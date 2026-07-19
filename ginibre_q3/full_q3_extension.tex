@@ -63,10 +63,11 @@ carried over literally to nonabelian compact groups.
 \label{rem:submission-architecture}
 The formal proof has three numbered parts and one detailed supplement
 collected in three files: \path{paper.pdf} consolidates Parts~I--II,
-\path{paper_full.pdf} is their 503-page formal detailed supplement, and the
+\path{paper_full.pdf} is their 504-page formal detailed supplement, and the
 present file is Part~III.  All three files are load-bearing.  In particular,
 the detailed supplement supplies the numbered $B/C$ correction-prefix proofs
-used by the compact residual-closure proposition in \path{paper.pdf}.  The
+and half-stable bridge reduction used by the compact residual-closure
+proposition in \path{paper.pdf}.  The
 concise dependency spine is recorded
 in \path{PUBLICATION_PROOF_SPINE.md}; diagnostic and superseded routes in the
 expanded archive are not inputs to that spine.  Files under \path{referee_audits/} and the
@@ -85,9 +86,10 @@ theoretically, its polynomial part consists exactly of nonnegative linear
 combinations of tensor-power characters
 \(1,\chiad,\chiad^2,\ldots\); hence its Haar moments are invariant-tensor
 multiplicities in tensor powers of the adjoint module.  From the viewpoint of
-Ginibre's Proposition~1, it is also the maximal cone to which a proof for the
-single generator \(\chiad\) promotes without introducing a second generator
-or a mixed-character inequality.  The theorem therefore isolates the full
+Ginibre's Proposition~1, it is precisely the generated cone to which the
+single-generator proof promotes.  A statement on any larger cone requires
+additional inequalities not supplied by that promotion.  The theorem
+therefore isolates the full
 signed-product consequences of the adjoint tensor category.  It does not
 assert that a general central positive-definite function is a uniform limit
 of these polynomials, and it supplies no conclusion for a model whose
@@ -207,8 +209,8 @@ This is the main theorem of the journal-facing Parts~I--II manuscript,
 functional $Q_3^G(n)$ is exactly $I^G_{1,n}$ above.  That manuscript is
 generated as \path{paper.pdf} from \path{paper.tex} and is submitted with the
 present Part~III.  The formal detailed supplement built from the same source
-supplies the numbered correction-prefix proofs used by the compact
-manuscript.
+supplies the numbered correction-prefix proofs and the half-stable bridge
+reduction used by the compact manuscript.
 \end{proof}
 
 \begin{proposition}[The all-positive-definite analogue is false]
@@ -2907,7 +2909,8 @@ expensive arithmetic transcripts.  The historical tag \texttt{v1.0.0}
 contains that import binding, but it is not asserted to contain later
 manuscript revisions.  For the present submission, the canonical source bytes
 are the files in the submitted archive whose hashes are listed in
-\path{full_q3_source_manifest.sha256}.  A public release of the final
+\path{certificates/full_q3/full_q3_source_manifest.sha256}.  A public release
+of the final
 submission must reproduce that manifest exactly.
 
 The formal submission has three numbered parts and a formal detailed
@@ -2919,7 +2922,8 @@ Part~III.  The archived
 computation-bearing sources are \path{paper.tex}, \path{paper_full.tex}, and
 \path{full_q3_extension.tex} in that commit.  The immutable import commit
 authenticates the arithmetic snapshot.  The current publication sources are
-bound directly by \path{full_q3_source_manifest.sha256} and are the inputs
+bound directly by
+\path{certificates/full_q3/full_q3_source_manifest.sha256} and are the inputs
 rebuilt by the commands below.  The historical aggregate transcript predates
 publication-only prose and metadata revisions; the fail-closed
 \path{verify_full_q3_related_work_rebind.py} records that boundary and rejects
@@ -2933,8 +2937,9 @@ standalone proof: its Theorem~\ref{thm:two-minus-import} imports Theorem~2.2
 of Parts~I--II, which is included in the submission and archive.
 
 The formal detailed supplement \path{paper_full.pdf} is rebuilt from the same
-source.  Its numbered correction-prefix derivations are incoming proof nodes
-for the residual $B/C$ closure; diagnostic and superseded material printed
+source.  Its numbered correction-prefix derivations and half-stable bridge
+reduction are incoming proof nodes for the residual $B/C$ closure;
+diagnostic and superseded material printed
 there remains outside the dependency spine.  The compact contract,
 accepted-certificate boundary, and family closures appear in
 \path{paper.pdf}.
@@ -2951,6 +2956,10 @@ installation.  From the repository root, the three aggregate commands are
 
 \texttt{make -C ginibre\_q3 full-q3-extension}.
 \end{center}
+The exact validated Ubuntu, compiler, GMP/MPFR, OpenMP, Python, and \TeX{}
+versions used for the July 2026 publication rebuild are recorded in
+\path{ENVIRONMENT.md}; the Makefiles remain authoritative for compilation and
+link flags.
 These commands implement three reproducibility tiers.  The first command runs
 the document, dependency, interface, scope, moment-formula, cone-promotion,
 $SO(3)$, and frontier-formula checks as one fail-closed short suite.  The
@@ -3032,7 +3041,9 @@ transcripts:
 L.~P. Polzer,
 The two-minus adjoint-character case of Ginibre's $Q_3$ condition,
 Parts I--II: classification and exact certificates, journal manuscript with
-formal detailed supplement, 2026,
+formal detailed supplement, 2026.  The exact submitted source bytes are bound
+by \path{certificates/full_q3/full_q3_source_manifest.sha256} in the
+inseparable submission archive; the historical execution snapshot is
 \url{https://github.com/skypher/ginibre-q3-adjoint/tree/91363c3cebb37a44349f613ab0a5aa6dcd412af3/ginibre_q3}.
 
 \bibitem{DiaconisShahshahani1994}

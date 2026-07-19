@@ -82,6 +82,12 @@ software requirements, and a result-to-certificate map.  It also states
 explicitly that the intermediate cone of all real continuous central
 positive-definite functions remains undecided.
 
+`ENVIRONMENT.md` records the exact operating system, compiler, arithmetic
+libraries, TeX installation, and host resources used for the July 2026
+publication validation. It supplements the resource and timeout contract in
+`REPLAY.md`; the manifested source bytes, rather than the prose version list,
+remain authoritative.
+
 The GMP `SU(2)` stage independently reconstructs moments from both the
 Clebsch--Gordan recurrence and the Catalan binomial transform, checks all 78
 residual higher-minus cases, and verifies the rational tail comparison.  The
@@ -124,8 +130,9 @@ as superseded, not accepted evidence.
 - `paper_full.tex` is a wrapper that builds the formal detailed
   supplement (`paper_full.pdf`) from the same source, including the complete
   B/C correction development and the detailed certificate, transcript, hash,
-  row, and external-input ledgers.  Its numbered correction-prefix proofs are
-  load-bearing for the compact residual B/C closure.  The compact paper prints
+  row, and external-input ledgers.  Its numbered correction-prefix proofs and
+  half-stable bridge reduction are load-bearing for the compact residual B/C
+  closure.  The compact paper prints
   the exact table of the 58 active family-wide contracts at offsets `0..28`
   and proves that only offsets through `27` are consumed.  Conditional,
   diagnostic, and superseded development material remains outside that

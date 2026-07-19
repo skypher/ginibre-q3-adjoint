@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Verify the single publication-only dependency rebind in ``paper.tex``.
+"""Verify the historical rebind and the live manifested ``paper.tex``.
 
 The 200-stage replay must be collected before the edit is made.  Its archived
 execution-source snapshot supplies ``--execution-root``.  This verifier then
-proves that the publication paper differs from those executed bytes by one
-fixed prose replacement, that the replacement removes exactly one theorem
-dependency edge, and that the resulting theorem/proof graph is acyclic.
+proves that the first publication paper differs from those executed bytes by
+one fixed prose replacement and removes exactly one cyclic theorem edge.  For
+the live revision it additionally permits only the explicitly audited B/C
+correction-contract result and residual-closure supplier edges, requires the
+half-stable bridge import, and validates the live manifests.
 """
 
 from __future__ import annotations
@@ -202,9 +204,12 @@ def reachable_labels(
     return frozenset(reached)
 
 
-def audit_graph(text: str) -> GraphAudit:
+def audit_graph(text: str, expected_results: int = 850) -> GraphAudit:
     results = list(RESULT_PATTERN.finditer(text))
-    require(len(results) == 850, f"expected 850 numbered results, found {len(results)}")
+    require(
+        len(results) == expected_results,
+        f"expected {expected_results} numbered results, found {len(results)}",
+    )
 
     main_proofs = list(MAIN_PROOF_PATTERN.finditer(text))
     require(len(main_proofs) == 1, f"expected one deferred main proof, found {len(main_proofs)}")
@@ -237,8 +242,11 @@ def audit_graph(text: str) -> GraphAudit:
         )
 
     global_proofs = list(re.finditer(r"\\begin\{proof\}(?:\[[^]]*\])?", text))
-    require(len(global_proofs) == 850, f"expected 850 proofs, found {len(global_proofs)}")
-    require(len(set(proof_spans)) == 850, "a proof was paired more than once")
+    require(
+        len(global_proofs) == expected_results,
+        f"expected {expected_results} proofs, found {len(global_proofs)}",
+    )
+    require(len(set(proof_spans)) == expected_results, "a proof was paired more than once")
     require(
         {start for start, _end in proof_spans} == {proof.start() for proof in global_proofs},
         "the result/proof pairing omits or invents a proof block",
@@ -409,13 +417,46 @@ def main() -> int:
         candidate_text = candidate_data.decode("utf-8")
         require(OLD_PASSAGE not in candidate_text, "old cyclic passage remains in final revision")
         require(candidate_text.count(NEW_PASSAGE) == 1, "new rebind passage is not unique")
-        final_graph = audit_graph(candidate_text)
-        require(final_graph.labels == intermediate_graph.labels, "final revision changes result labels")
-        require(final_graph.edges == intermediate_graph.edges, "final revision changes proof dependencies")
+        final_graph = audit_graph(candidate_text, 851)
+        added_label = "prop:bc-active-correction-prefix-contract"
         require(
-            final_graph.reachable == intermediate_graph.reachable,
-            "final revision changes main-theorem reachability",
+            tuple(label for label in final_graph.labels if label != added_label)
+            == intermediate_graph.labels,
+            "final revision changes historical result labels or their order",
         )
+        require(
+            set(final_graph.labels) - set(intermediate_graph.labels) == {added_label},
+            "final revision adds an unauthorized numbered result",
+        )
+        expected_added_edges = {
+            (added_label, "prop:bc-pieri-correction-sign"),
+            ("prop:post29-bc-residual-closure", "lem:moment-formula"),
+            ("prop:post29-bc-residual-closure", added_label),
+            ("prop:post29-bc-residual-closure", "prop:post29"),
+            ("prop:post29-bc-residual-closure", "prop:post29-b-tilted-mgf"),
+            ("prop:post29-bc-residual-closure", "prop:post29-bc-interval-direct"),
+            ("prop:post29-bc-residual-closure", "prop:post29-bc-layered-mgf"),
+            ("prop:post29-bc-residual-closure", "prop:post29-c-tilted-mgf"),
+        }
+        require(
+            final_graph.edges - intermediate_graph.edges == expected_added_edges,
+            "final revision adds unauthorized proof dependencies",
+        )
+        require(
+            not (intermediate_graph.edges - final_graph.edges),
+            "final revision removes a dependency after the historical rebind",
+        )
+        require(
+            r"\contractref{prop:post29-bc-half-bridge}" in candidate_text
+            and "post_m29_bc_interval_bridge_frontier_gmp.cpp" in candidate_text
+            and r"\mathcal L_m>0" in candidate_text,
+            "final revision omits the explicit half-stable bridge predicate",
+        )
+        require(
+            final_graph.reachable == intermediate_graph.reachable | {added_label},
+            "final revision changes main-theorem reachability beyond the correction contract",
+        )
+        require(not final_graph.nontrivial_components, "final revision introduces a proof cycle")
         actual_replay = (final_root / REPLAY_MANIFEST).read_text(encoding="utf-8")
         actual_full = (final_root / FULL_MANIFEST).read_text(encoding="utf-8")
         replay_records = parse_manifest(actual_replay, REPLAY_MANIFEST)
@@ -428,17 +469,13 @@ def main() -> int:
             full_records.get("../../paper.tex") == digest(candidate_data),
             "final Part III manifest does not bind revised paper.tex",
         )
-        require(
-            verify_manifest_files(final_root, REPLAY_MANIFEST, actual_replay) == 86,
-            "publication replay manifest cardinality changed",
-        )
-        require(
-            verify_manifest_files(final_root, FULL_MANIFEST, actual_full) == 39,
-            "publication Part III manifest cardinality changed",
-        )
+        live_replay_entries = verify_manifest_files(final_root, REPLAY_MANIFEST, actual_replay)
+        live_full_entries = verify_manifest_files(final_root, FULL_MANIFEST, actual_full)
+        require(live_replay_entries >= replay_entries, "live replay manifest lost inputs")
+        require(live_full_entries >= full_entries, "live Part III manifest lost inputs")
         publication_replay_hash = digest(actual_replay.encode("utf-8"))
         publication_full_hash = digest(actual_full.encode("utf-8"))
-        publication_entries = (86, 39)
+        publication_entries = (live_replay_entries, live_full_entries)
         mode = "final-revision"
 
     print(

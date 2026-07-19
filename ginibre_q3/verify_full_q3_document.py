@@ -12,6 +12,7 @@ from pathlib import Path
 SOURCE = Path(__file__).with_name("full_q3_extension.tex")
 COMPACT_SOURCE = SOURCE.with_name("paper.tex")
 SUPPLEMENT_WRAPPER = SOURCE.with_name("paper_full.tex")
+ENVIRONMENT = SOURCE.with_name("ENVIRONMENT.md")
 RESULT_ENVS = ("theorem", "proposition", "lemma", "corollary")
 
 
@@ -24,6 +25,8 @@ def main() -> int:
     text = SOURCE.read_text(encoding="utf-8")
     compact_text = COMPACT_SOURCE.read_text(encoding="utf-8")
     supplement_wrapper = SUPPLEMENT_WRAPPER.read_text(encoding="utf-8")
+    require(ENVIRONMENT.is_file(), "validated environment record is absent")
+    environment = ENVIRONMENT.read_text(encoding="utf-8")
     require(
         "formal detailed supplement" in compact_text
         and "proves the exact active results" in compact_text,
@@ -34,6 +37,12 @@ def main() -> int:
         and compact_text.count(r"0\le r\le28") >= 2
         and "only offsets $0\\le r\\le27$" in compact_text,
         "compact Parts I--II do not state the active B/C contract and consumed offset",
+    )
+    require(
+        r"\contractref{prop:post29-bc-half-bridge}" in compact_text
+        and "post_m29_bc_interval_bridge_frontier_gmp.cpp" in compact_text
+        and r"D_G(2m+1)\ge\mathcal L_m" in compact_text,
+        "compact Parts I--II omit the explicit half-stable bridge import",
     )
     require(
         "$B_1=C_1=A_1$" in compact_text
@@ -49,6 +58,26 @@ def main() -> int:
         "Formal detailed supplement" in supplement_wrapper
         and r"\def\GinibreFullProof{1}" in supplement_wrapper,
         "formal detailed supplement wrapper is absent or inactive",
+    )
+    require(
+        "504-page formal detailed supplement" in text,
+        "Part III reports the wrong detailed-supplement page count",
+    )
+    require(
+        "certificates/full_q3/full_q3_source_manifest.sha256" in text,
+        "Part III does not name the live final-source manifest path",
+    )
+    require(
+        r"\path{ENVIRONMENT.md}" in text
+        and "Ubuntu 24.04.4 LTS" in environment
+        and "GNU g++ 13.3.0" in environment
+        and "MPFR 4.2.1" in environment,
+        "validated replay environment is incomplete or not cited",
+    )
+    require(
+        "maximal cone to which" not in text
+        and "largest function class that" not in compact_text,
+        "unsupported maximality wording remains in the manuscript",
     )
 
     result_pattern = re.compile(

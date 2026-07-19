@@ -502,6 +502,35 @@ def audit_bc_caller_ranges(root: Path) -> tuple[int, int, int]:
     residual = "prop:post29-bc-residual-closure"
     if domains(residual) != [(14, 123), (20, 217)]:
         raise ReplayFailure(f"bad residual B/C caller domains: {domains(residual)}")
+    residual_proof_match = re.search(
+        rf"\\label\{{{residual}\}}.*?\\begin\{{proof\}}(.*?)\\end\{{proof\}}",
+        paper,
+        re.DOTALL,
+    )
+    if residual_proof_match is None:
+        raise ReplayFailure("cannot parse the residual B/C proof")
+    residual_proof = residual_proof_match.group(1)
+    half_bridge = "prop:post29-bc-half-bridge"
+    if rf"\contractref{{{half_bridge}}}" not in residual_proof:
+        raise ReplayFailure("residual B/C proof omits its half-stable bridge import")
+    if (
+        "post_m29_bc_interval_bridge_frontier_gmp.cpp" not in residual_proof
+        or r"\mathcal L_m" not in residual_proof
+        or r"D_G(2m+1)\ge\mathcal L_m" not in residual_proof
+    ):
+        raise ReplayFailure("residual B/C proof omits the exact bridge predicate/source")
+    for supplier in (
+        "prop:post29",
+        "prop:post29-bc-layered-mgf",
+        "prop:post29-b-tilted-mgf",
+        "prop:post29-c-tilted-mgf",
+        "prop:post29-bc-interval-direct",
+    ):
+        if supplier not in residual_proof:
+            raise ReplayFailure(f"residual B/C proof omits supplier {supplier}")
+    proof_spine = (root / "PUBLICATION_PROOF_SPINE.md").read_text(errors="strict")
+    if half_bridge not in proof_spine or "explicit incoming node" not in proof_spine:
+        raise ReplayFailure("publication proof spine omits the half-stable bridge edge")
     tail_specs = (
         ("prop:post29-b-tilted-mgf", [(62, 123)]),
         ("prop:post29-c-tilted-mgf", [(62, 217)]),

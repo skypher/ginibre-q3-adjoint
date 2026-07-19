@@ -62,6 +62,12 @@ must never be described as a lightweight checker for all arithmetic
 certificates; it checks their scope and authentication, not their numerical
 contents.
 
+`ENVIRONMENT.md` records one fully specified validated software stack and the
+host on which the July 2026 publication checks were rebuilt. The Makefiles
+remain authoritative for flags, while that environment record removes any
+ambiguity about the tested compiler, GMP/MPFR, OpenMP, Python, and TeX
+versions.
+
 The exceptional-prefix checker is fail-closed: it rejects an input that ends
 before `m_5`, a gapped moment sequence, conflicting duplicate moment rows, a
 negative `Q_3`, or a negative Chain difference, and every such rejection has

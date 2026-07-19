@@ -12,9 +12,10 @@ The proof has three numbered parts and one detailed supplement in three
 manuscript files. `paper.pdf` consolidates Parts I--II,
 `paper_full.pdf` is their formal detailed supplement, and
 `full_q3_extension.pdf` contains Part III. All three are load-bearing. The
-supplement supplies the numbered correction-prefix proofs consumed by the
-compact residual B/C closure; diagnostic and superseded routes printed in the
-same expanded build remain outside the dependency spine. The historical
+supplement supplies the numbered correction-prefix proofs and the half-stable
+bridge reduction consumed by the compact residual B/C closure; diagnostic and
+superseded routes printed in the same expanded build remain outside the
+dependency spine. The historical
 author report and `referee_audits/` directory are likewise outside the
 manuscript. The immutable execution snapshot preserves the sources and
 transcripts of the expensive arithmetic runs, while the final-source manifest
@@ -53,7 +54,10 @@ residual closure then proves directly that main-theorem propagation consumes
 only offsets through `27`; offset `28` is overlap, and the offset-`29` results
 and longer conditional development routes are not premises. The formal
 detailed supplement proves the 58 active lower bounds through its numbered
-Pieri, factorial-bound, and exact-frontier results.
+Pieri, factorial-bound, and exact-frontier results. Its numbered
+`prop:post29-bc-half-bridge` then converts those intervals into the exact
+common stable-moment lower bound evaluated for every active Chain index; this
+result is an explicit incoming node of `prop:post29-bc-residual-closure`.
 `REPLAY.md` maps every main-theorem-reachable certificate log to a freshly
 rebuilt stage.
 

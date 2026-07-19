@@ -30,6 +30,7 @@ FILES = {
     "replay_doc": ROOT / "REPLAY.md",
     "proof_spine": ROOT / "PUBLICATION_PROOF_SPINE.md",
     "replay_manifest": ROOT / "replay_sources.sha256",
+    "environment": ROOT / "ENVIRONMENT.md",
 }
 
 BASELINE = {
@@ -43,7 +44,7 @@ BASELINE = {
     "replay_manifest": "bfe68eaf0ee4a5fe8263902b1145804a630381a54bfd4a9b4bb3135517196874",
 }
 
-FINAL = {
+HISTORICAL_FINAL = {
     "extension": "9362671cfb5fbd4750a11a072b13f07a64073362e43e84da198ef73f12bd9439",
     "document_verifier": "c0b09862c12ea951f1a532a55848deabb6f222a6c4b9a77ba7b23be524b80997",
     "source_table": "a1556141b7032fc256da94a6fe72eaf80e2d1023e29265df361e7a1acc0eb39e",
@@ -55,6 +56,27 @@ FINAL = {
     "replay_doc": "65572ec18410f7bcf31417fdf276765d9fd50271bb7db2ca7b1f84bf1409881d",
     "proof_spine": "810a546718d3506008f79baf319c7e98755d8fb9f9625472cb1682b72381eaff",
     "replay_manifest": "83376b78f1dd8effce4bea92ede23d04bc0522b2d9c6feddae6819f637a5c2b3",
+}
+
+# Mutable publication files are authenticated by the live manifests instead
+# of by constants embedded in this verifier.  This avoids making an otherwise
+# valid, fully manifested publication correction require a new hard-coded
+# verifier release merely to recognize the new source bytes.
+FULL_MANIFEST_BINDINGS = {
+    "extension": "../../full_q3_extension.tex",
+    "document_verifier": "../../verify_full_q3_document.py",
+    "reference_manifest": "../../references/references_manifest.sha256",
+    "paper": "../../paper.tex",
+    "readme": "../../README.md",
+    "replay_doc": "../../REPLAY.md",
+    "proof_spine": "../../PUBLICATION_PROOF_SPINE.md",
+    "replay_manifest": "../../replay_sources.sha256",
+    "environment": "../../ENVIRONMENT.md",
+}
+
+REFERENCE_MANIFEST_BINDINGS = {
+    "source_table": "active_paper_sources.tsv",
+    "source_audit": "GINIBRE_RELATED_WORK_SOURCE_AUDIT.md",
 }
 
 FINAL_EXTENSION_METADATA = """\\author{Leslie P. Polzer}
@@ -355,14 +377,32 @@ def verify_manifest(path: Path) -> int:
 
 
 def main() -> int:
-    for key, expected in FINAL.items():
-        require(digest(read(key)) == expected, f"unexpected final hash for {key}")
+    full_records_live = parse_manifest(
+        FILES["full_manifest"].read_text(encoding="utf-8"), FILES["full_manifest"]
+    )
+    reference_records_live = parse_manifest(
+        FILES["reference_manifest"].read_text(encoding="utf-8"),
+        FILES["reference_manifest"],
+    )
+    for key, recorded in FULL_MANIFEST_BINDINGS.items():
+        require(recorded in full_records_live, f"full manifest omits {recorded}")
+        require(
+            digest(read(key)) == full_records_live[recorded],
+            f"full manifest does not bind live {key}",
+        )
+    for key, recorded in REFERENCE_MANIFEST_BINDINGS.items():
+        require(recorded in reference_records_live, f"reference manifest omits {recorded}")
+        require(
+            digest(read(key)) == reference_records_live[recorded],
+            f"reference manifest does not bind live {key}",
+        )
 
     extension = read("extension").decode("utf-8")
     paper = read("paper").decode("utf-8")
     readme = read("readme").decode("utf-8")
     replay_doc = read("replay_doc").decode("utf-8")
     proof_spine = read("proof_spine").decode("utf-8")
+    environment = read("environment").decode("utf-8")
     require("pdfauthor={Leslie P. Polzer}" in extension, "Part III PDF metadata is absent")
     require("pdfauthor={Leslie P. Polzer}" in paper, "companion PDF metadata is absent")
     require(
@@ -381,15 +421,43 @@ def main() -> int:
         "resource-tier disclosure is incomplete",
     )
     require(
+        "ENVIRONMENT.md" in replay_doc
+        and "Ubuntu 24.04.4 LTS" in environment
+        and "GNU g++ 13.3.0" in environment
+        and "MPFR 4.2.1" in environment,
+        "validated replay environment is not fully bound",
+    )
+    require(
         "# Publication proof spine" in proof_spine
         and "thm:full-adjoint-generated-q3" in proof_spine
         and "author-controlled" in proof_spine,
         "publication proof spine is incomplete",
     )
-
-    full_records_live = parse_manifest(
-        FILES["full_manifest"].read_text(encoding="utf-8"), FILES["full_manifest"]
+    require(
+        r"\contractref{prop:post29-bc-half-bridge}" in paper
+        and "post_m29_bc_interval_bridge_frontier_gmp.cpp" in paper
+        and r"\mathcal L_m>0" in paper,
+        "companion omits the explicit half-stable bridge predicate",
     )
+    require(
+        "prop:post29-bc-half-bridge" in proof_spine
+        and "explicit incoming node" in proof_spine,
+        "proof spine omits the half-stable bridge edge",
+    )
+    require(
+        "504-page formal detailed supplement" in extension,
+        "Part III supplement page count is stale",
+    )
+    require(
+        "certificates/full_q3/full_q3_source_manifest.sha256" in extension,
+        "Part III gives the wrong final-source manifest path",
+    )
+    require(
+        "largest function class" not in paper
+        and "maximal multiplicative cone" not in extension,
+        "unsupported maximality language remains",
+    )
+
     snapshot_manifest = (
         ROOT
         / "certificates/full_q3/distributed0001/execution_source_snapshot/"
@@ -402,8 +470,7 @@ def main() -> int:
     arithmetic_paths = [
         path
         for path in full_records_live
-        if path == "../../Makefile"
-        or path.startswith("../../character_ring_iter/")
+        if path.startswith("../../character_ring_iter/")
         or path.startswith("../../run_full")
     ]
     require(arithmetic_paths, "no arithmetic sources found in live manifest")
@@ -414,11 +481,47 @@ def main() -> int:
             f"arithmetic source changed after execution snapshot: {path}",
         )
 
+    # The live top-level Makefile differs from the execution snapshot only by
+    # the publication-preflight alias.  Authenticate that exact non-arithmetic
+    # addition while keeping every compile and replay recipe byte-identical.
+    snapshot_makefile = (
+        ROOT
+        / "certificates/full_q3/distributed0001/execution_source_snapshot/"
+          "ginibre_q3/Makefile"
+    ).read_text(encoding="utf-8")
+    live_makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
+    baseline_phony = (
+        ".PHONY: clean-room-replay full-q3-document-audit "
+        "full-q3-artifact-audit"
+    )
+    require(baseline_phony in snapshot_makefile, "snapshot Makefile boundary changed")
+    expected_live_makefile = snapshot_makefile.replace(
+        baseline_phony,
+        ".PHONY: publication-preflight clean-room-replay full-q3-document-audit "
+        "full-q3-artifact-audit",
+        1,
+    ).replace(
+        "\nclean-room-replay:\n",
+        "\npublication-preflight:\n"
+        "\tpython3 -u run_publication_short_audits.py\n"
+        "\tpython3 -u -c 'from pathlib import Path; from clean_room_replay import "
+        "verify_manifests; n, e = verify_manifests(Path(\".\")); "
+        "print(f\"PUBLICATION_PREFLIGHT manifests={n} entries={e}\"); "
+        "print(\"PUBLICATION_PREFLIGHT VERIFICATION: ALL PASS\")'\n\n"
+        "clean-room-replay:\n",
+        1,
+    )
+    require(
+        live_makefile == expected_live_makefile,
+        "live Makefile changes an execution recipe beyond publication-preflight",
+    )
+
     reference_records = verify_manifest(FILES["reference_manifest"])
     full_records = verify_manifest(FILES["full_manifest"])
     print(
         "FULL_Q3_FINAL_SOURCE_BINDING "
-        f"extension={FINAL['extension']} arithmetic_sources={len(arithmetic_paths)} "
+        f"extension={digest(read('extension'))} arithmetic_sources={len(arithmetic_paths)} "
+        "makefile_delta=publication-preflight-only "
         f"reference_records={reference_records} full_records={full_records}"
     )
     print("FULL_Q3_FINAL_SOURCE_BINDING VERIFICATION: ALL PASS")
