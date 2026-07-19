@@ -2,7 +2,7 @@
 """Fail-closed cross-document audit of the Part III two-minus import.
 
 Part III uses the Parts I--II theorem as its complete ``a=1`` row.  This
-referee-side audit parses both theorem statements and both defining Haar
+author self-audit parses both theorem statements and both defining Haar
 integrals, substitutes ``a=1`` in the Part III signature, and checks that the
 group scope, exponent range, normalization, theorem number, bibliography
 entry, and manifest bindings agree exactly.  It is structural and does not
@@ -25,9 +25,12 @@ ALLOWED_COMPANION_HASHES = {
     "d2fb8944ec081f47a1bfcf558bb65adb01936b0ac1d0dbbb1f561d63d7197010",
     "eb91422f3a32840d4a2649f4b60f09ccdd4599da42ad02c7c31276a9c7c535f4",
     "8b58f9015dc4738c0e48e3d340f512a74b54a6832f83a3ae378b910d75e6060f",
+    "bd2a53c86a00caa7f7e4d9a7d61f6a02f2059fadde313e080b3360d49da03f93",
+    "dba5091d17cd85aeeee73deaafda86df1fe05e395625489a391201898910e325",
+    "14881fb1fdc1a1e4d0c80faaaf710e880f768b4e1b820624298345e60fcf1cbd",
 }
 EXPECTED_PART_THREE_HASH = (
-    "a8965261fcb5ede9badf3a756b5def493cc5d769db99e2e67bb65cc79d7cec7f"
+    "9362671cfb5fbd4750a11a072b13f07a64073362e43e84da198ef73f12bd9439"
 )
 RESULT_ENVS = ("theorem", "proposition", "lemma", "corollary")
 RESULT_PATTERN = re.compile(
@@ -209,7 +212,7 @@ def validate_semantics(companion: str, part_three: str) -> tuple[IntegralSignatu
     )
     require_fragment(
         part_three,
-        r"Parts I--II: classification, exact certificates, and expanded proof companion",
+        r"Parts I--II: classification and exact certificates, journal manuscript with formal detailed supplement, 2026",
         "Part III companion bibliography identity changed",
     )
 

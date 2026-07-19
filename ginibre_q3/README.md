@@ -68,12 +68,15 @@ reconstruction machinery.
 
 The audited computation package is rooted at immutable publication import
 commit `91363c3cebb37a44349f613ab0a5aa6dcd412af3` in
-`https://github.com/skypher/ginibre-q3-adjoint`; tag `v1.0.0` identifies the
-publication release containing this binding. Parts I--II (`paper.tex`,
-`paper_full.tex`), Part III
-(`full_q3_extension.tex`), all replay sources, accepted transcripts, and
-SHA-256 manifests are archived together there. Parts I--II and Part III are
-inseparable formal submission components.  Part III contains a
+`https://github.com/skypher/ginibre-q3-adjoint`; historical tag `v1.0.0`
+contains that execution binding but is not asserted to contain later
+manuscript revisions.  The present submission bytes are bound by
+`certificates/full_q3/full_q3_source_manifest.sha256`, and any final public
+release must reproduce that manifest exactly.  The journal-facing Parts I--II
+(`paper.tex`/`paper.pdf`), their formal detailed supplement
+(`paper_full.tex`/`paper_full.pdf`), and Part III
+(`full_q3_extension.tex`/`full_q3_extension.pdf`) are the three inseparable
+formal submission components.  Part III contains a
 publication-facing code and data availability statement, exact build commands,
 software requirements, and a result-to-certificate map.  It also states
 explicitly that the intermediate cone of all real continuous central
@@ -115,19 +118,29 @@ as superseded, not accepted evidence.
 
 ## Authoritative files
 
-- `paper.tex` builds Part I, containing the theorem statement, reductions,
-  classification, and compact certificate assembly (`paper.pdf`).
-- `paper_full.tex` is a two-line wrapper that builds the expanded proof
-  Part II (`paper_full.pdf`) from the same source, including the complete
+- `paper.tex` builds the consolidated Parts I--II journal manuscript,
+  containing the theorem statement, reductions, classification, compact
+  correction-prefix contract, and accepted certificate assembly (`paper.pdf`).
+- `paper_full.tex` is a wrapper that builds the formal detailed
+  supplement (`paper_full.pdf`) from the same source, including the complete
   B/C correction development and the detailed certificate, transcript, hash,
-  row, and external-input ledgers.  Part II is load-bearing and is to be
-  archived, cited, and refereed together with Part I.
+  row, and external-input ledgers.  Its numbered correction-prefix proofs are
+  load-bearing for the compact residual B/C closure.  The compact paper prints
+  the exact table of the 58 active family-wide contracts at offsets `0..28`
+  and proves that only offsets through `27` are consumed.  Conditional,
+  diagnostic, and superseded development material remains outside that
+  explicitly indexed proof spine.
 - `full_q3_extension.tex` is the completed Part III extension described
   above.  Its final theorem is unconditional on the adjoint-generated cone;
   the exact `SO(3)` counterexample records why it cannot be enlarged to all
   positive-definite functions.
 - `REPLAY.md` defines the clean-room replay, its dependency boundary, and the
   expected success condition.
+- `make publication-preflight` runs the structural and independent-formula
+  audit suite and authenticates every manifest before any expensive arithmetic
+  replay.  It does not recompute all load-bearing arithmetic signs.
+- `PUBLICATION_PROOF_SPINE.md` is the concise reader-facing map of the
+  load-bearing Parts I--III results and certificate families.
 - `SU_N_REPAIR.md`, Theorem 71, closes every type-A row.
 - `CLASSICAL_M3_ONE_PROOF.md` supplies the numbered classical proof chain.
 - `character_ring_iter/CLOSURE_STATUS.md` records the exceptional-family
@@ -139,6 +152,13 @@ as superseded, not accepted evidence.
 Historical route diaries, superseded referee drafts, and unrelated research
 notes are intentionally excluded from this publication repository.
 
+The retained file `REFEREE_REPORT_FULL_Q3_2026_07_15.md` and the directory
+`referee_audits/` are author-controlled historical self-audits.  Their names
+record provenance; they are not independent peer review and are not premises
+of the theorem or components of the formal manuscript.  The
+publication-facing descriptions inside those files state this boundary
+explicitly.
+
 ## One-command replay
 
 Run the full exact contract on machine C from the repository root:
@@ -147,28 +167,28 @@ Run the full exact contract on machine C from the repository root:
 make -C ginibre_q3 clean-room-replay
 ```
 
-The command copies this subproject to a new temporary directory, validates
-every stored SHA-256 manifest, checks the accepted replay/status boundary,
-cross-checks every certified-output and inline hash printed in the paper
-against those manifests,
-requires complete SHA-256 coverage of the vendored reference directory and
-maps every bibliography key to its local source artifact and verified locus,
-pairs every numbered result syntactically with its proof, walks explicit
-cross-reference edges from the main theorem, and rejects enumerated
-unresolved-status phrases in the reachable text,
-deletes every copied ELF executable, rebuilds the active C++ verifiers, runs
-the proof-spine checks, and rebuilds both `paper.pdf` and `paper_full.pdf` in
-three LaTeX passes each.  The source-structure pass is a consistency audit,
-not a theorem prover; mathematical hypothesis discharge is contained in the
-numbered proofs in Parts I and II.  The source
-tree's existing binaries and LaTeX outputs are never used.  Passing this
-command verifies the certificate package for the theorem actually stated.  A preflight audit
-also requires every in-tree file argument consumed by a proof stage to appear
-in a verified manifest.  A final reachability audit extracts the 42
-post-`m=29` certificate logs cited on the main-theorem proof spine, requires
-every one to be classified `accepted`, and requires exact equality with the
-freshly recomputed stage set.  Short individual smoke tests may run on
-`optimus`; the full partitioned frontier replay is not a local smoke test.
+The publication preflight is:
+
+```text
+make -C ginibre_q3 publication-preflight
+```
+
+This seconds-to-minutes command runs the source-structure, formula,
+classification-coverage, dependency, explicit `B/C` caller-range, and
+manifest-integrity audits.  It checks that the active contract contains the
+58 offsets `0..28`, that the main theorem consumes at most offset `27`, and
+that offset `28` is only a checked overlap.  It does not compile the C++
+arithmetic verifiers, recompute every certified sign, or rebuild either PDF.
+Thus a passing preflight establishes internal consistency of the published
+proof interface and authenticates the stored certificate package; it is not
+an independent proof of every arithmetic claim.
+
+For arithmetic re-evaluation, use `make -C ginibre_q3 clean-room-replay` as
+described in `REPLAY.md`.  That multi-hour workflow copies the subproject to a
+fresh temporary directory, removes copied executables, rebuilds the active
+verifiers, recomputes the accepted stages, and rebuilds both manuscript
+variants.  A stored transcript authenticates only the execution it records;
+the clean-room replay is the independent end-to-end check.
 
 The expensive arithmetic is C++:
 
@@ -253,10 +273,13 @@ exact factor witnesses are replayed directly by the C++/GMP checker.
    Exact rational tails cover `D_4..D_10`; `D_11` uses an exact-MGF tail from
    odd exponent 75 plus an exact bridge through that onset, and exact-moment
    MGF tails begin at odd exponent 63 for `D_12..D_24`.
-4. The B/C correction prefix is discharged through the twenty-ninth
-   correction propositions and their exact accepted ledgers.  Those long
-   proofs are collected in `paper_full.pdf`; the concise paper invokes their
-   precise residual-closure proposition.
+4. The B/C correction prefix is discharged by the compact residual-closure
+   contract: the 58 active family-wide offset-`0..28` domains, their exact
+   accepted frontier ledgers, and the domain-aware caller audit.  The closure
+   proves that only offsets through `27` are consumed.  The formal detailed
+   supplement `paper_full.pdf` states and proves those correction-prefix
+   contracts through numbered Pieri, factorial-bound, and exact-frontier
+   results.
 5. The remaining B/C rows are supplied by the high-edge Chernoff bound, the
    unitary square trace, the tilted MGF bounds, and the 90-row layered MGF
    certificate (including the exact determinant/interval-Cholesky treatment
@@ -271,9 +294,10 @@ exact factor witnesses are replayed directly by the C++/GMP checker.
    simply connected models to all compact connected groups with simple Lie
    algebra through the stated central-quotient argument.
 
-The split is editorial, not mathematical: the expanded companion is part of
-the proof archive, both documents come from the same source, and the clean
-replay rejects unresolved references in either output.
+The expanded build is the formal detailed supplement and comes from the same
+source.  `paper.pdf`, `paper_full.pdf`, and `full_q3_extension.pdf` are the
+three formal manuscript components.  The clean replay rejects unresolved
+references in every component.
 
 Even exponents are pointwise nonnegative.  The certificate work is for the
 odd-exponent chain.

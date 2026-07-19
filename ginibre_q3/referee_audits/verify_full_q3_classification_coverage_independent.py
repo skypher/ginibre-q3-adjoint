@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Independent family/rank/degree coverage audit for the Part III theorem.
 
-This is a referee-side structural audit.  It does not verify the arithmetic
+This is an author structural self-audit.  It does not verify the arithmetic
 inside any certificate.  Instead it parses the theorem statements and the
 independent low-row ledger, reconstructs every case split used by the final
 classification proof, and proves that no nonautomatic odd-total-degree case

@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
 \usepackage[margin=1in]{geometry}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black]{hyperref}
@@ -20,6 +21,7 @@
 \DeclareMathOperator{\Haar}{Haar}
 \newcommand{\chiad}{\chi_{\mathrm{ad}}}
 \newcommand{\Qcone}{\mathcal Q}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \title[Full adjoint-generated Ginibre $Q_3$]{The full adjoint-generated case of Ginibre's condition \texorpdfstring{$Q_3$}{Q3}\\
 \large Part III: completion of the full signed-product hierarchy}
@@ -27,6 +29,13 @@
 \address{}
 \email{polzer@fastmail.com}
 \date{July 19, 2026}
+
+\hypersetup{
+  pdftitle={The full adjoint-generated case of Ginibre's condition Q3},
+  pdfauthor={Leslie P. Polzer},
+  pdfsubject={Full signed-product hierarchy on the adjoint-generated cone},
+  pdfkeywords={Ginibre Q3, compact Lie group, adjoint character, exact certificates}
+}
 
 \begin{document}
 
@@ -40,14 +49,49 @@ tuple length, every sign assignment, and every even number of minus factors;
 Ginibre's Proposition~1 then promotes the adjoint generator to $\Qcone_G$.
 The last finite classical boxes are closed by bounded Littlewood determinant
 identities and an exact prime-field/GMP certificate covering 12,993 residual
-inequalities.  We also give an exact $\mathrm{SO}(3)$ counterexample showing
+inequalities.  Here ``full'' refers to Ginibre's finite-tuple and sign-pattern
+quantifiers on the explicitly stated adjoint-generated cone; it does not mean
+the cone of all positive-definite functions.  We also give an exact
+$\mathrm{SO}(3)$ counterexample showing
 that Ginibre's abelian cone of all real positive-definite functions cannot be
 carried over literally to nonabelian compact groups.
 \end{abstract}
 
 \maketitle
 
+\begin{remark}[Submission architecture and audit status]
+\label{rem:submission-architecture}
+The formal proof has three numbered parts and one detailed supplement
+collected in three files: \path{paper.pdf} consolidates Parts~I--II,
+\path{paper_full.pdf} is their 503-page formal detailed supplement, and the
+present file is Part~III.  All three files are load-bearing.  In particular,
+the detailed supplement supplies the numbered $B/C$ correction-prefix proofs
+used by the compact residual-closure proposition in \path{paper.pdf}.  The
+concise dependency spine is recorded
+in \path{PUBLICATION_PROOF_SPINE.md}; diagnostic and superseded routes in the
+expanded archive are not inputs to that spine.  Files under \path{referee_audits/} and the
+historical report in the source archive are author-controlled self-audits.
+They are reproducibility aids, not independent peer review.  The theorem
+depends only on the numbered results and authenticated computations mapped in
+the code and data availability section.
+\end{remark}
+
 \section{The exact adjoint-generated target}
+
+The cone studied here is the smallest uniformly closed cone containing the
+adjoint character and closed under multiplication and nonnegative linear
+combination.  It is natural for two independent reasons.  Representation
+theoretically, its polynomial part consists exactly of nonnegative linear
+combinations of tensor-power characters
+\(1,\chiad,\chiad^2,\ldots\); hence its Haar moments are invariant-tensor
+multiplicities in tensor powers of the adjoint module.  From the viewpoint of
+Ginibre's Proposition~1, it is also the maximal cone to which a proof for the
+single generator \(\chiad\) promotes without introducing a second generator
+or a mixed-character inequality.  The theorem therefore isolates the full
+signed-product consequences of the adjoint tensor category.  It does not
+assert that a general central positive-definite function is a uniform limit
+of these polynomials, and it supplies no conclusion for a model whose
+interaction or observables do not belong to this cone.
 
 Let $G$ be as in the abstract, let $\mu_G$ be normalized Haar measure, and
 write $X=\chiad(g)$ and $Y=\chiad(h)$ for independent Haar variables.  Since
@@ -158,11 +202,13 @@ integer $n\geq0$,
 \end{theorem}
 
 \begin{proof}
-This is the main theorem of the load-bearing companion Parts~I--II,
+This is the main theorem of the journal-facing Parts~I--II manuscript,
 \cite[Theorem~2.2]{AdjointTwoMinus}.  In the notation of that theorem its
-functional $Q_3^G(n)$ is exactly $I^G_{1,n}$ above.  The companion is generated
-from \path{paper.tex}; its Part~I classification, Part~II expanded proof, and
-clean replay are submitted and archived with the present Part~III.
+functional $Q_3^G(n)$ is exactly $I^G_{1,n}$ above.  That manuscript is
+generated as \path{paper.pdf} from \path{paper.tex} and is submitted with the
+present Part~III.  The formal detailed supplement built from the same source
+supplies the numbered correction-prefix proofs used by the compact
+manuscript.
 \end{proof}
 
 \begin{proposition}[The all-positive-definite analogue is false]
@@ -1319,7 +1365,7 @@ $I^G_{a,n}\geq0$ holds in each of the following ranges:
  G&\text{stable-rank condition}\\
  \hline
  B_\ell=\mathrm{SO}(2\ell+1)&L\leq2\ell+1,\\
- C_\ell=\mathrm{Sp}(\ell)&L\leq2\ell+1,\\
+ C_\ell=\mathrm{Sp}(2\ell)&L\leq2\ell+1,\\
  D_\ell=\mathrm{SO}(2\ell)&L\leq\ell-1.
  \end{array}
 \]
@@ -1791,10 +1837,18 @@ Let
 \[
  d_T=\begin{cases}2b+1,&G=B_b,\\2b,&G=C_b,D_b,
  \end{cases}
- \qquad D_d(v)=1-\mathfrak b_d(v),
+ \qquad
+ \mathfrak b_d(v)=
+ \frac{e^{v^2/(d+1)}}{1-v^2/(d+1)^2}\frac{v^d}{d!},
 \]
-with $\mathfrak a_d,\mathfrak b_d$ as in the proof of
-Lemma~\ref{lem:square-trace-moment-mgf}.  If
+and put
+\[
+ \mathfrak a_d(v)=
+ \frac{e^{v^2/(d+1)}v^d}
+ {d!(1-v/(d+1))\sqrt{1-v^2/(d+1)^2}},
+ \qquad D_d(v)=1-\mathfrak b_d(v).
+\]
+If
 $0<v<d_T+1$ and $\mathfrak a_{d_T}(v)<1$, then
 \begin{equation}
 \label{eq:finite-trace-mgf-sandwich}
@@ -1825,22 +1879,71 @@ Whenever the corresponding two trace-norm conditions hold,
 \end{lemma}
 
 \begin{proof}
-For the defining trace, Courteaut--Johansson--Lambert's Fredholm formula
-\cite[Proposition~3.3 and the paragraph following it]{CJL2022} is written for
-the random eigenvalues only.  In type $B$, their random trace has mean $-1$;
-the fixed $+1$ eigenvalue cancels that shift exactly.  Equivalently, its
-factor $e^{\mp v}$ cancels the restoration factor $e^{\pm v}$ in the two
-MGFs.  In types $C,D$ there is no deterministic shift.  Thus the full
-defining character is centered in every family, as character orthogonality
-also requires.  Their trace-norm and
-Plemelj estimates in equations~(3.4)--(3.6) bound the remaining positive
-determinant between $D_{d_T}(v)$ and its reciprocal.  The estimates depend
-only on $|v|$, giving both signs in
-\eqref{eq:finite-trace-mgf-sandwich}.  The power-two decompositions use the
-component dimensions in Lemma~\ref{lem:square-trace-moment-mgf}.
-Multiplying their independent bounds gives
-\eqref{eq:finite-square-mgf-upper}.  The type-$B$ clause is the unitary
-strong Szeg\H{o} bound used there.
+We spell out the Fredholm step because every finite-middle trace estimate
+uses it.  Courteaut--Johansson--Lambert
+\cite[Proposition~3.3]{CJL2022} state their Fredholm identity for every
+complex \(\xi\), not only for real characteristic-function parameters.
+Substitution of \(\xi=\mp iv\) therefore writes the MGF of the
+random-eigenvalue trace as a Gaussian exponential times
+\[
+ \det(I+QK_{\pm v}Q).
+\]
+Here \(Q\) deletes the finite prefix determined by the Jacobi ensemble and
+\(K_{\pm v}\) is the corresponding Bessel Hankel operator.  In the proof of
+\cite[Lemma~3.6, equation~(3.4)]{CJL2022}, the row-norm inequality followed
+by the Bessel bound and the two geometric sums gives, before the source
+imposes its simpler sufficient restriction \(\lvert z\rvert<2e^{-5/4}n\),
+the explicit estimate
+\[
+ \lVert QK_{\pm v}Q\rVert_1
+ \leq \mathfrak a_{d_T}(v).
+\]
+Thus the hypothesis \(\mathfrak a_{d_T}(v)<1\) justifies the absolutely
+convergent Plemelj series
+\[
+ \log\det(I+QK_{\pm v}Q)
+ =\sum_{j\geq1}\frac{(-1)^{j+1}}j
+   \operatorname{tr}(QK_{\pm v}Q)^j.
+\]
+The source's total matrix size \(d\) is the component dimension denoted by
+\(d_T\) here, and its projection \(Q_n\) starts at the corresponding Jacobi
+index.  The argument of
+\cite[Lemma~3.7, equation~(3.6)]{CJL2022}, again before replacing the
+explicit expression by a simpler sufficient range, gives
+\[
+ \sum_{j\geq1}\frac1j
+  \left|\operatorname{tr}(QK_{\pm v}Q)^j\right|
+ \leq-\log\bigl(1-\mathfrak b_{d_T}(v)\bigr).
+\]
+Notice that \(0\leq\mathfrak b_d(v)\leq\mathfrak a_d(v)<1\): after writing
+\(x=v/(d+1)\), the ratio \(\mathfrak a_d/\mathfrak b_d\) is
+\(\sqrt{(1+x)/(1-x)}\).  Exponentiating the last absolute bound therefore
+gives
+\[
+ D_{d_T}(v)
+ \leq\det(I+QK_{\pm v}Q)
+ \leq D_{d_T}(v)^{-1}.
+\]
+The determinant is positive because the Gaussian prefactor is positive and
+the left side of the Fredholm identity is an MGF.  This proves the determinant
+sandwich directly from the cited estimates.
+
+It remains to account for the deterministic eigenvalues.  The source formula
+is written for the random eigenvalues only.  In type $B$, their random trace
+has mean $-1$; the fixed $+1$ eigenvalue cancels that shift exactly.  Equivalently,
+the source factor \(e^{\mp v}\) cancels the restoration factor \(e^{\pm v}\)
+in the two MGFs.  In types~$C,D$ there is no deterministic shift.  The full
+defining character is therefore centered in every family, in agreement with
+character orthogonality, and the Gaussian prefactor is \(e^{v^2/2}\).  This
+proves~\eqref{eq:finite-trace-mgf-sandwich} for both signs.
+
+For the square trace, Rains' power-two decompositions cited in
+Lemma~\ref{lem:square-trace-moment-mgf} give either the type-$B$ unitary trace
+or two independent orthogonal components of dimensions \(d_0,d_1\) displayed
+in the statement.  Apply the preceding upper determinant bound to each
+orthogonal component and multiply, using independence.  This gives the
+\(C,D\) clause of~\eqref{eq:finite-square-mgf-upper}; the type-$B$ clause is
+the unitary strong Szeg\H{o} bound already proved in that lemma.
 \end{proof}
 
 \begin{lemma}[Exact defining-trace determinant formulas]
@@ -2766,6 +2869,30 @@ $\mathrm{SO}(3)$ value $-8/279$.
 
 \section*{Code and data availability}
 
+\subsection*{Certificate semantics and trusted base}
+
+The computer-assisted results have three separate layers.  First, each
+numbered proposition states the mathematical input formula, the finite
+quantified domain, and the sign or interval comparison to be decided.  Second,
+the named verifier reconstructs the inputs and evaluates that comparison; a
+stored output value is not accepted as an input merely because it appears in a
+transcript.  Third, the transcript records the source identities, scope
+counts, arithmetic outputs, terminal marker, and process status of one
+execution.  A transcript authenticates a completed run but is not, by itself,
+the proof of the formula implemented by the verifier.
+
+The trusted computational base is consequently explicit: a conforming C++
+implementation, GMP integer and rational arithmetic, MPFR directed rounding,
+and the short orchestration and manifest parsers named below.  No claim is
+made that these programs are formally verified.  The exact stages avoid
+probabilistic reconstruction: when prime fields and CRT are used, the proved
+modulus bound makes the reconstructed integer unique.  The interval stages
+accept a sign only when the outward-rounded lower endpoint is positive.
+Independent recurrence checks, alternative low-degree implementations,
+sanitizer runs, and mutation tests are redundancy controls; their stated
+cutoffs are not represented as full second proofs of computations beyond
+those cutoffs.
+
 The audited computation package for Parts~I--III is rooted at the immutable
 publication import commit
 \begin{center}
@@ -2775,36 +2902,72 @@ Its full identifier is
 \begin{center}
 \texttt{91363c3cebb37a44349f613ab0a5aa6dcd412af3}.
 \end{center}
-The tag \texttt{v1.0.0} identifies the publication release containing this
-binding; the immutable import commit controls the computation snapshot.
+The immutable import commit controls the execution snapshot that produced the
+expensive arithmetic transcripts.  The historical tag \texttt{v1.0.0}
+contains that import binding, but it is not asserted to contain later
+manuscript revisions.  For the present submission, the canonical source bytes
+are the files in the submitted archive whose hashes are listed in
+\path{full_q3_source_manifest.sha256}.  A public release of the final
+submission must reproduce that manifest exactly.
 
-The formal submission has two inseparable mathematical components:
-\path{paper_full.pdf}, containing the load-bearing Parts~I--II, and
-\path{full_q3_extension.pdf}, containing the present Part~III.  The archived
+The formal submission has three numbered parts and a formal detailed
+supplement, supplied as three inseparable manuscript files:
+\path{paper.pdf}, containing the compact Parts~I--II,
+\path{paper_full.pdf}, containing their load-bearing correction-prefix
+derivations, and \path{full_q3_extension.pdf}, containing the present
+Part~III.  The archived
 computation-bearing sources are \path{paper.tex}, \path{paper_full.tex}, and
-\path{full_q3_extension.tex} in that commit.  The current publication sources
-differ only by the authorship, related-work, scope, availability, certificate-
-map, and date edits authenticated by
-\path{verify_full_q3_related_work_rebind.py}; reversing those fixed edits
-recovers the archived accepted hashes.  Part~III is not offered as a
+\path{full_q3_extension.tex} in that commit.  The immutable import commit
+authenticates the arithmetic snapshot.  The current publication sources are
+bound directly by \path{full_q3_source_manifest.sha256} and are the inputs
+rebuilt by the commands below.  The historical aggregate transcript predates
+publication-only prose and metadata revisions; the fail-closed
+\path{verify_full_q3_related_work_rebind.py} records that boundary and rejects
+any change to an arithmetic-bearing source.  That rebind is a provenance test,
+not a step required to construct the submitted source: the final files are
+bound directly by the final-source manifest.  A final release archive must
+preserve both the immutable execution snapshot and those exact final-source
+bytes.
+Part~III is not offered as a
 standalone proof: its Theorem~\ref{thm:two-minus-import} imports Theorem~2.2
 of Parts~I--II, which is included in the submission and archive.
+
+The formal detailed supplement \path{paper_full.pdf} is rebuilt from the same
+source.  Its numbered correction-prefix derivations are incoming proof nodes
+for the residual $B/C$ closure; diagnostic and superseded material printed
+there remains outside the dependency spine.  The compact contract,
+accepted-certificate boundary, and family closures appear in
+\path{paper.pdf}.
 
 The exact replay contract, software requirements, host/thread guidance, and
 terminal success markers are documented in \path{REPLAY.md} and
 \path{FULL_Q3_DISTRIBUTED_REPLAY.md}.  The principal requirements are a
 C++20 compiler with OpenMP, GMP, MPFR, Python~3, GNU Make, and a \LaTeX{}
-installation.  From the repository root, the two aggregate commands are
+installation.  From the repository root, the three aggregate commands are
 \begin{center}
+\texttt{python3 ginibre\_q3/run\_publication\_short\_audits.py}
+
 \texttt{make -C ginibre\_q3 clean-room-replay}
 
 \texttt{make -C ginibre\_q3 full-q3-extension}.
 \end{center}
+These commands implement three reproducibility tiers.  The first command runs
+the document, dependency, interface, scope, moment-formula, cone-promotion,
+$SO(3)$, and frontier-formula checks as one fail-closed short suite.  The
+Part~III command regenerates its exact and
+directed-rounding arithmetic; the archived two-worker run took 44 minutes 55
+seconds.  The separate Parts~I--II clean-room command is the full
+certificate-regeneration tier: its partitioned stages have two- or eight-hour
+guards and require the machine-C resource envelope documented in
+\path{REPLAY.md}.  Part~III does not silently substitute its faster audit for
+that imported computation.
+
 SHA-256 manifests authenticate every load-bearing source, accepted
 transcript, generated ledger, and cited source artifact.  Compiler and
-resource checks are integrity tests; the mathematical certificate claims are
-the exact integer/rational or directed-rounding comparisons described in the
-numbered results above.
+resource checks and author self-audits are integrity or redundancy tests; they
+are not independent peer review and do not by themselves decide a sign.  The
+mathematical certificate claims are the exact integer/rational or directed-rounding
+comparisons described in the numbered results above.
 
 Table~\ref{tab:certificate-map} gives the compact trusted-computation map.
 Here ``exact'' means integer or rational arithmetic, including prime-field
@@ -2813,7 +2976,7 @@ means outward-rounded 384-bit MPFR interval arithmetic.
 \begin{table}[ht]
 \centering
 \scriptsize
-\begin{tabular}{@{}p{.17\textwidth}p{.19\textwidth}p{.14\textwidth}p{.36\textwidth}@{}}
+\begin{tabular}{@{}L{.17\textwidth}L{.19\textwidth}L{.14\textwidth}L{.36\textwidth}@{}}
 \hline
 Result block & Program/transcript identifier & Arithmetic & Verified scope \\
 \hline
@@ -2868,8 +3031,8 @@ transcripts:
 \bibitem{AdjointTwoMinus}
 L.~P. Polzer,
 The two-minus adjoint-character case of Ginibre's $Q_3$ condition,
-Parts I--II: classification, exact certificates, and expanded proof
-companion, companion manuscript and source archive, 2026,
+Parts I--II: classification and exact certificates, journal manuscript with
+formal detailed supplement, 2026,
 \url{https://github.com/skypher/ginibre-q3-adjoint/tree/91363c3cebb37a44349f613ab0a5aa6dcd412af3/ginibre_q3}.
 
 \bibitem{DiaconisShahshahani1994}

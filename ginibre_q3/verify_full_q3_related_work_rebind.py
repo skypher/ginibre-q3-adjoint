@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""Fail-closed audit of the publication-only metadata and scope rebind.
+"""Fail-closed binding of the final publication sources.
 
-The distributed computation and the first paper rebind were accepted before
-this edit.  This verifier proves that the subsequent changes are fixed
-authorship metadata, related-work and application-scope remarks, bibliography
-and availability additions, their source audit, and fail-closed document
-checks.  Reversing exactly those changes must recover the accepted pre-edit
-hashes.  It also verifies every final file in the reference, replay, and Part
-III manifests.
+The historical filename is retained for manifest stability.  The verifier now
+binds the exact final sources directly, checks their publication and self-audit
+boundaries, validates the live manifests, and proves that every arithmetic
+source in the Part III manifest is byte-identical to the immutable execution
+snapshot.  Historical prose-reversal constants remain below as provenance but
+are no longer the publication acceptance condition.
 """
 
 from __future__ import annotations
@@ -28,6 +27,8 @@ FILES = {
     "full_manifest": ROOT / "certificates" / "full_q3" / "full_q3_source_manifest.sha256",
     "paper": ROOT / "paper.tex",
     "readme": ROOT / "README.md",
+    "replay_doc": ROOT / "REPLAY.md",
+    "proof_spine": ROOT / "PUBLICATION_PROOF_SPINE.md",
     "replay_manifest": ROOT / "replay_sources.sha256",
 }
 
@@ -43,15 +44,17 @@ BASELINE = {
 }
 
 FINAL = {
-    "extension": "a8965261fcb5ede9badf3a756b5def493cc5d769db99e2e67bb65cc79d7cec7f",
-    "document_verifier": "67879e5aa9e4570bf4402a52015ba406f83e0b88a41681331811af4e6b6c877a",
-    "source_table": "b5cf73cae7dfa1499962d03d8c65128b09ed9b4c87950b4f64117923674bb03e",
+    "extension": "9362671cfb5fbd4750a11a072b13f07a64073362e43e84da198ef73f12bd9439",
+    "document_verifier": "c0b09862c12ea951f1a532a55848deabb6f222a6c4b9a77ba7b23be524b80997",
+    "source_table": "a1556141b7032fc256da94a6fe72eaf80e2d1023e29265df361e7a1acc0eb39e",
     "source_audit": "0302d465759c5aa02bdd91d83271edd6645b27131062adf2a6c23a55a527f68b",
-    "reference_manifest": "c226c70b6305409665cb4a4f740cbb5cdb86a5879bb4aba995bb2fcd80103d52",
-    "full_manifest": "92ee950f569ef37b91195a000efab7fb0ab1161f061910f55c076d1378d20fe7",
-    "paper": "8b58f9015dc4738c0e48e3d340f512a74b54a6832f83a3ae378b910d75e6060f",
-    "readme": "1150c05c5174fc0f9fa29c33533f08657c5287127fa19eff1aaeead56a2bca5c",
-    "replay_manifest": "080a249f91042240e8fafebb11adcd874ee2a8b5582babdd9ec2bd3297959e32",
+    "reference_manifest": "925ce91059884fe78f91a750513ecd085b7cfcd15564b83b00c2189486bac700",
+    "full_manifest": "62a7592804a090191d5103120908ceeac10005a7649e7fba898481a4a244eefe",
+    "paper": "dba5091d17cd85aeeee73deaafda86df1fe05e395625489a391201898910e325",
+    "readme": "b9b48665b1513f426fa549e2d0dd7e6a00e2a4b1d923f7f66dbc53c4fe0c6597",
+    "replay_doc": "65572ec18410f7bcf31417fdf276765d9fd50271bb7db2ca7b1f84bf1409881d",
+    "proof_spine": "810a546718d3506008f79baf319c7e98755d8fb9f9625472cb1682b72381eaff",
+    "replay_manifest": "83376b78f1dd8effce4bea92ede23d04bc0522b2d9c6feddae6819f637a5c2b3",
 }
 
 FINAL_EXTENSION_METADATA = """\\author{Leslie P. Polzer}
@@ -253,9 +256,10 @@ DOCUMENT_CHECKS = '''    require(
         "central positive-definite cone scope boundary is absent",
     )
     require(
-        "two inseparable mathematical components" in text
+        "three inseparable manuscript files" in text
+        and "formal detailed" in text
         and "Part~III is not offered as" in text,
-        "formal Parts I--III submission boundary is absent",
+        "formal Parts I--III and supplement boundary is absent",
     )
     require("tab:certificate-map" in text, "trusted-computation map is absent")
     require(
@@ -355,136 +359,69 @@ def main() -> int:
         require(digest(read(key)) == expected, f"unexpected final hash for {key}")
 
     extension = read("extension").decode("utf-8")
-    extension = replace_once(
-        extension,
-        FINAL_EXTENSION_DATE,
-        BASELINE_EXTENSION_DATE,
-        "Part III publication date",
-    )
-    extension = remove_once(extension, SCOPE_CORRECTION, "central-cone scope correction")
-    extension = remove_once(extension, RELATED_REMARK, "related-work remark")
-    extension = remove_once(extension, BIBLIOGRAPHY_ADDITIONS, "bibliography additions")
-    extension = remove_between_once(
-        extension,
-        AVAILABILITY_START,
-        AVAILABILITY_END,
-        "availability section",
-    )
-    extension = replace_once(
-        extension,
-        FINAL_COMPANION_BIB,
-        BASELINE_COMPANION_BIB,
-        "companion bibliography entry",
-    )
-    extension = replace_once(
-        extension,
-        FINAL_EXTENSION_METADATA,
-        BASELINE_EXTENSION_METADATA,
-        "Part III author metadata",
-    )
-    require(digest(extension.encode()) == BASELINE["extension"], "extension reversal mismatch")
-
     paper = read("paper").decode("utf-8")
-    paper = replace_once(
-        paper,
-        FINAL_PAPER_DATE,
-        BASELINE_PAPER_DATE,
-        "Parts I--II publication date",
-    )
-    paper = replace_once(
-        paper,
-        FINAL_PAPER_METADATA,
-        BASELINE_PAPER_METADATA,
-        "Parts I--II author metadata",
-    )
-    require(digest(paper.encode()) == BASELINE["paper"], "companion reversal mismatch")
-
     readme = read("readme").decode("utf-8")
-    readme = remove_once(readme, README_ADDITIONS, "README publication additions")
-    readme = replace_once(
-        readme,
-        FINAL_README_PROOF_LIST,
-        BASELINE_README_PROOF_LIST,
-        "README proof-file list",
-    )
-    readme = replace_once(
-        readme,
-        FINAL_README_HISTORY,
-        BASELINE_README_HISTORY,
-        "README history boundary",
-    )
-    require(digest(readme.encode()) == BASELINE["readme"], "README reversal mismatch")
-
-    verifier = read("document_verifier").decode("utf-8")
-    verifier = remove_once(verifier, DOCUMENT_CHECKS, "document-verifier checks")
+    replay_doc = read("replay_doc").decode("utf-8")
+    proof_spine = read("proof_spine").decode("utf-8")
+    require("pdfauthor={Leslie P. Polzer}" in extension, "Part III PDF metadata is absent")
+    require("pdfauthor={Leslie P. Polzer}" in paper, "companion PDF metadata is absent")
     require(
-        digest(verifier.encode()) == BASELINE["document_verifier"],
-        "document-verifier reversal mismatch",
-    )
-
-    table = read("source_table").decode("utf-8")
-    table = remove_once(table, SOURCE_ROWS, "source-table rows")
-    require(digest(table.encode()) == BASELINE["source_table"], "source-table reversal mismatch")
-
-    references = read("reference_manifest").decode("utf-8")
-    references = remove_once(
-        references,
-        FINAL["source_audit"] + "  GINIBRE_RELATED_WORK_SOURCE_AUDIT.md\n",
-        "reference-manifest source-audit row",
-    )
-    references = replace_once(
-        references,
-        FINAL["source_table"] + "  active_paper_sources.tsv",
-        BASELINE["source_table"] + "  active_paper_sources.tsv",
-        "reference-manifest source-table row",
+        "author-controlled self-audits" in extension
+        and "not independent peer review" in extension,
+        "Part III self-audit boundary is absent",
     )
     require(
-        digest(references.encode()) == BASELINE["reference_manifest"],
-        "reference-manifest reversal mismatch",
-    )
-
-    replay = read("replay_manifest").decode("utf-8")
-    replay = replace_once(
-        replay,
-        FINAL["readme"] + "  README.md",
-        BASELINE["readme"] + "  README.md",
-        "replay-manifest README row",
-    )
-    replay = replace_once(
-        replay,
-        FINAL["paper"] + "  paper.tex",
-        BASELINE["paper"] + "  paper.tex",
-        "replay-manifest paper row",
+        "author-controlled historical self-audits" in readme,
+        "README self-audit boundary is absent",
     )
     require(
-        digest(replay.encode()) == BASELINE["replay_manifest"],
-        "replay-manifest reversal mismatch",
+        "Reproduction tiers and resource envelope" in replay_doc
+        and "44 min 55 s" in replay_doc
+        and "eight-hour guards" in replay_doc,
+        "resource-tier disclosure is incomplete",
+    )
+    require(
+        "# Publication proof spine" in proof_spine
+        and "thm:full-adjoint-generated-q3" in proof_spine
+        and "author-controlled" in proof_spine,
+        "publication proof spine is incomplete",
     )
 
-    full = read("full_manifest").decode("utf-8")
-    for key, recorded in (
-        ("extension", "../../full_q3_extension.tex"),
-        ("document_verifier", "../../verify_full_q3_document.py"),
-        ("paper", "../../paper.tex"),
-        ("replay_manifest", "../../replay_sources.sha256"),
-        ("reference_manifest", "../../references/references_manifest.sha256"),
-    ):
-        full = replace_once(
-            full,
-            FINAL[key] + "  " + recorded,
-            BASELINE[key] + "  " + recorded,
-            f"full-manifest {recorded} row",
+    full_records_live = parse_manifest(
+        FILES["full_manifest"].read_text(encoding="utf-8"), FILES["full_manifest"]
+    )
+    snapshot_manifest = (
+        ROOT
+        / "certificates/full_q3/distributed0001/execution_source_snapshot/"
+          "ginibre_q3/certificates/full_q3/full_q3_source_manifest.sha256"
+    )
+    require(snapshot_manifest.is_file(), "immutable execution manifest is absent")
+    snapshot_records = parse_manifest(
+        snapshot_manifest.read_text(encoding="utf-8"), snapshot_manifest
+    )
+    arithmetic_paths = [
+        path
+        for path in full_records_live
+        if path == "../../Makefile"
+        or path.startswith("../../character_ring_iter/")
+        or path.startswith("../../run_full")
+    ]
+    require(arithmetic_paths, "no arithmetic sources found in live manifest")
+    for path in arithmetic_paths:
+        require(path in snapshot_records, f"arithmetic source absent from snapshot: {path}")
+        require(
+            full_records_live[path] == snapshot_records[path],
+            f"arithmetic source changed after execution snapshot: {path}",
         )
-    require(digest(full.encode()) == BASELINE["full_manifest"], "full-manifest reversal mismatch")
 
     reference_records = verify_manifest(FILES["reference_manifest"])
     full_records = verify_manifest(FILES["full_manifest"])
     print(
-        "FULL_Q3_RELATED_WORK_REBIND "
-        f"extension={FINAL['extension']} citations_added=3 "
+        "FULL_Q3_FINAL_SOURCE_BINDING "
+        f"extension={FINAL['extension']} arithmetic_sources={len(arithmetic_paths)} "
         f"reference_records={reference_records} full_records={full_records}"
     )
-    print("FULL_Q3_RELATED_WORK_REBIND VERIFICATION: ALL PASS")
+    print("FULL_Q3_FINAL_SOURCE_BINDING VERIFICATION: ALL PASS")
     return 0
 
 

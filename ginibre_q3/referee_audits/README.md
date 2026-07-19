@@ -1,7 +1,11 @@
-# Ginibre Q3 supplementary referee audits
+# Ginibre Q3 author self-audits
 
-These files are referee-side controls.  They do not alter any replay-pinned
-source or replace the clean 71-task fleet collection gate.
+These files were created and are maintained inside the author's repository.
+They are self-audits and algorithmic redundancy controls, not independent
+peer review.  The historical directory name is retained only to preserve
+paths recorded in manifests and transcripts.  These files do not alter any
+replay-pinned source, replace the clean 71-task fleet collection gate, or
+serve as premises of a theorem.
 
 `GINIBRE_1970_SCOPE_SOURCE_AUDIT.md` records the direct primary-source basis
 for the phrase “full Q3”: all finite-family/sign quantifiers and Proposition
@@ -37,7 +41,7 @@ python3 \
   ginibre_q3/referee_audits/verify_full_q3_moment_formula_independent.py
 ```
 
-## Independent classification coverage
+## Separately implemented classification coverage self-audit
 
 `verify_full_q3_classification_coverage_independent.py` parses the Part III
 theorem statements and the independent 70-row low-classical ledger.  It

@@ -2,7 +2,7 @@
 """Independent exact audit of the SO(3) all-positive-definite obstruction.
 
 The Part III scope boundary rests on a concrete ``--++`` counterexample.  This
-referee-side verifier reconstructs the invariant-tensor projection for the
+author self-audit reconstructs the invariant-tensor projection for the
 standard SO(3) module, derives its second and fourth Haar moments, and expands
 all 16 signed-product terms with exact rational arithmetic.  It also checks
 that the manuscript supplies the matrix-coefficient positive-definiteness

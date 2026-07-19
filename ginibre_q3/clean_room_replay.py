@@ -451,6 +451,7 @@ def audit_bc_caller_ranges(root: Path) -> tuple[int, int, int]:
         )
     )
     b_high = "prop:bc-b-twentyninth-high-nonboundary-lower-correction"
+    c_overlap = "prop:bc-c-twentyninth-nonboundary-lower-correction"
     if len(b_labels) != 29 or len(c_labels) != 30:
         raise ReplayFailure(
             "B/C correction proposition count changed: "
@@ -474,6 +475,29 @@ def audit_bc_caller_ranges(root: Path) -> tuple[int, int, int]:
             f"bad high-B twenty-ninth correction domain/offset: "
             f"domains={domains(b_high)}, offset={correction_offset(b_high)}"
         )
+    if correction_offset(c_overlap) != 29:
+        raise ReplayFailure("bad C offset-29 overlap result")
+
+    active_contract = "prop:bc-active-correction-prefix-contract"
+    active_statement = require_statement(active_contract)
+    if domains(active_contract) != [(14, 123), (20, 217)]:
+        raise ReplayFailure(
+            f"bad active B/C contract domains: {domains(active_contract)}"
+        )
+    if active_statement.count(r"0\le r\le28") != 2:
+        raise ReplayFailure("active B/C contract does not state both offset-0..28 ranges")
+    active_b_labels = set(b_labels)
+    active_c_labels = {
+        label for label in c_labels if correction_offset(label) <= 28
+    }
+    for label in sorted(active_b_labels | active_c_labels):
+        if active_statement.count(label) != 1:
+            raise ReplayFailure(
+                f"active B/C contract table must contain {label} exactly once"
+            )
+    for label in (b_high, c_overlap):
+        if label in active_statement:
+            raise ReplayFailure(f"non-load-bearing offset-29 result entered active contract: {label}")
 
     residual = "prop:post29-bc-residual-closure"
     if domains(residual) != [(14, 123), (20, 217)]:
@@ -541,7 +565,7 @@ def audit_bc_caller_ranges(root: Path) -> tuple[int, int, int]:
                 f"B/C GMP arithmetic generator range changed: missing {declaration}"
             )
 
-    return len(b_labels) + 1 + len(c_labels), newly_closed, 402
+    return len(active_b_labels) + len(active_c_labels), newly_closed, 402
 
 
 def audit_accepted_replay_logs(root: Path) -> int:
@@ -1893,11 +1917,11 @@ def build_papers(runner: Runner, root: Path) -> None:
     full_pages = build_latex_document(runner, root, "paper_full")
     if full_pages <= main_pages:
         raise ReplayFailure(
-            f"expanded proof companion is incomplete: main={main_pages}, full={full_pages}"
+            f"formal detailed supplement is incomplete: main={main_pages}, full={full_pages}"
         )
     print(
         f"[replay] document split: PASS (main={main_pages} pages, "
-        f"expanded={full_pages} pages)",
+        f"supplement={full_pages} pages)",
         flush=True,
     )
 
@@ -1951,7 +1975,7 @@ def main() -> int:
         )
         bc_corrections, bc_closed_odds, bc_arithmetic_rows = audit_bc_caller_ranges(isolated)
         print(
-            f"[replay] B/C caller-range closure: PASS ({bc_corrections} correction "
+            f"[replay] B/C caller-range closure: PASS ({bc_corrections} active correction "
             f"propositions, {bc_closed_odds} formerly uncovered odd targets, "
             f"{bc_arithmetic_rows} exact-arithmetic rows)",
             flush=True,

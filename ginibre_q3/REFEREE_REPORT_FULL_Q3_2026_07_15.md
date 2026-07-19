@@ -1,4 +1,10 @@
-# Strict referee report: full adjoint-generated Ginibre Q3
+# Historical author self-audit: full adjoint-generated Ginibre Q3
+
+> **Status.** This document was created and maintained in the author's source
+> repository. It is a historical self-assessment, not an independent referee
+> report and not evidence of editorial acceptance. The filename is retained
+> only for provenance. Mathematical claims must be checked against the
+> numbered proofs and authenticated computations in the submission.
 
 Date: 2026-07-15
 

@@ -10,6 +10,8 @@ from pathlib import Path
 
 
 SOURCE = Path(__file__).with_name("full_q3_extension.tex")
+COMPACT_SOURCE = SOURCE.with_name("paper.tex")
+SUPPLEMENT_WRAPPER = SOURCE.with_name("paper_full.tex")
 RESULT_ENVS = ("theorem", "proposition", "lemma", "corollary")
 
 
@@ -20,6 +22,34 @@ def require(condition: bool, message: str) -> None:
 
 def main() -> int:
     text = SOURCE.read_text(encoding="utf-8")
+    compact_text = COMPACT_SOURCE.read_text(encoding="utf-8")
+    supplement_wrapper = SUPPLEMENT_WRAPPER.read_text(encoding="utf-8")
+    require(
+        "formal detailed supplement" in compact_text
+        and "proves the exact active results" in compact_text,
+        "compact Parts I--II do not identify the load-bearing supplement",
+    )
+    require(
+        r"\label{prop:bc-active-correction-prefix-contract}" in compact_text
+        and compact_text.count(r"0\le r\le28") >= 2
+        and "only offsets $0\\le r\\le27$" in compact_text,
+        "compact Parts I--II do not state the active B/C contract and consumed offset",
+    )
+    require(
+        "$B_1=C_1=A_1$" in compact_text
+        and "$D_3=A_3$" in compact_text
+        and "$D_2$ is not simple" in compact_text,
+        "compact Parts I--II omit the low-rank classification conventions",
+    )
+    require(
+        r"\section{Conclusion and limitations}" in compact_text,
+        "compact Parts I--II omit the conclusion and scope limitations",
+    )
+    require(
+        "Formal detailed supplement" in supplement_wrapper
+        and r"\def\GinibreFullProof{1}" in supplement_wrapper,
+        "formal detailed supplement wrapper is absent or inactive",
+    )
 
     result_pattern = re.compile(
         r"\\begin\{(" + "|".join(RESULT_ENVS) + r")\}(.*?)\\end\{\1\}",
@@ -168,9 +198,10 @@ def main() -> int:
         "central positive-definite cone scope boundary is absent",
     )
     require(
-        "two inseparable mathematical components" in text
+        "three inseparable manuscript files" in text
+        and "formal detailed" in text
         and "Part~III is not offered as" in text,
-        "formal Parts I--III submission boundary is absent",
+        "formal Parts I--III and supplement boundary is absent",
     )
     require("tab:certificate-map" in text, "trusted-computation map is absent")
     require(
@@ -195,6 +226,37 @@ def main() -> int:
         "the Ginibre monotonicity consequence established there is abelian" in text,
         "Chevyrev--Garban gauge/Ginibre scope distinction is absent",
     )
+    require(
+        "author-controlled self-audits" in text
+        and "not independent peer review" in text,
+        "author self-audit boundary is absent",
+    )
+    require(
+        "three reproducibility tiers" in text
+        and "44 minutes 55" in text
+        and "two- or eight-hour" in text,
+        "reproduction-tier resource disclosure is absent",
+    )
+    require(
+        "C_\\ell=\\mathrm{Sp}(2\\ell)" in text,
+        "compact symplectic-group notation is ambiguous",
+    )
+    proof_spine = SOURCE.with_name("PUBLICATION_PROOF_SPINE.md")
+    require(proof_spine.is_file(), "publication proof-spine guide is absent")
+    proof_spine_text = proof_spine.read_text(encoding="utf-8")
+    require(
+        all(
+            marker in proof_spine_text
+            for marker in (
+                "thm:main",
+                "thm:full-cone-reduction",
+                "thm:bcd-full-hierarchy",
+                "thm:full-adjoint-generated-q3",
+                "author-controlled",
+            )
+        ),
+        "publication proof-spine guide is incomplete",
+    )
 
     c1, c2, c3 = (Fraction(7, 31), Fraction(19, 31), Fraction(19, 31))
     fourth_moment = Fraction(2, 15) * (c1 * c1 + c2 * c2 + c3 * c3)
@@ -206,7 +268,7 @@ def main() -> int:
     require(signed_value == Fraction(-8, 279), "SO(3) signed obstruction mismatch")
 
     print(
-        "FULL_Q3_DOCUMENT results=51 proofs=51 "
+        "FULL_Q3_DOCUMENT results=51 proofs=51 proof_spine=PASS "
         f"labels={len(labels)} references={len(references)} "
         f"citations={len(set(citation_keys))} source_mappings={len(external_keys)} "
         f"forward_dependencies={len(forward_dependencies)} "

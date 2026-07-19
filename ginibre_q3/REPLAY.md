@@ -25,6 +25,43 @@ and a zero process exit status.  Any missing input, hash mismatch, nonzero
 accepted replay, build failure, failed inequality, timeout, or unresolved
 LaTeX reference makes the command fail.
 
+Before an expensive replay, run the complete publication preflight:
+
+```text
+make -C ginibre_q3 publication-preflight
+```
+
+It runs the document and dependency checks, moment and cone formulas,
+classification coverage, the exact `SO(3)` obstruction, the cross-document
+two-minus interface, the independent frontier-formula audit, and every
+artifact manifest.  These are structural, formula, and byte-authentication
+checks; they do not re-evaluate the load-bearing arithmetic signs.
+
+## Verification levels and trusted base
+
+The archive deliberately separates three claims that had previously been
+described together.
+
+1. `publication-preflight` checks theorem/proof structure, the explicit
+   residual B/C caller contract, classification coverage, independent small
+   formulas, and manifest integrity.  It is suitable for an ordinary
+   workstation and completes without regenerating large moment tables.
+2. An accepted transcript authenticates one completed exact or
+   directed-rounding execution.  Its hash proves byte identity only; reading
+   a positive margin from that transcript is not an independent
+   recomputation of the margin.
+3. `clean-room-replay` rebuilds the active C++ programs and re-evaluates every
+   sign used by Parts I--II.  This is the arithmetic proof replay and is the
+   only supplied command that independently recomputes all such signs.
+
+The trusted software base for level 3 is the manifested C++ source, the C++
+compiler and standard library, GMP, MPFR, OpenMP, `pdflatex`, and the Python
+orchestration that checks stage status and coverage.  The submission does not
+claim formal verification of this software.  In particular, the short suite
+must never be described as a lightweight checker for all arithmetic
+certificates; it checks their scope and authentication, not their numerical
+contents.
+
 The exceptional-prefix checker is fail-closed: it rejects an input that ends
 before `m_5`, a gapped moment sequence, conflicting duplicate moment rows, a
 negative `Q_3`, or a negative Chain difference, and every such rejection has
@@ -97,6 +134,24 @@ building the PDF.
 This proves the full Q3 quantifiers only on the adjoint-generated cone.  The
 literal nonabelian analogue using every real positive-definite function is
 false, with exact `SO(3)` value `-8/279` in Part III.
+
+## Reproduction tiers and resource envelope
+
+The archive separates checking from regeneration so that a reader can see
+which conclusion each command supports.
+
+| Tier | Command or target | Purpose | Documented resource scale |
+|---|---|---|---|
+| Preflight | `make -C ginibre_q3 publication-preflight` | Parse theorem interfaces and the explicit B/C contract, check formulas and coverage, and authenticate manifests; does not recompute all arithmetic signs | Seconds to a few minutes; ordinary workstation |
+| Part III arithmetic | `make -C ginibre_q3 full-q3-extension` | Rebuild every Part III exact/MPFR verifier and the Part III PDF | Archived `optimus` run: 44 min 55 s with two low-priority bounded-Littlewood workers; more workers reduce the prime-field stage |
+| Parts I--II regeneration | `make -C ginibre_q3 clean-room-replay` | Rebuild every main-theorem-reachable two-minus certificate in an isolated tree | Machine C; generic two-hour guards and explicit eight-hour guards for the largest B/C stages; H21 is about 6,600 s on the documented host |
+
+The Part III target verifies the imported two-minus theorem's source and
+interface bindings but does not rerun its 200-stage arithmetic.  A complete
+reproduction therefore requires both aggregate commands.  The files under
+`referee_audits/` are author self-audits and redundancy checks, not independent
+peer review.  SHA-256 records provenance and byte identity; only the exact or
+outward-rounded comparisons specified in the numbered results decide signs.
 
 ## Isolation guarantee
 
@@ -174,11 +229,13 @@ The command recomputes:
 - the active 530-row B/C first-hit replay; the former type-D portion of
   the historical 796-row replay is replaced by the exact D25--D52 and
   A-free D53--D295 C++/GMP bridge verifiers above;
-- the quantified caller contracts for all 60 residual B/C correction
-  propositions; this domain-aware audit checks the rank ranges, correction
-  offsets, tilted-tail onsets, and all-row GMP scope, and enumerates the 2,834
-  high-rank odd targets that would be uncovered if the old rank-61 cap
-  reappeared;
+- the active quantified caller contract for the 58 family-wide residual B/C
+  correction propositions at offsets `0..28`; this domain-aware audit checks
+  their rank ranges, the exact table labels, tilted-tail onsets, and all-row
+  GMP scope.  It independently proves that main-theorem propagation consumes
+  at most offset `27` and enumerates the 2,834 high-rank odd targets that
+  would be uncovered if the old rank-61 cap reappeared.  The additional
+  offset-29 results are checked overlaps, not premises of the closure;
 - the degree-8 cutoff-80 B/C Chebyshev negative-tail bound, the 402-row
   directed-MPFR interval onsets, the exact half-stable bridge through
   `m=15447`, and all `3,904,626` exact power-loss inequalities;
@@ -196,10 +253,14 @@ The command recomputes:
   source/majorant/moment audit,
   every E8 rectangular bridge/tail row through the parallel GMP program, and
   the E8 `m_0..m_100` finite bridge;
-- three clean `pdflatex` passes for each of `paper.tex` and `paper_full.tex`,
-  and the absence of undefined references or citations in either document;
-- the two-part document contract: both PDFs are nonempty, Part II is strictly
-  larger than Part I, and neither retains undefined references or citations.
+- three clean `pdflatex` passes for the formal Parts I--II manuscript
+  `paper.tex` and its formal detailed supplement `paper_full.tex`, and the
+  absence of undefined references or citations in either document;
+- the formal document contract: both Parts I--II PDFs are nonempty, the
+  detailed supplement is strictly larger than the compact journal manuscript,
+  and neither retains undefined references or citations.  `paper.pdf`,
+  `paper_full.pdf`, and the separately audited Part III PDF are the three
+  formal submission components.
 
 The replay also validates all archived SHA-256 manifests and
 the accepted/diagnostic classification boundary before consuming any

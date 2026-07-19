@@ -2,7 +2,7 @@
 """Independent exact audit of the full-Q3 moment and EGF formulas.
 
 All finite hierarchy certificates consume the double moment sum in
-``lem:full-moment-form``.  This referee-side audit derives its coefficients by
+``lem:full-moment-form``.  This author self-audit derives its coefficients by
 formal polynomial multiplication, compares it against direct expectations for
 several rational finite laws, reconstructs the derivative generating-function
 coefficients independently, and checks the index/sign skeleton in every

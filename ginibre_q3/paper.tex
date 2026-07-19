@@ -33,6 +33,9 @@
   linkcolor=blue!50!black,
   citecolor=blue!50!black,
   urlcolor=blue!70!black,
+  pdfauthor={Leslie P. Polzer},
+  pdfsubject={Two-minus adjoint-character Ginibre Q3 inequality},
+  pdfkeywords={Ginibre Q3, compact Lie group, adjoint character, exact certificates},
 }
 
 \theoremstyle{plain}
@@ -70,6 +73,14 @@
     \texttt{\scriptsize #1}\\[-1pt]
     \texttt{\scriptsize #2}%
   \end{tabular}}
+\ifginibrefullproof
+  \newcommand{\contractref}[1]{\cref{#1}}
+\else
+  % The compact build prints the exact supplement label without creating an
+  % unresolved cross-reference to a result that is typeset only in the
+  % detailed build.
+  \newcommand{\contractref}[1]{\path{#1}}
+\fi
 
 % Part II contains exact integer ledgers whose widest rows are intentionally
 % much longer than prose width.  Ordinary displays retain their natural size;
@@ -90,9 +101,11 @@
 \fi
 
 \ifginibrefullproof
-\title[Adjoint two-minus Ginibre integral]{The two-minus adjoint-character case of Ginibre's $Q_3$ condition\\\large Part II: Expanded proof companion}
+\title[Adjoint two-minus Ginibre integral]{The two-minus adjoint-character case of Ginibre's $Q_3$ condition\\\large Formal detailed supplement to Parts I--II}
+\hypersetup{pdftitle={The two-minus adjoint-character case of Ginibre's Q3 condition, formal detailed supplement}}
 \else
-\title[Adjoint two-minus Ginibre integral]{The two-minus adjoint-character case of Ginibre's $Q_3$ condition\\\large Part I: Classification and exact certificates}
+\title[Adjoint two-minus Ginibre integral]{The two-minus adjoint-character case of Ginibre's $Q_3$ condition\\\large Parts I--II: Classification and exact certificates}
+\hypersetup{pdftitle={The two-minus adjoint-character case of Ginibre's Q3 condition, Parts I-II}}
 \fi
 
 \author{Leslie P. Polzer}
@@ -118,18 +131,16 @@ We prove $\Qthree^G(n)\ge0$ for every such $G$ and every integer $n\ge0$.
 This is the specialization of Ginibre's condition~(Q3) in which every
 function is $\chiad$, exactly two factors carry a minus sign, and the other
 $n$ factors carry plus signs; it is not a proof of the full cone-valued Q3
-condition.  The proof follows the classification of simple Lie algebras.
-Type~$A$ uses transition ratios for adjoint tensor multiplicities; types
-$B,C,D$ combine stable moments, exact finite bridges, and uniform trace-tail
-bounds; the exceptional types use exact character-ring prefixes and
-rectangular tail certificates.  The active post-bridge and exceptional
-moment sources are regenerated from their Cartan data by exact
-Racah--Speiser iteration through half the requested degree and character
-orthogonality.  A batched Pieri/CRT verifier regenerates every finite
-$B/C$ row-gated correction used through $m=29$ and checks all $870$ Chain
-inequalities; a separate exact-GMP interval replay supplies the remaining
-high-rank type-$D$ row-gated steps.  Remaining signs use exact
-integer/rational arithmetic or outward-rounded intervals.
+condition.  The moment formula turns the odd-exponent problem into inequalities
+for invariant multiplicities in tensor powers of the adjoint representation.
+The proof follows the classification: type~$A$ uses transition ratios;
+types~$B,C,D$ use stable moments, finite correction prefixes, and uniform
+trace tails; and the exceptional types use exact character-ring prefixes and
+rectangular analytic tails.  All finite decisions are made with exact
+integer or rational arithmetic or with outward-rounded intervals.  The
+computer-assisted steps are stated as finite mathematical contracts, with
+their active domains and proof dependencies separated from certificate
+generation and transcript authentication.
 \end{abstract}
 
 \maketitle
@@ -138,20 +149,44 @@ integer/rational arithmetic or outward-rounded intervals.
 \tableofcontents
 \fi
 
-\begin{remark}[Two-part submission]
+\begin{remark}[Companion architecture]
 \ifginibrefullproof
-This is Part~II of the submission.  It contains the complete $B/C$
-Pieri-correction development and the certificate and row ledgers used by
-Part~I.  It is a load-bearing part of the proof, not informal supplementary
-material.  Part~I is produced as \texttt{paper.pdf} from the same source.
+This formal detailed supplement expands the $B/C$ Pieri-correction
+development and prints the detailed certificate, transcript, and row
+ledgers.  It is a load-bearing component of the proof of the residual
+$B/C$ closure stated compactly in \texttt{paper.pdf}.  The journal-facing
+Parts~I--II remain consolidated in \texttt{paper.pdf}; the present supplement
+supplies the numbered proofs of the correction-prefix contracts consumed
+there.  The compact contract table identifies every active result by label
+and proves that offsets beyond $27$ are not consumed.  Conditional and
+superseded development routes printed later in this expanded source are
+archival material, not part of that indexed proof.  Part~III is the separate full signed-product extension
+\texttt{full\_q3\_extension.pdf}.
 \else
-This is Part~I of a two-part submission.  The complete $B/C$ Pieri-correction
-development used in the residual finite bridge, together with the detailed
-certificate and row ledgers, is Part~II, \texttt{paper\_full.pdf}.  Part~II is
-load-bearing and is to be archived, cited, and refereed together with this
-part.  Both parts are generated from this source, and the clean-room replay
-compiles and checks both.
+This journal manuscript consolidates Parts~I--II of the proof: the
+classification reduction, family closures, compact correction-prefix
+contract, and accepted-certificate boundary.  The formal detailed supplement
+\texttt{paper\_full.pdf} expands the correction-prefix derivations and
+certificate ledgers from the same source and proves the exact active results
+listed in the compact contract table.  Only that indexed subgraph is
+load-bearing for the residual $B/C$ closure.
+Part~III, \texttt{full\_q3\_extension.pdf}, imports the theorem proved here
+and establishes the full signed-product hierarchy on the adjoint-generated
+cone.
 \fi
+\end{remark}
+
+\begin{remark}[Publication proof spine and author self-audits]
+The load-bearing dependency spine for Parts~I--III and their detailed
+supplement is listed in
+\path{PUBLICATION_PROOF_SPINE.md} and, for the present theorem, in the
+final-facing dependency map below.  The supplement's numbered
+correction-prefix proofs are load-bearing; explicitly marked diagnostic and
+superseded routes remain provenance and are not consumed.  The archived
+historical report and the programs under
+\path{referee_audits/} are author-controlled self-audits.  They provide
+redundant checks and source mappings; they are not independent peer review and
+are not premises of any theorem.
 \end{remark}
 
 %======================================================================
@@ -201,19 +236,61 @@ classical moment used in a finite correction is regenerated from the exact
 \ifginibrefullproof
 recurrence of \cref{lem:bc-stable-moment-recurrence};
 \else
-three-term recurrence proved in Part~II;
+three-term recurrence reconstructed by the exact source replay;
 \fi
 the archived OEIS row is checked against that regeneration and is not used as
 a mathematical premise.
 Exact discrete calculations use GMP integers or rationals, and analytic
 comparisons use outward-rounded MPFR intervals.
 
-Parts~I and II form one proof.  Part~I gives the final-facing reductions and
-family closures.  Part~II supplies the full finite classical correction
-development and the detailed certificate ledger.  The replay contract states
-which inputs are regenerated, which legacy certificates are audited without a
-full generator rerun, and which archived files are retained only as diagnostic
-history.
+Parts~I--II are consolidated in this manuscript.  The final-facing reductions
+and family closures consume a compact finite-correction contract and the
+accepted certificate ledger below.  The formal detailed supplement prints
+the line-by-line correction derivations and historical ledgers; its numbered
+correction-prefix proofs are incoming nodes for the compact residual closure,
+while explicitly diagnostic and superseded material adds no hypothesis or
+incoming edge.  The replay
+contract states which inputs are regenerated, which legacy certificates are
+audited without a full generator rerun, and which archived files are retained
+only as diagnostic history.
+
+The choice of the adjoint character is not merely a source of numerical
+examples.  Its powers are the characters of tensor powers of the adjoint
+module, so every Haar moment is an invariant-tensor multiplicity and can be
+attacked uniformly through the classification.  Part~III takes the smallest
+uniformly closed multiplicative convex cone generated by this character.  By
+Ginibre's Proposition~1, that cone is exactly the largest function class that
+follows formally from single-generator signed-product inequalities; enlarging
+it requires genuinely mixed-character input.  The resulting theorem is thus a
+complete statement about the adjoint tensor category, while remaining
+strictly narrower than a theorem for all central positive-definite functions.
+
+\subsection*{Contribution and relation to prior results}
+Ginibre's Proposition~1 supplies a promotion mechanism once the required
+signed products are known on a self-conjugate generating set; it does not
+establish the repeated-adjoint inequality proved here.  The exact stable
+trace laws of Diaconis--Shahshahani, the power-map identities of Rains, and
+the character bounds of Garibaldi--Guralnick--Rains provide inputs to
+individual family arguments, but none of those results compares the two
+moment diagonals in \cref{lem:moment-formula} for every exponent and every
+simple type.  Likewise, the adjoint tensor-rank calculations of
+Bourjaily--Plesser--Vergu provide comparison data for exceptional moments,
+not the sign theorem.
+
+The contribution of Parts~I--II is the uniform classification theorem and
+the mechanism joining three regimes that do not overlap automatically:
+stable invariant-tensor moments, finite-rank corrections, and analytic
+tails.  The repeated-adjoint and exactly-two-minus restrictions are essential
+parts of the statement, not abbreviations for a result about arbitrary
+characters.  In particular, this paper makes no claim for unequal
+irreducible characters or for all positive-definite class functions.  The
+separate Part~III uses Ginibre's promotion only after importing the theorem
+proved here; it is not used to justify the present theorem or its novelty.
+
+The computer calculations are proof devices rather than the mathematical
+claim.  Each active calculation has a numbered finite contract, and the
+compact residual $B/C$ contract table below records the exact theorem labels,
+rank ranges, and moment offsets supplied by the detailed proof.
 
 %======================================================================
 \section{Statement and General Reductions}
@@ -1224,8 +1301,8 @@ $(b,u,c)=(19/10,47/10,5)$.  The C++/GMP replay reconstructs all finite
 hook moments, polynomial expectations, Paley--Zygmund domain checks, and
 the two terminal rational inequalities used above.
 \else
-For $N\ge24$, the degree-$18$ signed-polynomial minorant printed in the
-expanded companion and reconstructed by the C++/GMP replay gives
+For $N\ge24$, the degree-$18$ signed-polynomial minorant reconstructed from
+the manifested verifier source by the C++/GMP replay gives
 $\mu_N([3/2,7/2])\ge
 \eta_B=122923229137548665407/(65536\cdot1467426013^2)$.
 Paley--Zygmund applied to $Y^{12}$ gives
@@ -1418,6 +1495,14 @@ If $N\ge n+2$, use \cref{thm:su-stable-rank}.  If $N<n+2$, use
 The non-$A$ classical Lie algebras are represented by the standard
 $B_b$, $C_b$, and $D_b$ families.  The proof uses exact adjoint moments,
 Rains stabilization, and a final finite certificate.
+We use the irreducible-root-system rank conventions
+
+\[
+ B_b\ (b\ge2),\qquad C_b\ (b\ge2),\qquad D_b\ (b\ge4).
+\]
+The low-rank coincidences $B_1=C_1=A_1$ and $D_3=A_3$ are already covered
+by \cref{thm:type-a}; $D_2=A_1\times A_1$ is not simple.  The coincidence
+$B_2=C_2$ causes harmless overlap between the two finite classical rows.
 
 \begin{definition}[Classical constants and first hits]\label{def:classical-constants}
 Let
@@ -2172,10 +2257,62 @@ convolution has variance $2$, so the one-sided Gaussian tail gives
 	  \exp\!\left(-\frac{(\eta C_G-1)^2}{4}\right)+2E_1(N(C_G)).
 \end{gathered}
 \]
-Substitution into \cref{lem:trace-tail} and then
-\cref{lem:pushforward-tail} leaves three one-variable rational/exponential
-inequalities in $C_G$.  The exact replay checks those inequalities for
-$296\le C_G\le10000$ and their monotone tails beyond $10000$.
+For completeness, we print the scalar certificate rather than leaving it as
+an unnamed replay.  Put
+\[
+ \widehat E(C)=5(\log(2C))^{1/4}
+   \exp\{-C(\log(2C)-1)\},
+ \qquad
+ E_U(C)=\frac{19C^{1/4}(\log C)^{1/2}}{\Gamma(C+2)},
+\]
+\[
+ T(C)=\exp\!\left(-\frac{(\eta C-1)^2}{4}\right)
+       +2\widehat E(\lfloor C/2\rfloor),qquad
+ d(C)=1-\frac1{\eta^2C^2}.
+\]
+The elementary bound $(2C)!\ge(2C/e)^{2C}$ gives
+$E_1(C)\le\widehat E(C)$.  With the rational constants $r,\eta,A,L$
+displayed in the statement, define
+\[
+\begin{aligned}
+ G(C)={}&(A-L/2)C+\tfrac12\log(LC)-\log(LC+1)
+          -\tfrac32\log2,\\
+ R_0(C)={}&e^{AC}T(C),\\
+ R_1(C)={}&\frac{r(1+C^{-2})}{2d(C)}e^{AC}T(C)
+             \left(\frac2r\right)^C,\\
+ R_2(C)={}&\frac{4r}{\eta^3C^2d(C)}
+       \exp\!\left(-\bigl(\log(r/\eta)-A\bigr)C\right).
+\end{aligned}
+\tag{\ref{lem:rains-square}.1}
+\]
+The finite scalar certificate consists exactly of
+\[
+ G(C)\ge0,\quad
+ \widehat E(C)e^{AC}\le1,\quad
+ E_U(C)\le\widehat E(\lfloor C/2\rfloor),\quad
+ R_i(C)\le\frac12\ (i=0,1,2).
+ \tag{\ref{lem:rains-square}.2}
+\]
+The first two comparisons control the Gaussian lower tail and its total
+variation error, the third absorbs the type-$B$ unitary projection error, and
+the last three are precisely the positive-tail/negative-tail ratios left by
+\cref{lem:trace-tail,lem:pushforward-tail}.  The directed-MPFR replay evaluates
+\eqref{lem:rains-square}.2 for every integer $296\le C\le10000$.  At
+$C=296$ it also checks, with outward rounding, the sign conditions
+\[
+ A-L/2-(2C)^{-1}>0,quad
+ A-\log(2C)+(4C\log(2C))^{-1}<0,
+\]
+\[
+ A-\eta(\eta C-1)/2<0,quad
+ A-\eta(\eta C-1)/2+\log(2/r)<0,quad
+ A-\log(r/\eta)<0.
+ \tag{\ref{lem:rains-square}.3}
+\]
+These are the derivative upper bounds used for the five monotone factors in
+\eqref{lem:rains-square}.2; their left sides only improve with $C$.
+Consequently the endpoint check propagates beyond $10000$.  This lists every
+scalar predicate decided by the high-rank replay.
 \end{proof}
 
 \begin{proposition}[Stable and high-rank classical tail]\label{prop:classical-high}
@@ -3751,8 +3888,8 @@ used in \eqref{prop:post29-low-bc-exact-mgf}.3 are supplied by
 $2b/c<1$ and $a/c<1$ in every checked row, the monotonicity clause of that
 lemma proves every later odd exponent.
 \else
-The expanded companion prints the exact rational parameter row for every
-displayed onset.  The $384$-bit directed-rounding C++/MPFR replay evaluates
+The manifested verifier source contains the exact rational parameter row for
+every displayed onset.  The $384$-bit directed-rounding C++/MPFR replay evaluates
 the exact Toeplitz--Hankel defining-trace MGFs, the square-trace Chernoff
 bounds, and the stable push moments, and checks the sufficient inequality of
 \cref{lem:one-sided-moment-pushforward}.  It checks all $22$ rows with no
@@ -5173,7 +5310,7 @@ $h_2^j$ by adding horizontal two-strips, so each $d_j(\lambda)$ is
 nonnegative.  Rains' symplectic Schur-integral criterion
 \cite[\S3]{Rains1997} says that the stable symplectic integral keeps exactly
 the Schur summands whose row lengths occur with even multiplicity, while the
-finite $\Sp(b)$ integral keeps exactly those among them with at most $2b$
+finite $\Sp(2b)$ integral keeps exactly those among them with at most $2b$
 nonzero rows.  The omitted summands are exactly
 $(\mu_1,\mu_1,\ldots,\mu_{\ell(\mu)},\mu_{\ell(\mu)})$ with
 $\ell(\mu)>b$, giving the second negative sum.
@@ -42363,6 +42500,20 @@ Thus \(|\delta_{2q+29}^{C_b}|\le s_{2q+29}/2\) also for \(q\ge74\), which
 implies the claimed lower bound.
 \end{proof}
 
+\subsection*{Development archive: superseded residual-tail routes}
+
+\begin{remark}[Status of the following development archive]
+The results from this point through the return marker below record conditional
+compression suppliers, obstructions, and superseded decoder constructions.
+They are retained to document why those routes were abandoned.  No result in
+this block is an incoming node of
+\cref{prop:bc-active-correction-prefix-contract,prop:post29-bc-residual-closure,thm:classical}.
+In particular, a proposition in this block whose statement
+begins with ``suppose'' remains only a conditional implication and is not an
+accepted proof premise.  The active proof resumes at the explicitly marked
+half-stable bridge.
+\end{remark}
+
 \begin{lemma}[Rank-free Pieri compression fails in low rank]\label{lem:bc-rank-free-pieri-compression-obstruction}
 Let \(s_n\) be the stable Littlewood moment sequence of
 \cref{lem:bc-littlewood-graph-model}.  In content \((2^7)\), the two bad-shape
@@ -44593,6 +44744,8 @@ $j$, and witness set $S$, and
 \cref{rem:former-post29-tail}.
 \end{proof}
 
+\subsection*{Return to the active proof: the half-stable bridge}
+
 \begin{proposition}[Post-$m=29$ $B/C$ half-stable bridge reduction]\label{prop:post29-bc-half-bridge}
 For the rows
 \[
@@ -44778,6 +44931,89 @@ and \(j=2b+30\) for \(B_b\) rows by
 
 \fi
 
+\begin{proposition}[Active residual $B/C$ correction-prefix contract]
+\label{prop:bc-active-correction-prefix-contract}
+Put $q=b+1$, write $s_j=m_j^{\mathrm{st}}$, and write
+$m_j^G=s_j+\delta_j^G$.  The following bounds hold:
+\[
+ -\frac12s_{2q+r}\le\delta_{2q+r}^{B_b}\le0
+ \quad(14\le b\le123, 0\le r\le28),
+ \tag{\ref{prop:bc-active-correction-prefix-contract}.1}
+\]
+and
+\[
+ -\frac12s_{2q+r}\le\delta_{2q+r}^{C_b}\le0
+ \quad(20\le b\le217, 0\le r\le28).
+ \tag{\ref{prop:bc-active-correction-prefix-contract}.2}
+\]
+The lower bound at each offset is supplied by the exact result in the same
+row of the following table; the common upper bound is
+\cref{prop:bc-pieri-correction-sign}.
+
+\begingroup\scriptsize
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\begin{longtable}{cL{0.43\linewidth}L{0.43\linewidth}}
+\toprule
+$r$ & type $B$ lower-bound result & type $C$ lower-bound result\\
+\midrule
+\endfirsthead
+\toprule
+$r$ & type $B$ lower-bound result & type $C$ lower-bound result\\
+\midrule
+\endhead
+0&\contractref{prop:bc-b-boundary-lower-correction}&\contractref{prop:bc-c-boundary-lower-correction}\\
+1&\contractref{prop:bc-b-first-nonboundary-lower-correction}&\contractref{prop:bc-c-first-nonboundary-lower-correction}\\
+2&\contractref{prop:bc-b-second-nonboundary-lower-correction}&\contractref{prop:bc-c-second-nonboundary-lower-correction}\\
+3&\contractref{prop:bc-b-third-nonboundary-lower-correction}&\contractref{prop:bc-c-third-nonboundary-lower-correction}\\
+4&\contractref{prop:bc-b-fourth-nonboundary-lower-correction}&\contractref{prop:bc-c-fourth-nonboundary-lower-correction}\\
+5&\contractref{prop:bc-b-fifth-nonboundary-lower-correction}&\contractref{prop:bc-c-fifth-nonboundary-lower-correction}\\
+6&\contractref{prop:bc-b-sixth-nonboundary-lower-correction}&\contractref{prop:bc-c-sixth-nonboundary-lower-correction}\\
+7&\contractref{prop:bc-b-seventh-nonboundary-lower-correction}&\contractref{prop:bc-c-seventh-nonboundary-lower-correction}\\
+8&\contractref{prop:bc-b-eighth-nonboundary-lower-correction}&\contractref{prop:bc-c-eighth-nonboundary-lower-correction}\\
+9&\contractref{prop:bc-b-ninth-nonboundary-lower-correction}&\contractref{prop:bc-c-ninth-nonboundary-lower-correction}\\
+10&\contractref{prop:bc-b-tenth-nonboundary-lower-correction}&\contractref{prop:bc-c-tenth-nonboundary-lower-correction}\\
+11&\contractref{prop:bc-b-eleventh-nonboundary-lower-correction}&\contractref{prop:bc-c-eleventh-nonboundary-lower-correction}\\
+12&\contractref{prop:bc-b-twelfth-nonboundary-lower-correction}&\contractref{prop:bc-c-twelfth-nonboundary-lower-correction}\\
+13&\contractref{prop:bc-b-thirteenth-nonboundary-lower-correction}&\contractref{prop:bc-c-thirteenth-nonboundary-lower-correction}\\
+14&\contractref{prop:bc-b-fourteenth-nonboundary-lower-correction}&\contractref{prop:bc-c-fourteenth-nonboundary-lower-correction}\\
+15&\contractref{prop:bc-b-fifteenth-nonboundary-lower-correction}&\contractref{prop:bc-c-fifteenth-nonboundary-lower-correction}\\
+16&\contractref{prop:bc-b-sixteenth-nonboundary-lower-correction}&\contractref{prop:bc-c-sixteenth-nonboundary-lower-correction}\\
+17&\contractref{prop:bc-b-seventeenth-nonboundary-lower-correction}&\contractref{prop:bc-c-seventeenth-nonboundary-lower-correction}\\
+18&\contractref{prop:bc-b-eighteenth-nonboundary-lower-correction}&\contractref{prop:bc-c-eighteenth-nonboundary-lower-correction}\\
+19&\contractref{prop:bc-b-nineteenth-nonboundary-lower-correction}&\contractref{prop:bc-c-nineteenth-nonboundary-lower-correction}\\
+20&\contractref{prop:bc-b-twentieth-nonboundary-lower-correction}&\contractref{prop:bc-c-twentieth-nonboundary-lower-correction}\\
+21&\contractref{prop:bc-b-twentyfirst-nonboundary-lower-correction}&\contractref{prop:bc-c-twentyfirst-nonboundary-lower-correction}\\
+22&\contractref{prop:bc-b-twentysecond-nonboundary-lower-correction}&\contractref{prop:bc-c-twentysecond-nonboundary-lower-correction}\\
+23&\contractref{prop:bc-b-twentythird-nonboundary-lower-correction}&\contractref{prop:bc-c-twentythird-nonboundary-lower-correction}\\
+24&\contractref{prop:bc-b-twentyfourth-nonboundary-lower-correction}&\contractref{prop:bc-c-twentyfourth-nonboundary-lower-correction}\\
+25&\contractref{prop:bc-b-twentyfifth-nonboundary-lower-correction}&\contractref{prop:bc-c-twentyfifth-nonboundary-lower-correction}\\
+26&\contractref{prop:bc-b-twentysixth-nonboundary-lower-correction}&\contractref{prop:bc-c-twentysixth-nonboundary-lower-correction}\\
+27&\contractref{prop:bc-b-twentyseventh-nonboundary-lower-correction}&\contractref{prop:bc-c-twentyseventh-nonboundary-lower-correction}\\
+28&\contractref{prop:bc-b-twentyeighth-nonboundary-lower-correction}&\contractref{prop:bc-c-twentyeighth-nonboundary-lower-correction}\\
+\bottomrule
+\end{longtable}
+\endgroup
+The additional offset-$29$ results in the detailed supplement are not needed
+by the main-theorem propagation below.
+\end{proposition}
+
+\begin{proof}
+For each table row, the stated lower-bound result has exactly the family,
+rank interval, and moment index printed in
+\eqref{prop:bc-active-correction-prefix-contract}.1 or
+\eqref{prop:bc-active-correction-prefix-contract}.2.
+\ifginibrefullproof
+Those results and their proofs occur earlier in this detailed build.
+\else
+Their exact supplement labels are printed in the table, so the import
+boundary does not depend on an unindexed collection of certificates.
+\fi
+The Pieri omitted-summand formula in
+\cref{prop:bc-pieri-correction-sign} gives $\delta_j^G\le0$ for both
+families.  Combining the two sides proves the contract.
+\end{proof}
+
 \begin{proposition}[Residual $B/C$ post-$m=29$ closure]\label{prop:post29-bc-residual-closure}
 For
 \[
@@ -44794,15 +45030,32 @@ $n\ge N_{\mathrm{hit}}^{(29)}(G)$.
 \end{proposition}
 
 \begin{proof}
-The complete proof is expanded in the companion \texttt{paper\_full.pdf},
-which is built from this exact source by defining \texttt{GinibreFullProof}
-before reading \texttt{paper.tex}.  We record the load-bearing chain here.
-The $B/C$ Pieri correction-sign proposition gives
-$\delta_j^G\le0$.  The boundary through twenty-ninth nonboundary correction
-propositions prove $\delta_j^G\ge-s_j/2$ over every prefix needed by the local
-half-stable bridge.  The exact GMP/OpenMP half-stable verifier then proves all
-intervening Chain differences; it checks $m=31,\ldots,15447$, reports no
-failures, and has replay SHA-256
+Write $m_j^G=s_j+\delta_j^G$, where $s_j$ is the stable moment.  The complete
+active correction import is \cref{prop:bc-active-correction-prefix-contract};
+in particular, its table replaces the former prose reference to a suite of
+unnamed contracts.
+
+We record why this prefix is sufficient.  The analytic suppliers used below
+start no later than the odd exponent
+\[
+ N_{\rm tail}(b)=2b+29.
+\]
+To propagate to an odd target $t<N_{\rm tail}(b)$, the last Chain difference
+used is $D_G(t-2)$.  By \cref{lem:moment-formula,def:chain-diff}, that
+difference involves moments only through $m_{t+2}^G$.  Since
+$t\le2b+27$, its largest possible correction index is
+\[
+ t+2\le2b+29=2q+27.
+\]
+Thus only offsets $0\le r\le27$ of
+\cref{prop:bc-active-correction-prefix-contract} are consumed by the main
+theorem.  Offset $28$ is retained as a checked overlap; the offset-$29$
+results and the longer conditional development routes printed in the source
+archive are not premises of this proposition.
+
+Substitution of these bounds into the local half-stable bridge leaves an
+integer lower bound in stable moments.  The exact GMP/OpenMP verifier checks
+it for $m=31,\ldots,15447$, reports no failures, and has replay SHA-256
 \[
 \hashsplit{426fc6ccf924e70d27fdfd90f0e4314f}{02e2bc87fe09a6fe84cfdce92f2dbec7}.
 \]
@@ -44812,10 +45065,8 @@ $B_{14},\ldots,B_{61}$ and $C_{20},\ldots,C_{61}$; the tilted-MGF and direct
 interval propositions supply $B_{62},\ldots,B_{123}$ and
 $C_{62},\ldots,C_{217}$.  For $B_{14},\ldots,B_{17}$ the layered-MGF onset
 already precedes $N_{\mathrm{hit}}^{(29)}(G)$.  These ranges are disjoint and
-exhaust the displayed rows, proving every stated odd exponent.  In the
-expanded companion, each correction step invoked in this paragraph is a
-numbered proposition with its proof; this proposition introduces no
-assumption.
+exhaust the displayed rows, proving every stated odd exponent.  No diagnostic
+or superseded route in the expanded archive is used.
 \end{proof}
 
 \begin{theorem}[Classical $B,C,D$ closure]
@@ -45560,19 +45811,39 @@ covered by \cref{lem:even}.
 
 \begin{proof}[Proof of \cref{thm:main}]
 By \cref{lem:global-form}, $\Qthree^G(n)$ depends only on the compact
-simple Lie algebra.  The classification leaves type $A$, the non-$A$
-classical types $B,C,D$, and the exceptional types
+simple Lie algebra.  In the irreducible-root-system classification,
+$B_1=C_1=A_1$ and $D_3=A_3$ are already in the type-$A$ branch,
+$D_2$ is not simple, and the remaining classical types have
+$B_b,C_b$ with $b\ge2$ and $D_b$ with $b\ge4$.  The classification
+therefore leaves type $A$, the non-$A$ classical types $B,C,D$, and the exceptional types
 $\Gtwo,\Ffour,\Esix,\Eseven,\Eeight$.  Type $A$ is
 \cref{thm:type-a}; types $B,C,D$ are \cref{thm:classical}; the exceptional
 types are \cref{thm:exceptional}.  These cases exhaust all compact
 connected simple Lie groups.
 \end{proof}
 
+\section{Conclusion and limitations}
+
+The proof establishes one uniform sign inequality for the adjoint tensor
+category of every compact simple type.  Its common structure is the passage
+from the moment identity in \cref{lem:moment-formula} to a stable prefix, a
+finite-rank correction interval, and an analytic tail.  The classification is
+needed because the mechanism controlling the middle interval differs between
+type~$A$, the three other classical families, and the exceptional groups.
+
+The theorem does not compare unequal characters and does not prove Ginibre's
+condition on the cone of all central positive-definite functions.  It also
+does not assert that the exactly-two-minus argument extends directly to four
+or more minus factors.  Part~III addresses the latter hierarchy only on the
+closed multiplicative convex cone generated by $\chiad$, using the present
+theorem as an input.  These scope boundaries separate the mathematical
+conclusion from possible applications to larger character cones or to
+model-specific correlation inequalities.
+
 \begin{remark}[Final-facing dependency map]\label{rem:final-dependency-map}
 The proof graph is the following; it deliberately omits superseded diagnostic
-routes retained in the expanded companion.  All incoming nodes are proved in
+routes retained in the expanded archive.  All incoming nodes are proved in
 the manuscript or discharged by the authenticated exact replays.
-\ifginibrefullproof
 \begin{center}
 \begin{tabular}{p{0.16\linewidth}|p{0.73\linewidth}}
 closure & load-bearing incoming results\\
@@ -45580,7 +45851,7 @@ closure & load-bearing incoming results\\
 \cref{thm:type-a} &
 \cref{thm:su-stable-rank,thm:su2-row,thm:su-low-rank-ratios,lem:su-transition-strip,thm:su-ratio,cor:su-finite}\\
 \cref{thm:classical} &
-\cref{lem:classical-stable-edge,prop:classical-high,prop:classical-bridge,prop:first-hit,prop:post29-direct,prop:post29-chernoff,prop:post29-d-a-free,prop:post29-b-unitary-square,prop:post29-bc-residual-closure}\\
+\cref{lem:classical-stable-edge,prop:classical-high,prop:classical-bridge,prop:first-hit,prop:post29-direct,prop:post29-chernoff,prop:post29-d-a-free,prop:post29-b-unitary-square,prop:bc-active-correction-prefix-contract,prop:post29-bc-residual-closure}\\
 \cref{thm:exceptional} &
 \cref{prop:g2-f4,prop:e6-e7,prop:e8-bridge,prop:e8-tail}\\
 \cref{thm:main} &
@@ -45590,15 +45861,11 @@ closure & load-bearing incoming results\\
 Inside \cref{prop:post29-bc-residual-closure}, the only live residual route is
 the proved correction-prefix bridge followed by the layered/tilted MGF or
 direct interval supplier.  Local fixed-witness lemmas used to prove the
-boundary-through-twenty-ninth correction bounds remain live.  Only the global
-all-row fixed-witness/compression interfaces explicitly marked superseded in
-the companion have no incoming edge from this map.
-\else
-The clean-room source-structure audit checks theorem/proof pairing and the
-syntactic incoming-edge table.  Mathematical hypothesis discharge is the
-content of the cited proofs in Part~II; the source audit is not presented as
-a theorem prover.
-\fi
+boundary-through-twenty-ninth correction contract are represented in the
+accepted correction-prefix suite.  The expanded archive supplies a
+line-by-line audit of those contracts.  Global all-row
+fixed-witness/compression interfaces explicitly marked superseded have no
+incoming edge from this map.
 \end{remark}
 
 %======================================================================
@@ -45896,6 +46163,7 @@ $m=31,\ldots,15447$, reports \texttt{failures=0}, and its worst positive
 lower bound occurs at $B_{217}$, odd exponent $30897$.  The replay SHA-256
 hash is
 \hashsplit{426fc6ccf924e70d27fdfd90f0e4314f}{02e2bc87fe09a6fe84cfdce92f2dbec7}.
+\iffalse
 The separate Pieri-compression arithmetic verifier checks that the candidate
 bound
 $|\delta_j|\le\binom{j}{\rank(G)+1}s_{j-\rank(G)-1}$ would imply
@@ -45954,15 +46222,18 @@ The low-low degree-profile verifier computes the exact profile count
 \texttt{SUMMARY checked\_m=190 failures=0}, verifies
 \texttt{active20\_failures=0}, and has SHA-256
 \hashsplit{cc1b41189d965a5e076d3524647caa5b}{7f5c5102ca6a1d8b03c623c15c29dc40}.
+\fi
 The Pieri and fixed-witness arithmetic verifiers above are conditional
 arithmetic reductions: they do not discharge their combinatorial
-fixed-witness or compression premises, which are no longer needed after
-\cref{prop:post29-bc-layered-mgf}. \\
+fixed-witness or compression premises.  Their detailed ledger is retained in
+the source archive but excluded from the publication proof ledger because
+those routes are not used after \cref{prop:post29-bc-layered-mgf}. \\
 \else
 Classical $B/C$ correction-prefix bridge &
-The expanded companion proves the Pieri sign and the boundary through
-twenty-ninth lower-correction propositions used in
-\cref{prop:post29-bc-residual-closure}.  The exact GMP/OpenMP bridge verifier
+The compact residual-closure proof states the Pieri sign and the sixty
+quantified boundary-through-twenty-ninth correction contracts.  The
+clean-room domain audit matches every contract to its callers, and the exact
+frontier logs record strictly positive margins.  The GMP/OpenMP bridge verifier
 checks $m=31,\ldots,15447$, reports \texttt{failures=0}, and has SHA-256
 \hashsplit{426fc6ccf924e70d27fdfd90f0e4314f}{02e2bc87fe09a6fe84cfdce92f2dbec7}.
 The longer fixed-witness and compression routes are proof-development history
@@ -46915,7 +47186,7 @@ Adv. Appl. Math. \textbf{37} (2006), 404--431.
 J.~Huh, J.~S.~Kim, C.~Krattenthaler, and S.~Okada,
 \emph{Bounded Littlewood identities with fixed number of odd rows or odd
 columns},
-author PDF, 2025.
+Electron. J. Combin. \textbf{33} (2026), no.~3, Paper~P3.5.
 
 \bibitem{CJL2022}
 C.~Courteaut, K.~Johansson, and G.~Lambert,

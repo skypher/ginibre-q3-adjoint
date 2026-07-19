@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Independently recompute the formula fields in all H25--H29 certificates.
 
-This is a supplementary referee audit, not a replacement for the distributed
+This is a supplementary author self-audit, not a replacement for the distributed
 replay.  It deliberately uses Python integers/Fraction rather than the GMP C++
 implementations.  The reverse-Pieri totals themselves are not recomputed; the
 audit checks their initial terminal partition counts, stable values, and every

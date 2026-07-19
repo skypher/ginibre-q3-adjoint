@@ -6,7 +6,11 @@ REPLAY_THREADS ?= $(shell nproc)
 FULL_Q3_REMAINING_THREADS ?= 2
 FULL_Q3_BOUNDED_THREADS ?= $(shell nproc)
 
-.PHONY: clean-room-replay full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bd-residual-audit full-q3-bcd-low-tail-audit full-q3-bcd-remaining-audit full-q3-bcd-bounded-littlewood-audit full-q3-extension
+.PHONY: publication-preflight clean-room-replay full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bd-residual-audit full-q3-bcd-low-tail-audit full-q3-bcd-remaining-audit full-q3-bcd-bounded-littlewood-audit full-q3-extension
+
+publication-preflight:
+	python3 -u run_publication_short_audits.py
+	python3 -u -c 'from pathlib import Path; from clean_room_replay import verify_manifests; n, e = verify_manifests(Path(".")); print(f"PUBLICATION_PREFLIGHT manifests={n} entries={e}"); print("PUBLICATION_PREFLIGHT VERIFICATION: ALL PASS")'
 
 clean-room-replay:
 	python3 clean_room_replay.py --threads $(REPLAY_THREADS)

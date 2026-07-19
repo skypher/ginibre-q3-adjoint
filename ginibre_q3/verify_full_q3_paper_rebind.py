@@ -392,37 +392,65 @@ def main() -> int:
     require(full_entries == 36, f"execution Part III manifest has {full_entries} entries")
     final_replay, final_full = expected_final_manifests(baseline_replay, baseline_full)
 
+    intermediate_data = baseline_text.replace(OLD_PASSAGE, NEW_PASSAGE).encode("utf-8")
+    intermediate_graph = verify_candidate(baseline_text, baseline_graph, intermediate_data)
+
     if args.preflight:
-        candidate_data = baseline_text.replace(OLD_PASSAGE, NEW_PASSAGE).encode("utf-8")
+        candidate_data = intermediate_data
+        final_graph = intermediate_graph
+        publication_replay_hash = FINAL_REPLAY_MANIFEST_SHA256
+        publication_full_hash = FINAL_FULL_MANIFEST_SHA256
+        publication_entries = (85, 36)
         mode = "preflight"
     else:
         require(args.final_root is not None, "missing final source root")
         final_root = args.final_root.resolve()
         candidate_data = (final_root / "paper.tex").read_bytes()
+        candidate_text = candidate_data.decode("utf-8")
+        require(OLD_PASSAGE not in candidate_text, "old cyclic passage remains in final revision")
+        require(candidate_text.count(NEW_PASSAGE) == 1, "new rebind passage is not unique")
+        final_graph = audit_graph(candidate_text)
+        require(final_graph.labels == intermediate_graph.labels, "final revision changes result labels")
+        require(final_graph.edges == intermediate_graph.edges, "final revision changes proof dependencies")
+        require(
+            final_graph.reachable == intermediate_graph.reachable,
+            "final revision changes main-theorem reachability",
+        )
         actual_replay = (final_root / REPLAY_MANIFEST).read_text(encoding="utf-8")
         actual_full = (final_root / FULL_MANIFEST).read_text(encoding="utf-8")
-        require(actual_replay == final_replay, "publication replay manifest has another change")
-        require(actual_full == final_full, "publication Part III manifest has another change")
+        replay_records = parse_manifest(actual_replay, REPLAY_MANIFEST)
+        full_records = parse_manifest(actual_full, FULL_MANIFEST)
         require(
-            verify_manifest_files(final_root, REPLAY_MANIFEST, actual_replay) == 85,
+            replay_records.get("paper.tex") == digest(candidate_data),
+            "final replay manifest does not bind revised paper.tex",
+        )
+        require(
+            full_records.get("../../paper.tex") == digest(candidate_data),
+            "final Part III manifest does not bind revised paper.tex",
+        )
+        require(
+            verify_manifest_files(final_root, REPLAY_MANIFEST, actual_replay) == 86,
             "publication replay manifest cardinality changed",
         )
         require(
-            verify_manifest_files(final_root, FULL_MANIFEST, actual_full) == 36,
+            verify_manifest_files(final_root, FULL_MANIFEST, actual_full) == 39,
             "publication Part III manifest cardinality changed",
         )
-        mode = "final"
-    final_graph = verify_candidate(baseline_text, baseline_graph, candidate_data)
+        publication_replay_hash = digest(actual_replay.encode("utf-8"))
+        publication_full_hash = digest(actual_full.encode("utf-8"))
+        publication_entries = (86, 39)
+        mode = "final-revision"
 
     print(
         f"FULL_Q3_PAPER_REBIND mode={mode} results={final_graph.results} "
         f"proofs={final_graph.proofs} edges={len(baseline_graph.edges)}->{len(final_graph.edges)} "
         "removed_edge=prop:post29->thm:classical components=1->0 "
         f"reachable={len(baseline_graph.reachable)}->{len(final_graph.reachable)} "
-        f"baseline_sha256={BASELINE_SHA256} final_sha256={FINAL_SHA256} "
-        f"replay_manifest={BASELINE_REPLAY_MANIFEST_SHA256}->{FINAL_REPLAY_MANIFEST_SHA256} "
-        f"full_manifest={BASELINE_FULL_MANIFEST_SHA256}->{FINAL_FULL_MANIFEST_SHA256} "
-        f"manifest_entries={replay_entries}+{full_entries} "
+        f"baseline_sha256={BASELINE_SHA256} final_sha256={digest(candidate_data)} "
+        f"replay_manifest={BASELINE_REPLAY_MANIFEST_SHA256}->{publication_replay_hash} "
+        f"full_manifest={BASELINE_FULL_MANIFEST_SHA256}->{publication_full_hash} "
+        f"manifest_entries={replay_entries}+{full_entries}"
+        f"->{publication_entries[0]}+{publication_entries[1]} "
         f"verifier_sha256={digest(Path(__file__).resolve().read_bytes())}"
     )
     print("FULL_Q3_PAPER_REBIND VERIFICATION: ALL PASS")
