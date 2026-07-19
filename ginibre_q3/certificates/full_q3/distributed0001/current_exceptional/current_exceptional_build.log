@@ -1,0 +1,24 @@
+python3 gen_header.py
+g++ -O3 -march=native -std=c++20 -Wall -fopenmp dunkl_exceptional_coefficients_gmp.cpp -lgmpxx -lgmp -o dunkl_exceptional_coefficients_gmp
+g++ -O3 -march=native -std=c++20 -Wall direct_chain_rect_g2_f4_certificate.cpp -lgmpxx -lgmp -o direct_chain_rect_g2_f4_certificate
+g++ -O3 -march=native -std=c++20 -Wall -fopenmp direct_chain_rect_e6_e7_rank_certificate.cpp -lgmpxx -lgmp -o direct_chain_rect_e6_e7_rank_certificate
+g++ -O3 -march=native -std=c++20 -Wall -fopenmp verify_e8_negative_bounds_gmp.cpp -lgmpxx -lgmp -o verify_e8_negative_bounds_gmp
+g++ -O3 -march=native -std=c++20 -Wall -fopenmp direct_chain_rect_e8_parallel_certificate.cpp -lgmpxx -lgmp -o direct_chain_rect_e8_parallel_certificate
+wrote /home/yang/q3/ginibre_q3/character_ring_iter/lie_data.h
+g++ -O3 -march=native -std=c++20 -Wall verify_character_ring_moment_sources_gmp.cpp -lgmpxx -lgmp -o verify_character_ring_moment_sources_gmp
+__EXIT_STATUS=0
+3c3e6c8d3b53cf725e1ac1c6d772a97e9ddeb9dfc9e4925d5888eb0a6a42ae83  gen_header.py
+ca8425b7c07edc5602210c4a8d6f6ad01f95ca34012c2c5b4729f745bdbf6ad3  lie_data.py
+ba30755944b7afa31ff8d7de00ff1b3384274e3bacd59edadb5d3c6f1025f576  lie_data.h
+5633f4002ec40646a6b488b38c084401b9d1f47b41c2f14d3945d35c524377f4  verify_character_ring_moment_sources_gmp.cpp
+ad81f93e5e6aca6507dbe718c0449697268db2affc26a34d40ecd522549dc43f  dunkl_exceptional_coefficients_gmp.cpp
+53e8c989696cce07c4b12cf74b31dcb1244af1f461c9c9bdff1728dbac73d2ec  direct_chain_rect_g2_f4_certificate.cpp
+d40cd28efd18b9cc473d71ccda3d402a30427844f812156fd6794a298d22d334  direct_chain_rect_e6_e7_rank_certificate.cpp
+7758379e442ca9b65844db4de7fbcb9d49cd0105b142d958c0ca5300c8678046  verify_e8_negative_bounds_gmp.cpp
+6b808818538a7fdfe282368bff0724762756048141ce011d73b5e3275e81c810  direct_chain_rect_e8_parallel_certificate.cpp
+fe883ab1d33d1d7bbcdb021c5141ac63c86091893519b7e99256ebdeba165812  verify_character_ring_moment_sources_gmp
+791ac1810d61bf5a4366bdbaf83ff5d647fd355186e65d5e47854d0b2bfe557e  dunkl_exceptional_coefficients_gmp
+907532ecd59080e31a6bc8645716084a220f57d1644bddc70c6e08bfed5f86d6  direct_chain_rect_g2_f4_certificate
+da54f78ff21aa009da6399ed7c8cf7b2a843b38001c38ddfb41dc2c52a0b2a6a  direct_chain_rect_e6_e7_rank_certificate
+a03cfce8d5116869c3fae90f8968b6ea882e95317b3cce67e5c187c90181617d  verify_e8_negative_bounds_gmp
+cb9edbf465ff93197faae07df6bb39b2bf4d96a543c3ff0fb62d3f46ae193da9  direct_chain_rect_e8_parallel_certificate

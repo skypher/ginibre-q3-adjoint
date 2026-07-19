@@ -1,0 +1,41 @@
+COMMAND: ./direct_chain_rect_e6_e7_rank_certificate --e7-moments /home/yang/q3/ginibre_q3/character_ring_iter/logs/e7_70.log
+COMMAND: direct_chain_rect_e6_e7_rank_certificate --e7-moments /home/yang/q3/ginibre_q3/character_ring_iter/logs/e7_70.log
+OpenMP max threads=8
+scalar_gap_cosine_sine_bernstein: OK
+e6_e7_root_counts_and_quartic_identities: OK
+e6_e7_normalized_weyl_lattice_factors_3_2: OK
+e6_e7_adjoint_torus_injectivity_minima_4/3_3/2: OK
+e7_moment_prefix_0_70: OK
+e7_chebyshev_negative_intervals_bernstein: OK
+e7_negative_integral_positive: OK
+log10_e7_negative_integral=2.805
+group=E6 n0=75 delta=14/3 grid=1/10 cap=2450/39
+retained_cells=23088 expected=23088
+gap_min=32290586527/31250000000000
+h_min=106532193/250000000 direct_min=17246368489137047729/3906250000000000
+sine_exponent_max=211556111/23355000
+log10_positive_lower=92.314
+log10_negative_upper=83.410
+log10_base_ratio_lower=8.904
+log10_odd_step_ratio_lower=0.573
+cell_count: OK
+transposed_cells_disjoint: OK
+base_ratio_gt_1: OK
+odd_step_ratio_gt_1: OK
+case_result: PASS
+progress group=E7 index~60000/66925 elapsed=2.90731s
+group=E7 n0=65 delta=14/3 grid=1/20 cap=910/19
+retained_cells=66925 expected=66925
+gap_min=24415385208361/23692500000000000
+h_min=9333099043/22815000000 direct_min=1540310559771910107852961/130131056250000000000
+sine_exponent_max=722805808375147/42627546000000
+log10_positive_lower=61.666
+log10_negative_upper=61.240
+log10_base_ratio_lower=0.426
+log10_odd_step_ratio_lower=0.004
+cell_count: OK
+transposed_cells_disjoint: OK
+base_ratio_gt_1: OK
+odd_step_ratio_gt_1: OK
+case_result: PASS
+RESULT: ALL PASS

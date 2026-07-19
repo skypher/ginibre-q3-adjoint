@@ -1,0 +1,277 @@
+D capped suffix modular moment range rank 5 moments m_5..m_52 row cap 10 modulus 9223372036854775783 C++ certificate
+begin D_5=SO(10) mod 9223372036854775783
+    D_5 capped mod 9223372036854775783 forward step 1/52 states=1 elapsed=4.398e-06s
+    D_5 capped mod 9223372036854775783 forward step 2/52 states=3 elapsed=2.18e-05s
+    D_5 capped mod 9223372036854775783 forward step 3/52 states=7 elapsed=2.674e-05s
+    D_5 capped mod 9223372036854775783 forward step 4/52 states=15 elapsed=3.0336e-05s
+    D_5 capped mod 9223372036854775783 forward step 5/52 states=30 elapsed=3.5666e-05s
+D_5 MOD 9223372036854775783 m_5 kept_even=22 det=1
+    D_5 capped mod 9223372036854775783 forward step 6/52 states=56 elapsed=5.5564e-05s
+D_5 MOD 9223372036854775783 m_6 kept_even=130 det=10
+    D_5 capped mod 9223372036854775783 forward step 7/52 states=98 elapsed=8.5149e-05s
+D_5 MOD 9223372036854775783 m_7 kept_even=822 det=120
+    D_5 capped mod 9223372036854775783 forward step 8/52 states=167 elapsed=0.000131045s
+D_5 MOD 9223372036854775783 m_8 kept_even=6202 det=1351
+    D_5 capped mod 9223372036854775783 forward step 9/52 states=273 elapsed=0.000201026s
+D_5 MOD 9223372036854775783 m_9 kept_even=52552 det=16003
+    D_5 capped mod 9223372036854775783 forward step 10/52 states=433 elapsed=0.000329355s
+D_5 MOD 9223372036854775783 m_10 kept_even=499194 det=197163
+    D_5 capped mod 9223372036854775783 forward step 11/52 states=669 elapsed=0.000563203s
+D_5 MOD 9223372036854775783 m_11 kept_even=5236785 det=2549350
+    D_5 capped mod 9223372036854775783 forward step 12/52 states=1012 elapsed=0.000872821s
+D_5 MOD 9223372036854775783 m_12 kept_even=60132501 det=34570756
+    D_5 capped mod 9223372036854775783 forward step 13/52 states=1496 elapsed=0.00136622s
+D_5 MOD 9223372036854775783 m_13 kept_even=749131101 det=491383608
+    D_5 capped mod 9223372036854775783 forward step 14/52 states=2175 elapsed=0.00214829s
+D_5 MOD 9223372036854775783 m_14 kept_even=10047170731 det=7308968602
+    D_5 capped mod 9223372036854775783 forward step 15/52 states=3108 elapsed=0.00335847s
+D_5 MOD 9223372036854775783 m_15 kept_even=144033676843 det=113551074742
+    D_5 capped mod 9223372036854775783 forward step 16/52 states=4374 elapsed=0.00517635s
+D_5 MOD 9223372036854775783 m_16 kept_even=2192755142595 det=1838772296310
+    D_5 capped mod 9223372036854775783 forward step 17/52 states=6072 elapsed=0.00799879s
+D_5 MOD 9223372036854775783 m_17 kept_even=35241774314134 det=30970507944304
+    D_5 capped mod 9223372036854775783 forward step 18/52 states=8326 elapsed=0.012108s
+D_5 MOD 9223372036854775783 m_18 kept_even=594796840146715 det=541425572243686
+    D_5 capped mod 9223372036854775783 forward step 19/52 states=11280 elapsed=0.0178802s
+D_5 MOD 9223372036854775783 m_19 kept_even=10492633619796987 det=9804052130214330
+    D_5 capped mod 9223372036854775783 forward step 20/52 states=15125 elapsed=0.0255445s
+D_5 MOD 9223372036854775783 m_20 kept_even=192669611969362840 det=183520514879561004
+    D_5 capped mod 9223372036854775783 forward step 21/52 states=20076 elapsed=0.0354746s
+D_5 MOD 9223372036854775783 m_21 kept_even=3669342219387005830 det=3544435296649286205
+    D_5 capped mod 9223372036854775783 forward step 22/52 states=26403 elapsed=0.0495684s
+D_5 MOD 9223372036854775783 m_22 kept_even=7687402497638324783 det=5938754181023148653
+    D_5 capped mod 9223372036854775783 forward step 23/52 states=34426 elapsed=0.0696925s
+D_5 MOD 9223372036854775783 m_23 kept_even=348328980994086727 det=2960586287949492808
+    D_5 capped mod 9223372036854775783 forward step 24/52 states=44529 elapsed=0.0982782s
+D_5 MOD 9223372036854775783 m_24 kept_even=1987404459164866741 det=3968995728015834242
+    D_5 capped mod 9223372036854775783 forward step 25/52 states=57156 elapsed=0.138944s
+D_5 MOD 9223372036854775783 m_25 kept_even=2554043206487335183 det=6761490374039179250
+    D_5 capped mod 9223372036854775783 forward step 26/52 states=72850 elapsed=0.198358s
+D_5 MOD 9223372036854775783 m_26 kept_even=5175681954102919191 det=7798581646975891981
+    D_5 capped mod 9223372036854775783 forward step 27/52 states=92230 elapsed=0.286546s
+D_5 MOD 9223372036854775783 m_27 kept_even=7783810541872503088 det=937448433073722428
+    D_5 capped mod 9223372036854775783 forward step 28/52 states=116030 elapsed=0.400072s
+D_5 MOD 9223372036854775783 m_28 kept_even=4075089934659304877 det=3775747575872634754
+    D_5 capped mod 9223372036854775783 forward step 29/52 states=145101 elapsed=0.556002s
+D_5 MOD 9223372036854775783 m_29 kept_even=2893650051696390948 det=6706159709026393583
+    D_5 capped mod 9223372036854775783 forward step 30/52 states=180436 elapsed=0.746734s
+D_5 MOD 9223372036854775783 m_30 kept_even=6445912022973370459 det=6599605071012923565
+    D_5 capped mod 9223372036854775783 forward step 31/52 states=223164 elapsed=1.03729s
+D_5 MOD 9223372036854775783 m_31 kept_even=7110442298126040273 det=5410445170270155681
+    D_5 capped mod 9223372036854775783 forward step 32/52 states=274616 elapsed=1.4865s
+D_5 MOD 9223372036854775783 m_32 kept_even=7109373228017959585 det=9154818879535170888
+    D_5 capped mod 9223372036854775783 forward step 33/52 states=336288 elapsed=2.05565s
+D_5 MOD 9223372036854775783 m_33 kept_even=9132234837549312878 det=1254518570209589465
+    D_5 capped mod 9223372036854775783 forward step 34/52 states=409911 elapsed=2.70118s
+D_5 MOD 9223372036854775783 m_34 kept_even=8866430612513522298 det=6671530415469591045
+    D_5 capped mod 9223372036854775783 forward step 35/52 states=497453 elapsed=3.52347s
+D_5 MOD 9223372036854775783 m_35 kept_even=3349034965223274459 det=5118838983555263481
+    D_5 capped mod 9223372036854775783 forward step 36/52 states=601158 elapsed=4.42093s
+      D_5 capped mod scan m_36 processed=500000/601158 elapsed=0.00260412s
+D_5 MOD 9223372036854775783 m_36 kept_even=6899634458203411543 det=1937758987740138712
+      D_5 capped mod 9223372036854775783 packed step 37/52 processed=500000/601158 next_states=622433 step_elapsed=0.893755s elapsed=5.31875s
+    D_5 capped mod 9223372036854775783 forward step 37/52 states=723551 elapsed=5.52032s
+      D_5 capped mod scan m_37 processed=500000/723551 elapsed=0.0027389s
+D_5 MOD 9223372036854775783 m_37 kept_even=1076740057530728673 det=629921747644128505
+      D_5 capped mod 9223372036854775783 packed step 38/52 processed=500000/723551 next_states=633745 step_elapsed=1.26613s elapsed=6.79724s
+    D_5 capped mod 9223372036854775783 forward step 38/52 states=867525 elapsed=7.45876s
+      D_5 capped mod scan m_38 processed=500000/867525 elapsed=0.0024941s
+D_5 MOD 9223372036854775783 m_38 kept_even=6268405849788297672 det=935784878270832144
+      D_5 capped mod 9223372036854775783 packed step 39/52 processed=500000/867525 next_states=640542 step_elapsed=1.25023s elapsed=8.72482s
+    D_5 capped mod 9223372036854775783 forward step 39/52 states=1036306 elapsed=9.62209s
+      D_5 capped mod scan m_39 processed=500000/1036306 elapsed=0.00455492s
+      D_5 capped mod scan m_39 processed=1000000/1036306 elapsed=0.0192619s
+D_5 MOD 9223372036854775783 m_39 kept_even=5928631829232509586 det=7879319340984280794
+      D_5 capped mod 9223372036854775783 packed step 40/52 processed=500000/1036306 next_states=645487 step_elapsed=1.17075s elapsed=10.8143s
+      D_5 capped mod 9223372036854775783 packed step 40/52 processed=1000000/1036306 next_states=1200278 step_elapsed=2.34694s elapsed=11.9905s
+    D_5 capped mod 9223372036854775783 forward step 40/52 states=1233550 elapsed=12.0602s
+      D_5 capped mod scan m_40 processed=500000/1233550 elapsed=0.00264282s
+      D_5 capped mod scan m_40 processed=1000000/1233550 elapsed=0.00552952s
+D_5 MOD 9223372036854775783 m_40 kept_even=7619135607383758788 det=5336748148079142324
+      D_5 capped mod 9223372036854775783 packed step 41/52 processed=500000/1233550 next_states=650785 step_elapsed=1.39717s elapsed=13.4664s
+      D_5 capped mod 9223372036854775783 packed step 41/52 processed=1000000/1233550 next_states=1226489 step_elapsed=2.67237s elapsed=14.7416s
+    D_5 capped mod 9223372036854775783 forward step 41/52 states=1463350 elapsed=15.3023s
+      D_5 capped mod scan m_41 processed=500000/1463350 elapsed=0.00271647s
+      D_5 capped mod scan m_41 processed=1000000/1463350 elapsed=0.00568603s
+D_5 MOD 9223372036854775783 m_41 kept_even=7146256176268778624 det=3878253660933746780
+      D_5 capped mod 9223372036854775783 packed step 42/52 processed=500000/1463350 next_states=655307 step_elapsed=1.02929s elapsed=16.3651s
+      D_5 capped mod 9223372036854775783 packed step 42/52 processed=1000000/1463350 next_states=1242283 step_elapsed=2.25768s elapsed=17.5934s
+    D_5 capped mod 9223372036854775783 forward step 42/52 states=1730308 elapsed=18.9476s
+      D_5 capped mod scan m_42 processed=500000/1730308 elapsed=0.00246703s
+      D_5 capped mod scan m_42 processed=1000000/1730308 elapsed=0.00512539s
+      D_5 capped mod scan m_42 processed=1500000/1730308 elapsed=0.00797442s
+D_5 MOD 9223372036854775783 m_42 kept_even=2474151092510329582 det=3643246390077390351
+      D_5 capped mod 9223372036854775783 packed step 43/52 processed=500000/1730308 next_states=659050 step_elapsed=1.17441s elapsed=20.1393s
+      D_5 capped mod 9223372036854775783 packed step 43/52 processed=1000000/1730308 next_states=1256702 step_elapsed=2.40518s elapsed=21.3701s
+      D_5 capped mod 9223372036854775783 packed step 43/52 processed=1500000/1730308 next_states=1810014 step_elapsed=3.71659s elapsed=22.6815s
+    D_5 capped mod 9223372036854775783 forward step 43/52 states=2039537 elapsed=23.2171s
+      D_5 capped mod scan m_43 processed=500000/2039537 elapsed=0.00252149s
+      D_5 capped mod scan m_43 processed=1000000/2039537 elapsed=0.00517409s
+      D_5 capped mod scan m_43 processed=1500000/2039537 elapsed=0.00811292s
+      D_5 capped mod scan m_43 processed=2000000/2039537 elapsed=0.0109862s
+D_5 MOD 9223372036854775783 m_43 kept_even=8289202229229383840 det=1413749112966369092
+      D_5 capped mod 9223372036854775783 packed step 44/52 processed=500000/2039537 next_states=662556 step_elapsed=0.9702s elapsed=24.2214s
+      D_5 capped mod 9223372036854775783 packed step 44/52 processed=1000000/2039537 next_states=1268902 step_elapsed=2.15761s elapsed=25.4088s
+      D_5 capped mod 9223372036854775783 packed step 44/52 processed=1500000/2039537 next_states=1835982 step_elapsed=3.47054s elapsed=26.7217s
+      D_5 capped mod 9223372036854775783 packed step 44/52 processed=2000000/2039537 next_states=2360550 step_elapsed=4.76939s elapsed=28.0206s
+    D_5 capped mod 9223372036854775783 forward step 44/52 states=2396791 elapsed=28.1089s
+      D_5 capped mod scan m_44 processed=500000/2396791 elapsed=0.0032493s
+      D_5 capped mod scan m_44 processed=1000000/2396791 elapsed=0.00588024s
+      D_5 capped mod scan m_44 processed=1500000/2396791 elapsed=0.00853626s
+      D_5 capped mod scan m_44 processed=2000000/2396791 elapsed=0.0112918s
+D_5 MOD 9223372036854775783 m_44 kept_even=6310392159874045759 det=1318148954443248777
+      D_5 capped mod 9223372036854775783 packed step 45/52 processed=500000/2396791 next_states=665231 step_elapsed=1.06665s elapsed=29.1933s
+      D_5 capped mod 9223372036854775783 packed step 45/52 processed=1000000/2396791 next_states=1277254 step_elapsed=2.32111s elapsed=30.4478s
+      D_5 capped mod 9223372036854775783 packed step 45/52 processed=1500000/2396791 next_states=1860752 step_elapsed=3.7668s elapsed=31.8935s
+      D_5 capped mod 9223372036854775783 packed step 45/52 processed=2000000/2396791 next_states=2408665 step_elapsed=5.23555s elapsed=33.3622s
+    D_5 capped mod 9223372036854775783 forward step 45/52 states=2808428 elapsed=34.4254s
+      D_5 capped mod scan m_45 processed=500000/2808428 elapsed=0.00315509s
+      D_5 capped mod scan m_45 processed=1000000/2808428 elapsed=0.00625059s
+      D_5 capped mod scan m_45 processed=1500000/2808428 elapsed=0.00945124s
+      D_5 capped mod scan m_45 processed=2000000/2808428 elapsed=0.0123847s
+      D_5 capped mod scan m_45 processed=2500000/2808428 elapsed=0.0153021s
+D_5 MOD 9223372036854775783 m_45 kept_even=6726375016653004726 det=1884762459400594861
+      D_5 capped mod 9223372036854775783 packed step 46/52 processed=500000/2808428 next_states=669183 step_elapsed=1.04442s elapsed=35.531s
+      D_5 capped mod 9223372036854775783 packed step 46/52 processed=1000000/2808428 next_states=1280829 step_elapsed=2.28773s elapsed=36.7743s
+      D_5 capped mod 9223372036854775783 packed step 46/52 processed=1500000/2808428 next_states=1872986 step_elapsed=3.61753s elapsed=38.1041s
+      D_5 capped mod 9223372036854775783 packed step 46/52 processed=2000000/2808428 next_states=2436505 step_elapsed=5.18715s elapsed=39.6738s
+      D_5 capped mod 9223372036854775783 packed step 46/52 processed=2500000/2808428 next_states=2980123 step_elapsed=6.7991s elapsed=41.2857s
+    D_5 capped mod 9223372036854775783 forward step 46/52 states=3281545 elapsed=42.344s
+      D_5 capped mod scan m_46 processed=500000/3281545 elapsed=0.00263391s
+      D_5 capped mod scan m_46 processed=1000000/3281545 elapsed=0.00527364s
+      D_5 capped mod scan m_46 processed=1500000/3281545 elapsed=0.00802349s
+      D_5 capped mod scan m_46 processed=2000000/3281545 elapsed=0.0108006s
+      D_5 capped mod scan m_46 processed=2500000/3281545 elapsed=0.0136727s
+      D_5 capped mod scan m_46 processed=3000000/3281545 elapsed=0.0165644s
+D_5 MOD 9223372036854775783 m_46 kept_even=8725857991159313241 det=5695787723778388726
+      D_5 capped mod 9223372036854775783 packed step 47/52 processed=500000/3281545 next_states=670104 step_elapsed=1.19784s elapsed=43.6062s
+      D_5 capped mod 9223372036854775783 packed step 47/52 processed=1000000/3281545 next_states=1284394 step_elapsed=2.61605s elapsed=45.0244s
+      D_5 capped mod 9223372036854775783 packed step 47/52 processed=1500000/3281545 next_states=1882929 step_elapsed=4.23795s elapsed=46.6463s
+      D_5 capped mod 9223372036854775783 packed step 47/52 processed=2000000/3281545 next_states=2465341 step_elapsed=6.21428s elapsed=48.6227s
+      D_5 capped mod 9223372036854775783 packed step 47/52 processed=2500000/3281545 next_states=3023226 step_elapsed=7.88151s elapsed=50.2899s
+      D_5 capped mod 9223372036854775783 packed step 47/52 processed=3000000/3281545 next_states=3552286 step_elapsed=9.46734s elapsed=51.8757s
+    D_5 capped mod 9223372036854775783 forward step 47/52 states=3824004 elapsed=52.6463s
+      D_5 capped mod scan m_47 processed=500000/3824004 elapsed=0.00270486s
+      D_5 capped mod scan m_47 processed=1000000/3824004 elapsed=0.00529587s
+      D_5 capped mod scan m_47 processed=1500000/3824004 elapsed=0.00791328s
+      D_5 capped mod scan m_47 processed=2000000/3824004 elapsed=0.0105005s
+      D_5 capped mod scan m_47 processed=2500000/3824004 elapsed=0.0131513s
+      D_5 capped mod scan m_47 processed=3000000/3824004 elapsed=0.0158588s
+      D_5 capped mod scan m_47 processed=3500000/3824004 elapsed=0.0189244s
+D_5 MOD 9223372036854775783 m_47 kept_even=5454020402863604605 det=623170771873640480
+      D_5 capped mod 9223372036854775783 packed step 48/52 processed=500000/3824004 next_states=670832 step_elapsed=1.08041s elapsed=53.79s
+      D_5 capped mod 9223372036854775783 packed step 48/52 processed=1000000/3824004 next_states=1289254 step_elapsed=2.3377s elapsed=55.0473s
+      D_5 capped mod 9223372036854775783 packed step 48/52 processed=1500000/3824004 next_states=1894182 step_elapsed=3.70369s elapsed=56.4133s
+      D_5 capped mod 9223372036854775783 packed step 48/52 processed=2000000/3824004 next_states=2485657 step_elapsed=5.11821s elapsed=57.8279s
+      D_5 capped mod 9223372036854775783 packed step 48/52 processed=2500000/3824004 next_states=3052365 step_elapsed=6.73597s elapsed=59.4456s
+      D_5 capped mod 9223372036854775783 packed step 48/52 processed=3000000/3824004 next_states=3604195 step_elapsed=8.18696s elapsed=60.8966s
+      D_5 capped mod 9223372036854775783 packed step 48/52 processed=3500000/3824004 next_states=4129527 step_elapsed=9.63759s elapsed=62.3472s
+    D_5 capped mod 9223372036854775783 forward step 48/52 states=4444525 elapsed=63.3329s
+      D_5 capped mod scan m_48 processed=500000/4444525 elapsed=0.00249861s
+      D_5 capped mod scan m_48 processed=1000000/4444525 elapsed=0.00519038s
+      D_5 capped mod scan m_48 processed=1500000/4444525 elapsed=0.00786023s
+      D_5 capped mod scan m_48 processed=2000000/4444525 elapsed=0.0104906s
+      D_5 capped mod scan m_48 processed=2500000/4444525 elapsed=0.013186s
+      D_5 capped mod scan m_48 processed=3000000/4444525 elapsed=0.0159099s
+      D_5 capped mod scan m_48 processed=3500000/4444525 elapsed=0.0186207s
+      D_5 capped mod scan m_48 processed=4000000/4444525 elapsed=0.0214842s
+D_5 MOD 9223372036854775783 m_48 kept_even=5087822904328361392 det=2635068423362029469
+      D_5 capped mod 9223372036854775783 packed step 49/52 processed=500000/4444525 next_states=670832 step_elapsed=1.26804s elapsed=64.6654s
+      D_5 capped mod 9223372036854775783 packed step 49/52 processed=1000000/4444525 next_states=1295096 step_elapsed=2.64501s elapsed=66.0424s
+      D_5 capped mod 9223372036854775783 packed step 49/52 processed=1500000/4444525 next_states=1904108 step_elapsed=4.05468s elapsed=67.452s
+      D_5 capped mod 9223372036854775783 packed step 49/52 processed=2000000/4444525 next_states=2489943 step_elapsed=5.61225s elapsed=69.0096s
+      D_5 capped mod 9223372036854775783 packed step 49/52 processed=2500000/4444525 next_states=3080979 step_elapsed=7.16023s elapsed=70.5576s
+      D_5 capped mod 9223372036854775783 packed step 49/52 processed=3000000/4444525 next_states=3643010 step_elapsed=8.8373s elapsed=72.2347s
+      D_5 capped mod 9223372036854775783 packed step 49/52 processed=3500000/4444525 next_states=4185605 step_elapsed=10.7252s elapsed=74.1226s
+      D_5 capped mod 9223372036854775783 packed step 49/52 processed=4000000/4444525 next_states=4718863 step_elapsed=12.4045s elapsed=75.8019s
+    D_5 capped mod 9223372036854775783 forward step 49/52 states=5152709 elapsed=77.1636s
+      D_5 capped mod scan m_49 processed=500000/5152709 elapsed=0.00251526s
+      D_5 capped mod scan m_49 processed=1000000/5152709 elapsed=0.00520462s
+      D_5 capped mod scan m_49 processed=1500000/5152709 elapsed=0.00939634s
+      D_5 capped mod scan m_49 processed=2000000/5152709 elapsed=0.012107s
+      D_5 capped mod scan m_49 processed=2500000/5152709 elapsed=0.0154409s
+      D_5 capped mod scan m_49 processed=3000000/5152709 elapsed=0.0181361s
+      D_5 capped mod scan m_49 processed=3500000/5152709 elapsed=0.0209737s
+      D_5 capped mod scan m_49 processed=4000000/5152709 elapsed=0.0238098s
+      D_5 capped mod scan m_49 processed=4500000/5152709 elapsed=0.0271618s
+      D_5 capped mod scan m_49 processed=5000000/5152709 elapsed=0.0301363s
+D_5 MOD 9223372036854775783 m_49 kept_even=2749794268129763431 det=6383984536586095124
+      D_5 capped mod 9223372036854775783 packed step 50/52 processed=500000/5152709 next_states=670832 step_elapsed=1.15101s elapsed=78.4313s
+      D_5 capped mod 9223372036854775783 packed step 50/52 processed=1000000/5152709 next_states=1298247 step_elapsed=2.48557s elapsed=79.7658s
+      D_5 capped mod 9223372036854775783 packed step 50/52 processed=1500000/5152709 next_states=1910478 step_elapsed=3.93537s elapsed=81.2156s
+      D_5 capped mod 9223372036854775783 packed step 50/52 processed=2000000/5152709 next_states=2504233 step_elapsed=5.65284s elapsed=82.9331s
+      D_5 capped mod 9223372036854775783 packed step 50/52 processed=2500000/5152709 next_states=3089357 step_elapsed=7.1432s elapsed=84.4234s
+      D_5 capped mod 9223372036854775783 packed step 50/52 processed=3000000/5152709 next_states=3671295 step_elapsed=8.68526s elapsed=85.9655s
+      D_5 capped mod 9223372036854775783 packed step 50/52 processed=3500000/5152709 next_states=4235992 step_elapsed=10.2469s elapsed=87.5272s
+      D_5 capped mod 9223372036854775783 packed step 50/52 processed=4000000/5152709 next_states=4785043 step_elapsed=11.825s elapsed=89.1053s
+      D_5 capped mod 9223372036854775783 packed step 50/52 processed=4500000/5152709 next_states=5309030 step_elapsed=13.3669s elapsed=90.6471s
+      D_5 capped mod 9223372036854775783 packed step 50/52 processed=5000000/5152709 next_states=5815578 step_elapsed=15.4232s elapsed=92.7034s
+    D_5 capped mod 9223372036854775783 forward step 50/52 states=5959215 elapsed=93.1015s
+      D_5 capped mod scan m_50 processed=500000/5959215 elapsed=0.00258599s
+      D_5 capped mod scan m_50 processed=1000000/5959215 elapsed=0.00519689s
+      D_5 capped mod scan m_50 processed=1500000/5959215 elapsed=0.00779789s
+      D_5 capped mod scan m_50 processed=2000000/5959215 elapsed=0.0104207s
+      D_5 capped mod scan m_50 processed=2500000/5959215 elapsed=0.0131178s
+      D_5 capped mod scan m_50 processed=3000000/5959215 elapsed=0.015784s
+      D_5 capped mod scan m_50 processed=3500000/5959215 elapsed=0.0184112s
+      D_5 capped mod scan m_50 processed=4000000/5959215 elapsed=0.0211422s
+      D_5 capped mod scan m_50 processed=4500000/5959215 elapsed=0.0238294s
+      D_5 capped mod scan m_50 processed=5000000/5959215 elapsed=0.0265977s
+      D_5 capped mod scan m_50 processed=5500000/5959215 elapsed=0.0294142s
+D_5 MOD 9223372036854775783 m_50 kept_even=2217113615094335406 det=4540357940331080288
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=500000/5959215 next_states=670832 step_elapsed=1.15987s elapsed=94.3828s
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=1000000/5959215 next_states=1304161 step_elapsed=2.55259s elapsed=95.7755s
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=1500000/5959215 next_states=1917910 step_elapsed=4.02934s elapsed=97.2522s
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=2000000/5959215 next_states=2518135 step_elapsed=5.66916s elapsed=98.8921s
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=2500000/5959215 next_states=3106550 step_elapsed=7.20948s elapsed=100.432s
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=3000000/5959215 next_states=3687539 step_elapsed=8.90842s elapsed=102.131s
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=3500000/5959215 next_states=4261138 step_elapsed=10.6976s elapsed=103.921s
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=4000000/5959215 next_states=4823403 step_elapsed=12.3074s elapsed=105.53s
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=4500000/5959215 next_states=5372081 step_elapsed=14.0327s elapsed=107.256s
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=5000000/5959215 next_states=5904615 step_elapsed=15.8798s elapsed=109.103s
+      D_5 capped mod 9223372036854775783 packed step 51/52 processed=5500000/5959215 next_states=6432967 step_elapsed=17.6214s elapsed=110.844s
+    D_5 capped mod 9223372036854775783 forward step 51/52 states=6875722 elapsed=112.217s
+      D_5 capped mod scan m_51 processed=500000/6875722 elapsed=0.00252532s
+      D_5 capped mod scan m_51 processed=1000000/6875722 elapsed=0.00512313s
+      D_5 capped mod scan m_51 processed=1500000/6875722 elapsed=0.00797296s
+      D_5 capped mod scan m_51 processed=2000000/6875722 elapsed=0.0105418s
+      D_5 capped mod scan m_51 processed=2500000/6875722 elapsed=0.0131503s
+      D_5 capped mod scan m_51 processed=3000000/6875722 elapsed=0.0157422s
+      D_5 capped mod scan m_51 processed=3500000/6875722 elapsed=0.0184275s
+      D_5 capped mod scan m_51 processed=4000000/6875722 elapsed=0.0210009s
+      D_5 capped mod scan m_51 processed=4500000/6875722 elapsed=0.0237892s
+      D_5 capped mod scan m_51 processed=5000000/6875722 elapsed=0.0264959s
+      D_5 capped mod scan m_51 processed=5500000/6875722 elapsed=0.0291592s
+      D_5 capped mod scan m_51 processed=6000000/6875722 elapsed=0.0328079s
+      D_5 capped mod scan m_51 processed=6500000/6875722 elapsed=0.0372788s
+D_5 MOD 9223372036854775783 m_51 kept_even=2127876357682182599 det=1245473855340798810
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=500000/6875722 next_states=670832 step_elapsed=1.12874s elapsed=113.471s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=1000000/6875722 next_states=1308142 step_elapsed=2.50473s elapsed=114.847s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=1500000/6875722 next_states=1925943 step_elapsed=3.83672s elapsed=116.179s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=2000000/6875722 next_states=2527091 step_elapsed=5.32026s elapsed=117.663s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=2500000/6875722 next_states=3120828 step_elapsed=6.78458s elapsed=119.127s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=3000000/6875722 next_states=3709766 step_elapsed=8.7085s elapsed=121.051s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=3500000/6875722 next_states=4292694 step_elapsed=10.5166s elapsed=122.859s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=4000000/6875722 next_states=4866730 step_elapsed=12.3001s elapsed=124.643s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=4500000/6875722 next_states=5428893 step_elapsed=14.0325s elapsed=126.375s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=5000000/6875722 next_states=5974562 step_elapsed=15.7956s elapsed=128.138s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=5500000/6875722 next_states=6510799 step_elapsed=18.036s elapsed=130.378s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=6000000/6875722 next_states=7044795 step_elapsed=19.6574s elapsed=132s
+      D_5 capped mod 9223372036854775783 packed step 52/52 processed=6500000/6875722 next_states=7553060 step_elapsed=21.2657s elapsed=133.608s
+    D_5 capped mod 9223372036854775783 forward step 52/52 states=7915124 elapsed=134.72s
+      D_5 capped mod scan m_52 processed=500000/7915124 elapsed=0.00296098s
+      D_5 capped mod scan m_52 processed=1000000/7915124 elapsed=0.00555997s
+      D_5 capped mod scan m_52 processed=1500000/7915124 elapsed=0.00824893s
+      D_5 capped mod scan m_52 processed=2000000/7915124 elapsed=0.0108726s
+      D_5 capped mod scan m_52 processed=2500000/7915124 elapsed=0.0138181s
+      D_5 capped mod scan m_52 processed=3000000/7915124 elapsed=0.0167025s
+      D_5 capped mod scan m_52 processed=3500000/7915124 elapsed=0.0194976s
+      D_5 capped mod scan m_52 processed=4000000/7915124 elapsed=0.0221787s
+      D_5 capped mod scan m_52 processed=4500000/7915124 elapsed=0.0250694s
+      D_5 capped mod scan m_52 processed=5000000/7915124 elapsed=0.0277646s
+      D_5 capped mod scan m_52 processed=5500000/7915124 elapsed=0.0307115s
+      D_5 capped mod scan m_52 processed=6000000/7915124 elapsed=0.0335734s
+      D_5 capped mod scan m_52 processed=6500000/7915124 elapsed=0.0378549s
+      D_5 capped mod scan m_52 processed=7000000/7915124 elapsed=0.0406911s
+      D_5 capped mod scan m_52 processed=7500000/7915124 elapsed=0.0439832s
+D_5 MOD 9223372036854775783 m_52 kept_even=2740130713045923960 det=5063355925664226137

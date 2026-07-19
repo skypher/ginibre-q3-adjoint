@@ -1,0 +1,593 @@
+B/C fixed-even recursive-envelope m=29 obstruction GMP verifier
+VERIFIES the recursive envelope of def:bc-fixed-even-recursive-envelope and the m=29 over-budget frontier
+host=optimus
+target_m=29 target_shape=(11,9,8,7,6,5,4,3,2,1,1) OpenMP threads=64
+RESULT m=1 partitions=1 max_W=1 max_W_bits=1 best_shape=(1)
+RESULT m=2 partitions=3 max_W=1 max_W_bits=1 best_shape=(3)
+RESULT m=3 partitions=7 max_W=1 max_W_bits=1 best_shape=(5)
+RESULT m=4 partitions=15 max_W=2 max_W_bits=2 best_shape=(4,2,1)
+RESULT m=5 partitions=30 max_W=4 max_W_bits=3 best_shape=(4,3,1,1)
+RESULT m=6 partitions=56 max_W=11 max_W_bits=4 best_shape=(5,3,2,1)
+RESULT m=7 partitions=101 max_W=29 max_W_bits=5 best_shape=(5,4,2,1,1)
+RESULT m=8 partitions=176 max_W=94 max_W_bits=7 best_shape=(5,4,3,2,1)
+RESULT m=9 partitions=297 max_W=320 max_W_bits=9 best_shape=(6,4,3,2,1,1)
+RESULT m=10 partitions=490 max_W=1100 max_W_bits=11 best_shape=(6,5,3,2,2,1)
+RESULT m=11 partitions=792 max_W=4504 max_W_bits=13 best_shape=(6,5,4,3,2,1)
+RESULT m=12 partitions=1255 max_W=19960 max_W_bits=15 best_shape=(7,5,4,3,2,1,1)
+RESULT m=13 partitions=1958 max_W=85787 max_W_bits=17 best_shape=(7,6,4,3,2,2,1)
+RESULT m=14 partitions=3010 max_W=370729 max_W_bits=19 best_shape=(8,6,5,3,2,2,1)
+RESULT m=15 partitions=4565 max_W=2037069 max_W_bits=21 best_shape=(8,6,5,4,3,2,1)
+RESULT m=16 partitions=6842 max_W=10845675 max_W_bits=24 best_shape=(8,7,5,4,3,2,1,1)
+RESULT m=17 partitions=10143 max_W=54725353 max_W_bits=26 best_shape=(8,7,6,4,3,2,2,1)
+RESULT m=18 partitions=14883 max_W=286275138 max_W_bits=29 best_shape=(9,7,6,4,3,3,2,1)
+RESULT m=19 partitions=21637 max_W=1788942066 max_W_bits=31 best_shape=(9,7,6,5,4,3,2,1)
+RESULT m=20 partitions=31185 max_W=11349507850 max_W_bits=34 best_shape=(9,8,6,5,4,3,2,1,1)
+RESULT m=21 partitions=44583 max_W=67061584700 max_W_bits=36 best_shape=(9,8,7,5,4,3,2,2,1)
+RESULT m=22 partitions=63261 max_W=403479661259 max_W_bits=39 best_shape=(10,8,7,5,4,3,3,2,1)
+RESULT m=23 partitions=89134 max_W=2554342683425 max_W_bits=42 best_shape=(10,8,7,6,4,3,3,2,1,1)
+RESULT m=24 partitions=124754 max_W=18877135179266 max_W_bits=45 best_shape=(10,8,7,6,5,4,3,2,1,1)
+RESULT m=25 partitions=173525 max_W=133746685912501 max_W_bits=47 best_shape=(10,9,7,6,5,4,3,2,2,1)
+RESULT m=26 partitions=239943 max_W=907074996503025 max_W_bits=50 best_shape=(11,9,8,6,5,4,3,2,2,1)
+RESULT m=27 partitions=329931 max_W=6344159720142261 max_W_bits=53 best_shape=(11,9,8,6,5,4,3,3,2,1,1)
+RESULT m=28 partitions=451276 max_W=45416126476990210 max_W_bits=56 best_shape=(11,9,8,7,5,4,4,3,2,1,1)
+RESULT m=29 partitions=614154 max_W=367676108829086275 max_W_bits=59 best_shape=(11,9,8,7,6,5,4,3,2,1,1)
+TARGET size=57 column_even=no W=367676108829086275 expected_W=367676108829086275 budget=2^58 budget_value=288230376151711744 exceeds_budget=yes target_is_m29_maximizer=yes
+M29_OVER_BUDGET count=144 expected_count=144 target_in_over_budget=yes
+M29_TOP_PAIR_OVER_BUDGET count=346 expected_count=346 target_has_top_pair_over_budget=yes
+M29_TOP_TWO_OVER_BUDGET count=62 expected_count=62
+M29_TOP_THREE_OVER_BUDGET count=0 expected_count=0
+M29_OVER_BUDGET_SHAPE shape=(13,10,8,7,6,4,3,2,2,1,1) W=288446994682128768 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(13,10,8,7,5,4,3,3,2,1,1) W=298133146640091317 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(13,10,8,6,5,4,4,3,2,1,1) W=292928268812375869 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(13,9,8,7,6,4,3,3,2,1,1) W=290042922129290569 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(13,9,8,7,5,4,4,3,2,1,1) W=293492831396328403 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(13,9,8,6,5,5,4,3,2,1,1) W=289014898520322170 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,11,8,7,6,4,3,2,2,1,1) W=289883433822253411 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,11,8,7,5,4,3,3,2,1,1) W=299469268171333909 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,11,8,6,5,4,4,3,2,1,1) W=293884922218174287 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,9,7,6,4,3,3,2,1) W=291944508263487903 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,9,7,6,4,3,2,2,1,1) W=299224940112685660 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,9,7,5,4,4,3,2,1) W=288573856725493006 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,9,7,5,4,3,3,2,1,1) W=306830366595415816 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,9,6,5,4,4,3,2,1,1) W=297184466227470110 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,6,5,4,2,2,1) W=291388157968268655 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,6,5,3,3,2,1) W=297354427837402346 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,6,5,3,2,2,1,1) W=303884429797053382 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,6,4,4,3,2,1) W=297354427837402346 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,6,4,3,3,2,1,1) W=314381437571660125 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,6,4,3,2,2,2,1) W=293321845797996278 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,6,4,3,2,2,1,1,1) W=290662412036574529 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,5,5,4,3,2,1) W=296666141824693549 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,5,4,4,3,2,1,1) W=314776532938688350 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,5,4,3,3,2,2,1) W=307825175876326515 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,7,5,4,3,3,2,1,1,1) W=301612638811651167 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,6,5,5,4,3,2,1,1) W=308897498974934114 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,6,5,4,4,3,2,2,1) W=305078310915834383 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,6,5,4,4,3,2,1,1,1) W=296569431966031909 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,10,8,6,5,4,3,3,2,2,1,1) W=290296083752608736 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,7,6,5,4,3,2,1) W=356326365666977336 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,7,6,5,4,2,2,1,1) W=297887183515208676 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,7,6,5,3,3,2,1,1) W=311741180551469786 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,7,6,4,4,3,2,1,1) W=316543211091097809 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,7,6,4,3,3,2,2,1) W=302054505177840404 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,7,6,4,3,3,2,1,1,1) W=294566556473284995 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,7,5,5,4,3,2,1,1) W=316543211091097809 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,7,5,4,4,3,2,2,1) W=309712228421031838 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,7,5,4,4,3,2,1,1,1) W=297990986031196626 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,7,5,4,3,3,2,2,1,1) W=296569431966031909 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,6,6,5,4,3,2,1,1) W=311249499294706725 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,6,5,5,4,3,2,2,1) W=307467364634980728 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,6,5,5,4,3,2,1,1,1) W=294566556473284995 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,6,5,4,4,3,3,2,1) W=295505091427771715 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,8,6,5,4,4,3,2,2,1,1) W=301612638811651167 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,7,7,6,5,4,3,2,1,1) W=296420612722287991 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,7,6,6,5,4,3,2,2,1) W=292787334559972238 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(12,9,7,6,5,5,4,3,2,2,1,1) W=290662412036574529 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,8,6,4,3,2,2,1,1) W=288713467420467261 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,8,5,4,3,3,2,1,1) W=290327320680615898 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,7,6,5,3,3,2,1) W=295460913084185638 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,7,6,5,3,2,2,1,1) W=302863108899306512 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,7,6,4,4,3,2,1) W=296755062801238692 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,7,6,4,3,3,2,1,1) W=315990461935707290 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,7,5,5,4,3,2,1) W=291038375054618169 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,7,5,4,4,3,2,1,1) W=314792359724634068 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,7,5,4,3,3,2,2,1) W=303815032965879018 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,7,5,4,3,3,2,1,1,1) W=295505091427771715 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,6,5,5,4,3,2,1,1) W=301179126380272560 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,9,6,5,4,4,3,2,2,1) W=298105300882313116 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,6,5,4,3,2,1) W=364045173419462398 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,6,5,4,2,2,1,1) W=308827345786777718 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,6,5,3,3,2,1,1) W=322745853623616707 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,6,5,3,2,2,2,1) W=295426811903051914 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,6,5,3,2,2,1,1,1) W=292787334559972238 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,6,4,4,3,2,1,1) W=327075062349918086 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,6,4,3,3,2,2,1) W=314247649187255134 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,6,4,3,3,2,1,1,1) W=307467364634980728 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,5,5,4,3,2,1,1) W=326133200819342947 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,5,4,4,3,2,2,1) W=319157896623357449 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,5,4,4,3,2,1,1,1) W=309712228421031838 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,5,4,3,3,3,2,1) W=298105300882313116 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,7,5,4,3,3,2,2,1,1) W=305078310915834383 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,6,6,5,4,3,2,1,1) W=318539951219953190 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,6,5,5,4,3,2,2,1) W=314247649187255134 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,6,5,5,4,3,2,1,1,1) W=302054505177840404 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,6,5,4,4,3,3,2,1) W=303815032965879018 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,8,6,5,4,4,3,2,2,1,1) W=307825175876326515 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,7,7,6,5,4,3,2,1,1) W=299224106058819807 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,7,6,6,5,4,3,2,2,1) W=295426811903051914 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,10,7,6,5,5,4,3,2,2,1,1) W=293321845797996278 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,9,7,6,5,4,3,2,1) W=324004302981551047 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,9,7,6,4,4,3,2,1,1) W=290217180455083506 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,8,6,5,4,3,2,1) W=316556035414865027 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,7,5,4,3,2,1) W=313793139548961425 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,6,4,3,2,1) W=313150504795323302 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,5,5,3,2,1) W=313301458292198364 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,5,4,4,2,1) W=314597783365181281 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,5,4,3,3,1) W=318688811695991593 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,5,4,3,2,2) W=329114324352956696 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,5,4,3,2,1,1) W=367676108829086275 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,5,4,2,2,2,1) W=299224106058819807 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,5,4,2,2,1,1,1) W=296420612722287991 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,5,3,3,2,2,1) W=318539951219953190 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,5,3,3,2,1,1,1) W=311249499294706725 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,4,4,3,2,2,1) W=326133200819342947 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,4,4,3,2,1,1,1) W=316543211091097809 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,4,3,3,3,2,1) W=301179126380272560 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,4,3,3,2,2,1,1) W=308897498974934114 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,6,4,3,3,2,1,1,1,1) W=289014898520322170 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,5,5,4,3,3,1,1) W=290217180455083506 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,5,5,4,3,2,2,1) W=327075062349918086 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,5,5,4,3,2,1,1,1) W=316543211091097809 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,5,4,4,3,3,2,1) W=314792359724634068 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,5,4,4,3,2,2,1,1) W=314776532938688350 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,5,4,4,3,2,1,1,1,1) W=293492831396328403 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,5,4,3,3,3,2,1,1) W=297184466227470110 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,5,4,3,3,2,2,2,1) W=293884922218174287 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,7,5,4,3,3,2,2,1,1,1) W=292928268812375869 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,6,6,5,4,3,2,2,1) W=322745853623616707 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,6,6,5,4,3,2,1,1,1) W=311741180551469786 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,6,5,5,4,3,3,2,1) W=315990461935707290 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,6,5,5,4,3,2,2,1,1) W=314381437571660125 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,6,5,5,4,3,2,1,1,1,1) W=290042922129290569 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,6,5,4,4,4,3,2,1) W=290327320680615898 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,6,5,4,4,3,3,2,1,1) W=306830366595415816 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,6,5,4,4,3,2,2,2,1) W=299469268171333909 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,8,6,5,4,4,3,2,2,1,1,1) W=298133146640091317 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,7,7,6,5,4,3,2,2,1) W=308827345786777718 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,7,7,6,5,4,3,2,1,1,1) W=297887183515208676 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,7,6,6,5,4,3,3,2,1) W=302863108899306512 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,7,6,6,5,4,3,2,2,1,1) W=303884429797053382 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,7,6,5,5,4,4,3,2,1) W=288713467420467261 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,7,6,5,5,4,3,3,2,1,1) W=299224940112685660 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,7,6,5,5,4,3,2,2,2,1) W=289883433822253411 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(11,9,7,6,5,5,4,3,2,2,1,1,1) W=288446994682128768 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,10,8,7,6,5,4,3,2,1,1) W=329114324352956696 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,9,7,6,5,4,3,2,1,1) W=318688811695991593 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,8,6,5,4,3,2,1,1) W=314597783365181281 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,7,5,4,3,2,1,1) W=313301458292198364 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,6,6,4,3,2,1,1) W=313150504795323302 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,6,5,5,3,2,1,1) W=313793139548961425 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,6,5,4,4,2,1,1) W=316556035414865027 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,6,5,4,3,3,1,1) W=324004302981551047 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,6,5,4,3,2,2,1) W=364045173419462398 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,6,5,4,3,2,1,1,1) W=356326365666977336 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,6,4,4,3,3,2,1) W=291038375054618169 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,6,4,4,3,2,2,1,1) W=296666141824693549 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,5,5,4,3,3,2,1) W=296755062801238692 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,5,5,4,3,2,2,1,1) W=297354427837402346 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,7,5,4,4,3,3,2,1,1) W=288573856725493006 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,6,6,5,4,3,3,2,1) W=295460913084185638 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,6,6,5,4,3,2,2,1,1) W=297354427837402346 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,8,6,5,5,4,3,3,2,1,1) W=291944508263487903 exceeds_budget=yes
+M29_OVER_BUDGET_SHAPE shape=(10,9,7,7,6,5,4,3,2,2,1,1) W=291388157968268655 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(13,10,8,7,6,4,3,2,2,1,1) e=(1,13) W_top=288446994682128768 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(13,10,8,7,5,4,3,3,2,1,1) e=(1,13) W_top=298133146640091317 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(13,10,8,6,5,4,4,3,2,1,1) e=(1,13) W_top=292928268812375869 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(13,9,8,7,6,4,3,3,2,1,1) e=(1,13) W_top=290042922129290569 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(13,9,8,7,5,4,4,3,2,1,1) e=(1,13) W_top=293492831396328403 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(13,9,8,6,5,5,4,3,2,1,1) e=(1,13) W_top=289014898520322170 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,11,8,7,6,4,3,2,2,1,1) e=(2,11) W_top=289883433822253411 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,11,8,7,5,4,3,3,2,1,1) e=(2,11) W_top=299469268171333909 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,11,8,6,5,4,4,3,2,1,1) e=(2,11) W_top=293884922218174287 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,9,7,6,4,3,3,2,1) e=(3,9) W_top=291944508263487903 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,9,7,6,4,3,2,2,1,1) e=(1,12) W_top=292027854396045403 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,9,7,6,4,3,2,2,1,1) e=(3,9) W_top=299224940112685660 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,9,7,6,4,3,2,2,1,1) e=(5,6) W_top=293073375131165814 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,9,7,5,4,4,3,2,1) e=(3,9) W_top=288573856725493006 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,9,7,5,4,3,3,2,1,1) e=(1,12) W_top=299384276075961739 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,9,7,5,4,3,3,2,1,1) e=(3,9) W_top=306830366595415816 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,9,7,5,4,3,3,2,1,1) e=(8,3) W_top=294422926103420142 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,9,6,5,4,4,3,2,1,1) e=(3,9) W_top=297184466227470110 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,5,4,2,2,1) e=(7,4) W_top=291388157968268655 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,5,3,3,2,1) e=(1,12) W_top=291675810708814799 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,5,3,3,2,1) e=(6,5) W_top=297354427837402346 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,5,3,3,2,1) e=(8,3) W_top=291388157968268655 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,5,3,2,2,1,1) e=(1,12) W_top=298857126947677279 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,5,3,2,2,1,1) e=(2,10) W_top=291609034545368272 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,5,3,2,2,1,1) e=(6,5) W_top=303884429797053382 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,4,4,3,2,1) e=(1,12) W_top=293558426575286725 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,4,4,3,2,1) e=(5,6) W_top=296666141824693549 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,4,4,3,2,1) e=(7,4) W_top=297354427837402346 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,4,3,3,2,1,1) e=(1,12) W_top=312444299350394434 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,4,3,3,2,1,1) e=(2,10) W_top=305460048777064127 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,4,3,3,2,1,1) e=(5,6) W_top=314381437571660125 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,4,3,3,2,1,1) e=(8,3) W_top=305613378046311713 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,4,3,3,2,1,1) e=(11,1) W_top=295181268970867934 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,4,3,2,2,2,1) e=(10,2) W_top=293321845797996278 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,6,4,3,2,2,1,1,1) e=(12,1) W_top=290662412036574529 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,5,4,3,2,1) e=(1,12) W_top=290551282798879859 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,5,4,3,2,1) e=(6,5) W_top=296666141824693549 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,4,3,2,1,1) e=(1,12) W_top=314278607802420527 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,4,3,2,1,1) e=(2,10) W_top=307784165647871743 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,4,3,2,1,1) e=(4,7) W_top=310258022577386424 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,4,3,2,1,1) e=(7,4) W_top=314776532938688350 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,4,3,2,1,1) e=(11,1) W_top=295185352466356059 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,3,3,2,2,1) e=(1,12) W_top=303369421403068273 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,3,3,2,2,1) e=(2,10) W_top=296885483491875032 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,3,3,2,2,1) e=(4,7) W_top=299140596836793598 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,3,3,2,2,1) e=(10,2) W_top=307825175876326515 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,3,3,2,1,1,1) e=(1,12) W_top=295162336264619903 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,3,3,2,1,1,1) e=(2,10) W_top=288610847105079062 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,3,3,2,1,1,1) e=(4,7) W_top=291165120376879980 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,7,5,4,3,3,2,1,1,1) e=(12,1) W_top=301612638811651167 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,5,4,3,2,1,1) e=(1,12) W_top=306237010420519120 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,5,4,3,2,1,1) e=(2,10) W_top=301084993638157271 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,5,4,3,2,1,1) e=(6,5) W_top=308897498974934114 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,4,4,3,2,2,1) e=(1,12) W_top=303006020726040628 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,4,4,3,2,2,1) e=(2,10) W_top=297679242394767160 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,4,4,3,2,2,1) e=(7,4) W_top=298642859764084978 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,4,4,3,2,2,1) e=(10,2) W_top=305078310915834383 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,4,4,3,2,1,1,1) e=(1,12) W_top=291457612437464147 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,4,4,3,2,1,1,1) e=(7,4) W_top=290690304413609892 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,4,4,3,2,1,1,1) e=(12,1) W_top=296569431966031909 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,4,3,3,2,2,1,1) e=(1,12) W_top=290296083752608736 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,10,8,6,5,4,3,3,2,2,1,1) e=(12,1) W_top=290296083752608736 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,4,3,2,1) e=(1,12) W_top=356326365666977336 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,4,3,2,1) e=(4,7) W_top=305153272216394632 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,4,3,2,1) e=(5,6) W_top=312372239228295163 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,4,3,2,1) e=(6,5) W_top=314036929854646332 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,4,3,2,1) e=(7,4) W_top=310901590553897749 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,4,3,2,1) e=(8,3) W_top=301692708589179577 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,4,2,2,1,1) e=(1,12) W_top=297887183515208676 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,4,2,2,1,1) e=(7,4) W_top=294967225744984086 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,3,3,2,1,1) e=(1,12) W_top=311741180551469786 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,3,3,2,1,1) e=(6,5) W_top=308780106356574213 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,5,3,3,2,1,1) e=(8,3) W_top=294967225744984086 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,4,4,3,2,1,1) e=(1,12) W_top=316543211091097809 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,4,4,3,2,1,1) e=(5,6) W_top=311872864301179321 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,4,4,3,2,1,1) e=(7,4) W_top=308780106356574213 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,4,3,3,2,2,1) e=(1,12) W_top=302054505177840404 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,4,3,3,2,2,1) e=(5,6) W_top=299459211513681473 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,4,3,3,2,2,1) e=(10,2) W_top=301230645754856328 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,4,3,3,2,1,1,1) e=(1,12) W_top=294024825186998354 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,4,3,3,2,1,1,1) e=(5,6) W_top=291120340156996486 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,6,4,3,3,2,1,1,1) e=(12,1) W_top=294566556473284995 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,5,4,3,2,1,1) e=(1,12) W_top=316543211091097809 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,5,4,3,2,1,1) e=(4,7) W_top=307964052011375241 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,5,4,3,2,1,1) e=(6,5) W_top=311872864301179321 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,4,3,2,2,1) e=(1,12) W_top=309712228421031838 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,4,3,2,2,1) e=(4,7) W_top=303764523270103035 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,4,3,2,2,1) e=(7,4) W_top=300369918609918158 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,4,3,2,2,1) e=(10,2) W_top=307025121124227281 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,4,3,2,1,1,1) e=(1,12) W_top=297990986031196626 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,4,3,2,1,1,1) e=(4,7) W_top=291949568655374014 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,4,3,2,1,1,1) e=(7,4) W_top=291949568655374014 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,4,3,2,1,1,1) e=(12,1) W_top=297990986031196626 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,3,3,2,2,1,1) e=(1,12) W_top=296569431966031909 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,3,3,2,2,1,1) e=(4,7) W_top=290690304413609892 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,7,5,4,3,3,2,2,1,1) e=(12,1) W_top=291457612437464147 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,6,5,4,3,2,1,1) e=(1,12) W_top=311249499294706725 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,6,5,4,3,2,1,1) e=(3,8) W_top=292227571775258032 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,6,5,4,3,2,1,1) e=(5,6) W_top=307964052011375241 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,5,4,3,2,2,1) e=(1,12) W_top=307467364634980728 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,5,4,3,2,2,1) e=(3,8) W_top=291867146285266595 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,5,4,3,2,2,1) e=(6,5) W_top=303212950043208538 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,5,4,3,2,2,1) e=(10,2) W_top=303788010522705110 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,5,4,3,2,1,1,1) e=(1,12) W_top=294566556473284995 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,5,4,3,2,1,1,1) e=(6,5) W_top=291120340156996486 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,5,4,3,2,1,1,1) e=(12,1) W_top=294024825186998354 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,4,4,3,3,2,1) e=(1,12) W_top=291199996521752932 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,4,4,3,3,2,1) e=(9,3) W_top=295505091427771715 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,4,4,3,2,2,1,1) e=(1,12) W_top=301612638811651167 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,4,4,3,2,2,1,1) e=(7,4) W_top=291165120376879980 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,4,4,3,2,2,1,1) e=(10,2) W_top=288610847105079062 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,8,6,5,4,4,3,2,2,1,1) e=(12,1) W_top=295162336264619903 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,7,7,6,5,4,3,2,1,1) e=(1,12) W_top=296420612722287991 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,7,7,6,5,4,3,2,1,1) e=(4,7) W_top=292227571775258032 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,7,6,6,5,4,3,2,2,1) e=(1,12) W_top=292787334559972238 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,7,6,6,5,4,3,2,2,1) e=(5,6) W_top=290123075870695641 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(12,9,7,6,5,5,4,3,2,2,1,1) e=(1,12) W_top=290662412036574529 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,8,6,4,3,2,2,1,1) e=(4,8) W_top=288713467420467261 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,8,5,4,3,3,2,1,1) e=(4,8) W_top=290327320680615898 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,6,5,3,3,2,1) e=(3,9) W_top=295460913084185638 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,6,5,3,2,2,1,1) e=(3,9) W_top=302863108899306512 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,6,5,3,2,2,1,1) e=(6,5) W_top=296883088577759793 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,6,4,4,3,2,1) e=(3,9) W_top=296755062801238692 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,6,4,3,3,2,1,1) e=(3,9) W_top=315990461935707290 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,6,4,3,3,2,1,1) e=(5,6) W_top=304700188767441382 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,6,4,3,3,2,1,1) e=(8,3) W_top=298114103213665924 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,5,5,4,3,2,1) e=(3,9) W_top=291038375054618169 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,5,4,4,3,2,1,1) e=(3,9) W_top=314792359724634068 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,5,4,4,3,2,1,1) e=(4,7) W_top=288562840597986146 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,5,4,4,3,2,1,1) e=(7,4) W_top=304867234089442127 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,5,4,3,3,2,2,1) e=(3,9) W_top=303815032965879018 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,5,4,3,3,2,2,1) e=(10,2) W_top=298590288427700187 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,5,4,3,3,2,1,1,1) e=(3,9) W_top=295505091427771715 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,7,5,4,3,3,2,1,1,1) e=(12,1) W_top=291199996521752932 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,6,5,5,4,3,2,1,1) e=(3,9) W_top=301179126380272560 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,9,6,5,4,4,3,2,2,1) e=(3,9) W_top=298105300882313116 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(1,11) W_top=299896043465301614 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(2,10) W_top=364045173419462398 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(4,7) W_top=313454656225507490 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(5,6) W_top=324985019533977614 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(6,5) W_top=328174663527322328 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(7,4) W_top=325881170587070704 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(8,3) W_top=316973290988618643 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(9,2) W_top=296366539406440650 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,4,2,2,1,1) e=(2,10) W_top=308562899561364035 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,4,2,2,1,1) e=(7,4) W_top=308827345786777718 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,3,3,2,1,1) e=(2,10) W_top=322745853623616707 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,3,3,2,1,1) e=(5,6) W_top=293286910281639791 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,3,3,2,1,1) e=(6,5) W_top=322232862808157400 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,3,3,2,1,1) e=(8,3) W_top=308827345786777718 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,3,3,2,1,1) e=(11,1) W_top=298783737152438957 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,3,2,2,2,1) e=(10,2) W_top=295426811903051914 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,3,2,2,1,1,1) e=(6,5) W_top=290123075870695641 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,5,3,2,2,1,1,1) e=(12,1) W_top=292787334559972238 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,4,3,2,1,1) e=(2,10) W_top=327075062349918086 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,4,3,2,1,1) e=(4,7) W_top=290348397513712134 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,4,3,2,1,1) e=(5,6) W_top=324163098413658280 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,4,3,2,1,1) e=(7,4) W_top=322232862808157400 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,4,3,2,1,1) e=(11,1) W_top=301284119111135562 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,3,3,2,2,1) e=(2,10) W_top=312205651781361001 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,3,3,2,2,1) e=(5,6) W_top=311679629574143066 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,3,3,2,2,1) e=(8,3) W_top=288701176035076840 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,3,3,2,2,1) e=(10,2) W_top=314247649187255134 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,3,3,2,1,1,1) e=(2,10) W_top=303788010522705110 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,3,3,2,1,1,1) e=(5,6) W_top=303212950043208538 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,3,3,2,1,1,1) e=(8,3) W_top=291867146285266595 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,6,4,3,3,2,1,1,1) e=(12,1) W_top=307467364634980728 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,5,4,3,2,1,1) e=(2,10) W_top=326133200819342947 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,5,4,3,2,1,1) e=(4,7) W_top=316558052726406667 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,5,4,3,2,1,1) e=(6,5) W_top=324163098413658280 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,5,4,3,2,1,1) e=(7,4) W_top=293286910281639791 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,5,4,3,2,1,1) e=(11,1) W_top=298810442836018858 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,4,3,2,2,1) e=(2,10) W_top=319157896623357449 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,4,3,2,2,1) e=(4,7) W_top=312298476620531079 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,4,3,2,2,1) e=(7,4) W_top=312298476620531079 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,4,3,2,2,1) e=(10,2) W_top=319157896623357449 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,4,3,2,1,1,1) e=(2,10) W_top=307025121124227281 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,4,3,2,1,1,1) e=(4,7) W_top=300369918609918158 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,4,3,2,1,1,1) e=(7,4) W_top=303764523270103035 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,4,3,2,1,1,1) e=(12,1) W_top=309712228421031838 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,3,3,3,2,1) e=(9,3) W_top=298105300882313116 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,3,3,2,2,1,1) e=(2,10) W_top=305078310915834383 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,3,3,2,2,1,1) e=(4,7) W_top=298642859764084978 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,3,3,2,2,1,1) e=(10,2) W_top=297679242394767160 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,7,5,4,3,3,2,2,1,1) e=(12,1) W_top=303006020726040628 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,6,5,4,3,2,1,1) e=(2,10) W_top=318539951219953190 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,6,5,4,3,2,1,1) e=(3,8) W_top=288758887408488173 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,6,5,4,3,2,1,1) e=(5,6) W_top=316558052726406667 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,6,5,4,3,2,1,1) e=(6,5) W_top=290348397513712134 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,6,5,4,3,2,1,1) e=(11,1) W_top=288430536516662014 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,5,4,3,2,2,1) e=(2,10) W_top=314247649187255134 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,5,4,3,2,2,1) e=(3,8) W_top=288701176035076840 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,5,4,3,2,2,1) e=(6,5) W_top=311679629574143066 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,5,4,3,2,2,1) e=(10,2) W_top=312205651781361001 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,5,4,3,2,1,1,1) e=(2,10) W_top=301230645754856328 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,5,4,3,2,1,1,1) e=(6,5) W_top=299459211513681473 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,5,4,3,2,1,1,1) e=(12,1) W_top=302054505177840404 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,4,4,3,3,2,1) e=(2,10) W_top=298590288427700187 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,4,4,3,3,2,1) e=(9,3) W_top=303815032965879018 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,4,4,3,2,2,1,1) e=(2,10) W_top=307825175876326515 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,4,4,3,2,2,1,1) e=(7,4) W_top=299140596836793598 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,4,4,3,2,2,1,1) e=(10,2) W_top=296885483491875032 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,8,6,5,4,4,3,2,2,1,1) e=(12,1) W_top=303369421403068273 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,7,7,6,5,4,3,2,1,1) e=(2,10) W_top=299224106058819807 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,7,7,6,5,4,3,2,1,1) e=(4,7) W_top=288758887408488173 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,7,6,6,5,4,3,2,2,1) e=(2,10) W_top=295426811903051914 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,10,7,6,5,5,4,3,2,2,1,1) e=(2,10) W_top=293321845797996278 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,9,7,6,5,4,3,2,1) e=(3,9) W_top=324004302981551047 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,9,7,6,4,4,3,2,1,1) e=(3,9) W_top=290217180455083506 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,8,6,5,4,3,2,1) e=(4,8) W_top=316556035414865027 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,7,5,4,3,2,1) e=(5,7) W_top=313793139548961425 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,6,4,3,2,1) e=(6,6) W_top=313150504795323302 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,5,3,2,1) e=(7,5) W_top=313301458292198364 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,4,2,1) e=(8,4) W_top=314597783365181281 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,3,1) e=(9,3) W_top=318688811695991593 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,2) e=(10,2) W_top=329114324352956696 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(1,11) W_top=367676108829086275 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(2,9) W_top=298597286430155267 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(3,8) W_top=337928053953120027 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(4,7) W_top=353902312101646616 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(5,6) W_top=359346977394912762 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(6,5) W_top=359346977394912762 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(7,4) W_top=353902312101646616 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(8,3) W_top=337928053953120027 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(9,2) W_top=298597286430155267 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(11,1) W_top=367676108829086275 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,2,2,2,1) e=(7,4) W_top=288758887408488173 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,2,2,2,1) e=(10,2) W_top=299224106058819807 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,2,2,1,1,1) e=(7,4) W_top=292227571775258032 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,4,2,2,1,1,1) e=(12,1) W_top=296420612722287991 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,3,3,2,2,1) e=(1,11) W_top=288430536516662014 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,3,3,2,2,1) e=(5,6) W_top=290348397513712134 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,3,3,2,2,1) e=(6,5) W_top=316558052726406667 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,3,3,2,2,1) e=(8,3) W_top=288758887408488173 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,3,3,2,2,1) e=(10,2) W_top=318539951219953190 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,3,3,2,1,1,1) e=(6,5) W_top=307964052011375241 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,3,3,2,1,1,1) e=(8,3) W_top=292227571775258032 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,5,3,3,2,1,1,1) e=(12,1) W_top=311249499294706725 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,4,3,2,2,1) e=(1,11) W_top=298810442836018858 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,4,3,2,2,1) e=(4,7) W_top=293286910281639791 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,4,3,2,2,1) e=(5,6) W_top=324163098413658280 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,4,3,2,2,1) e=(7,4) W_top=316558052726406667 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,4,3,2,2,1) e=(10,2) W_top=326133200819342947 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,4,3,2,1,1,1) e=(5,6) W_top=311872864301179321 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,4,3,2,1,1,1) e=(7,4) W_top=307964052011375241 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,4,3,2,1,1,1) e=(12,1) W_top=316543211091097809 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,3,3,3,2,1) e=(9,3) W_top=301179126380272560 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,3,3,2,2,1,1) e=(5,6) W_top=308897498974934114 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,3,3,2,2,1,1) e=(10,2) W_top=301084993638157271 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,3,3,2,2,1,1) e=(12,1) W_top=306237010420519120 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,6,4,3,3,2,1,1,1,1) e=(13,1) W_top=289014898520322170 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,5,4,3,3,1,1) e=(9,3) W_top=290217180455083506 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,5,4,3,2,2,1) e=(1,11) W_top=301284119111135562 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,5,4,3,2,2,1) e=(4,7) W_top=322232862808157400 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,5,4,3,2,2,1) e=(6,5) W_top=324163098413658280 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,5,4,3,2,2,1) e=(7,4) W_top=290348397513712134 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,5,4,3,2,2,1) e=(10,2) W_top=327075062349918086 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,5,4,3,2,1,1,1) e=(4,7) W_top=308780106356574213 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,5,4,3,2,1,1,1) e=(6,5) W_top=311872864301179321 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,5,4,3,2,1,1,1) e=(12,1) W_top=316543211091097809 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,4,3,3,2,1) e=(4,7) W_top=304867234089442127 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,4,3,3,2,1) e=(7,4) W_top=288562840597986146 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,4,3,3,2,1) e=(9,3) W_top=314792359724634068 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,4,3,2,2,1,1) e=(1,11) W_top=295185352466356059 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,4,3,2,2,1,1) e=(4,7) W_top=314776532938688350 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,4,3,2,2,1,1) e=(7,4) W_top=310258022577386424 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,4,3,2,2,1,1) e=(10,2) W_top=307784165647871743 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,4,3,2,2,1,1) e=(12,1) W_top=314278607802420527 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,4,3,2,1,1,1,1) e=(13,1) W_top=293492831396328403 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,3,3,3,2,1,1) e=(9,3) W_top=297184466227470110 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,3,3,2,2,2,1) e=(11,2) W_top=293884922218174287 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,7,5,4,3,3,2,2,1,1,1) e=(13,1) W_top=292928268812375869 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,6,5,4,3,2,2,1) e=(1,11) W_top=298783737152438957 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,6,5,4,3,2,2,1) e=(3,8) W_top=308827345786777718 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,6,5,4,3,2,2,1) e=(5,6) W_top=322232862808157400 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,6,5,4,3,2,2,1) e=(6,5) W_top=293286910281639791 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,6,5,4,3,2,2,1) e=(10,2) W_top=322745853623616707 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,6,5,4,3,2,1,1,1) e=(3,8) W_top=294967225744984086 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,6,5,4,3,2,1,1,1) e=(5,6) W_top=308780106356574213 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,6,5,4,3,2,1,1,1) e=(12,1) W_top=311741180551469786 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,5,4,3,3,2,1) e=(3,8) W_top=298114103213665924 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,5,4,3,3,2,1) e=(6,5) W_top=304700188767441382 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,5,4,3,3,2,1) e=(9,3) W_top=315990461935707290 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,5,4,3,2,2,1,1) e=(1,11) W_top=295181268970867934 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,5,4,3,2,2,1,1) e=(3,8) W_top=305613378046311713 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,5,4,3,2,2,1,1) e=(6,5) W_top=314381437571660125 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,5,4,3,2,2,1,1) e=(10,2) W_top=305460048777064127 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,5,4,3,2,2,1,1) e=(12,1) W_top=312444299350394434 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,5,4,3,2,1,1,1,1) e=(13,1) W_top=290042922129290569 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,4,4,4,3,2,1) e=(8,4) W_top=290327320680615898 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,4,4,3,3,2,1,1) e=(3,8) W_top=294422926103420142 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,4,4,3,3,2,1,1) e=(9,3) W_top=306830366595415816 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,4,4,3,3,2,1,1) e=(12,1) W_top=299384276075961739 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,4,4,3,2,2,2,1) e=(11,2) W_top=299469268171333909 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,8,6,5,4,4,3,2,2,1,1,1) e=(13,1) W_top=298133146640091317 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,7,6,5,4,3,2,2,1) e=(4,7) W_top=308827345786777718 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,7,6,5,4,3,2,2,1) e=(10,2) W_top=308562899561364035 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,7,6,5,4,3,2,1,1,1) e=(4,7) W_top=294967225744984086 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,7,6,5,4,3,2,1,1,1) e=(12,1) W_top=297887183515208676 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,6,5,4,3,3,2,1) e=(5,6) W_top=296883088577759793 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,6,5,4,3,3,2,1) e=(9,3) W_top=302863108899306512 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,6,5,4,3,2,2,1,1) e=(5,6) W_top=303884429797053382 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,6,5,4,3,2,2,1,1) e=(10,2) W_top=291609034545368272 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,6,5,4,3,2,2,1,1) e=(12,1) W_top=298857126947677279 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,5,5,4,4,3,2,1) e=(8,4) W_top=288713467420467261 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,5,5,4,3,3,2,1,1) e=(6,5) W_top=293073375131165814 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,5,5,4,3,3,2,1,1) e=(9,3) W_top=299224940112685660 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,5,5,4,3,3,2,1,1) e=(12,1) W_top=292027854396045403 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,5,5,4,3,2,2,2,1) e=(11,2) W_top=289883433822253411 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(11,9,7,6,5,5,4,3,2,2,1,1,1) e=(13,1) W_top=288446994682128768 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,10,8,7,6,5,4,3,2,1,1) e=(2,10) W_top=329114324352956696 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,9,7,6,5,4,3,2,1,1) e=(3,9) W_top=318688811695991593 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,8,6,5,4,3,2,1,1) e=(4,8) W_top=314597783365181281 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,7,5,4,3,2,1,1) e=(5,7) W_top=313301458292198364 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,6,4,3,2,1,1) e=(6,6) W_top=313150504795323302 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,5,3,2,1,1) e=(7,5) W_top=313793139548961425 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,4,2,1,1) e=(8,4) W_top=316556035414865027 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,3,1,1) e=(9,3) W_top=324004302981551047 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(2,9) W_top=296366539406440650 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(3,8) W_top=316973290988618643 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(4,7) W_top=325881170587070704 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(5,6) W_top=328174663527322328 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(6,5) W_top=324985019533977614 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(7,4) W_top=313454656225507490 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(10,2) W_top=364045173419462398 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(11,1) W_top=299896043465301614 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,1,1,1) e=(3,8) W_top=301692708589179577 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,1,1,1) e=(4,7) W_top=310901590553897749 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,1,1,1) e=(5,6) W_top=314036929854646332 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,1,1,1) e=(6,5) W_top=312372239228295163 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,1,1,1) e=(7,4) W_top=305153272216394632 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,1,1,1) e=(12,1) W_top=356326365666977336 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,4,4,3,3,2,1) e=(9,3) W_top=291038375054618169 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,4,4,3,2,2,1,1) e=(5,6) W_top=296666141824693549 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,6,4,4,3,2,2,1,1) e=(12,1) W_top=290551282798879859 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,5,5,4,3,3,2,1) e=(9,3) W_top=296755062801238692 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,5,5,4,3,2,2,1,1) e=(4,7) W_top=297354427837402346 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,5,5,4,3,2,2,1,1) e=(6,5) W_top=296666141824693549 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,5,5,4,3,2,2,1,1) e=(12,1) W_top=293558426575286725 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,7,5,4,4,3,3,2,1,1) e=(9,3) W_top=288573856725493006 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,6,6,5,4,3,3,2,1) e=(9,3) W_top=295460913084185638 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,6,6,5,4,3,2,2,1,1) e=(3,8) W_top=291388157968268655 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,6,6,5,4,3,2,2,1,1) e=(5,6) W_top=297354427837402346 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,6,6,5,4,3,2,2,1,1) e=(12,1) W_top=291675810708814799 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,8,6,5,5,4,3,3,2,1,1) e=(9,3) W_top=291944508263487903 exceeds_budget=yes
+M29_TOP_PAIR_OVER_BUDGET shape=(10,9,7,7,6,5,4,3,2,2,1,1) e=(4,7) W_top=291388157968268655 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(13,10,8,7,5,4,3,3,2,1,1) e=(1,13) f=(1,12) W_top2=291215274283755915 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(12,11,8,7,5,4,3,3,2,1,1) e=(2,11) f=(2,10) W_top2=288891213930646523 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(12,9,8,7,6,5,4,3,2,1) e=(1,12) f=(1,11) W_top2=324180791883527004 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(12,9,8,7,6,5,4,3,2,1) e=(1,12) f=(5,6) W_top2=291912019863999160 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(12,9,8,7,6,5,4,3,2,1) e=(1,12) f=(6,5) W_top2=292929244542461692 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(12,9,8,7,6,5,4,3,2,1) e=(1,12) f=(7,4) W_top2=290256751297841997 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(2,10) f=(1,11) W_top2=290822581806426373 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(2,10) f=(4,7) W_top2=295363579112452143 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(2,10) f=(5,6) W_top2=302568518379225600 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(2,10) f=(6,5) W_top2=304179913861289286 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(2,10) f=(7,4) W_top2=301430012295943455 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,10,8,7,6,5,4,3,2,1) e=(2,10) f=(8,3) W_top2=293033262333131035 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,7,5,4,3,2,1) e=(5,7) f=(5,6) W_top2=292182560049798202 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,6,4,3,2,1) e=(6,6) f=(5,6) W_top2=291539925296160079 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,6,4,3,2,1) e=(6,6) f=(6,5) W_top2=292557149974622611 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,5,3,2,1) e=(7,5) f=(6,5) W_top2=292708103471497673 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,5,3,2,1) e=(7,5) f=(7,4) W_top2=289413391163066547 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,4,2,1) e=(8,4) f=(7,4) W_top2=290558762739174402 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(1,11) f=(3,8) W_top2=293117418197026557 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(1,11) f=(4,7) W_top2=303017743690621231 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(1,11) f=(5,6) W_top2=306559938769601892 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(1,11) f=(6,5) W_top2=305834753273002371 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(1,11) f=(7,4) W_top2=300241567407425260 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(1,11) f=(11,1) W_top2=295702144057950786 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(3,8) f=(4,7) W_top2=293627167729333380 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(4,7) f=(3,8) W_top2=294568985242504075 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(4,7) f=(5,6) W_top2=306453267484766330 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(4,7) f=(6,5) W_top2=290873035917658975 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(5,6) f=(4,7) W_top2=306865608188762839 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(5,6) f=(6,5) W_top2=310150729811663756 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(5,6) f=(7,4) W_top2=291240785659200780 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(6,5) f=(4,7) W_top2=291240785659200780 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(6,5) f=(5,6) W_top2=310150729811663756 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(6,5) f=(7,4) W_top2=306865608188762839 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(7,4) f=(5,6) W_top2=290873035917658975 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(7,4) f=(6,5) W_top2=306453267484766330 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(7,4) f=(8,3) W_top2=294568985242504075 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(8,3) f=(7,4) W_top2=293627167729333380 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(11,1) f=(1,11) W_top2=295702144057950786 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(11,1) f=(4,7) W_top2=300241567407425260 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(11,1) f=(5,6) W_top2=305834753273002371 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(11,1) f=(6,5) W_top2=306559938769601892 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(11,1) f=(7,4) W_top2=303017743690621231 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,7,6,5,4,3,2,1,1) e=(11,1) f=(8,3) W_top2=293117418197026557 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,6,5,4,4,3,2,2,2,1) e=(11,2) f=(10,2) W_top2=288891213930646523 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(11,9,8,6,5,4,4,3,2,2,1,1,1) e=(13,1) f=(12,1) W_top2=291215274283755915 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,8,6,5,4,3,2,1,1) e=(4,8) f=(4,7) W_top2=290558762739174402 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,7,5,4,3,2,1,1) e=(5,7) f=(4,7) W_top2=289413391163066547 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,7,5,4,3,2,1,1) e=(5,7) f=(5,6) W_top2=292708103471497673 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,6,4,3,2,1,1) e=(6,6) f=(5,6) W_top2=292557149974622611 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,6,4,3,2,1,1) e=(6,6) f=(6,5) W_top2=291539925296160079 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,5,3,2,1,1) e=(7,5) f=(6,5) W_top2=292182560049798202 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(10,2) f=(3,8) W_top2=293033262333131035 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(10,2) f=(4,7) W_top2=301430012295943455 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(10,2) f=(5,6) W_top2=304179913861289286 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(10,2) f=(6,5) W_top2=302568518379225600 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(10,2) f=(7,4) W_top2=295363579112452143 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,2,1) e=(10,2) f=(11,1) W_top2=290822581806426373 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,1,1,1) e=(12,1) f=(4,7) W_top2=290256751297841997 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,1,1,1) e=(12,1) f=(5,6) W_top2=292929244542461692 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,1,1,1) e=(12,1) f=(6,5) W_top2=291912019863999160 exceeds_budget=yes
+M29_TOP_TWO_OVER_BUDGET shape=(10,9,8,7,6,5,4,3,2,1,1,1) e=(12,1) f=(11,1) W_top2=324180791883527004 exceeds_budget=yes
+NOTE obstruction applies only to this recursive envelope, not to actual broad-Omega cardinalities
+SUMMARY failures=0
+__EXIT_STATUS=0

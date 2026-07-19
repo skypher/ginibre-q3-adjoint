@@ -1,0 +1,102 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=bc22efcafafe2d40b5f5430cb8f9cb046bc6b9b188da684e61dc6fdfaa27077e
+D exact shared moment range ranks 5..5 moments m_43..m_44 C++ certificate
+begin D_5=SO(10)
+shared D exact moment m_43 ranks 5..5
+    m_43: O-even target 1000/25608 elapsed=0.431212s
+    m_43: O-even target 2000/25608 elapsed=1.46982s
+    m_43: O-even target 3000/25608 elapsed=2.93195s
+    m_43: O-even target 4000/25608 elapsed=4.87257s
+    m_43: O-even target 5000/25608 elapsed=7.01955s
+    m_43: O-even target 6000/25608 elapsed=9.78445s
+    coeff heartbeat misses=1730721 cache=1730715 power=38 partition-size=8
+    m_43: O-even target 7000/25608 elapsed=12.1618s
+    m_43: O-even target 8000/25608 elapsed=15.2973s
+    m_43: O-even target 9000/25608 elapsed=18.1991s
+    coeff heartbeat misses=3185010 cache=3185006 power=40 partition-size=9
+    m_43: O-even target 10000/25608 elapsed=21.3756s
+    m_43: O-even target 11000/25608 elapsed=25.4005s
+    m_43: O-even target 12000/25608 elapsed=28.5012s
+    coeff heartbeat misses=4447193 cache=4447186 power=37 partition-size=8
+    m_43: O-even target 13000/25608 elapsed=31.7645s
+    m_43: O-even target 14000/25608 elapsed=35.4286s
+    m_43: O-even target 15000/25608 elapsed=37.8122s
+    coeff heartbeat misses=5725730 cache=5725718 power=32 partition-size=10
+    m_43: O-even target 16000/25608 elapsed=41.945s
+    m_43: O-even target 17000/25608 elapsed=44.1253s
+    m_43: O-even target 18000/25608 elapsed=47.8866s
+    coeff heartbeat misses=6749048 cache=6749043 power=39 partition-size=9
+    m_43: O-even target 19000/25608 elapsed=51.9991s
+    m_43: O-even target 20000/25608 elapsed=54.8585s
+    m_43: O-even target 21000/25608 elapsed=57.8088s
+    m_43: O-even target 22000/25608 elapsed=59.5642s
+    coeff heartbeat misses=7924841 cache=7924836 power=39 partition-size=9
+    m_43: O-even target 23000/25608 elapsed=62.269s
+    m_43: O-even target 24000/25608 elapsed=64.6916s
+    m_43: O-even target 25000/25608 elapsed=66.1365s
+    m_43: O-even target 25608/25608 elapsed=66.6611s
+    depth 38: partition 1000/12690 elapsed=0.387591s
+    depth 38: partition 2000/12690 elapsed=0.914602s
+    depth 38: partition 3000/12690 elapsed=1.52382s
+    depth 38: partition 4000/12690 elapsed=2.19428s
+    depth 38: partition 5000/12690 elapsed=2.91738s
+    coeff heartbeat misses=9047514 cache=9047510 power=40 partition-size=10
+    depth 38: partition 6000/12690 elapsed=3.66297s
+    depth 38: partition 7000/12690 elapsed=4.43975s
+    depth 38: partition 8000/12690 elapsed=5.23897s
+    depth 38: partition 9000/12690 elapsed=6.11164s
+    depth 38: partition 10000/12690 elapsed=7.0027s
+    depth 38: partition 11000/12690 elapsed=7.82957s
+    depth 38: partition 12000/12690 elapsed=8.55939s
+    depth 38: partition 12690/12690 elapsed=8.92282s
+  D_5 m_43 += O_even -4024448853827462170880815916120139589176960373328571 + det 12447690741074932359798357590759656589627364918174; Delta_43 = -4012001163086387238521017558529379932587333008410397; moment_43 = 24895465058954818549108502192205830747393286206979
+shared D exact moment m_44 ranks 5..5
+    coeff heartbeat misses=9664950 cache=9664949 power=44 partition-size=1
+    m_44: O-even target 1000/29292 elapsed=0.0900418s
+    m_44: O-even target 2000/29292 elapsed=0.255474s
+    m_44: O-even target 3000/29292 elapsed=0.600014s
+    m_44: O-even target 4000/29292 elapsed=0.877587s
+    m_44: O-even target 5000/29292 elapsed=1.25865s
+    m_44: O-even target 6000/29292 elapsed=2.25535s
+    m_44: O-even target 7000/29292 elapsed=3.15882s
+    m_44: O-even target 8000/29292 elapsed=3.47839s
+    m_44: O-even target 9000/29292 elapsed=3.71946s
+    m_44: O-even target 10000/29292 elapsed=4.04625s
+    m_44: O-even target 11000/29292 elapsed=4.2589s
+    m_44: O-even target 12000/29292 elapsed=4.61962s
+    m_44: O-even target 13000/29292 elapsed=4.85366s
+    m_44: O-even target 14000/29292 elapsed=5.20279s
+    m_44: O-even target 15000/29292 elapsed=5.49776s
+    m_44: O-even target 16000/29292 elapsed=5.8463s
+    m_44: O-even target 17000/29292 elapsed=6.21882s
+    m_44: O-even target 18000/29292 elapsed=6.52915s
+    m_44: O-even target 19000/29292 elapsed=6.948s
+    m_44: O-even target 20000/29292 elapsed=7.26062s
+    m_44: O-even target 21000/29292 elapsed=7.66571s
+    m_44: O-even target 22000/29292 elapsed=8.08611s
+    m_44: O-even target 23000/29292 elapsed=8.43351s
+    m_44: O-even target 24000/29292 elapsed=8.90597s
+    m_44: O-even target 25000/29292 elapsed=9.25518s
+    m_44: O-even target 26000/29292 elapsed=9.75522s
+    coeff heartbeat misses=10662837 cache=10662834 power=42 partition-size=9
+    m_44: O-even target 27000/29292 elapsed=10.1376s
+    m_44: O-even target 28000/29292 elapsed=10.6037s
+    m_44: O-even target 29000/29292 elapsed=11.0117s
+    m_44: O-even target 29292/29292 elapsed=11.0994s
+    depth 39: partition 1000/14663 elapsed=0.249547s
+    depth 39: partition 2000/14663 elapsed=0.595443s
+    depth 39: partition 3000/14663 elapsed=0.992614s
+    depth 39: partition 4000/14663 elapsed=1.4274s
+    depth 39: partition 5000/14663 elapsed=1.89571s
+    depth 39: partition 6000/14663 elapsed=2.39368s
+    depth 39: partition 7000/14663 elapsed=2.9135s
+    depth 39: partition 8000/14663 elapsed=3.48356s
+    depth 39: partition 9000/14663 elapsed=4.08128s
+    depth 39: partition 10000/14663 elapsed=4.65162s
+    depth 39: partition 11000/14663 elapsed=5.2308s
+    depth 39: partition 12000/14663 elapsed=5.90633s
+    depth 39: partition 13000/14663 elapsed=6.52745s
+    depth 39: partition 14000/14663 elapsed=7.08255s
+    depth 39: partition 14663/14663 elapsed=7.36742s
+  D_5 m_44 += O_even -175248595416122201079784397564776163286369573864077111 + det 355546949257659074661964202350727511206658800729942; Delta_44 = -174893048466864542005122433362425435775162915063347169; moment_44 = 711095467260409372639103569884621042513508985274847
+__EXIT_STATUS=0

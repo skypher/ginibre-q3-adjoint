@@ -1,0 +1,57 @@
+B/C residual Pieri-compression power-loss arithmetic GMP verifier
+VERIFIES exact inequality: 2^(A*q+B+1)*binom(j,q)*s_{j-q} <= s_j
+A=2 B=0 q=rank+1
+This is only the arithmetic implication of a possible branch-loss supplier.
+rows=402 total_checks=3904626 max_index=30899 onset_log=../certificates/post_m29/bc_interval_formula_mpfr_certificate.log OpenMP threads=64
+stable_progress index=1000/30899
+stable_progress index=2000/30899
+stable_progress index=3000/30899
+stable_progress index=4000/30899
+stable_progress index=5000/30899
+stable_progress index=6000/30899
+stable_progress index=7000/30899
+stable_progress index=8000/30899
+stable_progress index=9000/30899
+stable_progress index=10000/30899
+stable_progress index=11000/30899
+stable_progress index=12000/30899
+stable_progress index=13000/30899
+stable_progress index=14000/30899
+stable_progress index=15000/30899
+stable_progress index=16000/30899
+stable_progress index=17000/30899
+stable_progress index=18000/30899
+stable_progress index=19000/30899
+stable_progress index=20000/30899
+stable_progress index=21000/30899
+stable_progress index=22000/30899
+stable_progress index=23000/30899
+stable_progress index=24000/30899
+stable_progress index=25000/30899
+stable_progress index=26000/30899
+stable_progress index=27000/30899
+stable_progress index=28000/30899
+stable_progress index=29000/30899
+stable_progress index=30000/30899
+stable_progress index=30899/30899
+progress completed=25/402 last=B_47 failures=0
+progress completed=50/402 last=B_83 failures=0
+progress completed=75/402 last=B_63 failures=0
+progress completed=100/402 last=B_110 failures=0
+progress completed=125/402 last=B_133 failures=0
+progress completed=150/402 last=C_28 failures=0
+progress completed=175/402 last=B_162 failures=0
+progress completed=200/402 last=C_74 failures=0
+progress completed=225/402 last=C_97 failures=0
+progress completed=250/402 last=C_119 failures=0
+progress completed=275/402 last=C_138 failures=0
+progress completed=300/402 last=B_169 failures=0
+progress completed=325/402 last=B_191 failures=0
+progress completed=350/402 last=B_201 failures=0
+progress completed=375/402 last=C_202 failures=0
+progress completed=400/402 last=C_212 failures=0
+progress completed=402/402 last=C_217 failures=0
+worst_ratio	row=B_14	onset=925	boundary=30	q=15	moment=30	log10_bound_over_stable=-2.63554171301028006
+worst_margin	row=B_14	onset=925	boundary=30	q=15	moment=30	margin_log10=31.3252320612507091
+SUMMARY failures=0 rows=402 total_checks=3904626 max_index=30899 loss_q_mult=2 loss_add=0 worst_ratio_log10=-2.63554171301028006 worst_margin_log10=31.3252320612507091
+__EXIT_STATUS=0

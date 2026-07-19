@@ -1,0 +1,35 @@
+BEGIN D10 2026-05-03T09:13:33+00:00
+Exact classical Chain bridge C++: max_chain=10, moment_max=25, families=D, rank_min=10, rank_cap=10
+  m_1 = 0  (|support| = 1, |cache| = 181)
+  m_2 = 1  (|support| = 6, |cache| = 328)
+  m_3 = 1  (|support| = 14, |cache| = 866)
+  m_4 = 6  (|support| = 32, |cache| = 1808)
+  m_5 = 22  (|support| = 67, |cache| = 3749)
+  m_6 = 130  (|support| = 133, |cache| = 7163)
+  m_7 = 822  (|support| = 247, |cache| = 13073)
+  m_8 = 6202  (|support| = 444, |cache| = 22292)
+  m_9 = 52552  (|support| = 765, |cache| = 37154)
+  m_10 = 499195  (|support| = 1280, |cache| = 59413)
+  m_11 = 5238415  (|support| = 2079, |cache| = 92717)
+  m_12 = 60224384  (|support| = 3298, |cache| = 140684)
+  m_13 = 752634240  (|support| = 5112, |cache| = 209283)
+  m_14 = 10159271447  (|support| = 7774, |cache| = 304621)
+  m_15 = 147304127432  (|support| = 11605, |cache| = 436440)
+  m_16 = 2283377761815  (|support| = 17045, |cache| = 614836)
+  m_17 = 37683428022464  (|support| = 24656, |cache| = 854052)
+  m_18 = 659705573402822  (|support| = 35181, |cache| = 1170333)
+  m_19 = 12211707919300578  (|support| = 49552, |cache| = 1585197)
+  m_20 = 238332074336624432  (|support| = 68982, |cache| = 2122371)
+  m_21 = 4891623364380929000  (|support| = 94967, |cache| = 2813900)
+  m_22 = 105338071169250184692  (|support| = 129412, |cache| = 3694190)
+  m_23 = 2375059047276947587688  (|support| = 174656, |cache| = 4808072)
+  m_24 = 55962817819757272831130  (|support| = 233614, |cache| = 6205721)
+  m_25 = 1375668424897100039786100  (|support| = 309828, |cache| = 7949313)
+D10: min_diff_m0..10=32 diff_m10=4745076385977027311715272 Q3(23)=4776807397272767711949208 m0..6=[1, 0, 1, 1, 6, 22, 130] dt=127.63s OK
+
+Summary table:
+group,rank,min_chain_diff,last_chain_diff,last_odd_Q3,seconds
+D10,10,32,4745076385977027311715272,4776807397272767711949208,127.63
+
+RESULT: ALL PASS
+END D10 rc=0 2026-05-03T09:15:47+00:00

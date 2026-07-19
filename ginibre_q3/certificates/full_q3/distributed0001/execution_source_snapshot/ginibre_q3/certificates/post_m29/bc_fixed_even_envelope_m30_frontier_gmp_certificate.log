@@ -1,0 +1,45 @@
+B/C fixed-even recursive-envelope m=30 frontier GMP verifier
+host=optimus
+target_m=30 target_n=59 budget=2^60 budget_value=1152921504606846976 max_depth=8 OpenMP threads=64
+RESULT m=1 partitions=1 max_W=1 max_W_bits=1 best_shape=(1)
+RESULT m=2 partitions=3 max_W=1 max_W_bits=1 best_shape=(3)
+RESULT m=3 partitions=7 max_W=1 max_W_bits=1 best_shape=(5)
+RESULT m=4 partitions=15 max_W=2 max_W_bits=2 best_shape=(4,2,1)
+RESULT m=5 partitions=30 max_W=4 max_W_bits=3 best_shape=(4,3,1,1)
+RESULT m=6 partitions=56 max_W=11 max_W_bits=4 best_shape=(5,3,2,1)
+RESULT m=7 partitions=101 max_W=29 max_W_bits=5 best_shape=(5,4,2,1,1)
+RESULT m=8 partitions=176 max_W=94 max_W_bits=7 best_shape=(5,4,3,2,1)
+RESULT m=9 partitions=297 max_W=320 max_W_bits=9 best_shape=(6,4,3,2,1,1)
+RESULT m=10 partitions=490 max_W=1100 max_W_bits=11 best_shape=(6,5,3,2,2,1)
+RESULT m=11 partitions=792 max_W=4504 max_W_bits=13 best_shape=(6,5,4,3,2,1)
+RESULT m=12 partitions=1255 max_W=19960 max_W_bits=15 best_shape=(7,5,4,3,2,1,1)
+RESULT m=13 partitions=1958 max_W=85787 max_W_bits=17 best_shape=(7,6,4,3,2,2,1)
+RESULT m=14 partitions=3010 max_W=370729 max_W_bits=19 best_shape=(8,6,5,3,2,2,1)
+RESULT m=15 partitions=4565 max_W=2037069 max_W_bits=21 best_shape=(8,6,5,4,3,2,1)
+RESULT m=16 partitions=6842 max_W=10845675 max_W_bits=24 best_shape=(8,7,5,4,3,2,1,1)
+RESULT m=17 partitions=10143 max_W=54725353 max_W_bits=26 best_shape=(8,7,6,4,3,2,2,1)
+RESULT m=18 partitions=14883 max_W=286275138 max_W_bits=29 best_shape=(9,7,6,4,3,3,2,1)
+RESULT m=19 partitions=21637 max_W=1788942066 max_W_bits=31 best_shape=(9,7,6,5,4,3,2,1)
+RESULT m=20 partitions=31185 max_W=11349507850 max_W_bits=34 best_shape=(9,8,6,5,4,3,2,1,1)
+RESULT m=21 partitions=44583 max_W=67061584700 max_W_bits=36 best_shape=(9,8,7,5,4,3,2,2,1)
+RESULT m=22 partitions=63261 max_W=403479661259 max_W_bits=39 best_shape=(10,8,7,5,4,3,3,2,1)
+RESULT m=23 partitions=89134 max_W=2554342683425 max_W_bits=42 best_shape=(10,8,7,6,4,3,3,2,1,1)
+RESULT m=24 partitions=124754 max_W=18877135179266 max_W_bits=45 best_shape=(10,8,7,6,5,4,3,2,1,1)
+RESULT m=25 partitions=173525 max_W=133746685912501 max_W_bits=47 best_shape=(10,9,7,6,5,4,3,2,2,1)
+RESULT m=26 partitions=239943 max_W=907074996503025 max_W_bits=50 best_shape=(11,9,8,6,5,4,3,2,2,1)
+RESULT m=27 partitions=329931 max_W=6344159720142261 max_W_bits=53 best_shape=(11,9,8,6,5,4,3,3,2,1,1)
+RESULT m=28 partitions=451276 max_W=45416126476990210 max_W_bits=56 best_shape=(11,9,8,7,5,4,4,3,2,1,1)
+RESULT m=29 partitions=614154 max_W=367676108829086275 max_W_bits=59 best_shape=(11,9,8,7,6,5,4,3,2,1,1)
+RESULT m=30 partitions=831820 max_W=2963381126459933824 max_W_bits=62 best_shape=(11,10,8,7,6,5,4,3,2,2,1)
+M30_OVER_BUDGET_SHAPES count=11090
+M30_OVER_BUDGET_SHAPES expected_count=11090
+M30_MAX W=2963381126459933824 expected_W=2963381126459933824 bits=62 shape=(11,10,8,7,6,5,4,3,2,2,1)
+M30_TOP_DEPTH depth=1 count=44333 expected_count=44333
+M30_TOP_DEPTH depth=2 count=92312 expected_count=92312
+M30_TOP_DEPTH depth=3 count=60440 expected_count=60440
+M30_TOP_DEPTH depth=4 count=5438 expected_count=5438
+M30_TOP_DEPTH depth=5 count=408 expected_count=408
+M30_TOP_DEPTH depth=6 count=18 expected_count=18
+M30_TOP_DEPTH depth=7 count=0 expected_count=0
+SUMMARY remaining_count=0 failures=0
+__EXIT_STATUS=0

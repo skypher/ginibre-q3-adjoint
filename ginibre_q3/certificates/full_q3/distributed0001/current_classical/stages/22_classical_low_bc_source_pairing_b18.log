@@ -1,0 +1,23 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp B18 39 --stable-moments /home/yang/q3/ginibre_q3/references/oeis_A002137_stable.txt /home/yang/q3/ginibre_q3/certificates/post_m29/m30_BC13_18_pair_range_exact39.log
+power=1 support=1 elapsed_seconds=5.4353e-05
+power=2 support=6 elapsed_seconds=4.9473e-05
+power=3 support=14 elapsed_seconds=0.000280287
+power=4 support=32 elapsed_seconds=0.000742448
+power=5 support=66 elapsed_seconds=0.00158625
+power=6 support=132 elapsed_seconds=0.00331981
+power=7 support=248 elapsed_seconds=0.00679552
+power=8 support=453 elapsed_seconds=0.0129892
+power=9 support=797 elapsed_seconds=0.0239867
+power=10 support=1368 elapsed_seconds=0.0435577
+power=11 support=2287 elapsed_seconds=0.0761071
+power=12 support=3750 elapsed_seconds=0.130607
+power=13 support=6026 elapsed_seconds=0.21584
+power=14 support=9531 elapsed_seconds=0.354646
+power=15 support=14840 elapsed_seconds=0.571134
+power=16 support=22800 elapsed_seconds=0.911054
+power=17 support=34584 elapsed_seconds=1.4219
+power=18 support=51875 elapsed_seconds=2.20227
+power=19 support=76959 elapsed_seconds=3.3861
+power=20 support=113044 elapsed_seconds=5.18296
+root_datum=B_18 rank=18 roots=648 maximum_coordinate=20
+SUMMARY group=B_18 moments=40 source_values=2 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

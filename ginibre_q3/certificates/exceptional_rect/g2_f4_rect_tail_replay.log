@@ -1,0 +1,19 @@
+COMMAND: ./direct_chain_rect_g2_f4_certificate
+group=G2 n0=21 roots=6 kappa=4 quartic_denominator=16/5
+rectangle_s=[19/5,21/5] rectangle_t=[7/5,9/5] gap=111/80 h=1661/2268
+discriminant_scale=1/27 radial_exp_ceiling=6 sine_exp_ceiling=1
+base_ratio_gt_3: OK
+odd_step_ratio_gt_6: OK
+quartic_identity_exact: OK
+root_angle_cap_exact: OK
+h_monotone_from_n0: OK
+group=F4 n0=65 roots=24 kappa=9 quartic_denominator=54/5
+rectangle_s=[51/4,53/4] rectangle_t=[31/4,33/4] gap=3023/1296 h=44063/63180
+discriminant_scale=1/4096 radial_exp_ceiling=22 sine_exp_ceiling=4
+base_ratio_gt_100000000000000: OK
+odd_step_ratio_gt_10: OK
+quartic_identity_exact: OK
+root_angle_cap_exact: OK
+h_monotone_from_n0: OK
+RESULT: G2/F4 RECTANGULAR TAILS PASS (exact GMP rationals)
+__EXIT_STATUS=0

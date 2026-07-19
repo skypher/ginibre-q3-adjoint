@@ -1,0 +1,7 @@
+m=29 reused D determinant-delta certificate
+stable Chain diff D(29) = 601101928572633606043640402579591572896576321369733121741661664564304348781808026451968
+certified rows: D_11..D_11
+delta logs:
+  /tmp/ginibre_m28_logs/d_exact/m28_D11_lower_reverse.log
+D_11 missing active deltas: [26, 49, 50]
+__EXIT_STATUS=1

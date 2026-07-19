@@ -1,0 +1,24 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp D19 42 --stable-moments /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/references/oeis_A002137_stable.txt /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_delta_logs/d19_delta_19_42_from_m29_D16_63_lower.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_delta_logs/d19_delta_27.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D15_23_m33.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D15_23_m34.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m19_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m20_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m21_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m22_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m23_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m24_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m25_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m26_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m27_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m28_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m29_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m30_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m31_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m32_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m39.log
+power=1 support=1 elapsed_seconds=1.8044e-05
+power=2 support=6 elapsed_seconds=1.6972e-05
+power=3 support=14 elapsed_seconds=9.4446e-05
+power=4 support=32 elapsed_seconds=0.000206986
+power=5 support=66 elapsed_seconds=0.000482058
+power=6 support=132 elapsed_seconds=0.00101698
+power=7 support=248 elapsed_seconds=0.00205862
+power=8 support=453 elapsed_seconds=0.00394959
+power=9 support=797 elapsed_seconds=0.00730477
+power=10 support=1368 elapsed_seconds=0.0131619
+power=11 support=2286 elapsed_seconds=0.0228439
+power=12 support=3744 elapsed_seconds=0.0385301
+power=13 support=6005 elapsed_seconds=0.0636165
+power=14 support=9473 elapsed_seconds=0.103696
+power=15 support=14699 elapsed_seconds=0.16497
+power=16 support=22488 elapsed_seconds=0.258459
+power=17 support=33940 elapsed_seconds=0.401181
+power=18 support=50613 elapsed_seconds=0.611291
+power=19 support=74609 elapsed_seconds=0.926963
+power=20 support=108847 elapsed_seconds=1.37827
+power=21 support=157224 elapsed_seconds=2.03695
+root_datum=D_19 rank=19 roots=684 maximum_coordinate=21
+SUMMARY group=D_19 moments=43 source_values=38 failures=0 ignored_determinant_components=4 stable_recurrence_values_checked=101

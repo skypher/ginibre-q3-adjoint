@@ -1,0 +1,64 @@
+B/C family single-delta reverse certificate
+family = C
+rank = 19
+moment = 57
+C_19 target count = 118822
+    C_19 Delta_57 shared reverse step 1/57 frontier=1636983 colors=1 elapsed=4.91063s
+    C_19 Delta_57 shared reverse step 2/57 frontier=5451219 colors=1 elapsed=67.8556s
+    C_19 Delta_57 shared reverse step 3/57 frontier=9358661 colors=1 elapsed=268.165s
+    C_19 Delta_57 shared reverse step 4/57 frontier=12001460 colors=1 elapsed=631.58s
+    C_19 Delta_57 shared reverse step 5/57 frontier=13224382 colors=1 elapsed=1128.75s
+    C_19 Delta_57 shared reverse step 6/57 frontier=13401093 colors=1 elapsed=1722.33s
+    C_19 Delta_57 shared reverse step 7/57 frontier=12922818 colors=1 elapsed=2361.91s
+    C_19 Delta_57 shared reverse step 8/57 frontier=12076840 colors=1 elapsed=2998.17s
+    C_19 Delta_57 shared reverse step 9/57 frontier=11048162 colors=1 elapsed=3613.48s
+    C_19 Delta_57 shared reverse step 10/57 frontier=9954153 colors=1 elapsed=4208.46s
+    C_19 Delta_57 shared reverse step 11/57 frontier=8864985 colors=1 elapsed=4743.65s
+    C_19 Delta_57 shared reverse step 12/57 frontier=7823366 colors=1 elapsed=5227.08s
+    C_19 Delta_57 shared reverse step 13/57 frontier=6852179 colors=1 elapsed=5658.85s
+    C_19 Delta_57 shared reverse step 14/57 frontier=5963478 colors=1 elapsed=6041.65s
+    C_19 Delta_57 shared reverse step 15/57 frontier=5160843 colors=1 elapsed=6374.72s
+    C_19 Delta_57 shared reverse step 16/57 frontier=4443825 colors=1 elapsed=6663.83s
+    C_19 Delta_57 shared reverse step 17/57 frontier=3808416 colors=1 elapsed=6912.76s
+    C_19 Delta_57 shared reverse step 18/57 frontier=3249440 colors=1 elapsed=7126.09s
+    C_19 Delta_57 shared reverse step 19/57 frontier=2760409 colors=1 elapsed=7306.3s
+    C_19 Delta_57 shared reverse step 20/57 frontier=2334875 colors=1 elapsed=7458.28s
+    C_19 Delta_57 shared reverse step 21/57 frontier=1966106 colors=1 elapsed=7585.85s
+    C_19 Delta_57 shared reverse step 22/57 frontier=1647906 colors=1 elapsed=7691.78s
+    C_19 Delta_57 shared reverse step 23/57 frontier=1374245 colors=1 elapsed=7779.36s
+    C_19 Delta_57 shared reverse step 24/57 frontier=1139773 colors=1 elapsed=7851.35s
+    C_19 Delta_57 shared reverse step 25/57 frontier=939487 colors=1 elapsed=7910.07s
+    C_19 Delta_57 shared reverse step 26/57 frontier=769049 colors=1 elapsed=7957.56s
+    C_19 Delta_57 shared reverse step 27/57 frontier=624505 colors=1 elapsed=7995.7s
+    C_19 Delta_57 shared reverse step 28/57 frontier=502492 colors=1 elapsed=8026.06s
+    C_19 Delta_57 shared reverse step 29/57 frontier=400003 colors=1 elapsed=8049.93s
+    C_19 Delta_57 shared reverse step 30/57 frontier=314517 colors=1 elapsed=8068.53s
+    C_19 Delta_57 shared reverse step 31/57 frontier=243811 colors=1 elapsed=8082.83s
+    C_19 Delta_57 shared reverse step 32/57 frontier=186021 colors=1 elapsed=8093.67s
+    C_19 Delta_57 shared reverse step 33/57 frontier=139483 colors=1 elapsed=8101.71s
+    C_19 Delta_57 shared reverse step 34/57 frontier=102728 colors=1 elapsed=8107.55s
+    C_19 Delta_57 shared reverse step 35/57 frontier=74355 colors=1 elapsed=8111.69s
+    C_19 Delta_57 shared reverse step 36/57 frontier=53004 colors=1 elapsed=8114.56s
+    C_19 Delta_57 shared reverse step 37/57 frontier=37317 colors=1 elapsed=8116.49s
+    C_19 Delta_57 shared reverse step 38/57 frontier=26014 colors=1 elapsed=8117.74s
+    C_19 Delta_57 shared reverse step 39/57 frontier=17977 colors=1 elapsed=8118.54s
+    C_19 Delta_57 shared reverse step 40/57 frontier=12310 colors=1 elapsed=8119.05s
+    C_19 Delta_57 shared reverse step 41/57 frontier=8349 colors=1 elapsed=8119.36s
+    C_19 Delta_57 shared reverse step 42/57 frontier=5604 colors=1 elapsed=8119.55s
+    C_19 Delta_57 shared reverse step 43/57 frontier=3718 colors=1 elapsed=8119.67s
+    C_19 Delta_57 shared reverse step 44/57 frontier=2436 colors=1 elapsed=8119.73s
+    C_19 Delta_57 shared reverse step 45/57 frontier=1575 colors=1 elapsed=8119.77s
+    C_19 Delta_57 shared reverse step 46/57 frontier=1002 colors=1 elapsed=8119.8s
+    C_19 Delta_57 shared reverse step 47/57 frontier=627 colors=1 elapsed=8119.81s
+    C_19 Delta_57 shared reverse step 48/57 frontier=385 colors=1 elapsed=8119.82s
+    C_19 Delta_57 shared reverse step 49/57 frontier=231 colors=1 elapsed=8119.82s
+    C_19 Delta_57 shared reverse step 50/57 frontier=135 colors=1 elapsed=8119.82s
+    C_19 Delta_57 shared reverse step 51/57 frontier=77 colors=1 elapsed=8119.82s
+    C_19 Delta_57 shared reverse step 52/57 frontier=42 colors=1 elapsed=8119.82s
+    C_19 Delta_57 shared reverse step 53/57 frontier=22 colors=1 elapsed=8119.82s
+    C_19 Delta_57 shared reverse step 54/57 frontier=11 colors=1 elapsed=8119.82s
+    C_19 Delta_57 shared reverse step 55/57 frontier=5 colors=1 elapsed=8119.82s
+    C_19 Delta_57 shared reverse step 56/57 frontier=2 colors=1 elapsed=8119.82s
+    C_19 Delta_57 shared reverse step 57/57 frontier=1 colors=1 elapsed=8119.82s
+  C_19 Delta_57 = -65928374241208428607655097318308166209222760826080646586353075
+__EXIT_STATUS=0

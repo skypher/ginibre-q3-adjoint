@@ -1,0 +1,54 @@
+B/C family single-delta reverse certificate
+family = C
+rank = 14
+moment = 47
+C_14 target count = 41872
+    C_14 Delta_47 shared reverse step 1/47 frontier=506223 colors=1 elapsed=1.91909s
+    C_14 Delta_47 shared reverse step 2/47 frontier=1537215 colors=1 elapsed=16.5031s
+    C_14 Delta_47 shared reverse step 3/47 frontier=2444491 colors=1 elapsed=61.7898s
+    C_14 Delta_47 shared reverse step 4/47 frontier=2961195 colors=1 elapsed=147.043s
+    C_14 Delta_47 shared reverse step 5/47 frontier=3123408 colors=1 elapsed=253.589s
+    C_14 Delta_47 shared reverse step 6/47 frontier=3055754 colors=1 elapsed=365.426s
+    C_14 Delta_47 shared reverse step 7/47 frontier=2857937 colors=1 elapsed=487.531s
+    C_14 Delta_47 shared reverse step 8/47 frontier=2597283 colors=1 elapsed=603.222s
+    C_14 Delta_47 shared reverse step 9/47 frontier=2312668 colors=1 elapsed=711.219s
+    C_14 Delta_47 shared reverse step 10/47 frontier=2028489 colors=1 elapsed=808.224s
+    C_14 Delta_47 shared reverse step 11/47 frontier=1757245 colors=1 elapsed=910.252s
+    C_14 Delta_47 shared reverse step 12/47 frontier=1506634 colors=1 elapsed=1030.24s
+    C_14 Delta_47 shared reverse step 13/47 frontier=1279369 colors=1 elapsed=1122.93s
+    C_14 Delta_47 shared reverse step 14/47 frontier=1076795 colors=1 elapsed=1187.32s
+    C_14 Delta_47 shared reverse step 15/47 frontier=898085 colors=1 elapsed=1241.42s
+    C_14 Delta_47 shared reverse step 16/47 frontier=742249 colors=1 elapsed=1295.74s
+    C_14 Delta_47 shared reverse step 17/47 frontier=607362 colors=1 elapsed=1334.58s
+    C_14 Delta_47 shared reverse step 18/47 frontier=491744 colors=1 elapsed=1364.74s
+    C_14 Delta_47 shared reverse step 19/47 frontier=393361 colors=1 elapsed=1389.94s
+    C_14 Delta_47 shared reverse step 20/47 frontier=310521 colors=1 elapsed=1408.14s
+    C_14 Delta_47 shared reverse step 21/47 frontier=241448 colors=1 elapsed=1422.84s
+    C_14 Delta_47 shared reverse step 22/47 frontier=184676 colors=1 elapsed=1435.49s
+    C_14 Delta_47 shared reverse step 23/47 frontier=138735 colors=1 elapsed=1443.77s
+    C_14 Delta_47 shared reverse step 24/47 frontier=102335 colors=1 elapsed=1450.61s
+    C_14 Delta_47 shared reverse step 25/47 frontier=74155 colors=1 elapsed=1455.23s
+    C_14 Delta_47 shared reverse step 26/47 frontier=52912 colors=1 elapsed=1458.54s
+    C_14 Delta_47 shared reverse step 27/47 frontier=37277 colors=1 elapsed=1460.61s
+    C_14 Delta_47 shared reverse step 28/47 frontier=26000 colors=1 elapsed=1461.97s
+    C_14 Delta_47 shared reverse step 29/47 frontier=17973 colors=1 elapsed=1462.82s
+    C_14 Delta_47 shared reverse step 30/47 frontier=12309 colors=1 elapsed=1463.36s
+    C_14 Delta_47 shared reverse step 31/47 frontier=8349 colors=1 elapsed=1463.71s
+    C_14 Delta_47 shared reverse step 32/47 frontier=5604 colors=1 elapsed=1463.94s
+    C_14 Delta_47 shared reverse step 33/47 frontier=3718 colors=1 elapsed=1464.06s
+    C_14 Delta_47 shared reverse step 34/47 frontier=2436 colors=1 elapsed=1464.13s
+    C_14 Delta_47 shared reverse step 35/47 frontier=1575 colors=1 elapsed=1464.17s
+    C_14 Delta_47 shared reverse step 36/47 frontier=1002 colors=1 elapsed=1464.19s
+    C_14 Delta_47 shared reverse step 37/47 frontier=627 colors=1 elapsed=1464.2s
+    C_14 Delta_47 shared reverse step 38/47 frontier=385 colors=1 elapsed=1464.21s
+    C_14 Delta_47 shared reverse step 39/47 frontier=231 colors=1 elapsed=1464.21s
+    C_14 Delta_47 shared reverse step 40/47 frontier=135 colors=1 elapsed=1464.22s
+    C_14 Delta_47 shared reverse step 41/47 frontier=77 colors=1 elapsed=1464.22s
+    C_14 Delta_47 shared reverse step 42/47 frontier=42 colors=1 elapsed=1464.22s
+    C_14 Delta_47 shared reverse step 43/47 frontier=22 colors=1 elapsed=1464.22s
+    C_14 Delta_47 shared reverse step 44/47 frontier=11 colors=1 elapsed=1464.22s
+    C_14 Delta_47 shared reverse step 45/47 frontier=5 colors=1 elapsed=1464.22s
+    C_14 Delta_47 shared reverse step 46/47 frontier=2 colors=1 elapsed=1464.22s
+    C_14 Delta_47 shared reverse step 47/47 frontier=1 colors=1 elapsed=1464.22s
+  C_14 Delta_47 = -610900619902071188127231186464738325455901722543462
+__EXIT_STATUS=0

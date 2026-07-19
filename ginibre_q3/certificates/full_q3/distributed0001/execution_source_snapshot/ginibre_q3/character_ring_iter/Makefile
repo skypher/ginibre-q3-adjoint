@@ -1,0 +1,280 @@
+CXX ?= g++
+CXXFLAGS ?= -O3 -march=native -std=c++20 -Wall
+LIBS = -lgmpxx -lgmp
+
+REPLAY_TARGETS = verify_sun_repair_certificates_gmp \
+	verify_character_ring_moment_sources_gmp \
+	verify_bc_row_gated_bridge_gmp \
+	verify_d_high_rank_finite_tails_gmp \
+	dunkl_exceptional_coefficients_gmp \
+	direct_chain_rect_g2_f4_certificate \
+	direct_chain_rect_e6_e7_rank_certificate \
+	trace_square_cutoff_mpfr \
+	verify_e8_negative_bounds_gmp \
+	direct_chain_rect_e8_parallel_certificate \
+	post_m29_b_unitary_square_trace_mpfr \
+	post_m29_bc_tilted_mgf_mpfr \
+	post_m29_bc_layered_mgf_mpfr \
+	post_m29_d_stable_window_interval_gmp \
+	post_m29_d_interval_bridge_frontier_gmp \
+	classical_boundary_source_replay_gmp \
+	verify_d10_exact_tail_gmp \
+	verify_full_q3_bcd_bounded_littlewood_gmp \
+	post_m29_bc_cheb80_negative_tail_gmp \
+	post_m29_bc_interval_formula_mpfr \
+	post_m29_bc_interval_bridge_frontier_gmp \
+	post_m29_bc_pieri_powerloss_gmp \
+	post_m29_bc_b14_j37_badshape_gmp \
+	post_m29_bc_b_eighth_frontier_gmp \
+	post_m29_bc_ninth_frontier_gmp \
+	post_m29_bc_tenth_frontier_gmp \
+	post_m29_bc_eleventh_frontier_gmp \
+	post_m29_bc_twelfth_frontier_gmp \
+	post_m29_bc_thirteenth_frontier_gmp \
+	post_m29_bc_fourteenth_frontier_gmp \
+	post_m29_bc_fifteenth_frontier_gmp \
+	post_m29_bc_sixteenth_frontier_gmp \
+	post_m29_bc_seventeenth_frontier_gmp \
+	post_m29_bc_eighteenth_frontier_gmp \
+	post_m29_bc_nineteenth_frontier_gmp \
+	post_m29_bc_twentieth_frontier_gmp \
+	post_m29_bc_twentyfirst_frontier_gmp \
+	post_m29_bc_twentysecond_frontier_gmp \
+	post_m29_bc_twentythird_frontier_gmp \
+	post_m29_bc_twentyfourth_frontier_gmp \
+	post_m29_bc_twentyfifth_frontier_gmp \
+	post_m29_bc_twentysixth_frontier_gmp \
+	post_m29_bc_twentyseventh_frontier_gmp \
+	post_m29_bc_twentyeighth_frontier_gmp \
+	post_m29_bc_twentyeighth_b_absorption_gmp \
+	post_m29_bc_twentyninth_c_frontier_gmp \
+	post_m29_bc_twentyninth_b_absorption_gmp
+
+all: moments moments_omp verify_sun_repair_certificates_gmp post_m29_direct_tail_log_scan post_m29_d_interval_formula_scan post_m29_d_interval_formula_mpfr post_m29_bc_interval_formula_mpfr post_m29_b_unitary_square_trace_mpfr post_m29_bc_tilted_mgf_mpfr post_m29_bc_layered_mgf_mpfr post_m29_bc_cheb80_negative_tail_gmp post_m29_d_interval_bridge_frontier_scan post_m29_d_interval_bridge_frontier_gmp post_m29_bc_interval_bridge_frontier_gmp post_m29_bc_bridge_lambda_scan post_m29_bc_pieri_compression_scan post_m29_bc_pieri_compression_gmp post_m29_bc_pieri_fullwall_gmp post_m29_bc_pieri_compression_pow2_gmp post_m29_bc_pieri_powerloss_gmp post_m29_bc_badshape_residual_probe post_m29_bc_fixed_witness_probe post_m29_bc_fixed_witness_2q_obstruction_gmp post_m29_bc_complement_packing_gmp post_m29_bc_complement_frontier_gmp post_m29_bc_fixed_even_envelope_gmp post_m29_bc_fixed_even_envelope_m29_obstruction_gmp post_m29_bc_fixed_even_envelope_m30_frontier_gmp post_m29_bc_fixed_even_envelope_m31_frontier_gmp post_m29_bc_low_low_profile_gmp post_m29_bc_b14_j37_badshape_gmp post_m29_bc_b_eighth_frontier_gmp post_m29_bc_ninth_frontier_gmp post_m29_bc_tenth_frontier_gmp post_m29_bc_eleventh_frontier_gmp post_m29_bc_twelfth_frontier_gmp post_m29_bc_thirteenth_frontier_gmp post_m29_bc_fourteenth_frontier_gmp post_m29_bc_fifteenth_frontier_gmp post_m29_bc_sixteenth_frontier_gmp post_m29_bc_seventeenth_frontier_gmp post_m29_bc_eighteenth_frontier_gmp post_m29_bc_nineteenth_frontier_gmp post_m29_bc_twentieth_frontier_gmp post_m29_bc_twentyfirst_frontier_gmp post_m29_bc_twentysecond_frontier_gmp post_m29_bc_twentythird_frontier_gmp post_m29_bc_twentyfourth_frontier_gmp post_m29_bc_twentyfifth_frontier_gmp post_m29_bc_twentysixth_frontier_gmp post_m29_bc_twentyseventh_frontier_gmp post_m29_bc_twentyeighth_frontier_gmp post_m29_bc_twentyeighth_b_absorption_gmp post_m29_bc_twentyninth_c_frontier_gmp post_m29_bc_twentyninth_b_absorption_gmp post_m29_bc_twentyninth_b_frontier_gmp
+
+all: verify_d_high_rank_finite_tails_gmp
+
+all: dunkl_exceptional_coefficients_gmp
+
+replay-build: $(REPLAY_TARGETS)
+
+moments: moments.cpp lie_data.h
+	$(CXX) $(CXXFLAGS) moments.cpp $(LIBS) -o moments
+
+moments_omp: moments.cpp lie_data.h
+	$(CXX) $(CXXFLAGS) -fopenmp moments.cpp $(LIBS) -o moments_omp
+
+verify_character_ring_moment_sources_gmp: verify_character_ring_moment_sources_gmp.cpp lie_data.h ankerl/unordered_dense.h
+	$(CXX) $(CXXFLAGS) verify_character_ring_moment_sources_gmp.cpp $(LIBS) -o verify_character_ring_moment_sources_gmp
+
+verify_sun_repair_certificates_gmp: verify_sun_repair_certificates_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp verify_sun_repair_certificates_gmp.cpp $(LIBS) -o verify_sun_repair_certificates_gmp
+
+verify_bc_row_gated_bridge_gmp: verify_bc_row_gated_bridge_gmp.cpp ankerl/unordered_dense.h
+	$(CXX) $(CXXFLAGS) -fopenmp verify_bc_row_gated_bridge_gmp.cpp $(LIBS) -o verify_bc_row_gated_bridge_gmp
+
+classical_boundary_source_replay_gmp: classical_boundary_certificate.cpp ankerl/unordered_dense.h
+	$(CXX) $(CXXFLAGS) classical_boundary_certificate.cpp $(LIBS) -o classical_boundary_source_replay_gmp
+
+verify_d10_exact_tail_gmp: verify_d10_exact_tail_gmp.cpp
+	$(CXX) $(CXXFLAGS) verify_d10_exact_tail_gmp.cpp $(LIBS) -o verify_d10_exact_tail_gmp
+
+verify_full_q3_bcd_bounded_littlewood_gmp: verify_full_q3_bcd_bounded_littlewood_gmp.cpp full_q3_bcd_remaining_data.hpp
+	$(CXX) $(CXXFLAGS) -fopenmp -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Werror verify_full_q3_bcd_bounded_littlewood_gmp.cpp \
+		$(LIBS) -o verify_full_q3_bcd_bounded_littlewood_gmp
+
+verify_d_high_rank_finite_tails_gmp: verify_d_high_rank_finite_tails_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp verify_d_high_rank_finite_tails_gmp.cpp $(LIBS) -o verify_d_high_rank_finite_tails_gmp
+
+dunkl_exceptional_coefficients_gmp: dunkl_exceptional_coefficients_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp dunkl_exceptional_coefficients_gmp.cpp $(LIBS) -o dunkl_exceptional_coefficients_gmp
+
+direct_chain_rect_g2_f4_certificate: direct_chain_rect_g2_f4_certificate.cpp
+	$(CXX) $(CXXFLAGS) direct_chain_rect_g2_f4_certificate.cpp $(LIBS) -o direct_chain_rect_g2_f4_certificate
+
+direct_chain_rect_e6_e7_rank_certificate: direct_chain_rect_e6_e7_rank_certificate.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp direct_chain_rect_e6_e7_rank_certificate.cpp $(LIBS) -o direct_chain_rect_e6_e7_rank_certificate
+
+trace_square_cutoff_mpfr: trace_square_cutoff_mpfr.cpp
+	$(CXX) $(CXXFLAGS) trace_square_cutoff_mpfr.cpp -l:libmpfr.so.6 -lgmp -o trace_square_cutoff_mpfr
+
+verify_e8_negative_bounds_gmp: verify_e8_negative_bounds_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp verify_e8_negative_bounds_gmp.cpp $(LIBS) -o verify_e8_negative_bounds_gmp
+
+direct_chain_rect_e8_parallel_certificate: direct_chain_rect_e8_parallel_certificate.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp direct_chain_rect_e8_parallel_certificate.cpp $(LIBS) -o direct_chain_rect_e8_parallel_certificate
+
+post_m29_direct_tail_log_scan: post_m29_direct_tail_log_scan.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_direct_tail_log_scan.cpp -o post_m29_direct_tail_log_scan
+
+post_m29_d_interval_formula_scan: post_m29_d_interval_formula_scan.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_d_interval_formula_scan.cpp -o post_m29_d_interval_formula_scan
+
+post_m29_d_interval_formula_mpfr: post_m29_d_interval_formula_mpfr.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_d_interval_formula_mpfr.cpp -l:libmpfr.so.6 -lgmp -o post_m29_d_interval_formula_mpfr
+
+post_m29_d_two_sided_obstruction_gmp: post_m29_d_two_sided_obstruction_gmp.cpp
+	$(CXX) $(CXXFLAGS) post_m29_d_two_sided_obstruction_gmp.cpp $(LIBS) -o post_m29_d_two_sided_obstruction_gmp
+
+post_m29_bc_interval_formula_mpfr: post_m29_bc_interval_formula_mpfr.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_interval_formula_mpfr.cpp -l:libmpfr.so.6 -lgmp -o post_m29_bc_interval_formula_mpfr
+
+post_m29_b_unitary_square_trace_mpfr: post_m29_b_unitary_square_trace_mpfr.cpp
+	$(CXX) $(CXXFLAGS) post_m29_b_unitary_square_trace_mpfr.cpp -l:libmpfr.so.6 -lgmp -o post_m29_b_unitary_square_trace_mpfr
+
+post_m29_bc_tilted_mgf_mpfr: post_m29_bc_tilted_mgf_mpfr.cpp
+	$(CXX) $(CXXFLAGS) post_m29_bc_tilted_mgf_mpfr.cpp -l:libmpfr.so.6 -lgmp -o post_m29_bc_tilted_mgf_mpfr
+
+post_m29_bc_layered_mgf_mpfr: post_m29_bc_layered_mgf_mpfr.cpp
+	$(CXX) $(CXXFLAGS) post_m29_bc_layered_mgf_mpfr.cpp -l:libmpfr.so.6 $(LIBS) -o post_m29_bc_layered_mgf_mpfr
+
+post_m29_d_stable_window_interval_gmp: post_m29_d_stable_window_interval_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_d_stable_window_interval_gmp.cpp $(LIBS) -o post_m29_d_stable_window_interval_gmp
+
+post_m29_bc_cheb80_negative_tail_gmp: post_m29_bc_cheb80_negative_tail_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_cheb80_negative_tail_gmp.cpp $(LIBS) -o post_m29_bc_cheb80_negative_tail_gmp
+
+post_m29_d_interval_bridge_frontier_scan: post_m29_d_interval_bridge_frontier_scan.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_d_interval_bridge_frontier_scan.cpp -o post_m29_d_interval_bridge_frontier_scan
+
+post_m29_d_interval_bridge_frontier_gmp: post_m29_d_interval_bridge_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_d_interval_bridge_frontier_gmp.cpp $(LIBS) -o post_m29_d_interval_bridge_frontier_gmp
+
+post_m29_bc_interval_bridge_frontier_gmp: post_m29_bc_interval_bridge_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_interval_bridge_frontier_gmp.cpp $(LIBS) -o post_m29_bc_interval_bridge_frontier_gmp
+
+post_m29_bc_bridge_lambda_scan: post_m29_bc_bridge_lambda_scan.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_bridge_lambda_scan.cpp -o post_m29_bc_bridge_lambda_scan
+
+post_m29_bc_pieri_compression_scan: post_m29_bc_pieri_compression_scan.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_pieri_compression_scan.cpp -o post_m29_bc_pieri_compression_scan
+
+post_m29_bc_pieri_compression_gmp: post_m29_bc_pieri_compression_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_pieri_compression_gmp.cpp $(LIBS) -o post_m29_bc_pieri_compression_gmp
+
+post_m29_bc_pieri_fullwall_gmp: post_m29_bc_pieri_fullwall_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_pieri_fullwall_gmp.cpp $(LIBS) -o post_m29_bc_pieri_fullwall_gmp
+
+post_m29_bc_pieri_compression_pow2_gmp: post_m29_bc_pieri_compression_pow2_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_pieri_compression_pow2_gmp.cpp $(LIBS) -o post_m29_bc_pieri_compression_pow2_gmp
+
+post_m29_bc_pieri_powerloss_gmp: post_m29_bc_pieri_powerloss_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_pieri_powerloss_gmp.cpp $(LIBS) -o post_m29_bc_pieri_powerloss_gmp
+
+post_m29_bc_badshape_residual_probe: post_m29_bc_badshape_residual_probe.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_badshape_residual_probe.cpp -o post_m29_bc_badshape_residual_probe
+
+post_m29_bc_fixed_witness_probe: post_m29_bc_fixed_witness_probe.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_fixed_witness_probe.cpp -o post_m29_bc_fixed_witness_probe
+
+post_m29_bc_fixed_witness_2q_obstruction_gmp: post_m29_bc_fixed_witness_2q_obstruction_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_fixed_witness_2q_obstruction_gmp.cpp $(LIBS) -o post_m29_bc_fixed_witness_2q_obstruction_gmp
+
+post_m29_bc_complement_packing_gmp: post_m29_bc_complement_packing_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_complement_packing_gmp.cpp $(LIBS) -o post_m29_bc_complement_packing_gmp
+
+post_m29_bc_complement_frontier_gmp: post_m29_bc_complement_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_complement_frontier_gmp.cpp $(LIBS) -o post_m29_bc_complement_frontier_gmp
+
+post_m29_bc_fixed_even_envelope_gmp: post_m29_bc_fixed_even_envelope_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_fixed_even_envelope_gmp.cpp $(LIBS) -o post_m29_bc_fixed_even_envelope_gmp
+
+post_m29_bc_fixed_even_envelope_m29_obstruction_gmp: post_m29_bc_fixed_even_envelope_m29_obstruction_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_fixed_even_envelope_m29_obstruction_gmp.cpp $(LIBS) -o post_m29_bc_fixed_even_envelope_m29_obstruction_gmp
+
+post_m29_bc_fixed_even_envelope_m30_frontier_gmp: post_m29_bc_fixed_even_envelope_m30_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_fixed_even_envelope_m30_frontier_gmp.cpp $(LIBS) -o post_m29_bc_fixed_even_envelope_m30_frontier_gmp
+
+post_m29_bc_fixed_even_envelope_m31_frontier_gmp: post_m29_bc_fixed_even_envelope_m31_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_fixed_even_envelope_m31_frontier_gmp.cpp $(LIBS) -o post_m29_bc_fixed_even_envelope_m31_frontier_gmp
+
+post_m29_bc_low_low_profile_gmp: post_m29_bc_low_low_profile_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_low_low_profile_gmp.cpp $(LIBS) -o post_m29_bc_low_low_profile_gmp
+
+post_m29_bc_b14_j37_badshape_gmp: post_m29_bc_b14_j37_badshape_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_b14_j37_badshape_gmp.cpp $(LIBS) -o post_m29_bc_b14_j37_badshape_gmp
+
+post_m29_bc_b_eighth_frontier_gmp: post_m29_bc_b_eighth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_b_eighth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_b_eighth_frontier_gmp
+
+post_m29_bc_ninth_frontier_gmp: post_m29_bc_ninth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_ninth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_ninth_frontier_gmp
+
+post_m29_bc_tenth_frontier_gmp: post_m29_bc_tenth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_tenth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_tenth_frontier_gmp
+
+post_m29_bc_eleventh_frontier_gmp: post_m29_bc_eleventh_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_eleventh_frontier_gmp.cpp $(LIBS) -o post_m29_bc_eleventh_frontier_gmp
+
+post_m29_bc_twelfth_frontier_gmp: post_m29_bc_twelfth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twelfth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twelfth_frontier_gmp
+
+post_m29_bc_thirteenth_frontier_gmp: post_m29_bc_thirteenth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_thirteenth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_thirteenth_frontier_gmp
+
+post_m29_bc_fourteenth_frontier_gmp: post_m29_bc_fourteenth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_fourteenth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_fourteenth_frontier_gmp
+
+post_m29_bc_fifteenth_frontier_gmp: post_m29_bc_fifteenth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_fifteenth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_fifteenth_frontier_gmp
+
+post_m29_bc_sixteenth_frontier_gmp: post_m29_bc_sixteenth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_sixteenth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_sixteenth_frontier_gmp
+
+post_m29_bc_seventeenth_frontier_gmp: post_m29_bc_seventeenth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_seventeenth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_seventeenth_frontier_gmp
+
+post_m29_bc_eighteenth_frontier_gmp: post_m29_bc_eighteenth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_eighteenth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_eighteenth_frontier_gmp
+
+post_m29_bc_nineteenth_frontier_gmp: post_m29_bc_nineteenth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_nineteenth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_nineteenth_frontier_gmp
+
+post_m29_bc_twentieth_frontier_gmp: post_m29_bc_twentieth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twentieth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentieth_frontier_gmp
+
+post_m29_bc_twentyfirst_frontier_gmp: post_m29_bc_twentyfirst_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twentyfirst_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentyfirst_frontier_gmp
+
+post_m29_bc_twentysecond_frontier_gmp: post_m29_bc_twentysecond_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twentysecond_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentysecond_frontier_gmp
+
+post_m29_bc_twentythird_frontier_gmp: post_m29_bc_twentythird_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twentythird_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentythird_frontier_gmp
+
+post_m29_bc_twentyfourth_frontier_gmp: post_m29_bc_twentyfourth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twentyfourth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentyfourth_frontier_gmp
+
+post_m29_bc_twentyfifth_frontier_gmp: post_m29_bc_twentyfifth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twentyfifth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentyfifth_frontier_gmp
+
+post_m29_bc_twentysixth_frontier_gmp: post_m29_bc_twentysixth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twentysixth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentysixth_frontier_gmp
+
+post_m29_bc_twentyseventh_frontier_gmp: post_m29_bc_twentyseventh_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twentyseventh_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentyseventh_frontier_gmp
+
+post_m29_bc_twentyeighth_frontier_gmp: post_m29_bc_twentyeighth_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twentyeighth_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentyeighth_frontier_gmp
+
+post_m29_bc_twentyeighth_b_absorption_gmp: post_m29_bc_twentyeighth_b_absorption_gmp.cpp
+	$(CXX) $(CXXFLAGS) post_m29_bc_twentyeighth_b_absorption_gmp.cpp $(LIBS) -o post_m29_bc_twentyeighth_b_absorption_gmp
+
+post_m29_bc_twentyninth_c_frontier_gmp: post_m29_bc_twentyninth_c_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) post_m29_bc_twentyninth_c_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentyninth_c_frontier_gmp
+
+post_m29_bc_twentyninth_b_absorption_gmp: post_m29_bc_twentyninth_b_absorption_gmp.cpp
+	$(CXX) $(CXXFLAGS) post_m29_bc_twentyninth_b_absorption_gmp.cpp $(LIBS) -o post_m29_bc_twentyninth_b_absorption_gmp
+
+post_m29_bc_twentyninth_b_frontier_gmp: post_m29_bc_twentyninth_b_frontier_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp post_m29_bc_twentyninth_b_frontier_gmp.cpp $(LIBS) -o post_m29_bc_twentyninth_b_frontier_gmp
+
+lie_data.h: lie_data.py gen_header.py
+	python3 gen_header.py
+
+clean:
+	rm -f verify_d_high_rank_finite_tails_gmp verify_d10_exact_tail_gmp verify_d10_d11_exact_tail_gmp verify_full_q3_bcd_bounded_littlewood_gmp dunkl_exceptional_coefficients_gmp direct_chain_rect_g2_f4_certificate direct_chain_rect_e6_e7_rank_certificate trace_square_cutoff_mpfr verify_e8_negative_bounds_gmp direct_chain_rect_e8_parallel_certificate post_m29_d_two_sided_obstruction_gmp classical_boundary_source_replay_gmp
+	rm -f moments moments_omp verify_sun_repair_certificates_gmp post_m29_direct_tail_log_scan post_m29_d_interval_formula_scan post_m29_d_interval_formula_mpfr post_m29_bc_interval_formula_mpfr post_m29_b_unitary_square_trace_mpfr post_m29_bc_tilted_mgf_mpfr post_m29_bc_layered_mgf_mpfr post_m29_d_stable_window_interval_gmp post_m29_bc_cheb80_negative_tail_gmp post_m29_d_interval_bridge_frontier_scan post_m29_d_interval_bridge_frontier_gmp post_m29_bc_interval_bridge_frontier_gmp post_m29_bc_bridge_lambda_scan post_m29_bc_pieri_compression_scan post_m29_bc_pieri_compression_gmp post_m29_bc_pieri_fullwall_gmp post_m29_bc_pieri_compression_pow2_gmp post_m29_bc_pieri_powerloss_gmp post_m29_bc_badshape_residual_probe post_m29_bc_fixed_witness_probe post_m29_bc_fixed_witness_2q_obstruction_gmp post_m29_bc_complement_packing_gmp post_m29_bc_complement_frontier_gmp post_m29_bc_fixed_even_envelope_gmp post_m29_bc_fixed_even_envelope_m29_obstruction_gmp post_m29_bc_fixed_even_envelope_m30_frontier_gmp post_m29_bc_fixed_even_envelope_m31_frontier_gmp post_m29_bc_low_low_profile_gmp post_m29_bc_b14_j37_badshape_gmp post_m29_bc_b_eighth_frontier_gmp post_m29_bc_ninth_frontier_gmp post_m29_bc_tenth_frontier_gmp post_m29_bc_eleventh_frontier_gmp post_m29_bc_twelfth_frontier_gmp post_m29_bc_thirteenth_frontier_gmp post_m29_bc_fourteenth_frontier_gmp post_m29_bc_fifteenth_frontier_gmp post_m29_bc_sixteenth_frontier_gmp post_m29_bc_seventeenth_frontier_gmp post_m29_bc_eighteenth_frontier_gmp post_m29_bc_nineteenth_frontier_gmp post_m29_bc_twentieth_frontier_gmp post_m29_bc_twentyfirst_frontier_gmp post_m29_bc_twentysecond_frontier_gmp post_m29_bc_twentythird_frontier_gmp post_m29_bc_twentyfourth_frontier_gmp post_m29_bc_twentyfifth_frontier_gmp post_m29_bc_twentysixth_frontier_gmp post_m29_bc_twentyseventh_frontier_gmp post_m29_bc_twentyeighth_frontier_gmp post_m29_bc_twentyeighth_b_absorption_gmp post_m29_bc_twentyninth_c_frontier_gmp post_m29_bc_twentyninth_b_absorption_gmp post_m29_bc_twentyninth_b_frontier_gmp *.log
+
+.PHONY: all clean replay-build

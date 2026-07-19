@@ -1,0 +1,4 @@
+SU(3) determinant_terms=3 weyl_terms=11 binomial_index_shift=1 q_shifts=4 reduced_identity_terms=0 finite_residuals=0
+SU(4) determinant_terms=7 weyl_terms=23 binomial_index_shift=1 q_shifts=6 reduced_identity_terms=0 finite_residuals=0
+SU(5) determinant_terms=11 weyl_terms=32 binomial_index_shift=2 q_shifts=7 reduced_identity_terms=0 finite_residuals=0
+SUMMARY SU(3..5) recurrence derivations verified by exact integer Bessel/Weyl/differential algebra: ALL PASS

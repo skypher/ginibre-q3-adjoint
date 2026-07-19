@@ -1,0 +1,12 @@
+COMMAND: ./post_m29_bc_layered_mgf_mpfr --d-only --d-rank-low 11 --d-rank-high 11 --allow-d-shallow-wall --exact-d-square-mgf --exact-d-defining-mgf --d-polynomial-k 3 --d-polynomial-m 7 --d-square-alpha 24 5 --d-square-lambda-fraction 1 1 --d-adjoint-moment-source-log /home/yang/q3/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m4_20.log --d-adjoint-moment-source-log /home/yang/q3/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m21_26.log
+Post-m=29 layered B/C/D MGF certificate
+mpfr_precision=384 mpfr_version=4.2.1 layers=8
+exact_D_adjoint_moment_source_logs=2 exact_D_adjoint_moment_rows_loaded=156
+exact_D_adjoint_moment_source_log=/home/yang/q3/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m4_20.log
+exact_D_adjoint_moment_source_log=/home/yang/q3/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m21_26.log
+stable_push_moments K_10=148568632 K_11=1924746272 K_12=26873982320 K_13=402237478160 K_14=6424471800784 K_15=109057379728768 K_16=1960653454347808 K_17=37214344450560800 K_18=743639684149707680 K_19=15604783653883419776 K_20=343083895963058942272 K_21=7886502718036427849152 K_22=189183100564979533362880 K_23=4727532291412074203847680 K_24=122868799454430600436406144 K_25=3316328622334258349466405248 K_26=92828977351978249264778827648 K_27=2691306517299445153903508707840 K_28=80719382219469512629757920956160 K_29=2501746076417166674136945377997056 K_30=80039786046144079138805807177891072
+parameter_set=D53-295-short-onset family=D ranks=11..11 polynomial_k=3 polynomial_m=7
+row=D_11 n=75 polynomial_k=3 polynomial_m=7 push_moments=reconstructed_from_exact_adjoint_source A_free_slack=-55 exact_defining_pivot_lower=0.84268449777000631072 exact_square_pivot_lower=0.98149062251708770199 negative_component_log_margin_lower=0.11196528150323649674 central_component_log_margin_lower=3.972772493162353944 final_log_margin_lower=0.091132792490649002559
+MINIMUM geometry=0.3501 fredholm_trace_margin=not_run exact_cholesky_pivot=not_run exact_D_defining_pivot=0.8426844977700063107150848895 exact_D_square_pivot=0.9814906225170877019902018296 first_layer_mass=0.003252572844658858313547673875 layer_monotonicity=0.01455022438624290225553113136 positive_difference=4.059353827297541943660470264e-25 polynomial_expectation=423.5749291136928824178759706 final_log_margin=0.0911327924906490025591245315 final_row=D_11
+SUMMARY rows_checked=1 B_rows_checked=0 C_rows_checked=0 D_rows_checked=1 failures=0
+__EXIT_STATUS=0

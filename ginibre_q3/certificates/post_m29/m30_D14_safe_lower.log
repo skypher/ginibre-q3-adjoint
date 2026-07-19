@@ -1,0 +1,450 @@
+m=30 remaining low-row lower certificate
+stable Chain diff D(30) = 2500623373805017412865794150835519603793070537617825663445350235450607928831280596834844672
+negative linear coefficient indices = [29, 30, 31, 32, 33, 34, 35, 36]
+negative quadratic pairs = [(0,63,-8), (1,62,-472), (2,61,-13672), (3,60,-259128), (4,59,-3613640), (5,58,-39531416), (6,57,-353191464), (7,56,-2649353464), (8,55,-17022492616), (9,54,-95107030040), (10,53,-467507767848), (11,52,-2040652607352), (12,51,-7968382678152), (13,50,-28001587879128), (14,49,-88979012020200), (15,48,-256645487682360), (16,47,-673882011516840), (17,46,-1614120898278840), (18,45,-3531148803175560), (19,44,-7057274635080600), (20,43,-12873875366342760), (21,42,-21382788698603640), (22,41,-32182176930221640), (23,40,-43507448414857560), (24,39,-51977925097396200), (25,38,-53055985766082936), (26,37,-42429387746170824), (27,36,-18044682144923224), (29,36,-19289142982504136), (30,35,-57867428947512408), (31,34,-91467871562197032), (32,33,-111068129754096396)]
+begin D_14 lower row
+  D_14 Delta_14 = 1
+  D_14 Delta_15 = 91
+  D_14 Delta_16 = 5565
+  D_14 Delta_17 = 283816
+  D_14 Delta_18 = 13114531
+    depth 5: partition 7/7 elapsed=0.0657268s
+  D_14 Delta_19 = 572100831
+    depth 6: partition 11/11 elapsed=0.0714668s
+  D_14 Delta_20 = 24126721930
+    depth 7: partition 15/15 elapsed=0.120604s
+  D_14 Delta_21 = 998386830910
+    depth 8: partition 22/22 elapsed=0.215305s
+  D_14 Delta_22 = 40942633060770
+    depth 9: partition 30/30 elapsed=0.355104s
+  D_14 Delta_23 = 1675351538299615
+    depth 10: partition 42/42 elapsed=0.654895s
+  D_14 Delta_24 = 68740026870417574
+    depth 11: partition 56/56 elapsed=0.968121s
+  D_14 Delta_25 = 2838110289443437116
+    depth 12: partition 77/77 elapsed=1.58847s
+  D_14 Delta_26 = 118223405503496010550
+    depth 13: partition 101/101 elapsed=2.51134s
+  D_14 Delta_27 = 4978308689347676713066
+    coeff heartbeat misses=233721 cache=81834 power=27 partition-size=27
+    depth 15: partition 176/176 elapsed=5.92832s
+  D_14 Delta_29 = 9169440219029610434218276
+    coeff heartbeat misses=450836 cache=169671 power=25 partition-size=25
+    depth 16: partition 231/231 elapsed=8.70771s
+  D_14 Delta_30 = 401850096390067418635718962
+    coeff heartbeat misses=670361 cache=197454 power=24 partition-size=21
+    depth 17: partition 297/297 elapsed=13.3053s
+  D_14 Delta_31 = 17874459565755687383020356480
+    coeff heartbeat misses=892211 cache=138134 power=28 partition-size=25
+    coeff heartbeat misses=1093728 cache=339649 power=26 partition-size=21
+    depth 18: partition 385/385 elapsed=19.4908s
+  D_14 Delta_32 = 807319162700244741640109231362
+    coeff heartbeat misses=1314966 cache=152559 power=30 partition-size=27
+    coeff heartbeat misses=1518006 cache=355594 power=25 partition-size=23
+    coeff heartbeat misses=1695276 cache=532865 power=26 partition-size=18
+    depth 19: partition 490/490 elapsed=29.1638s
+  D_14 Delta_33 = 37037454104788453571764991636992
+    coeff heartbeat misses=1922669 cache=172938 power=24 partition-size=22
+    coeff heartbeat misses=2133326 cache=383593 power=22 partition-size=17
+    coeff heartbeat misses=2325092 cache=575363 power=26 partition-size=12
+    coeff heartbeat misses=2504124 cache=754392 power=23 partition-size=16
+    depth 20: partition 627/627 elapsed=41.7546s
+  D_14 Delta_34 = 1726300808232048170512410091296522
+    coeff heartbeat misses=2724209 cache=136837 power=24 partition-size=16
+    coeff heartbeat misses=2942357 cache=354991 power=30 partition-size=25
+    coeff heartbeat misses=3142472 cache=555101 power=25 partition-size=11
+    coeff heartbeat misses=3332743 cache=745374 power=27 partition-size=15
+    coeff heartbeat misses=3513901 cache=926528 power=23 partition-size=18
+    coeff heartbeat misses=3687850 cache=1100482 power=28 partition-size=23
+    depth 21: partition 792/792 elapsed=60.0414s
+  D_14 Delta_35 = 81758384362141398183598669648813114
+    coeff heartbeat misses=3907096 cache=134908 power=30 partition-size=22
+    coeff heartbeat misses=4147255 cache=375066 power=29 partition-size=25
+    coeff heartbeat misses=4352598 cache=580412 power=32 partition-size=25
+    coeff heartbeat misses=4539226 cache=767038 power=30 partition-size=26
+    coeff heartbeat misses=4723097 cache=950908 power=29 partition-size=21
+    coeff heartbeat misses=4887799 cache=1115611 power=30 partition-size=25
+    coeff heartbeat misses=5042497 cache=1270311 power=32 partition-size=22
+    coeff heartbeat misses=5206239 cache=1434046 power=25 partition-size=11
+    coeff heartbeat misses=5362449 cache=1590256 power=25 partition-size=17
+    depth 22: partition 1000/1002 elapsed=90.0733s
+    depth 22: partition 1002/1002 elapsed=90.1099s
+  D_14 Delta_36 = 3934791567360158754963134224299257020
+    coeff heartbeat misses=5543860 cache=108204 power=17 partition-size=12
+    coeff heartbeat misses=5780055 cache=344405 power=23 partition-size=12
+    coeff heartbeat misses=5975501 cache=539859 power=31 partition-size=22
+    coeff heartbeat misses=6156884 cache=721245 power=34 partition-size=28
+    coeff heartbeat misses=6335201 cache=899553 power=25 partition-size=12
+    coeff heartbeat misses=6503142 cache=1067492 power=23 partition-size=20
+    coeff heartbeat misses=6654986 cache=1219343 power=30 partition-size=26
+    coeff heartbeat misses=6820983 cache=1385341 power=31 partition-size=18
+    coeff heartbeat misses=6981166 cache=1545523 power=30 partition-size=18
+    coeff heartbeat misses=7131985 cache=1696339 power=27 partition-size=12
+    coeff heartbeat misses=7286073 cache=1850428 power=28 partition-size=17
+    coeff heartbeat misses=7430808 cache=1995171 power=36 partition-size=27
+    depth 23: partition 1000/1255 elapsed=114.354s
+    coeff heartbeat misses=7580897 cache=2145257 power=33 partition-size=27
+    coeff heartbeat misses=7717820 cache=2282175 power=28 partition-size=13
+    depth 23: partition 1255/1255 elapsed=136.547s
+  D_14 Delta_37 = 192440107670082119850413561757870733164
+    coeff heartbeat misses=7954796 cache=200549 power=25 partition-size=19
+    coeff heartbeat misses=8191942 cache=437694 power=24 partition-size=24
+    coeff heartbeat misses=8400392 cache=646147 power=27 partition-size=21
+    coeff heartbeat misses=8608543 cache=854307 power=36 partition-size=28
+    coeff heartbeat misses=8786844 cache=1032604 power=32 partition-size=19
+    coeff heartbeat misses=8980129 cache=1225888 power=31 partition-size=25
+    coeff heartbeat misses=9151980 cache=1397738 power=30 partition-size=22
+    coeff heartbeat misses=9334842 cache=1580600 power=30 partition-size=23
+    coeff heartbeat misses=9502348 cache=1748108 power=32 partition-size=21
+    coeff heartbeat misses=9674468 cache=1920223 power=27 partition-size=24
+    coeff heartbeat misses=9838942 cache=2084705 power=35 partition-size=28
+    coeff heartbeat misses=10006718 cache=2252474 power=28 partition-size=15
+    depth 24: partition 1000/1575 elapsed=119.648s
+    coeff heartbeat misses=10163811 cache=2409569 power=30 partition-size=24
+    coeff heartbeat misses=10321845 cache=2567607 power=34 partition-size=26
+    coeff heartbeat misses=10482446 cache=2728207 power=33 partition-size=27
+    coeff heartbeat misses=10630342 cache=2876101 power=31 partition-size=25
+    coeff heartbeat misses=10774958 cache=3020712 power=26 partition-size=21
+    coeff heartbeat misses=10914224 cache=3159979 power=27 partition-size=18
+    depth 24: partition 1575/1575 elapsed=180.861s
+  D_14 Delta_38 = 9564159564043551425127420534068674268959
+    coeff heartbeat misses=11130813 cache=166088 power=26 partition-size=11
+    coeff heartbeat misses=11384618 cache=419894 power=27 partition-size=15
+    coeff heartbeat misses=11603715 cache=638989 power=25 partition-size=9
+    coeff heartbeat misses=11804859 cache=840146 power=38 partition-size=28
+    coeff heartbeat misses=11996672 cache=1031955 power=34 partition-size=24
+    coeff heartbeat misses=12205936 cache=1241217 power=32 partition-size=28
+    coeff heartbeat misses=12397656 cache=1432939 power=34 partition-size=24
+    coeff heartbeat misses=12588128 cache=1623411 power=34 partition-size=25
+    coeff heartbeat misses=12774450 cache=1809723 power=24 partition-size=22
+    coeff heartbeat misses=12941753 cache=1977037 power=35 partition-size=22
+    coeff heartbeat misses=13125270 cache=2160545 power=26 partition-size=21
+    coeff heartbeat misses=13295795 cache=2331076 power=32 partition-size=25
+    coeff heartbeat misses=13457195 cache=2492474 power=30 partition-size=12
+    depth 25: partition 1000/1958 elapsed=128.275s
+    coeff heartbeat misses=13623708 cache=2658985 power=28 partition-size=14
+    coeff heartbeat misses=13792097 cache=2827377 power=31 partition-size=19
+    coeff heartbeat misses=13946792 cache=2982072 power=31 partition-size=16
+    coeff heartbeat misses=14113977 cache=3149260 power=34 partition-size=28
+    coeff heartbeat misses=14269843 cache=3305125 power=33 partition-size=27
+    coeff heartbeat misses=14405403 cache=3440683 power=31 partition-size=23
+    coeff heartbeat misses=14564163 cache=3599445 power=33 partition-size=20
+    coeff heartbeat misses=14720036 cache=3755320 power=35 partition-size=26
+    coeff heartbeat misses=14863749 cache=3899023 power=25 partition-size=17
+    coeff heartbeat misses=15017814 cache=4053094 power=31 partition-size=22
+    coeff heartbeat misses=15157578 cache=4192862 power=35 partition-size=28
+    coeff heartbeat misses=15289987 cache=4325271 power=35 partition-size=23
+    depth 25: partition 1958/1958 elapsed=253.008s
+  D_14 Delta_39 = 483007599537720529206879065133999309465730
+    coeff heartbeat misses=15432550 cache=50818 power=30 partition-size=16
+    coeff heartbeat misses=15711472 cache=329746 power=36 partition-size=21
+    coeff heartbeat misses=15957508 cache=575776 power=30 partition-size=14
+    coeff heartbeat misses=16177807 cache=796084 power=39 partition-size=27
+    coeff heartbeat misses=16392515 cache=1010784 power=31 partition-size=25
+    coeff heartbeat misses=16585559 cache=1203835 power=38 partition-size=28
+    coeff heartbeat misses=16800449 cache=1418719 power=32 partition-size=22
+    coeff heartbeat misses=16973419 cache=1591689 power=32 partition-size=24
+    coeff heartbeat misses=17160669 cache=1778939 power=32 partition-size=22
+    coeff heartbeat misses=17352830 cache=1971096 power=28 partition-size=22
+    coeff heartbeat misses=17518425 cache=2136695 power=32 partition-size=16
+    coeff heartbeat misses=17698707 cache=2316978 power=33 partition-size=20
+    coeff heartbeat misses=17879258 cache=2497524 power=28 partition-size=15
+    coeff heartbeat misses=18048076 cache=2666351 power=37 partition-size=28
+    depth 26: partition 1000/2436 elapsed=140.897s
+    coeff heartbeat misses=18212633 cache=2830901 power=30 partition-size=16
+    coeff heartbeat misses=18380241 cache=2998517 power=38 partition-size=28
+    coeff heartbeat misses=18553591 cache=3171860 power=31 partition-size=19
+    coeff heartbeat misses=18713042 cache=3331307 power=27 partition-size=16
+    coeff heartbeat misses=18860607 cache=3478878 power=33 partition-size=22
+    coeff heartbeat misses=19028580 cache=3646854 power=36 partition-size=26
+    coeff heartbeat misses=19181322 cache=3799591 power=31 partition-size=28
+    coeff heartbeat misses=19341429 cache=3959698 power=31 partition-size=16
+    coeff heartbeat misses=19490609 cache=4108880 power=33 partition-size=22
+    coeff heartbeat misses=19636820 cache=4255094 power=36 partition-size=25
+    coeff heartbeat misses=19794321 cache=4412594 power=35 partition-size=28
+    coeff heartbeat misses=19945506 cache=4563777 power=33 partition-size=19
+    coeff heartbeat misses=20085315 cache=4703585 power=32 partition-size=23
+    coeff heartbeat misses=20225425 cache=4843691 power=28 partition-size=16
+    coeff heartbeat misses=20372583 cache=4990860 power=39 partition-size=28
+    coeff heartbeat misses=20528266 cache=5146536 power=32 partition-size=21
+    coeff heartbeat misses=20666276 cache=5284547 power=33 partition-size=26
+    depth 26: partition 2000/2436 elapsed=311.242s
+    coeff heartbeat misses=20799767 cache=5418041 power=36 partition-size=26
+    coeff heartbeat misses=20949387 cache=5567662 power=37 partition-size=25
+    coeff heartbeat misses=21088746 cache=5707018 power=34 partition-size=27
+    coeff heartbeat misses=21220405 cache=5838678 power=35 partition-size=22
+    coeff heartbeat misses=21353190 cache=5971463 power=35 partition-size=27
+    depth 26: partition 2436/2436 elapsed=357.204s
+  D_14 Delta_40 = 24784722965106022032368782854022020130540809
+    coeff heartbeat misses=21524170 cache=101413 power=34 partition-size=21
+    coeff heartbeat misses=21804624 cache=381870 power=37 partition-size=24
+    coeff heartbeat misses=22050277 cache=627521 power=35 partition-size=23
+    coeff heartbeat misses=22266812 cache=844051 power=30 partition-size=23
+    coeff heartbeat misses=22489348 cache=1066587 power=30 partition-size=23
+    coeff heartbeat misses=22683927 cache=1261170 power=34 partition-size=23
+    coeff heartbeat misses=22900874 cache=1478117 power=34 partition-size=21
+    coeff heartbeat misses=23070916 cache=1648156 power=31 partition-size=26
+    coeff heartbeat misses=23262718 cache=1839957 power=30 partition-size=19
+    coeff heartbeat misses=23455667 cache=2032904 power=28 partition-size=22
+    coeff heartbeat misses=23634096 cache=2211337 power=32 partition-size=25
+    coeff heartbeat misses=23810114 cache=2387361 power=38 partition-size=28
+    coeff heartbeat misses=24002773 cache=2580020 power=38 partition-size=27
+    coeff heartbeat misses=24195984 cache=2773229 power=36 partition-size=26
+    coeff heartbeat misses=24371860 cache=2949103 power=34 partition-size=18
+    coeff heartbeat misses=24527085 cache=3104333 power=39 partition-size=28
+    depth 27: partition 1000/3010 elapsed=153.533s
+    coeff heartbeat misses=24693195 cache=3270437 power=33 partition-size=21
+    coeff heartbeat misses=24876819 cache=3454056 power=28 partition-size=23
+    coeff heartbeat misses=25059020 cache=3636266 power=37 partition-size=27
+    coeff heartbeat misses=25227317 cache=3804556 power=30 partition-size=23
+    coeff heartbeat misses=25382902 cache=3960145 power=34 partition-size=23
+    coeff heartbeat misses=25546526 cache=4123768 power=33 partition-size=28
+    coeff heartbeat misses=25712088 cache=4289332 power=35 partition-size=23
+    coeff heartbeat misses=25869193 cache=4446436 power=34 partition-size=21
+    coeff heartbeat misses=26045417 cache=4622654 power=28 partition-size=16
+    coeff heartbeat misses=26206730 cache=4783967 power=28 partition-size=16
+    coeff heartbeat misses=26363129 cache=4940370 power=32 partition-size=26
+    coeff heartbeat misses=26528234 cache=5105476 power=33 partition-size=26
+    coeff heartbeat misses=26694323 cache=5271568 power=36 partition-size=28
+    coeff heartbeat misses=26843748 cache=5420991 power=34 partition-size=22
+    coeff heartbeat misses=27013610 cache=5590852 power=33 partition-size=23
+    coeff heartbeat misses=27165646 cache=5742887 power=32 partition-size=19
+    coeff heartbeat misses=27313359 cache=5890604 power=36 partition-size=22
+    depth 27: partition 2000/3010 elapsed=332.872s
+    coeff heartbeat misses=27478955 cache=6056200 power=36 partition-size=28
+    coeff heartbeat misses=27648731 cache=6225976 power=36 partition-size=27
+    coeff heartbeat misses=27804421 cache=6381662 power=32 partition-size=16
+    coeff heartbeat misses=27958938 cache=6536182 power=35 partition-size=26
+    coeff heartbeat misses=28101763 cache=6679002 power=30 partition-size=20
+    coeff heartbeat misses=28217694 cache=6794941 power=38 partition-size=26
+    coeff heartbeat misses=28384916 cache=6962162 power=37 partition-size=27
+    coeff heartbeat misses=28533934 cache=7111176 power=33 partition-size=19
+    coeff heartbeat misses=28681843 cache=7259086 power=34 partition-size=20
+    coeff heartbeat misses=28815653 cache=7392894 power=32 partition-size=15
+    coeff heartbeat misses=28943868 cache=7521113 power=36 partition-size=21
+    coeff heartbeat misses=29095659 cache=7672904 power=36 partition-size=22
+    coeff heartbeat misses=29230293 cache=7807536 power=34 partition-size=18
+    coeff heartbeat misses=29358352 cache=7935597 power=36 partition-size=24
+    coeff heartbeat misses=29485198 cache=8062441 power=34 partition-size=16
+    coeff heartbeat misses=29603975 cache=8181216 power=32 partition-size=20
+    depth 27: partition 3000/3010 elapsed=485.884s
+    depth 27: partition 3010/3010 elapsed=486.229s
+  D_14 Delta_41 = 1292096336642645296553744763432598790107763200
+    coeff heartbeat misses=29809644 cache=171983 power=35 partition-size=26
+    coeff heartbeat misses=30090018 cache=452360 power=38 partition-size=24
+    coeff heartbeat misses=30334502 cache=696838 power=32 partition-size=20
+    coeff heartbeat misses=30556375 cache=918717 power=38 partition-size=28
+    coeff heartbeat misses=30762846 cache=1125174 power=24 partition-size=21
+    coeff heartbeat misses=30930722 cache=1293055 power=29 partition-size=25
+    coeff heartbeat misses=31147736 cache=1510075 power=35 partition-size=23
+    coeff heartbeat misses=31324748 cache=1687087 power=35 partition-size=28
+    coeff heartbeat misses=31503084 cache=1865423 power=35 partition-size=21
+    coeff heartbeat misses=31679795 cache=2042135 power=36 partition-size=22
+    coeff heartbeat misses=31882194 cache=2244531 power=33 partition-size=25
+    coeff heartbeat misses=32034380 cache=2396717 power=33 partition-size=18
+    coeff heartbeat misses=32212200 cache=2574533 power=29 partition-size=15
+    coeff heartbeat misses=32394319 cache=2756663 power=40 partition-size=28
+    coeff heartbeat misses=32578475 cache=2940813 power=34 partition-size=25
+    coeff heartbeat misses=32755078 cache=3117419 power=37 partition-size=28
+    coeff heartbeat misses=32898669 cache=3261000 power=27 partition-size=6
+    depth 28: partition 1000/3718 elapsed=170.863s
+    coeff heartbeat misses=33054824 cache=3417157 power=29 partition-size=22
+    coeff heartbeat misses=33221462 cache=3583797 power=31 partition-size=25
+    coeff heartbeat misses=33387003 cache=3749345 power=38 partition-size=27
+    coeff heartbeat misses=33546296 cache=3908634 power=34 partition-size=25
+    coeff heartbeat misses=33715471 cache=4077801 power=26 partition-size=24
+    coeff heartbeat misses=33875480 cache=4237812 power=28 partition-size=20
+    coeff heartbeat misses=34011194 cache=4373523 power=25 partition-size=28
+    coeff heartbeat misses=34149927 cache=4512262 power=31 partition-size=28
+    coeff heartbeat misses=34311600 cache=4673942 power=38 partition-size=27
+    coeff heartbeat misses=34466655 cache=4828990 power=31 partition-size=18
+    coeff heartbeat misses=34622369 cache=4984711 power=38 partition-size=28
+    coeff heartbeat misses=34778454 cache=5140799 power=41 partition-size=27
+    coeff heartbeat misses=34930586 cache=5292916 power=26 partition-size=21
+    coeff heartbeat misses=35078499 cache=5440836 power=33 partition-size=24
+    coeff heartbeat misses=35218195 cache=5580530 power=31 partition-size=15
+    coeff heartbeat misses=35367165 cache=5729501 power=32 partition-size=16
+    coeff heartbeat misses=35523381 cache=5885718 power=33 partition-size=28
+    coeff heartbeat misses=35653302 cache=6015643 power=37 partition-size=25
+    coeff heartbeat misses=35817068 cache=6179409 power=37 partition-size=28
+    coeff heartbeat misses=35949660 cache=6311999 power=35 partition-size=26
+    coeff heartbeat misses=36114370 cache=6476707 power=33 partition-size=19
+    coeff heartbeat misses=36251710 cache=6614044 power=30 partition-size=18
+    coeff heartbeat misses=36391823 cache=6754158 power=31 partition-size=24
+    coeff heartbeat misses=36523929 cache=6886268 power=35 partition-size=25
+    depth 28: partition 2000/3718 elapsed=405.759s
+    coeff heartbeat misses=36675204 cache=7037547 power=39 partition-size=23
+    coeff heartbeat misses=36822783 cache=7185119 power=32 partition-size=12
+    coeff heartbeat misses=36960314 cache=7322653 power=35 partition-size=26
+    coeff heartbeat misses=37107731 cache=7470068 power=33 partition-size=22
+    coeff heartbeat misses=37232231 cache=7594572 power=37 partition-size=27
+    coeff heartbeat misses=37377680 cache=7740017 power=33 partition-size=21
+    coeff heartbeat misses=37510038 cache=7872377 power=35 partition-size=21
+    coeff heartbeat misses=37635881 cache=7998217 power=32 partition-size=14
+    coeff heartbeat misses=37758254 cache=8120593 power=35 partition-size=27
+    coeff heartbeat misses=37893140 cache=8255483 power=39 partition-size=24
+    coeff heartbeat misses=38041855 cache=8404197 power=38 partition-size=25
+    coeff heartbeat misses=38193252 cache=8555584 power=28 partition-size=7
+    coeff heartbeat misses=38337076 cache=8699413 power=33 partition-size=16
+    coeff heartbeat misses=38465211 cache=8827550 power=35 partition-size=27
+    coeff heartbeat misses=38604622 cache=8966959 power=33 partition-size=16
+    coeff heartbeat misses=38721542 cache=9083884 power=38 partition-size=27
+    coeff heartbeat misses=38838071 cache=9200412 power=37 partition-size=26
+    coeff heartbeat misses=38946898 cache=9309233 power=31 partition-size=19
+    coeff heartbeat misses=39074035 cache=9436375 power=36 partition-size=23
+    coeff heartbeat misses=39220011 cache=9582349 power=34 partition-size=18
+    depth 28: partition 3000/3718 elapsed=608.895s
+    coeff heartbeat misses=39350194 cache=9712533 power=35 partition-size=25
+    coeff heartbeat misses=39491422 cache=9853762 power=36 partition-size=25
+    coeff heartbeat misses=39618203 cache=9980536 power=29 partition-size=14
+    coeff heartbeat misses=39742338 cache=10104672 power=30 partition-size=17
+    coeff heartbeat misses=39849394 cache=10211732 power=34 partition-size=26
+    coeff heartbeat misses=39971512 cache=10333850 power=34 partition-size=20
+    coeff heartbeat misses=40100528 cache=10462870 power=38 partition-size=25
+    coeff heartbeat misses=40220295 cache=10582637 power=38 partition-size=28
+    coeff heartbeat misses=40336347 cache=10698684 power=33 partition-size=17
+    coeff heartbeat misses=40444312 cache=10806656 power=40 partition-size=27
+    coeff heartbeat misses=40560331 cache=10922674 power=39 partition-size=26
+    coeff heartbeat misses=40674590 cache=11036928 power=34 partition-size=21
+    depth 28: partition 3718/3718 elapsed=732.554s
+  D_14 Delta_42 = 68428466131755004475002475737058239473261810634
+    coeff heartbeat misses=40765883 cache=16892 power=31 partition-size=15
+    coeff heartbeat misses=41055680 cache=306697 power=39 partition-size=26
+    coeff heartbeat misses=41308844 cache=559846 power=24 partition-size=20
+    coeff heartbeat misses=41541992 cache=793008 power=38 partition-size=28
+    coeff heartbeat misses=41783390 cache=1034404 power=36 partition-size=23
+    coeff heartbeat misses=41984497 cache=1235497 power=22 partition-size=14
+    coeff heartbeat misses=42208203 cache=1459216 power=35 partition-size=17
+    coeff heartbeat misses=42427894 cache=1678904 power=32 partition-size=22
+    coeff heartbeat misses=42598585 cache=1849596 power=33 partition-size=27
+    coeff heartbeat misses=42807009 cache=2058021 power=34 partition-size=20
+    coeff heartbeat misses=43017285 cache=2268293 power=30 partition-size=24
+    coeff heartbeat misses=43196435 cache=2447441 power=28 partition-size=23
+    coeff heartbeat misses=43362169 cache=2613179 power=32 partition-size=28
+    coeff heartbeat misses=43548303 cache=2799314 power=33 partition-size=18
+    coeff heartbeat misses=43741176 cache=2992180 power=26 partition-size=11
+    coeff heartbeat misses=43936684 cache=3187700 power=38 partition-size=22
+    coeff heartbeat misses=44114433 cache=3365447 power=36 partition-size=28
+    coeff heartbeat misses=44256423 cache=3507436 power=35 partition-size=22
+    depth 29: partition 1000/4564 elapsed=176.093s
+    coeff heartbeat misses=44418052 cache=3669062 power=32 partition-size=26
+    coeff heartbeat misses=44585316 cache=3836326 power=32 partition-size=26
+    coeff heartbeat misses=44750294 cache=4001312 power=40 partition-size=26
+    coeff heartbeat misses=44922494 cache=4173501 power=29 partition-size=15
+    coeff heartbeat misses=45109881 cache=4360895 power=36 partition-size=22
+    coeff heartbeat misses=45274930 cache=4525936 power=28 partition-size=18
+    coeff heartbeat misses=45417765 cache=4668781 power=38 partition-size=21
+    coeff heartbeat misses=45560780 cache=4811788 power=30 partition-size=25
+    coeff heartbeat misses=45715466 cache=4966480 power=36 partition-size=27
+    coeff heartbeat misses=45879507 cache=5130518 power=33 partition-size=26
+    coeff heartbeat misses=46024055 cache=5275067 power=34 partition-size=25
+    coeff heartbeat misses=46209324 cache=5460335 power=33 partition-size=25
+    coeff heartbeat misses=46356342 cache=5607352 power=32 partition-size=22
+    coeff heartbeat misses=46541899 cache=5792911 power=34 partition-size=28
+    coeff heartbeat misses=46702429 cache=5953442 power=35 partition-size=24
+    coeff heartbeat misses=46850555 cache=6101570 power=37 partition-size=23
+    coeff heartbeat misses=46992586 cache=6243597 power=33 partition-size=26
+    coeff heartbeat misses=47143950 cache=6394967 power=39 partition-size=24
+    coeff heartbeat misses=47283148 cache=6534160 power=34 partition-size=22
+    coeff heartbeat misses=47449753 cache=6700765 power=34 partition-size=24
+    coeff heartbeat misses=47589948 cache=6840957 power=31 partition-size=17
+    coeff heartbeat misses=47773220 cache=7024229 power=31 partition-size=17
+    coeff heartbeat misses=47916758 cache=7167771 power=35 partition-size=21
+    coeff heartbeat misses=48078091 cache=7329103 power=34 partition-size=25
+    coeff heartbeat misses=48234217 cache=7485231 power=36 partition-size=26
+    coeff heartbeat misses=48375938 cache=7626951 power=35 partition-size=25
+    coeff heartbeat misses=48507284 cache=7758294 power=32 partition-size=22
+    depth 29: partition 2000/4564 elapsed=444.802s
+    coeff heartbeat misses=48646832 cache=7897842 power=32 partition-size=12
+    coeff heartbeat misses=48798365 cache=8049377 power=34 partition-size=18
+    coeff heartbeat misses=48936276 cache=8187288 power=34 partition-size=17
+    coeff heartbeat misses=49086769 cache=8337783 power=36 partition-size=21
+    coeff heartbeat misses=49211683 cache=8462693 power=32 partition-size=24
+    coeff heartbeat misses=49368933 cache=8619952 power=41 partition-size=27
+    coeff heartbeat misses=49525480 cache=8776490 power=32 partition-size=10
+    coeff heartbeat misses=49652162 cache=8903172 power=32 partition-size=17
+    coeff heartbeat misses=49804133 cache=9055151 power=40 partition-size=28
+    coeff heartbeat misses=49953387 cache=9204397 power=32 partition-size=25
+    coeff heartbeat misses=50073341 cache=9324350 power=31 partition-size=22
+    coeff heartbeat misses=50206080 cache=9457092 power=34 partition-size=25
+    coeff heartbeat misses=50322742 cache=9573751 power=31 partition-size=25
+    coeff heartbeat misses=50475044 cache=9726060 power=38 partition-size=28
+    coeff heartbeat misses=50621503 cache=9872520 power=39 partition-size=24
+    coeff heartbeat misses=50769533 cache=10020547 power=36 partition-size=27
+    coeff heartbeat misses=50894619 cache=10145633 power=36 partition-size=27
+    coeff heartbeat misses=51051393 cache=10302405 power=34 partition-size=19
+    coeff heartbeat misses=51195875 cache=10446889 power=36 partition-size=24
+    coeff heartbeat misses=51319226 cache=10570243 power=39 partition-size=22
+    coeff heartbeat misses=51451561 cache=10702574 power=35 partition-size=23
+    coeff heartbeat misses=51595471 cache=10846479 power=30 partition-size=9
+    coeff heartbeat misses=51724214 cache=10975223 power=31 partition-size=20
+    coeff heartbeat misses=51841706 cache=11092717 power=33 partition-size=22
+    coeff heartbeat misses=51969794 cache=11220812 power=40 partition-size=28
+    depth 29: partition 3000/4564 elapsed=698.062s
+    coeff heartbeat misses=52098579 cache=11349594 power=37 partition-size=19
+    coeff heartbeat misses=52256416 cache=11507434 power=40 partition-size=28
+    coeff heartbeat misses=52399643 cache=11650659 power=38 partition-size=27
+    coeff heartbeat misses=52549679 cache=11800696 power=39 partition-size=23
+    coeff heartbeat misses=52695166 cache=11946181 power=37 partition-size=23
+    coeff heartbeat misses=52823399 cache=12074409 power=32 partition-size=15
+    coeff heartbeat misses=52957497 cache=12208513 power=38 partition-size=25
+    coeff heartbeat misses=53091161 cache=12342170 power=31 partition-size=22
+    coeff heartbeat misses=53212822 cache=12463837 power=37 partition-size=19
+    coeff heartbeat misses=53327614 cache=12578629 power=37 partition-size=26
+    coeff heartbeat misses=53449419 cache=12700430 power=33 partition-size=21
+    coeff heartbeat misses=53556971 cache=12807978 power=29 partition-size=22
+    coeff heartbeat misses=53697487 cache=12948501 power=36 partition-size=17
+    coeff heartbeat misses=53846114 cache=13097130 power=38 partition-size=25
+    coeff heartbeat misses=53980827 cache=13231836 power=31 partition-size=14
+    coeff heartbeat misses=54109198 cache=13360208 power=32 partition-size=16
+    coeff heartbeat misses=54207055 cache=13458066 power=33 partition-size=11
+    coeff heartbeat misses=54329326 cache=13580339 power=35 partition-size=19
+    coeff heartbeat misses=54438230 cache=13689244 power=36 partition-size=28
+    coeff heartbeat misses=54555457 cache=13806474 power=39 partition-size=25
+    coeff heartbeat misses=54665447 cache=13916458 power=33 partition-size=18
+    depth 29: partition 4000/4564 elapsed=904.104s
+    coeff heartbeat misses=54794760 cache=14045776 power=38 partition-size=28
+    coeff heartbeat misses=54927427 cache=14178437 power=32 partition-size=13
+    coeff heartbeat misses=55056011 cache=14307023 power=34 partition-size=17
+    coeff heartbeat misses=55172832 cache=14423847 power=37 partition-size=27
+    coeff heartbeat misses=55290282 cache=14541296 power=36 partition-size=26
+    coeff heartbeat misses=55405289 cache=14656304 power=37 partition-size=28
+    coeff heartbeat misses=55529273 cache=14780284 power=33 partition-size=22
+    coeff heartbeat misses=55640505 cache=14891519 power=36 partition-size=18
+    depth 29: partition 4564/4564 elapsed=986.376s
+  D_14 Delta_43 = 3680902102296009439789129549754548517792841917484
+    coeff heartbeat misses=55737929 cache=37654 power=37 partition-size=15
+    coeff heartbeat misses=56024288 cache=324010 power=34 partition-size=23
+    coeff heartbeat misses=56285860 cache=585584 power=36 partition-size=18
+    coeff heartbeat misses=56511840 cache=811569 power=41 partition-size=24
+    coeff heartbeat misses=56750798 cache=1050523 power=37 partition-size=27
+    coeff heartbeat misses=56962736 cache=1262459 power=35 partition-size=22
+    coeff heartbeat misses=57194329 cache=1494040 power=23 partition-size=17
+    coeff heartbeat misses=57413432 cache=1713153 power=33 partition-size=14
+    coeff heartbeat misses=57591213 cache=1890930 power=29 partition-size=21
+    coeff heartbeat misses=57798631 cache=2098353 power=34 partition-size=23
+    coeff heartbeat misses=58027157 cache=2326874 power=29 partition-size=19
+    coeff heartbeat misses=58222706 cache=2522425 power=31 partition-size=10
+    coeff heartbeat misses=58380869 cache=2680593 power=36 partition-size=27
+    coeff heartbeat misses=58563304 cache=2863025 power=33 partition-size=23
+    coeff heartbeat misses=58757749 cache=3057464 power=27 partition-size=13
+    coeff heartbeat misses=58954715 cache=3254438 power=35 partition-size=20
+    coeff heartbeat misses=59148315 cache=3448040 power=37 partition-size=24
+    coeff heartbeat misses=59316778 cache=3616501 power=35 partition-size=27
+    coeff heartbeat misses=59467132 cache=3766854 power=34 partition-size=23
+    depth 30: partition 1000/5602 elapsed=184.151s
+    coeff heartbeat misses=59642366 cache=3942094 power=40 partition-size=28
+    coeff heartbeat misses=59827735 cache=4127452 power=29 partition-size=14
+    coeff heartbeat misses=60019203 cache=4318921 power=30 partition-size=9
+    coeff heartbeat misses=60203665 cache=4503383 power=30 partition-size=21
+    coeff heartbeat misses=60404801 cache=4704530 power=41 partition-size=26
+    coeff heartbeat misses=60575111 cache=4874837 power=38 partition-size=28
+    coeff heartbeat misses=60721756 cache=5021478 power=34 partition-size=14
+    coeff heartbeat misses=60869277 cache=5168997 power=32 partition-size=26
+    coeff heartbeat misses=61033671 cache=5333397 power=38 partition-size=25
+    coeff heartbeat misses=61184894 cache=5484616 power=34 partition-size=18
+    coeff heartbeat misses=61375323 cache=5675046 power=35 partition-size=26
+    coeff heartbeat misses=61536426 cache=5836145 power=31 partition-size=10
+    coeff heartbeat misses=61724536 cache=6024261 power=37 partition-size=24
+    coeff heartbeat misses=61889428 cache=6189150 power=34 partition-size=13
+    coeff heartbeat misses=62073443 cache=6373165 power=34 partition-size=24

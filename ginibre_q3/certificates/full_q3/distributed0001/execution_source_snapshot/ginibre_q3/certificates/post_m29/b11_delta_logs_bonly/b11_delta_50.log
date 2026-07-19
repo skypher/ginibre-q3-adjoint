@@ -1,0 +1,57 @@
+B/C family single-delta reverse certificate
+family = B
+rank = 11
+moment = 50
+B_11 target count = 11730
+    B_11 Delta_50 shared reverse step 1/50 frontier=128101 colors=1 elapsed=2.83559s
+    B_11 Delta_50 shared reverse step 2/50 frontier=459268 colors=1 elapsed=31.7344s
+    B_11 Delta_50 shared reverse step 3/50 frontier=930690 colors=1 elapsed=129.437s
+    B_11 Delta_50 shared reverse step 4/50 frontier=1488025 colors=1 elapsed=319.707s
+    B_11 Delta_50 shared reverse step 5/50 frontier=2084795 colors=1 elapsed=610.718s
+    B_11 Delta_50 shared reverse step 6/50 frontier=2692831 colors=1 elapsed=1000.09s
+    B_11 Delta_50 shared reverse step 7/50 frontier=3290276 colors=1 elapsed=1479.7s
+    B_11 Delta_50 shared reverse step 8/50 frontier=3848988 colors=1 elapsed=2041.54s
+    B_11 Delta_50 shared reverse step 9/50 frontier=4321151 colors=1 elapsed=2669.85s
+    B_11 Delta_50 shared reverse step 10/50 frontier=4630109 colors=1 elapsed=3344.51s
+    B_11 Delta_50 shared reverse step 11/50 frontier=4691179 colors=1 elapsed=4034.1s
+    B_11 Delta_50 shared reverse step 12/50 frontier=4487224 colors=1 elapsed=4695.14s
+    B_11 Delta_50 shared reverse step 13/50 frontier=4101107 colors=1 elapsed=5287.11s
+    B_11 Delta_50 shared reverse step 14/50 frontier=3622267 colors=1 elapsed=5789.11s
+    B_11 Delta_50 shared reverse step 15/50 frontier=3106874 colors=1 elapsed=6195.83s
+    B_11 Delta_50 shared reverse step 16/50 frontier=2591375 colors=1 elapsed=6513.23s
+    B_11 Delta_50 shared reverse step 17/50 frontier=2101848 colors=1 elapsed=6757.17s
+    B_11 Delta_50 shared reverse step 18/50 frontier=1658360 colors=1 elapsed=6939.47s
+    B_11 Delta_50 shared reverse step 19/50 frontier=1275618 colors=1 elapsed=7072.41s
+    B_11 Delta_50 shared reverse step 20/50 frontier=961314 colors=1 elapsed=7168.13s
+    B_11 Delta_50 shared reverse step 21/50 frontier=714506 colors=1 elapsed=7235.88s
+    B_11 Delta_50 shared reverse step 22/50 frontier=526734 colors=1 elapsed=7283.18s
+    B_11 Delta_50 shared reverse step 23/50 frontier=386137 colors=1 elapsed=7315.83s
+    B_11 Delta_50 shared reverse step 24/50 frontier=281586 colors=1 elapsed=7338.12s
+    B_11 Delta_50 shared reverse step 25/50 frontier=204226 colors=1 elapsed=7353.3s
+    B_11 Delta_50 shared reverse step 26/50 frontier=147273 colors=1 elapsed=7363.63s
+    B_11 Delta_50 shared reverse step 27/50 frontier=105558 colors=1 elapsed=7370.63s
+    B_11 Delta_50 shared reverse step 28/50 frontier=75175 colors=1 elapsed=7375.28s
+    B_11 Delta_50 shared reverse step 29/50 frontier=53174 colors=1 elapsed=7378.33s
+    B_11 Delta_50 shared reverse step 30/50 frontier=37338 colors=1 elapsed=7380.32s
+    B_11 Delta_50 shared reverse step 31/50 frontier=26015 colors=1 elapsed=7381.61s
+    B_11 Delta_50 shared reverse step 32/50 frontier=17977 colors=1 elapsed=7382.44s
+    B_11 Delta_50 shared reverse step 33/50 frontier=12310 colors=1 elapsed=7382.95s
+    B_11 Delta_50 shared reverse step 34/50 frontier=8349 colors=1 elapsed=7383.27s
+    B_11 Delta_50 shared reverse step 35/50 frontier=5604 colors=1 elapsed=7383.47s
+    B_11 Delta_50 shared reverse step 36/50 frontier=3718 colors=1 elapsed=7383.59s
+    B_11 Delta_50 shared reverse step 37/50 frontier=2436 colors=1 elapsed=7383.66s
+    B_11 Delta_50 shared reverse step 38/50 frontier=1575 colors=1 elapsed=7383.7s
+    B_11 Delta_50 shared reverse step 39/50 frontier=1002 colors=1 elapsed=7383.72s
+    B_11 Delta_50 shared reverse step 40/50 frontier=627 colors=1 elapsed=7383.73s
+    B_11 Delta_50 shared reverse step 41/50 frontier=385 colors=1 elapsed=7383.74s
+    B_11 Delta_50 shared reverse step 42/50 frontier=231 colors=1 elapsed=7383.74s
+    B_11 Delta_50 shared reverse step 43/50 frontier=135 colors=1 elapsed=7383.74s
+    B_11 Delta_50 shared reverse step 44/50 frontier=77 colors=1 elapsed=7383.74s
+    B_11 Delta_50 shared reverse step 45/50 frontier=42 colors=1 elapsed=7383.74s
+    B_11 Delta_50 shared reverse step 46/50 frontier=22 colors=1 elapsed=7383.74s
+    B_11 Delta_50 shared reverse step 47/50 frontier=11 colors=1 elapsed=7383.74s
+    B_11 Delta_50 shared reverse step 48/50 frontier=5 colors=1 elapsed=7383.74s
+    B_11 Delta_50 shared reverse step 49/50 frontier=2 colors=1 elapsed=7383.74s
+    B_11 Delta_50 shared reverse step 50/50 frontier=1 colors=1 elapsed=7383.74s
+  B_11 Delta_50 = -161191929032102738025728698631353186855533918599491073060461
+__EXIT_STATUS=0

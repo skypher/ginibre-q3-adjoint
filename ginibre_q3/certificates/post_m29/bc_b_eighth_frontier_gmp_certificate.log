@@ -1,0 +1,46 @@
+B_EIGHTH_FRONTIER_GMP cases=3 omp_max_threads=64
+CASE q=15 j=38 width_wall=30 terminal_shapes=67
+REVERSE_STEP q=15 after_removing_to=37 states=296
+REVERSE_STEP q=15 after_removing_to=34 states=1631
+REVERSE_STEP q=15 after_removing_to=29 states=3801
+REVERSE_STEP q=15 after_removing_to=24 states=5798
+REVERSE_STEP q=15 after_removing_to=19 states=4332
+REVERSE_STEP q=15 after_removing_to=14 states=2164
+REVERSE_STEP q=15 after_removing_to=9 states=385
+REVERSE_STEP q=15 after_removing_to=4 states=22
+REVERSE_STEP q=15 after_removing_to=1 states=2
+REVERSE_STEP q=15 after_removing_to=0 states=1
+BAD_COUNT q=15 j=38 value=727372931790442036273061869531
+STABLE q=15 j=38 value=37163028392637978591540031296493505495330848
+MARGIN q=15 j=38 stable_minus_2bad=37163028392636523845676450412420959371591786
+CASE q=16 j=40 width_wall=32 terminal_shapes=67
+REVERSE_STEP q=16 after_removing_to=39 states=296
+REVERSE_STEP q=16 after_removing_to=34 states=2499
+REVERSE_STEP q=16 after_removing_to=29 states=4669
+REVERSE_STEP q=16 after_removing_to=24 states=6253
+REVERSE_STEP q=16 after_removing_to=19 states=4332
+REVERSE_STEP q=16 after_removing_to=14 states=2164
+REVERSE_STEP q=16 after_removing_to=9 states=385
+REVERSE_STEP q=16 after_removing_to=4 states=22
+REVERSE_STEP q=16 after_removing_to=1 states=2
+REVERSE_STEP q=16 after_removing_to=0 states=1
+BAD_COUNT q=16 j=40 value=15500236532483430857257682568105
+STABLE q=16 j=40 value=56514900379404445074668150405030378102377297056
+MARGIN q=16 j=40 stable_minus_2bad=56514900379404414074195085438168663587012160846
+CASE q=17 j=42 width_wall=34 terminal_shapes=67
+REVERSE_STEP q=17 after_removing_to=41 states=296
+REVERSE_STEP q=17 after_removing_to=39 states=1197
+REVERSE_STEP q=17 after_removing_to=34 states=3367
+REVERSE_STEP q=17 after_removing_to=29 states=5537
+REVERSE_STEP q=17 after_removing_to=24 states=6428
+REVERSE_STEP q=17 after_removing_to=19 states=4332
+REVERSE_STEP q=17 after_removing_to=14 states=2164
+REVERSE_STEP q=17 after_removing_to=9 states=385
+REVERSE_STEP q=17 after_removing_to=4 states=22
+REVERSE_STEP q=17 after_removing_to=1 states=2
+REVERSE_STEP q=17 after_removing_to=0 states=1
+BAD_COUNT q=17 j=42 value=314516359551758315471982172229150
+STABLE q=17 j=42 value=94986302333375732067392754855199453224336116330656
+MARGIN q=17 j=42 stable_minus_2bad=94986302333375731438360035751682822280371771872356
+SUMMARY failures=0
+__EXIT_STATUS=0

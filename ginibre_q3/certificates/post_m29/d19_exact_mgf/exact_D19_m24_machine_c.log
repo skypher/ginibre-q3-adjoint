@@ -1,0 +1,33 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=bc22efcafafe2d40b5f5430cb8f9cb046bc6b9b188da684e61dc6fdfaa27077e
+__BINARY_SHA256=de780944b63a4472fc2ed6eda17ab4eabf291bf0646ab929a60f6a5ee6577b88
+__COMMAND=timeout 1200 ./classical_boundary_certificate --d-exact-moment-range 19 19 24 24 --stable-moments oeis_A002137_stable.txt --reverse-target-sums --progress
+D exact shared moment range ranks 19..19 moments m_24..m_24 C++ certificate
+begin D_19=SO(38)
+shared D exact moment m_24 ranks 19..19
+    m_24: determinant shared reverse step 1/24 frontier=28 colors=1 elapsed=0.00115172s
+    m_24: determinant shared reverse step 2/24 frontier=55 colors=1 elapsed=0.00556199s
+    m_24: determinant shared reverse step 3/24 frontier=67 colors=1 elapsed=0.0137548s
+    m_24: determinant shared reverse step 4/24 frontier=72 colors=1 elapsed=0.0226223s
+    m_24: determinant shared reverse step 5/24 frontier=74 colors=1 elapsed=0.0308061s
+    m_24: determinant shared reverse step 6/24 frontier=74 colors=1 elapsed=0.0378773s
+    m_24: determinant shared reverse step 7/24 frontier=74 colors=1 elapsed=0.0438112s
+    m_24: determinant shared reverse step 8/24 frontier=74 colors=1 elapsed=0.0487441s
+    m_24: determinant shared reverse step 9/24 frontier=74 colors=1 elapsed=0.052859s
+    m_24: determinant shared reverse step 10/24 frontier=74 colors=1 elapsed=0.0562295s
+    m_24: determinant shared reverse step 11/24 frontier=74 colors=1 elapsed=0.058949s
+    m_24: determinant shared reverse step 12/24 frontier=74 colors=1 elapsed=0.0610015s
+    m_24: determinant shared reverse step 13/24 frontier=74 colors=1 elapsed=0.0624993s
+    m_24: determinant shared reverse step 14/24 frontier=74 colors=1 elapsed=0.0635834s
+    m_24: determinant shared reverse step 15/24 frontier=74 colors=1 elapsed=0.0643567s
+    m_24: determinant shared reverse step 16/24 frontier=74 colors=1 elapsed=0.0648955s
+    m_24: determinant shared reverse step 17/24 frontier=73 colors=1 elapsed=0.0652555s
+    m_24: determinant shared reverse step 18/24 frontier=66 colors=1 elapsed=0.0654807s
+    m_24: determinant shared reverse step 19/24 frontier=42 colors=1 elapsed=0.0656059s
+    m_24: determinant shared reverse step 20/24 frontier=22 colors=1 elapsed=0.0656604s
+    m_24: determinant shared reverse step 21/24 frontier=11 colors=1 elapsed=0.0656792s
+    m_24: determinant shared reverse step 22/24 frontier=5 colors=1 elapsed=0.0656858s
+    m_24: determinant shared reverse step 23/24 frontier=2 colors=1 elapsed=0.0656882s
+    m_24: determinant shared reverse step 24/24 frontier=1 colors=1 elapsed=0.0656897s
+  D_19 m_24 += O_even 0 + det 7662695272; Delta_24 = 7662695272; moment_24 = 55378867183537065478688
+__EXIT_STATUS=0

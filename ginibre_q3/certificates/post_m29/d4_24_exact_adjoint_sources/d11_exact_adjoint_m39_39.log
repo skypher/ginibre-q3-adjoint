@@ -1,0 +1,34 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=bc22efcafafe2d40b5f5430cb8f9cb046bc6b9b188da684e61dc6fdfaa27077e
+D exact shared moment range ranks 11..11 moments m_39..m_39 C++ certificate
+begin D_11=SO(22)
+shared D exact moment m_39 ranks 11..11
+    coeff heartbeat misses=351924 cache=351911 power=27 partition-size=21
+    coeff heartbeat misses=638527 cache=638515 power=28 partition-size=28
+    coeff heartbeat misses=915187 cache=915178 power=31 partition-size=21
+    coeff heartbeat misses=1176341 cache=1176330 power=29 partition-size=24
+    coeff heartbeat misses=1424187 cache=1424178 power=31 partition-size=21
+    coeff heartbeat misses=1653007 cache=1653003 power=36 partition-size=22
+    m_39: O-even target 915/915 elapsed=63.7771s
+    coeff heartbeat misses=2093401 cache=2093388 power=27 partition-size=8
+    coeff heartbeat misses=2623444 cache=2623434 power=30 partition-size=14
+    coeff heartbeat misses=3117287 cache=3117281 power=34 partition-size=15
+    depth 28: partition 1000/3699 elapsed=35.7516s
+    coeff heartbeat misses=3534201 cache=3534195 power=34 partition-size=20
+    coeff heartbeat misses=3994626 cache=3994620 power=34 partition-size=20
+    coeff heartbeat misses=4410978 cache=4410969 power=31 partition-size=16
+    coeff heartbeat misses=4828021 cache=4828015 power=34 partition-size=22
+    coeff heartbeat misses=5238142 cache=5238129 power=27 partition-size=11
+    coeff heartbeat misses=5627191 cache=5627187 power=36 partition-size=20
+    depth 28: partition 2000/3699 elapsed=86.5623s
+    coeff heartbeat misses=6022613 cache=6022607 power=34 partition-size=16
+    coeff heartbeat misses=6392144 cache=6392135 power=31 partition-size=16
+    coeff heartbeat misses=6710893 cache=6710888 power=35 partition-size=20
+    coeff heartbeat misses=7064714 cache=7064706 power=32 partition-size=14
+    depth 28: partition 3000/3699 elapsed=134.281s
+    coeff heartbeat misses=7422289 cache=7422285 power=36 partition-size=22
+    coeff heartbeat misses=7760131 cache=7760125 power=34 partition-size=17
+    coeff heartbeat misses=8080621 cache=8080616 power=35 partition-size=22
+    depth 28: partition 3699/3699 elapsed=158.805s
+  D_11 m_39 += O_even -5678830737769212803198832413166389241136 + det 78916740569395251754910547578423184437062964; Delta_39 = 78911061738657482542107348746010018047821828; moment_39 = 1509677456364782424289722257532900188755822436
+__EXIT_STATUS=0

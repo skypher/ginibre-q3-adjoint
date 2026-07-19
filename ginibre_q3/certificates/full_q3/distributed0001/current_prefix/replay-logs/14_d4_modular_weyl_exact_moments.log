@@ -1,0 +1,85 @@
+COMMAND: /usr/bin/python3 verify_d4_modular_weyl_moments.py --mod-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_mod_prime_9223372036854775433.log --mod-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_mod_prime_9223372036854775507.log --mod-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_mod_prime_9223372036854775549.log --mod-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_mod_prime_9223372036854775643.log --mod-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_mod_prime_9223372036854775783.log --reconstruction-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_modular_weyl.log --reconstruction-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_modular_weyl.rerun_check.log --stable-moments /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/references/oeis_A002137_stable.txt --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m21_26.log --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m27_30.log --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m31_32.log --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m33_34.log --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m35_35.log --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m36_36.log --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m37_37.log --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m38_38.log --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m4_20.log --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m39_39.log --source-cross-check-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m40_40.log
+D4 modular Weyl exact-moment replay
+arithmetic=exact_integer_crt
+mod_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_mod_prime_9223372036854775433.log sha256=65d4294ac85976ba8382e7c74c31478f65cf5159380e135d371483af7e1980dd prime=9223372036854775433 rows=60
+mod_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_mod_prime_9223372036854775507.log sha256=4e72a282aada35be94bbf9dd2f0d888c34a83dccf778c58228f0e976306a0292 prime=9223372036854775507 rows=60
+mod_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_mod_prime_9223372036854775549.log sha256=d51688a2465cae93521aff225576ab4923689a486b105177d8f88b8e452f1337 prime=9223372036854775549 rows=60
+mod_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_mod_prime_9223372036854775643.log sha256=abb31f59bc30037b1d2d26e284e9e76d0d224ece5a953ad0a4b2c6169f615e86 prime=9223372036854775643 rows=60
+mod_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_mod_prime_9223372036854775783.log sha256=fe87f55a07a0b1651b0a2d5273796806545a3552a6c3217901751a6c8412b545 prime=9223372036854775783 rows=60
+reconstruction_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_modular_weyl.log sha256=2125f80bc81d2411ca2881f0aadaf1d12fa2a767648ab2eeab2d6c37248b87d8
+reconstruction_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m27_logs/rank4/m27_D4_rank4_modular_weyl.rerun_check.log sha256=2125f80bc81d2411ca2881f0aadaf1d12fa2a767648ab2eeab2d6c37248b87d8
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m21_26.log sha256=cfc0cbf36bb9fed6711ba98fc4129b7ef3ecdb608ae27130cde456581343ddf0
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m27_30.log sha256=564601769bbc638e060daffa528bb0deda904992032ba4833bf9d63ef8e91356
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m31_32.log sha256=12543d0317106ea5934ba5c001bc8dab2eb974e7d64a09a7741a90ba3c33c025
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m33_34.log sha256=76e7d9d0938bd7dfaf6dbf26a468fd4f74afbe77659bbd3beb937205d40210ff
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m35_35.log sha256=c88f51c60917b1d83463ced98c9e42c453181be0db652da02e1eff0150c1ada4
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m36_36.log sha256=be8929f6b383822df4b71f923a5d5655e99ff90a14e68c23b4602ce6f79020cf
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m37_37.log sha256=afe70ccef8c13e23d1c44cbdbb88113127f3ac623daf69c3d3825c0f90f0edae
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m38_38.log sha256=556c5f1fbffe7ca11a2a3f233ce8d4a3cd79e1fc2c4d753184346c7c0788b492
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m4_20.log sha256=2daa3fa536251b6d2ae37782af311f4adc1daf1add13bd4b4115b17c8a5e0a4c
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m39_39.log sha256=c13afc9495b5c911fa73de21178e40d9ae6207da779bda4d151f0697ff5bcc4b
+source_cross_check_log=/tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m40_40.log sha256=4684abb3a1190a32bc5989c92e159fcd4930bb1f7ddae6c1310393c0f146e36d
+modulus_product=66749594872528431933213153819003881432512954166157148569322058651957986901745855155232130693411
+dimension_bound=28^59=24117031420209043043536518936949605376147092299133069867356930338999694689998934638592
+D_4 exact_Weyl m_0 = 1; Delta_0 = 0
+D_4 exact_Weyl m_1 = 0; Delta_1 = 0
+D_4 exact_Weyl m_2 = 1; Delta_2 = 0
+D_4 exact_Weyl m_3 = 1; Delta_3 = 0
+D_4 exact_Weyl m_4 = 7; Delta_4 = 1
+D_4 exact_Weyl m_5 = 28; Delta_5 = 6
+D_4 exact_Weyl m_6 = 185; Delta_6 = 55
+D_4 exact_Weyl m_7 = 1278; Delta_7 = 456
+D_4 exact_Weyl m_8 = 10388; Delta_8 = 4186
+D_4 exact_Weyl m_9 = 92704; Delta_9 = 40152
+D_4 exact_Weyl m_10 = 905964; Delta_10 = 406770
+D_4 exact_Weyl m_11 = 9534595; Delta_11 = 4296225
+D_4 exact_Weyl m_12 = 107083669; Delta_12 = 46860825
+D_4 exact_Weyl m_13 = 1272659964; Delta_13 = 520072200
+D_4 exact_Weyl m_14 = 15899798941; Delta_14 = 5741853897
+D_4 exact_Weyl m_15 = 207654466894; Delta_15 = 60387286386
+D_4 exact_Weyl m_16 = 2821860438960; Delta_16 = 539505270900
+D_4 exact_Weyl m_17 = 39742352437504; Delta_17 = 2087348265696
+D_4 exact_Weyl m_18 = 578125687744444; Delta_18 = -80781084484224
+D_4 exact_Weyl m_19 = 8661040537166640; Delta_19 = -3527871097328748
+D_4 exact_Weyl m_20 = 133288185368672896; Delta_20 = -104381358645705000
+D_4 exact_Weyl m_21 = 2102422262432220160; Delta_21 = -2769554563821798600
+D_4 exact_Weyl m_22 = 33923750969047103556; Delta_22 = -70819151363345194740
+D_4 exact_Weyl m_23 = 558972441971038067896; Delta_23 = -1797653234851859613360
+D_4 exact_Weyl m_24 = 9390960308437216019056; Delta_24 = -45987906875092186764360
+D_4 exact_Weyl m_25 = 160644065666630834354304; Delta_25 = -1196098721938084102468128
+D_4 exact_Weyl m_26 = 2794589949093043147805500; Delta_26 = -31801463717566196037963900
+D_4 exact_Weyl m_27 = 49384117939496953616709979; Delta_27 = -867390458036718797666067453
+D_4 exact_Weyl m_28 = 885596575421489799427174629; Delta_28 = -24325193706486880000398916203
+D_4 exact_Weyl m_29 = 16101573435702567198130951948; Delta_29 = -702392934299068635820696526244
+D_4 exact_Weyl m_30 = 296568217138190656648746978787; Delta_30 = -20898674947499173360071398885517
+D_4 exact_Weyl m_31 = 5529381173366012741058770320690; Delta_31 = -640916055225167902988186080442270
+D_4 exact_Weyl m_32 = 104285472045967039195520235480712; Delta_32 = -20258475648315674023525639882605192
+D_4 exact_Weyl m_33 = 1988341909441918229802205269508352; Delta_33 = -659793427297223548528317561384960512
+D_4 exact_Weyl m_34 = 38302323219791150523026746271874336; Delta_34 = -22131143987153677500059682556019590128
+D_4 exact_Weyl m_35 = 745062424211371735365895570064963816; Delta_35 = -764093183292990307618035721947850577192
+D_4 exact_Weyl m_36 = 14627774066633453787852885684764143480; Delta_36 = -27136881294220530773630517291863072073960
+D_4 exact_Weyl m_37 = 289722668497451409080018160339098739936; Delta_37 = -990732029460124435984836659601584341951872
+D_4 exact_Weyl m_38 = 5786560221272182043085798002146887784816; Delta_38 = -37157241832416706409496945498491358607546032
+D_4 exact_Weyl m_39 = 116498542801995555183547803860910882897184; Delta_39 = -1430649896083322946192431360983029259825103424
+D_4 exact_Weyl m_40 = 2363320843184335137863155139577498923783616; Delta_40 = -56512537058561260739530287249890800603453513440
+D_4 exact_Weyl m_41 = 48292317741044887329217909435398299809123840; Delta_41 = -2288791216497224132467900170231990398337244721280
+D_4 exact_Weyl m_42 = 993682079279358144156195116904021708934902856; Delta_42 = -94985308651296452709248598660082549202627181427800
+D_4 exact_Weyl m_43 = 20582626928012088300463138911809035861534914216; Delta_43 = -4036876045518414044981825597582673954298864759703160
+D_4 exact_Weyl m_44 = 429058226161559533990461719296736583387629189080; Delta_44 = -175603714875898789818227546470590760081093036419432936
+D_4 exact_Weyl m_45 = 8998693720126813120120335106141749446038258977568; Delta_45 = -7814339744038799341783719505265267449064822610794755104
+D_4 exact_Weyl m_46 = 189838018373600317926086411321962566031138338074400; Delta_46 = -355551162400116736662039701427445072275170118119596684320
+D_4 exact_Weyl m_47 = 4027415867238045800941748105771286604722206319993088; Delta_47 = -16533067928732224404902121355941964640020419402624826824384
+D_4 exact_Weyl m_48 = 85904182086703426625313770169923158735463118169876288; Delta_48 = -785317898599076717151903347535540386085774773009441579186304
+D_4 exact_Weyl m_49 = 1841862117337008519121108335755924603217973645153516544; Delta_49 = -38087786942864797242532880442112064299546775970338167440890368
+D_4 exact_Weyl m_50 = 39689020017099760399869346880127203593282301085338881360; Delta_50 = -1885339299382828322914572590775985417031634668489331730833777264
+D_4 exact_Weyl m_51 = 859358209872470360578936751631782703504825329889783979200; Delta_51 = -95209341002454060822500579714750477797821834995293015855967622400
+D_4 exact_Weyl m_52 = 18693608978497543979605498458613010914743136104195494866560; Delta_52 = -4903266791850954276197789673452356179381195291648155241404773592064
+D_4 exact_Weyl m_53 = 408465748321273262170171683175952226347792541636246454786560; Delta_53 = -257420799553056508100163571138512783304053312851451577199501643009664
+D_4 exact_Weyl m_54 = 8963836837683251560240070773550966626555379524758192407817520; Delta_54 = -13771977056870127296134083333007571243549024825890134134415625296684624
+D_4 exact_Weyl m_55 = 197534871264097624606666572469663066445872184182982368166359200; Delta_55 = -750570909749532123791327026169849267656687062021598797913980200993461728
+D_4 exact_Weyl m_56 = 4370630717020878218852795895703438628840636751720254734111758400; Delta_56 = -41656588893396061487601597295520799189463509741043892998396160618198617920
+D_4 exact_Weyl m_57 = 97081610754363623528331194022398245869766313788508183165604083200; Delta_57 = -2353592104453504599661520089984473649087692483201179636180313301171793660928
+D_4 exact_Weyl m_58 = 2164547896698461986549678915768228074536031275379211367701941233200; Delta_58 = -135331264352116048628561933045360172780519804734557222381173496654232347431248
+D_4 exact_Weyl m_59 = 48437564232340330418701167658391202009678455080060326527321684978515; Delta_59 = -7916863333115762692222642884790553358950918997548425994421245950259067074661933
+SUMMARY primes=5 moments=60 cross_checks=37 failures=0
+__EXIT_STATUS=0

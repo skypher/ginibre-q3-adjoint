@@ -1,0 +1,251 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=bc22efcafafe2d40b5f5430cb8f9cb046bc6b9b188da684e61dc6fdfaa27077e
+__COMMAND=./classical_boundary_source_replay_gmp --d-exact-moment-range 12 17 12 24 --stable-moments oeis_A002137_stable.txt --reverse-target-sums --progress
+D exact shared moment range ranks 12..17 moments m_12..m_24 C++ certificate
+begin D_12=SO(24)
+begin D_13=SO(26)
+begin D_14=SO(28)
+begin D_15=SO(30)
+begin D_16=SO(32)
+begin D_17=SO(34)
+shared D exact moment m_12 ranks 12..17
+  D_12 m_12 += O_even 0 + det 1; Delta_12 = 1; moment_12 = 60222845
+shared D exact moment m_13 ranks 12..17
+  D_12 m_13 += O_even 0 + det 66; Delta_13 = 66; moment_13 = 752587830
+  D_13 m_13 += O_even 0 + det 1; Delta_13 = 1; moment_13 = 752587765
+shared D exact moment m_14 ranks 12..17
+  D_12 m_14 += O_even 0 + det 3081; Delta_14 = 3081; moment_14 = 10157948125
+  D_13 m_14 += O_even 0 + det 78; Delta_14 = 78; moment_14 = 10157945122
+  D_14 m_14 += O_even 0 + det 1; Delta_14 = 1; moment_14 = 10157945045
+shared D exact moment m_15 ranks 12..17
+  D_12 m_15 += O_even 0 + det 123046; Delta_15 = 123046; moment_15 = 147267303554
+  D_13 m_15 += O_even 0 + det 4186; Delta_15 = 4186; moment_15 = 147267184694
+  D_14 m_15 += O_even 0 + det 91; Delta_15 = 91; moment_15 = 147267180599
+  D_15 m_15 += O_even 0 + det 1; Delta_15 = 1; moment_15 = 147267180509
+shared D exact moment m_16 ranks 12..17
+  D_12 m_16 += O_even 0 + det 4538535; Delta_16 = 4538535; moment_16 = 2282359706595
+  D_13 m_16 += O_even 0 + det 189645; Delta_16 = 189645; moment_16 = 2282355357705
+  D_14 m_16 += O_even 0 + det 5565; Delta_16 = 5565; moment_16 = 2282355173625
+  D_15 m_16 += O_even 0 + det 105; Delta_16 = 105; moment_16 = 2282355168165
+  D_16 m_16 += O_even 0 + det 1; Delta_16 = 1; moment_16 = 2282355168061
+shared D exact moment m_17 ranks 12..17
+    m_17: determinant shared reverse step 1/17 frontier=28 colors=6 elapsed=0.000343009s
+    m_17: determinant shared reverse step 2/17 frontier=55 colors=6 elapsed=0.00161886s
+    m_17: determinant shared reverse step 3/17 frontier=67 colors=6 elapsed=0.00388569s
+    m_17: determinant shared reverse step 4/17 frontier=72 colors=6 elapsed=0.00622316s
+    m_17: determinant shared reverse step 5/17 frontier=74 colors=6 elapsed=0.00822625s
+    m_17: determinant shared reverse step 6/17 frontier=74 colors=6 elapsed=0.00976426s
+    m_17: determinant shared reverse step 7/17 frontier=74 colors=6 elapsed=0.0108645s
+    m_17: determinant shared reverse step 8/17 frontier=74 colors=6 elapsed=0.0116945s
+    m_17: determinant shared reverse step 9/17 frontier=74 colors=6 elapsed=0.0122395s
+    m_17: determinant shared reverse step 10/17 frontier=73 colors=6 elapsed=0.0126153s
+    m_17: determinant shared reverse step 11/17 frontier=66 colors=6 elapsed=0.0128492s
+    m_17: determinant shared reverse step 12/17 frontier=42 colors=6 elapsed=0.0129873s
+    m_17: determinant shared reverse step 13/17 frontier=22 colors=6 elapsed=0.0130461s
+    m_17: determinant shared reverse step 14/17 frontier=11 colors=6 elapsed=0.0130662s
+    m_17: determinant shared reverse step 15/17 frontier=5 colors=6 elapsed=0.0130734s
+    m_17: determinant shared reverse step 16/17 frontier=2 colors=6 elapsed=0.0130761s
+    m_17: determinant shared reverse step 17/17 frontier=1 colors=6 elapsed=0.0130778s
+  D_12 m_17 += O_even 0 + det 160442584; Delta_17 = 160442584; moment_17 = 37655164614392
+  D_13 m_17 += O_even 0 + det 7855786; Delta_17 = 7855786; moment_17 = 37655012027594
+  D_14 m_17 += O_even 0 + det 283816; Delta_17 = 283816; moment_17 = 37655004455624
+  D_15 m_17 += O_even 0 + det 7260; Delta_17 = 7260; moment_17 = 37655004179068
+  D_16 m_17 += O_even 0 + det 120; Delta_17 = 120; moment_17 = 37655004171928
+  D_17 m_17 += O_even 0 + det 1; Delta_17 = 1; moment_17 = 37655004171809
+shared D exact moment m_18 ranks 12..17
+    m_18: determinant shared reverse step 1/18 frontier=75 colors=6 elapsed=0.000956372s
+    m_18: determinant shared reverse step 2/18 frontier=117 colors=6 elapsed=0.00461644s
+    m_18: determinant shared reverse step 3/18 frontier=132 colors=6 elapsed=0.00983569s
+    m_18: determinant shared reverse step 4/18 frontier=137 colors=6 elapsed=0.0148048s
+    m_18: determinant shared reverse step 5/18 frontier=139 colors=6 elapsed=0.0189103s
+    m_18: determinant shared reverse step 6/18 frontier=139 colors=6 elapsed=0.0220627s
+    m_18: determinant shared reverse step 7/18 frontier=139 colors=6 elapsed=0.0243687s
+    m_18: determinant shared reverse step 8/18 frontier=139 colors=6 elapsed=0.0260123s
+    m_18: determinant shared reverse step 9/18 frontier=139 colors=6 elapsed=0.0271777s
+    m_18: determinant shared reverse step 10/18 frontier=136 colors=6 elapsed=0.0279642s
+    m_18: determinant shared reverse step 11/18 frontier=120 colors=6 elapsed=0.0284736s
+    m_18: determinant shared reverse step 12/18 frontier=77 colors=6 elapsed=0.0287652s
+    m_18: determinant shared reverse step 13/18 frontier=42 colors=6 elapsed=0.0289041s
+    m_18: determinant shared reverse step 14/18 frontier=22 colors=6 elapsed=0.0289616s
+    m_18: determinant shared reverse step 15/18 frontier=11 colors=6 elapsed=0.0289809s
+    m_18: determinant shared reverse step 16/18 frontier=5 colors=6 elapsed=0.028988s
+    m_18: determinant shared reverse step 17/18 frontier=2 colors=6 elapsed=0.0289908s
+    m_18: determinant shared reverse step 18/18 frontier=1 colors=6 elapsed=0.0289924s
+  D_12 m_18 += O_even 0 + det 5552033689; Delta_18 = 5552033689; moment_18 = 658912324262357
+  D_13 m_18 += O_even 0 + det 309436669; Delta_18 = 309436669; moment_18 = 658907081665337
+  D_14 m_18 += O_even 0 + det 13114531; Delta_18 = 13114531; moment_18 = 658906785343199
+  D_15 m_18 += O_even 0 + det 414001; Delta_18 = 414001; moment_18 = 658906772642669
+  D_16 m_18 += O_even 0 + det 9316; Delta_18 = 9316; moment_18 = 658906772237984
+  D_17 m_18 += O_even 0 + det 136; Delta_18 = 136; moment_18 = 658906772228804
+shared D exact moment m_19 ranks 12..17
+    m_19: determinant shared reverse step 1/19 frontier=148 colors=6 elapsed=0.0018833s
+    m_19: determinant shared reverse step 2/19 frontier=219 colors=6 elapsed=0.00966745s
+    m_19: determinant shared reverse step 3/19 frontier=241 colors=6 elapsed=0.0200331s
+    m_19: determinant shared reverse step 4/19 frontier=247 colors=6 elapsed=0.0297611s
+    m_19: determinant shared reverse step 5/19 frontier=249 colors=6 elapsed=0.0377125s
+    m_19: determinant shared reverse step 6/19 frontier=249 colors=6 elapsed=0.0438984s
+    m_19: determinant shared reverse step 7/19 frontier=249 colors=6 elapsed=0.0484619s
+    m_19: determinant shared reverse step 8/19 frontier=249 colors=6 elapsed=0.0517513s
+    m_19: determinant shared reverse step 9/19 frontier=248 colors=6 elapsed=0.0540548s
+    m_19: determinant shared reverse step 10/19 frontier=241 colors=6 elapsed=0.0556659s
+    m_19: determinant shared reverse step 11/19 frontier=209 colors=6 elapsed=0.0567007s
+    m_19: determinant shared reverse step 12/19 frontier=135 colors=6 elapsed=0.0573271s
+    m_19: determinant shared reverse step 13/19 frontier=77 colors=6 elapsed=0.0576352s
+    m_19: determinant shared reverse step 14/19 frontier=42 colors=6 elapsed=0.0577758s
+    m_19: determinant shared reverse step 15/19 frontier=22 colors=6 elapsed=0.057834s
+    m_19: determinant shared reverse step 16/19 frontier=11 colors=6 elapsed=0.0578537s
+    m_19: determinant shared reverse step 17/19 frontier=5 colors=6 elapsed=0.0578609s
+    m_19: determinant shared reverse step 18/19 frontier=2 colors=6 elapsed=0.0578636s
+    m_19: determinant shared reverse step 19/19 frontier=1 colors=6 elapsed=0.0578652s
+  D_12 m_19 += O_even 0 + det 190532585619; Delta_19 = 190532585619; moment_19 = 12189102167081007
+  D_13 m_19 += O_even 0 + det 11853737595; Delta_19 = 11853737595; moment_19 = 12188923488232983
+  D_14 m_19 += O_even 0 + det 572100831; Delta_19 = 572100831; moment_19 = 12188912206596219
+  D_15 m_19 += O_even 0 + det 21212703; Delta_19 = 21212703; moment_19 = 12188911655708091
+  D_16 m_19 += O_even 0 + det 590445; Delta_19 = 590445; moment_19 = 12188911635085833
+  D_17 m_19 += O_even 0 + det 11781; Delta_19 = 11781; moment_19 = 12188911634507169
+shared D exact moment m_20 ranks 12..17
+    m_20: determinant shared reverse step 1/20 frontier=262 colors=6 elapsed=0.00342092s
+    m_20: determinant shared reverse step 2/20 frontier=386 colors=6 elapsed=0.0179355s
+    m_20: determinant shared reverse step 3/20 frontier=423 colors=6 elapsed=0.037249s
+    m_20: determinant shared reverse step 4/20 frontier=432 colors=6 elapsed=0.0552828s
+    m_20: determinant shared reverse step 5/20 frontier=434 colors=6 elapsed=0.070086s
+    m_20: determinant shared reverse step 6/20 frontier=434 colors=6 elapsed=0.0815279s
+    m_20: determinant shared reverse step 7/20 frontier=434 colors=6 elapsed=0.090044s
+    m_20: determinant shared reverse step 8/20 frontier=434 colors=6 elapsed=0.0963083s
+    m_20: determinant shared reverse step 9/20 frontier=431 colors=6 elapsed=0.100763s
+    m_20: determinant shared reverse step 10/20 frontier=415 colors=6 elapsed=0.103928s
+    m_20: determinant shared reverse step 11/20 frontier=355 colors=6 elapsed=0.105977s
+    m_20: determinant shared reverse step 12/20 frontier=231 colors=6 elapsed=0.107219s
+    m_20: determinant shared reverse step 13/20 frontier=135 colors=6 elapsed=0.10787s
+    m_20: determinant shared reverse step 14/20 frontier=77 colors=6 elapsed=0.108182s
+    m_20: determinant shared reverse step 15/20 frontier=42 colors=6 elapsed=0.108324s
+    m_20: determinant shared reverse step 16/20 frontier=22 colors=6 elapsed=0.108384s
+    m_20: determinant shared reverse step 17/20 frontier=11 colors=6 elapsed=0.108405s
+    m_20: determinant shared reverse step 18/20 frontier=5 colors=6 elapsed=0.108412s
+    m_20: determinant shared reverse step 19/20 frontier=2 colors=6 elapsed=0.108415s
+    m_20: determinant shared reverse step 20/20 frontier=1 colors=6 elapsed=0.108417s
+  D_12 m_20 += O_even 0 + det 6539715517735; Delta_20 = 6539715517735; moment_20 = 237676083729895631
+  D_13 m_20 += O_even 0 + det 447841797670; Delta_20 = 447841797670; moment_20 = 237669991856175566
+  D_14 m_20 += O_even 0 + det 24126721930; Delta_20 = 24126721930; moment_20 = 237669568141099826
+  D_15 m_20 += O_even 0 + det 1019342305; Delta_20 = 1019342305; moment_20 = 237669545033720201
+  D_16 m_20 += O_even 0 + det 33369301; Delta_20 = 33369301; moment_20 = 237669544047747197
+  D_17 m_20 += O_even 0 + det 825436; Delta_20 = 825436; moment_20 = 237669544015203332
+shared D exact moment m_21 ranks 12..17
+    m_21: determinant shared reverse step 1/21 frontier=432 colors=6 elapsed=0.00544636s
+    m_21: determinant shared reverse step 2/21 frontier=648 colors=6 elapsed=0.0309564s
+    m_21: determinant shared reverse step 3/21 frontier=715 colors=6 elapsed=0.0650881s
+    m_21: determinant shared reverse step 4/21 frontier=731 colors=6 elapsed=0.0971678s
+    m_21: determinant shared reverse step 5/21 frontier=734 colors=6 elapsed=0.123802s
+    m_21: determinant shared reverse step 6/21 frontier=734 colors=6 elapsed=0.144534s
+    m_21: determinant shared reverse step 7/21 frontier=734 colors=6 elapsed=0.160217s
+    m_21: determinant shared reverse step 8/21 frontier=733 colors=6 elapsed=0.171821s
+    m_21: determinant shared reverse step 9/21 frontier=726 colors=6 elapsed=0.180216s
+    m_21: determinant shared reverse step 10/21 frontier=693 colors=6 elapsed=0.186165s
+    m_21: determinant shared reverse step 11/21 frontier=585 colors=6 elapsed=0.190112s
+    m_21: determinant shared reverse step 12/21 frontier=385 colors=6 elapsed=0.192531s
+    m_21: determinant shared reverse step 13/21 frontier=231 colors=6 elapsed=0.193826s
+    m_21: determinant shared reverse step 14/21 frontier=135 colors=6 elapsed=0.194485s
+    m_21: determinant shared reverse step 15/21 frontier=77 colors=6 elapsed=0.194801s
+    m_21: determinant shared reverse step 16/21 frontier=42 colors=6 elapsed=0.194949s
+    m_21: determinant shared reverse step 17/21 frontier=22 colors=6 elapsed=0.195009s
+    m_21: determinant shared reverse step 18/21 frontier=11 colors=6 elapsed=0.195029s
+    m_21: determinant shared reverse step 19/21 frontier=5 colors=6 elapsed=0.195037s
+    m_21: determinant shared reverse step 20/21 frontier=2 colors=6 elapsed=0.19504s
+    m_21: determinant shared reverse step 21/21 frontier=1 colors=6 elapsed=0.195047s
+  D_12 m_21 += O_even 0 + det 225795355686460; Delta_21 = 225795355686460; moment_21 = 4872202621609705220
+  D_13 m_21 += O_even 0 + det 16841872923715; Delta_21 = 16841872923715; moment_21 = 4871993668126942475
+  D_14 m_21 += O_even 0 + det 998386830910; Delta_21 = 998386830910; moment_21 = 4871977824640849670
+  D_15 m_21 += O_even 0 + det 47093130505; Delta_21 = 47093130505; moment_21 = 4871976873347149265
+  D_16 m_21 += O_even 0 + det 1757901034; Delta_21 = 1757901034; moment_21 = 4871976828011919794
+  D_17 m_21 += O_even 0 + det 51210055; Delta_21 = 51210055; moment_21 = 4871976826305228815
+shared D exact moment m_22 ranks 12..17
+    m_22: determinant shared reverse step 1/22 frontier=685 colors=6 elapsed=0.00873193s
+    m_22: determinant shared reverse step 2/22 frontier=1055 colors=6 elapsed=0.0514625s
+    m_22: determinant shared reverse step 3/22 frontier=1178 colors=6 elapsed=0.10985s
+    m_22: determinant shared reverse step 4/22 frontier=1209 colors=6 elapsed=0.165278s
+    m_22: determinant shared reverse step 5/22 frontier=1215 colors=6 elapsed=0.211594s
+    m_22: determinant shared reverse step 6/22 frontier=1215 colors=6 elapsed=0.248089s
+    m_22: determinant shared reverse step 7/22 frontier=1215 colors=6 elapsed=0.275898s
+    m_22: determinant shared reverse step 8/22 frontier=1212 colors=6 elapsed=0.296615s
+    m_22: determinant shared reverse step 9/22 frontier=1196 colors=6 elapsed=0.311779s
+    m_22: determinant shared reverse step 10/22 frontier=1133 colors=6 elapsed=0.322521s
+    m_22: determinant shared reverse step 11/22 frontier=946 colors=6 elapsed=0.329785s
+    m_22: determinant shared reverse step 12/22 frontier=627 colors=6 elapsed=0.334192s
+    m_22: determinant shared reverse step 13/22 frontier=385 colors=6 elapsed=0.33671s
+    m_22: determinant shared reverse step 14/22 frontier=231 colors=6 elapsed=0.337986s
+    m_22: determinant shared reverse step 15/22 frontier=135 colors=6 elapsed=0.33865s
+    m_22: determinant shared reverse step 16/22 frontier=77 colors=6 elapsed=0.338971s
+    m_22: determinant shared reverse step 17/22 frontier=42 colors=6 elapsed=0.339117s
+    m_22: determinant shared reverse step 18/22 frontier=22 colors=6 elapsed=0.339177s
+    m_22: determinant shared reverse step 19/22 frontier=11 colors=6 elapsed=0.339197s
+    m_22: determinant shared reverse step 20/22 frontier=5 colors=6 elapsed=0.339205s
+    m_22: determinant shared reverse step 21/22 frontier=2 colors=6 elapsed=0.339208s
+    m_22: determinant shared reverse step 22/22 frontier=1 colors=6 elapsed=0.339209s
+  D_12 m_22 += O_even 0 + det 7873497744549801; Delta_22 = 7873497744549801; moment_22 = 104750775830136848097
+  D_13 m_22 += O_even 0 + det 634454403006480; Delta_22 = 634454403006480; moment_22 = 104743536786795304776
+  D_14 m_22 += O_even 0 + det 40942633060770; Delta_22 = 40942633060770; moment_22 = 104742943275025359066
+  D_15 m_22 += O_even 0 + det 2124832238871; Delta_22 = 2124832238871; moment_22 = 104742904457224537167
+  D_16 m_22 += O_even 0 + det 88581251661; Delta_22 = 88581251661; moment_22 = 104742902420973549957
+  D_17 m_22 += O_even 0 + det 2944799760; Delta_22 = 2944799760; moment_22 = 104742902335337098056
+shared D exact moment m_23 ranks 12..17
+    m_23: determinant shared reverse step 1/23 frontier=1022 colors=6 elapsed=0.0123401s
+    m_23: determinant shared reverse step 2/23 frontier=1647 colors=6 elapsed=0.0770002s
+    m_23: determinant shared reverse step 3/23 frontier=1880 colors=6 elapsed=0.170211s
+    m_23: determinant shared reverse step 4/23 frontier=1948 colors=6 elapsed=0.261648s
+    m_23: determinant shared reverse step 5/23 frontier=1964 colors=6 elapsed=0.339517s
+    m_23: determinant shared reverse step 6/23 frontier=1967 colors=6 elapsed=0.401882s
+    m_23: determinant shared reverse step 7/23 frontier=1966 colors=6 elapsed=0.450029s
+    m_23: determinant shared reverse step 8/23 frontier=1959 colors=6 elapsed=0.486205s
+    m_23: determinant shared reverse step 9/23 frontier=1926 colors=6 elapsed=0.51295s
+    m_23: determinant shared reverse step 10/23 frontier=1810 colors=6 elapsed=0.532564s
+    m_23: determinant shared reverse step 11/23 frontier=1498 colors=6 elapsed=0.545616s
+    m_23: determinant shared reverse step 12/23 frontier=1002 colors=6 elapsed=0.55369s
+    m_23: determinant shared reverse step 13/23 frontier=627 colors=6 elapsed=0.558208s
+    m_23: determinant shared reverse step 14/23 frontier=385 colors=6 elapsed=0.560725s
+    m_23: determinant shared reverse step 15/23 frontier=231 colors=6 elapsed=0.562058s
+    m_23: determinant shared reverse step 16/23 frontier=135 colors=6 elapsed=0.562729s
+    m_23: determinant shared reverse step 17/23 frontier=77 colors=6 elapsed=0.563049s
+    m_23: determinant shared reverse step 18/23 frontier=42 colors=6 elapsed=0.563194s
+    m_23: determinant shared reverse step 19/23 frontier=22 colors=6 elapsed=0.563255s
+    m_23: determinant shared reverse step 20/23 frontier=11 colors=6 elapsed=0.563275s
+    m_23: determinant shared reverse step 21/23 frontier=5 colors=6 elapsed=0.563283s
+    m_23: determinant shared reverse step 22/23 frontier=2 colors=6 elapsed=0.563286s
+    m_23: determinant shared reverse step 23/23 frontier=1 colors=6 elapsed=0.563287s
+  D_12 m_23 += O_even 0 + det 278058880981617106; Delta_23 = 278058880981617106; moment_23 = 2356903735703879298362
+  D_13 m_23 += O_even 0 + det 24048590586306286; Delta_23 = 24048590586306286; moment_23 = 2356649725413483987542
+  D_14 m_23 += O_even 0 + det 1675351538299615; Delta_23 = 1675351538299615; moment_23 = 2356627352174435980871
+  D_15 m_23 += O_even 0 + det 94620768380545; Delta_23 = 94620768380545; moment_23 = 2356625771443666061801
+  D_16 m_23 += O_even 0 + det 4340307682480; Delta_23 = 4340307682480; moment_23 = 2356625681163205363736
+  D_17 m_23 += O_even 0 + det 161213645230; Delta_23 = 161213645230; moment_23 = 2356625676984111326486
+shared D exact moment m_24 ranks 12..17
+    m_24: determinant shared reverse step 1/24 frontier=1500 colors=6 elapsed=0.0169929s
+    m_24: determinant shared reverse step 2/24 frontier=2525 colors=6 elapsed=0.113151s
+    m_24: determinant shared reverse step 3/24 frontier=2946 colors=6 elapsed=0.258535s
+    m_24: determinant shared reverse step 4/24 frontier=3083 colors=6 elapsed=0.406164s
+    m_24: determinant shared reverse step 5/24 frontier=3121 colors=6 elapsed=0.534853s
+    m_24: determinant shared reverse step 6/24 frontier=3130 colors=6 elapsed=0.639342s
+    m_24: determinant shared reverse step 7/24 frontier=3129 colors=6 elapsed=0.720796s
+    m_24: determinant shared reverse step 8/24 frontier=3113 colors=6 elapsed=0.783058s
+    m_24: determinant shared reverse step 9/24 frontier=3050 colors=6 elapsed=0.829021s
+    m_24: determinant shared reverse step 10/24 frontier=2845 colors=6 elapsed=0.862588s
+    m_24: determinant shared reverse step 11/24 frontier=2335 colors=6 elapsed=0.885712s
+    m_24: determinant shared reverse step 12/24 frontier=1575 colors=6 elapsed=0.90038s
+    m_24: determinant shared reverse step 13/24 frontier=1002 colors=6 elapsed=0.9089s
+    m_24: determinant shared reverse step 14/24 frontier=627 colors=6 elapsed=0.913674s
+    m_24: determinant shared reverse step 15/24 frontier=385 colors=6 elapsed=0.916248s
+    m_24: determinant shared reverse step 16/24 frontier=231 colors=6 elapsed=0.917564s
+    m_24: determinant shared reverse step 17/24 frontier=135 colors=6 elapsed=0.918249s
+    m_24: determinant shared reverse step 18/24 frontier=77 colors=6 elapsed=0.918583s
+    m_24: determinant shared reverse step 19/24 frontier=42 colors=6 elapsed=0.918734s
+    m_24: determinant shared reverse step 20/24 frontier=22 colors=6 elapsed=0.918797s
+    m_24: determinant shared reverse step 21/24 frontier=11 colors=6 elapsed=0.918818s
+    m_24: determinant shared reverse step 22/24 frontier=5 colors=6 elapsed=0.918826s
+    m_24: determinant shared reverse step 23/24 frontier=2 colors=6 elapsed=0.918829s
+    m_24: determinant shared reverse step 24/24 frontier=1 colors=6 elapsed=0.918831s
+  D_12 m_24 += O_even 0 + det 9965293096971708706; Delta_24 = 9965293096971708706; moment_24 = 55388832476626374492122
+  D_13 m_24 += O_even 0 + det 920125248191397598; Delta_24 = 920125248191397598; moment_24 = 55379787308777594181014
+  D_14 m_24 += O_even 0 + det 68740026870417574; Delta_24 = 68740026870417574; moment_24 = 55378935923556273200990
+  D_15 m_24 += O_even 0 + det 4189168151311738; Delta_24 = 4189168151311738; moment_24 = 55378871372697554095154
+  D_16 m_24 += O_even 0 + det 209091108525586; Delta_24 = 209091108525586; moment_24 = 55378867392620511309002
+  D_17 m_24 += O_even 0 + det 8546961916780; Delta_24 = 8546961916780; moment_24 = 55378867192076364700196
+__EXIT_STATUS=0

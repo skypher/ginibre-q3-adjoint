@@ -1,0 +1,18 @@
+COMMAND: ./post_m29_bc_b14_j37_badshape_gmp
+B14_J37_BADSHAPE_GMP q=15 j=37 width_wall=30 omp_max_threads=32
+TERMINAL_SHAPES column_even_width_bad=45
+REVERSE_STEP after_removing_to=36 states=182
+REVERSE_STEP after_removing_to=34 states=712
+REVERSE_STEP after_removing_to=29 states=1957
+REVERSE_STEP after_removing_to=24 states=3189
+REVERSE_STEP after_removing_to=19 states=2786
+REVERSE_STEP after_removing_to=14 states=1542
+REVERSE_STEP after_removing_to=9 states=379
+REVERSE_STEP after_removing_to=4 states=22
+REVERSE_STEP after_removing_to=1 states=2
+REVERSE_STEP after_removing_to=0 states=1
+BAD_COUNT 6170018716859356895648705996
+STABLE_S37 991021752128621887393916677761923440691808
+MARGIN stable_minus_2bad 991021752128609547356482959048132143279816
+SUMMARY failures=0
+__EXIT_STATUS=0

@@ -1,0 +1,26 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp C17 45 --stable-moments /home/yang/q3/ginibre_q3/references/oeis_A002137_stable.txt /home/yang/q3/ginibre_q3/certificates/classical_bridge/raw_logs/ginibre_m28_logs/bc/m28_BC17_rank_pair_exact41.rerun2.log /home/yang/q3/ginibre_q3/certificates/post_m29/c17_delta_logs_conly/c17_delta_42.log /home/yang/q3/ginibre_q3/certificates/post_m29/c17_delta_logs_conly/c17_delta_43.log /home/yang/q3/ginibre_q3/certificates/post_m29/c17_delta_logs_conly/c17_delta_44.log /home/yang/q3/ginibre_q3/certificates/post_m29/c17_delta_logs_conly/c17_delta_45.log /home/yang/q3/ginibre_q3/certificates/post_m29/m30_BC13_18_pair_range_exact39.log
+power=1 support=1 elapsed_seconds=5.3892e-05
+power=2 support=6 elapsed_seconds=4.5946e-05
+power=3 support=14 elapsed_seconds=0.0002335
+power=4 support=32 elapsed_seconds=0.000524989
+power=5 support=66 elapsed_seconds=0.00143703
+power=6 support=132 elapsed_seconds=0.00301966
+power=7 support=248 elapsed_seconds=0.0053472
+power=8 support=453 elapsed_seconds=0.0108471
+power=9 support=797 elapsed_seconds=0.0190063
+power=10 support=1368 elapsed_seconds=0.0338214
+power=11 support=2287 elapsed_seconds=0.0635279
+power=12 support=3750 elapsed_seconds=0.106092
+power=13 support=6026 elapsed_seconds=0.177833
+power=14 support=9531 elapsed_seconds=0.285416
+power=15 support=14840 elapsed_seconds=0.450281
+power=16 support=22800 elapsed_seconds=0.703461
+power=17 support=34584 elapsed_seconds=1.1033
+power=18 support=50964 elapsed_seconds=1.69749
+power=19 support=74267 elapsed_seconds=2.43852
+power=20 support=107106 elapsed_seconds=4.19969
+power=21 support=152970 elapsed_seconds=6.19794
+power=22 support=216486 elapsed_seconds=9.03025
+power=23 support=303754 elapsed_seconds=11.9855
+root_datum=C_17 rank=17 roots=578 maximum_coordinate=46
+SUMMARY group=C_17 moments=46 source_values=10 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

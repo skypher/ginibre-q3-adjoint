@@ -1,0 +1,158 @@
+B/C residual exact complement-packing GMP verifier
+VERIFIES exact inequality: row_bound * M_{ceil(q/3)+offset} < 2^(2q)
+where M_K=sum_{d=0}^K (d+1)*s_d and s_{n+1}=n*s_n+n*s_{n-1}-binom(n,2)*s_{n-2}
+host=optimus
+q_min=86 q_max=218 offset=10 row_bound=30899 k_min=39 k_max=83 OpenMP threads=64
+stable_progress index=10/83
+stable_progress index=20/83
+stable_progress index=30/83
+stable_progress index=40/83
+stable_progress index=50/83
+stable_progress index=60/83
+stable_progress index=70/83
+stable_progress index=80/83
+stable_progress index=83/83
+progress completed=25/133 last_q=128 failures=0
+progress completed=50/133 last_q=160 failures=0
+progress completed=75/133 last_q=187 failures=0
+progress completed=100/133 last_q=217 failures=0
+progress completed=125/133 last_q=117 failures=0
+progress completed=133/133 last_q=95 failures=0
+check q=86 K=39 lhs_bits=171 rhs_bits=173 margin_bits=172 log10_lhs_over_rhs=-0.518438356025349378 status=OK
+check q=87 K=39 lhs_bits=171 rhs_bits=175 margin_bits=174 log10_lhs_over_rhs=-1.12049834735331189 status=OK
+check q=88 K=40 lhs_bits=176 rhs_bits=177 margin_bits=174 log10_lhs_over_rhs=-0.115519519802795401 status=OK
+check q=89 K=40 lhs_bits=176 rhs_bits=179 margin_bits=178 log10_lhs_over_rhs=-0.717579511130757908 status=OK
+check q=90 K=40 lhs_bits=176 rhs_bits=181 margin_bits=180 log10_lhs_over_rhs=-1.31963950245872041 status=OK
+check q=91 K=41 lhs_bits=181 rhs_bits=183 margin_bits=182 log10_lhs_over_rhs=-0.304047301174129814 status=OK
+check q=92 K=41 lhs_bits=181 rhs_bits=185 margin_bits=184 log10_lhs_over_rhs=-0.906107292502092321 status=OK
+check q=93 K=41 lhs_bits=181 rhs_bits=187 margin_bits=186 log10_lhs_over_rhs=-1.50816728383005483 status=OK
+check q=94 K=42 lhs_bits=187 rhs_bits=189 margin_bits=188 log10_lhs_over_rhs=-0.482215400239404346 status=OK
+check q=95 K=42 lhs_bits=187 rhs_bits=191 margin_bits=190 log10_lhs_over_rhs=-1.08427539156736685 status=OK
+check q=96 K=42 lhs_bits=187 rhs_bits=193 margin_bits=192 log10_lhs_over_rhs=-1.68633538289532225 status=OK
+check q=97 K=43 lhs_bits=192 rhs_bits=195 margin_bits=194 log10_lhs_over_rhs=-0.650265639454715938 status=OK
+check q=98 K=43 lhs_bits=192 rhs_bits=197 margin_bits=196 log10_lhs_over_rhs=-1.25232563078267845 status=OK
+check q=99 K=43 lhs_bits=192 rhs_bits=199 margin_bits=198 log10_lhs_over_rhs=-1.85438562211064095 status=OK
+check q=100 K=44 lhs_bits=198 rhs_bits=201 margin_bits=200 log10_lhs_over_rhs=-0.808428787884679423 status=OK
+check q=101 K=44 lhs_bits=198 rhs_bits=203 margin_bits=202 log10_lhs_over_rhs=-1.41048877921264193 status=OK
+check q=102 K=44 lhs_bits=198 rhs_bits=205 margin_bits=204 log10_lhs_over_rhs=-2.01254877054060444 status=OK
+check q=103 K=45 lhs_bits=203 rhs_bits=207 margin_bits=206 log10_lhs_over_rhs=-0.956925303579005515 status=OK
+check q=104 K=45 lhs_bits=203 rhs_bits=209 margin_bits=208 log10_lhs_over_rhs=-1.55898529490696802 status=OK
+check q=105 K=45 lhs_bits=203 rhs_bits=211 margin_bits=210 log10_lhs_over_rhs=-2.16104528623493053 status=OK
+check q=106 K=46 lhs_bits=209 rhs_bits=213 margin_bits=212 log10_lhs_over_rhs=-1.09596601079540079 status=OK
+check q=107 K=46 lhs_bits=209 rhs_bits=215 margin_bits=214 log10_lhs_over_rhs=-1.6980260021233633 status=OK
+check q=108 K=46 lhs_bits=209 rhs_bits=217 margin_bits=216 log10_lhs_over_rhs=-2.30008599345132581 status=OK
+check q=109 K=47 lhs_bits=214 rhs_bits=219 margin_bits=218 log10_lhs_over_rhs=-1.22575271907685135 status=OK
+check q=110 K=47 lhs_bits=214 rhs_bits=221 margin_bits=220 log10_lhs_over_rhs=-1.82781271040481386 status=OK
+check q=111 K=47 lhs_bits=214 rhs_bits=223 margin_bits=222 log10_lhs_over_rhs=-2.42987270173277636 status=OK
+check q=112 K=48 lhs_bits=220 rhs_bits=225 margin_bits=224 log10_lhs_over_rhs=-1.34647879030441686 status=OK
+check q=113 K=48 lhs_bits=220 rhs_bits=227 margin_bits=226 log10_lhs_over_rhs=-1.94853878163237937 status=OK
+check q=114 K=48 lhs_bits=220 rhs_bits=229 margin_bits=228 log10_lhs_over_rhs=-2.55059877296034188 status=OK
+check q=115 K=49 lhs_bits=226 rhs_bits=231 margin_bits=230 log10_lhs_over_rhs=-1.45832965908758183 status=OK
+check q=116 K=49 lhs_bits=226 rhs_bits=233 margin_bits=232 log10_lhs_over_rhs=-2.06038965041554434 status=OK
+check q=117 K=49 lhs_bits=226 rhs_bits=235 margin_bits=234 log10_lhs_over_rhs=-2.66244964174350685 status=OK
+check q=118 K=50 lhs_bits=231 rhs_bits=237 margin_bits=236 log10_lhs_over_rhs=-1.56148331120346029 status=OK
+check q=119 K=50 lhs_bits=231 rhs_bits=239 margin_bits=238 log10_lhs_over_rhs=-2.1635433025314228 status=OK
+check q=120 K=50 lhs_bits=231 rhs_bits=241 margin_bits=240 log10_lhs_over_rhs=-2.7656032938593853 status=OK
+check q=121 K=51 lhs_bits=237 rhs_bits=243 margin_bits=242 log10_lhs_over_rhs=-1.65611072423546091 status=OK
+check q=122 K=51 lhs_bits=237 rhs_bits=245 margin_bits=244 log10_lhs_over_rhs=-2.25817071556342341 status=OK
+check q=123 K=51 lhs_bits=237 rhs_bits=247 margin_bits=246 log10_lhs_over_rhs=-2.86023070689138592 status=OK
+check q=124 K=52 lhs_bits=243 rhs_bits=249 margin_bits=248 log10_lhs_over_rhs=-1.74237627407822515 status=OK
+check q=125 K=52 lhs_bits=243 rhs_bits=251 margin_bits=250 log10_lhs_over_rhs=-2.34443626540618766 status=OK
+check q=126 K=52 lhs_bits=243 rhs_bits=253 margin_bits=252 log10_lhs_over_rhs=-2.94649625673415017 status=OK
+check q=127 K=53 lhs_bits=248 rhs_bits=255 margin_bits=254 log10_lhs_over_rhs=-1.82043811055594063 status=OK
+check q=128 K=53 lhs_bits=248 rhs_bits=257 margin_bits=256 log10_lhs_over_rhs=-2.42249810188390313 status=OK
+check q=129 K=53 lhs_bits=248 rhs_bits=259 margin_bits=258 log10_lhs_over_rhs=-3.02455809321186564 status=OK
+check q=130 K=54 lhs_bits=254 rhs_bits=261 margin_bits=260 log10_lhs_over_rhs=-1.89044850503709938 status=OK
+check q=131 K=54 lhs_bits=254 rhs_bits=263 margin_bits=262 log10_lhs_over_rhs=-2.49250849636506189 status=OK
+check q=132 K=54 lhs_bits=254 rhs_bits=265 margin_bits=264 log10_lhs_over_rhs=-3.09456848769302439 status=OK
+check q=133 K=55 lhs_bits=260 rhs_bits=267 margin_bits=266 log10_lhs_over_rhs=-1.95255417261125785 status=OK
+check q=134 K=55 lhs_bits=260 rhs_bits=269 margin_bits=268 log10_lhs_over_rhs=-2.55461416393922036 status=OK
+check q=135 K=55 lhs_bits=260 rhs_bits=271 margin_bits=270 log10_lhs_over_rhs=-3.15667415526718287 status=OK
+check q=136 K=56 lhs_bits=266 rhs_bits=273 margin_bits=272 log10_lhs_over_rhs=-2.00689657111578867 status=OK
+check q=137 K=56 lhs_bits=266 rhs_bits=275 margin_bits=274 log10_lhs_over_rhs=-2.60895656244375118 status=OK
+check q=138 K=56 lhs_bits=266 rhs_bits=277 margin_bits=276 log10_lhs_over_rhs=-3.21101655377171369 status=OK
+check q=139 K=57 lhs_bits=272 rhs_bits=279 margin_bits=278 log10_lhs_over_rhs=-2.05361217905795002 status=OK
+check q=140 K=57 lhs_bits=272 rhs_bits=281 margin_bits=280 log10_lhs_over_rhs=-2.65567217038591252 status=OK
+check q=141 K=57 lhs_bits=272 rhs_bits=283 margin_bits=282 log10_lhs_over_rhs=-3.25773216171387503 status=OK
+check q=142 K=58 lhs_bits=278 rhs_bits=285 margin_bits=284 log10_lhs_over_rhs=-2.09283275426410853 status=OK
+check q=143 K=58 lhs_bits=278 rhs_bits=287 margin_bits=286 log10_lhs_over_rhs=-2.69489274559207104 status=OK
+check q=144 K=58 lhs_bits=278 rhs_bits=289 margin_bits=288 log10_lhs_over_rhs=-3.29695273692003354 status=OK
+check q=145 K=59 lhs_bits=283 rhs_bits=291 margin_bits=290 log10_lhs_over_rhs=-2.12468557490019805 status=OK
+check q=146 K=59 lhs_bits=283 rhs_bits=293 margin_bits=292 log10_lhs_over_rhs=-2.72674556622816056 status=OK
+check q=147 K=59 lhs_bits=283 rhs_bits=295 margin_bits=294 log10_lhs_over_rhs=-3.32880555755612306 status=OK
+check q=148 K=60 lhs_bits=289 rhs_bits=297 margin_bits=296 log10_lhs_over_rhs=-2.14929366434175506 status=OK
+check q=149 K=60 lhs_bits=289 rhs_bits=299 margin_bits=298 log10_lhs_over_rhs=-2.75135365566971757 status=OK
+check q=150 K=60 lhs_bits=289 rhs_bits=301 margin_bits=300 log10_lhs_over_rhs=-3.35341364699768008 status=OK
+check q=151 K=61 lhs_bits=295 rhs_bits=303 margin_bits=302 log10_lhs_over_rhs=-2.16677600122569913 status=OK
+check q=152 K=61 lhs_bits=295 rhs_bits=305 margin_bits=304 log10_lhs_over_rhs=-2.76883599255366164 status=OK
+check q=153 K=61 lhs_bits=295 rhs_bits=307 margin_bits=306 log10_lhs_over_rhs=-3.37089598388162415 status=OK
+check q=154 K=62 lhs_bits=301 rhs_bits=309 margin_bits=308 log10_lhs_over_rhs=-2.17724771588557076 status=OK
+check q=155 K=62 lhs_bits=301 rhs_bits=311 margin_bits=310 log10_lhs_over_rhs=-2.77930770721353326 status=OK
+check q=156 K=62 lhs_bits=301 rhs_bits=313 margin_bits=312 log10_lhs_over_rhs=-3.38136769854149577 status=OK
+check q=157 K=63 lhs_bits=307 rhs_bits=315 margin_bits=314 log10_lhs_over_rhs=-2.1808202742574565 status=OK
+check q=158 K=63 lhs_bits=307 rhs_bits=317 margin_bits=316 log10_lhs_over_rhs=-2.78288026558541901 status=OK
+check q=159 K=63 lhs_bits=307 rhs_bits=319 margin_bits=318 log10_lhs_over_rhs=-3.38494025691338152 status=OK
+check q=160 K=64 lhs_bits=313 rhs_bits=321 margin_bits=320 log10_lhs_over_rhs=-2.17760165024057528 status=OK
+check q=161 K=64 lhs_bits=313 rhs_bits=323 margin_bits=322 log10_lhs_over_rhs=-2.77966164156853779 status=OK
+check q=162 K=64 lhs_bits=313 rhs_bits=325 margin_bits=324 log10_lhs_over_rhs=-3.3817216328965003 status=OK
+check q=163 K=65 lhs_bits=319 rhs_bits=327 margin_bits=326 log10_lhs_over_rhs=-2.16769648740550736 status=OK
+check q=164 K=65 lhs_bits=319 rhs_bits=329 margin_bits=328 log10_lhs_over_rhs=-2.76975647873346986 status=OK
+check q=165 K=65 lhs_bits=319 rhs_bits=331 margin_bits=330 log10_lhs_over_rhs=-3.37181647006143237 status=OK
+check q=166 K=66 lhs_bits=325 rhs_bits=333 margin_bits=332 log10_lhs_over_rhs=-2.15120625086110806 status=OK
+check q=167 K=66 lhs_bits=325 rhs_bits=335 margin_bits=334 log10_lhs_over_rhs=-2.75326624218907057 status=OK
+check q=168 K=66 lhs_bits=325 rhs_bits=337 margin_bits=336 log10_lhs_over_rhs=-3.35532623351703307 status=OK
+check q=169 K=67 lhs_bits=331 rhs_bits=339 margin_bits=338 log10_lhs_over_rhs=-2.12822937001837431 status=OK
+check q=170 K=67 lhs_bits=331 rhs_bits=341 margin_bits=340 log10_lhs_over_rhs=-2.73028936134633682 status=OK
+check q=171 K=67 lhs_bits=331 rhs_bits=343 margin_bits=342 log10_lhs_over_rhs=-3.33234935267429933 status=OK
+check q=172 K=68 lhs_bits=338 rhs_bits=345 margin_bits=344 log10_lhs_over_rhs=-2.09886137292353681 status=OK
+check q=173 K=68 lhs_bits=338 rhs_bits=347 margin_bits=346 log10_lhs_over_rhs=-2.70092136425149931 status=OK
+check q=174 K=68 lhs_bits=338 rhs_bits=349 margin_bits=348 log10_lhs_over_rhs=-3.30298135557946182 status=OK
+check q=175 K=69 lhs_bits=344 rhs_bits=351 margin_bits=350 log10_lhs_over_rhs=-2.06319501277451423 status=OK
+check q=176 K=69 lhs_bits=344 rhs_bits=353 margin_bits=352 log10_lhs_over_rhs=-2.66525500410247673 status=OK
+check q=177 K=69 lhs_bits=344 rhs_bits=355 margin_bits=354 log10_lhs_over_rhs=-3.26731499543043924 status=OK
+check q=178 K=70 lhs_bits=350 rhs_bits=357 margin_bits=356 log10_lhs_over_rhs=-2.02132038718117713 status=OK
+check q=179 K=70 lhs_bits=350 rhs_bits=359 margin_bits=358 log10_lhs_over_rhs=-2.62338037850913963 status=OK
+check q=180 K=70 lhs_bits=350 rhs_bits=361 margin_bits=360 log10_lhs_over_rhs=-3.22544036983710214 status=OK
+check q=181 K=71 lhs_bits=356 rhs_bits=363 margin_bits=362 log10_lhs_over_rhs=-1.97332505068312969 status=OK
+check q=182 K=71 lhs_bits=356 rhs_bits=365 margin_bits=364 log10_lhs_over_rhs=-2.5753850420110922 status=OK
+check q=183 K=71 lhs_bits=356 rhs_bits=367 margin_bits=366 log10_lhs_over_rhs=-3.1774450333390547 status=OK
+check q=184 K=72 lhs_bits=362 rhs_bits=369 margin_bits=368 log10_lhs_over_rhs=-1.91929412099476338 status=OK
+check q=185 K=72 lhs_bits=362 rhs_bits=371 margin_bits=370 log10_lhs_over_rhs=-2.52135411232272588 status=OK
+check q=186 K=72 lhs_bits=362 rhs_bits=373 margin_bits=372 log10_lhs_over_rhs=-3.12341410365068839 status=OK
+check q=187 K=73 lhs_bits=368 rhs_bits=375 margin_bits=374 log10_lhs_over_rhs=-1.85931037940932242 status=OK
+check q=188 K=73 lhs_bits=368 rhs_bits=377 margin_bits=376 log10_lhs_over_rhs=-2.46137037073728493 status=OK
+check q=189 K=73 lhs_bits=368 rhs_bits=379 margin_bits=378 log10_lhs_over_rhs=-3.06343036206524744 status=OK
+check q=190 K=74 lhs_bits=375 rhs_bits=381 margin_bits=380 log10_lhs_over_rhs=-1.79345436575808037 status=OK
+check q=191 K=74 lhs_bits=375 rhs_bits=383 margin_bits=382 log10_lhs_over_rhs=-2.39551435708604288 status=OK
+check q=192 K=74 lhs_bits=375 rhs_bits=385 margin_bits=384 log10_lhs_over_rhs=-2.99757434841399117 status=OK
+check q=193 K=75 lhs_bits=381 rhs_bits=387 margin_bits=386 log10_lhs_over_rhs=-1.72180446828905076 status=OK
+check q=194 K=75 lhs_bits=381 rhs_bits=389 margin_bits=388 log10_lhs_over_rhs=-2.32386445961701327 status=OK
+check q=195 K=75 lhs_bits=381 rhs_bits=391 margin_bits=390 log10_lhs_over_rhs=-2.92592445094497577 status=OK
+check q=196 K=76 lhs_bits=387 rhs_bits=393 margin_bits=392 log10_lhs_over_rhs=-1.6444370088007787 status=OK
+check q=197 K=76 lhs_bits=387 rhs_bits=395 margin_bits=394 log10_lhs_over_rhs=-2.24649700012874121 status=OK
+check q=198 K=76 lhs_bits=387 rhs_bits=397 margin_bits=396 log10_lhs_over_rhs=-2.84855699145670371 status=OK
+check q=199 K=77 lhs_bits=393 rhs_bits=399 margin_bits=398 log10_lhs_over_rhs=-1.56142632334031362 status=OK
+check q=200 K=77 lhs_bits=393 rhs_bits=401 margin_bits=400 log10_lhs_over_rhs=-2.16348631466827612 status=OK
+check q=201 K=77 lhs_bits=393 rhs_bits=403 margin_bits=402 log10_lhs_over_rhs=-2.76554630599623863 status=OK
+check q=202 K=78 lhs_bits=400 rhs_bits=405 margin_bits=404 log10_lhs_over_rhs=-1.47284483875098715 status=OK
+check q=203 K=78 lhs_bits=400 rhs_bits=407 margin_bits=406 log10_lhs_over_rhs=-2.07490483007894966 status=OK
+check q=204 K=78 lhs_bits=400 rhs_bits=409 margin_bits=408 log10_lhs_over_rhs=-2.67696482140691217 status=OK
+check q=205 K=79 lhs_bits=406 rhs_bits=411 margin_bits=410 log10_lhs_over_rhs=-1.37876314533330913 status=OK
+check q=206 K=79 lhs_bits=406 rhs_bits=413 margin_bits=412 log10_lhs_over_rhs=-1.98082313666127163 status=OK
+check q=207 K=79 lhs_bits=406 rhs_bits=415 margin_bits=414 log10_lhs_over_rhs=-2.58288312798923414 status=OK
+check q=208 K=80 lhs_bits=412 rhs_bits=417 margin_bits=416 log10_lhs_over_rhs=-1.27925006586286827 status=OK
+check q=209 K=80 lhs_bits=412 rhs_bits=419 margin_bits=418 log10_lhs_over_rhs=-1.88131005719083078 status=OK
+check q=210 K=80 lhs_bits=412 rhs_bits=421 margin_bits=420 log10_lhs_over_rhs=-2.48337004851879328 status=OK
+check q=211 K=81 lhs_bits=419 rhs_bits=423 margin_bits=422 log10_lhs_over_rhs=-1.17437272119084923 status=OK
+check q=212 K=81 lhs_bits=419 rhs_bits=425 margin_bits=424 log10_lhs_over_rhs=-1.77643271251881174 status=OK
+check q=213 K=81 lhs_bits=419 rhs_bits=427 margin_bits=426 log10_lhs_over_rhs=-2.37849270384677425 status=OK
+check q=214 K=82 lhs_bits=425 rhs_bits=429 margin_bits=428 log10_lhs_over_rhs=-1.06419659263620758 status=OK
+check q=215 K=82 lhs_bits=425 rhs_bits=431 margin_bits=430 log10_lhs_over_rhs=-1.66625658396417009 status=OK
+check q=216 K=82 lhs_bits=425 rhs_bits=433 margin_bits=432 log10_lhs_over_rhs=-2.2683165752921326 status=OK
+check q=217 K=83 lhs_bits=431 rhs_bits=435 margin_bits=434 log10_lhs_over_rhs=-0.94878558136329616 status=OK
+check q=218 K=83 lhs_bits=431 rhs_bits=437 margin_bits=436 log10_lhs_over_rhs=-1.55084557269125867 status=OK
+anchor_value M_39=58718705658075676663193967906281687283486360200
+anchor_value M_40=2375829621213657924724588134512527189480955539496
+anchor_value M_83=161542988313624522243948333029840776975463300385208625299239096132030683316177591525727207204433303483484658046478341455368328
+SUMMARY failures=0 q_checked=133 k_min=39 k_max=83 worst_q=88 worst_K=40 worst_log10_lhs_over_rhs=-0.115519519802795401 worst_lhs_bits=176 worst_rhs_bits=177 worst_margin_bits=174
+__EXIT_STATUS=0

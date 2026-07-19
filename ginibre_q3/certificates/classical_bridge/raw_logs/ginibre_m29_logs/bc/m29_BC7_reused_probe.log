@@ -1,0 +1,8 @@
+m=29 reused B/C exact-window certificate
+stable Chain diff D(29) = 601101928572633606043640402579591572896576321369733121741661664564304348781808026451968
+certified rows: B_7..B_7 and C_7..C_7
+delta logs:
+  /tmp/ginibre_m25_eval/m24_BC3_14_range43.log
+  /tmp/ginibre_m28_logs/bc/m28_BC6_rank_pair_exact45.log
+B_7 has active negative quadratic terms outside m_43: [(16, 45), (17, 44)]
+__EXIT_STATUS=1

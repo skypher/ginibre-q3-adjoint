@@ -1,0 +1,53 @@
+B/C family single-delta reverse certificate
+family = C
+rank = 18
+moment = 46
+C_18 target count = 14669
+    C_18 Delta_46 shared reverse step 1/46 frontier=150961 colors=1 elapsed=0.334456s
+    C_18 Delta_46 shared reverse step 2/46 frontier=409063 colors=1 elapsed=3.45919s
+    C_18 Delta_46 shared reverse step 3/46 frontier=595834 colors=1 elapsed=12.5045s
+    C_18 Delta_46 shared reverse step 4/46 frontier=679385 colors=1 elapsed=26.7063s
+    C_18 Delta_46 shared reverse step 5/46 frontier=686868 colors=1 elapsed=44.307s
+    C_18 Delta_46 shared reverse step 6/46 frontier=651090 colors=1 elapsed=63.1594s
+    C_18 Delta_46 shared reverse step 7/46 frontier=594133 colors=1 elapsed=81.9384s
+    C_18 Delta_46 shared reverse step 8/46 frontier=529094 colors=1 elapsed=99.6126s
+    C_18 Delta_46 shared reverse step 9/46 frontier=463218 colors=1 elapsed=115.686s
+    C_18 Delta_46 shared reverse step 10/46 frontier=400489 colors=1 elapsed=130.025s
+    C_18 Delta_46 shared reverse step 11/46 frontier=342844 colors=1 elapsed=142.42s
+    C_18 Delta_46 shared reverse step 12/46 frontier=291155 colors=1 elapsed=153.112s
+    C_18 Delta_46 shared reverse step 13/46 frontier=245556 colors=1 elapsed=162.118s
+    C_18 Delta_46 shared reverse step 14/46 frontier=205875 colors=1 elapsed=169.646s
+    C_18 Delta_46 shared reverse step 15/46 frontier=171668 colors=1 elapsed=175.878s
+    C_18 Delta_46 shared reverse step 16/46 frontier=142450 colors=1 elapsed=181.019s
+    C_18 Delta_46 shared reverse step 17/46 frontier=117650 colors=1 elapsed=185.198s
+    C_18 Delta_46 shared reverse step 18/46 frontier=96747 colors=1 elapsed=188.596s
+    C_18 Delta_46 shared reverse step 19/46 frontier=79204 colors=1 elapsed=191.312s
+    C_18 Delta_46 shared reverse step 20/46 frontier=64570 colors=1 elapsed=193.469s
+    C_18 Delta_46 shared reverse step 21/46 frontier=52399 colors=1 elapsed=195.173s
+    C_18 Delta_46 shared reverse step 22/46 frontier=42330 colors=1 elapsed=196.501s
+    C_18 Delta_46 shared reverse step 23/46 frontier=34019 colors=1 elapsed=197.53s
+    C_18 Delta_46 shared reverse step 24/46 frontier=27195 colors=1 elapsed=198.331s
+    C_18 Delta_46 shared reverse step 25/46 frontier=21600 colors=1 elapsed=198.937s
+    C_18 Delta_46 shared reverse step 26/46 frontier=17039 colors=1 elapsed=199.394s
+    C_18 Delta_46 shared reverse step 27/46 frontier=13325 colors=1 elapsed=199.74s
+    C_18 Delta_46 shared reverse step 28/46 frontier=10320 colors=1 elapsed=199.997s
+    C_18 Delta_46 shared reverse step 29/46 frontier=7893 colors=1 elapsed=200.185s
+    C_18 Delta_46 shared reverse step 30/46 frontier=5949 colors=1 elapsed=200.323s
+    C_18 Delta_46 shared reverse step 31/46 frontier=4398 colors=1 elapsed=200.421s
+    C_18 Delta_46 shared reverse step 32/46 frontier=3178 colors=1 elapsed=200.491s
+    C_18 Delta_46 shared reverse step 33/46 frontier=2230 colors=1 elapsed=200.538s
+    C_18 Delta_46 shared reverse step 34/46 frontier=1514 colors=1 elapsed=200.57s
+    C_18 Delta_46 shared reverse step 35/46 frontier=990 colors=1 elapsed=200.59s
+    C_18 Delta_46 shared reverse step 36/46 frontier=626 colors=1 elapsed=200.602s
+    C_18 Delta_46 shared reverse step 37/46 frontier=385 colors=1 elapsed=200.608s
+    C_18 Delta_46 shared reverse step 38/46 frontier=231 colors=1 elapsed=200.612s
+    C_18 Delta_46 shared reverse step 39/46 frontier=135 colors=1 elapsed=200.614s
+    C_18 Delta_46 shared reverse step 40/46 frontier=77 colors=1 elapsed=200.615s
+    C_18 Delta_46 shared reverse step 41/46 frontier=42 colors=1 elapsed=200.615s
+    C_18 Delta_46 shared reverse step 42/46 frontier=22 colors=1 elapsed=200.615s
+    C_18 Delta_46 shared reverse step 43/46 frontier=11 colors=1 elapsed=200.615s
+    C_18 Delta_46 shared reverse step 44/46 frontier=5 colors=1 elapsed=200.615s
+    C_18 Delta_46 shared reverse step 45/46 frontier=2 colors=1 elapsed=200.615s
+    C_18 Delta_46 shared reverse step 46/46 frontier=1 colors=1 elapsed=200.615s
+  C_18 Delta_46 = -92150649268252952810192484643071438426540
+__EXIT_STATUS=0

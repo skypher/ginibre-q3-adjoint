@@ -1,0 +1,1174 @@
+m=28 B/C rank-pair positive-quadratic certificate
+rank = 6
+stable Chain diff D(28) = 153889275723409762152911972708157654219985447590746073156624800187079091955425345536
+begin B_6: first boundary = 14; exact through m_45
+begin C_6: first boundary = 14; exact through m_45
+    shared forward step 1/45 states=1 elapsed=3.657e-06s
+    shared forward step 2/45 states=3 elapsed=2.3494e-05s
+    shared forward step 3/45 states=7 elapsed=3.4655e-05s
+    shared forward step 4/45 states=15 elapsed=6.6414e-05s
+    shared forward step 5/45 states=30 elapsed=0.00013925s
+    shared forward step 6/45 states=58 elapsed=0.000312463s
+    shared forward step 7/45 states=105 elapsed=0.000748547s
+    shared forward step 8/45 states=186 elapsed=0.00160801s
+    shared forward step 9/45 states=318 elapsed=0.00337922s
+    shared forward step 10/45 states=530 elapsed=0.00673005s
+    shared forward step 11/45 states=863 elapsed=0.0130741s
+    shared forward step 12/45 states=1380 elapsed=0.0251044s
+    shared forward step 13/45 states=2164 elapsed=0.0465805s
+    shared forward step 14/45 states=3345 elapsed=0.0835579s
+    m_14: B_6 shared target 1/1 elapsed=3.51e-07s
+  B_6 Delta_14 = -30537
+    m_14: C_6 shared target 45/45 elapsed=2.915e-06s
+  C_6 Delta_14 = -135135
+    shared forward step 15/45 states=5096 elapsed=0.146123s
+    m_15: B_6 shared target 2/2 elapsed=6.31e-07s
+  B_6 Delta_15 = -2998737
+    m_15: C_6 shared target 66/66 elapsed=6.272e-06s
+  C_6 Delta_15 = -12162151
+    shared forward step 16/45 states=7665 elapsed=0.250102s
+    m_16: B_6 shared target 4/4 elapsed=8.01e-07s
+  B_6 Delta_16 = -185068950
+    m_16: C_6 shared target 95/95 elapsed=9.758e-06s
+  C_6 Delta_16 = -683107530
+    shared forward step 17/45 states=11395 elapsed=0.426547s
+    m_17: B_6 shared target 7/7 elapsed=2.024e-06s
+  B_6 Delta_17 = -9195216192
+    m_17: C_6 shared target 134/134 elapsed=1.8895e-05s
+  C_6 Delta_17 = -30875657416
+    shared forward step 18/45 states=16765 elapsed=0.698251s
+    m_18: B_6 shared target 12/12 elapsed=4.238e-06s
+  B_6 Delta_18 = -403886914362
+    m_18: C_6 shared target 186/186 elapsed=2.5628e-05s
+  C_6 Delta_18 = -1236543311246
+    shared forward step 19/45 states=24418 elapsed=1.12995s
+    m_19: B_6 shared target 19/19 elapsed=1.1291e-05s
+  B_6 Delta_19 = -16441286282946
+    m_19: C_6 shared target 255/255 elapsed=3.8742e-05s
+  C_6 Delta_19 = -46065809567934
+    shared forward step 20/45 states=35251 elapsed=1.81686s
+    m_20: B_6 shared target 30/30 elapsed=1.2724e-05s
+  B_6 Delta_20 = -637598637741532
+    m_20: C_6 shared target 345/345 elapsed=6.0583e-05s
+  C_6 Delta_20 = -1642073004548408
+    shared forward step 21/45 states=50460 elapsed=2.8737s
+    m_21: B_6 shared target 45/45 elapsed=2.4736e-05s
+  B_6 Delta_21 = -23971559312113060
+    m_21: C_6 shared target 461/461 elapsed=8.3305e-05s
+  C_6 Delta_21 = -57016669081887330
+    shared forward step 22/45 states=71669 elapsed=4.49396s
+    m_22: B_6 shared target 67/67 elapsed=3.7921e-05s
+  B_6 Delta_22 = -884103937968869457
+    m_22: C_6 shared target 611/611 elapsed=0.000121828s
+  C_6 Delta_22 = -1951558536890637888
+    shared forward step 23/45 states=101050 elapsed=7.01042s
+    m_23: B_6 shared target 97/97 elapsed=6.0383e-05s
+  B_6 Delta_23 = -32252505258379580227
+    m_23: C_6 shared target 801/801 elapsed=0.00017723s
+  C_6 Delta_23 = -66392903548310137733
+    shared forward step 24/45 states=141510 elapsed=10.7939s
+    m_24: B_6 shared target 139/139 elapsed=9.8464e-05s
+  B_6 Delta_24 = -1170790628856633603658
+    m_24: C_6 shared target 1000/1043 elapsed=0.000230481s
+    m_24: C_6 shared target 1043/1043 elapsed=0.00024089s
+  C_6 Delta_24 = -2258305181581174533812
+    shared forward step 25/45 states=196888 elapsed=16.5139s
+    m_25: B_6 shared target 195/195 elapsed=0.000136404s
+  B_6 Delta_25 = -42479547387234389193876
+    m_25: C_6 shared target 1000/1346 elapsed=0.000264123s
+    m_25: C_6 shared target 1346/1346 elapsed=0.000330718s
+  C_6 Delta_25 = -77130875031500030063976
+    shared forward step 26/45 states=272293 elapsed=24.9823s
+    m_26: B_6 shared target 272/272 elapsed=0.000168715s
+  B_6 Delta_26 = -1545689926018076296956400
+    m_26: C_6 shared target 1000/1727 elapsed=0.000270054s
+    m_26: C_6 shared target 1727/1727 elapsed=0.000400968s
+  C_6 Delta_26 = -2653600041866692496850850
+    shared forward step 27/45 states=374423 elapsed=37.8259s
+    m_27: B_6 shared target 373/373 elapsed=0.000234447s
+  B_6 Delta_27 = -56548850013466751638729876
+    m_27: C_6 shared target 1000/2199 elapsed=0.000278069s
+    m_27: C_6 shared target 2000/2199 elapsed=0.000506145s
+    m_27: C_6 shared target 2199/2199 elapsed=0.00053562s
+  C_6 Delta_27 = -92179097653923358531130626
+    shared forward step 28/45 states=512081 elapsed=56.3921s
+    m_28: B_6 shared target 508/508 elapsed=0.000317863s
+  B_6 Delta_28 = -2084256852364023186640559976
+    m_28: C_6 shared target 1000/2787 elapsed=0.000275223s
+    m_28: C_6 shared target 2000/2787 elapsed=0.000534638s
+    m_28: C_6 shared target 2787/2787 elapsed=0.000676643s
+  C_6 Delta_28 = -3238864186678631138006233776
+      shared forward step 29/45 processed=500000/512081 next_states=683206 step_elapsed=24.6231s elapsed=81.0703s
+    shared forward step 29/45 states=696760 elapsed=83.1618s
+    m_29: B_6 shared target 683/683 elapsed=0.000481348s
+  B_6 Delta_29 = -77514883038208126000976325616
+    m_29: C_6 shared target 1000/3508 elapsed=0.000461271s
+    m_29: C_6 shared target 2000/3508 elapsed=0.000830991s
+    m_29: C_6 shared target 3000/3508 elapsed=0.00122103s
+    m_29: C_6 shared target 3508/3508 elapsed=0.00135502s
+  C_6 Delta_29 = -115265948836342223908612286116
+      shared forward step 30/45 processed=500000/696760 next_states=701654 step_elapsed=20.7305s elapsed=103.968s
+    shared forward step 30/45 states=943442 elapsed=122.285s
+    m_30: B_6 shared target 913/913 elapsed=0.000630487s
+  B_6 Delta_30 = -2912488115813113983969538897417
+    m_30: C_6 shared target 1000/4398 elapsed=0.000333482s
+    m_30: C_6 shared target 2000/4398 elapsed=0.000667856s
+    m_30: C_6 shared target 3000/4398 elapsed=0.00094863s
+    m_30: C_6 shared target 4000/4398 elapsed=0.0011795s
+    m_30: C_6 shared target 4398/4398 elapsed=0.00124606s
+  C_6 Delta_30 = -4159110926839633760200461613117
+      shared forward step 31/45 processed=500000/943442 next_states=714082 step_elapsed=18.7637s elapsed=141.164s
+    shared forward step 31/45 states=1271527 elapsed=178.366s
+    m_31: B_6 shared target 1000/1207 elapsed=0.000668588s
+    m_31: B_6 shared target 1207/1207 elapsed=0.000836201s
+  B_6 Delta_31 = -110667199313321190415576781222505
+    m_31: C_6 shared target 1000/5482 elapsed=0.000475568s
+    m_31: C_6 shared target 2000/5482 elapsed=0.000833255s
+    m_31: C_6 shared target 3000/5482 elapsed=0.0011477s
+    m_31: C_6 shared target 4000/5482 elapsed=0.00146296s
+    m_31: C_6 shared target 5000/5482 elapsed=0.00175113s
+    m_31: C_6 shared target 5482/5482 elapsed=0.00184781s
+  C_6 Delta_31 = -152274585364921599744570760654980
+      shared forward step 32/45 processed=500000/1271527 next_states=721837 step_elapsed=17.9815s elapsed=196.497s
+      shared forward step 32/45 processed=1000000/1271527 next_states=1378884 step_elapsed=48.6259s elapsed=227.141s
+    shared forward step 32/45 states=1706159 elapsed=258.006s
+    m_32: B_6 shared target 1000/1588 elapsed=0.000661625s
+    m_32: B_6 shared target 1588/1588 elapsed=0.00105237s
+  B_6 Delta_32 = -4255947956325762843970250519056192
+    m_32: C_6 shared target 1000/6809 elapsed=0.00043892s
+    m_32: C_6 shared target 2000/6809 elapsed=0.000785326s
+    m_32: C_6 shared target 3000/6809 elapsed=0.00110252s
+    m_32: C_6 shared target 4000/6809 elapsed=0.00143894s
+    m_32: C_6 shared target 5000/6809 elapsed=0.00174992s
+    m_32: C_6 shared target 6000/6809 elapsed=0.00199333s
+    m_32: C_6 shared target 6809/6809 elapsed=0.00216501s
+  C_6 Delta_32 = -5660267601006900799590123576748792
+      shared forward step 33/45 processed=500000/1706159 next_states=726800 step_elapsed=17.6784s elapsed=275.911s
+      shared forward step 33/45 processed=1000000/1706159 next_states=1402479 step_elapsed=44.2095s elapsed=302.442s
+      shared forward step 33/45 processed=1500000/1706159 next_states=2035235 step_elapsed=85.4561s elapsed=343.689s
+    shared forward step 33/45 states=2279700 elapsed=372.443s
+    m_33: B_6 shared target 1000/2070 elapsed=0.000698434s
+    m_33: B_6 shared target 2000/2070 elapsed=0.00136245s
+    m_33: B_6 shared target 2070/2070 elapsed=0.001411s
+  B_6 Delta_33 = -165759533509036994289468875508277072
+    m_33: C_6 shared target 1000/8414 elapsed=0.000270766s
+    m_33: C_6 shared target 2000/8414 elapsed=0.000624456s
+    m_33: C_6 shared target 3000/8414 elapsed=0.000934355s
+    m_33: C_6 shared target 4000/8414 elapsed=0.00127649s
+    m_33: C_6 shared target 5000/8414 elapsed=0.00158523s
+    m_33: C_6 shared target 6000/8414 elapsed=0.00189615s
+    m_33: C_6 shared target 7000/8414 elapsed=0.00220167s
+    m_33: C_6 shared target 8000/8414 elapsed=0.00245148s
+    m_33: C_6 shared target 8414/8414 elapsed=0.00253841s
+  C_6 Delta_33 = -213708946795846454780669263162298272
+      shared forward step 34/45 processed=500000/2279700 next_states=731956 step_elapsed=17.5394s elapsed=390.261s
+      shared forward step 34/45 processed=1000000/2279700 next_states=1414256 step_elapsed=43.7062s elapsed=416.428s
+      shared forward step 34/45 processed=1500000/2279700 next_states=2073625 step_elapsed=76.1117s elapsed=448.833s
+      shared forward step 34/45 processed=2000000/2279700 next_states=2702873 step_elapsed=119.846s elapsed=492.568s
+    shared forward step 34/45 states=3033772 elapsed=533.793s
+    m_34: B_6 shared target 1000/2686 elapsed=0.000711408s
+    m_34: B_6 shared target 2000/2686 elapsed=0.00143414s
+    m_34: B_6 shared target 2686/2686 elapsed=0.00188362s
+  B_6 Delta_34 = -6541802135388284001969017233520694552
+    m_34: C_6 shared target 1000/10365 elapsed=0.000684848s
+    m_34: C_6 shared target 2000/10365 elapsed=0.00124263s
+    m_34: C_6 shared target 3000/10365 elapsed=0.0016176s
+    m_34: C_6 shared target 4000/10365 elapsed=0.00196077s
+    m_34: C_6 shared target 5000/10365 elapsed=0.00228998s
+    m_34: C_6 shared target 6000/10365 elapsed=0.00261109s
+    m_34: C_6 shared target 7000/10365 elapsed=0.00295818s
+    m_34: C_6 shared target 8000/10365 elapsed=0.00328006s
+    m_34: C_6 shared target 9000/10365 elapsed=0.00356228s
+    m_34: C_6 shared target 10000/10365 elapsed=0.00381053s
+    m_34: C_6 shared target 10365/10365 elapsed=0.00387679s
+  C_6 Delta_34 = -8198446735395898700371786786915723692
+      shared forward step 35/45 processed=500000/3033772 next_states=736364 step_elapsed=16.84s elapsed=550.999s
+      shared forward step 35/45 processed=1000000/3033772 next_states=1428066 step_elapsed=40.7906s elapsed=574.95s
+      shared forward step 35/45 processed=1500000/3033772 next_states=2103344 step_elapsed=69.1248s elapsed=603.284s
+      shared forward step 35/45 processed=2000000/3033772 next_states=2752538 step_elapsed=104.376s elapsed=638.535s
+      shared forward step 35/45 processed=2500000/3033772 next_states=3382735 step_elapsed=150.062s elapsed=684.221s
+      shared forward step 35/45 processed=3000000/3033772 next_states=3984212 step_elapsed=215.705s elapsed=749.865s
+    shared forward step 35/45 states=4021695 elapsed=759.275s
+    m_35: B_6 shared target 1000/3459 elapsed=0.000709846s
+    m_35: B_6 shared target 2000/3459 elapsed=0.00141378s
+    m_35: B_6 shared target 3000/3459 elapsed=0.00354435s
+    m_35: B_6 shared target 3459/3459 elapsed=0.00384454s
+  B_6 Delta_35 = -261725306220043509081390436861205638264
+    m_35: C_6 shared target 1000/12711 elapsed=0.00058926s
+    m_35: C_6 shared target 2000/12711 elapsed=0.00111053s
+    m_35: C_6 shared target 3000/12711 elapsed=0.00152215s
+    m_35: C_6 shared target 4000/12711 elapsed=0.00185576s
+    m_35: C_6 shared target 5000/12711 elapsed=0.00217697s
+    m_35: C_6 shared target 6000/12711 elapsed=0.00249279s
+    m_35: C_6 shared target 7000/12711 elapsed=0.00279841s
+    m_35: C_6 shared target 8000/12711 elapsed=0.0031094s
+    m_35: C_6 shared target 9000/12711 elapsed=0.00344087s
+    m_35: C_6 shared target 10000/12711 elapsed=0.00378791s
+    m_35: C_6 shared target 11000/12711 elapsed=0.00410053s
+    m_35: C_6 shared target 12000/12711 elapsed=0.00440179s
+    m_35: C_6 shared target 12711/12711 elapsed=0.00454209s
+  C_6 Delta_35 = -319650500576576733668005274733666701164
+      shared forward step 36/45 processed=500000/4021695 next_states=739541 step_elapsed=16.6867s elapsed=776.471s
+      shared forward step 36/45 processed=1000000/4021695 next_states=1439520 step_elapsed=39.4813s elapsed=799.266s
+      shared forward step 36/45 processed=1500000/4021695 next_states=2117990 step_elapsed=67.6736s elapsed=827.458s
+      shared forward step 36/45 processed=2000000/4021695 next_states=2783351 step_elapsed=99.3819s elapsed=859.166s
+      shared forward step 36/45 processed=2500000/4021695 next_states=3436010 step_elapsed=135.11s elapsed=894.895s
+      shared forward step 36/45 processed=3000000/4021695 next_states=4074931 step_elapsed=176.667s elapsed=936.451s
+      shared forward step 36/45 processed=3500000/4021695 next_states=4697254 step_elapsed=225.853s elapsed=985.637s
+      shared forward step 36/45 processed=4000000/4021695 next_states=5287900 step_elapsed=302.937s elapsed=1062.72s
+    shared forward step 36/45 states=5311627 elapsed=1070.24s
+    m_36: B_6 shared target 1000/4435 elapsed=0.000683677s
+    m_36: B_6 shared target 2000/4435 elapsed=0.00134451s
+    m_36: B_6 shared target 3000/4435 elapsed=0.00195014s
+    m_36: B_6 shared target 4000/4435 elapsed=0.00253341s
+    m_36: B_6 shared target 4435/4435 elapsed=0.00279734s
+  B_6 Delta_36 = -10619054248548407925898834853556726491920
+    m_36: C_6 shared target 1000/15545 elapsed=0.000713152s
+    m_36: C_6 shared target 2000/15545 elapsed=0.00138931s
+    m_36: C_6 shared target 3000/15545 elapsed=0.00201052s
+    m_36: C_6 shared target 4000/15545 elapsed=0.00241693s
+    m_36: C_6 shared target 5000/15545 elapsed=0.00278496s
+    m_36: C_6 shared target 6000/15545 elapsed=0.00314253s
+    m_36: C_6 shared target 7000/15545 elapsed=0.00351831s
+    m_36: C_6 shared target 8000/15545 elapsed=0.00385972s
+    m_36: C_6 shared target 9000/15545 elapsed=0.00418528s
+    m_36: C_6 shared target 10000/15545 elapsed=0.00451228s
+    m_36: C_6 shared target 11000/15545 elapsed=0.00485893s
+    m_36: C_6 shared target 12000/15545 elapsed=0.00519153s
+    m_36: C_6 shared target 13000/15545 elapsed=0.00551403s
+    m_36: C_6 shared target 14000/15545 elapsed=0.00580057s
+    m_36: C_6 shared target 15000/15545 elapsed=0.00606357s
+    m_36: C_6 shared target 15545/15545 elapsed=0.00616598s
+  C_6 Delta_36 = -12668923886698714458084914448218819322520
+      shared forward step 37/45 processed=500000/5311627 next_states=742006 step_elapsed=16.47s elapsed=1087.36s
+      shared forward step 37/45 processed=1000000/5311627 next_states=1447256 step_elapsed=38.1512s elapsed=1109.04s
+      shared forward step 37/45 processed=1500000/5311627 next_states=2133702 step_elapsed=64.1185s elapsed=1135.01s
+      shared forward step 37/45 processed=2000000/5311627 next_states=2809658 step_elapsed=92.7422s elapsed=1163.63s
+      shared forward step 37/45 processed=2500000/5311627 next_states=3475338 step_elapsed=124.026s elapsed=1194.92s
+      shared forward step 37/45 processed=3000000/5311627 next_states=4133067 step_elapsed=157.654s elapsed=1228.55s
+      shared forward step 37/45 processed=3500000/5311627 next_states=4775828 step_elapsed=197.29s elapsed=1268.18s
+      shared forward step 37/45 processed=4000000/5311627 next_states=5402634 step_elapsed=242.823s elapsed=1313.72s
+      shared forward step 37/45 processed=4500000/5311627 next_states=6025260 step_elapsed=291.232s elapsed=1362.12s
+      shared forward step 37/45 processed=5000000/5311627 next_states=6631858 step_elapsed=352.12s elapsed=1423.01s
+    shared forward step 37/45 states=6990367 elapsed=1485.67s
+    m_37: B_6 shared target 1000/5649 elapsed=0.000713873s
+    m_37: B_6 shared target 2000/5649 elapsed=0.00141686s
+    m_37: B_6 shared target 3000/5649 elapsed=0.00211794s
+    m_37: B_6 shared target 4000/5649 elapsed=0.00276465s
+    m_37: B_6 shared target 5000/5649 elapsed=0.00337956s
+    m_37: B_6 shared target 5649/5649 elapsed=0.00384574s
+  B_6 Delta_37 = -437075727152163199210315701937217749682664
+    m_37: C_6 shared target 1000/18935 elapsed=0.000683036s
+    m_37: C_6 shared target 2000/18935 elapsed=0.00135884s
+    m_37: C_6 shared target 3000/18935 elapsed=0.00195936s
+    m_37: C_6 shared target 4000/18935 elapsed=0.0025127s
+    m_37: C_6 shared target 5000/18935 elapsed=0.00293708s
+    m_37: C_6 shared target 6000/18935 elapsed=0.00329557s
+    m_37: C_6 shared target 7000/18935 elapsed=0.00366025s
+    m_37: C_6 shared target 8000/18935 elapsed=0.00399757s
+    m_37: C_6 shared target 9000/18935 elapsed=0.00434002s
+    m_37: C_6 shared target 10000/18935 elapsed=0.00467693s
+    m_37: C_6 shared target 11000/18935 elapsed=0.00499033s
+    m_37: C_6 shared target 12000/18935 elapsed=0.00531573s
+    m_37: C_6 shared target 13000/18935 elapsed=0.00565723s
+    m_37: C_6 shared target 14000/18935 elapsed=0.00600278s
+    m_37: C_6 shared target 15000/18935 elapsed=0.00634658s
+    m_37: C_6 shared target 16000/18935 elapsed=0.00668394s
+    m_37: C_6 shared target 17000/18935 elapsed=0.00699374s
+    m_37: C_6 shared target 18000/18935 elapsed=0.00728194s
+    m_37: C_6 shared target 18935/18935 elapsed=0.00748718s
+  C_6 Delta_37 = -510494320065841733796507968524986384434664
+      shared forward step 38/45 processed=500000/6990367 next_states=744146 step_elapsed=16.4415s elapsed=1503.02s
+      shared forward step 38/45 processed=1000000/6990367 next_states=1453972 step_elapsed=37.7411s elapsed=1524.32s
+      shared forward step 38/45 processed=1500000/6990367 next_states=2147041 step_elapsed=62.0991s elapsed=1548.68s
+      shared forward step 38/45 processed=2000000/6990367 next_states=2830913 step_elapsed=88.8048s elapsed=1575.39s
+      shared forward step 38/45 processed=2500000/6990367 next_states=3507841 step_elapsed=117.96s elapsed=1604.54s
+      shared forward step 38/45 processed=3000000/6990367 next_states=4163242 step_elapsed=152.776s elapsed=1639.36s
+      shared forward step 38/45 processed=3500000/6990367 next_states=4827351 step_elapsed=184.789s elapsed=1671.37s
+      shared forward step 38/45 processed=4000000/6990367 next_states=5482695 step_elapsed=220.856s elapsed=1707.44s
+      shared forward step 38/45 processed=4500000/6990367 next_states=6117495 step_elapsed=263.031s elapsed=1749.61s
+      shared forward step 38/45 processed=5000000/6990367 next_states=6757710 step_elapsed=303.286s elapsed=1789.87s
+      shared forward step 38/45 processed=5500000/6990367 next_states=7381260 step_elapsed=353.505s elapsed=1840.09s
+      shared forward step 38/45 processed=6000000/6990367 next_states=7994050 step_elapsed=407.859s elapsed=1894.44s
+      shared forward step 38/45 processed=6500000/6990367 next_states=8598749 step_elapsed=468.411s elapsed=1954.99s
+    shared forward step 38/45 states=9168321 elapsed=2045.71s
+    m_38: B_6 shared target 1000/7168 elapsed=0.00070701s
+    m_38: B_6 shared target 2000/7168 elapsed=0.00143758s
+    m_38: B_6 shared target 3000/7168 elapsed=0.00210015s
+    m_38: B_6 shared target 4000/7168 elapsed=0.00274292s
+    m_38: B_6 shared target 5000/7168 elapsed=0.00338669s
+    m_38: B_6 shared target 6000/7168 elapsed=0.00400104s
+    m_38: B_6 shared target 7000/7168 elapsed=0.00463381s
+    m_38: B_6 shared target 7168/7168 elapsed=0.00474764s
+  B_6 Delta_38 = -18254885818335858309575895271209107754463834
+    m_38: C_6 shared target 1000/23006 elapsed=0.000808089s
+    m_38: C_6 shared target 2000/23006 elapsed=0.00159698s
+    m_38: C_6 shared target 3000/23006 elapsed=0.00230584s
+    m_38: C_6 shared target 4000/23006 elapsed=0.00293354s
+    m_38: C_6 shared target 5000/23006 elapsed=0.0035867s
+    m_38: C_6 shared target 6000/23006 elapsed=0.0040171s
+    m_38: C_6 shared target 7000/23006 elapsed=0.00442329s
+    m_38: C_6 shared target 8000/23006 elapsed=0.00479551s
+    m_38: C_6 shared target 9000/23006 elapsed=0.00515194s
+    m_38: C_6 shared target 10000/23006 elapsed=0.00551019s
+    m_38: C_6 shared target 11000/23006 elapsed=0.0058607s
+    m_38: C_6 shared target 12000/23006 elapsed=0.00620743s
+    m_38: C_6 shared target 13000/23006 elapsed=0.00656736s
+    m_38: C_6 shared target 14000/23006 elapsed=0.00688703s
+    m_38: C_6 shared target 15000/23006 elapsed=0.00722126s
+    m_38: C_6 shared target 16000/23006 elapsed=0.0075592s
+    m_38: C_6 shared target 17000/23006 elapsed=0.00792226s
+    m_38: C_6 shared target 18000/23006 elapsed=0.00825819s
+    m_38: C_6 shared target 19000/23006 elapsed=0.0086057s
+    m_38: C_6 shared target 20000/23006 elapsed=0.00893572s
+    m_38: C_6 shared target 21000/23006 elapsed=0.00924364s
+    m_38: C_6 shared target 22000/23006 elapsed=0.00951488s
+    m_38: C_6 shared target 23000/23006 elapsed=0.00973318s
+    m_38: C_6 shared target 23006/23006 elapsed=0.0097376s
+  C_6 Delta_38 = -20916130956455888037746774516317148637827884
+      shared forward step 39/45 processed=500000/9168321 next_states=746906 step_elapsed=16.4399s elapsed=2063.37s
+      shared forward step 39/45 processed=1000000/9168321 next_states=1459564 step_elapsed=37.3155s elapsed=2084.25s
+      shared forward step 39/45 processed=1500000/9168321 next_states=2157025 step_elapsed=61.5199s elapsed=2108.45s
+      shared forward step 39/45 processed=2000000/9168321 next_states=2847382 step_elapsed=87.889s elapsed=2134.82s
+      shared forward step 39/45 processed=2500000/9168321 next_states=3526241 step_elapsed=117.839s elapsed=2164.77s
+      shared forward step 39/45 processed=3000000/9168321 next_states=4197976 step_elapsed=147.776s elapsed=2194.71s
+      shared forward step 39/45 processed=3500000/9168321 next_states=4873062 step_elapsed=178.283s elapsed=2225.21s
+      shared forward step 39/45 processed=4000000/9168321 next_states=5526343 step_elapsed=214.494s elapsed=2261.42s
+      shared forward step 39/45 processed=4500000/9168321 next_states=6190942 step_elapsed=247.568s elapsed=2294.5s
+      shared forward step 39/45 processed=5000000/9168321 next_states=6832169 step_elapsed=288.578s elapsed=2335.51s
+      shared forward step 39/45 processed=5500000/9168321 next_states=7485770 step_elapsed=325.571s elapsed=2372.5s
+      shared forward step 39/45 processed=6000000/9168321 next_states=8117498 step_elapsed=370.057s elapsed=2416.99s
+      shared forward step 39/45 processed=6500000/9168321 next_states=8757237 step_elapsed=413.502s elapsed=2460.43s
+      shared forward step 39/45 processed=7000000/9168321 next_states=9376909 step_elapsed=463.158s elapsed=2510.09s
+      shared forward step 39/45 processed=7500000/9168321 next_states=10001721 step_elapsed=512.666s elapsed=2559.6s
+      shared forward step 39/45 processed=8000000/9168321 next_states=10606350 step_elapsed=573.501s elapsed=2620.43s
+      shared forward step 39/45 processed=8500000/9168321 next_states=11210028 step_elapsed=634.939s elapsed=2681.87s
+      shared forward step 39/45 processed=9000000/9168321 next_states=11796998 step_elapsed=714.223s elapsed=2761.15s
+    shared forward step 39/45 states=11985379 elapsed=2806s
+    m_39: B_6 shared target 1000/9043 elapsed=0.000723141s
+    m_39: B_6 shared target 2000/9043 elapsed=0.00142965s
+    m_39: B_6 shared target 3000/9043 elapsed=0.00211167s
+    m_39: B_6 shared target 4000/9043 elapsed=0.00277477s
+    m_39: B_6 shared target 5000/9043 elapsed=0.00342894s
+    m_39: B_6 shared target 6000/9043 elapsed=0.00408109s
+    m_39: B_6 shared target 7000/9043 elapsed=0.00469635s
+    m_39: B_6 shared target 8000/9043 elapsed=0.00535838s
+    m_39: B_6 shared target 9000/9043 elapsed=0.0060112s
+    m_39: B_6 shared target 9043/9043 elapsed=0.00605131s
+  B_6 Delta_39 = -773856010328521031132403929819461685673845686
+    m_39: C_6 shared target 1000/27854 elapsed=0.000805044s
+    m_39: C_6 shared target 2000/27854 elapsed=0.0015988s
+    m_39: C_6 shared target 3000/27854 elapsed=0.0023095s
+    m_39: C_6 shared target 4000/27854 elapsed=0.00301189s
+    m_39: C_6 shared target 5000/27854 elapsed=0.0036873s
+    m_39: C_6 shared target 6000/27854 elapsed=0.00437532s
+    m_39: C_6 shared target 7000/27854 elapsed=0.00531903s
+    m_39: C_6 shared target 8000/27854 elapsed=0.00582387s
+    m_39: C_6 shared target 9000/27854 elapsed=0.0063144s
+    m_39: C_6 shared target 10000/27854 elapsed=0.00672041s
+    m_39: C_6 shared target 11000/27854 elapsed=0.00714326s
+    m_39: C_6 shared target 12000/27854 elapsed=0.00755925s
+    m_39: C_6 shared target 13000/27854 elapsed=0.00796113s
+    m_39: C_6 shared target 14000/27854 elapsed=0.00838471s
+    m_39: C_6 shared target 15000/27854 elapsed=0.00878364s
+    m_39: C_6 shared target 16000/27854 elapsed=0.00920182s
+    m_39: C_6 shared target 17000/27854 elapsed=0.00960579s
+    m_39: C_6 shared target 18000/27854 elapsed=0.0100539s
+    m_39: C_6 shared target 19000/27854 elapsed=0.0104282s
+    m_39: C_6 shared target 20000/27854 elapsed=0.0108515s
+    m_39: C_6 shared target 21000/27854 elapsed=0.0112602s
+    m_39: C_6 shared target 22000/27854 elapsed=0.0116604s
+    m_39: C_6 shared target 23000/27854 elapsed=0.0120412s
+    m_39: C_6 shared target 24000/27854 elapsed=0.0124315s
+    m_39: C_6 shared target 25000/27854 elapsed=0.012803s
+    m_39: C_6 shared target 26000/27854 elapsed=0.0131611s
+    m_39: C_6 shared target 27000/27854 elapsed=0.0134545s
+    m_39: C_6 shared target 27854/27854 elapsed=0.0136787s
+  C_6 Delta_39 = -871472352123417201556997537775775398683501716
+      shared forward step 40/45 processed=500000/11985379 next_states=749869 step_elapsed=16.4228s elapsed=2823.96s
+      shared forward step 40/45 processed=1000000/11985379 next_states=1463258 step_elapsed=37.0207s elapsed=2844.55s
+      shared forward step 40/45 processed=1500000/11985379 next_states=2165396 step_elapsed=60.3115s elapsed=2867.84s
+      shared forward step 40/45 processed=2000000/11985379 next_states=2860788 step_elapsed=85.4934s elapsed=2893.03s
+      shared forward step 40/45 processed=2500000/11985379 next_states=3538400 step_elapsed=114.471s elapsed=2922s
+      shared forward step 40/45 processed=3000000/11985379 next_states=4222533 step_elapsed=141.965s elapsed=2949.5s
+      shared forward step 40/45 processed=3500000/11985379 next_states=4897731 step_elapsed=174.383s elapsed=2981.92s
+      shared forward step 40/45 processed=4000000/11985379 next_states=5568183 step_elapsed=204.481s elapsed=3012.01s
+      shared forward step 40/45 processed=4500000/11985379 next_states=6221981 step_elapsed=242.27s elapsed=3049.8s
+      shared forward step 40/45 processed=5000000/11985379 next_states=6898060 step_elapsed=271.503s elapsed=3079.03s
+      shared forward step 40/45 processed=5500000/11985379 next_states=7547571 step_elapsed=311.024s elapsed=3118.56s
+      shared forward step 40/45 processed=6000000/11985379 next_states=8209486 step_elapsed=346.528s elapsed=3154.06s
+      shared forward step 40/45 processed=6500000/11985379 next_states=8852391 step_elapsed=385.48s elapsed=3193.01s
+      shared forward step 40/45 processed=7000000/11985379 next_states=9489046 step_elapsed=431.586s elapsed=3239.12s
+      shared forward step 40/45 processed=7500000/11985379 next_states=10141818 step_elapsed=468.94s elapsed=3276.47s
+      shared forward step 40/45 processed=8000000/11985379 next_states=10769718 step_elapsed=515.67s elapsed=3323.2s
+      shared forward step 40/45 processed=8500000/11985379 next_states=11395336 step_elapsed=568.718s elapsed=3376.25s
+      shared forward step 40/45 processed=9000000/11985379 next_states=12032519 step_elapsed=609.584s elapsed=3417.12s
+      shared forward step 40/45 processed=9500000/11985379 next_states=12644834 step_elapsed=667.37s elapsed=3474.9s
+      shared forward step 40/45 processed=10000000/11985379 next_states=13267778 step_elapsed=719.036s elapsed=3526.57s
+      shared forward step 40/45 processed=10500000/11985379 next_states=13869282 step_elapsed=782.44s elapsed=3589.97s
+      shared forward step 40/45 processed=11000000/11985379 next_states=14476521 step_elapsed=843.896s elapsed=3651.43s
+      shared forward step 40/45 processed=11500000/11985379 next_states=15065269 step_elapsed=921.785s elapsed=3729.32s
+    shared forward step 40/45 states=15618506 elapsed=3836.92s
+    m_40: B_6 shared target 1000/11367 elapsed=0.000731757s
+    m_40: B_6 shared target 2000/11367 elapsed=0.00144975s
+    m_40: B_6 shared target 3000/11367 elapsed=0.00216287s
+    m_40: B_6 shared target 4000/11367 elapsed=0.00281879s
+    m_40: B_6 shared target 5000/11367 elapsed=0.00344758s
+    m_40: B_6 shared target 6000/11367 elapsed=0.00409794s
+    m_40: B_6 shared target 7000/11367 elapsed=0.0046818s
+    m_40: B_6 shared target 8000/11367 elapsed=0.00531482s
+    m_40: B_6 shared target 9000/11367 elapsed=0.00593616s
+    m_40: B_6 shared target 10000/11367 elapsed=0.00655541s
+    m_40: B_6 shared target 11000/11367 elapsed=0.00718369s
+    m_40: B_6 shared target 11367/11367 elapsed=0.00746331s
+  B_6 Delta_40 = -33303989250016200096037923133701842167164214716
+    m_40: C_6 shared target 1000/33646 elapsed=0.000863493s
+    m_40: C_6 shared target 2000/33646 elapsed=0.00167148s
+    m_40: C_6 shared target 3000/33646 elapsed=0.00243561s
+    m_40: C_6 shared target 4000/33646 elapsed=0.00314694s
+    m_40: C_6 shared target 5000/33646 elapsed=0.00383353s
+    m_40: C_6 shared target 6000/33646 elapsed=0.00442192s
+    m_40: C_6 shared target 7000/33646 elapsed=0.00505501s
+    m_40: C_6 shared target 8000/33646 elapsed=0.00565503s
+    m_40: C_6 shared target 9000/33646 elapsed=0.00620128s
+    m_40: C_6 shared target 10000/33646 elapsed=0.00660246s
+    m_40: C_6 shared target 11000/33646 elapsed=0.00708329s
+    m_40: C_6 shared target 12000/33646 elapsed=0.00744923s
+    m_40: C_6 shared target 13000/33646 elapsed=0.00787226s
+    m_40: C_6 shared target 14000/33646 elapsed=0.00834763s
+    m_40: C_6 shared target 15000/33646 elapsed=0.00877701s
+    m_40: C_6 shared target 16000/33646 elapsed=0.00915154s
+    m_40: C_6 shared target 17000/33646 elapsed=0.00963046s
+    m_40: C_6 shared target 18000/33646 elapsed=0.0101915s
+    m_40: C_6 shared target 19000/33646 elapsed=0.0108091s
+    m_40: C_6 shared target 20000/33646 elapsed=0.0114891s
+    m_40: C_6 shared target 21000/33646 elapsed=0.0121259s
+    m_40: C_6 shared target 22000/33646 elapsed=0.0127434s
+    m_40: C_6 shared target 23000/33646 elapsed=0.0132543s
+    m_40: C_6 shared target 24000/33646 elapsed=0.0136078s
+    m_40: C_6 shared target 25000/33646 elapsed=0.0140312s
+    m_40: C_6 shared target 26000/33646 elapsed=0.0145769s
+    m_40: C_6 shared target 27000/33646 elapsed=0.0152192s
+    m_40: C_6 shared target 28000/33646 elapsed=0.0157248s
+    m_40: C_6 shared target 29000/33646 elapsed=0.0161311s
+    m_40: C_6 shared target 30000/33646 elapsed=0.0165238s
+    m_40: C_6 shared target 31000/33646 elapsed=0.0168949s
+    m_40: C_6 shared target 32000/33646 elapsed=0.0171944s
+    m_40: C_6 shared target 33000/33646 elapsed=0.0174688s
+    m_40: C_6 shared target 33646/33646 elapsed=0.0176537s
+  C_6 Delta_40 = -36926955338380234012564662910209718511672186136
+      shared forward step 41/45 processed=500000/15618506 next_states=751051 step_elapsed=16.3504s elapsed=3855.37s
+      shared forward step 41/45 processed=1000000/15618506 next_states=1467360 step_elapsed=36.8537s elapsed=3875.87s
+      shared forward step 41/45 processed=1500000/15618506 next_states=2171125 step_elapsed=59.6689s elapsed=3898.69s
+      shared forward step 41/45 processed=2000000/15618506 next_states=2869794 step_elapsed=84.8872s elapsed=3923.91s
+      shared forward step 41/45 processed=2500000/15618506 next_states=3551434 step_elapsed=113.46s elapsed=3952.48s
+      shared forward step 41/45 processed=3000000/15618506 next_states=4245533 step_elapsed=139.392s elapsed=3978.41s
+      shared forward step 41/45 processed=3500000/15618506 next_states=4918051 step_elapsed=171.498s elapsed=4010.52s
+      shared forward step 41/45 processed=4000000/15618506 next_states=5604520 step_elapsed=198.984s elapsed=4038.01s
+      shared forward step 41/45 processed=4500000/15618506 next_states=6267661 step_elapsed=233.792s elapsed=4072.81s
+      shared forward step 41/45 processed=5000000/15618506 next_states=6945729 step_elapsed=264.975s elapsed=4104s
+      shared forward step 41/45 processed=5500000/15618506 next_states=7606912 step_elapsed=298.272s elapsed=4137.29s
+      shared forward step 41/45 processed=6000000/15618506 next_states=8259899 step_elapsed=337.077s elapsed=4176.1s
+      shared forward step 41/45 processed=6500000/15618506 next_states=8932043 step_elapsed=370.455s elapsed=4209.48s
+      shared forward step 41/45 processed=7000000/15618506 next_states=9583386 step_elapsed=406.87s elapsed=4245.89s
+      shared forward step 41/45 processed=7500000/15618506 next_states=10226355 step_elapsed=450.347s elapsed=4289.37s
+      shared forward step 41/45 processed=8000000/15618506 next_states=10878789 step_elapsed=490.851s elapsed=4329.87s
+      shared forward step 41/45 processed=8500000/15618506 next_states=11532461 step_elapsed=526.353s elapsed=4365.37s
+      shared forward step 41/45 processed=9000000/15618506 next_states=12167755 step_elapsed=571.706s elapsed=4410.73s
+      shared forward step 41/45 processed=9500000/15618506 next_states=12800433 step_elapsed=620.751s elapsed=4459.77s
+      shared forward step 41/45 processed=10000000/15618506 next_states=13452352 step_elapsed=659.547s elapsed=4498.57s
+      shared forward step 41/45 processed=10500000/15618506 next_states=14080709 step_elapsed=705.404s elapsed=4544.42s
+      shared forward step 41/45 processed=11000000/15618506 next_states=14701086 step_elapsed=760.758s elapsed=4599.78s
+      shared forward step 41/45 processed=11500000/15618506 next_states=15330724 step_elapsed=811.703s elapsed=4650.72s
+      shared forward step 41/45 processed=12000000/15618506 next_states=15960729 step_elapsed=856.757s elapsed=4695.78s
+      shared forward step 41/45 processed=12500000/15618506 next_states=16570517 step_elapsed=917.097s elapsed=4756.12s
+      shared forward step 41/45 processed=13000000/15618506 next_states=17185404 step_elapsed=977.543s elapsed=4816.56s
+      shared forward step 41/45 processed=13500000/15618506 next_states=17798521 step_elapsed=1032.09s elapsed=4871.11s
+      shared forward step 41/45 processed=14000000/15618506 next_states=18395056 step_elapsed=1106.16s elapsed=4945.18s
+      shared forward step 41/45 processed=14500000/15618506 next_states=18999991 step_elapsed=1168.02s elapsed=5007.04s
+      shared forward step 41/45 processed=15000000/15618506 next_states=19586490 step_elapsed=1251.59s elapsed=5090.61s
+      shared forward step 41/45 processed=15500000/15618506 next_states=20160071 step_elapsed=1350.29s elapsed=5189.31s
+    shared forward step 41/45 states=20290947 elapsed=5229.32s
+    m_41: B_6 shared target 1000/14217 elapsed=0.000754469s
+    m_41: B_6 shared target 2000/14217 elapsed=0.00154984s
+    m_41: B_6 shared target 3000/14217 elapsed=0.00228177s
+    m_41: B_6 shared target 4000/14217 elapsed=0.0030052s
+    m_41: B_6 shared target 5000/14217 elapsed=0.0037458s
+    m_41: B_6 shared target 6000/14217 elapsed=0.00447429s
+    m_41: B_6 shared target 7000/14217 elapsed=0.00519794s
+    m_41: B_6 shared target 8000/14217 elapsed=0.00584544s
+    m_41: B_6 shared target 9000/14217 elapsed=0.00645652s
+    m_41: B_6 shared target 10000/14217 elapsed=0.00711234s
+    m_41: B_6 shared target 11000/14217 elapsed=0.00774871s
+    m_41: B_6 shared target 12000/14217 elapsed=0.00839676s
+    m_41: B_6 shared target 13000/14217 elapsed=0.00904446s
+    m_41: B_6 shared target 14000/14217 elapsed=0.00970264s
+    m_41: B_6 shared target 14217/14217 elapsed=0.0098569s
+  B_6 Delta_41 = -1455377789354839931799393610113047458635207520240
+    m_41: C_6 shared target 1000/40513 elapsed=0.000934525s
+    m_41: C_6 shared target 2000/40513 elapsed=0.00180261s
+    m_41: C_6 shared target 3000/40513 elapsed=0.00261356s
+    m_41: C_6 shared target 4000/40513 elapsed=0.0034045s
+    m_41: C_6 shared target 5000/40513 elapsed=0.00415564s
+    m_41: C_6 shared target 6000/40513 elapsed=0.00483956s
+    m_41: C_6 shared target 7000/40513 elapsed=0.00556812s
+    m_41: C_6 shared target 8000/40513 elapsed=0.00622905s
+    m_41: C_6 shared target 9000/40513 elapsed=0.00692587s
+    m_41: C_6 shared target 10000/40513 elapsed=0.00759999s
+    m_41: C_6 shared target 11000/40513 elapsed=0.00829568s
+    m_41: C_6 shared target 12000/40513 elapsed=0.00872882s
+    m_41: C_6 shared target 13000/40513 elapsed=0.00917614s
+    m_41: C_6 shared target 14000/40513 elapsed=0.00965969s
+    m_41: C_6 shared target 15000/40513 elapsed=0.0100612s
+    m_41: C_6 shared target 16000/40513 elapsed=0.0104478s
+    m_41: C_6 shared target 17000/40513 elapsed=0.0108544s
+    m_41: C_6 shared target 18000/40513 elapsed=0.011209s
+    m_41: C_6 shared target 19000/40513 elapsed=0.0115613s
+    m_41: C_6 shared target 20000/40513 elapsed=0.0119175s
+    m_41: C_6 shared target 21000/40513 elapsed=0.0122982s
+    m_41: C_6 shared target 22000/40513 elapsed=0.0126451s
+    m_41: C_6 shared target 23000/40513 elapsed=0.0129986s
+    m_41: C_6 shared target 24000/40513 elapsed=0.013368s
+    m_41: C_6 shared target 25000/40513 elapsed=0.0137457s
+    m_41: C_6 shared target 26000/40513 elapsed=0.0141001s
+    m_41: C_6 shared target 27000/40513 elapsed=0.0144838s
+    m_41: C_6 shared target 28000/40513 elapsed=0.0148412s
+    m_41: C_6 shared target 29000/40513 elapsed=0.015222s
+    m_41: C_6 shared target 30000/40513 elapsed=0.0156144s
+    m_41: C_6 shared target 31000/40513 elapsed=0.0160434s
+    m_41: C_6 shared target 32000/40513 elapsed=0.0164722s
+    m_41: C_6 shared target 33000/40513 elapsed=0.0168856s
+    m_41: C_6 shared target 34000/40513 elapsed=0.0172876s
+    m_41: C_6 shared target 35000/40513 elapsed=0.0177139s
+    m_41: C_6 shared target 36000/40513 elapsed=0.0181252s
+    m_41: C_6 shared target 37000/40513 elapsed=0.0185008s
+    m_41: C_6 shared target 38000/40513 elapsed=0.0188708s
+    m_41: C_6 shared target 39000/40513 elapsed=0.0192071s
+    m_41: C_6 shared target 40000/40513 elapsed=0.0195176s
+    m_41: C_6 shared target 40513/40513 elapsed=0.0196422s
+  C_6 Delta_41 = -1591410628905284757501011539329710587441659375040
+      shared forward step 42/45 processed=500000/20290947 next_states=752191 step_elapsed=16.5227s elapsed=5248.19s
+      shared forward step 42/45 processed=1000000/20290947 next_states=1470281 step_elapsed=36.9047s elapsed=5268.57s
+      shared forward step 42/45 processed=1500000/20290947 next_states=2177446 step_elapsed=59.2172s elapsed=5290.89s
+      shared forward step 42/45 processed=2000000/20290947 next_states=2876264 step_elapsed=84.2308s elapsed=5315.9s
+      shared forward step 42/45 processed=2500000/20290947 next_states=3566198 step_elapsed=110.56s elapsed=5342.23s
+      shared forward step 42/45 processed=3000000/20290947 next_states=4261951 step_elapsed=136.071s elapsed=5367.74s
+      shared forward step 42/45 processed=3500000/20290947 next_states=4939799 step_elapsed=166.311s elapsed=5397.98s
+      shared forward step 42/45 processed=4000000/20290947 next_states=5630503 step_elapsed=193.933s elapsed=5425.6s
+      shared forward step 42/45 processed=4500000/20290947 next_states=6300225 step_elapsed=225.46s elapsed=5457.13s
+      shared forward step 42/45 processed=5000000/20290947 next_states=6963898 step_elapsed=260.722s elapsed=5492.39s
+      shared forward step 42/45 processed=5500000/20290947 next_states=7654922 step_elapsed=287.825s elapsed=5519.49s
+      shared forward step 42/45 processed=6000000/20290947 next_states=8315831 step_elapsed=322.832s elapsed=5554.5s
+      shared forward step 42/45 processed=6500000/20290947 next_states=8974204 step_elapsed=360.796s elapsed=5592.47s
+      shared forward step 42/45 processed=7000000/20290947 next_states=9653707 step_elapsed=391.218s elapsed=5622.89s
+      shared forward step 42/45 processed=7500000/20290947 next_states=10309880 step_elapsed=426.421s elapsed=5658.09s
+      shared forward step 42/45 processed=8000000/20290947 next_states=10961159 step_elapsed=466.416s elapsed=5698.08s
+      shared forward step 42/45 processed=8500000/20290947 next_states=11606096 step_elapsed=508.898s elapsed=5740.57s
+      shared forward step 42/45 processed=9000000/20290947 next_states=12281894 step_elapsed=540.3s elapsed=5771.97s
+      shared forward step 42/45 processed=9500000/20290947 next_states=12927873 step_elapsed=579.184s elapsed=5810.85s
+      shared forward step 42/45 processed=10000000/20290947 next_states=13567092 step_elapsed=624.865s elapsed=5856.53s
+      shared forward step 42/45 processed=10500000/20290947 next_states=14207803 step_elapsed=670.965s elapsed=5902.63s
+      shared forward step 42/45 processed=11000000/20290947 next_states=14866971 step_elapsed=708.861s elapsed=5940.53s
+      shared forward step 42/45 processed=11500000/20290947 next_states=15512945 step_elapsed=747.467s elapsed=5979.14s
+      shared forward step 42/45 processed=12000000/20290947 next_states=16142470 step_elapsed=795.426s elapsed=6027.1s
+      shared forward step 42/45 processed=12500000/20290947 next_states=16772416 step_elapsed=847.609s elapsed=6079.28s
+      shared forward step 42/45 processed=13000000/20290947 next_states=17401809 step_elapsed=900.798s elapsed=6132.47s
+      shared forward step 42/45 processed=13500000/20290947 next_states=18054890 step_elapsed=937.627s elapsed=6169.3s
+      shared forward step 42/45 processed=14000000/20290947 next_states=18678286 step_elapsed=987.29s elapsed=6218.96s
+      shared forward step 42/45 processed=14500000/20290947 next_states=19296588 step_elapsed=1045.32s elapsed=6276.99s
+      shared forward step 42/45 processed=15000000/20290947 next_states=19915415 step_elapsed=1104s elapsed=6335.67s
+      shared forward step 42/45 processed=15500000/20290947 next_states=20551148 step_elapsed=1151.23s elapsed=6382.9s
+      shared forward step 42/45 processed=16000000/20290947 next_states=21170521 step_elapsed=1203.17s elapsed=6434.84s
+      shared forward step 42/45 processed=16500000/20290947 next_states=21773904 step_elapsed=1270.4s elapsed=6502.07s
+      shared forward step 42/45 processed=17000000/20290947 next_states=22380749 step_elapsed=1338s elapsed=6569.67s
+      shared forward step 42/45 processed=17500000/20290947 next_states=23004252 step_elapsed=1390.16s elapsed=6621.83s
+      shared forward step 42/45 processed=18000000/20290947 next_states=23601841 step_elapsed=1459.45s elapsed=6691.12s
+      shared forward step 42/45 processed=18500000/20290947 next_states=24193869 step_elapsed=1541.79s elapsed=6773.46s
+      shared forward step 42/45 processed=19000000/20290947 next_states=24798803 step_elapsed=1604.79s elapsed=6836.46s
+      shared forward step 42/45 processed=19500000/20290947 next_states=25380465 step_elapsed=1700.1s elapsed=6931.77s
+      shared forward step 42/45 processed=20000000/20290947 next_states=25957442 step_elapsed=1799.24s elapsed=7030.91s
+    shared forward step 42/45 states=26283769 elapsed=7111.68s
+    m_42: B_6 shared target 1000/17722 elapsed=0.000773705s
+    m_42: B_6 shared target 2000/17722 elapsed=0.00156884s
+    m_42: B_6 shared target 3000/17722 elapsed=0.00231612s
+    m_42: B_6 shared target 4000/17722 elapsed=0.00300388s
+    m_42: B_6 shared target 5000/17722 elapsed=0.0036719s
+    m_42: B_6 shared target 6000/17722 elapsed=0.00430603s
+    m_42: B_6 shared target 7000/17722 elapsed=0.00496761s
+    m_42: B_6 shared target 8000/17722 elapsed=0.00560594s
+    m_42: B_6 shared target 9000/17722 elapsed=0.00624343s
+    m_42: B_6 shared target 10000/17722 elapsed=0.00683169s
+    m_42: B_6 shared target 11000/17722 elapsed=0.00744652s
+    m_42: B_6 shared target 12000/17722 elapsed=0.00804225s
+    m_42: B_6 shared target 13000/17722 elapsed=0.00864281s
+    m_42: B_6 shared target 14000/17722 elapsed=0.00924053s
+    m_42: B_6 shared target 15000/17722 elapsed=0.00979125s
+    m_42: B_6 shared target 16000/17722 elapsed=0.0103555s
+    m_42: B_6 shared target 17000/17722 elapsed=0.0109027s
+    m_42: B_6 shared target 17722/17722 elapsed=0.0113496s
+  B_6 Delta_42 = -64592275510529976099723633103204876967423396942536
+    m_42: C_6 shared target 1000/48680 elapsed=0.000949543s
+    m_42: C_6 shared target 2000/48680 elapsed=0.00183059s
+    m_42: C_6 shared target 3000/48680 elapsed=0.0026541s
+    m_42: C_6 shared target 4000/48680 elapsed=0.00341887s
+    m_42: C_6 shared target 5000/48680 elapsed=0.00421543s
+    m_42: C_6 shared target 6000/48680 elapsed=0.00490719s
+    m_42: C_6 shared target 7000/48680 elapsed=0.00567398s
+    m_42: C_6 shared target 8000/48680 elapsed=0.00634313s
+    m_42: C_6 shared target 9000/48680 elapsed=0.00709764s
+    m_42: C_6 shared target 10000/48680 elapsed=0.0077136s
+    m_42: C_6 shared target 11000/48680 elapsed=0.0083959s
+    m_42: C_6 shared target 12000/48680 elapsed=0.00902666s
+    m_42: C_6 shared target 13000/48680 elapsed=0.00969779s
+    m_42: C_6 shared target 14000/48680 elapsed=0.010426s
+    m_42: C_6 shared target 15000/48680 elapsed=0.0108709s
+    m_42: C_6 shared target 16000/48680 elapsed=0.0113015s
+    m_42: C_6 shared target 17000/48680 elapsed=0.0117555s
+    m_42: C_6 shared target 18000/48680 elapsed=0.0122133s
+    m_42: C_6 shared target 19000/48680 elapsed=0.0125887s
+    m_42: C_6 shared target 20000/48680 elapsed=0.0129603s
+    m_42: C_6 shared target 21000/48680 elapsed=0.0133705s
+    m_42: C_6 shared target 22000/48680 elapsed=0.0137832s
+    m_42: C_6 shared target 23000/48680 elapsed=0.0141506s
+    m_42: C_6 shared target 24000/48680 elapsed=0.0144976s
+    m_42: C_6 shared target 25000/48680 elapsed=0.0148621s
+    m_42: C_6 shared target 26000/48680 elapsed=0.0152869s
+    m_42: C_6 shared target 27000/48680 elapsed=0.0156357s
+    m_42: C_6 shared target 28000/48680 elapsed=0.0159711s
+    m_42: C_6 shared target 29000/48680 elapsed=0.0163237s
+    m_42: C_6 shared target 30000/48680 elapsed=0.0166739s
+    m_42: C_6 shared target 31000/48680 elapsed=0.0170797s
+    m_42: C_6 shared target 32000/48680 elapsed=0.0174012s
+    m_42: C_6 shared target 33000/48680 elapsed=0.0177567s
+    m_42: C_6 shared target 34000/48680 elapsed=0.0180913s
+    m_42: C_6 shared target 35000/48680 elapsed=0.0184247s
+    m_42: C_6 shared target 36000/48680 elapsed=0.0188025s
+    m_42: C_6 shared target 37000/48680 elapsed=0.0191741s
+    m_42: C_6 shared target 38000/48680 elapsed=0.0195571s
+    m_42: C_6 shared target 39000/48680 elapsed=0.019993s
+    m_42: C_6 shared target 40000/48680 elapsed=0.0204377s
+    m_42: C_6 shared target 41000/48680 elapsed=0.022345s
+    m_42: C_6 shared target 42000/48680 elapsed=0.0228027s
+    m_42: C_6 shared target 43000/48680 elapsed=0.0232016s
+    m_42: C_6 shared target 44000/48680 elapsed=0.0235796s
+    m_42: C_6 shared target 45000/48680 elapsed=0.0239655s
+    m_42: C_6 shared target 46000/48680 elapsed=0.0243094s
+    m_42: C_6 shared target 47000/48680 elapsed=0.0246609s
+    m_42: C_6 shared target 48000/48680 elapsed=0.024949s
+    m_42: C_6 shared target 48680/48680 elapsed=0.0251489s
+  C_6 Delta_42 = -69758645194223437401694583044493869855270688719906
+      shared forward step 43/45 processed=500000/26283769 next_states=752191 step_elapsed=16.41s elapsed=7131.13s
+      shared forward step 43/45 processed=1000000/26283769 next_states=1473692 step_elapsed=37.0121s elapsed=7151.74s
+      shared forward step 43/45 processed=1500000/26283769 next_states=2181185 step_elapsed=59.5073s elapsed=7174.23s
+      shared forward step 43/45 processed=2000000/26283769 next_states=2880772 step_elapsed=85.1208s elapsed=7199.85s
+      shared forward step 43/45 processed=2500000/26283769 next_states=3574426 step_elapsed=110.589s elapsed=7225.31s
+      shared forward step 43/45 processed=3000000/26283769 next_states=4275294 step_elapsed=136.268s elapsed=7250.99s
+      shared forward step 43/45 processed=3500000/26283769 next_states=4954745 step_elapsed=165.977s elapsed=7280.7s
+      shared forward step 43/45 processed=4000000/26283769 next_states=5647918 step_elapsed=194.775s elapsed=7309.5s
+      shared forward step 43/45 processed=4500000/26283769 next_states=6327517 step_elapsed=223.776s elapsed=7338.5s
+      shared forward step 43/45 processed=5000000/26283769 next_states=6995303 step_elapsed=258.35s elapsed=7373.07s
+      shared forward step 43/45 processed=5500000/26283769 next_states=7688472 step_elapsed=286.643s elapsed=7401.37s
+      shared forward step 43/45 processed=6000000/26283769 next_states=8357996 step_elapsed=317.92s elapsed=7432.64s
+      shared forward step 43/45 processed=6500000/26283769 next_states=9020513 step_elapsed=354.359s elapsed=7469.08s
+      shared forward step 43/45 processed=7000000/26283769 next_states=9677758 step_elapsed=393.734s elapsed=7508.46s
+      shared forward step 43/45 processed=7500000/26283769 next_states=10373599 step_elapsed=419.542s elapsed=7534.27s
+      shared forward step 43/45 processed=8000000/26283769 next_states=11028781 step_elapsed=456.419s elapsed=7571.14s
+      shared forward step 43/45 processed=8500000/26283769 next_states=11688672 step_elapsed=494.934s elapsed=7609.66s
+      shared forward step 43/45 processed=9000000/26283769 next_states=12341930 step_elapsed=536.05s elapsed=7650.77s
+      shared forward step 43/45 processed=9500000/26283769 next_states=13019254 step_elapsed=569.057s elapsed=7683.78s
+      shared forward step 43/45 processed=10000000/26283769 next_states=13677342 step_elapsed=603.691s elapsed=7718.42s
+      shared forward step 43/45 processed=10500000/26283769 next_states=14325536 step_elapsed=645.073s elapsed=7759.8s
+      shared forward step 43/45 processed=11000000/26283769 next_states=14971121 step_elapsed=688.98s elapsed=7803.7s
+      shared forward step 43/45 processed=11500000/26283769 next_states=15617011 step_elapsed=734.435s elapsed=7849.16s
+      shared forward step 43/45 processed=12000000/26283769 next_states=16283468 step_elapsed=771.502s elapsed=7886.23s
+      shared forward step 43/45 processed=12500000/26283769 next_states=16938888 step_elapsed=807.481s elapsed=7922.2s
+      shared forward step 43/45 processed=13000000/26283769 next_states=17578275 step_elapsed=851.255s elapsed=7965.98s
+      shared forward step 43/45 processed=13500000/26283769 next_states=18212551 step_elapsed=899.576s elapsed=8014.3s
+      shared forward step 43/45 processed=14000000/26283769 next_states=18850944 step_elapsed=948.271s elapsed=8062.99s
+      shared forward step 43/45 processed=14500000/26283769 next_states=19483889 step_elapsed=1000.15s elapsed=8114.88s
+      shared forward step 43/45 processed=15000000/26283769 next_states=20152678 step_elapsed=1032.58s elapsed=8147.3s
+      shared forward step 43/45 processed=15500000/26283769 next_states=20789521 step_elapsed=1075.6s elapsed=8190.33s
+      shared forward step 43/45 processed=16000000/26283769 next_states=21414029 step_elapsed=1127.78s elapsed=8242.5s
+      shared forward step 43/45 processed=16500000/26283769 next_states=22042123 step_elapsed=1180.92s elapsed=8295.64s
+      shared forward step 43/45 processed=17000000/26283769 next_states=22662598 step_elapsed=1239.8s elapsed=8354.52s
+      shared forward step 43/45 processed=17500000/26283769 next_states=23301089 step_elapsed=1288.35s elapsed=8403.07s
+      shared forward step 43/45 processed=18000000/26283769 next_states=23949145 step_elapsed=1327.62s elapsed=8442.34s
+      shared forward step 43/45 processed=18500000/26283769 next_states=24572712 step_elapsed=1377.57s elapsed=8492.3s
+      shared forward step 43/45 processed=19000000/26283769 next_states=25186733 step_elapsed=1436.65s elapsed=8551.37s
+      shared forward step 43/45 processed=19500000/26283769 next_states=25798553 step_elapsed=1501.3s elapsed=8616.02s
+      shared forward step 43/45 processed=20000000/26283769 next_states=26415174 step_elapsed=1562.54s elapsed=8677.26s
+      shared forward step 43/45 processed=20500000/26283769 next_states=27053842 step_elapsed=1609.04s elapsed=8723.77s
+      shared forward step 43/45 processed=21000000/26283769 next_states=27673192 step_elapsed=1661.98s elapsed=8776.71s
+      shared forward step 43/45 processed=21500000/26283769 next_states=28276075 step_elapsed=1728.87s elapsed=8843.59s
+      shared forward step 43/45 processed=22000000/26283769 next_states=28878827 step_elapsed=1801.21s elapsed=8915.94s
+      shared forward step 43/45 processed=22500000/26283769 next_states=29487798 step_elapsed=1871.45s elapsed=8986.17s
+      shared forward step 43/45 processed=23000000/26283769 next_states=30105046 step_elapsed=1925.01s elapsed=9039.73s
+      shared forward step 43/45 processed=23500000/26283769 next_states=30699310 step_elapsed=1998.32s elapsed=9113.05s
+      shared forward step 43/45 processed=24000000/26283769 next_states=31291896 step_elapsed=2081.43s elapsed=9196.16s
+      shared forward step 43/45 processed=24500000/26283769 next_states=31892723 step_elapsed=2154.57s elapsed=9269.3s
+      shared forward step 43/45 processed=25000000/26283769 next_states=32479031 step_elapsed=2237.89s elapsed=9352.62s
+      shared forward step 43/45 processed=25500000/26283769 next_states=33063130 step_elapsed=2332.16s elapsed=9446.88s
+      shared forward step 43/45 processed=26000000/26283769 next_states=33634800 step_elapsed=2442.43s elapsed=9557.15s
+    shared forward step 43/45 states=33949897 elapsed=9646.89s
+    m_43: B_6 shared target 1000/21992 elapsed=0.000790016s
+    m_43: B_6 shared target 2000/21992 elapsed=0.00160183s
+    m_43: B_6 shared target 3000/21992 elapsed=0.00237127s
+    m_43: B_6 shared target 4000/21992 elapsed=0.00311388s
+    m_43: B_6 shared target 5000/21992 elapsed=0.00382478s
+    m_43: B_6 shared target 6000/21992 elapsed=0.00448812s
+    m_43: B_6 shared target 7000/21992 elapsed=0.00520581s
+    m_43: B_6 shared target 8000/21992 elapsed=0.0058712s
+    m_43: B_6 shared target 9000/21992 elapsed=0.00659282s
+    m_43: B_6 shared target 10000/21992 elapsed=0.00725778s
+    m_43: B_6 shared target 11000/21992 elapsed=0.00796209s
+    m_43: B_6 shared target 12000/21992 elapsed=0.00864453s
+    m_43: B_6 shared target 13000/21992 elapsed=0.0093156s
+    m_43: B_6 shared target 14000/21992 elapsed=0.0100173s
+    m_43: B_6 shared target 15000/21992 elapsed=0.0106856s
+    m_43: B_6 shared target 16000/21992 elapsed=0.0113346s
+    m_43: B_6 shared target 17000/21992 elapsed=0.0120199s
+    m_43: B_6 shared target 18000/21992 elapsed=0.0126673s
+    m_43: B_6 shared target 19000/21992 elapsed=0.0133038s
+    m_43: B_6 shared target 20000/21992 elapsed=0.0139139s
+    m_43: B_6 shared target 21000/21992 elapsed=0.0145344s
+    m_43: B_6 shared target 21992/21992 elapsed=0.0152065s
+  B_6 Delta_43 = -2911974475202778238078626995249449075903555412668296
+    m_43: C_6 shared target 1000/58326 elapsed=0.0010208s
+    m_43: C_6 shared target 2000/58326 elapsed=0.00203127s
+    m_43: C_6 shared target 3000/58326 elapsed=0.00302395s
+    m_43: C_6 shared target 4000/58326 elapsed=0.00541781s
+    m_43: C_6 shared target 5000/58326 elapsed=0.00630732s
+    m_43: C_6 shared target 6000/58326 elapsed=0.00716959s
+    m_43: C_6 shared target 7000/58326 elapsed=0.00799273s
+    m_43: C_6 shared target 8000/58326 elapsed=0.00876293s
+    m_43: C_6 shared target 9000/58326 elapsed=0.00961589s
+    m_43: C_6 shared target 10000/58326 elapsed=0.0103637s
+    m_43: C_6 shared target 11000/58326 elapsed=0.0112797s
+    m_43: C_6 shared target 12000/58326 elapsed=0.0119965s
+    m_43: C_6 shared target 13000/58326 elapsed=0.0127121s
+    m_43: C_6 shared target 14000/58326 elapsed=0.0134777s
+    m_43: C_6 shared target 15000/58326 elapsed=0.0141975s
+    m_43: C_6 shared target 16000/58326 elapsed=0.0148876s
+    m_43: C_6 shared target 17000/58326 elapsed=0.0156113s
+    m_43: C_6 shared target 18000/58326 elapsed=0.0163453s
+    m_43: C_6 shared target 19000/58326 elapsed=0.0167947s
+    m_43: C_6 shared target 20000/58326 elapsed=0.0172562s
+    m_43: C_6 shared target 21000/58326 elapsed=0.0177164s
+    m_43: C_6 shared target 22000/58326 elapsed=0.0182352s
+    m_43: C_6 shared target 23000/58326 elapsed=0.0186669s
+    m_43: C_6 shared target 24000/58326 elapsed=0.0190529s
+    m_43: C_6 shared target 25000/58326 elapsed=0.0196242s
+    m_43: C_6 shared target 26000/58326 elapsed=0.0201638s
+    m_43: C_6 shared target 27000/58326 elapsed=0.020596s
+    m_43: C_6 shared target 28000/58326 elapsed=0.020975s
+    m_43: C_6 shared target 29000/58326 elapsed=0.021361s
+    m_43: C_6 shared target 30000/58326 elapsed=0.0217391s
+    m_43: C_6 shared target 31000/58326 elapsed=0.0221264s
+    m_43: C_6 shared target 32000/58326 elapsed=0.0226395s
+    m_43: C_6 shared target 33000/58326 elapsed=0.0231504s
+    m_43: C_6 shared target 34000/58326 elapsed=0.0236284s
+    m_43: C_6 shared target 35000/58326 elapsed=0.0239802s
+    m_43: C_6 shared target 36000/58326 elapsed=0.0243529s
+    m_43: C_6 shared target 37000/58326 elapsed=0.0247126s
+    m_43: C_6 shared target 38000/58326 elapsed=0.0251153s
+    m_43: C_6 shared target 39000/58326 elapsed=0.0254675s
+    m_43: C_6 shared target 40000/58326 elapsed=0.0258587s
+    m_43: C_6 shared target 41000/58326 elapsed=0.0262419s
+    m_43: C_6 shared target 42000/58326 elapsed=0.0266347s
+    m_43: C_6 shared target 43000/58326 elapsed=0.0270862s
+    m_43: C_6 shared target 44000/58326 elapsed=0.0275644s
+    m_43: C_6 shared target 45000/58326 elapsed=0.0281497s
+    m_43: C_6 shared target 46000/58326 elapsed=0.028637s
+    m_43: C_6 shared target 47000/58326 elapsed=0.0291422s
+    m_43: C_6 shared target 48000/58326 elapsed=0.029642s
+    m_43: C_6 shared target 49000/58326 elapsed=0.030105s
+    m_43: C_6 shared target 50000/58326 elapsed=0.0305278s
+    m_43: C_6 shared target 51000/58326 elapsed=0.030975s
+    m_43: C_6 shared target 52000/58326 elapsed=0.0314063s
+    m_43: C_6 shared target 53000/58326 elapsed=0.0318081s
+    m_43: C_6 shared target 54000/58326 elapsed=0.032228s
+    m_43: C_6 shared target 55000/58326 elapsed=0.0326367s
+    m_43: C_6 shared target 56000/58326 elapsed=0.0329886s
+    m_43: C_6 shared target 57000/58326 elapsed=0.0333582s
+    m_43: C_6 shared target 58000/58326 elapsed=0.0336353s
+    m_43: C_6 shared target 58326/58326 elapsed=0.033698s
+  C_6 Delta_43 = -3110404182171202830367789884206384287397888855529066
+      shared forward step 44/45 processed=500000/33949897 next_states=752191 step_elapsed=16.6996s elapsed=9667.56s
+      shared forward step 44/45 processed=1000000/33949897 next_states=1478377 step_elapsed=37.448s elapsed=9688.31s
+      shared forward step 44/45 processed=1500000/33949897 next_states=2186372 step_elapsed=60.0063s elapsed=9710.87s
+      shared forward step 44/45 processed=2000000/33949897 next_states=2883921 step_elapsed=85.7036s elapsed=9736.57s
+      shared forward step 44/45 processed=2500000/33949897 next_states=3584659 step_elapsed=110.334s elapsed=9761.2s
+      shared forward step 44/45 processed=3000000/33949897 next_states=4285506 step_elapsed=135.956s elapsed=9786.82s
+      shared forward step 44/45 processed=3500000/33949897 next_states=4970136 step_elapsed=164.488s elapsed=9815.35s
+      shared forward step 44/45 processed=4000000/33949897 next_states=5658459 step_elapsed=194.112s elapsed=9844.98s
+      shared forward step 44/45 processed=4500000/33949897 next_states=6349301 step_elapsed=220.394s elapsed=9871.26s
+      shared forward step 44/45 processed=5000000/33949897 next_states=7021739 step_elapsed=253.788s elapsed=9904.65s
+      shared forward step 44/45 processed=5500000/33949897 next_states=7706171 step_elapsed=284.961s elapsed=9935.83s
+      shared forward step 44/45 processed=6000000/33949897 next_states=8393566 step_elapsed=312.05s elapsed=9962.91s
+      shared forward step 44/45 processed=6500000/33949897 next_states=9063589 step_elapsed=345.87s elapsed=9996.73s
+      shared forward step 44/45 processed=7000000/33949897 next_states=9723750 step_elapsed=383.622s elapsed=10034.5s
+      shared forward step 44/45 processed=7500000/33949897 next_states=10411789 step_elapsed=414.896s elapsed=10065.8s
+      shared forward step 44/45 processed=8000000/33949897 next_states=11089999 step_elapsed=444.372s elapsed=10095.2s
+      shared forward step 44/45 processed=8500000/33949897 next_states=11750793 step_elapsed=480.345s elapsed=10131.2s
+      shared forward step 44/45 processed=9000000/33949897 next_states=12409153 step_elapsed=519.055s elapsed=10169.9s
+      shared forward step 44/45 processed=9500000/33949897 next_states=13069153 step_elapsed=558.145s elapsed=10209s
+      shared forward step 44/45 processed=10000000/33949897 next_states=13751001 step_elapsed=591.057s elapsed=10241.9s
+      shared forward step 44/45 processed=10500000/33949897 next_states=14419441 step_elapsed=623.657s elapsed=10274.5s
+      shared forward step 44/45 processed=11000000/33949897 next_states=15070338 step_elapsed=663.369s elapsed=10314.2s
+      shared forward step 44/45 processed=11500000/33949897 next_states=15719649 step_elapsed=705.594s elapsed=10356.5s
+      shared forward step 44/45 processed=12000000/33949897 next_states=16375809 step_elapsed=747.59s elapsed=10398.5s
+      shared forward step 44/45 processed=12500000/33949897 next_states=17014333 step_elapsed=793.88s elapsed=10444.7s
+      shared forward step 44/45 processed=13000000/33949897 next_states=17705557 step_elapsed=823.211s elapsed=10474.1s
+      shared forward step 44/45 processed=13500000/33949897 next_states=18360994 step_elapsed=859.614s elapsed=10510.5s
+      shared forward step 44/45 processed=14000000/33949897 next_states=19005329 step_elapsed=901.99s elapsed=10552.9s
+      shared forward step 44/45 processed=14500000/33949897 next_states=19648714 step_elapsed=947.358s elapsed=10598.2s
+      shared forward step 44/45 processed=15000000/33949897 next_states=20288218 step_elapsed=994.147s elapsed=10645s
+      shared forward step 44/45 processed=15500000/33949897 next_states=20931297 step_elapsed=1042.34s elapsed=10693.2s
+      shared forward step 44/45 processed=16000000/33949897 next_states=21583758 step_elapsed=1085.32s elapsed=10736.2s
+      shared forward step 44/45 processed=16500000/33949897 next_states=22252964 step_elapsed=1118.33s elapsed=10769.2s
+      shared forward step 44/45 processed=17000000/33949897 next_states=22899082 step_elapsed=1158.82s elapsed=10809.7s
+      shared forward step 44/45 processed=17500000/33949897 next_states=23531628 step_elapsed=1206.88s elapsed=10857.7s
+      shared forward step 44/45 processed=18000000/33949897 next_states=24163048 step_elapsed=1258.79s elapsed=10909.7s
+      shared forward step 44/45 processed=18500000/33949897 next_states=24798125 step_elapsed=1309.31s elapsed=10960.2s
+      shared forward step 44/45 processed=19000000/33949897 next_states=25423908 step_elapsed=1367.62s elapsed=11018.5s
+      shared forward step 44/45 processed=19500000/33949897 next_states=26062237 step_elapsed=1418.29s elapsed=11069.2s
+      shared forward step 44/45 processed=20000000/33949897 next_states=26727444 step_elapsed=1452.52s elapsed=11103.4s
+      shared forward step 44/45 processed=20500000/33949897 next_states=27369967 step_elapsed=1494.26s elapsed=11145.1s
+      shared forward step 44/45 processed=21000000/33949897 next_states=27996064 step_elapsed=1544.85s elapsed=11195.7s
+      shared forward step 44/45 processed=21500000/33949897 next_states=28617871 step_elapsed=1601.27s elapsed=11252.1s
+      shared forward step 44/45 processed=22000000/33949897 next_states=29239614 step_elapsed=1661.38s elapsed=11312.2s
+      shared forward step 44/45 processed=22500000/33949897 next_states=29864433 step_elapsed=1719.13s elapsed=11370s
+      shared forward step 44/45 processed=23000000/33949897 next_states=30481053 step_elapsed=1781.47s elapsed=11432.3s
+      shared forward step 44/45 processed=23500000/33949897 next_states=31132792 step_elapsed=1825.2s elapsed=11476.1s
+      shared forward step 44/45 processed=24000000/33949897 next_states=31767847 step_elapsed=1871.64s elapsed=11522.5s
+      shared forward step 44/45 processed=24500000/33949897 next_states=32384604 step_elapsed=1927.02s elapsed=11577.9s
+      shared forward step 44/45 processed=25000000/33949897 next_states=32996498 step_elapsed=1990.27s elapsed=11641.1s
+      shared forward step 44/45 processed=25500000/33949897 next_states=33608102 step_elapsed=2056.05s elapsed=11706.9s
+      shared forward step 44/45 processed=26000000/33949897 next_states=34224728 step_elapsed=2120.18s elapsed=11771s
+      shared forward step 44/45 processed=26500000/33949897 next_states=34829333 step_elapsed=2195s elapsed=11845.9s
+      shared forward step 44/45 processed=27000000/33949897 next_states=35473919 step_elapsed=2235.92s elapsed=11886.8s
+      shared forward step 44/45 processed=27500000/33949897 next_states=36090740 step_elapsed=2291.89s elapsed=11942.8s
+      shared forward step 44/45 processed=28000000/33949897 next_states=36693134 step_elapsed=2359.45s elapsed=12010.3s
+      shared forward step 44/45 processed=28500000/33949897 next_states=37295839 step_elapsed=2432.62s elapsed=12083.5s
+      shared forward step 44/45 processed=29000000/33949897 next_states=37896343 step_elapsed=2510.53s elapsed=12161.4s
+      shared forward step 44/45 processed=29500000/33949897 next_states=38504238 step_elapsed=2585.84s elapsed=12236.7s
+      shared forward step 44/45 processed=30000000/33949897 next_states=39119875 step_elapsed=2641.48s elapsed=12292.3s
+      shared forward step 44/45 processed=30500000/33949897 next_states=39716244 step_elapsed=2715.04s elapsed=12365.9s
+      shared forward step 44/45 processed=31000000/33949897 next_states=40303110 step_elapsed=2806.45s elapsed=12457.3s
+      shared forward step 44/45 processed=31500000/33949897 next_states=40892141 step_elapsed=2897.48s elapsed=12548.3s
+      shared forward step 44/45 processed=32000000/33949897 next_states=41497122 step_elapsed=2966.13s elapsed=12617s
+      shared forward step 44/45 processed=32500000/33949897 next_states=42075861 step_elapsed=3062.66s elapsed=12713.5s
+      shared forward step 44/45 processed=33000000/33949897 next_states=42658507 step_elapsed=3164.47s elapsed=12815.3s
+      shared forward step 44/45 processed=33500000/33949897 next_states=43228903 step_elapsed=3279.4s elapsed=12930.3s
+    shared forward step 44/45 states=43731783 elapsed=13082.8s
+    m_44: B_6 shared target 1000/27207 elapsed=0.0453395s
+    m_44: B_6 shared target 2000/27207 elapsed=0.120828s
+    m_44: B_6 shared target 3000/27207 elapsed=0.172617s
+    m_44: B_6 shared target 4000/27207 elapsed=0.23718s
+    m_44: B_6 shared target 5000/27207 elapsed=0.309575s
+    m_44: B_6 shared target 6000/27207 elapsed=0.327326s
+    m_44: B_6 shared target 7000/27207 elapsed=0.46066s
+    m_44: B_6 shared target 8000/27207 elapsed=0.461898s
+    m_44: B_6 shared target 9000/27207 elapsed=0.613639s
+    m_44: B_6 shared target 10000/27207 elapsed=0.614949s
+    m_44: B_6 shared target 11000/27207 elapsed=0.758612s
+    m_44: B_6 shared target 12000/27207 elapsed=0.767579s
+    m_44: B_6 shared target 13000/27207 elapsed=0.7684s
+    m_44: B_6 shared target 14000/27207 elapsed=0.890603s
+    m_44: B_6 shared target 15000/27207 elapsed=0.919385s
+    m_44: B_6 shared target 16000/27207 elapsed=0.92014s
+    m_44: B_6 shared target 17000/27207 elapsed=0.961077s
+    m_44: B_6 shared target 18000/27207 elapsed=0.963004s
+    m_44: B_6 shared target 19000/27207 elapsed=0.963717s
+    m_44: B_6 shared target 20000/27207 elapsed=0.964514s
+    m_44: B_6 shared target 21000/27207 elapsed=0.96525s
+    m_44: B_6 shared target 22000/27207 elapsed=0.965935s
+    m_44: B_6 shared target 23000/27207 elapsed=0.966682s
+    m_44: B_6 shared target 24000/27207 elapsed=0.967362s
+    m_44: B_6 shared target 25000/27207 elapsed=0.968109s
+    m_44: B_6 shared target 26000/27207 elapsed=0.968829s
+    m_44: B_6 shared target 27000/27207 elapsed=0.969628s
+    m_44: B_6 shared target 27207/27207 elapsed=0.969814s
+  B_6 Delta_44 = -133373311787536329946583738702129745563321139891108272
+    m_44: C_6 shared target 1000/69748 elapsed=0.00104302s
+    m_44: C_6 shared target 2000/69748 elapsed=0.00201537s
+    m_44: C_6 shared target 3000/69748 elapsed=0.00294824s
+    m_44: C_6 shared target 4000/69748 elapsed=0.00393534s
+    m_44: C_6 shared target 5000/69748 elapsed=0.00483223s
+    m_44: C_6 shared target 6000/69748 elapsed=0.0056648s
+    m_44: C_6 shared target 7000/69748 elapsed=0.00652707s
+    m_44: C_6 shared target 8000/69748 elapsed=0.00733414s
+    m_44: C_6 shared target 9000/69748 elapsed=0.00821583s
+    m_44: C_6 shared target 10000/69748 elapsed=0.00894981s
+    m_44: C_6 shared target 11000/69748 elapsed=0.00995506s
+    m_44: C_6 shared target 12000/69748 elapsed=0.0107412s
+    m_44: C_6 shared target 13000/69748 elapsed=0.0114865s
+    m_44: C_6 shared target 14000/69748 elapsed=0.0124014s
+    m_44: C_6 shared target 15000/69748 elapsed=0.0131212s
+    m_44: C_6 shared target 16000/69748 elapsed=0.0137987s
+    m_44: C_6 shared target 17000/69748 elapsed=0.0145318s
+    m_44: C_6 shared target 18000/69748 elapsed=0.0153032s
+    m_44: C_6 shared target 19000/69748 elapsed=0.0159839s
+    m_44: C_6 shared target 20000/69748 elapsed=0.0166787s
+    m_44: C_6 shared target 21000/69748 elapsed=0.0173868s
+    m_44: C_6 shared target 22000/69748 elapsed=0.0181367s
+    m_44: C_6 shared target 23000/69748 elapsed=0.0233326s
+    m_44: C_6 shared target 24000/69748 elapsed=0.0409655s
+    m_44: C_6 shared target 25000/69748 elapsed=0.0686286s
+    m_44: C_6 shared target 26000/69748 elapsed=0.113506s
+    m_44: C_6 shared target 27000/69748 elapsed=0.191272s
+    m_44: C_6 shared target 28000/69748 elapsed=0.286354s
+    m_44: C_6 shared target 29000/69748 elapsed=0.303676s
+    m_44: C_6 shared target 30000/69748 elapsed=0.3269s
+    m_44: C_6 shared target 31000/69748 elapsed=0.34882s
+    m_44: C_6 shared target 32000/69748 elapsed=0.404037s
+    m_44: C_6 shared target 33000/69748 elapsed=0.486672s
+    m_44: C_6 shared target 34000/69748 elapsed=0.576191s
+    m_44: C_6 shared target 35000/69748 elapsed=0.592788s
+    m_44: C_6 shared target 36000/69748 elapsed=0.612784s
+    m_44: C_6 shared target 37000/69748 elapsed=0.646678s
+    m_44: C_6 shared target 38000/69748 elapsed=0.674475s
+    m_44: C_6 shared target 39000/69748 elapsed=0.748913s
+    m_44: C_6 shared target 40000/69748 elapsed=0.849707s
+    m_44: C_6 shared target 41000/69748 elapsed=0.895841s
+    m_44: C_6 shared target 42000/69748 elapsed=0.909566s
+    m_44: C_6 shared target 43000/69748 elapsed=0.925318s
+    m_44: C_6 shared target 44000/69748 elapsed=0.944747s
+    m_44: C_6 shared target 45000/69748 elapsed=0.980384s
+    m_44: C_6 shared target 46000/69748 elapsed=1.03686s
+    m_44: C_6 shared target 47000/69748 elapsed=1.11786s
+    m_44: C_6 shared target 48000/69748 elapsed=1.14606s
+    m_44: C_6 shared target 49000/69748 elapsed=1.16514s
+    m_44: C_6 shared target 50000/69748 elapsed=1.17827s
+    m_44: C_6 shared target 51000/69748 elapsed=1.20403s
+    m_44: C_6 shared target 52000/69748 elapsed=1.25093s
+    m_44: C_6 shared target 53000/69748 elapsed=1.31018s
+    m_44: C_6 shared target 54000/69748 elapsed=1.37429s
+    m_44: C_6 shared target 55000/69748 elapsed=1.39077s
+    m_44: C_6 shared target 56000/69748 elapsed=1.42453s
+    m_44: C_6 shared target 57000/69748 elapsed=1.46377s
+    m_44: C_6 shared target 58000/69748 elapsed=1.51075s
+    m_44: C_6 shared target 59000/69748 elapsed=1.61445s
+    m_44: C_6 shared target 60000/69748 elapsed=1.65251s
+    m_44: C_6 shared target 61000/69748 elapsed=1.68684s
+    m_44: C_6 shared target 62000/69748 elapsed=1.75022s
+    m_44: C_6 shared target 63000/69748 elapsed=1.81115s
+    m_44: C_6 shared target 64000/69748 elapsed=1.86578s
+    m_44: C_6 shared target 65000/69748 elapsed=1.96088s
+    m_44: C_6 shared target 66000/69748 elapsed=2.03178s
+    m_44: C_6 shared target 67000/69748 elapsed=2.07814s
+    m_44: C_6 shared target 68000/69748 elapsed=2.11589s
+    m_44: C_6 shared target 69000/69748 elapsed=2.13132s
+    m_44: C_6 shared target 69748/69748 elapsed=2.1373s
+  C_6 Delta_44 = -141079136901588680330293645693735487415707061114408712
+      shared forward step 45/45 processed=500000/43731783 next_states=752191 step_elapsed=20.9093s elapsed=13113s
+      shared forward step 45/45 processed=1000000/43731783 next_states=1479114 step_elapsed=44.1382s elapsed=13136.2s
+      shared forward step 45/45 processed=1500000/43731783 next_states=2191427 step_elapsed=68.9051s elapsed=13161s
+      shared forward step 45/45 processed=2000000/43731783 next_states=2886818 step_elapsed=97.5908s elapsed=13189.7s
+      shared forward step 45/45 processed=2500000/43731783 next_states=3589887 step_elapsed=124.644s elapsed=13216.7s
+      shared forward step 45/45 processed=3000000/43731783 next_states=4292714 step_elapsed=152.954s elapsed=13245s
+      shared forward step 45/45 processed=3500000/43731783 next_states=4980350 step_elapsed=182.978s elapsed=13275.1s
+      shared forward step 45/45 processed=4000000/43731783 next_states=5662317 step_elapsed=216.41s elapsed=13308.5s
+      shared forward step 45/45 processed=4500000/43731783 next_states=6366198 step_elapsed=242.468s elapsed=13334.5s
+      shared forward step 45/45 processed=5000000/43731783 next_states=7046031 step_elapsed=275.936s elapsed=13368s
+      shared forward step 45/45 processed=5500000/43731783 next_states=7714598 step_elapsed=312.146s elapsed=13404.2s
+      shared forward step 45/45 processed=6000000/43731783 next_states=8419434 step_elapsed=339.147s elapsed=13431.2s
+      shared forward step 45/45 processed=6500000/43731783 next_states=9095247 step_elapsed=373.324s elapsed=13465.4s
+      shared forward step 45/45 processed=7000000/43731783 next_states=9759546 step_elapsed=412.258s elapsed=13504.3s
+      shared forward step 45/45 processed=7500000/43731783 next_states=10428009 step_elapsed=449.457s elapsed=13541.5s
+      shared forward step 45/45 processed=8000000/43731783 next_states=11132257 step_elapsed=476.77s elapsed=13568.8s
+      shared forward step 45/45 processed=8500000/43731783 next_states=11799433 step_elapsed=511.708s elapsed=13603.8s
+      shared forward step 45/45 processed=9000000/43731783 next_states=12466363 step_elapsed=549.786s elapsed=13641.9s
+      shared forward step 45/45 processed=9500000/43731783 next_states=13128210 step_elapsed=590.331s elapsed=13682.4s
+      shared forward step 45/45 processed=10000000/43731783 next_states=13788775 step_elapsed=629.956s elapsed=13722s
+      shared forward step 45/45 processed=10500000/43731783 next_states=14480664 step_elapsed=662.009s elapsed=13754.1s
+      shared forward step 45/45 processed=11000000/43731783 next_states=15151724 step_elapsed=695.969s elapsed=13788s
+      shared forward step 45/45 processed=11500000/43731783 next_states=15809130 step_elapsed=735.235s elapsed=13827.3s
+      shared forward step 45/45 processed=12000000/43731783 next_states=16466710 step_elapsed=777.425s elapsed=13869.5s
+      shared forward step 45/45 processed=12500000/43731783 next_states=17115425 step_elapsed=823.594s elapsed=13915.7s
+      shared forward step 45/45 processed=13000000/43731783 next_states=17775347 step_elapsed=865.242s elapsed=13957.3s
+      shared forward step 45/45 processed=13500000/43731783 next_states=18445413 step_elapsed=904.558s elapsed=13996.6s
+      shared forward step 45/45 processed=14000000/43731783 next_states=19124037 step_elapsed=936.227s elapsed=14028.3s
+      shared forward step 45/45 processed=14500000/43731783 next_states=19781132 step_elapsed=974.603s elapsed=14066.7s
+      shared forward step 45/45 processed=15000000/43731783 next_states=20429338 step_elapsed=1018.35s elapsed=14110.4s
+      shared forward step 45/45 processed=15500000/43731783 next_states=21077223 step_elapsed=1065.52s elapsed=14157.6s
+      shared forward step 45/45 processed=16000000/43731783 next_states=21726121 step_elapsed=1111.38s elapsed=14203.5s
+      shared forward step 45/45 processed=16500000/43731783 next_states=22366385 step_elapsed=1161.48s elapsed=14253.6s
+      shared forward step 45/45 processed=17000000/43731783 next_states=23007249 step_elapsed=1211.3s elapsed=14303.4s
+      shared forward step 45/45 processed=17500000/43731783 next_states=23694865 step_elapsed=1244.82s elapsed=14336.9s
+      shared forward step 45/45 processed=18000000/43731783 next_states=24357199 step_elapsed=1281.26s elapsed=14373.3s
+      shared forward step 45/45 processed=18500000/43731783 next_states=25005219 step_elapsed=1324.19s elapsed=14416.3s
+      shared forward step 45/45 processed=19000000/43731783 next_states=25642616 step_elapsed=1373s elapsed=14465.1s
+      shared forward step 45/45 processed=19500000/43731783 next_states=26280281 step_elapsed=1423.12s elapsed=14515.2s
+      shared forward step 45/45 processed=20000000/43731783 next_states=26921317 step_elapsed=1474.38s elapsed=14566.5s
+      shared forward step 45/45 processed=20500000/43731783 next_states=27561853 step_elapsed=1525.22s elapsed=14617.3s
+      shared forward step 45/45 processed=21000000/43731783 next_states=28198348 step_elapsed=1578.05s elapsed=14670.1s
+      shared forward step 45/45 processed=21500000/43731783 next_states=28843312 step_elapsed=1629.57s elapsed=14721.6s
+      shared forward step 45/45 processed=22000000/43731783 next_states=29515954 step_elapsed=1664.63s elapsed=14756.7s
+      shared forward step 45/45 processed=22500000/43731783 next_states=30163016 step_elapsed=1706.86s elapsed=14798.9s
+      shared forward step 45/45 processed=23000000/43731783 next_states=30799451 step_elapsed=1755.26s elapsed=14847.3s
+      shared forward step 45/45 processed=23500000/43731783 next_states=31427362 step_elapsed=1808.75s elapsed=14900.8s
+      shared forward step 45/45 processed=24000000/43731783 next_states=32059249 step_elapsed=1862.07s elapsed=14954.2s
+      shared forward step 45/45 processed=24500000/43731783 next_states=32683839 step_elapsed=1922.95s elapsed=15015s
+      shared forward step 45/45 processed=25000000/43731783 next_states=33317314 step_elapsed=1978.11s elapsed=15070.2s
+      shared forward step 45/45 processed=25500000/43731783 next_states=33944833 step_elapsed=2037.71s elapsed=15129.8s
+      shared forward step 45/45 processed=26000000/43731783 next_states=34572911 step_elapsed=2097.67s elapsed=15189.7s
+      shared forward step 45/45 processed=26500000/43731783 next_states=35235488 step_elapsed=2135.68s elapsed=15227.8s
+      shared forward step 45/45 processed=27000000/43731783 next_states=35885077 step_elapsed=2179.37s elapsed=15271.5s
+      shared forward step 45/45 processed=27500000/43731783 next_states=36512574 step_elapsed=2233.24s elapsed=15325.3s
+      shared forward step 45/45 processed=28000000/43731783 next_states=37136470 step_elapsed=2290.89s elapsed=15383s
+      shared forward step 45/45 processed=28500000/43731783 next_states=37752180 step_elapsed=2357.18s elapsed=15449.3s
+      shared forward step 45/45 processed=29000000/43731783 next_states=38376600 step_elapsed=2419.33s elapsed=15511.4s
+      shared forward step 45/45 processed=29500000/43731783 next_states=38994528 step_elapsed=2485.81s elapsed=15577.9s
+      shared forward step 45/45 processed=30000000/43731783 next_states=39609585 step_elapsed=2555.78s elapsed=15647.9s
+      shared forward step 45/45 processed=30500000/43731783 next_states=40226610 step_elapsed=2623.47s elapsed=15715.5s
+      shared forward step 45/45 processed=31000000/43731783 next_states=40878974 step_elapsed=2672.47s elapsed=15764.5s
+      shared forward step 45/45 processed=31500000/43731783 next_states=41516759 step_elapsed=2721.5s elapsed=15813.6s
+      shared forward step 45/45 processed=32000000/43731783 next_states=42136614 step_elapsed=2780.23s elapsed=15872.3s
+      shared forward step 45/45 processed=32500000/43731783 next_states=42751539 step_elapsed=2844.44s elapsed=15936.5s
+      shared forward step 45/45 processed=33000000/43731783 next_states=43356321 step_elapsed=2919.29s elapsed=16011.4s
+      shared forward step 45/45 processed=33500000/43731783 next_states=43969587 step_elapsed=2989.72s elapsed=16081.8s
+      shared forward step 45/45 processed=34000000/43731783 next_states=44575546 step_elapsed=3069.68s elapsed=16161.8s
+      shared forward step 45/45 processed=34500000/43731783 next_states=45186807 step_elapsed=3143.64s elapsed=16235.7s
+      shared forward step 45/45 processed=35000000/43731783 next_states=45806475 step_elapsed=3213.95s elapsed=16306s
+      shared forward step 45/45 processed=35500000/43731783 next_states=46438032 step_elapsed=3265.42s elapsed=16357.5s
+      shared forward step 45/45 processed=36000000/43731783 next_states=47052162 step_elapsed=3328.13s elapsed=16420.2s
+      shared forward step 45/45 processed=36500000/43731783 next_states=47656427 step_elapsed=3400.84s elapsed=16492.9s
+      shared forward step 45/45 processed=37000000/43731783 next_states=48252834 step_elapsed=3484.76s elapsed=16576.8s
+      shared forward step 45/45 processed=37500000/43731783 next_states=48851692 step_elapsed=3569.74s elapsed=16661.8s
+      shared forward step 45/45 processed=38000000/43731783 next_states=49446105 step_elapsed=3659.69s elapsed=16751.8s
+      shared forward step 45/45 processed=38500000/43731783 next_states=50057006 step_elapsed=3738.8s elapsed=16830.9s
+      shared forward step 45/45 processed=39000000/43731783 next_states=50672305 step_elapsed=3802.39s elapsed=16894.5s
+      shared forward step 45/45 processed=39500000/43731783 next_states=51268718 step_elapsed=3881.11s elapsed=16973.2s
+      shared forward step 45/45 processed=40000000/43731783 next_states=51856231 step_elapsed=3976.62s elapsed=17068.7s
+      shared forward step 45/45 processed=40500000/43731783 next_states=52441466 step_elapsed=4080.11s elapsed=17172.2s
+      shared forward step 45/45 processed=41000000/43731783 next_states=53033497 step_elapsed=4180.55s elapsed=17272.6s
+      shared forward step 45/45 processed=41500000/43731783 next_states=53633052 step_elapsed=4256.76s elapsed=17348.8s
+      shared forward step 45/45 processed=42000000/43731783 next_states=54210366 step_elapsed=4364.19s elapsed=17456.3s
+      shared forward step 45/45 processed=42500000/43731783 next_states=54783836 step_elapsed=4491.17s elapsed=17583.3s
+      shared forward step 45/45 processed=43000000/43731783 next_states=55364764 step_elapsed=4597.11s elapsed=17689.2s
+      shared forward step 45/45 processed=43500000/43731783 next_states=55928902 step_elapsed=4745.63s elapsed=17837.7s
+    shared forward step 45/45 states=56182672 elapsed=17995.5s
+    m_45: B_6 shared target 1000/33524 elapsed=0.0648261s
+    m_45: B_6 shared target 2000/33524 elapsed=0.145345s
+    m_45: B_6 shared target 3000/33524 elapsed=0.25205s
+    m_45: B_6 shared target 4000/33524 elapsed=0.348481s
+    m_45: B_6 shared target 5000/33524 elapsed=0.433156s
+    m_45: B_6 shared target 6000/33524 elapsed=0.546098s
+    m_45: B_6 shared target 7000/33524 elapsed=0.640621s
+    m_45: B_6 shared target 8000/33524 elapsed=0.7611s
+    m_45: B_6 shared target 9000/33524 elapsed=0.843085s
+    m_45: B_6 shared target 10000/33524 elapsed=0.991473s
+    m_45: B_6 shared target 11000/33524 elapsed=1.03331s
+    m_45: B_6 shared target 12000/33524 elapsed=1.13597s
+    m_45: B_6 shared target 13000/33524 elapsed=1.31908s
+    m_45: B_6 shared target 14000/33524 elapsed=1.37437s
+    m_45: B_6 shared target 15000/33524 elapsed=1.47055s
+    m_45: B_6 shared target 16000/33524 elapsed=1.67812s
+    m_45: B_6 shared target 17000/33524 elapsed=1.73958s
+    m_45: B_6 shared target 18000/33524 elapsed=1.81056s
+    m_45: B_6 shared target 19000/33524 elapsed=1.93216s
+    m_45: B_6 shared target 20000/33524 elapsed=2.10734s
+    m_45: B_6 shared target 21000/33524 elapsed=2.11768s
+    m_45: B_6 shared target 22000/33524 elapsed=2.19449s
+    m_45: B_6 shared target 23000/33524 elapsed=2.2895s
+    m_45: B_6 shared target 24000/33524 elapsed=2.44647s
+    m_45: B_6 shared target 25000/33524 elapsed=2.45558s
+    m_45: B_6 shared target 26000/33524 elapsed=2.49531s
+    m_45: B_6 shared target 27000/33524 elapsed=2.70272s
+    m_45: B_6 shared target 28000/33524 elapsed=2.72913s
+    m_45: B_6 shared target 29000/33524 elapsed=2.84497s
+    m_45: B_6 shared target 30000/33524 elapsed=2.98756s
+    m_45: B_6 shared target 31000/33524 elapsed=3.00217s
+    m_45: B_6 shared target 32000/33524 elapsed=3.00356s
+    m_45: B_6 shared target 33000/33524 elapsed=3.00584s
+    m_45: B_6 shared target 33524/33524 elapsed=3.008s
+  B_6 Delta_45 = -6207155828679978261009404997146298472582408794974256332
+    m_45: C_6 shared target 1000/83192 elapsed=0.00216212s
+    m_45: C_6 shared target 2000/83192 elapsed=0.00407326s
+    m_45: C_6 shared target 3000/83192 elapsed=0.00585242s
+    m_45: C_6 shared target 4000/83192 elapsed=0.00763807s
+    m_45: C_6 shared target 5000/83192 elapsed=0.00863524s
+    m_45: C_6 shared target 6000/83192 elapsed=0.00957885s
+    m_45: C_6 shared target 7000/83192 elapsed=0.010576s
+    m_45: C_6 shared target 8000/83192 elapsed=0.0115201s
+    m_45: C_6 shared target 9000/83192 elapsed=0.0125039s
+    m_45: C_6 shared target 10000/83192 elapsed=0.0134553s
+    m_45: C_6 shared target 11000/83192 elapsed=0.0145305s
+    m_45: C_6 shared target 12000/83192 elapsed=0.0155008s
+    m_45: C_6 shared target 13000/83192 elapsed=0.0166613s
+    m_45: C_6 shared target 14000/83192 elapsed=0.0176796s
+    m_45: C_6 shared target 15000/83192 elapsed=0.0186039s
+    m_45: C_6 shared target 16000/83192 elapsed=0.0195016s
+    m_45: C_6 shared target 17000/83192 elapsed=0.0204403s
+    m_45: C_6 shared target 18000/83192 elapsed=0.0214598s
+    m_45: C_6 shared target 19000/83192 elapsed=0.0222993s
+    m_45: C_6 shared target 20000/83192 elapsed=0.0231572s
+    m_45: C_6 shared target 21000/83192 elapsed=0.0240313s
+    m_45: C_6 shared target 22000/83192 elapsed=0.0249596s
+    m_45: C_6 shared target 23000/83192 elapsed=0.0258647s
+    m_45: C_6 shared target 24000/83192 elapsed=0.0267039s
+    m_45: C_6 shared target 25000/83192 elapsed=0.027528s
+    m_45: C_6 shared target 26000/83192 elapsed=0.0283771s
+    m_45: C_6 shared target 27000/83192 elapsed=0.0292651s
+    m_45: C_6 shared target 28000/83192 elapsed=0.0301883s
+    m_45: C_6 shared target 29000/83192 elapsed=0.0548681s
+    m_45: C_6 shared target 30000/83192 elapsed=0.0941988s
+    m_45: C_6 shared target 31000/83192 elapsed=0.145393s
+    m_45: C_6 shared target 32000/83192 elapsed=0.211731s
+    m_45: C_6 shared target 33000/83192 elapsed=0.31567s
+    m_45: C_6 shared target 34000/83192 elapsed=0.396838s
+    m_45: C_6 shared target 35000/83192 elapsed=0.467022s
+    m_45: C_6 shared target 36000/83192 elapsed=0.509743s
+    m_45: C_6 shared target 37000/83192 elapsed=0.543833s
+    m_45: C_6 shared target 38000/83192 elapsed=0.588867s
+    m_45: C_6 shared target 39000/83192 elapsed=0.633206s
+    m_45: C_6 shared target 40000/83192 elapsed=0.69725s
+    m_45: C_6 shared target 41000/83192 elapsed=0.773203s
+    m_45: C_6 shared target 42000/83192 elapsed=0.843771s
+    m_45: C_6 shared target 43000/83192 elapsed=0.871238s
+    m_45: C_6 shared target 44000/83192 elapsed=0.899357s
+    m_45: C_6 shared target 45000/83192 elapsed=0.927884s
+    m_45: C_6 shared target 46000/83192 elapsed=0.960925s
+    m_45: C_6 shared target 47000/83192 elapsed=0.995306s
+    m_45: C_6 shared target 48000/83192 elapsed=1.03344s
+    m_45: C_6 shared target 49000/83192 elapsed=1.10488s
+    m_45: C_6 shared target 50000/83192 elapsed=1.16259s
+    m_45: C_6 shared target 51000/83192 elapsed=1.16966s
+    m_45: C_6 shared target 52000/83192 elapsed=1.18053s
+    m_45: C_6 shared target 53000/83192 elapsed=1.19462s
+    m_45: C_6 shared target 54000/83192 elapsed=1.20568s
+    m_45: C_6 shared target 55000/83192 elapsed=1.23297s
+    m_45: C_6 shared target 56000/83192 elapsed=1.26106s
+    m_45: C_6 shared target 57000/83192 elapsed=1.29919s
+    m_45: C_6 shared target 58000/83192 elapsed=1.3466s
+    m_45: C_6 shared target 59000/83192 elapsed=1.35461s
+    m_45: C_6 shared target 60000/83192 elapsed=1.36528s
+    m_45: C_6 shared target 61000/83192 elapsed=1.37672s
+    m_45: C_6 shared target 62000/83192 elapsed=1.39717s
+    m_45: C_6 shared target 63000/83192 elapsed=1.40798s
+    m_45: C_6 shared target 64000/83192 elapsed=1.44714s
+    m_45: C_6 shared target 65000/83192 elapsed=1.47953s
+    m_45: C_6 shared target 66000/83192 elapsed=1.50322s
+    m_45: C_6 shared target 67000/83192 elapsed=1.51129s
+    m_45: C_6 shared target 68000/83192 elapsed=1.52582s
+    m_45: C_6 shared target 69000/83192 elapsed=1.53728s
+    m_45: C_6 shared target 70000/83192 elapsed=1.55676s
+    m_45: C_6 shared target 71000/83192 elapsed=1.57824s
+    m_45: C_6 shared target 72000/83192 elapsed=1.6117s
+    m_45: C_6 shared target 73000/83192 elapsed=1.62563s
+    m_45: C_6 shared target 74000/83192 elapsed=1.63565s
+    m_45: C_6 shared target 75000/83192 elapsed=1.66049s
+    m_45: C_6 shared target 76000/83192 elapsed=1.67551s
+    m_45: C_6 shared target 77000/83192 elapsed=1.69838s
+    m_45: C_6 shared target 78000/83192 elapsed=1.71037s
+    m_45: C_6 shared target 79000/83192 elapsed=1.71276s
+    m_45: C_6 shared target 80000/83192 elapsed=1.72568s
+    m_45: C_6 shared target 81000/83192 elapsed=1.74s
+    m_45: C_6 shared target 82000/83192 elapsed=1.74576s
+    m_45: C_6 shared target 83000/83192 elapsed=1.75336s
+    m_45: C_6 shared target 83192/83192 elapsed=1.75381s
+  C_6 Delta_45 = -6509659371838086026766452905424089852585224242698194712
+B_6 tail = -147090472121071178514702206865516021187098787434898794134271468747630134441962385408; linear exact = -4787988038917969245847253713391830773783669077644809149143583291246585291065247968; negative quadratic exact = -6198134375796250424977475021789492660607311527860259102207226212344058426675040; positive quadratic exact = 11924071825352563638908215816123638591329259462914576899339846662167834863447792; lower margin = 2016541500870170705576442870044136405033713026137524191006880768652195998834484912
+C_6 tail = -147090472121071178514702206865516021187098787434898794134271468747630134441962385408; linear exact = -5149817535036290102734424153113847883780846635574726936476767017146881891381183168; negative quadratic exact = -12290831306977311198851751291360357890746421249542301576885694256766630819835200; positive quadratic exact = 30184926589797191858377943414609574427479996888585847765380180355218394520481952; lower margin = 1666880162585113416134867881651034365642547095911595632065058908400527385782423712
+minimum lower margin = C_6: 1666880162585113416134867881651034365642547095911595632065058908400527385782423712

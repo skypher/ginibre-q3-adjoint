@@ -1,0 +1,75 @@
+COMMAND: ./dunkl_exceptional_coefficients_gmp --threads 8
+F4 S normalization Dunkl step 1/4; terms=35
+F4 S normalization Dunkl step 2/4; terms=20
+F4 S normalization Dunkl step 3/4; terms=10
+F4 S normalization Dunkl step 4/4; terms=4
+F4 radial6 Dunkl step 1/3; terms=20
+F4 radial6 Dunkl step 2/3; terms=10
+F4 radial6 Dunkl step 3/3; terms=4
+F4 R Dunkl step 1/3; terms=20
+F4 R Dunkl step 2/3; terms=10
+F4 R Dunkl step 3/3; terms=4
+F4 RQ Dunkl step 1/4; terms=35
+F4 RQ Dunkl step 2/4; terms=20
+F4 RQ Dunkl step 3/4; terms=10
+F4 RQ Dunkl step 4/4; terms=4
+F4 RQ2 Dunkl step 1/5; terms=56
+F4 RQ2 Dunkl step 2/5; terms=35
+F4 RQ2 Dunkl step 3/5; terms=20
+F4 RQ2 Dunkl step 4/5; terms=10
+F4 RQ2 Dunkl step 5/5; terms=4
+F4 S Dunkl step 1/4; terms=35
+F4 S Dunkl step 2/4; terms=20
+F4 S Dunkl step 3/4; terms=10
+F4 S Dunkl step 4/4; terms=4
+F4 exact coefficients: c2=8401705/486 c3=-44918139383/39366; elapsed=0.0257721 s
+E6 radial6 Dunkl step 1/3; terms=228
+E6 radial6 Dunkl step 2/3; terms=60
+E6 radial6 Dunkl step 3/3; terms=11
+E6 R Dunkl step 1/3; terms=231
+E6 R Dunkl step 2/3; terms=60
+E6 R Dunkl step 3/3; terms=11
+E6 RQ Dunkl step 1/4; terms=715
+E6 RQ Dunkl step 2/4; terms=231
+E6 RQ Dunkl step 3/4; terms=60
+E6 RQ Dunkl step 4/4; terms=11
+E6 RQ2 Dunkl step 1/5; terms=1898
+E6 RQ2 Dunkl step 2/5; terms=715
+E6 RQ2 Dunkl step 3/5; terms=231
+E6 RQ2 Dunkl step 4/5; terms=60
+E6 RQ2 Dunkl step 5/5; terms=11
+E6 S Dunkl step 1/4; terms=715
+E6 S Dunkl step 2/4; terms=231
+E6 S Dunkl step 3/4; terms=60
+E6 S Dunkl step 4/4; terms=11
+E6 exact coefficients: c2=10524215/128 c3=-11872316417/1024; elapsed=1.02377 s
+E7 radial6 Dunkl step 1/3; terms=156
+E7 radial6 Dunkl step 2/3; terms=44
+E7 radial6 Dunkl step 3/3; terms=9
+E7 R Dunkl step 1/3; terms=157
+E7 R Dunkl step 2/3; terms=44
+E7 R Dunkl step 3/3; terms=9
+E7 RQ Dunkl step 1/4; terms=459
+E7 RQ Dunkl step 2/4; terms=157
+E7 RQ Dunkl step 3/4; terms=44
+E7 RQ Dunkl step 4/4; terms=9
+E7 RQ2 Dunkl step 1/5; terms=1166
+E7 RQ2 Dunkl step 2/5; terms=459
+E7 RQ2 Dunkl step 3/5; terms=157
+E7 RQ2 Dunkl step 4/5; terms=44
+E7 RQ2 Dunkl step 5/5; terms=9
+E7 S Dunkl step 1/4; terms=459
+E7 S Dunkl step 2/4; terms=157
+E7 S Dunkl step 3/4; terms=44
+E7 S Dunkl step 4/4; terms=9
+E7 exact coefficients: c2=82042395295/124416 c3=-41730554417849633/161243136; elapsed=1.81996 s
+E8 radial8 Dunkl step 1/4; terms=330
+E8 radial8 Dunkl step 2/4; terms=120
+E8 radial8 Dunkl step 3/4; terms=36
+E8 radial8 Dunkl step 4/4; terms=8
+E8 S Dunkl step 1/4; terms=331
+E8 S Dunkl step 2/4; terms=120
+E8 S Dunkl step 3/4; terms=36
+E8 S Dunkl step 4/4; terms=8
+E8 exact coefficients: c2=346377539/45 c3=-11478332145838/1125
+All exceptional Dunkl coefficient certificates verified with exact GMP arithmetic; OpenMP threads=8, elapsed=4.68824 s.

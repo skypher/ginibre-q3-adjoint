@@ -1,0 +1,29 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp C14 51 --stable-moments /home/yang/q3/ginibre_q3/references/oeis_A002137_stable.txt /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_40.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_41.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_42.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_43.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_44.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_45.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_46.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_47.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_48.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_49.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_50.log /home/yang/q3/ginibre_q3/certificates/post_m29/c14_delta_logs_conly/c14_delta_51.log /home/yang/q3/ginibre_q3/certificates/post_m29/m30_BC13_18_pair_range_exact39.log
+power=1 support=1 elapsed_seconds=3.5036e-05
+power=2 support=6 elapsed_seconds=2.8935e-05
+power=3 support=14 elapsed_seconds=0.00016987
+power=4 support=32 elapsed_seconds=0.000377771
+power=5 support=66 elapsed_seconds=0.000889584
+power=6 support=132 elapsed_seconds=0.00189961
+power=7 support=248 elapsed_seconds=0.00378985
+power=8 support=453 elapsed_seconds=0.00727053
+power=9 support=797 elapsed_seconds=0.0135813
+power=10 support=1368 elapsed_seconds=0.0243642
+power=11 support=2287 elapsed_seconds=0.0425777
+power=12 support=3750 elapsed_seconds=0.0723322
+power=13 support=6026 elapsed_seconds=0.121636
+power=14 support=9531 elapsed_seconds=0.198478
+power=15 support=14451 elapsed_seconds=0.319332
+power=16 support=21590 elapsed_seconds=0.497842
+power=17 support=31822 elapsed_seconds=0.764253
+power=18 support=46321 elapsed_seconds=1.14981
+power=19 support=66646 elapsed_seconds=1.71144
+power=20 support=94858 elapsed_seconds=2.51363
+power=21 support=133655 elapsed_seconds=3.67038
+power=22 support=186543 elapsed_seconds=5.2659
+power=23 support=258052 elapsed_seconds=7.52336
+power=24 support=353995 elapsed_seconds=10.622
+power=25 support=481781 elapsed_seconds=15.3138
+power=26 support=650808 elapsed_seconds=20.2859
+root_datum=C_14 rank=14 roots=392 maximum_coordinate=52
+SUMMARY group=C_14 moments=52 source_values=22 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

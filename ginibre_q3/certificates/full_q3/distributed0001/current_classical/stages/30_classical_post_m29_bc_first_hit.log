@@ -1,0 +1,12 @@
+COMMAND: /usr/bin/python3 classical_tail_constants.py --post-m29-bc-lower-bound-supplier-certificate --bc-window-delta-log /home/yang/q3/ginibre_q3/certificates/post_m29/m30_B11_12_lower_exact39.log --bc-window-delta-log /home/yang/q3/ginibre_q3/certificates/post_m29/m30_BC13_18_pair_range_exact39.log
+post-m29 B/C first-hit lower-bound certificate
+  finite cutoff: 296
+  scope: one Chain step at N_hit^(29)(G) for each listed row
+  rows checked: 530
+  stable moments generated through m_557
+  delta logs:
+    B/C /home/yang/q3/ginibre_q3/certificates/post_m29/m30_B11_12_lower_exact39.log
+    B/C /home/yang/q3/ginibre_q3/certificates/post_m29/m30_BC13_18_pair_range_exact39.log
+  BC-exact-m30-window: 14 rows; B: 11..18; C: 13..18; minimum margin 60984308873118699486654152331256832152869458098892654294200691875540792679706283260112 at B_11
+  BC-stable-tail-m30: 26 rows; B: 19..31; C: 19..31; minimum margin 60985758865525726741497365108763381707932808258587264949406275385721186214924056342528 at B_19
+  BC-stable-tail-sloped: 490 rows; B: 32..275, 277; C: 32..275, 277; minimum margin 7149492711914194489047217614280561916480894481051782764750681120187888555100532287564414713344 at B_32

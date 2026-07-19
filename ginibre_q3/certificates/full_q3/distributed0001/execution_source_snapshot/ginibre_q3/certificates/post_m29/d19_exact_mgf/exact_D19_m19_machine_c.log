@@ -1,0 +1,9 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=bc22efcafafe2d40b5f5430cb8f9cb046bc6b9b188da684e61dc6fdfaa27077e
+__BINARY_SHA256=de780944b63a4472fc2ed6eda17ab4eabf291bf0646ab929a60f6a5ee6577b88
+__COMMAND=timeout 1200 ./classical_boundary_certificate --d-exact-moment-range 19 19 19 19 --stable-moments oeis_A002137_stable.txt --reverse-target-sums --progress
+D exact shared moment range ranks 19..19 moments m_19..m_19 C++ certificate
+begin D_19=SO(38)
+shared D exact moment m_19 ranks 19..19
+  D_19 m_19 += O_even 0 + det 1; Delta_19 = 1; moment_19 = 12188911634495389
+__EXIT_STATUS=0

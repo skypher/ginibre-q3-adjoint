@@ -1,0 +1,13 @@
+g++ -O3 -march=native -std=c++20 -Wall post_m29_bc_layered_mgf_mpfr.cpp -l:libmpfr.so.6 -lgmpxx -lgmp -o post_m29_bc_layered_mgf_mpfr
+g++ -O3 -march=native -std=c++20 -Wall verify_d10_exact_tail_gmp.cpp -lgmpxx -lgmp -o verify_d10_exact_tail_gmp
+g++ -O3 -march=native -std=c++20 -Wall -fopenmp post_m29_d_stable_window_interval_gmp.cpp -lgmpxx -lgmp -o post_m29_d_stable_window_interval_gmp
+__EXIT_STATUS=0
+643f31317ba1be2014db2a9334654499c38981c5a753fd948db177cb4093cfb8  post_m29_bc_layered_mgf_mpfr.cpp
+aa8ed39c58461cf070984664d7e0bb3ee99fc842eb670384c908abc3dc8cc2fa  verify_d10_exact_tail_gmp.cpp
+1e574e0c53e624df30e9c69bc24280b8e6c56a099923428f0a27036b74a7454b  post_m29_d_stable_window_interval_gmp.cpp
+5633f4002ec40646a6b488b38c084401b9d1f47b41c2f14d3945d35c524377f4  verify_character_ring_moment_sources_gmp.cpp
+ba30755944b7afa31ff8d7de00ff1b3384274e3bacd59edadb5d3c6f1025f576  lie_data.h
+c1f66bc8ba846c934055ab5724a45222f13a64ee61bd9a69e0907ab892da75cb  post_m29_bc_layered_mgf_mpfr
+3db72afa6f1fa6696c354223771785ab5472c2276b631b8f4e689586b8c580db  verify_d10_exact_tail_gmp
+0e581ced7eed8cf142f4d917c95dafdbed541e1950fe3521d2ec3488a81ade35  post_m29_d_stable_window_interval_gmp
+fe883ab1d33d1d7bbcdb021c5141ac63c86091893519b7e99256ebdeba165812  verify_character_ring_moment_sources_gmp

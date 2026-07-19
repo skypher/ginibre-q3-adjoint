@@ -1,0 +1,39 @@
+BEGIN D25_nocache m12 no-reflect-cache 2026-05-04T08:17:10+00:00
+Exact classical Chain bridge C++: max_chain=12, moment_max=29, families=D, rank_min=25, rank_cap=25, reflect_cache_limit=0
+  m_1 = 0  (|support| = 1, |cache| = 0)
+  m_2 = 1  (|support| = 6, |cache| = 0)
+  m_3 = 1  (|support| = 14, |cache| = 0)
+  m_4 = 6  (|support| = 32, |cache| = 0)
+  m_5 = 22  (|support| = 66, |cache| = 0)
+  m_6 = 130  (|support| = 132, |cache| = 0)
+  m_7 = 822  (|support| = 248, |cache| = 0)
+  m_8 = 6202  (|support| = 453, |cache| = 0)
+  m_9 = 52552  (|support| = 797, |cache| = 0)
+  m_10 = 499194  (|support| = 1368, |cache| = 0)
+  m_11 = 5238370  (|support| = 2287, |cache| = 0)
+  m_12 = 60222844  (|support| = 3750, |cache| = 0)
+  m_13 = 752587764  (|support| = 6026, |cache| = 0)
+  m_14 = 10157945044  (|support| = 9530, |cache| = 0)
+  m_15 = 147267180508  (|support| = 14834, |cache| = 0)
+  m_16 = 2282355168060  (|support| = 22779, |cache| = 0)
+  m_17 = 37655004171808  (|support| = 34526, |cache| = 0)
+  m_18 = 658906772228668  (|support| = 51734, |cache| = 0)
+  m_19 = 12188911634495388  (|support| = 76667, |cache| = 0)
+  m_20 = 237669544014377896  (|support| = 112497, |cache| = 0)
+  m_21 = 4871976826254018760  (|support| = 163515, |cache| = 0)
+  m_22 = 104742902332392298296  (|support| = 235615, |cache| = 0)
+  m_23 = 2356625676822897681256  (|support| = 336711, |cache| = 0)
+  m_24 = 55378867183529402783416  (|support| = 477508, |cache| = 0)
+  m_25 = 1356742787604714936822433  (|support| = 672238, |cache| = 0)
+  m_26 = 34596053666659239185769700  (|support| = 939922, |cache| = 0)
+  m_27 = 916774575976215751282830407  (|support| = 1305625, |cache| = 0)
+  m_28 = 25210790281908369799833268458  (|support| = 1802461, |cache| = 0)
+  m_29 = 718494507734771203019654145320  (|support| = 2473719, |cache| = 0)
+D25: min_diff_m0..12=32 diff_m12=2678041202810108120507329063008 Q3(27)=2691306517299445153905195109808 m0..6=[1, 0, 1, 1, 6, 22, 130] dt=725.956s OK
+
+Summary table:
+group,rank,min_chain_diff,last_chain_diff,last_odd_Q3,seconds
+D25,25,32,2678041202810108120507329063008,2691306517299445153905195109808,725.956
+
+RESULT: ALL PASS
+END D25_nocache m12 nocache rc=0 2026-05-04T08:29:16+00:00

@@ -1,0 +1,25 @@
+    m_24: determinant shared reverse step 1/24 frontier=525 colors=1 elapsed=0.00639292s
+    m_24: determinant shared reverse step 2/24 frontier=1326 colors=1 elapsed=0.0447868s
+    m_24: determinant shared reverse step 3/24 frontier=1988 colors=1 elapsed=0.136792s
+    m_24: determinant shared reverse step 4/24 frontier=2460 colors=1 elapsed=0.273678s
+    m_24: determinant shared reverse step 5/24 frontier=2760 colors=1 elapsed=0.407684s
+    m_24: determinant shared reverse step 6/24 frontier=2937 colors=1 elapsed=0.536162s
+    m_24: determinant shared reverse step 7/24 frontier=3032 colors=1 elapsed=0.646585s
+    m_24: determinant shared reverse step 8/24 frontier=3068 colors=1 elapsed=0.73424s
+    m_24: determinant shared reverse step 9/24 frontier=3031 colors=1 elapsed=0.801681s
+    m_24: determinant shared reverse step 10/24 frontier=2838 colors=1 elapsed=0.853381s
+    m_24: determinant shared reverse step 11/24 frontier=2333 colors=1 elapsed=0.887714s
+    m_24: determinant shared reverse step 12/24 frontier=1575 colors=1 elapsed=0.909393s
+    m_24: determinant shared reverse step 13/24 frontier=1002 colors=1 elapsed=0.92226s
+    m_24: determinant shared reverse step 14/24 frontier=627 colors=1 elapsed=0.93107s
+    m_24: determinant shared reverse step 15/24 frontier=385 colors=1 elapsed=0.934946s
+    m_24: determinant shared reverse step 16/24 frontier=231 colors=1 elapsed=0.936971s
+    m_24: determinant shared reverse step 17/24 frontier=135 colors=1 elapsed=0.937958s
+    m_24: determinant shared reverse step 18/24 frontier=77 colors=1 elapsed=0.938479s
+    m_24: determinant shared reverse step 19/24 frontier=42 colors=1 elapsed=0.938676s
+    m_24: determinant shared reverse step 20/24 frontier=22 colors=1 elapsed=0.938764s
+    m_24: determinant shared reverse step 21/24 frontier=11 colors=1 elapsed=0.938795s
+    m_24: determinant shared reverse step 22/24 frontier=5 colors=1 elapsed=0.938805s
+    m_24: determinant shared reverse step 23/24 frontier=2 colors=1 elapsed=0.938809s
+    m_24: determinant shared reverse step 24/24 frontier=1 colors=1 elapsed=0.938811s
+D_12 Delta_24 = 9965293096971708706

@@ -1,0 +1,154 @@
+PROFILE_GMP max_m=218 max_profile=436
+m=29 bad_profiles=719 min_b=0 min_active=21 min_D=34 max_closed_active=58 max_profile=(0,58) max_count_prefix=135331264354280596525260... budget_bits=58
+m=30 bad_profiles=772 min_b=0 min_active=21 min_D=34 max_closed_active=60 max_profile=(0,60) max_count_prefix=471052485162704317319812... budget_bits=60
+m=31 bad_profiles=827 min_b=0 min_active=21 min_D=34 max_closed_active=62 max_profile=(0,62) max_count_prefix=175266244057778157520950... budget_bits=62
+m=32 bad_profiles=883 min_b=0 min_active=22 min_D=36 max_closed_active=64 max_profile=(0,64) max_count_prefix=695585714472713997075197... budget_bits=64
+m=33 bad_profiles=942 min_b=0 min_active=22 min_D=36 max_closed_active=66 max_profile=(0,66) max_count_prefix=293866732999017089647494... budget_bits=66
+m=34 bad_profiles=1001 min_b=0 min_active=23 min_D=38 max_closed_active=68 max_profile=(0,68) max_count_prefix=131909085289227211701789... budget_bits=68
+m=35 bad_profiles=1064 min_b=0 min_active=23 min_D=38 max_closed_active=70 max_profile=(0,70) max_count_prefix=627984678371728270376818... budget_bits=70
+m=36 bad_profiles=1127 min_b=0 min_active=24 min_D=38 max_closed_active=72 max_profile=(0,72) max_count_prefix=316550683923573006903902... budget_bits=72
+m=37 bad_profiles=1193 min_b=0 min_active=24 min_D=40 max_closed_active=74 max_profile=(0,74) max_count_prefix=168681606443654579419533... budget_bits=74
+m=38 bad_profiles=1263 min_b=0 min_active=25 min_D=40 max_closed_active=76 max_profile=(0,76) max_count_prefix=948790108300449802319736... budget_bits=76
+m=39 bad_profiles=1332 min_b=0 min_active=25 min_D=40 max_closed_active=78 max_profile=(0,78) max_count_prefix=562512973617582593017381... budget_bits=78
+m=40 bad_profiles=1404 min_b=0 min_active=25 min_D=42 max_closed_active=80 max_profile=(0,80) max_count_prefix=351049728773477898603729... budget_bits=80
+m=60 bad_profiles=3232 min_b=0 min_active=34 min_D=56 max_closed_active=120 max_profile=(0,120) max_count_prefix=268045196852917110920858... budget_bits=120
+m=80 bad_profiles=5822 min_b=0 min_active=41 min_D=70 max_closed_active=160 max_profile=(0,160) max_count_prefix=163648346547167300126411... budget_bits=160
+m=100 bad_profiles=9173 min_b=0 min_active=49 min_D=82 max_closed_active=200 max_profile=(0,200) max_count_prefix=244881348389085144400463... budget_bits=200
+m=120 bad_profiles=13293 min_b=0 min_active=56 min_D=94 max_closed_active=240 max_profile=(0,240) max_count_prefix=115316050242276885771240... budget_bits=240
+m=140 bad_profiles=18180 min_b=0 min_active=63 min_D=106 max_closed_active=280 max_profile=(0,280) max_count_prefix=440221895344291847901073... budget_bits=280
+m=160 bad_profiles=23834 min_b=0 min_active=69 min_D=118 max_closed_active=320 max_profile=(0,320) max_count_prefix=519570496773712525393195... budget_bits=320
+m=180 bad_profiles=30265 min_b=0 min_active=76 min_D=130 max_closed_active=360 max_profile=(0,360) max_count_prefix=922101088519578628311254... budget_bits=360
+m=200 bad_profiles=37460 min_b=0 min_active=82 min_D=142 max_closed_active=400 max_profile=(0,400) max_count_prefix=140637267507154424648975... budget_bits=400
+m=218 bad_profiles=44599 min_b=0 min_active=88 min_D=152 max_closed_active=436 max_profile=(0,436) max_count_prefix=320343204248759530269010... budget_bits=436
+ACTIVE20 max_profile=(0,20) max_count=237669544014377896 budget_2^58=288230376151711744 active20_failures=0
+FIRST_DENSE profile=(0,21) count=4871976826254018760 exceeds_2^58=yes
+ACTIVE_FRONTIER m=29..31 min_dense_active=21 closes_active_le=20
+ACTIVE_FRONTIER m=32..33 min_dense_active=22 closes_active_le=21
+ACTIVE_FRONTIER m=34..35 min_dense_active=23 closes_active_le=22
+ACTIVE_FRONTIER m=36..37 min_dense_active=24 closes_active_le=23
+ACTIVE_FRONTIER m=38..40 min_dense_active=25 closes_active_le=24
+ACTIVE_FRONTIER m=41..42 min_dense_active=26 closes_active_le=25
+ACTIVE_FRONTIER m=43..44 min_dense_active=27 closes_active_le=26
+ACTIVE_FRONTIER m=45..47 min_dense_active=28 closes_active_le=27
+ACTIVE_FRONTIER m=48..49 min_dense_active=29 closes_active_le=28
+ACTIVE_FRONTIER m=50..52 min_dense_active=30 closes_active_le=29
+ACTIVE_FRONTIER m=53..54 min_dense_active=31 closes_active_le=30
+ACTIVE_FRONTIER m=55..56 min_dense_active=32 closes_active_le=31
+ACTIVE_FRONTIER m=57..59 min_dense_active=33 closes_active_le=32
+ACTIVE_FRONTIER m=60..62 min_dense_active=34 closes_active_le=33
+ACTIVE_FRONTIER m=63..64 min_dense_active=35 closes_active_le=34
+ACTIVE_FRONTIER m=65..67 min_dense_active=36 closes_active_le=35
+ACTIVE_FRONTIER m=68..69 min_dense_active=37 closes_active_le=36
+ACTIVE_FRONTIER m=70..72 min_dense_active=38 closes_active_le=37
+ACTIVE_FRONTIER m=73..75 min_dense_active=39 closes_active_le=38
+ACTIVE_FRONTIER m=76..77 min_dense_active=40 closes_active_le=39
+ACTIVE_FRONTIER m=78..80 min_dense_active=41 closes_active_le=40
+ACTIVE_FRONTIER m=81..83 min_dense_active=42 closes_active_le=41
+ACTIVE_FRONTIER m=84..85 min_dense_active=43 closes_active_le=42
+ACTIVE_FRONTIER m=86..88 min_dense_active=44 closes_active_le=43
+ACTIVE_FRONTIER m=89..91 min_dense_active=45 closes_active_le=44
+ACTIVE_FRONTIER m=92..93 min_dense_active=46 closes_active_le=45
+ACTIVE_FRONTIER m=94..96 min_dense_active=47 closes_active_le=46
+ACTIVE_FRONTIER m=97..99 min_dense_active=48 closes_active_le=47
+ACTIVE_FRONTIER m=100..102 min_dense_active=49 closes_active_le=48
+ACTIVE_FRONTIER m=103..105 min_dense_active=50 closes_active_le=49
+ACTIVE_FRONTIER m=106..107 min_dense_active=51 closes_active_le=50
+ACTIVE_FRONTIER m=108..110 min_dense_active=52 closes_active_le=51
+ACTIVE_FRONTIER m=111..113 min_dense_active=53 closes_active_le=52
+ACTIVE_FRONTIER m=114..116 min_dense_active=54 closes_active_le=53
+ACTIVE_FRONTIER m=117..119 min_dense_active=55 closes_active_le=54
+ACTIVE_FRONTIER m=120..122 min_dense_active=56 closes_active_le=55
+ACTIVE_FRONTIER m=123..125 min_dense_active=57 closes_active_le=56
+ACTIVE_FRONTIER m=126..128 min_dense_active=58 closes_active_le=57
+ACTIVE_FRONTIER m=129..131 min_dense_active=59 closes_active_le=58
+ACTIVE_FRONTIER m=132..133 min_dense_active=60 closes_active_le=59
+ACTIVE_FRONTIER m=134..136 min_dense_active=61 closes_active_le=60
+ACTIVE_FRONTIER m=137..139 min_dense_active=62 closes_active_le=61
+ACTIVE_FRONTIER m=140..142 min_dense_active=63 closes_active_le=62
+ACTIVE_FRONTIER m=143..145 min_dense_active=64 closes_active_le=63
+ACTIVE_FRONTIER m=146..148 min_dense_active=65 closes_active_le=64
+ACTIVE_FRONTIER m=149..151 min_dense_active=66 closes_active_le=65
+ACTIVE_FRONTIER m=152..154 min_dense_active=67 closes_active_le=66
+ACTIVE_FRONTIER m=155..157 min_dense_active=68 closes_active_le=67
+ACTIVE_FRONTIER m=158..161 min_dense_active=69 closes_active_le=68
+ACTIVE_FRONTIER m=162..164 min_dense_active=70 closes_active_le=69
+ACTIVE_FRONTIER m=165..167 min_dense_active=71 closes_active_le=70
+ACTIVE_FRONTIER m=168..170 min_dense_active=72 closes_active_le=71
+ACTIVE_FRONTIER m=171..173 min_dense_active=73 closes_active_le=72
+ACTIVE_FRONTIER m=174..176 min_dense_active=74 closes_active_le=73
+ACTIVE_FRONTIER m=177..179 min_dense_active=75 closes_active_le=74
+ACTIVE_FRONTIER m=180..182 min_dense_active=76 closes_active_le=75
+ACTIVE_FRONTIER m=183..185 min_dense_active=77 closes_active_le=76
+ACTIVE_FRONTIER m=186..188 min_dense_active=78 closes_active_le=77
+ACTIVE_FRONTIER m=189..192 min_dense_active=79 closes_active_le=78
+ACTIVE_FRONTIER m=193..195 min_dense_active=80 closes_active_le=79
+ACTIVE_FRONTIER m=196..198 min_dense_active=81 closes_active_le=80
+ACTIVE_FRONTIER m=199..201 min_dense_active=82 closes_active_le=81
+ACTIVE_FRONTIER m=202..204 min_dense_active=83 closes_active_le=82
+ACTIVE_FRONTIER m=205..207 min_dense_active=84 closes_active_le=83
+ACTIVE_FRONTIER m=208..211 min_dense_active=85 closes_active_le=84
+ACTIVE_FRONTIER m=212..214 min_dense_active=86 closes_active_le=85
+ACTIVE_FRONTIER m=215..217 min_dense_active=87 closes_active_le=86
+ACTIVE_FRONTIER m=218 min_dense_active=88 closes_active_le=87
+DEGREE_FRONTIER m=29..31 min_dense_D=34 closes_D_le=33
+DEGREE_FRONTIER m=32..33 min_dense_D=36 closes_D_le=35
+DEGREE_FRONTIER m=34..36 min_dense_D=38 closes_D_le=37
+DEGREE_FRONTIER m=37..39 min_dense_D=40 closes_D_le=39
+DEGREE_FRONTIER m=40..41 min_dense_D=42 closes_D_le=41
+DEGREE_FRONTIER m=42..44 min_dense_D=44 closes_D_le=43
+DEGREE_FRONTIER m=45..47 min_dense_D=46 closes_D_le=45
+DEGREE_FRONTIER m=48..49 min_dense_D=48 closes_D_le=47
+DEGREE_FRONTIER m=50..52 min_dense_D=50 closes_D_le=49
+DEGREE_FRONTIER m=53..55 min_dense_D=52 closes_D_le=51
+DEGREE_FRONTIER m=56..58 min_dense_D=54 closes_D_le=53
+DEGREE_FRONTIER m=59..61 min_dense_D=56 closes_D_le=55
+DEGREE_FRONTIER m=62..64 min_dense_D=58 closes_D_le=57
+DEGREE_FRONTIER m=65..67 min_dense_D=60 closes_D_le=59
+DEGREE_FRONTIER m=68..70 min_dense_D=62 closes_D_le=61
+DEGREE_FRONTIER m=71..73 min_dense_D=64 closes_D_le=63
+DEGREE_FRONTIER m=74..76 min_dense_D=66 closes_D_le=65
+DEGREE_FRONTIER m=77..79 min_dense_D=68 closes_D_le=67
+DEGREE_FRONTIER m=80..82 min_dense_D=70 closes_D_le=69
+DEGREE_FRONTIER m=83..85 min_dense_D=72 closes_D_le=71
+DEGREE_FRONTIER m=86..88 min_dense_D=74 closes_D_le=73
+DEGREE_FRONTIER m=89..91 min_dense_D=76 closes_D_le=75
+DEGREE_FRONTIER m=92..94 min_dense_D=78 closes_D_le=77
+DEGREE_FRONTIER m=95..97 min_dense_D=80 closes_D_le=79
+DEGREE_FRONTIER m=98..101 min_dense_D=82 closes_D_le=81
+DEGREE_FRONTIER m=102..104 min_dense_D=84 closes_D_le=83
+DEGREE_FRONTIER m=105..107 min_dense_D=86 closes_D_le=85
+DEGREE_FRONTIER m=108..110 min_dense_D=88 closes_D_le=87
+DEGREE_FRONTIER m=111..113 min_dense_D=90 closes_D_le=89
+DEGREE_FRONTIER m=114..117 min_dense_D=92 closes_D_le=91
+DEGREE_FRONTIER m=118..120 min_dense_D=94 closes_D_le=93
+DEGREE_FRONTIER m=121..123 min_dense_D=96 closes_D_le=95
+DEGREE_FRONTIER m=124..126 min_dense_D=98 closes_D_le=97
+DEGREE_FRONTIER m=127..130 min_dense_D=100 closes_D_le=99
+DEGREE_FRONTIER m=131..133 min_dense_D=102 closes_D_le=101
+DEGREE_FRONTIER m=134..136 min_dense_D=104 closes_D_le=103
+DEGREE_FRONTIER m=137..140 min_dense_D=106 closes_D_le=105
+DEGREE_FRONTIER m=141..143 min_dense_D=108 closes_D_le=107
+DEGREE_FRONTIER m=144..147 min_dense_D=110 closes_D_le=109
+DEGREE_FRONTIER m=148..150 min_dense_D=112 closes_D_le=111
+DEGREE_FRONTIER m=151..153 min_dense_D=114 closes_D_le=113
+DEGREE_FRONTIER m=154..157 min_dense_D=116 closes_D_le=115
+DEGREE_FRONTIER m=158..160 min_dense_D=118 closes_D_le=117
+DEGREE_FRONTIER m=161..164 min_dense_D=120 closes_D_le=119
+DEGREE_FRONTIER m=165..167 min_dense_D=122 closes_D_le=121
+DEGREE_FRONTIER m=168..171 min_dense_D=124 closes_D_le=123
+DEGREE_FRONTIER m=172..174 min_dense_D=126 closes_D_le=125
+DEGREE_FRONTIER m=175..178 min_dense_D=128 closes_D_le=127
+DEGREE_FRONTIER m=179..181 min_dense_D=130 closes_D_le=129
+DEGREE_FRONTIER m=182..185 min_dense_D=132 closes_D_le=131
+DEGREE_FRONTIER m=186..188 min_dense_D=134 closes_D_le=133
+DEGREE_FRONTIER m=189..192 min_dense_D=136 closes_D_le=135
+DEGREE_FRONTIER m=193..195 min_dense_D=138 closes_D_le=137
+DEGREE_FRONTIER m=196..199 min_dense_D=140 closes_D_le=139
+DEGREE_FRONTIER m=200..202 min_dense_D=142 closes_D_le=141
+DEGREE_FRONTIER m=203..206 min_dense_D=144 closes_D_le=143
+DEGREE_FRONTIER m=207..210 min_dense_D=146 closes_D_le=145
+DEGREE_FRONTIER m=211..213 min_dense_D=148 closes_D_le=147
+DEGREE_FRONTIER m=214..217 min_dense_D=150 closes_D_le=149
+DEGREE_FRONTIER m=218 min_dense_D=152 closes_D_le=151
+SUMMARY checked_m=190 failures=0 global_min_bad_b=0 global_min_bad_active=21 global_min_bad_D=34 global_max_closed_active=436
+__EXIT_STATUS=0

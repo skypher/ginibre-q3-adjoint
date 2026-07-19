@@ -1,0 +1,41 @@
+BEGIN D29 m13 no-reflect-cache 2026-05-04T09:05:27+00:00
+Exact classical Chain bridge C++: max_chain=13, moment_max=31, families=D, rank_min=29, rank_cap=29, reflect_cache_limit=0
+  m_1 = 0  (|support| = 1, |cache| = 0)
+  m_2 = 1  (|support| = 6, |cache| = 0)
+  m_3 = 1  (|support| = 14, |cache| = 0)
+  m_4 = 6  (|support| = 32, |cache| = 0)
+  m_5 = 22  (|support| = 66, |cache| = 0)
+  m_6 = 130  (|support| = 132, |cache| = 0)
+  m_7 = 822  (|support| = 248, |cache| = 0)
+  m_8 = 6202  (|support| = 453, |cache| = 0)
+  m_9 = 52552  (|support| = 797, |cache| = 0)
+  m_10 = 499194  (|support| = 1368, |cache| = 0)
+  m_11 = 5238370  (|support| = 2287, |cache| = 0)
+  m_12 = 60222844  (|support| = 3750, |cache| = 0)
+  m_13 = 752587764  (|support| = 6026, |cache| = 0)
+  m_14 = 10157945044  (|support| = 9531, |cache| = 0)
+  m_15 = 147267180508  (|support| = 14840, |cache| = 0)
+  m_16 = 2282355168060  (|support| = 22799, |cache| = 0)
+  m_17 = 37655004171808  (|support| = 34578, |cache| = 0)
+  m_18 = 658906772228668  (|support| = 51854, |cache| = 0)
+  m_19 = 12188911634495388  (|support| = 76921, |cache| = 0)
+  m_20 = 237669544014377896  (|support| = 113000, |cache| = 0)
+  m_21 = 4871976826254018760  (|support| = 164465, |cache| = 0)
+  m_22 = 104742902332392298296  (|support| = 237340, |cache| = 0)
+  m_23 = 2356625676822897681256  (|support| = 339740, |cache| = 0)
+  m_24 = 55378867183529402783416  (|support| = 482683, |cache| = 0)
+  m_25 = 1356742787604714936822432  (|support| = 680872, |cache| = 0)
+  m_26 = 34596053666659239185769400  (|support| = 954027, |cache| = 0)
+  m_27 = 916774575976215751282777432  (|support| = 1328251, |cache| = 0)
+  m_28 = 25210790281908369799826090832  (|support| = 1838161, |cache| = 0)
+  m_29 = 718494507734771203018827478193  (|support| = 2529216, |cache| = 0)
+  m_30 = 21195243164637364016720145864710  (|support| = 3461138, |cache| = 0)
+  m_31 = 646445436398533915729244850857790  (|support| = 4711738, |cache| = 0)
+D29: min_diff_m0..13=32 diff_m13=2490980850347968893521331343356046 Q3(29)=2501746076417166674136945378187414 m0..6=[1, 0, 1, 1, 6, 22, 130] dt=1878.5s OK
+
+Summary table:
+group,rank,min_chain_diff,last_chain_diff,last_odd_Q3,seconds
+D29,29,32,2490980850347968893521331343356046,2501746076417166674136945378187414,1878.5
+
+RESULT: ALL PASS
+END D29 m13 nocache rc=0 2026-05-04T09:36:46+00:00

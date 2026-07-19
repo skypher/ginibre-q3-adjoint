@@ -1,0 +1,37 @@
+BEGIN D4 m11 2026-05-03T10:56:03+00:00
+Exact classical Chain bridge C++: max_chain=11, moment_max=27, families=D, rank_min=4, rank_cap=4
+  m_1 = 0  (|support| = 1, |cache| = 25)
+  m_2 = 1  (|support| = 7, |cache| = 40)
+  m_3 = 1  (|support| = 15, |cache| = 96)
+  m_4 = 7  (|support| = 30, |cache| = 157)
+  m_5 = 28  (|support| = 54, |cache| = 253)
+  m_6 = 185  (|support| = 91, |cache| = 381)
+  m_7 = 1278  (|support| = 143, |cache| = 559)
+  m_8 = 10388  (|support| = 217, |cache| = 766)
+  m_9 = 92704  (|support| = 315, |cache| = 1053)
+  m_10 = 905964  (|support| = 444, |cache| = 1387)
+  m_11 = 9534595  (|support| = 609, |cache| = 1801)
+  m_12 = 107083669  (|support| = 817, |cache| = 2295)
+  m_13 = 1272659964  (|support| = 1073, |cache| = 2890)
+  m_14 = 15899798941  (|support| = 1387, |cache| = 3568)
+  m_15 = 207654466894  (|support| = 1764, |cache| = 4383)
+  m_16 = 2821860438960  (|support| = 2214, |cache| = 5305)
+  m_17 = 39742352437504  (|support| = 2745, |cache| = 6370)
+  m_18 = 578125687744444  (|support| = 3367, |cache| = 7581)
+  m_19 = 8661040537166640  (|support| = 4088, |cache| = 8962)
+  m_20 = 133288185368672896  (|support| = 4921, |cache| = 10498)
+  m_21 = 2102422262432220160  (|support| = 5874, |cache| = 12246)
+  m_22 = 33923750969047103556  (|support| = 6960, |cache| = 14179)
+  m_23 = 558972441971038067896  (|support| = 8190, |cache| = 16336)
+  m_24 = 9390960308437216019056  (|support| = 9577, |cache| = 18723)
+  m_25 = 160644065666630834354304  (|support| = 11132, |cache| = 21367)
+  m_26 = 2794589949093043147805500  (|support| = 12871, |cache| = 24256)
+  m_27 = 49384117939496953616709979  (|support| = 14805, |cache| = 27450)
+D4: min_diff_m0..11=44 diff_m11=514942686855440151451878438 Q3(25)=519824516170948442274960166 m0..6=[1, 0, 1, 1, 7, 28, 185] dt=0.581992s OK
+
+Summary table:
+group,rank,min_chain_diff,last_chain_diff,last_odd_Q3,seconds
+D4,4,44,514942686855440151451878438,519824516170948442274960166,0.581992
+
+RESULT: ALL PASS
+END D4 rc=0 2026-05-03T10:56:03+00:00

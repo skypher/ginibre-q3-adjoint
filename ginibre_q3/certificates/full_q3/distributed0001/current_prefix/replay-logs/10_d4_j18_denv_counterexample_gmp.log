@@ -1,0 +1,4 @@
+COMMAND: ./classical_boundary_source_replay_gmp --d-exact-moment-range 4 4 18 18 --stable-moments /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/references/oeis_A002137_stable.txt
+D exact shared moment range ranks 4..4 moments m_18..m_18 C++ certificate
+begin D_4=SO(8)
+  D_4 m_18 += O_even -369382858189470 + det 288601773705246; Delta_18 = -80781084484224; moment_18 = 578125687744444

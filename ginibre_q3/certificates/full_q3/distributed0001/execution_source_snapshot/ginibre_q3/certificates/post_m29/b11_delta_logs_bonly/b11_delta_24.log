@@ -1,0 +1,31 @@
+B/C family single-delta reverse certificate
+family = B
+rank = 11
+moment = 24
+B_11 target count = 1
+    B_11 Delta_24 shared reverse step 1/24 frontier=1 colors=1 elapsed=0.000230043s
+    B_11 Delta_24 shared reverse step 2/24 frontier=3 colors=1 elapsed=0.000515741s
+    B_11 Delta_24 shared reverse step 3/24 frontier=4 colors=1 elapsed=0.00114349s
+    B_11 Delta_24 shared reverse step 4/24 frontier=5 colors=1 elapsed=0.00189364s
+    B_11 Delta_24 shared reverse step 5/24 frontier=6 colors=1 elapsed=0.00265106s
+    B_11 Delta_24 shared reverse step 6/24 frontier=7 colors=1 elapsed=0.00355629s
+    B_11 Delta_24 shared reverse step 7/24 frontier=8 colors=1 elapsed=0.00442306s
+    B_11 Delta_24 shared reverse step 8/24 frontier=9 colors=1 elapsed=0.00534026s
+    B_11 Delta_24 shared reverse step 9/24 frontier=10 colors=1 elapsed=0.00630409s
+    B_11 Delta_24 shared reverse step 10/24 frontier=11 colors=1 elapsed=0.00730293s
+    B_11 Delta_24 shared reverse step 11/24 frontier=12 colors=1 elapsed=0.00832892s
+    B_11 Delta_24 shared reverse step 12/24 frontier=13 colors=1 elapsed=0.00938953s
+    B_11 Delta_24 shared reverse step 13/24 frontier=12 colors=1 elapsed=0.010457s
+    B_11 Delta_24 shared reverse step 14/24 frontier=11 colors=1 elapsed=0.0112995s
+    B_11 Delta_24 shared reverse step 15/24 frontier=10 colors=1 elapsed=0.0118438s
+    B_11 Delta_24 shared reverse step 16/24 frontier=9 colors=1 elapsed=0.0122211s
+    B_11 Delta_24 shared reverse step 17/24 frontier=8 colors=1 elapsed=0.0124713s
+    B_11 Delta_24 shared reverse step 18/24 frontier=7 colors=1 elapsed=0.0126339s
+    B_11 Delta_24 shared reverse step 19/24 frontier=6 colors=1 elapsed=0.0127344s
+    B_11 Delta_24 shared reverse step 20/24 frontier=5 colors=1 elapsed=0.0127908s
+    B_11 Delta_24 shared reverse step 21/24 frontier=4 colors=1 elapsed=0.0128224s
+    B_11 Delta_24 shared reverse step 22/24 frontier=3 colors=1 elapsed=0.0128385s
+    B_11 Delta_24 shared reverse step 23/24 frontier=2 colors=1 elapsed=0.0128465s
+    B_11 Delta_24 shared reverse step 24/24 frontier=1 colors=1 elapsed=0.0128511s
+  B_11 Delta_24 = -834086421
+__EXIT_STATUS=0

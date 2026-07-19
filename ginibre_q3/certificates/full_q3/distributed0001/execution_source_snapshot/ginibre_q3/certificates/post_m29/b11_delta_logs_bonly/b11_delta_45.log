@@ -1,0 +1,52 @@
+B/C family single-delta reverse certificate
+family = B
+rank = 11
+moment = 45
+B_11 target count = 3506
+    B_11 Delta_45 shared reverse step 1/45 frontier=32136 colors=1 elapsed=1.17296s
+    B_11 Delta_45 shared reverse step 2/45 frontier=105875 colors=1 elapsed=8.75829s
+    B_11 Delta_45 shared reverse step 3/45 frontier=201123 colors=1 elapsed=30.6531s
+    B_11 Delta_45 shared reverse step 4/45 frontier=308435 colors=1 elapsed=70.5056s
+    B_11 Delta_45 shared reverse step 5/45 frontier=420622 colors=1 elapsed=129.098s
+    B_11 Delta_45 shared reverse step 6/45 frontier=534080 colors=1 elapsed=205.336s
+    B_11 Delta_45 shared reverse step 7/45 frontier=646286 colors=1 elapsed=297.296s
+    B_11 Delta_45 shared reverse step 8/45 frontier=753647 colors=1 elapsed=403.172s
+    B_11 Delta_45 shared reverse step 9/45 frontier=848909 colors=1 elapsed=521.544s
+    B_11 Delta_45 shared reverse step 10/45 frontier=918115 colors=1 elapsed=648.45s
+    B_11 Delta_45 shared reverse step 11/45 frontier=941744 colors=1 elapsed=778.955s
+    B_11 Delta_45 shared reverse step 12/45 frontier=910306 colors=1 elapsed=904.671s
+    B_11 Delta_45 shared reverse step 13/45 frontier=838962 colors=1 elapsed=1017.44s
+    B_11 Delta_45 shared reverse step 14/45 frontier=747301 colors=1 elapsed=1112.18s
+    B_11 Delta_45 shared reverse step 15/45 frontier=646909 colors=1 elapsed=1188.27s
+    B_11 Delta_45 shared reverse step 16/45 frontier=544701 colors=1 elapsed=1246.43s
+    B_11 Delta_45 shared reverse step 17/45 frontier=445433 colors=1 elapsed=1289.86s
+    B_11 Delta_45 shared reverse step 18/45 frontier=353000 colors=1 elapsed=1321.06s
+    B_11 Delta_45 shared reverse step 19/45 frontier=270874 colors=1 elapsed=1342.93s
+    B_11 Delta_45 shared reverse step 20/45 frontier=201790 colors=1 elapsed=1357.98s
+    B_11 Delta_45 shared reverse step 21/45 frontier=146960 colors=1 elapsed=1368.24s
+    B_11 Delta_45 shared reverse step 22/45 frontier=105544 colors=1 elapsed=1375.18s
+    B_11 Delta_45 shared reverse step 23/45 frontier=75175 colors=1 elapsed=1379.8s
+    B_11 Delta_45 shared reverse step 24/45 frontier=53174 colors=1 elapsed=1382.86s
+    B_11 Delta_45 shared reverse step 25/45 frontier=37338 colors=1 elapsed=1384.85s
+    B_11 Delta_45 shared reverse step 26/45 frontier=26015 colors=1 elapsed=1386.14s
+    B_11 Delta_45 shared reverse step 27/45 frontier=17977 colors=1 elapsed=1386.96s
+    B_11 Delta_45 shared reverse step 28/45 frontier=12310 colors=1 elapsed=1387.48s
+    B_11 Delta_45 shared reverse step 29/45 frontier=8349 colors=1 elapsed=1387.8s
+    B_11 Delta_45 shared reverse step 30/45 frontier=5604 colors=1 elapsed=1388s
+    B_11 Delta_45 shared reverse step 31/45 frontier=3718 colors=1 elapsed=1388.12s
+    B_11 Delta_45 shared reverse step 32/45 frontier=2436 colors=1 elapsed=1388.19s
+    B_11 Delta_45 shared reverse step 33/45 frontier=1575 colors=1 elapsed=1388.23s
+    B_11 Delta_45 shared reverse step 34/45 frontier=1002 colors=1 elapsed=1388.25s
+    B_11 Delta_45 shared reverse step 35/45 frontier=627 colors=1 elapsed=1388.26s
+    B_11 Delta_45 shared reverse step 36/45 frontier=385 colors=1 elapsed=1388.27s
+    B_11 Delta_45 shared reverse step 37/45 frontier=231 colors=1 elapsed=1388.27s
+    B_11 Delta_45 shared reverse step 38/45 frontier=135 colors=1 elapsed=1388.27s
+    B_11 Delta_45 shared reverse step 39/45 frontier=77 colors=1 elapsed=1388.27s
+    B_11 Delta_45 shared reverse step 40/45 frontier=42 colors=1 elapsed=1388.28s
+    B_11 Delta_45 shared reverse step 41/45 frontier=22 colors=1 elapsed=1388.28s
+    B_11 Delta_45 shared reverse step 42/45 frontier=11 colors=1 elapsed=1388.28s
+    B_11 Delta_45 shared reverse step 43/45 frontier=5 colors=1 elapsed=1388.28s
+    B_11 Delta_45 shared reverse step 44/45 frontier=2 colors=1 elapsed=1388.28s
+    B_11 Delta_45 shared reverse step 45/45 frontier=1 colors=1 elapsed=1388.28s
+  B_11 Delta_45 = -84885799451192384973316491341013525990188188106302
+__EXIT_STATUS=0

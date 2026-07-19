@@ -1,0 +1,32 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=9a6cf4da5b866d3b8fc2ce6d1d1a442fd3b419702fda2296da83d2fb788379e4
+__COMMAND=OMP_NUM_THREADS=32 ./d_bridge --certificate-d4-24 --exact-correction-log d4_modular_weyl_exact_moments_certificate.log [all active exact-adjoint logs]
+exact_correction_input_logs=31 full_rows=501 exact_weyl_rows=60 stable_window_legacy_rows=0 ignored_out_of_window_legacy_rows=0
+D4-D24 exact-prefix/two-sided-suffix GMP interval certificate
+arithmetic=exact_integer correction_window=j<rank:0,rank<=j<=2rank:[0,U_j],j>2rank:[-s_j,U_j]
+upper_bound=U_j:s_j_all_parities
+openmp_max_threads=32
+row=D_4 exact_prefix=4..59 first_chain_m=0 last_chain_m=29 checks=30 minimum_lower_sign=1 minimum_lower=44 minimum_lower_log10=1.64345267648618742 minimum_chain_m=0
+row=D_5 exact_prefix=5..44 first_chain_m=0 last_chain_m=29 checks=30 minimum_lower_sign=1 minimum_lower=34 minimum_lower_log10=1.53147891704225514 minimum_chain_m=0
+row=D_6 exact_prefix=6..40 first_chain_m=1 last_chain_m=29 checks=29 minimum_lower_sign=1 minimum_lower=1498 minimum_lower_log10=3.1755118133634479 minimum_chain_m=1
+row=D_7 exact_prefix=7..40 first_chain_m=1 last_chain_m=29 checks=29 minimum_lower_sign=1 minimum_lower=1470 minimum_lower_log10=3.16731733474817601 minimum_chain_m=1
+row=D_8 exact_prefix=8..38 first_chain_m=2 last_chain_m=29 checks=28 minimum_lower_sign=1 minimum_lower=108104 minimum_lower_log10=5.0338417637570867 minimum_chain_m=2
+row=D_9 exact_prefix=9..38 first_chain_m=2 last_chain_m=29 checks=28 minimum_lower_sign=1 minimum_lower=108050 minimum_lower_log10=5.03362477121926055 minimum_chain_m=2
+row=D_10 exact_prefix=10..38 first_chain_m=3 last_chain_m=29 checks=27 minimum_lower_sign=1 minimum_lower=11976626 minimum_lower_log10=7.07833448783937769 minimum_chain_m=3
+row=D_11 exact_prefix=11..38 first_chain_m=3 last_chain_m=29 checks=27 minimum_lower_sign=1 minimum_lower=11976538 minimum_lower_log10=7.07833129678583628 minimum_chain_m=3
+row=D_12 exact_prefix=12..38 first_chain_m=4 last_chain_m=29 checks=26 minimum_lower_sign=1 minimum_lower=1875007300 minimum_lower_log10=9.27300296291362969 minimum_chain_m=4
+row=D_13 exact_prefix=13..38 first_chain_m=4 last_chain_m=29 checks=26 minimum_lower_sign=1 minimum_lower=1875007170 minimum_lower_log10=9.27300293280266175 minimum_chain_m=4
+row=D_14 exact_prefix=14..38 first_chain_m=5 last_chain_m=29 checks=25 minimum_lower_sign=1 minimum_lower=394538493254 minimum_lower_log10=11.5960893816702981 minimum_chain_m=5
+row=D_15 exact_prefix=15..38 first_chain_m=5 last_chain_m=29 checks=25 minimum_lower_sign=1 minimum_lower=394538493074 minimum_lower_log10=11.5960893814721615 minimum_chain_m=5
+row=D_16 exact_prefix=16..38 first_chain_m=6 last_chain_m=29 checks=24 minimum_lower_sign=1 minimum_lower=107448429816368 minimum_lower_log10=14.031200073367998 minimum_chain_m=6
+row=D_17 exact_prefix=17..38 first_chain_m=6 last_chain_m=29 checks=24 minimum_lower_sign=1 minimum_lower=107448429816130 minimum_lower_log10=14.0312000733670352 minimum_chain_m=6
+row=D_18 exact_prefix=18..38 first_chain_m=7 last_chain_m=29 checks=23 minimum_lower_sign=1 minimum_lower=36778114931646034 minimum_lower_log10=16.565589465637121 minimum_chain_m=7
+row=D_19 exact_prefix=19..34 first_chain_m=7 last_chain_m=29 checks=23 minimum_lower_sign=1 minimum_lower=36778114931645730 minimum_lower_log10=16.5655894656371174 minimum_chain_m=7
+row=D_20 exact_prefix=20..30 first_chain_m=8 last_chain_m=29 checks=22 minimum_lower_sign=1 minimum_lower=15455926276081176956 minimum_lower_log10=19.1890950375155498 minimum_chain_m=8
+row=D_21 exact_prefix=21..30 first_chain_m=8 last_chain_m=29 checks=22 minimum_lower_sign=1 minimum_lower=15455926276081176578 minimum_lower_log10=19.1890950375155498 minimum_chain_m=8
+row=D_22 exact_prefix=22..30 first_chain_m=9 last_chain_m=29 checks=21 minimum_lower_sign=1 minimum_lower=7824083583420894170510 minimum_lower_log10=21.8934334813021145 minimum_chain_m=9
+row=D_23 exact_prefix=23..30 first_chain_m=9 last_chain_m=29 checks=21 minimum_lower_sign=1 minimum_lower=7824083583420894170050 minimum_lower_log10=21.8934334813021145 minimum_chain_m=9
+row=D_24 exact_prefix=24..30 first_chain_m=10 last_chain_m=29 checks=20 minimum_lower_sign=1 minimum_lower=4695986280539928492451624 minimum_lower_log10=24.6717268194374917 minimum_chain_m=10
+MINIMUM lower_sign=1 lower=34 lower_log10=1.53147891704225514 rank=D_5 chain_m=0
+SUMMARY ranks_checked=21 chain_steps_checked=530 failures=0
+__EXIT_STATUS=0

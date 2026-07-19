@@ -1,0 +1,16 @@
+SU(N) row N=6 exact moments through 53: ok
+SU(N) row N=7 exact moments through 53: ok
+SU(N) row N=8 exact moments through 53: ok
+SU(N) row N=9 exact moments through 53: ok
+SU(N) row N=10 exact moments through 53: ok
+SU(N) row N=11 exact moments through 53: ok
+SU(N) row N=12 exact moments through 53: ok
+SU(N) row N=13 exact moments through 53: ok
+SU(N) row N=14 exact moments through 53: ok
+SU(N) row N=15 exact moments through 53: ok
+SU(N) row N=16 exact moments through 53: ok
+SU(N) row N=17 exact moments through 53: ok
+SU(N) row N=18 exact moments through 53: ok
+Uniform transition strip N-1 <= k <= N+33: ok
+Quadratic transition window N>=25: ok
+All SU(N) repair certificates verified with exact GMP arithmetic.

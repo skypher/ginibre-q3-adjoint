@@ -1,0 +1,13 @@
+BEGIN D26 moment-table replay 2026-05-03T23:28:52.096661+00:00
+input_log=ginibre_q3/character_ring_iter/logs/classical_m11_cpp/moments_D26_from_interrupted_cpp.log
+input_sha256=eb2db01bd5d95ca1e116f1f1e079eacb9f3d3963649e14ae5e5fd92c9059e9a9
+m_0=1 inserted as the tensor-unit initial moment; m_1..m_27 parsed from input_log
+moments_read=28 missing=[]
+D26: min_diff_m0..11=32 diff_m11=3297418493168610052651015178 Q3(25)=3316328622334258349466405898 m0..6=[1, 0, 1, 1, 6, 22, 130] OK
+
+Summary table:
+group,rank,min_chain_diff,last_chain_diff,last_odd_Q3
+D26,26,32,3297418493168610052651015178,3316328622334258349466405898
+
+RESULT: ALL PASS
+END D26 moment-table replay 2026-05-03T23:28:52.096929+00:00

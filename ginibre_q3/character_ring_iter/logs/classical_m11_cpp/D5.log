@@ -1,0 +1,37 @@
+BEGIN D5 m11 2026-05-03T10:56:03+00:00
+Exact classical Chain bridge C++: max_chain=11, moment_max=27, families=D, rank_min=5, rank_cap=5
+  m_1 = 0  (|support| = 1, |cache| = 41)
+  m_2 = 1  (|support| = 6, |cache| = 68)
+  m_3 = 1  (|support| = 14, |cache| = 156)
+  m_4 = 6  (|support| = 31, |cache| = 280)
+  m_5 = 23  (|support| = 59, |cache| = 500)
+  m_6 = 140  (|support| = 108, |cache| = 786)
+  m_7 = 942  (|support| = 181, |cache| = 1239)
+  m_8 = 7553  (|support| = 294, |cache| = 1788)
+  m_9 = 68555  (|support| = 452, |cache| = 2592)
+  m_10 = 696357  (|support| = 679, |cache| = 3550)
+  m_11 = 7786135  (|support| = 981, |cache| = 4889)
+  m_12 = 94703257  (|support| = 1391, |cache| = 6439)
+  m_13 = 1240514709  (|support| = 1918, |cache| = 8492)
+  m_14 = 17356139333  (|support| = 2605, |cache| = 10853)
+  m_15 = 257584751585  (|support| = 3465, |cache| = 13868)
+  m_16 = 4031527438905  (|support| = 4551, |cache| = 17336)
+  m_17 = 66212282258438  (|support| = 5879, |cache| = 21615)
+  m_18 = 1136222412390401  (|support| = 7517, |cache| = 26453)
+  m_19 = 20296685750011317  (|support| = 9484, |cache| = 32347)
+  m_20 = 376190126848923844  (|support| = 11862, |cache| = 38956)
+  m_21 = 7213777516036292035  (|support| = 14674, |cache| = 46863)
+  m_22 = 142753365194628334398  (|support| = 18018, |cache| = 55659)
+  m_23 = 2908671106878197951180  (|support| = 21922, |cache| = 66015)
+  m_24 = 60898658587502410420349  (|support| = 26501, |cache| = 77485)
+  m_25 = 1307782013267182330010220  (|support| = 31788, |cache| = 90823)
+  m_26 = 28758403974828460277223125  (|support| = 37916, |cache| = 105520)
+  m_27 = 646622610844271377138302545  (|support| = 44924, |cache| = 122412)
+D5: min_diff_m0..11=34 diff_m11=3038913485897260340415507510 Q3(25)=3060725189625779374333120270 m0..6=[1, 0, 1, 1, 6, 23, 140] dt=3.2626s OK
+
+Summary table:
+group,rank,min_chain_diff,last_chain_diff,last_odd_Q3,seconds
+D5,5,34,3038913485897260340415507510,3060725189625779374333120270,3.2626
+
+RESULT: ALL PASS
+END D5 rc=0 2026-05-03T10:56:06+00:00

@@ -1,0 +1,43 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp E6 80 /home/yang/q3/ginibre_q3/character_ring_iter/logs/e6_80.log
+power=1 support=1 elapsed_seconds=1.0319e-05
+power=2 support=5 elapsed_seconds=5.671e-06
+power=3 support=11 elapsed_seconds=1.8715e-05
+power=4 support=26 elapsed_seconds=3.9534e-05
+power=5 support=49 elapsed_seconds=9.8786e-05
+power=6 support=93 elapsed_seconds=0.000200327
+power=7 support=158 elapsed_seconds=0.000394072
+power=8 support=270 elapsed_seconds=0.000707852
+power=9 support=425 elapsed_seconds=0.00122438
+power=10 support=665 elapsed_seconds=0.00204442
+power=11 support=988 elapsed_seconds=0.00338361
+power=12 support=1459 elapsed_seconds=0.00510748
+power=13 support=2071 elapsed_seconds=0.0079224
+power=14 support=2918 elapsed_seconds=0.0115552
+power=15 support=3995 elapsed_seconds=0.0169399
+power=16 support=5434 elapsed_seconds=0.0241025
+power=17 support=7222 elapsed_seconds=0.0333158
+power=18 support=9538 elapsed_seconds=0.045967
+power=19 support=12370 elapsed_seconds=0.0623904
+power=20 support=15954 elapsed_seconds=0.0837663
+power=21 support=20268 elapsed_seconds=0.111523
+power=22 support=25614 elapsed_seconds=0.144328
+power=23 support=31972 elapsed_seconds=0.188449
+power=24 support=39723 elapsed_seconds=0.238621
+power=25 support=48834 elapsed_seconds=0.30047
+power=26 support=59777 elapsed_seconds=0.380562
+power=27 support=72519 elapsed_seconds=0.685715
+power=28 support=87638 elapsed_seconds=1.03648
+power=29 support=105085 elapsed_seconds=1.23293
+power=30 support=125557 elapsed_seconds=1.3323
+power=31 support=149004 elapsed_seconds=1.61498
+power=32 support=176258 elapsed_seconds=1.40426
+power=33 support=207251 elapsed_seconds=1.45657
+power=34 support=242965 elapsed_seconds=1.72279
+power=35 support=283330 elapsed_seconds=2.03243
+power=36 support=329497 elapsed_seconds=2.38282
+power=37 support=381373 elapsed_seconds=2.85003
+power=38 support=440296 elapsed_seconds=3.56795
+power=39 support=506169 elapsed_seconds=4.54379
+power=40 support=580536 elapsed_seconds=4.40548
+root_datum=E6 rank=6 roots=72 maximum_coordinate=40
+SUMMARY group=E6 moments=81 source_values=81 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=0

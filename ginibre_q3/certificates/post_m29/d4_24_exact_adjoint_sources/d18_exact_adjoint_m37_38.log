@@ -1,0 +1,19 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=bc22efcafafe2d40b5f5430cb8f9cb046bc6b9b188da684e61dc6fdfaa27077e
+D exact shared moment range ranks 18..18 moments m_37..m_38 C++ certificate
+begin D_18=SO(36)
+shared D exact moment m_37 ranks 18..18
+    m_37: O-even target 1/1 elapsed=0.0268102s
+    coeff heartbeat misses=220777 cache=220757 power=18 partition-size=11
+    coeff heartbeat misses=400520 cache=400514 power=32 partition-size=35
+    coeff heartbeat misses=569020 cache=569012 power=30 partition-size=29
+    coeff heartbeat misses=731377 cache=731367 power=28 partition-size=30
+    depth 19: partition 490/490 elapsed=45.1602s
+  D_18 m_37 += O_even -707854577312178 + det 12796237046433214748568905497748754; Delta_37 = 12796237046433214747861050920436576; moment_37 = 991021764924858933827131425622974361128384
+shared D exact moment m_38 ranks 18..18
+    m_38: O-even target 2/2 elapsed=0.0283335s
+    coeff heartbeat misses=878027 cache=878020 power=32 partition-size=27
+    coeff heartbeat misses=1049866 cache=1049858 power=31 partition-size=28
+    depth 20: partition 627/627 elapsed=21.1305s
+  D_18 m_38 += O_even -573726992158344796 + det 734563639082762390851729383801945484; Delta_38 = 734563639082762390278002391643600688; moment_38 = 37163029127201617674302421574495897138931536
+__EXIT_STATUS=0

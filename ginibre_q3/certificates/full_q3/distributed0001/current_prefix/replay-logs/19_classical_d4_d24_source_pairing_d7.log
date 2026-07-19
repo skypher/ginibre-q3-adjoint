@@ -1,0 +1,23 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp D7 40 --stable-moments /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/references/oeis_A002137_stable.txt /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m21_26.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m27_30.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m31_32.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m33_34.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m35_35.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m36_36.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m37_37.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m38_38.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m4_20.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m39_39.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m40_40.log
+power=1 support=1 elapsed_seconds=4.558e-06
+power=2 support=6 elapsed_seconds=2.425e-06
+power=3 support=14 elapsed_seconds=1.0049e-05
+power=4 support=32 elapsed_seconds=2.2683e-05
+power=5 support=65 elapsed_seconds=5.91e-05
+power=6 support=126 elapsed_seconds=0.000110926
+power=7 support=226 elapsed_seconds=0.000221943
+power=8 support=392 elapsed_seconds=0.000399293
+power=9 support=647 elapsed_seconds=0.000741842
+power=10 support=1038 elapsed_seconds=0.00123585
+power=11 support=1609 elapsed_seconds=0.00200958
+power=12 support=2437 elapsed_seconds=0.00335534
+power=13 support=3595 elapsed_seconds=0.00504664
+power=14 support=5207 elapsed_seconds=0.00761939
+power=15 support=7388 elapsed_seconds=0.0115373
+power=16 support=10321 elapsed_seconds=0.0165058
+power=17 support=14184 elapsed_seconds=0.0239654
+power=18 support=19240 elapsed_seconds=0.0336848
+power=19 support=25746 elapsed_seconds=0.0472782
+power=20 support=34074 elapsed_seconds=0.066161
+root_datum=D_7 rank=7 roots=84 maximum_coordinate=20
+SUMMARY group=D_7 moments=41 source_values=68 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

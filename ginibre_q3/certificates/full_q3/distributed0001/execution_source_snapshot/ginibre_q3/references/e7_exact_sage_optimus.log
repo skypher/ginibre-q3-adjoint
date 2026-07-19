@@ -1,0 +1,11 @@
+['E', 7]: dim(adj) = 133
+['E', 7] m_0 = 1  (irrep count: 1)
+['E', 7] m_1 = 0  (irrep count: 1)
+['E', 7] m_2 = 1  (irrep count: 5)
+['E', 7] m_3 = 1  (irrep count: 11)
+['E', 7] m_4 = 5  (irrep count: 23)
+['E', 7] m_5 = 16  (irrep count: 43)
+['E', 7] m_6 = 80  (irrep count: 79)
+['E', 7] m_7 = 436  (irrep count: 135)
+['E', 7] m_8 = 2877  (irrep count: 223)
+['E', 7] m_9 = 21828  (irrep count: 357)

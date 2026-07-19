@@ -1,0 +1,8 @@
+COMMAND: ./post_m29_d_stable_window_interval_gmp --rank 19 --onset 63 --exact-correction-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_delta_logs/d19_delta_19_42_from_m29_D16_63_lower.log --exact-correction-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_delta_logs/d19_delta_27.log --exact-correction-log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d19_exact_mgf/exact_D19_m39.log
+exact_correction_input_logs=3 full_rows=1 exact_weyl_rows=0 stable_window_legacy_rows=219 ignored_out_of_window_legacy_rows=35
+D correction-aware GMP interval chain certificate
+arithmetic=exact_integer correction_window=j<rank:0,rank<=j<=2rank:[0,U_j],j>2rank:[-s_j,U_j]
+rank=D_19 onset=63 first_chain_m=7 last_chain_m=30 checks=24 exact_corrections_available=21
+MINIMUM lower_sign=1 lower=36778114931645730 lower_log10=16.5655894656371174 rank=D_19 chain_m=7
+SUMMARY ranks_checked=1 chain_steps_checked=24 failures=0
+__EXIT_STATUS=0

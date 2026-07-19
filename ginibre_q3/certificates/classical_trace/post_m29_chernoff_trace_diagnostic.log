@@ -1,0 +1,6 @@
+post-m29 Chernoff trace certificate
+  open rows tested: 796
+  rows closed: 0
+  source-supported no-TV Chernoff supplier closes no rows
+  first failure counts: {'CJL-one-trace-source-range': 361, 'tau-upper-beats-positive-tail': 435}
+__EXIT_STATUS=0

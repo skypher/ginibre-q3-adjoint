@@ -1,0 +1,249 @@
+B/C residual exact complement-frontier GMP verifier
+VERIFIES exact frontier for window_bound(q) * M_K < 2^(2q)
+where M_K=sum_{d=0}^K (d+1)*s_d and s_{n+1}=n*s_n+n*s_{n-1}-binom(n,2)*s_{n-2}
+window_bound(q) is the residual j-q bound from cor:post29-bc-window-size-strata, with 30899-q for q>=29
+host=optimus
+q_min=15 q_max=218 k_cap=218 OpenMP threads=64
+stable_progress index=10/218
+stable_progress index=20/218
+stable_progress index=30/218
+stable_progress index=40/218
+stable_progress index=50/218
+stable_progress index=60/218
+stable_progress index=70/218
+stable_progress index=80/218
+stable_progress index=90/218
+stable_progress index=100/218
+stable_progress index=110/218
+stable_progress index=120/218
+stable_progress index=130/218
+stable_progress index=140/218
+stable_progress index=150/218
+stable_progress index=160/218
+stable_progress index=170/218
+stable_progress index=180/218
+stable_progress index=190/218
+stable_progress index=200/218
+stable_progress index=210/218
+stable_progress index=218/218
+progress completed=25/204 last_q=61 failures=0
+progress completed=50/204 last_q=117 failures=0
+progress completed=75/204 last_q=152 failures=0
+progress completed=100/204 last_q=176 failures=0
+progress completed=125/204 last_q=197 failures=0
+progress completed=150/204 last_q=21 failures=0
+progress completed=175/204 last_q=35 failures=0
+progress completed=200/204 last_q=128 failures=0
+progress completed=204/204 last_q=134 failures=0
+frontier q=15 window_bound=912 K=9 lhs_bits=30 rhs_bits=31 margin_bits=29 log10_lhs_over_rhs=-0.300794160878899319 next_K=10 next_log10_lhs_over_rhs=0.713007690627199153 status=OK
+frontier q=16 window_bound=401 K=10 lhs_bits=32 rhs_bits=33 margin_bits=31 log10_lhs_over_rhs=-0.245902766408997664 next_K=11 next_log10_lhs_over_rhs=0.808659368603249717 status=OK
+frontier q=17 window_bound=401 K=10 lhs_bits=32 rhs_bits=35 margin_bits=34 log10_lhs_over_rhs=-0.847962757736960171 next_K=11 next_log10_lhs_over_rhs=0.20659937727528721 status=OK
+frontier q=18 window_bound=287 K=11 lhs_bits=35 rhs_bits=37 margin_bits=36 log10_lhs_over_rhs=-0.540723089938865087 next_K=12 next_log10_lhs_over_rhs=0.551158828103037735 status=OK
+frontier q=19 window_bound=283 K=12 lhs_bits=38 rhs_bits=39 margin_bits=35 log10_lhs_over_rhs=-0.0569966244346282735 next_K=13 next_log10_lhs_over_rhs=1.06909658474664049 status=OK
+frontier q=20 window_bound=283 K=12 lhs_bits=38 rhs_bits=41 margin_bits=40 log10_lhs_over_rhs=-0.659056615762590781 next_K=13 next_log10_lhs_over_rhs=0.467036593418677981 status=OK
+frontier q=21 window_bound=303 K=13 lhs_bits=42 rhs_bits=43 margin_bits=40 log10_lhs_over_rhs=-0.105367204931269498 next_K=14 next_log10_lhs_over_rhs=1.05238332566625381 status=OK
+frontier q=22 window_bound=303 K=13 lhs_bits=42 rhs_bits=45 margin_bits=44 log10_lhs_over_rhs=-0.707427196259232005 next_K=14 next_log10_lhs_over_rhs=0.450323334338291303 status=OK
+frontier q=23 window_bound=337 K=14 lhs_bits=46 rhs_bits=47 margin_bits=44 log10_lhs_over_rhs=-0.105549384620637454 next_K=15 next_log10_lhs_over_rhs=1.08165617833322614 status=OK
+frontier q=24 window_bound=337 K=14 lhs_bits=46 rhs_bits=49 margin_bits=48 log10_lhs_over_rhs=-0.707609375948598185 next_K=15 next_log10_lhs_over_rhs=0.479596187005265406 status=OK
+frontier q=25 window_bound=423 K=15 lhs_bits=50 rhs_bits=51 margin_bits=46 log10_lhs_over_rhs=-0.0237533378189933586 next_K=16 next_log10_lhs_over_rhs=1.19100163262282166 status=OK
+frontier q=26 window_bound=423 K=15 lhs_bits=50 rhs_bits=53 margin_bits=52 log10_lhs_over_rhs=-0.625813329146955866 next_K=16 next_log10_lhs_over_rhs=0.588941641294859153 status=OK
+frontier q=27 window_bound=423 K=16 lhs_bits=54 rhs_bits=55 margin_bits=49 log10_lhs_over_rhs=-0.0131183500331033542 next_K=17 next_log10_lhs_over_rhs=1.22751601726684356 status=OK
+frontier q=28 window_bound=423 K=16 lhs_bits=54 rhs_bits=57 margin_bits=56 log10_lhs_over_rhs=-0.615178341361065861 next_K=17 next_log10_lhs_over_rhs=0.625456025938881055 status=OK
+frontier q=29 window_bound=30870 K=15 lhs_bits=57 rhs_bits=59 margin_bits=58 log10_lhs_over_rhs=-0.568797041023788807 next_K=16 next_log10_lhs_over_rhs=0.645957929418024435 status=OK
+frontier q=30 window_bound=30869 K=15 lhs_bits=57 rhs_bits=61 margin_bits=60 log10_lhs_over_rhs=-1.17087110107596004 next_K=16 next_log10_lhs_over_rhs=0.0438838693658532009 status=OK
+frontier q=31 window_bound=30868 K=16 lhs_bits=61 rhs_bits=63 margin_bits=62 log10_lhs_over_rhs=-0.558190191142077907 next_K=17 next_log10_lhs_over_rhs=0.682444176157869009 status=OK
+frontier q=32 window_bound=30867 K=16 lhs_bits=61 rhs_bits=65 margin_bits=64 log10_lhs_over_rhs=-1.16026425210580442 next_K=17 next_log10_lhs_over_rhs=0.0803701151941424996 status=OK
+frontier q=33 window_bound=30866 K=17 lhs_bits=65 rhs_bits=67 margin_bits=66 log10_lhs_over_rhs=-0.521703946225407833 next_K=18 next_log10_lhs_over_rhs=0.743334130103658453 status=OK
+frontier q=34 window_bound=30865 K=17 lhs_bits=65 rhs_bits=69 margin_bits=68 log10_lhs_over_rhs=-1.12377800810080686 next_K=18 next_log10_lhs_over_rhs=0.141260068228259428 status=OK
+frontier q=35 window_bound=30864 K=18 lhs_bits=69 rhs_bits=71 margin_bits=70 log10_lhs_over_rhs=-0.460813994103020264 next_K=19 next_log10_lhs_over_rhs=0.827313639806781964 status=OK
+frontier q=36 window_bound=30863 K=18 lhs_bits=69 rhs_bits=73 margin_bits=72 log10_lhs_over_rhs=-1.0628880568902126 next_K=19 next_log10_lhs_over_rhs=0.225239577019589632 status=OK
+frontier q=37 window_bound=30862 K=19 lhs_bits=73 rhs_bits=75 margin_bits=74 log10_lhs_over_rhs=-0.376834486223543763 next_K=20 next_log10_lhs_over_rhs=0.933204585844723766 status=OK
+frontier q=38 window_bound=30861 K=19 lhs_bits=73 rhs_bits=77 margin_bits=76 log10_lhs_over_rhs=-0.978908549922646642 next_K=20 next_log10_lhs_over_rhs=0.331130522145620887 status=OK
+frontier q=39 window_bound=30860 K=20 lhs_bits=78 rhs_bits=79 margin_bits=77 log10_lhs_over_rhs=-0.270943542009479899 next_K=21 next_log10_lhs_over_rhs=1.05994452423413321 status=OK
+frontier q=40 window_bound=30859 K=20 lhs_bits=78 rhs_bits=81 margin_bits=80 log10_lhs_over_rhs=-0.873017606620614117 next_K=21 next_log10_lhs_over_rhs=0.457870459623002546 status=OK
+frontier q=41 window_bound=30858 K=21 lhs_bits=82 rhs_bits=83 margin_bits=81 log10_lhs_over_rhs=-0.144203605444186422 next_K=22 next_log10_lhs_over_rhs=1.20657025825667574 status=OK
+frontier q=42 window_bound=30857 K=21 lhs_bits=82 rhs_bits=85 margin_bits=84 log10_lhs_over_rhs=-0.746277670967465667 next_K=22 next_log10_lhs_over_rhs=0.604496192733396498 status=OK
+frontier q=43 window_bound=30856 K=21 lhs_bits=82 rhs_bits=87 margin_bits=86 log10_lhs_over_rhs=-1.34835173694686006 next_K=22 next_log10_lhs_over_rhs=0.00242212675400210742 status=OK
+frontier q=44 window_bound=30855 K=22 lhs_bits=87 rhs_bits=89 margin_bits=88 log10_lhs_over_rhs=-0.599651939681539403 next_K=23 next_log10_lhs_over_rhs=0.770130348502824802 status=OK
+frontier q=45 window_bound=30854 K=22 lhs_bits=87 rhs_bits=91 margin_bits=90 log10_lhs_over_rhs=-1.20172600657326001 next_K=23 next_log10_lhs_over_rhs=0.16805628161110775 status=OK
+frontier q=46 window_bound=30853 K=23 lhs_bits=91 rhs_bits=93 margin_bits=92 log10_lhs_over_rhs=-0.434017785736820372 next_K=24 next_log10_lhs_over_rhs=0.95397029527417132 status=OK
+frontier q=47 window_bound=30852 K=23 lhs_bits=91 rhs_bits=95 margin_bits=94 log10_lhs_over_rhs=-1.03609185354098088 next_K=24 next_log10_lhs_over_rhs=0.351896227470007261 status=OK
+frontier q=48 window_bound=30851 K=24 lhs_bits=96 rhs_bits=97 margin_bits=95 log10_lhs_over_rhs=-0.250177840790417605 next_K=25 next_log10_lhs_over_rhs=1.15527890683053869 status=OK
+frontier q=49 window_bound=30850 K=24 lhs_bits=96 rhs_bits=99 margin_bits=98 log10_lhs_over_rhs=-0.852251909507138805 next_K=25 next_log10_lhs_over_rhs=0.553204838113817488 status=OK
+frontier q=50 window_bound=30849 K=25 lhs_bits=100 rhs_bits=101 margin_bits=97 log10_lhs_over_rhs=-0.0488692310592284684 next_K=26 next_log10_lhs_over_rhs=1.37337680037106935 status=OK
+frontier q=51 window_bound=30848 K=25 lhs_bits=100 rhs_bits=103 margin_bits=102 log10_lhs_over_rhs=-0.650943300688631155 next_K=26 next_log10_lhs_over_rhs=0.771302730741666664 status=OK
+frontier q=52 window_bound=30847 K=25 lhs_bits=100 rhs_bits=105 margin_bits=104 log10_lhs_over_rhs=-1.25301737077441544 next_K=26 next_log10_lhs_over_rhs=0.169228660655882379 status=OK
+frontier q=53 window_bound=30846 K=26 lhs_bits=105 rhs_bits=107 margin_bits=106 log10_lhs_over_rhs=-0.43284540988631548 next_K=27 next_log10_lhs_over_rhs=1.00556169265276907 status=OK
+frontier q=54 window_bound=30845 K=26 lhs_bits=105 rhs_bits=109 margin_bits=108 log10_lhs_over_rhs=-1.03491948088495889 next_K=27 next_log10_lhs_over_rhs=0.403487621654129214 status=OK
+frontier q=55 window_bound=30844 K=27 lhs_bits=110 rhs_bits=111 margin_bits=109 log10_lhs_over_rhs=-0.19858644980098461 next_K=28 next_log10_lhs_over_rhs=1.25539907578532706 status=OK
+frontier q=56 window_bound=30843 K=27 lhs_bits=110 rhs_bits=113 margin_bits=112 log10_lhs_over_rhs=-0.800660521712607931 next_K=28 next_log10_lhs_over_rhs=0.653325003873710841 status=OK
+frontier q=57 window_bound=30842 K=27 lhs_bits=110 rhs_bits=115 margin_bits=114 log10_lhs_over_rhs=-1.40273459408075496 next_K=28 next_log10_lhs_over_rhs=0.0512509315055567072 status=OK
+frontier q=58 window_bound=30841 K=28 lhs_bits=115 rhs_bits=117 margin_bits=116 log10_lhs_over_rhs=-0.550823141319149556 next_K=29 next_log10_lhs_over_rhs=0.918198913275539041 status=OK
+frontier q=59 window_bound=30840 K=28 lhs_bits=115 rhs_bits=119 margin_bits=118 log10_lhs_over_rhs=-1.15289721460045058 next_K=29 next_log10_lhs_over_rhs=0.316124839994238016 status=OK
+frontier q=60 window_bound=30839 K=29 lhs_bits=120 rhs_bits=121 margin_bits=119 log10_lhs_over_rhs=-0.285949233743686193 next_K=30 next_log10_lhs_over_rhs=1.19760405714516338 status=OK
+frontier q=61 window_bound=30838 K=29 lhs_bits=120 rhs_bits=123 margin_bits=122 log10_lhs_over_rhs=-0.888023307938254902 next_K=30 next_log10_lhs_over_rhs=0.595529982950587566 status=OK
+frontier q=62 window_bound=30837 K=30 lhs_bits=124 rhs_bits=125 margin_bits=118 log10_lhs_over_rhs=-0.00654409170066116985 next_K=31 next_log10_lhs_over_rhs=1.49106813992484888 status=OK
+frontier q=63 window_bound=30836 K=30 lhs_bits=124 rhs_bits=127 margin_bits=126 log10_lhs_over_rhs=-0.60861816680862546 next_K=31 next_log10_lhs_over_rhs=0.888994064816884588 status=OK
+frontier q=64 window_bound=30835 K=30 lhs_bits=124 rhs_bits=129 margin_bits=128 log10_lhs_over_rhs=-1.21069224237332662 next_K=31 next_log10_lhs_over_rhs=0.286919989252183427 status=OK
+frontier q=65 window_bound=30834 K=31 lhs_bits=129 rhs_bits=131 margin_bits=130 log10_lhs_over_rhs=-0.315154086769283026 next_K=32 next_log10_lhs_over_rhs=1.1960746434125582 status=OK
+frontier q=66 window_bound=30833 K=31 lhs_bits=129 rhs_bits=133 margin_bits=132 log10_lhs_over_rhs=-0.917228163247550299 next_K=32 next_log10_lhs_over_rhs=0.59400056693429093 status=OK
+frontier q=67 window_bound=30832 K=32 lhs_bits=134 rhs_bits=135 margin_bits=129 log10_lhs_over_rhs=-0.00807351000080558379 next_K=33 next_log10_lhs_over_rhs=1.51635637495665776 status=OK
+frontier q=68 window_bound=30831 K=32 lhs_bits=134 rhs_bits=137 margin_bits=136 log10_lhs_over_rhs=-0.61014758739275976 next_K=33 next_log10_lhs_over_rhs=0.914282297564703583 status=OK
+frontier q=69 window_bound=30830 K=32 lhs_bits=134 rhs_bits=139 margin_bits=138 log10_lhs_over_rhs=-1.21222166524160002 next_K=33 next_log10_lhs_over_rhs=0.312208219715863322 status=OK
+frontier q=70 window_bound=30829 K=33 lhs_bits=140 rhs_bits=141 margin_bits=139 log10_lhs_over_rhs=-0.289865858589891445 next_K=34 next_log10_lhs_over_rhs=1.24737451101881902 status=OK
+frontier q=71 window_bound=30828 K=33 lhs_bits=140 rhs_bits=143 margin_bits=142 log10_lhs_over_rhs=-0.891939937352596246 next_K=34 next_log10_lhs_over_rhs=0.64530043225611422 status=OK
+frontier q=72 window_bound=30827 K=33 lhs_bits=140 rhs_bits=145 margin_bits=144 log10_lhs_over_rhs=-1.4940140165722795 next_K=34 next_log10_lhs_over_rhs=0.0432263530364380699 status=OK
+frontier q=73 window_bound=30826 K=34 lhs_bits=145 rhs_bits=147 margin_bits=146 log10_lhs_over_rhs=-0.558847726640252063 next_K=35 next_log10_lhs_over_rhs=0.990834988399384997 status=OK
+frontier q=74 window_bound=30825 K=34 lhs_bits=145 rhs_bits=149 margin_bits=148 log10_lhs_over_rhs=-1.16092180677397039 next_K=35 next_log10_lhs_over_rhs=0.388760908265659566 status=OK
+frontier q=75 window_bound=30824 K=35 lhs_bits=150 rhs_bits=151 margin_bits=149 log10_lhs_over_rhs=-0.213313172325129585 next_K=36 next_log10_lhs_over_rhs=1.34846437907668815 status=OK
+frontier q=76 window_bound=30823 K=35 lhs_bits=150 rhs_bits=153 margin_bits=152 log10_lhs_over_rhs=-0.815387253373010878 next_K=36 next_log10_lhs_over_rhs=0.746390298028806853 status=OK
+frontier q=77 window_bound=30822 K=35 lhs_bits=150 rhs_bits=155 margin_bits=154 log10_lhs_over_rhs=-1.41746133487801274 next_K=36 next_log10_lhs_over_rhs=0.144316216523797891 status=OK
+frontier q=78 window_bound=30821 K=36 lhs_bits=155 rhs_bits=157 margin_bits=156 log10_lhs_over_rhs=-0.457757865438360056 next_K=37 next_log10_lhs_over_rhs=1.11578595130892921 status=OK
+frontier q=79 window_bound=30820 K=36 lhs_bits=155 rhs_bits=159 margin_bits=158 log10_lhs_over_rhs=-1.05983194785770252 next_K=37 next_log10_lhs_over_rhs=0.513711868889586754 status=OK
+frontier q=80 window_bound=30819 K=37 lhs_bits=160 rhs_bits=161 margin_bits=158 log10_lhs_over_rhs=-0.0883622139869757461 next_K=38 next_log10_lhs_over_rhs=1.49663672373345236 status=OK
+frontier q=81 window_bound=30818 K=37 lhs_bits=160 rhs_bits=163 margin_bits=162 log10_lhs_over_rhs=-0.690436297320772496 next_K=38 next_log10_lhs_over_rhs=0.894562640399648501 status=OK
+frontier q=82 window_bound=30817 K=37 lhs_bits=160 rhs_bits=165 margin_bits=164 log10_lhs_over_rhs=-1.29251038111184613 next_K=38 next_log10_lhs_over_rhs=0.292488556608574868 status=OK
+frontier q=83 window_bound=30816 K=38 lhs_bits=165 rhs_bits=167 margin_bits=166 log10_lhs_over_rhs=-0.309585527639796965 next_K=39 next_log10_lhs_over_rhs=1.28657345904317566 status=OK
+frontier q=84 window_bound=30815 K=38 lhs_bits=165 rhs_bits=169 margin_bits=168 log10_lhs_over_rhs=-0.911659612345509629 next_K=39 next_log10_lhs_over_rhs=0.684499374337470101 status=OK
+frontier q=85 window_bound=30814 K=38 lhs_bits=165 rhs_bits=171 margin_bits=170 log10_lhs_over_rhs=-1.51373369750857734 next_K=39 next_log10_lhs_over_rhs=0.0824252891743952887 status=OK
+frontier q=86 window_bound=30813 K=39 lhs_bits=171 rhs_bits=173 margin_bits=172 log10_lhs_over_rhs=-0.519648796446062988 next_K=40 next_log10_lhs_over_rhs=1.087390022432416 status=OK
+frontier q=87 window_bound=30812 K=39 lhs_bits=171 rhs_bits=175 margin_bits=174 log10_lhs_over_rhs=-1.12172288252394736 next_K=40 next_log10_lhs_over_rhs=0.48531593635453163 status=OK
+frontier q=88 window_bound=30811 K=40 lhs_bits=176 rhs_bits=177 margin_bits=174 log10_lhs_over_rhs=-0.116758150180800158 next_K=41 next_log10_lhs_over_rhs=1.50089404243175295 status=OK
+frontier q=89 window_bound=30810 K=40 lhs_bits=176 rhs_bits=179 margin_bits=178 log10_lhs_over_rhs=-0.718832237173614885 next_K=41 next_log10_lhs_over_rhs=0.898819955438938223 status=OK
+frontier q=90 window_bound=30809 K=40 lhs_bits=176 rhs_bits=181 margin_bits=180 log10_lhs_over_rhs=-1.32090632462394098 next_K=41 next_log10_lhs_over_rhs=0.296745867988612133 status=OK
+frontier q=91 window_bound=30808 K=41 lhs_bits=181 rhs_bits=183 margin_bits=182 log10_lhs_over_rhs=-0.30532821991925374 next_K=42 next_log10_lhs_over_rhs=1.32268365499935925 status=OK
+frontier q=92 window_bound=30807 K=41 lhs_bits=181 rhs_bits=185 margin_bits=184 log10_lhs_over_rhs=-0.90740230828468782 next_K=42 next_log10_lhs_over_rhs=0.720609566633925169 status=OK
+frontier q=93 window_bound=30806 K=41 lhs_bits=181 rhs_bits=187 margin_bits=186 log10_lhs_over_rhs=-1.50947639710771853 next_K=42 next_log10_lhs_over_rhs=0.118535477810894463 status=OK
+frontier q=94 window_bound=30805 K=42 lhs_bits=187 rhs_bits=189 margin_bits=188 log10_lhs_over_rhs=-0.483538611469775503 next_K=43 next_log10_lhs_over_rhs=1.15459112329878621 status=OK
+frontier q=95 window_bound=30804 K=42 lhs_bits=187 rhs_bits=191 margin_bits=190 log10_lhs_over_rhs=-1.08561270120809894 next_K=43 next_log10_lhs_over_rhs=0.552517033560462778 status=OK
+frontier q=96 window_bound=30803 K=43 lhs_bits=192 rhs_bits=193 margin_bits=189 log10_lhs_over_rhs=-0.0495570566355425512 next_K=44 next_log10_lhs_over_rhs=1.59845976891838149 status=OK
+frontier q=97 window_bound=30802 K=43 lhs_bits=192 rhs_bits=195 margin_bits=194 log10_lhs_over_rhs=-0.651631147289272405 next_K=44 next_log10_lhs_over_rhs=0.996385678264658736 status=OK
+frontier q=98 window_bound=30801 K=43 lhs_bits=192 rhs_bits=197 margin_bits=196 log10_lhs_over_rhs=-1.2537052384007481 next_K=44 next_log10_lhs_over_rhs=0.394311587153175935 status=OK
+frontier q=99 window_bound=30800 K=44 lhs_bits=198 rhs_bits=199 margin_bits=197 log10_lhs_over_rhs=-0.207762504416081129 next_K=45 next_log10_lhs_over_rhs=1.4499209538734803 status=OK
+frontier q=100 window_bound=30799 K=44 lhs_bits=198 rhs_bits=201 margin_bits=200 log10_lhs_over_rhs=-0.809836596443140877 next_K=45 next_log10_lhs_over_rhs=0.847846861846420552 status=OK
+frontier q=101 window_bound=30798 K=44 lhs_bits=198 rhs_bits=203 margin_bits=202 log10_lhs_over_rhs=-1.41191068892803884 next_K=45 next_log10_lhs_over_rhs=0.245772769361515486 status=OK
+frontier q=102 window_bound=30797 K=45 lhs_bits=203 rhs_bits=205 margin_bits=204 log10_lhs_over_rhs=-0.356301323581249108 next_K=46 next_log10_lhs_over_rhs=1.31083794318624314 status=OK
+frontier q=103 window_bound=30796 K=45 lhs_bits=203 rhs_bits=207 margin_bits=206 log10_lhs_over_rhs=-0.958375416981908756 next_K=46 next_log10_lhs_over_rhs=0.708763849785583488 status=OK
+frontier q=104 window_bound=30795 K=45 lhs_bits=203 rhs_bits=209 margin_bits=208 log10_lhs_over_rhs=-1.56044951084049899 next_K=46 next_log10_lhs_over_rhs=0.106689755926993257 status=OK
+frontier q=105 window_bound=30794 K=46 lhs_bits=209 rhs_bits=211 margin_bits=210 log10_lhs_over_rhs=-0.495384338389555978 next_K=47 next_log10_lhs_over_rhs=1.18100892731287388 status=OK
+frontier q=106 window_bound=30793 K=46 lhs_bits=209 rhs_bits=213 margin_bits=212 log10_lhs_over_rhs=-1.09745843316408553 next_K=47 next_log10_lhs_over_rhs=0.578934832538351429 status=OK
+frontier q=107 window_bound=30792 K=47 lhs_bits=214 rhs_bits=215 margin_bits=210 log10_lhs_over_rhs=-0.0231392626942010793 next_K=48 next_log10_lhs_over_rhs=1.66231464006212093 status=OK
+frontier q=108 window_bound=30791 K=47 lhs_bits=214 rhs_bits=217 margin_bits=216 log10_lhs_over_rhs=-0.625213358384797857 next_K=48 next_log10_lhs_over_rhs=1.06024054437152415 status=OK
+frontier q=109 window_bound=30790 K=47 lhs_bits=214 rhs_bits=219 margin_bits=218 log10_lhs_over_rhs=-1.22728745453346733 next_K=48 next_log10_lhs_over_rhs=0.458166448222854683 status=OK
+frontier q=110 window_bound=30789 K=48 lhs_bits=220 rhs_bits=221 margin_bits=219 log10_lhs_over_rhs=-0.143907648383915898 next_K=49 next_log10_lhs_over_rhs=1.55042145681680665 status=OK
+frontier q=111 window_bound=30788 K=48 lhs_bits=220 rhs_bits=223 margin_bits=222 log10_lhs_over_rhs=-0.745981745448830225 next_K=49 next_log10_lhs_over_rhs=0.948347359751906538 status=OK
+frontier q=112 window_bound=30787 K=48 lhs_bits=220 rhs_bits=225 margin_bits=224 log10_lhs_over_rhs=-1.34805584297190251 next_K=49 next_log10_lhs_over_rhs=0.346273262228834255 status=OK
+frontier q=113 window_bound=30786 K=49 lhs_bits=226 rhs_bits=227 margin_bits=225 log10_lhs_over_rhs=-0.255800835752438616 next_K=50 next_log10_lhs_over_rhs=1.44722548611558466 status=OK
+frontier q=114 window_bound=30785 K=49 lhs_bits=226 rhs_bits=229 margin_bits=228 log10_lhs_over_rhs=-0.857874934191926286 next_K=50 next_log10_lhs_over_rhs=0.845151387676096988 status=OK
+frontier q=115 window_bound=30784 K=49 lhs_bits=226 rhs_bits=231 margin_bits=230 log10_lhs_over_rhs=-1.45994903308967139 next_K=50 next_log10_lhs_over_rhs=0.243077288778351885 status=OK
+frontier q=116 window_bound=30783 K=50 lhs_bits=231 rhs_bits=233 margin_bits=232 log10_lhs_over_rhs=-0.358996810577679071 next_K=51 next_log10_lhs_over_rhs=1.35255575037420783 status=OK
+frontier q=117 window_bound=30782 K=50 lhs_bits=231 rhs_bits=235 margin_bits=234 log10_lhs_over_rhs=-0.961070910392024302 next_K=51 next_log10_lhs_over_rhs=0.750481650559862601 status=OK
+frontier q=118 window_bound=30781 K=50 lhs_bits=231 rhs_bits=237 margin_bits=236 log10_lhs_over_rhs=-1.56314501066469802 next_K=51 next_log10_lhs_over_rhs=0.148407550287174672 status=OK
+frontier q=119 window_bound=30780 K=51 lhs_bits=237 rhs_bits=239 margin_bits=238 log10_lhs_over_rhs=-0.453666550443870165 next_K=52 next_log10_lhs_over_rhs=1.2662478736972389 status=OK
+frontier q=120 window_bound=30779 K=51 lhs_bits=237 rhs_bits=241 margin_bits=240 log10_lhs_over_rhs=-1.05574065163332875 next_K=52 next_log10_lhs_over_rhs=0.664173772507780313 status=OK
+frontier q=121 window_bound=30778 K=51 lhs_bits=237 rhs_bits=243 margin_bits=242 log10_lhs_over_rhs=-1.65781475328122951 next_K=52 next_log10_lhs_over_rhs=0.062099670859893763 status=OK
+frontier q=122 window_bound=30777 K=52 lhs_bits=243 rhs_bits=245 margin_bits=244 log10_lhs_over_rhs=-0.539974431246463382 next_K=53 next_log10_lhs_over_rhs=1.18814370625970867 status=OK
+frontier q=123 window_bound=30776 K=52 lhs_bits=243 rhs_bits=247 margin_bits=246 log10_lhs_over_rhs=-1.14204853381130533 next_K=53 next_log10_lhs_over_rhs=0.586069603694866714 status=OK
+frontier q=124 window_bound=30775 K=53 lhs_bits=248 rhs_bits=249 margin_bits=244 log10_lhs_over_rhs=-0.0160044993285026749 next_K=54 next_log10_lhs_over_rhs=1.72016508017422609 status=OK
+frontier q=125 window_bound=30774 K=53 lhs_bits=248 rhs_bits=251 margin_bits=250 log10_lhs_over_rhs=-0.618078602810427924 next_K=54 next_log10_lhs_over_rhs=1.11809097669230084 status=OK
+frontier q=126 window_bound=30773 K=53 lhs_bits=248 rhs_bits=253 margin_bits=252 log10_lhs_over_rhs=-1.22015270675092324 next_K=54 next_log10_lhs_over_rhs=0.516016872751805522 status=OK
+frontier q=127 window_bound=30772 K=54 lhs_bits=254 rhs_bits=255 margin_bits=252 log10_lhs_over_rhs=-0.086057231647316712 next_K=55 next_log10_lhs_over_rhs=1.65801707476241234 status=OK
+frontier q=128 window_bound=30771 K=54 lhs_bits=254 rhs_bits=257 margin_bits=256 log10_lhs_over_rhs=-0.68813133650506586 next_K=55 next_log10_lhs_over_rhs=1.05594296990466319 status=OK
+frontier q=129 window_bound=30770 K=54 lhs_bits=254 rhs_bits=259 margin_bits=258 log10_lhs_over_rhs=-1.29020544182148456 next_K=55 next_log10_lhs_over_rhs=0.453868864588244492 status=OK
+frontier q=130 window_bound=30769 K=55 lhs_bits=260 rhs_bits=261 margin_bits=259 log10_lhs_over_rhs=-0.148205241186886383 next_K=56 next_log10_lhs_over_rhs=1.60363233429248453 status=OK
+frontier q=131 window_bound=30768 K=55 lhs_bits=260 rhs_bits=263 margin_bits=262 log10_lhs_over_rhs=-0.750279347420729437 next_K=56 next_log10_lhs_over_rhs=1.00155822805862726 status=OK
+frontier q=132 window_bound=30767 K=55 lhs_bits=260 rhs_bits=265 margin_bits=264 log10_lhs_over_rhs=-1.35235345411335572 next_K=56 next_log10_lhs_over_rhs=0.399484121366015188 status=OK
+frontier q=133 window_bound=30766 K=56 lhs_bits=266 rhs_bits=267 margin_bits=265 log10_lhs_over_rhs=-0.202589985785394333 next_K=57 next_log10_lhs_over_rhs=1.55687438025633185 status=OK
+frontier q=134 window_bound=30765 K=56 lhs_bits=266 rhs_bits=269 margin_bits=268 log10_lhs_over_rhs=-0.80466409339561551 next_K=57 next_log10_lhs_over_rhs=0.95480027264611067 status=OK
+frontier q=135 window_bound=30764 K=56 lhs_bits=266 rhs_bits=271 margin_bits=270 log10_lhs_over_rhs=-1.40673820146469097 next_K=57 next_log10_lhs_over_rhs=0.352726164577035206 status=OK
+frontier q=136 window_bound=30763 K=57 lhs_bits=272 rhs_bits=273 margin_bits=271 log10_lhs_over_rhs=-0.249347943950922968 next_K=58 next_log10_lhs_over_rhs=1.51761145482680604 status=OK
+frontier q=137 window_bound=30762 K=57 lhs_bits=272 rhs_bits=275 margin_bits=274 log10_lhs_over_rhs=-0.851422052937792273 next_K=58 next_log10_lhs_over_rhs=0.915537345839936734 status=OK
+frontier q=138 window_bound=30761 K=57 lhs_bits=272 rhs_bits=277 margin_bits=276 log10_lhs_over_rhs=-1.45349616238358692 next_K=58 next_log10_lhs_over_rhs=0.313463236394142086 status=OK
+frontier q=139 window_bound=30760 K=58 lhs_bits=278 rhs_bits=279 margin_bits=277 log10_lhs_over_rhs=-0.288610873510634747 next_K=59 next_log10_lhs_over_rhs=1.48571627983717747 status=OK
+frontier q=140 window_bound=30759 K=58 lhs_bits=278 rhs_bits=281 margin_bits=280 log10_lhs_over_rhs=-0.890684983874407976 next_K=59 next_log10_lhs_over_rhs=0.883642169473404238 status=OK
+frontier q=141 window_bound=30758 K=58 lhs_bits=278 rhs_bits=283 margin_bits=282 log10_lhs_over_rhs=-1.49275909469720602 next_K=59 next_log10_lhs_over_rhs=0.28156805865060619 status=OK
+frontier q=142 window_bound=30757 K=59 lhs_bits=283 rhs_bits=285 margin_bits=284 log10_lhs_over_rhs=-0.320506052631259308 next_K=60 next_log10_lhs_over_rhs=1.4610658319110712 status=OK
+frontier q=143 window_bound=30756 K=59 lhs_bits=283 rhs_bits=287 margin_bits=286 log10_lhs_over_rhs=-0.922580164372206468 next_K=60 next_log10_lhs_over_rhs=0.85899172017012404 status=OK
+frontier q=144 window_bound=30755 K=59 lhs_bits=283 rhs_bits=289 margin_bits=288 log10_lhs_over_rhs=-1.52465427657226371 next_K=60 next_log10_lhs_over_rhs=0.256917607970052586 status=OK
+frontier q=145 window_bound=30754 K=60 lhs_bits=289 rhs_bits=291 margin_bits=290 log10_lhs_over_rhs=-0.345156504689157373 next_K=61 next_log10_lhs_over_rhs=1.44354113241078608 status=OK
+frontier q=146 window_bound=30753 K=60 lhs_bits=289 rhs_bits=293 margin_bits=292 log10_lhs_over_rhs=-0.94723061780754847 next_K=61 next_log10_lhs_over_rhs=0.84146701929239498 status=OK
+frontier q=147 window_bound=30752 K=60 lhs_bits=289 rhs_bits=295 margin_bits=294 log10_lhs_over_rhs=-1.54930473138514913 next_K=61 next_log10_lhs_over_rhs=0.239392905714794324 status=OK
+frontier q=148 window_bound=30751 K=61 lhs_bits=295 rhs_bits=297 margin_bits=296 log10_lhs_over_rhs=-0.362681208322044313 next_K=62 next_log10_lhs_over_rhs=1.43302705100197159 status=OK
+frontier q=149 window_bound=30750 K=61 lhs_bits=295 rhs_bits=299 margin_bits=298 log10_lhs_over_rhs=-0.964755322818149352 next_K=62 next_log10_lhs_over_rhs=0.830952936505866546 status=OK
+frontier q=150 window_bound=30749 K=61 lhs_bits=295 rhs_bits=301 margin_bits=300 log10_lhs_over_rhs=-1.56682943777354922 next_K=62 next_log10_lhs_over_rhs=0.228878821550466682 status=OK
+frontier q=151 window_bound=30748 K=62 lhs_bits=301 rhs_bits=303 margin_bits=302 log10_lhs_over_rhs=-0.373195293864256428 next_K=63 next_log10_lhs_over_rhs=1.42941212174774535 status=OK
+frontier q=152 window_bound=30747 K=62 lhs_bits=301 rhs_bits=305 margin_bits=304 log10_lhs_over_rhs=-0.975269409738345416 next_K=63 next_log10_lhs_over_rhs=0.827338005873656357 status=OK
+frontier q=153 window_bound=30746 K=62 lhs_bits=301 rhs_bits=307 margin_bits=306 log10_lhs_over_rhs=-1.57734352607181449 next_K=63 next_log10_lhs_over_rhs=0.225263889540187279 status=OK
+frontier q=154 window_bound=30745 K=63 lhs_bits=307 rhs_bits=309 margin_bits=308 log10_lhs_over_rhs=-0.376810227252704522 next_K=64 next_log10_lhs_over_rhs=1.43258837074806422 status=OK
+frontier q=155 window_bound=30744 K=63 lhs_bits=307 rhs_bits=311 margin_bits=310 log10_lhs_over_rhs=-0.978884344505047466 next_K=64 next_log10_lhs_over_rhs=0.830514253495721277 status=OK
+frontier q=156 window_bound=30743 K=63 lhs_bits=307 rhs_bits=313 margin_bits=312 log10_lhs_over_rhs=-1.58095846221685576 next_K=64 next_log10_lhs_over_rhs=0.228440135783912979 status=OK
+frontier q=157 window_bound=30742 K=64 lhs_bits=313 rhs_bits=315 margin_bits=314 log10_lhs_over_rhs=-0.373633982387417518 next_K=65 next_log10_lhs_over_rhs=1.44245115443155214 status=OK
+frontier q=158 window_bound=30741 K=64 lhs_bits=313 rhs_bits=317 margin_bits=316 log10_lhs_over_rhs=-0.975708101018270213 next_K=65 next_log10_lhs_over_rhs=0.840377035800699446 status=OK
+frontier q=159 window_bound=30740 K=64 lhs_bits=313 rhs_bits=319 margin_bits=318 log10_lhs_over_rhs=-1.57778222010868774 next_K=65 next_log10_lhs_over_rhs=0.238302916710267709 status=OK
+frontier q=160 window_bound=30739 K=65 lhs_bits=319 rhs_bits=321 margin_bits=320 log10_lhs_over_rhs=-0.363771202839743069 next_K=66 next_log10_lhs_over_rhs=1.45889900768852954 status=OK
+frontier q=161 window_bound=30738 K=65 lhs_bits=319 rhs_bits=323 margin_bits=322 log10_lhs_over_rhs=-0.965845322849389731 next_K=66 next_log10_lhs_over_rhs=0.856824887678882874 status=OK
+frontier q=162 window_bound=30737 K=65 lhs_bits=319 rhs_bits=325 margin_bits=324 log10_lhs_over_rhs=-1.5679194433187007 next_K=66 next_log10_lhs_over_rhs=0.254750767209586115 status=OK
+frontier q=163 window_bound=30736 K=66 lhs_bits=325 rhs_bits=327 margin_bits=326 log10_lhs_over_rhs=-0.347323353719403372 next_K=67 next_log10_lhs_over_rhs=1.4818335011072179 status=OK
+frontier q=164 window_bound=30735 K=66 lhs_bits=325 rhs_bits=329 margin_bits=328 log10_lhs_over_rhs=-0.949397475108099798 next_K=67 next_log10_lhs_over_rhs=0.879759379718521473 status=OK
+frontier q=165 window_bound=30734 K=66 lhs_bits=325 rhs_bits=331 margin_bits=330 log10_lhs_over_rhs=-1.55147159695656001 next_K=67 next_log10_lhs_over_rhs=0.277685257870075475 status=OK
+frontier q=166 window_bound=30733 K=67 lhs_bits=331 rhs_bits=333 margin_bits=332 log10_lhs_over_rhs=-0.324388864438162727 next_K=68 next_log10_lhs_over_rhs=1.5111591066405623 status=OK
+frontier q=167 window_bound=30732 K=67 lhs_bits=331 rhs_bits=335 margin_bits=334 log10_lhs_over_rhs=-0.926462987206193134 next_K=68 next_log10_lhs_over_rhs=0.909084983872531893 status=OK
+frontier q=168 window_bound=30731 K=67 lhs_bits=331 rhs_bits=337 margin_bits=336 log10_lhs_over_rhs=-1.52853711043405838 next_K=68 next_log10_lhs_over_rhs=0.307010860644652439 status=OK
+frontier q=169 window_bound=30730 K=68 lhs_bits=338 rhs_bits=339 margin_bits=337 log10_lhs_over_rhs=-0.295063263043076063 next_K=69 next_log10_lhs_over_rhs=1.54678307108984825 status=OK
+frontier q=170 window_bound=30729 K=68 lhs_bits=338 rhs_bits=341 margin_bits=340 log10_lhs_over_rhs=-0.897137387190710456 next_K=69 next_log10_lhs_over_rhs=0.944708946942213856 status=OK
+frontier q=171 window_bound=30728 K=68 lhs_bits=338 rhs_bits=343 margin_bits=342 log10_lhs_over_rhs=-1.49921151179826495 next_K=69 next_log10_lhs_over_rhs=0.342634822334659361 status=OK
+frontier q=172 window_bound=30727 K=69 lhs_bits=344 rhs_bits=345 margin_bits=343 log10_lhs_over_rhs=-0.259439302732843657 next_K=70 next_log10_lhs_over_rhs=1.58861529684436675 status=OK
+frontier q=173 window_bound=30726 K=69 lhs_bits=344 rhs_bits=347 margin_bits=346 log10_lhs_over_rhs=-0.861513428260337832 next_K=70 next_log10_lhs_over_rhs=0.986541171316872578 status=OK
+frontier q=174 window_bound=30725 K=69 lhs_bits=344 rhs_bits=349 margin_bits=348 log10_lhs_over_rhs=-1.46358755424785159 next_K=70 next_log10_lhs_over_rhs=0.384467045329358825 status=OK
+frontier q=175 window_bound=30724 K=70 lhs_bits=350 rhs_bits=351 margin_bits=349 log10_lhs_over_rhs=-0.217607081118188717 next_K=71 next_log10_lhs_over_rhs=1.63656822936374624 status=OK
+frontier q=176 window_bound=30723 K=70 lhs_bits=350 rhs_bits=353 margin_bits=352 log10_lhs_over_rhs=-0.819681208025826891 next_K=71 next_log10_lhs_over_rhs=1.03449410245610807 status=OK
+frontier q=177 window_bound=30722 K=70 lhs_bits=350 rhs_bits=355 margin_bits=354 log10_lhs_over_rhs=-1.4217553353935557 next_K=71 next_log10_lhs_over_rhs=0.43241997508837926 status=OK
+frontier q=178 window_bound=30721 K=71 lhs_bits=356 rhs_bits=357 margin_bits=355 log10_lhs_over_rhs=-0.169654152739497022 next_K=72 next_log10_lhs_over_rhs=1.69055675093275681 status=OK
+frontier q=179 window_bound=30720 K=71 lhs_bits=356 rhs_bits=359 margin_bits=358 log10_lhs_over_rhs=-0.77172828102753499 next_K=72 next_log10_lhs_over_rhs=1.08848262264473306 status=OK
+frontier q=180 window_bound=30719 K=71 lhs_bits=356 rhs_bits=361 margin_bits=360 log10_lhs_over_rhs=-1.37380240977576307 next_K=72 next_log10_lhs_over_rhs=0.486408493896490768 status=OK
+frontier q=181 window_bound=30718 K=72 lhs_bits=362 rhs_bits=363 margin_bits=360 log10_lhs_over_rhs=-0.115665635311955839 next_K=73 next_log10_lhs_over_rhs=1.75049808025737264 status=OK
+frontier q=182 window_bound=30717 K=72 lhs_bits=362 rhs_bits=365 margin_bits=364 log10_lhs_over_rhs=-0.717739764980677819 next_K=73 next_log10_lhs_over_rhs=1.14842395058865065 status=OK
+frontier q=183 window_bound=30716 K=72 lhs_bits=362 rhs_bits=367 margin_bits=366 log10_lhs_over_rhs=-1.31981389510966096 next_K=73 next_log10_lhs_over_rhs=0.546349820459653301 status=OK
+frontier q=184 window_bound=30715 K=73 lhs_bits=368 rhs_bits=369 margin_bits=365 log10_lhs_over_rhs=-0.0557243101296478471 next_K=74 next_log10_lhs_over_rhs=1.81631167750548173 status=OK
+frontier q=185 window_bound=30714 K=73 lhs_bits=368 rhs_bits=371 margin_bits=370 log10_lhs_over_rhs=-0.657798441179309634 next_K=74 next_log10_lhs_over_rhs=1.21423754645581994 status=OK
+frontier q=186 window_bound=30713 K=73 lhs_bits=368 rhs_bits=373 margin_bits=372 log10_lhs_over_rhs=-1.25987257268933206 next_K=74 next_log10_lhs_over_rhs=0.612163414945783302 status=OK
+frontier q=187 window_bound=30712 K=73 lhs_bits=368 rhs_bits=375 margin_bits=374 log10_lhs_over_rhs=-1.86194670465977197 next_K=74 next_log10_lhs_over_rhs=0.0100892829753576052 status=OK
+frontier q=188 window_bound=30711 K=74 lhs_bits=375 rhs_bits=377 margin_bits=376 log10_lhs_over_rhs=-0.591984849455513995 next_K=75 next_log10_lhs_over_rhs=1.28584502199738893 status=OK
+frontier q=189 window_bound=30710 K=74 lhs_bits=375 rhs_bits=379 margin_bits=378 log10_lhs_over_rhs=-1.19405898234684571 next_K=75 next_log10_lhs_over_rhs=0.683770889106057211 status=OK
+frontier q=190 window_bound=30709 K=74 lhs_bits=375 rhs_bits=381 margin_bits=380 log10_lhs_over_rhs=-1.79613311569868017 next_K=75 next_log10_lhs_over_rhs=0.0816967557542227496 status=OK
+frontier q=191 window_bound=30708 K=75 lhs_bits=381 rhs_bits=383 margin_bits=382 log10_lhs_over_rhs=-0.52037737805812867 next_K=76 next_log10_lhs_over_rhs=1.3631700554140167 status=OK
+frontier q=192 window_bound=30707 K=75 lhs_bits=381 rhs_bits=385 margin_bits=384 log10_lhs_over_rhs=-1.12245151233102547 next_K=76 next_log10_lhs_over_rhs=0.761095921141134113 status=OK
+frontier q=193 window_bound=30706 K=75 lhs_bits=381 rhs_bits=387 margin_bits=386 log10_lhs_over_rhs=-1.72452564706451028 next_K=76 next_log10_lhs_over_rhs=0.159021786407635091 status=OK
+frontier q=194 window_bound=30705 K=76 lhs_bits=387 rhs_bits=389 margin_bits=388 log10_lhs_over_rhs=-0.443052348786480366 next_K=77 next_log10_lhs_over_rhs=1.44613831065787224 status=OK
+frontier q=195 window_bound=30704 K=76 lhs_bits=387 rhs_bits=391 margin_bits=390 log10_lhs_over_rhs=-1.04512648444122647 next_K=77 next_log10_lhs_over_rhs=0.844064175003126138 status=OK
+frontier q=196 window_bound=30703 K=76 lhs_bits=387 rhs_bits=393 margin_bits=392 log10_lhs_over_rhs=-1.64720062055666006 next_K=77 next_log10_lhs_over_rhs=0.241990038887692549 status=OK
+frontier q=197 window_bound=30702 K=77 lhs_bits=393 rhs_bits=395 margin_bits=394 log10_lhs_over_rhs=-0.360084097688442739 next_K=78 next_log10_lhs_over_rhs=1.53467736088477125 status=OK
+frontier q=198 window_bound=30701 K=77 lhs_bits=393 rhs_bits=397 margin_bits=396 log10_lhs_over_rhs=-0.962158234725308148 next_K=78 next_log10_lhs_over_rhs=0.932603223847905838 status=OK
+frontier q=199 window_bound=30700 K=77 lhs_bits=393 rhs_bits=399 margin_bits=398 log10_lhs_over_rhs=-1.5642323722229321 next_K=78 next_log10_lhs_over_rhs=0.330529086350267676 status=OK
+frontier q=200 window_bound=30699 K=78 lhs_bits=400 rhs_bits=401 margin_bits=399 log10_lhs_over_rhs=-0.271545051608157451 next_K=79 next_log10_lhs_over_rhs=1.6287166157934081 status=OK
+frontier q=201 window_bound=30698 K=78 lhs_bits=400 rhs_bits=403 margin_bits=402 log10_lhs_over_rhs=-0.873619190027412174 next_K=79 next_log10_lhs_over_rhs=1.02664247737416758 status=OK
+frontier q=202 window_bound=30697 K=78 lhs_bits=400 rhs_bits=405 margin_bits=404 log10_lhs_over_rhs=-1.4756933289075107 next_K=79 next_log10_lhs_over_rhs=0.424568338494054842 status=OK
+frontier q=203 window_bound=30696 K=79 lhs_bits=406 rhs_bits=407 margin_bits=405 log10_lhs_over_rhs=-0.177505800846930129 next_K=80 next_log10_lhs_over_rhs=1.72818725260739825 status=OK
+frontier q=204 window_bound=30695 K=79 lhs_bits=406 rhs_bits=409 margin_bits=408 log10_lhs_over_rhs=-0.779579940648844172 next_K=80 next_log10_lhs_over_rhs=1.12611311280549842 status=OK
+frontier q=205 window_bound=30694 K=79 lhs_bits=406 rhs_bits=411 margin_bits=410 log10_lhs_over_rhs=-1.38165408091168729 next_K=80 next_log10_lhs_over_rhs=0.524038972542641091 status=OK
+frontier q=206 window_bound=30693 K=80 lhs_bits=412 rhs_bits=413 margin_bits=410 log10_lhs_over_rhs=-0.0780351681811879416 next_K=81 next_log10_lhs_over_rhs=1.83302215047471861 status=OK
+frontier q=207 window_bound=30692 K=80 lhs_bits=412 rhs_bits=415 margin_bits=414 log10_lhs_over_rhs=-0.680109309366017101 next_K=81 next_log10_lhs_over_rhs=1.23094800928988946 status=OK
+frontier q=208 window_bound=30691 K=80 lhs_bits=412 rhs_bits=417 margin_bits=416 log10_lhs_over_rhs=-1.28218345101188902 next_K=81 next_log10_lhs_over_rhs=0.628873867644017537 status=OK
+frontier q=209 window_bound=30690 K=80 lhs_bits=412 rhs_bits=419 margin_bits=418 log10_lhs_over_rhs=-1.88425759311881791 next_K=81 next_log10_lhs_over_rhs=0.0267997255370886478 status=OK
+frontier q=210 window_bound=30689 K=81 lhs_bits=419 rhs_bits=421 margin_bits=420 log10_lhs_over_rhs=-0.575274417030939844 next_K=82 next_log10_lhs_over_rhs=1.34108168550760354 status=OK
+frontier q=211 window_bound=30688 K=81 lhs_bits=419 rhs_bits=423 margin_bits=422 log10_lhs_over_rhs=-1.17734856006008215 next_K=82 next_log10_lhs_over_rhs=0.739007542478447021 status=OK
+frontier q=212 window_bound=30687 K=81 lhs_bits=419 rhs_bits=425 margin_bits=424 log10_lhs_over_rhs=-1.77942270355039511 next_K=82 next_log10_lhs_over_rhs=0.136933398988134059 status=OK
+frontier q=213 window_bound=30686 K=82 lhs_bits=425 rhs_bits=427 margin_bits=426 log10_lhs_over_rhs=-0.465140744963349562 next_K=83 next_log10_lhs_over_rhs=1.45645024029343517 status=OK
+frontier q=214 window_bound=30685 K=82 lhs_bits=425 rhs_bits=429 margin_bits=428 log10_lhs_over_rhs=-1.06721488937606068 next_K=83 next_log10_lhs_over_rhs=0.854376095880724051 status=OK
+frontier q=215 window_bound=30684 K=82 lhs_bits=425 rhs_bits=431 margin_bits=430 log10_lhs_over_rhs=-1.66928903425001351 next_K=83 next_log10_lhs_over_rhs=0.25230195100678543 status=OK
+frontier q=216 window_bound=30683 K=83 lhs_bits=431 rhs_bits=433 margin_bits=432 log10_lhs_over_rhs=-0.349772194328437536 next_K=84 next_log10_lhs_over_rhs=1.57699129609363808 status=OK
+frontier q=217 window_bound=30682 K=83 lhs_bits=431 rhs_bits=435 margin_bits=434 log10_lhs_over_rhs=-0.951846340124973267 next_K=84 next_log10_lhs_over_rhs=0.974917150297102353 status=OK
+frontier q=218 window_bound=30681 K=83 lhs_bits=431 rhs_bits=437 margin_bits=436 log10_lhs_over_rhs=-1.55392048638285019 next_K=84 next_log10_lhs_over_rhs=0.372843004039253856 status=OK
+anchor_value M_9=588994
+anchor_value M_10=6080128
+anchor_value M_15=2520032130024
+anchor_value M_39=58718705658075676663193967906281687283486360200
+anchor_value M_40=2375829621213657924724588134512527189480955539496
+anchor_value M_83=161542988313624522243948333029840776975463300385208625299239096132030683316177591525727207204433303483484658046478341455368328
+SUMMARY failures=0 q_checked=204 min_frontier=9 max_frontier=83 max_frontier_minus_q=-6 worst_ok_q=62 worst_ok_K=30 worst_ok_log10_lhs_over_rhs=-0.00654409170066116985 closest_next_q=43 closest_next_K=22 closest_next_log10_lhs_over_rhs=0.00242212675400210742
+__EXIT_STATUS=0

@@ -1,0 +1,10 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=9a6cf4da5b866d3b8fc2ce6d1d1a442fd3b419702fda2296da83d2fb788379e4
+__COMMAND=OMP_NUM_THREADS=32 ./d_bridge --rank 11 --onset 75 [all D4-11 and D11 exact-adjoint logs]
+exact_correction_input_logs=17 full_rows=260 exact_weyl_rows=0 stable_window_legacy_rows=0 ignored_out_of_window_legacy_rows=0
+D correction-aware GMP interval chain certificate
+arithmetic=exact_integer correction_window=j<rank:0,rank<=j<=2rank:[0,U_j],j>2rank:[-s_j,U_j]
+rank=D_11 onset=75 first_chain_m=3 last_chain_m=36 checks=34 exact_corrections_available=36
+MINIMUM lower_sign=1 lower=11976538 lower_log10=7.07833129678583628 rank=D_11 chain_m=3
+SUMMARY ranks_checked=1 chain_steps_checked=34 failures=0
+__EXIT_STATUS=0

@@ -1,0 +1,25 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp D5 44 --stable-moments /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/references/oeis_A002137_stable.txt /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m21_26.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m27_30.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m31_32.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m33_34.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m35_35.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m36_36.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m37_37.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m38_38.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m4_20.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m39_39.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m40_40.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d5_exact_adjoint_m41_42.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d5_exact_adjoint_m43_44.log
+power=1 support=1 elapsed_seconds=4.729e-06
+power=2 support=6 elapsed_seconds=1.542e-06
+power=3 support=14 elapsed_seconds=5.941e-06
+power=4 support=31 elapsed_seconds=1.3595e-05
+power=5 support=59 elapsed_seconds=2.8373e-05
+power=6 support=108 elapsed_seconds=5.8309e-05
+power=7 support=181 elapsed_seconds=0.000105186
+power=8 support=294 elapsed_seconds=0.000192328
+power=9 support=452 elapsed_seconds=0.000319094
+power=10 support=679 elapsed_seconds=0.000484883
+power=11 support=981 elapsed_seconds=0.000758352
+power=12 support=1391 elapsed_seconds=0.00108146
+power=13 support=1918 elapsed_seconds=0.00159117
+power=14 support=2605 elapsed_seconds=0.00215864
+power=15 support=3465 elapsed_seconds=0.00305012
+power=16 support=4551 elapsed_seconds=0.00406198
+power=17 support=5879 elapsed_seconds=0.00551878
+power=18 support=7517 elapsed_seconds=0.00732746
+power=19 support=9484 elapsed_seconds=0.00949121
+power=20 support=11862 elapsed_seconds=0.0124006
+power=21 support=14674 elapsed_seconds=0.0159508
+power=22 support=18018 elapsed_seconds=0.0196791
+root_datum=D_5 rank=5 roots=40 maximum_coordinate=22
+SUMMARY group=D_5 moments=45 source_values=80 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

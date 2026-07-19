@@ -1,0 +1,309 @@
+path	role	status	proof_use
+m28_D12_lower_reverse.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m28_D13_lower_reverse.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m29_D12_Delta_26.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m29_D13_Delta_26.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m29_D12_Delta_48_reverse.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m29_D12_Delta_49_reverse.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_B11_12_lower_exact39.log	input-delta	accepted	parsed by post_m29 first-hit replay
+m30_BC13_18_pair_range_exact39.log	input-delta	accepted	parsed by post_m29 first-hit replay
+m30_D12_Delta_50_reverse.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_D12_Delta_51_reverse.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_D13_16_lower.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_D13_missing44_50.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_D13_safe_lower.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_D14_missing44_49.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_D14_missing46_49.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_D14_safe_lower.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_D15_missing44_48.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_D15_safe_lower.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+m30_D17_65_lower.log	input-delta	superseded	legacy determinant-only type-D input; no accepted proof replay parses it
+post_m29_lower_bound_supplier_certificate_replay.log	replay	accepted	accepted B/C-only first-hit Chain replay; exactly 530 rows and no type-D input
+b11_delta_logs_bonly.sha256	input-delta-manifest	accepted	parsed by the low-B/C exact-onset bridge and B/C first-hit replays
+b11_bridge_range_certificate.log	replay	superseded	superseded by the unified 34-step low-B/C exact-onset bridge replay
+b11_direct_tail_certificate.log	replay	superseded	terminal cap used the uncorrected non-simply-laced root normalization; replaced by the exact-MGF tail
+b11_m31_reverse_lower.log	replay	superseded	superseded by B11 bridge-range replay
+b12_delta_logs_bonly.sha256	input-delta-manifest	accepted	parsed by the low-B/C exact-onset bridge and B/C first-hit replays
+b12_finite_tail_certificate.log	replay	superseded	terminal cap used the uncorrected non-simply-laced root normalization; replaced by the exact-MGF tail and unified bridge
+b13_delta_logs_bonly.sha256	input-delta-manifest	accepted	parsed by the low-B/C exact-onset bridge and B/C first-hit replays
+b13_finite_tail_certificate.log	replay	superseded	terminal cap used the uncorrected non-simply-laced root normalization; replaced by the exact-MGF tail and unified bridge
+b13_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	B13 exact-through-54 and exact-through-57 direct-tail scans
+b14_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	B14 exact-through-39 direct-tail no-candidate scan
+c13_delta_logs_conly.sha256	input-delta-manifest	accepted	parsed by the low-B/C exact-onset bridge and B/C first-hit replays
+c13_finite_tail_certificate.log	replay	superseded	non-simply-laced cap normalization was not justified; replaced by the exact-MGF tail and unified bridge
+c14_delta_logs_conly.sha256	input-delta-manifest	accepted	parsed by the low-B/C exact-onset bridge and B/C first-hit replays
+c14_finite_tail_certificate.log	replay	superseded	non-simply-laced cap normalization was not justified; replaced by the exact-MGF tail and unified bridge
+c15_direct_tail_certificate.log	replay	superseded	non-simply-laced cap normalization was not justified; replaced by the exact-MGF tail
+c16_direct_tail_certificate.log	replay	superseded	non-simply-laced cap normalization was not justified; replaced by the exact-MGF tail and first-hit replay
+c17_delta_logs_conly.sha256	input-delta-manifest	accepted	parsed by the low-B/C exact-onset bridge and B/C first-hit replays
+c17_finite_tail_certificate.log	replay	superseded	non-simply-laced cap normalization was not justified; replaced by the exact-MGF tail and unified bridge
+c18_delta_logs_conly.sha256	input-delta-manifest	accepted	parsed by the B/C first-hit replay
+c18_finite_tail_certificate.log	replay	superseded	non-simply-laced cap normalization was not justified; replaced by the exact-MGF tail
+c18_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	C18 exact-through-39 and exact-through-47 direct-tail no-candidate scans
+c19_delta_logs_conly.sha256	input-delta-manifest	accepted	parsed by the B/C first-hit replay
+c19_finite_tail_certificate.log	replay	superseded	non-simply-laced cap normalization was not justified; replaced by the exact-MGF tail
+c19_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	C19 direct-tail candidate/no-candidate scans
+d12_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d13_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d14_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d14_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d14_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D14 exact-through-49 direct-tail candidate scan
+d15_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d15_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d15_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D15 exact-through-48 direct-tail candidate scan
+d16_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d16_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d16_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D16 exact-through-45 direct-tail candidate scan
+d17_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d17_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d17_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D17 exact-through-44 direct-tail candidate scan
+d18_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d18_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d18_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D18 exact-through-43 direct-tail candidate scan
+d19_delta_logs_donly.sha256	input-delta-manifest	accepted	D19 determinant rows; correction-aware replay consumes only the proved j<=38 window
+d19_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d19_exact_mgf_machine_c.sha256	input-delta-manifest	accepted	machine-C exact adjoint moments through degree 34, full j=39 correction, and authenticated D19 certificate outputs
+d19_exact_mgf/d19_exact_mgf_onset63_mpfr_machine_c_certificate.log	replay	accepted	machine-C directed-MPFR exact-push-moment tail certificate for D19 from odd n=63
+d19_exact_mgf/d19_onset63_complete_bridge_machine_c_certificate.log	replay	accepted	machine-C exact-GMP correction-aware bridge for all 24 D19 Chain steps through odd n=63
+d19_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D19 exact-through-44 direct-tail candidate scan
+d20_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d20_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d21_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d21_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d22_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d22_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d23_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d23_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d24_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d24_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d25_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d25_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d26_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d26_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d27_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d27_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d28_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d28_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d28_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D28 exact-through-35 direct-tail candidate/no-candidate scans
+d29_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d29_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d29_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D29 exact-through-35 direct-tail candidate/no-candidate scans
+d30_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d30_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d30_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D30 exact-through-35 direct-tail candidate/no-candidate scans
+d31_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d31_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d31_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D31 exact-through-35 direct-tail candidate/no-candidate scans
+d32_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d32_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d32_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D32 exact-through-35 direct-tail candidate/no-candidate scans
+d33_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d33_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d33_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D33 exact-through-35 direct-tail candidate/no-candidate scans
+d34_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d34_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d34_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D34 exact-through-35 direct-tail candidate/no-candidate scans
+d35_delta_logs_donly.sha256	input-delta-manifest	superseded	legacy determinant-only input manifest; no accepted proof replay parses it
+d35_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d35_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D35 exact-through-35 direct-tail candidate/no-candidate scans
+d36_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d36_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D36 stable-through-35 direct-tail candidate/no-candidate scans
+d37_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d37_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D37 stable-through-35 direct-tail candidate/no-candidate scans
+d38_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d38_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D38 stable-through-35 direct-tail candidate/no-candidate scans
+d39_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d39_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D39 stable-through-35 direct-tail candidate/no-candidate scans
+d40_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d40_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D40 stable-through-35 direct-tail candidate/no-candidate scans
+d41_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d41_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D41 stable-through-35 direct-tail candidate/no-candidate scans
+d42_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d42_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D42 stable-through-35 direct-tail candidate/no-candidate scans
+d43_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d43_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D43 stable-through-35 direct-tail candidate/no-candidate scans
+d44_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d44_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D44 stable-through-35 direct-tail candidate/no-candidate scans
+d45_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d45_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D45 stable-through-35 direct-tail candidate/no-candidate scans
+d46_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d46_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D46 stable-through-35 direct-tail candidate/no-candidate scans
+d47_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d47_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D47 stable-through-35 direct-tail candidate/no-candidate scans
+d48_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d48_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D48 stable-through-35 direct-tail candidate/no-candidate scans
+d49_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d49_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D49 stable-through-35 binary-search direct-tail onset scan
+d50_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d50_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D50 stable-through-35 binary-search direct-tail onset scan
+d51_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d51_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D51 stable-through-35 binary-search direct-tail onset scan
+d52_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d52_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D52 stable-through-35 binary-search direct-tail onset scan
+d53_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d53_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D53 stable-through-35 binary-search direct-tail onset scan
+d54_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d54_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D54 stable-through-35 binary-search direct-tail onset scan
+d55_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d55_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D55 stable-through-35 binary-search direct-tail onset scan
+d56_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d56_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D56 stable-through-35 binary-search direct-tail onset scan
+d57_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d57_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D57 stable-through-35 binary-search direct-tail onset scan
+d58_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d58_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D58 stable-through-35 binary-search direct-tail onset scan
+d59_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d59_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D59 stable-through-35 binary-search direct-tail onset scan
+d60_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d60_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D60 stable-through-35 binary-search direct-tail onset scan
+d61_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d61_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D61 stable-through-35 binary-search direct-tail onset scan
+d62_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d62_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D62 stable-through-35 binary-search direct-tail onset scan
+d63_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d63_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D63 stable-through-35 binary-search direct-tail onset scan
+d64_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d64_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D64 stable-through-35 generated binary-search direct-tail onset scan
+d65_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d65_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D65 stable-through-35 generated binary-search direct-tail onset scan
+d66_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d66_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D66 stable-through-35 generated binary-search direct-tail onset scan
+d67_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d67_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D67 stable-through-35 generated binary-search direct-tail onset scan
+d68_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d68_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D68 stable-through-35 generated binary-search direct-tail onset scan
+d69_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d69_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D69 stable-through-35 generated binary-search direct-tail onset scan
+d70_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d70_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D70 stable-through-35 generated binary-search direct-tail onset scan
+d71_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d71_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D71 stable-through-35 generated binary-search direct-tail onset scan
+d72_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d72_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D72 stable-through-35 generated binary-search direct-tail onset scan
+d73_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d73_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D73 stable-through-35 generated binary-search direct-tail onset scan
+d74_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d74_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D74 stable-through-35 generated binary-search direct-tail onset scan
+d75_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d75_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D75 stable-through-35 generated binary-search direct-tail onset scan
+d76_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d76_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D76 stable-through-35 generated binary-search direct-tail onset scan
+d77_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d77_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D77 stable-through-35 generated binary-search direct-tail onset scan
+d78_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d78_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D78 stable-through-35 generated binary-search direct-tail onset scan
+d79_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d79_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D79 stable-through-35 generated binary-search direct-tail onset scan
+d80_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d80_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D80 stable-through-35 generated binary-search direct-tail onset scan
+d81_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d81_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D81 stable-through-35 generated binary-search direct-tail onset scan
+d82_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d82_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D82 stable-through-35 generated binary-search direct-tail onset scan
+d83_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d83_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D83 stable-through-35 generated binary-search direct-tail onset scan
+d84_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d84_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D84 stable-through-35 generated binary-search direct-tail onset scan
+d85_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d85_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D85 stable-through-35 generated binary-search direct-tail onset scan
+d86_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d86_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D86 stable-through-35 generated binary-search direct-tail onset scan
+d87_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d87_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D87 stable-through-35 generated binary-search direct-tail onset scan
+d88_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d88_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D88 stable-through-35 generated binary-search direct-tail onset scan
+d89_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d89_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D89 stable-through-35 generated binary-search direct-tail onset scan
+d90_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d90_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D90 stable-through-35 generated binary-search direct-tail onset scan
+d91_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d91_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D91 stable-through-35 generated binary-search direct-tail onset scan
+d92_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d92_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D92 stable-through-35 generated binary-search direct-tail onset scan
+d93_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d93_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D93 stable-through-35 generated binary-search direct-tail onset scan
+d94_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d94_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D94 stable-through-35 generated binary-search direct-tail onset scan
+d95_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d95_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D95 stable-through-35 generated binary-search direct-tail onset scan
+d96_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d96_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D96 stable-through-35 generated binary-search direct-tail onset scan
+d97_finite_tail_certificate.log	replay	superseded	legacy replay treated determinant-only rows beyond the A-free window as full corrections
+d97_direct_tail_scan_diagnostics.sha256	diagnostic-manifest	diagnostic	D97 stable-through-35 generated binary-search direct-tail onset scan
+d_interval_direct_tail_mpfr_certificate.log	replay	superseded	legacy determinant-only D98-D279 direct-tail replay; superseded by the correction-aware A-free route
+d_interval_frontier_gmp_accepted.sha256	manifest	superseded	legacy determinant-only D98-D279 frontier manifest; superseded by the correction-aware A-free route
+d_interval_formula_diagnostics.sha256	diagnostic-manifest	diagnostic	D98-D279 diagnostic archive; accepted direct-tail and frontier subsets are listed separately
+post_m29_superseded_d_routes.sha256	superseded-manifest	superseded	integrity index for determinant-only type-D routes excluded from the accepted proof boundary
+post_m29_superseded_low_bc_routes.sha256	superseded-manifest	superseded	integrity index for normalization-defective low-rank B/C tail routes excluded from the accepted proof boundary
+post_m29_chernoff_trace_high_edge_certificate.log	replay	accepted	high-edge no-TV Chernoff trace supplier
+bc_cheb80_negative_tail_gmp_certificate.log	replay	accepted	B/C exact GMP Chebyshev negative-tail input for interval direct-tail
+bc_interval_formula_mpfr_certificate.log	replay	accepted	B/C directed-rounding MPFR direct-tail onset certificate; conditional input discharged by bc_cheb80_negative_tail_gmp_certificate.log
+bc_interval_tail_code.sha256	manifest	accepted	source hashes for B/C interval-tail verifier targets, the caller-discharged half-bridge and power-loss verifiers, diagnostic/conditional compression verifiers, the fixed-even counterexample verifier, tight-Omega small-case verifiers, exact complement-packing/frontier verifiers, recursive fixed-even envelope/obstruction verifiers, low-low degree-profile verifier, and B/C nonboundary frontier verifiers
+bc_bridge_lambda_scan_diagnostic.log	replay	diagnostic	B/C bridge uniform-lambda diagnostic; reduction target only, not proof evidence
+bc_pieri_compression_scan_diagnostic.log	replay	diagnostic	B/C Pieri compression-bound diagnostic; candidate reduction target only, not proof evidence
+bc_lambda_half_bridge_gmp_certificate.log	replay	accepted	B/C exact GMP finite-bridge implication under delta_j<=0 and delta_j>=-s_j/2; its live callers discharge those hypotheses with the Pieri sign theorem and the numbered boundary-through-twenty-ninth lower-correction propositions
+bc_pieri_compression_gmp_certificate.log	replay	conditional	B/C exact GMP arithmetic check that the candidate binomial-shift Pieri-compression bound would imply delta_j>=-s_j/2 on the residual rows; not unconditional proof evidence until the combinatorial compression inequality is proved or source-audited
+bc_pieri_fullwall_gmp_certificate.log	replay	diagnostic	B/C exact GMP arithmetic check for the full-wall overflow candidate; not proof evidence, since the direct full-wall bound has a parity-zero obstruction at j=2rank+3
+bc_pieri_compression_pow2_gmp_certificate.log	replay	conditional	B/C exact GMP arithmetic check that a 2^q-loss rank-plus-one compression bound would imply delta_j>=-s_j/2 on the residual rows; not unconditional proof evidence until that tableaux inequality is proved
+bc_pieri_powerloss_2q_gmp_certificate.log	replay	accepted	B/C exact GMP arithmetic implication 2^(2q+1) binom(j,q) s_(j-q)<=s_j on all residual rows; the numbered correction proofs establish their separate bad-shape hypotheses before invoking this implication
+bc_complement_packing_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP complement-packing verifier; checks 30899*M_{ceil(q/3)+10}<2^(2q) for 86<=q<=218 with status 0
+bc_complement_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP complement-frontier verifier; computes maximal F(q) with W(q)M_{F(q)}<2^(2q) for 15<=q<=218 and reports max_frontier_minus_q=-6
+bc_badshape_q15_j30_diagnostic.log	replay	diagnostic	B/C exact C++/optimus/OpenMP bad-shape residual-boundary probe; verifies the proposed 2^q bad-shape inequality at q=15,j=30 only, not proof evidence for the full residual theorem
+bc_fixed_witness_q15_j30_first_diagnostic.log	replay	diagnostic	B/C exact C++/optimus/OpenMP fixed-witness probe for q=15,j=30,S={1,...,15}; calibration for the fixed-fiber route only
+bc_fixed_witness_q15_j30_middle_diagnostic.log	replay	diagnostic	B/C exact C++/optimus/OpenMP fixed-witness probe for q=15,j=30,middle S; calibration showing such S is impossible for both witness kinds
+bc_fixed_witness_q15_j30_odd_diagnostic.log	replay	diagnostic	B/C exact C++/optimus/OpenMP fixed-witness probe for q=15,j=30,S={1,3,...,29}; falsifies the 2^q fixed-height-fiber target, so the remaining route needs either larger branch loss or a global witness distribution
+bc_fixed_witness_2q_obstruction_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP fixed-witness obstruction; run on optimus with 64 threads and verifies that at q=15,j=30,S={1,3,...,29}, the height fixed fiber exceeds 2^q*s_15
+bc_fixed_even_counterexample_certificate.log	replay	diagnostic	B/C exact C++/optimus fixed-even counterexample verifier; falsifies the overbroad uniform fixed-even 2^m supplier target
+bc_tight_omega_small_m7_certificate.log	replay	accepted	B/C exact C++/optimus tight-Omega small-case certificate; enumerates all tight data through m=7 and reports max_omega=20<2^7
+bc_tight_omega_packed_m8_certificate.log	replay	accepted	B/C exact C++/optimus/OpenMP packed tight-Omega small-case certificate; enumerates all tight data through m=8 and reports max_omega=45<2^8
+bc_fixed_even_envelope_m23_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP recursive fixed-even envelope certificate; run on optimus with 64 threads and reports max_W<2^(2m) for every 13<=m<=23
+bc_fixed_even_envelope_m28_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP recursive fixed-even envelope certificate; run on optimus with 64 threads and reports max_W<2^(2m) for every 13<=m<=28
+bc_fixed_even_envelope_m29_obstruction_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP recursive fixed-even envelope frontier; run on optimus with 64 threads and verifies exactly 144 m=29 shapes have W>2^58, exactly 346 top-fixed m=29 pairs have W_top>2^58, exactly 62 top-two triples have W_top2>2^58, no top-three quadruple has W_top3>2^58, and the displayed non-column-even maximizer has W>2^58
+bc_fixed_even_envelope_m30_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP recursive fixed-even envelope frontier; run on optimus with 64 threads and verifies the m=30 depth frontier counts 44333, 92312, 60440, 5438, 408, 18, 0, closing the m=30 broad-Omega frontier at fixed depth seven
+bc_fixed_even_envelope_m31_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP recursive fixed-even envelope frontier; run on optimus with 64 threads and verifies the m=31 depth frontier counts 331969, 1229238, 2687932, 2263824, 499606, 49486, 6142, 610, 24, 0, closing the m=31 broad-Omega frontier at fixed depth ten
+bc_low_low_profile_gmp_certificate.log	replay	accepted	B/C exact C++/GMP low-low residual degree-profile verifier; run on optimus, verifies every profile with at most 20 active residual labels fits the full 2^58 budget, emits m-dependent ACTIVE_FRONTIER and DEGREE_FRONTIER intervals, and verifies profile (0,21) exceeds 2^58
+bc_b14_j37_badshape_gmp_certificate.log	replay	accepted	B/C exact C++/GMP B14 seventh nonboundary bad-shape verifier; run on optimus with 64 threads and verifies the q=15,j=37 width-bad Pieri count is below s_37/2
+bc_b_eighth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP B-side eighth nonboundary frontier verifier; run on optimus with 64 threads and verifies the q=15,16,17 width-bad Pieri counts are below s_j/2
+bc_ninth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP ninth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,16,17,18 width-bad Pieri counts below s_j/2 and the C-side q=21,22 ninth-pause arithmetic margins
+bc_tenth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP tenth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,16,17,18,19 width-bad Pieri counts below s_j/2 and the C-side q=21,22,23,24,25 tenth-pause arithmetic margins
+bc_eleventh_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP eleventh nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,16,17,18,19,20,21 width-bad Pieri counts below s_j/2 and the C-side q=21,22,23,24,25,26,27 eleventh-pause arithmetic margins
+bc_twelfth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP twelfth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,16,17,18,19,20,21,22 width-bad Pieri counts below s_j/2 and the C-side q=21,22,23,24,25,26,27,28,29,30 twelfth-pause arithmetic margins
+bc_thirteenth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP thirteenth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,16,17,18,19,20,21,22,23,24 width-bad Pieri counts below s_j/2 and the C-side q=21,22,23,24,25,26,27,28,29,30,31,32 thirteenth-pause arithmetic margins
+bc_fourteenth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP fourteenth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,16,17,18,19,20,21,22,23,24,25 width-bad Pieri counts below s_j/2 and the C-side q=21,22,23,24,25,26,27,28,29,30,31,32,33,34,35 fourteenth-pause arithmetic margins
+bc_fifteenth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP fifteenth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,16,17,18,19,20,21,22,23,24,25,26,27 width-bad Pieri counts below s_j/2, the C-side q=21 fixed-point-free pause bound, and the C-side q=22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37 fifteenth-pause arithmetic margins
+bc_sixteenth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP sixteenth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,16,17,18,19,20,21,22,23,24,25,26,27,28 width-bad Pieri counts below s_j/2, the C-side q=21,22 fixed-point-free pause bounds, and the C-side q=23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40 sixteenth-pause arithmetic margins
+bc_seventeenth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP seventeenth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30 width-bad Pieri counts below s_j/2, the C-side q=21,22,23 fixed-point-free pause bounds, and the C-side q=24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43 seventeenth-pause arithmetic margins
+bc_eighteenth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP eighteenth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31 width-bad Pieri counts below s_j/2, the C-side q=21,22,23 fixed-point-free pause bounds, and the C-side q=24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45 eighteenth-pause arithmetic margins
+bc_nineteenth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP nineteenth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,...,33 width-bad Pieri counts below s_j/2, the C-side q=21,22,23,24 fixed-point-free pause bounds, and the C-side q=25,...,48 nineteenth-pause arithmetic margins
+bc_twentieth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP twentieth nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,...,34 width-bad Pieri counts below s_j/2, the C-side q=21,22,23,24,25 fixed-point-free pause bounds, and the C-side q=26,...,50 twentieth-pause arithmetic margins
+bc_twentyfirst_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP twenty-first nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,...,36 width-bad Pieri counts below s_j/2, the C-side q=21,22,23,24,25,26 fixed-point-free pause bounds, and the C-side q=27,...,53 twenty-first-pause arithmetic margins
+bc_twentysecond_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP twenty-second nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,...,37 width-bad Pieri counts below s_j/2, the C-side q=21,22,23,24,25,26,27 fixed-point-free pause bounds, and the C-side q=28,...,55 twenty-second-pause arithmetic margins
+bc_twentythird_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP twenty-third nonboundary frontier verifier; run on optimus with 64 threads and verifies the B-side q=15,...,39 width-bad Pieri counts below s_j/2, the C-side q=21,22,23,24,25,26,27,28 fixed-point-free pause bounds, and the C-side q=29,...,58 twenty-third-pause arithmetic margins
+bc_twentyfourth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP twenty-fourth nonboundary frontier verifier; run on optimus with partitioned 8-thread B jobs and a 64-thread C job, verifies the B-side q=15,...,41 width-bad Pieri counts below s_j/2, the C-side q=21,...,29 fixed-point-free pause bounds, and the C-side q=30,...,60 twenty-fourth-pause arithmetic margins
+bc_twentyfifth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP twenty-fifth nonboundary frontier verifier; run on optimus with partitioned 8-thread B jobs and a 64-thread C job, verifies the B-side q=15,...,43 width-bad Pieri counts below s_j/2, the C-side q=21,...,30 fixed-point-free pause bounds, and the C-side q=31,...,63 twenty-fifth-pause arithmetic margins
+bc_twentysixth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP twenty-sixth nonboundary frontier verifier; run on optimus with partitioned 8-thread B jobs and a 64-thread C job, verifies the B-side q=15,...,45 width-bad Pieri counts below s_j/2, the C-side q=21,...,31 fixed-point-free pause bounds, and the C-side q=32,...,65 twenty-sixth-pause arithmetic margins
+bc_twentyseventh_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP twenty-seventh nonboundary frontier verifier; run on optimus with partitioned 8-thread B jobs and a 64-thread C job, verifies the B-side q=15,...,47 width-bad Pieri counts below s_j/2, the C-side q=21,...,32 fixed-point-free pause bounds, and the C-side q=33,...,68 twenty-seventh-pause arithmetic margins
+bc_twentyeighth_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP/OpenMP twenty-eighth nonboundary frontier verifier; run on optimus with partitioned 8-thread B jobs and a 64-thread C job, verifies the B-side q=15,...,41 width-bad Pieri counts below s_j/2, the C-side q=21,...,33 fixed-point-free pause bounds, and the C-side q=34,...,70 twenty-eighth-pause arithmetic margins
+bc_twentyeighth_b_absorption_gmp_certificate.log	replay	accepted	B-side exact C++/GMP twenty-eighth nonboundary absorption verifier; verifies q=42,...,49 using the q-dependent lower-box quotient floor 2q-27 and exact stable moments, and verifies the fixed-floor q=50 factorial base and induction ratio for all q>=50
+bc_twentyninth_c_frontier_gmp_certificate.log	replay	accepted	B/C exact C++/GMP twenty-ninth C-side nonboundary frontier verifier; run on optimus, verifies the C-side q=21,...,34 fixed-point-free pause bounds, the C-side q=35,...,73 twenty-ninth-pause arithmetic margins, and the q=74 central-binomial absorption base and induction ratios
+bc_twentyninth_b_absorption_gmp_certificate.log	replay	accepted	B-side exact C++/GMP twenty-ninth high-row nonboundary absorption verifier; run on optimus, verifies q=43,...,52 using the q-dependent lower-box quotient floor 2q-28 and exact stable moments, and verifies the fixed-floor q=53 factorial base and induction ratio for all q>=53
+bc_fixed_even_envelope_m32_diagnostic.log	replay	diagnostic	B/C exact C++/GMP/OpenMP recursive fixed-even envelope diagnostic; first reports max_W>2^(2m) at m=29, so this envelope is not a uniform final supplier
+post_m29_lower_bound_supplier_certificate.log	replay	superseded	stale 472-row transcript, not proof evidence
+post_m29_b_unitary_square_trace_mpfr_certificate.log	replay	accepted	384-bit directed-rounding MPFR verifier for the source-audited Rains/CJL type-B square-trace supplier; checks four strict log inequalities for all 94 rows B_124..B_217 and reports failures=0
+post_m29_bc_tilted_mgf_mpfr_certificate.log	replay	accepted	384-bit directed-rounding MPFR verifier for the source-audited CJL defining-trace MGF tilts and Rains/CJL square-trace tails; checks 62 rows B_62..B_123 and 156 rows C_62..C_217, including both type-C component domains, and reports failures=0
+post_m29_bc_layered_mgf_mpfr_certificate.log	replay	accepted	384-bit directed-rounding MPFR verifier for the source-audited layered trace-MGF supplier; checks exact CJL Toeplitz-Hankel determinants and Bessel remainders for B_14,B_15, extended CJL/Rains bounds for the other rows, exact stable push moments, and strict one-sided comparisons for 48 rows B_14..B_61, 42 rows C_20..C_61, and 243 A-free rows D_53..D_295; reports failures=0
+post_m29_low_bc_exact_mgf_mpfr_certificate.log	replay	accepted	384-bit directed-rounding C++/GMP/MPFR exact Toeplitz-Hankel MGF verifier for 22 low-rank B/C terminal tails; reports failures=0 and a strictly positive final margin in every row
+post_m29_low_bc_exact_onset_bridge_certificate.log	replay	accepted	short exact-integer finite Chain replay connecting six low-rank B/C first-hit rows to their exact-MGF onsets; checks 34 differences with strictly positive integer lower bounds
+post_m29_d25_52_exact_mgf_mpfr_machine_c_certificate.log	replay	accepted	machine-C 384-bit directed-rounding C++/GMP/MPFR verifier for 28 finite-rank type-D onsets D_25..D_52; uses exact normalized SO-even defining MGFs at D_25..D_28, exact Rains square-component MGFs throughout, and reports failures=0
+post_m29_d25_52_correction_interval_gmp_machine_c_certificate.log	replay	accepted	machine-C exact C++/GMP/OpenMP two-sided correction-box verifier for all 707 finite Chain steps in D_25..D_52; reports failures=0 and a strictly positive exact lower bound in every step
+post_m29_d53_295_short_frontier_gmp_machine_c_certificate.log	replay	accepted	exact GMP/OpenMP A-free type-D frontier replay; checks unique odd onsets, minimum A-free slack 1, all active Chain steps m=30..163 for D_53..D_295, and reports failures=0
+d4_j18_denv_counterexample_gmp_machine_c.log	replay	accepted	exact machine-C C++/GMP Pieri replay disproving the legacy DEnv moment-correction sign at D_4,j=18
+d4_24_exact_adjoint_sources.sha256	input-exact-moment-manifest	accepted	machine-C C++/GMP exact signed adjoint-moment sources consumed by the unconditional D4-D24 bridge and D10-D24 terminal-tail replays
+d4_modular_weyl_exact_moments_certificate.log	replay	accepted	exact D4 CRT reconstruction audit over five C++ modular Weyl sources; checks 60 moments and 37 full-source overlaps with failures=0
+post_m29_d4_24_exact_prefix_interval_gmp_certificate.log	replay	accepted	exact C++/GMP/OpenMP D4-D24 finite bridge; checks all 530 row-gated Chain steps with strictly positive lower endpoints
+post_m29_d10_exact_tail_gmp_certificate.log	replay	accepted	exact C++/GMP rational D10 terminal-tail certificate from machine-C full adjoint moments through degree 38
+post_m29_d11_exact_mgf_mpfr_machine_c_certificate.log	replay	accepted	machine-C directed 384-bit C++/GMP/MPFR D11 exact-moment terminal-tail certificate from odd exponent 75
+post_m29_d11_onset75_bridge_gmp_machine_c_certificate.log	replay	accepted	machine-C exact C++/GMP/OpenMP D11 bridge from the stable edge through the exact-MGF onset 75; checks 34 Chain steps with failures=0
+post_m29_d12_24_exact_mgf_mpfr_certificate.log	replay	accepted	directed 384-bit C++/GMP/MPFR D12-D24 exact-moment terminal-tail certificate at odd exponent 63; checks 13 rows with failures=0
+d4_24_exact_adjoint_sources/superseded_optimus/superseded_optimus.sha256	superseded-manifest	superseded	integrity index for earlier optimus C++/GMP source runs excluded from every active source glob
+source_snapshots/source_snapshots.sha256	source-snapshot-manifest	diagnostic	historical accepted-source snapshots retained to resolve immutable source hashes printed by earlier certificate records

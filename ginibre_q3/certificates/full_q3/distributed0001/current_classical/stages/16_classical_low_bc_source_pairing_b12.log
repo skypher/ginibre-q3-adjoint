@@ -1,0 +1,30 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp B12 53 --stable-moments /home/yang/q3/ginibre_q3/references/oeis_A002137_stable.txt /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_40.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_41.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_42.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_43.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_44.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_45.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_46.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_47.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_48.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_49.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_50.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_51.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_52.log /home/yang/q3/ginibre_q3/certificates/post_m29/b12_delta_logs_bonly/b12_delta_53.log /home/yang/q3/ginibre_q3/certificates/post_m29/m30_B11_12_lower_exact39.log
+power=1 support=1 elapsed_seconds=2.659e-05
+power=2 support=6 elapsed_seconds=2.107e-05
+power=3 support=14 elapsed_seconds=0.000111901
+power=4 support=32 elapsed_seconds=0.000268515
+power=5 support=66 elapsed_seconds=0.000661455
+power=6 support=132 elapsed_seconds=0.0013967
+power=7 support=248 elapsed_seconds=0.00290622
+power=8 support=453 elapsed_seconds=0.00552367
+power=9 support=797 elapsed_seconds=0.010239
+power=10 support=1368 elapsed_seconds=0.0186505
+power=11 support=2287 elapsed_seconds=0.0329004
+power=12 support=3750 elapsed_seconds=0.0560085
+power=13 support=6012 elapsed_seconds=0.0949495
+power=14 support=9464 elapsed_seconds=0.157225
+power=15 support=14622 elapsed_seconds=0.252907
+power=16 support=22222 elapsed_seconds=0.395892
+power=17 support=33238 elapsed_seconds=0.615817
+power=18 support=49006 elapsed_seconds=0.962362
+power=19 support=71260 elapsed_seconds=1.46784
+power=20 support=102332 elapsed_seconds=2.23803
+power=21 support=145199 elapsed_seconds=3.18847
+power=22 support=203765 elapsed_seconds=4.69819
+power=23 support=282976 elapsed_seconds=6.48646
+power=24 support=389182 elapsed_seconds=8.90249
+power=25 support=530340 elapsed_seconds=13.1716
+power=26 support=716510 elapsed_seconds=20.3516
+power=27 support=960158 elapsed_seconds=22.9786
+root_datum=B_12 rank=12 roots=288 maximum_coordinate=27
+SUMMARY group=B_12 moments=54 source_values=28 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

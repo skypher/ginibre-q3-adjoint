@@ -1,0 +1,10 @@
+B/C rank-pair single-delta reverse certificate
+rank = 7
+moment = 44
+B_7 target count = 18095
+C_7 target count = 65222
+    B/C_7 Delta_44 shared reverse step 1/44 frontier=910325 colors=2 elapsed=1.84466s
+    B/C_7 Delta_44 shared reverse step 2/44 frontier=3002460 colors=2 elapsed=22.1742s
+    B/C_7 Delta_44 shared reverse step 3/44 frontier=5083565 colors=2 elapsed=88.8442s
+    B/C_7 Delta_44 shared reverse step 4/44 frontier=6331458 colors=2 elapsed=212.029s
+    B/C_7 Delta_44 shared reverse step 5/44 frontier=6630977 colors=2 elapsed=378.31s

@@ -1,0 +1,23 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp D6 40 --stable-moments /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/references/oeis_A002137_stable.txt /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m21_26.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m27_30.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m31_32.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m33_34.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m35_35.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m36_36.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m37_37.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m38_38.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m4_20.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m39_39.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m40_40.log
+power=1 support=1 elapsed_seconds=4.298e-06
+power=2 support=6 elapsed_seconds=1.973e-06
+power=3 support=15 elapsed_seconds=8.045e-06
+power=4 support=33 elapsed_seconds=1.8665e-05
+power=5 support=65 elapsed_seconds=4.1697e-05
+power=6 support=122 elapsed_seconds=8.3134e-05
+power=7 support=213 elapsed_seconds=0.000158014
+power=8 support=357 elapsed_seconds=0.000297544
+power=9 support=574 elapsed_seconds=0.000494962
+power=10 support=891 elapsed_seconds=0.000840806
+power=11 support=1341 elapsed_seconds=0.00132198
+power=12 support=1970 elapsed_seconds=0.00209688
+power=13 support=2824 elapsed_seconds=0.00313955
+power=14 support=3969 elapsed_seconds=0.00471755
+power=15 support=5477 elapsed_seconds=0.0066365
+power=16 support=7435 elapsed_seconds=0.00951862
+power=17 support=9943 elapsed_seconds=0.012938
+power=18 support=13124 elapsed_seconds=0.01787
+power=19 support=17107 elapsed_seconds=0.0238938
+power=20 support=22053 elapsed_seconds=0.0322949
+root_datum=D_6 rank=6 roots=60 maximum_coordinate=20
+SUMMARY group=D_6 moments=41 source_values=70 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

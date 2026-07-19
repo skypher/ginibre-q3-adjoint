@@ -1,0 +1,10 @@
+__RUN_ID=fullq3bcd0007_bounded_littlewood
+__HOST=nb1cb2f
+__START_UTC=2026-07-15T05:46:44Z
+__OMP_NUM_THREADS=24
+61bde65cd2ad346c1b128ac2d47b9353ccdf7cd1b043ada604eccf7cb380d656  verify_full_q3_bcd_bounded_littlewood_gmp.cpp
+7e913141d86e3f52d003b8cf5a1f2a0582d4a93722ecc60c04201b062acdabb9  full_q3_bcd_remaining_data.hpp
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+/root/q3_full_bounded_littlewood_20260715/run_fullq3bcd0007_machine_c.sh: line 16: /usr/bin/time: No such file or directory
+__EXIT_STATUS=127
+__END_UTC=2026-07-15T05:46:44Z

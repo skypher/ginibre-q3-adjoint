@@ -1,0 +1,38 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=bc22efcafafe2d40b5f5430cb8f9cb046bc6b9b188da684e61dc6fdfaa27077e
+__BINARY_SHA256=de780944b63a4472fc2ed6eda17ab4eabf291bf0646ab929a60f6a5ee6577b88
+__COMMAND=timeout 1200 ./classical_boundary_certificate --d-exact-moment-range 19 19 29 29 --stable-moments oeis_A002137_stable.txt --reverse-target-sums --progress
+D exact shared moment range ranks 19..19 moments m_29..m_29 C++ certificate
+begin D_19=SO(38)
+shared D exact moment m_29 ranks 19..19
+    m_29: determinant shared reverse step 1/29 frontier=253 colors=1 elapsed=0.00698926s
+    m_29: determinant shared reverse step 2/29 frontier=599 colors=1 elapsed=0.0475418s
+    m_29: determinant shared reverse step 3/29 frontier=854 colors=1 elapsed=0.137699s
+    m_29: determinant shared reverse step 4/29 frontier=1021 colors=1 elapsed=0.2557s
+    m_29: determinant shared reverse step 5/29 frontier=1118 colors=1 elapsed=0.382204s
+    m_29: determinant shared reverse step 6/29 frontier=1170 colors=1 elapsed=0.503842s
+    m_29: determinant shared reverse step 7/29 frontier=1196 colors=1 elapsed=0.613101s
+    m_29: determinant shared reverse step 8/29 frontier=1208 colors=1 elapsed=0.709272s
+    m_29: determinant shared reverse step 9/29 frontier=1213 colors=1 elapsed=0.790887s
+    m_29: determinant shared reverse step 10/29 frontier=1215 colors=1 elapsed=0.859235s
+    m_29: determinant shared reverse step 11/29 frontier=1215 colors=1 elapsed=0.91544s
+    m_29: determinant shared reverse step 12/29 frontier=1215 colors=1 elapsed=0.960236s
+    m_29: determinant shared reverse step 13/29 frontier=1215 colors=1 elapsed=0.994927s
+    m_29: determinant shared reverse step 14/29 frontier=1215 colors=1 elapsed=1.02119s
+    m_29: determinant shared reverse step 15/29 frontier=1212 colors=1 elapsed=1.04075s
+    m_29: determinant shared reverse step 16/29 frontier=1196 colors=1 elapsed=1.05492s
+    m_29: determinant shared reverse step 17/29 frontier=1133 colors=1 elapsed=1.06491s
+    m_29: determinant shared reverse step 18/29 frontier=946 colors=1 elapsed=1.07163s
+    m_29: determinant shared reverse step 19/29 frontier=627 colors=1 elapsed=1.07572s
+    m_29: determinant shared reverse step 20/29 frontier=385 colors=1 elapsed=1.07801s
+    m_29: determinant shared reverse step 21/29 frontier=231 colors=1 elapsed=1.07917s
+    m_29: determinant shared reverse step 22/29 frontier=135 colors=1 elapsed=1.07976s
+    m_29: determinant shared reverse step 23/29 frontier=77 colors=1 elapsed=1.08003s
+    m_29: determinant shared reverse step 24/29 frontier=42 colors=1 elapsed=1.08015s
+    m_29: determinant shared reverse step 25/29 frontier=22 colors=1 elapsed=1.0802s
+    m_29: determinant shared reverse step 26/29 frontier=11 colors=1 elapsed=1.08022s
+    m_29: determinant shared reverse step 27/29 frontier=5 colors=1 elapsed=1.08023s
+    m_29: determinant shared reverse step 28/29 frontier=2 colors=1 elapsed=1.08023s
+    m_29: determinant shared reverse step 29/29 frontier=1 colors=1 elapsed=1.08023s
+  D_19 m_29 += O_even 0 + det 6153018266839542931; Delta_29 = 6153018266839542931; moment_29 = 718494507740924221285667021123
+__EXIT_STATUS=0

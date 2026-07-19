@@ -1,0 +1,39 @@
+E_6 positive roots (6D doubled): 36 (expect 36)
+  delta^2: 6/36, len=425
+  delta^2: 12/36, len=18833
+  delta^2: 18/36, len=177777
+  delta^2: 24/36, len=4170995
+  delta^2: 30/36, len=20908617
+  delta^2: 36/36, len=57583477
+E_6 Z_0 = 51840 (|W(E_6)| = 51840)
+E_6 m_0 = 1  (len(chi^k)=1)
+E_6 m_1 = 0  (len(chi^k)=73)
+E_6 m_2 = 1  (len(chi^k)=1135)
+E_6 m_3 = 1  (len(chi^k)=7831)
+E_6 m_4 = 5  (len(chi^k)=34147)
+E_6 m_5 = 17  (len(chi^k)=111835)
+E_6 m_6 = 90  (len(chi^k)=301645)
+E_6 m_7 = 542  (len(chi^k)=707365)
+E_6 m_8 = 3962  (len(chi^k)=1492669)
+E_6 m_9 = 33554  (len(chi^k)=2900773)
+E_6 m_10 = 324489  (len(chi^k)=5276899)
+E_6 m_11 = 3520885  (len(chi^k)=9093547)
+E_6 m_12 = 42300709  (len(chi^k)=14978575)
+E_6 m_13 = 556530474  (len(chi^k)=23746087)
+E_6 Chain:
+  Chain m=0: diff = 22 OK
+  Chain m=1: diff = 948 OK
+  Chain m=2: diff = 69128 OK
+  Chain m=3: diff = 8028586 OK
+  Chain m=4: diff = 1363156348 OK
+Traceback (most recent call last):
+  File "/tmp/e6_exact.py", line 106, in <module>
+    diff = Q3(2*mm+3, moments) - 4 * Q3(2*mm+1, moments)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/e6_exact.py", line 100, in Q3
+    return 2 * sum(comb(n, k) * (m[k+2] * m[n-k] - m[k+1] * m[n-k+1]) for k in range(n+1))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/e6_exact.py", line 100, in <genexpr>
+    return 2 * sum(comb(n, k) * (m[k+2] * m[n-k] - m[k+1] * m[n-k+1]) for k in range(n+1))
+                                                            ~^^^^^^^
+IndexError: list index out of range

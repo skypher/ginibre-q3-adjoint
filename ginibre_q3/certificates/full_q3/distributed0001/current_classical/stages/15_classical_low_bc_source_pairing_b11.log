@@ -1,0 +1,29 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp B11 51 --stable-moments /home/yang/q3/ginibre_q3/references/oeis_A002137_stable.txt /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_24.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_25.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_26.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_27.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_28.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_29.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_30.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_31.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_32.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_33.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_34.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_35.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_36.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_37.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_38.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_39.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_40.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_41.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_42.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_43.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_44.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_45.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_46.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_47.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_48.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_49.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_50.log /home/yang/q3/ginibre_q3/certificates/post_m29/b11_delta_logs_bonly/b11_delta_51.log /home/yang/q3/ginibre_q3/certificates/post_m29/m30_B11_12_lower_exact39.log
+power=1 support=1 elapsed_seconds=2.4957e-05
+power=2 support=6 elapsed_seconds=1.9296e-05
+power=3 support=14 elapsed_seconds=9.7243e-05
+power=4 support=32 elapsed_seconds=0.000237367
+power=5 support=66 elapsed_seconds=0.000602725
+power=6 support=132 elapsed_seconds=0.00126775
+power=7 support=248 elapsed_seconds=0.00260265
+power=8 support=453 elapsed_seconds=0.00501394
+power=9 support=797 elapsed_seconds=0.00934699
+power=10 support=1368 elapsed_seconds=0.0169955
+power=11 support=2287 elapsed_seconds=0.0300366
+power=12 support=3737 elapsed_seconds=0.0514697
+power=13 support=5964 elapsed_seconds=0.0863687
+power=14 support=9330 elapsed_seconds=0.143132
+power=15 support=14309 elapsed_seconds=0.237802
+power=16 support=21568 elapsed_seconds=0.357628
+power=17 support=31968 elapsed_seconds=0.556098
+power=18 support=46681 elapsed_seconds=0.851151
+power=19 support=67202 elapsed_seconds=1.27062
+power=20 support=95504 elapsed_seconds=1.8935
+power=21 support=134074 elapsed_seconds=2.71902
+power=22 support=186127 elapsed_seconds=3.81886
+power=23 support=255672 elapsed_seconds=5.52847
+power=24 support=347784 elapsed_seconds=7.81832
+power=25 support=468729 elapsed_seconds=10.2791
+power=26 support=626314 elapsed_seconds=15.7715
+root_datum=B_11 rank=11 roots=242 maximum_coordinate=26
+SUMMARY group=B_11 moments=52 source_values=28 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

@@ -1,0 +1,44 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=bc22efcafafe2d40b5f5430cb8f9cb046bc6b9b188da684e61dc6fdfaa27077e
+D exact shared moment range ranks 11..11 moments m_40..m_40 C++ certificate
+begin D_11=SO(22)
+shared D exact moment m_40 ranks 11..11
+    coeff heartbeat misses=356687 cache=356673 power=27 partition-size=24
+    coeff heartbeat misses=662719 cache=662708 power=30 partition-size=19
+    coeff heartbeat misses=944639 cache=944626 power=28 partition-size=26
+    coeff heartbeat misses=1221527 cache=1221511 power=25 partition-size=19
+    coeff heartbeat misses=1480810 cache=1480801 power=32 partition-size=23
+    coeff heartbeat misses=1732738 cache=1732728 power=31 partition-size=23
+    coeff heartbeat misses=1985161 cache=1985152 power=32 partition-size=22
+    coeff heartbeat misses=2205010 cache=2205006 power=37 partition-size=25
+    m_40: O-even target 1000/1212 elapsed=87.6717s
+    coeff heartbeat misses=2411961 cache=2411955 power=35 partition-size=21
+    m_40: O-even target 1212/1212 elapsed=94.4088s
+    coeff heartbeat misses=2830024 cache=2830020 power=37 partition-size=21
+    coeff heartbeat misses=3355445 cache=3355433 power=29 partition-size=15
+    coeff heartbeat misses=3839061 cache=3839057 power=37 partition-size=21
+    coeff heartbeat misses=4307563 cache=4307552 power=30 partition-size=20
+    depth 29: partition 1000/4535 elapsed=36.6022s
+    coeff heartbeat misses=4785208 cache=4785196 power=29 partition-size=13
+    coeff heartbeat misses=5214626 cache=5214618 power=33 partition-size=11
+    coeff heartbeat misses=5657043 cache=5657031 power=29 partition-size=11
+    coeff heartbeat misses=6059543 cache=6059535 power=33 partition-size=19
+    coeff heartbeat misses=6478576 cache=6478567 power=32 partition-size=19
+    depth 29: partition 2000/4535 elapsed=94.971s
+    coeff heartbeat misses=6802930 cache=6802927 power=38 partition-size=18
+    coeff heartbeat misses=7200132 cache=7200124 power=33 partition-size=18
+    coeff heartbeat misses=7597325 cache=7597317 power=33 partition-size=18
+    coeff heartbeat misses=7971801 cache=7971794 power=34 partition-size=13
+    coeff heartbeat misses=8351171 cache=8351160 power=30 partition-size=10
+    coeff heartbeat misses=8704765 cache=8704755 power=31 partition-size=17
+    depth 29: partition 3000/4535 elapsed=151.616s
+    coeff heartbeat misses=9066411 cache=9066408 power=38 partition-size=21
+    coeff heartbeat misses=9425146 cache=9425138 power=33 partition-size=22
+    coeff heartbeat misses=9765233 cache=9765224 power=32 partition-size=20
+    coeff heartbeat misses=10119130 cache=10119127 power=38 partition-size=21
+    coeff heartbeat misses=10439919 cache=10439907 power=29 partition-size=15
+    depth 29: partition 4000/4535 elapsed=196.605s
+    coeff heartbeat misses=10766743 cache=10766737 power=35 partition-size=21
+    depth 29: partition 4535/4535 elapsed=212.852s
+  D_11 m_40 += O_even -382236411296066283136317364862713699429068 + det 3648082598999196307251345200090198792913613500; Delta_40 = 3647700362587900240968208882725336079214184432; moment_40 = 60162600741992345315636359287755714181591481488
+__EXIT_STATUS=0

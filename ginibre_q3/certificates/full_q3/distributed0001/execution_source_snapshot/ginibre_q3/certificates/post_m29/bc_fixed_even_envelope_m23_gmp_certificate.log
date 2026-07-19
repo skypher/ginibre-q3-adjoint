@@ -1,0 +1,31 @@
+g++ -O3 -march=native -std=c++20 -Wall -fopenmp post_m29_bc_fixed_even_envelope_gmp.cpp -lgmpxx -lgmp -o post_m29_bc_fixed_even_envelope_gmp
+B/C fixed-even recursive-envelope GMP verifier
+VERIFIES W(gamma)=max_e sum_{y in Y(gamma,e)} W(gamma\\{y,e})
+and max_{|gamma|=2m-1} W(gamma) <= 2^(2m) for reported m
+host=optimus
+max_m=23 OpenMP threads=64
+RESULT m=1 partitions=1 max_W=1 max_W_bits=1 budget=2^2 budget_value=4 pass_full_budget=yes best_shape=(1)
+RESULT m=2 partitions=3 max_W=1 max_W_bits=1 budget=2^4 budget_value=16 pass_full_budget=yes best_shape=(3)
+RESULT m=3 partitions=7 max_W=1 max_W_bits=1 budget=2^6 budget_value=64 pass_full_budget=yes best_shape=(5)
+RESULT m=4 partitions=15 max_W=2 max_W_bits=2 budget=2^8 budget_value=256 pass_full_budget=yes best_shape=(4,2,1)
+RESULT m=5 partitions=30 max_W=4 max_W_bits=3 budget=2^10 budget_value=1024 pass_full_budget=yes best_shape=(4,3,1,1)
+RESULT m=6 partitions=56 max_W=11 max_W_bits=4 budget=2^12 budget_value=4096 pass_full_budget=yes best_shape=(5,3,2,1)
+RESULT m=7 partitions=101 max_W=29 max_W_bits=5 budget=2^14 budget_value=16384 pass_full_budget=yes best_shape=(5,4,2,1,1)
+RESULT m=8 partitions=176 max_W=94 max_W_bits=7 budget=2^16 budget_value=65536 pass_full_budget=yes best_shape=(5,4,3,2,1)
+RESULT m=9 partitions=297 max_W=320 max_W_bits=9 budget=2^18 budget_value=262144 pass_full_budget=yes best_shape=(6,4,3,2,1,1)
+RESULT m=10 partitions=490 max_W=1100 max_W_bits=11 budget=2^20 budget_value=1048576 pass_full_budget=yes best_shape=(6,5,3,2,2,1)
+RESULT m=11 partitions=792 max_W=4504 max_W_bits=13 budget=2^22 budget_value=4194304 pass_full_budget=yes best_shape=(6,5,4,3,2,1)
+RESULT m=12 partitions=1255 max_W=19960 max_W_bits=15 budget=2^24 budget_value=16777216 pass_full_budget=yes best_shape=(7,5,4,3,2,1,1)
+RESULT m=13 partitions=1958 max_W=85787 max_W_bits=17 budget=2^26 budget_value=67108864 pass_full_budget=yes best_shape=(7,6,4,3,2,2,1)
+RESULT m=14 partitions=3010 max_W=370729 max_W_bits=19 budget=2^28 budget_value=268435456 pass_full_budget=yes best_shape=(8,6,5,3,2,2,1)
+RESULT m=15 partitions=4565 max_W=2037069 max_W_bits=21 budget=2^30 budget_value=1073741824 pass_full_budget=yes best_shape=(8,6,5,4,3,2,1)
+RESULT m=16 partitions=6842 max_W=10845675 max_W_bits=24 budget=2^32 budget_value=4294967296 pass_full_budget=yes best_shape=(8,7,5,4,3,2,1,1)
+RESULT m=17 partitions=10143 max_W=54725353 max_W_bits=26 budget=2^34 budget_value=17179869184 pass_full_budget=yes best_shape=(8,7,6,4,3,2,2,1)
+RESULT m=18 partitions=14883 max_W=286275138 max_W_bits=29 budget=2^36 budget_value=68719476736 pass_full_budget=yes best_shape=(9,7,6,4,3,3,2,1)
+RESULT m=19 partitions=21637 max_W=1788942066 max_W_bits=31 budget=2^38 budget_value=274877906944 pass_full_budget=yes best_shape=(9,7,6,5,4,3,2,1)
+RESULT m=20 partitions=31185 max_W=11349507850 max_W_bits=34 budget=2^40 budget_value=1099511627776 pass_full_budget=yes best_shape=(9,8,6,5,4,3,2,1,1)
+RESULT m=21 partitions=44583 max_W=67061584700 max_W_bits=36 budget=2^42 budget_value=4398046511104 pass_full_budget=yes best_shape=(9,8,7,5,4,3,2,2,1)
+RESULT m=22 partitions=63261 max_W=403479661259 max_W_bits=39 budget=2^44 budget_value=17592186044416 pass_full_budget=yes best_shape=(10,8,7,5,4,3,3,2,1)
+RESULT m=23 partitions=89134 max_W=2554342683425 max_W_bits=42 budget=2^46 budget_value=70368744177664 pass_full_budget=yes best_shape=(10,8,7,6,4,3,3,2,1,1)
+SUMMARY failures=0
+__EXIT_STATUS=0

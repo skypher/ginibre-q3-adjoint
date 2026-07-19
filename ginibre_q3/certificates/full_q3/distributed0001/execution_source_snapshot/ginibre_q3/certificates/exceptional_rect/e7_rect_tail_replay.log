@@ -1,0 +1,22 @@
+COMMAND: python3 -u ginibre_q3/character_ring_iter/direct_chain_rect_e7_certificate.py
+group=E7 n0=65
+rectangle_s=[53361/2500, 8649/400] rectangle_t=[225/16, 143641/10000]
+cap_lower_from_pi_gt_333_106=64870065/2988776
+gap_lower=22361947/20800000 log10_rect_fraction_lower=-40.86
+h65_lower=673037674373/1267500000000 direct_factor65_lower=8011151553847490362503008881/401639062500000000000000
+sine_exponent_bound=1840853/112500
+log10_ratio65_lower=1.33
+log10_odd_step_ratio_lower=0.97
+log10_exact_q3_n65=93.54
+quartic_identity_constant: OK
+cap_contains_s1: OK
+cap_contains_t1: OK
+positive_gap: OK
+positive_h65: OK
+positive_direct65: OK
+h_monotone_from_n65: OK
+sine_exponent_lt_17: OK
+ratio65_gt_10: OK
+odd_step_ratio_gt_1: OK
+exact_q3_n65_positive: OK
+__EXIT_STATUS=0

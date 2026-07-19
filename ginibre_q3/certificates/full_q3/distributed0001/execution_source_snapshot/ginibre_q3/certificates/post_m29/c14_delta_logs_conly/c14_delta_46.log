@@ -1,0 +1,53 @@
+B/C family single-delta reverse certificate
+family = C
+rank = 14
+moment = 46
+C_14 target count = 34049
+    C_14 Delta_46 shared reverse step 1/46 frontier=399714 colors=1 elapsed=1.31428s
+    C_14 Delta_46 shared reverse step 2/46 frontier=1188451 colors=1 elapsed=15.6804s
+    C_14 Delta_46 shared reverse step 3/46 frontier=1858587 colors=1 elapsed=58.5103s
+    C_14 Delta_46 shared reverse step 4/46 frontier=2225095 colors=1 elapsed=116.434s
+    C_14 Delta_46 shared reverse step 5/46 frontier=2327322 colors=1 elapsed=213.088s
+    C_14 Delta_46 shared reverse step 6/46 frontier=2262468 colors=1 elapsed=303.21s
+    C_14 Delta_46 shared reverse step 7/46 frontier=2105295 colors=1 elapsed=400.01s
+    C_14 Delta_46 shared reverse step 8/46 frontier=1905085 colors=1 elapsed=485.011s
+    C_14 Delta_46 shared reverse step 9/46 frontier=1689989 colors=1 elapsed=572.113s
+    C_14 Delta_46 shared reverse step 10/46 frontier=1477327 colors=1 elapsed=642.134s
+    C_14 Delta_46 shared reverse step 11/46 frontier=1275871 colors=1 elapsed=708.337s
+    C_14 Delta_46 shared reverse step 12/46 frontier=1090823 colors=1 elapsed=766.242s
+    C_14 Delta_46 shared reverse step 13/46 frontier=923894 colors=1 elapsed=817.086s
+    C_14 Delta_46 shared reverse step 14/46 frontier=775762 colors=1 elapsed=857.039s
+    C_14 Delta_46 shared reverse step 15/46 frontier=645633 colors=1 elapsed=912.274s
+    C_14 Delta_46 shared reverse step 16/46 frontier=532584 colors=1 elapsed=950.478s
+    C_14 Delta_46 shared reverse step 17/46 frontier=435077 colors=1 elapsed=982.011s
+    C_14 Delta_46 shared reverse step 18/46 frontier=351749 colors=1 elapsed=1007.48s
+    C_14 Delta_46 shared reverse step 19/46 frontier=281032 colors=1 elapsed=1030.25s
+    C_14 Delta_46 shared reverse step 20/46 frontier=221606 colors=1 elapsed=1049.56s
+    C_14 Delta_46 shared reverse step 21/46 frontier=172127 colors=1 elapsed=1062.33s
+    C_14 Delta_46 shared reverse step 22/46 frontier=131486 colors=1 elapsed=1073.42s
+    C_14 Delta_46 shared reverse step 23/46 frontier=98596 colors=1 elapsed=1080.94s
+    C_14 Delta_46 shared reverse step 24/46 frontier=72527 colors=1 elapsed=1086.49s
+    C_14 Delta_46 shared reverse step 25/46 frontier=52341 colors=1 elapsed=1090.64s
+    C_14 Delta_46 shared reverse step 26/46 frontier=37134 colors=1 elapsed=1093.61s
+    C_14 Delta_46 shared reverse step 27/46 frontier=25974 colors=1 elapsed=1095.62s
+    C_14 Delta_46 shared reverse step 28/46 frontier=17969 colors=1 elapsed=1096.93s
+    C_14 Delta_46 shared reverse step 29/46 frontier=12308 colors=1 elapsed=1097.77s
+    C_14 Delta_46 shared reverse step 30/46 frontier=8349 colors=1 elapsed=1098.29s
+    C_14 Delta_46 shared reverse step 31/46 frontier=5604 colors=1 elapsed=1098.61s
+    C_14 Delta_46 shared reverse step 32/46 frontier=3718 colors=1 elapsed=1098.8s
+    C_14 Delta_46 shared reverse step 33/46 frontier=2436 colors=1 elapsed=1098.91s
+    C_14 Delta_46 shared reverse step 34/46 frontier=1575 colors=1 elapsed=1098.98s
+    C_14 Delta_46 shared reverse step 35/46 frontier=1002 colors=1 elapsed=1099.01s
+    C_14 Delta_46 shared reverse step 36/46 frontier=627 colors=1 elapsed=1099.03s
+    C_14 Delta_46 shared reverse step 37/46 frontier=385 colors=1 elapsed=1099.05s
+    C_14 Delta_46 shared reverse step 38/46 frontier=231 colors=1 elapsed=1099.05s
+    C_14 Delta_46 shared reverse step 39/46 frontier=135 colors=1 elapsed=1099.05s
+    C_14 Delta_46 shared reverse step 40/46 frontier=77 colors=1 elapsed=1099.06s
+    C_14 Delta_46 shared reverse step 41/46 frontier=42 colors=1 elapsed=1099.06s
+    C_14 Delta_46 shared reverse step 42/46 frontier=22 colors=1 elapsed=1099.06s
+    C_14 Delta_46 shared reverse step 43/46 frontier=11 colors=1 elapsed=1099.06s
+    C_14 Delta_46 shared reverse step 44/46 frontier=5 colors=1 elapsed=1099.06s
+    C_14 Delta_46 shared reverse step 45/46 frontier=2 colors=1 elapsed=1099.06s
+    C_14 Delta_46 shared reverse step 46/46 frontier=1 colors=1 elapsed=1099.06s
+  C_14 Delta_46 = -7530137067639704451795992806406397094400852650890
+__EXIT_STATUS=0

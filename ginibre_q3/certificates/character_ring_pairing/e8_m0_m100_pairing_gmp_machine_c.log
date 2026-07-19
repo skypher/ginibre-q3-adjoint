@@ -1,0 +1,57 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=5633f4002ec40646a6b488b38c084401b9d1f47b41c2f14d3945d35c524377f4
+__BINARY_SHA256=f2bdeca21a2413b17eff5435b044e83fb02aeb2ce0527eb98287ee2a193ca4fe
+__COMMAND=./verify_character_ring_moment_sources_gmp E8 100 e8_70.log arxiv_2412_21189_e8_m71_m100.txt
+power=1 support=1 elapsed_seconds=7.293e-06
+power=2 support=5 elapsed_seconds=4.097e-06
+power=3 support=10 elapsed_seconds=1.3044e-05
+power=4 support=20 elapsed_seconds=2.4756e-05
+power=5 support=35 elapsed_seconds=4.9091e-05
+power=6 support=62 elapsed_seconds=8.9997e-05
+power=7 support=102 elapsed_seconds=0.000167321
+power=8 support=165 elapsed_seconds=0.000289199
+power=9 support=256 elapsed_seconds=0.000487908
+power=10 support=390 elapsed_seconds=0.000806301
+power=11 support=578 elapsed_seconds=0.0012894
+power=12 support=843 elapsed_seconds=0.00200635
+power=13 support=1203 elapsed_seconds=0.00300988
+power=14 support=1694 elapsed_seconds=0.00454665
+power=15 support=2345 elapsed_seconds=0.00652162
+power=16 support=3208 elapsed_seconds=0.00950826
+power=17 support=4328 elapsed_seconds=0.0137311
+power=18 support=5780 elapsed_seconds=0.0188951
+power=19 support=7631 elapsed_seconds=0.0264561
+power=20 support=9984 elapsed_seconds=0.0357304
+power=21 support=12937 elapsed_seconds=0.0487356
+power=22 support=16630 elapsed_seconds=0.0657791
+power=23 support=21200 elapsed_seconds=0.0851554
+power=24 support=26836 elapsed_seconds=0.112316
+power=25 support=33724 elapsed_seconds=0.143182
+power=26 support=42114 elapsed_seconds=0.18534
+power=27 support=52257 elapsed_seconds=0.23842
+power=28 support=64477 elapsed_seconds=0.305231
+power=29 support=79104 elapsed_seconds=0.376048
+power=30 support=96557 elapsed_seconds=0.474398
+power=31 support=117263 elapsed_seconds=0.596228
+power=32 support=141754 elapsed_seconds=0.730397
+power=33 support=170577 elapsed_seconds=0.906306
+power=34 support=204401 elapsed_seconds=1.1178
+power=35 support=243918 elapsed_seconds=1.37758
+power=36 support=289961 elapsed_seconds=1.64811
+power=37 support=343394 elapsed_seconds=1.9947
+power=38 support=405246 elapsed_seconds=2.41064
+power=39 support=476588 elapsed_seconds=2.92376
+power=40 support=558677 elapsed_seconds=3.44677
+power=41 support=652827 elapsed_seconds=4.12292
+power=42 support=760567 elapsed_seconds=4.9423
+power=43 support=883494 elapsed_seconds=5.91305
+power=44 support=1023451 elapsed_seconds=7.05225
+power=45 support=1182367 elapsed_seconds=8.30828
+power=46 support=1362450 elapsed_seconds=9.83929
+power=47 support=1566012 elapsed_seconds=11.6137
+power=48 support=1795682 elapsed_seconds=13.6929
+power=49 support=2054213 elapsed_seconds=16.2355
+power=50 support=2344716 elapsed_seconds=18.9918
+root_datum=E8 rank=8 roots=240 maximum_coordinate=50
+SUMMARY group=E8 moments=101 source_values=101 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=0
+__EXIT_STATUS=0

@@ -1,0 +1,36 @@
+COMMAND: ./post_m29_d_stable_window_interval_gmp --certificate-d25-52
+D25-D52 correction-aware GMP interval certificate
+arithmetic=exact_integer correction_window=j<rank:0,rank<=j<=2rank:[0,U_j],j>2rank:[-s_j,U_j]
+upper_bound=U_j:s_j_all_parities
+openmp_max_threads=32
+row=D_25 onset=71 first_chain_m=10 last_chain_m=34 checks=25 minimum_lower_sign=1 minimum_lower=4695986280539928492451072 minimum_lower_log10=24.6717268194374917 minimum_chain_m=10
+row=D_26 onset=73 first_chain_m=11 last_chain_m=35 checks=25 minimum_lower_sign=1 minimum_lower=3297418493168610052651014528 minimum_lower_log10=27.5181740692966166 minimum_chain_m=11
+row=D_27 onset=71 first_chain_m=11 last_chain_m=34 checks=24 minimum_lower_sign=1 minimum_lower=3297418493168610052651014528 minimum_lower_log10=27.5181740692966166 minimum_chain_m=11
+row=D_28 onset=73 first_chain_m=12 last_chain_m=35 checks=24 minimum_lower_sign=1 minimum_lower=2678041202810108120505643086848 minimum_lower_log10=30.4278172545338741 minimum_chain_m=12
+row=D_29 onset=73 first_chain_m=12 last_chain_m=35 checks=24 minimum_lower_sign=1 minimum_lower=2678041202810108120505643086848 minimum_lower_log10=30.4278172545338741 minimum_chain_m=12
+row=D_30 onset=73 first_chain_m=13 last_chain_m=35 checks=23 minimum_lower_sign=1 minimum_lower=2490980850347968893521331343165696 minimum_lower_log10=33.3963703888692365 minimum_chain_m=13
+row=D_31 onset=75 first_chain_m=13 last_chain_m=36 checks=24 minimum_lower_sign=1 minimum_lower=2490980850347968893521331343165696 minimum_lower_log10=33.3963703888692365 minimum_chain_m=13
+row=D_32 onset=77 first_chain_m=14 last_chain_m=37 checks=24 minimum_lower_sign=1 minimum_lower=2630823303240928288181856543269127168 minimum_lower_log10=36.4200916800870687 minimum_chain_m=14
+row=D_33 onset=79 first_chain_m=14 last_chain_m=38 checks=25 minimum_lower_sign=1 minimum_lower=2630823303240928288181856543269127168 minimum_lower_log10=36.4200916800870687 minimum_chain_m=14
+row=D_34 onset=79 first_chain_m=15 last_chain_m=38 checks=24 minimum_lower_sign=1 minimum_lower=3131022252875784544447494957405451960832 minimum_lower_log10=39.4956861542559494 minimum_chain_m=15
+row=D_35 onset=81 first_chain_m=15 last_chain_m=39 checks=25 minimum_lower_sign=1 minimum_lower=3131022252875784544447494957405451960832 minimum_lower_log10=39.4956861542559494 minimum_chain_m=15
+row=D_36 onset=83 first_chain_m=16 last_chain_m=40 checks=25 minimum_lower_sign=1 minimum_lower=4170903835554993116757590564704000538042368 minimum_lower_log10=42.620230176858712 minimum_chain_m=16
+row=D_37 onset=83 first_chain_m=16 last_chain_m=40 checks=25 minimum_lower_sign=1 minimum_lower=4170903835554993116757590564704000538042368 minimum_lower_log10=42.620230176858712 minimum_chain_m=16
+row=D_38 onset=85 first_chain_m=17 last_chain_m=41 checks=25 minimum_lower_sign=1 minimum_lower=6181758764377005266608025634605815482088209408 minimum_lower_log10=45.7911120532436087 minimum_chain_m=17
+row=D_39 onset=85 first_chain_m=17 last_chain_m=41 checks=25 minimum_lower_sign=1 minimum_lower=6181758764377005266608025634605815482088209408 minimum_lower_log10=45.7911120532436087 minimum_chain_m=17
+row=D_40 onset=87 first_chain_m=18 last_chain_m=42 checks=25 minimum_lower_sign=1 minimum_lower=10138755458601155429840097290022912129304662020096 minimum_lower_log10=49.0059846482286829 minimum_chain_m=18
+row=D_41 onset=89 first_chain_m=18 last_chain_m=43 checks=26 minimum_lower_sign=1 minimum_lower=10138755458601155429840097290022912129304662020096 minimum_lower_log10=49.0059846482286829 minimum_chain_m=18
+row=D_42 onset=89 first_chain_m=19 last_chain_m=43 checks=25 minimum_lower_sign=1 minimum_lower=18311635458107092493208852614555819056301613477910528 minimum_lower_log10=52.2627271339637574 minimum_chain_m=19
+row=D_43 onset=91 first_chain_m=19 last_chain_m=44 checks=26 minimum_lower_sign=1 minimum_lower=18311635458107092493208852614555819056301613477910528 minimum_lower_log10=52.2627271339637574 minimum_chain_m=19
+row=D_44 onset=93 first_chain_m=20 last_chain_m=45 checks=26 minimum_lower_sign=1 minimum_lower=36258828674335538143239331493756785309871743273191063552 minimum_lower_log10=55.5594137702920534 minimum_chain_m=20
+row=D_45 onset=93 first_chain_m=20 last_chain_m=45 checks=26 minimum_lower_sign=1 minimum_lower=36258828674335538143239331493756785309871743273191063552 minimum_lower_log10=55.5594137702920534 minimum_chain_m=20
+row=D_46 onset=95 first_chain_m=21 last_chain_m=46 checks=26 minimum_lower_sign=1 minimum_lower=78394965510869188978073070225991946881629276230565006184448 minimum_lower_log10=58.8942881733852843 minimum_chain_m=21
+row=D_47 onset=97 first_chain_m=21 last_chain_m=47 checks=27 minimum_lower_sign=1 minimum_lower=78394965510869188978073070225991946881629276230565006184448 minimum_lower_log10=58.8942881733852843 minimum_chain_m=21
+row=D_48 onset=97 first_chain_m=22 last_chain_m=47 checks=26 minimum_lower_sign=1 minimum_lower=184391933352054723520988620064929318710573609887838085812011008 minimum_lower_log10=62.2657419179252116 minimum_chain_m=22
+row=D_49 onset=99 first_chain_m=22 last_chain_m=48 checks=27 minimum_lower_sign=1 minimum_lower=184391933352054723520988620064929318710573609887838085812011008 minimum_lower_log10=62.2657419179252116 minimum_chain_m=22
+row=D_50 onset=99 first_chain_m=23 last_chain_m=48 checks=26 minimum_lower_sign=1 minimum_lower=470215128384323017114157225486697529390724328114103334369939890176 minimum_lower_log10=65.6722965977113802 minimum_chain_m=23
+row=D_51 onset=101 first_chain_m=23 last_chain_m=49 checks=27 minimum_lower_sign=1 minimum_lower=470215128384323017114157225486697529390724328114103334369939890176 minimum_lower_log10=65.6722965977113802 minimum_chain_m=23
+row=D_52 onset=103 first_chain_m=24 last_chain_m=50 checks=27 minimum_lower_sign=1 minimum_lower=1295951275047754385311107869606245254765288973412864475150697991241728 minimum_lower_log10=69.1125886733125867 minimum_chain_m=24
+MINIMUM lower_sign=1 lower=4695986280539928492451072 lower_log10=24.6717268194374917 rank=D_25 chain_m=10
+SUMMARY ranks_checked=28 chain_steps_checked=707 failures=0
+__EXIT_STATUS=0

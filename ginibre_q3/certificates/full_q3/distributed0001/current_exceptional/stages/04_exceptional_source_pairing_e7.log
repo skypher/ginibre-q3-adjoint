@@ -1,0 +1,38 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp E7 70 /home/yang/q3/ginibre_q3/character_ring_iter/logs/e7_70.log
+power=1 support=1 elapsed_seconds=2.0529e-05
+power=2 support=5 elapsed_seconds=1.4237e-05
+power=3 support=11 elapsed_seconds=5.2579e-05
+power=4 support=23 elapsed_seconds=0.000119555
+power=5 support=43 elapsed_seconds=0.000260229
+power=6 support=79 elapsed_seconds=0.000484292
+power=7 support=135 elapsed_seconds=0.000942775
+power=8 support=223 elapsed_seconds=0.00171045
+power=9 support=357 elapsed_seconds=0.00289078
+power=10 support=553 elapsed_seconds=0.00529195
+power=11 support=833 elapsed_seconds=0.00440858
+power=12 support=1231 elapsed_seconds=0.00548881
+power=13 support=1775 elapsed_seconds=0.00853487
+power=14 support=2515 elapsed_seconds=0.0120825
+power=15 support=3506 elapsed_seconds=0.017908
+power=16 support=4810 elapsed_seconds=0.0290878
+power=17 support=6506 elapsed_seconds=0.0383127
+power=18 support=8697 elapsed_seconds=0.0518806
+power=19 support=11481 elapsed_seconds=0.0723668
+power=20 support=14997 elapsed_seconds=0.097315
+power=21 support=19400 elapsed_seconds=0.131485
+power=22 support=24859 elapsed_seconds=0.173406
+power=23 support=31579 elapsed_seconds=0.228086
+power=24 support=39808 elapsed_seconds=0.299809
+power=25 support=49793 elapsed_seconds=0.392636
+power=26 support=61851 elapsed_seconds=0.516902
+power=27 support=76332 elapsed_seconds=0.714357
+power=28 support=93613 elapsed_seconds=0.853553
+power=29 support=114135 elapsed_seconds=1.04662
+power=30 support=138408 elapsed_seconds=1.30069
+power=31 support=166952 elapsed_seconds=1.61434
+power=32 support=200397 elapsed_seconds=2.06792
+power=33 support=239429 elapsed_seconds=2.95369
+power=34 support=284783 elapsed_seconds=3.75203
+power=35 support=337296 elapsed_seconds=4.4329
+root_datum=E7 rank=7 roots=126 maximum_coordinate=35
+SUMMARY group=E7 moments=71 source_values=71 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=0

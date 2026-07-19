@@ -1,0 +1,19 @@
+COMMAND: python3 -u ginibre_q3/character_ring_iter/direct_chain_rect_e6_certificate.py
+group=E6 n0=75
+rectangle_s=[22, 23] rectangle_t=[0, 15/2]
+cap_lower_from_pi_gt_3=675/26
+gap_lower=31/22 log10_rect_fraction_lower=-21.55
+h75_lower=186517/303750 direct_factor75_lower=23506836148864/2562890625
+log10_ratio75_lower=9.61
+log10_odd_step_ratio_lower=1.84
+log10_exact_q3_n75=110.34
+cap_contains_s1: OK
+cap_contains_t1: OK
+positive_gap: OK
+positive_h75: OK
+positive_direct75: OK
+h_monotone_from_n75: OK
+ratio75_gt_1e9: OK
+odd_step_ratio_gt_1: OK
+exact_q3_n75_positive: OK
+__EXIT_STATUS=0

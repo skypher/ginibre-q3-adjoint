@@ -1,0 +1,36 @@
+B/C family single-delta reverse certificate
+family = B
+rank = 11
+moment = 29
+B_11 target count = 19
+    B_11 Delta_29 shared reverse step 1/29 frontier=62 colors=1 elapsed=0.00359352s
+    B_11 Delta_29 shared reverse step 2/29 frontier=154 colors=1 elapsed=0.0155219s
+    B_11 Delta_29 shared reverse step 3/29 frontier=228 colors=1 elapsed=0.0407306s
+    B_11 Delta_29 shared reverse step 4/29 frontier=302 colors=1 elapsed=0.0759009s
+    B_11 Delta_29 shared reverse step 5/29 frontier=376 colors=1 elapsed=0.11992s
+    B_11 Delta_29 shared reverse step 6/29 frontier=450 colors=1 elapsed=0.171698s
+    B_11 Delta_29 shared reverse step 7/29 frontier=524 colors=1 elapsed=0.230488s
+    B_11 Delta_29 shared reverse step 8/29 frontier=598 colors=1 elapsed=0.29547s
+    B_11 Delta_29 shared reverse step 9/29 frontier=672 colors=1 elapsed=0.365662s
+    B_11 Delta_29 shared reverse step 10/29 frontier=745 colors=1 elapsed=0.43969s
+    B_11 Delta_29 shared reverse step 11/29 frontier=807 colors=1 elapsed=0.5166s
+    B_11 Delta_29 shared reverse step 12/29 frontier=823 colors=1 elapsed=0.594061s
+    B_11 Delta_29 shared reverse step 13/29 frontier=779 colors=1 elapsed=0.665272s
+    B_11 Delta_29 shared reverse step 14/29 frontier=712 colors=1 elapsed=0.722531s
+    B_11 Delta_29 shared reverse step 15/29 frontier=639 colors=1 elapsed=0.765045s
+    B_11 Delta_29 shared reverse step 16/29 frontier=565 colors=1 elapsed=0.794858s
+    B_11 Delta_29 shared reverse step 17/29 frontier=491 colors=1 elapsed=0.815428s
+    B_11 Delta_29 shared reverse step 18/29 frontier=417 colors=1 elapsed=0.82907s
+    B_11 Delta_29 shared reverse step 19/29 frontier=343 colors=1 elapsed=0.837869s
+    B_11 Delta_29 shared reverse step 20/29 frontier=269 colors=1 elapsed=0.843242s
+    B_11 Delta_29 shared reverse step 21/29 frontier=197 colors=1 elapsed=0.846335s
+    B_11 Delta_29 shared reverse step 22/29 frontier=130 colors=1 elapsed=0.848003s
+    B_11 Delta_29 shared reverse step 23/29 frontier=77 colors=1 elapsed=0.848817s
+    B_11 Delta_29 shared reverse step 24/29 frontier=42 colors=1 elapsed=0.849185s
+    B_11 Delta_29 shared reverse step 25/29 frontier=22 colors=1 elapsed=0.849336s
+    B_11 Delta_29 shared reverse step 26/29 frontier=11 colors=1 elapsed=0.849392s
+    B_11 Delta_29 shared reverse step 27/29 frontier=5 colors=1 elapsed=0.849412s
+    B_11 Delta_29 shared reverse step 28/29 frontier=2 colors=1 elapsed=0.84942s
+    B_11 Delta_29 shared reverse step 29/29 frontier=1 colors=1 elapsed=0.849425s
+  B_11 Delta_29 = -78460632771893738294
+__EXIT_STATUS=0

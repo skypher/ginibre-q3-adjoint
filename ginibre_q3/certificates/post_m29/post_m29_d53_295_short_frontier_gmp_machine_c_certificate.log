@@ -1,0 +1,23 @@
+__HOST=nb1cb2f
+__SOURCE_SHA256=444cf4dbe59d5000a3315f31054ef07ec1cf710edf91a7c685f973644d65ad74
+__COMMAND=OMP_NUM_THREADS=32 ./d53_frontier --rank-lo 53 --rank-hi 295 --chain-lo 30 --onset-log post_m29_bc_layered_mgf_mpfr_certificate.log
+D interval stable-envelope bridge frontier GMP verifier
+rank_lo=53 rank_hi=295 chain_lo=30 chain_hi=163 max_index=331 minimum_a_free_slack=1 onset_log=post_m29_bc_layered_mgf_mpfr_certificate.log OpenMP threads=32
+stable_moments_start max_index=331
+stable_moments_done max_index=331
+worst_positive	m	odd_n	frontier	active_rows	lower_log10	stable_log10	relative_log10
+worst_positive	50	103	D_53	243	167.515421966088354	167.5157680089103	-0.00034604282194550251
+sample	m	odd_n	frontier	active_rows	lower_sign	lower_log10	stable_log10	relative_log10
+sample	30	63	D_53	243	1	90.398048286294582	90.398048286294582	0
+sample	43	89	D_53	243	1	139.612746833812196	139.612746833812196	0
+sample	56	115	D_62	234	1	192.08050207228959	192.080574366088086	-7.22937984960481117e-05
+sample	69	141	D_86	210	1	247.067754845560472	247.067754845560472	0
+sample	82	167	D_111	185	1	304.112140533575428	304.112140533575428	0
+sample	95	193	D_138	158	1	362.895429359541083	362.895429359541083	0
+sample	108	219	D_166	130	1	423.184875644440297	423.184875644440297	0
+sample	121	245	D_195	101	1	484.802810973289922	484.802810973289922	0
+sample	134	271	D_225	71	1	547.609129822476461	547.609129822476461	0
+sample	147	297	D_256	40	1	611.490499677618345	611.490499677618345	0
+sample	160	323	D_288	8	1	676.353347310305026	676.353347310305026	0
+SUMMARY failures=0 worst_m=50 worst_odd_n=103 worst_frontier=D_53 worst_relative_log10=-0.00034604282194550251 worst_lower_log10=167.515421966088354
+__EXIT_STATUS=0

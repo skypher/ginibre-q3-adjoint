@@ -1,0 +1,42 @@
+m=28 B/C rank-pair positive-quadratic certificate
+rank = 17
+stable Chain diff D(28) = 153889275723409762152911972708157654219985447590746073156624800187079091955425345536
+begin B_17: first boundary = 36; exact through m_31
+begin C_17: first boundary = 36; exact through m_31
+    shared forward step 1/31 states=1 elapsed=1.1342e-05s
+    shared forward step 2/31 states=3 elapsed=5.6777e-05s
+    shared forward step 3/31 states=7 elapsed=7.3979e-05s
+    shared forward step 4/31 states=15 elapsed=0.000101621s
+    shared forward step 5/31 states=30 elapsed=0.000205957s
+    shared forward step 6/31 states=58 elapsed=0.000384562s
+    shared forward step 7/31 states=105 elapsed=0.000790954s
+    shared forward step 8/31 states=186 elapsed=0.00163538s
+    shared forward step 9/31 states=318 elapsed=0.00330231s
+    shared forward step 10/31 states=530 elapsed=0.00656839s
+    shared forward step 11/31 states=863 elapsed=0.0127041s
+    shared forward step 12/31 states=1380 elapsed=0.0239757s
+    shared forward step 13/31 states=2164 elapsed=0.0535066s
+    shared forward step 14/31 states=3345 elapsed=0.0889596s
+    shared forward step 15/31 states=5096 elapsed=0.151214s
+    shared forward step 16/31 states=7665 elapsed=0.252249s
+    shared forward step 17/31 states=11395 elapsed=0.419097s
+    shared forward step 18/31 states=16765 elapsed=0.693986s
+    shared forward step 19/31 states=24418 elapsed=1.13459s
+    shared forward step 20/31 states=35251 elapsed=1.8425s
+    shared forward step 21/31 states=50460 elapsed=2.92185s
+    shared forward step 22/31 states=71669 elapsed=4.59583s
+    shared forward step 23/31 states=101050 elapsed=7.13595s
+    shared forward step 24/31 states=141510 elapsed=10.9658s
+    shared forward step 25/31 states=196888 elapsed=16.8237s
+    shared forward step 26/31 states=272293 elapsed=25.3613s
+    shared forward step 27/31 states=374423 elapsed=37.9917s
+    shared forward step 28/31 states=512081 elapsed=56.5773s
+      shared forward step 29/31 processed=500000/512081 next_states=683206 step_elapsed=24.8528s elapsed=81.4869s
+    shared forward step 29/31 states=696760 elapsed=83.6365s
+      shared forward step 30/31 processed=500000/696760 next_states=701654 step_elapsed=20.8327s elapsed=104.5s
+    shared forward step 30/31 states=943442 elapsed=122.641s
+      shared forward step 31/31 processed=500000/943442 next_states=714082 step_elapsed=18.6694s elapsed=141.416s
+    shared forward step 31/31 states=1271527 elapsed=178.712s
+B_17 tail = -154168213468282681369695494552007883703088570930159217067428013738164627874033420288; linear exact = 0; negative quadratic exact = 0; positive quadratic exact = 0; lower margin = -278937744872919216783521843850229483103123339413143910803213551085535918608074752
+ERROR: B_17 lower margin is not positive
+__EXIT_STATUS=1

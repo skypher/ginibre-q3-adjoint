@@ -1,0 +1,23 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp D4 40 --stable-moments /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/references/oeis_A002137_stable.txt /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m21_26.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m27_30.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m31_32.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m33_34.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m35_35.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m36_36.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m37_37.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m38_38.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_11_exact_adjoint_m4_20.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m39_39.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d4_7_exact_adjoint_m40_40.log
+power=1 support=1 elapsed_seconds=3.256e-06
+power=2 support=7 elapsed_seconds=1.513e-06
+power=3 support=15 elapsed_seconds=4.98e-06
+power=4 support=30 elapsed_seconds=1.0309e-05
+power=5 support=54 elapsed_seconds=2.0388e-05
+power=6 support=91 elapsed_seconds=3.8662e-05
+power=7 support=143 elapsed_seconds=6.1865e-05
+power=8 support=217 elapsed_seconds=0.000101098
+power=9 support=315 elapsed_seconds=0.000172201
+power=10 support=444 elapsed_seconds=0.000229958
+power=11 support=609 elapsed_seconds=0.00031674
+power=12 support=817 elapsed_seconds=0.000446481
+power=13 support=1073 elapsed_seconds=0.000624103
+power=14 support=1387 elapsed_seconds=0.000785874
+power=15 support=1764 elapsed_seconds=0.00104739
+power=16 support=2214 elapsed_seconds=0.00132779
+power=17 support=2745 elapsed_seconds=0.00173707
+power=18 support=3367 elapsed_seconds=0.00222783
+power=19 support=4088 elapsed_seconds=0.00262886
+power=20 support=4921 elapsed_seconds=0.00326419
+root_datum=D_4 rank=4 roots=24 maximum_coordinate=20
+SUMMARY group=D_4 moments=41 source_values=74 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

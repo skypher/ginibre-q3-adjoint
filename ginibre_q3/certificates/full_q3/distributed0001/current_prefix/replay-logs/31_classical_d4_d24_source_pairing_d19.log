@@ -1,0 +1,20 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp D19 34 --stable-moments /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/references/oeis_A002137_stable.txt /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d18_19_exact_adjoint_m31_34_machine_c.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d18_24_exact_adjoint_m18_30.log
+power=1 support=1 elapsed_seconds=1.7853e-05
+power=2 support=6 elapsed_seconds=1.654e-05
+power=3 support=14 elapsed_seconds=8.7042e-05
+power=4 support=32 elapsed_seconds=0.000207657
+power=5 support=66 elapsed_seconds=0.000471849
+power=6 support=132 elapsed_seconds=0.0010042
+power=7 support=248 elapsed_seconds=0.00205505
+power=8 support=453 elapsed_seconds=0.00389899
+power=9 support=797 elapsed_seconds=0.00723042
+power=10 support=1368 elapsed_seconds=0.0130376
+power=11 support=2286 elapsed_seconds=0.022591
+power=12 support=3744 elapsed_seconds=0.0380924
+power=13 support=6005 elapsed_seconds=0.0631221
+power=14 support=9473 elapsed_seconds=0.102853
+power=15 support=14699 elapsed_seconds=0.163347
+power=16 support=22488 elapsed_seconds=0.255589
+power=17 support=33940 elapsed_seconds=0.397022
+root_datum=D_19 rank=19 roots=684 maximum_coordinate=17
+SUMMARY group=D_19 moments=35 source_values=32 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

@@ -1,0 +1,44 @@
+TIGHT_OMEGA_SMALL_DIAGNOSTIC max_m=7 partitions=18460
+progress m=1 r=1 states=3 total_paths=3 max_fiber=1
+RESULT m=1 states=3 total_paths=3 max_omega=1 pow2=2 passes_pow2=yes
+BEST m=1 partition=2,2 strips=(2,1;2,2)
+progress m=2 r=1 states=3 total_paths=3 max_fiber=1
+progress m=2 r=2 states=22 total_paths=22 max_fiber=1
+RESULT m=2 states=22 total_paths=22 max_omega=1 pow2=4 passes_pow2=yes
+BEST m=2 partition=4,2,1,1 strips=(1,3;2,1)|(1,4;4,1)
+progress m=3 r=1 states=3 total_paths=3 max_fiber=1
+progress m=3 r=2 states=22 total_paths=22 max_fiber=1
+progress m=3 r=3 states=191 total_paths=191 max_fiber=1
+RESULT m=3 states=191 total_paths=191 max_omega=1 pow2=8 passes_pow2=yes
+BEST m=3 partition=3,3,2,2,1,1 strips=(2,1;2,2)|(1,3;4,1)|(2,3;6,1)
+progress m=4 r=1 states=3 total_paths=3 max_fiber=1
+progress m=4 r=2 states=22 total_paths=22 max_fiber=1
+progress m=4 r=3 states=191 total_paths=191 max_fiber=1
+progress m=4 r=4 states=1866 total_paths=2073 max_fiber=2
+RESULT m=4 states=1866 total_paths=2073 max_omega=2 pow2=16 passes_pow2=yes
+BEST m=4 partition=5,3,3,1,1,1,1,1 strips=(1,3;2,1)|(1,4;4,1)|(1,5;6,1)|(3,3;8,1)
+progress m=5 r=1 states=3 total_paths=3 max_fiber=1
+progress m=5 r=2 states=22 total_paths=22 max_fiber=1
+progress m=5 r=3 states=191 total_paths=191 max_fiber=1
+progress m=5 r=4 states=1866 total_paths=2073 max_fiber=2
+progress m=5 r=5 states=20218 total_paths=27343 max_fiber=3
+RESULT m=5 states=20218 total_paths=27343 max_omega=3 pow2=32 passes_pow2=yes
+BEST m=5 partition=5,4,3,2,2,1,1,1,1 strips=(1,3;2,1)|(1,4;4,1)|(3,2;6,1)|(4,2;8,1)|(3,3;5,2)
+progress m=6 r=1 states=3 total_paths=3 max_fiber=1
+progress m=6 r=2 states=22 total_paths=22 max_fiber=1
+progress m=6 r=3 states=191 total_paths=191 max_fiber=1
+progress m=6 r=4 states=1866 total_paths=2073 max_fiber=2
+progress m=6 r=5 states=20218 total_paths=27343 max_fiber=3
+progress m=6 r=6 states=243171 total_paths=424403 max_fiber=8
+RESULT m=6 states=243171 total_paths=424403 max_omega=8 pow2=64 passes_pow2=yes
+BEST m=6 partition=5,4,3,3,2,1,1,1,1,1,1,1 strips=(1,3;2,1)|(2,2;4,1)|(2,3;6,1)|(4,2;8,1)|(5,2;10,1)|(4,3;12,1)
+progress m=7 r=1 states=3 total_paths=3 max_fiber=1
+progress m=7 r=2 states=22 total_paths=22 max_fiber=1
+progress m=7 r=3 states=191 total_paths=191 max_fiber=1
+progress m=7 r=4 states=1866 total_paths=2073 max_fiber=2
+progress m=7 r=5 states=20218 total_paths=27343 max_fiber=3
+progress m=7 r=6 states=243171 total_paths=424403 max_fiber=8
+progress m=7 r=7 states=3160108 total_paths=7565247 max_fiber=20
+RESULT m=7 states=3160108 total_paths=7565247 max_omega=20 pow2=128 passes_pow2=yes
+BEST m=7 partition=7,5,3,2,2,2,1,1,1,1,1,1,1 strips=(2,1;2,2)|(1,3;4,1)|(1,4;6,1)|(1,5;8,1)|(1,6;10,1)|(1,7;12,1)|(2,5;6,2)
+__EXIT_STATUS=0

@@ -1,0 +1,22 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp D12 38 --stable-moments /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/references/oeis_A002137_stable.txt /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d12_17_exact_adjoint_m12_24.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d12_17_exact_adjoint_m25_31.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d12_17_exact_adjoint_m32_34.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d12_17_exact_adjoint_m35_36.log /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d12_17_exact_adjoint_m37_38.log
+power=1 support=1 elapsed_seconds=8.065e-06
+power=2 support=6 elapsed_seconds=5.841e-06
+power=3 support=14 elapsed_seconds=2.694e-05
+power=4 support=32 elapsed_seconds=6.5913e-05
+power=5 support=66 elapsed_seconds=0.000158565
+power=6 support=133 elapsed_seconds=0.000326418
+power=7 support=249 elapsed_seconds=0.000663366
+power=8 support=452 elapsed_seconds=0.00127262
+power=9 support=788 elapsed_seconds=0.00233162
+power=10 support=1336 elapsed_seconds=0.00423958
+power=11 support=2200 elapsed_seconds=0.00727909
+power=12 support=3544 elapsed_seconds=0.0121552
+power=13 support=5580 elapsed_seconds=0.0200109
+power=14 support=8626 elapsed_seconds=0.0326195
+power=15 support=13099 elapsed_seconds=0.0514371
+power=16 support=19583 elapsed_seconds=0.0807139
+power=17 support=28845 elapsed_seconds=0.12228
+power=18 support=41932 elapsed_seconds=0.182848
+power=19 support=60189 elapsed_seconds=0.27425
+root_datum=D_12 rank=12 roots=264 maximum_coordinate=19
+SUMMARY group=D_12 moments=39 source_values=54 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

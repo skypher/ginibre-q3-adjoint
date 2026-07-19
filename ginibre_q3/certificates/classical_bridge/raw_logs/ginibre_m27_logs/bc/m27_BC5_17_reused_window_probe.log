@@ -1,0 +1,7 @@
+m=27 reused B/C exact-window certificate
+stable Chain diff D(27) = 42045445077102182205533040645398449053840308179888972401718533069918113097678848
+certified rows: B_5..B_17 and C_5..C_17
+delta logs:
+  /tmp/ginibre_m25_eval/m24_BC3_14_range43.log
+  /tmp/ginibre_m25_eval/m24_BC15.log
+missing deltas for B_17

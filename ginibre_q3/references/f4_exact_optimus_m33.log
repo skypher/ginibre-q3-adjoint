@@ -1,0 +1,43 @@
+F_4 positive roots (doubled): 24
+Building |Delta|^2 via parallel tree-reduction (24 factors)...
+  tree level 0: 12 pairs + 0 singles; sizes pre-merge ~ min=3 max=3
+  tree level 1: 6 pairs + 0 singles; sizes pre-merge ~ min=9 max=9
+  tree level 2: 3 pairs + 0 singles; sizes pre-merge ~ min=65 max=81
+  tree level 3: 1 pairs + 1 singles; sizes pre-merge ~ min=1011 max=1537
+  tree level 4: 1 pairs + 0 singles; sizes pre-merge ~ min=1537 max=24929
+F_4 Z_0 = 1152 (|W(F_4)| = 1152)
+|Delta|^2 has 165457 monomials
+F_4 m_0 = 1  (len(chi^k)=1)
+F_4 m_1 = 0  (len(chi^k)=49)
+F_4 m_2 = 1  (len(chi^k)=433)
+F_4 m_3 = 1  (len(chi^k)=1825)
+F_4 m_4 = 5  (len(chi^k)=5281)
+F_4 m_5 = 16  (len(chi^k)=12241)
+F_4 m_6 = 80  (len(chi^k)=24529)
+F_4 m_7 = 436  (len(chi^k)=44353)
+F_4 m_8 = 2891  (len(chi^k)=74305)
+F_4 m_9 = 22248  (len(chi^k)=117361)
+F_4 m_10 = 198774  (len(chi^k)=176881)
+F_4 m_11 = 2029140  (len(chi^k)=256609)
+F_4 m_12 = 23310386  (len(chi^k)=360673)
+F_4 m_13 = 296407466  (len(chi^k)=493585)
+F_4 m_14 = 4109654354  (len(chi^k)=660241)
+F_4 m_15 = 61348443380  (len(chi^k)=865921)
+F_4 m_16 = 976111067870  (len(chi^k)=1116289)
+F_4 m_17 = 16423368282336  (len(chi^k)=1417393)
+F_4 m_18 = 290404344321126  (len(chi^k)=1775665)
+F_4 m_19 = 5370042566624118  (len(chi^k)=2197921)
+F_4 m_20 = 103427555919931446  (len(chi^k)=2691361)
+F_4 m_21 = 2067833442384581380  (len(chi^k)=3263569)
+F_4 m_22 = 42792262533257469400  (len(chi^k)=3922513)
+F_4 m_23 = 914318797566833057740  (len(chi^k)=4676545)
+F_4 m_24 = 20125811377819675114249  (len(chi^k)=5534401)
+F_4 m_25 = 455488541476516114400744  (len(chi^k)=6505201)
+F_4 m_26 = 10580390922401067494020800  (len(chi^k)=7598449)
+F_4 m_27 = 251844206226913104085199854  (len(chi^k)=8824033)
+F_4 m_28 = 6133915244071482900234415704  (len(chi^k)=10192225)
+F_4 m_29 = 152666713086265634690728726390  (len(chi^k)=11713681)
+F_4 m_30 = 3878161802934178761483723021649  (len(chi^k)=13399441)
+F_4 m_31 = 100438468088602499966930169065570  (len(chi^k)=15260929)
+F_4 m_32 = 2649250747302231655364965233968764  (len(chi^k)=17309953)
+F_4 m_33 = 71102632594349033170405301733245984  (len(chi^k)=19558705)

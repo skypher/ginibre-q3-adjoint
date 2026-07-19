@@ -1,0 +1,76 @@
+Classical row-gated bridge certificate replay boundary
+source map: ginibre_q3/CLASSICAL_M3_ONE_SOURCE_MAP.md
+proof ledger: ginibre_q3/CLASSICAL_M3_ONE_PROOF.md
+inspectable transcript: ginibre_q3/certificates/classical_bridge/row_gated_bridge_replay_transcript.log
+raw log archive: ginibre_q3/certificates/classical_bridge/raw_logs
+raw log classification: ginibre_q3/certificates/classical_bridge/raw_log_classification.tsv
+f6a4d9b47b3fd12e855df70939c103a690579bc4842801af3b189ed5194b73a2  ginibre_q3/CLASSICAL_M3_ONE_SOURCE_MAP.md
+e241a9b19c6a4db330269b75fe7cb3db00d641b38cec08fdcde8568f39cb2496  ginibre_q3/CLASSICAL_M3_ONE_PROOF.md
+faf5fd7b8685c3feb2f79c1a4d9eaa37b4a97138202ed3db2d5867442037d90d  ginibre_q3/certificates/classical_bridge/row_gated_bridge_replay_transcript.log
+09b40fe1ebbdf8897471b513d6353c70eb1514238a76414cb20746e57d8310bd  ginibre_q3/certificates/classical_bridge/raw_log_manifest.sha256
+2277355c990e1e6c6b110bd98dcf9db47349e97d0bfe8c360e5441cdf2ab7e93  ginibre_q3/certificates/classical_bridge/raw_log_classification.tsv
+975c4e143e1a9e273fea8eb074935860fcf26af9874be5da8bafdd33f4c4e6a5  ginibre_q3/certificates/classical_bridge/accepted_log_manifest.sha256
+21a8c98545124035c3abe42fd4ae1652f1255b217b4d3765dfac198402140155  ginibre_q3/certificates/classical_bridge/supporting_log_manifest.sha256
+5007477325bf7ed035976d708b52417cb0e8cbf55191465dcc670b0f395cc34f  ginibre_q3/certificates/classical_bridge/diagnostic_log_manifest.sha256
+
+checked target:
+  D_G(2m+1) = Q3_G(2m+3) - 4 Q3_G(2m+1) > 0
+  for every row-gated bridge pair with m <= 29 and C_G < 296.
+
+row-gate definition:
+  active iff stable_odd_reach(G) < 2m+3 < max(63, stable_odd_reach(G)+2)
+  and 0 <= m <= 29.
+
+slice coverage:
+  m=26: B_2..B_27, C_2..C_27, D_4..D_57; active rows 106.
+  m=27: B_2..B_28, C_2..C_28, D_4..D_59; active rows 110.
+  m=28: B_2..B_29, C_2..C_29, D_4..D_61; active rows 114.
+  m=29: B_2..B_30, C_2..C_30, D_4..D_63; active rows 118.
+
+proof-ledger certificate ranges:
+  m=0..10: Proposition 25; exact C++ character-ring replay through m=10.
+  m=11: Propositions 26--27; exact B/C and D replays through m=11.
+  m=12: Propositions 28--29; exact B/C and D replays through m=12.
+  m=13: Proposition 30; exact classical replay through m=13.
+  m=14: Proposition 31; exact classical replay through m=14.
+  m=15..25: Propositions 31A--31FR; row-gated exact certificate slices.
+  m=26: Propositions 31FRD--31FRS.
+  m=27: Propositions 31FRT--31FRAI.
+  m=28: Propositions 31FRAJ--31FRBF.
+  m=29: Propositions 31FRBG--31FRCD.
+
+acceptance contract:
+  Every listed proposition states its row set, the exact integer/rational
+  lower-bound expression used for the Chain difference, a strictly positive
+  minimum lower margin or exact positive integer check, and the transcript/hash
+  line for the underlying computation.  The source map lines below verify the
+  row counts and the proof-ledger lines verify that the four top slices are
+  exactly the proposition ranges invoked by the paper.
+  The transcript file above contains the source-map excerpt and the complete
+  proof-ledger text for Propositions 31FRD--31FRCD, so the row commands,
+  exact margins, row counts, and replay-hash checks are inspectable without
+  relying on this boundary manifest alone.
+  The raw log archive vendors the historical /tmp log inputs cited in the
+  transcript.  The all-archive manifest lists 297 raw logs.  The classification
+  manifest partitions them into 124 accepted status-zero evidence files, 132
+  supporting status-free arithmetic inputs, and 41 diagnostic failed,
+  interrupted, or superseded logs.  Accepted rows may cite only the accepted
+  manifest for row-acceptance evidence; diagnostic logs are retained solely for
+  audit trail.
+
+source-map coverage lines:
+189:       next diagnostic m=26 bridge submeter: 106/106 rows closed
+197:       next diagnostic m=27 bridge submeter: 110/110 rows closed
+205:       next diagnostic m=28 bridge submeter: 114/114 rows closed
+220:       active diagnostic m=29 bridge submeter: 118/118 rows closed
+
+proof-ledger reduction lines:
+3351:bridge has already proved every row-gated Chain step with `m<=20`.  For a
+16423:bridge has already proved every row-gated Chain step with `m<=24`.  For a
+24376:bridge has already proved every row-gated Chain step with `m<=25`.  For a
+24438:bridge has already proved every row-gated Chain step with `m<=29`.  For a
+24935:m=26: Propositions 31FRD--31FRS,
+24936:m=27: Propositions 31FRT--31FRAI,
+24937:m=28: Propositions 31FRAJ--31FRBF,
+24938:m=29: Propositions 31FRBG--31FRCD.
+__EXIT_STATUS=0

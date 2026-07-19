@@ -1,0 +1,18 @@
+COMMAND: ./verify_character_ring_moment_sources_gmp D23 30 --stable-moments /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/references/oeis_A002137_stable.txt /tmp/ginibre-q3-clean-room-jb3u4pkg/ginibre_q3/certificates/post_m29/d4_24_exact_adjoint_sources/d18_24_exact_adjoint_m18_30.log
+power=1 support=1 elapsed_seconds=2.7371e-05
+power=2 support=6 elapsed_seconds=2.6249e-05
+power=3 support=14 elapsed_seconds=0.000148567
+power=4 support=32 elapsed_seconds=0.000342157
+power=5 support=66 elapsed_seconds=0.000798066
+power=6 support=132 elapsed_seconds=0.00169723
+power=7 support=248 elapsed_seconds=0.00341272
+power=8 support=453 elapsed_seconds=0.00654117
+power=9 support=797 elapsed_seconds=0.0120648
+power=10 support=1368 elapsed_seconds=0.0216531
+power=11 support=2287 elapsed_seconds=0.037362
+power=12 support=3750 elapsed_seconds=0.0631477
+power=13 support=6025 elapsed_seconds=0.103789
+power=14 support=9525 elapsed_seconds=0.168486
+power=15 support=14819 elapsed_seconds=0.268263
+root_datum=D_23 rank=23 roots=1012 maximum_coordinate=15
+SUMMARY group=D_23 moments=31 source_values=16 failures=0 ignored_determinant_components=0 stable_recurrence_values_checked=101

@@ -1,0 +1,34 @@
+COMMAND: ./verify_e8_negative_bounds_gmp --table /home/yang/q3/ginibre_q3/certificates/exceptional_rect/e8_rect_negative_bounds.tsv --factors /home/yang/q3/ginibre_q3/certificates/exceptional_rect/e8_negative_majorant_factors.tsv --local-moments /home/yang/q3/ginibre_q3/character_ring_iter/logs/e8_70.log --ancillary-moments /home/yang/q3/ginibre_q3/references/arxiv_2412_21189_e8_m71_m100.txt --oeis-moments /home/yang/q3/ginibre_q3/references/oeis_A179663.txt
+E8 exact negative-bound audit (C++/GMP)
+moment_sources_m0_m100_and_oeis_overlap: OK
+n=77 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=79 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=81 negative=OK(Bernstein,depth=3) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=83 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=85 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=5) moment_integral=OK bound_match=OK
+n=87 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=89 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=91 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=93 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=95 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=97 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=99 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=101 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=103 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=105 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=107 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=109 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=111 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=113 negative=OK(Bernstein,depth=0) positive=OK(Bernstein,depth=0) moment_integral=OK bound_match=OK
+n=115 endpoint_bound_match=OK
+n=117 endpoint_bound_match=OK
+n=119 endpoint_bound_match=OK
+n=121 endpoint_bound_match=OK
+n=123 endpoint_bound_match=OK
+n=125 endpoint_bound_match=OK
+n=127 endpoint_bound_match=OK
+n=129 endpoint_bound_match=OK
+n=131 endpoint_bound_match=OK
+n=133 endpoint_bound_match=OK
+E8_NEGATIVE_BOUND_TABLE_ROWS=29
+E8_NEGATIVE_BOUND_AUDIT_GMP: ALL PASS
