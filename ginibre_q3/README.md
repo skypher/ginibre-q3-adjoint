@@ -66,9 +66,11 @@ lattice gauge theories, or continuum QFT.  Those uses need separate
 model-specific Gibbs promotion, thermodynamic limits, and quantum
 reconstruction machinery.
 
-The audited computation package is archived in the official publication
-repository, `https://github.com/skypher/ginibre-q3-adjoint`. Parts I--II
-(`paper.tex`, `paper_full.tex`), Part III
+The audited computation package is rooted at immutable publication import
+commit `91363c3cebb37a44349f613ab0a5aa6dcd412af3` in
+`https://github.com/skypher/ginibre-q3-adjoint`; tag `v1.0.0` identifies the
+publication release containing this binding. Parts I--II (`paper.tex`,
+`paper_full.tex`), Part III
 (`full_q3_extension.tex`), all replay sources, accepted transcripts, and
 SHA-256 manifests are archived together there. Parts I--II and Part III are
 inseparable formal submission components.  Part III contains a

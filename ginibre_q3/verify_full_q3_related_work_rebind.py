@@ -43,15 +43,15 @@ BASELINE = {
 }
 
 FINAL = {
-    "extension": "b7b872f7d382f895bbf1ce5e16f123642e36d94745194e5b08e20c14fe48f5b8",
-    "document_verifier": "9d07c924434f41a5395331171c7a593d92052a5064ab3b4cb69fcbc40d9ca4ba",
+    "extension": "a8965261fcb5ede9badf3a756b5def493cc5d769db99e2e67bb65cc79d7cec7f",
+    "document_verifier": "67879e5aa9e4570bf4402a52015ba406f83e0b88a41681331811af4e6b6c877a",
     "source_table": "b5cf73cae7dfa1499962d03d8c65128b09ed9b4c87950b4f64117923674bb03e",
     "source_audit": "0302d465759c5aa02bdd91d83271edd6645b27131062adf2a6c23a55a527f68b",
     "reference_manifest": "c226c70b6305409665cb4a4f740cbb5cdb86a5879bb4aba995bb2fcd80103d52",
-    "full_manifest": "433b6073e40ea393f86e9c3df2a7019852f29cbf3208fd171992f1479143909a",
+    "full_manifest": "92ee950f569ef37b91195a000efab7fb0ab1161f061910f55c076d1378d20fe7",
     "paper": "8b58f9015dc4738c0e48e3d340f512a74b54a6832f83a3ae378b910d75e6060f",
-    "readme": "8de77a263088bb9e46ce93340777ea22f37586f08e4d01774307df339f926d6a",
-    "replay_manifest": "04442536fdfaf8505d56432a2b28fc957063eb70be2edb8766cb0decbc835923",
+    "readme": "1150c05c5174fc0f9fa29c33533f08657c5287127fa19eff1aaeead56a2bca5c",
+    "replay_manifest": "080a249f91042240e8fafebb11adcd874ee2a8b5582babdd9ec2bd3297959e32",
 }
 
 FINAL_EXTENSION_METADATA = """\\author{Leslie P. Polzer}
@@ -168,9 +168,11 @@ lattice gauge theories, or continuum QFT.  Those uses need separate
 model-specific Gibbs promotion, thermodynamic limits, and quantum
 reconstruction machinery.
 
-The audited computation package is archived in the official publication
-repository, `https://github.com/skypher/ginibre-q3-adjoint`. Parts I--II
-(`paper.tex`, `paper_full.tex`), Part III
+The audited computation package is rooted at immutable publication import
+commit `91363c3cebb37a44349f613ab0a5aa6dcd412af3` in
+`https://github.com/skypher/ginibre-q3-adjoint`; tag `v1.0.0` identifies the
+publication release containing this binding. Parts I--II (`paper.tex`,
+`paper_full.tex`), Part III
 (`full_q3_extension.tex`), all replay sources, accepted transcripts, and
 SHA-256 manifests are archived together there. Parts I--II and Part III are
 inseparable formal submission components.  Part III contains a
@@ -201,7 +203,7 @@ L.~P. Polzer,
 The two-minus adjoint-character case of Ginibre's $Q_3$ condition,
 Parts I--II: classification, exact certificates, and expanded proof
 companion, companion manuscript and source archive, 2026,
-\url{https://github.com/skypher/ginibre-q3-adjoint}."""
+\url{https://github.com/skypher/ginibre-q3-adjoint/tree/91363c3cebb37a44349f613ab0a5aa6dcd412af3/ginibre_q3}."""
 
 BASELINE_COMPANION_BIB = r"""\bibitem{AdjointTwoMinus}
 Anonymous,
@@ -239,6 +241,11 @@ DOCUMENT_CHECKS = '''    require(
     require(
         "github.com/skypher/ginibre-q3-adjoint" in text,
         "official publication repository is absent",
+    )
+    require("v1.0.0" in text, "publication release tag is absent")
+    require(
+        "91363c3cebb37a44349f613ab0a5aa6dcd412af3" in text,
+        "immutable publication import commit is absent",
     )
     require(
         "intermediate cone of all real continuous" in text

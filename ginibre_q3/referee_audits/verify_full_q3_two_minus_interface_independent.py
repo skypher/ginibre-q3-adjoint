@@ -27,7 +27,7 @@ ALLOWED_COMPANION_HASHES = {
     "8b58f9015dc4738c0e48e3d340f512a74b54a6832f83a3ae378b910d75e6060f",
 }
 EXPECTED_PART_THREE_HASH = (
-    "b7b872f7d382f895bbf1ce5e16f123642e36d94745194e5b08e20c14fe48f5b8"
+    "a8965261fcb5ede9badf3a756b5def493cc5d769db99e2e67bb65cc79d7cec7f"
 )
 RESULT_ENVS = ("theorem", "proposition", "lemma", "corollary")
 RESULT_PATTERN = re.compile(

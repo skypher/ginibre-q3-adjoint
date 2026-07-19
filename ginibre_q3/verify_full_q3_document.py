@@ -157,6 +157,11 @@ def main() -> int:
         "github.com/skypher/ginibre-q3-adjoint" in text,
         "official publication repository is absent",
     )
+    require("v1.0.0" in text, "publication release tag is absent")
+    require(
+        "91363c3cebb37a44349f613ab0a5aa6dcd412af3" in text,
+        "immutable publication import commit is absent",
+    )
     require(
         "intermediate cone of all real continuous" in text
         and "central positive-definite functions" in text,

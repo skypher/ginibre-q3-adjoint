@@ -703,8 +703,9 @@ integrity checks, not as substitutes for the complete mathematical replay.
     cites Chevyrev--Garban at the exact gauge/Ginibre scope boundary.
 13. **Satisfied:** the paper explicitly states that the intermediate cone of
     all real continuous central positive-definite functions is not decided.
-14. **Satisfied:** the audited computation package is archived in the official
-    `skypher/ginibre-q3-adjoint` publication repository.
+14. **Satisfied:** the audited computation package is pinned to immutable
+    publication import commit `91363c3cebb37a44349f613ab0a5aa6dcd412af3`
+    in the official `skypher/ginibre-q3-adjoint` repository.
 15. **Satisfied:** Parts I--II and Part III are declared inseparable formal
     submission components, and the imported theorem is identified precisely.
 16. **Satisfied:** a compact result-to-program/transcript/arithmetic/scope map
