@@ -73,7 +73,7 @@ contains that execution binding but is not asserted to contain later
 manuscript revisions.  The present submission bytes are bound by
 `certificates/full_q3/full_q3_source_manifest.sha256`, and any final public
 release must reproduce that manifest exactly.  The journal-facing Parts I--II
-(`paper.tex`/`paper.pdf`), their formal detailed supplement
+(`paper.tex`/`paper.pdf`), their detailed computational supplement
 (`paper_full.tex`/`paper_full.pdf`), and Part III
 (`full_q3_extension.tex`/`full_q3_extension.pdf`) are the three inseparable
 formal submission components.  Part III contains a
@@ -148,6 +148,8 @@ as superseded, not accepted evidence.
   replay.  It does not recompute all load-bearing arithmetic signs.
 - `PUBLICATION_PROOF_SPINE.md` is the concise reader-facing map of the
   load-bearing Parts I--III results and certificate families.
+- `ACTIVE_PROOF_SUPPLEMENT.md` is the minimal accepted-node index and explicit
+  exclusion list for diagnostic, conditional, and superseded routes.
 - `SU_N_REPAIR.md`, Theorem 71, closes every type-A row.
 - `CLASSICAL_M3_ONE_PROOF.md` supplies the numbered classical proof chain.
 - `character_ring_iter/CLOSURE_STATUS.md` records the exceptional-family
@@ -159,10 +161,10 @@ as superseded, not accepted evidence.
 Historical route diaries, superseded referee drafts, and unrelated research
 notes are intentionally excluded from this publication repository.
 
-The retained file `REFEREE_REPORT_FULL_Q3_2026_07_15.md` and the directory
-`referee_audits/` are author-controlled historical self-audits.  Their names
-record provenance; they are not independent peer review and are not premises
-of the theorem or components of the formal manuscript.  The
+The retained file `AUTHOR_SELF_AUDIT_FULL_Q3_2026_07_15.md` and the directory
+`referee_audits/` are author-controlled historical self-audits.  They are not
+independent peer review, premises of the theorem, or components of the formal
+manuscript.  The
 publication-facing descriptions inside those files state this boundary
 explicitly.
 
@@ -179,6 +181,20 @@ The publication preflight is:
 ```text
 make -C ginibre_q3 publication-preflight
 ```
+
+For the final archival run, use one clean-commit command and an output log
+outside the repository:
+
+```text
+FINAL_REPLAY_LOG=/absolute/path/final-replay.log \
+  make -C ginibre_q3 final-publication-replay
+```
+
+This runs the preflight and both arithmetic aggregates, records the commit,
+source-manifest hash, environment, and stage timestamps, and rejects a replay
+that changes the source tree.  After it passes, `final-release-archive` builds
+a deterministic archive containing every tracked publication file and that
+log; see `REPLAY.md` for the exact command.
 
 This seconds-to-minutes command runs the source-structure, formula,
 classification-coverage, dependency, explicit `B/C` caller-range, and
@@ -301,7 +317,7 @@ exact factor witnesses are replayed directly by the C++/GMP checker.
    simply connected models to all compact connected groups with simple Lie
    algebra through the stated central-quotient argument.
 
-The expanded build is the formal detailed supplement and comes from the same
+The expanded build is the detailed computational supplement and comes from the same
 source.  `paper.pdf`, `paper_full.pdf`, and `full_q3_extension.pdf` are the
 three formal manuscript components.  The clean replay rejects unresolved
 references in every component.

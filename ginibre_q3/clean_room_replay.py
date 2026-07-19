@@ -1946,7 +1946,7 @@ def build_papers(runner: Runner, root: Path) -> None:
     full_pages = build_latex_document(runner, root, "paper_full")
     if full_pages <= main_pages:
         raise ReplayFailure(
-            f"formal detailed supplement is incomplete: main={main_pages}, full={full_pages}"
+            f"detailed computational supplement is incomplete: main={main_pages}, full={full_pages}"
         )
     print(
         f"[replay] document split: PASS (main={main_pages} pages, "

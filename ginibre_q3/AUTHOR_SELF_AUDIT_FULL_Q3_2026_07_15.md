@@ -2,15 +2,16 @@
 
 > **Status.** This document was created and maintained in the author's source
 > repository. It is a historical self-assessment, not an independent referee
-> report and not evidence of editorial acceptance. The filename is retained
-> only for provenance. Mathematical claims must be checked against the
+> report and not evidence of editorial acceptance. The former filename is
+> recorded only in Git history. Mathematical claims must be checked against the
 > numbered proofs and authenticated computations in the submission.
 
 Date: 2026-07-15
 
 Last evidence update: 2026-07-19
 
-Recommendation: **accept, for the precisely stated adjoint-generated theorem**.
+Author assessment at the recorded date: **publication-ready for the precisely
+stated adjoint-generated theorem**.
 
 The load-bearing Part III source-matched exact and directed-rounding replays
 have passed.  The final-source companion prefix through clean stage 49 is

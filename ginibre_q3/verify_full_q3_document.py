@@ -13,6 +13,12 @@ SOURCE = Path(__file__).with_name("full_q3_extension.tex")
 COMPACT_SOURCE = SOURCE.with_name("paper.tex")
 SUPPLEMENT_WRAPPER = SOURCE.with_name("paper_full.tex")
 ENVIRONMENT = SOURCE.with_name("ENVIRONMENT.md")
+ACTIVE_PROOF = SOURCE.with_name("ACTIVE_PROOF_SUPPLEMENT.md")
+FINAL_REPLAY = SOURCE.with_name("run_final_publication_replay.sh")
+FINAL_ARCHIVE = SOURCE.with_name("build_final_release_archive.py")
+MODULAR_CHECKER = SOURCE.parent / "character_ring_iter" / (
+    "verify_full_q3_bcd_modular_moment_checker.cpp"
+)
 RESULT_ENVS = ("theorem", "proposition", "lemma", "corollary")
 
 
@@ -26,9 +32,13 @@ def main() -> int:
     compact_text = COMPACT_SOURCE.read_text(encoding="utf-8")
     supplement_wrapper = SUPPLEMENT_WRAPPER.read_text(encoding="utf-8")
     require(ENVIRONMENT.is_file(), "validated environment record is absent")
+    require(ACTIVE_PROOF.is_file(), "active proof supplement is absent")
+    require(FINAL_REPLAY.is_file(), "final-source replay driver is absent")
+    require(FINAL_ARCHIVE.is_file(), "final release archive builder is absent")
+    require(MODULAR_CHECKER.is_file(), "compressed modular checker is absent")
     environment = ENVIRONMENT.read_text(encoding="utf-8")
     require(
-        "formal detailed supplement" in compact_text
+        "detailed computational supplement" in compact_text
         and "proves the exact active results" in compact_text,
         "compact Parts I--II do not identify the load-bearing supplement",
     )
@@ -55,17 +65,27 @@ def main() -> int:
         "compact Parts I--II omit the conclusion and scope limitations",
     )
     require(
-        "Formal detailed supplement" in supplement_wrapper
+        "Detailed computational supplement" in supplement_wrapper
         and r"\def\GinibreFullProof{1}" in supplement_wrapper,
-        "formal detailed supplement wrapper is absent or inactive",
+        "detailed computational supplement wrapper is absent or inactive",
     )
     require(
-        "504-page formal detailed supplement" in text,
+        "504-page detailed computational supplement" in text,
         "Part III reports the wrong detailed-supplement page count",
     )
     require(
         "certificates/full_q3/full_q3_source_manifest.sha256" in text,
         "Part III does not name the live final-source manifest path",
+    )
+    require(
+        "run_final_publication_replay.sh" in text
+        and "build_final_release_archive.py" in text
+        and "verify_full_q3_bcd_modular_moment_checker.cpp" in text
+        and "$538$" in text
+        and "$5{,}509$" in text
+        and "$628$" in text
+        and "$607$" in text,
+        "Part III omits the final-source replay/archive or compressed cross-check",
     )
     require(
         r"\path{ENVIRONMENT.md}" in text

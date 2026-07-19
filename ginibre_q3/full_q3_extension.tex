@@ -63,7 +63,7 @@ carried over literally to nonabelian compact groups.
 \label{rem:submission-architecture}
 The formal proof has three numbered parts and one detailed supplement
 collected in three files: \path{paper.pdf} consolidates Parts~I--II,
-\path{paper_full.pdf} is their 504-page formal detailed supplement, and the
+\path{paper_full.pdf} is their 504-page detailed computational supplement, and the
 present file is Part~III.  All three files are load-bearing.  In particular,
 the detailed supplement supplies the numbered $B/C$ correction-prefix proofs
 and half-stable bridge reduction used by the compact residual-closure
@@ -208,7 +208,7 @@ This is the main theorem of the journal-facing Parts~I--II manuscript,
 \cite[Theorem~2.2]{AdjointTwoMinus}.  In the notation of that theorem its
 functional $Q_3^G(n)$ is exactly $I^G_{1,n}$ above.  That manuscript is
 generated as \path{paper.pdf} from \path{paper.tex} and is submitted with the
-present Part~III.  The formal detailed supplement built from the same source
+present Part~III.  The detailed computational supplement built from the same source
 supplies the numbered correction-prefix proofs and the half-stable bridge
 reduction used by the compact manuscript.
 \end{proof}
@@ -2725,8 +2725,20 @@ $12{,}993$ values positive with the stated minimum, ends with
 records wrapper exit status zero.  Its adjacent SHA-256 file authenticates
 the raw transcript.  As an implementation-independent control, the earlier
 reverse-Pieri verifier agrees exactly on all $2{,}845$ moments and all
-$7{,}484$ residual pairs through degree $40$; the accepted proof, however,
-uses the determinant identities above and the complete degree-$59$ replay.
+$7{,}484$ residual pairs through degree $40$.  Only $538$ required moments
+remain above that prefix.  The independent modular checker described in the
+code-and-data section evaluates their determinant formulas using ordinary
+modular arithmetic and Newton forward differences, rather than the promotion
+verifier's Montgomery arithmetic, Lagrange weights, and GMP reconstruction.
+It requires agreement modulo $21$ distinct primes whose product has $628$
+bits.  This exceeds the independently checked $607$-bit maximum of the bounds
+$d_G^j$.  Both the candidate and the invariant multiplicity lie in
+$[0,d_G^j]$, so their difference has absolute value smaller than the modulus;
+the residue agreements therefore prove equality as integers.  The checker
+then recomputes all remaining $5{,}509$ hierarchy values with GMP integers and
+requires strict positivity.  Thus no degree-$41$--$59$ reverse-Pieri frontier
+is needed; the degree-$40$ prefix remains the structurally independent overlap
+test.
 \end{proof}
 
 \begin{proposition}[Exact $B_{18}$--$B_{21}$ and
@@ -2936,7 +2948,7 @@ Part~III is not offered as a
 standalone proof: its Theorem~\ref{thm:two-minus-import} imports Theorem~2.2
 of Parts~I--II, which is included in the submission and archive.
 
-The formal detailed supplement \path{paper_full.pdf} is rebuilt from the same
+The detailed computational supplement \path{paper_full.pdf} is rebuilt from the same
 source.  Its numbered correction-prefix derivations and half-stable bridge
 reduction are incoming proof nodes for the residual $B/C$ closure;
 diagnostic and superseded material printed
@@ -2970,6 +2982,32 @@ certificate-regeneration tier: its partitioned stages have two- or eight-hour
 guards and require the machine-C resource envelope documented in
 \path{REPLAY.md}.  Part~III does not silently substitute its faster audit for
 that imported computation.
+
+For the final public archive, the clean-worktree driver
+\path{run_final_publication_replay.sh} runs the preflight and both arithmetic
+aggregates, records the exact commit and final-source-manifest identity in one
+persistent log, and rejects any replay that changes the source tree.  The
+deterministic packager \path{build_final_release_archive.py} then includes
+every tracked publication file, that successful replay log, and the exact
+commit metadata in one checksum-addressed archive.  The commands and terminal
+markers are given in \path{REPLAY.md}.  The archive deposited for publication
+must be the output of this final-source workflow; the historical execution
+snapshot is retained as audit history, not substituted for the final replay.
+
+The full-range independent check is supplied without constructing the large
+degree-$41$--$59$ reverse-Pieri frontier.  Its source is
+\begin{center}
+\path{character_ring_iter/verify_full_q3_bcd_modular_moment_checker.cpp}.
+\end{center}
+It checks the archived degree-$40$ reverse-Pieri overlap, verifies the $538$
+higher candidates by the uniquely bounded $21$-prime calculation described
+above, and checks the $5{,}509$ higher hierarchy values exactly.  It rejects
+any incorrect row, degree, count, residue, character bound, modulus bound, or
+nonpositive hierarchy value before emitting
+\texttt{FULL\_Q3\_MODULAR\_CHECKER VERIFICATION: ALL PASS}.  The target
+\texttt{full-q3-bcd-independent-audit} is included in
+\texttt{full-q3-extension};
+\path{run_full_q3_bcd_independent_audit.sh} is the persistent-log wrapper.
 
 SHA-256 manifests authenticate every load-bearing source, accepted
 transcript, generated ledger, and cited source artifact.  Compiler and
@@ -3041,7 +3079,7 @@ transcripts:
 L.~P. Polzer,
 The two-minus adjoint-character case of Ginibre's $Q_3$ condition,
 Parts I--II: classification and exact certificates, journal manuscript with
-formal detailed supplement, 2026.  The exact submitted source bytes are bound
+detailed computational supplement, 2026.  The exact submitted source bytes are bound
 by \path{certificates/full_q3/full_q3_source_manifest.sha256} in the
 inseparable submission archive; the historical execution snapshot is
 \url{https://github.com/skypher/ginibre-q3-adjoint/tree/91363c3cebb37a44349f613ab0a5aa6dcd412af3/ginibre_q3}.

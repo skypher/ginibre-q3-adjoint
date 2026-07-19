@@ -159,6 +159,80 @@ reproduction therefore requires both aggregate commands.  The files under
 peer review.  SHA-256 records provenance and byte identity; only the exact or
 outward-rounded comparisons specified in the numbered results decide signs.
 
+## Final-source archival replay
+
+The publication archive is produced only after a clean-commit replay of both
+arithmetic aggregates. Choose an absolute log path outside the repository:
+
+```text
+FINAL_REPLAY_LOG=/absolute/path/final-replay.log \
+  make -C ginibre_q3 final-publication-replay
+```
+
+`run_final_publication_replay.sh` rejects a dirty worktree and an existing log
+path. It records the exact commit, final-source-manifest hash, deterministic
+PDF epoch, host, compiler, Python version, and UTC start/pass time of every
+stage. It uses unbuffered Python and the progress-enabled C++ entry points.
+The terminal marker is `FINAL_PUBLICATION_REPLAY: ALL PASS`. It then verifies
+that the replay did not alter the source tree.
+
+After that marker is present, build the immutable-deposit payload with:
+
+```text
+make -C ginibre_q3 final-release-archive \
+  FINAL_REPLAY_LOG=/absolute/path/final-replay.log \
+  FINAL_RELEASE_ARCHIVE=/absolute/path/ginibre-q3-final.tar.gz
+```
+
+The archive builder again requires a clean worktree, refuses to overwrite an
+output, includes every tracked `ginibre_q3` file plus the replay log and exact
+commit metadata, normalizes ownership and timestamps, and prints the archive
+SHA-256. Running it twice from the same commit and replay log produces the
+same bytes. The resulting archive and checksum are the objects to deposit in
+the public DOI-bearing repository; local tooling cannot assign that external
+identifier.
+
+## Compressed full-range implementation cross-check
+
+The accepted bounded-Littlewood calculation and the reverse-Pieri traversal
+are structurally independent algorithms. The archived reverse-Pieri prefix
+checks all 2,845 required moments through degree 40, covering 7,484 residual
+pairs. Extending that traversal through degree 59 creates a much larger GMP
+frontier but adds only 538 moments needed by the remaining 5,509 pairs. The
+fail-closed target therefore verifies precisely that smaller complement:
+
+```text
+make -C ginibre_q3 full-q3-bcd-independent-audit
+```
+
+The target builds
+`character_ring_iter/verify_full_q3_bcd_modular_moment_checker.cpp`. It first
+requires exact equality with the archived reverse-Pieri prefix. For degrees
+41--59 it evaluates the bounded-Littlewood determinants in ordinary modular
+arithmetic, using Newton forward differences instead of the promotion
+verifier's Montgomery arithmetic, Lagrange weights, and GMP CRT
+reconstruction. All 538 candidate moments must agree modulo 21 distinct
+primes. Their 628-bit product is larger than the independently enforced
+607-bit maximum character bound; since both the true moment and candidate lie
+between zero and that bound, the modular agreement proves equality over the
+integers. The checker then evaluates all 5,509 remaining hierarchy values
+with exact GMP integers and requires strict positivity, in addition to the
+7,484 prefix count. It emits
+`FULL_Q3_MODULAR_CHECKER VERIFICATION: ALL PASS` only after all scopes and the
+modulus-dominance test pass.
+
+To preserve a timestamped raw audit log, use the wrapper with a new absolute
+directory:
+
+```text
+FULL_Q3_INDEPENDENT_LOG_DIR=/absolute/new/directory \
+  ./ginibre_q3/run_full_q3_bcd_independent_audit.sh
+```
+
+The compressed target is included in `full-q3-extension`; it remains a
+separate implementation and source file from the determinant promotion
+verifier.
+
 ## Isolation guarantee
 
 The driver creates a new temporary directory and copies only the Ginibre Q3
@@ -260,7 +334,7 @@ The command recomputes:
   every E8 rectangular bridge/tail row through the parallel GMP program, and
   the E8 `m_0..m_100` finite bridge;
 - three clean `pdflatex` passes for the formal Parts I--II manuscript
-  `paper.tex` and its formal detailed supplement `paper_full.tex`, and the
+  `paper.tex` and its detailed computational supplement `paper_full.tex`, and the
   absence of undefined references or citations in either document;
 - the formal document contract: both Parts I--II PDFs are nonempty, the
   detailed supplement is strictly larger than the compact journal manuscript,

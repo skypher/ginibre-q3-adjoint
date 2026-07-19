@@ -10,17 +10,19 @@ them.
 
 The proof has three numbered parts and one detailed supplement in three
 manuscript files. `paper.pdf` consolidates Parts I--II,
-`paper_full.pdf` is their formal detailed supplement, and
+`paper_full.pdf` is their detailed computational supplement, and
 `full_q3_extension.pdf` contains Part III. All three are load-bearing. The
 supplement supplies the numbered correction-prefix proofs and the half-stable
 bridge reduction consumed by the compact residual B/C closure; diagnostic and
 superseded routes printed in the same expanded build remain outside the
-dependency spine. The historical
-author report and `referee_audits/` directory are likewise outside the
+dependency spine. The historical author self-audit and `referee_audits/`
+directory are likewise outside the
 manuscript. The immutable execution snapshot preserves the sources and
 transcripts of the expensive arithmetic runs, while the final-source manifest
 binds the exact submitted source bytes. A public final release must reproduce
-that manifest exactly.
+that manifest exactly. `ACTIVE_PROOF_SUPPLEMENT.md` is the canonical minimal
+index: a diagnostic or superseded result not listed there is not an incoming
+theorem node.
 
 ## Scope
 

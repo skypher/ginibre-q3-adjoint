@@ -200,7 +200,7 @@ def validate_semantics(companion: str, part_three: str) -> tuple[IntegralSignatu
     )
     require_fragment(
         part_three,
-        r"Parts I--II: classification and exact certificates, journal manuscript with formal detailed supplement, 2026",
+        r"Parts I--II: classification and exact certificates, journal manuscript with detailed computational supplement, 2026",
         "Part III companion bibliography identity changed",
     )
 

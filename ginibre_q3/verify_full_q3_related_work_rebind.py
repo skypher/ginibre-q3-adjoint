@@ -445,7 +445,7 @@ def main() -> int:
         "proof spine omits the half-stable bridge edge",
     )
     require(
-        "504-page formal detailed supplement" in extension,
+        "504-page detailed computational supplement" in extension,
         "Part III supplement page count is stale",
     )
     require(
@@ -467,11 +467,19 @@ def main() -> int:
     snapshot_records = parse_manifest(
         snapshot_manifest.read_text(encoding="utf-8"), snapshot_manifest
     )
+    publication_only_audit_paths = {
+        "../../run_full_q3_bcd_independent_audit.sh",
+        "../../verify_full_q3_bcd_crosscheck.py",
+        "../../character_ring_iter/verify_full_q3_bcd_modular_moment_checker.cpp",
+    }
     arithmetic_paths = [
         path
         for path in full_records_live
-        if path.startswith("../../character_ring_iter/")
-        or path.startswith("../../run_full")
+        if (
+            path.startswith("../../character_ring_iter/")
+            or path.startswith("../../run_full")
+        )
+        and path not in publication_only_audit_paths
     ]
     require(arithmetic_paths, "no arithmetic sources found in live manifest")
     for path in arithmetic_paths:
@@ -481,39 +489,61 @@ def main() -> int:
             f"arithmetic source changed after execution snapshot: {path}",
         )
 
-    # The live top-level Makefile differs from the execution snapshot only by
-    # the publication-preflight alias.  Authenticate that exact non-arithmetic
-    # addition while keeping every compile and replay recipe byte-identical.
+    # The final Makefile adds publication wrappers, deterministic PDF metadata,
+    # and progress flags.  Compare every historical arithmetic target after
+    # removing only the output-observability changes.  New archival and
+    # independent-audit targets are checked separately below.
     snapshot_makefile = (
         ROOT
         / "certificates/full_q3/distributed0001/execution_source_snapshot/"
           "ginibre_q3/Makefile"
     ).read_text(encoding="utf-8")
     live_makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
-    baseline_phony = (
-        ".PHONY: clean-room-replay full-q3-document-audit "
-        "full-q3-artifact-audit"
-    )
-    require(baseline_phony in snapshot_makefile, "snapshot Makefile boundary changed")
-    expected_live_makefile = snapshot_makefile.replace(
-        baseline_phony,
-        ".PHONY: publication-preflight clean-room-replay full-q3-document-audit "
+    def recipe(makefile: str, target: str) -> str:
+        match = re.search(
+            rf"(?m)^{re.escape(target)}:[^\n]*\n((?:\t[^\n]*\n|\n)*)",
+            makefile,
+        )
+        require(match is not None, f"Makefile target is absent: {target}")
+        return match.group(1).replace("python3 -u clean_room_replay.py", "python3 clean_room_replay.py").replace(
+            "/tmp/verify_full_q3_bd_residual_gmp --progress",
+            "/tmp/verify_full_q3_bd_residual_gmp",
+        ).replace(
+            "/tmp/verify_full_q3_bcd_remaining_gmp --progress",
+            "/tmp/verify_full_q3_bcd_remaining_gmp",
+        ).replace(
+            "/tmp/verify_full_q3_bcd_bounded_littlewood_gmp --progress",
+            "/tmp/verify_full_q3_bcd_bounded_littlewood_gmp",
+        )
+
+    protected_targets = (
+        "clean-room-replay",
+        "full-q3-document-audit",
         "full-q3-artifact-audit",
-        1,
-    ).replace(
-        "\nclean-room-replay:\n",
-        "\npublication-preflight:\n"
-        "\tpython3 -u run_publication_short_audits.py\n"
-        "\tpython3 -u -c 'from pathlib import Path; from clean_room_replay import "
-        "verify_manifests; n, e = verify_manifests(Path(\".\")); "
-        "print(f\"PUBLICATION_PREFLIGHT manifests={n} entries={e}\"); "
-        "print(\"PUBLICATION_PREFLIGHT VERIFICATION: ALL PASS\")'\n\n"
-        "clean-room-replay:\n",
-        1,
+        "full-q3-stable-audit",
+        "full-q3-su2-audit",
+        "full-q3-su3-audit",
+        "full-q3-su45-audit",
+        "full-q3-sun-ge6-audit",
+        "full-q3-exceptional-audit",
+        "full-q3-bcd-high-audit",
+        "full-q3-bcd-mid-audit",
+        "full-q3-bd-residual-audit",
+        "full-q3-bcd-low-tail-audit",
+        "full-q3-bcd-remaining-audit",
+        "full-q3-bcd-bounded-littlewood-audit",
+        "full-q3-extension",
     )
+    for target in protected_targets:
+        require(
+            recipe(live_makefile, target) == recipe(snapshot_makefile, target),
+            f"live Makefile changes protected arithmetic recipe {target}",
+        )
     require(
-        live_makefile == expected_live_makefile,
-        "live Makefile changes an execution recipe beyond publication-preflight",
+        "PUBLICATION_SOURCE_DATE_EPOCH ?= 1784419200" in live_makefile
+        and "final-publication-replay:" in live_makefile
+        and "full-q3-bcd-independent-audit:" in live_makefile,
+        "final replay, deterministic PDF, or independent-audit target is absent",
     )
 
     reference_records = verify_manifest(FILES["reference_manifest"])
@@ -521,7 +551,7 @@ def main() -> int:
     print(
         "FULL_Q3_FINAL_SOURCE_BINDING "
         f"extension={digest(read('extension'))} arithmetic_sources={len(arithmetic_paths)} "
-        "makefile_delta=publication-preflight-only "
+        "makefile_delta=wrappers-deterministic-pdf-progress-only "
         f"reference_records={reference_records} full_records={full_records}"
     )
     print("FULL_Q3_FINAL_SOURCE_BINDING VERIFICATION: ALL PASS")

@@ -15,15 +15,19 @@ fb54ba33c1711ba404f368ce3af8def226d90facf56953958e2791068178b210  Makefile
 48d269b8d0ab67d15e49f99256fd0e36dd559691bf2039d2c373ca99fc483c02  full_q3_extension.tex
 a92f75a0cfdd5ea7f7bdea8eafc11a3481ff4227d2f29b7de6f156bcc1cdc26e  verify_full_q3_document.py
 e7a46ec33608a9c54aca3b6154b4cd6b864d2f9b2ffc00117384edd331e9ac61  run_fullq3complete0002_optimus.sh
-6270eabf52062b8478238c5128a914ae0f07d5b31292e09d4c03561d49e278a8  full_q3_source_manifest.sha256
+c147434141f42484b6a46364803f784e1c15a8d48d06954ce903938360f52f87  full_q3_source_manifest.sha256
 ```
 
-After the separately verified publication-only rebind in `paper.tex`, the
-publication source manifest is required to have SHA-256
+The initial publication-only rebind in `paper.tex` produced source-manifest
+SHA-256
 `1cbd33b571e990c8b8bce47a1bd549129dea6cc89d965ec5951ec6f8f265fb59`.
+The live final-source manifest, including the compressed modular checker, has
+SHA-256
+`cb7f417576f6bd94686883abbff70f8f81e797ed501ae6058771d321c19e52a2`.
 The historical aggregate transcript and the archived execution snapshot keep
-the prepublication hash above; the rebind verifier proves the exact two-record
-manifest delta.
+the prepublication hash above; the live rebind verifier authenticates mutable
+publication files through the current manifest while requiring every archived
+arithmetic source to remain byte-identical to the execution snapshot.
 
 The same transcript records successful acyclic document, artifact,
 stable-hierarchy, type-A,
@@ -118,6 +122,15 @@ the accepted unified certificate.
 diagnostic through degree 40.  Its 2,845 printed moments agree exactly with
 the bounded-Littlewood implementation, and both implementations report 7,484
 residual pairs with minimum `50`.  It is an implementation cross-check, not
-the promotion certificate.  `fullq3bcd0007_machine_c_launch_failure.log`
+the promotion certificate.  The final-source checker
+`character_ring_iter/verify_full_q3_bcd_modular_moment_checker.cpp` consumes
+this prefix and the accepted bounded-Littlewood ledger.  Above degree 40 it
+evaluates the determinants independently using ordinary modular arithmetic
+and Newton forward differences at the integer nodes.  It checks exactly 538
+higher moments modulo 21 primes whose 628-bit product exceeds the 607-bit
+character bound, which makes every checked candidate unique, and then checks
+the remaining 5,509 hierarchy values with exact GMP integers.  Its terminal
+marker is `FULL_Q3_MODULAR_CHECKER VERIFICATION: ALL PASS`.
+`fullq3bcd0007_machine_c_launch_failure.log`
 records a wrapper failure before the verifier was invoked (`/usr/bin/time`
 was absent); it is retained solely to make the run-ID history auditable.
