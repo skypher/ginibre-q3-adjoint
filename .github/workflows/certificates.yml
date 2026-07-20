@@ -1,0 +1,202 @@
+name: Certificate build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/certificates.yml"
+      - "ginibre_q3/**"
+  pull_request:
+    paths:
+      - ".github/workflows/certificates.yml"
+      - "ginibre_q3/**"
+  workflow_dispatch:
+    inputs:
+      run_full_replay:
+        description: Run the complete 105-stage replay on the q3-certificates runner
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: certificates-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  LC_ALL: C
+  PYTHONHASHSEED: "0"
+  SOURCE_DATE_EPOCH: "1784419200"
+
+jobs:
+  certificate-build:
+    name: Authenticate and compile certificates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Select Python 3.12
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+
+      - name: Install native proof dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            g++ \
+            make \
+            libgmp-dev \
+            libmpfr-dev \
+            libomp-dev \
+            texlive-latex-base \
+            texlive-latex-extra \
+            texlive-fonts-recommended
+
+      - name: Record runner resources and toolchain
+        run: |
+          mkdir -p ci-logs
+          {
+            echo "cpus=$(nproc)"
+            awk '/MemTotal|MemAvailable/ {print}' /proc/meminfo
+            g++ --version | head -n 1
+            make --version | head -n 1
+            python3 --version
+            pdflatex --version | head -n 1
+          } | tee ci-logs/environment.log
+
+      - name: Authenticate certificate inputs and proof contracts
+        run: |
+          set -o pipefail
+          make -C ginibre_q3 publication-preflight \
+            2>&1 | tee ci-logs/publication-preflight.log
+
+      - name: Compile every clean-room certificate replayer
+        run: |
+          set -o pipefail
+          make -B -C ginibre_q3/character_ring_iter \
+            -j"$(nproc)" replay-build \
+            2>&1 | tee ci-logs/certificate-build.log
+
+      - name: Run exact certificate smoke checks
+        working-directory: ginibre_q3/character_ring_iter
+        run: |
+          set -o pipefail
+          ./verify_sun_repair_certificates_gmp \
+            2>&1 | tee ../../ci-logs/sun-repair-smoke.log
+          OMP_NUM_THREADS="$(nproc)" \
+            ./direct_chain_rect_e8_parallel_certificate \
+              --negative-bounds ../certificates/exceptional_rect/e8_rect_negative_bounds.tsv \
+              --only n133 \
+            2>&1 | tee ../../ci-logs/e8-directed-rounding-smoke.log
+          grep -F "SUMMARY cases_checked=1 failed_cases=0 lattice_failures=0 precision_bits=384" \
+            ../../ci-logs/e8-directed-rounding-smoke.log
+          grep -F "RESULT: ALL PASS" \
+            ../../ci-logs/e8-directed-rounding-smoke.log
+
+      - name: Package compiled replayers
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          mapfile -t replay_targets < <(
+            make -s -C ginibre_q3/character_ring_iter \
+              --eval='print-replay-targets: ; @printf "%s\n" $(REPLAY_TARGETS)' \
+              print-replay-targets
+          )
+          for target in "${replay_targets[@]}"; do
+            test -x "ginibre_q3/character_ring_iter/${target}"
+          done
+          tar -C ginibre_q3/character_ring_iter \
+            --sort=name \
+            --mtime="@${SOURCE_DATE_EPOCH}" \
+            --owner=0 \
+            --group=0 \
+            --numeric-owner \
+            -czf dist/certificate-replayers-linux-x86_64.tar.gz \
+            "${replay_targets[@]}"
+          sha256sum dist/certificate-replayers-linux-x86_64.tar.gz \
+            > dist/certificate-replayers-linux-x86_64.tar.gz.sha256
+
+      - name: Upload compiled certificate replayers
+        if: success()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: certificate-replayers-linux-x86_64
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload build and smoke logs
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: certificate-build-logs
+          path: ci-logs/
+          if-no-files-found: warn
+          retention-days: 14
+
+  full-certificate-replay:
+    name: Complete clean-room certificate replay
+    if: github.event_name == 'workflow_dispatch' && inputs.run_full_replay
+    needs: certificate-build
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+      - q3-certificates
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Record validated-runner resources
+        run: |
+          mkdir -p ci-logs
+          {
+            echo "cpus=$(nproc)"
+            awk '/MemTotal|MemAvailable/ {print}' /proc/meminfo
+            g++ --version | head -n 1
+            make --version | head -n 1
+            python3 --version
+            pdflatex --version | head -n 1
+          } | tee ci-logs/full-replay-environment.log
+
+      - name: Run complete clean-room replay
+        run: |
+          set -o pipefail
+          make -C ginibre_q3 clean-room-replay \
+            REPLAY_MAX_STAGE_SECONDS=300 \
+            REPLAY_MAX_TOTAL_SECONDS=300 \
+            2>&1 | tee ci-logs/full-clean-room-replay.log
+
+      - name: Preserve failed isolated replay workspace
+        if: failure()
+        run: |
+          mkdir -p ci-logs/failed-workspace
+          latest="$({
+            find /tmp -maxdepth 1 -type d -name 'ginibre-q3-clean-room-*' \
+              -printf '%T@ %p\n' 2>/dev/null || true
+          } | sort -nr | head -n 1 | cut -d' ' -f2-)"
+          if [[ -n "${latest}" ]]; then
+            cp -a "${latest}/." ci-logs/failed-workspace/
+          fi
+
+      - name: Upload complete replay evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: full-certificate-replay-logs
+          path: ci-logs/
+          if-no-files-found: warn
+          retention-days: 30
