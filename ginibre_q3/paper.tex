@@ -160,8 +160,10 @@ supplies the numbered proofs of the correction-prefix contracts consumed
 there and the half-stable bridge reduction that converts those contracts into
 Chain inequalities.  The compact contract table identifies every active result by label
 and proves that offsets beyond $27$ are not consumed.  Conditional and
-superseded development routes printed later in this expanded source are
-archival material, not part of that indexed proof.  Part~III is the separate full signed-product extension
+superseded development routes are excluded from the formal supplement; they
+can be typeset separately from the source archive by defining
+\texttt{\string\GinibreDevelopmentArchive}.  They are not part of that
+indexed proof.  Part~III is the separate full signed-product extension
 \texttt{full\_q3\_extension.pdf}.
 \else
 This journal manuscript consolidates Parts~I--II of the proof: the
@@ -14295,15 +14297,14 @@ or south.
 record the resulting recovery criterion: a right-boundary tight zone may use
 only such already recovered outside data as an auxiliary input, with no new
 branch words and with the same $2^{2q}s_{j-q}$ fixed-fiber count.
-\Cref{prop:bc-split-target-window-halo-tail-supplier} inserts the split
-target-window inverse into this final supplier: base target-window data handle
+The development archive's split target-window supplier inserts the split
+inverse into this route: base target-window data handle
 the right-boundary $C$-side alternative through $m=28$, through the certified
 \(m=29,30,31\) envelope frontiers, and through every fixed-depth non-frontier
 case.  Only the \(m\ge32\) branch that remains in every fixed-depth envelope
 frontier still needs the commuting-signature or bounded signature-list readout
 in this split form.
-\Cref{prop:bc-carrier-target-window-halo-tail-supplier} gives the
-terminal-source version of those last readouts: for $m\ge29$ in the
+Its terminal-source variant gives the last readouts: for $m\ge29$ in the
 non-column-even final-zone branch, the degree-pruned ambient set already closes
 the sparse residual-degree cases of
 \cref{prop:bc-sparse-active-low-low-degree-full-budget} and the degree-profile
@@ -29698,8 +29699,14 @@ and
  \#\{T:\lambda(T)' \text{ even},\ \ell(\lambda(T))\ge2q,\ H_q(T)=S\}
  \le 2^{2q} s_{j-q}.
 \]
-Then the two bad-shape estimates in \cref{prop:bc-bad-shape-reduction} hold
-for this $q$ and $j$.
+Then
+\[
+  \sum_{\substack{\lambda':\,\mathrm{even}\\ \lambda_1\ge2q}}a_j(\lambda)
+  \le 2^{2q}\binom jq s_{j-q},
+  \qquad
+  \sum_{\substack{\lambda':\,\mathrm{even}\\ \ell(\lambda)\ge2q}}a_j(\lambda)
+  \le 2^{2q}\binom jq s_{j-q}.
+\]
 \end{proposition}
 
 \begin{proof}
@@ -30846,6 +30853,126 @@ because \(56q^2-940q+156>0\) for \(q\ge18\).  The right side is multiplied by
 Induction proves the result.
 \end{proof}
 
+\begin{lemma}[Bounded Littlewood determinant for finite type-$B$ adjoint moments]
+\label{lem:bc-b-bounded-littlewood-determinant}
+Work in the completed symmetric-function ring over \(\mathbb Q\), put
+\(e_r=0\) for \(r<0\), and define
+\[
+ f_r^e=\sum_{k\in\mathbb Z}e_ke_{k+r},\qquad
+ e=\sum_{k\ge0}e_k,\qquad
+ \bar e=\sum_{k\ge0}(-1)^ke_k.
+\]
+For \(b\ge1\), set
+\[
+ \mathcal B_b=\frac12\left\{
+ e\det_{1\le i,j\le b}(f^e_{i-j}-f^e_{i+j-1})
+ +\bar e\det_{1\le i,j\le b}(f^e_{i-j}+f^e_{i+j-1})
+ \right\}.
+\]
+Then, for every \(r\ge0\),
+\[
+ m_r^{B_b}=[m_{(2^r)}]\mathcal B_b.
+\]
+Moreover, if \(F\) is homogeneous of symmetric-function degree \(2r\),
+and \(\pi_2(p_1)=p\), \(\pi_2(p_2)=z p^2\),
+\(\pi_2(p_k)=0\) for \(k\ge3\), then
+\[
+ [m_{(2^r)}]F
+ =r!\sum_{a=0}^r(2(r-a)-1)!!
+   [p^{2r}z^a]\pi_2(F).
+\]
+\end{lemma}
+
+\begin{proof}
+By \cref{lem:bc-correction-bad-shapes,lem:bc-littlewood-graph-model}, the
+finite type-$B$ moment is the stable column-even sum with precisely the
+width-excluded terms removed.  Transpose the resulting admitted partitions.
+The involution \(\omega\) interchanges
+\(e_2\) and \(h_2\), so Hall duality gives
+\[
+ m_r^{B_b}
+ =\left\langle h_2^r,
+   \sum_{\substack{\lambda_1\le2b+1\\c(\lambda)=0}}s_\lambda
+  \right\rangle,
+\]
+where \(c(\lambda)\) is the number of odd columns.  The two identities in
+\cite[Theorem~1.3, equations~(1.9)--(1.10)]{HKKO2025}, specialized at
+\(u=0\), give the sum and difference of the sectors
+\(c(\lambda)=0\) and \(c(\lambda)=2b+1\).  Their half-sum is
+\(\mathcal B_b\), and
+\(\langle h_2^r,F\rangle=[m_{(2^r)}]F\), proving the first assertion.
+
+For the second, expand \(F\) in power sums.  A power-sum monomial involving
+some \(p_k\), \(k\ge3\), cannot contribute to \(m_{(2^r)}\).  In
+\(p_1^{2(r-a)}p_2^a\), the \(a\) ordered \(p_2\)-factors choose distinct
+variables and the remaining ordered \(p_1\)-factors hit every other
+variable twice.  The coefficient of \(x_1^2\cdots x_r^2\) is therefore
+\[
+ \frac{r!}{(r-a)!}\frac{(2(r-a))!}{2^{r-a}}
+ =r!(2(r-a)-1)!!,
+\]
+which is exactly the displayed functional after substituting \(q=zp^2\).
+\end{proof}
+
+\begin{lemma}[Unified exact type-$B$ frontier certificate, H8--H27]
+\label{lem:bc-b-h8-h27-bounded-littlewood-certificate}
+Let \(\mathcal F_B\) consist of the integer pairs \((h,q)\) in
+\[
+ \begin{split}
+ &h=8,\quad 15\le q\le17;\\
+ &9\le h\le23,\quad 15\le q\le\lceil3h/2\rceil+4;\\
+ &24\le h\le27,\quad 15\le q\le2h-7.
+ \end{split}
+\]
+For every \((h,q)\in\mathcal F_B\), the number of column-even Pieri
+two-strip paths of length \(2q+h\) with terminal first row at least \(2q\)
+is strictly less than \(s_{2q+h}/2\).
+\end{lemma}
+
+\begin{proof}
+By \cref{lem:bc-correction-bad-shapes,lem:bc-b-bounded-littlewood-determinant},
+the required bad-path count is exactly
+\[
+ \#\operatorname{bad}(q,j)=s_j-m_j^{B_{q-1}},\qquad j=2q+h.
+\]
+The current exact verifier
+\[
+\texttt{character\_ring\_iter/verify\_active\_bc\_b\_frontiers\_bounded\_littlewood\_gmp.cpp}
+\]
+generates \(\mathcal F_B\) from the three displayed ranges and rejects any
+scope other than its \(337\) distinct cases.  It specializes the determinant
+of \cref{lem:bc-b-bounded-littlewood-determinant} at the integer nodes
+\(z=0,1,\ldots,121\), using
+\[
+ \sum_{r\ge0}\pi_2(e_r)u^r=\exp(pu-zp^2u^2/2)
+\]
+to construct every entry as a truncated exact power series.  Lagrange
+interpolation applies the coefficient functional in that lemma.
+
+The independent prime-field evaluations are merged by exact GMP CRT.  Since
+the finite moment counts a subset of the unrestricted stable objects,
+\(0\le m_j^{B_b}\le s_j\).  The verifier chooses primes until their product
+is strictly larger than \(s_{121}\), and rejects a reconstructed value
+outside its corresponding stable bound.  Thus every CRT representative is
+the unique integer moment, rather than a probable reconstruction.
+
+The accepted transcript
+\[
+\texttt{certificates/post\_m29/bc\_b\_h8\_h27\_bounded\_littlewood\_gmp\_certificate.log}
+\]
+has SHA-256
+\[
+\hashsplit{79a6d2721185cc71a8884987774da1dd}{0e90f38482c4f8af1b26bf3c7e695327}.
+\]
+It records the per-\(h\) scope and minimum margin, reports
+\texttt{rows=33 cases=337 maximum\_moment=121 failures=0}, and ends with
+\texttt{ACTIVE\_B\_FRONTIER\_BOUNDED\_LITTLEWOOD VERIFICATION: ALL PASS}.
+In particular, every exact value
+\(s_j-2\#\operatorname{bad}(q,j)=2m_j^{B_{q-1}}-s_j\) is positive.
+The older reverse-Pieri transcripts cited below remain independent controls,
+but are not premises of this unified calculation.
+\end{proof}
+
 \begin{lemma}[Exact first three eighth $B$ nonboundary bad-shape counts]\label{lem:bc-b-eighth-frontier-badshape-certificate}
 For \(q=15,16,17\), the number of column-even Pieri two-strip paths of length
 \(2q+8\) with terminal first row at least \(2q\) is at most \(s_{2q+8}/2\).
@@ -30903,7 +31030,7 @@ By \cref{lem:bc-correction-bad-shapes}, the coefficient interpretation in
 \cref{lem:bc-pieri-path-bijection}, \(|\delta_{2q+8}^{B_b}|\) is the number
 of column-even Pieri two-strip paths of length \(2q+8\) with terminal first
 row at least \(2q\).  If \(q=15,16,17\), this is bounded by \(s_{2q+8}/2\) by
-\cref{lem:bc-b-eighth-frontier-badshape-certificate}.  If \(q\ge18\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge18\),
 \cref{lem:bc-b-eighth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -31070,7 +31197,7 @@ By \cref{lem:bc-correction-bad-shapes}, the coefficient interpretation in
 of column-even Pieri two-strip paths of length \(2q+9\) with terminal first
 row at least \(2q\).  If \(q=15,16,17,18\), this is bounded by
 \(s_{2q+9}/2\) by
-\cref{lem:bc-b-ninth-frontier-badshape-certificate}.  If \(q\ge19\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge19\),
 \cref{lem:bc-b-ninth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -31240,7 +31367,7 @@ By \cref{lem:bc-correction-bad-shapes}, the coefficient interpretation in
 of column-even Pieri two-strip paths of length \(2q+10\) with terminal first
 row at least \(2q\).  If \(q=15,16,17,18,19\), this is bounded by
 \(s_{2q+10}/2\) by
-\cref{lem:bc-b-tenth-frontier-badshape-certificate}.  If \(q\ge20\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge20\),
 \cref{lem:bc-b-tenth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -31417,7 +31544,7 @@ By \cref{lem:bc-correction-bad-shapes}, the coefficient interpretation in
 of column-even Pieri two-strip paths of length \(2q+11\) with terminal first
 row at least \(2q\).  If \(15\le q\le21\), this is bounded by
 \(s_{2q+11}/2\) by
-\cref{lem:bc-b-eleventh-frontier-badshape-certificate}.  If \(q\ge22\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge22\),
 \cref{lem:bc-b-eleventh-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -31596,7 +31723,7 @@ By \cref{lem:bc-correction-bad-shapes}, the coefficient interpretation in
 of column-even Pieri two-strip paths of length \(2q+12\) with terminal first
 row at least \(2q\).  If \(15\le q\le22\), this is bounded by
 \(s_{2q+12}/2\) by
-\cref{lem:bc-b-twelfth-frontier-badshape-certificate}.  If \(q\ge23\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge23\),
 \cref{lem:bc-b-twelfth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -31785,7 +31912,7 @@ By \cref{lem:bc-correction-bad-shapes}, the coefficient interpretation in
 of column-even Pieri two-strip paths of length \(2q+13\) with terminal first
 row at least \(2q\).  If \(15\le q\le24\), this is bounded
 by \(s_{2q+13}/2\) by
-\cref{lem:bc-b-thirteenth-frontier-badshape-certificate}.  If \(q\ge25\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge25\),
 \cref{lem:bc-b-thirteenth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -31977,7 +32104,7 @@ By \cref{lem:bc-correction-bad-shapes}, the coefficient interpretation in
 of column-even Pieri two-strip paths of length \(2q+14\) with terminal first
 row at least \(2q\).  If \(15\le q\le25\), this is
 bounded by \(s_{2q+14}/2\) by
-\cref{lem:bc-b-fourteenth-frontier-badshape-certificate}.  If \(q\ge26\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge26\),
 \cref{lem:bc-b-fourteenth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -32175,7 +32302,7 @@ By \cref{lem:bc-correction-bad-shapes}, the coefficient interpretation in
 of column-even Pieri two-strip paths of length \(2q+15\) with terminal first
 row at least \(2q\).  If \(15\le q\le27\), this
 is bounded by \(s_{2q+15}/2\) by
-\cref{lem:bc-b-fifteenth-frontier-badshape-certificate}.  If \(q\ge28\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge28\),
 \cref{lem:bc-b-fifteenth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -32376,7 +32503,7 @@ By \cref{lem:bc-correction-bad-shapes}, the coefficient interpretation in
 of column-even Pieri two-strip paths of length \(2q+16\) with terminal first
 row at least \(2q\).  If \(15\le q\le28\), this
 is bounded by \(s_{2q+16}/2\) by
-\cref{lem:bc-b-sixteenth-frontier-badshape-certificate}.  If \(q\ge29\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge29\),
 \cref{lem:bc-b-sixteenth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -32585,7 +32712,7 @@ of column-even Pieri two-strip paths of length \(2q+17\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le30\), this is bounded by
 \(s_{2q+17}/2\) by
-\cref{lem:bc-b-seventeenth-frontier-badshape-certificate}.  If \(q\ge31\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge31\),
 \cref{lem:bc-b-seventeenth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -32797,7 +32924,7 @@ of column-even Pieri two-strip paths of length \(2q+18\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le31\), this is bounded by
 \(s_{2q+18}/2\) by
-\cref{lem:bc-b-eighteenth-frontier-badshape-certificate}.  If \(q\ge32\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge32\),
 \cref{lem:bc-b-eighteenth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -33020,7 +33147,7 @@ of column-even Pieri two-strip paths of length \(2q+19\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le33\), this is
 bounded by \(s_{2q+19}/2\) by
-\cref{lem:bc-b-nineteenth-frontier-badshape-certificate}.  If \(q\ge34\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge34\),
 \cref{lem:bc-b-nineteenth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -33246,7 +33373,7 @@ of column-even Pieri two-strip paths of length \(2q+20\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le34\), this is
 bounded by \(s_{2q+20}/2\) by
-\cref{lem:bc-b-twentieth-frontier-badshape-certificate}.  If \(q\ge35\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge35\),
 \cref{lem:bc-b-twentieth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -33478,7 +33605,7 @@ of column-even Pieri two-strip paths of length \(2q+21\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le36\), this is
 bounded by \(s_{2q+21}/2\) by
-\cref{lem:bc-b-twentyfirst-frontier-badshape-certificate}.  If \(q\ge37\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge37\),
 \cref{lem:bc-b-twentyfirst-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -33713,7 +33840,7 @@ of column-even Pieri two-strip paths of length \(2q+22\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le37\), this is
 bounded by \(s_{2q+22}/2\) by
-\cref{lem:bc-b-twentysecond-frontier-badshape-certificate}.  If \(q\ge38\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge38\),
 \cref{lem:bc-b-twentysecond-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -33954,7 +34081,7 @@ of column-even Pieri two-strip paths of length \(2q+23\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le39\), this is
 bounded by \(s_{2q+23}/2\) by
-\cref{lem:bc-b-twentythird-frontier-badshape-certificate}.  If \(q\ge40\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge40\),
 \cref{lem:bc-b-twentythird-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -34198,7 +34325,7 @@ of column-even Pieri two-strip paths of length \(2q+24\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le41\), this is
 bounded by \(s_{2q+24}/2\) by
-\cref{lem:bc-b-twentyfourth-frontier-badshape-certificate}.  If \(q\ge42\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge42\),
 \cref{lem:bc-b-twentyfourth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -34449,7 +34576,7 @@ of column-even Pieri two-strip paths of length \(2q+25\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le43\), this is
 bounded by \(s_{2q+25}/2\) by
-\cref{lem:bc-b-twentyfifth-frontier-badshape-certificate}.  If \(q\ge44\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge44\),
 \cref{lem:bc-b-twentyfifth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -34611,7 +34738,7 @@ of column-even Pieri two-strip paths of length \(2q+26\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le45\), this is
 bounded by \(s_{2q+26}/2\) by
-\cref{lem:bc-b-twentysixth-frontier-badshape-certificate}.  If \(q\ge46\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge46\),
 \cref{lem:bc-b-twentysixth-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -34773,7 +34900,7 @@ of column-even Pieri two-strip paths of length \(2q+27\) with terminal first
 row at least \(2q\).  If
 \(15\le q\le47\), this is
 bounded by \(s_{2q+27}/2\) by
-\cref{lem:bc-b-twentyseventh-frontier-badshape-certificate}.  If \(q\ge48\),
+\cref{lem:bc-b-h8-h27-bounded-littlewood-certificate}.  If \(q\ge48\),
 \cref{lem:bc-b-twentyseventh-nonboundary-width-bad-lower-box-code} bounds this
 number by
 \[
@@ -42505,6 +42632,7 @@ Thus \(|\delta_{2q+29}^{C_b}|\le s_{2q+29}/2\) also for \(q\ge74\), which
 implies the claimed lower bound.
 \end{proof}
 
+\ifdefined\GinibreDevelopmentArchive
 \subsection*{Development archive: superseded residual-tail routes}
 
 \begin{remark}[Status of the following development archive]
@@ -44749,6 +44877,8 @@ $j$, and witness set $S$, and
 \cref{rem:former-post29-tail}.
 \end{proof}
 
+\fi
+
 \subsection*{Return to the active proof: the half-stable bridge}
 
 \begin{proposition}[Post-$m=29$ $B/C$ half-stable bridge reduction]\label{prop:post29-bc-half-bridge}
@@ -44851,15 +44981,17 @@ lower bound for every active row.  The exact GMP/OpenMP replay
 \[
 \texttt{certificates/post\_m29/bc\_lambda\_half\_bridge\_gmp\_certificate.log}
 \]
-computes these lower bounds for all $m=31,\ldots,15447$ with
+computes a still smaller rigorous bound, using the separable linear
+majorant and generating-function reduction recorded in
+\cref{prop:post29-bc-local-half-bridge}, for all $m=31,\ldots,15447$ with
 $\lambda=1/2$.  It exits with status $0$, reports \texttt{failures=0}, and
 has SHA-256
 \[
-\hashsplit{426fc6ccf924e70d27fdfd90f0e4314f}{02e2bc87fe09a6fe84cfdce92f2dbec7}.
+\hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
 \]
 Its worst positive lower bound is attained at $m=15447$, odd exponent
 $30897$, with frontier rank $217$ and log$_{10}$ lower bound
-$125316.825861440928>0$.  Hence every active bridge Chain difference is
+$125316.825861430509>0$.  Hence every active bridge Chain difference is
 nonnegative under the displayed assumptions and the cited boundary and initial
 nonboundary theorems.  For a fixed $m$, the two moment-formula diagonals in
 $D_G(2m+1)$ involve moment indices only through $2m+5$.  The same coefficient
@@ -44936,19 +45068,101 @@ and \(j=2b+30\) for \(B_b\) rows by
 
 \fi
 
+\begin{proposition}[Local $B/C$ half-stable bridge]
+\label{prop:post29-bc-local-half-bridge}
+Fix one of the rows
+\[
+  B_{14},\ldots,B_{123},\qquad C_{20},\ldots,C_{217},
+\]
+and an integer $m$ for which
+\[
+ N_{\mathrm{hit}}^{(29)}(G)\le 2m+1<N_{\mathrm{dir}}^{BC}(G).
+\]
+Put $s_j=m_j^{\mathrm{st}}$ and $m_j^G=s_j+\delta_j^G$.  If
+\[
+ -\frac12s_j\le\delta_j^G\le0
+ \qquad(2\rank(G)+2\le j\le2m+5),
+\]
+then $D_G(2m+1)\ge0$.
+\end{proposition}
+
+\begin{proof}
+Substitution in \cref{lem:moment-formula,def:chain-diff} gives
+\[
+ D_G(2m+1)=D_{\rm st}(2m+1)
+ +\sum_jL_{m,j}\delta_j^G
+ +\sum_{i,j}Q_{m,i,j}\delta_i^G\delta_j^G .
+\]
+The two moment-formula diagonals use indices only through $2m+5$.
+Under the displayed box constraints, discarding sign-favourable terms gives
+the exact sign-truncated lower bound
+\[
+ \mathcal L_m=D_{\rm st}(2m+1)
+ -\frac12\sum_{L_{m,j}>0}L_{m,j}s_j
+ +\frac14\sum_{Q_{m,i,j}<0}Q_{m,i,j}s_is_j .
+\]
+The replay uses the still smaller bound \(\widetilde{\mathcal L}_m\) obtained
+from \([x+y]_+\le[x]_++[y]_+\) on the two linear diagonals; thus
+\(D_G(2m+1)\ge\mathcal L_m\ge\widetilde{\mathcal L}_m\).
+
+Here is the analytic reduction used by the source.  Put \(S=n+2\) and
+\[
+ A_n(k)=\binom n{k-2}+\binom nk-2\binom n{k-1}
+ =\frac{n!}{k!(S-k)!}\bigl((2k-S)^2-S\bigr),
+ \qquad
+ q_n=\sum_{k=0}^{S}A_n(k)s_ks_{S-k}.
+\]
+If \(M(x)=\sum_{j\ge0}s_jx^j/j!\), the stable recurrence gives
+\[
+ M(x)=\frac{\exp(-x/2+x^2/4)}{\sqrt{1-x}},\qquad
+ \sum_{n\ge0}q_n\frac{x^n}{n!}
+ =2\bigl(M''M-(M')^2\bigr)
+ =e^{-x+x^2/2}\left((1-x)^{-3}+(1-x)^{-1}\right).
+\]
+Thus all stable diagonal values are generated by a fixed finite recurrence;
+equivalently, for \(Q(x)=\sum q_nx^n/n!\),
+\[
+ (-x^3+3x^2-4x+2)Q'
+ =(-x^4+4x^3-6x^2+4x+2)Q,
+ \qquad q_0=q_1=2.
+\]
+Moreover, \(A_n(k)<0\) only when \(|2k-S|<\sqrt S\).  Consequently the
+negative parts require only \(O(\sqrt n)\) central terms.  The positive
+active parts are recovered from \(q_n\) by subtracting that central sum and
+the excluded boundary sum \(k<f_m\), where \(f_m\le436\) is the active
+frontier.  Finally, since
+\[
+ L_{m,k}s_k=2A_{2m+3}(k)s_ks_{2m+5-k}
+             -8A_{2m+1}(k)s_ks_{2m+3-k},
+\]
+the inequality \([x+y]_+\le[x]_++[y]_+\) supplies the asserted separable
+linear majorant, while the negative quadratic part is retained exactly.
+This replaces the former full diagonal traversal by
+\(O(\sqrt m+f_m)\) exact terms per index.
+The GMP/OpenMP source
+\path{character_ring_iter/post_m29_bc_interval_bridge_frontier_gmp.cpp}
+checks $\widetilde{\mathcal L}_m>0$ for every $m=31,\ldots,15447$.  Its accepted replay
+reports no failures and has SHA-256
+\[
+\hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
+\]
+This range contains every bridge index in the displayed rows, and proves the
+claim.
+\end{proof}
+
 \begin{proposition}[Active residual $B/C$ correction-prefix contract]
 \label{prop:bc-active-correction-prefix-contract}
 Put $q=b+1$, write $s_j=m_j^{\mathrm{st}}$, and write
 $m_j^G=s_j+\delta_j^G$.  The following bounds hold:
 \[
  -\frac12s_{2q+r}\le\delta_{2q+r}^{B_b}\le0
- \quad(14\le b\le123, 0\le r\le28),
+ \quad(14\le b\le123, 0\le r\le27),
  \tag{\ref{prop:bc-active-correction-prefix-contract}.1}
 \]
 and
 \[
  -\frac12s_{2q+r}\le\delta_{2q+r}^{C_b}\le0
- \quad(20\le b\le217, 0\le r\le28).
+ \quad(20\le b\le217, 0\le r\le27).
  \tag{\ref{prop:bc-active-correction-prefix-contract}.2}
 \]
 The lower bound at each offset is supplied by the exact result in the same
@@ -44995,12 +45209,11 @@ $r$ & type $B$ lower-bound result & type $C$ lower-bound result\\
 25&\contractref{prop:bc-b-twentyfifth-nonboundary-lower-correction}&\contractref{prop:bc-c-twentyfifth-nonboundary-lower-correction}\\
 26&\contractref{prop:bc-b-twentysixth-nonboundary-lower-correction}&\contractref{prop:bc-c-twentysixth-nonboundary-lower-correction}\\
 27&\contractref{prop:bc-b-twentyseventh-nonboundary-lower-correction}&\contractref{prop:bc-c-twentyseventh-nonboundary-lower-correction}\\
-28&\contractref{prop:bc-b-twentyeighth-nonboundary-lower-correction}&\contractref{prop:bc-c-twentyeighth-nonboundary-lower-correction}\\
 \bottomrule
 \end{longtable}
 \endgroup
-The additional offset-$29$ results in the detailed supplement are not needed
-by the main-theorem propagation below.
+The additional offset-$28$ and offset-$29$ results in the source archive are
+not needed by the main-theorem propagation below.
 \end{proposition}
 
 \begin{proof}
@@ -45052,14 +45265,14 @@ $t\le2b+27$, its largest possible correction index is
 \[
  t+2\le2b+29=2q+27.
 \]
-Thus only offsets $0\le r\le27$ of
-\cref{prop:bc-active-correction-prefix-contract} are consumed by the main
-theorem.  Offset $28$ is retained as a checked overlap; the offset-$29$
-results and the longer conditional development routes printed in the source
+Thus the offsets $0\le r\le27$ in
+\cref{prop:bc-active-correction-prefix-contract} are exactly the correction
+prefix consumed by the main theorem.  The offset-$28$ and offset-$29$
+results and the longer conditional development routes retained in the source
 archive are not premises of this proposition.
 
 Apply the local clause of the supplement's half-stable bridge reduction
-\contractref{prop:post29-bc-half-bridge}.  To make the imported finite
+\contractref{prop:post29-bc-local-half-bridge}.  To make the imported finite
 predicate explicit, write the exact moment-formula expansion as
 \[
  D_G(2m+1)=D_{\rm st}(2m+1)
@@ -45069,20 +45282,24 @@ predicate explicit, write the exact moment-formula expansion as
 where the integer coefficients are obtained by substituting
 $m_j^G=s_j+\delta_j^G$ into
 \cref{lem:moment-formula,def:chain-diff}.  Under
-$-s_j/2\le\delta_j^G\le0$, the verifier evaluates the common exact lower
-bound
+$-s_j/2\le\delta_j^G\le0$, sign truncation gives the exact lower bound
+\(\mathcal L_m\) displayed in
+\contractref{prop:post29-bc-local-half-bridge}.  The separable linear
+majorant proved there then gives the certified bound
 \[
- \mathcal L_m=D_{\rm st}(2m+1)
- -\frac12\sum_{L_{m,j}>0}L_{m,j}s_j
- +\frac14\sum_{Q_{m,i,j}<0}Q_{m,i,j}s_is_j.
+ \widetilde{\mathcal L}_m\le\mathcal L_m\le D_G(2m+1).
 \]
-Discarding the other linear and quadratic terms is sign-preserving, so
-$D_G(2m+1)\ge\mathcal L_m$.  The exact GMP/OpenMP source
-\path{character_ring_iter/post_m29_bc_interval_bridge_frontier_gmp.cpp}
-checks $\mathcal L_m>0$ for $m=31,\ldots,15447$, reports no failures, and
+Its generating-function recurrence and central-band sign formula reduce the
+exact evaluation to \(O(\sqrt m+f_m)\) terms.
+
+\noindent The exact GMP/OpenMP source
+\begin{center}
+\small\path{character_ring_iter/post_m29_bc_interval_bridge_frontier_gmp.cpp}
+\end{center}
+checks $\widetilde{\mathcal L}_m>0$ for $m=31,\ldots,15447$, reports no failures, and
 has replay SHA-256
 \[
-\hashsplit{426fc6ccf924e70d27fdfd90f0e4314f}{02e2bc87fe09a6fe84cfdce92f2dbec7}.
+\hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
 \]
 Together with the first-hit proposition \cref{prop:post29} and Chain
 propagation, this reaches the applicable analytic supplier.  The layered-MGF
@@ -45093,8 +45310,8 @@ direct interval proposition \cref{prop:post29-bc-interval-direct} supply
 $B_{62},\ldots,B_{123}$ and $C_{62},\ldots,C_{217}$.  For
 $B_{14},\ldots,B_{17}$ the layered-MGF onset
 already precedes $N_{\mathrm{hit}}^{(29)}(G)$.  These ranges are disjoint and
-exhaust the displayed rows, proving every stated odd exponent.  No diagnostic
-or superseded route in the expanded archive is used.
+exhaust the displayed rows, proving every stated odd exponent.  No inactive
+archival route is used.
 \end{proof}
 
 \begin{theorem}[Classical $B,C,D$ closure]
@@ -45128,40 +45345,13 @@ $D_{53},\ldots,D_{295}$ is covered unconditionally by
 \cref{prop:classical-high}.  The high-edge
 rows $B_b,C_b$ for $218\le b\le275$ or $b=277$ are covered by
 \cref{prop:post29-chernoff}.  The rows $B_{124},\ldots,B_{217}$ are covered by
-\cref{prop:post29-b-unitary-square}.  For the next 308 rows, the first
-post-bridge hit is covered by \cref{prop:post29}, the boundary and
-initial nonboundary theorems
-\cref{prop:bc-b-boundary-lower-correction,prop:bc-b-first-nonboundary-lower-correction,prop:bc-b-second-nonboundary-lower-correction,prop:bc-b-third-nonboundary-lower-correction,prop:bc-b-fourth-nonboundary-lower-correction,prop:bc-b-fifth-nonboundary-lower-correction,prop:bc-b-sixth-nonboundary-lower-correction,prop:bc-b-seventh-nonboundary-lower-correction,prop:bc-b-eighth-nonboundary-lower-correction,prop:bc-b-ninth-nonboundary-lower-correction,prop:bc-b-tenth-nonboundary-lower-correction,prop:bc-b-eleventh-nonboundary-lower-correction,prop:bc-b-twelfth-nonboundary-lower-correction,prop:bc-b-thirteenth-nonboundary-lower-correction,prop:bc-b-fourteenth-nonboundary-lower-correction,prop:bc-b-fifteenth-nonboundary-lower-correction,prop:bc-b-sixteenth-nonboundary-lower-correction,prop:bc-b-seventeenth-nonboundary-lower-correction,prop:bc-b-eighteenth-nonboundary-lower-correction,prop:bc-b-nineteenth-nonboundary-lower-correction,prop:bc-c-boundary-lower-correction,prop:bc-c-first-nonboundary-lower-correction,prop:bc-c-second-nonboundary-lower-correction,prop:bc-c-third-nonboundary-lower-correction,prop:bc-c-fourth-nonboundary-lower-correction,prop:bc-c-fifth-nonboundary-lower-correction,prop:bc-c-sixth-nonboundary-lower-correction,prop:bc-c-seventh-nonboundary-lower-correction,prop:bc-c-eighth-nonboundary-lower-correction,prop:bc-c-ninth-nonboundary-lower-correction,prop:bc-c-tenth-nonboundary-lower-correction,prop:bc-c-eleventh-nonboundary-lower-correction,prop:bc-c-twelfth-nonboundary-lower-correction,prop:bc-c-thirteenth-nonboundary-lower-correction,prop:bc-c-fourteenth-nonboundary-lower-correction,prop:bc-c-fifteenth-nonboundary-lower-correction,prop:bc-c-sixteenth-nonboundary-lower-correction,prop:bc-c-seventeenth-nonboundary-lower-correction,prop:bc-c-eighteenth-nonboundary-lower-correction,prop:bc-c-nineteenth-nonboundary-lower-correction},
-the twentieth, twenty-first, twenty-second, twenty-third, twenty-fourth, twenty-fifth, twenty-sixth, twenty-seventh, twenty-eighth,
-B-side high-row twenty-ninth, and C-side twenty-ninth nonboundary
-theorems
-\cref{prop:bc-b-twentieth-nonboundary-lower-correction,prop:bc-c-twentieth-nonboundary-lower-correction,prop:bc-b-twentyfirst-nonboundary-lower-correction,prop:bc-c-twentyfirst-nonboundary-lower-correction,prop:bc-b-twentysecond-nonboundary-lower-correction,prop:bc-c-twentysecond-nonboundary-lower-correction,prop:bc-b-twentythird-nonboundary-lower-correction,prop:bc-c-twentythird-nonboundary-lower-correction,prop:bc-b-twentyfourth-nonboundary-lower-correction,prop:bc-c-twentyfourth-nonboundary-lower-correction,prop:bc-b-twentyfifth-nonboundary-lower-correction,prop:bc-c-twentyfifth-nonboundary-lower-correction,prop:bc-b-twentysixth-nonboundary-lower-correction,prop:bc-c-twentysixth-nonboundary-lower-correction,prop:bc-b-twentyseventh-nonboundary-lower-correction,prop:bc-c-twentyseventh-nonboundary-lower-correction,prop:bc-b-twentyeighth-nonboundary-lower-correction,prop:bc-c-twentyeighth-nonboundary-lower-correction,prop:bc-b-twentyninth-high-nonboundary-lower-correction,prop:bc-c-twentyninth-nonboundary-lower-correction}.
-For $B_{18},\ldots,B_{61}$ and $C_{20},\ldots,C_{61}$, the applicable
-theorems in these lists, together with
-\cref{prop:bc-pieri-correction-sign}, give the half-stable correction bound
-through the prefix used by the local clause of
-\cref{prop:post29-bc-half-bridge}.  That clause and
-\cref{lem:chain-propagation} cover every intervening odd exponent below
-$2b+29$, and \cref{prop:post29-bc-layered-mgf} supplies $2b+29$ and every
-later one.
-The four additional rows $B_{14},B_{15},B_{16},B_{17}$ are supplied
-directly from odd exponents $57,59,61,63$, respectively, by the same
-proposition.
-For $B_{62},\ldots,B_{123}$, the B-side theorems in these two lists together
-with \cref{prop:bc-pieri-correction-sign} give
-$-s_j/2\le\delta_j^{B_b}\le0$ through $j=2b+31$.  The prefix-local clause
-of \cref{prop:post29-bc-half-bridge} and \cref{lem:chain-propagation}
-therefore reach the smaller of $2b+29$ and the logged direct-tail onset.
-From there, either \cref{prop:post29-bc-interval-direct} already applies or
-\cref{prop:post29-b-tilted-mgf} supplies every later odd exponent.  For the
-rows $C_{62},\ldots,C_{217}$, the C-side theorems in the two preceding
-lists together with \cref{prop:bc-pieri-correction-sign} give
-$-s_j/2\le\delta_j^{C_b}\le0$ through $j=2b+31$.  The prefix-local clause
-of \cref{prop:post29-bc-half-bridge} and \cref{lem:chain-propagation}
-therefore reach the smaller of $2b+29$ and the logged direct-tail onset.
-From there, either \cref{prop:post29-bc-interval-direct} already applies or
-\cref{prop:post29-c-tilted-mgf} supplies every later odd exponent.  These
-alternatives exhaust every non-$A$ classical row and every odd exponent.
+\cref{prop:post29-b-unitary-square}.  The remaining rows
+$B_{14},\ldots,B_{123}$ and $C_{20},\ldots,C_{217}$ are exactly
+\cref{prop:post29-bc-residual-closure}.  This proposition imports the minimal
+offset-$0$--$27$ correction contract, the local half-stable bridge, and the
+layered/tilted MGF or direct interval supplier.  No surplus correction offset
+or development-archive route is used.  These cases exhaust every non-$A$
+classical row and every odd exponent.
 \else
 Even $n$ is \cref{lem:even}.  For odd $n$, the moment formula and
 \cref{lem:adjoint-moment-positive} give the strict base value
@@ -45880,7 +46070,7 @@ closure & load-bearing incoming results\\
 \cref{thm:su-stable-rank,thm:su2-row,thm:su-low-rank-ratios,lem:su-transition-strip,thm:su-ratio,cor:su-finite}\\
 \cref{thm:classical} &
 \cref{lem:classical-stable-edge,prop:classical-high,prop:classical-bridge,prop:first-hit,prop:post29-direct,prop:post29-chernoff,prop:post29-d-a-free,prop:post29-b-unitary-square,prop:bc-active-correction-prefix-contract},
-\contractref{prop:post29-bc-half-bridge},
+\contractref{prop:post29-bc-local-half-bridge},
 \cref{prop:post29-bc-residual-closure}\\
 \cref{thm:exceptional} &
 \cref{prop:g2-f4,prop:e6-e7,prop:e8-bridge,prop:e8-tail}\\
@@ -45889,10 +46079,10 @@ closure & load-bearing incoming results\\
 \end{tabular}
 \end{center}
 Inside \cref{prop:post29-bc-residual-closure}, the only live residual route is
-the proved correction-prefix contract, the local clause of
-\contractref{prop:post29-bc-half-bridge}, and then the layered/tilted MGF or
-direct interval supplier.  Local fixed-witness lemmas used to prove the
-boundary-through-twenty-ninth correction contract are represented in the
+the proved correction-prefix contract and local half-stable bridge, followed
+by the layered/tilted MGF or direct interval supplier.  Local fixed-witness
+lemmas used to prove the
+boundary-through-twenty-seventh correction contract are represented in the
 accepted correction-prefix suite.  The expanded archive supplies a
 line-by-line audit of those contracts.  Global all-row
 fixed-witness/compression interfaces explicitly marked superseded have no
@@ -46193,7 +46383,7 @@ It covers
 $m=31,\ldots,15447$, reports \texttt{failures=0}, and its worst positive
 lower bound occurs at $B_{217}$, odd exponent $30897$.  The replay SHA-256
 hash is
-\hashsplit{426fc6ccf924e70d27fdfd90f0e4314f}{02e2bc87fe09a6fe84cfdce92f2dbec7}.
+\hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
 \iffalse
 The separate Pieri-compression arithmetic verifier checks that the candidate
 bound
@@ -46266,7 +46456,7 @@ quantified boundary-through-twenty-ninth correction contracts.  The
 clean-room domain audit matches every contract to its callers, and the exact
 frontier logs record strictly positive margins.  The GMP/OpenMP bridge verifier
 checks $m=31,\ldots,15447$, reports \texttt{failures=0}, and has SHA-256
-\hashsplit{426fc6ccf924e70d27fdfd90f0e4314f}{02e2bc87fe09a6fe84cfdce92f2dbec7}.
+\hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
 The longer fixed-witness and compression routes are proof-development history
 and are omitted from the main paper. \\
 \fi

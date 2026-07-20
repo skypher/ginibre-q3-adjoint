@@ -58,7 +58,7 @@ MAIN_PROOF_PATTERN = re.compile(
     re.DOTALL,
 )
 RESULT_REFERENCE_PATTERN = re.compile(
-    r"\\(?:[Cc]ref|ref)\{([^}]+)\}"
+    r"\\(?:[Cc]ref|ref|contractref)\{([^}]+)\}"
 )
 RESULT_LABEL_PREFIXES = ("thm:", "prop:", "lem:", "cor:")
 
@@ -417,23 +417,37 @@ def main() -> int:
         candidate_text = candidate_data.decode("utf-8")
         require(OLD_PASSAGE not in candidate_text, "old cyclic passage remains in final revision")
         require(candidate_text.count(NEW_PASSAGE) == 1, "new rebind passage is not unique")
-        final_graph = audit_graph(candidate_text, 851)
-        added_label = "prop:bc-active-correction-prefix-contract"
+        final_graph = audit_graph(candidate_text, 852)
+        added_labels = {
+            "prop:bc-active-correction-prefix-contract",
+            "prop:post29-bc-local-half-bridge",
+        }
         require(
-            tuple(label for label in final_graph.labels if label != added_label)
+            tuple(label for label in final_graph.labels if label not in added_labels)
             == intermediate_graph.labels,
             "final revision changes historical result labels or their order",
         )
         require(
-            set(final_graph.labels) - set(intermediate_graph.labels) == {added_label},
+            set(final_graph.labels) - set(intermediate_graph.labels) == added_labels,
             "final revision adds an unauthorized numbered result",
         )
         expected_added_edges = {
-            (added_label, "prop:bc-pieri-correction-sign"),
+            (
+                "prop:bc-active-correction-prefix-contract",
+                "prop:bc-pieri-correction-sign",
+            ),
+            ("prop:post29-bc-local-half-bridge", "lem:moment-formula"),
             ("prop:post29-bc-residual-closure", "lem:moment-formula"),
-            ("prop:post29-bc-residual-closure", added_label),
+            (
+                "prop:post29-bc-residual-closure",
+                "prop:bc-active-correction-prefix-contract",
+            ),
             ("prop:post29-bc-residual-closure", "prop:post29"),
             ("prop:post29-bc-residual-closure", "prop:post29-b-tilted-mgf"),
+            (
+                "prop:post29-bc-residual-closure",
+                "prop:post29-bc-local-half-bridge",
+            ),
             ("prop:post29-bc-residual-closure", "prop:post29-bc-interval-direct"),
             ("prop:post29-bc-residual-closure", "prop:post29-bc-layered-mgf"),
             ("prop:post29-bc-residual-closure", "prop:post29-c-tilted-mgf"),
@@ -442,19 +456,43 @@ def main() -> int:
             final_graph.edges - intermediate_graph.edges == expected_added_edges,
             "final revision adds unauthorized proof dependencies",
         )
+        removed_edges = intermediate_graph.edges - final_graph.edges
         require(
-            not (intermediate_graph.edges - final_graph.edges),
-            "final revision removes a dependency after the historical rebind",
+            len(removed_edges) == 67
+            and all(source == "thm:classical" for source, _target in removed_edges),
+            "final revision removes dependencies outside the redundant classical list",
+        )
+        removed_targets = {target for _source, target in removed_edges}
+        removed_corrections = {
+            target
+            for target in removed_targets
+            if target.startswith(("prop:bc-b-", "prop:bc-c-"))
+            and target.endswith("lower-correction")
+        }
+        require(
+            len(removed_corrections) == 60
+            and removed_targets - removed_corrections
+            == {
+                "prop:bc-pieri-correction-sign",
+                "prop:post29",
+                "prop:post29-b-tilted-mgf",
+                "prop:post29-bc-half-bridge",
+                "prop:post29-bc-interval-direct",
+                "prop:post29-bc-layered-mgf",
+                "prop:post29-c-tilted-mgf",
+            },
+            "final revision removes the wrong classical direct suppliers",
         )
         require(
-            r"\contractref{prop:post29-bc-half-bridge}" in candidate_text
+            r"\contractref{prop:post29-bc-local-half-bridge}" in candidate_text
             and "post_m29_bc_interval_bridge_frontier_gmp.cpp" in candidate_text
             and r"\mathcal L_m>0" in candidate_text,
             "final revision omits the explicit half-stable bridge predicate",
         )
         require(
-            final_graph.reachable == intermediate_graph.reachable | {added_label},
-            "final revision changes main-theorem reachability beyond the correction contract",
+            len(final_graph.reachable) == 90
+            and added_labels <= final_graph.reachable,
+            "final revision has the wrong compact proof-spine reachability",
         )
         require(not final_graph.nontrivial_components, "final revision introduces a proof cycle")
         actual_replay = (final_root / REPLAY_MANIFEST).read_text(encoding="utf-8")
@@ -481,7 +519,8 @@ def main() -> int:
     print(
         f"FULL_Q3_PAPER_REBIND mode={mode} results={final_graph.results} "
         f"proofs={final_graph.proofs} edges={len(baseline_graph.edges)}->{len(final_graph.edges)} "
-        "removed_edge=prop:post29->thm:classical components=1->0 "
+        "historical_removed_edge=prop:post29->thm:classical "
+        "current_redundant_edges_removed=67 components=1->0 "
         f"reachable={len(baseline_graph.reachable)}->{len(final_graph.reachable)} "
         f"baseline_sha256={BASELINE_SHA256} final_sha256={digest(candidate_data)} "
         f"replay_manifest={BASELINE_REPLAY_MANIFEST_SHA256}->{publication_replay_hash} "

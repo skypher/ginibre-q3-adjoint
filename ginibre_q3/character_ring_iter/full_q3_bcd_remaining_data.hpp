@@ -23,7 +23,7 @@ struct RowCutoff {
 // The stable prefix ends at 2r+1 in types B/C and at r-1 in type D.
 // Exact hierarchy values are checked through tail_onset-2.  The moment
 // endpoint can be larger only when an exact polynomial tail consumes it.
-inline constexpr std::array<RowCutoff, 70> row_cutoffs{{
+inline constexpr std::array<RowCutoff, 114> row_cutoffs{{
     {'B', 2, 47, 45, TailMethod::rational_cap},
     {'B', 3, 37, 35, TailMethod::polynomial},
     {'B', 4, 41, 42, TailMethod::polynomial},
@@ -40,6 +40,10 @@ inline constexpr std::array<RowCutoff, 70> row_cutoffs{{
     {'B', 15, 45, 43, TailMethod::directed_interval},
     {'B', 16, 45, 43, TailMethod::directed_interval},
     {'B', 17, 45, 43, TailMethod::directed_interval},
+    {'B', 18, 47, 45, TailMethod::directed_interval},
+    {'B', 19, 45, 43, TailMethod::directed_interval},
+    {'B', 20, 45, 43, TailMethod::directed_interval},
+    {'B', 21, 45, 43, TailMethod::directed_interval},
 
     {'C', 2, 47, 45, TailMethod::rational_cap},
     {'C', 3, 37, 35, TailMethod::polynomial},
@@ -96,6 +100,46 @@ inline constexpr std::array<RowCutoff, 70> row_cutoffs{{
     {'D', 28, 49, 47, TailMethod::directed_interval},
     {'D', 29, 47, 45, TailMethod::directed_interval},
     {'D', 30, 49, 47, TailMethod::directed_interval},
+    {'D', 31, 49, 47, TailMethod::directed_interval},
+    {'D', 32, 51, 49, TailMethod::directed_interval},
+    {'D', 33, 51, 49, TailMethod::directed_interval},
+    {'D', 34, 51, 49, TailMethod::directed_interval},
+    {'D', 35, 51, 49, TailMethod::directed_interval},
+    {'D', 36, 53, 51, TailMethod::directed_interval},
+    {'D', 37, 53, 51, TailMethod::directed_interval},
+    {'D', 38, 55, 53, TailMethod::directed_interval},
+    {'D', 39, 53, 51, TailMethod::directed_interval},
+    {'D', 40, 55, 53, TailMethod::directed_interval},
+    {'D', 41, 55, 53, TailMethod::directed_interval},
+    {'D', 42, 57, 55, TailMethod::directed_interval},
+    {'D', 43, 55, 53, TailMethod::directed_interval},
+    {'D', 44, 57, 55, TailMethod::directed_interval},
+    {'D', 45, 57, 55, TailMethod::directed_interval},
+    {'D', 46, 59, 57, TailMethod::directed_interval},
+    {'D', 47, 59, 57, TailMethod::directed_interval},
+    {'D', 48, 61, 59, TailMethod::directed_interval},
+    {'D', 49, 61, 59, TailMethod::directed_interval},
+    {'D', 50, 61, 59, TailMethod::directed_interval},
+    {'D', 51, 61, 59, TailMethod::directed_interval},
+    {'D', 52, 63, 61, TailMethod::directed_interval},
+    {'D', 53, 61, 59, TailMethod::directed_interval},
+    {'D', 54, 63, 61, TailMethod::directed_interval},
+    {'D', 55, 63, 61, TailMethod::directed_interval},
+    {'D', 56, 65, 63, TailMethod::directed_interval},
+    {'D', 57, 63, 61, TailMethod::directed_interval},
+    {'D', 58, 65, 63, TailMethod::directed_interval},
+    {'D', 59, 65, 63, TailMethod::directed_interval},
+    {'D', 60, 67, 65, TailMethod::directed_interval},
+    {'D', 61, 67, 65, TailMethod::directed_interval},
+    {'D', 62, 69, 67, TailMethod::directed_interval},
+    {'D', 63, 67, 65, TailMethod::directed_interval},
+    {'D', 64, 69, 67, TailMethod::directed_interval},
+    {'D', 65, 69, 67, TailMethod::directed_interval},
+    {'D', 66, 71, 69, TailMethod::directed_interval},
+    {'D', 67, 71, 69, TailMethod::directed_interval},
+    {'D', 68, 71, 69, TailMethod::directed_interval},
+    {'D', 69, 71, 69, TailMethod::directed_interval},
+    {'D', 70, 73, 71, TailMethod::directed_interval},
 }};
 
 inline const RowCutoff* find_row(char family, int rank) {
@@ -105,11 +149,19 @@ inline const RowCutoff* find_row(char family, int rank) {
     return nullptr;
 }
 
-inline constexpr int required_maximum_moment = 59;
+inline constexpr int required_maximum_moment = 71;
 inline constexpr std::size_t polynomial_rows = 6;
 inline constexpr std::size_t rational_cap_rows = 6;
-inline constexpr std::size_t directed_interval_rows = 58;
-inline constexpr std::size_t full_residual_pairs = 12993;
+inline constexpr std::size_t directed_interval_rows = 102;
+inline constexpr std::size_t full_residual_pairs = 17862;
+
+// The directed-MPFR construction was proved for the original low-tail
+// subledger.  Later B18--B21 and D31--D70 rows are determinant-only rows and
+// must not silently enlarge that verifier's analytic scope.
+inline constexpr int mpfr_b_rank_end = 17;
+inline constexpr int mpfr_c_rank_end = 28;
+inline constexpr int mpfr_d_rank_end = 30;
+inline constexpr std::size_t mpfr_directed_interval_rows = 58;
 
 }  // namespace full_q3_bcd_remaining
 

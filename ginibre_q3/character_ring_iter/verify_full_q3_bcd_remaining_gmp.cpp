@@ -578,8 +578,8 @@ void run_remaining_certificate(
             != full_q3_bcd_remaining::directed_interval_rows
         || largest_moment
             != full_q3_bcd_remaining::required_maximum_moment
-        || expected_b_rank != 18 || expected_c_rank != 29
-        || expected_d_rank != 31) {
+        || expected_b_rank != 22 || expected_c_rank != 29
+        || expected_d_rank != 71) {
         throw std::runtime_error("remaining-row ledger mismatch");
     }
 

@@ -660,8 +660,8 @@ void validate_row_ledger() {
                 break;
         }
     }
-    if (expected_b_rank != 18 || expected_c_rank != 29
-        || expected_d_rank != 31
+    if (expected_b_rank != 22 || expected_c_rank != 29
+        || expected_d_rank != 71
         || polynomial_count != full_q3_bcd_remaining::polynomial_rows
         || rational_cap_count != full_q3_bcd_remaining::rational_cap_rows
         || directed_interval_count
@@ -1414,6 +1414,13 @@ void verify_moments_and_prefix(
     int minimum_rank = 0;
     int minimum_a = 0;
     int minimum_n = 0;
+    std::size_t bd_checked_pairs = 0U;
+    bool have_bd_minimum = false;
+    BigInt bd_minimum = 0;
+    char bd_minimum_family = 0;
+    int bd_minimum_rank = 0;
+    int bd_minimum_a = 0;
+    int bd_minimum_n = 0;
 
     for (const MomentRow& row : rows) {
         const int stable_through = row.family == 'D'
@@ -1461,6 +1468,20 @@ void verify_moments_and_prefix(
                 }
                 ++checked_pairs;
                 ++row_checked;
+                const bool in_bd_overlap =
+                    (row.family == 'B' && 18 <= row.rank && row.rank <= 21)
+                    || (row.family == 'D' && 31 <= row.rank && row.rank <= 70);
+                if (in_bd_overlap) {
+                    ++bd_checked_pairs;
+                    if (!have_bd_minimum || value < bd_minimum) {
+                        bd_minimum = value;
+                        bd_minimum_family = row.family;
+                        bd_minimum_rank = row.rank;
+                        bd_minimum_a = a;
+                        bd_minimum_n = n;
+                        have_bd_minimum = true;
+                    }
+                }
             }
         }
         std::cout << "FULL_Q3_BOUNDED_ROW row=" << row.family << '_'
@@ -1488,6 +1509,22 @@ void verify_moments_and_prefix(
                   << " value=" << minimum;
     }
     std::cout << '\n';
+    if (maximum_moment == kCertifiedMaximum) {
+        const BigInt expected_bd_minimum(
+            "1272988116891284109857142182380802", 10
+        );
+        if (bd_checked_pairs != 4869U || !have_bd_minimum
+            || bd_minimum != expected_bd_minimum
+            || bd_minimum_family != 'D' || bd_minimum_rank != 31
+            || bd_minimum_a != 8 || bd_minimum_n != 15) {
+            throw std::runtime_error("bounded-Littlewood B/D overlap mismatch");
+        }
+        std::cout << "FULL_Q3_BOUNDED_BD_OVERLAP pairs=" << bd_checked_pairs
+                  << " minimum=" << bd_minimum_family << '_'
+                  << bd_minimum_rank << " a=" << bd_minimum_a
+                  << " n=" << bd_minimum_n << " value=" << bd_minimum
+                  << '\n';
+    }
     if (maximum_moment == kCertifiedMaximum
         && checked_pairs != full_q3_bcd_remaining::full_residual_pairs) {
         throw std::runtime_error("bounded-Littlewood hierarchy scope mismatch");

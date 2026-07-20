@@ -434,19 +434,20 @@ def main() -> int:
         "publication proof spine is incomplete",
     )
     require(
-        r"\contractref{prop:post29-bc-half-bridge}" in paper
+        r"\contractref{prop:post29-bc-local-half-bridge}" in paper
         and "post_m29_bc_interval_bridge_frontier_gmp.cpp" in paper
         and r"\mathcal L_m>0" in paper,
         "companion omits the explicit half-stable bridge predicate",
     )
     require(
-        "prop:post29-bc-half-bridge" in proof_spine
+        "prop:post29-bc-local-half-bridge" in proof_spine
         and "explicit incoming node" in proof_spine,
         "proof spine omits the half-stable bridge edge",
     )
     require(
-        "504-page detailed computational supplement" in extension,
-        "Part III supplement page count is stale",
+        "paper_full.pdf} is their active computational supplement" in extension
+        and "504-page detailed computational supplement" not in extension,
+        "Part III submission architecture is stale",
     )
     require(
         "certificates/full_q3/full_q3_source_manifest.sha256" in extension,
@@ -472,6 +473,13 @@ def main() -> int:
         "../../verify_full_q3_bcd_crosscheck.py",
         "../../character_ring_iter/verify_full_q3_bcd_modular_moment_checker.cpp",
     }
+    authorized_current_source_replacements = {
+        "../../character_ring_iter/full_q3_bcd_remaining_data.hpp",
+        "../../character_ring_iter/verify_full_q3_bcd_bounded_littlewood_gmp.cpp",
+        "../../character_ring_iter/verify_full_q3_bcd_low_tail_mpfr.cpp",
+        "../../character_ring_iter/verify_full_q3_bcd_modular_moment_checker.cpp",
+        "../../character_ring_iter/verify_full_q3_bcd_remaining_gmp.cpp",
+    }
     arithmetic_paths = [
         path
         for path in full_records_live
@@ -480,6 +488,7 @@ def main() -> int:
             or path.startswith("../../run_full")
         )
         and path not in publication_only_audit_paths
+        and path not in authorized_current_source_replacements
     ]
     require(arithmetic_paths, "no arithmetic sources found in live manifest")
     for path in arithmetic_paths:
@@ -532,13 +541,32 @@ def main() -> int:
         "full-q3-bcd-low-tail-audit",
         "full-q3-bcd-remaining-audit",
         "full-q3-bcd-bounded-littlewood-audit",
-        "full-q3-extension",
     )
     for target in protected_targets:
         require(
             recipe(live_makefile, target) == recipe(snapshot_makefile, target),
             f"live Makefile changes protected arithmetic recipe {target}",
         )
+    def target_header(target: str) -> str:
+        match = re.search(
+            rf"(?m)^{re.escape(target)}:[^\n]*$", live_makefile
+        )
+        require(match is not None, f"Makefile target is absent: {target}")
+        return match.group(0)
+
+    extension_recipe = target_header("full-q3-extension")
+    independent_recipe = target_header("full-q3-extension-independent-controls")
+    require(
+        "full-q3-bcd-bounded-littlewood-audit" in extension_recipe
+        and "full-q3-bd-residual-audit" not in extension_recipe
+        and "full-q3-bcd-independent-audit" not in extension_recipe,
+        "mandatory Part III target does not use the unified determinant supplier",
+    )
+    require(
+        "full-q3-bd-residual-audit" in independent_recipe
+        and "full-q3-bcd-independent-audit" in independent_recipe,
+        "optional Part III controls omit an independent overlap",
+    )
     require(
         "PUBLICATION_SOURCE_DATE_EPOCH ?= 1784419200" in live_makefile
         and "final-publication-replay:" in live_makefile
@@ -551,7 +579,7 @@ def main() -> int:
     print(
         "FULL_Q3_FINAL_SOURCE_BINDING "
         f"extension={digest(read('extension'))} arithmetic_sources={len(arithmetic_paths)} "
-        "makefile_delta=wrappers-deterministic-pdf-progress-only "
+        "makefile_delta=authorized-current-suppliers-and-wrapper-controls "
         f"reference_records={reference_records} full_records={full_records}"
     )
     print("FULL_Q3_FINAL_SOURCE_BINDING VERIFICATION: ALL PASS")

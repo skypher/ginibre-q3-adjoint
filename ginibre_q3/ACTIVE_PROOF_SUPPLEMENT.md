@@ -20,10 +20,10 @@ incoming node.
    two-minus integral to adjoint moments and Chain inequalities.
 2. `thm:type-a` consumes the stable-rank theorem, the low-rank ratio
    theorems, and their exact overlap certificates.
-3. `prop:bc-active-correction-prefix-contract` identifies exactly 58 active
-   B/C correction results: offsets `0..28` for each family. The compact
-   residual proof consumes offsets `0..27`; offset `28` is overlap.
-4. `prop:post29-bc-half-bridge` converts the active correction intervals into
+3. `prop:bc-active-correction-prefix-contract` identifies exactly 56 active
+   B/C correction results: offsets `0..27` for each family, exactly the range
+   consumed by the compact residual proof.
+4. `prop:post29-bc-local-half-bridge` converts the active correction intervals into
    the common stable-moment lower bound used by
    `prop:post29-bc-residual-closure`.
 5. `thm:classical` consumes that B/C closure, the type-D exact bridges, and
@@ -34,9 +34,13 @@ incoming node.
    `thm:main`.
 
 The machine-checked caller contract is `verify_parts_i_ii_contract.py`. It
-requires 58 active correction references, maximum consumed offset 27,
-overlap offset 28, and the named half-bridge input. The complete arithmetic
+requires 56 active correction references, maximum consumed offset 27, no
+surplus offsets, and the named local half-bridge input. The complete arithmetic
 regeneration command is `make -C ginibre_q3 clean-room-replay`.
+Its active B/C correction prefix uses one exact 337-case bounded-Littlewood
+type-B supplier for H8--H27 and runs the mixed frontier programs in
+type-C/formula-only mode. The older type-B reverse-Pieri traversals are
+independent controls, not incoming proof nodes.
 
 ## Part III active chain
 
@@ -47,12 +51,12 @@ regeneration command is `make -C ginibre_q3 clean-room-replay`.
 | `thm:type-a-full-cone` | Stable type-A law, exact SU(2)--SU(5) prefixes, and the SU(N≥6) residual certificate |
 | `thm:exceptional-full-cone` | Exact exceptional moments, polynomial tails, and 1,265 residual checks |
 | `thm:stable-bcd-full` | Stable Gaussian-square law and exact cumulant recurrence |
-| `thm:bcd-full-hierarchy` | High/middle outward-MPFR suppliers; 58 low-tail schedules; 12,993 bounded-Littlewood residual checks; 4,869 B/D residual checks |
+| `thm:bcd-full-hierarchy` | High/middle outward-MPFR suppliers; 58 low-tail schedules; one 17,862-case bounded-Littlewood residual certificate |
 | `thm:full-adjoint-generated-q3` | Classification plus `thm:full-cone-reduction` |
 
 The Part III arithmetic regeneration command is
-`make -C ginibre_q3 full-q3-extension`; it includes the compressed independent
-target `full-q3-bcd-independent-audit`. That target keeps the structurally
+`make -C ginibre_q3 full-q3-extension`. The optional aggregate
+`full-q3-extension-independent-controls` keeps the structurally
 independent reverse-Pieri comparison through degree 40 (2,845 moments), then
 checks the 538 required higher moments modulo 21 independent primes by a
 plain-arithmetic determinant implementation using Newton differences. The

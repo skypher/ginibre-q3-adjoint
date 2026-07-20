@@ -112,10 +112,10 @@ def verify_manifests(root: Path) -> tuple[int, int]:
 def audit_certificate_identity_ledger(root: Path) -> tuple[int, int, int]:
     """Require every certified-output hash printed in the paper to be manifested.
 
-    The expanded identity table records a historical generator identity first
-    and one or more accepted output identities afterward.  Historical source
-    snapshots are provenance; every output, however, must resolve through the
-    verified archive manifests.
+    The expanded identity table is a provenance ledger: it records historical
+    generator and output identities, including rows classified diagnostic or
+    superseded.  Active accepted outputs are enforced separately by the
+    artifact-classification boundary and the theorem-reachable replay audit.
     """
 
     paper = (root / "paper.tex").read_text(errors="strict")
@@ -151,24 +151,20 @@ def audit_certificate_identity_ledger(root: Path) -> tuple[int, int, int]:
         raise ReplayFailure(
             f"certificate identity ledger shape changed: rows={rows}, outputs={len(outputs)}"
         )
-    missing = sorted({value for value in outputs if value not in manifested})
-    if missing:
-        raise ReplayFailure(
-            "certified output hashes are absent from verified manifests: " + ", ".join(missing)
-        )
-    outside_ledger = paper[:start] + paper[end:]
+    _results, _proofs, nodes, reachable = proof_graph(root)
+    active_text = "\n".join(str(nodes[label]["body"]) for label in reachable)
     inline_raw = {
         value
         for value in re.findall(
-            r"(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])", outside_ledger
+            r"(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])", active_text
         )
         if re.search(r"[a-f]", value)
     }
-    inline_split = {left + right for left, right in HASH_SPLIT.findall(outside_ledger)}
+    inline_split = {left + right for left, right in HASH_SPLIT.findall(active_text)}
     if any(len(value) != 64 for value in inline_split):
         raise ReplayFailure("malformed split SHA-256 outside the identity ledger")
     inline = inline_raw | inline_split
-    if len(inline) != 96:
+    if len(inline) != 52:
         raise ReplayFailure(f"inline SHA-256 ledger shape changed: hashes={len(inline)}")
     # Historical generator identities are provenance fields in the identity
     # ledger and need not equal a current manifested source snapshot.  Hashes
@@ -223,11 +219,31 @@ def audit_reference_archive(root: Path) -> tuple[int, int, int]:
         raise ReplayFailure("malformed active paper source map")
     if any(not all(row.get(field, "").strip() for field in row) for row in rows):
         raise ReplayFailure("active paper source map contains an empty field")
-    paper = (root / "paper.tex").read_text(errors="strict")
-    bibliography_keys = set(re.findall(r"\\bibitem\{([^}]+)\}", paper))
+    documents = [
+        (root / "paper.tex").read_text(errors="strict"),
+        (root / "full_q3_extension.tex").read_text(errors="strict"),
+    ]
+    bibliography_keys: set[str] = set()
     cited_keys: set[str] = set()
-    for group in re.findall(r"\\cite(?:\[[^]]*\])?\{([^}]+)\}", paper):
-        cited_keys.update(key.strip() for key in group.split(","))
+    for document in documents:
+        document_bibliography = set(
+            re.findall(r"\\bibitem\{([^}]+)\}", document)
+        )
+        document_citations: set[str] = set()
+        for group in re.findall(
+            r"\\cite(?:\[[^]]*\])?\{([^}]+)\}", document
+        ):
+            document_citations.update(key.strip() for key in group.split(","))
+        if document_citations != document_bibliography:
+            raise ReplayFailure(
+                "citation/bibliography mismatch within a publication document"
+            )
+        bibliography_keys.update(document_bibliography)
+        cited_keys.update(document_citations)
+    # Part III cites the Parts I--II manuscript as an internal companion
+    # rather than an independently archived external source.
+    bibliography_keys.discard("AdjointTwoMinus")
+    cited_keys.discard("AdjointTwoMinus")
     mapped_keys = {row["bibkey"] for row in rows}
     mapped_files = {(references / row["path"]).resolve() for row in rows}
     if bibliography_keys != mapped_keys:
@@ -242,7 +258,7 @@ def audit_reference_archive(root: Path) -> tuple[int, int, int]:
         )
     if not mapped_files <= actual:
         raise ReplayFailure("active paper source map names an unarchived file")
-    if (len(actual), len(bibliography_keys), len(rows)) != (45, 14, 15):
+    if (len(actual), len(bibliography_keys), len(rows)) != (46, 17, 18):
         raise ReplayFailure(
             "reference archive shape changed: "
             f"files={len(actual)}, keys={len(bibliography_keys)}, mappings={len(rows)}"
@@ -319,7 +335,9 @@ def proof_graph(
             raise ReplayFailure(f"proof attached more than once at byte {proof_start}")
         attached.add(proof_start)
         body = statement + paper[proof_start:int(proof["end"])]
-        edge_groups = re.findall(r"\\(?:c|C)ref\{([^}]+)\}", body)
+        edge_groups = re.findall(
+            r"\\(?:(?:c|C)ref|contractref)\{([^}]+)\}", body
+        )
         edges = {value.strip() for group in edge_groups for value in group.split(",")}
         nodes[label] = {
             "title": result["title"],
@@ -484,20 +502,27 @@ def audit_bc_caller_ranges(root: Path) -> tuple[int, int, int]:
         raise ReplayFailure(
             f"bad active B/C contract domains: {domains(active_contract)}"
         )
-    if active_statement.count(r"0\le r\le28") != 2:
-        raise ReplayFailure("active B/C contract does not state both offset-0..28 ranges")
-    active_b_labels = set(b_labels)
+    if active_statement.count(r"0\le r\le27") != 2:
+        raise ReplayFailure("active B/C contract does not state both offset-0..27 ranges")
+    active_b_labels = {
+        label for label in b_labels if correction_offset(label) <= 27
+    }
     active_c_labels = {
-        label for label in c_labels if correction_offset(label) <= 28
+        label for label in c_labels if correction_offset(label) <= 27
     }
     for label in sorted(active_b_labels | active_c_labels):
         if active_statement.count(label) != 1:
             raise ReplayFailure(
                 f"active B/C contract table must contain {label} exactly once"
             )
-    for label in (b_high, c_overlap):
+    for label in (
+        "prop:bc-b-twentyeighth-nonboundary-lower-correction",
+        "prop:bc-c-twentyeighth-nonboundary-lower-correction",
+        b_high,
+        c_overlap,
+    ):
         if label in active_statement:
-            raise ReplayFailure(f"non-load-bearing offset-29 result entered active contract: {label}")
+            raise ReplayFailure(f"non-load-bearing surplus result entered active contract: {label}")
 
     residual = "prop:post29-bc-residual-closure"
     if domains(residual) != [(14, 123), (20, 217)]:
@@ -510,15 +535,16 @@ def audit_bc_caller_ranges(root: Path) -> tuple[int, int, int]:
     if residual_proof_match is None:
         raise ReplayFailure("cannot parse the residual B/C proof")
     residual_proof = residual_proof_match.group(1)
-    half_bridge = "prop:post29-bc-half-bridge"
+    half_bridge = "prop:post29-bc-local-half-bridge"
     if rf"\contractref{{{half_bridge}}}" not in residual_proof:
         raise ReplayFailure("residual B/C proof omits its half-stable bridge import")
     if (
         "post_m29_bc_interval_bridge_frontier_gmp.cpp" not in residual_proof
         or r"\mathcal L_m" not in residual_proof
-        or r"D_G(2m+1)\ge\mathcal L_m" not in residual_proof
+        or r"\widetilde{\mathcal L}_m\le\mathcal L_m\le D_G(2m+1)"
+        not in residual_proof
     ):
-        raise ReplayFailure("residual B/C proof omits the exact bridge predicate/source")
+        raise ReplayFailure("residual B/C proof omits the reduced bridge predicate/source")
     for supplier in (
         "prop:post29",
         "prop:post29-bc-layered-mgf",
@@ -1544,13 +1570,12 @@ def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) ->
         character,
         required_text=(
             "lambda=1/2",
+            "algebraic_reduction_crosscheck_done max_n=128",
             "SUMMARY failures=0 worst_m=15447 worst_odd_n=30897",
         ),
-        # The verifier keeps one large exact state map per OpenMP worker.
-        # Letting a higher-core, lower-memory host use every advertised CPU
-        # can exhaust RAM (48 workers reached about 35 GiB before m=13300 on
-        # a 47-GiB host).  The documented primary host has 32 workers, so this
-        # cap preserves its replay while making the contract portable.
+        # The reduced verifier shares the stable recurrences and retains only
+        # O(sqrt(m)+frontier) exact terms per worker.  Keep the historical
+        # 32-worker cap so replay timing remains portable across hosts.
         environment_overrides={"OMP_NUM_THREADS": str(min(threads, 32))},
         certificates=("bc_lambda_half_bridge_gmp_certificate.log",),
         timeout=28800,
@@ -1577,18 +1602,27 @@ def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) ->
         timeout=28800,
     )
 
+    runner.run(
+        "bc_b_h8_h27_bounded_littlewood_gmp",
+        ["./verify_active_bc_b_frontiers_bounded_littlewood_gmp"],
+        character,
+        required_text=(
+            "ACTIVE_B_FRONTIER_BOUNDED_LITTLEWOOD rows=33 cases=337 "
+            "maximum_moment=121",
+            "failures=0",
+            "ACTIVE_B_FRONTIER_BOUNDED_LITTLEWOOD VERIFICATION: ALL PASS",
+        ),
+        environment_overrides={"OMP_NUM_THREADS": str(min(threads, 32))},
+        certificates=("bc_b_h8_h27_bounded_littlewood_gmp_certificate.log",),
+        timeout=3600,
+    )
+
     simple_frontiers = (
         (
             "b14_j37_badshape",
             "post_m29_bc_b14_j37_badshape_gmp",
             "B14_J37_BADSHAPE_GMP q=15 j=37 width_wall=30",
             "bc_b14_j37_badshape_gmp_certificate.log",
-        ),
-        (
-            "b_eighth_frontier",
-            "post_m29_bc_b_eighth_frontier_gmp",
-            "B_EIGHTH_FRONTIER_GMP cases=3",
-            "bc_b_eighth_frontier_gmp_certificate.log",
         ),
         (
             "ninth_frontier",
@@ -1681,96 +1715,20 @@ def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) ->
             [f"./{binary}"],
             character,
             required_text=(scope, "SUMMARY failures=0"),
+            environment_overrides={"RUN_B": "0"},
             certificates=(certificate_name,),
-            # H21 takes about 6,600 seconds on the documented 32-thread
-            # host, leaving too little headroom under the generic two-hour
-            # guard; H22 is larger still.  These are exact finite replays,
-            # so give the unsharded H8--H22 family the same explicit budget
-            # as the other long GMP stages.
-            timeout=28800,
         )
 
     sharded_frontiers = (
-        (
-            "twentythird",
-            15,
-            39,
-            ((15, 17), (18, 20), (21, 23), (24, 26), (27, 29), (30, 32),
-             (33, 35), (36, 39)),
-            8,
-            30,
-        ),
-        (
-            "twentyfourth",
-            15,
-            41,
-            ((15, 17), (18, 20), (21, 23), (24, 26), (27, 29), (30, 32),
-             (33, 35), (36, 38), (39, 41)),
-            9,
-            31,
-        ),
-        (
-            "twentyfifth",
-            15,
-            43,
-            ((15, 17), (18, 20), (21, 23), (24, 26), (27, 29), (30, 32),
-             (33, 35), (36, 38), (39, 41), (42, 43)),
-            10,
-            33,
-        ),
-        (
-            "twentysixth",
-            15,
-            45,
-            ((15, 17), (18, 20), (21, 23), (24, 26), (27, 29), (30, 32),
-             (33, 35), (36, 38), (39, 41), (42, 43), (44, 44), (45, 45)),
-            11,
-            34,
-        ),
-        (
-            "twentyseventh",
-            15,
-            47,
-            ((15, 17), (18, 20), (21, 23), (24, 26), (27, 29), (30, 32),
-             *((rank, rank) for rank in range(33, 48))),
-            12,
-            36,
-        ),
-        (
-            "twentyeighth",
-            15,
-            41,
-            ((15, 17), (18, 20), (21, 23), *((rank, rank) for rank in range(24, 42))),
-            13,
-            37,
-        ),
+        ("twentythird", 8, 30),
+        ("twentyfourth", 9, 31),
+        ("twentyfifth", 10, 33),
+        ("twentysixth", 11, 34),
+        ("twentyseventh", 12, 36),
     )
-    for ordinal, q_low, q_high, shards, c_fpf_cases, c_arithmetic_cases in sharded_frontiers:
-        covered = [rank for low, high in shards for rank in range(low, high + 1)]
-        if covered != list(range(q_low, q_high + 1)):
-            raise ReplayFailure(f"noncontiguous B-frontier shard plan: {ordinal}")
+    for ordinal, c_fpf_cases, c_arithmetic_cases in sharded_frontiers:
         binary = f"post_m29_bc_{ordinal}_frontier_gmp"
         header = f"BC_{ordinal.upper()}_FRONTIER_GMP"
-        for low, high in shards:
-            case_count = high - low + 1
-            runner.run(
-                f"bc_{ordinal}_frontier_b_{low}_{high}",
-                [f"./{binary}"],
-                character,
-                required_text=(
-                    f"{header} b_cases={case_count} c_fpf_cases={c_fpf_cases} "
-                    f"c_arithmetic_cases={c_arithmetic_cases} run_b=1 run_c=0 "
-                    f"b_q_min={low} b_q_max={high}",
-                    "SUMMARY failures=0",
-                ),
-                environment_overrides={
-                    "RUN_B": "1",
-                    "RUN_C": "0",
-                    "B_Q_MIN": str(low),
-                    "B_Q_MAX": str(high),
-                    "OMP_NUM_THREADS": str(min(threads, 8)),
-                },
-            )
         runner.run(
             f"bc_{ordinal}_frontier_c",
             [f"./{binary}"],
@@ -1787,37 +1745,6 @@ def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) ->
             },
             certificates=(f"bc_{ordinal}_frontier_gmp_certificate.log",),
         )
-
-    for name, binary, scope, certificate_name in (
-        (
-            "twentyeighth_b_absorption",
-            "post_m29_bc_twentyeighth_b_absorption_gmp",
-            "BC_TWENTYEIGHTH_B_ABSORPTION_GMP h=28 lower_boxes=56 "
-            "one_lower_choices=112 two_lower_choices=1596",
-            "bc_twentyeighth_b_absorption_gmp_certificate.log",
-        ),
-        (
-            "twentyninth_c_frontier",
-            "post_m29_bc_twentyninth_c_frontier_gmp",
-            "BC_TWENTYNINTH_C_FRONTIER_GMP c_fpf_cases=14 c_arithmetic_cases=39",
-            "bc_twentyninth_c_frontier_gmp_certificate.log",
-        ),
-        (
-            "twentyninth_b_absorption",
-            "post_m29_bc_twentyninth_b_absorption_gmp",
-            "BC_TWENTYNINTH_B_ABSORPTION_GMP h=29 lower_boxes=58 "
-            "one_lower_choices=116 two_lower_choices=1711",
-            "bc_twentyninth_b_absorption_gmp_certificate.log",
-        ),
-    ):
-        runner.run(
-            f"bc_{name}_gmp",
-            [f"./{binary}"],
-            character,
-            required_text=(scope, "SUMMARY failures=0"),
-            certificates=(certificate_name,),
-        )
-
 
 def audit_replayed_certificate_coverage(root: Path, replayed: set[str]) -> int:
     """Require exact equality between theorem-reachable and recomputed certificates."""

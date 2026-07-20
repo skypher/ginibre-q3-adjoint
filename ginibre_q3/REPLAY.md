@@ -77,19 +77,17 @@ are regression-checked with short synthetic moment streams; all five
 authenticated G2/F4/E6/E7/E8 prefixes retain their byte-identical successful
 output after this hardening.
 
-The partitioned B/C frontier stages preserve the archived shard boundaries,
-use at most eight OpenMP threads per B shard and up to 64 for the C shards,
-and can take substantially longer than the lightweight audit stages.  A local
-`optimus` invocation is suitable only when intentionally replaying a short
-individual checker; it is not the documented full-contract host.
-The all-range half-stable bridge, power-loss verifier, and unsharded H8--H22
-B/C frontier family have explicit eight-hour per-stage budgets and emit
-progress records during their exact GMP passes.  The half-stable bridge is
+The active type-B H8--H27 frontier is a single 337-case exact
+bounded-Littlewood determinant/CRT reconstruction through moment 121.  It
+uses the stable moment as a proved uniqueness bound and replaces all mandatory
+reverse-Pieri frontier shards.  The H9--H27 mixed programs now run only their
+closed type-C formulas; archived B shards remain optional controls.  The
+all-range half-stable bridge and power-loss verifier remain exact GMP scans.
+The half-stable bridge is
 capped at 32 OpenMP workers because it keeps a large exact state map per
 worker; this is the documented machine-C count and avoids exhausting RAM on
-higher-core, lower-memory hosts.  (On the documented host H21 alone takes
-about 6,600 seconds, so the generic two-hour guard has inadequate headroom for
-H22.)  The generic two-hour guard remains in force for every other stage.
+higher-core, lower-memory hosts.  The generic two-hour guard remains in force
+for every other stage.
 
 Success verifies the certificate and artifact contract for the paper's
 unconditional, exactly-two-minus repeated-adjoint theorem.  This is not a
@@ -111,10 +109,11 @@ make -C ginibre_q3 full-q3-extension
 
 The final finite classical stage is
 `full-q3-bcd-bounded-littlewood-audit`.  It reconstructs all required
-`B_2..B_17`, `C_2..C_28`, and `D_4..D_30` moments by exact bounded-Littlewood
+`B_2..B_21`, `C_2..C_28`, and `D_4..D_70` moments by exact bounded-Littlewood
 determinants over prime fields, performs a GMP CRT merge beyond the character
 bound, reruns the six exact polynomial and six exact rational-cap tails, and
-checks exactly 12,993 residual hierarchy values.  The separate 58-row
+checks exactly 17,862 residual hierarchy values.  This includes the formerly
+separate 4,869-case B/D reverse-Pieri box.  The separate 58-row
 directed-MPFR tail stage remains part of the aggregate target.  The accepted
 machine-C exact transcript is
 `certificates/full_q3/fullq3bcd0010_machine_c.log`; success requires its
@@ -221,6 +220,12 @@ with exact GMP integers and requires strict positivity, in addition to the
 `FULL_Q3_MODULAR_CHECKER VERIFICATION: ALL PASS` only after all scopes and the
 modulus-dominance test pass.
 
+The optional aggregate
+`make -C ginibre_q3 full-q3-extension-independent-controls` additionally
+runs the historical reverse-Pieri suppliers, including the 4,869-case B/D
+box. They are retained as algorithmically independent overlaps and are not
+second mandatory suppliers.
+
 To preserve a timestamped raw audit log, use the wrapper with a new absolute
 directory:
 
@@ -310,20 +315,19 @@ The command recomputes:
   the historical 796-row replay is replaced by the exact D25--D52 and
   A-free D53--D295 C++/GMP bridge verifiers above;
 - the active quantified caller contract for the 58 family-wide residual B/C
-  correction propositions at offsets `0..28`; this domain-aware audit checks
+  correction propositions at offsets `0..27`; this domain-aware audit checks
   their rank ranges, the exact table labels, tilted-tail onsets, and all-row
   GMP scope.  It independently proves that main-theorem propagation consumes
   at most offset `27` and enumerates the 2,834 high-rank odd targets that
   would be uncovered if the old rank-61 cap reappeared.  The additional
-  offset-29 results are checked overlaps, not premises of the closure;
+  offset-28 and offset-29 results are historical overlaps, not premises of the closure;
 - the degree-8 cutoff-80 B/C Chebyshev negative-tail bound, the 402-row
   directed-MPFR interval onsets, the exact half-stable bridge through
   `m=15447`, and all `3,904,626` exact power-loss inequalities;
-- every exact residual B/C frontier certificate used by the correction
-  prefix: the `B_14,j=37` seed, the eighth through twenty-second frontiers,
-  the fully partitioned B ranges and C ranges for the twenty-third through
-  twenty-eighth frontiers, and the two B absorptions plus the twenty-ninth C
-  frontier;
+- the unified exact 337-case H8--H27 type-B bounded-Littlewood certificate,
+  the `B_14,j=37` seed, and the inexpensive type-C formula portions of the
+  ninth through twenty-seventh frontiers; H28--H29 and the old type-B
+  reverse-Pieri shards are authenticated historical overlaps;
 - the G2/F4/E6/E7/E8 exact prefix audits after their source moments have been
   regenerated independently;
 - the F4/E6/E7/E8 Dunkl coefficient identities using parallel GMP;

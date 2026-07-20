@@ -9,7 +9,7 @@ import re
 from clean_room_replay import ReplayFailure, audit_bc_caller_ranges
 
 
-HALF_BRIDGE = "prop:post29-bc-half-bridge"
+HALF_BRIDGE = "prop:post29-bc-local-half-bridge"
 RESIDUAL = "prop:post29-bc-residual-closure"
 TAIL_SUPPLIERS = (
     "prop:post29",
@@ -50,8 +50,9 @@ def audit_explicit_half_bridge(root: Path) -> None:
     require(
         "post_m29_bc_interval_bridge_frontier_gmp.cpp" in residual_proof
         and r"\mathcal L_m" in residual_proof
-        and r"D_G(2m+1)\ge\mathcal L_m" in residual_proof,
-        "residual B/C proof does not state the exact bridge predicate and source",
+        and r"\widetilde{\mathcal L}_m\le\mathcal L_m\le D_G(2m+1)"
+        in residual_proof,
+        "residual B/C proof does not state the reduced bridge predicate and source",
     )
     for label in TAIL_SUPPLIERS:
         require(
@@ -76,7 +77,7 @@ def main() -> int:
         active, targets, arithmetic_rows = audit_bc_caller_ranges(root)
     except ReplayFailure as error:
         raise SystemExit(f"PARTS_I_II_CONTRACT FAILURE: {error}") from error
-    if (active, targets, arithmetic_rows) != (58, 2834, 402):
+    if (active, targets, arithmetic_rows) != (56, 2834, 402):
         raise SystemExit(
             "PARTS_I_II_CONTRACT FAILURE: unexpected summary "
             f"active={active} targets={targets} arithmetic_rows={arithmetic_rows}"
@@ -84,7 +85,7 @@ def main() -> int:
     print(
         "PARTS_I_II_CONTRACT "
         f"active_corrections={active} formerly_uncovered_targets={targets} "
-        "max_consumed_offset=27 checked_overlap_offset=28 "
+        "max_consumed_offset=27 no_surplus_offsets=PASS "
         f"arithmetic_rows={arithmetic_rows} half_bridge_edge=PASS "
         f"named_suppliers={len(TAIL_SUPPLIERS)}"
     )

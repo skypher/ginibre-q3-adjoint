@@ -48,7 +48,7 @@ compact connected $G$ with simple Lie algebra.  The proof treats every finite
 tuple length, every sign assignment, and every even number of minus factors;
 Ginibre's Proposition~1 then promotes the adjoint generator to $\Qcone_G$.
 The last finite classical boxes are closed by bounded Littlewood determinant
-identities and an exact prime-field/GMP certificate covering 12,993 residual
+identities and an exact prime-field/GMP certificate covering 17,862 residual
 inequalities.  Here ``full'' refers to Ginibre's finite-tuple and sign-pattern
 quantifiers on the explicitly stated adjoint-generated cone; it does not mean
 the cone of all positive-definite functions.  We also give an exact
@@ -63,14 +63,16 @@ carried over literally to nonabelian compact groups.
 \label{rem:submission-architecture}
 The formal proof has three numbered parts and one detailed supplement
 collected in three files: \path{paper.pdf} consolidates Parts~I--II,
-\path{paper_full.pdf} is their 504-page detailed computational supplement, and the
+\path{paper_full.pdf} is their active computational supplement, and the
 present file is Part~III.  All three files are load-bearing.  In particular,
 the detailed supplement supplies the numbered $B/C$ correction-prefix proofs
 and half-stable bridge reduction used by the compact residual-closure
 proposition in \path{paper.pdf}.  The
-concise dependency spine is recorded
-in \path{PUBLICATION_PROOF_SPINE.md}; diagnostic and superseded routes in the
-expanded archive are not inputs to that spine.  Files under \path{referee_audits/} and the
+concise dependency spine is recorded in \path{PUBLICATION_PROOF_SPINE.md}.
+Diagnostic and superseded routes are not printed in the formal supplement
+and are not inputs to that spine; the source-only development archive can be
+typeset separately by defining \texttt{\string\GinibreDevelopmentArchive}.
+Files under \path{referee_audits/} and the
 historical report in the source archive are author-controlled self-audits.
 They are reproducibility aids, not independent peer review.  The theorem
 depends only on the numbered results and authenticated computations mapped in
@@ -1891,15 +1893,39 @@ random-eigenvalue trace as a Gaussian exponential times
  \det(I+QK_{\pm v}Q).
 \]
 Here \(Q\) deletes the finite prefix determined by the Jacobi ensemble and
-\(K_{\pm v}\) is the corresponding Bessel Hankel operator.  In the proof of
-\cite[Lemma~3.6, equation~(3.4)]{CJL2022}, the row-norm inequality followed
-by the Bessel bound and the two geometric sums gives, before the source
-imposes its simpler sufficient restriction \(\lvert z\rvert<2e^{-5/4}n\),
-the explicit estimate
+\(K_{\pm v}\) is the corresponding Bessel Hankel operator.  We first make
+the index conversion explicit for all four Jacobi cases.  After applying the
+projection, the Bessel order in entry \((r,s)\), with \(r,s\geq0\), is
+\[
+\begin{array}{c|c|c}
+\text{kernel}&d&\text{Bessel order}\\ \hline
+K^{--}&2n&2n+r+s\\
+K^{-+},K^{+-}&2n+1&2n+1+r+s\\
+K^{++}&2n+2&2n+2+r+s.
+\end{array}
+\]
+In every row, \(d\) is the total component dimension.  Entry signs do not
+affect the following absolute-value estimates.
+
+Apply the Bessel estimate used in the proof of
+\cite[Lemma~3.6, equation~(3.4)]{CJL2022}, followed by
+\[
+ (d+r+s)!\geq d!(d+1)^{r+s},\qquad
+ e^{v^2/(d+r+s+1)}\leq e^{v^2/(d+1)}.
+\]
+Writing \(x=v/(d+1)<1\), the squared row sum is a geometric series in
+\(x^{2s}\), and the sum of its square roots is a geometric series in
+\(x^r\).  Hence, in each of the four cases,
 \[
  \lVert QK_{\pm v}Q\rVert_1
- \leq \mathfrak a_{d_T}(v).
+ \leq
+ \frac{e^{v^2/(d+1)}v^d}
+ {d!(1-x)\sqrt{1-x^2}}
+ =\mathfrak a_d(v).
 \]
+This is the explicit estimate obtained before, and independently of, the
+source's simpler sufficient restriction
+\(\lvert z\rvert<2e^{-5/4}n\).
 Thus the hypothesis \(\mathfrak a_{d_T}(v)<1\) justifies the absolutely
 convergent Plemelj series
 \[
@@ -1907,15 +1933,17 @@ convergent Plemelj series
  =\sum_{j\geq1}\frac{(-1)^{j+1}}j
    \operatorname{tr}(QK_{\pm v}Q)^j.
 \]
-The source's total matrix size \(d\) is the component dimension denoted by
-\(d_T\) here, and its projection \(Q_n\) starts at the corresponding Jacobi
-index.  The argument of
-\cite[Lemma~3.7, equation~(3.6)]{CJL2022}, again before replacing the
-explicit expression by a simpler sufficient range, gives
+For a trace of the \(j\)-th power, the cyclic index sum uses the same
+factorial and Bessel bounds.  Each cyclic index occurs twice, so the two
+geometric sums contribute \((1-x^2)^{-1}\).  The calculation of
+\cite[Lemma~3.7, equation~(3.6)]{CJL2022} therefore gives, for all four rows,
 \[
+ \left|\operatorname{tr}(QK_{\pm v}Q)^j\right|
+ \leq\mathfrak b_d(v)^j,
+ \qquad
  \sum_{j\geq1}\frac1j
   \left|\operatorname{tr}(QK_{\pm v}Q)^j\right|
- \leq-\log\bigl(1-\mathfrak b_{d_T}(v)\bigr).
+ \leq-\log\bigl(1-\mathfrak b_d(v)\bigr).
 \]
 Notice that \(0\leq\mathfrak b_d(v)\leq\mathfrak a_d(v)<1\): after writing
 \(x=v/(d+1)\), the ratio \(\mathfrak a_d/\mathfrak b_d\) is
@@ -2644,9 +2672,9 @@ For a row $G=B_b,C_b,D_b$, put
 \]
 In the rows
 \[
- B_2,\ldots,B_{17},\qquad
+ B_2,\ldots,B_{21},\qquad
  C_2,\ldots,C_{28},\qquad
- D_4,\ldots,D_{30},
+ D_4,\ldots,D_{70},
 \]
 let $K_G$ be the tail onset assigned to that row in
 Proposition~\ref{prop:bcd-remaining-exact-tails} or
@@ -2656,7 +2684,7 @@ Proposition~\ref{prop:bcd-remaining-directed-tails}.  Then
  \quad\text{whenever}\quad
  a\geq2,\quad n\text{ is odd},\quad s_G<2a+n<K_G.
 \]
-This domain contains exactly $12{,}993$ pairs.  Its smallest value is
+This domain contains exactly $17{,}862$ pairs.  Its smallest value is
 \[
  I^{D_5}_{2,1}=50.
 \]
@@ -2683,10 +2711,10 @@ The verifier
 \begin{center}
 \path{character_ring_iter/verify_full_q3_bcd_bounded_littlewood_gmp.cpp}
 \end{center}
-works simultaneously through $j=59$.  For each of the integer nodes
-$z=0,1,\ldots,59$, it uses the recurrences in
+works simultaneously through $j=71$.  For each of the integer nodes
+$z=0,1,\ldots,71$, it uses the recurrences in
 Lemma~\ref{lem:two-power-coefficient-functional} to form the specialized
-$e_r,h_r,f_r^e,f_r^h$ as truncated power series through degree $118$, then
+$e_r,h_r,f_r^e,f_r^h$ as truncated power series through degree $142$, then
 evaluates every leading determinant in
 Lemma~\ref{lem:bounded-littlewood-classical-moments}.  Lagrange interpolation
 applies the functional in
@@ -2695,9 +2723,9 @@ in exact prime fields; the primes exceed $2^{30}$, and therefore every
 integer divided by the recurrences and every nonzero node difference is
 invertible.
 
-The $20$ prime-field evaluations are independent OpenMP tasks.  Their
+The $31$ prime-field evaluations are independent OpenMP tasks.  Their
 residues are merged in one fixed descending-prime order by exact GMP CRT,
-giving a modulus of $620$ bits.  If $d_G=\dim G$, invariant multiplicity and
+giving a modulus of $961$ bits.  If $d_G=\dim G$, invariant multiplicity and
 $|\chiad|\leq d_G$ give the elementary reconstruction bound
 \[
  0\leq m_j^G\leq d_G^j.
@@ -2711,19 +2739,23 @@ The program next regenerates the stable recurrence, checks every stable
 prefix, checks the $B_2=C_2$ Lie-isomorphism row, and substitutes the moments
 into the exact GMP sum of Lemma~\ref{lem:full-moment-form}.  The row ledger is
 \path{character_ring_iter/full_q3_bcd_remaining_data.hpp}; it asserts the
-stable endpoint, tail onset, and moment endpoint for every one of the $70$
+stable endpoint, tail onset, and moment endpoint for every one of the $114$
 rows in the statement.  The verifier rejects a nonpositive hierarchy value,
-an incorrect row ledger, or a scope other than $12{,}993$.
+an incorrect row ledger, or a scope other than $17{,}862$.
 
-The accepted machine-C transcript is
+The historical machine-C transcript
 \begin{center}
 \path{certificates/full_q3/fullq3bcd0010_machine_c.log}.
 \end{center}
-It authenticates the verifier and row-ledger sources, reports all
-$12{,}993$ values positive with the stated minimum, ends with
+authenticates the first $12{,}993$ cases, while
+\path{certificates/full_q3/fullq3bcd0002_machine_c.log} independently
+authenticates the remaining $4{,}869$ $B/D$ cases by reverse Pieri.  The
+current unified verifier replaces that partition by one determinant run and
+must be regenerated by the final-source replay.  It reports all $17{,}862$
+values positive with the stated minimum and ends with
 \texttt{FULL\_Q3\_BCD\_BOUNDED\_LITTLEWOOD VERIFICATION: ALL PASS}, and
-records wrapper exit status zero.  Its adjacent SHA-256 file authenticates
-the raw transcript.  As an implementation-independent control, the earlier
+the replay wrapper records exit status zero.  As an
+implementation-independent control for the original low-row subledger, the earlier
 reverse-Pieri verifier agrees exactly on all $2{,}845$ moments and all
 $7{,}484$ residual pairs through degree $40$.  Only $538$ required moments
 remain above that prefix.  The independent modular checker described in the
@@ -2753,45 +2785,25 @@ Thus the complete generator hierarchy holds in all $44$ rows.
 \end{proposition}
 
 \begin{proof}
-Theorem~\ref{thm:stable-bcd-full} supplies the stable prefix and
-Proposition~\ref{prop:bcd-low-tail} supplies the tail.  It remains to check
-the odd total degrees strictly between them.  The case $a=1$ is
-Theorem~\ref{thm:two-minus-import}, so only $a\geq2$ remains.  Lemma
-\ref{lem:finite-orthogonal-adjoint-moments} supplies every moment in that
-finite box.  In type $D$, every consumed degree is at most $2b$, so no
-unlisted even-partition overflow occurs.
+Theorem~\ref{thm:stable-bcd-full} supplies the stable prefix, and
+Proposition~\ref{prop:bcd-low-tail} supplies the tail.  The intervening
+$a\ge2$, odd-$n$ box is the $B_{18}$--$B_{21}$ and
+$D_{31}$--$D_{70}$ subledger of
+Proposition~\ref{prop:bcd-bounded-littlewood-residual-certificate}.
+The case $a=1$ is Theorem~\ref{thm:two-minus-import}.  These ranges are
+exhaustive, proving the proposition.
 
-The exact C++/GMP verifier
-\begin{center}
-\path{character_ring_iter/verify_full_q3_bd_residual_gmp.cpp}
-\end{center}
-regenerates $s_0,\ldots,s_{71}$ from
-\[
- s_{r+1}=r s_r+r s_{r-1}-\binom r2s_{r-2},
-\]
-and rejects any disagreement with the vendored row.  For each required
-moment it enumerates precisely the partitions in Lemma
-\ref{lem:finite-orthogonal-adjoint-moments}; a reverse
-vertical-two-strip Pieri traversal computes all $c_j(\lambda)$ with GMP
-integers.  The traversals for distinct moment degrees are independent and
-are distributed over OpenMP workers; their arithmetic and output are
-unchanged by the worker count.  The program then substitutes the regenerated
-moments in Lemma~\ref{lem:full-moment-form} for every residual pair and
-rejects a nonpositive value or an incorrect scope count.
-
-There are exactly $137$ type-$B$ and $4732$ type-$D$ residual pairs.  The
-machine-C replay checks all $4869$ and reports the minimum
+The older reverse-Pieri source
+\path{character_ring_iter/verify_full_q3_bd_residual_gmp.cpp} and its
+authenticated machine-C transcript remain an algorithmically independent
+control: they check exactly $137$ type-$B$ and $4732$ type-$D$ residual
+pairs, $4869$ in total, and report
+minimum
 \[
  I^{D_{31}}_{8,15}
  =1272988116891284109857142182380802>0.
 \]
-The raw transcript is
-\begin{center}
-\path{certificates/full_q3/fullq3bcd0002_machine_c.log},
-\end{center}
-authenticated by its adjacent SHA-256 file.  Its terminal marker is
-\texttt{FULL\_Q3\_B18\_D31\_RESIDUAL VERIFICATION: ALL PASS}.
-This proves every residual inequality and hence the proposition.
+They are no longer a second mandatory supplier.
 \end{proof}
 
 \begin{corollary}[Completed middle orthogonal rows]
@@ -2951,8 +2963,8 @@ of Parts~I--II, which is included in the submission and archive.
 The detailed computational supplement \path{paper_full.pdf} is rebuilt from the same
 source.  Its numbered correction-prefix derivations and half-stable bridge
 reduction are incoming proof nodes for the residual $B/C$ closure;
-diagnostic and superseded material printed
-there remains outside the dependency spine.  The compact contract,
+diagnostic and superseded material is excluded from that PDF and remains
+available only in the source development archive.  The compact contract,
 accepted-certificate boundary, and family closures appear in
 \path{paper.pdf}.
 
@@ -3004,8 +3016,11 @@ higher candidates by the uniquely bounded $21$-prime calculation described
 above, and checks the $5{,}509$ higher hierarchy values exactly.  It rejects
 any incorrect row, degree, count, residue, character bound, modulus bound, or
 nonpositive hierarchy value before emitting
-\texttt{FULL\_Q3\_MODULAR\_CHECKER VERIFICATION: ALL PASS}.  The target
-\texttt{full-q3-bcd-independent-audit} is included in
+\texttt{FULL\_Q3\_MODULAR\_CHECKER VERIFICATION: ALL PASS}.  The optional
+target \texttt{full-q3-extension-independent-controls} runs this checker
+together with the older reverse-Pieri supplier for the same bounded-Littlewood
+box.  They are
+independent cross-checks, not additional proof obligations of
 \texttt{full-q3-extension};
 \path{run_full_q3_bcd_independent_audit.sh} is the persistent-log wrapper.
 
@@ -3015,6 +3030,35 @@ resource checks and author self-audits are integrity or redundancy tests; they
 are not independent peer review and do not by themselves decide a sign.  The
 mathematical certificate claims are the exact integer/rational or directed-rounding
 comparisons described in the numbered results above.
+
+The executable proof obligations are the following.  This list fixes the
+input/output contract independently of program names.
+\begin{enumerate}
+\item An \emph{exact moment supplier} receives a root datum or one of the
+bounded Littlewood determinants in
+Lemmas~\ref{lem:finite-orthogonal-adjoint-moments}--
+\ref{lem:two-power-coefficient-functional}; it must output every requested
+integer moment together with its rank and degree.  A CRT output is accepted
+only after the product modulus exceeds the displayed character bound
+\(d_G^j\), making the representative unique.
+\item An \emph{exact hierarchy evaluator} receives only those moments and a
+finite list of triples \((G,a,n)\); it evaluates the double sum of
+Lemma~\ref{lem:full-moment-form}, rejects a missing or duplicate triple, and
+accepts only a strictly positive integer for every listed residual case.
+The row ledger must prove that the listed triples are exactly the complement
+of the stable and analytic-tail ranges.
+\item A \emph{directed analytic supplier} receives rational tail parameters
+and the exact determinant or Fredholm formulas proved above.  Every elementary
+operation, Bessel remainder, determinant pivot, exponential, and logarithm
+is enclosed with outward MPFR rounding.  It accepts only when the final lower
+endpoint is positive and when all trace-norm and support hypotheses are also
+certified by intervals.
+\item An \emph{independent control} may consume candidate moments but not a
+candidate sign.  It must reconstruct the same mathematical object by a
+different recurrence, interpolation, or modular path and then reevaluate the
+hierarchy formula.  Shared formulas and shared input ledgers are part of the
+trusted base and are not described as independent.
+\end{enumerate}
 
 Table~\ref{tab:certificate-map} gives the compact trusted-computation map.
 Here ``exact'' means integer or rational arithmetic, including prime-field
@@ -3047,14 +3091,10 @@ Remaining classical tails
  & \texttt{bcdlowtail0001}
  & directed MPFR
  & 58 finite-rank tail rows \\
-Low classical residual boxes
- & \texttt{bcd0010}
+Finite classical residual boxes
+ & final-source bounded replay; historical \texttt{bcd0010}/\texttt{bcd0002}
  & exact prime/GMP
- & 70 rows and 12,993 residual inequalities \\
-Finite $B_{18}$--$B_{21}$ and $D_{31}$--$D_{70}$ boxes
- & \texttt{bcd0002}
- & exact GMP
- & 4,869 residual inequalities \\
+ & 114 rows and 17,862 residual inequalities \\
 \hline
 \end{tabular}
 \caption{Map from the computer-assisted proof blocks to their accepted

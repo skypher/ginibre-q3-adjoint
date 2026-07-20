@@ -50,14 +50,16 @@ to that stronger statement.
 The `rem:final-dependency-map` in `paper.pdf` gives the exact incoming results
 for these four closure nodes. Proposition
 `prop:bc-active-correction-prefix-contract` prints the exact supplement label
-for each of the 58 family-wide offset-`0..28` correction results and proves
+for each of the 56 family-wide offset-`0..27` correction results and proves
 that the common Pieri sign supplies the other side of every interval. The
 residual closure then proves directly that main-theorem propagation consumes
-only offsets through `27`; offset `28` is overlap, and the offset-`29` results
-and longer conditional development routes are not premises. The formal
-detailed supplement proves the 58 active lower bounds through its numbered
-Pieri, factorial-bound, and exact-frontier results. Its numbered
-`prop:post29-bc-half-bridge` then converts those intervals into the exact
+exactly offsets through `27`; the offset-`28` and offset-`29` results and
+longer conditional development routes are not premises. The formal
+detailed supplement proves the 56 active lower bounds through its numbered
+Pieri and factorial-bound results, with all finite type-B H8--H27 boxes
+supplied by one bounded-Littlewood determinant lemma and the type-C boxes by
+their closed formula certificates. Its numbered
+`prop:post29-bc-local-half-bridge` then converts those intervals into the exact
 common stable-moment lower bound evaluated for every active Chain index; this
 result is an explicit incoming node of `prop:post29-bc-residual-closure`.
 `REPLAY.md` maps every main-theorem-reachable certificate log to a freshly
@@ -75,10 +77,10 @@ rebuilt stage.
 
 The Part III proof uses the exact moment formula, stable laws, analytic tail
 bounds, and finite exact certificates enumerated in its
-`tab:certificate-map`. The low classical bounded-Littlewood stage checks
-12,993 residual inequalities with a CRT modulus strictly exceeding the
-elementary character bound. The separate finite B/D stage checks 4,869
-residual inequalities, and the directed-MPFR stage checks the remaining 58
+`tab:certificate-map`. The finite classical bounded-Littlewood stage checks
+17,862 residual inequalities with a CRT modulus strictly exceeding the
+elementary character bound. This includes the formerly separate 4,869-case
+B/D box, and the directed-MPFR stage checks the remaining 58
 low-rank tails.
 
 ## Trust and audit boundary

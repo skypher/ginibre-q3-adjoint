@@ -44,12 +44,13 @@ def main() -> int:
     )
     require(
         r"\label{prop:bc-active-correction-prefix-contract}" in compact_text
-        and compact_text.count(r"0\le r\le28") >= 2
-        and "only offsets $0\\le r\\le27$" in compact_text,
+        and compact_text.count(r"0\le r\le27") >= 2
+        and "exactly the correction" in compact_text
+        and "prefix consumed by the main theorem" in compact_text,
         "compact Parts I--II do not state the active B/C contract and consumed offset",
     )
     require(
-        r"\contractref{prop:post29-bc-half-bridge}" in compact_text
+        r"\contractref{prop:post29-bc-local-half-bridge}" in compact_text
         and "post_m29_bc_interval_bridge_frontier_gmp.cpp" in compact_text
         and r"D_G(2m+1)\ge\mathcal L_m" in compact_text,
         "compact Parts I--II omit the explicit half-stable bridge import",
@@ -70,8 +71,9 @@ def main() -> int:
         "detailed computational supplement wrapper is absent or inactive",
     )
     require(
-        "504-page detailed computational supplement" in text,
-        "Part III reports the wrong detailed-supplement page count",
+        "active computational supplement" in text
+        and "GinibreDevelopmentArchive" in text,
+        "Part III does not distinguish the active supplement from the archive",
     )
     require(
         "certificates/full_q3/full_q3_source_manifest.sha256" in text,

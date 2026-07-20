@@ -129,8 +129,8 @@ def main() -> int:
             if target is not None and target != index:
                 whole_edges.add((index, target))
 
-    require(len(proof_edges) == 97, f"proof edges={len(proof_edges)}")
-    require(len(whole_edges) == 104, f"whole-result edges={len(whole_edges)}")
+    require(len(proof_edges) == 96, f"proof edges={len(proof_edges)}")
+    require(len(whole_edges) == 103, f"whole-result edges={len(whole_edges)}")
     proof_forward = sorted(edge for edge in proof_edges if edge[1] > edge[0])
     whole_forward = sorted(edge for edge in whole_edges if edge[1] > edge[0])
     require(not proof_forward, f"forward proof edges={proof_forward}")

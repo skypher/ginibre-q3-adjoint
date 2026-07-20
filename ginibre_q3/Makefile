@@ -9,7 +9,7 @@ FULL_Q3_REMAINING_THREADS ?= 2
 FULL_Q3_BOUNDED_THREADS ?= $(shell nproc)
 FULL_Q3_MODULAR_THREADS ?= $(shell nproc)
 
-.PHONY: publication-preflight clean-room-replay final-publication-replay final-release-archive full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bd-residual-audit full-q3-bcd-low-tail-audit full-q3-bcd-remaining-audit full-q3-bcd-independent-audit full-q3-bcd-bounded-littlewood-audit full-q3-extension
+.PHONY: publication-preflight clean-room-replay final-publication-replay final-release-archive full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bd-residual-audit full-q3-bcd-low-tail-audit full-q3-bcd-remaining-audit full-q3-bcd-independent-audit full-q3-bcd-bounded-littlewood-audit full-q3-extension-independent-controls full-q3-extension
 
 publication-preflight:
 	python3 -u run_publication_short_audits.py
@@ -123,6 +123,8 @@ full-q3-bcd-bounded-littlewood-audit:
 	OMP_NUM_THREADS=$(FULL_Q3_BOUNDED_THREADS) \
 		/tmp/verify_full_q3_bcd_bounded_littlewood_gmp --progress
 
-full-q3-extension: full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bd-residual-audit full-q3-bcd-low-tail-audit full-q3-bcd-bounded-littlewood-audit full-q3-bcd-independent-audit
+full-q3-extension-independent-controls: full-q3-bd-residual-audit full-q3-bcd-independent-audit
+
+full-q3-extension: full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bcd-low-tail-audit full-q3-bcd-bounded-littlewood-audit
 	pdflatex -interaction=nonstopmode -halt-on-error full_q3_extension.tex
 	pdflatex -interaction=nonstopmode -halt-on-error full_q3_extension.tex

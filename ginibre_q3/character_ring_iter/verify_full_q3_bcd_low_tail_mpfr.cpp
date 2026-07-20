@@ -1062,6 +1062,16 @@ int main(int argc, char** argv) {
 
         for (const full_q3_bcd_remaining::RowCutoff& cutoff :
              full_q3_bcd_remaining::row_cutoffs) {
+            const bool in_mpfr_subledger =
+                (cutoff.family == 'B'
+                 && cutoff.rank <= full_q3_bcd_remaining::mpfr_b_rank_end)
+                || (cutoff.family == 'C'
+                    && cutoff.rank <= full_q3_bcd_remaining::mpfr_c_rank_end)
+                || (cutoff.family == 'D'
+                    && cutoff.rank <= full_q3_bcd_remaining::mpfr_d_rank_end);
+            if (!in_mpfr_subledger) {
+                continue;
+            }
             const bool should_be_checked = cutoff.tail_method
                 == full_q3_bcd_remaining::TailMethod::directed_interval;
             const bool was_checked = checked_rows.count(
@@ -1072,7 +1082,7 @@ int main(int argc, char** argv) {
             }
         }
         if (checked_rows.size()
-            != full_q3_bcd_remaining::directed_interval_rows) {
+            != full_q3_bcd_remaining::mpfr_directed_interval_rows) {
             die("full-Q3 low-tail row ledger mismatch");
         }
         std::cout << "FULL_Q3_LOW_TAIL rows_checked="

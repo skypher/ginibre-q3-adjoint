@@ -10,6 +10,8 @@
 #include <gmpxx.h>
 #include <omp.h>
 
+#include "frontier_runtime_scope.hpp"
+
 namespace {
 
 struct Case {
@@ -194,7 +196,7 @@ mpz_class c_tenth_pause_polynomial(int q) {
 
 int main() {
   int failures = 0;
-  const std::vector<Case> b_cases = {
+  std::vector<Case> b_cases = {
       {15, 40},
       {16, 42},
       {17, 44},
@@ -209,6 +211,7 @@ int main() {
             << " omp_max_threads=" << omp_get_max_threads() << "\n";
 
   for (const Case& c : b_cases) {
+    if (!frontier_run_b()) break;
     const mpz_class bad_count = compute_b_width_bad_count(c);
     const mpz_class stable = s[c.j];
     const mpz_class margin = stable - 2 * bad_count;

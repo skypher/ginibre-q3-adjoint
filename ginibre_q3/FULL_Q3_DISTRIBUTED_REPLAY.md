@@ -48,7 +48,8 @@ suffixes, malformed timings, and duplicate metadata are rejected.
 Certificate-name coverage is not treated as certificate-data verification.
 The verifier additionally compares 124 complete regenerated payloads with the
 paper-cited data: 34 direct certificate replays, all 19 uniquely scoped
-H23--H24 B/C blocks, and all 71 H25--H29 fleet blocks.  Equality is ordered and
+H23--H24 B/C blocks, and the historical 71 H25--H29 fleet blocks.  The active
+proof now stops at H27; H28--H29 remain authenticated overlap data. Equality is ordered and
 complete.  The only normalizations are absolute path relocation, host thread
 counts, and redundant scheduling-progress lines whose row data are retained
 in the deterministic ordered tables.  Missing, inserted, reordered, or

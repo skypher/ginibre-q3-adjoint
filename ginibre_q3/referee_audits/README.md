@@ -129,14 +129,16 @@ identity
 bad(q,j) = stable(j) - moment(B_(q-1),j).
 ```
 
-The wrapper deliberately includes the separately audited Part III
-implementation `verify_full_q3_bcd_bounded_littlewood_gmp.cpp`; consequently
-this is algorithmically independent of the fleet traversal, but it is not a
-second source implementation of the determinant formula.  The included
-implementation had already passed Montgomery-field, coefficient-functional,
-and direct signed-permutation determinant controls.  The wrapper supplies its
-own B14--B46 ledger, stable-moment reconstruction bound, accepted-log parser,
-and B-only evaluation path.
+The archived wrapper deliberately included the then-current, separately
+audited Part III implementation
+`verify_full_q3_bcd_bounded_littlewood_gmp.cpp`; consequently this is
+algorithmically independent of the fleet traversal, but it is not a second
+source implementation of the determinant formula.  Those exact included
+bytes are preserved under the distributed execution-source snapshot and are
+the bytes pinned by the oracle manifest.  The live implementation has since
+expanded its row ledger, while retaining the same determinant engine.  The
+wrapper supplies its own B14--B46 ledger, stable-moment reconstruction bound,
+accepted-log parser, and B-only evaluation path.
 
 The archived run used machine C (`nb1cb2f`), an AMD Ryzen 9 7950X with 32
 logical CPUs, g++ 13.3.0, and 24 OpenMP threads.  It ran at niceness 10 from

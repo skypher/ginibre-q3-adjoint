@@ -10,6 +10,8 @@
 #include <gmpxx.h>
 #include <omp.h>
 
+#include "frontier_runtime_scope.hpp"
+
 namespace {
 
 constexpr int H = 20;
@@ -247,7 +249,7 @@ mpq_class b_twentieth_lower_box_rational() {
 int main() {
   std::cout << std::unitbuf;
   int failures = 0;
-  const std::vector<Case> b_cases = {
+  std::vector<Case> b_cases = {
       {15, 50},
       {16, 52},
       {17, 54},
@@ -342,6 +344,7 @@ int main() {
   }
 
   for (const Case& c : b_cases) {
+    if (!frontier_run_b()) break;
     const mpz_class bad_count = compute_b_width_bad_count(c);
     const mpz_class stable = s[c.j];
     const mpz_class margin = stable - 2 * bad_count;

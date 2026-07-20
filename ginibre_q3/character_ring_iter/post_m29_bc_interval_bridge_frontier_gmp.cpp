@@ -102,85 +102,224 @@ std::vector<mpz_class> stable_moments(int max_index) {
     return moments;
 }
 
-std::vector<mpz_class> binom_row(int n_value) {
-    std::vector<mpz_class> row(static_cast<std::size_t>(n_value + 1));
-    row[0] = 1;
-    for (int k = 0; k < n_value; ++k) {
-        row[static_cast<std::size_t>(k + 1)] =
-            row[static_cast<std::size_t>(k)] * (n_value - k) / (k + 1);
-    }
-    return row;
-}
-
-void add_binom_if_valid(
-    mpz_class& coeff,
-    const std::vector<mpz_class>& row,
-    int k,
-    int factor
-) {
-    if (k < 0 || k >= static_cast<int>(row.size())) return;
-    if (factor == 1) {
-        coeff += row[static_cast<std::size_t>(k)];
-    } else if (factor == -1) {
-        coeff -= row[static_cast<std::size_t>(k)];
-    } else {
-        coeff += factor * row[static_cast<std::size_t>(k)];
-    }
-}
-
-mpz_class pair_coefficient(
-    const std::vector<mpz_class>& row,
-    int first,
-    int second,
-    int scale
-) {
-    const int factor = 2 * scale;
-    mpz_class coeff = 0;
-    const int pos_ks[2] = {first - 2, second - 2};
-    for (int slot = 0; slot < 2; ++slot) {
-        if (slot == 1 && pos_ks[1] == pos_ks[0]) continue;
-        add_binom_if_valid(coeff, row, pos_ks[slot], factor);
-    }
-    const int neg_ks[2] = {first - 1, second - 1};
-    for (int slot = 0; slot < 2; ++slot) {
-        if (slot == 1 && neg_ks[1] == neg_ks[0]) continue;
-        add_binom_if_valid(coeff, row, neg_ks[slot], -factor);
-    }
-    return coeff;
-}
-
-void accumulate_diagonal(
-    int n_value,
-    int scale,
-    int frontier_boundary,
-    const std::vector<mpz_class>& stable,
-    std::vector<mpz_class>& linear_coeffs,
-    mpz_class& stable_value,
-    mpz_class& negative_quadratic
-) {
-    const std::vector<mpz_class> row = binom_row(n_value);
-    const int pair_sum = n_value + 2;
-    for (int first = 0; first <= pair_sum / 2; ++first) {
-        const int second = pair_sum - first;
-        mpz_class coeff = pair_coefficient(row, first, second, scale);
-        if (sgn(coeff) == 0) continue;
-
-        mpz_class pair_value =
-            coeff * stable[static_cast<std::size_t>(first)]
-            * stable[static_cast<std::size_t>(second)];
-        stable_value += pair_value;
-        if (sgn(coeff) < 0 && first >= frontier_boundary && second >= frontier_boundary) {
-            negative_quadratic += pair_value;
+std::vector<mpz_class> stable_chain_values(int max_n) {
+    std::vector<mpz_class> values(static_cast<std::size_t>(max_n + 1));
+    values[0] = 2;
+    for (int n = 0; n < max_n; ++n) {
+        const long n1 = n;
+        const long n2 = n1 * (n - 1);
+        const long n3 = n2 * (n - 2);
+        const long n4 = n3 * (n - 3);
+        mpz_class numerator = (4 * n1 + 2) * values[static_cast<std::size_t>(n)];
+        if (n >= 1) {
+            numerator += (4 * n1 - 3 * n2)
+                * values[static_cast<std::size_t>(n - 1)];
         }
+        if (n >= 2) {
+            numerator += (n3 - 6 * n2)
+                * values[static_cast<std::size_t>(n - 2)];
+        }
+        if (n >= 3) {
+            numerator += 4 * n3 * values[static_cast<std::size_t>(n - 3)];
+        }
+        if (n >= 4) {
+            numerator -= n4 * values[static_cast<std::size_t>(n - 4)];
+        }
+        if (!mpz_even_p(numerator.get_mpz_t())) {
+            std::cerr << "stable chain recurrence lost integrality at n=" << n << "\n";
+            std::exit(1);
+        }
+        values[static_cast<std::size_t>(n + 1)] = numerator / 2;
+        if (sgn(values[static_cast<std::size_t>(n + 1)]) <= 0) {
+            std::cerr << "stable chain recurrence lost positivity at n=" << (n + 1) << "\n";
+            std::exit(1);
+        }
+    }
+    return values;
+}
 
-        if (first == second) {
-            linear_coeffs[static_cast<std::size_t>(first)] +=
-                2 * coeff * stable[static_cast<std::size_t>(first)];
-        } else {
-            linear_coeffs[static_cast<std::size_t>(first)] +=
-                coeff * stable[static_cast<std::size_t>(second)];
-            linear_coeffs[static_cast<std::size_t>(second)] +=
-                coeff * stable[static_cast<std::size_t>(first)];
+long long a_sign_polynomial(int n_value, int k) {
+    const long long pair_sum = static_cast<long long>(n_value) + 2;
+    const long long difference = 2LL * k - pair_sum;
+    return difference * difference - pair_sum;
+}
+
+mpz_class a_term(
+    int n_value,
+    int k,
+    const std::vector<mpz_class>& stable
+) {
+    const int pair_sum = n_value + 2;
+    const int reflected = pair_sum - k;
+    const int t = std::min(k, reflected);
+    mpz_class coefficient;
+    if (t == 0) {
+        coefficient = 1;
+    } else if (t == 1) {
+        coefficient = n_value - 2;
+    } else {
+        mpz_bin_uiui(
+            coefficient.get_mpz_t(),
+            static_cast<unsigned long>(n_value),
+            static_cast<unsigned long>(t - 2)
+        );
+        coefficient *= static_cast<long>(a_sign_polynomial(n_value, k));
+        const long denominator = static_cast<long>(t) * (t - 1);
+        if (!mpz_divisible_ui_p(
+                coefficient.get_mpz_t(),
+                static_cast<unsigned long>(denominator))) {
+            std::cerr << "nonintegral A coefficient at n=" << n_value
+                      << " k=" << k << "\n";
+            std::exit(1);
+        }
+        coefficient /= denominator;
+    }
+    return coefficient * stable[static_cast<std::size_t>(k)]
+        * stable[static_cast<std::size_t>(reflected)];
+}
+
+template <typename Predicate>
+mpz_class central_negative_sum(
+    int n_value,
+    const std::vector<mpz_class>& stable,
+    Predicate include
+) {
+    const int pair_sum = n_value + 2;
+    const int radius = static_cast<int>(std::sqrt(static_cast<double>(pair_sum))) + 2;
+    const int center = pair_sum / 2;
+    const int low = std::max(0, center - radius);
+    const int high = std::min(pair_sum, center + radius + 1);
+    mpz_class sum = 0;
+    for (int k = low; k <= high; ++k) {
+        if (a_sign_polynomial(n_value, k) < 0 && include(k, pair_sum - k)) {
+            sum += a_term(n_value, k, stable);
+        }
+    }
+    if (sgn(sum) > 0) {
+        std::cerr << "negative A sum has wrong sign at n=" << n_value << "\n";
+        std::exit(1);
+    }
+    return sum;
+}
+
+mpz_class central_negative_sum_all(
+    int n_value,
+    const std::vector<mpz_class>& stable
+) {
+    const int pair_sum = n_value + 2;
+    const int center = pair_sum / 2;
+    const int radius = static_cast<int>(std::sqrt(static_cast<double>(pair_sum))) + 2;
+    const int low = std::max(0, center - radius);
+    mpz_class sum = 0;
+    for (int k = low; k <= center; ++k) {
+        if (a_sign_polynomial(n_value, k) >= 0) continue;
+        mpz_class term = a_term(n_value, k, stable);
+        sum += (2 * k == pair_sum) ? term : 2 * term;
+    }
+    if (sgn(sum) > 0) {
+        std::cerr << "negative A sum has wrong sign at n=" << n_value << "\n";
+        std::exit(1);
+    }
+    return sum;
+}
+
+bool central_support_is_active(int n_value, int frontier_boundary) {
+    const int pair_sum = n_value + 2;
+    const int center = pair_sum / 2;
+    const int radius = static_cast<int>(std::sqrt(static_cast<double>(pair_sum))) + 2;
+    const int low = std::max(0, center - radius);
+    const int high = std::min(pair_sum, center + radius + 1);
+    for (int k = low; k <= high; ++k) {
+        if (a_sign_polynomial(n_value, k) < 0
+            && (k < frontier_boundary || pair_sum - k < frontier_boundary)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+mpz_class positive_boundary_sum(
+    int n_value,
+    int frontier_boundary,
+    const std::vector<mpz_class>& stable
+) {
+    if (frontier_boundary <= 0 || frontier_boundary > n_value + 2) {
+        std::cerr << "invalid positive-boundary range at n=" << n_value << "\n";
+        std::exit(1);
+    }
+    mpz_class sum = 0;
+    mpz_class binomial = 1;
+    for (int k = 0; k < frontier_boundary; ++k) {
+        if (a_sign_polynomial(n_value, k) > 0) {
+            mpz_class coefficient;
+            if (k == 0) {
+                coefficient = 1;
+            } else if (k == 1) {
+                coefficient = n_value - 2;
+            } else {
+                coefficient = binomial * static_cast<long>(a_sign_polynomial(n_value, k));
+                const long denominator = static_cast<long>(k) * (k - 1);
+                if (!mpz_divisible_ui_p(
+                        coefficient.get_mpz_t(),
+                        static_cast<unsigned long>(denominator))) {
+                    std::cerr << "nonintegral boundary coefficient at n=" << n_value
+                              << " k=" << k << "\n";
+                    std::exit(1);
+                }
+                coefficient /= denominator;
+            }
+            sum += coefficient * stable[static_cast<std::size_t>(k)]
+                * stable[static_cast<std::size_t>(n_value + 2 - k)];
+        }
+        if (k >= 2 && k + 1 < frontier_boundary) {
+            binomial *= n_value - k + 2;
+            binomial /= k - 1;
+        }
+    }
+    if (sgn(sum) < 0) {
+        std::cerr << "positive boundary sum has wrong sign at n=" << n_value << "\n";
+        std::exit(1);
+    }
+    return sum;
+}
+
+mpz_class binomial_or_zero(int n_value, int k) {
+    if (k < 0 || k > n_value) return 0;
+    mpz_class value;
+    mpz_bin_uiui(
+        value.get_mpz_t(),
+        static_cast<unsigned long>(n_value),
+        static_cast<unsigned long>(k)
+    );
+    return value;
+}
+
+void verify_algebraic_reduction(
+    int max_n,
+    const std::vector<mpz_class>& stable,
+    const std::vector<mpz_class>& stable_chain
+) {
+    for (int n_value = 0; n_value <= max_n; ++n_value) {
+        const int pair_sum = n_value + 2;
+        mpz_class direct_sum = 0;
+        for (int k = 0; k <= pair_sum; ++k) {
+            const mpz_class coefficient =
+                binomial_or_zero(n_value, k - 2)
+                + binomial_or_zero(n_value, k)
+                - 2 * binomial_or_zero(n_value, k - 1);
+            const mpz_class direct_term =
+                coefficient * stable[static_cast<std::size_t>(k)]
+                * stable[static_cast<std::size_t>(pair_sum - k)];
+            if (direct_term != a_term(n_value, k, stable)) {
+                std::cerr << "closed A coefficient mismatch at n=" << n_value
+                          << " k=" << k << "\n";
+                std::exit(1);
+            }
+            direct_sum += direct_term;
+        }
+        if (direct_sum != stable_chain[static_cast<std::size_t>(n_value)]) {
+            std::cerr << "stable chain recurrence mismatch at n=" << n_value << "\n";
+            std::exit(1);
         }
     }
 }
@@ -190,41 +329,76 @@ ChainResult verify_chain_m_exact(
     int frontier_boundary,
     int active_rows,
     const std::vector<mpz_class>& stable,
+    const std::vector<mpz_class>& stable_chain,
     int lambda_num,
     int lambda_den
 ) {
-    const int max_index = 2 * chain_m + 5;
-    std::vector<mpz_class> linear_coeffs(static_cast<std::size_t>(max_index + 1));
-    mpz_class stable_value = 0;
-    mpz_class negative_quadratic = 0;
-    accumulate_diagonal(
-        2 * chain_m + 3,
-        1,
-        frontier_boundary,
-        stable,
-        linear_coeffs,
-        stable_value,
-        negative_quadratic
-    );
-    accumulate_diagonal(
-        2 * chain_m + 1,
-        -4,
-        frontier_boundary,
-        stable,
-        linear_coeffs,
-        stable_value,
-        negative_quadratic
-    );
-
-    mpz_class negative_linear = 0;
-    for (int index = frontier_boundary; index <= max_index; ++index) {
-        const mpz_class& coeff = linear_coeffs[static_cast<std::size_t>(index)];
-        if (sgn(coeff) > 0) {
-            negative_linear -= coeff * stable[static_cast<std::size_t>(index)];
-        }
+    const int n_first = 2 * chain_m + 3;
+    const int n_second = 2 * chain_m + 1;
+    const int pair_sum_second = n_second + 2;
+    if (2 * frontier_boundary > pair_sum_second + 1) {
+        std::cerr << "overlapping frontier boundary at m=" << chain_m << "\n";
+        std::exit(1);
     }
-    const mpz_class positive_linear_abs = -negative_linear;
+
+    const mpz_class stable_value = stable_chain[static_cast<std::size_t>(n_first)]
+        - 4 * stable_chain[static_cast<std::size_t>(n_second)];
+    if (sgn(stable_value) <= 0) {
+        std::cerr << "stable chain value lost positivity at m=" << chain_m << "\n";
+        std::exit(1);
+    }
+
+    const mpz_class negative_first_all =
+        central_negative_sum_all(n_first, stable);
+    const mpz_class negative_second_all =
+        central_negative_sum_all(n_second, stable);
+    const mpz_class positive_first_boundary =
+        positive_boundary_sum(n_first, frontier_boundary, stable);
+    const mpz_class positive_second_boundary =
+        positive_boundary_sum(n_second, frontier_boundary, stable);
+
+    const mpz_class positive_first_active =
+        stable_chain[static_cast<std::size_t>(n_first)]
+        - negative_first_all - positive_first_boundary;
+    const mpz_class negative_second_active = central_support_is_active(
+        n_second,
+        frontier_boundary
+    ) ? negative_second_all : central_negative_sum(
+            n_second,
+            stable,
+            [frontier_boundary](int k, int) { return k >= frontier_boundary; }
+        );
+    if (sgn(positive_first_active) < 0 || sgn(negative_second_active) > 0) {
+        std::cerr << "linear majorant component has wrong sign at m=" << chain_m << "\n";
+        std::exit(1);
+    }
+    const mpz_class positive_linear_abs =
+        2 * positive_first_active - 8 * negative_second_active;
+
+    const mpz_class negative_first_restricted = central_support_is_active(
+        n_first,
+        frontier_boundary
+    ) ? negative_first_all : central_negative_sum(
+            n_first,
+            stable,
+            [frontier_boundary](int k, int reflected) {
+                return k >= frontier_boundary && reflected >= frontier_boundary;
+            }
+        );
+    const mpz_class positive_second_restricted =
+        stable_chain[static_cast<std::size_t>(n_second)]
+        - negative_second_all - 2 * positive_second_boundary;
+    if (sgn(positive_second_restricted) < 0) {
+        std::cerr << "quadratic majorant component has wrong sign at m=" << chain_m << "\n";
+        std::exit(1);
+    }
+    const mpz_class negative_quadratic =
+        negative_first_restricted - 4 * positive_second_restricted;
     const mpz_class negative_quadratic_abs = -negative_quadratic;
+    if (sgn(positive_linear_abs) < 0 || sgn(negative_quadratic_abs) < 0) {
+        std::cerr << "penalty has wrong sign at m=" << chain_m << "\n";
+        std::exit(1);
+    }
     const mpz_class lower_scaled =
         mpz_class(lambda_den) * lambda_den * stable_value
         - mpz_class(lambda_num) * lambda_den * positive_linear_abs
@@ -440,13 +614,18 @@ int main(int argc, char** argv) {
               << " onset_log=" << onset_log
               << " OpenMP threads=" << omp_get_max_threads() << std::endl;
     std::cout << "SIGN_MODEL corrections_delta<=0 active from boundary=2*rank+2; "
-              << "frontier lower bound uses |delta_j|<=lambda*s_j with positive linear "
-              << "and negative quadratic coefficients"
+              << "frontier lower bound uses |delta_j|<=lambda*s_j with a separable "
+              << "positive-linear majorant and exact negative quadratic coefficients"
               << std::endl;
 
     std::cout << "stable_moments_start max_index=" << max_index << std::endl;
     const std::vector<mpz_class> stable = stable_moments(max_index);
     std::cout << "stable_moments_done max_index=" << max_index << std::endl;
+    const std::vector<mpz_class> stable_chain = stable_chain_values(2 * chain_hi + 3);
+    const int algebraic_crosscheck_max_n = std::min(128, 2 * chain_hi + 3);
+    verify_algebraic_reduction(algebraic_crosscheck_max_n, stable, stable_chain);
+    std::cout << "algebraic_reduction_crosscheck_done max_n="
+              << algebraic_crosscheck_max_n << std::endl;
 
     const int total = chain_hi - chain_lo + 1;
     std::vector<ChainResult> results(static_cast<std::size_t>(total));
@@ -468,6 +647,7 @@ int main(int argc, char** argv) {
                 frontier,
                 active_rows,
                 stable,
+                stable_chain,
                 lambda_num,
                 lambda_den
             );
@@ -527,7 +707,7 @@ int main(int argc, char** argv) {
 
     std::cout << "sample\tm\todd_n\tfrontier_boundary\tfrontier_rank"
               << "\tactive_rows\tlower_sign\tlower_log10\tstable_log10"
-              << "\tpositive_linear_log10\tnegative_quadratic_log10"
+              << "\tpositive_linear_upper_log10\tnegative_quadratic_log10"
               << "\tuniform_lambda_log10\trelative_log10\n";
     const int sample_stride = std::max(1, total / 10);
     for (int offset = 0; offset < total; offset += sample_stride) {

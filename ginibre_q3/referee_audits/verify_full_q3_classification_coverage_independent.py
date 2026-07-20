@@ -549,13 +549,31 @@ def main() -> int:
     directed_tails = parse_directed_low_tail_rows(directed_statement)
     require(not (set(exact_tails) & set(directed_tails)), "a low row has two tail methods")
     paper_tails = exact_tails | directed_tails
-    low_rows = parse_low_row_ledger(ledger_text)
+    all_bounded_rows = parse_low_row_ledger(ledger_text)
+    expected_bounded_keys = (
+        {("B", rank) for rank in range(2, 22)}
+        | {("C", rank) for rank in range(2, 29)}
+        | {("D", rank) for rank in range(4, 71)}
+    )
+    require(
+        set(all_bounded_rows) == expected_bounded_keys,
+        "unified bounded ledger is not exactly B2--21/C2--28/D4--70",
+    )
+    low_rows = {
+        key: row
+        for key, row in all_bounded_rows.items()
+        if key in expected_low_rank_keys()
+    }
 
     low_residual = validate_low_rows(low_rows, paper_tails)
     explicit_a_residual = validate_explicit_type_a(text)
     general_a_residual = validate_general_type_a(text)
     exceptional = parse_exceptional_rows(text)
     b_finite_residual, d_finite_residual = validate_finite_bd_rows(text)
+    require(
+        low_residual + b_finite_residual + d_finite_residual == 17862,
+        "unified bounded residual count is not 17,862",
+    )
     validate_classical_statements(text)
     classical_ranks, rank_overlaps = validate_classical_rank_coverage()
 
@@ -577,6 +595,7 @@ def main() -> int:
     exceptional_residual = sum(row[2] for row in exceptional.values())
     print(
         "FULL_Q3_CLASSIFICATION_COVERAGE "
+        f"bounded_rows={len(all_bounded_rows)} bounded_residual_pairs=17862 "
         f"low_rows={len(low_rows)} low_residual_pairs={low_residual} "
         f"explicit_A_residual_pairs={explicit_a_residual} "
         f"general_A_residual_pairs={general_a_residual} "

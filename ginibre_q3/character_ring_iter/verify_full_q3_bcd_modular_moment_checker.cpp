@@ -24,8 +24,11 @@ namespace {
 
 using BigInt = mpz_class;
 
-constexpr int kMaximumMoment =
-    full_q3_bcd_remaining::required_maximum_moment;
+// This independent control intentionally freezes the original 70-row
+// degree-59 subledger.  The promotion verifier now also covers the separate
+// B18--B21/D31--D70 box, whose reverse-Pieri transcript is checked by its own
+// optional control.
+constexpr int kMaximumMoment = 59;
 constexpr int kSeriesDegree = 2 * kMaximumMoment;
 
 class PrimeField {
@@ -498,6 +501,11 @@ BigInt integer_power(int base, int exponent) {
 std::vector<CandidateRow> empty_rows() {
     std::vector<CandidateRow> rows;
     for (const auto& cutoff : full_q3_bcd_remaining::row_cutoffs) {
+        const bool original_subledger =
+            (cutoff.family == 'B' && cutoff.rank <= 17)
+            || cutoff.family == 'C'
+            || (cutoff.family == 'D' && cutoff.rank <= 30);
+        if (!original_subledger) continue;
         rows.push_back(CandidateRow{
             cutoff.family,
             cutoff.rank,
