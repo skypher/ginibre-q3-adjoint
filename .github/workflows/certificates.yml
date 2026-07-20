@@ -12,12 +12,6 @@ on:
       - ".github/workflows/certificates.yml"
       - "ginibre_q3/**"
   workflow_dispatch:
-    inputs:
-      run_full_replay:
-        description: Run the complete 105-stage replay on the q3-certificates runner
-        required: false
-        default: false
-        type: boolean
 
 permissions:
   contents: read
@@ -145,13 +139,7 @@ jobs:
 
   full-certificate-replay:
     name: Complete clean-room certificate replay
-    if: github.event_name == 'workflow_dispatch' && inputs.run_full_replay
-    needs: certificate-build
-    runs-on:
-      - self-hosted
-      - linux
-      - x64
-      - q3-certificates
+    runs-on: ubuntu-24.04
     timeout-minutes: 6
 
     steps:
@@ -160,7 +148,25 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Record validated-runner resources
+      - name: Select Python 3.12
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+
+      - name: Install native proof dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            g++ \
+            make \
+            libgmp-dev \
+            libmpfr-dev \
+            libomp-dev \
+            texlive-latex-base \
+            texlive-latex-extra \
+            texlive-fonts-recommended
+
+      - name: Record GitHub-hosted runner resources
         run: |
           mkdir -p ci-logs
           {
