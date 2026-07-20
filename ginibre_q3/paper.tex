@@ -101,8 +101,8 @@
 \fi
 
 \ifginibrefullproof
-\title[Adjoint two-minus Ginibre integral]{The two-minus adjoint-character case of Ginibre's $Q_3$ condition\\\large Detailed computational supplement to Parts I--II}
-\hypersetup{pdftitle={The two-minus adjoint-character case of Ginibre's Q3 condition, detailed computational supplement}}
+\title[Adjoint two-minus Ginibre integral]{The two-minus adjoint-character case of Ginibre's $Q_3$ condition\\\large Derivation archive for Parts I--II}
+\hypersetup{pdftitle={The two-minus adjoint-character case of Ginibre's Q3 condition, derivation archive}}
 \else
 \title[Adjoint two-minus Ginibre integral]{The two-minus adjoint-character case of Ginibre's $Q_3$ condition\\\large Parts I--II: Classification and exact certificates}
 \hypersetup{pdftitle={The two-minus adjoint-character case of Ginibre's Q3 condition, Parts I-II}}
@@ -151,15 +151,14 @@ generation and transcript authentication.
 
 \begin{remark}[Companion architecture]
 \ifginibrefullproof
-This detailed computational supplement expands the $B/C$ Pieri-correction
-development and prints the detailed certificate, transcript, and row
-ledgers.  It is a load-bearing component of the proof of the residual
-$B/C$ closure stated compactly in \texttt{paper.pdf}.  The journal-facing
-Parts~I--II remain consolidated in \texttt{paper.pdf}; the present supplement
-supplies the numbered proofs of the correction-prefix contracts consumed
-there and the half-stable bridge reduction that converts those contracts into
-Chain inequalities.  The compact contract table identifies every active result by label
-and proves that offsets beyond $27$ are not consumed.  Conditional and
+This derivation archive expands the $B/C$ Pieri-correction development and
+prints detailed certificate, transcript, and row ledgers.  It is not a formal
+submission component and is not an incoming node of the proof.  The
+journal-facing Parts~I--II are self-contained in \texttt{paper.pdf}: the
+active correction-prefix proposition states its finite verification contract,
+and the local half-stable bridge and its proof are printed there in full.  The
+present archive retains the longer offset-by-offset derivations as optional
+explanatory and implementation-audit material.  Conditional and
 superseded development routes are excluded from the formal supplement; they
 can be typeset separately from the source archive by defining
 \texttt{\string\GinibreDevelopmentArchive}.  They are not part of that
@@ -168,13 +167,10 @@ indexed proof.  Part~III is the separate full signed-product extension
 \else
 This journal manuscript consolidates Parts~I--II of the proof: the
 classification reduction, family closures, compact correction-prefix
-contract, and accepted-certificate boundary.  The detailed computational supplement
-\texttt{paper\_full.pdf} expands the correction-prefix derivations and
-certificate ledgers from the same source and proves the exact active results
-listed in the compact contract table.  It also proves the explicitly indexed
-half-stable bridge reduction that converts those correction intervals into
-Chain inequalities.  Only that indexed subgraph is load-bearing for the
-residual $B/C$ closure.
+contract, its exact finite-verification proof, the local half-stable bridge,
+and the accepted-certificate boundary.  No theorem imports a result from
+\texttt{paper\_full.pdf}; that optional derivation archive expands the
+offset-by-offset combinatorics and certificate ledgers from the same source.
 Part~III, \texttt{full\_q3\_extension.pdf}, imports the theorem proved here
 and establishes the full signed-product hierarchy on the adjoint-generated
 cone.
@@ -182,11 +178,9 @@ cone.
 \end{remark}
 
 \begin{remark}[Publication proof spine and author self-audits]
-The load-bearing dependency spine for Parts~I--III and their detailed
-supplement is listed in
+The load-bearing dependency spine for Parts~I--III is listed in
 \path{PUBLICATION_PROOF_SPINE.md} and, for the present theorem, in the
-final-facing dependency map below.  The supplement's numbered
-correction-prefix proofs and half-stable bridge reduction are load-bearing;
+final-facing dependency map below.  The optional derivation archive and all
 explicitly marked diagnostic and superseded routes remain provenance and are
 not consumed.  The archived
 historical report and the programs under
@@ -229,15 +223,15 @@ tails.
 
 Computer assistance enters only after the mathematical reduction has
 specified a finite integer, rational, or interval inequality.  A source table
-is not accepted merely because its hash matches.  For every moment ledger
-passed to an active source-replay stage, the clean replay regenerates the
-claimed exceptional or low classical moments from the Cartan datum by
-\cref{lem:racah-speiser-step,lem:character-pairing}; in
-particular, the $E_8$ values through $m_{100}$ require the decomposition only
-through $\ad^{\otimes50}$.  The ancillary $E_8$ values of
-Bourjaily--Plesser--Vergu
-\cite[ancillary file \texttt{adjoint\_tensor\_ranks.tex}]{BPV2024} are
-therefore comparison data, not an unverified premise.  Likewise, every stable
+is not accepted merely because its hash matches.  For every low classical
+ledger, and for the computationally bounded prefixes of the exceptional
+ledgers, the clean replay regenerates the claimed moments from the Cartan
+datum by \cref{lem:racah-speiser-step,lem:character-pairing}.  The longer
+exceptional suffixes are checked termwise against the independent ancillary
+tables of Bourjaily--Plesser--Vergu
+\cite[ancillary file \texttt{adjoint\_tensor\_ranks.tex}]{BPV2024}; the
+local ledgers and the published source must agree before the full exact Chain
+checks run.  Likewise, every stable
 classical moment used in a finite correction is regenerated from the exact
 \ifginibrefullproof
 recurrence of \cref{lem:bc-stable-moment-recurrence};
@@ -2411,6 +2405,10 @@ The three simultaneous bands and their exact moment windows are
 \end{array}
 \tag{\ref{prop:bc-source-row-gated-bridge}.5}
 \]
+For the termwise source-ledger audit only, the same reconstruction is extended
+to degrees $51,53,57$ in $B_{11},B_{12},B_{13}$ and to degrees $43,51,45$ in
+$C_{13},C_{14},C_{17}$, respectively.  These extensions do not enlarge the
+row-gated bridge box.
 The recurrence is evaluated modulo the first five, four, or three primes,
 respectively, from
 \[
@@ -2464,13 +2462,19 @@ There are
  2\sum_{b=2}^{30}(31-b)=870
 \]
 row-gated checks.  The replay generates $832$ correction values, evaluates
-$416$ steps exactly and $454$ by the stated interval substitution, and reports
-no failure.  Its least lower bound is the exact value $1046$ at $B_2,m=1$.
-The source and the deterministic machine-C output have SHA-256 hashes
+$416$ steps exactly and $454$ by the stated interval substitution, and compares
+all $182$ consumed archived correction claims in $14$ low-rank rows termwise
+with the determinant reconstruction.  It reports no failure.  Its least lower
+bound is the exact value $1046$ at $B_2,m=1$.
+The source
+\path{character_ring_iter/verify_bc_row_gated_bridge_bounded_littlewood_gmp.cpp}
+and accepted transcript
+\path{certificates/classical_bridge/bc_row_gated_bounded_littlewood_certificate.log}
+have SHA-256 hashes
 \[
 \begin{aligned}
-&\hashsplit{fbd5565215a7b976b67a4529ad21daa2}{f235f2988da463c502370e3dab3ad797},\\
-&\hashsplit{d019c183f7dedff1049199b31a50d681}{3e0c17a0c565df1e845119e2a9fba054}.
+&\hashsplit{834f0005c2ef8146736a75106d327c6ca}{985ba266ebb26cdb4f35a5c5304c1dc},\\
+&\hashsplit{62fb4525ab8d130c39c8950ed11514fd}{2ea98970d2f065907fec961d3905735f}.
 \end{aligned}
 \tag{\ref{prop:bc-source-row-gated-bridge}.10}
 \]
@@ -30914,7 +30918,7 @@ variable twice.  The coefficient of \(x_1^2\cdots x_r^2\) is therefore
 which is exactly the displayed functional after substituting \(q=zp^2\).
 \end{proof}
 
-\begin{lemma}[Unified exact type-$B$ frontier certificate, H8--H27]
+\begin{lemma}[Hybrid exact type-$B$ frontier certificate, H8--H27]
 \label{lem:bc-b-h8-h27-bounded-littlewood-certificate}
 Let \(\mathcal F_B\) consist of the integer pairs \((h,q)\) in
 \[
@@ -30935,26 +30939,52 @@ the required bad-path count is exactly
 \[
  \#\operatorname{bad}(q,j)=s_j-m_j^{B_{q-1}},\qquad j=2q+h.
 \]
-The current exact verifier
+There is first a short analytic reduction.  Every bad terminal shape is
+uniquely
+\[
+ \lambda=(\mu_1,\mu_1,\mu_2,\mu_2,\ldots),
+ \qquad |\mu|=j,\quad \mu_1\ge2q,
+\]
+and the number of paths ending at \(\lambda\) is the Kostka number
+\(K_{\lambda,(2^j)}\).  Standardizing the two copies of each letter gives an
+injection from these semistandard tableaux into the standard tableaux of
+shape \(\lambda\).  Hence
+\[
+ \#\operatorname{bad}(q,j)
+ \le U(q,h):=
+ \sum_{r=0}^{h}\ \sum_{\nu\vdash h-r}
+ f^{(2q+r,2q+r,\nu_1,\nu_1,\nu_2,\nu_2,\ldots)},
+ \qquad j=2q+h,
+\]
+where each summand is evaluated by the hook-length formula.  This is a
+finite exact sum over partitions of integers at most \(27\); it proves
+\(2U(q,h)<s_j\) in \(296\) of the \(337\) cases.
+
+The current hybrid verifier
 \[
 \texttt{character\_ring\_iter/verify\_active\_bc\_b\_frontiers\_bounded\_littlewood\_gmp.cpp}
 \]
 generates \(\mathcal F_B\) from the three displayed ranges and rejects any
-scope other than its \(337\) distinct cases.  It specializes the determinant
+scope other than its \(337\) distinct cases.  It evaluates the hook sums
+exactly with GMP, checks that precisely \(296\) cases close analytically, and
+retains only the other \(41\) cases.  Those residual cases have
+\(15\le q\le20\) and \(j\le67\).  For them it specializes the determinant
 of \cref{lem:bc-b-bounded-littlewood-determinant} at the integer nodes
-\(z=0,1,\ldots,121\), using
+\(z=0,1,\ldots,67\), using
 \[
  \sum_{r\ge0}\pi_2(e_r)u^r=\exp(pu-zp^2u^2/2)
 \]
 to construct every entry as a truncated exact power series.  Lagrange
 interpolation applies the coefficient functional in that lemma.
 
-The independent prime-field evaluations are merged by exact GMP CRT.  Since
+The independent prime--node evaluations are merged by exact GMP CRT.  Since
 the finite moment counts a subset of the unrestricted stable objects,
 \(0\le m_j^{B_b}\le s_j\).  The verifier chooses primes until their product
-is strictly larger than \(s_{121}\), and rejects a reconstructed value
+is strictly larger than \(s_{67}\), and rejects a reconstructed value
 outside its corresponding stable bound.  Thus every CRT representative is
-the unique integer moment, rather than a probable reconstruction.
+the unique integer moment, rather than a probable reconstruction.  This
+six-row residual reconstruction uses ten primes; all prime--node tasks are
+independent, while node reduction and CRT merging retain fixed orders.
 
 The accepted transcript
 \[
@@ -30962,15 +30992,17 @@ The accepted transcript
 \]
 has SHA-256
 \[
-\hashsplit{79a6d2721185cc71a8884987774da1dd}{0e90f38482c4f8af1b26bf3c7e695327}.
+\hashsplit{a0ef18d6b2afe82ea9218c8e313bef7a}{f61e75a268ccdfdaed592c6c3e21876f}.
 \]
-It records the per-\(h\) scope and minimum margin, reports
-\texttt{rows=33 cases=337 maximum\_moment=121 failures=0}, and ends with
-\texttt{ACTIVE\_B\_FRONTIER\_BOUNDED\_LITTLEWOOD VERIFICATION: ALL PASS}.
-In particular, every exact value
-\(s_j-2\#\operatorname{bad}(q,j)=2m_j^{B_{q-1}}-s_j\) is positive.
+It records the per-\(h\) scope and certified minimum margin, reports
+\texttt{rows=6 cases=337 analytic\_cases=296 exact\_cases=41}
+and \texttt{determinant\_maximum\_moment=67 failures=0}, and ends with
+\texttt{ACTIVE\_B\_FRONTIER\_HYBRID VERIFICATION: ALL PASS}.
+Thus every case has either a positive exact hook-bound margin
+\(s_j-2U(q,h)\), or the positive exact determinant margin
+\(2m_j^{B_{q-1}}-s_j\).
 The older reverse-Pieri transcripts cited below remain independent controls,
-but are not premises of this unified calculation.
+but are not premises of this hybrid calculation.
 \end{proof}
 
 \begin{lemma}[Exact first three eighth $B$ nonboundary bad-shape counts]\label{lem:bc-b-eighth-frontier-badshape-certificate}
@@ -45141,7 +45173,9 @@ This replaces the former full diagonal traversal by
 \(O(\sqrt m+f_m)\) exact terms per index.
 The GMP/OpenMP source
 \path{character_ring_iter/post_m29_bc_interval_bridge_frontier_gmp.cpp}
-checks $\widetilde{\mathcal L}_m>0$ for every $m=31,\ldots,15447$.  Its accepted replay
+checks $\widetilde{\mathcal L}_m>0$ for every $m=31,\ldots,15447$.  The
+accepted transcript
+\path{certificates/post_m29/bc_lambda_half_bridge_gmp_certificate.log}
 reports no failures and has SHA-256
 \[
 \hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
@@ -45165,10 +45199,12 @@ and
  \quad(20\le b\le217, 0\le r\le27).
  \tag{\ref{prop:bc-active-correction-prefix-contract}.2}
 \]
-The lower bound at each offset is supplied by the exact result in the same
-row of the following table; the common upper bound is
-\cref{prop:bc-pieri-correction-sign}.
+The common upper bound is \cref{prop:bc-pieri-correction-sign}.  For audit
+purposes the derivation archive gives an offset-by-offset proposition table;
+the submission proof instead uses the direct finite certificate contract
+printed below.
 
+\ifginibrefullproof
 \begingroup\scriptsize
 \setlength{\LTleft}{0pt}
 \setlength{\LTright}{0pt}
@@ -45212,20 +45248,62 @@ $r$ & type $B$ lower-bound result & type $C$ lower-bound result\\
 \bottomrule
 \end{longtable}
 \endgroup
+\else
+\begin{center}
+\small
+\begin{tabular}{L{0.29\linewidth}L{0.61\linewidth}}
+\toprule
+domain & exact lower-bound supplier\\
+\midrule
+type $B$ nonstable frontiers & the $B_{14},j=37$ seed; exact hook-length
+bounds for $296$ active H8--H27 cases; and a six-row determinant/CRT residual
+reconstruction for the other $41$ cases through moment $67$\\
+type $C$ nonstable frontiers & closed fixed-point-free and arithmetic formulas,
+checked in $60$ and $179$ cases respectively\\
+all caller rows & exact stable-recurrence and power-loss arithmetic on $402$
+rows and $3{,}904{,}626$ integer comparisons, followed by an independent
+domain audit of every offset $0\le r\le27$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\fi
 The additional offset-$28$ and offset-$29$ results in the source archive are
 not needed by the main-theorem propagation below.
 \end{proposition}
 
 \begin{proof}
-For each table row, the stated lower-bound result has exactly the family,
-rank interval, and moment index printed in
-\eqref{prop:bc-active-correction-prefix-contract}.1 or
-\eqref{prop:bc-active-correction-prefix-contract}.2.
 \ifginibrefullproof
-Those results and their proofs occur earlier in this detailed build.
+For each archive-table row, the stated lower-bound result has exactly the
+family, rank interval, and moment index printed in
+\eqref{prop:bc-active-correction-prefix-contract}.1 or
+\eqref{prop:bc-active-correction-prefix-contract}.2; those longer derivations
+occur earlier in this archive.
 \else
-Their exact supplement labels are printed in the table, so the import
-boundary does not depend on an unindexed collection of certificates.
+The finite lower-bound claim is checked directly, without importing an
+archive proposition.  The source
+\begin{center}
+\small\path{character_ring_iter/verify_active_bc_b_frontiers_bounded_littlewood_gmp.cpp}
+\end{center}
+reconstructs the required type-$B$ moments from the bounded-Littlewood
+determinant modulo enough primes for unique integer recovery, subtracts them
+from the stable moments, and checks the half-stable inequality in every
+nonautomatic active frontier case.  It fails closed unless the ledger has
+exactly $337$ cases and maximum moment $121$.  The $B_{14},j=37$ seed is
+checked separately by
+\path{post_m29_bc_b14_j37_badshape_gmp}.  The type-$C$ frontier programs
+evaluate their closed fixed-point-free and arithmetic formulas with GMP and
+fail closed unless their combined scopes are $60$ and $179$ cases.
+
+The stable recurrence and the remaining exact dominance comparisons are
+checked by \path{post_m29_bc_pieri_powerloss_gmp}: its accepted run covers all
+$402$ caller rows, $3{,}904{,}626$ integer comparisons, and moment indices
+through $30{,}899$.  Finally, \path{verify_parts_i_ii_contract.py}
+independently reconstructs the caller domains from the proposition statement
+and requires both complete offset sets $\{0,\ldots,27\}$, exactly $2{,}834$
+propagated odd targets, and no consumed offset beyond $27$.  Thus the direct
+determinant, formula, and recurrence suppliers exhaust
+\eqref{prop:bc-active-correction-prefix-contract}.1--.2; no statement from
+the derivation archive is a premise.
 \fi
 The Pieri omitted-summand formula in
 \cref{prop:bc-pieri-correction-sign} gives $\delta_j^G\le0$ for both
@@ -45271,8 +45349,8 @@ prefix consumed by the main theorem.  The offset-$28$ and offset-$29$
 results and the longer conditional development routes retained in the source
 archive are not premises of this proposition.
 
-Apply the local clause of the supplement's half-stable bridge reduction
-\contractref{prop:post29-bc-local-half-bridge}.  To make the imported finite
+Apply the local half-stable bridge
+\cref{prop:post29-bc-local-half-bridge}.  To make its finite
 predicate explicit, write the exact moment-formula expansion as
 \[
  D_G(2m+1)=D_{\rm st}(2m+1)
@@ -45284,7 +45362,7 @@ $m_j^G=s_j+\delta_j^G$ into
 \cref{lem:moment-formula,def:chain-diff}.  Under
 $-s_j/2\le\delta_j^G\le0$, sign truncation gives the exact lower bound
 \(\mathcal L_m\) displayed in
-\contractref{prop:post29-bc-local-half-bridge}.  The separable linear
+\cref{prop:post29-bc-local-half-bridge}.  The separable linear
 majorant proved there then gives the certified bound
 \[
  \widetilde{\mathcal L}_m\le\mathcal L_m\le D_G(2m+1).
@@ -45821,18 +45899,22 @@ $n=115,117,\ldots,133$, the audit recomputes $520\cdot16^n$ from
 \cref{lem:exceptional-negative-region}.  Every resulting rational must equal
 the corresponding table entry; no historical Python row module is active.
 
-Only then does the OpenMP/GMP replay
+Only then does the OpenMP replay with GMP exact geometry and directed MPFR
+accumulation
 \texttt{direct\_chain\_rect\_e8\_parallel\_certificate.cpp} consume that
 table.  It checks every retained-cell count, the $n=133$ tail row, and the two
-exact rational comparisons for each case.  The base comparisons and tail
-odd-step comparison are exact rational checks.  For completeness, on the
+certified comparisons for each case.  Every cell endpoint, local factor, and
+negative bound is exact rational; the positive sums are rounded downward at
+384 bits and compared with the negative bounds rounded upward.  The tail
+odd-step comparison remains exact rational.  For completeness, on the
 \else
 An exact source audit first rederives all $29$ negative-bound rows from their
 moment sources and pointwise majorants and requires exact equality with the
-manifest-pinned table.  The OpenMP/GMP replay then consumes it and checks all
+manifest-pinned table.  The OpenMP replay then consumes it and checks all
 cell counts, the factor-one normalized $E_8$ Weyl coefficient of
 \cref{lem:exceptional-weyl-normalization}, transposed-cell disjointness, and
-rational base comparisons.  For the tail propagation, on the
+the base comparisons by 384-bit outward rounding of exact rational factors.
+For the tail propagation, on the
 \fi
 fixed $n=133$ tail cells one has $s_1<40$, $t_1\le31$, and
 $s_1+t_1>63$.  With $A_R=s_1+t_1$ and
@@ -45956,11 +46038,12 @@ are nonnegative.
 
 \begin{proof}
 The exact source-pairing replay applies
-\cref{lem:racah-speiser-step,lem:character-pairing} through
-$\ad^{\otimes50}$ and independently regenerates
-$m_0,\ldots,m_{100}$ from the $E_8$ Cartan datum.  It checks every value
-against the archived local prefix and the Bourjaily--Plesser--Vergu
-comparison table, with zero mismatches.  For
+\cref{lem:racah-speiser-step,lem:character-pairing} to regenerate the bounded
+prefix through $m_{42}$ from the $E_8$ Cartan datum.  It checks that prefix
+against the local ledger, then checks the complete consumed range through
+$m_{100}$ termwise against the Bourjaily--Plesser--Vergu ancillary block;
+the maintained $m_{71},\ldots,m_{100}$ transcription is compared directly
+with the primary ancillary file.  All comparisons have zero mismatches.  For
 odd $n\le98$, \cref{lem:moment-formula} computes $\Qthree^{E_8}(n)$
 using only these moments.  Exact integer evaluation gives
 \[
@@ -46070,7 +46153,7 @@ closure & load-bearing incoming results\\
 \cref{thm:su-stable-rank,thm:su2-row,thm:su-low-rank-ratios,lem:su-transition-strip,thm:su-ratio,cor:su-finite}\\
 \cref{thm:classical} &
 \cref{lem:classical-stable-edge,prop:classical-high,prop:classical-bridge,prop:first-hit,prop:post29-direct,prop:post29-chernoff,prop:post29-d-a-free,prop:post29-b-unitary-square,prop:bc-active-correction-prefix-contract},
-\contractref{prop:post29-bc-local-half-bridge},
+\cref{prop:post29-bc-local-half-bridge},
 \cref{prop:post29-bc-residual-closure}\\
 \cref{thm:exceptional} &
 \cref{prop:g2-f4,prop:e6-e7,prop:e8-bridge,prop:e8-tail}\\
@@ -46120,20 +46203,23 @@ The common checker contract is the following.
 \text{accept only if every required integer/rational margin is } >0.
 \end{array}
 \]
-For every classical or exceptional source table passed to an active
-root-datum source-replay stage, the checker
-reconstructs the relevant Cartan matrix and its full root set, verifies the
-adjoint root multiplicities and rank-dimensional zero-weight space, rejects
-negative output multiplicities and coordinate overflow, regenerates the
-moments through half degree, and compares every claimed moment or full
-correction.  In
-particular, the $E_8$ bridge regenerates $m_0,\ldots,m_{100}$ from
-$\ad^{\otimes0},\ldots,\ad^{\otimes50}$.  For each classical source check,
-the checker independently regenerates the stable sequence from
+Every type-$D$ source table and every bounded exceptional prefix passed to an
+active root-datum source-replay stage is regenerated by reconstructing the
+relevant Cartan matrix and its full root set, verifying the adjoint root
+multiplicities and rank-dimensional zero-weight space, rejecting negative
+output multiplicities and coordinate overflow, and iterating the bounded
+character ring.  The consumed type-$B/C$ source claims are instead compared
+termwise with the exact bounded-Littlewood determinant/CRT reconstruction in
+\cref{prop:bc-source-row-gated-bridge}; the slower Racah--Speiser comparison
+is retained as an independent control rather than a second proof premise.
+Every longer consumed exceptional row is separately compared with the
+corresponding BPV ancillary block.  For each classical source check, the
+checker independently regenerates the stable sequence from
 \cref{lem:bc-stable-moment-recurrence}, verifies every archived OEIS value
 through the largest required degree, and uses the regenerated value in the
-finite correction.  Thus the OEIS and arXiv tables are independent comparisons
-rather than accepted source axioms.
+finite correction.  Thus the stable OEIS table is an independent comparison;
+the BPV ancillary is the primary exact source for the exceptional suffixes
+beyond the regenerated prefixes.
 
 The finite row-gated bridge is now source-generated.  The standard command
 runs the Pieri/CRT verifier of
@@ -46173,6 +46259,7 @@ records the minimum margin at $D_{281}$. \\
 \addlinespace
 Source-generated classical row-gated bridge &
 The common Pieri traversal regenerates $832$ exact $B/C$ corrections and
+compares all $182$ consumed archived claims in $14$ low-rank rows before it
 checks all $870$ row-gated inequalities: $416$ are direct exact evaluations
 and $454$ use proved one-sided correction intervals.  It reports zero
 failures and minimum lower margin $1046$.  The separate type-$D$ mode checks
@@ -46478,7 +46565,9 @@ The exact source audit first reconstructs all $29$ negative-bound rows from
 their pointwise majorants, moment sources, and moment integrals and reports
 \texttt{E8\_NEGATIVE\_BOUND\_AUDIT\_GMP: ALL PASS}.  The C++/OpenMP replay then
 consumes the authenticated table, verifies every expected retained-cell count,
-prints all base-ratio lower bounds and the $n=133$ odd-step ratio, and exits
+accumulates the exact-cell lower bounds with 384-bit downward MPFR rounding,
+compares them with upward-rounded negative bounds, prints all base-ratio lower
+bounds and the $n=133$ odd-step ratio, and exits
 with \texttt{RESULT: ALL PASS} and status $0$. \\
 \bottomrule
 \end{longtable}
@@ -47264,12 +47353,15 @@ Courteaut--Johansson--Lambert trace estimates
 \cite[Theorems 1.1, 1.4, 4.1 and \S4.2]{CJL2022}.  The ancillary table of
 Bourjaily--Plesser--Vergu
 \cite[Appendix B and ancillary file
-\texttt{adjoint\_tensor\_ranks.tex}]{BPV2024} is used only as an independent
-comparison for the $E_8$ values $m_{71},\ldots,m_{100}$.  The proof input is
-regenerated from the $E_8$ Cartan datum by the exact Racah--Speiser iteration
-and character-pairing identities of
-\cref{lem:racah-speiser-step,lem:character-pairing}; the replay requires
-termwise equality with the local transcription of the published table.
+\texttt{adjoint\_tensor\_ranks.tex}]{BPV2024} supplies an independent exact
+source for every exceptional moment consumed beyond the freshly regenerated
+prefix.  The replay regenerates the bounded prefixes from the Cartan data by
+the exact Racah--Speiser iteration and character-pairing identities of
+\cref{lem:racah-speiser-step,lem:character-pairing}, requires termwise
+agreement there, and then requires termwise agreement of all longer consumed
+local rows with the corresponding published ancillary blocks.  For $E_8$ it
+also checks every maintained transcription row $m_{71},\ldots,m_{100}$
+directly against that block.
 
 The source notes in this repository are not invoked as additional analytic
 lemmas.  They are part of the computer-assisted certificate boundary: the
@@ -47287,8 +47379,7 @@ Huh--Kim--Krattenthaler--Okada's author PDF,
 Courteaut--Johansson--Lambert's arXiv PDF,
 Bröcker--tom Dieck's GTM text, the Bourjaily--Plesser--Vergu arXiv paper, and
 the BPV ancillary
-\path{adjoint_tensor_ranks.tex} file used for the independent $E_8$
-comparison.
+\path{adjoint_tensor_ranks.tex} file used for the exceptional suffix audit.
 The folder also contains the primary Etingof arXiv PDF and the primary
 Garibaldi--Guralnick--Rains journal PDF; these replace the former
 Markdown-only mappings for those two citations.

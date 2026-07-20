@@ -31,10 +31,11 @@ notes unless explicitly described as a current-source test.
    subledger (`B<=17`, `C<=28`, `D<=30`).  The additional 44 exact-determinant
    rows are not silently routed through an analytic method whose schedules do
    not cover them.
-6. The active H8--H27 type-B frontier is now one 337-case bounded-Littlewood
-   determinant/CRT certificate through moment 121.  It derives every bad
-   count as `stable - finite`, proves a CRT modulus beyond the stable-moment
-   uniqueness bound, and checks the half-stable margin directly.  The mixed
+6. The active H8--H27 type-B frontier is now one 337-case hybrid certificate.
+   Standardization and the hook-length formula close 296 cases by exact
+   finite sums over partitions of the excess `h<=27`.  Only 41 low-rank
+   cases require bounded-Littlewood determinant/CRT reconstruction; that
+   residual box has six rows and ends at moment 67.  The mixed
    H9--H22 programs run with `RUN_B=0`, retaining only their inexpensive
    type-C formulas; H23--H27 already had this mode.  The high-memory
    reverse-Pieri traversals remain optional independent controls.
@@ -48,17 +49,44 @@ notes unless explicitly described as a current-source test.
    from the total by an at-most-436-term boundary subtraction.  A separable
    linear majorant is slightly more conservative than the former exact
    positive-part computation but certifies the same interval.  The final
-   32-worker exact run took 119 seconds and about 1.5 GiB RSS, versus
+   Adjacent odd indices now share the identical exact envelope components,
+   removing almost half of the remaining GMP convolution work without
+   weakening any comparison.  A 24-worker standalone run took 70.82 seconds
+   and about 1.5 GiB RSS (89.01 seconds under the complete replay load), versus
    7,802--8,504 seconds in the archived full replays.  An exact startup test
    compares the recurrence and closed coefficient formula with the original
    binomial convolution through degree 128.
+8. Exceptional character-ring regeneration is capped at the bounded prefixes
+   needed to validate the Cartan/Racah--Speiser implementation (`m38`, `m65`,
+   and `m42` for the three remaining families).  All longer consumed rows are
+   compared termwise with the BPV ancillary blocks before the unchanged exact
+   Chain audits run.  This replaces archival decompositions whose supports
+   reach 23--34 million highest weights and whose individual late steps take
+   more than five minutes.
+9. The 14 low-rank B/C root-datum source checks duplicated moments already
+   reconstructed by the row-gated bounded-Littlewood engine and consumed more
+   than eight serial minutes.  The mandatory replay now compares all 182 raw
+   ledger claims termwise with that exact determinant/CRT reconstruction in
+   the same stage that checks the 832-correction scope.  The Racah--Speiser
+   implementation remains an independent optional control, not a second
+   theorem premise.
+10. The E8 rectangle replay no longer constructs and sums multi-thousand-bit
+    rational powers for roughly two million cells.  Cell endpoints, retained
+    regions, local inequalities, radial integrals, exponential witnesses, and
+    negative bounds remain exact GMP rationals.  Their positive contributions
+    are converted downward and accumulated at 384-bit MPFR precision, then
+    compared with the negative bound converted upward.  The grid integrals and
+    diagonal radial exponentials are also computed only once per distinct
+    value.  This retains the published two-decimal margins while reducing a
+    32-worker standalone replay from 108.89 to 59.06 seconds; under the full
+    clean-room load the E8 stage fell from 138.44 to 83.90 seconds.
 
 ## Expensive Parts I--II stages
 
 | Stage | Evidence of cost | Mathematical role | Cheaper sufficient route |
 |---|---:|---|---|
-| H8--H22 B reverse-Pieri frontiers | H21 alone is about 6,600 s on the documented host | Exact low-rank type-B bad-shape counts | Replaced by the unified 337-case determinant supplier; old traversal is optional. |
-| H23--H27 B reverse-Pieri frontiers | Largest runs create 20,720,864 exact states; fleet notes report about 90 GiB aggregate memory | Same type-B correction inequality at later offsets | Replaced by the same determinant supplier; old shards are optional. |
+| H8--H22 B reverse-Pieri frontiers | H21 alone is about 6,600 s on the documented host | Exact low-rank type-B bad-shape counts | Replaced by the 337-case hook-length/determinant supplier; old traversal is optional. |
+| H23--H27 B reverse-Pieri frontiers | Largest runs create 20,720,864 exact states; fleet notes report about 90 GiB aggregate memory | Same type-B correction inequality at later offsets | Replaced by the same hybrid supplier; old shards are optional. |
 | H28--H29 fleet | 25 historical heavy-partition tasks, including extra absorption stages | Overlap only | Removed from the mandatory dependency graph and clean-room replay. No replacement is needed. |
 | Type-C frontier portions | Small FPF lists plus closed pause-polynomial and ratio checks | Type-C correction inequality | Retain the present formulas. They are already analytical; a character determinant would be less transparent and would not materially reduce cost. |
 | Half-stable bridge scan | Archived runs took 7,802--8,504 s; the former code traversed `O(m)` large-integer pairs at each of 15,417 indices | Converts correction boxes to Chain lower bounds | Replaced by the EGF recurrence, central-band sign identity, boundary subtraction, and separable linear majorant above. The exact full run now takes about 119 s. |

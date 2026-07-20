@@ -1,13 +1,13 @@
-// Exact determinant/CRT supplier for every active type-B H8--H27 frontier.
+// Hybrid exact supplier for every active type-B H8--H27 frontier.
 //
 // For B_b with q=b+1, the bounded Littlewood identity gives
 //
 //   bad(q,j) = stable(j) - moment(B_b,j).
 //
-// Thus a single finite-moment reconstruction certifies the half-stable
-// inequality for all 337 cases which previously required separate reverse-
-// Pieri traversals.  The reverse traversals remain available as independent
-// controls, but are not inputs to this verifier.
+// Standardization injects every bad semistandard tableau into a standard
+// tableau of the same shape.  The hook-length formula alone closes 296 cases.
+// The remaining 41 low-rank cases are reconstructed by the bounded-Littlewood
+// determinant/CRT engine.  The reverse traversals remain independent controls.
 
 #include <array>
 #include <cstddef>
@@ -30,40 +30,13 @@ struct RowCutoff {
     TailMethod tail_method;
 };
 
-inline constexpr std::array<RowCutoff, 33> row_cutoffs{{
-    {'B', 14, 59, 58, TailMethod::directed_interval},
-    {'B', 15, 61, 60, TailMethod::directed_interval},
-    {'B', 16, 63, 62, TailMethod::directed_interval},
-    {'B', 17, 65, 64, TailMethod::directed_interval},
-    {'B', 18, 67, 66, TailMethod::directed_interval},
-    {'B', 19, 69, 68, TailMethod::directed_interval},
-    {'B', 20, 71, 70, TailMethod::directed_interval},
-    {'B', 21, 73, 72, TailMethod::directed_interval},
-    {'B', 22, 75, 74, TailMethod::directed_interval},
-    {'B', 23, 77, 76, TailMethod::directed_interval},
-    {'B', 24, 79, 78, TailMethod::directed_interval},
-    {'B', 25, 81, 80, TailMethod::directed_interval},
-    {'B', 26, 83, 82, TailMethod::directed_interval},
-    {'B', 27, 85, 84, TailMethod::directed_interval},
-    {'B', 28, 87, 86, TailMethod::directed_interval},
-    {'B', 29, 89, 88, TailMethod::directed_interval},
-    {'B', 30, 91, 90, TailMethod::directed_interval},
-    {'B', 31, 93, 92, TailMethod::directed_interval},
-    {'B', 32, 95, 94, TailMethod::directed_interval},
-    {'B', 33, 97, 96, TailMethod::directed_interval},
-    {'B', 34, 99, 98, TailMethod::directed_interval},
-    {'B', 35, 101, 100, TailMethod::directed_interval},
-    {'B', 36, 103, 102, TailMethod::directed_interval},
-    {'B', 37, 105, 104, TailMethod::directed_interval},
-    {'B', 38, 107, 106, TailMethod::directed_interval},
-    {'B', 39, 109, 108, TailMethod::directed_interval},
-    {'B', 40, 111, 110, TailMethod::directed_interval},
-    {'B', 41, 113, 111, TailMethod::directed_interval},
-    {'B', 42, 115, 113, TailMethod::directed_interval},
-    {'B', 43, 117, 115, TailMethod::directed_interval},
-    {'B', 44, 119, 117, TailMethod::directed_interval},
-    {'B', 45, 121, 119, TailMethod::directed_interval},
-    {'B', 46, 123, 121, TailMethod::directed_interval},
+inline constexpr std::array<RowCutoff, 6> row_cutoffs{{
+    {'B', 14, 59, 57, TailMethod::directed_interval},
+    {'B', 15, 61, 59, TailMethod::directed_interval},
+    {'B', 16, 63, 61, TailMethod::directed_interval},
+    {'B', 17, 65, 63, TailMethod::directed_interval},
+    {'B', 18, 67, 65, TailMethod::directed_interval},
+    {'B', 19, 69, 67, TailMethod::directed_interval},
 }};
 
 inline const RowCutoff* find_row(char family, int rank) {
@@ -73,7 +46,7 @@ inline const RowCutoff* find_row(char family, int rank) {
     return nullptr;
 }
 
-inline constexpr int required_maximum_moment = 121;
+inline constexpr int required_maximum_moment = 67;
 inline constexpr std::size_t polynomial_rows = 0;
 inline constexpr std::size_t rational_cap_rows = 0;
 inline constexpr std::size_t directed_interval_rows = row_cutoffs.size();
@@ -99,14 +72,15 @@ namespace active_b_frontier {
 
 using ResidueTable = std::vector<std::vector<std::uint32_t>>;
 
-ResidueTable residues_for_prime(
+ResidueTable residues_for_prime_node(
     const std::vector<MomentRow>& rows,
     int maximum_moment,
-    std::uint32_t prime
+    std::uint32_t prime,
+    int node_index,
+    const std::vector<std::vector<std::uint32_t>>& weights
 ) {
     const int degree_limit = 2 * maximum_moment;
     const MontgomeryField field(prime);
-    const auto weights = gaussian_functional_weights(maximum_moment, field);
     ResidueTable residues(
         rows.size(),
         std::vector<std::uint32_t>(
@@ -123,77 +97,68 @@ ResidueTable residues_for_prime(
         maximum_rank = std::max(maximum_rank, row.rank);
     }
 
-    for (int node_index = 0; node_index <= maximum_moment; ++node_index) {
-        const std::uint32_t node = field.from_unsigned(
-            static_cast<std::uint64_t>(node_index)
-        );
-        const NodeData data = build_node_data(
-            node, 2 * maximum_rank - 1, field, degree_limit
-        );
-        const auto minus_determinants = leading_principal_determinants(
-            build_b_matrix(
-                data.elementary_pair,
-                maximum_rank,
-                false,
-                field,
-                degree_limit
-            ),
+    const std::uint32_t node = field.from_unsigned(
+        static_cast<std::uint64_t>(node_index)
+    );
+    const NodeData data = build_node_data(
+        node, 2 * maximum_rank - 1, field, degree_limit
+    );
+    const auto minus_determinants = leading_principal_determinants(
+        build_b_matrix(
+            data.elementary_pair,
             maximum_rank,
+            false,
             field,
             degree_limit
-        );
-        const auto plus_determinants = leading_principal_determinants(
-            build_b_matrix(
-                data.elementary_pair,
-                maximum_rank,
-                true,
-                field,
-                degree_limit
-            ),
+        ),
+        maximum_rank,
+        field,
+        degree_limit
+    );
+    const auto plus_determinants = leading_principal_determinants(
+        build_b_matrix(
+            data.elementary_pair,
             maximum_rank,
+            true,
             field,
             degree_limit
-        );
+        ),
+        maximum_rank,
+        field,
+        degree_limit
+    );
 
-        for (std::size_t row_index = 0; row_index < rows.size(); ++row_index) {
-            const MomentRow& row = rows[row_index];
-            const Series first = multiply_series(
-                data.elementary_sum,
-                minus_determinants[static_cast<std::size_t>(row.rank)],
-                field,
-                degree_limit
-            );
-            const Series second = multiply_series(
-                data.alternating_elementary_sum,
-                plus_determinants[static_cast<std::size_t>(row.rank)],
-                field,
-                degree_limit
-            );
-            const Series generating = scale_series(
-                add_series(first, second, field, degree_limit),
-                inverse_two,
-                field,
-                degree_limit
-            );
-            for (int moment = 0; moment <= row.moment_through; ++moment) {
-                const std::uint32_t coefficient = generating.coefficient[
-                    static_cast<std::size_t>(2 * moment)
-                ];
-                residues[row_index][static_cast<std::size_t>(moment)] =
-                    field.add(
-                        residues[row_index][static_cast<std::size_t>(moment)],
-                        field.multiply(
-                            weights[static_cast<std::size_t>(moment)]
-                                   [static_cast<std::size_t>(node_index)],
-                            coefficient
-                        )
-                    );
-            }
+    for (std::size_t row_index = 0; row_index < rows.size(); ++row_index) {
+        const MomentRow& row = rows[row_index];
+        const Series first = multiply_series(
+            data.elementary_sum,
+            minus_determinants[static_cast<std::size_t>(row.rank)],
+            field,
+            degree_limit
+        );
+        const Series second = multiply_series(
+            data.alternating_elementary_sum,
+            plus_determinants[static_cast<std::size_t>(row.rank)],
+            field,
+            degree_limit
+        );
+        const Series generating = scale_series(
+            add_series(first, second, field, degree_limit),
+            inverse_two,
+            field,
+            degree_limit
+        );
+        for (int moment = 0; moment <= row.moment_through; ++moment) {
+            const std::uint32_t coefficient = generating.coefficient[
+                static_cast<std::size_t>(2 * moment)
+            ];
+            residues[row_index][static_cast<std::size_t>(moment)] =
+                field.multiply(
+                    weights[static_cast<std::size_t>(moment)]
+                           [static_cast<std::size_t>(node_index)],
+                    coefficient
+                );
         }
-    }
-
-    for (auto& row : residues) {
-        for (std::uint32_t& value : row) value = field.to_unsigned(value);
     }
     return residues;
 }
@@ -238,37 +203,111 @@ std::vector<MomentRow> reconstruct_moments(
         throw std::runtime_error("stable-bound CRT prime table is too short");
     }
 
-    std::vector<ResidueTable> residues_by_prime(primes.size());
-    std::vector<std::string> errors(primes.size());
+    using WeightTable = std::vector<std::vector<std::uint32_t>>;
+    std::vector<WeightTable> weights_by_prime(primes.size());
     const int prime_count = static_cast<int>(primes.size());
+    const int node_count = maximum_moment + 1;
+
+    // The former implementation assigned one OpenMP job per prime.  At this
+    // frontier that exposed only 22 jobs and made every job traverse all 122
+    // interpolation nodes serially.  The mathematical evaluations are
+    // independent on the full prime-by-node grid, so precompute the small
+    // Gaussian-functional tables once per prime and flatten that grid.  The
+    // reduction below remains in increasing node order and the CRT merge
+    // remains in the fixed descending-prime order.
 #ifdef _OPENMP
 #pragma omp parallel for schedule(dynamic, 1)
 #endif
     for (int prime_index = 0; prime_index < prime_count; ++prime_index) {
         const std::size_t index = static_cast<std::size_t>(prime_index);
-        try {
-            residues_by_prime[index] = residues_for_prime(
-                rows, maximum_moment, primes[index]
-            );
+        const MontgomeryField field(primes[index]);
+        weights_by_prime[index] = gaussian_functional_weights(
+            maximum_moment, field
+        );
+    }
+
+    const int task_count = prime_count * node_count;
+    std::vector<ResidueTable> residues_by_task(
+        static_cast<std::size_t>(task_count)
+    );
+    std::vector<std::string> errors(static_cast<std::size_t>(task_count));
 #ifdef _OPENMP
-#pragma omp critical(active_b_frontier_progress)
+#pragma omp parallel for schedule(dynamic, 1)
 #endif
-            std::cout << "ACTIVE_B_FRONTIER evaluated_prime=" << primes[index]
-                      << " prime_index=" << prime_index << '/' << prime_count
-                      << std::endl;
+    for (int task_index = 0; task_index < task_count; ++task_index) {
+        const int prime_index = task_index / node_count;
+        const int node_index = task_index % node_count;
+        const std::size_t task = static_cast<std::size_t>(task_index);
+        const std::size_t prime = static_cast<std::size_t>(prime_index);
+        try {
+            residues_by_task[task] = residues_for_prime_node(
+                rows,
+                maximum_moment,
+                primes[prime],
+                node_index,
+                weights_by_prime[prime]
+            );
         } catch (const std::exception& error) {
-            errors[index] = error.what();
+            errors[task] = error.what();
         } catch (...) {
-            errors[index] = "unknown prime-field failure";
+            errors[task] = "unknown prime-field node failure";
         }
     }
     for (std::size_t index = 0; index < errors.size(); ++index) {
         if (!errors[index].empty()) {
+            const std::size_t prime_index = index
+                / static_cast<std::size_t>(node_count);
+            const std::size_t node_index = index
+                % static_cast<std::size_t>(node_count);
             throw std::runtime_error(
-                std::string("prime ") + std::to_string(primes[index])
+                std::string("prime ") + std::to_string(primes[prime_index])
+                + " node " + std::to_string(node_index)
                 + " failed: " + errors[index]
             );
         }
+    }
+
+    std::vector<ResidueTable> residues_by_prime(primes.size());
+    for (int prime_index = 0; prime_index < prime_count; ++prime_index) {
+        const std::size_t prime = static_cast<std::size_t>(prime_index);
+        const MontgomeryField field(primes[prime]);
+        ResidueTable& total = residues_by_prime[prime];
+        total.assign(
+            rows.size(),
+            std::vector<std::uint32_t>(
+                static_cast<std::size_t>(maximum_moment + 1), 0U
+            )
+        );
+        for (int node_index = 0; node_index < node_count; ++node_index) {
+            const ResidueTable& contribution = residues_by_task[
+                static_cast<std::size_t>(prime_index * node_count + node_index)
+            ];
+            for (std::size_t row_index = 0;
+                 row_index < rows.size();
+                 ++row_index) {
+                for (int moment = 0;
+                     moment <= rows[row_index].moment_through;
+                     ++moment) {
+                    std::uint32_t& value = total[row_index][
+                        static_cast<std::size_t>(moment)
+                    ];
+                    value = field.add(
+                        value,
+                        contribution[row_index][
+                            static_cast<std::size_t>(moment)
+                        ]
+                    );
+                }
+            }
+        }
+        for (auto& row : total) {
+            for (std::uint32_t& value : row) {
+                value = field.to_unsigned(value);
+            }
+        }
+        std::cout << "ACTIVE_B_FRONTIER evaluated_prime=" << primes[prime]
+                  << " prime_index=" << prime_index << '/' << prime_count
+                  << std::endl;
     }
 
     BigInt modulus_product = 1;
@@ -354,6 +393,101 @@ std::vector<Case> active_cases() {
     return cases;
 }
 
+BigInt standard_tableau_dimension(
+    const std::vector<int>& shape,
+    const std::vector<BigInt>& factorials
+) {
+    const int row_count = static_cast<int>(shape.size());
+    int size = 0;
+    for (int part : shape) size += part;
+    BigInt numerator = factorials[static_cast<std::size_t>(size)];
+    BigInt denominator = 1;
+    for (int row = 0; row < row_count; ++row) {
+        denominator *= factorials[static_cast<std::size_t>(
+            shape[static_cast<std::size_t>(row)] + row_count - row - 1
+        )];
+        for (int lower = row + 1; lower < row_count; ++lower) {
+            numerator *=
+                shape[static_cast<std::size_t>(row)]
+                - shape[static_cast<std::size_t>(lower)]
+                + lower - row;
+        }
+    }
+    if (denominator == 0 || numerator % denominator != 0) {
+        throw std::runtime_error("nonintegral hook-length dimension");
+    }
+    return numerator / denominator;
+}
+
+void add_partition_dimensions(
+    int remaining,
+    int maximum_part,
+    int first_part,
+    std::vector<int>& suffix,
+    const std::vector<BigInt>& factorials,
+    BigInt& total,
+    std::size_t& shapes
+) {
+    if (remaining == 0) {
+        std::vector<int> shape;
+        shape.reserve(2U * (suffix.size() + 1U));
+        shape.push_back(first_part);
+        shape.push_back(first_part);
+        for (int part : suffix) {
+            shape.push_back(part);
+            shape.push_back(part);
+        }
+        total += standard_tableau_dimension(shape, factorials);
+        ++shapes;
+        return;
+    }
+    for (int part = std::min(remaining, maximum_part); part >= 1; --part) {
+        suffix.push_back(part);
+        add_partition_dimensions(
+            remaining - part,
+            part,
+            first_part,
+            suffix,
+            factorials,
+            total,
+            shapes
+        );
+        suffix.pop_back();
+    }
+}
+
+// A bad B frontier tableau has column-even shape
+//   lambda=(mu_1,mu_1,mu_2,mu_2,...),
+// with |mu|=j and mu_1>=2q.  Standardizing its two copies of each label gives
+// an injective map into the standard tableaux of shape lambda.  Summing the
+// hook-length dimensions therefore gives a rigorous upper bound for bad(q,j).
+BigInt hook_length_bad_upper_bound(
+    const Case& frontier,
+    const std::vector<BigInt>& factorials,
+    std::size_t& shapes
+) {
+    const int excess = frontier.j - 2 * frontier.q;
+    if (excess < 0) throw std::runtime_error("negative frontier excess");
+    BigInt total = 0;
+    shapes = 0U;
+    std::vector<int> suffix;
+    for (int first_excess = 0;
+         first_excess <= excess;
+         ++first_excess) {
+        const int remainder = excess - first_excess;
+        add_partition_dimensions(
+            remainder,
+            remainder,
+            2 * frontier.q + first_excess,
+            suffix,
+            factorials,
+            total,
+            shapes
+        );
+    }
+    return total;
+}
+
 }  // namespace active_b_frontier
 
 int main() {
@@ -367,9 +501,17 @@ int main() {
                 primes_consumed,
                 modulus_bits
             );
+        constexpr int active_maximum_moment = 121;
         const std::vector<BigInt> stable = stable_moments(
-            full_q3_bcd_remaining::required_maximum_moment
+            active_maximum_moment
         );
+        std::vector<BigInt> factorials(
+            static_cast<std::size_t>(2 * active_maximum_moment + 1), 1
+        );
+        for (int value = 1; value <= 2 * active_maximum_moment; ++value) {
+            factorials[static_cast<std::size_t>(value)] =
+                value * factorials[static_cast<std::size_t>(value - 1)];
+        }
         std::map<int, const MomentRow*> by_rank;
         for (const MomentRow& row : rows) {
             if (!by_rank.emplace(row.rank, &row).second) {
@@ -379,26 +521,46 @@ int main() {
 
         int failures = 0;
         int cases_checked = 0;
+        int analytic_cases = 0;
+        int exact_cases = 0;
+        std::size_t hook_shapes = 0U;
         BigInt minimum_margin;
         bool have_minimum = false;
         std::map<int, std::pair<int, BigInt>> summaries_by_h;
         for (const active_b_frontier::Case& frontier :
              active_b_frontier::active_cases()) {
-            const int rank = frontier.q - 1;
-            const auto found = by_rank.find(rank);
-            if (found == by_rank.end()
-                || frontier.j > found->second->moment_through) {
-                throw std::runtime_error("active frontier row is absent from ledger");
-            }
-            const BigInt finite = found->second->moments[
-                static_cast<std::size_t>(frontier.j)
-            ];
             const BigInt& stable_value = stable[
                 static_cast<std::size_t>(frontier.j)
             ];
-            const BigInt bad = stable_value - finite;
-            const BigInt margin = stable_value - 2 * bad;
-            const bool pass = bad >= 0 && margin > 0;
+            std::size_t case_shapes = 0U;
+            const BigInt hook_bound =
+                active_b_frontier::hook_length_bad_upper_bound(
+                    frontier, factorials, case_shapes
+                );
+            hook_shapes += case_shapes;
+            BigInt bad_bound = hook_bound;
+            BigInt margin = stable_value - 2 * hook_bound;
+            const char* method = "hook";
+            if (margin > 0) {
+                ++analytic_cases;
+            } else {
+                const int rank = frontier.q - 1;
+                const auto found = by_rank.find(rank);
+                if (found == by_rank.end()
+                    || frontier.j > found->second->moment_through) {
+                    throw std::runtime_error(
+                        "exact residual frontier row is absent from ledger"
+                    );
+                }
+                const BigInt finite = found->second->moments[
+                    static_cast<std::size_t>(frontier.j)
+                ];
+                bad_bound = stable_value - finite;
+                margin = stable_value - 2 * bad_bound;
+                method = "determinant";
+                ++exact_cases;
+            }
+            const bool pass = bad_bound >= 0 && margin > 0;
             if (!pass) ++failures;
             if (!have_minimum || margin < minimum_margin) {
                 minimum_margin = margin;
@@ -413,30 +575,36 @@ int main() {
             if (!pass) {
                 std::cout << "ACTIVE_B_FRONTIER_FAILURE h=" << frontier.h
                           << " q=" << frontier.q
-                          << " rank=" << rank
+                          << " rank=" << frontier.q - 1
                           << " j=" << frontier.j
-                          << " finite=" << finite
+                          << " method=" << method
                           << " stable=" << stable_value
-                          << " bad=" << bad
+                          << " bad_bound=" << bad_bound
                           << " margin=" << margin << '\n';
             }
         }
-        if (cases_checked != 337) ++failures;
+        if (cases_checked != 337 || analytic_cases != 296 || exact_cases != 41) {
+            ++failures;
+        }
         for (const auto& [h, summary] : summaries_by_h) {
             std::cout << "ACTIVE_B_FRONTIER_H_SUMMARY h=" << h
                       << " cases=" << summary.first
                       << " minimum_margin=" << summary.second << '\n';
         }
-        std::cout << "ACTIVE_B_FRONTIER_BOUNDED_LITTLEWOOD rows=" << rows.size()
+        std::cout << "ACTIVE_B_FRONTIER_HYBRID rows=" << rows.size()
                   << " cases=" << cases_checked
-                  << " maximum_moment="
+                  << " analytic_cases=" << analytic_cases
+                  << " exact_cases=" << exact_cases
+                  << " active_maximum_moment=" << active_maximum_moment
+                  << " determinant_maximum_moment="
                   << full_q3_bcd_remaining::required_maximum_moment
+                  << " hook_shapes=" << hook_shapes
                   << " primes=" << primes_consumed
                   << " modulus_bits=" << modulus_bits
                   << " minimum_margin=" << minimum_margin
                   << " failures=" << failures << '\n';
         if (failures == 0) {
-            std::cout << "ACTIVE_B_FRONTIER_BOUNDED_LITTLEWOOD "
+            std::cout << "ACTIVE_B_FRONTIER_HYBRID "
                          "VERIFICATION: ALL PASS\n";
         }
         std::cout << "__EXIT_STATUS=" << (failures == 0 ? 0 : 1) << '\n';

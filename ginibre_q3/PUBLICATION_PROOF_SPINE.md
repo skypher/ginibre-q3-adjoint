@@ -2,20 +2,16 @@
 
 This file is the concise reader-facing map of the load-bearing argument. It
 does not replace the numbered proofs. Diagnostic, exploratory, conditional,
-and superseded routes printed in the detailed supplement are outside this
-spine unless a numbered correction-prefix result below explicitly consumes
-them.
+and superseded routes in the optional derivation archive are outside this
+spine.
 
 ## Formal submission boundary
 
-The proof has three numbered parts and one detailed supplement in three
-manuscript files. `paper.pdf` consolidates Parts I--II,
-`paper_full.pdf` is their detailed computational supplement, and
-`full_q3_extension.pdf` contains Part III. All three are load-bearing. The
-supplement supplies the numbered correction-prefix proofs and the half-stable
-bridge reduction consumed by the compact residual B/C closure; diagnostic and
-superseded routes printed in the same expanded build remain outside the
-dependency spine. The historical author self-audit and `referee_audits/`
+The proof has three numbered parts presented in the single reader artifact
+`submission.pdf`. Its two source components are the self-contained
+`paper.pdf` for Parts I--II and `full_q3_extension.pdf` for Part III.
+`paper_full.pdf` is an optional derivation archive and is not load-bearing.
+The historical author self-audit and `referee_audits/`
 directory are likewise outside the
 manuscript. The immutable execution snapshot preserves the sources and
 transcripts of the expensive arithmetic runs, while the final-source manifest
@@ -49,16 +45,16 @@ to that stronger statement.
 
 The `rem:final-dependency-map` in `paper.pdf` gives the exact incoming results
 for these four closure nodes. Proposition
-`prop:bc-active-correction-prefix-contract` prints the exact supplement label
-for each of the 56 family-wide offset-`0..27` correction results and proves
-that the common Pieri sign supplies the other side of every interval. The
+`prop:bc-active-correction-prefix-contract` states the 56 family-wide
+offset-`0..27` correction domains and gives their direct determinant/formula
+certificate proof; the common Pieri sign supplies the other side of every
+interval. The
 residual closure then proves directly that main-theorem propagation consumes
 exactly offsets through `27`; the offset-`28` and offset-`29` results and
 longer conditional development routes are not premises. The formal
-detailed supplement proves the 56 active lower bounds through its numbered
-Pieri and factorial-bound results, with all finite type-B H8--H27 boxes
-supplied by one bounded-Littlewood determinant lemma and the type-C boxes by
-their closed formula certificates. Its numbered
+main paper supplies all finite type-B H8--H27 boxes through one hybrid
+hook-length/determinant certificate and the type-C boxes through their
+closed formula certificates. Its numbered and fully proved
 `prop:post29-bc-local-half-bridge` then converts those intervals into the exact
 common stable-moment lower bound evaluated for every active Chain index; this
 result is an explicit incoming node of `prop:post29-bc-residual-closure`.
@@ -81,7 +77,11 @@ bounds, and finite exact certificates enumerated in its
 17,862 residual inequalities with a CRT modulus strictly exceeding the
 elementary character bound. This includes the formerly separate 4,869-case
 B/D box, and the directed-MPFR stage checks the remaining 58
-low-rank tails.
+low-rank tails.  The unified current-source transcript is
+`certificates/full_q3/fullq3bcdboundedfinal0001_current_source.log`.  The
+mandatory Part III target also runs the distinct modular/Newton checker on the
+same complete finite box; the older reverse-Pieri transcripts remain
+historical implementation overlaps.
 
 ## Trust and audit boundary
 
@@ -90,6 +90,9 @@ low-rank tails.
   ordinary workstation. It does not recompute every arithmetic sign.
 - `make -C ginibre_q3 clean-room-replay` is the supplied level that rebuilds
   the active C++ programs and re-evaluates every Parts I--II arithmetic sign.
+- `make -C ginibre_q3 full-q3-extension` rebuilds every Part III supplier and
+  requires both the exact determinant verifier and the modular/Newton
+  cross-check before rebuilding Part III.
 - GMP integer/rational comparisons and outward-rounded MPFR intervals decide
   all computer-assisted signs.
 - A numbered result specifies the mathematical comparison; a verifier

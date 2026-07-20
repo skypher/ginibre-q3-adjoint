@@ -29,8 +29,11 @@ compact connected group with simple Lie algebra: every finite tuple length,
 every sign assignment, and every even number of minus factors.  The final
 finite classical boxes are supplied by bounded Littlewood determinant
 identities. The current verifier checks all 17,862 residual inequalities in
-one run; the authenticated `fullq3bcd0010` and `fullq3bcd0002` transcripts
-provide independent historical coverage of its two subledgers. The
+one run; `fullq3bcdboundedfinal0001_current_source` authenticates that unified
+run, while `fullq3bcdmodularfinal0001_current_source` authenticates the
+separate modular/Newton check.  The older `fullq3bcd0010` and
+`fullq3bcd0002` transcripts provide independent historical coverage of the
+two subledgers. The
 finite-rank analytic tail is separately pinned by
 the corrected machine-C replay `fullq3bcdanalytic0003`: in type B the fixed
 `+1` eigenvalue cancels the `-1` mean of the random eigenvalue contribution,
@@ -78,11 +81,12 @@ commit `91363c3cebb37a44349f613ab0a5aa6dcd412af3` in
 contains that execution binding but is not asserted to contain later
 manuscript revisions.  The present submission bytes are bound by
 `certificates/full_q3/full_q3_source_manifest.sha256`, and any final public
-release must reproduce that manifest exactly.  The journal-facing Parts I--II
-(`paper.tex`/`paper.pdf`), their detailed computational supplement
-(`paper_full.tex`/`paper_full.pdf`), and Part III
-(`full_q3_extension.tex`/`full_q3_extension.pdf`) are the three inseparable
-formal submission components.  Part III contains a
+release must reproduce that manifest exactly.  The single reader-facing
+`submission.pdf` contains the self-contained Parts I--II
+(`paper.tex`/`paper.pdf`) followed by Part III
+(`full_q3_extension.tex`/`full_q3_extension.pdf`).  The expanded
+`paper_full.pdf` is an optional derivation archive, not a formal proof
+component.  Part III contains a
 publication-facing code and data availability statement, exact build commands,
 software requirements, and a result-to-certificate map.  It also states
 explicitly that the intermediate cone of all real continuous central
@@ -133,16 +137,14 @@ as superseded, not accepted evidence.
 - `paper.tex` builds the consolidated Parts I--II journal manuscript,
   containing the theorem statement, reductions, classification, compact
   correction-prefix contract, and accepted certificate assembly (`paper.pdf`).
-- `paper_full.tex` is a wrapper that builds the formal detailed
-  supplement (`paper_full.pdf`) from the same source, including the complete
-  B/C correction development and the detailed certificate, transcript, hash,
-  row, and external-input ledgers.  Its numbered correction-prefix proofs and
-  half-stable bridge reduction are load-bearing for the compact residual B/C
-  closure.  The compact paper prints
-  the exact table of the 56 active family-wide contracts at offsets `0..27`
-  and proves that only offsets through `27` are consumed.  Conditional,
-  diagnostic, and superseded development material remains outside that
-  explicitly indexed proof spine.
+- `paper_full.tex` optionally builds the non-load-bearing derivation archive
+  (`paper_full.pdf`) from the same source, including the expanded B/C
+  combinatorics and detailed ledgers.  The compact paper itself states and
+  proves the direct determinant/formula contract for all 56 active
+  family-wide domains at offsets `0..27`, proves the half-stable bridge, and
+  proves that no later offset is consumed.
+- `submission.tex` combines the two self-contained numbered manuscripts into
+  the single referee-facing `submission.pdf`.
 - `full_q3_extension.tex` is the completed Part III extension described
   above.  Its final theorem is unconditional on the adjoint-generated cone;
   the exact `SO(3)` counterexample records why it cannot be enlarged to all
@@ -181,6 +183,10 @@ Run the full exact contract on machine C from the repository root:
 ```text
 make -C ginibre_q3 clean-room-replay
 ```
+
+The replay automatically sizes compilation and proof-group concurrency from
+the process CPU affinity and available host/cgroup RAM.  Set
+`REPLAY_THREADS=N` only to impose a smaller explicit ceiling.
 
 The publication preflight is:
 
@@ -225,9 +231,9 @@ The expensive arithmetic is C++:
   moment sweep with GMP integers and OpenMP.
 - `verify_character_ring_moment_sources_gmp.cpp` rebuilds the classical and
   exceptional root data, performs exact Racah--Speiser tensor iteration, and
-  regenerates each adjoint moment presented to that active source-replay stage
-  via character orthogonality.  In particular, it obtains `m_0..m_100` for E8
-  from tensor powers only through `ad^50`.
+  regenerates each bounded prefix presented to that active source-replay stage
+  via character orthogonality.  Longer consumed exceptional suffixes are
+  compared termwise with the BPV ancillary blocks.
 - `verify_bc_row_gated_bridge_gmp.cpp` performs one common Pieri traversal per
   rank band, reconstructs 832 finite `B/C` corrections by exact GMP CRT, and
   checks all 870 row-gated Chain inequalities.  The three bands run
@@ -249,8 +255,8 @@ The expensive arithmetic is C++:
   onsets and checks the entire `D_53..D_295` finite bridge with exact GMP
   arithmetic and OpenMP.
 - The residual B/C verifier suite regenerates the direct interval onsets,
-  half-stable bridge, all-row power-loss arithmetic, one exact 337-case
-  bounded-Littlewood supplier for the active H8--H27 type-B frontier, and the
+  half-stable bridge, all-row power-loss arithmetic, one 337-case hybrid
+  hook-length/determinant supplier for the active H8--H27 type-B frontier, and the
   type-C formula checks through H27.  Archived reverse-Pieri partitions and
   H28--H29 remain independent historical controls.
 - `classical_boundary_certificate.cpp` gives the exact `D_4,j=18`
@@ -305,28 +311,27 @@ exact factor witnesses are replayed directly by the C++/GMP checker.
 4. The B/C correction prefix is discharged by the compact residual-closure
    contract: the 56 active family-wide offset-`0..27` domains, their exact
    accepted frontier ledgers, and the domain-aware caller audit.  The closure
-   proves that only offsets through `27` are consumed.  The formal detailed
-   supplement `paper_full.pdf` states and proves those correction-prefix
-   contracts through numbered Pieri, factorial-bound, and exact-frontier
-   results.
+   proves that only offsets through `27` are consumed.  Direct determinant,
+   closed-form, and exact-recurrence suppliers prove the contract inside
+   `paper.pdf`; the expanded offset-by-offset derivations are optional archive
+   material.
 5. The remaining B/C rows are supplied by the high-edge Chernoff bound, the
    unitary square trace, the tilted MGF bounds, and the 90-row layered MGF
    certificate (including the exact determinant/interval-Cholesky treatment
    of `B_14,B_15`).
 6. G2 and F4 close from exact prefixes plus GMP rectangular tails; E6 and E7
    use their rectangular tail certificates.  The clean replay regenerates
-   every exceptional source moment from the Cartan datum; E8 combines the
-   regenerated `m_0..m_100` finite bridge with its parallel rectangular
-   bridge and tail.  The BPV ancillary values are an independent comparison,
-   not a premise.
+   bounded exceptional prefixes from the Cartan data and compares every
+   longer consumed row with the BPV ancillary source.  E8 combines that
+   audited `m_0..m_100` bridge with its parallel rectangular bridge and tail.
 7. The unconditional final assembly in `paper.tex` passes from the simple
    simply connected models to all compact connected groups with simple Lie
    algebra through the stated central-quotient argument.
 
-The expanded build is the detailed computational supplement and comes from the same
-source.  `paper.pdf`, `paper_full.pdf`, and `full_q3_extension.pdf` are the
-three formal manuscript components.  The clean replay rejects unresolved
-references in every component.
+The formal reader artifact is `submission.pdf`, containing `paper.pdf` and
+`full_q3_extension.pdf` in order.  The expanded `paper_full.pdf` comes from
+the same source but is an optional derivation archive.  The replay rejects
+unresolved references in each formal component.
 
 Even exponents are pointwise nonnegative.  The certificate work is for the
 odd-exponent chain.
@@ -348,10 +353,11 @@ The standard clean replay regenerates every classical or exceptional
 character-moment value passed to its active source-replay stages.  It also
 freshly regenerates the 57 representative classical `m=29` rows used by the
 Weyl/Pieri boundary audit, all 832 finite `B/C` corrections used by the
-row-gated bridge, all 870 corresponding Chain inequalities, and the 36
-remaining high-rank type-D row-gated steps.  The former bridge transcript and
-raw search shards are superseded provenance and are not consumed as proof
-evidence.
+row-gated bridge, compares all 182 consumed low-rank B/C ledger claims
+termwise with that reconstruction, checks all 870 corresponding Chain
+inequalities, and checks the 36 remaining high-rank type-D row-gated steps.
+The former bridge transcript and raw search shards are superseded provenance
+and are not consumed as proof evidence.
 
 The same replay now derives the `SU(3..5)` recurrences in exact formal
 algebra and performs a domain-aware audit of the residual B/C bridge.  The
@@ -372,8 +378,10 @@ ones for integrity, but consumes only accepted proof inputs.
 
 Content hashes authenticate bytes; they do not establish mathematical truth.
 Before a raw character-moment ledger is consumed by an active source-replay
-stage, that stage regenerates its claimed values by an independent exact
-root-datum and character-pairing path.  Classical stable moments are independently generated
+stage, that stage regenerates its claimed values either by the exact
+root-datum/character-pairing path (type D and bounded exceptional prefixes) or
+by the proved bounded-Littlewood determinant/CRT identity (type B/C).
+Classical stable moments are independently generated
 from the proved three-term recurrence before the downstream correction
 stages; every archived OEIS value is checked, so any later table lookup has
 already been proved equal to the regenerated value.  Determinant and frontier

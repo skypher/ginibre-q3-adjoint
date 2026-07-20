@@ -9,7 +9,8 @@ root on machine C (the default primary compute host):
 make -C ginibre_q3 clean-room-replay
 ```
 
-Optional thread control is explicit:
+CPU affinity, available host RAM, and cgroup memory limits are detected by
+default.  An explicit value remains a hard upper bound:
 
 ```text
 make -C ginibre_q3 clean-room-replay REPLAY_THREADS=32
@@ -77,17 +78,48 @@ are regression-checked with short synthetic moment streams; all five
 authenticated G2/F4/E6/E7/E8 prefixes retain their byte-identical successful
 output after this hardening.
 
-The active type-B H8--H27 frontier is a single 337-case exact
-bounded-Littlewood determinant/CRT reconstruction through moment 121.  It
-uses the stable moment as a proved uniqueness bound and replaces all mandatory
-reverse-Pieri frontier shards.  The H9--H27 mixed programs now run only their
+The active type-B H8--H27 frontier is a single 337-case hybrid exact
+certificate: hook-length sums close 296 cases analytically, and a ten-prime
+bounded-Littlewood determinant/CRT reconstruction closes the remaining 41
+low-rank cases through moment 67.  It uses the stable moment as a proved
+uniqueness bound and replaces all mandatory reverse-Pieri frontier shards.
+The H9--H27 mixed programs now run only their
 closed type-C formulas; archived B shards remain optional controls.  The
 all-range half-stable bridge and power-loss verifier remain exact GMP scans.
-The half-stable bridge is
-capped at 32 OpenMP workers because it keeps a large exact state map per
-worker; this is the documented machine-C count and avoids exhausting RAM on
-higher-core, lower-memory hosts.  The generic two-hour guard remains in force
-for every other stage.
+The half-stable bridge is capped at 32 OpenMP workers because it keeps a large
+exact state map per worker.  Every executable clean-room stage now has a
+hard five-minute ceiling (`REPLAY_MAX_STAGE_SECONDS=300`).  A stage that
+crosses it is terminated with its isolated workspace and log preserved; it
+must be profiled and optimized or replaced by a proved analytic reduction
+before it may re-enter the replay.
+
+After the one-time build and stable-recurrence check, four dependency-disjoint
+proof groups run concurrently.  The resource planner caps compiler jobs at
+eight, reduces simultaneous proof groups on memory-constrained hosts, and
+assigns CPU budgets without exceeding the affinity/RAM allowance.  On the
+validated 64-core host it selects 8 endpoint threads, 24 B/C-residual threads,
+and 32 exceptional threads; the classical-tail group consists of small or
+single-threaded jobs.  Measured kernel saturation caps prevent a larger host
+from adding counterproductive workers.
+Per-stage logs, required-marker checks, certificate accounting, and the
+300-second ceiling remain independent and fail closed under this scheduling.
+The driver also enforces a 300-second budget for the entire isolated workflow,
+including integrity audits, compilation, arithmetic, and the compact PDF
+rebuild (`REPLAY_MAX_TOTAL_SECONDS=300`).
+The 64-core, 112.4-GiB clean-room run of 2026-07-20 completed all 105 stages,
+71 manifests, 3,334 hashes, and the 53-page PDF in 180.97 seconds.
+
+The exceptional source audit applies the same ceiling to character-ring
+growth.  Fresh Racah--Speiser regeneration stops at `G2:m38`, `F4:m65`, and
+`E6/E7/E8:m42`; these prefixes validate the Cartan data, Weyl reflections,
+and character-pairing implementation.  Every longer moment actually consumed
+by the proof is then compared exactly with the corresponding `g[2]`, `f[4]`,
+`e[6]`, `e[7]`, or `e[8]` block in the BPV ancillary source, after which the
+full GMP Chain checks run on the complete consumed ledgers.  The old attempt
+to regenerate the archival `F4:m220`, `E6:m80`, `E7:m70`, and `E8:m100`
+suffixes in one process is not a replay obligation: its support grows to tens
+of millions of highest weights and individual historical steps exceed five
+minutes.
 
 Success verifies the certificate and artifact contract for the paper's
 unconditional, exactly-two-minus repeated-adjoint theorem.  This is not a
@@ -115,9 +147,15 @@ bound, reruns the six exact polynomial and six exact rational-cap tails, and
 checks exactly 17,862 residual hierarchy values.  This includes the formerly
 separate 4,869-case B/D reverse-Pieri box.  The separate 58-row
 directed-MPFR tail stage remains part of the aggregate target.  The accepted
-machine-C exact transcript is
-`certificates/full_q3/fullq3bcd0010_machine_c.log`; success requires its
-source hashes, terminal marker, and wrapper exit status zero.
+unified current-source exact transcript is
+`certificates/full_q3/fullq3bcdboundedfinal0001_current_source.log`; success
+requires its verifier/data hashes, terminal marker, wrapper exit status zero,
+and adjacent SHA-256 sidecar.  The older `fullq3bcd0010` and
+`fullq3bcd0002` transcripts retain independent historical coverage of the
+12,993-case and 4,869-case subledgers.  The mandatory modular/Newton result is
+separately authenticated by
+`certificates/full_q3/fullq3bcdmodularfinal0001_current_source.log` and its
+adjacent sidecar.
 
 The finite-middle and high-rank analytic branches are authenticated by
 `certificates/full_q3/fullq3bcdanalytic0003_machine_c.log`.  In the type-B
@@ -148,8 +186,8 @@ which conclusion each command supports.
 | Tier | Command or target | Purpose | Documented resource scale |
 |---|---|---|---|
 | Preflight | `make -C ginibre_q3 publication-preflight` | Parse theorem interfaces and the explicit B/C contract, check formulas and coverage, and authenticate manifests; does not recompute all arithmetic signs | Seconds to a few minutes; ordinary workstation |
-| Part III arithmetic | `make -C ginibre_q3 full-q3-extension` | Rebuild every Part III exact/MPFR verifier and the Part III PDF | Archived `optimus` run: 44 min 55 s with two low-priority bounded-Littlewood workers; more workers reduce the prime-field stage |
-| Parts I--II regeneration | `make -C ginibre_q3 clean-room-replay` | Rebuild every main-theorem-reachable two-minus certificate in an isolated tree | Machine C; generic two-hour guards and explicit eight-hour guards for the largest B/C stages; H21 is about 6,600 s on the documented host |
+| Part III arithmetic | `make -C ginibre_q3 full-q3-extension` | Rebuild every Part III exact/MPFR verifier and the Part III PDF | Parallel exact suppliers; each underlying computation is required to remain below five minutes on the validated 64-thread host |
+| Parts I--II regeneration | `make -C ginibre_q3 clean-room-replay` | Rebuild every main-theorem-reachable two-minus certificate in an isolated tree | Hard 300-second ceiling for each executable stage; a ceiling failure preserves its profiling log |
 
 The Part III target verifies the imported two-minus theorem's source and
 interface bindings but does not rerun its 200-stage arithmetic.  A complete
@@ -220,11 +258,14 @@ with exact GMP integers and requires strict positivity, in addition to the
 `FULL_Q3_MODULAR_CHECKER VERIFICATION: ALL PASS` only after all scopes and the
 modulus-dominance test pass.
 
+The modular checker is a mandatory dependency of
+`make -C ginibre_q3 full-q3-extension`; a successful Part III aggregate must
+therefore pass both the promotion verifier and this distinct implementation.
 The optional aggregate
 `make -C ginibre_q3 full-q3-extension-independent-controls` additionally
-runs the historical reverse-Pieri suppliers, including the 4,869-case B/D
-box. They are retained as algorithmically independent overlaps and are not
-second mandatory suppliers.
+runs the historical reverse-Pieri supplier for the 4,869-case B/D box.  That
+larger traversal is retained as a further algorithmically independent overlap,
+not as a second mandatory supplier.
 
 To preserve a timestamped raw audit log, use the wrapper with a new absolute
 directory:
@@ -248,8 +289,10 @@ subproject into it.  Before compiling, it:
    entry rejection within each manifest);
 2. checks every replay marked `accepted` in the post-`m=29` classification
    has `__EXIT_STATUS=0`;
-3. removes every copied ELF executable, Python bytecode cache, and main/full
-   LaTeX output before rebuilding.
+3. removes every copied active ELF executable, Python bytecode cache, and
+   main/full LaTeX output before rebuilding.  Checksum-bound ELF files inside
+   inert historical certificate snapshots are preserved for manifest
+   verification but are never invoked.
 
 It then builds the active replayers from source.  Thus a tracked or untracked
 binary in the working tree cannot satisfy an executable replay stage.  A
@@ -267,11 +310,13 @@ The command recomputes:
 - the SU(N) finite transition strip for `N=6..18`, the uniform strip base
   margin and symbolic monotonicity polynomials, and the endpoint/overlap
   certificates using exact GMP arithmetic;
-- every classical and exceptional adjoint-moment source routed to the active
-  root-datum checker, by reconstructing its root datum, iterating the exact
-  Racah--Speiser character ring, and applying character orthogonality; the
-  half-degree pairing identity regenerates E8 through `m_100` from tensor
-  powers through `ad^50`;
+- every type-D adjoint-moment source and bounded exceptional prefix routed to
+  the active root-datum checker, by reconstructing its root datum, iterating
+  the exact Racah--Speiser character ring, and applying character
+  orthogonality; the 182 consumed low-rank B/C source claims are instead
+  compared termwise with the bounded-Littlewood determinant reconstruction,
+  while every longer consumed exceptional row is compared termwise with the
+  BPV ancillary table before the full integer Chain audits run;
 - the stable classical sequence from the proved exact three-term recurrence;
   the archived OEIS row is checked in every degree before any downstream
   correction stage, so each later table lookup is certified equal to the
@@ -280,8 +325,9 @@ The command recomputes:
   generator: `B_2,C_2,B_3,C_3`, `B_19..B_30`, `C_19..C_30`, and
   `D_35..D_63`;
 - 832 finite `B/C` corrections from a common modular Pieri traversal with
-  exact GMP CRT reconstruction, followed by all 870 row-gated Chain
-  inequalities (`416` exact and `454` interval-minimized);
+  exact GMP CRT reconstruction, including an exact comparison with all 182
+  consumed archived claims in 14 low-rank rows, followed by all 870 row-gated
+  Chain inequalities (`416` exact and `454` interval-minimized);
 - the 57 first-hit trace rows, the 118 high-edge Chernoff rows, and the
   Rains-square cutoff for every integer `296 <= C <= 10000`, all in the
   same 384-bit directed-MPFR C++ verifier;
@@ -324,7 +370,7 @@ The command recomputes:
 - the degree-8 cutoff-80 B/C Chebyshev negative-tail bound, the 402-row
   directed-MPFR interval onsets, the exact half-stable bridge through
   `m=15447`, and all `3,904,626` exact power-loss inequalities;
-- the unified exact 337-case H8--H27 type-B bounded-Littlewood certificate,
+- the hybrid exact 337-case H8--H27 type-B hook-length/determinant certificate,
   the `B_14,j=37` seed, and the inexpensive type-C formula portions of the
   ninth through twenty-seventh frontiers; H28--H29 and the old type-B
   reverse-Pieri shards are authenticated historical overlaps;
@@ -335,16 +381,15 @@ The command recomputes:
   rectangular tails (including the E7 degree-26 exact moment majorant), every
   E8 negative-bound row through the parallel C++/GMP
   source/majorant/moment audit,
-  every E8 rectangular bridge/tail row through the parallel GMP program, and
+  every E8 rectangular bridge/tail row through exact GMP geometry with
+  384-bit outward-rounded MPFR accumulation, and
   the E8 `m_0..m_100` finite bridge;
-- three clean `pdflatex` passes for the formal Parts I--II manuscript
-  `paper.tex` and its detailed computational supplement `paper_full.tex`, and the
-  absence of undefined references or citations in either document;
-- the formal document contract: both Parts I--II PDFs are nonempty, the
-  detailed supplement is strictly larger than the compact journal manuscript,
-  and neither retains undefined references or citations.  `paper.pdf`,
-  `paper_full.pdf`, and the separately audited Part III PDF are the three
-  formal submission components.
+- three clean `pdflatex` passes for the self-contained Parts I--II manuscript
+  `paper.tex`, and the absence of undefined references or citations;
+- the formal document contract: `paper.pdf` is nonempty and self-contained,
+  while the separately audited Part III PDF completes the proof.  The two are
+  collected in `submission.pdf`; `paper_full.pdf` is an optional derivation
+  archive rather than a formal submission component.
 
 The replay also validates all archived SHA-256 manifests and
 the accepted/diagnostic classification boundary before consuming any
@@ -378,8 +423,11 @@ the command fail.
 The archive contains raw character-ring, determinant-isotypic-sum, partitioned
 frontier, and exploratory search transcripts.  A SHA-256 digest authenticates
 only the bytes.  The standard command independently regenerates every
-character-ring moment claim passed to a main-theorem source-replay stage,
-rebuilds the theorem-reachable determinant/frontier certificates, regenerates
+low classical character-ring claim and each bounded exceptional prefix passed
+to a main-theorem source-replay stage.  Longer exceptional suffixes are
+checked termwise against the independently archived BPV ancillary table; the
+full downstream Chain calculation still consumes and checks every required
+integer row.  The command rebuilds the theorem-reachable determinant/frontier certificates, regenerates
 the stable classical moments from the proved recurrence while checking the
 OEIS comparison table, verifies recorded exit statuses and the accepted
 classification, and checks every downstream exact inequality.

@@ -4,7 +4,7 @@
 2. Chain Inequality Q_3(2m+3) >= 4*Q_3(2m+1) for all m up to the computed range.
 
 Usage:
-  python3 verify_chain.py GROUP LOGFILE
+  python3 verify_chain.py GROUP LOGFILE [OEIS_DIR [MAXIMUM_MOMENT]]
 """
 import re
 import sys
@@ -68,14 +68,21 @@ def Q3(n, mom):
 
 
 def main():
-    if len(sys.argv) not in (3, 4):
-        print('usage: verify_chain.py GROUP LOGFILE [OEIS_DIR]')
+    if len(sys.argv) not in (3, 4, 5):
+        print('usage: verify_chain.py GROUP LOGFILE [OEIS_DIR [MAXIMUM_MOMENT]]')
         sys.exit(1)
     group = sys.argv[1]
     logfile = sys.argv[2]
     oeis_dir = sys.argv[3] if len(sys.argv) > 3 else '../references'
 
     moms = parse_moments(logfile)
+    if len(sys.argv) == 5:
+        maximum_moment = int(sys.argv[4])
+        if maximum_moment < 5 or maximum_moment >= len(moms):
+            raise ValueError(
+                f'invalid maximum moment {maximum_moment} for {logfile}'
+            )
+        moms = moms[:maximum_moment + 1]
     K = len(moms) - 1
     if K < 5:
         raise ValueError(

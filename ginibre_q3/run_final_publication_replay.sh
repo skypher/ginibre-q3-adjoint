@@ -53,6 +53,8 @@ run_stage part-iii-full-replay \
     make -C "$script_dir" full-q3-extension \
         REPLAY_THREADS="${REPLAY_THREADS:-$(nproc)}" \
         FULL_Q3_BOUNDED_THREADS="${FULL_Q3_BOUNDED_THREADS:-$(nproc)}"
+run_stage unified-reader-submission \
+    make -C "$script_dir" unified-submission
 
 if [[ -n "$(git -C "$repo_root" status --porcelain=v1 --untracked-files=all)" ]]; then
     echo "FINAL_PUBLICATION_REPLAY: FAIL: replay changed tracked or untracked source-tree files"

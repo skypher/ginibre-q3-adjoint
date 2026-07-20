@@ -12,6 +12,7 @@ from pathlib import Path
 SOURCE = Path(__file__).with_name("full_q3_extension.tex")
 COMPACT_SOURCE = SOURCE.with_name("paper.tex")
 SUPPLEMENT_WRAPPER = SOURCE.with_name("paper_full.tex")
+UNIFIED_WRAPPER = SOURCE.with_name("submission.tex")
 ENVIRONMENT = SOURCE.with_name("ENVIRONMENT.md")
 ACTIVE_PROOF = SOURCE.with_name("ACTIVE_PROOF_SUPPLEMENT.md")
 FINAL_REPLAY = SOURCE.with_name("run_final_publication_replay.sh")
@@ -31,6 +32,7 @@ def main() -> int:
     text = SOURCE.read_text(encoding="utf-8")
     compact_text = COMPACT_SOURCE.read_text(encoding="utf-8")
     supplement_wrapper = SUPPLEMENT_WRAPPER.read_text(encoding="utf-8")
+    unified_wrapper = UNIFIED_WRAPPER.read_text(encoding="utf-8")
     require(ENVIRONMENT.is_file(), "validated environment record is absent")
     require(ACTIVE_PROOF.is_file(), "active proof supplement is absent")
     require(FINAL_REPLAY.is_file(), "final-source replay driver is absent")
@@ -38,9 +40,9 @@ def main() -> int:
     require(MODULAR_CHECKER.is_file(), "compressed modular checker is absent")
     environment = ENVIRONMENT.read_text(encoding="utf-8")
     require(
-        "detailed computational supplement" in compact_text
-        and "proves the exact active results" in compact_text,
-        "compact Parts I--II do not identify the load-bearing supplement",
+        "No theorem imports a result" in compact_text
+        and "optional derivation archive" in compact_text,
+        "compact Parts I--II are not declared self-contained",
     )
     require(
         r"\label{prop:bc-active-correction-prefix-contract}" in compact_text
@@ -50,10 +52,10 @@ def main() -> int:
         "compact Parts I--II do not state the active B/C contract and consumed offset",
     )
     require(
-        r"\contractref{prop:post29-bc-local-half-bridge}" in compact_text
+        r"\cref{prop:post29-bc-local-half-bridge}" in compact_text
         and "post_m29_bc_interval_bridge_frontier_gmp.cpp" in compact_text
         and r"D_G(2m+1)\ge\mathcal L_m" in compact_text,
-        "compact Parts I--II omit the explicit half-stable bridge import",
+        "compact Parts I--II omit the proved half-stable bridge",
     )
     require(
         "$B_1=C_1=A_1$" in compact_text
@@ -66,14 +68,22 @@ def main() -> int:
         "compact Parts I--II omit the conclusion and scope limitations",
     )
     require(
-        "Detailed computational supplement" in supplement_wrapper
+        "Optional derivation archive" in supplement_wrapper
         and r"\def\GinibreFullProof{1}" in supplement_wrapper,
-        "detailed computational supplement wrapper is absent or inactive",
+        "optional derivation archive wrapper is absent or inactive",
     )
     require(
-        "active computational supplement" in text
+        "submission.pdf" in text
+        and "not load-bearing" in text
         and "GinibreDevelopmentArchive" in text,
-        "Part III does not distinguish the active supplement from the archive",
+        "Part III does not state the unified self-contained architecture",
+    )
+    require(
+        "paper.pdf" in unified_wrapper
+        and "full_q3_extension.pdf" in unified_wrapper
+        and r"paper\_full.pdf" in unified_wrapper
+        and "not part of the" in unified_wrapper,
+        "unified submission wrapper omits a formal part or archive exclusion",
     )
     require(
         "certificates/full_q3/full_q3_source_manifest.sha256" in text,
@@ -249,10 +259,10 @@ def main() -> int:
         "central positive-definite cone scope boundary is absent",
     )
     require(
-        "three inseparable manuscript files" in text
-        and "formal detailed" in text
+        "submission.pdf" in text
+        and "optional derivation archive" in text
         and "Part~III is not offered as" in text,
-        "formal Parts I--III and supplement boundary is absent",
+        "unified Parts I--III boundary is absent",
     )
     require("tab:certificate-map" in text, "trusted-computation map is absent")
     require(
@@ -262,6 +272,8 @@ def main() -> int:
                 "distributed0001",
                 "bcdanalytic0003",
                 "bcdlowtail0001",
+                "bcdboundedfinal0001",
+                "bcdmodularfinal0001",
                 "bcd0010",
                 "bcd0002",
             )
@@ -284,8 +296,8 @@ def main() -> int:
     )
     require(
         "three reproducibility tiers" in text
-        and "44 minutes 55" in text
-        and "two- or eight-hour" in text,
+        and "five-minute ceiling" in text
+        and "proved analytic reduction" in text,
         "reproduction-tier resource disclosure is absent",
     )
     require(

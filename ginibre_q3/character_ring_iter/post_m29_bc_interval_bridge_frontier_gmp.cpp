@@ -35,6 +35,15 @@ struct ChainResult {
     double relative_log10 = std::numeric_limits<double>::quiet_NaN();
 };
 
+struct EnvelopeComponents {
+    int n_value = -1;
+    int frontier_boundary = -1;
+    mpz_class negative_all;
+    mpz_class positive_boundary;
+    mpz_class negative_active;
+    mpz_class negative_restricted;
+};
+
 double log10_abs_mpz(const mpz_class& value) {
     if (sgn(value) == 0) return -std::numeric_limits<double>::infinity();
     mpz_class abs_value = value >= 0 ? value : -value;
@@ -283,6 +292,39 @@ mpz_class positive_boundary_sum(
     return sum;
 }
 
+EnvelopeComponents envelope_components(
+    int n_value,
+    int frontier_boundary,
+    const std::vector<mpz_class>& stable
+) {
+    EnvelopeComponents components;
+    components.n_value = n_value;
+    components.frontier_boundary = frontier_boundary;
+    components.negative_all = central_negative_sum_all(n_value, stable);
+    components.positive_boundary =
+        positive_boundary_sum(n_value, frontier_boundary, stable);
+    if (central_support_is_active(n_value, frontier_boundary)) {
+        components.negative_active = components.negative_all;
+        components.negative_restricted = components.negative_all;
+    } else {
+        components.negative_active = central_negative_sum(
+            n_value,
+            stable,
+            [frontier_boundary](int k, int) {
+                return k >= frontier_boundary;
+            }
+        );
+        components.negative_restricted = central_negative_sum(
+            n_value,
+            stable,
+            [frontier_boundary](int k, int reflected) {
+                return k >= frontier_boundary && reflected >= frontier_boundary;
+            }
+        );
+    }
+    return components;
+}
+
 mpz_class binomial_or_zero(int n_value, int k) {
     if (k < 0 || k > n_value) return 0;
     mpz_class value;
@@ -328,8 +370,9 @@ ChainResult verify_chain_m_exact(
     int chain_m,
     int frontier_boundary,
     int active_rows,
-    const std::vector<mpz_class>& stable,
     const std::vector<mpz_class>& stable_chain,
+    const EnvelopeComponents& first_components,
+    const EnvelopeComponents& second_components,
     int lambda_num,
     int lambda_den
 ) {
@@ -348,26 +391,22 @@ ChainResult verify_chain_m_exact(
         std::exit(1);
     }
 
-    const mpz_class negative_first_all =
-        central_negative_sum_all(n_first, stable);
-    const mpz_class negative_second_all =
-        central_negative_sum_all(n_second, stable);
-    const mpz_class positive_first_boundary =
-        positive_boundary_sum(n_first, frontier_boundary, stable);
-    const mpz_class positive_second_boundary =
-        positive_boundary_sum(n_second, frontier_boundary, stable);
+    if (first_components.n_value != n_first
+        || second_components.n_value != n_second
+        || first_components.frontier_boundary != frontier_boundary
+        || second_components.frontier_boundary != frontier_boundary) {
+        std::cerr << "internal envelope-component mismatch at m=" << chain_m << "\n";
+        std::exit(1);
+    }
+    const mpz_class& negative_first_all = first_components.negative_all;
+    const mpz_class& negative_second_all = second_components.negative_all;
+    const mpz_class& positive_first_boundary = first_components.positive_boundary;
+    const mpz_class& positive_second_boundary = second_components.positive_boundary;
 
     const mpz_class positive_first_active =
         stable_chain[static_cast<std::size_t>(n_first)]
         - negative_first_all - positive_first_boundary;
-    const mpz_class negative_second_active = central_support_is_active(
-        n_second,
-        frontier_boundary
-    ) ? negative_second_all : central_negative_sum(
-            n_second,
-            stable,
-            [frontier_boundary](int k, int) { return k >= frontier_boundary; }
-        );
+    const mpz_class& negative_second_active = second_components.negative_active;
     if (sgn(positive_first_active) < 0 || sgn(negative_second_active) > 0) {
         std::cerr << "linear majorant component has wrong sign at m=" << chain_m << "\n";
         std::exit(1);
@@ -375,16 +414,7 @@ ChainResult verify_chain_m_exact(
     const mpz_class positive_linear_abs =
         2 * positive_first_active - 8 * negative_second_active;
 
-    const mpz_class negative_first_restricted = central_support_is_active(
-        n_first,
-        frontier_boundary
-    ) ? negative_first_all : central_negative_sum(
-            n_first,
-            stable,
-            [frontier_boundary](int k, int reflected) {
-                return k >= frontier_boundary && reflected >= frontier_boundary;
-            }
-        );
+    const mpz_class& negative_first_restricted = first_components.negative_restricted;
     const mpz_class positive_second_restricted =
         stable_chain[static_cast<std::size_t>(n_second)]
         - negative_second_all - 2 * positive_second_boundary;
@@ -630,41 +660,63 @@ int main(int argc, char** argv) {
     const int total = chain_hi - chain_lo + 1;
     std::vector<ChainResult> results(static_cast<std::size_t>(total));
     int completed = 0;
-#pragma omp parallel for schedule(dynamic, 1)
-    for (int offset = 0; offset < total; ++offset) {
-        const int chain_m = chain_lo + offset;
-        int active_rows = 0;
-        const int frontier = frontier_for_chain_m(
-            chain_m,
-            rows,
-            bridge_max,
-            c_rank_hi,
-            active_rows
-        );
-        if (frontier != 0) {
-            results[static_cast<std::size_t>(offset)] = verify_chain_m_exact(
+#pragma omp parallel
+    {
+        bool have_cached_first = false;
+        EnvelopeComponents cached_first;
+#pragma omp for schedule(dynamic, 64)
+        for (int offset = 0; offset < total; ++offset) {
+            const int chain_m = chain_lo + offset;
+            int active_rows = 0;
+            const int frontier = frontier_for_chain_m(
                 chain_m,
-                frontier,
-                active_rows,
-                stable,
-                stable_chain,
-                lambda_num,
-                lambda_den
+                rows,
+                bridge_max,
+                c_rank_hi,
+                active_rows
             );
-        } else {
-            results[static_cast<std::size_t>(offset)].chain_m = chain_m;
-            results[static_cast<std::size_t>(offset)].odd_n = 2 * chain_m + 3;
-        }
+            if (frontier != 0) {
+                const int n_second = 2 * chain_m + 1;
+                EnvelopeComponents second_storage;
+                const EnvelopeComponents* second = nullptr;
+                if (have_cached_first
+                    && cached_first.n_value == n_second
+                    && cached_first.frontier_boundary == frontier) {
+                    second = &cached_first;
+                } else {
+                    second_storage = envelope_components(n_second, frontier, stable);
+                    second = &second_storage;
+                }
+                EnvelopeComponents first =
+                    envelope_components(n_second + 2, frontier, stable);
+                results[static_cast<std::size_t>(offset)] = verify_chain_m_exact(
+                    chain_m,
+                    frontier,
+                    active_rows,
+                    stable_chain,
+                    first,
+                    *second,
+                    lambda_num,
+                    lambda_den
+                );
+                cached_first = std::move(first);
+                have_cached_first = true;
+            } else {
+                have_cached_first = false;
+                results[static_cast<std::size_t>(offset)].chain_m = chain_m;
+                results[static_cast<std::size_t>(offset)].odd_n = 2 * chain_m + 3;
+            }
 
-        int done_now = 0;
+            int done_now = 0;
 #pragma omp atomic capture
-        done_now = ++completed;
-        if (progress && (done_now == total || done_now % progress_step == 0)) {
+            done_now = ++completed;
+            if (progress && (done_now == total || done_now % progress_step == 0)) {
 #pragma omp critical
-            {
-                std::cout << "progress completed=" << done_now << "/" << total
-                          << " last_m=" << chain_m << std::endl;
-                std::fflush(stdout);
+                {
+                    std::cout << "progress completed=" << done_now << "/" << total
+                              << " last_m=" << chain_m << std::endl;
+                    std::fflush(stdout);
+                }
             }
         }
     }

@@ -307,4 +307,4 @@ post_m29_d11_onset75_bridge_gmp_machine_c_certificate.log	replay	accepted	machin
 post_m29_d12_24_exact_mgf_mpfr_certificate.log	replay	accepted	directed 384-bit C++/GMP/MPFR D12-D24 exact-moment terminal-tail certificate at odd exponent 63; checks 13 rows with failures=0
 d4_24_exact_adjoint_sources/superseded_optimus/superseded_optimus.sha256	superseded-manifest	superseded	integrity index for earlier optimus C++/GMP source runs excluded from every active source glob
 source_snapshots/source_snapshots.sha256	source-snapshot-manifest	diagnostic	historical accepted-source snapshots retained to resolve immutable source hashes printed by earlier certificate records
-bc_b_h8_h27_bounded_littlewood_gmp_certificate.log	replay	accepted	exact bounded-Littlewood determinant/CRT supplier for all 337 active type-B H8--H27 frontier margins through moment 121
+bc_b_h8_h27_bounded_littlewood_gmp_certificate.log	replay	accepted	hybrid exact hook-length supplier for 296 active type-B H8--H27 margins and bounded-Littlewood determinant/CRT supplier for the 41 residual cases through moment 67

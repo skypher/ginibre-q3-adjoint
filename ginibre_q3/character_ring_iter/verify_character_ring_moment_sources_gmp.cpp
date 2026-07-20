@@ -508,6 +508,13 @@ int verify_group(
                 fail("expected sources omit m_" + std::to_string(degree));
             }
         }
+        // A source ledger may retain a longer historical overlap than the
+        // theorem consumes.  The command-line maximum is the fail-closed
+        // proof obligation; discard surplus rows so the summary records the
+        // exact prefix that was regenerated and compared.
+        std::erase_if(expected, [maximum_moment](const auto& entry) {
+            return entry.first > maximum_moment;
+        });
     } else {
         if (stable_moment_path.empty()) fail("classical verification requires stable moments");
         classical_claims =

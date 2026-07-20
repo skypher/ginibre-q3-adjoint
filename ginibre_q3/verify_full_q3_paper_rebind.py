@@ -484,9 +484,9 @@ def main() -> int:
             "final revision removes the wrong classical direct suppliers",
         )
         require(
-            r"\contractref{prop:post29-bc-local-half-bridge}" in candidate_text
+            r"\cref{prop:post29-bc-local-half-bridge}" in candidate_text
             and "post_m29_bc_interval_bridge_frontier_gmp.cpp" in candidate_text
-            and r"\mathcal L_m>0" in candidate_text,
+            and r"D_G(2m+1)\ge\mathcal L_m\ge\widetilde{\mathcal L}_m" in candidate_text,
             "final revision omits the explicit half-stable bridge predicate",
         )
         require(

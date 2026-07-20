@@ -1,6 +1,34 @@
 #include <gmpxx.h>
 #include <omp.h>
 
+#if __has_include(<mpfr.h>)
+#include <mpfr.h>
+#else
+extern "C" {
+typedef long mpfr_prec_t;
+typedef long mpfr_exp_t;
+typedef int mpfr_sign_t;
+typedef enum { MPFR_RNDN = 0, MPFR_RNDZ = 1, MPFR_RNDU = 2, MPFR_RNDD = 3,
+               MPFR_RNDA = 4, MPFR_RNDF = 5, MPFR_RNDNA = -1 } mpfr_rnd_t;
+typedef struct { mpfr_prec_t _mpfr_prec; mpfr_sign_t _mpfr_sign; mpfr_exp_t _mpfr_exp;
+                 mp_limb_t* _mpfr_d; } __mpfr_struct;
+typedef __mpfr_struct mpfr_t[1];
+typedef __mpfr_struct* mpfr_ptr;
+typedef const __mpfr_struct* mpfr_srcptr;
+void mpfr_init2(mpfr_ptr, mpfr_prec_t);
+void mpfr_clear(mpfr_ptr);
+void mpfr_set_zero(mpfr_ptr, int);
+int mpfr_set(mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
+void mpfr_swap(mpfr_ptr, mpfr_ptr);
+int mpfr_set_q(mpfr_ptr, mpq_srcptr, mpfr_rnd_t);
+int mpfr_add(mpfr_ptr, mpfr_srcptr, mpfr_srcptr, mpfr_rnd_t);
+int mpfr_mul(mpfr_ptr, mpfr_srcptr, mpfr_srcptr, mpfr_rnd_t);
+int mpfr_pow_ui(mpfr_ptr, mpfr_srcptr, unsigned long, mpfr_rnd_t);
+int mpfr_cmp(mpfr_srcptr, mpfr_srcptr);
+double mpfr_get_d(mpfr_srcptr, mpfr_rnd_t);
+}
+#endif
+
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -25,6 +53,44 @@ constexpr int SHAPE = 124;
 constexpr int QUARTIC_DENOM = 50;
 constexpr int SEXTIC_DENOM = 1800;
 constexpr int EIGHTH_LOWER_DENOM = 300000;
+constexpr mpfr_prec_t OUTWARD_PRECISION = 384;
+
+struct LowerReal {
+    mpfr_t value;
+    LowerReal() {
+        mpfr_init2(value, OUTWARD_PRECISION);
+        mpfr_set_zero(value, 0);
+    }
+    LowerReal(const LowerReal& other) {
+        mpfr_init2(value, OUTWARD_PRECISION);
+        mpfr_set(value, other.value, MPFR_RNDD);
+    }
+    LowerReal& operator=(const LowerReal& other) {
+        if (this != &other) mpfr_set(value, other.value, MPFR_RNDD);
+        return *this;
+    }
+    LowerReal(LowerReal&& other) noexcept {
+        mpfr_init2(value, OUTWARD_PRECISION);
+        mpfr_swap(value, other.value);
+    }
+    LowerReal& operator=(LowerReal&& other) noexcept {
+        if (this != &other) mpfr_swap(value, other.value);
+        return *this;
+    }
+    ~LowerReal() { mpfr_clear(value); }
+};
+
+void set_lower(LowerReal& target, const Rational& value) {
+    mpfr_set_q(target.value, value.get_mpq_t(), MPFR_RNDD);
+}
+
+void set_upper(LowerReal& target, const Rational& value) {
+    mpfr_set_q(target.value, value.get_mpq_t(), MPFR_RNDU);
+}
+
+double log10_lower(const LowerReal& value) {
+    return std::log10(mpfr_get_d(value.value, MPFR_RNDD));
+}
 
 Rational q(long long numerator, long long denominator = 1) {
     Rational out(mpz_class(std::to_string(numerator)), mpz_class(std::to_string(denominator)));
@@ -199,12 +265,16 @@ struct Cell {
     Rational s1;
     Rational t0;
     Rational t1;
+    Rational gap;
+    Rational h;
+    Rational direct;
+    Rational radial_weight;
 };
 
 struct Stats {
-    Rational positive_total = q(0);
-    Rational rect_total = q(0);
-    Rational best_term = q(0);
+    LowerReal positive_total;
+    LowerReal rect_total;
+    LowerReal best_term;
     Rational min_gap;
     Rational min_h;
     Rational min_direct;
@@ -212,16 +282,18 @@ struct Stats {
     bool initialized = false;
 
     void add(
-        const Rational& term,
-        const Rational& rect,
+        mpfr_srcptr term,
+        mpfr_srcptr rect,
         const Rational& gap,
         const Rational& h,
         const Rational& direct,
         const Rational& sine_exponent
     ) {
-        positive_total += term;
-        rect_total += rect;
-        if (term > best_term) best_term = term;
+        mpfr_add(positive_total.value, positive_total.value, term, MPFR_RNDD);
+        mpfr_add(rect_total.value, rect_total.value, rect, MPFR_RNDD);
+        if (mpfr_cmp(term, best_term.value) > 0) {
+            mpfr_set(best_term.value, term, MPFR_RNDD);
+        }
         if (!initialized) {
             min_gap = gap;
             min_h = h;
@@ -242,9 +314,21 @@ struct Stats {
             *this = other;
             return;
         }
-        positive_total += other.positive_total;
-        rect_total += other.rect_total;
-        if (other.best_term > best_term) best_term = other.best_term;
+        mpfr_add(
+            positive_total.value,
+            positive_total.value,
+            other.positive_total.value,
+            MPFR_RNDD
+        );
+        mpfr_add(
+            rect_total.value,
+            rect_total.value,
+            other.rect_total.value,
+            MPFR_RNDD
+        );
+        if (mpfr_cmp(other.best_term.value, best_term.value) > 0) {
+            mpfr_set(best_term.value, other.best_term.value, MPFR_RNDD);
+        }
         if (other.min_gap < min_gap) min_gap = other.min_gap;
         if (other.min_h < min_h) min_h = other.min_h;
         if (other.min_direct < min_direct) min_direct = other.min_direct;
@@ -417,15 +501,6 @@ Rational sine_density_lower(const CaseConfig& cfg, const Rational& exponent) {
     return exp_fractional_septic_lower(exponent, q(1457, 536));
 }
 
-Rational rectangle_fraction_lower(const CaseConfig& cfg, const Cell& cell, const Rational& gap) {
-    Rational s_integral = (pow_q(cell.s1, SHAPE) - pow_q(cell.s0, SHAPE)) / SHAPE;
-    Rational t_integral = (pow_q(cell.t1, SHAPE) - pow_q(cell.t0, SHAPE)) / SHAPE;
-    Rational out = gap * gap * radial_exp_lower(cfg, cell.s1 + cell.t1)
-        * s_integral * t_integral * gamma_inv_square() / SHAPE;
-    out.canonicalize();
-    return out;
-}
-
 std::vector<Cell> candidate_cells(const CaseConfig& cfg) {
     std::vector<Cell> cells;
     Rational cap = cap_value(cfg);
@@ -444,35 +519,107 @@ std::vector<Cell> candidate_cells(const CaseConfig& cfg) {
             if (gap <= 0) continue;
             Rational h = local_h_lower(cfg, cell);
             if (h <= 0) continue;
-            if (local_direct_factor_lower(h) <= 0) continue;
+            Rational direct = local_direct_factor_lower(h);
+            if (direct <= 0) continue;
+            cell.gap = std::move(gap);
+            cell.h = std::move(h);
+            cell.direct = std::move(direct);
             cells.push_back(std::move(cell));
         }
+    }
+
+    // Each case uses one uniform grid.  The radial integral on an s- or
+    // t-interval therefore depends only on its lower endpoint, while the
+    // exponential factor depends only on s1+t1.  Compute each exact rational
+    // once instead of repeating two degree-124 powers in every rectangle.
+    std::map<Rational, Rational> interval_integrals;
+    std::map<Rational, Rational> radial_exponentials;
+    for (const Cell& cell : cells) {
+        for (const Rational* lower : {&cell.s0, &cell.t0}) {
+            if (interval_integrals.find(*lower) == interval_integrals.end()) {
+                const Rational upper = *lower + cfg.grid;
+                interval_integrals.emplace(
+                    *lower,
+                    (pow_q(upper, SHAPE) - pow_q(*lower, SHAPE)) / SHAPE
+                );
+            }
+        }
+        const Rational diagonal = cell.s1 + cell.t1;
+        if (radial_exponentials.find(diagonal) == radial_exponentials.end()) {
+            radial_exponentials.emplace(diagonal, radial_exp_lower(cfg, diagonal));
+        }
+    }
+#pragma omp parallel for schedule(static)
+    for (std::size_t index = 0; index < cells.size(); ++index) {
+        Cell& cell = cells[index];
+        cell.radial_weight = interval_integrals.at(cell.s0)
+            * interval_integrals.at(cell.t0)
+            * radial_exponentials.at(cell.s1 + cell.t1);
     }
     return cells;
 }
 
 Stats compute_stats(const CaseConfig& cfg, const std::vector<Cell>& cells) {
     const Rational a0 = a0_lower();
+    const Rational term_prefactor = a0 * pow_q(q(2 * D), cfg.n)
+        / pow_q(q(cfg.n), ALPHA);
+    const Rational rectangle_prefactor = gamma_inv_square() / SHAPE;
+    if (term_prefactor <= 0 || rectangle_prefactor <= 0) {
+        throw std::runtime_error("nonpositive E8 case prefactor");
+    }
+    LowerReal term_prefactor_lower;
+    LowerReal rectangle_prefactor_lower;
+    set_lower(term_prefactor_lower, term_prefactor);
+    set_lower(rectangle_prefactor_lower, rectangle_prefactor);
     const int threads = omp_get_max_threads();
     std::vector<Stats> partial(static_cast<std::size_t>(threads));
     auto started = std::chrono::steady_clock::now();
     std::vector<double> last_print(static_cast<std::size_t>(threads), 0.0);
+    int nonpositive_factors = 0;
 
 #pragma omp parallel
     {
         int tid = omp_get_thread_num();
+        LowerReal term;
+        LowerReal rect;
+        LowerReal factor;
+        LowerReal power;
 #pragma omp for schedule(dynamic, 16)
         for (std::size_t index = 0; index < cells.size(); ++index) {
             const Cell& cell = cells[index];
-            Rational gap = gap_lower(cfg, cell);
-            Rational h = local_h_lower(cfg, cell);
-            Rational direct = local_direct_factor_lower(h);
-            Rational rect = rectangle_fraction_lower(cfg, cell, gap);
+            const Rational& gap = cell.gap;
+            const Rational& h = cell.h;
+            const Rational& direct = cell.direct;
             Rational exponent = sine_exponent(cfg, cell);
-            Rational term = a0 * pow_q(q(2 * D), cfg.n) / pow_q(q(cfg.n), ALPHA)
-                * rect * pow_q(h, cfg.n) * direct * sine_density_lower(cfg, exponent);
-            term.canonicalize();
-            partial[static_cast<std::size_t>(tid)].add(term, rect, gap, h, direct, exponent);
+            const Rational sine = sine_density_lower(cfg, exponent);
+            if (cell.radial_weight <= 0 || sine <= 0) {
+#pragma omp atomic
+                ++nonpositive_factors;
+                continue;
+            }
+
+            set_lower(rect, gap);
+            mpfr_mul(rect.value, rect.value, rect.value, MPFR_RNDD);
+            set_lower(factor, cell.radial_weight);
+            mpfr_mul(rect.value, rect.value, factor.value, MPFR_RNDD);
+            mpfr_mul(
+                rect.value,
+                rect.value,
+                rectangle_prefactor_lower.value,
+                MPFR_RNDD
+            );
+            mpfr_set(term.value, term_prefactor_lower.value, MPFR_RNDD);
+            mpfr_mul(term.value, term.value, rect.value, MPFR_RNDD);
+            set_lower(factor, h);
+            mpfr_pow_ui(power.value, factor.value, cfg.n, MPFR_RNDD);
+            mpfr_mul(term.value, term.value, power.value, MPFR_RNDD);
+            set_lower(factor, direct);
+            mpfr_mul(term.value, term.value, factor.value, MPFR_RNDD);
+            set_lower(factor, sine);
+            mpfr_mul(term.value, term.value, factor.value, MPFR_RNDD);
+            partial[static_cast<std::size_t>(tid)].add(
+                term.value, rect.value, gap, h, direct, exponent
+            );
 
             if ((index + 1) % 5000 == 0) {
                 auto now = std::chrono::steady_clock::now();
@@ -488,6 +635,10 @@ Stats compute_stats(const CaseConfig& cfg, const std::vector<Cell>& cells) {
                 }
             }
         }
+    }
+
+    if (nonpositive_factors != 0) {
+        throw std::runtime_error("nonpositive E8 radial or sine lower factor");
     }
 
     Stats total;
@@ -678,8 +829,12 @@ int main(int argc, char** argv) {
     if (!only.empty()) std::cout << " --only " << only;
     std::cout << std::endl;
     std::cout << "OpenMP max threads=" << omp_get_max_threads() << std::endl;
+    std::cout << "positive_accumulation=MPFR_RNDD negative_conversion=MPFR_RNDU"
+              << " precision_bits=" << OUTWARD_PRECISION << std::endl;
     const bool lattice_ok = e8_weyl_lattice_normalization_check();
     all_ok = all_ok && lattice_ok;
+    int cases_checked = 0;
+    int failed_cases = 0;
     std::cout << "e8_normalized_weyl_lattice_factor_1_and_minimum_2: "
               << (lattice_ok ? "OK" : "FAIL") << std::endl;
 
@@ -696,9 +851,12 @@ int main(int argc, char** argv) {
         bool transpose_disjoint = std::all_of(
             cells.begin(), cells.end(), [](const Cell& cell) { return cell.s0 >= cell.t1; });
         Stats stats = compute_stats(cfg, cells);
-        Rational ratio = stats.positive_total / negative;
-        Rational best_ratio = stats.best_term / negative;
-        bool ratio_ok = ratio > 1;
+        LowerReal negative_upper;
+        set_upper(negative_upper, negative);
+        const double negative_log10 = log10_q(negative);
+        const double positive_log10 = log10_lower(stats.positive_total);
+        const double best_log10 = log10_lower(stats.best_term);
+        bool ratio_ok = mpfr_cmp(stats.positive_total.value, negative_upper.value) > 0;
         bool gaps_ok = stats.min_gap > 0;
         bool h_ok = stats.min_h > 0;
         bool direct_ok = stats.min_direct > 0;
@@ -710,22 +868,26 @@ int main(int argc, char** argv) {
                 break;
             }
         }
-        all_ok = all_ok && cell_count_ok && transpose_disjoint
+        bool case_ok = cell_count_ok && transpose_disjoint
             && ratio_ok && gaps_ok && h_ok && direct_ok && cap_ok;
+        all_ok = all_ok && case_ok;
 
         std::cout << "group=E8 n=" << cfg.n << std::endl;
         std::cout << "retained_cells=" << cells.size() << " expected=" << cfg.expected_cells << std::endl;
         std::cout << "cap=" << cap << std::endl;
         std::cout << "negative_bound=" << negative << std::endl;
-        std::cout << "log10_union_fraction_lower=" << fixed2(log10_q(stats.rect_total)) << std::endl;
+        std::cout << "log10_union_fraction_lower="
+                  << fixed2(log10_lower(stats.rect_total)) << std::endl;
         std::cout << "gap" << cfg.n << "_min=" << stats.min_gap << std::endl;
         std::cout << "h" << cfg.n << "_min=" << stats.min_h
                   << " direct_factor" << cfg.n << "_min=" << stats.min_direct << std::endl;
         std::cout << "sine_exponent_max=" << stats.max_sine_exponent << std::endl;
-        std::cout << "log10_positive" << cfg.n << "_lower=" << fixed2(log10_q(stats.positive_total)) << std::endl;
-        std::cout << "log10_negative" << cfg.n << "_upper=" << fixed2(log10_q(negative)) << std::endl;
-        std::cout << "log10_ratio" << cfg.n << "_lower=" << fixed2(log10_q(ratio)) << std::endl;
-        std::cout << "log10_best_cell_ratio" << cfg.n << "=" << fixed2(log10_q(best_ratio)) << std::endl;
+        std::cout << "log10_positive" << cfg.n << "_lower=" << fixed2(positive_log10) << std::endl;
+        std::cout << "log10_negative" << cfg.n << "_upper=" << fixed2(negative_log10) << std::endl;
+        std::cout << "log10_ratio" << cfg.n << "_lower="
+                  << fixed2(positive_log10 - negative_log10) << std::endl;
+        std::cout << "log10_best_cell_ratio" << cfg.n << "="
+                  << fixed2(best_log10 - negative_log10) << std::endl;
         std::cout << "cell_count_" << cfg.expected_cells << ": " << (cell_count_ok ? "OK" : "FAIL") << std::endl;
         std::cout << "transposed_cells_disjoint: "
                   << (transpose_disjoint ? "OK" : "FAIL") << std::endl;
@@ -741,15 +903,20 @@ int main(int argc, char** argv) {
                 * pow_q(q(cfg.n, cfg.n + 2), ALPHA);
             bool step_ok = step > 1;
             all_ok = all_ok && step_ok;
+            case_ok = case_ok && step_ok;
             std::cout << "log10_odd_step_ratio_lower=" << fixed2(log10_q(step)) << std::endl;
             std::cout << "odd_step_ratio_gt_1: " << (step_ok ? "OK" : "FAIL") << std::endl;
         }
+        ++cases_checked;
+        if (!case_ok) ++failed_cases;
         std::cout << "case " << cfg.label << " result="
-                  << ((cell_count_ok && transpose_disjoint && ratio_ok && gaps_ok
-                       && h_ok && direct_ok && cap_ok) ? "OK" : "FAIL")
-                  << std::endl;
+                  << (case_ok ? "OK" : "FAIL") << std::endl;
     }
 
+    std::cout << "SUMMARY cases_checked=" << cases_checked
+              << " failed_cases=" << failed_cases
+              << " lattice_failures=" << (lattice_ok ? 0 : 1)
+              << " precision_bits=" << OUTWARD_PRECISION << std::endl;
     std::cout << "RESULT: " << (all_ok ? "ALL PASS" : "FAIL") << std::endl;
     return all_ok ? 0 : 1;
 }

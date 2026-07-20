@@ -2,17 +2,17 @@
 
 This file is the minimal index of the results and computations used by the
 publication theorem. It is an index, not a substitute for the numbered
-proofs. A diagnostic, conditional, exploratory, or superseded result in
-`paper_full.pdf` is outside the proof unless it appears below as an explicit
-incoming node.
+proofs. The optional `paper_full.pdf` derivation archive and every diagnostic,
+conditional, exploratory, or superseded result are outside the proof.
 
 ## Submission components
 
 | Component | Active role |
 |---|---|
-| `paper.pdf` | Parts I--II theorem, reductions, compact family closures, and final assembly |
-| `paper_full.pdf` | The 58 B/C correction-prefix proofs and the half-stable bridge consumed by the compact residual closure |
+| `submission.pdf` | Single referee-facing artifact containing all three numbered parts |
+| `paper.pdf` | Self-contained Parts I--II theorem, reductions, finite certificate contracts, family closures, and final assembly |
 | `full_q3_extension.pdf` | Part III cone reduction, higher-minus hierarchy, finite certificates, and final cone promotion |
+| `paper_full.pdf` | Optional non-load-bearing derivation archive |
 
 ## Parts I--II active chain
 
@@ -21,8 +21,9 @@ incoming node.
 2. `thm:type-a` consumes the stable-rank theorem, the low-rank ratio
    theorems, and their exact overlap certificates.
 3. `prop:bc-active-correction-prefix-contract` identifies exactly 56 active
-   B/C correction results: offsets `0..27` for each family, exactly the range
-   consumed by the compact residual proof.
+   B/C correction domains and proves them by direct determinant/formula
+   certificates: offsets `0..27` for each family, exactly the range consumed
+   by the residual proof.
 4. `prop:post29-bc-local-half-bridge` converts the active correction intervals into
    the common stable-moment lower bound used by
    `prop:post29-bc-residual-closure`.
@@ -37,8 +38,8 @@ The machine-checked caller contract is `verify_parts_i_ii_contract.py`. It
 requires 56 active correction references, maximum consumed offset 27, no
 surplus offsets, and the named local half-bridge input. The complete arithmetic
 regeneration command is `make -C ginibre_q3 clean-room-replay`.
-Its active B/C correction prefix uses one exact 337-case bounded-Littlewood
-type-B supplier for H8--H27 and runs the mixed frontier programs in
+Its active B/C correction prefix uses one exact 337-case hook-length plus
+bounded-Littlewood type-B supplier for H8--H27 and runs the mixed frontier programs in
 type-C/formula-only mode. The older type-B reverse-Pieri traversals are
 independent controls, not incoming proof nodes.
 
@@ -55,14 +56,16 @@ independent controls, not incoming proof nodes.
 | `thm:full-adjoint-generated-q3` | Classification plus `thm:full-cone-reduction` |
 
 The Part III arithmetic regeneration command is
-`make -C ginibre_q3 full-q3-extension`. The optional aggregate
-`full-q3-extension-independent-controls` keeps the structurally
-independent reverse-Pieri comparison through degree 40 (2,845 moments), then
-checks the 538 required higher moments modulo 21 independent primes by a
-plain-arithmetic determinant implementation using Newton differences. The
+`make -C ginibre_q3 full-q3-extension`.  That mandatory target keeps the
+structurally independent reverse-Pieri comparison through degree 40 (2,845
+moments), then checks the 538 required higher moments modulo 21 independent
+primes by a plain-arithmetic determinant implementation using Newton
+differences. The
 628-bit modulus exceeds the 607-bit character bound, so the residues determine
 those moments uniquely. It finally checks the remaining 5,509 hierarchy
-values exactly.
+values exactly.  The optional aggregate
+`full-q3-extension-independent-controls` additionally reruns the older large
+reverse-Pieri B/D supplier.
 
 ## Trusted-computation boundary
 

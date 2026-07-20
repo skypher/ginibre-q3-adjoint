@@ -26,7 +26,7 @@ def require(condition: bool, message: str) -> None:
 
 
 def audit_explicit_half_bridge(root: Path) -> None:
-    """Require the formerly implicit supplement dependency to stay explicit."""
+    """Require the half-bridge to be an internal edge of the compact paper."""
 
     paper = (root / "paper.tex").read_text(encoding="utf-8")
     spine = (root / "PUBLICATION_PROOF_SPINE.md").read_text(encoding="utf-8")
@@ -44,8 +44,8 @@ def audit_explicit_half_bridge(root: Path) -> None:
     require(residual_match is not None, "cannot parse the residual B/C proof")
     residual_proof = residual_match.group(1)
     require(
-        rf"\contractref{{{HALF_BRIDGE}}}" in residual_proof,
-        "residual B/C proof does not explicitly import the half-stable bridge",
+        rf"\cref{{{HALF_BRIDGE}}}" in residual_proof,
+        "residual B/C proof does not cite its internal half-stable bridge",
     )
     require(
         "post_m29_bc_interval_bridge_frontier_gmp.cpp" in residual_proof
@@ -65,7 +65,8 @@ def audit_explicit_half_bridge(root: Path) -> None:
         "publication proof spine omits the half-stable bridge incoming edge",
     )
     require(
-        "half-stable bridge reduction" in extension,
+        "half-stable bridge" in extension
+        and "imported from the optional derivation archive" in extension,
         "Part III submission boundary omits the half-stable bridge dependency",
     )
 

@@ -4,7 +4,7 @@ LIBS = -lgmpxx -lgmp
 
 REPLAY_TARGETS = verify_sun_repair_certificates_gmp \
 	verify_character_ring_moment_sources_gmp \
-	verify_bc_row_gated_bridge_gmp \
+	verify_bc_row_gated_bridge_bounded_littlewood_gmp \
 	verify_d_high_rank_finite_tails_gmp \
 	dunkl_exceptional_coefficients_gmp \
 	direct_chain_rect_g2_f4_certificate \
@@ -74,6 +74,11 @@ verify_sun_repair_certificates_gmp: verify_sun_repair_certificates_gmp.cpp
 verify_bc_row_gated_bridge_gmp: verify_bc_row_gated_bridge_gmp.cpp ankerl/unordered_dense.h
 	$(CXX) $(CXXFLAGS) -fopenmp verify_bc_row_gated_bridge_gmp.cpp $(LIBS) -o verify_bc_row_gated_bridge_gmp
 
+verify_bc_row_gated_bridge_bounded_littlewood_gmp: verify_bc_row_gated_bridge_bounded_littlewood_gmp.cpp verify_full_q3_bcd_bounded_littlewood_gmp.cpp
+	$(CXX) $(CXXFLAGS) -fopenmp -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Werror verify_bc_row_gated_bridge_bounded_littlewood_gmp.cpp \
+		$(LIBS) -o verify_bc_row_gated_bridge_bounded_littlewood_gmp
+
 classical_boundary_source_replay_gmp: classical_boundary_certificate.cpp ankerl/unordered_dense.h
 	$(CXX) $(CXXFLAGS) classical_boundary_certificate.cpp $(LIBS) -o classical_boundary_source_replay_gmp
 
@@ -109,7 +114,7 @@ verify_e8_negative_bounds_gmp: verify_e8_negative_bounds_gmp.cpp
 	$(CXX) $(CXXFLAGS) -fopenmp verify_e8_negative_bounds_gmp.cpp $(LIBS) -o verify_e8_negative_bounds_gmp
 
 direct_chain_rect_e8_parallel_certificate: direct_chain_rect_e8_parallel_certificate.cpp
-	$(CXX) $(CXXFLAGS) -fopenmp direct_chain_rect_e8_parallel_certificate.cpp $(LIBS) -o direct_chain_rect_e8_parallel_certificate
+	$(CXX) $(CXXFLAGS) -fopenmp direct_chain_rect_e8_parallel_certificate.cpp -l:libmpfr.so.6 $(LIBS) -o direct_chain_rect_e8_parallel_certificate
 
 post_m29_direct_tail_log_scan: post_m29_direct_tail_log_scan.cpp
 	$(CXX) $(CXXFLAGS) -fopenmp post_m29_direct_tail_log_scan.cpp -o post_m29_direct_tail_log_scan

@@ -1,0 +1,37 @@
+__RUN_ID=fullq3bcdmodularfinal0001_current_source
+__START_UTC=2026-07-20T01:31:15Z
+__HOST=Linux optimus 6.8.0-90-generic #91-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 18 14:14:30 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+__OMP_NUM_THREADS=64
+__GIT_COMMIT=68e462f6c56ce1365492a8f761f8e08bb37ece03
+58e0b7a7fce8ffdcc963a257999358bdbe01460ec367cf4d60c580a4744d6b1c  /home/yang/q3adjoint/ginibre_q3/character_ring_iter/verify_full_q3_bcd_modular_moment_checker.cpp
+ec64a4b9c842c0f59a2a0cdffd0c702dabd12179b9e5b58d5be901e6f6cb82be  /home/yang/q3adjoint/ginibre_q3/character_ring_iter/full_q3_bcd_remaining_data.hpp
+2f6d6673626efc2c834d36ecac5e02554aacc0ecf5a9478d3c1f6e7ae57d3291  /home/yang/q3adjoint/ginibre_q3/certificates/full_q3/fullq3bcd0010_machine_c.log
+38a0abd66f2cfadf1149d3c582a9e79c3e79aa7142fc12bf060d33d9f10252fd  /home/yang/q3adjoint/ginibre_q3/certificates/full_q3/fullq3bcd0006_machine_c_prefix40.log
+1d0a7f551e67f4cfe5a5c5d705cb24c92d050204d7b74c8dbd67f9a0749c428f  /home/yang/q3adjoint/ginibre_q3/Makefile
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+FULL_Q3_MODULAR_CHECKER completed_prime=999999937 index=2/21
+FULL_Q3_MODULAR_CHECKER completed_prime=1000000007 index=1/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999527 index=19/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999613 index=14/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999503 index=20/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999607 index=15/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999667 index=13/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999751 index=9/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999733 index=11/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999893 index=4/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999491 index=21/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999599 index=16/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999541 index=18/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999739 index=10/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999677 index=12/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999761 index=7/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999797 index=6/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999883 index=5/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999929 index=3/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999757 index=8/21
+FULL_Q3_MODULAR_CHECKER completed_prime=999999587 index=17/21
+FULL_Q3_MODULAR_CHECKER reverse_overlap_moments=2845 modular_moments=3383 modular_high_moments=538 prefix_pairs=7484 high_pairs=5509 primes=21 modulus_bits=628 required_bound_bits=607 newton_interpolation=1 plain_modular_arithmetic=1
+FULL_Q3_MODULAR_CHECKER VERIFICATION: ALL PASS
+__EXIT_STATUS=0
+__END_UTC=2026-07-20T01:32:00Z
+FULL_Q3_MODULAR_CURRENT: ALL PASS

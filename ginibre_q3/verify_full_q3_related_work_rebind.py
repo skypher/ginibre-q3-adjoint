@@ -416,8 +416,8 @@ def main() -> int:
     )
     require(
         "Reproduction tiers and resource envelope" in replay_doc
-        and "44 min 55 s" in replay_doc
-        and "eight-hour guards" in replay_doc,
+        and "Hard 300-second ceiling" in replay_doc
+        and "profiled and optimized" in replay_doc,
         "resource-tier disclosure is incomplete",
     )
     require(
@@ -434,19 +434,19 @@ def main() -> int:
         "publication proof spine is incomplete",
     )
     require(
-        r"\contractref{prop:post29-bc-local-half-bridge}" in paper
+        r"\cref{prop:post29-bc-local-half-bridge}" in paper
         and "post_m29_bc_interval_bridge_frontier_gmp.cpp" in paper
-        and r"\mathcal L_m>0" in paper,
+        and r"D_G(2m+1)\ge\mathcal L_m\ge\widetilde{\mathcal L}_m" in paper,
         "companion omits the explicit half-stable bridge predicate",
     )
     require(
         "prop:post29-bc-local-half-bridge" in proof_spine
-        and "explicit incoming node" in proof_spine,
+        and "fully proved" in proof_spine,
         "proof spine omits the half-stable bridge edge",
     )
     require(
-        "paper_full.pdf} is their active computational supplement" in extension
-        and "504-page detailed computational supplement" not in extension,
+        "submission.pdf" in extension
+        and "paper_full.pdf} derivation archive is not load-bearing" in extension,
         "Part III submission architecture is stale",
     )
     require(
@@ -470,10 +470,13 @@ def main() -> int:
     )
     publication_only_audit_paths = {
         "../../run_full_q3_bcd_independent_audit.sh",
+        "../../run_full_q3_bcd_bounded_current_source.sh",
+        "../../run_full_q3_bcd_modular_current_source.sh",
         "../../verify_full_q3_bcd_crosscheck.py",
         "../../character_ring_iter/verify_full_q3_bcd_modular_moment_checker.cpp",
     }
     authorized_current_source_replacements = {
+        "../../character_ring_iter/Makefile",
         "../../character_ring_iter/full_q3_bcd_remaining_data.hpp",
         "../../character_ring_iter/verify_full_q3_bcd_bounded_littlewood_gmp.cpp",
         "../../character_ring_iter/verify_full_q3_bcd_low_tail_mpfr.cpp",
@@ -514,7 +517,13 @@ def main() -> int:
             makefile,
         )
         require(match is not None, f"Makefile target is absent: {target}")
-        return match.group(1).replace("python3 -u clean_room_replay.py", "python3 clean_room_replay.py").replace(
+        return match.group(1).replace(
+            "timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s ", ""
+        ).replace(
+            "\t\t\\\n", ""
+        ).replace(
+            " \\\n\t\t--max-stage-seconds $(REPLAY_MAX_STAGE_SECONDS)", ""
+        ).replace("python3 -u clean_room_replay.py", "python3 clean_room_replay.py").replace(
             "/tmp/verify_full_q3_bd_residual_gmp --progress",
             "/tmp/verify_full_q3_bd_residual_gmp",
         ).replace(
@@ -559,8 +568,8 @@ def main() -> int:
     require(
         "full-q3-bcd-bounded-littlewood-audit" in extension_recipe
         and "full-q3-bd-residual-audit" not in extension_recipe
-        and "full-q3-bcd-independent-audit" not in extension_recipe,
-        "mandatory Part III target does not use the unified determinant supplier",
+        and "full-q3-bcd-independent-audit" in extension_recipe,
+        "mandatory Part III target omits the unified supplier or modular cross-check",
     )
     require(
         "full-q3-bd-residual-audit" in independent_recipe

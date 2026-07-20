@@ -8,6 +8,7 @@ exact audits.  Load-bearing sweeps run in C++ with GMP/OpenMP or directed MPFR.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import csv
 import hashlib
 import os
@@ -16,7 +17,9 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import threading
 import time
+from dataclasses import dataclass
 from pathlib import Path
 
 
@@ -41,6 +44,149 @@ LATEX_PAGES = re.compile(r"Output written on .+? \((\d+) pages?,")
 
 class ReplayFailure(RuntimeError):
     pass
+
+
+@dataclass(frozen=True)
+class ResourcePlan:
+    detected_cores: int
+    requested_threads: int
+    usable_threads: int
+    available_memory_bytes: int
+    build_jobs: int
+    proof_group_workers: int
+    endpoint_threads: int
+    bc_threads: int
+    exceptional_threads: int
+
+
+def detected_cpu_count() -> int:
+    """Return CPUs available to this process, not merely CPUs on the host."""
+
+    try:
+        return max(1, len(os.sched_getaffinity(0)))
+    except (AttributeError, OSError):
+        return max(1, os.cpu_count() or 1)
+
+
+def _read_memory_number(path: Path) -> int | None:
+    try:
+        value = path.read_text(errors="strict").strip()
+    except OSError:
+        return None
+    if value == "max":
+        return None
+    try:
+        number = int(value)
+    except ValueError:
+        return None
+    # Kernels commonly encode an unlimited cgroup-v1 ceiling near 2^63.
+    return number if 0 < number < (1 << 60) else None
+
+
+def detected_available_memory() -> int:
+    """Return the tightest host/cgroup estimate of memory still available."""
+
+    candidates: list[int] = []
+    try:
+        for line in Path("/proc/meminfo").read_text(errors="strict").splitlines():
+            if line.startswith("MemAvailable:"):
+                candidates.append(int(line.split()[1]) * 1024)
+                break
+    except (OSError, ValueError, IndexError):
+        pass
+
+    # Direct paths cover the usual unified-v2 and legacy-v1 layouts.
+    for limit_path, usage_path in (
+        (Path("/sys/fs/cgroup/memory.max"), Path("/sys/fs/cgroup/memory.current")),
+        (
+            Path("/sys/fs/cgroup/memory/memory.limit_in_bytes"),
+            Path("/sys/fs/cgroup/memory/memory.usage_in_bytes"),
+        ),
+    ):
+        limit = _read_memory_number(limit_path)
+        usage = _read_memory_number(usage_path)
+        if limit is not None:
+            candidates.append(max(1, limit - (usage or 0)))
+
+    # Some runners mount the current cgroup below the filesystem root.
+    try:
+        cgroup_lines = Path("/proc/self/cgroup").read_text(errors="strict").splitlines()
+    except OSError:
+        cgroup_lines = []
+    for line in cgroup_lines:
+        fields = line.split(":", 2)
+        if len(fields) != 3:
+            continue
+        controllers, relative = fields[1], fields[2].lstrip("/")
+        if fields[0] == "0" and controllers == "":
+            base = Path("/sys/fs/cgroup") / relative
+            limit = _read_memory_number(base / "memory.max")
+            usage = _read_memory_number(base / "memory.current")
+        elif "memory" in controllers.split(","):
+            base = Path("/sys/fs/cgroup/memory") / relative
+            limit = _read_memory_number(base / "memory.limit_in_bytes")
+            usage = _read_memory_number(base / "memory.usage_in_bytes")
+        else:
+            continue
+        if limit is not None:
+            candidates.append(max(1, limit - (usage or 0)))
+
+    # A conservative fallback keeps the planner usable on non-Linux systems.
+    return min(candidates) if candidates else 4 * 1024**3
+
+
+def make_resource_plan(
+    requested_threads: int,
+    detected_cores: int | None = None,
+    available_memory_bytes: int | None = None,
+) -> ResourcePlan:
+    """Allocate replay concurrency from CPU affinity and available RAM."""
+
+    cores = max(1, detected_cores or detected_cpu_count())
+    memory = max(1, available_memory_bytes or detected_available_memory())
+    requested = cores if requested_threads == 0 else max(1, requested_threads)
+    memory_gib = memory / 1024**3
+    # GMP/MPFR frontier work is more memory-sensitive than ordinary integer
+    # arithmetic.  Budget roughly 512 MiB per active compute thread.
+    memory_thread_cap = max(1, int(memory_gib * 2))
+    usable = min(requested, cores, memory_thread_cap)
+
+    if memory_gib < 4:
+        group_workers = 1
+    elif memory_gib < 8:
+        group_workers = 2
+    elif memory_gib < 16:
+        group_workers = 3
+    else:
+        group_workers = 4
+    group_workers = min(group_workers, usable, 4)
+    build_jobs = min(8, usable, max(1, int(memory_gib // 2)))
+
+    if group_workers == 4 and usable >= 4:
+        # Measurements show no useful scaling beyond 8/24/32 for these three
+        # kernels; preserve spare CPUs instead of increasing contention.
+        endpoint = min(8, max(1, usable // 8))
+        bc = min(24, max(1, 3 * usable // 8))
+        exceptional = min(32, max(1, usable - endpoint - bc))
+    else:
+        # Groups are queued on smaller hosts, so each running group may use
+        # its fair share without assuming that all four are simultaneous.
+        share = max(1, usable // group_workers)
+        endpoint = min(8, share)
+        bc = min(24, share)
+        exceptional = min(32, share)
+
+    return ResourcePlan(
+        detected_cores=cores,
+        requested_threads=requested,
+        usable_threads=usable,
+        available_memory_bytes=memory,
+        build_jobs=build_jobs,
+        proof_group_workers=group_workers,
+        endpoint_threads=endpoint,
+        bc_threads=bc,
+        exceptional_threads=exceptional,
+    )
 
 
 def digest(path: Path) -> str:
@@ -502,7 +648,7 @@ def audit_bc_caller_ranges(root: Path) -> tuple[int, int, int]:
         raise ReplayFailure(
             f"bad active B/C contract domains: {domains(active_contract)}"
         )
-    if active_statement.count(r"0\le r\le27") != 2:
+    if active_statement.count(r"0\le r\le27") < 2:
         raise ReplayFailure("active B/C contract does not state both offset-0..27 ranges")
     active_b_labels = {
         label for label in b_labels if correction_offset(label) <= 27
@@ -536,8 +682,8 @@ def audit_bc_caller_ranges(root: Path) -> tuple[int, int, int]:
         raise ReplayFailure("cannot parse the residual B/C proof")
     residual_proof = residual_proof_match.group(1)
     half_bridge = "prop:post29-bc-local-half-bridge"
-    if rf"\contractref{{{half_bridge}}}" not in residual_proof:
-        raise ReplayFailure("residual B/C proof omits its half-stable bridge import")
+    if rf"\cref{{{half_bridge}}}" not in residual_proof:
+        raise ReplayFailure("residual B/C proof omits its internal half-stable bridge")
     if (
         "post_m29_bc_interval_bridge_frontier_gmp.cpp" not in residual_proof
         or r"\mathcal L_m" not in residual_proof
@@ -555,7 +701,7 @@ def audit_bc_caller_ranges(root: Path) -> tuple[int, int, int]:
         if supplier not in residual_proof:
             raise ReplayFailure(f"residual B/C proof omits supplier {supplier}")
     proof_spine = (root / "PUBLICATION_PROOF_SPINE.md").read_text(errors="strict")
-    if half_bridge not in proof_spine or "explicit incoming node" not in proof_spine:
+    if half_bridge not in proof_spine or "fully proved" not in proof_spine:
         raise ReplayFailure("publication proof spine omits the half-stable bridge edge")
     tail_specs = (
         ("prop:post29-b-tilted-mgf", [(62, 123)]),
@@ -692,6 +838,13 @@ def purge_elf_binaries(root: Path) -> int:
     for path in sorted(root.rglob("*")):
         if not path.is_file() or path.is_symlink():
             continue
+        # `certificates/` contains checksum-bound execution snapshots from
+        # historical distributed runs.  They are inert evidence, never a
+        # command working directory or executable input.  Preserve their
+        # bytes so their manifests remain verifiable; purge every active ELF
+        # outside that archive before rebuilding the replay targets.
+        if (root / "certificates") in path.parents:
+            continue
         with path.open("rb") as handle:
             magic = handle.read(4)
         if magic == b"\x7fELF":
@@ -720,11 +873,21 @@ def tail(path: Path, lines: int = 80) -> str:
 
 
 class Runner:
-    def __init__(self, log_dir: Path, environment: dict[str, str]):
+    def __init__(
+        self,
+        log_dir: Path,
+        environment: dict[str, str],
+        max_stage_seconds: int,
+        deadline: float,
+    ):
         self.log_dir = log_dir
         self.environment = environment
+        self.max_stage_seconds = max_stage_seconds
+        self.deadline = deadline
         self.results: list[tuple[str, float]] = []
         self.replayed_certificates: set[str] = set()
+        self._lock = threading.Lock()
+        self._next_log_index = 1
 
     def run(
         self,
@@ -734,14 +897,21 @@ class Runner:
         required_text: str | tuple[str, ...] | None = None,
         environment_overrides: dict[str, str] | None = None,
         certificates: tuple[str, ...] = (),
-        timeout: int = 7200,
+        timeout: int = 300,
     ) -> Path:
-        log_path = self.log_dir / f"{len(self.results) + 1:02d}_{name}.log"
+        with self._lock:
+            log_index = self._next_log_index
+            self._next_log_index += 1
+        log_path = self.log_dir / f"{log_index:03d}_{name}.log"
         print(f"[replay] {name} ...", flush=True)
         started = time.monotonic()
         environment = self.environment.copy()
         if environment_overrides:
             environment.update(environment_overrides)
+        remaining_total = self.deadline - time.monotonic()
+        if remaining_total <= 0:
+            raise ReplayFailure(f"{name} could not start: total replay budget exhausted")
+        effective_timeout = min(timeout, self.max_stage_seconds, remaining_total)
         with log_path.open("w") as output:
             output.write("COMMAND: " + " ".join(command) + "\n")
             if environment_overrides:
@@ -762,11 +932,19 @@ class Runner:
                     stdout=output,
                     stderr=subprocess.STDOUT,
                     text=True,
-                    timeout=timeout,
+                    timeout=effective_timeout,
                     check=False,
                 )
             except subprocess.TimeoutExpired as error:
-                raise ReplayFailure(f"{name} timed out after {timeout}s; log: {log_path}") from error
+                budget = (
+                    "total replay budget"
+                    if remaining_total < min(timeout, self.max_stage_seconds)
+                    else "per-stage ceiling"
+                )
+                raise ReplayFailure(
+                    f"{name} exceeded the {effective_timeout:.1f}s {budget}; "
+                    f"profile and optimize it before replay; log: {log_path}"
+                ) from error
         elapsed = time.monotonic() - started
         if completed.returncode != 0:
             raise ReplayFailure(
@@ -781,6 +959,7 @@ class Runner:
             raise ReplayFailure(
                 f"{name} did not emit {missing!r}; log: {log_path}\n{tail(log_path)}"
             )
+        normalized_certificates: list[str] = []
         for certificate in certificates:
             relative = Path(certificate)
             if (
@@ -795,9 +974,11 @@ class Runner:
                 if len(relative.parts) == 1
                 else Path("certificates") / relative
             )
-            self.replayed_certificates.add(normalized.as_posix())
-        self.results.append((name, elapsed))
-        print(f"[replay] {name}: PASS ({elapsed:.2f}s)", flush=True)
+            normalized_certificates.append(normalized.as_posix())
+        with self._lock:
+            self.replayed_certificates.update(normalized_certificates)
+            self.results.append((name, elapsed))
+            print(f"[replay] {name}: PASS ({elapsed:.2f}s)", flush=True)
         return log_path
 
 
@@ -874,13 +1055,16 @@ def replay_classical_source_pairings(
     paths: list[Path],
     name_prefix: str,
     allowed: set[str] | None = None,
+    parallel_jobs: int = 1,
 ) -> None:
     """Regenerate claimed finite-rank moments by an independent root-datum path."""
 
     groups = classical_claim_groups(paths, allowed)
     if not groups:
         raise ReplayFailure(f"{name_prefix} exposed no classical moment claims")
-    for group in sorted(groups, key=lambda value: (value[0], int(value[1:]))):
+    ordered_groups = sorted(groups, key=lambda value: (value[0], int(value[1:])))
+
+    def replay_group(group: str) -> None:
         maximum, sources = groups[group]
         command = [
             "./verify_character_ring_moment_sources_gmp",
@@ -896,6 +1080,17 @@ def replay_classical_source_pairings(
             character,
             required_text=f"SUMMARY group={group[0]}_{group[1:]} ",
         )
+
+    if parallel_jobs <= 1 or len(ordered_groups) == 1:
+        for group in ordered_groups:
+            replay_group(group)
+        return
+    with concurrent.futures.ThreadPoolExecutor(
+        max_workers=min(parallel_jobs, len(ordered_groups))
+    ) as executor:
+        futures = [executor.submit(replay_group, group) for group in ordered_groups]
+        for future in concurrent.futures.as_completed(futures):
+            future.result()
 
 
 def stable_moment_recurrence_replay(runner: Runner, root: Path) -> None:
@@ -918,6 +1113,29 @@ def stable_moment_recurrence_replay(runner: Runner, root: Path) -> None:
         root / "character_ring_iter",
         required_text="stable_recurrence_values_checked=101",
     )
+
+
+def low_bc_source_inputs(root: Path) -> list[Path]:
+    """Return the authenticated B/C source logs consumed by the finite bridge."""
+
+    certificate = root / "certificates/post_m29"
+    manifests = [
+        certificate / "post_m29_input_manifest.sha256",
+        certificate / "b11_delta_logs_bonly.sha256",
+        certificate / "b12_delta_logs_bonly.sha256",
+        certificate / "b13_delta_logs_bonly.sha256",
+        certificate / "c13_delta_logs_conly.sha256",
+        certificate / "c14_delta_logs_conly.sha256",
+        certificate / "c17_delta_logs_conly.sha256",
+    ]
+    inputs = manifested_inputs(root, manifests)
+    inputs.append(
+        root
+        / "certificates/classical_bridge/raw_logs/ginibre_m28_logs/bc/"
+        / "m28_BC17_rank_pair_exact41.rerun2.log"
+    )
+    is_d_log = lambda path: re.search(r"(?:^|_)D\d", path.name) is not None
+    return sorted({path for path in inputs if not is_d_log(path)})
 
 
 def classical_replays(runner: Runner, root: Path) -> None:
@@ -1015,43 +1233,9 @@ def classical_replays(runner: Runner, root: Path) -> None:
         certificates=("post_m29_d11_onset75_bridge_gmp_machine_c_certificate.log",),
     )
 
-    bc_manifests = [
-        # The shared first-hit sources supply the early consecutive prefixes
-        # (B12 Delta_26..39 and the corresponding B13/C13/C14/C17 data).  The
-        # row-specific manifests below begin only at their later continuation
-        # points, so omitting this accepted input manifest makes the focused
-        # onset replay correctly reject a gapped source sequence.
-        certificate / "post_m29_input_manifest.sha256",
-        certificate / "b11_delta_logs_bonly.sha256",
-        certificate / "b12_delta_logs_bonly.sha256",
-        certificate / "b13_delta_logs_bonly.sha256",
-        certificate / "c13_delta_logs_conly.sha256",
-        certificate / "c14_delta_logs_conly.sha256",
-        certificate / "c17_delta_logs_conly.sha256",
-    ]
     supplier = certificate / "post_m29_lower_bound_supplier_certificate_replay.log"
-    bc_inputs = manifested_inputs(root, bc_manifests)
-    # The accepted m=28 bridge source supplies C17 Delta_40 and Delta_41,
-    # between the shared prefix through Delta_39 and the row-specific shard
-    # beginning at Delta_42.
-    bc_inputs.extend(
-        (
-            root
-            / "certificates/classical_bridge/raw_logs/ginibre_m28_logs/bc/"
-            / "m28_BC17_rank_pair_exact41.rerun2.log",
-        )
-    )
-    bc_inputs = sorted(set(bc_inputs))
+    bc_inputs = low_bc_source_inputs(root)
     is_d_log = lambda path: re.search(r"(?:^|_)D\d", path.name) is not None
-    bc_inputs = [path for path in bc_inputs if not is_d_log(path)]
-
-    replay_classical_source_pairings(
-        runner,
-        character,
-        str(root / "references/oeis_A002137_stable.txt"),
-        bc_inputs,
-        "classical_low_bc_source_pairing",
-    )
 
     command = [
         sys.executable,
@@ -1088,13 +1272,13 @@ def classical_replays(runner: Runner, root: Path) -> None:
 def exceptional_replays(runner: Runner, root: Path, threads: int) -> None:
     character = root / "character_ring_iter"
     pairing_sources = (
-        ("G2", 200, [character / "logs/g2_200.log"]),
-        ("F4", 220, [character / "logs/f4_220c.log"]),
-        ("E6", 80, [character / "logs/e6_80.log"]),
-        ("E7", 70, [character / "logs/e7_70.log"]),
+        ("G2", 38, [character / "logs/g2_200.log"]),
+        ("F4", 65, [character / "logs/f4_220c.log"]),
+        ("E6", 42, [character / "logs/e6_80.log"]),
+        ("E7", 42, [character / "logs/e7_70.log"]),
         (
             "E8",
-            100,
+            42,
             [
                 character / "logs/e8_70.log",
                 root / "references/arxiv_2412_21189_e8_m71_m100.txt",
@@ -1116,12 +1300,21 @@ def exceptional_replays(runner: Runner, root: Path, threads: int) -> None:
                 f"source_values={maximum + 1} failures=0"
             ),
         )
-    for group, log_name in (
-        ("G2", "g2_200.log"),
-        ("F4", "f4_220c.log"),
-        ("E6", "e6_80.log"),
-        ("E7", "e7_70.log"),
-        ("E8", "e8_70.log"),
+    runner.run(
+        "exceptional_ancillary_all_consumed_moments",
+        [sys.executable, "verify_exceptional_moment_ancillary.py"],
+        root,
+        required_text=(
+            "EXCEPTIONAL_ANCILLARY checked_values=358 failures=0",
+            "EXCEPTIONAL_ANCILLARY VERIFICATION: ALL PASS",
+        ),
+    )
+    for group, log_name, maximum in (
+        ("G2", "g2_200.log", 38),
+        ("F4", "f4_220c.log", 65),
+        ("E6", "e6_80.log", 80),
+        ("E7", "e7_70.log", 70),
+        ("E8", "e8_70.log", 70),
     ):
         runner.run(
             f"exceptional_prefix_{group.lower()}",
@@ -1131,6 +1324,7 @@ def exceptional_replays(runner: Runner, root: Path, threads: int) -> None:
                 group,
                 str(character / "logs" / log_name),
                 str(root / "references"),
+                str(maximum),
             ],
             character,
             required_text="Chain verification: ALL PASS",
@@ -1183,7 +1377,14 @@ def exceptional_replays(runner: Runner, root: Path, threads: int) -> None:
             str(root / "certificates/exceptional_rect/e8_rect_negative_bounds.tsv"),
         ],
         character,
-        required_text="RESULT: ALL PASS",
+        required_text=(
+            "positive_accumulation=MPFR_RNDD negative_conversion=MPFR_RNDU "
+            "precision_bits=384",
+            "SUMMARY cases_checked=29 failed_cases=0 lattice_failures=0 "
+            "precision_bits=384",
+            "RESULT: ALL PASS",
+        ),
+        environment_overrides={"OMP_NUM_THREADS": str(min(threads, 32))},
     )
     runner.run(
         "exceptional_e8_finite_bridge",
@@ -1212,64 +1413,89 @@ def cpp_endpoint_replays(runner: Runner, root: Path, threads: int) -> None:
         required_text="All SU(N) repair certificates verified with exact GMP arithmetic",
     )
     stable = str(root / "references/oeis_A002137_stable.txt")
-    runner.run(
-        "classical_bc_row_gated_source_bridge",
-        [
-            "./verify_bc_row_gated_bridge_gmp",
-            "--threads",
-            str(min(threads, 3)),
-            "--stable",
-            stable,
-        ],
-        character,
-        required_text=(
-            "families=2 ranks=58 row_gated_steps=870 "
-            "exact_steps=416 interval_steps=454 failures=0 status=PASS"
-        ),
-    )
-    runner.run(
-        "classical_d53_63_row_gated_source_bridge",
-        [
-            "./post_m29_d_stable_window_interval_gmp",
-            "--certificate-d53-63-row-gated",
-        ],
-        character,
-        required_text=(
-            "SUMMARY ranks_checked=11 chain_steps_checked=36 failures=0"
-        ),
-    )
-    runner.run(
-        "classical_source_m29_weyl",
-        [
-            "./classical_boundary_source_replay_gmp",
-            "--b2-c2-weyl-certificate",
-            "--b3-c3-weyl-certificate",
-            "--chain-m",
-            "29",
-            "--stable-moments",
-            stable,
-        ],
-        character,
-        required_text="C_3 Chain diff D(29) =",
-    )
-    runner.run(
-        "classical_source_m29_high_rows",
-        [
-            "./classical_boundary_source_replay_gmp",
-            "--bc-lower-range",
-            "19",
-            "30",
-            "--d-lower-range",
-            "35",
-            "63",
-            "--chain-m",
-            "29",
-            "--stable-moments",
-            stable,
-        ],
-        character,
-        required_text="minimum lower margin = B_19",
-    )
+    bc_source_command = [
+        "./verify_bc_row_gated_bridge_bounded_littlewood_gmp",
+        "--stable",
+        stable,
+    ]
+    for source_log in low_bc_source_inputs(root):
+        bc_source_command.extend(("--source-log", str(source_log)))
+
+    def row_gated_bridges(row_threads: int) -> None:
+        runner.run(
+            "classical_bc_row_gated_source_bridge",
+            bc_source_command,
+            character,
+            required_text=(
+                "source_claims_checked=182 source_groups_checked=14",
+                "families=2 ranks=58 row_gated_steps=870 "
+                "exact_steps=416 interval_steps=454 failures=0 status=PASS",
+                "BC_ROW_GATED_BOUNDED_LITTLEWOOD VERIFICATION: ALL PASS",
+            ),
+            environment_overrides={"OMP_NUM_THREADS": str(row_threads)},
+            certificates=(
+                "classical_bridge/bc_row_gated_bounded_littlewood_certificate.log",
+            ),
+        )
+        runner.run(
+            "classical_d53_63_row_gated_source_bridge",
+            [
+                "./post_m29_d_stable_window_interval_gmp",
+                "--certificate-d53-63-row-gated",
+            ],
+            character,
+            required_text=(
+                "SUMMARY ranks_checked=11 chain_steps_checked=36 failures=0"
+            ),
+        )
+
+    def source_weyl_bridges() -> None:
+        runner.run(
+            "classical_source_m29_weyl",
+            [
+                "./classical_boundary_source_replay_gmp",
+                "--b2-c2-weyl-certificate",
+                "--b3-c3-weyl-certificate",
+                "--chain-m",
+                "29",
+                "--stable-moments",
+                stable,
+            ],
+            character,
+            required_text="C_3 Chain diff D(29) =",
+            environment_overrides={"OMP_NUM_THREADS": "1"},
+        )
+        runner.run(
+            "classical_source_m29_high_rows",
+            [
+                "./classical_boundary_source_replay_gmp",
+                "--bc-lower-range",
+                "19",
+                "30",
+                "--d-lower-range",
+                "35",
+                "63",
+                "--chain-m",
+                "29",
+                "--stable-moments",
+                stable,
+            ],
+            character,
+            required_text="minimum lower margin = B_19",
+            environment_overrides={"OMP_NUM_THREADS": "1"},
+        )
+
+    # The B/C bounded-Littlewood comparison and the independent Weyl-source
+    # computation share no generated inputs.  Reserve one endpoint core for
+    # Weyl and hide the row-gated bridge behind its longer critical path.
+    if threads > 1:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+            row_future = executor.submit(row_gated_bridges, threads - 1)
+            source_weyl_bridges()
+            row_future.result()
+    else:
+        row_gated_bridges(1)
+        source_weyl_bridges()
     runner.run(
         "trace_square_cutoff_mpfr",
         ["./trace_square_cutoff_mpfr"],
@@ -1370,6 +1596,32 @@ def cpp_endpoint_replays(runner: Runner, root: Path, threads: int) -> None:
         required_text="SUMMARY group=D_4 moments=60 source_values=120 failures=0",
     )
     exact_source_logs = sorted(exact_source.glob("*exact_adjoint*.log"))
+    d19_artifacts = certificate / "d19_exact_mgf"
+    d19_moment_logs = [
+        d19_artifacts / f"exact_D19_m{moment}_machine_c.log"
+        for moment in range(19, 33)
+    ] + [
+        d19_artifacts / "exact_D15_23_m33.log",
+        d19_artifacts / "exact_D15_23_m34.log",
+    ]
+    d19_bridge_logs = [
+        certificate / "d19_delta_logs/d19_delta_19_42_from_m29_D16_63_lower.log",
+        certificate / "d19_delta_logs/d19_delta_27.log",
+        d19_artifacts / "exact_D19_m39.log",
+    ]
+    # D19 and the D4--D24 source families consume disjoint authenticated logs.
+    # The D4 branch exposes four one-core jobs, leaving ample room inside the
+    # eight-core endpoint allocation for this longer independent pairing.
+    d19_pairing_executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+    d19_pairing_future = d19_pairing_executor.submit(
+        replay_classical_source_pairings,
+        runner,
+        character,
+        stable,
+        sorted(set(d19_moment_logs + d19_bridge_logs)),
+        "classical_d19_source_pairing",
+        {"D19"},
+    )
     replay_classical_source_pairings(
         runner,
         character,
@@ -1377,6 +1629,7 @@ def cpp_endpoint_replays(runner: Runner, root: Path, threads: int) -> None:
         exact_source_logs,
         "classical_d4_d24_source_pairing",
         {f"D{rank}" for rank in range(4, 25)},
+        parallel_jobs=min(4, threads),
     )
     d4_24_command = [
         "./post_m29_d_stable_window_interval_gmp",
@@ -1413,27 +1666,10 @@ def cpp_endpoint_replays(runner: Runner, root: Path, threads: int) -> None:
         ),
         certificates=("post_m29_d12_24_exact_mgf_mpfr_certificate.log",),
     )
-    d19_artifacts = certificate / "d19_exact_mgf"
-    d19_moment_logs = [
-        d19_artifacts / f"exact_D19_m{moment}_machine_c.log"
-        for moment in range(19, 33)
-    ] + [
-        d19_artifacts / "exact_D15_23_m33.log",
-        d19_artifacts / "exact_D15_23_m34.log",
-    ]
-    d19_bridge_logs = [
-        certificate / "d19_delta_logs/d19_delta_19_42_from_m29_D16_63_lower.log",
-        certificate / "d19_delta_logs/d19_delta_27.log",
-        d19_artifacts / "exact_D19_m39.log",
-    ]
-    replay_classical_source_pairings(
-        runner,
-        character,
-        stable,
-        sorted(set(d19_moment_logs + d19_bridge_logs)),
-        "classical_d19_source_pairing",
-        {"D19"},
-    )
+    try:
+        d19_pairing_future.result()
+    finally:
+        d19_pairing_executor.shutdown(wait=True)
     d19_tail_command = [
         "./post_m29_bc_layered_mgf_mpfr",
         "--d-only",
@@ -1578,7 +1814,7 @@ def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) ->
         # 32-worker cap so replay timing remains portable across hosts.
         environment_overrides={"OMP_NUM_THREADS": str(min(threads, 32))},
         certificates=("bc_lambda_half_bridge_gmp_certificate.log",),
-        timeout=28800,
+        timeout=300,
     )
     runner.run(
         "bc_pieri_powerloss_2q_gmp",
@@ -1599,7 +1835,7 @@ def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) ->
             "loss_q_mult=2 loss_add=0",
         ),
         certificates=("bc_pieri_powerloss_2q_gmp_certificate.log",),
-        timeout=28800,
+        timeout=300,
     )
 
     runner.run(
@@ -1607,12 +1843,13 @@ def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) ->
         ["./verify_active_bc_b_frontiers_bounded_littlewood_gmp"],
         character,
         required_text=(
-            "ACTIVE_B_FRONTIER_BOUNDED_LITTLEWOOD rows=33 cases=337 "
-            "maximum_moment=121",
+            "ACTIVE_B_FRONTIER_HYBRID rows=6 cases=337 analytic_cases=296 "
+            "exact_cases=41 active_maximum_moment=121 "
+            "determinant_maximum_moment=67",
             "failures=0",
-            "ACTIVE_B_FRONTIER_BOUNDED_LITTLEWOOD VERIFICATION: ALL PASS",
+            "ACTIVE_B_FRONTIER_HYBRID VERIFICATION: ALL PASS",
         ),
-        environment_overrides={"OMP_NUM_THREADS": str(min(threads, 32))},
+        environment_overrides={"OMP_NUM_THREADS": str(min(threads, 64))},
         certificates=("bc_b_h8_h27_bounded_littlewood_gmp_certificate.log",),
         timeout=3600,
     )
@@ -1823,7 +2060,6 @@ def audit_replay_input_coverage(root: Path) -> int:
     input_suffixes = {".cpp", ".log", ".md", ".py", ".sha256", ".tex", ".tsv", ".txt"}
     consumed: set[Path] = {
         (root / "paper.tex").resolve(),
-        (root / "paper_full.tex").resolve(),
         (root / "character_ring_iter/Makefile").resolve(),
     }
     for command, cwd in collector.calls:
@@ -1870,14 +2106,13 @@ def build_latex_document(runner: Runner, root: Path, stem: str) -> int:
 
 def build_papers(runner: Runner, root: Path) -> None:
     main_pages = build_latex_document(runner, root, "paper")
-    full_pages = build_latex_document(runner, root, "paper_full")
-    if full_pages <= main_pages:
+    if main_pages > 100:
         raise ReplayFailure(
-            f"detailed computational supplement is incomplete: main={main_pages}, full={full_pages}"
+            f"reader-facing Parts I--II exceeded the 100-page compactness ceiling: {main_pages}"
         )
     print(
-        f"[replay] document split: PASS (main={main_pages} pages, "
-        f"supplement={full_pages} pages)",
+        f"[replay] self-contained Parts I--II document: PASS ({main_pages} pages; "
+        "optional derivation archive excluded from the proof replay)",
         flush=True,
     )
 
@@ -1893,12 +2128,33 @@ def preflight(skip_paper: bool = False) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--threads", type=int, default=os.cpu_count() or 1)
+    parser.add_argument(
+        "--threads",
+        type=lambda value: 0 if value.lower() == "auto" else int(value),
+        default=0,
+        help="maximum compute threads, or 'auto' (default) for affinity/RAM detection",
+    )
+    parser.add_argument(
+        "--max-stage-seconds",
+        type=int,
+        default=300,
+        help="fail and preserve profiling evidence if one executable stage exceeds this limit",
+    )
+    parser.add_argument(
+        "--max-total-seconds",
+        type=int,
+        default=300,
+        help="fail unless the complete isolated replay finishes inside this wall-clock budget",
+    )
     parser.add_argument("--keep", action="store_true", help="keep the isolated tree after success")
     parser.add_argument("--skip-paper", action="store_true", help="skip only the final PDF rebuild")
     args = parser.parse_args()
-    if args.threads < 1:
-        parser.error("--threads must be positive")
+    if args.threads < 0:
+        parser.error("--threads must be positive or 'auto'")
+    if args.max_stage_seconds < 1:
+        parser.error("--max-stage-seconds must be positive")
+    if args.max_total_seconds < 1:
+        parser.error("--max-total-seconds must be positive")
 
     source = Path(__file__).resolve().parent
     workspace = Path(tempfile.mkdtemp(prefix="ginibre-q3-clean-room-"))
@@ -1909,6 +2165,17 @@ def main() -> int:
     started = time.monotonic()
     try:
         preflight(args.skip_paper)
+        resources = make_resource_plan(args.threads)
+        print(
+            "[replay] resource plan: "
+            f"detected_cores={resources.detected_cores} "
+            f"requested_threads={resources.requested_threads} "
+            f"available_ram_gib={resources.available_memory_bytes / 1024**3:.1f} "
+            f"usable_threads={resources.usable_threads} "
+            f"build_jobs={resources.build_jobs} "
+            f"proof_group_workers={resources.proof_group_workers}",
+            flush=True,
+        )
         print(f"[replay] isolated workspace: {workspace}", flush=True)
         shutil.copytree(source, isolated, symlinks=True)
         manifest_count, entry_count = verify_manifests(isolated)
@@ -1964,21 +2231,62 @@ def main() -> int:
             {
                 "LC_ALL": "C",
                 "PYTHONHASHSEED": "0",
-                "OMP_NUM_THREADS": str(args.threads),
+                "OMP_NUM_THREADS": str(resources.usable_threads),
                 "SOURCE_DATE_EPOCH": "946684800",
             }
         )
-        runner = Runner(logs, environment)
+        runner = Runner(
+            logs,
+            environment,
+            args.max_stage_seconds,
+            started + args.max_total_seconds,
+        )
         runner.run(
             "build_cpp_replayers",
-            ["make", "-j", str(min(args.threads, 8)), "replay-build"],
+            ["make", "-j", str(resources.build_jobs), "replay-build"],
             isolated / "character_ring_iter",
         )
         stable_moment_recurrence_replay(runner, isolated)
-        cpp_endpoint_replays(runner, isolated, args.threads)
-        bc_residual_certificate_replays(runner, isolated, args.threads)
-        classical_replays(runner, isolated)
-        exceptional_replays(runner, isolated, args.threads)
+        print(
+            "[replay] parallel proof groups: "
+            f"endpoint_threads={resources.endpoint_threads} "
+            f"bc_threads={resources.bc_threads} "
+            f"exceptional_threads={resources.exceptional_threads}",
+            flush=True,
+        )
+        with concurrent.futures.ThreadPoolExecutor(
+            max_workers=resources.proof_group_workers
+        ) as executor:
+            futures = {
+                executor.submit(
+                    cpp_endpoint_replays,
+                    runner,
+                    isolated,
+                    resources.endpoint_threads,
+                ): "classical endpoints",
+                executor.submit(
+                    bc_residual_certificate_replays,
+                    runner,
+                    isolated,
+                    resources.bc_threads,
+                ): "B/C residuals",
+                executor.submit(classical_replays, runner, isolated): "classical tails",
+                executor.submit(
+                    exceptional_replays,
+                    runner,
+                    isolated,
+                    resources.exceptional_threads,
+                ): "exceptional",
+            }
+            for future in concurrent.futures.as_completed(futures):
+                group_name = futures[future]
+                try:
+                    future.result()
+                except Exception as error:
+                    raise ReplayFailure(
+                        f"parallel replay group {group_name} failed: {error}"
+                    ) from error
+                print(f"[replay] parallel proof group {group_name}: PASS", flush=True)
         reachable_certificates = audit_replayed_certificate_coverage(
             isolated, runner.replayed_certificates
         )
@@ -1991,6 +2299,11 @@ def main() -> int:
             build_papers(runner, isolated)
 
         elapsed = time.monotonic() - started
+        if elapsed > args.max_total_seconds:
+            raise ReplayFailure(
+                f"complete replay took {elapsed:.2f}s, exceeding the "
+                f"{args.max_total_seconds}s total budget"
+            )
         print(
             f"[replay] ALL GINIBRE Q3 CHECKS PASSED: {len(runner.results)} executable "
             f"stages, {manifest_count} manifests, {entry_count} hashes, {elapsed:.2f}s",

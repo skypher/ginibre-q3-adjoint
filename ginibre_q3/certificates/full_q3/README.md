@@ -4,8 +4,9 @@ This directory contains exact and directed-rounding certificates used only by
 `full_q3_extension.tex`.  They are separate from the accepted exactly-two-minus
 certificate boundary of `paper.tex`.
 
-`fullq3complete0002_optimus.log` is the hardened aggregate current-source
-replay of the complete Part III target `make full-q3-extension`.  It ran on
+`fullq3complete0002_optimus.log` is the hardened aggregate replay of the
+prepublication Part III target that preceded the unified 17,862-case supplier
+and mandatory modular cross-check.  It ran on
 `optimus` from `2026-07-15T12:45:11Z` to `2026-07-15T13:30:06Z` with two
 low-priority OpenMP workers.  The transcript authenticates the final acyclic
 Part III document and the executed prepublication source snapshot
@@ -21,9 +22,9 @@ c147434141f42484b6a46364803f784e1c15a8d48d06954ce903938360f52f87  full_q3_source
 The initial publication-only rebind in `paper.tex` produced source-manifest
 SHA-256
 `1cbd33b571e990c8b8bce47a1bd549129dea6cc89d965ec5951ec6f8f265fb59`.
-The live final-source manifest, including the compressed modular checker, has
-SHA-256
-`cb7f417576f6bd94686883abbff70f8f81e797ed501ae6058771d321c19e52a2`.
+The live final-source manifest includes the compressed modular checker and is
+verified directly by `publication-preflight`; its digest may change with a
+publication revision and is therefore not duplicated in this prose file.
 The historical aggregate transcript and the archived execution snapshot keep
 the prepublication hash above; the live rebind verifier authenticates mutable
 publication files through the current manifest while requiring every archived
@@ -46,8 +47,9 @@ thread count from four to two.  The older transcript remains the independent
 machine-C audit trail.  The adjacent SHA-256 sidecar authenticates the new
 imported bytes.  The individual source-matched certificates below remain the
 load-bearing arithmetic records;
-the aggregate transcript proves that the final Make target consumes them and
-recomputes every active Part III verifier from the pinned source snapshot.
+the aggregate transcript proves what the prepublication Make target consumed.
+The final Make target is stronger: it reruns both the promotion verifier and
+the mandatory modular checker.
 
 `fullq3bcd0002_machine_c.log` is the source-matched raw C++/GMP replay for the finite residual
 boxes in `B_18..B_21` and `D_31..D_70`.  It was compiled and run on machine C
@@ -85,7 +87,15 @@ exact rational parameter schedule for every row, `rows_checked=58`, and the
 terminal marker `FULL_Q3_BCD_LOW_TAIL VERIFICATION: ALL PASS`.  Its adjacent
 SHA-256 file authenticates the raw output.
 
-`fullq3bcd0010_machine_c.log` is the accepted complete exact
+`fullq3bcdboundedfinal0001_current_source.log` is the accepted unified exact
+bounded-Littlewood replay for all 114 residual rows.  Its header records the
+exact current verifier and row-data hashes, compiler, host, thread count, and
+base commit.  It reconstructs through degree 71 with 31 primes and a 961-bit
+CRT modulus, checks all 17,862 residual inequalities, reproduces the minimum
+`I(D_5,2,1)=50`, and records both the verifier terminal marker and wrapper exit
+status zero.  The adjacent SHA-256 sidecar authenticates its 6,164 raw lines.
+
+`fullq3bcd0010_machine_c.log` is the accepted historical exact
 bounded-Littlewood replay
 for all residual boxes left in `B_2..B_17`, `C_2..C_28`, and `D_4..D_30`.
 It was compiled with strict warnings and run on machine C (`nb1cb2f`) with 24
@@ -113,7 +123,7 @@ to 12,993.  `fullq3bcd0009_machine_c.log` is arithmetic-identical in every
 moment and exact-tail margin but predates these fail-closed row-ledger checks;
 it is retained as the immediately preceding audit trail.
 
-`fullq3bcd0008_machine_c.log` is the immediately preceding residual-only
+`fullq3bcd0008_machine_c.log` is the earlier residual-only
 replay.  It has the same 12,993 residual result but predates integration of
 the twelve exact-tail ledgers, so it is retained as an audit trail and is not
 the accepted unified certificate.
@@ -130,7 +140,14 @@ and Newton forward differences at the integer nodes.  It checks exactly 538
 higher moments modulo 21 primes whose 628-bit product exceeds the 607-bit
 character bound, which makes every checked candidate unique, and then checks
 the remaining 5,509 hierarchy values with exact GMP integers.  Its terminal
-marker is `FULL_Q3_MODULAR_CHECKER VERIFICATION: ALL PASS`.
+marker is `FULL_Q3_MODULAR_CHECKER VERIFICATION: ALL PASS`.  This checker is a
+mandatory dependency of `make full-q3-extension`; the older large
+reverse-Pieri B/D supplier remains an optional additional control.
+The current-source execution is stored as
+`fullq3bcdmodularfinal0001_current_source.log`.  Its header binds the checker,
+row data, and both historical input ledgers; it records the 21-prime scope,
+628-bit modulus, 607-bit required bound, zero wrapper status, and terminal
+success marker.  Its adjacent sidecar authenticates the raw transcript.
 `fullq3bcd0007_machine_c_launch_failure.log`
 records a wrapper failure before the verifier was invoked (`/usr/bin/time`
 was absent); it is retained solely to make the run-ID history auditable.

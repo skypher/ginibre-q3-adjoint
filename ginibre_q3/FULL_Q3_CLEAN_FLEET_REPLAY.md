@@ -6,7 +6,7 @@
   H25--H29 exact B/C frontier, so that the Part III import of the two-minus
   theorem had a current-source fleet audit rather than waiting for one serial
   host.  The corrected active Parts I--II proof now consumes one unified
-  bounded-Littlewood determinant certificate for the type-B H8--H27 boxes and
+  hook-length/determinant certificate for the type-B H8--H27 boxes and
   only the inexpensive type-C formula portions of H9--H27.  Consequently this
   fleet is an independent reverse-Pieri control; H28--H29 are additional
   overlap and provenance data.
