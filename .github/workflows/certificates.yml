@@ -51,6 +51,7 @@ jobs:
             libgmp-dev \
             libmpfr-dev \
             libomp-dev \
+            lmodern \
             texlive-latex-base \
             texlive-latex-extra \
             texlive-fonts-recommended
@@ -187,6 +188,7 @@ jobs:
             libgmp-dev \
             libmpfr-dev \
             libomp-dev \
+            lmodern \
             texlive-latex-base \
             texlive-latex-extra \
             texlive-fonts-recommended
@@ -257,6 +259,7 @@ jobs:
             libgmp-dev \
             libmpfr-dev \
             libomp-dev \
+            lmodern \
             texlive-latex-base \
             texlive-latex-extra \
             texlive-fonts-recommended
