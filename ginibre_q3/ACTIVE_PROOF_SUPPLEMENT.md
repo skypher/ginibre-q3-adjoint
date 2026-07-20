@@ -9,9 +9,10 @@ conditional, exploratory, or superseded result are outside the proof.
 
 | Component | Active role |
 |---|---|
-| `submission.pdf` | Single referee-facing artifact containing all three numbered parts |
-| `paper.pdf` | Self-contained Parts I--II theorem, reductions, finite certificate contracts, family closures, and final assembly |
-| `full_q3_extension.pdf` | Part III cone reduction, higher-minus hierarchy, finite certificates, and final cone promotion |
+| `submission.pdf` | Single artifact containing every load-bearing manuscript component |
+| `paper.pdf` | Formal Parts I--II theorem, reductions, finite certificate contracts, family closures, and final assembly |
+| `full_q3_main.pdf` | Compact Part III guide and theorem interface |
+| `full_q3_extension.pdf` | Included Part III cone reduction, higher-minus hierarchy, finite certificates, and final cone promotion |
 | `paper_full.pdf` | Optional non-load-bearing derivation archive |
 
 ## Parts I--II active chain

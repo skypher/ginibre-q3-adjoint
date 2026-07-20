@@ -173,35 +173,13 @@ successful full composition from the archived source root.  Thus a later
 publication-only rebind of `paper.tex` cannot replace the source bytes against
 which the 200-stage evidence was accepted.
 
-The publication-only rebind is separately fail-closed by
-`verify_full_q3_paper_rebind.py` (SHA-256
-`fee2856f349b4896ae6495f8d51982c35acb1103ece111e87410200f2b63a145`,
-also pinned by `certificates/full_q3/full_q3_paper_rebind_verifier.sha256`).
-Its preflight pins the executed `paper.tex` digest
-`6b2f273aa082f105df4bf60f8ba7047c62cafac88a3bc2c0a5cffdca95607d27`,
-pairs all 850 numbered results with 850 proofs, and reconstructs the 2,099-edge
-result-reference graph.  The baseline has exactly one nontrivial component:
-`prop:post29`, `prop:post29-bc-half-bridge`, `prop:post29-direct`, and
-`thm:classical`.  The verifier authorizes one exact prose replacement and no
-other byte change.  Its in-memory candidate has digest
-`d2fb8944ec081f47a1bfcf558bb65adb01936b0ac1d0dbbb1f561d63d7197010`,
-removes only the edge `prop:post29 -> thm:classical`, retains 2,098 edges, and
-has no nontrivial component.  The 348 results reachable from `thm:main` are
-unchanged.  Mutated baseline bytes, an unchanged final paper, an extra final
-byte, and a different edge edit are all rejected.
-The same audit verifies every file in the 85-entry replay manifest and the
-36-entry Part III manifest.  It permits only the induced `paper.tex` record
-change in the former, and only the induced `paper.tex` and nested replay-
-manifest record changes in the latter.  Their final required digests are
-`bfe68eaf0ee4a5fe8263902b1145804a630381a54bfd4a9b4bb3135517196874`
-and
-`1cbd33b571e990c8b8bce47a1bd549129dea6cc89d965ec5951ec6f8f265fb59`.
-
-The edit is intentionally not applied until the execution-source snapshot and
-successful 200-stage transcript exist.  Afterwards the archived source root
-is passed as `--execution-root` and the publication source root as
-`--final-root`; the final PDFs, manifests, and dependency audit are then
-rebuilt from the rebound source.
+The historical one-edit paper-rebind verifier has been retired because its
+fixed theorem count and source digests describe a superseded publication
+draft.  It is not evidence for the current manuscript.  The archived
+execution-source snapshot remains immutable evidence for the 200-stage run;
+the current publication sources, dependency graph, manifests, and PDFs are
+instead checked directly by the live publication preflight and artifact
+audits.
 
 After the three fleet partitions have completed, the collection and exact
 composition command is:
@@ -223,10 +201,9 @@ The preceding audit-detail line must also contain
 `frontier_certificate_files=7`, `frontier_certificate_blocks=71`, and
 `certificate_data_projections=124`.
 
-The exact paper-rebind audit, final document audit, complete manifest audit,
-three-pass builds of both companion PDFs, Part III audit/build, and strict
-referee disposition are run only after that marker is present and
-authenticated.
+The final document audit, complete manifest audit, three-pass PDF builds,
+Part III audit/build, and strict referee disposition are run only after that
+marker is present and authenticated.
 
 ## Publication finalization order
 
@@ -238,43 +215,16 @@ accepted.
    `distributed0001_manifest.sha256` with `sha256sum -c`.  Require the two
    composition transcripts and the collection transcript to retain their exact
    `ALL PASS` markers.
-2. From `certificates/full_q3`, verify
-   `full_q3_paper_rebind_verifier.sha256` with `sha256sum -c`.
-3. Return to the `ginibre_q3` source root.  Before changing the publication
-   tree, run
-
-   ```text
-   python3 verify_full_q3_paper_rebind.py \
-     --execution-root certificates/full_q3/distributed0001/execution_source_snapshot/ginibre_q3 \
-     --preflight
-   ```
-
-   and require `FULL_Q3_PAPER_REBIND VERIFICATION: ALL PASS`.
-4. Apply only the fixed `OLD_PASSAGE` to `NEW_PASSAGE` replacement encoded in
-   `verify_full_q3_paper_rebind.py`.  Change only the induced `paper.tex` entry
-   in `replay_sources.sha256`, and only the induced `paper.tex` and nested
-   replay-manifest entries in
-   `certificates/full_q3/full_q3_source_manifest.sha256`.
-5. Run the final-mode rebind audit:
-
-   ```text
-   python3 verify_full_q3_paper_rebind.py \
-     --execution-root certificates/full_q3/distributed0001/execution_source_snapshot/ginibre_q3 \
-     --final-root .
-   ```
-
-   It must report the fixed paper digest `d2fb8944...`, edge count
-   `2099->2098`, component count `1->0`, unchanged reachability, and the two
-   fixed final manifest digests.
-6. Rerun the document, reference, caller-range, accepted-status, replay-input,
+2. Return to the `ginibre_q3` source root and rerun the document, reference,
+   caller-range, accepted-status, replay-input,
    and complete artifact audits from the final source.  Then build
    `paper.tex` and `paper_full.tex` for three clean `pdflatex` passes each and
    reject undefined references, undefined citations, duplicate labels, or a
    nonzero process status.
-7. Run `make full-q3-extension` from `ginibre_q3`; require every arithmetic
+3. Run `make full-q3-extension` from `ginibre_q3`; require every arithmetic
    target, the 51-result document audit, the complete artifact audit, and the
    two-pass `full_q3_extension.pdf` build to succeed.
-8. Verify that all three PDFs are nonempty and issue the unconditional referee
+4. Verify that all four publication PDFs are nonempty and issue the unconditional referee
    disposition only after every preceding gate has passed.  Any failure reopens
    the exact failing obligation; it is not waived by the earlier conditional
    recommendation.
@@ -288,16 +238,17 @@ quantum-application boundary, and a code/data availability section.  It
 changes no theorem, proof, arithmetic program, or certificate.  Its induced
 `paper.tex`, replay-manifest, and Part III manifest changes are exact metadata
 rebinds.  The final referee corrections additionally state the unresolved
-central-positive-definite cone boundary, pin the audited computation by full
-Git commit, make Parts I--II a formally inseparable submission component, add
-the proposition-to-certificate map, and synchronize the publication date.
+central-positive-definite cone boundary, distinguish the historical execution
+snapshot from the final-source authority, make Parts I--II a formally
+inseparable submission component, add the proposition-to-certificate map, and
+synchronize the publication date.
 `verify_full_q3_related_work_rebind.py` reverses the fixed author
 metadata, related-work and application-scope remarks, three bibliography
 items, three source-table rows, the complete corrected availability section,
 the central-cone sentence, both date changes, companion bibliography identity,
 and all added document checks to recover the accepted pre-edit hashes.
 The audit also verifies all
-46 records in the final reference manifest and all 36 records in the final
+46 records in the final reference manifest and all 56 records in the final
 Part III manifest.
 
 From `certificates/full_q3`, first authenticate the new verifier:
@@ -315,10 +266,7 @@ sha256sum -c references/references_manifest.sha256
 (cd certificates/full_q3 && sha256sum -c full_q3_source_manifest.sha256)
 ```
 
-The related-work verifier must report the final Part III source digest
-`ba089e58...0bf4e06`, 13 cited works, 46 reference records, 36 full-manifest
-records, and `FULL_Q3_RELATED_WORK_REBIND VERIFICATION: ALL PASS`.  The final
-Part III manifest digest is `6af35090...436a68`.  The earlier digest
-`1cbd33b5...265fb59` remains the authenticated stage immediately after the
-dependency rebind and is the baseline recovered by reversing this second,
-publication-only edit.
+The related-work verifier must report 19 bound arithmetic sources, 46
+reference records, 56 full-manifest records, and
+`FULL_Q3_FINAL_SOURCE_BINDING VERIFICATION: ALL PASS`.  Current digests are
+read from the authenticated manifests rather than duplicated in this guide.

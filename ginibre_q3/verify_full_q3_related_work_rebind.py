@@ -446,7 +446,9 @@ def main() -> int:
     )
     require(
         "submission.pdf" in extension
-        and "paper_full.pdf} derivation archive is not load-bearing" in extension,
+        and "full_q3_extension.pdf" in extension
+        and "load-bearing theorem dependency included in that manuscript" in extension
+        and "paper_full.pdf} derivation archive is not" in extension,
         "Part III submission architecture is stale",
     )
     require(
@@ -477,12 +479,23 @@ def main() -> int:
     }
     authorized_current_source_replacements = {
         "../../character_ring_iter/Makefile",
+        "../../character_ring_iter/classical_boundary_certificate.cpp",
         "../../character_ring_iter/full_q3_bcd_remaining_data.hpp",
         "../../character_ring_iter/verify_full_q3_bcd_bounded_littlewood_gmp.cpp",
         "../../character_ring_iter/verify_full_q3_bcd_low_tail_mpfr.cpp",
         "../../character_ring_iter/verify_full_q3_bcd_modular_moment_checker.cpp",
         "../../character_ring_iter/verify_full_q3_bcd_remaining_gmp.cpp",
     }
+    classical_boundary_source = (
+        ROOT / "character_ring_iter/classical_boundary_certificate.cpp"
+    ).read_text(encoding="utf-8")
+    require(
+        "rank3_weyl_moments_full" in classical_boundary_source
+        and "B3 Weyl-orbit reduction failed" not in classical_boundary_source
+        and "Weyl-orbit reduction failed at moment" in classical_boundary_source
+        and "moments[index] != full_crosscheck[index]" in classical_boundary_source,
+        "optimized classical-boundary source omits its full-orbit equivalence check",
+    )
     arithmetic_paths = [
         path
         for path in full_records_live
@@ -523,6 +536,8 @@ def main() -> int:
             "\t\t\\\n", ""
         ).replace(
             " \\\n\t\t--max-stage-seconds $(REPLAY_MAX_STAGE_SECONDS)", ""
+        ).replace(
+            " \\\n\t\t--max-total-seconds $(REPLAY_MAX_TOTAL_SECONDS)", ""
         ).replace("python3 -u clean_room_replay.py", "python3 clean_room_replay.py").replace(
             "/tmp/verify_full_q3_bd_residual_gmp --progress",
             "/tmp/verify_full_q3_bd_residual_gmp",

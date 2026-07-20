@@ -21,22 +21,19 @@
 {\large Leslie P. Polzer\par}
 \vfill
 \begin{minipage}{0.82\textwidth}
-This reader manuscript contains the proof spine and principal mathematical
-interfaces.  Pages after this guide reproduce, in order:
+This unified manuscript contains every load-bearing proof component.  Pages
+after this guide reproduce, in order:
 \begin{enumerate}
-\item Parts I--II: the self-contained two-minus adjoint-character theorem,
+\item Parts I--II: the two-minus adjoint-character theorem,
 classification closure, and exact finite-certificate contracts;
-\item compact Part III: the higher-minus reduction, exact finite-rank contract,
-classification closure, and cone promotion.
+\item the compact Part III guide: the higher-minus reduction, exact finite-rank
+contract, classification closure, and cone promotion;
+\item the complete Part III formal proof and computational supplement.
 \end{enumerate}
-The separately authenticated \texttt{full\_q3\_extension.pdf} is the
-35-page formal proof and computational supplement for Part III.  It is a
-load-bearing component of the proof package, although it is not repeated in
-this reader manuscript.
 The optional \texttt{paper\_full.pdf} derivation archive is not part of the
 proof and is not required to read or verify any theorem.  Executable evidence,
 authenticated transcripts, and implementation notes are indexed from the
-included parts and the formal supplement.
+included formal parts.
 \end{minipage}
 \vfill
 {\large July 2026\par}
@@ -57,5 +54,11 @@ included parts and the formal supplement.
   pagecommand={\thispagestyle{empty}},
   addtotoc={1,part,1,{Part III: the adjoint-generated cone},part3}
 ]{full_q3_main.pdf}
+
+\includepdf[
+  pages=-,
+  pagecommand={\thispagestyle{empty}},
+  addtotoc={1,part,1,{Part III: formal proof and computational supplement},part3supplement}
+]{full_q3_extension.pdf}
 
 \end{document}

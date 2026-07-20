@@ -33,9 +33,10 @@ finite classical boxes are supplied by bounded Littlewood determinant
 identities. The current verifier checks all 17,862 residual inequalities in
 one run; `fullq3bcdboundedfinal0001_current_source` authenticates that unified
 run, while `fullq3bcdmodularfinal0001_current_source` authenticates the
-separate modular/Newton check.  The older `fullq3bcd0010` and
-`fullq3bcd0002` transcripts provide independent historical coverage of the
-two subledgers. The
+separate modular/Newton check of the 12,993-case low-row subledger.  The older
+`fullq3bcd0010` and `fullq3bcd0002` transcripts provide independent historical
+coverage of the 12,993-case and complementary 4,869-case subledgers.  No
+single secondary checker covers the complete 17,862-case box. The
 finite-rank analytic tail is separately pinned by
 the corrected machine-C replay `fullq3bcdanalytic0003`: in type B the fixed
 `+1` eigenvalue cancels the `-1` mean of the random eigenvalue contribution,
@@ -77,19 +78,17 @@ lattice gauge theories, or continuum QFT.  Those uses need separate
 model-specific Gibbs promotion, thermodynamic limits, and quantum
 reconstruction machinery.
 
-The audited computation package is rooted at immutable publication import
-commit `91363c3cebb37a44349f613ab0a5aa6dcd412af3` in
-`https://github.com/skypher/ginibre-q3-adjoint`; historical tag `v1.0.0`
-contains that execution binding but is not asserted to contain later
-manuscript revisions.  The present submission sources are bound by
+The historical execution snapshot is rooted at commit
+`91363c3cebb37a44349f613ab0a5aa6dcd412af3` in
+`https://github.com/skypher/ginibre-q3-adjoint`; it is audit history, not the
+source authority for the current theorem.  The present submission sources are bound by
 `certificates/full_q3/full_q3_source_manifest.sha256`.  The separately
 generated `publication_artifacts.sha256` binds the four formal PDFs, and a
-final public release must reproduce both manifests exactly.  The single reader-facing
-`submission.pdf` contains the self-contained Parts I--II
-(`paper.tex`/`paper.pdf`) followed by compact Part III
-(`full_q3_main.tex`/`full_q3_main.pdf`).  The 35-page
-`full_q3_extension.pdf` is a separately paginated, load-bearing formal and
-computational supplement.  The expanded
+final public release must reproduce both manifests exactly.  The unified
+`submission.pdf` contains the formal Parts I--II
+(`paper.tex`/`paper.pdf`), the compact Part III guide
+(`full_q3_main.tex`/`full_q3_main.pdf`), and the 35-page load-bearing formal
+and computational supplement (`full_q3_extension.pdf`).  The expanded
 `paper_full.pdf` is an optional derivation archive, not a formal proof
 component.  Part III contains a
 publication-facing code and data availability statement, exact build commands,
@@ -148,10 +147,10 @@ as superseded, not accepted evidence.
   proves the direct determinant/formula contract for all 56 active
   family-wide domains at offsets `0..27`, proves the half-stable bridge, and
   proves that no later offset is consumed.
-- `full_q3_main.tex` is the compact Part III proof spine included in the
-  reader manuscript.
-- `submission.tex` combines `paper.pdf` and `full_q3_main.pdf` into the
-  59-page referee-facing `submission.pdf`.
+- `full_q3_main.tex` is the compact Part III proof guide included in the
+  unified manuscript.
+- `submission.tex` combines `paper.pdf`, `full_q3_main.pdf`, and
+  `full_q3_extension.pdf` into the complete referee-facing `submission.pdf`.
 - `full_q3_extension.tex` is the load-bearing formal proof and computational
   supplement for Part III.  Its final theorem is unconditional on the
   adjoint-generated cone; the exact `SO(3)` counterexample records why it
@@ -237,7 +236,7 @@ For arithmetic re-evaluation, use `make -C ginibre_q3 clean-room-replay` as
 described in `REPLAY.md`.  That multi-hour workflow copies the subproject to a
 fresh temporary directory, removes copied executables, rebuilds the active
 verifiers, recomputes the accepted stages, and rebuilds the formal Parts
-I--II manuscript.  Part III and the unified reader artifact are rebuilt by
+I--II manuscript.  Part III and the unified artifact are rebuilt by
 `publication-artifact-audit`.  A stored transcript authenticates only the execution it records;
 the clean-room replay is the independent end-to-end check.
 
@@ -344,9 +343,10 @@ exact factor witnesses are replayed directly by the C++/GMP checker.
    simply connected models to all compact connected groups with simple Lie
    algebra through the stated central-quotient argument.
 
-The formal reader artifact is `submission.pdf`, containing `paper.pdf` and
-`full_q3_main.pdf` in order.  The separate `full_q3_extension.pdf` is the
-load-bearing 35-page Part III formal/computational supplement.  The expanded
+The formal artifact is `submission.pdf`, containing `paper.pdf`,
+`full_q3_main.pdf`, and the load-bearing 35-page
+`full_q3_extension.pdf` Part III formal/computational supplement in order.  The
+expanded
 `paper_full.pdf` comes from the Parts I--II source but is an optional
 derivation archive.  The replay rejects unresolved references in each formal
 component.

@@ -23,6 +23,9 @@ ARTIFACT_MANIFEST = SOURCE.with_name("publication_artifacts.sha256")
 MODULAR_CHECKER = SOURCE.parent / "character_ring_iter" / (
     "verify_full_q3_bcd_modular_moment_checker.cpp"
 )
+MODULAR_TRANSCRIPT = SOURCE.parent / "certificates" / "full_q3" / (
+    "fullq3bcdmodularfinal0001_current_source.log"
+)
 RESULT_ENVS = ("theorem", "proposition", "lemma", "corollary")
 
 
@@ -44,11 +47,12 @@ def main() -> int:
     require(ARTIFACT_VERIFIER.is_file(), "publication artifact verifier is absent")
     require(ARTIFACT_MANIFEST.is_file(), "publication artifact manifest is absent")
     require(MODULAR_CHECKER.is_file(), "compressed modular checker is absent")
+    require(MODULAR_TRANSCRIPT.is_file(), "compressed modular transcript is absent")
     environment = ENVIRONMENT.read_text(encoding="utf-8")
     require(
         "No theorem imports a result" in compact_text
         and "optional derivation archive" in compact_text,
-        "compact Parts I--II are not declared self-contained",
+        "formal Parts I--II do not exclude the optional derivation archive",
     )
     require(
         r"\label{prop:bc-active-correction-prefix-contract}" in compact_text
@@ -94,10 +98,10 @@ def main() -> int:
     require(
         "paper.pdf" in unified_wrapper
         and "full_q3_main.pdf" in unified_wrapper
-        and r"full\_q3\_extension.pdf" in unified_wrapper
+        and "full_q3_extension.pdf" in unified_wrapper
         and r"paper\_full.pdf" in unified_wrapper
-        and "load-bearing component" in unified_wrapper,
-        "reader wrapper omits the compact Part III or formal-supplement boundary",
+        and "every load-bearing proof component" in unified_wrapper,
+        "unified wrapper omits a load-bearing manuscript component",
     )
     require(
         r"\label{prop:reduction}" in reader_part_iii
@@ -105,8 +109,7 @@ def main() -> int:
         and r"\label{prop:contract}" in reader_part_iii
         and r"\label{thm:main}" in reader_part_iii
         and "17{,}862" in reader_part_iii
-        and "separately authenticated 35-page formal and computational supplement"
-        in reader_part_iii,
+        and "included as the final component" in reader_part_iii,
         "compact Part III omits a load-bearing reader interface",
     )
     require(
@@ -117,6 +120,17 @@ def main() -> int:
         "publication_artifacts.sha256" in text
         and "publication-artifact-audit" in FINAL_REPLAY.read_text(encoding="utf-8"),
         "final publication flow does not rebuild and bind the reader PDFs",
+    )
+    proof_spine_text_coverage = ACTIVE_PROOF.with_name("PUBLICATION_PROOF_SPINE.md").read_text(
+        encoding="utf-8"
+    )
+    modular_transcript = MODULAR_TRANSCRIPT.read_text(encoding="utf-8")
+    require(
+        "12,993-case low-row subledger" in proof_spine_text_coverage
+        and "other 4,869 cases" in proof_spine_text_coverage
+        and "no single secondary checker covers the complete box" in proof_spine_text_coverage
+        and "prefix_pairs=7484 high_pairs=5509" in modular_transcript,
+        "secondary finite-box coverage is overstated or inconsistent",
     )
     require(
         "run_final_publication_replay.sh" in text
@@ -277,10 +291,10 @@ def main() -> int:
         "github.com/skypher/ginibre-q3-adjoint" in text,
         "official publication repository is absent",
     )
-    require("v1.0.0" in text, "publication release tag is absent")
+    require("v1.0.0" in text, "historical snapshot tag is absent")
     require(
         "91363c3cebb37a44349f613ab0a5aa6dcd412af3" in text,
-        "immutable publication import commit is absent",
+        "historical execution commit is absent",
     )
     require(
         "intermediate cone of all real continuous" in text

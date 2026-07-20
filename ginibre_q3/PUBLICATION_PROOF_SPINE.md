@@ -7,11 +7,10 @@ spine.
 
 ## Formal submission boundary
 
-The proof has three numbered parts.  The 59-page reader artifact
-`submission.pdf` contains the self-contained `paper.pdf` for Parts I--II and
-the compact `full_q3_main.pdf` for Part III.  The separately paginated
-35-page `full_q3_extension.pdf` is the load-bearing formal proof and
-computational supplement for Part III.  `paper_full.pdf` is an optional
+The proof has three numbered parts.  The unified artifact `submission.pdf`
+contains the formal `paper.pdf` for Parts I--II, the compact
+`full_q3_main.pdf` guide, and the complete `full_q3_extension.pdf` formal proof
+and computational supplement for Part III.  `paper_full.pdf` is an optional
 derivation archive and is not load-bearing.
 The historical author self-audit and `referee_audits/`
 directory are likewise outside the
@@ -85,9 +84,12 @@ elementary character bound. This includes the formerly separate 4,869-case
 B/D box, and the directed-MPFR stage checks the remaining 58
 low-rank tails.  The unified current-source transcript is
 `certificates/full_q3/fullq3bcdboundedfinal0001_current_source.log`.  The
-mandatory Part III target also runs the distinct modular/Newton checker on the
-same complete finite box; the older reverse-Pieri transcripts remain
-historical implementation overlaps.
+mandatory Part III target also runs a distinct modular/Newton checker on the
+12,993-case low-row subledger: it checks 7,484 cases through degree 40 and the
+remaining 5,509 cases after verifying 538 higher moments modulo 21 primes.
+The other 4,869 cases have a separate historical reverse-Pieri control.  Thus
+the independent coverage of the 17,862-case box is partitioned between two
+controls; no single secondary checker covers the complete box.
 
 ## Trust and audit boundary
 

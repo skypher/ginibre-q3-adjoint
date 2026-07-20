@@ -272,7 +272,7 @@ same bytes. The resulting archive and checksum are the objects to deposit in
 the public DOI-bearing repository; local tooling cannot assign that external
 identifier.
 
-## Compressed full-range implementation cross-check
+## Compressed low-row implementation cross-check
 
 The accepted bounded-Littlewood calculation and the reverse-Pieri traversal
 are structurally independent algorithms. The archived reverse-Pieri prefix
@@ -427,12 +427,12 @@ The command recomputes:
   every E8 rectangular bridge/tail row through exact GMP geometry with
   384-bit outward-rounded MPFR accumulation, and
   the E8 `m_0..m_100` finite bridge;
-- three clean `pdflatex` passes for the self-contained Parts I--II manuscript
+- three clean `pdflatex` passes for the formal Parts I--II manuscript
   `paper.tex`, and the absence of undefined references or citations;
-- the formal document contract: `paper.pdf` is nonempty and self-contained;
-  `full_q3_main.pdf` states the compact Part III proof spine; and the separately
-  audited `full_q3_extension.pdf` is its load-bearing supplement.  The first
-  two are collected in the 59-page `submission.pdf`; `paper_full.pdf` is an
+- the formal document contract: `paper.pdf` is nonempty;
+  `full_q3_main.pdf` states the compact Part III proof guide; and
+  `full_q3_extension.pdf` is its load-bearing formal proof.  All three are
+  collected in `submission.pdf`; `paper_full.pdf` is an
   optional derivation archive rather than a formal submission component.
 
 The clean-room arithmetic replay builds `paper.pdf` in its isolated tree but
@@ -440,7 +440,8 @@ does not publish that temporary file.  The final release driver therefore
 runs `publication-artifact-audit` in the final-source tree after both
 arithmetic aggregates.  This ordering prevents the temporary Parts I--II PDF
 from being discarded while an older tracked `paper.pdf` is silently used by
-`submission.tex`.
+`submission.tex`.  The `unified-submission` target rebuilds all three included
+PDFs before assembling that file.
 
 The replay also validates all archived SHA-256 manifests and
 the accepted/diagnostic classification boundary before consuming any

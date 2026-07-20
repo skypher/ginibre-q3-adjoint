@@ -62,10 +62,10 @@ carried over literally to nonabelian compact groups.
 
 \begin{remark}[Submission architecture and audit status]
 \label{rem:submission-architecture}
-The reader manuscript \path{submission.pdf} contains \path{paper.pdf}
-(Parts~I--II) and the compact \path{full_q3_main.pdf} (Part~III).  The present
-file is the separately paginated formal proof and computational supplement
-for Part~III.  It is a load-bearing theorem dependency, while the optional
+The unified manuscript \path{submission.pdf} contains \path{paper.pdf}
+(Parts~I--II), the compact \path{full_q3_main.pdf} guide, and the present
+formal proof and computational supplement for Part~III.  The present file is
+a load-bearing theorem dependency included in that manuscript, while the optional
 \path{paper_full.pdf} derivation archive is not.  In particular, the finite
 $B/C$ correction-prefix contract and the proved half-stable bridge occur in
 \path{paper.pdf}; the exact higher-minus tails, finite ledgers, and replay
@@ -208,7 +208,7 @@ integer $n\geq0$,
 \end{theorem}
 
 \begin{proof}
-This is the main theorem of the self-contained Parts~I--II manuscript,
+This is the main theorem of the formal Parts~I--II manuscript,
 \cite[Theorem~2.2]{AdjointTwoMinus}.  In the notation of that theorem its
 functional $Q_3^G(n)$ is exactly $I^G_{1,n}$ above.  That manuscript is
 generated as \path{paper.pdf} from \path{paper.tex} and is submitted with the
@@ -2936,8 +2936,8 @@ sanitizer runs, and mutation tests are redundancy controls; their stated
 cutoffs are not represented as full second proofs of computations beyond
 those cutoffs.
 
-The audited computation package for Parts~I--III is rooted at the immutable
-publication import commit
+The historical execution snapshot for Parts~I--III is rooted at the immutable
+commit
 \begin{center}
 \url{https://github.com/skypher/ginibre-q3-adjoint/tree/91363c3cebb37a44349f613ab0a5aa6dcd412af3/ginibre_q3}.
 \end{center}
@@ -2945,27 +2945,26 @@ Its full identifier is
 \begin{center}
 \texttt{91363c3cebb37a44349f613ab0a5aa6dcd412af3}.
 \end{center}
-The immutable import commit controls the execution snapshot that produced the
-expensive arithmetic transcripts.  The historical tag \texttt{v1.0.0}
-contains that import binding, but it is not asserted to contain later
-manuscript revisions.  For the present submission, the canonical source bytes
-are the files in the submitted archive whose hashes are listed in
+That commit is retained only as a historical execution snapshot.  It is not
+the source authority for the present theorem; the historical tag
+\texttt{v1.0.0} identifies that snapshot.  For the present submission,
+the canonical source bytes are the files in the submitted archive whose
+hashes are listed in
 \path{certificates/full_q3/full_q3_source_manifest.sha256}.  The generated
 formal PDFs are separately bound by \path{publication_artifacts.sha256}.
-A public release of the final submission must reproduce both manifests
-exactly.
+A public release of the final submission must preserve the submitted archive
+and reproduce both manifests exactly.
 
-The formal submission has three numbered parts supplied as one reader file,
-\path{submission.pdf}.  Its source wrapper \path{submission.tex} includes the
-self-contained \path{paper.pdf} and the present
-\path{full_q3_extension.pdf}.  The optional \path{paper_full.pdf} preserves
+The formal submission is one unified file, \path{submission.pdf}.  Its source
+wrapper \path{submission.tex} includes \path{paper.pdf}, the compact guide
+\path{full_q3_main.pdf}, and the present \path{full_q3_extension.pdf}.  The
+optional \path{paper_full.pdf} preserves
 longer combinatorial derivations and ledgers but is not a theorem dependency.
 The archived computation-bearing sources include \path{paper.tex} and
-\path{full_q3_extension.tex}.  The immutable import commit
-authenticates the arithmetic snapshot.  The current publication sources are
-bound directly by
+\path{full_q3_extension.tex}.  The historical commit authenticates only its
+arithmetic snapshot.  The current publication sources are bound directly by
 \path{certificates/full_q3/full_q3_source_manifest.sha256} and are the inputs
-rebuilt by the commands below.  The final reader artifacts are rebuilt before
+rebuilt by the commands below.  The final publication artifacts are rebuilt before
 their hashes are checked against \path{publication_artifacts.sha256}; mere
 existence of a pre-existing PDF is not an acceptance condition.  The
 historical aggregate transcript predates
@@ -3023,7 +3022,8 @@ markers are given in \path{REPLAY.md}.  The archive deposited for publication
 must be the output of this final-source workflow; the historical execution
 snapshot is retained as audit history, not substituted for the final replay.
 
-The full-range independent check is supplied without constructing the large
+The independent check of the 12,993-case low-row subledger is supplied without
+constructing the large
 degree-$41$--$59$ reverse-Pieri frontier.  Its source is
 \begin{center}
 \path{character_ring_iter/verify_full_q3_bcd_modular_moment_checker.cpp}.
@@ -3035,9 +3035,10 @@ any incorrect row, degree, count, residue, character bound, modulus bound, or
 nonpositive hierarchy value before emitting
 \texttt{FULL\_Q3\_MODULAR\_CHECKER VERIFICATION: ALL PASS}.  The optional
 target \texttt{full-q3-extension-independent-controls} runs this checker
-together with the older reverse-Pieri supplier for the same bounded-Littlewood
-box.  They are
-independent cross-checks, not additional proof obligations of
+together with the older reverse-Pieri supplier for the complementary
+4,869-case $B/D$ subledger.  Together they give partitioned secondary coverage
+of the complete 17,862-case box.  They are independent cross-checks, not
+additional proof obligations of
 \texttt{full-q3-extension};
 \path{run_full_q3_bcd_independent_audit.sh} is the persistent-log wrapper.
 
@@ -3108,10 +3109,14 @@ Remaining classical tails
  & \texttt{bcdlowtail0001}
  & directed MPFR
  & 58 finite-rank tail rows \\
-Finite classical residual boxes
- & current bounded/modular replays; historical \texttt{bcd0010}/\texttt{bcd0002}
+Finite classical residual boxes (primary)
+ & current bounded replay
  & exact prime/GMP
  & 114 rows and 17,862 residual inequalities \\
+Finite classical controls
+ & current modular replay; historical \texttt{bcd0010}/\texttt{bcd0002}
+ & exact prime/GMP
+ & modular/Newton: 12,993 cases; separate reverse-Pieri: 4,869 cases \\
 \hline
 \end{tabular}
 \caption{Map from the computer-assisted proof blocks to their accepted
@@ -3137,7 +3142,7 @@ transcripts:
 \bibitem{AdjointTwoMinus}
 L.~P. Polzer,
 The two-minus adjoint-character case of Ginibre's $Q_3$ condition,
-Parts I--II: classification and exact certificates, self-contained journal
+Parts I--II: classification and exact certificates, formal journal
 manuscript, 2026.  The exact submitted source bytes are bound
 by \path{certificates/full_q3/full_q3_source_manifest.sha256} in the
 inseparable submission archive; the historical execution snapshot is

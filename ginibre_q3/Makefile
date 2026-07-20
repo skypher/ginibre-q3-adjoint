@@ -40,13 +40,13 @@ full-q3-main-pdf:
 	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_main.tex
 	! grep -Eq 'undefined references|undefined citations|There were undefined references' full_q3_main.log
 
-unified-submission: paper-pdf full-q3-main-pdf
+unified-submission: paper-pdf full-q3-main-pdf full-q3-pdf
 	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error submission.tex
 	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error submission.tex
 	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error submission.tex
 	! grep -Eq 'undefined references|undefined citations|There were undefined references' submission.log
 
-publication-artifact-audit: unified-submission full-q3-pdf
+publication-artifact-audit: unified-submission
 	python3 -u verify_publication_artifacts.py
 
 final-publication-replay:
