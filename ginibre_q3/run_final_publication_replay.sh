@@ -38,6 +38,8 @@ run_stage() {
 printf 'FINAL_PUBLICATION_REPLAY commit=%s\n' "$(git -C "$repo_root" rev-parse HEAD)"
 printf 'FINAL_PUBLICATION_REPLAY source_manifest_sha256=%s\n' \
     "$(sha256sum "$script_dir/certificates/full_q3/full_q3_source_manifest.sha256" | awk '{print $1}')"
+printf 'FINAL_PUBLICATION_REPLAY publication_artifact_manifest_sha256=%s\n' \
+    "$(sha256sum "$script_dir/publication_artifacts.sha256" | awk '{print $1}')"
 printf 'FINAL_PUBLICATION_REPLAY source_date_epoch=%s\n' \
     "${PUBLICATION_SOURCE_DATE_EPOCH:-1784419200}"
 printf 'FINAL_PUBLICATION_REPLAY host=%s\n' "$(uname -a)"
@@ -53,8 +55,8 @@ run_stage part-iii-full-replay \
     make -C "$script_dir" full-q3-extension \
         REPLAY_THREADS="${REPLAY_THREADS:-$(nproc)}" \
         FULL_Q3_BOUNDED_THREADS="${FULL_Q3_BOUNDED_THREADS:-$(nproc)}"
-run_stage unified-reader-submission \
-    make -C "$script_dir" unified-submission
+run_stage rebuilt-publication-artifacts \
+    make -C "$script_dir" publication-artifact-audit
 
 if [[ -n "$(git -C "$repo_root" status --porcelain=v1 --untracked-files=all)" ]]; then
     echo "FINAL_PUBLICATION_REPLAY: FAIL: replay changed tracked or untracked source-tree files"

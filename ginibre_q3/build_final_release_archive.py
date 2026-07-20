@@ -69,10 +69,14 @@ def main() -> int:
 
     commit = git(repo, "rev-parse", "HEAD").decode().strip()
     manifest = project / "certificates/full_q3/full_q3_source_manifest.sha256"
+    artifact_manifest = project / "publication_artifacts.sha256"
+    require(artifact_manifest.is_file(), "publication artifact manifest is absent")
     metadata = (
         "GINIBRE_Q3_FINAL_RELEASE\n"
         f"commit={commit}\n"
         f"source_manifest_sha256={hashlib.sha256(manifest.read_bytes()).hexdigest()}\n"
+        f"publication_artifact_manifest_sha256="
+        f"{hashlib.sha256(artifact_manifest.read_bytes()).hexdigest()}\n"
         f"replay_log_sha256={hashlib.sha256(replay).hexdigest()}\n"
         f"source_date_epoch={FIXED_MTIME}\n"
     ).encode()

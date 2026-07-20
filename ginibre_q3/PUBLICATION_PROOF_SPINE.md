@@ -7,10 +7,12 @@ spine.
 
 ## Formal submission boundary
 
-The proof has three numbered parts presented in the single reader artifact
-`submission.pdf`. Its two source components are the self-contained
-`paper.pdf` for Parts I--II and `full_q3_extension.pdf` for Part III.
-`paper_full.pdf` is an optional derivation archive and is not load-bearing.
+The proof has three numbered parts.  The 59-page reader artifact
+`submission.pdf` contains the self-contained `paper.pdf` for Parts I--II and
+the compact `full_q3_main.pdf` for Part III.  The separately paginated
+35-page `full_q3_extension.pdf` is the load-bearing formal proof and
+computational supplement for Part III.  `paper_full.pdf` is an optional
+derivation archive and is not load-bearing.
 The historical author self-audit and `referee_audits/`
 directory are likewise outside the
 manuscript. The immutable execution snapshot preserves the sources and
@@ -62,6 +64,10 @@ result is an explicit incoming node of `prop:post29-bc-residual-closure`.
 rebuilt stage.
 
 ## Part III: full adjoint-generated hierarchy
+
+The compact reader part states the reduction, exact bounded-Littlewood
+interface, exhaustive certificate contract, and final theorem.  The formal
+supplement gives the numbered family-by-family tail and finite-box proofs:
 
 1. `thm:full-cone-reduction` reduces Ginibre Q3 on the adjoint-generated cone
    to the hierarchy `I^G_{a,n}` and proves cone promotion.

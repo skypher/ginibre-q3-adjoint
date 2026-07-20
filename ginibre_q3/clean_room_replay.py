@@ -2036,6 +2036,12 @@ def audit_replayed_certificate_coverage(root: Path, replayed: set[str]) -> int:
     )
     manifested: set[Path] = set()
     for manifest in root.rglob("*.sha256"):
+        # Generated publication PDFs are authenticated before LaTeX outputs
+        # are intentionally purged.  They are release outputs, not theorem-
+        # reachable certificate logs, so do not resolve that manifest again
+        # after the arithmetic replay.
+        if manifest.name == "publication_artifacts.sha256":
+            continue
         for line in manifest.read_text(errors="strict").splitlines():
             match = HASH_LINE.match(line)
             if match is not None:

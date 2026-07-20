@@ -2,6 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{array}
 \usepackage[margin=1in]{geometry}
@@ -23,8 +24,8 @@
 \newcommand{\Qcone}{\mathcal Q}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
-\title[Full adjoint-generated Ginibre $Q_3$]{The full adjoint-generated case of Ginibre's condition \texorpdfstring{$Q_3$}{Q3}\\
-\large Part III: completion of the full signed-product hierarchy}
+\title[Formal supplement: full adjoint-generated Ginibre $Q_3$]{The full adjoint-generated case of Ginibre's condition \texorpdfstring{$Q_3$}{Q3}\\
+\large Formal proof and computational supplement for Part III}
 \author{Leslie P. Polzer}
 \address{}
 \email{polzer@fastmail.com}
@@ -61,13 +62,15 @@ carried over literally to nonabelian compact groups.
 
 \begin{remark}[Submission architecture and audit status]
 \label{rem:submission-architecture}
-The formal proof has three numbered parts collected for readers in the single
-file \path{submission.pdf}: \path{paper.pdf} supplies the self-contained
-Parts~I--II and the present file supplies Part~III.  The optional
-\path{paper_full.pdf} derivation archive is not load-bearing.  In particular,
-the finite $B/C$ correction-prefix contract and the proved half-stable bridge
-now both occur in \path{paper.pdf}.  The
-concise dependency spine is recorded in \path{PUBLICATION_PROOF_SPINE.md}.
+The reader manuscript \path{submission.pdf} contains \path{paper.pdf}
+(Parts~I--II) and the compact \path{full_q3_main.pdf} (Part~III).  The present
+file is the separately paginated formal proof and computational supplement
+for Part~III.  It is a load-bearing theorem dependency, while the optional
+\path{paper_full.pdf} derivation archive is not.  In particular, the finite
+$B/C$ correction-prefix contract and the proved half-stable bridge occur in
+\path{paper.pdf}; the exact higher-minus tails, finite ledgers, and replay
+semantics occur here.  The concise dependency spine is recorded in
+\path{PUBLICATION_PROOF_SPINE.md}.
 Diagnostic and superseded routes are not printed in the formal supplement
 and are not inputs to that spine; the source-only development archive can be
 typeset separately by defining \texttt{\string\GinibreDevelopmentArchive}.
@@ -2947,9 +2950,10 @@ expensive arithmetic transcripts.  The historical tag \texttt{v1.0.0}
 contains that import binding, but it is not asserted to contain later
 manuscript revisions.  For the present submission, the canonical source bytes
 are the files in the submitted archive whose hashes are listed in
-\path{certificates/full_q3/full_q3_source_manifest.sha256}.  A public release
-of the final
-submission must reproduce that manifest exactly.
+\path{certificates/full_q3/full_q3_source_manifest.sha256}.  The generated
+formal PDFs are separately bound by \path{publication_artifacts.sha256}.
+A public release of the final submission must reproduce both manifests
+exactly.
 
 The formal submission has three numbered parts supplied as one reader file,
 \path{submission.pdf}.  Its source wrapper \path{submission.tex} includes the
@@ -2961,7 +2965,10 @@ The archived computation-bearing sources include \path{paper.tex} and
 authenticates the arithmetic snapshot.  The current publication sources are
 bound directly by
 \path{certificates/full_q3/full_q3_source_manifest.sha256} and are the inputs
-rebuilt by the commands below.  The historical aggregate transcript predates
+rebuilt by the commands below.  The final reader artifacts are rebuilt before
+their hashes are checked against \path{publication_artifacts.sha256}; mere
+existence of a pre-existing PDF is not an acceptance condition.  The
+historical aggregate transcript predates
 publication-only prose and metadata revisions; the fail-closed
 \path{verify_full_q3_related_work_rebind.py} records that boundary and rejects
 any change to an arithmetic-bearing source.  That rebind is a provenance test,

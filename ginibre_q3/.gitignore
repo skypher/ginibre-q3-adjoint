@@ -10,6 +10,12 @@ paper_full.toc
 full_q3_extension.aux
 full_q3_extension.log
 full_q3_extension.out
+full_q3_main.aux
+full_q3_main.log
+full_q3_main.out
+submission.aux
+submission.log
+submission.out
 __pycache__/
 *.pyc
 /character_ring_iter/verify_sun_repair_certificates_gmp

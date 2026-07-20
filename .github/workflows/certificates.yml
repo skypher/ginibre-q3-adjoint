@@ -73,6 +73,17 @@ jobs:
           make -C ginibre_q3 publication-preflight \
             2>&1 | tee ci-logs/publication-preflight.log
 
+      - name: Rebuild and authenticate publication PDFs
+        run: |
+          set -o pipefail
+          make -C ginibre_q3 publication-artifact-audit \
+            2>&1 | tee ci-logs/publication-artifacts.log
+          git diff --exit-code -- \
+            ginibre_q3/paper.pdf \
+            ginibre_q3/full_q3_main.pdf \
+            ginibre_q3/full_q3_extension.pdf \
+            ginibre_q3/submission.pdf
+
       - name: Compile every clean-room certificate replayer
         run: |
           set -o pipefail
@@ -125,6 +136,20 @@ jobs:
         with:
           name: certificate-replayers-linux-x86_64
           path: dist/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload authenticated publication PDFs
+        if: success()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: publication-pdfs
+          path: |
+            ginibre_q3/paper.pdf
+            ginibre_q3/full_q3_main.pdf
+            ginibre_q3/full_q3_extension.pdf
+            ginibre_q3/submission.pdf
+            ginibre_q3/publication_artifacts.sha256
           if-no-files-found: error
           retention-days: 14
 
@@ -203,6 +228,55 @@ jobs:
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: full-certificate-replay-logs
+          path: ci-logs/
+          if-no-files-found: warn
+          retention-days: 30
+
+  full-q3-extension-replay:
+    name: Complete Part III hierarchy replay
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Select Python 3.12
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+
+      - name: Install native proof dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            g++ \
+            make \
+            libgmp-dev \
+            libmpfr-dev \
+            libomp-dev \
+            texlive-latex-base \
+            texlive-latex-extra \
+            texlive-fonts-recommended
+
+      - name: Run complete Part III hierarchy replay
+        run: |
+          set -o pipefail
+          mkdir -p ci-logs
+          make -C ginibre_q3 full-q3-extension \
+            REPLAY_THREADS="$(nproc)" \
+            FULL_Q3_BOUNDED_THREADS="$(nproc)" \
+            FULL_Q3_MODULAR_THREADS="$(nproc)" \
+            REPLAY_MAX_STAGE_SECONDS=600 \
+            2>&1 | tee ci-logs/full-q3-extension-replay.log
+
+      - name: Upload Part III replay evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: full-q3-extension-replay-logs
           path: ci-logs/
           if-no-files-found: warn
           retention-days: 30

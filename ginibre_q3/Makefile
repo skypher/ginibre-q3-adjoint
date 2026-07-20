@@ -11,7 +11,7 @@ FULL_Q3_REMAINING_THREADS ?= 2
 FULL_Q3_BOUNDED_THREADS ?= $(shell nproc)
 FULL_Q3_MODULAR_THREADS ?= $(shell nproc)
 
-.PHONY: publication-preflight clean-room-replay unified-submission final-publication-replay final-release-archive full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bd-residual-audit full-q3-bcd-low-tail-audit full-q3-bcd-remaining-audit full-q3-bcd-independent-audit full-q3-bcd-bounded-littlewood-audit full-q3-extension-independent-controls full-q3-extension
+.PHONY: publication-preflight clean-room-replay paper-pdf full-q3-main-pdf full-q3-pdf unified-submission publication-artifact-audit final-publication-replay final-release-archive full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bd-residual-audit full-q3-bcd-low-tail-audit full-q3-bcd-remaining-audit full-q3-bcd-independent-audit full-q3-bcd-bounded-littlewood-audit full-q3-extension-independent-controls full-q3-extension
 
 publication-preflight:
 	python3 -u run_publication_short_audits.py
@@ -22,11 +22,32 @@ clean-room-replay:
 		--max-stage-seconds $(REPLAY_MAX_STAGE_SECONDS) \
 		--max-total-seconds $(REPLAY_MAX_TOTAL_SECONDS)
 
-unified-submission:
-	test -s paper.pdf
-	test -s full_q3_extension.pdf
+paper-pdf:
+	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error paper.tex
+	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error paper.tex
+	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error paper.tex
+	! grep -Eq 'undefined references|undefined citations|There were undefined references' paper.log
+
+full-q3-pdf:
+	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_extension.tex
+	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_extension.tex
+	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_extension.tex
+	! grep -Eq 'undefined references|undefined citations|There were undefined references' full_q3_extension.log
+
+full-q3-main-pdf:
+	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_main.tex
+	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_main.tex
+	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_main.tex
+	! grep -Eq 'undefined references|undefined citations|There were undefined references' full_q3_main.log
+
+unified-submission: paper-pdf full-q3-main-pdf
 	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error submission.tex
 	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error submission.tex
+	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error submission.tex
+	! grep -Eq 'undefined references|undefined citations|There were undefined references' submission.log
+
+publication-artifact-audit: unified-submission full-q3-pdf
+	python3 -u verify_publication_artifacts.py
 
 final-publication-replay:
 	./run_final_publication_replay.sh

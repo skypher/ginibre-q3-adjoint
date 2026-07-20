@@ -55,6 +55,13 @@ described together.
    sign used by Parts I--II.  This is the arithmetic proof replay and is the
    only supplied command that independently recomputes all such signs.
 
+PDF synchronization is a separate fail-closed level.  The command
+`make -C ginibre_q3 publication-artifact-audit` performs three LaTeX passes
+on each formal component, rebuilds the reader PDF from fresh Parts I--II and
+compact Part III components, and verifies all four resulting SHA-256 values against
+`publication_artifacts.sha256`.  It detects a checked-in PDF made from older
+source even when that stale PDF is nonempty and valid LaTeX output.
+
 The trusted software base for level 3 is the manifested C++ source, the C++
 compiler and standard library, GMP, MPFR, OpenMP, `pdflatex`, and the Python
 orchestration that checks stage status and coverage.  The submission does not
@@ -222,7 +229,7 @@ which conclusion each command supports.
 | Tier | Command or target | Purpose | Documented resource scale |
 |---|---|---|---|
 | Preflight | `make -C ginibre_q3 publication-preflight` | Parse theorem interfaces and the explicit B/C contract, check formulas and coverage, and authenticate manifests; does not recompute all arithmetic signs | Seconds to a few minutes; ordinary workstation |
-| Part III arithmetic | `make -C ginibre_q3 full-q3-extension` | Rebuild every Part III exact/MPFR verifier and the Part III PDF | Parallel exact suppliers; each underlying computation is required to remain below five minutes on the validated 64-thread host |
+| Part III arithmetic | `make -C ginibre_q3 full-q3-extension` | Rebuild every Part III exact/MPFR verifier and its 35-page formal/computational supplement | Parallel exact suppliers; each underlying computation is required to remain below five minutes on the validated 64-thread host |
 | Parts I--II regeneration | `make -C ginibre_q3 clean-room-replay` | Rebuild every main-theorem-reachable two-minus certificate in an isolated tree | Hard 300-second ceiling for each executable stage; a ceiling failure preserves its profiling log |
 
 The Part III target verifies the imported two-minus theorem's source and
@@ -422,10 +429,18 @@ The command recomputes:
   the E8 `m_0..m_100` finite bridge;
 - three clean `pdflatex` passes for the self-contained Parts I--II manuscript
   `paper.tex`, and the absence of undefined references or citations;
-- the formal document contract: `paper.pdf` is nonempty and self-contained,
-  while the separately audited Part III PDF completes the proof.  The two are
-  collected in `submission.pdf`; `paper_full.pdf` is an optional derivation
-  archive rather than a formal submission component.
+- the formal document contract: `paper.pdf` is nonempty and self-contained;
+  `full_q3_main.pdf` states the compact Part III proof spine; and the separately
+  audited `full_q3_extension.pdf` is its load-bearing supplement.  The first
+  two are collected in the 59-page `submission.pdf`; `paper_full.pdf` is an
+  optional derivation archive rather than a formal submission component.
+
+The clean-room arithmetic replay builds `paper.pdf` in its isolated tree but
+does not publish that temporary file.  The final release driver therefore
+runs `publication-artifact-audit` in the final-source tree after both
+arithmetic aggregates.  This ordering prevents the temporary Parts I--II PDF
+from being discarded while an older tracked `paper.pdf` is silently used by
+`submission.tex`.
 
 The replay also validates all archived SHA-256 manifests and
 the accepted/diagnostic classification boundary before consuming any

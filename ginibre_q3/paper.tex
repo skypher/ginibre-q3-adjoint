@@ -13,6 +13,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{graphicx}
 \usepackage[protrusion=true,expansion=false]{microtype}
@@ -45223,6 +45224,157 @@ This range contains every bridge index in the displayed rows, and proves the
 claim.
 \end{proof}
 
+\ifginibrefullproof
+\else
+\begin{lemma}[Exact finite type-$B/C$ adjoint moments]
+\label{lem:bc-active-finite-adjoint-moments}
+Write
+\[
+ e_2^j=\sum_{\lambda\vdash2j}c_j(\lambda)s_\lambda,
+ \qquad c_j(\lambda)\in\mathbb Z_{\geq0},
+\]
+and let $s_j$ be the stable classical adjoint moment.  Then
+\[
+ m_j^{B_b}=s_j-
+ \sum_{\substack{\nu\vdash j\\\ell(\nu)>2b+1}}c_j(2\nu)
+\]
+and
+\[
+ m_j^{C_b}=s_j-
+ \sum_{\substack{\nu\vdash j\\\ell(\nu)>b}}
+ c_j\!\left((\nu_1,\nu_1,\nu_2,\nu_2,\ldots)'\right).
+\]
+An empty partition sum is zero.
+\end{lemma}
+
+\begin{proof}
+For type $B$, the adjoint representation is $\bigwedge^2V$, so the Schur
+expansion of $e_2^j$ is the character decomposition of
+$(\bigwedge^2V)^{\otimes j}$; iterated vertical-two-strip Pieri gives
+$c_j(\lambda)\in\mathbb Z_{\geq0}$.  The orthogonal Schur integral criterion
+in Rains~\cite[Section~3, paragraph preceding Lemma~3.1]{Rains1997} says that
+the $\mathrm O(N)$ integral of $s_\lambda$ is one precisely for even
+$\lambda$ of length at most $N$, and is zero otherwise.  For odd
+$N=2b+1$, the central element $-I$ identifies the $\mathrm O(N)$ and
+$\mathrm{SO}(N)$ integrals of every power of $\bigwedge^2V$.  Removing the
+even partitions excluded by the length wall gives the first formula.
+
+For type $C$, the adjoint representation is $\operatorname{Sym}^2V$.  The
+standard involution $\omega$ sends $h_2$ to $e_2$ and $s_\lambda$ to
+$s_{\lambda'}$, so the coefficient of $s_\lambda$ in $h_2^j$ is
+$c_j(\lambda')$.  Rains' symplectic criterion in the same paragraph admits
+exactly the partitions of length at most $2b$ in which every row length has
+even multiplicity.  Such a partition is uniquely
+$\lambda=(\nu_1,\nu_1,\nu_2,\nu_2,\ldots)$, and its length constraint is
+$\ell(\nu)\leq b$.  Removing the excluded partitions gives the second
+formula.
+\end{proof}
+
+\begin{lemma}[Bounded-Littlewood determinant specification for the active
+$B/C$ moments]
+\label{lem:bc-active-bounded-littlewood-determinants}
+Work degree by degree in the completed ring of symmetric functions over
+$\mathbb Q$, put $e_r=h_r=0$ for $r<0$, and define
+\[
+ f_r^e=\sum_{k\in\mathbb Z}e_ke_{k+r},\qquad
+ f_r^h=\sum_{k\in\mathbb Z}h_kh_{k+r},\qquad
+ e=\sum_{k\geq0}e_k,\qquad
+ \bar e=\sum_{k\geq0}(-1)^ke_k.
+\]
+For $b\geq1$, let
+\[
+\begin{aligned}
+ \mathcal B_b
+ &=\frac12\left\{
+ e\det_{1\leq u,v\leq b}(f^e_{u-v}-f^e_{u+v-1})
+ +\bar e\det_{1\leq u,v\leq b}(f^e_{u-v}+f^e_{u+v-1})
+ \right\},\\
+ \mathcal C_b
+ &=\det_{1\leq u,v\leq b}(f^h_{u-v}-f^h_{u+v}).
+\end{aligned}
+\]
+Then, for every $j\geq0$,
+\[
+ m_j^{B_b}=[m_{(2^j)}]\mathcal B_b,
+ \qquad
+ m_j^{C_b}=[m_{(2^j)}]\mathcal C_b.
+\]
+\end{lemma}
+
+\begin{proof}
+Hall duality gives
+$\langle h_2^j,F\rangle=[m_{(2^j)}]F$.  Transposing the admitted partitions
+in the type-$B$ formula of
+\cref{lem:bc-active-finite-adjoint-moments}, and using the involution
+$\omega(e_2)=h_2$, gives
+\[
+ m_j^{B_b}=\left\langle h_2^j,
+ \sum_{\substack{\lambda_1\leq2b+1\\c(\lambda)=0}}s_\lambda
+ \right\rangle,
+\]
+where $c(\lambda)$ is the number of odd columns.  Huh--Kim--Krattenthaler--
+Okada~\cite[Theorem~1.3, equations~(1.9)--(1.10)]{HKKO2025}, at $u=0$,
+give the sum and difference of the sectors $c(\lambda)=0$ and
+$c(\lambda)=2b+1$.  Their half-sum is $\mathcal B_b$.
+
+For type $C$, transposition gives
+\[
+ m_j^{C_b}=\left\langle e_2^j,
+ \sum_{\substack{\lambda_1\leq2b\\r(\lambda)=0}}s_\lambda
+ \right\rangle,
+\]
+where $r(\lambda)$ is the number of odd rows.  Equation~(1.6) of the same
+source identifies the Schur sum with
+$\det(f^e_{u-v}-f^e_{u+v})$.  Applying the Hall-isometric involution
+$\omega$, which sends $f_r^e$ to $f_r^h$, and then Hall duality proves the
+formula for $\mathcal C_b$.
+\end{proof}
+
+\begin{lemma}[Exact coefficient functional used by the determinant replay]
+\label{lem:bc-active-two-power-functional}
+Let $F$ be homogeneous of symmetric-function degree $2j$.  Define $\pi_2$
+on power sums by
+\[
+ \pi_2(p_1)=p,\qquad \pi_2(p_2)=q,\qquad
+ \pi_2(p_r)=0\quad(r\geq3).
+\]
+Then
+\[
+ [m_{(2^j)}]F
+ =j!\sum_{a=0}^{j}(2(j-a)-1)!!
+ [p^{2(j-a)}q^a]\pi_2(F).
+\]
+Moreover,
+\[
+ \sum_{r\geq0}\pi_2(e_r)u^r=\exp(pu-qu^2/2),\qquad
+ \sum_{r\geq0}\pi_2(h_r)u^r=\exp(pu+qu^2/2),
+\]
+so, with $e_{-1}=h_{-1}=0$ and with $e_r,h_r$ abbreviating their
+specialized images,
+\[
+ r e_r=pe_{r-1}-qe_{r-2},\qquad
+ r h_r=ph_{r-1}+qh_{r-2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Expand $F$ in the power-sum basis.  A monomial containing $p_r$ with
+$r\geq3$ cannot contain the ordinary monomial $x_1^2\cdots x_j^2$ and hence
+does not contribute to $[m_{(2^j)}]F$.  In
+$p_1^{2(j-a)}p_2^a$, the $a$ ordered $p_2$ factors choose distinct
+variables and the other ordered factors hit each remaining variable twice.
+The coefficient of $x_1^2\cdots x_j^2$ is
+\[
+ \frac{j!}{(j-a)!}\frac{(2(j-a))!}{2^{j-a}}
+ =j!(2(j-a)-1)!!.
+\]
+This proves the coefficient formula.  Applying $\pi_2$ to the standard
+power-sum generating series for elementary and complete symmetric functions
+gives the two exponentials; differentiation and coefficient comparison give
+the recurrences.
+\end{proof}
+\fi
+
 \begin{proposition}[Active residual $B/C$ correction-prefix contract]
 \label{prop:bc-active-correction-prefix-contract}
 Put $q=b+1$, write $s_j=m_j^{\mathrm{st}}$, and write
@@ -45319,12 +45471,16 @@ family, rank interval, and moment index printed in
 occur earlier in this archive.
 \else
 The finite lower-bound claim is checked directly, without importing an
-archive proposition.  The source
+archive proposition.  The mathematical values computed by the finite
+programs are fixed, independently of their implementations, by
+\cref{lem:bc-active-finite-adjoint-moments,lem:bc-active-bounded-littlewood-determinants,lem:bc-active-two-power-functional}.
+The source
 \begin{center}
 \small\path{character_ring_iter/verify_active_bc_b_frontiers_bounded_littlewood_gmp.cpp}
 \end{center}
-reconstructs the required type-$B$ moments from the bounded-Littlewood
-determinant modulo enough primes for unique integer recovery, subtracts them
+reconstructs the required type-$B$ moments from the displayed
+bounded-Littlewood determinant and coefficient recurrence modulo enough
+primes for unique integer recovery, subtracts them
 from the stable moments, and checks the half-stable inequality in every
 nonautomatic active frontier case.  The determinant evaluations are flattened
 over the prime--interpolation-node grid, and the independent exact hook-length
@@ -45332,8 +45488,11 @@ sums over paired-row partitions are reduced in a fixed order.  It fails closed u
 exactly $337$ cases and maximum moment $121$.  The $B_{14},j=37$ seed is
 checked separately by
 \path{post_m29_bc_b14_j37_badshape_gmp}.  The type-$C$ frontier programs
-evaluate their closed fixed-point-free and arithmetic formulas with GMP and
-fail closed unless their combined scopes are $60$ and $179$ cases.
+evaluate with GMP the fixed-point-free and arithmetic specializations of the
+type-$C$ partition sum displayed in
+\cref{lem:bc-active-finite-adjoint-moments}; the determinant identity gives
+an exact alternative specification of the same moments.  The programs fail
+closed unless their combined scopes are $60$ and $179$ cases.
 
 The stable recurrence and the remaining exact dominance comparisons are
 checked by \path{post_m29_bc_pieri_powerloss_gmp}: its accepted run covers all

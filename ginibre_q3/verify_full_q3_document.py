@@ -11,12 +11,15 @@ from pathlib import Path
 
 SOURCE = Path(__file__).with_name("full_q3_extension.tex")
 COMPACT_SOURCE = SOURCE.with_name("paper.tex")
+READER_PART_III = SOURCE.with_name("full_q3_main.tex")
 SUPPLEMENT_WRAPPER = SOURCE.with_name("paper_full.tex")
 UNIFIED_WRAPPER = SOURCE.with_name("submission.tex")
 ENVIRONMENT = SOURCE.with_name("ENVIRONMENT.md")
 ACTIVE_PROOF = SOURCE.with_name("ACTIVE_PROOF_SUPPLEMENT.md")
 FINAL_REPLAY = SOURCE.with_name("run_final_publication_replay.sh")
 FINAL_ARCHIVE = SOURCE.with_name("build_final_release_archive.py")
+ARTIFACT_VERIFIER = SOURCE.with_name("verify_publication_artifacts.py")
+ARTIFACT_MANIFEST = SOURCE.with_name("publication_artifacts.sha256")
 MODULAR_CHECKER = SOURCE.parent / "character_ring_iter" / (
     "verify_full_q3_bcd_modular_moment_checker.cpp"
 )
@@ -31,12 +34,15 @@ def require(condition: bool, message: str) -> None:
 def main() -> int:
     text = SOURCE.read_text(encoding="utf-8")
     compact_text = COMPACT_SOURCE.read_text(encoding="utf-8")
+    reader_part_iii = READER_PART_III.read_text(encoding="utf-8")
     supplement_wrapper = SUPPLEMENT_WRAPPER.read_text(encoding="utf-8")
     unified_wrapper = UNIFIED_WRAPPER.read_text(encoding="utf-8")
     require(ENVIRONMENT.is_file(), "validated environment record is absent")
     require(ACTIVE_PROOF.is_file(), "active proof supplement is absent")
     require(FINAL_REPLAY.is_file(), "final-source replay driver is absent")
     require(FINAL_ARCHIVE.is_file(), "final release archive builder is absent")
+    require(ARTIFACT_VERIFIER.is_file(), "publication artifact verifier is absent")
+    require(ARTIFACT_MANIFEST.is_file(), "publication artifact manifest is absent")
     require(MODULAR_CHECKER.is_file(), "compressed modular checker is absent")
     environment = ENVIRONMENT.read_text(encoding="utf-8")
     require(
@@ -58,6 +64,13 @@ def main() -> int:
         "compact Parts I--II omit the proved half-stable bridge",
     )
     require(
+        r"\label{lem:bc-active-finite-adjoint-moments}" in compact_text
+        and r"\label{lem:bc-active-bounded-littlewood-determinants}" in compact_text
+        and r"\label{lem:bc-active-two-power-functional}" in compact_text
+        and r"m_j^{C_b}=[m_{(2^j)}]\mathcal C_b" in compact_text,
+        "compact Parts I--II omit the exact finite B/C moment specification",
+    )
+    require(
         "$B_1=C_1=A_1$" in compact_text
         and "$D_3=A_3$" in compact_text
         and "$D_2$ is not simple" in compact_text,
@@ -74,20 +87,36 @@ def main() -> int:
     )
     require(
         "submission.pdf" in text
-        and "not load-bearing" in text
+        and "load-bearing theorem dependency" in text
         and "GinibreDevelopmentArchive" in text,
-        "Part III does not state the unified self-contained architecture",
+        "Part III supplement does not state the reader/supplement architecture",
     )
     require(
         "paper.pdf" in unified_wrapper
-        and "full_q3_extension.pdf" in unified_wrapper
+        and "full_q3_main.pdf" in unified_wrapper
+        and r"full\_q3\_extension.pdf" in unified_wrapper
         and r"paper\_full.pdf" in unified_wrapper
-        and "not part of the" in unified_wrapper,
-        "unified submission wrapper omits a formal part or archive exclusion",
+        and "load-bearing component" in unified_wrapper,
+        "reader wrapper omits the compact Part III or formal-supplement boundary",
+    )
+    require(
+        r"\label{prop:reduction}" in reader_part_iii
+        and r"\label{lem:bl}" in reader_part_iii
+        and r"\label{prop:contract}" in reader_part_iii
+        and r"\label{thm:main}" in reader_part_iii
+        and "17{,}862" in reader_part_iii
+        and "separately authenticated 35-page formal and computational supplement"
+        in reader_part_iii,
+        "compact Part III omits a load-bearing reader interface",
     )
     require(
         "certificates/full_q3/full_q3_source_manifest.sha256" in text,
         "Part III does not name the live final-source manifest path",
+    )
+    require(
+        "publication_artifacts.sha256" in text
+        and "publication-artifact-audit" in FINAL_REPLAY.read_text(encoding="utf-8"),
+        "final publication flow does not rebuild and bind the reader PDFs",
     )
     require(
         "run_final_publication_replay.sh" in text
