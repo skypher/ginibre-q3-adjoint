@@ -36,6 +36,13 @@ notes unless explicitly described as a current-source test.
    finite sums over partitions of the excess `h<=27`.  Only 41 low-rank
    cases require bounded-Littlewood determinant/CRT reconstruction; that
    residual box has six rows and ends at moment 67.  The mixed
+   determinant work is flattened over its exact prime-by-interpolation-node
+   grid, while the 337 independent hook-length partition sums use the same
+   adaptive team in a separate exact phase.  On four cores the complete
+   supplier takes 24.93 seconds rather than 35.45 seconds with a serial hook
+   phase.  It runs once with exclusive cores before the four proof groups,
+   avoiding contention with the endpoint determinant.
+   The mixed
    H9--H22 programs run with `RUN_B=0`, retaining only their inexpensive
    type-C formulas; H23--H27 already had this mode.  The high-memory
    reverse-Pieri traversals remain optional independent controls.
@@ -56,6 +63,22 @@ notes unless explicitly described as a current-source test.
    7,802--8,504 seconds in the archived full replays.  An exact startup test
    compares the recurrence and closed coefficient formula with the original
    binomial convolution through degree 128.
+   The portable replay now takes the still smaller fixed boundary `30` for
+   every active row.  This enlarges each higher-rank correction box and hence
+   lowers, rather than strengthens, the claimed certificate bound.  It also
+   uses the exact finite log-convexity of `s_j/j!` to majorize the complete
+   negative central band by its endpoint product and a closed even/odd square
+   sum.  The original exact central sum remains as a startup cross-check.
+   The central-bound bridge passed on four workers in 17.45 seconds with about
+   1.5 GiB peak RSS; its new worst lower bound remains positive at
+   log10 value 125316.249635486369.  A 24-worker standalone run completed
+   in 13.76 seconds.  The normalized log-convexity audit now continues through
+   index 30,898 and also proves that every power-loss ratio is maximal at its
+   boundary.  This replaces 3,904,626 later comparisons by 402 exact boundary
+   checks.  Rigorous 192-bit dyadic prefix enclosures certify all 30,890
+   log-convexity comparisons without a full-width fallback; the complete
+   bridge takes 21.90 seconds on one core, and the resulting one-core
+   power-loss stage takes 1.27 seconds.
 8. Exceptional character-ring regeneration is capped at the bounded prefixes
    needed to validate the Cartan/Racah--Speiser implementation (`m38`, `m65`,
    and `m42` for the three remaining families).  All longer consumed rows are
@@ -71,15 +94,27 @@ notes unless explicitly described as a current-source test.
    implementation remains an independent optional control, not a second
    theorem premise.
 10. The E8 rectangle replay no longer constructs and sums multi-thousand-bit
-    rational powers for roughly two million cells.  Cell endpoints, retained
+    rational powers for roughly two million fine cells.  Exact endpoint
+    monotonicity permits each row's mesh to be enlarged by an audited factor
+    among `5/4, 3/2, 2, 3, 4`, leaving 466,072 disjoint cells.  Cell endpoints, retained
     regions, local inequalities, radial integrals, exponential witnesses, and
     negative bounds remain exact GMP rationals.  Their positive contributions
     are converted downward and accumulated at 384-bit MPFR precision, then
     compared with the negative bound converted upward.  The grid integrals and
     diagonal radial exponentials are also computed only once per distinct
-    value.  This retains the published two-decimal margins while reducing a
-    32-worker standalone replay from 108.89 to 59.06 seconds; under the full
-    clean-room load the E8 stage fell from 138.44 to 83.90 seconds.
+    value.  The adaptive exact grid passes in 22.23 seconds on four workers,
+    versus 83.14 seconds for the preceding replay.
+11. The rank-three classical Weyl recurrence now quotients its Laurent support
+    by the signed-permutation Weyl action.  Exact orbit masses are divided by
+    audited target orbit sizes, reducing up to 48 equal coefficients to one.
+    The unreduced and orbit recurrences agree through `m_12`; the complete
+    `B_2/C_2/B_3/C_3` source replay through `m_63` takes 2.37 seconds instead
+    of 68.70 seconds.
+12. The D4--D24 raw source replay no longer starts one Racah--Speiser state
+    expansion per rank.  A single bounded-Littlewood determinant/CRT grid
+    reconstructs all 21 rows through degree 46 and checks all 1,060 raw
+    moment/correction claims termwise.  It takes 4.96 seconds on four cores;
+    the independent modular/Weyl D4 control remains mandatory.
 
 ## Expensive Parts I--II stages
 
@@ -89,7 +124,7 @@ notes unless explicitly described as a current-source test.
 | H23--H27 B reverse-Pieri frontiers | Largest runs create 20,720,864 exact states; fleet notes report about 90 GiB aggregate memory | Same type-B correction inequality at later offsets | Replaced by the same hybrid supplier; old shards are optional. |
 | H28--H29 fleet | 25 historical heavy-partition tasks, including extra absorption stages | Overlap only | Removed from the mandatory dependency graph and clean-room replay. No replacement is needed. |
 | Type-C frontier portions | Small FPF lists plus closed pause-polynomial and ratio checks | Type-C correction inequality | Retain the present formulas. They are already analytical; a character determinant would be less transparent and would not materially reduce cost. |
-| Half-stable bridge scan | Archived runs took 7,802--8,504 s; the former code traversed `O(m)` large-integer pairs at each of 15,417 indices | Converts correction boxes to Chain lower bounds | Replaced by the EGF recurrence, central-band sign identity, boundary subtraction, and separable linear majorant above. The exact full run now takes about 119 s. |
+| Half-stable bridge scan | Archived runs took 7,802--8,504 s; the former code traversed `O(m)` large-integer pairs at each of 15,417 indices | Converts correction boxes to Chain lower bounds | Replaced by the EGF recurrence, central-band sign identity, fixed rank-14 boundary, log-convex endpoint majorant, and separable linear bound above. The full certificate takes 17.45 s on four workers. |
 
 The two largest identified Parts I--II bottlenecks have therefore been
 removed: the mandatory replay contains one bounded-memory determinant
@@ -116,3 +151,5 @@ algorithms remain important, but belong in
 duplicate prerequisites of the theorem build. A publication archive still
 needs a clean, current-commit final replay; historical transcripts establish
 overlap and provenance but do not substitute for that final-source run.
+Consistently, `replay-build` omits seven optional-control executables that no
+mandatory replay stage invokes; their individual Make targets are retained.

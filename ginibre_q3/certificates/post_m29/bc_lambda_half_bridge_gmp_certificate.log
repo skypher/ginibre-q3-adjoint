@@ -1,53 +1,179 @@
 B/C interval stable-envelope bridge frontier GMP verifier
-b_rank_lo=14 b_rank_hi=217 c_rank_lo=20 c_rank_hi=217 include_b=1 include_c=1 chain_lo=31 chain_hi=15447 max_index=30899 lambda=1/2 onset_log=certificates/post_m29/bc_interval_formula_mpfr_certificate.log OpenMP threads=32
-SIGN_MODEL corrections_delta<=0 active from boundary=2*rank+2; frontier lower bound uses |delta_j|<=lambda*s_j with a separable positive-linear majorant and exact negative quadratic coefficients
+b_rank_lo=14 b_rank_hi=217 c_rank_lo=20 c_rank_hi=217 include_b=1 include_c=1 chain_lo=31 chain_hi=15447 max_index=30899 lambda=1/2 fixed_frontier=30 central_logconvex_bound=1 onset_log=../certificates/post_m29/bc_interval_formula_mpfr_certificate.log OpenMP threads=4
+SIGN_MODEL corrections_delta<=0 active from boundary=2*rank+2; frontier lower bound uses |delta_j|<=lambda*s_j with a separable positive-linear majorant and a log-convex central penalty majorant
 stable_moments_start max_index=30899
 stable_moments_done max_index=30899
+normalized_logconvexity_dyadic_audit prefix_bits=192 prefix_certified=30890 exact_fallbacks=0
+central_logconvex_bound_audit_done first_index=9 last_index=30898 crosscheck_max_n=128
 algebraic_reduction_crosscheck_done max_n=128
-progress completed=500/15417 last_m=532
-progress completed=1000/15417 last_m=1031
-progress completed=1500/15417 last_m=1535
-progress completed=2000/15417 last_m=2033
-progress completed=2500/15417 last_m=2533
-progress completed=3000/15417 last_m=3037
-progress completed=3500/15417 last_m=3532
-progress completed=4000/15417 last_m=4018
-progress completed=4500/15417 last_m=4533
-progress completed=5000/15417 last_m=5025
-progress completed=5500/15417 last_m=5521
-progress completed=6000/15417 last_m=6035
-progress completed=6500/15417 last_m=6529
-progress completed=7000/15417 last_m=7027
-progress completed=7500/15417 last_m=7527
-progress completed=8000/15417 last_m=8033
-progress completed=8500/15417 last_m=8535
-progress completed=9000/15417 last_m=9037
-progress completed=9500/15417 last_m=9538
+progress completed=100/15417 last_m=167
+progress completed=200/15417 last_m=245
+progress completed=300/15417 last_m=340
+progress completed=400/15417 last_m=435
+progress completed=500/15417 last_m=473
+progress completed=600/15417 last_m=514
+progress completed=700/15417 last_m=647
+progress completed=800/15417 last_m=869
+progress completed=900/15417 last_m=885
+progress completed=1000/15417 last_m=903
+progress completed=1100/15417 last_m=1117
+progress completed=1200/15417 last_m=1209
+progress completed=1300/15417 last_m=1396
+progress completed=1400/15417 last_m=1363
+progress completed=1500/15417 last_m=1533
+progress completed=1600/15417 last_m=1662
+progress completed=1700/15417 last_m=1722
+progress completed=1800/15417 last_m=1847
+progress completed=1900/15417 last_m=1965
+progress completed=2000/15417 last_m=2090
+progress completed=2100/15417 last_m=2208
+progress completed=2200/15417 last_m=2196
+progress completed=2300/15417 last_m=2259
+progress completed=2400/15417 last_m=2383
+progress completed=2500/15417 last_m=2600
+progress completed=2600/15417 last_m=2679
+progress completed=2700/15417 last_m=2741
+progress completed=2800/15417 last_m=2868
+progress completed=2900/15417 last_m=2839
+progress completed=3000/15417 last_m=2973
+progress completed=3100/15417 last_m=3081
+progress completed=3200/15417 last_m=3214
+progress completed=3300/15417 last_m=3276
+progress completed=3400/15417 last_m=3348
+progress completed=3500/15417 last_m=3564
+progress completed=3600/15417 last_m=3544
+progress completed=3700/15417 last_m=3760
+progress completed=3800/15417 last_m=3828
+progress completed=3900/15417 last_m=3966
+progress completed=4000/15417 last_m=3993
+progress completed=4100/15417 last_m=4210
+progress completed=4200/15417 last_m=4121
+progress completed=4300/15417 last_m=4453
+progress completed=4400/15417 last_m=4365
+progress completed=4500/15417 last_m=4504
+progress completed=4600/15417 last_m=4657
+progress completed=4700/15417 last_m=4684
+progress completed=4800/15417 last_m=4853
+progress completed=4900/15417 last_m=5025
+progress completed=5000/15417 last_m=4956
+progress completed=5100/15417 last_m=5123
+progress completed=5200/15417 last_m=5294
+progress completed=5300/15417 last_m=5417
+progress completed=5400/15417 last_m=5276
+progress completed=5500/15417 last_m=5610
+progress completed=5600/15417 last_m=5636
+progress completed=5700/15417 last_m=5743
+progress completed=5800/15417 last_m=5769
+progress completed=5900/15417 last_m=5844
+progress completed=6000/15417 last_m=6062
+progress completed=6100/15417 last_m=6136
+progress completed=6200/15417 last_m=6225
+progress completed=6300/15417 last_m=6438
+progress completed=6400/15417 last_m=6404
+progress completed=6500/15417 last_m=6523
+progress completed=6600/15417 last_m=6603
+progress completed=6700/15417 last_m=6722
+progress completed=6800/15417 last_m=6890
+progress completed=6900/15417 last_m=6961
+progress completed=7000/15417 last_m=6941
+progress completed=7100/15417 last_m=7158
+progress completed=7200/15417 last_m=7333
+progress completed=7300/15417 last_m=7400
+progress completed=7400/15417 last_m=7385
+progress completed=7500/15417 last_m=7602
+progress completed=7600/15417 last_m=7569
+progress completed=7700/15417 last_m=7786
+progress completed=7800/15417 last_m=7811
+progress completed=7900/15417 last_m=7836
+progress completed=8000/15417 last_m=8053
+progress completed=8100/15417 last_m=8139
+progress completed=8200/15417 last_m=8357
+progress completed=8300/15417 last_m=8256
+progress completed=8400/15417 last_m=8276
+progress completed=8500/15417 last_m=8562
+progress completed=8600/15417 last_m=8527
+progress completed=8700/15417 last_m=8807
+progress completed=8800/15417 last_m=8770
+progress completed=8900/15417 last_m=8900
+progress completed=9000/15417 last_m=8925
+progress completed=9100/15417 last_m=9144
+progress completed=9200/15417 last_m=9229
+progress completed=9300/15417 last_m=9338
+progress completed=9400/15417 last_m=9469
+progress completed=9500/15417 last_m=9494
+progress completed=9600/15417 last_m=9709
+progress completed=9700/15417 last_m=9733
+progress completed=9800/15417 last_m=9841
+progress completed=9900/15417 last_m=9928
 progress completed=10000/15417 last_m=10039
-progress completed=10500/15417 last_m=10526
-progress completed=11000/15417 last_m=11026
-progress completed=11500/15417 last_m=11534
-progress completed=12000/15417 last_m=12034
-progress completed=12500/15417 last_m=12530
-progress completed=13000/15417 last_m=13032
-progress completed=13500/15417 last_m=13533
-progress completed=14000/15417 last_m=14025
-progress completed=14500/15417 last_m=14523
-progress completed=15000/15417 last_m=15030
+progress completed=10100/15417 last_m=10065
+progress completed=10200/15417 last_m=10282
+progress completed=10300/15417 last_m=10264
+progress completed=10400/15417 last_m=10434
+progress completed=10500/15417 last_m=10504
+progress completed=10600/15417 last_m=10622
+progress completed=10700/15417 last_m=10698
+progress completed=10800/15417 last_m=10866
+progress completed=10900/15417 last_m=11039
+progress completed=11000/15417 last_m=11110
+progress completed=11100/15417 last_m=11177
+progress completed=11200/15417 last_m=11163
+progress completed=11300/15417 last_m=11334
+progress completed=11400/15417 last_m=11492
+progress completed=11500/15417 last_m=11624
+progress completed=11600/15417 last_m=11603
+progress completed=11700/15417 last_m=11820
+progress completed=11800/15417 last_m=11728
+progress completed=11900/15417 last_m=11945
+progress completed=12000/15417 last_m=12088
+progress completed=12100/15417 last_m=12114
+progress completed=12200/15417 last_m=12189
+progress completed=12300/15417 last_m=12294
+progress completed=12400/15417 last_m=12449
+progress completed=12500/15417 last_m=12595
+progress completed=12600/15417 last_m=12674
+progress completed=12700/15417 last_m=12701
+progress completed=12800/15417 last_m=12917
+progress completed=12900/15417 last_m=12828
+progress completed=13000/15417 last_m=13160
+progress completed=13100/15417 last_m=13125
+progress completed=13200/15417 last_m=13283
+progress completed=13300/15417 last_m=13255
+progress completed=13400/15417 last_m=13455
+progress completed=13500/15417 last_m=13549
+progress completed=13600/15417 last_m=13525
+progress completed=13700/15417 last_m=13597
+progress completed=13800/15417 last_m=13878
+progress completed=13900/15417 last_m=13904
+progress completed=14000/15417 last_m=14114
+progress completed=14100/15417 last_m=14039
+progress completed=14200/15417 last_m=14226
+progress completed=14300/15417 last_m=14379
+progress completed=14400/15417 last_m=14465
+progress completed=14500/15417 last_m=14526
+progress completed=14600/15417 last_m=14702
+progress completed=14700/15417 last_m=14769
+progress completed=14800/15417 last_m=14795
+progress completed=14900/15417 last_m=14912
+progress completed=15000/15417 last_m=15085
+progress completed=15100/15417 last_m=15111
+progress completed=15200/15417 last_m=15283
+progress completed=15300/15417 last_m=15392
+progress completed=15400/15417 last_m=15430
 progress completed=15417/15417 last_m=15447
 worst_positive	m	odd_n	frontier_boundary	frontier_rank	active_rows	lower_log10	stable_log10	relative_log10
-worst_positive	15447	30897	436	217	1	125316.825861430509	125317.653458045548	-0.827596615039510652
+worst_positive	15447	30897	30	14	1	125316.249635486369	125317.653458045548	-1.40382255917938892
 sample	m	odd_n	frontier_boundary	frontier_rank	active_rows	lower_sign	lower_log10	stable_log10	positive_linear_upper_log10	negative_quadratic_log10	uniform_lambda_log10	relative_log10
-sample	31	65	30	14	402	1	93.7412217434697936	94.0436732489011149	94.0447495239087488	91.2404064951080898	-0.00175445923798633885	-0.302451505431321266
-sample	1572	3147	150	74	280	1	9649.20170020091973	9649.78239530812789	9649.95112407922352	9644.48107756376885	-0.168729768813136616	-0.580695107208157424
-sample	3113	6229	206	102	222	1	20938.9261499906097	20939.5786286995099	20939.7703040902816	20933.8297479804969	-0.191675711070274701	-0.652478708900162019
-sample	4654	9311	248	123	178	1	32920.7162861367906	32921.4124237343276	32921.6158325873621	32915.4001286316561	-0.203409018482489046	-0.696137597537017427
-sample	6195	12393	284	141	141	1	45353.9113221305961	45354.6381887214084	45354.849011503451	45348.4384905957559	-0.210822885899688117	-0.726866590812278446
-sample	7736	15475	314	156	110	1	58123.430466333346	58124.1823962002163	58124.3988051358538	58117.837206389122	-0.216409008040500339	-0.751929866870341357
-sample	9277	18557	344	171	80	1	71161.2775549479702	71162.0481996815361	71162.268531386886	71155.5840263137361	-0.220331759410328232	-0.770644733565859497
-sample	10818	21639	368	183	54	1	84422.4296871985571	84423.2182611792086	84423.442164755761	84416.6534471102932	-0.223903618738404475	-0.788573980651563033
-sample	12359	24721	394	196	28	1	97874.8530763147137	97875.6551863740315	97875.8816722354095	97869.0031775126117	-0.226485895473160781	-0.802110059317783453
-sample	13900	27803	416	207	11	1	111494.566804120012	111495.382124304611	111495.611039784824	111488.653198322994	-0.228915508458158001	-0.815320184599841014
-sample	15441	30885	436	217	1	1	125262.947537664833	125263.775052717639	125264.006134929659	125256.977326266919	-0.231082235884969123	-0.827515052806120366
-SUMMARY failures=0 worst_m=15447 worst_odd_n=30897 worst_frontier_boundary=436 worst_frontier_rank=217 worst_relative_log10=-0.827596615039510652 worst_lower_log10=125316.825861430509 min_uniform_lambda_m=15447 min_uniform_lambda_odd_n=30897 min_uniform_lambda_frontier_boundary=436 min_uniform_lambda_rank=217 min_uniform_lambda_log10=-0.231096487827016972
+sample	31	65	30	14	402	1	93.7412150366450589	94.0436732489011149	94.0447548574398269	91.2421044363278355	-0.00176242650857716399	-0.302458212256055958
+sample	1572	3147	30	14	280	1	9648.87022556631018	9649.78239530812789	9650.02671447383727	9644.49085318630932	-0.244319886158336885	-0.912169741817706381
+sample	3113	6229	30	14	222	1	20938.5205997568155	20939.5786286995099	20939.8398949002149	20933.8365038504198	-0.261266436820733361	-1.05802894269436365
+sample	4654	9311	30	14	178	1	32920.2679167528622	32921.4124237343276	32921.6811439840603	32915.4054555425319	-0.268720373715041205	-1.14450698146538343
+sample	6195	12393	30	14	141	1	45353.4319991375087	45354.6381887214084	45354.9113275429918	45348.4429713588106	-0.273138900338381063	-1.20618958389968611
+sample	7736	15475	30	14	110	1	58122.9282246230287	58124.1823962002163	58124.458537712293	58117.8410968179887	-0.27614156756317243	-1.25417157718766248
+sample	9277	18557	30	14	80	1	71160.7547532216995	71162.0481996815361	71162.326550417507	71155.5875078827667	-0.278350777691230178	-1.29344645983655937
+sample	10818	21639	30	14	54	1	84421.8915670487622	84423.2182611792086	84423.4983243805618	84416.6565917861735	-0.280063234153203666	-1.3266941304464126
+sample	12359	24721	30	14	28	1	97874.2996656698379	97875.6551863740315	97875.9366269277671	97869.0060730986443	-0.281440580394701101	-1.35552070419362281
+sample	13900	27803	30	14	11	1	111494.001159157851	111495.382124304611	111495.664703622126	111488.655878112724	-0.282579339705989696	-1.3809651467599906
+sample	15441	30885	30	14	1	1	125262.371314320335	125263.775052717639	125264.058593855792	125256.979822913112	-0.283541157012223266	-1.40373839730455074
+SUMMARY failures=0 worst_m=15447 worst_odd_n=30897 worst_frontier_boundary=30 worst_frontier_rank=14 worst_relative_log10=-1.40382255917938892 worst_lower_log10=125316.249635486369 min_uniform_lambda_m=15447 min_uniform_lambda_odd_n=30897 min_uniform_lambda_frontier_boundary=30 min_uniform_lambda_rank=14 min_uniform_lambda_log10=-0.283544614983838983
 __EXIT_STATUS=0

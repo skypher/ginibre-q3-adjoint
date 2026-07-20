@@ -57,6 +57,7 @@ class ResourcePlan:
     endpoint_threads: int
     bc_threads: int
     exceptional_threads: int
+    classical_threads: int
 
 
 def detected_cpu_count() -> int:
@@ -151,23 +152,36 @@ def make_resource_plan(
     memory_thread_cap = max(1, int(memory_gib * 2))
     usable = min(requested, cores, memory_thread_cap)
 
-    if memory_gib < 4:
-        group_workers = 1
-    elif memory_gib < 8:
-        group_workers = 2
-    elif memory_gib < 16:
-        group_workers = 3
+    if memory_gib < 2:
+        memory_group_cap = 1
+    elif memory_gib < 4:
+        memory_group_cap = 2
+    elif memory_gib < 6:
+        memory_group_cap = 3
     else:
-        group_workers = 4
-    group_workers = min(group_workers, usable, 4)
+        memory_group_cap = 4
+    # Exact reductions removed the former bridge and exceptional bottlenecks.
+    # One core per independent proof group now minimizes the small-host
+    # critical path; queuing groups merely adds their mostly serial runtimes.
+    cpu_group_cap = usable
+    group_workers = min(memory_group_cap, cpu_group_cap, usable, 4)
     build_jobs = min(8, usable, max(1, int(memory_gib // 2)))
 
     if group_workers == 4 and usable >= 4:
-        # Measurements show no useful scaling beyond 8/24/32 for these three
-        # kernels; preserve spare CPUs instead of increasing contention.
-        endpoint = min(8, max(1, usable // 8))
-        bc = min(24, max(1, 3 * usable // 8))
-        exceptional = min(32, max(1, usable - endpoint - bc))
+        # Reserve an explicit share for the fourth (classical-tail) group so
+        # unspecified OpenMP stages cannot oversubscribe the allocated groups.
+        if usable == 4:
+            # The B/C and classical groups drain quickly.  Expose enough work
+            # in the two long-lived groups to reclaim those cores immediately
+            # instead of leaving the host at 3/4 utilization.  Linux/OpenMP
+            # time-sharing bounds the brief initial overlap; after the short
+            # groups finish the determinant and E8 stages use all four cores.
+            endpoint, bc, exceptional, classical = 4, 1, 2, 1
+        else:
+            endpoint = min(8, max(2, usable // 8))
+            bc = min(24, max(1, 3 * usable // 8))
+            classical = min(8, max(1, usable // 8))
+            exceptional = min(32, max(1, usable - endpoint - bc - classical))
     else:
         # Groups are queued on smaller hosts, so each running group may use
         # its fair share without assuming that all four are simultaneous.
@@ -175,6 +189,7 @@ def make_resource_plan(
         endpoint = min(8, share)
         bc = min(24, share)
         exceptional = min(32, share)
+        classical = min(8, share)
 
     return ResourcePlan(
         detected_cores=cores,
@@ -186,6 +201,7 @@ def make_resource_plan(
         endpoint_threads=endpoint,
         bc_threads=bc,
         exceptional_threads=exceptional,
+        classical_threads=classical,
     )
 
 
@@ -746,8 +762,10 @@ def audit_bc_caller_ranges(root: Path) -> tuple[int, int, int]:
         root / "certificates/post_m29/bc_pieri_powerloss_2q_gmp_certificate.log"
     ).read_text(errors="strict")
     required_log_fragments = (
+        "normalized_logconvexity_reduction=boundary_only audit_range=9..30898",
         "rows=402 total_checks=3904626 max_index=30899",
-        "SUMMARY failures=0 rows=402 total_checks=3904626 max_index=30899",
+        "SUMMARY failures=0 rows=402 total_checks=3904626 boundary_checks=402 "
+        "max_index=30899",
         "__EXIT_STATUS=0",
     )
     if any(fragment not in arithmetic_log for fragment in required_log_fragments):
@@ -1380,6 +1398,8 @@ def exceptional_replays(runner: Runner, root: Path, threads: int) -> None:
         required_text=(
             "positive_accumulation=MPFR_RNDD negative_conversion=MPFR_RNDU "
             "precision_bits=384",
+            "adaptive_grid_coarsening=exact_endpoint_monotonicity "
+            "scales=5/4,3/2,2,3,4",
             "SUMMARY cases_checked=29 failed_cases=0 lattice_failures=0 "
             "precision_bits=384",
             "RESULT: ALL PASS",
@@ -1462,7 +1482,11 @@ def cpp_endpoint_replays(runner: Runner, root: Path, threads: int) -> None:
                 stable,
             ],
             character,
-            required_text="C_3 Chain diff D(29) =",
+            required_text=(
+                "signed_permutation_orbit_reduction=exact "
+                "full_crosscheck_m0_m12=PASS",
+                "C_3 Chain diff D(29) =",
+            ),
             environment_overrides={"OMP_NUM_THREADS": "1"},
         )
         runner.run(
@@ -1485,17 +1509,10 @@ def cpp_endpoint_replays(runner: Runner, root: Path, threads: int) -> None:
             environment_overrides={"OMP_NUM_THREADS": "1"},
         )
 
-    # The B/C bounded-Littlewood comparison and the independent Weyl-source
-    # computation share no generated inputs.  Reserve one endpoint core for
-    # Weyl and hide the row-gated bridge behind its longer critical path.
-    if threads > 1:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-            row_future = executor.submit(row_gated_bridges, threads - 1)
-            source_weyl_bridges()
-            row_future.result()
-    else:
-        row_gated_bridges(1)
-        source_weyl_bridges()
+    # Weyl-orbit reduction makes the source computation negligible.  Run it
+    # first and give the determinant bridge the complete endpoint allocation.
+    source_weyl_bridges()
+    row_gated_bridges(threads)
     runner.run(
         "trace_square_cutoff_mpfr",
         ["./trace_square_cutoff_mpfr"],
@@ -1609,27 +1626,27 @@ def cpp_endpoint_replays(runner: Runner, root: Path, threads: int) -> None:
         certificate / "d19_delta_logs/d19_delta_27.log",
         d19_artifacts / "exact_D19_m39.log",
     ]
-    # D19 and the D4--D24 source families consume disjoint authenticated logs.
-    # The D4 branch exposes four one-core jobs, leaving ample room inside the
-    # eight-core endpoint allocation for this longer independent pairing.
-    d19_pairing_executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
-    d19_pairing_future = d19_pairing_executor.submit(
-        replay_classical_source_pairings,
-        runner,
-        character,
+    # One exact bounded-Littlewood grid reconstructs the 21 finite D rows once
+    # instead of repeating Racah--Speiser state growth in a process per rank.
+    # D4 retains the separate modular/Weyl control immediately above.
+    d_source_grid_command = [
+        "./verify_active_bc_b_frontiers_bounded_littlewood_gmp",
+        "--d4-d24-source-grid",
+        "--stable",
         stable,
-        sorted(set(d19_moment_logs + d19_bridge_logs)),
-        "classical_d19_source_pairing",
-        {"D19"},
-    )
-    replay_classical_source_pairings(
-        runner,
+    ]
+    for path in sorted(set(exact_source_logs + d19_moment_logs + d19_bridge_logs)):
+        d_source_grid_command.extend(("--source-log", str(path)))
+    runner.run(
+        "classical_d4_d24_bounded_littlewood_source_grid",
+        d_source_grid_command,
         character,
-        stable,
-        exact_source_logs,
-        "classical_d4_d24_source_pairing",
-        {f"D{rank}" for rank in range(4, 25)},
-        parallel_jobs=min(4, threads),
+        required_text=(
+            "D4_D24_BOUNDED_LITTLEWOOD_SOURCE_GRID rows=21 maximum_moment=46 "
+            "source_claims=1060 stable_values_checked=47 status=PASS",
+            "D4_D24_BOUNDED_LITTLEWOOD_SOURCE_GRID VERIFICATION: ALL PASS",
+        ),
+        environment_overrides={"OMP_NUM_THREADS": str(min(threads, 32))},
     )
     d4_24_command = [
         "./post_m29_d_stable_window_interval_gmp",
@@ -1666,10 +1683,6 @@ def cpp_endpoint_replays(runner: Runner, root: Path, threads: int) -> None:
         ),
         certificates=("post_m29_d12_24_exact_mgf_mpfr_certificate.log",),
     )
-    try:
-        d19_pairing_future.result()
-    finally:
-        d19_pairing_executor.shutdown(wait=True)
     d19_tail_command = [
         "./post_m29_bc_layered_mgf_mpfr",
         "--d-only",
@@ -1760,8 +1773,29 @@ def cpp_endpoint_replays(runner: Runner, root: Path, threads: int) -> None:
     )
 
 
+def active_b_frontier_replay(runner: Runner, root: Path, threads: int) -> None:
+    """Run the compute-dense B-frontier grid with exclusive adaptive cores."""
+
+    runner.run(
+        "bc_b_h8_h27_bounded_littlewood_gmp",
+        ["./verify_active_bc_b_frontiers_bounded_littlewood_gmp"],
+        root / "character_ring_iter",
+        required_text=(
+            "ACTIVE_B_FRONTIER_HYBRID rows=6 cases=337 analytic_cases=296 "
+            "exact_cases=41 active_maximum_moment=121 "
+            "determinant_maximum_moment=67",
+            "hook_parallelism=exact_independent_case_sums",
+            "failures=0",
+            "ACTIVE_B_FRONTIER_HYBRID VERIFICATION: ALL PASS",
+        ),
+        environment_overrides={"OMP_NUM_THREADS": str(min(threads, 64))},
+        certificates=("bc_b_h8_h27_bounded_littlewood_gmp_certificate.log",),
+        timeout=3600,
+    )
+
+
 def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) -> None:
-    """Recompute every main-proof B/C residual certificate omitted by the old replay."""
+    """Recompute the remaining main-proof B/C residual certificates."""
 
     character = root / "character_ring_iter"
     certificate = root / "certificates/post_m29"
@@ -1799,6 +1833,9 @@ def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) ->
             "1",
             "--lambda-den",
             "2",
+            "--fixed-frontier",
+            "30",
+            "--central-logconvex-bound",
             "--progress",
             "--progress-step",
             "100",
@@ -1806,12 +1843,19 @@ def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) ->
         character,
         required_text=(
             "lambda=1/2",
+            "fixed_frontier=30",
+            "central_logconvex_bound=1",
+            "normalized_logconvexity_dyadic_audit prefix_bits=192 "
+            "prefix_certified=30890 exact_fallbacks=0",
+            "central_logconvex_bound_audit_done first_index=9 last_index=30898 "
+            "crosscheck_max_n=128",
             "algebraic_reduction_crosscheck_done max_n=128",
-            "SUMMARY failures=0 worst_m=15447 worst_odd_n=30897",
+            "SUMMARY failures=0 worst_m=15447 worst_odd_n=30897 "
+            "worst_frontier_boundary=30 worst_frontier_rank=14",
         ),
         # The reduced verifier shares the stable recurrences and retains only
-        # O(sqrt(m)+frontier) exact terms per worker.  Keep the historical
-        # 32-worker cap so replay timing remains portable across hosts.
+        # O(sqrt(m)) exact terms per worker at its fixed frontier.  Keep the
+        # historical 32-worker cap so replay timing remains portable.
         environment_overrides={"OMP_NUM_THREADS": str(min(threads, 32))},
         certificates=("bc_lambda_half_bridge_gmp_certificate.log",),
         timeout=300,
@@ -1831,27 +1875,12 @@ def bc_residual_certificate_replays(runner: Runner, root: Path, threads: int) ->
         character,
         required_text=(
             "VERIFIES exact inequality: 2^(A*q+B+1)*binom(j,q)*s_{j-q} <= s_j",
-            "SUMMARY failures=0 rows=402 total_checks=3904626 max_index=30899 "
+            "normalized_logconvexity_reduction=boundary_only audit_range=9..30898",
+            "SUMMARY failures=0 rows=402 total_checks=3904626 boundary_checks=402 max_index=30899 "
             "loss_q_mult=2 loss_add=0",
         ),
         certificates=("bc_pieri_powerloss_2q_gmp_certificate.log",),
         timeout=300,
-    )
-
-    runner.run(
-        "bc_b_h8_h27_bounded_littlewood_gmp",
-        ["./verify_active_bc_b_frontiers_bounded_littlewood_gmp"],
-        character,
-        required_text=(
-            "ACTIVE_B_FRONTIER_HYBRID rows=6 cases=337 analytic_cases=296 "
-            "exact_cases=41 active_maximum_moment=121 "
-            "determinant_maximum_moment=67",
-            "failures=0",
-            "ACTIVE_B_FRONTIER_HYBRID VERIFICATION: ALL PASS",
-        ),
-        environment_overrides={"OMP_NUM_THREADS": str(min(threads, 64))},
-        certificates=("bc_b_h8_h27_bounded_littlewood_gmp_certificate.log",),
-        timeout=3600,
     )
 
     simple_frontiers = (
@@ -2045,6 +2074,7 @@ def audit_replay_input_coverage(root: Path) -> int:
 
     collector = Collector()
     stable_moment_recurrence_replay(collector, root)  # type: ignore[arg-type]
+    active_b_frontier_replay(collector, root, 1)  # type: ignore[arg-type]
     cpp_endpoint_replays(collector, root, 1)  # type: ignore[arg-type]
     bc_residual_certificate_replays(collector, root, 1)  # type: ignore[arg-type]
     classical_replays(collector, root)  # type: ignore[arg-type]
@@ -2231,7 +2261,7 @@ def main() -> int:
             {
                 "LC_ALL": "C",
                 "PYTHONHASHSEED": "0",
-                "OMP_NUM_THREADS": str(resources.usable_threads),
+                "OMP_NUM_THREADS": str(resources.classical_threads),
                 "SOURCE_DATE_EPOCH": "946684800",
             }
         )
@@ -2248,10 +2278,17 @@ def main() -> int:
         )
         stable_moment_recurrence_replay(runner, isolated)
         print(
+            "[replay] exclusive active-B frontier: "
+            f"threads={min(resources.usable_threads, 64)}",
+            flush=True,
+        )
+        active_b_frontier_replay(runner, isolated, resources.usable_threads)
+        print(
             "[replay] parallel proof groups: "
             f"endpoint_threads={resources.endpoint_threads} "
             f"bc_threads={resources.bc_threads} "
-            f"exceptional_threads={resources.exceptional_threads}",
+            f"exceptional_threads={resources.exceptional_threads} "
+            f"classical_threads={resources.classical_threads}",
             flush=True,
         )
         with concurrent.futures.ThreadPoolExecutor(

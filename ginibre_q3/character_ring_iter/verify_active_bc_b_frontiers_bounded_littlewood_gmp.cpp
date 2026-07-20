@@ -61,6 +61,7 @@ inline constexpr std::size_t full_residual_pairs = 0;
 #include <algorithm>
 #include <cstdint>
 #include <exception>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <stdexcept>
@@ -490,17 +491,264 @@ BigInt hook_length_bad_upper_bound(
 
 }  // namespace active_b_frontier
 
-int main() {
+namespace d_source_grid {
+
+enum class Kind : unsigned char { moment, delta };
+using Key = std::tuple<int, int, Kind>;
+
+void insert_claim(std::map<Key, BigInt>& claims, const Key& key, const BigInt& value) {
+    const auto [found, inserted] = claims.emplace(key, value);
+    if (!inserted && found->second != value) {
+        throw std::runtime_error("conflicting D source claims");
+    }
+}
+
+bool parse_number_after(
+    const std::string& line,
+    const std::string& marker,
+    std::size_t start,
+    int& value,
+    std::size_t& end
+) {
+    const std::size_t position = line.find(marker, start);
+    if (position == std::string::npos) return false;
+    std::size_t cursor = position + marker.size();
+    if (cursor == line.size() || line[cursor] < '0' || line[cursor] > '9') {
+        return false;
+    }
+    value = 0;
+    while (cursor < line.size() && line[cursor] >= '0' && line[cursor] <= '9') {
+        value = 10 * value + (line[cursor] - '0');
+        ++cursor;
+    }
+    end = cursor;
+    return true;
+}
+
+bool parse_assignment(
+    const std::string& line,
+    const std::string& marker,
+    std::size_t start,
+    int& degree,
+    BigInt& value
+) {
+    std::size_t end = 0;
+    if (!parse_number_after(line, marker, start, degree, end)) return false;
+    const std::size_t equals = line.find('=', end);
+    if (equals == std::string::npos) return false;
+    std::size_t cursor = equals + 1;
+    while (cursor < line.size() && line[cursor] == ' ') ++cursor;
+    const std::size_t begin = cursor;
+    if (cursor < line.size() && line[cursor] == '-') ++cursor;
+    const std::size_t digits = cursor;
+    while (cursor < line.size() && line[cursor] >= '0' && line[cursor] <= '9') {
+        ++cursor;
+    }
+    if (cursor == digits) return false;
+    value = BigInt(line.substr(begin, cursor - begin));
+    return true;
+}
+
+std::map<Key, BigInt> read_claims(const std::vector<std::string>& paths) {
+    std::map<Key, BigInt> claims;
+    for (const std::string& path : paths) {
+        std::ifstream input(path);
+        if (!input) throw std::runtime_error("cannot open D source log: " + path);
+        std::string line;
+        while (std::getline(input, line)) {
+            int rank = 0;
+            std::size_t group_end = 0;
+            if (!parse_number_after(line, "D_", 0, rank, group_end)
+                || rank < 4 || rank > 24) continue;
+            int moment = 0;
+            BigInt value;
+            if (parse_assignment(line, "Delta_", group_end, moment, value)) {
+                const bool bare_legacy = line.find(" m_", group_end) == std::string::npos
+                    && moment > 2 * rank;
+                if (!bare_legacy) {
+                    insert_claim(claims, Key{rank, moment, Kind::delta}, value);
+                }
+            }
+            if (parse_assignment(line, "moment_", group_end, moment, value)) {
+                insert_claim(claims, Key{rank, moment, Kind::moment}, value);
+            } else {
+                std::size_t direct_end = 0;
+                if (parse_number_after(line, "m_", group_end, moment, direct_end)) {
+                    std::size_t cursor = direct_end;
+                    while (cursor < line.size() && line[cursor] == ' ') ++cursor;
+                    if (cursor < line.size() && line[cursor] == '='
+                        && (cursor + 1 == line.size() || line[cursor + 1] != '+')) {
+                        if (parse_assignment(line, "m_", group_end, moment, value)) {
+                            insert_claim(claims, Key{rank, moment, Kind::moment}, value);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (claims.empty()) throw std::runtime_error("no D source claims found");
+    return claims;
+}
+
+std::vector<MomentRow> reconstruct_rows() {
+    constexpr std::array<int, 21> through{{
+        40, 44, 40, 40, 38, 38, 38, 46, 38, 38, 38, 38, 45, 44, 43,
+        42, 41, 40, 39, 38, 37
+    }};
+    std::vector<MomentRow> rows;
+    rows.push_back(MomentRow{'B', 1, 0, std::vector<BigInt>(1U, 0)});
+    rows.push_back(MomentRow{'C', 1, 0, std::vector<BigInt>(1U, 0)});
+    BigInt largest_bound = 1;
+    for (int rank = 4; rank <= 24; ++rank) {
+        const int maximum = through[static_cast<std::size_t>(rank - 4)];
+        rows.push_back(MomentRow{
+            'D', rank, maximum,
+            std::vector<BigInt>(static_cast<std::size_t>(maximum + 1), 0)
+        });
+        largest_bound = std::max(
+            largest_bound, integer_power(group_dimension('D', rank), maximum)
+        );
+    }
+
+    std::vector<std::uint32_t> primes;
+    BigInt planned = 1;
+    for (std::uint32_t prime : descending_primes(32U)) {
+        primes.push_back(prime);
+        planned *= prime;
+        if (planned > largest_bound) break;
+    }
+    if (planned <= largest_bound) throw std::runtime_error("D-grid CRT table too short");
+
+    using ResidueTable = std::vector<std::vector<std::uint32_t>>;
+    std::vector<ResidueTable> residues(primes.size());
+    std::vector<std::string> errors(primes.size());
+    const int prime_count = static_cast<int>(primes.size());
+#ifdef _OPENMP
+#pragma omp parallel for schedule(dynamic, 1)
+#endif
+    for (int prime_index = 0; prime_index < prime_count; ++prime_index) {
+        const std::size_t index = static_cast<std::size_t>(prime_index);
+        try {
+            residues[index] = moment_residues_for_prime(
+                rows, 46, primes[index], false
+            );
+        } catch (const std::exception& error) {
+            errors[index] = error.what();
+        } catch (...) {
+            errors[index] = "unknown D-grid prime failure";
+        }
+    }
+    for (std::size_t index = 0; index < errors.size(); ++index) {
+        if (!errors[index].empty()) throw std::runtime_error(errors[index]);
+    }
+
+    BigInt modulus = 1;
+    for (std::size_t prime_index = 0; prime_index < primes.size(); ++prime_index) {
+        const std::uint32_t prime = primes[prime_index];
+        const std::uint32_t inverse = normal_mod_inverse(
+            static_cast<std::uint32_t>(mpz_fdiv_ui(modulus.get_mpz_t(), prime)),
+            prime
+        );
+        for (std::size_t row_index = 0; row_index < rows.size(); ++row_index) {
+            MomentRow& row = rows[row_index];
+            for (int moment = 0; moment <= row.moment_through; ++moment) {
+                BigInt& value = row.moments[static_cast<std::size_t>(moment)];
+                const std::uint32_t current = static_cast<std::uint32_t>(
+                    mpz_fdiv_ui(value.get_mpz_t(), prime)
+                );
+                const std::uint32_t residue = residues[prime_index][row_index]
+                    [static_cast<std::size_t>(moment)];
+                const std::uint32_t difference = residue >= current
+                    ? residue - current
+                    : static_cast<std::uint32_t>(
+                          static_cast<std::uint64_t>(residue) + prime - current
+                      );
+                value += modulus * static_cast<std::uint32_t>(
+                    (static_cast<std::uint64_t>(difference) * inverse) % prime
+                );
+            }
+        }
+        modulus *= prime;
+    }
+    if (modulus <= largest_bound) throw std::runtime_error("D-grid CRT bound missed");
+    return rows;
+}
+
+int run(int argc, char** argv) {
+    std::string stable_path;
+    std::vector<std::string> source_paths;
+    for (int index = 2; index < argc; ++index) {
+        const std::string argument = argv[index];
+        if (argument == "--stable" && index + 1 < argc) {
+            stable_path = argv[++index];
+        } else if (argument == "--source-log" && index + 1 < argc) {
+            source_paths.emplace_back(argv[++index]);
+        } else {
+            throw std::runtime_error("bad D-grid command line");
+        }
+    }
+    if (stable_path.empty() || source_paths.empty()) {
+        throw std::runtime_error("D source grid lacks authenticated inputs");
+    }
+    const std::vector<BigInt> stable = stable_moments(46);
+    std::ifstream stable_input(stable_path);
+    int degree = 0;
+    std::string printed;
+    std::size_t stable_checked = 0;
+    while (stable_input >> degree >> printed) {
+        if (degree < 0) throw std::runtime_error("bad stable degree");
+        if (degree <= 46) {
+            if (BigInt(printed) != stable[static_cast<std::size_t>(degree)]) {
+                throw std::runtime_error("stable recurrence/table mismatch");
+            }
+            ++stable_checked;
+        }
+    }
+    if (!stable_input.eof() || stable_checked < 47U) {
+        throw std::runtime_error("malformed stable table");
+    }
+    const auto claims = read_claims(source_paths);
+    const auto rows = reconstruct_rows();
+    std::map<int, const MomentRow*> by_rank;
+    for (const MomentRow& row : rows) {
+        if (row.family == 'D') by_rank.emplace(row.rank, &row);
+    }
+    std::size_t checked = 0;
+    for (const auto& [key, expected] : claims) {
+        const auto [rank, moment, kind] = key;
+        const auto found = by_rank.find(rank);
+        if (found == by_rank.end() || moment < 0
+            || moment > found->second->moment_through) {
+            throw std::runtime_error("D claim outside determinant grid");
+        }
+        const BigInt& finite = found->second->moments[static_cast<std::size_t>(moment)];
+        const BigInt actual = kind == Kind::moment
+            ? finite : finite - stable[static_cast<std::size_t>(moment)];
+        if (actual != expected) throw std::runtime_error("D source mismatch");
+        ++checked;
+    }
+    if (by_rank.size() != 21U || checked != 1060U) {
+        throw std::runtime_error("D source-grid scope changed");
+    }
+    std::cout << "D4_D24_BOUNDED_LITTLEWOOD_SOURCE_GRID rows=21 "
+                 "maximum_moment=46 source_claims=1060 stable_values_checked=47 "
+                 "status=PASS\n"
+                 "D4_D24_BOUNDED_LITTLEWOOD_SOURCE_GRID VERIFICATION: ALL PASS\n";
+    return 0;
+}
+
+}  // namespace d_source_grid
+
+#ifndef GINIBRE_Q3_ACTIVE_B_FRONTIER_NO_MAIN
+int main(int argc, char** argv) {
     try {
         std::cout << std::unitbuf;
-        std::size_t primes_consumed = 0U;
-        int modulus_bits = 0;
-        const std::vector<MomentRow> rows =
-            active_b_frontier::reconstruct_moments(
-                full_q3_bcd_remaining::required_maximum_moment,
-                primes_consumed,
-                modulus_bits
-            );
+        if (argc >= 2 && std::string(argv[1]) == "--d4-d24-source-grid") {
+            return d_source_grid::run(argc, argv);
+        }
+        if (argc != 1) throw std::runtime_error("unexpected active-frontier argument");
+        const std::vector<active_b_frontier::Case> active_cases =
+            active_b_frontier::active_cases();
         constexpr int active_maximum_moment = 121;
         const std::vector<BigInt> stable = stable_moments(
             active_maximum_moment
@@ -512,6 +760,52 @@ int main() {
             factorials[static_cast<std::size_t>(value)] =
                 value * factorials[static_cast<std::size_t>(value - 1)];
         }
+
+        // Each hook sum is an independent exact sum over paired-row
+        // partitions.  Compute this analytical branch on the same adaptive
+        // OpenMP team used by the determinant grid; the ordered verification
+        // and output pass below remains deterministic.
+        std::vector<BigInt> hook_bounds(active_cases.size());
+        std::vector<std::size_t> hook_shape_counts(active_cases.size(), 0U);
+        std::vector<std::string> hook_errors(active_cases.size());
+        const int active_case_count = static_cast<int>(active_cases.size());
+#ifdef _OPENMP
+#pragma omp parallel for schedule(dynamic, 1)
+#endif
+        for (int case_index = 0;
+             case_index < active_case_count;
+             ++case_index) {
+            const std::size_t index = static_cast<std::size_t>(case_index);
+            try {
+                hook_bounds[index] =
+                    active_b_frontier::hook_length_bad_upper_bound(
+                        active_cases[index],
+                        factorials,
+                        hook_shape_counts[index]
+                    );
+            } catch (const std::exception& error) {
+                hook_errors[index] = error.what();
+            } catch (...) {
+                hook_errors[index] = "unknown hook-length worker failure";
+            }
+        }
+        for (std::size_t index = 0; index < hook_errors.size(); ++index) {
+            if (!hook_errors[index].empty()) {
+                throw std::runtime_error(
+                    std::string("hook case ") + std::to_string(index)
+                    + " failed: " + hook_errors[index]
+                );
+            }
+        }
+
+        std::size_t primes_consumed = 0U;
+        int modulus_bits = 0;
+        const std::vector<MomentRow> rows =
+            active_b_frontier::reconstruct_moments(
+                full_q3_bcd_remaining::required_maximum_moment,
+                primes_consumed,
+                modulus_bits
+            );
         std::map<int, const MomentRow*> by_rank;
         for (const MomentRow& row : rows) {
             if (!by_rank.emplace(row.rank, &row).second) {
@@ -527,17 +821,15 @@ int main() {
         BigInt minimum_margin;
         bool have_minimum = false;
         std::map<int, std::pair<int, BigInt>> summaries_by_h;
-        for (const active_b_frontier::Case& frontier :
-             active_b_frontier::active_cases()) {
+        for (std::size_t case_index = 0;
+             case_index < active_cases.size();
+             ++case_index) {
+            const active_b_frontier::Case& frontier = active_cases[case_index];
             const BigInt& stable_value = stable[
                 static_cast<std::size_t>(frontier.j)
             ];
-            std::size_t case_shapes = 0U;
-            const BigInt hook_bound =
-                active_b_frontier::hook_length_bad_upper_bound(
-                    frontier, factorials, case_shapes
-                );
-            hook_shapes += case_shapes;
+            const BigInt& hook_bound = hook_bounds[case_index];
+            hook_shapes += hook_shape_counts[case_index];
             BigInt bad_bound = hook_bound;
             BigInt margin = stable_value - 2 * hook_bound;
             const char* method = "hook";
@@ -599,6 +891,7 @@ int main() {
                   << " determinant_maximum_moment="
                   << full_q3_bcd_remaining::required_maximum_moment
                   << " hook_shapes=" << hook_shapes
+                  << " hook_parallelism=exact_independent_case_sums"
                   << " primes=" << primes_consumed
                   << " modulus_bits=" << modulus_bits
                   << " minimum_margin=" << minimum_margin
@@ -616,3 +909,4 @@ int main() {
         return 1;
     }
 }
+#endif

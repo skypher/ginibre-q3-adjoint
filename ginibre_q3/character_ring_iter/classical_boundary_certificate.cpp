@@ -2729,12 +2729,41 @@ struct Exp3Hash {
 
 using Laurent3 = ankerl::unordered_dense::map<Exp3, BigInt, Exp3Hash>;
 
+// The B3/C3 adjoint characters and Weyl densities are invariant under the
+// signed-permutation Weyl group.  Store one coefficient per orbit instead of
+// all (up to) 48 signed permutations.  The map value is the coefficient at
+// each weight in the orbit, not the total orbit mass.
+using OrbitLaurent3 = ankerl::unordered_dense::map<Exp3, BigInt, Exp3Hash>;
+
 Exp3 add_exp3(const Exp3& left, const Exp3& right) {
     return {left.first + right.first, left.second + right.second, left.third + right.third};
 }
 
 Exp3 neg_exp3(const Exp3& exp) {
     return {-exp.first, -exp.second, -exp.third};
+}
+
+Exp3 canonical_exp3(const Exp3& exp) {
+    std::array<int, 3> values{
+        std::abs(exp.first), std::abs(exp.second), std::abs(exp.third)
+    };
+    std::sort(values.begin(), values.end(), std::greater<int>());
+    return {values[0], values[1], values[2]};
+}
+
+int orbit_size_exp3(const Exp3& canonical) {
+    const std::array<int, 3> values{
+        canonical.first, canonical.second, canonical.third
+    };
+    int nonzero = 0;
+    for (int value : values) nonzero += value != 0;
+    int permutations = 6;
+    if (values[0] == values[1] && values[1] == values[2]) {
+        permutations = 1;
+    } else if (values[0] == values[1] || values[1] == values[2]) {
+        permutations = 3;
+    }
+    return (1 << nonzero) * permutations;
 }
 
 void add_laurent3(Laurent3& out, const Exp3& exp, const BigInt& value) {
@@ -2799,6 +2828,37 @@ Laurent3 multiply_by_rank3_adjoint_character(const Laurent3& poly, const std::ve
     return out;
 }
 
+OrbitLaurent3 multiply_by_rank3_adjoint_character_orbits(
+    const OrbitLaurent3& poly,
+    const std::vector<Exp3>& positive_roots
+) {
+    OrbitLaurent3 orbit_mass;
+    orbit_mass.reserve(poly.size() * 2 + 128);
+    for (const auto& [exp, coefficient] : poly) {
+        const int source_orbit_size = orbit_size_exp3(exp);
+        orbit_mass[exp] += 3 * source_orbit_size * coefficient;
+        for (const Exp3& root : positive_roots) {
+            orbit_mass[canonical_exp3(add_exp3(exp, root))]
+                += source_orbit_size * coefficient;
+            orbit_mass[canonical_exp3(add_exp3(exp, neg_exp3(root)))]
+                += source_orbit_size * coefficient;
+        }
+    }
+
+    OrbitLaurent3 out;
+    out.reserve(orbit_mass.size());
+    for (auto& [exp, mass] : orbit_mass) {
+        const int target_orbit_size = orbit_size_exp3(exp);
+        if (!mpz_divisible_ui_p(
+                mass.get_mpz_t(), static_cast<unsigned long>(target_orbit_size))) {
+            throw std::runtime_error("rank-3 Weyl orbit mass is not divisible by orbit size");
+        }
+        mass /= target_orbit_size;
+        if (mass != 0) out.emplace(exp, std::move(mass));
+    }
+    return out;
+}
+
 BigInt constant_term_against_density3(const Laurent3& poly, const Laurent3& density) {
     BigInt total = 0;
     for (const auto& [exp, coeff] : poly) {
@@ -2806,6 +2866,40 @@ BigInt constant_term_against_density3(const Laurent3& poly, const Laurent3& dens
         if (found != density.end()) total += coeff * found->second;
     }
     return total;
+}
+
+BigInt constant_term_against_density3_orbits(
+    const OrbitLaurent3& poly,
+    const Laurent3& density
+) {
+    BigInt total = 0;
+    for (const auto& [exp, coefficient] : density) {
+        auto found = poly.find(canonical_exp3(exp));
+        if (found != poly.end()) total += found->second * coefficient;
+    }
+    return total;
+}
+
+std::vector<BigInt> rank3_weyl_moments_full(
+    char family,
+    int moment_max
+) {
+    const std::vector<Exp3> positive_roots = rank3_positive_roots(family);
+    const Laurent3 density = rank3_weyl_density(family);
+    std::vector<BigInt> moments(moment_max + 1);
+    Laurent3 power;
+    power[{0, 0, 0}] = 1;
+    for (int index = 0; index <= moment_max; ++index) {
+        const BigInt raw = constant_term_against_density3(power, density);
+        if (raw % 48 != 0) {
+            throw std::runtime_error("rank-3 full Weyl moment is not divisible by 48");
+        }
+        moments[index] = raw / 48;
+        if (index < moment_max) {
+            power = multiply_by_rank3_adjoint_character(power, positive_roots);
+        }
+    }
+    return moments;
 }
 
 std::vector<BigInt> rank3_weyl_moments(char family, int moment_max, bool progress) {
@@ -2816,11 +2910,11 @@ std::vector<BigInt> rank3_weyl_moments(char family, int moment_max, bool progres
     if (density_ct != 48) throw std::runtime_error("rank-3 Weyl density constant term is not |W|=48");
 
     std::vector<BigInt> moments(moment_max + 1);
-    Laurent3 power;
+    OrbitLaurent3 power;
     power[{0, 0, 0}] = 1;
     auto start = std::chrono::steady_clock::now();
     for (int index = 0; index <= moment_max; ++index) {
-        BigInt raw = constant_term_against_density3(power, density);
+        BigInt raw = constant_term_against_density3_orbits(power, density);
         if (raw % 48 != 0) throw std::runtime_error("rank-3 Weyl moment numerator is not divisible by 48");
         moments[index] = raw / 48;
         if (progress) {
@@ -2830,7 +2924,9 @@ std::vector<BigInt> rank3_weyl_moments(char family, int moment_max, bool progres
                       << " support=" << power.size()
                       << " elapsed=" << seconds << "s" << std::endl;
         }
-        if (index < moment_max) power = multiply_by_rank3_adjoint_character(power, positive_roots);
+        if (index < moment_max) {
+            power = multiply_by_rank3_adjoint_character_orbits(power, positive_roots);
+        }
     }
     return moments;
 }
@@ -2841,10 +2937,24 @@ void run_b3_c3_weyl_certificate(const std::string& stable_path, bool progress, i
 
     for (char family : std::vector<char>{'B', 'C'}) {
         std::vector<BigInt> moments = rank3_weyl_moments(family, moment_max, progress);
+        constexpr int crosscheck_max = 12;
+        const std::vector<BigInt> full_crosscheck =
+            rank3_weyl_moments_full(family, std::min(moment_max, crosscheck_max));
+        for (int index = 0; index < static_cast<int>(full_crosscheck.size()); ++index) {
+            if (moments[index] != full_crosscheck[index]) {
+                throw std::runtime_error(
+                    std::string(1, family) + "3 Weyl-orbit reduction failed at moment "
+                    + std::to_string(index)
+                );
+            }
+        }
         BigInt row_diff = chain_diff(moments, chain_m);
 
         std::cout << family << "_3 exact Weyl m=" << chain_m << " certificate" << std::endl;
         std::cout << "Weyl density constant term = 48" << std::endl;
+        std::cout << "signed_permutation_orbit_reduction=exact"
+                  << " full_crosscheck_m0_m" << std::min(moment_max, crosscheck_max)
+                  << "=PASS" << std::endl;
         std::cout << "moment range m_0..m_" << moment_max << std::endl;
         int first_report = std::max(0, moment_max - 12);
         for (int index = first_report; index <= moment_max; ++index) {

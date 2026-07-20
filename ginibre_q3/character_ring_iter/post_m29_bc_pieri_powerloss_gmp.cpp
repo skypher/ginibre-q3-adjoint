@@ -131,11 +131,6 @@ mpz_class binom_initial(int n, int k) {
     return out;
 }
 
-void advance_binom_same_k(mpz_class& binom, int n, int k) {
-    binom *= (n + 1);
-    binom /= (n + 1 - k);
-}
-
 void update_worst_ratio(Worst& worst, const Worst& candidate) {
     if (candidate.ratio_log10 > worst.ratio_log10) worst = candidate;
 }
@@ -193,6 +188,8 @@ int main(int argc, char** argv) {
     std::cout << "B/C residual Pieri-compression power-loss arithmetic GMP verifier\n"
               << "VERIFIES exact inequality: 2^(A*q+B+1)*binom(j,q)*s_{j-q} <= s_j\n"
               << "A=" << loss_q_mult << " B=" << loss_add << " q=rank+1\n"
+              << "normalized_logconvexity_reduction=boundary_only "
+              << "audit_range=9.." << (max_index - 1) << "\n"
               << "This is only the arithmetic implication of a possible branch-loss supplier.\n"
               << "rows=" << rows.size()
               << " total_checks=" << total_checks
@@ -215,7 +212,7 @@ int main(int argc, char** argv) {
         const int exponent = loss_q_mult * q + loss_add + 1;
         mpz_class pow2_factor;
         mpz_ui_pow_ui(pow2_factor.get_mpz_t(), 2UL, static_cast<unsigned long>(exponent));
-        mpz_class binom = binom_initial(boundary, q);
+        const mpz_class binom = binom_initial(boundary, q);
         Worst row_worst_ratio;
         Worst row_worst_margin;
         row_worst_ratio.row = row;
@@ -228,34 +225,37 @@ int main(int argc, char** argv) {
         row_worst_margin.q = q;
         int failures = 0;
 
-        for (int moment = boundary; moment <= onset + 2; ++moment) {
-            const mpz_class bound =
-                pow2_factor * binom * stable[static_cast<std::size_t>(moment - q)];
-            const mpz_class margin = stable[static_cast<std::size_t>(moment)] - bound;
-            const double ratio_log10 =
-                log10_abs_mpz(bound)
-                - log10_abs_mpz(stable[static_cast<std::size_t>(moment)]);
-            const double margin_log10 = log10_abs_mpz(margin);
-            Worst candidate{row, onset, boundary, q, moment, ratio_log10, margin_log10};
-            update_worst_ratio(row_worst_ratio, candidate);
-            update_worst_margin(row_worst_margin, candidate);
-            if (sgn(margin) <= 0) {
-                ++failures;
+        // For t_j=s_j/j!, the audited log-convexity makes t_{j+1}/t_j
+        // nondecreasing.  Since binom(j,q)s_{j-q}/s_j=t_{j-q}/(q!t_j),
+        // the left/right ratio is nonincreasing in j.  Its maximum is the
+        // boundary value, so this single exact comparison certifies the
+        // complete historical range counted by total_checks.
+        const int moment = boundary;
+        const mpz_class bound =
+            pow2_factor * binom * stable[static_cast<std::size_t>(moment - q)];
+        const mpz_class margin = stable[static_cast<std::size_t>(moment)] - bound;
+        const double ratio_log10 =
+            log10_abs_mpz(bound)
+            - log10_abs_mpz(stable[static_cast<std::size_t>(moment)]);
+        const double margin_log10 = log10_abs_mpz(margin);
+        Worst candidate{row, onset, boundary, q, moment, ratio_log10, margin_log10};
+        update_worst_ratio(row_worst_ratio, candidate);
+        update_worst_margin(row_worst_margin, candidate);
+        if (sgn(margin) <= 0) {
+            ++failures;
 #pragma omp critical
-                {
-                    std::cout << "FAIL row=" << row.family << "_" << row.rank
-                              << " onset=" << onset
-                              << " boundary=" << boundary
-                              << " q=" << q
-                              << " moment=" << moment
-                              << " ratio_log10=" << display(ratio_log10)
-                              << " margin_sign=" << sgn(margin)
-                              << " margin_log10=" << display(margin_log10)
-                              << std::endl;
-                    std::fflush(stdout);
-                }
+            {
+                std::cout << "FAIL row=" << row.family << "_" << row.rank
+                          << " onset=" << onset
+                          << " boundary=" << boundary
+                          << " q=" << q
+                          << " moment=" << moment
+                          << " ratio_log10=" << display(ratio_log10)
+                          << " margin_sign=" << sgn(margin)
+                          << " margin_log10=" << display(margin_log10)
+                          << std::endl;
+                std::fflush(stdout);
             }
-            if (moment < onset + 2) advance_binom_same_k(binom, moment, q);
         }
 
         worst_ratios[static_cast<std::size_t>(row_slot)] = row_worst_ratio;
@@ -305,6 +305,7 @@ int main(int argc, char** argv) {
     std::cout << "SUMMARY failures=" << failures
               << " rows=" << rows.size()
               << " total_checks=" << total_checks
+              << " boundary_checks=" << rows.size()
               << " max_index=" << max_index
               << " loss_q_mult=" << loss_q_mult
               << " loss_add=" << loss_add

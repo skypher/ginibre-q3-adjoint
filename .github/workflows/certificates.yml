@@ -152,7 +152,7 @@ jobs:
       - linux
       - x64
       - q3-certificates
-    timeout-minutes: 15
+    timeout-minutes: 6
 
     steps:
       - name: Check out source
@@ -176,8 +176,8 @@ jobs:
         run: |
           set -o pipefail
           make -C ginibre_q3 clean-room-replay \
-            REPLAY_MAX_STAGE_SECONDS=300 \
-            REPLAY_MAX_TOTAL_SECONDS=300 \
+            REPLAY_MAX_STAGE_SECONDS=240 \
+            REPLAY_MAX_TOTAL_SECONDS=240 \
             2>&1 | tee ci-logs/full-clean-room-replay.log
 
       - name: Preserve failed isolated replay workspace

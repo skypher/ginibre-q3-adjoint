@@ -83,31 +83,67 @@ certificate: hook-length sums close 296 cases analytically, and a ten-prime
 bounded-Littlewood determinant/CRT reconstruction closes the remaining 41
 low-rank cases through moment 67.  It uses the stable moment as a proved
 uniqueness bound and replaces all mandatory reverse-Pieri frontier shards.
+The 337 independent paired-row partition sums and the prime-by-interpolation-
+node determinant grid both use the affinity/RAM-limited OpenMP team; the
+ordered reduction remains deterministic.  This stage takes 24.93 seconds on
+four cores, down from 35.45 seconds after parallelizing only the grid.
 The H9--H27 mixed programs now run only their
 closed type-C formulas; archived B shards remain optional controls.  The
 all-range half-stable bridge and power-loss verifier remain exact GMP scans.
+The clean build likewise compiles only executables invoked by the mandatory
+replay; seven optional-control binaries remain available as explicit Make
+targets but are no longer paid for on the four-minute critical path.  The 19
+closed-form frontier executables share one unoptimized unity translation unit
+and dispatch by executable name; they still run in hundredths of a second.
+Optimization remains enabled for every determinant, recurrence, MPFR, and
+character-ring kernel.
 The half-stable bridge is capped at 32 OpenMP workers because it keeps a large
 exact state map per worker.  Every executable clean-room stage now has a
-hard five-minute ceiling (`REPLAY_MAX_STAGE_SECONDS=300`).  A stage that
+hard four-minute ceiling (`REPLAY_MAX_STAGE_SECONDS=240`).  A stage that
 crosses it is terminated with its isolated workspace and log preserved; it
 must be profiled and optimized or replaced by a proved analytic reduction
 before it may re-enter the replay.
 
-After the one-time build and stable-recurrence check, four dependency-disjoint
-proof groups run concurrently.  The resource planner caps compiler jobs at
-eight, reduces simultaneous proof groups on memory-constrained hosts, and
-assigns CPU budgets without exceeding the affinity/RAM allowance.  On the
-validated 64-core host it selects 8 endpoint threads, 24 B/C-residual threads,
-and 32 exceptional threads; the classical-tail group consists of small or
-single-threaded jobs.  Measured kernel saturation caps prevent a larger host
-from adding counterproductive workers.
+After the one-time build and stable-recurrence check, the compute-dense active
+type-B frontier receives the full adaptive core allocation once.  The four
+remaining dependency-disjoint proof groups then run concurrently.  The
+resource planner caps compiler jobs at
+eight, reduces simultaneous proof groups only below the audited RAM floor,
+and assigns explicit endpoint, B/C, exceptional, and classical CPU shares.
+After the exact bridge, Weyl-orbit, and adaptive-grid reductions, a four-core
+host exposes four endpoint workers, two exceptional workers, and one worker
+in each short B/C and classical group.  The brief initial overlap is
+time-shared; as the two short groups drain, their cores are automatically
+reclaimed by the two long-lived groups instead of sitting idle.  On the
+validated 64-core host it selects 8 endpoint
+threads, 24 B/C-residual threads, 24 exceptional threads, and 8 classical-tail
+threads.  Measured kernel saturation caps prevent a larger host from adding
+counterproductive workers.
 Per-stage logs, required-marker checks, certificate accounting, and the
-300-second ceiling remain independent and fail closed under this scheduling.
-The driver also enforces a 300-second budget for the entire isolated workflow,
+240-second ceiling remain independent and fail closed under this scheduling.
+The driver also enforces a 240-second budget for the entire isolated workflow,
 including integrity audits, compilation, arithmetic, and the compact PDF
-rebuild (`REPLAY_MAX_TOTAL_SECONDS=300`).
-The 64-core, 112.4-GiB clean-room run of 2026-07-20 completed all 105 stages,
-71 manifests, 3,334 hashes, and the 53-page PDF in 180.97 seconds.
+rebuild (`REPLAY_MAX_TOTAL_SECONDS=240`).
+The 64-core, 112.7-GiB clean-room run of 2026-07-20 completed all 105 stages,
+71 manifests, 3,334 hashes, and the 53-page PDF in 168.97 seconds.  The
+fixed-frontier bridge itself took 38.36 seconds under full replay load, down
+from 88.69 seconds before this reduction.
+The conservative fixed-boundary/log-convex bridge passed a four-core
+standalone replay in 17.45 seconds.  Extending its shared audit through index
+30,898 with rigorous 192-bit dyadic prefixes gives a complete one-core bridge
+time of 21.90 seconds.  Adaptive exact E8 meshes reduce that
+four-core stage from 83.14 to 22.23 seconds, while signed-permutation orbit
+reduction cuts the complete low-rank Weyl source from 68.70 to 2.37 seconds.
+The identity
+`binom(j,q)*s[j-q]/s[j] = (s[j-q]/(j-q)!)/(q!*s[j]/j!)`, together with the
+same exact log-convexity audit through index 30,898, reduces the power-loss
+stage from 3,904,626 comparisons to 402 boundary comparisons; it takes 1.27
+seconds on one core.
+The 21 finite type-D source rows are now reconstructed together by one exact
+bounded-Littlewood determinant/CRT grid through the largest consumed degree
+46.  It checks 1,060 authenticated moment/correction claims in about five
+seconds on four cores, replacing the repeated rank-by-rank Racah--Speiser
+growth; the separate D4 modular/Weyl control is retained.
 
 The exceptional source audit applies the same ceiling to character-ring
 growth.  Fresh Racah--Speiser regeneration stops at `G2:m38`, `F4:m65`, and

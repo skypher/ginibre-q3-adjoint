@@ -663,7 +663,7 @@ std::map<std::string, Rational> read_negative_bounds(const std::string& path) {
     return out;
 }
 
-std::vector<CaseConfig> cases() {
+std::vector<CaseConfig> cases(const Rational& grid_scale) {
     std::vector<CaseConfig> out;
     auto cubic = [](std::string label, int n, int cells, Rational s_end, Rational t_end) {
         CaseConfig cfg;
@@ -801,6 +801,46 @@ std::vector<CaseConfig> cases() {
     tail.t_end_is_cap = false;
     tail.sine_denom = q(21);
     out.push_back(tail);
+
+    // The endpoint formulae are valid for every positive mesh width.  Use the
+    // coarsest audited uniform mesh that retains a positive ratio in each
+    // case.  This replaces needless subdivisions without changing the
+    // underlying disjoint-rectangle argument.
+    const std::map<std::string, std::pair<Rational, int>> adaptive_mesh{
+        {"n77", {q(3, 2), 25493}}, {"n79", {q(3), 7518}},
+        {"n81", {q(2), 19706}}, {"n83", {q(2), 22609}},
+        {"n85", {q(2), 25688}}, {"n87", {q(2), 28933}},
+        {"n89", {q(2), 32597}}, {"n91", {q(3, 2), 30748}},
+        {"n93", {q(5, 4), 34241}}, {"n95", {q(3), 3217}},
+        {"n97", {q(2), 8930}}, {"n99", {q(4), 2595}},
+        {"n101", {q(3), 5459}}, {"n103", {q(3), 6185}},
+        {"n105", {q(2), 15875}}, {"n107", {q(3, 2), 31163}},
+        {"n109", {q(4), 4762}}, {"n111", {q(2), 21133}},
+        {"n113", {q(4), 5667}}, {"n115", {q(2), 24567}},
+        {"n117", {q(5, 4), 71087}}, {"n119", {q(2), 3720}},
+        {"n121", {q(2), 18367}}, {"n123", {q(4), 1741}},
+        {"n125", {q(4), 517}}, {"n127", {q(4), 621}},
+        {"n129", {q(2), 3153}}, {"n131", {q(4), 1074}},
+        {"n133", {q(5, 4), 8706}},
+    };
+    for (CaseConfig& cfg : out) {
+        auto found = adaptive_mesh.find(cfg.label);
+        if (found == adaptive_mesh.end()) {
+            throw std::runtime_error("missing adaptive E8 mesh for " + cfg.label);
+        }
+        cfg.grid *= found->second.first;
+        cfg.expected_cells = found->second.second;
+    }
+
+    if (grid_scale <= 0) {
+        throw std::runtime_error("grid scale must be positive");
+    }
+    if (grid_scale != 1) {
+        for (CaseConfig& cfg : out) {
+            cfg.grid *= grid_scale;
+            cfg.expected_cells = -1;
+        }
+    }
     return out;
 }
 
@@ -809,6 +849,7 @@ std::vector<CaseConfig> cases() {
 int main(int argc, char** argv) {
     std::string negative_path = "ginibre_q3/certificates/exceptional_rect/e8_rect_negative_bounds.tsv";
     std::string only;
+    Rational grid_scale = q(1);
     for (int index = 1; index < argc; ++index) {
         std::string arg = argv[index];
         if (arg == "--negative-bounds") {
@@ -817,6 +858,9 @@ int main(int argc, char** argv) {
         } else if (arg == "--only") {
             if (index + 1 >= argc) throw std::runtime_error("missing --only value");
             only = argv[++index];
+        } else if (arg == "--grid-scale") {
+            if (index + 1 >= argc) throw std::runtime_error("missing --grid-scale value");
+            grid_scale = parse_q(argv[++index]);
         } else {
             throw std::runtime_error("unknown argument: " + arg);
         }
@@ -831,6 +875,8 @@ int main(int argc, char** argv) {
     std::cout << "OpenMP max threads=" << omp_get_max_threads() << std::endl;
     std::cout << "positive_accumulation=MPFR_RNDD negative_conversion=MPFR_RNDU"
               << " precision_bits=" << OUTWARD_PRECISION << std::endl;
+    std::cout << "adaptive_grid_coarsening=exact_endpoint_monotonicity"
+              << " scales=5/4,3/2,2,3,4" << std::endl;
     const bool lattice_ok = e8_weyl_lattice_normalization_check();
     all_ok = all_ok && lattice_ok;
     int cases_checked = 0;
@@ -838,7 +884,7 @@ int main(int argc, char** argv) {
     std::cout << "e8_normalized_weyl_lattice_factor_1_and_minimum_2: "
               << (lattice_ok ? "OK" : "FAIL") << std::endl;
 
-    for (const CaseConfig& cfg : cases()) {
+    for (const CaseConfig& cfg : cases(grid_scale)) {
         if (!only.empty() && cfg.label != only) continue;
         auto neg_it = negative_bounds.find(cfg.label);
         if (neg_it == negative_bounds.end()) {
@@ -847,7 +893,8 @@ int main(int argc, char** argv) {
         Rational negative = neg_it->second;
         std::cout << "case " << cfg.label << " n=" << cfg.n << " start" << std::endl;
         std::vector<Cell> cells = candidate_cells(cfg);
-        bool cell_count_ok = static_cast<int>(cells.size()) == cfg.expected_cells;
+        bool cell_count_ok = cfg.expected_cells < 0
+            || static_cast<int>(cells.size()) == cfg.expected_cells;
         bool transpose_disjoint = std::all_of(
             cells.begin(), cells.end(), [](const Cell& cell) { return cell.s0 >= cell.t1; });
         Stats stats = compute_stats(cfg, cells);

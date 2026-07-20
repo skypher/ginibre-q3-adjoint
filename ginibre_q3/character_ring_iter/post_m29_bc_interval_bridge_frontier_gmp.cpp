@@ -211,7 +211,7 @@ mpz_class central_negative_sum(
     return sum;
 }
 
-mpz_class central_negative_sum_all(
+mpz_class central_negative_sum_all_exact(
     int n_value,
     const std::vector<mpz_class>& stable
 ) {
@@ -220,9 +220,42 @@ mpz_class central_negative_sum_all(
     const int radius = static_cast<int>(std::sqrt(static_cast<double>(pair_sum))) + 2;
     const int low = std::max(0, center - radius);
     mpz_class sum = 0;
+    mpz_class binomial = 1;
+    bool have_binomial = false;
     for (int k = low; k <= center; ++k) {
+        if (k >= 2) {
+            if (!have_binomial) {
+                mpz_bin_uiui(
+                    binomial.get_mpz_t(),
+                    static_cast<unsigned long>(n_value),
+                    static_cast<unsigned long>(k - 2)
+                );
+                have_binomial = true;
+            } else {
+                binomial *= n_value - k + 3;
+                binomial /= k - 2;
+            }
+        }
         if (a_sign_polynomial(n_value, k) >= 0) continue;
-        mpz_class term = a_term(n_value, k, stable);
+        mpz_class coefficient;
+        if (k == 0) {
+            coefficient = 1;
+        } else if (k == 1) {
+            coefficient = n_value - 2;
+        } else {
+            coefficient = binomial * static_cast<long>(a_sign_polynomial(n_value, k));
+            const long denominator = static_cast<long>(k) * (k - 1);
+            if (!mpz_divisible_ui_p(
+                    coefficient.get_mpz_t(),
+                    static_cast<unsigned long>(denominator))) {
+                std::cerr << "nonintegral central coefficient at n=" << n_value
+                          << " k=" << k << "\n";
+                std::exit(1);
+            }
+            coefficient /= denominator;
+        }
+        mpz_class term = coefficient * stable[static_cast<std::size_t>(k)]
+            * stable[static_cast<std::size_t>(pair_sum - k)];
         sum += (2 * k == pair_sum) ? term : 2 * term;
     }
     if (sgn(sum) > 0) {
@@ -230,6 +263,155 @@ mpz_class central_negative_sum_all(
         std::exit(1);
     }
     return sum;
+}
+
+void verify_normalized_log_convexity(
+    const std::vector<mpz_class>& stable,
+    int first_index,
+    int last_index
+) {
+    if (first_index < 2 || last_index + 1 >= static_cast<int>(stable.size())) {
+        std::cerr << "invalid normalized log-convexity range\n";
+        std::exit(1);
+    }
+    constexpr mp_bitcnt_t prefix_bits = 192;
+    int prefix_certified = 0;
+    int exact_fallbacks = 0;
+    auto truncated = [](const mpz_class& value, bool upper) {
+        const std::size_t bits = mpz_sizeinbase(value.get_mpz_t(), 2);
+        const mp_bitcnt_t shift = bits > prefix_bits
+            ? static_cast<mp_bitcnt_t>(bits - prefix_bits)
+            : 0;
+        mpz_class mantissa;
+        mpz_fdiv_q_2exp(mantissa.get_mpz_t(), value.get_mpz_t(), shift);
+        if (upper && shift != 0) ++mantissa;
+        return std::pair<mpz_class, mp_bitcnt_t>{std::move(mantissa), shift};
+    };
+    auto dyadic_ge = [](mpz_class left, mp_bitcnt_t left_shift,
+                        mpz_class right, mp_bitcnt_t right_shift) {
+        const std::size_t left_bits = mpz_sizeinbase(left.get_mpz_t(), 2)
+            + static_cast<std::size_t>(left_shift);
+        const std::size_t right_bits = mpz_sizeinbase(right.get_mpz_t(), 2)
+            + static_cast<std::size_t>(right_shift);
+        if (left_bits != right_bits) return left_bits > right_bits;
+        if (left_shift > right_shift) {
+            mpz_mul_2exp(left.get_mpz_t(), left.get_mpz_t(), left_shift - right_shift);
+        } else if (right_shift > left_shift) {
+            mpz_mul_2exp(right.get_mpz_t(), right.get_mpz_t(), right_shift - left_shift);
+        }
+        return left >= right;
+    };
+
+    for (int index = first_index; index <= last_index; ++index) {
+        auto [left_first, left_first_shift] =
+            truncated(stable[static_cast<std::size_t>(index + 1)], false);
+        auto [left_second, left_second_shift] =
+            truncated(stable[static_cast<std::size_t>(index - 1)], false);
+        auto [right_factor, right_shift] =
+            truncated(stable[static_cast<std::size_t>(index)], true);
+        mpz_class left_prefix = index * left_first * left_second;
+        mpz_class right_prefix = (index + 1) * right_factor * right_factor;
+        bool verified = dyadic_ge(
+            std::move(left_prefix), left_first_shift + left_second_shift,
+            std::move(right_prefix), 2 * right_shift
+        );
+        if (verified) {
+            ++prefix_certified;
+            continue;
+        }
+
+        ++exact_fallbacks;
+        const mpz_class left = index * stable[static_cast<std::size_t>(index + 1)]
+            * stable[static_cast<std::size_t>(index - 1)];
+        const mpz_class right = (index + 1) * stable[static_cast<std::size_t>(index)]
+            * stable[static_cast<std::size_t>(index)];
+        if (left < right) {
+            std::cerr << "normalized stable coefficients are not log-convex at index "
+                      << index << "\n";
+            std::exit(1);
+        }
+    }
+    std::cout << "normalized_logconvexity_dyadic_audit prefix_bits=" << prefix_bits
+              << " prefix_certified=" << prefix_certified
+              << " exact_fallbacks=" << exact_fallbacks << std::endl;
+}
+
+int central_negative_low(int n_value) {
+    const int pair_sum = n_value + 2;
+    int low = pair_sum / 2;
+    while (low > 0 && a_sign_polynomial(n_value, low - 1) < 0) --low;
+    return low;
+}
+
+long long central_negative_weight_sum(int pair_sum) {
+    long long maximum_difference = static_cast<long long>(
+        std::sqrt(static_cast<double>(pair_sum - 1))
+    );
+    while ((maximum_difference + 1) * (maximum_difference + 1) < pair_sum) {
+        ++maximum_difference;
+    }
+    while (maximum_difference * maximum_difference >= pair_sum) {
+        --maximum_difference;
+    }
+    if ((maximum_difference - pair_sum) % 2 != 0) --maximum_difference;
+
+    long long count = 0;
+    long long square_sum = 0;
+    if (pair_sum % 2 == 0) {
+        const long long radius = maximum_difference / 2;
+        count = 2 * radius + 1;
+        square_sum = 8 * radius * (radius + 1) * (2 * radius + 1) / 6;
+    } else {
+        const long long radius = (maximum_difference - 1) / 2;
+        count = 2 * (radius + 1);
+        square_sum = 2 * (radius + 1) * (2 * radius + 1) * (2 * radius + 3) / 3;
+    }
+    return count * pair_sum - square_sum;
+}
+
+mpz_class central_negative_sum_logconvex_bound(
+    int n_value,
+    const std::vector<mpz_class>& stable
+) {
+    const int pair_sum = n_value + 2;
+    const int low = central_negative_low(n_value);
+    if (low < 9) {
+        std::cerr << "central log-convex bound enters unaudited index " << low
+                  << " at n=" << n_value << "\n";
+        std::exit(1);
+    }
+
+    const long long weight_sum = central_negative_weight_sum(pair_sum);
+
+    mpz_class binomial;
+    mpz_bin_uiui(
+        binomial.get_mpz_t(),
+        static_cast<unsigned long>(pair_sum),
+        static_cast<unsigned long>(low)
+    );
+    mpz_class numerator = binomial * stable[static_cast<std::size_t>(low)]
+        * stable[static_cast<std::size_t>(pair_sum - low)]
+        * static_cast<long>(weight_sum);
+    const unsigned long denominator = static_cast<unsigned long>(pair_sum)
+        * static_cast<unsigned long>(pair_sum - 1);
+    mpz_class upper;
+    mpz_cdiv_q_ui(upper.get_mpz_t(), numerator.get_mpz_t(), denominator);
+    return -upper;
+}
+
+void verify_central_logconvex_bound(
+    int first_n,
+    int last_n,
+    const std::vector<mpz_class>& stable
+) {
+    for (int n_value = first_n; n_value <= last_n; ++n_value) {
+        const mpz_class exact = central_negative_sum_all_exact(n_value, stable);
+        const mpz_class bound = central_negative_sum_logconvex_bound(n_value, stable);
+        if (bound > exact || sgn(exact) > 0) {
+            std::cerr << "central log-convex bound failed at n=" << n_value << "\n";
+            std::exit(1);
+        }
+    }
 }
 
 bool central_support_is_active(int n_value, int frontier_boundary) {
@@ -295,12 +477,15 @@ mpz_class positive_boundary_sum(
 EnvelopeComponents envelope_components(
     int n_value,
     int frontier_boundary,
-    const std::vector<mpz_class>& stable
+    const std::vector<mpz_class>& stable,
+    bool use_central_logconvex_bound
 ) {
     EnvelopeComponents components;
     components.n_value = n_value;
     components.frontier_boundary = frontier_boundary;
-    components.negative_all = central_negative_sum_all(n_value, stable);
+    components.negative_all = use_central_logconvex_bound
+        ? central_negative_sum_logconvex_bound(n_value, stable)
+        : central_negative_sum_all_exact(n_value, stable);
     components.positive_boundary =
         positive_boundary_sum(n_value, frontier_boundary, stable);
     if (central_support_is_active(n_value, frontier_boundary)) {
@@ -552,6 +737,8 @@ int main(int argc, char** argv) {
     int c_rank_hi = 217;
     int chain_lo = 31;
     int chain_hi_override = 0;
+    int fixed_frontier = 0;
+    bool central_logconvex_bound = false;
     int progress_step = 50;
     int lambda_num = 1;
     int lambda_den = 1;
@@ -580,6 +767,10 @@ int main(int argc, char** argv) {
             chain_lo = std::atoi(argv[++i]);
         } else if (arg == "--chain-hi" && i + 1 < argc) {
             chain_hi_override = std::atoi(argv[++i]);
+        } else if (arg == "--fixed-frontier" && i + 1 < argc) {
+            fixed_frontier = std::atoi(argv[++i]);
+        } else if (arg == "--central-logconvex-bound") {
+            central_logconvex_bound = true;
         } else if (arg == "--onset-log" && i + 1 < argc) {
             onset_log = argv[++i];
         } else if (arg == "--progress-step" && i + 1 < argc) {
@@ -632,6 +823,10 @@ int main(int argc, char** argv) {
         std::cerr << "empty chain interval\n";
         return 2;
     }
+    if (fixed_frontier < 0 || fixed_frontier == 1 || fixed_frontier % 2 != 0) {
+        std::cerr << "fixed frontier must be zero or a positive even integer\n";
+        return 2;
+    }
 
     const int max_index = 2 * chain_hi + 5;
     std::cout << "B/C interval stable-envelope bridge frontier GMP verifier\n"
@@ -641,16 +836,33 @@ int main(int argc, char** argv) {
               << " chain_lo=" << chain_lo << " chain_hi=" << chain_hi
               << " max_index=" << max_index
               << " lambda=" << lambda_num << "/" << lambda_den
+              << " fixed_frontier=" << fixed_frontier
+              << " central_logconvex_bound=" << central_logconvex_bound
               << " onset_log=" << onset_log
               << " OpenMP threads=" << omp_get_max_threads() << std::endl;
     std::cout << "SIGN_MODEL corrections_delta<=0 active from boundary=2*rank+2; "
               << "frontier lower bound uses |delta_j|<=lambda*s_j with a separable "
-              << "positive-linear majorant and exact negative quadratic coefficients"
+              << "positive-linear majorant and "
+              << (central_logconvex_bound
+                      ? "a log-convex central penalty majorant"
+                      : "exact negative quadratic coefficients")
               << std::endl;
 
     std::cout << "stable_moments_start max_index=" << max_index << std::endl;
     const std::vector<mpz_class> stable = stable_moments(max_index);
     std::cout << "stable_moments_done max_index=" << max_index << std::endl;
+    if (central_logconvex_bound) {
+        const int last_logconvex_index = max_index - 1;
+        verify_normalized_log_convexity(stable, 9, last_logconvex_index);
+        verify_central_logconvex_bound(
+            2 * chain_lo + 1,
+            std::min(128, 2 * chain_hi + 3),
+            stable
+        );
+        std::cout << "central_logconvex_bound_audit_done first_index=9 last_index="
+                  << last_logconvex_index << " crosscheck_max_n="
+                  << std::min(128, 2 * chain_hi + 3) << std::endl;
+    }
     const std::vector<mpz_class> stable_chain = stable_chain_values(2 * chain_hi + 3);
     const int algebraic_crosscheck_max_n = std::min(128, 2 * chain_hi + 3);
     verify_algebraic_reduction(algebraic_crosscheck_max_n, stable, stable_chain);
@@ -668,13 +880,25 @@ int main(int argc, char** argv) {
         for (int offset = 0; offset < total; ++offset) {
             const int chain_m = chain_lo + offset;
             int active_rows = 0;
-            const int frontier = frontier_for_chain_m(
+            int frontier = frontier_for_chain_m(
                 chain_m,
                 rows,
                 bridge_max,
                 c_rank_hi,
                 active_rows
             );
+            if (frontier != 0 && fixed_frontier != 0) {
+                if (fixed_frontier > frontier) {
+#pragma omp critical
+                    std::cerr << "fixed frontier " << fixed_frontier
+                              << " exceeds active frontier " << frontier
+                              << " at m=" << chain_m << "\n";
+                    std::exit(2);
+                }
+                // Enlarging the correction box below the active row's true
+                // boundary can only lower the sign-truncated certificate.
+                frontier = fixed_frontier;
+            }
             if (frontier != 0) {
                 const int n_second = 2 * chain_m + 1;
                 EnvelopeComponents second_storage;
@@ -684,11 +908,20 @@ int main(int argc, char** argv) {
                     && cached_first.frontier_boundary == frontier) {
                     second = &cached_first;
                 } else {
-                    second_storage = envelope_components(n_second, frontier, stable);
+                    second_storage = envelope_components(
+                        n_second,
+                        frontier,
+                        stable,
+                        central_logconvex_bound
+                    );
                     second = &second_storage;
                 }
-                EnvelopeComponents first =
-                    envelope_components(n_second + 2, frontier, stable);
+                EnvelopeComponents first = envelope_components(
+                    n_second + 2,
+                    frontier,
+                    stable,
+                    central_logconvex_bound
+                );
                 results[static_cast<std::size_t>(offset)] = verify_chain_m_exact(
                     chain_m,
                     frontier,

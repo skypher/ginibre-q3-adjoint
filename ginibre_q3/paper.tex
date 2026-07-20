@@ -2568,6 +2568,15 @@ The exact box integrals for $B_2,C_2,B_3,C_3$ are replayed by the flags
 \texttt{--b3-c3-post-m29-tail-certificate}.
 \end{array}
 \]
+For the rank-three Weyl source, signed permutations preserve both the
+adjoint character and the Weyl density.  The replay therefore stores one
+coefficient for each dominant absolute-value triple.  A transition from an
+orbit of size $o_\lambda$ contributes its exact total mass
+$o_\lambda c_\lambda$ to the target orbits; division by each target orbit
+size is checked to be integral.  This is the full Laurent recurrence modulo
+the order-$48$ Weyl action, and the unreduced and orbit recurrences are
+checked termwise through moments $m_0,\ldots,m_{12}$ before the reduced
+recurrence is continued to $m_{63}$.
 For $B_4,B_5,B_6,B_8$, the
 fixed rational cap replays apply
 \cref{lem:b-weyl-cap-pushforward}; in particular they include the factor
@@ -30992,7 +31001,7 @@ The accepted transcript
 \]
 has SHA-256
 \[
-\hashsplit{a0ef18d6b2afe82ea9218c8e313bef7a}{f61e75a268ccdfdaed592c6c3e21876f}.
+\hashsplit{19cab146d6868f734d71b3a3c7db18386}{0834e8dba8b07bbbf8e255b7099f2d5}.
 \]
 It records the per-\(h\) scope and certified minimum margin, reports
 \texttt{rows=6 cases=337 analytic\_cases=296 exact\_cases=41}
@@ -35387,7 +35396,7 @@ checks the stronger boundary inequality
 \]
 for every residual $C_b$ row, reports \texttt{failures=0}, and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Since $\binom{2q}{q}\ge1$, the preceding two inequalities give
 $|\delta_{2q}^{C_b}|\le s_{2q}/2$.  This implies the stated lower bound.
@@ -35572,7 +35581,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Combining the displayed inequalities gives
 \(|\delta_{2q+1}^{C_b}|\le s_{2q+1}/2\), and hence the stated lower bound.
@@ -35698,7 +35707,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+2}^{C_b}|\le s_{2q+2}/2\), which implies the claimed lower
 bound.
@@ -35825,7 +35834,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+3}^{C_b}|\le s_{2q+3}/2\), which implies the claimed lower
 bound.
@@ -35969,7 +35978,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+4}^{C_b}|\le s_{2q+4}/2\), which implies the claimed lower
 bound.
@@ -36118,7 +36127,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+5}^{C_b}|\le s_{2q+5}/2\), which implies the claimed lower
 bound.
@@ -36281,7 +36290,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+6}^{C_b}|\le s_{2q+6}/2\), which implies the claimed lower
 bound.
@@ -36450,7 +36459,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+7}^{C_b}|\le s_{2q+7}/2\), which implies the claimed lower
 bound.
@@ -36590,7 +36599,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+8}^{C_b}|\le s_{2q+8}/2\), which implies the claimed lower
 bound.
@@ -36774,7 +36783,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+9}^{C_b}|\le s_{2q+9}/2\) also for \(q\ge23\), which
 implies the claimed lower bound.
@@ -36970,7 +36979,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+10}^{C_b}|\le s_{2q+10}/2\) also for \(q\ge26\), which
 implies the claimed lower bound.
@@ -37174,7 +37183,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+11}^{C_b}|\le s_{2q+11}/2\) also for \(q\ge28\), which
 implies the claimed lower bound.
@@ -37397,7 +37406,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+12}^{C_b}|\le s_{2q+12}/2\) also for \(q\ge31\), which
 implies the claimed lower bound.
@@ -37627,7 +37636,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+13}^{C_b}|\le s_{2q+13}/2\) also for \(q\ge33\), which
 implies the claimed lower bound.
@@ -37859,7 +37868,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+14}^{C_b}|\le s_{2q+14}/2\) also for \(q\ge36\), which
 implies the claimed lower bound.
@@ -38162,7 +38171,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+15}^{C_b}|\le s_{2q+15}/2\) also for \(q\ge38\), which
 implies the claimed lower bound.
@@ -38450,7 +38459,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+16}^{C_b}|\le s_{2q+16}/2\) also for \(q\ge41\), which
 implies the claimed lower bound.
@@ -38747,7 +38756,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+17}^{C_b}|\le s_{2q+17}/2\) also for \(q\ge44\), which
 implies the claimed lower bound.
@@ -39057,7 +39066,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+18}^{C_b}|\le s_{2q+18}/2\) also for \(q\ge46\), which
 implies the claimed lower bound.
@@ -39382,7 +39391,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+19}^{C_b}|\le s_{2q+19}/2\) also for \(q\ge49\), which
 implies the claimed lower bound.
@@ -39725,7 +39734,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+20}^{C_b}|\le s_{2q+20}/2\) also for \(q\ge51\), which
 implies the claimed lower bound.
@@ -40077,7 +40086,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+21}^{C_b}|\le s_{2q+21}/2\) also for \(q\ge54\), which
 implies the claimed lower bound.
@@ -40447,7 +40456,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+22}^{C_b}|\le s_{2q+22}/2\) also for \(q\ge56\), which
 implies the claimed lower bound.
@@ -40825,7 +40834,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+23}^{C_b}|\le s_{2q+23}/2\) also for \(q\ge59\), which
 implies the claimed lower bound.
@@ -41214,7 +41223,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+24}^{C_b}|\le s_{2q+24}/2\) also for \(q\ge61\), which
 implies the claimed lower bound.
@@ -41613,7 +41622,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+25}^{C_b}|\le s_{2q+25}/2\) also for \(q\ge64\), which
 implies the claimed lower bound.
@@ -41889,7 +41898,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+26}^{C_b}|\le s_{2q+26}/2\) also for \(q\ge66\), which
 implies the claimed lower bound.
@@ -42165,7 +42174,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+27}^{C_b}|\le s_{2q+27}/2\) also for \(q\ge69\), which
 implies the claimed lower bound.
@@ -42412,7 +42421,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+28}^{C_b}|\le s_{2q+28}/2\) also for \(q\ge71\), which
 implies the claimed lower bound.
@@ -42658,7 +42667,7 @@ checks the inequality
 on this residual row and moment as part of its all-row residual-window audit;
 it reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 Thus \(|\delta_{2q+29}^{C_b}|\le s_{2q+29}/2\) also for \(q\ge74\), which
 implies the claimed lower bound.
@@ -42859,7 +42868,7 @@ checks, over all residual rows and windows, the integer inequalities
 \]
 It reports \texttt{failures=0} and has SHA-256
 \[
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 \]
 The replay reports its largest ratio diagnostic at $B_{14}$, moment $30$, as
 the approximation
@@ -45006,10 +45015,12 @@ $L_{m,j}$ contributes at worst $-\frac12 L_{m,j}s_j$.  Likewise positive
 quadratic terms may be discarded and a negative quadratic coefficient
 $Q_{m,i,j}$ contributes at worst $\frac14 Q_{m,i,j}s_is_j$.
 
-For each Chain index $m$, the verifier takes the smallest active boundary
-$2\rank(G)+2$ among rows whose finite bridge still includes $D_G(2m+1)$.
-Using this frontier only adds possible negative terms, so it gives a common
-lower bound for every active row.  The exact GMP/OpenMP replay
+For each Chain index $m$, the smallest active boundary is at least the
+global boundary $2\cdot14+2=30$.  The verifier uses this fixed rank-$14$
+frontier for every active row.  Enlarging the correction box below a row's
+true boundary contains the actual lower corrections, which vanish by
+stability, and only adds possible negative terms.  Thus it gives a common
+lower bound while keeping the boundary width constant.  The exact GMP/OpenMP replay
 \[
 \texttt{certificates/post\_m29/bc\_lambda\_half\_bridge\_gmp\_certificate.log}
 \]
@@ -45019,11 +45030,11 @@ majorant and generating-function reduction recorded in
 $\lambda=1/2$.  It exits with status $0$, reports \texttt{failures=0}, and
 has SHA-256
 \[
-\hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
+\hashsplit{ac2e805c5fb7f039ed03849ad651528e}{d0dd957abea4f9643c416d995c25cf41}.
 \]
 Its worst positive lower bound is attained at $m=15447$, odd exponent
-$30897$, with frontier rank $217$ and log$_{10}$ lower bound
-$125316.825861430509>0$.  Hence every active bridge Chain difference is
+$30897$, with the fixed frontier rank $14$ and log$_{10}$ lower bound
+$125316.249635486369>0$.  Hence every active bridge Chain difference is
 nonnegative under the displayed assumptions and the cited boundary and initial
 nonboundary theorems.  For a fixed $m$, the two moment-formula diagonals in
 $D_G(2m+1)$ involve moment indices only through $2m+5$.  The same coefficient
@@ -45161,16 +45172,44 @@ equivalently, for \(Q(x)=\sum q_nx^n/n!\),
 Moreover, \(A_n(k)<0\) only when \(|2k-S|<\sqrt S\).  Consequently the
 negative parts require only \(O(\sqrt n)\) central terms.  The positive
 active parts are recovered from \(q_n\) by subtracting that central sum and
-the excluded boundary sum \(k<f_m\), where \(f_m\le436\) is the active
-frontier.  Finally, since
+the excluded boundary sum \(k<30\).  This fixed frontier enlarges every
+active row's correction box and therefore produces a no-larger lower bound.
+To reduce the remaining central arithmetic, put \(t_j=s_j/j!\).  The source
+checks exactly that
+\[
+ j s_{j+1}s_{j-1}\ge (j+1)s_j^2
+ \qquad (9\le j\le30898),
+\]
+which is precisely the log-convexity of \((t_j)\).  The central-band argument
+uses the first half of this range; the full audit also supplies the
+power-loss reduction below.  Each product comparison is certified from
+rigorous $192$-bit dyadic enclosures: truncating a positive integer gives an
+exact lower prefix and adding one unit gives an exact upper prefix.  Lower
+left products exceed upper right products in all $30{,}890$ cases, so no
+full-width fallback multiplication is needed.
+If \(k_0\) is the left endpoint of
+\(\{k:(2k-S)^2<S\}\), log-convexity gives
+\(t_kt_{S-k}\le t_{k_0}t_{S-k_0}\) throughout that band.  Hence its negative
+part is bounded below by the negative of
+\[
+ \frac{\binom S{k_0}s_{k_0}s_{S-k_0}}{S(S-1)}
+ \sum_{\substack{|d|<\sqrt S\\d\equiv S\pmod 2}}
+       \bigl(S-d^2\bigr).
+\]
+The final weight sum is evaluated by the closed formulas for consecutive
+even or odd squares, and the rational result is rounded upward to an integer
+penalty.  A startup audit compares this bound with the original exact central
+sum through \(n=128\).
+This same endpoint majorant is used wherever the negative central sum enters
+the quadratic penalty.  Finally, since
 \[
  L_{m,k}s_k=2A_{2m+3}(k)s_ks_{2m+5-k}
              -8A_{2m+1}(k)s_ks_{2m+3-k},
 \]
 the inequality \([x+y]_+\le[x]_++[y]_+\) supplies the asserted separable
-linear majorant, while the negative quadratic part is retained exactly.
+linear majorant.
 This replaces the former full diagonal traversal by
-\(O(\sqrt m+f_m)\) exact terms per index.
+one large-integer endpoint product per index, plus fixed-width boundary work.
 The GMP/OpenMP source
 \path{character_ring_iter/post_m29_bc_interval_bridge_frontier_gmp.cpp}
 checks $\widetilde{\mathcal L}_m>0$ for every $m=31,\ldots,15447$.  The
@@ -45178,7 +45217,7 @@ accepted transcript
 \path{certificates/post_m29/bc_lambda_half_bridge_gmp_certificate.log}
 reports no failures and has SHA-256
 \[
-\hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
+\hashsplit{ac2e805c5fb7f039ed03849ad651528e}{d0dd957abea4f9643c416d995c25cf41}.
 \]
 This range contains every bridge index in the displayed rows, and proves the
 claim.
@@ -45287,7 +45326,9 @@ archive proposition.  The source
 reconstructs the required type-$B$ moments from the bounded-Littlewood
 determinant modulo enough primes for unique integer recovery, subtracts them
 from the stable moments, and checks the half-stable inequality in every
-nonautomatic active frontier case.  It fails closed unless the ledger has
+nonautomatic active frontier case.  The determinant evaluations are flattened
+over the prime--interpolation-node grid, and the independent exact hook-length
+sums over paired-row partitions are reduced in a fixed order.  It fails closed unless the ledger has
 exactly $337$ cases and maximum moment $121$.  The $B_{14},j=37$ seed is
 checked separately by
 \path{post_m29_bc_b14_j37_badshape_gmp}.  The type-$C$ frontier programs
@@ -45367,8 +45408,9 @@ majorant proved there then gives the certified bound
 \[
  \widetilde{\mathcal L}_m\le\mathcal L_m\le D_G(2m+1).
 \]
-Its generating-function recurrence and central-band sign formula reduce the
-exact evaluation to \(O(\sqrt m+f_m)\) terms.
+Its generating-function recurrence, fixed rank-$14$ frontier, and audited
+log-convex central-band majorant reduce the large-integer evaluation to one
+endpoint product per index.
 
 \noindent The exact GMP/OpenMP source
 \begin{center}
@@ -45377,7 +45419,7 @@ exact evaluation to \(O(\sqrt m+f_m)\) terms.
 checks $\widetilde{\mathcal L}_m>0$ for $m=31,\ldots,15447$, reports no failures, and
 has replay SHA-256
 \[
-\hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
+\hashsplit{ac2e805c5fb7f039ed03849ad651528e}{d0dd957abea4f9643c416d995c25cf41}.
 \]
 Together with the first-hit proposition \cref{prop:post29} and Chain
 propagation, this reaches the applicable analytic supplier.  The layered-MGF
@@ -45805,34 +45847,34 @@ $D_{E_8}(n)\ge0$ at the listed odd exponents:
 \begin{array}{c|c|c}
 n & \text{retained cells} & \log_{10}(\text{base ratio})\\
 \hline
-77&57817&0.19\\
-79&68095&0.79\\
-81&79060&0.27\\
-83&91138&0.28\\
-85&103495&0.29\\
-87&116526&0.44\\
-89&130740&0.47\\
-91&69502&0.13\\
-93&53822&0.04\\
-95&29784&0.70\\
-97&35869&0.27\\
-99&42662&1.70\\
-101&49478&0.68\\
-103&56387&0.68\\
-105&63660&0.19\\
-107&70562&0.08\\
-109&77454&1.15\\
-111&84702&0.39\\
-113&91581&1.89\\
-115&98455&0.52\\
-117&111427&0.05\\
-119&15000&0.66\\
-121&74053&0.10\\
-123&28121&1.10\\
-125&8497&1.11\\
-127&10528&1.04\\
-129&12719&0.35\\
-131&17797&1.59
+77&25493&0.09\\
+79&7518&0.40\\
+81&19706&0.08\\
+83&22609&0.10\\
+85&25688&0.11\\
+87&28933&0.27\\
+89&32597&0.30\\
+91&30748&0.04\\
+93&34241&0.00\\
+95&3217&0.38\\
+97&8930&0.13\\
+99&2595&1.26\\
+101&5459&0.40\\
+103&6185&0.39\\
+105&15875&0.05\\
+107&31163&0.00\\
+109&4762&0.74\\
+111&21133&0.26\\
+113&5667&1.50\\
+115&24567&0.39\\
+117&71087&0.02\\
+119&3720&0.39\\
+121&18367&0.01\\
+123&1741&0.88\\
+125&517&0.89\\
+127&621&0.80\\
+129&3153&0.28\\
+131&1074&1.39
 \end{array}
 \]
 \else
@@ -45840,25 +45882,25 @@ n & \text{retained cells} & \log_{10}(\text{base ratio})\\
 \begin{array}{c|r|c@{\qquad}c|r|c}
 n&\text{cells}&\log_{10}\text{ ratio}&n&\text{cells}&\log_{10}\text{ ratio}\\
 \hline
-77&57817&.19&105&63660&.19\\
-79&68095&.79&107&70562&.08\\
-81&79060&.27&109&77454&1.15\\
-83&91138&.28&111&84702&.39\\
-85&103495&.29&113&91581&1.89\\
-87&116526&.44&115&98455&.52\\
-89&130740&.47&117&111427&.05\\
-91&69502&.13&119&15000&.66\\
-93&53822&.04&121&74053&.10\\
-95&29784&.70&123&28121&1.10\\
-97&35869&.27&125&8497&1.11\\
-99&42662&1.70&127&10528&1.04\\
-101&49478&.68&129&12719&.35\\
-103&56387&.68&131&17797&1.59
+77&25493&.09&105&15875&.05\\
+79&7518&.40&107&31163&.00\\
+81&19706&.08&109&4762&.74\\
+83&22609&.10&111&21133&.26\\
+85&25688&.11&113&5667&1.50\\
+87&28933&.27&115&24567&.39\\
+89&32597&.30&117&71087&.02\\
+91&30748&.04&119&3720&.39\\
+93&34241&.00&121&18367&.01\\
+95&3217&.38&123&1741&.88\\
+97&8930&.13&125&517&.89\\
+99&2595&1.26&127&621&.80\\
+101&5459&.40&129&3153&.28\\
+103&6185&.39&131&1074&1.39
 \end{array}
 \]
 \fi
-The analytic tail from $n\ge133$ uses $13558$ retained cells, base-ratio
-logarithm $0.02$, and odd-step logarithm $0.85$.
+The analytic tail from $n\ge133$ uses $8706$ retained cells, base-ratio
+logarithm $0.01$, and odd-step logarithm $0.85$.
 \end{proposition}
 
 \begin{proof}
@@ -45872,7 +45914,11 @@ The certificates use the quartic Weyl identity
 \]
 On each retained rational cell the checker proves the two local character
 bounds of \cref{lem:rect-template}; all retained cells are inside the
-root-angle cap.  It also verifies the factor-one normalized Weyl coefficient
+root-angle cap.  The mesh widths are enlarged by the audited factors
+$5/4,3/2,2,3$, or $4$ according to the row.  The same endpoint monotonicity
+inequalities apply to each enlarged rectangle, and exact retained-cell counts
+and transposed-cell disjointness ensure that only endpoint bounds and
+nonoverlapping cells enter the sum.  It also verifies the factor-one normalized Weyl coefficient
 and transposed-cell disjointness required by
 \cref{lem:exceptional-weyl-normalization}.  For the tail certificate at
 $n=133$, for instance, the
@@ -45884,7 +45930,7 @@ cell formula is
 \]
 and the retained cells have
 \[
-  \min h_R(133)=\frac{176378749}{318402000},\qquad
+  \min h_R(133)=\frac{62706243}{113209600},\qquad
   \min(496^2h_R(133)^2-4)>0.
 \]
 \ifginibrefullproof
@@ -46203,12 +46249,16 @@ The common checker contract is the following.
 \text{accept only if every required integer/rational margin is } >0.
 \end{array}
 \]
-Every type-$D$ source table and every bounded exceptional prefix passed to an
-active root-datum source-replay stage is regenerated by reconstructing the
+The $D_4$ modular/Weyl control and every bounded exceptional prefix passed to
+an active root-datum source-replay stage are regenerated by reconstructing the
 relevant Cartan matrix and its full root set, verifying the adjoint root
 multiplicities and rank-dimensional zero-weight space, rejecting negative
 output multiplicities and coordinate overflow, and iterating the bounded
-character ring.  The consumed type-$B/C$ source claims are instead compared
+character ring.  The $1{,}060$ consumed $D_4$--$D_{24}$ raw moment and
+correction claims are compared termwise with one exact bounded-Littlewood
+determinant/CRT reconstruction of all $21$ rows through degree $46$; CRT
+uniqueness is certified beyond the character bound.  The consumed type-$B/C$
+source claims are likewise compared
 termwise with the exact bounded-Littlewood determinant/CRT reconstruction in
 \cref{prop:bc-source-row-gated-bridge}; the slower Racah--Speiser comparison
 is retained as an independent control rather than a second proof premise.
@@ -46468,9 +46518,10 @@ The expanded correction propositions prove the prefix hypotheses used in
 \cref{prop:post29-bc-residual-closure}.
 It covers
 $m=31,\ldots,15447$, reports \texttt{failures=0}, and its worst positive
-lower bound occurs at $B_{217}$, odd exponent $30897$.  The replay SHA-256
+lower bound occurs at odd exponent $30897$ with the fixed rank-$14$
+frontier.  The replay SHA-256
 hash is
-\hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
+\hashsplit{ac2e805c5fb7f039ed03849ad651528e}{d0dd957abea4f9643c416d995c25cf41}.
 \iffalse
 The separate Pieri-compression arithmetic verifier checks that the candidate
 bound
@@ -46499,10 +46550,16 @@ implication used in \cref{prop:bc-bad-shape-reduction}:
   2^{2q+1}\binom jq\,s_{j-q}\le s_j
 \]
 for all residual $B/C$ rows and residual moments, with
-$q=\rank(G)+1$.  It checks the same $3{,}904{,}626$ inequalities, reports
+$q=\rank(G)+1$.  Since
+\[
+ \binom jq\frac{s_{j-q}}{s_j}=\frac{t_{j-q}}{q!t_j},
+\]
+the audited log-convexity makes the ratio nonincreasing in $j$.  The
+verifier therefore replaces the historical $3{,}904{,}626$ comparisons by
+$402$ exact boundary comparisons, reports
 \texttt{failures=0}, and reports its largest logarithmic-ratio diagnostic as
 $-2.63554171301028006$ at $B_{14}$, moment $30$, and has SHA-256
-\hashsplit{124068c5daa1123088a3cd79c3f6b839}{fee45a1aaef637ed82161c465d86bf45}.
+\hashsplit{65bd5ce096ca3ada45de11d550730fe4}{d6edb73f4307b160bd4920274f7efdc1}.
 The exact fixed-witness obstruction verifier checks the first residual height
 fiber $q=15$, $j=30$, $S=\{1,3,\ldots,29\}$ and reports
 \[
@@ -46543,7 +46600,7 @@ quantified boundary-through-twenty-ninth correction contracts.  The
 clean-room domain audit matches every contract to its callers, and the exact
 frontier logs record strictly positive margins.  The GMP/OpenMP bridge verifier
 checks $m=31,\ldots,15447$, reports \texttt{failures=0}, and has SHA-256
-\hashsplit{fa267f4eed4eda48405e7eb468c8b022}{f997ad0bee5ce6324bc8618affcb0e6a}.
+\hashsplit{ac2e805c5fb7f039ed03849ad651528e}{d0dd957abea4f9643c416d995c25cf41}.
 The longer fixed-witness and compression routes are proof-development history
 and are omitted from the main paper. \\
 \fi
@@ -47051,7 +47108,7 @@ $E_6/E_7$ rank-corrected rectangular tails &
 \addlinespace
 $E_8$ rectangular OpenMP source &
 \hashsplit{2024a73d5ad98c33d80dbc9c12820927}{37d0172a3088e7db527aa7cd7406d764} &
-\hashsplit{6bc3c5bf1774e5c50017360f9c7dda09}{932454f2f4fe73f7c8cfbba0650ee025} \\
+\hashsplit{76e8fb31df2acfdbe1d5cdfe1f80f1e5}{8b551424d1aa0ea02d557e23dd828546} \\
 \addlinespace
 $E_8$ negative-bound exact audit &
 \hashsplit{7758379e442ca9b65844db4de7fbcb9d}{49cd0105b142d958c0ca5300c8678046} &
@@ -47425,10 +47482,10 @@ three-pass document checks stated in \texttt{REPLAY.md} all pass.
 \begin{proof}
 The discrete checkers form \cref{lem:moment-formula,def:chain-diff} with GMP
 integers or rationals; analytic checkers use directed MPFR and report positive
-lower margins.  The character-source checker first reconstructs every root
-system from the stated Cartan matrix, verifies the adjoint weight multiset,
-performs the exact Racah--Speiser iterations, and applies
-\cref{lem:character-pairing} before any stored moment is consumed.  The
+lower margins.  Each active character source is regenerated either by the
+checked root-datum Racah--Speiser/character-pairing path or by the proved
+bounded-Littlewood determinant over enough prime fields for unique CRT
+recovery before any stored moment is consumed.  The
 isolated driver deletes copied build products, rebuilds the active checkers and
 both documents, extracts all certificate logs cited on the main-theorem
 dependency walk, and requires exact equality with the set of recomputed
