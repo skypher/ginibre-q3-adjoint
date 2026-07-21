@@ -99,14 +99,14 @@ closed type-C formulas; archived B shards remain optional controls.  The
 all-range half-stable bridge and power-loss verifier remain exact GMP scans.
 The clean build likewise compiles only executables invoked by the mandatory
 replay; seven optional-control binaries remain available as explicit Make
-targets but are no longer paid for on the four-minute critical path.  The 19
+targets but are no longer paid for on the ten-minute critical path.  The 19
 closed-form frontier executables share one unoptimized unity translation unit
 and dispatch by executable name; they still run in hundredths of a second.
 Optimization remains enabled for every determinant, recurrence, MPFR, and
 character-ring kernel.
 The half-stable bridge is capped at 32 OpenMP workers because it keeps a large
 exact state map per worker.  Every executable clean-room stage now has a
-hard four-minute ceiling (`REPLAY_MAX_STAGE_SECONDS=240`).  A stage that
+hard ten-minute ceiling (`REPLAY_MAX_STAGE_SECONDS=600`).  A stage that
 crosses it is terminated with its isolated workspace and log preserved; it
 must be profiled and optimized or replaced by a proved analytic reduction
 before it may re-enter the replay.
@@ -118,7 +118,7 @@ resource planner caps compiler jobs at
 eight, reduces simultaneous proof groups only below the audited RAM floor,
 and assigns explicit endpoint, B/C, exceptional, and classical CPU shares.
 After the exact bridge, Weyl-orbit, and adaptive-grid reductions, a four-core
-host exposes four endpoint workers, two exceptional workers, and one worker
+host exposes four endpoint workers, four exceptional workers, and one worker
 in each short B/C and classical group.  The brief initial overlap is
 time-shared; as the two short groups drain, their cores are automatically
 reclaimed by the two long-lived groups instead of sitting idle.  On the
@@ -127,14 +127,12 @@ threads, 24 B/C-residual threads, 24 exceptional threads, and 8 classical-tail
 threads.  Measured kernel saturation caps prevent a larger host from adding
 counterproductive workers.
 Per-stage logs, required-marker checks, certificate accounting, and the
-240-second ceiling remain independent and fail closed under this scheduling.
-The driver also enforces a 240-second budget for the entire isolated workflow,
+600-second ceiling remain independent and fail closed under this scheduling.
+The driver also enforces a 900-second budget for the entire isolated workflow,
 including integrity audits, compilation, arithmetic, and the compact PDF
-rebuild (`REPLAY_MAX_TOTAL_SECONDS=240`).
-The 64-core, 112.7-GiB clean-room run of 2026-07-20 completed all 105 stages,
-71 manifests, 3,334 hashes, and the 53-page PDF in 168.97 seconds.  The
-fixed-frontier bridge itself took 38.36 seconds under full replay load, down
-from 88.69 seconds before this reduction.
+rebuild (`REPLAY_MAX_TOTAL_SECONDS=900`).  Counts, page totals, and timings are
+reported by each replay transcript rather than duplicated here, so document or
+manifest changes cannot leave stale success metadata in this contract.
 The conservative fixed-boundary/log-convex bridge passed a four-core
 standalone replay in 17.45 seconds.  Extending its shared audit through index
 30,898 with rigorous 192-bit dyadic prefixes gives a complete one-core bridge
@@ -153,16 +151,18 @@ seconds on four cores, replacing the repeated rank-by-rank Racah--Speiser
 growth; the separate D4 modular/Weyl control is retained.
 
 The exceptional source audit applies the same ceiling to character-ring
-growth.  Fresh Racah--Speiser regeneration stops at `G2:m38`, `F4:m65`, and
-`E6/E7/E8:m42`; these prefixes validate the Cartan data, Weyl reflections,
-and character-pairing implementation.  Every longer moment actually consumed
-by the proof is then compared exactly with the corresponding `g[2]`, `f[4]`,
-`e[6]`, `e[7]`, or `e[8]` block in the BPV ancillary source, after which the
-full GMP Chain checks run on the complete consumed ledgers.  The old attempt
-to regenerate the archival `F4:m220`, `E6:m80`, `E7:m70`, and `E8:m100`
-suffixes in one process is not a replay obligation: its support grows to tens
-of millions of highest weights and individual historical steps exceed five
-minutes.
+growth.  Fresh Racah--Speiser iteration plus character pairing regenerates the
+complete theorem-consumed ranges `G2:m38`, `F4:m65`, `E6:m80`, `E7:m70`, and
+`E8:m100` from their Cartan data.  Character pairing reduces moment degree
+`m` to tensor depth `ceil(m/2)`.  The regenerated values are compared with the
+local ledgers before any full GMP Chain check consumes them.  A logically
+separate audit then compares every row with the corresponding `g[2]`, `f[4]`,
+`e[6]`, `e[7]`, or `e[8]` BPV ancillary block.  The older direct-power
+decompositions through `F4:m220` and comparable archival ranges are not replay
+obligations: their supports grow to tens of millions of highest weights.  Each
+consumed-range reconstruction uses the exceptional worker allocation, with
+thread-local exact maps capped at eight workers and an exact deterministic
+merge.  The groups run in ledger order to avoid multiplying peak memory.
 
 Success verifies the certificate and artifact contract for the paper's
 unconditional, exactly-two-minus repeated-adjoint theorem.  This is not a
@@ -229,8 +229,26 @@ which conclusion each command supports.
 | Tier | Command or target | Purpose | Documented resource scale |
 |---|---|---|---|
 | Preflight | `make -C ginibre_q3 publication-preflight` | Parse theorem interfaces and the explicit B/C contract, check formulas and coverage, and authenticate manifests; does not recompute all arithmetic signs | Seconds to a few minutes; ordinary workstation |
-| Part III arithmetic | `make -C ginibre_q3 full-q3-extension` | Rebuild every Part III exact/MPFR verifier and its 35-page formal/computational supplement | Parallel exact suppliers; each underlying computation is required to remain below five minutes on the validated 64-thread host |
-| Parts I--II regeneration | `make -C ginibre_q3 clean-room-replay` | Rebuild every main-theorem-reachable two-minus certificate in an isolated tree | Hard 300-second ceiling for each executable stage; a ceiling failure preserves its profiling log |
+| Part III arithmetic | `make -C ginibre_q3 full-q3-extension` | Rebuild every Part III exact/MPFR verifier and its formal/computational supplement | Parallel exact suppliers; each underlying computation is required to remain below ten minutes on the validated host |
+| Parts I--II regeneration | `make -C ginibre_q3 clean-room-replay` | Rebuild every main-theorem-reachable two-minus certificate in an isolated tree | Hard 600-second ceiling per executable stage and 900-second aggregate ceiling; a failure preserves its profiling log |
+
+The GitHub Actions workflow uses the standard four-core Ubuntu runner for this
+public repository.  To preserve the complete proof obligation without placing
+two independent E8 computations serially on one ten-minute runner, CI splits
+Parts I--II into two required, concurrent jobs.  The main clean-room shard
+runs every stage except E8 source pairing with 420-second stage and aggregate
+limits; the dedicated exact shard authenticates the same manifests, rebuilds
+the OpenMP/GMP character verifier, and regenerates all 101 E8 moments through
+`m_100`.  Their union is exactly the default unsplit `clean-room-replay`
+obligation.  Every CI job has a ten-minute wall ceiling.  The more conservative
+local defaults above remain appropriate for slower or contended machines;
+`--skip-e8-source-pairing` is a CI-sharding switch, not a complete-replay mode.
+Part III is likewise the union of two required concurrent jobs: the hierarchy
+main shard runs every `full-q3-extension` prerequisite except the independent
+31-prime bounded-Littlewood reconstruction, and the exact bounded-Littlewood
+job authenticates the same manifests and runs that omitted target.  The local
+`full-q3-extension` target still composes both and remains the single-command
+complete Part III replay.
 
 The Part III target verifies the imported two-minus theorem's source and
 interface bindings but does not rerun its 200-stage arithmetic.  A complete
@@ -353,13 +371,13 @@ The command recomputes:
 - the SU(N) finite transition strip for `N=6..18`, the uniform strip base
   margin and symbolic monotonicity polynomials, and the endpoint/overlap
   certificates using exact GMP arithmetic;
-- every type-D adjoint-moment source and bounded exceptional prefix routed to
+- every type-D adjoint-moment source and complete consumed exceptional range routed to
   the active root-datum checker, by reconstructing its root datum, iterating
   the exact Racah--Speiser character ring, and applying character
   orthogonality; the 182 consumed low-rank B/C source claims are instead
   compared termwise with the bounded-Littlewood determinant reconstruction,
-  while every longer consumed exceptional row is compared termwise with the
-  BPV ancillary table before the full integer Chain audits run;
+  while every exceptional row is then compared termwise with the BPV ancillary
+  table as an independent control before the full integer Chain audits run;
 - the stable classical sequence from the proved exact three-term recurrence;
   the archived OEIS row is checked in every degree before any downstream
   correction stage, so each later table lookup is certified equal to the
@@ -475,11 +493,11 @@ the command fail.
 The archive contains raw character-ring, determinant-isotypic-sum, partitioned
 frontier, and exploratory search transcripts.  A SHA-256 digest authenticates
 only the bytes.  The standard command independently regenerates every
-low classical character-ring claim and each bounded exceptional prefix passed
-to a main-theorem source-replay stage.  Longer exceptional suffixes are
-checked termwise against the independently archived BPV ancillary table; the
-full downstream Chain calculation still consumes and checks every required
-integer row.  The command rebuilds the theorem-reachable determinant/frontier certificates, regenerates
+low classical character-ring claim and every theorem-consumed exceptional
+range passed to a main-theorem source-replay stage.  The independently
+archived BPV ancillary table is checked termwise only after that regeneration;
+the full downstream Chain calculation consumes the regenerated integer rows.
+The command rebuilds the theorem-reachable determinant/frontier certificates, regenerates
 the stable classical moments from the proved recurrence while checking the
 OEIS comparison table, verifies recorded exit statuses and the accepted
 classification, and checks every downstream exact inequality.

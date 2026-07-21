@@ -32,7 +32,7 @@ echo "__GIT_COMMIT=$(git -C "$script_dir" rev-parse HEAD)"
 sha256sum "$source_file" "$data_file" "$script_dir/Makefile"
 g++ --version | head -n 1
 
-g++ -O3 -DNDEBUG -std=c++20 -fopenmp -Wall -Wextra -Wpedantic \
+g++ -O3 -march=native -DNDEBUG -std=c++20 -fopenmp -Wall -Wextra -Wpedantic \
     -Wconversion -Wsign-conversion -Werror \
     "$source_file" -lgmpxx -lgmp -o "$binary"
 

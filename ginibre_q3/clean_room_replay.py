@@ -176,7 +176,7 @@ def make_resource_plan(
             # instead of leaving the host at 3/4 utilization.  Linux/OpenMP
             # time-sharing bounds the brief initial overlap; after the short
             # groups finish the determinant and E8 stages use all four cores.
-            endpoint, bc, exceptional, classical = 4, 1, 2, 1
+            endpoint, bc, exceptional, classical = 4, 1, 4, 1
         else:
             endpoint = min(8, max(2, usable // 8))
             bc = min(24, max(1, 3 * usable // 8))
@@ -188,7 +188,10 @@ def make_resource_plan(
         share = max(1, usable // group_workers)
         endpoint = min(8, share)
         bc = min(24, share)
-        exceptional = min(32, share)
+        # Exceptional reconstruction is the only long serial proof group on
+        # a small host.  Its kernel caps itself at eight threads; exposing all
+        # usable cores lets it reclaim CPUs as the short peer group drains.
+        exceptional = min(8, usable)
         classical = min(8, share)
 
     return ResourcePlan(
@@ -915,7 +918,7 @@ class Runner:
         required_text: str | tuple[str, ...] | None = None,
         environment_overrides: dict[str, str] | None = None,
         certificates: tuple[str, ...] = (),
-        timeout: int = 300,
+        timeout: int | None = None,
     ) -> Path:
         with self._lock:
             log_index = self._next_log_index
@@ -929,7 +932,12 @@ class Runner:
         remaining_total = self.deadline - time.monotonic()
         if remaining_total <= 0:
             raise ReplayFailure(f"{name} could not start: total replay budget exhausted")
-        effective_timeout = min(timeout, self.max_stage_seconds, remaining_total)
+        requested_timeout = (
+            self.max_stage_seconds
+            if timeout is None
+            else min(timeout, self.max_stage_seconds)
+        )
+        effective_timeout = min(requested_timeout, remaining_total)
         with log_path.open("w") as output:
             output.write("COMMAND: " + " ".join(command) + "\n")
             if environment_overrides:
@@ -956,7 +964,7 @@ class Runner:
             except subprocess.TimeoutExpired as error:
                 budget = (
                     "total replay budget"
-                    if remaining_total < min(timeout, self.max_stage_seconds)
+                    if remaining_total < requested_timeout
                     else "per-stage ceiling"
                 )
                 raise ReplayFailure(
@@ -1287,16 +1295,22 @@ def classical_replays(runner: Runner, root: Path) -> None:
     )
 
 
-def exceptional_replays(runner: Runner, root: Path, threads: int) -> None:
+def exceptional_replays(
+    runner: Runner,
+    root: Path,
+    threads: int,
+    *,
+    skip_e8_source_pairing: bool = False,
+) -> None:
     character = root / "character_ring_iter"
     pairing_sources = (
         ("G2", 38, [character / "logs/g2_200.log"]),
         ("F4", 65, [character / "logs/f4_220c.log"]),
-        ("E6", 42, [character / "logs/e6_80.log"]),
-        ("E7", 42, [character / "logs/e7_70.log"]),
+        ("E6", 80, [character / "logs/e6_80.log"]),
+        ("E7", 70, [character / "logs/e7_70.log"]),
         (
             "E8",
-            42,
+            100,
             [
                 character / "logs/e8_70.log",
                 root / "references/arxiv_2412_21189_e8_m71_m100.txt",
@@ -1304,6 +1318,8 @@ def exceptional_replays(runner: Runner, root: Path, threads: int) -> None:
         ),
     )
     for group, maximum, sources in pairing_sources:
+        if skip_e8_source_pairing and group == "E8":
+            continue
         runner.run(
             f"exceptional_source_pairing_{group.lower()}",
             [
@@ -1317,6 +1333,7 @@ def exceptional_replays(runner: Runner, root: Path, threads: int) -> None:
                 f"SUMMARY group={group} moments={maximum + 1} "
                 f"source_values={maximum + 1} failures=0"
             ),
+            environment_overrides={"OMP_NUM_THREADS": str(max(1, threads))},
         )
     runner.run(
         "exceptional_ancillary_all_consumed_moments",
@@ -2173,17 +2190,25 @@ def main() -> int:
     parser.add_argument(
         "--max-stage-seconds",
         type=int,
-        default=300,
+        default=600,
         help="fail and preserve profiling evidence if one executable stage exceeds this limit",
     )
     parser.add_argument(
         "--max-total-seconds",
         type=int,
-        default=300,
+        default=900,
         help="fail unless the complete isolated replay finishes inside this wall-clock budget",
     )
     parser.add_argument("--keep", action="store_true", help="keep the isolated tree after success")
     parser.add_argument("--skip-paper", action="store_true", help="skip only the final PDF rebuild")
+    parser.add_argument(
+        "--skip-e8-source-pairing",
+        action="store_true",
+        help=(
+            "skip only the E8 m_0..m_100 character-pairing stage; intended for "
+            "the CI main shard when the dedicated E8 shard runs in parallel"
+        ),
+    )
     args = parser.parse_args()
     if args.threads < 0:
         parser.error("--threads must be positive or 'auto'")
@@ -2319,6 +2344,7 @@ def main() -> int:
                     runner,
                     isolated,
                     resources.exceptional_threads,
+                    skip_e8_source_pairing=args.skip_e8_source_pairing,
                 ): "exceptional",
             }
             for future in concurrent.futures.as_completed(futures):
@@ -2347,9 +2373,14 @@ def main() -> int:
                 f"complete replay took {elapsed:.2f}s, exceeding the "
                 f"{args.max_total_seconds}s total budget"
             )
+        scope = (
+            "CI MAIN SHARD PASSED (dedicated E8 source-pairing shard required)"
+            if args.skip_e8_source_pairing
+            else "ALL GINIBRE Q3 CHECKS PASSED"
+        )
         print(
-            f"[replay] ALL GINIBRE Q3 CHECKS PASSED: {len(runner.results)} executable "
-            f"stages, {manifest_count} manifests, {entry_count} hashes, {elapsed:.2f}s",
+            f"[replay] {scope}: {len(runner.results)} executable stages, "
+            f"{manifest_count} manifests, {entry_count} hashes, {elapsed:.2f}s",
             flush=True,
         )
         succeeded = True

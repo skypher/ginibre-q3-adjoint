@@ -5,18 +5,25 @@
 
 #include <algorithm>
 #include <array>
+#include <atomic>
 #include <chrono>
 #include <cstdint>
 #include <cstdlib>
+#include <exception>
 #include <fstream>
 #include <iostream>
 #include <limits>
 #include <map>
+#include <mutex>
 #include <regex>
 #include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
+
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 namespace {
 
@@ -424,41 +431,123 @@ MultiplicityMap<Rank> tensor_with_adjoint(
     const MultiplicityMap<Rank>& source,
     const RootDatum<Rank>& datum,
     std::int32_t& maximum_coordinate) {
-    MultiplicityMap<Rank> target;
-    target.reserve(std::max<std::size_t>(64, 2 * source.size()));
-
-    for (const auto& [highest_weight, coefficient] : source) {
+    using Entry = typename MultiplicityMap<Rank>::value_type;
+    std::vector<const Entry*> entries;
+    entries.reserve(source.size());
+    for (const auto& entry : source) {
+        const mpz_class& coefficient = entry.second;
         if (coefficient <= 0) fail("source decomposition has a nonpositive coefficient");
-        for (std::size_t index = 0; index < datum.adjoint_weights.size(); ++index) {
-            Weight<Rank> shifted;
-            for (int coordinate = 0; coordinate < Rank; ++coordinate) {
-                const std::int64_t value =
-                    static_cast<std::int64_t>(highest_weight.coordinate[coordinate]) +
-                    datum.adjoint_weights[index].coordinate[coordinate] + 1;
-                if (value < std::numeric_limits<std::int32_t>::min() ||
-                    value > std::numeric_limits<std::int32_t>::max()) {
-                    fail("weight-coordinate overflow before dominant reflection");
-                }
-                shifted.coordinate[coordinate] = static_cast<std::int32_t>(value);
-            }
-            const int sign = dominant_reflect<Rank>(shifted, datum.cartan);
-            if (sign == 0) continue;
+        entries.push_back(&entry);
+    }
 
-            Weight<Rank> dominant;
-            for (int coordinate = 0; coordinate < Rank; ++coordinate) {
-                const std::int64_t value =
-                    static_cast<std::int64_t>(shifted.coordinate[coordinate]) - 1;
-                if (value < 0 || value > std::numeric_limits<std::int32_t>::max()) {
-                    fail("dominant highest weight is outside the checked coordinate range");
-                }
-                dominant.coordinate[coordinate] = static_cast<std::int32_t>(value);
-                maximum_coordinate = std::max(maximum_coordinate, dominant.coordinate[coordinate]);
-            }
+#ifdef _OPENMP
+    const int thread_count = std::min(8, std::max(1, omp_get_max_threads()));
+#else
+    const int thread_count = 1;
+#endif
+    std::vector<MultiplicityMap<Rank>> partials(
+        static_cast<std::size_t>(thread_count));
+    std::vector<std::int32_t> partial_maxima(
+        static_cast<std::size_t>(thread_count), 0);
+    for (MultiplicityMap<Rank>& partial : partials) {
+        partial.reserve(std::max<std::size_t>(64, source.size()));
+    }
 
-            mpz_class contribution = coefficient * datum.adjoint_multiplicities[index];
-            if (sign < 0) contribution = -contribution;
-            const auto [found, inserted] = target.try_emplace(dominant, contribution);
-            if (!inserted) found->second += contribution;
+    std::atomic<bool> aborted = false;
+    std::exception_ptr parallel_failure;
+    std::mutex failure_mutex;
+
+#pragma omp parallel num_threads(thread_count)
+    {
+#ifdef _OPENMP
+        const int thread = omp_get_thread_num();
+#else
+        const int thread = 0;
+#endif
+        MultiplicityMap<Rank>& partial =
+            partials[static_cast<std::size_t>(thread)];
+        std::int32_t& partial_maximum =
+            partial_maxima[static_cast<std::size_t>(thread)];
+
+#pragma omp for schedule(static)
+        for (std::size_t position = 0; position < entries.size(); ++position) {
+            if (aborted.load(std::memory_order_relaxed)) continue;
+            try {
+                const auto& [highest_weight, coefficient] = *entries[position];
+                for (std::size_t index = 0;
+                     index < datum.adjoint_weights.size(); ++index) {
+                    Weight<Rank> shifted;
+                    for (int coordinate = 0; coordinate < Rank; ++coordinate) {
+                        const std::int64_t value =
+                            static_cast<std::int64_t>(
+                                highest_weight.coordinate[coordinate]) +
+                            datum.adjoint_weights[index].coordinate[coordinate] + 1;
+                        if (value < std::numeric_limits<std::int32_t>::min() ||
+                            value > std::numeric_limits<std::int32_t>::max()) {
+                            fail("weight-coordinate overflow before dominant reflection");
+                        }
+                        shifted.coordinate[coordinate] =
+                            static_cast<std::int32_t>(value);
+                    }
+                    const int sign = dominant_reflect<Rank>(shifted, datum.cartan);
+                    if (sign == 0) continue;
+
+                    Weight<Rank> dominant;
+                    for (int coordinate = 0; coordinate < Rank; ++coordinate) {
+                        const std::int64_t value =
+                            static_cast<std::int64_t>(
+                                shifted.coordinate[coordinate]) - 1;
+                        if (value < 0 ||
+                            value > std::numeric_limits<std::int32_t>::max()) {
+                            fail("dominant highest weight is outside the checked coordinate range");
+                        }
+                        dominant.coordinate[coordinate] =
+                            static_cast<std::int32_t>(value);
+                        partial_maximum = std::max(
+                            partial_maximum, dominant.coordinate[coordinate]);
+                    }
+
+                    const auto [found, inserted] =
+                        partial.try_emplace(dominant, mpz_class(0));
+                    (void)inserted;
+                    const unsigned long multiplicity = static_cast<unsigned long>(
+                        datum.adjoint_multiplicities[index]);
+                    if (sign > 0) {
+                        mpz_addmul_ui(found->second.get_mpz_t(),
+                                      coefficient.get_mpz_t(), multiplicity);
+                    } else {
+                        mpz_submul_ui(found->second.get_mpz_t(),
+                                      coefficient.get_mpz_t(), multiplicity);
+                    }
+                }
+            } catch (...) {
+                {
+                    std::lock_guard<std::mutex> guard(failure_mutex);
+                    if (!parallel_failure) parallel_failure = std::current_exception();
+                }
+                aborted.store(true, std::memory_order_relaxed);
+            }
+        }
+    }
+    if (parallel_failure) std::rethrow_exception(parallel_failure);
+
+    for (const std::int32_t value : partial_maxima) {
+        maximum_coordinate = std::max(maximum_coordinate, value);
+    }
+
+    const auto largest = std::max_element(
+        partials.begin(), partials.end(),
+        [](const auto& left, const auto& right) {
+            return left.size() < right.size();
+        });
+    MultiplicityMap<Rank> target = std::move(*largest);
+    target.reserve(std::max<std::size_t>(64, 2 * source.size()));
+    for (auto& partial : partials) {
+        if (&partial == &*largest) continue;
+        for (auto& [weight, coefficient] : partial) {
+            const auto [found, inserted] =
+                target.try_emplace(weight, std::move(coefficient));
+            if (!inserted) found->second += coefficient;
         }
     }
 

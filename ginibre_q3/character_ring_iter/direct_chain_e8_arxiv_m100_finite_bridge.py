@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Exact E8 finite-bridge replay from the arXiv m_0..m_100 moment table.
+"""Exact E8 finite-bridge replay from the checked m_0..m_100 ledger.
 
-The local character-ring log supplies m_0..m_70.  The arXiv 2412.21189
-ancillary table supplies m_71..m_100.  This checker verifies the source
-overlap through the n=81 certificate and then evaluates Q_3(n) and the direct
+This downstream checker reads the maintained local rows through m_70 and the
+m_71..m_100 transcription, then evaluates Q_3(n) and the direct
 Chain differences
 
     D_E8(n) = Q_3^{E8}(n+2) - 4 Q_3^{E8}(n)
 
 for the remaining finite E8 bridge window.
+
+Before this stage is accepted, the standard replay independently regenerates
+the entire range from the E8 Cartan datum and requires exact equality.  A
+separate audit compares the same values with the BPV ancillary table.
 """
 
 from __future__ import annotations

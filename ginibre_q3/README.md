@@ -246,9 +246,11 @@ The expensive arithmetic is C++:
   moment sweep with GMP integers and OpenMP.
 - `verify_character_ring_moment_sources_gmp.cpp` rebuilds the classical and
   exceptional root data, performs exact Racah--Speiser tensor iteration, and
-  regenerates each bounded prefix presented to that active source-replay stage
-  via character orthogonality.  Longer consumed exceptional suffixes are
-  compared termwise with the BPV ancillary blocks.
+  regenerates every theorem-consumed exceptional moment via character
+  orthogonality.  The BPV ancillary blocks are checked afterward as an
+  independent control, not used as a moment supplier.  Their thread-local
+  exact maps use at most eight workers and merge exactly; the five groups run
+  in ledger order to keep peak memory bounded.
 - `verify_bc_row_gated_bridge_gmp.cpp` performs one common Pieri traversal per
   rank band, reconstructs 832 finite `B/C` corrections by exact GMP CRT, and
   checks all 870 row-gated Chain inequalities.  The three bands run
@@ -336,9 +338,10 @@ exact factor witnesses are replayed directly by the C++/GMP checker.
    of `B_14,B_15`).
 6. G2 and F4 close from exact prefixes plus GMP rectangular tails; E6 and E7
    use their rectangular tail certificates.  The clean replay regenerates
-   bounded exceptional prefixes from the Cartan data and compares every
-   longer consumed row with the BPV ancillary source.  E8 combines that
-   audited `m_0..m_100` bridge with its parallel rectangular bridge and tail.
+   every consumed exceptional range from the Cartan data, through
+   `G2:m38`, `F4:m65`, `E6:m80`, `E7:m70`, and `E8:m100`, before comparing
+   the results with BPV as an independent control.  E8 combines that exact
+   `m_0..m_100` bridge with its parallel rectangular bridge and tail.
 7. The unconditional final assembly in `paper.tex` passes from the simple
    simply connected models to all compact connected groups with simple Lie
    algebra through the stated central-quotient argument.
@@ -377,6 +380,14 @@ inequalities, and checks the 36 remaining high-rank type-D row-gated steps.
 The former bridge transcript and raw search shards are superseded provenance
 and are not consumed as proof evidence.
 
+GitHub CI preserves this complete obligation as two concurrent required
+lanes: the main isolated replay omits only E8 source pairing, while a dedicated
+authenticated lane rebuilds that verifier and regenerates `E8:m0..m100`.
+The ordinary local target remains unsplit and runs both lanes serially.
+The same pattern separates Part III's independent 31-prime bounded-Littlewood
+reconstruction from its hierarchy main shard; `full-q3-extension` remains the
+unsplit union used for local complete verification.
+
 The same replay now derives the `SU(3..5)` recurrences in exact formal
 algebra and performs a domain-aware audit of the residual B/C bridge.  The
 latter checks all 60 correction-proposition quantifiers against their final
@@ -397,7 +408,8 @@ ones for integrity, but consumes only accepted proof inputs.
 Content hashes authenticate bytes; they do not establish mathematical truth.
 Before a raw character-moment ledger is consumed by an active source-replay
 stage, that stage regenerates its claimed values either by the exact
-root-datum/character-pairing path (type D and bounded exceptional prefixes) or
+root-datum/character-pairing path (type D and complete consumed exceptional
+ranges) or
 by the proved bounded-Littlewood determinant/CRT identity (type B/C).
 Classical stable moments are independently generated
 from the proved three-term recurrence before the downstream correction

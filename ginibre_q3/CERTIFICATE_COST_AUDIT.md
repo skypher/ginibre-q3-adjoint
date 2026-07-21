@@ -79,13 +79,13 @@ notes unless explicitly described as a current-source test.
    log-convexity comparisons without a full-width fallback; the complete
    bridge takes 21.90 seconds on one core, and the resulting one-core
    power-loss stage takes 1.27 seconds.
-8. Exceptional character-ring regeneration is capped at the bounded prefixes
-   needed to validate the Cartan/Racah--Speiser implementation (`m38`, `m65`,
-   and `m42` for the three remaining families).  All longer consumed rows are
-   compared termwise with the BPV ancillary blocks before the unchanged exact
-   Chain audits run.  This replaces archival decompositions whose supports
-   reach 23--34 million highest weights and whose individual late steps take
-   more than five minutes.
+8. Exceptional character-ring regeneration uses character pairing, so moment
+   degree `m` requires tensor depth only `ceil(m/2)`.  The standard replay
+   regenerates the complete consumed ranges (`G2:m38`, `F4:m65`, `E6:m80`,
+   `E7:m70`, and `E8:m100`) before the unchanged exact Chain audits run.  BPV
+   is retained only as a termwise independent control.  The older direct-power
+   decompositions, whose supports reach 23--34 million highest weights and
+   whose late steps take more than five minutes, remain archival.
 9. The 14 low-rank B/C root-datum source checks duplicated moments already
    reconstructed by the row-gated bounded-Littlewood engine and consumed more
    than eight serial minutes.  The mandatory replay now compares all 182 raw
@@ -115,6 +115,12 @@ notes unless explicitly described as a current-source test.
     reconstructs all 21 rows through degree 46 and checks all 1,060 raw
     moment/correction claims termwise.  It takes 4.96 seconds on four cores;
     the independent modular/Weyl D4 control remains mandatory.
+13. Exact exceptional character pairing now partitions each tensor update
+    over at most eight thread-local GMP maps and merges them deterministically.
+    The load-bearing `E8:m0..m100` reconstruction takes 290.83 seconds on four
+    cores in the isolated replay, versus 542.86 seconds for the former serial
+    kernel.  GitHub runs that independent computation concurrently with the
+    remaining clean-room stages; the default local replay remains unsplit.
 
 ## Expensive Parts I--II stages
 
@@ -142,6 +148,14 @@ promotions do not introduce a circular dependence on Part III.
 | Six polynomial and six rational-cap tails | Keep exact rational proofs. They run inside the determinant supplier and have negligible cost. |
 | 58 directed low tails | Keep directed MPFR. Replacing these by exact symbolic inequalities would increase proof complexity; the current schedules are small and have positive audited margins. |
 | Type A and exceptional prefixes | Keep exact moment suppliers. Their scopes are already truncated at the first proved analytic tail/bridge and are not responsible for the large replay cost. |
+
+On four cores the unified bounded-Littlewood supplier is the dominant Part III
+stage because it evaluates 31 independent exact prime fields before a
+deterministic GMP CRT merge.  GitHub therefore runs this supplier as a required
+concurrent lane; the hierarchy main lane and the default local aggregate still
+consume the same source, data, manifest, and success markers.  With native CPU
+optimization, the forced compile plus full four-core replay takes 370.86
+seconds and peaks at 193,052 KiB on the validated host.
 
 ## Replay policy
 

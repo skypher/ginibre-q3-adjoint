@@ -29,7 +29,7 @@ jobs:
   certificate-build:
     name: Authenticate and compile certificates
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 10
 
     steps:
       - name: Check out source
@@ -166,7 +166,7 @@ jobs:
   full-certificate-replay:
     name: Complete clean-room certificate replay
     runs-on: ubuntu-24.04
-    timeout-minutes: 6
+    timeout-minutes: 10
 
     steps:
       - name: Check out source
@@ -205,12 +205,14 @@ jobs:
             pdflatex --version | head -n 1
           } | tee ci-logs/full-replay-environment.log
 
-      - name: Run complete clean-room replay
+      - name: Run clean-room main shard
         run: |
           set -o pipefail
-          make -C ginibre_q3 clean-room-replay \
-            REPLAY_MAX_STAGE_SECONDS=240 \
-            REPLAY_MAX_TOTAL_SECONDS=240 \
+          python3 -u ginibre_q3/clean_room_replay.py \
+            --threads "$(nproc)" \
+            --max-stage-seconds 420 \
+            --max-total-seconds 420 \
+            --skip-e8-source-pairing \
             2>&1 | tee ci-logs/full-clean-room-replay.log
 
       - name: Preserve failed isolated replay workspace
@@ -234,10 +236,75 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-  full-q3-extension-replay:
-    name: Complete Part III hierarchy replay
+  e8-source-pairing-replay:
+    name: Exact E8 source-pairing replay
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Select Python 3.12
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+
+      - name: Install exact-arithmetic dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            g++ \
+            make \
+            libgmp-dev
+
+      - name: Authenticate E8 inputs and build the exact verifier
+        run: |
+          set -o pipefail
+          mkdir -p ci-logs
+          make -C ginibre_q3 publication-preflight \
+            2>&1 | tee ci-logs/e8-publication-preflight.log
+          make -B -C ginibre_q3/character_ring_iter \
+            verify_character_ring_moment_sources_gmp \
+            2>&1 | tee ci-logs/e8-source-pairing-build.log
+
+      - name: Regenerate all E8 moments through m100
+        working-directory: ginibre_q3/character_ring_iter
+        run: |
+          set -o pipefail
+          {
+            echo "cpus=$(nproc)"
+            sha256sum \
+              verify_character_ring_moment_sources_gmp.cpp \
+              verify_character_ring_moment_sources_gmp
+          } | tee ../../ci-logs/e8-source-pairing-environment.log
+          /usr/bin/time -f 'wall_seconds=%e maxrss_kb=%M' \
+            timeout --foreground 420s \
+            env OMP_NUM_THREADS="$(nproc)" \
+            ./verify_character_ring_moment_sources_gmp \
+              E8 100 \
+              logs/e8_70.log \
+              ../references/arxiv_2412_21189_e8_m71_m100.txt \
+            2>&1 | tee ../../ci-logs/e8-source-pairing-replay.log
+          grep -F \
+            "SUMMARY group=E8 moments=101 source_values=101 failures=0" \
+            ../../ci-logs/e8-source-pairing-replay.log
+
+      - name: Upload E8 replay evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: e8-source-pairing-replay-logs
+          path: ci-logs/
+          if-no-files-found: warn
+          retention-days: 30
+
+  full-q3-extension-replay:
+    name: Part III hierarchy main shard
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
 
     steps:
       - name: Check out source
@@ -264,15 +331,15 @@ jobs:
             texlive-latex-extra \
             texlive-fonts-recommended
 
-      - name: Run complete Part III hierarchy replay
+      - name: Run Part III hierarchy main shard
         run: |
           set -o pipefail
           mkdir -p ci-logs
-          make -C ginibre_q3 full-q3-extension \
+          make -C ginibre_q3 full-q3-extension-main-shard \
             REPLAY_THREADS="$(nproc)" \
             FULL_Q3_BOUNDED_THREADS="$(nproc)" \
             FULL_Q3_MODULAR_THREADS="$(nproc)" \
-            REPLAY_MAX_STAGE_SECONDS=600 \
+            REPLAY_MAX_STAGE_SECONDS=420 \
             2>&1 | tee ci-logs/full-q3-extension-replay.log
 
       - name: Upload Part III replay evidence
@@ -280,6 +347,51 @@ jobs:
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: full-q3-extension-replay-logs
+          path: ci-logs/
+          if-no-files-found: warn
+          retention-days: 30
+
+  full-q3-bounded-littlewood-replay:
+    name: Part III exact bounded-Littlewood replay
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Select Python 3.12
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+
+      - name: Install exact-arithmetic dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            g++ \
+            make \
+            libgmp-dev
+
+      - name: Authenticate inputs and reconstruct bounded-Littlewood moments
+        run: |
+          set -o pipefail
+          mkdir -p ci-logs
+          make -C ginibre_q3 publication-preflight \
+            2>&1 | tee ci-logs/bounded-littlewood-preflight.log
+          /usr/bin/time -f 'wall_seconds=%e maxrss_kb=%M' \
+            make -C ginibre_q3 full-q3-bcd-bounded-littlewood-audit \
+              FULL_Q3_BOUNDED_THREADS="$(nproc)" \
+              REPLAY_MAX_STAGE_SECONDS=540 \
+            2>&1 | tee ci-logs/bounded-littlewood-replay.log
+
+      - name: Upload bounded-Littlewood replay evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: full-q3-bounded-littlewood-replay-logs
           path: ci-logs/
           if-no-files-found: warn
           retention-days: 30

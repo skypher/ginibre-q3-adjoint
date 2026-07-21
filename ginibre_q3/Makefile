@@ -1,6 +1,6 @@
 REPLAY_THREADS ?= $(shell nproc)
-REPLAY_MAX_STAGE_SECONDS ?= 240
-REPLAY_MAX_TOTAL_SECONDS ?= 240
+REPLAY_MAX_STAGE_SECONDS ?= 600
+REPLAY_MAX_TOTAL_SECONDS ?= 900
 PUBLICATION_SOURCE_DATE_EPOCH ?= 1784419200
 export SOURCE_DATE_EPOCH := $(PUBLICATION_SOURCE_DATE_EPOCH)
 # Each reverse-Pieri task carries a large GMP frontier.  The residual replay
@@ -11,7 +11,7 @@ FULL_Q3_REMAINING_THREADS ?= 2
 FULL_Q3_BOUNDED_THREADS ?= $(shell nproc)
 FULL_Q3_MODULAR_THREADS ?= $(shell nproc)
 
-.PHONY: publication-preflight clean-room-replay paper-pdf full-q3-main-pdf full-q3-pdf unified-submission publication-artifact-audit final-publication-replay final-release-archive full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bd-residual-audit full-q3-bcd-low-tail-audit full-q3-bcd-remaining-audit full-q3-bcd-independent-audit full-q3-bcd-bounded-littlewood-audit full-q3-extension-independent-controls full-q3-extension
+.PHONY: publication-preflight clean-room-replay paper-pdf full-q3-main-pdf full-q3-pdf unified-submission publication-artifact-audit final-publication-replay final-release-archive full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bd-residual-audit full-q3-bcd-low-tail-audit full-q3-bcd-remaining-audit full-q3-bcd-independent-audit full-q3-bcd-bounded-littlewood-audit full-q3-extension-independent-controls full-q3-extension-main-shard full-q3-extension
 
 publication-preflight:
 	python3 -u run_publication_short_audits.py
@@ -150,7 +150,7 @@ full-q3-bcd-independent-audit:
 		--progress
 
 full-q3-bcd-bounded-littlewood-audit:
-	g++ -O3 -DNDEBUG -std=c++20 -fopenmp -Wall -Wextra -Wpedantic \
+	g++ -O3 -march=native -DNDEBUG -std=c++20 -fopenmp -Wall -Wextra -Wpedantic \
 		-Wconversion -Wsign-conversion -Werror \
 		character_ring_iter/verify_full_q3_bcd_bounded_littlewood_gmp.cpp \
 		-lgmpxx -lgmp -o /tmp/verify_full_q3_bcd_bounded_littlewood_gmp
@@ -160,6 +160,8 @@ full-q3-bcd-bounded-littlewood-audit:
 
 full-q3-extension-independent-controls: full-q3-bd-residual-audit full-q3-bcd-independent-audit
 
-full-q3-extension: full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bcd-low-tail-audit full-q3-bcd-bounded-littlewood-audit full-q3-bcd-independent-audit
+full-q3-extension-main-shard: full-q3-document-audit full-q3-artifact-audit full-q3-stable-audit full-q3-su2-audit full-q3-su3-audit full-q3-su45-audit full-q3-sun-ge6-audit full-q3-exceptional-audit full-q3-bcd-high-audit full-q3-bcd-mid-audit full-q3-bcd-low-tail-audit full-q3-bcd-independent-audit
 	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_extension.tex
 	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_extension.tex
+
+full-q3-extension: full-q3-extension-main-shard full-q3-bcd-bounded-littlewood-audit

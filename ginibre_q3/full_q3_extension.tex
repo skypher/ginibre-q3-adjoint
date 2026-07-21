@@ -1321,14 +1321,17 @@ The proof companion is
 \begin{center}
 \path{character_ring_iter/verify_full_q3_exceptional_gmp.cpp}.
 \end{center}
-It reads the exact invariant-tensor moments audited in Parts~I--II.  The
-bounded prefixes are regenerated from the Cartan data by Racah--Speiser and
-character pairing.  Every longer consumed row is compared termwise with the
-corresponding block of the ancillary tensor-rank table of
-Bourjaily--Plesser--Vergu
+It reads the exact invariant-tensor moments audited in Parts~I--II.  For every
+exceptional type, the complete theorem-consumed range is regenerated from the
+Cartan datum by exact Racah--Speiser iteration and the character-pairing
+identities: through degrees $38,65,80,70,100$ for
+$G_2,F_4,E_6,E_7,E_8$, respectively.  Only after that independent
+regeneration, a separate control compares every row termwise with the
+corresponding ancillary tensor-rank block of Bourjaily--Plesser--Vergu
 \cite[ancillary file \texttt{adjoint\_tensor\_ranks.tex}]{BPV2024}.
-For $E_8$, this includes a direct comparison of the maintained transcription
-of degrees $71$--$100$ with the primary ancillary file.
+For $E_8$, the control also compares the maintained transcription of degrees
+$71$--$100$ directly with the primary ancillary file.  Thus no ancillary
+entry is a premise of the residual certificate.
 
 For every pair in the stated boxes, the verifier evaluates the integer
 formula of Lemma~\ref{lem:full-moment-form}, rejects a nonpositive value,
@@ -3005,7 +3008,7 @@ the document, dependency, interface, scope, moment-formula, cone-promotion,
 $SO(3)$, and frontier-formula checks as one fail-closed short suite.  The
 Part~III command regenerates its exact and directed-rounding arithmetic with
 parallel suppliers.  The separate Parts~I--II clean-room command is the full
-certificate-regeneration tier.  Both workflows enforce a five-minute ceiling
+certificate-regeneration tier.  Both workflows enforce a ten-minute ceiling
 for each underlying computation on the validated host; an overrun must be
 profiled and optimized or replaced by a proved analytic reduction before
 release.  The resource envelope is documented in \path{REPLAY.md}.  Part~III
@@ -3207,7 +3210,8 @@ Images of eigenvalue distributions under power maps,
 \bibitem{CJL2022}
 C.~Courteaut, K.~Johansson, and G.~Lambert,
 From Berry--Esseen to super-exponential,
-arXiv:2204.03282.
+\emph{Electron. J. Probab.} \textbf{29} (2024), no.~11, 1--48,
+doi:10.1214/23-EJP1068.
 
 \end{thebibliography}
 

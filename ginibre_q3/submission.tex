@@ -46,19 +46,45 @@ included formal parts.
 \includepdf[
   pages=-,
   pagecommand={\thispagestyle{empty}},
-  addtotoc={1,part,1,{Parts I--II: the two-minus theorem},parts12}
+  addtotoc={
+    1,part,1,{Parts I--II: the two-minus theorem},parts12,
+    1,section,2,{1. Introduction},parts12intro,
+    2,section,2,{2. Statement and general reductions},parts12reductions,
+    5,section,2,{3. Type A},parts12typea,
+    13,section,2,{4. Non-A classical families},parts12classical,
+    49,section,2,{5. Exceptional Lie groups},parts12exceptional,
+    54,section,2,{6. Assembly and conclusion},parts12assembly,
+    55,section,2,{Appendix A. Certificate and replay contract},parts12appendix
+  }
 ]{paper.pdf}
 
 \includepdf[
   pages=-,
   pagecommand={\thispagestyle{empty}},
-  addtotoc={1,part,1,{Part III: the adjoint-generated cone},part3}
+  addtotoc={
+    1,part,1,{Part III: the adjoint-generated cone},part3,
+    1,section,2,{1. Higher-minus hierarchy},part3hierarchy,
+    2,section,2,{2. Exact finite-rank contract},part3contract,
+    3,section,2,{3. Full theorem},part3theorem
+  }
 ]{full_q3_main.pdf}
 
 \includepdf[
   pages=-,
   pagecommand={\thispagestyle{empty}},
-  addtotoc={1,part,1,{Part III: formal proof and computational supplement},part3supplement}
+  addtotoc={
+    1,part,1,{Part III: formal proof and computational supplement},part3supplement,
+    1,section,2,{1. Exact adjoint-generated target},part3target,
+    7,section,2,{2. Type A1},part3a1,
+    9,section,2,{3. Type A2},part3a2,
+    10,section,2,{4. Types A3 and A4},part3a34,
+    11,section,2,{5. Stable type A},part3astable,
+    14,section,2,{6. Exceptional groups},part3exceptional,
+    15,section,2,{7. Stable classical types},part3classicalstable,
+    17,section,2,{8. Nonstable classical tail},part3classicaltail,
+    32,section,2,{Code and data availability},part3code,
+    35,section,2,{References},part3references
+  }
 ]{full_q3_extension.pdf}
 
 \end{document}

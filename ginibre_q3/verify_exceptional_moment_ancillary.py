@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Compare every consumed exceptional moment with the BPV ancillary table.
+"""Independently compare every consumed exceptional moment with BPV.
 
-The local character-ring logs are independent historical computations.  A
-fresh Racah--Speiser replay checks their low prefixes; this audit checks every
-longer theorem-consumed entry against the separately archived source table.
+The standard replay regenerates the complete theorem-consumed ranges from
+the Cartan data by exact Racah--Speiser iteration and character pairing.  This
+separate audit compares those local ledgers with the archived BPV table; the
+table is a control, not a supplier for a theorem-consumed value.
 """
 
 from __future__ import annotations

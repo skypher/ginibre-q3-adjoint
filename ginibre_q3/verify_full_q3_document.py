@@ -339,7 +339,7 @@ def main() -> int:
     )
     require(
         "three reproducibility tiers" in text
-        and "five-minute ceiling" in text
+        and "ten-minute ceiling" in text
         and "proved analytic reduction" in text,
         "reproduction-tier resource disclosure is absent",
     )

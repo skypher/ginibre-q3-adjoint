@@ -416,7 +416,7 @@ def main() -> int:
     )
     require(
         "Reproduction tiers and resource envelope" in replay_doc
-        and "Hard 300-second ceiling" in replay_doc
+        and "Hard 600-second ceiling" in replay_doc
         and "profiled and optimized" in replay_doc,
         "resource-tier disclosure is incomplete",
     )

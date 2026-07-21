@@ -70,7 +70,7 @@ moments_omp: moments.cpp lie_data.h
 	$(CXX) $(CXXFLAGS) -fopenmp moments.cpp $(LIBS) -o moments_omp
 
 verify_character_ring_moment_sources_gmp: verify_character_ring_moment_sources_gmp.cpp lie_data.h ankerl/unordered_dense.h
-	$(CXX) $(CXXFLAGS) verify_character_ring_moment_sources_gmp.cpp $(LIBS) -o verify_character_ring_moment_sources_gmp
+	$(CXX) $(CXXFLAGS) -fopenmp verify_character_ring_moment_sources_gmp.cpp $(LIBS) -o verify_character_ring_moment_sources_gmp
 
 verify_sun_repair_certificates_gmp: verify_sun_repair_certificates_gmp.cpp
 	$(CXX) $(CXXFLAGS) -fopenmp verify_sun_repair_certificates_gmp.cpp $(LIBS) -o verify_sun_repair_certificates_gmp
