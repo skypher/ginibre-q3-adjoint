@@ -97,10 +97,10 @@ def main() -> int:
     )
     require(
         "paper.pdf" in unified_wrapper
-        and "full_q3_main.pdf" in unified_wrapper
         and "full_q3_extension.pdf" in unified_wrapper
-        and r"paper\_full.pdf" in unified_wrapper
-        and "every load-bearing proof component" in unified_wrapper,
+        and r"\textbf{Abstract.}" in unified_wrapper
+        and "Unified theorem and proof architecture" in unified_wrapper
+        and "former Part III guide" in unified_wrapper,
         "unified wrapper omits a load-bearing manuscript component",
     )
     require(
@@ -109,8 +109,14 @@ def main() -> int:
         and r"\label{prop:contract}" in reader_part_iii
         and r"\label{thm:main}" in reader_part_iii
         and "17{,}862" in reader_part_iii
-        and "included as the final component" in reader_part_iii,
+        and "not as a third" in reader_part_iii,
         "compact Part III omits a load-bearing reader interface",
+    )
+    require(
+        r"\label{prop:consolidated-computational-interface}" in text
+        and "full_q3_classification_ledger.csv" in text
+        and "generate_full_q3_classification_ledger.py" in text,
+        "Part III omits the consolidated mathematical interface or publication ledger",
     )
     require(
         "certificates/full_q3/full_q3_source_manifest.sha256" in text,
@@ -161,8 +167,8 @@ def main() -> int:
     )
     results = list(result_pattern.finditer(text))
     proofs = list(re.finditer(r"\\begin\{proof\}.*?\\end\{proof\}", text, re.DOTALL))
-    require(len(results) == 51, f"expected 51 numbered results, found {len(results)}")
-    require(len(proofs) == 51, f"expected 51 proofs, found {len(proofs)}")
+    require(len(results) == 53, f"expected 53 numbered results, found {len(results)}")
+    require(len(proofs) == 53, f"expected 53 proofs, found {len(proofs)}")
 
     for index, result in enumerate(results, 1):
         following = text[result.end() :]
@@ -374,7 +380,7 @@ def main() -> int:
     require(signed_value == Fraction(-8, 279), "SO(3) signed obstruction mismatch")
 
     print(
-        "FULL_Q3_DOCUMENT results=51 proofs=51 proof_spine=PASS "
+        "FULL_Q3_DOCUMENT results=53 proofs=53 proof_spine=PASS "
         f"labels={len(labels)} references={len(references)} "
         f"citations={len(set(citation_keys))} source_mappings={len(external_keys)} "
         f"forward_dependencies={len(forward_dependencies)} "

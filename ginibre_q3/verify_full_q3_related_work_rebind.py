@@ -447,7 +447,7 @@ def main() -> int:
     require(
         "submission.pdf" in extension
         and "full_q3_extension.pdf" in extension
-        and "load-bearing theorem dependency included in that manuscript" in extension
+        and "load-bearing theorem dependency included in the unified" in extension
         and "paper_full.pdf} derivation archive is not" in extension,
         "Part III submission architecture is stale",
     )

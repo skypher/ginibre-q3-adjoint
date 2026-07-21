@@ -45,7 +45,8 @@ described together.
 
 1. `publication-preflight` checks theorem/proof structure, the explicit
    residual B/C caller contract, classification coverage, independent small
-   formulas, and manifest integrity.  It is suitable for an ordinary
+   formulas, the byte-exact reader-facing classification ledger, and manifest
+   integrity.  It is suitable for an ordinary
    workstation and completes without regenerating large moment tables.
 2. An accepted transcript authenticates one completed exact or
    directed-rounding execution.  Its hash proves byte identity only; reading
@@ -57,8 +58,8 @@ described together.
 
 PDF synchronization is a separate fail-closed level.  The command
 `make -C ginibre_q3 publication-artifact-audit` performs three LaTeX passes
-on each formal component, rebuilds the reader PDF from fresh Parts I--II and
-compact Part III components, and verifies all four resulting SHA-256 values against
+on each independently built component, rebuilds the unified PDF from fresh
+Parts I--II and formal Part III components, and verifies all four resulting SHA-256 values against
 `publication_artifacts.sha256`.  It detects a checked-in PDF made from older
 source even when that stale PDF is nonempty and valid LaTeX output.
 
@@ -448,8 +449,9 @@ The command recomputes:
 - three clean `pdflatex` passes for the formal Parts I--II manuscript
   `paper.tex`, and the absence of undefined references or citations;
 - the formal document contract: `paper.pdf` is nonempty;
-  `full_q3_main.pdf` states the compact Part III proof guide; and
-  `full_q3_extension.pdf` is its load-bearing formal proof.  All three are
+  `full_q3_main.pdf` states the standalone compact Part III navigation guide;
+  and `full_q3_extension.pdf` is the load-bearing formal proof.  The unified
+  abstract and proof map, `paper.pdf`, and `full_q3_extension.pdf` are
   collected in `submission.pdf`; `paper_full.pdf` is an
   optional derivation archive rather than a formal submission component.
 
@@ -458,8 +460,9 @@ does not publish that temporary file.  The final release driver therefore
 runs `publication-artifact-audit` in the final-source tree after both
 arithmetic aggregates.  This ordering prevents the temporary Parts I--II PDF
 from being discarded while an older tracked `paper.pdf` is silently used by
-`submission.tex`.  The `unified-submission` target rebuilds all three included
-PDFs before assembling that file.
+`submission.tex`.  The `unified-submission` target rebuilds all three
+manifested PDFs and assembles the two load-bearing components after the
+unified front matter.
 
 The replay also validates all archived SHA-256 manifests and
 the accepted/diagnostic classification boundary before consuming any

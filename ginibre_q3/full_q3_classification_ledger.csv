@@ -1,0 +1,151 @@
+scope,family,rank,representative,stable_through,finite_first_degree,finite_last_degree,tail_onset,maximum_moment_consumed,finite_pairs,tail_method,finite_supplier,tail_supplier
+fixed,A,1,SU(2),2,5,27,29,27,78,exact Haar/moment cap,SU2 exact recurrence,Part III fixed-group cap tail
+fixed,A,2,SU(3),3,5,27,29,54,78,exact Haar/moment cap,SU3 hook-length/GMP,Part III fixed-group cap tail
+fixed,A,3,SU(4),4,5,25,27,94,66,exact Haar/moment cap,SU4 hook-length/GMP,Part III fixed-group cap tail
+fixed,A,4,SU(5),5,7,35,37,96,135,exact Haar/moment cap,SU5 hook-length/GMP,Part III fixed-group cap tail
+fixed,A,5,SU(6),6,7,25,27,32,65,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,6,SU(7),7,9,27,29,32,75,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,7,SU(8),8,9,27,29,32,75,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,8,SU(9),9,11,29,31,32,85,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,9,SU(10),10,11,29,31,32,85,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,10,SU(11),11,13,29,31,32,81,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,11,SU(12),12,13,29,31,32,81,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,12,SU(13),13,15,29,31,32,76,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,13,SU(14),14,15,29,31,32,76,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,14,SU(15),15,17,29,31,32,70,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,15,SU(16),16,17,29,31,32,70,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,16,SU(17),17,19,29,31,32,63,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,17,SU(18),18,19,29,31,32,63,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,18,SU(19),19,21,29,31,32,55,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,19,SU(20),20,21,29,31,32,55,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,20,SU(21),21,23,29,31,32,46,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,21,SU(22),22,23,29,31,32,46,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,22,SU(23),23,25,29,31,32,36,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,23,SU(24),24,25,29,31,32,36,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,24,SU(25),25,27,29,31,32,25,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,25,SU(26),26,27,29,31,32,25,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,26,SU(27),27,29,29,31,32,13,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+fixed,A,27,SU(28),28,29,29,31,32,13,uniform Paley--Zygmund cap,SUN_GE6 exact Schur--Weyl/GMP,Part III uniform type-A tail
+parametric,A,>=28,"SU(N), N>=29",N,none,none,31 (overlaps stable range),32,0,stable law + uniform cap,none,Part III stable and uniform type-A tails
+fixed,G2,-,G2,none,5,23,25,38,55,exact polynomial cap,exceptional Racah--Speiser/GMP,Part III exceptional polynomial tail
+fixed,F4,-,F4,none,5,35,37,50,136,exact polynomial cap,exceptional Racah--Speiser/GMP,Part III exceptional polynomial tail
+fixed,E6,-,E6,none,5,27,29,42,78,exact polynomial cap,exceptional Racah--Speiser/GMP,Part III exceptional polynomial tail
+fixed,E7,-,E7,none,5,61,63,70,435,exact polynomial cap,exceptional Racah--Speiser/GMP,Part III exceptional polynomial tail
+fixed,E8,-,E8,none,5,69,71,94,561,exact polynomial cap,exceptional Racah--Speiser/GMP,Part III exceptional polynomial tail
+fixed,B,2,B_2,5,7,45,47,45,230,exact rational Weyl cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,3,B_3,7,9,35,37,35,133,exact polynomial cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,4,B_4,9,11,39,41,42,165,exact polynomial cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,5,B_5,11,13,53,55,53,315,exact polynomial cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,6,B_6,13,15,49,51,49,261,exact rational Weyl cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,7,B_7,15,17,51,53,51,279,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,8,B_8,17,19,49,51,49,248,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,9,B_9,19,21,51,53,51,264,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,10,B_10,21,23,55,57,55,306,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,11,B_11,23,25,55,57,55,296,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,12,B_12,25,27,59,61,59,340,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,13,B_13,27,29,59,61,59,328,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,14,B_14,29,31,43,45,43,119,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,15,B_15,31,33,43,45,43,105,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,16,B_16,33,35,43,45,43,90,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,17,B_17,35,37,43,45,43,74,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,18,B_18,37,39,45,47,45,78,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,19,B_19,39,41,43,45,43,39,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,20,B_20,41,43,43,45,43,20,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,B,21,B_21,43,45,43,45,43,0,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,2,C_2,5,7,45,47,45,230,exact rational Weyl cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,3,C_3,7,9,35,37,35,133,exact polynomial cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,4,C_4,9,11,59,61,59,400,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,5,C_5,11,13,53,55,53,315,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,6,C_6,13,15,37,39,37,138,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,7,C_7,15,17,37,39,37,132,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,8,C_8,17,19,47,49,47,225,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,9,C_9,19,21,47,49,47,217,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,10,C_10,21,23,51,53,51,255,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,11,C_11,23,25,53,55,53,270,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,12,C_12,25,27,51,53,51,234,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,13,C_13,27,29,55,57,55,273,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,14,C_14,29,31,57,59,57,287,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,15,C_15,31,33,53,55,53,220,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,16,C_16,33,35,53,55,53,205,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,17,C_17,35,37,55,57,55,215,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,18,C_18,37,39,43,45,43,57,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,19,C_19,39,41,43,45,43,39,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,20,C_20,41,43,43,45,43,20,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,21,C_21,43,45,45,47,45,21,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,22,C_22,45,47,45,47,45,0,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,23,C_23,47,49,47,49,47,0,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,24,C_24,49,51,49,51,49,0,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,25,C_25,51,53,51,53,51,0,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,26,C_26,53,55,53,55,53,0,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,27,C_27,55,57,55,57,55,0,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,C,28,C_28,57,59,57,59,57,0,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,4,D_4,3,5,45,47,45,231,exact polynomial cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,5,D_5,4,5,31,33,31,105,exact polynomial cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,6,D_6,5,7,47,49,47,252,exact rational Weyl cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,7,D_7,6,7,51,53,51,299,exact rational Weyl cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,8,D_8,7,9,55,57,55,348,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,9,D_9,8,9,59,61,59,403,exact rational Weyl cap,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,10,D_10,9,11,49,51,49,270,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,11,D_11,10,11,55,57,55,345,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,12,D_12,11,13,43,45,43,200,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,13,D_13,12,13,43,45,43,200,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,14,D_14,13,15,43,45,43,195,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,15,D_15,14,15,43,45,43,195,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,16,D_16,15,17,41,43,41,169,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,17,D_17,16,17,41,43,41,169,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,18,D_18,17,19,41,43,41,162,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,19,D_19,18,19,43,45,43,182,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,20,D_20,19,21,43,45,43,174,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,21,D_21,20,21,43,45,43,174,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,22,D_22,21,23,43,45,43,165,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,23,D_23,22,23,43,45,43,165,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,24,D_24,23,25,45,47,45,176,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,25,D_25,24,25,43,45,43,155,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,26,D_26,25,27,45,47,45,165,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,27,D_27,26,27,45,47,45,165,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,28,D_28,27,29,47,49,47,175,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,29,D_29,28,29,45,47,45,153,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,30,D_30,29,31,47,49,47,162,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,31,D_31,30,31,47,49,47,162,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,32,D_32,31,33,49,51,49,171,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,33,D_33,32,33,49,51,49,171,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,34,D_34,33,35,49,51,49,156,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,35,D_35,34,35,49,51,49,156,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,36,D_36,35,37,51,53,51,164,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,37,D_37,36,37,51,53,51,164,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,38,D_38,37,39,53,55,53,172,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,39,D_39,38,39,51,53,51,147,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,40,D_40,39,41,53,55,53,154,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,41,D_41,40,41,53,55,53,154,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,42,D_42,41,43,55,57,55,161,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,43,D_43,42,43,53,55,53,135,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,44,D_44,43,45,55,57,55,141,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,45,D_45,44,45,55,57,55,141,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,46,D_46,45,47,57,59,57,147,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,47,D_47,46,47,57,59,57,147,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,48,D_48,47,49,59,61,59,153,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,49,D_49,48,49,59,61,59,153,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,50,D_50,49,51,59,61,59,130,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,51,D_51,50,51,59,61,59,130,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,52,D_52,51,53,61,63,61,135,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,53,D_53,52,53,59,61,59,106,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,54,D_54,53,55,61,63,61,110,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,55,D_55,54,55,61,63,61,110,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,56,D_56,55,57,63,65,63,114,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,57,D_57,56,57,61,63,61,84,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,58,D_58,57,59,63,65,63,87,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,59,D_59,58,59,63,65,63,87,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,60,D_60,59,61,65,67,65,90,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,61,D_61,60,61,65,67,65,90,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,62,D_62,61,63,67,69,67,93,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,63,D_63,62,63,65,67,65,61,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,64,D_64,63,65,67,69,67,63,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,65,D_65,64,65,67,69,67,63,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,66,D_66,65,67,69,71,69,65,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,67,D_67,66,67,69,71,69,65,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,68,D_68,67,69,69,71,69,33,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,69,D_69,68,69,69,71,69,33,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+fixed,D,70,D_70,69,71,71,73,71,34,directed exact-MGF/Fredholm tail,bounded-Littlewood determinant/GMP,Part III exact or directed classical tail
+parametric,B,>=22,B_b,2b+1,none,none,2b+3,none,0,directed Fredholm/trace tail,none,finite-middle/high-rank trace tail
+parametric,C,>=29,C_b,2b+1,none,none,2b+3,none,0,directed Fredholm/trace tail,none,finite-middle/high-rank trace tail
+parametric,D,>=71,D_b,b-1,none,none,"b+1 (b even), b (b odd)",none,0,directed Fredholm/trace tail,none,finite-middle/high-rank trace tail

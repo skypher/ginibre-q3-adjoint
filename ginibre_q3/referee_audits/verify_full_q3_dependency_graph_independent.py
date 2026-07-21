@@ -82,8 +82,8 @@ def main() -> int:
     proof_matches = list(
         re.finditer(r"\\begin\{proof\}.*?\\end\{proof\}", text, re.DOTALL)
     )
-    require(len(result_matches) == 51, f"results={len(result_matches)}")
-    require(len(proof_matches) == 51, f"proofs={len(proof_matches)}")
+    require(len(result_matches) == 53, f"results={len(result_matches)}")
+    require(len(proof_matches) == 53, f"proofs={len(proof_matches)}")
 
     records: list[tuple[re.Match[str], str, list[str]]] = []
     for number, result in enumerate(result_matches, 1):
@@ -102,7 +102,7 @@ def main() -> int:
         for label in labels:
             require(label not in owner, f"duplicate owned label {label}")
             owner[label] = index
-    require(len(owner) == 68, f"owned labels={len(owner)}")
+    require(len(owner) == 70, f"owned labels={len(owner)}")
 
     all_labels = re.findall(r"\\label\{([^}]+)\}", text)
     require(len(all_labels) == len(set(all_labels)), "duplicate document label")
@@ -129,13 +129,13 @@ def main() -> int:
             if target is not None and target != index:
                 whole_edges.add((index, target))
 
-    require(len(proof_edges) == 96, f"proof edges={len(proof_edges)}")
-    require(len(whole_edges) == 103, f"whole-result edges={len(whole_edges)}")
+    require(len(proof_edges) == 98, f"proof edges={len(proof_edges)}")
+    require(len(whole_edges) == 119, f"whole-result edges={len(whole_edges)}")
     proof_forward = sorted(edge for edge in proof_edges if edge[1] > edge[0])
     whole_forward = sorted(edge for edge in whole_edges if edge[1] > edge[0])
     require(not proof_forward, f"forward proof edges={proof_forward}")
     require(
-        whole_forward == [(0, 3), (1, 2)],
+        whole_forward == [(1, 4), (2, 3)],
         f"unexpected statement-level forward edges={whole_forward}",
     )
     require(not nontrivial_sccs(len(records), proof_edges), "proof graph cycle")
@@ -151,7 +151,7 @@ def main() -> int:
             continue
         reachable.add(vertex)
         pending.extend(target for source, target in proof_edges if source == vertex)
-    require(len(reachable) == 47, f"reachable results={len(reachable)}")
+    require(len(reachable) == 49, f"reachable results={len(reachable)}")
     unreachable_primary = {
         records[index][2][0]
         for index in range(len(records))

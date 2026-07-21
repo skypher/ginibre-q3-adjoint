@@ -8,9 +8,10 @@ spine.
 ## Formal submission boundary
 
 The proof has three numbered parts.  The unified artifact `submission.pdf`
-contains the formal `paper.pdf` for Parts I--II, the compact
-`full_q3_main.pdf` guide, and the complete `full_q3_extension.pdf` formal proof
-and computational supplement for Part III.  `paper_full.pdf` is an optional
+contains a unified abstract and proof map, the formal `paper.pdf` for
+Parts I--II, and the complete `full_q3_extension.pdf` formal proof and
+computational supplement for Part III.  The manifested `full_q3_main.pdf` is
+a standalone navigation guide, not a proof component.  `paper_full.pdf` is an optional
 derivation archive and is not load-bearing.
 The historical author self-audit and `referee_audits/`
 directory are likewise outside the

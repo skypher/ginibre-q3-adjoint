@@ -2,12 +2,19 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,booktabs}
 \usepackage{pdfpages}
 \usepackage[colorlinks=true,linkcolor=blue!50!black]{hyperref}
 
+\newcommand{\chiad}{\chi_{\mathrm{ad}}}
+\newcommand{\Qcone}{\mathcal Q}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
 \hypersetup{
   pdftitle={Ginibre Q3 for the adjoint-generated cone: unified submission},
-  pdfauthor={Leslie P. Polzer}
+  pdfauthor={Leslie P. Polzer},
+  pageanchor=false
 }
 
 \begin{document}
@@ -16,32 +23,101 @@
 \centering
 {\LARGE Ginibre's $Q_3$ condition for the adjoint-generated cone\par}
 \vspace{1.2em}
-{\Large Unified referee submission\par}
+{\Large Unified manuscript\par}
 \vspace{2em}
 {\large Leslie P. Polzer\par}
-\vfill
-\begin{minipage}{0.82\textwidth}
-This unified manuscript contains every load-bearing proof component.  Pages
-after this guide reproduce, in order:
-\begin{enumerate}
-\item Parts I--II: the two-minus adjoint-character theorem,
-classification closure, and exact finite-certificate contracts;
-\item the compact Part III guide: the higher-minus reduction, exact finite-rank
-contract, classification closure, and cone promotion;
-\item the complete Part III formal proof and computational supplement.
-\end{enumerate}
-The optional \texttt{paper\_full.pdf} derivation archive is not part of the
-proof and is not required to read or verify any theorem.  Executable evidence,
-authenticated transcripts, and implementation notes are indexed from the
-included formal parts.
+\vspace{2.5em}
+\begin{minipage}{0.88\textwidth}
+\small
+\textbf{Abstract.}
+Let $G$ be a compact connected Lie group with simple Lie algebra, let
+$\chiad$ be its real adjoint character, and let
+\[
+ \Qcone_G=\overline{\left\{\sum_{j=0}^dc_j\chiad^j:
+ d\geq0,\ c_j\geq0\right\}}^{\|\cdot\|_\infty}.
+\]
+We prove Ginibre's full condition $Q_3$ on $\Qcone_G$: every finite signed
+product integral is nonnegative when the number of minus factors is even and
+vanishes when it is odd.  The proof reduces the condition to the hierarchy
+\[
+ I^G_{a,n}=\mathbf E\,(X-Y)^{2a}(X+Y)^n\geq0,
+ \qquad a,n\geq0,
+\]
+for independent adjoint-character values $X,Y$.  The two-minus row is proved
+by classification in Parts I--II.  The remaining rows use stable trace laws,
+exact Schur--Weyl and bounded-Littlewood moment formulas, analytic cap and
+Fredholm tails, and exhaustive exact or outward-rounded certificates.  A
+row-by-row publication ledger records every stable endpoint, finite box, tail
+onset, consumed moment, and supplier.  The cone contains, in particular,
+$e^{\beta\chiad}$ for every $\beta\geq0$.  The restriction to this cone is
+essential: four positive-definite matrix coefficients on $\mathrm{SO}(3)$
+give an exact $Q_3$ value $-8/279$.
 \end{minipage}
 \vfill
 {\large July 2026\par}
 \end{titlepage}
 
-% The included PDFs retain their own visible page numbers; suppress wrapper
-% page anchors to avoid duplicate destination names at each embedded page 1.
-\hypersetup{pageanchor=false}
+\section*{Unified theorem and proof architecture}
+
+For every finite tuple $f_1,\ldots,f_r\in\Qcone_G$ and signs
+$\varepsilon_i\in\{+1,-1\}$,
+\[
+ \int_{G\times G}\prod_{i=1}^r
+ \bigl(f_i(g)+\varepsilon_i f_i(h)\bigr)\,dg\,dh\geq0
+\]
+when the number of minus signs is even; with an odd number it is zero.  This
+is the full finite-tuple and sign-pattern content of Ginibre's $Q_3$, on the
+explicitly stated adjoint-generated cone.
+
+The proof has four auditable layers:
+\[
+\begin{array}{@{}L{0.19\textwidth}L{0.70\textwidth}@{}}
+\toprule
+\textbf{Layer}&\textbf{Load-bearing content}\\
+\midrule
+Reduction&Cone promotion and the exact moment functional $I^G_{a,n}$; even
+$n$, all-plus, and odd-minus sectors are automatic.\\
+Two-minus row&Parts I--II prove $I^G_{1,n}\geq0$ for every simple type and
+every $n\geq0$.\\
+Higher-minus rows&Sections 7--14 prove stable prefixes, exact finite boxes,
+and analytic tails for types $A,B,C,D$ and the exceptional groups.\\
+Proof interface&Section 15 and
+\texttt{full\_q3\_classification\_ledger.csv} state the trusted formulas,
+disjoint coverage ranges, verifier semantics, and result-to-certificate map.\\
+\bottomrule
+\end{array}
+\]
+
+The computational proof is not a collection of sampled signs.  Each finite
+decision is an integer or rational predicate, or an interval predicate whose
+lower endpoint is rounded outward and required to be positive.  Hashes bind
+source and execution but are not used as mathematical evidence.  The final
+release workflow rebuilds both proof parts, the unified artifact, and every
+active certificate from the manifested current sources.
+
+\paragraph{Scope and significance.}
+The result is a complete positivity theorem for the tensor category generated
+by the adjoint representation.  Besides polynomial characters, the cone
+contains every absolutely convergent power series in $\chiad$ with
+nonnegative coefficients, including the exponential adjoint interaction
+$e^{\beta\chiad}$.  It does not cover arbitrary central positive-definite
+functions, defining-representation matrix coefficients, general vector-spin
+models, or nonabelian gauge observables with shared-link constraints.
+
+\paragraph{Manuscript organization.}
+The remainder contains the two load-bearing proof parts in logical order.
+Parts I--II occupy Sections 1--6 and prove the imported two-minus theorem.
+Part III continues the numbering at Section 7 and proves the full hierarchy,
+the cone promotion, the strict larger-cone counterexample, and the consolidated
+computational interface.  The former Part III guide remains a
+standalone navigation aid but is no longer inserted as a duplicate component
+of this unified manuscript.  Component bibliographies are retained so that
+each independently rebuilt proof PDF records its exact external inputs.
+
+\clearpage
+
+% The included PDFs retain their own visible page numbers.  Wrapper page
+% anchors are disabled globally above, avoiding duplicate page.1 destinations.
 
 \includepdf[
   pages=-,
@@ -62,28 +138,17 @@ included formal parts.
   pages=-,
   pagecommand={\thispagestyle{empty}},
   addtotoc={
-    1,part,1,{Part III: the adjoint-generated cone},part3,
-    1,section,2,{1. Higher-minus hierarchy},part3hierarchy,
-    2,section,2,{2. Exact finite-rank contract},part3contract,
-    3,section,2,{3. Full theorem},part3theorem
-  }
-]{full_q3_main.pdf}
-
-\includepdf[
-  pages=-,
-  pagecommand={\thispagestyle{empty}},
-  addtotoc={
     1,part,1,{Part III: formal proof and computational supplement},part3supplement,
-    1,section,2,{1. Exact adjoint-generated target},part3target,
-    7,section,2,{2. Type A1},part3a1,
-    9,section,2,{3. Type A2},part3a2,
-    10,section,2,{4. Types A3 and A4},part3a34,
-    11,section,2,{5. Stable type A},part3astable,
-    14,section,2,{6. Exceptional groups},part3exceptional,
-    15,section,2,{7. Stable classical types},part3classicalstable,
-    17,section,2,{8. Nonstable classical tail},part3classicaltail,
-    32,section,2,{Code and data availability},part3code,
-    35,section,2,{References},part3references
+    1,section,2,{7. Exact adjoint-generated target},part3target,
+    7,section,2,{8. Type A1},part3a1,
+    9,section,2,{9. Type A2},part3a2,
+    10,section,2,{10. Types A3 and A4},part3a34,
+    11,section,2,{11. Stable type A},part3astable,
+    14,section,2,{12. Exceptional groups},part3exceptional,
+    16,section,2,{13. Stable classical types},part3classicalstable,
+    17,section,2,{14. Nonstable classical tail},part3classicaltail,
+    33,section,2,{15. Code and data availability},part3code,
+    36,section,2,{References},part3references
   }
 ]{full_q3_extension.pdf}
 

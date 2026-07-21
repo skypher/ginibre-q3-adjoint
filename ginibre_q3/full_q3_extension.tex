@@ -62,10 +62,12 @@ carried over literally to nonabelian compact groups.
 
 \begin{remark}[Submission architecture and audit status]
 \label{rem:submission-architecture}
-The unified manuscript \path{submission.pdf} contains \path{paper.pdf}
-(Parts~I--II), the compact \path{full_q3_main.pdf} guide, and the present
-formal proof and computational supplement for Part~III.  The present file is
-a load-bearing theorem dependency included in that manuscript, while the optional
+The unified manuscript \path{submission.pdf} contains its own abstract and
+proof map, followed by \path{paper.pdf} (Parts~I--II) and the present formal
+proof and computational supplement for Part~III.  The separately rebuilt
+\path{full_q3_main.pdf} is a navigation aid, not a third proof component.
+The present file is a load-bearing theorem dependency included in the unified
+manuscript, while the optional
 \path{paper_full.pdf} derivation archive is not.  In particular, the finite
 $B/C$ correction-prefix contract and the proved half-stable bridge occur in
 \path{paper.pdf}; the exact higher-minus tails, finite ledgers, and replay
@@ -81,6 +83,11 @@ depends only on the numbered results and authenticated computations mapped in
 the code and data availability section.
 \end{remark}
 
+% Parts I--II occupy Sections 1--6 in the unified manuscript.  Continue the
+% section and theorem numbering here so that the formal submission has one
+% reader-facing numbering sequence even though the components remain
+% independently buildable.
+\setcounter{section}{6}
 \section{The exact adjoint-generated target}
 
 The cone studied here is the smallest uniformly closed cone containing the
@@ -121,6 +128,30 @@ For integers $a,n\geq0$, define
    (\chiad(g)+\chiad(h))^n\,d\mu_G(g)d\mu_G(h).
 \]
 \end{definition}
+
+\begin{lemma}[Concrete nonpolynomial interactions in the cone]
+\label{lem:nonpolynomial-cone-examples}
+Let \(R=\max_G|\chiad|\).  If
+\[
+ A(z)=\sum_{j\geq0}c_jz^j,
+ \qquad c_j\geq0,
+ \qquad \sum_{j\geq0}c_jR^j<\infty,
+\]
+then \(A(\chiad)\in\Qcone_G\).  In particular,
+\(e^{\beta\chiad}\in\Qcone_G\) for every \(\beta\geq0\).
+Thus the theorem applies not only to finite tensor-power characters but also
+to the standard exponential adjoint interaction and to finite products and
+nonnegative mixtures of such interactions.
+\end{lemma}
+
+\begin{proof}
+The partial sums of \(A(\chiad)\) are nonnegative linear combinations of
+the powers of \(\chiad\).  The displayed scalar bound and the Weierstrass
+test give uniform convergence on \(G\), so the limit belongs to
+\(\Qcone_G\) by definition.  Taking \(c_j=\beta^j/j!\) proves the
+exponential assertion.  Closure under products and nonnegative linear
+combinations is built into the cone.
+\end{proof}
 
 \begin{lemma}[The adjoint-generated cone is positive definite]
 \label{lem:adjoint-cone-positive-definite}
@@ -2546,7 +2577,9 @@ The accepted transcript
 scope of six polynomial rows and six rational-cap rows, prints a positive
 reduced rational margin for each, and ends with exit status zero and the
 terminal marker
-\texttt{FULL\_Q3\_BCD\_BOUNDED\_LITTLEWOOD VERIFICATION: ALL PASS}.
+\begin{center}
+\small\path{FULL_Q3_BCD_BOUNDED_LITTLEWOOD VERIFICATION: ALL PASS}.
+\end{center}
 \end{proof}
 
 \begin{proposition}[Directed exact-MGF tails in the residual rows]
@@ -2661,7 +2694,9 @@ It verifies all $58$ rows; its least directed logarithmic margin in
  \quad\text{at }C_{15}.
 \]
 Its terminal marker is
-\texttt{FULL\_Q3\_BCD\_LOW\_TAIL VERIFICATION: ALL PASS}.
+\begin{center}
+\small\texttt{FULL\_Q3\_BCD\_LOW\_TAIL VERIFICATION: ALL PASS}.
+\end{center}
 The complete transcript is
 \begin{center}
 \path{certificates/full_q3/fullq3bcdlowtail0001_optimus.log},
@@ -2877,6 +2912,69 @@ compact connected global form, and
 Theorem~\ref{thm:full-cone-reduction} promotes the generator to $\Qcone_G$.
 \end{proof}
 
+\begin{proposition}[Auditable computational interface]
+\label{prop:consolidated-computational-interface}
+Every machine-decided sign used in the classification closure is the value of
+one of the following fully specified mathematical predicates.
+\begin{enumerate}
+\item The target is the exact integer double sum in
+Lemma~\ref{lem:full-moment-form}; no program-specific rearrangement changes
+the quantity being decided.
+\item Type-$A$ moments are supplied by the Schur--Weyl and hook-length
+formulas in Theorem~\ref{thm:stable-a-full} and
+Propositions~\ref{prop:sun-ge6-tail}--\ref{prop:sun-ge6-residual}.
+Exceptional moments are supplied by the Cartan-datum Racah--Speiser and
+character-pairing reconstruction stated in
+Proposition~\ref{prop:exceptional-full-residual}.
+Finite classical moments are supplied by
+Lemmas~\ref{lem:finite-orthogonal-adjoint-moments}--
+\ref{lem:two-power-coefficient-functional}.
+\item Every analytic tail is reduced to a positive lower bound by
+Theorem~\ref{thm:fixed-group-total-degree-tail},
+Lemma~\ref{lem:one-sided-cap-full-q3}, or
+Lemma~\ref{lem:all-minus-trace-tail}.  Their hypotheses are discharged by
+the exact cap formulas or by the Fredholm and exact-MGF inequalities in
+Lemmas~\ref{lem:full-q3-classical-weyl-cap},
+\ref{lem:square-trace-moment-mgf},
+\ref{lem:finite-rank-fredholm-mgf}, and
+\ref{lem:exact-defining-trace-determinants}.  Directed arithmetic decides
+only the final explicitly stated interval inequalities.
+\item The disjoint stable, finite, and tail regions are recorded row by row
+in the committed file
+\begin{center}
+\small\path{full_q3_classification_ledger.csv}.
+\end{center}
+Its generator
+\begin{center}
+\small\path{generate_full_q3_classification_ledger.py}
+\end{center}
+reconstructs the classical
+rows from the same published cutoff header consumed by the exact verifier,
+derives every pair count from \(L=2a+n\), and fails unless the totals are
+exactly $1{,}315$ general type-$A$, $1{,}265$ exceptional, and $17{,}862$
+finite classical pairs.  It also prints the four fixed low type-$A$ rows and
+the parametric high-rank ranges, so no coverage claim is available only in
+C++ source.
+\end{enumerate}
+Thus hashes and transcripts authenticate source and execution, but the
+mathematical interfaces above determine what is proved.  A replay is accepted
+only after evaluating these predicates over every ledger row with exact
+integer/rational arithmetic or with an outward-rounded positive interval.
+\end{proposition}
+
+\begin{proof}
+Items (1)--(3) are precisely the backward mathematical dependencies of the
+family closures already proved above.  For item (4), the ledger generator
+parses all $114$ finite classical rows, recomputes the stable endpoint and
+the number of pairs at every intervening odd total degree, and asserts the
+three displayed totals before comparing its byte-for-byte output with the
+committed ledger.  The publication preflight and Part~III aggregate both run
+this check.  The exact and directed verifier semantics are stated in the
+proofs of the cited residual and tail propositions and summarized in the
+code-and-data section below.  Consequently every accepted computational
+conclusion has both a mathematical predicate and an exhaustive ledger entry.
+\end{proof}
+
 \begin{theorem}[Full adjoint-generated Ginibre $Q_3$]
 \label{thm:full-adjoint-generated-q3}
 Let $G$ be any compact connected Lie group with simple Lie algebra.  For every
@@ -2890,7 +2988,9 @@ signs,
 \]
 If the number of minus signs is odd, the integral is zero.  Hence
 $\Qcone_G$ satisfies Ginibre's condition $Q_3$ with all of its original
-finite-tuple and sign-pattern quantifiers.
+finite-tuple and sign-pattern quantifiers.  In particular, this includes
+every finite tuple of exponential adjoint interactions
+$e^{\beta_i\chi_{\mathrm{ad}}}$ with $\beta_i\geq0$.
 \end{theorem}
 
 \begin{proof}
@@ -2899,9 +2999,13 @@ types.  Theorem~\ref{thm:type-a-full-cone},
 Theorem~\ref{thm:bcd-full-hierarchy}, and
 Theorem~\ref{thm:exceptional-full-cone}, respectively, prove the full
 generator hierarchy in those cases.  Lemma~\ref{lem:full-central-cover}
-removes the choice of compact connected global form.  Finally,
+removes the choice of compact connected global form.
+Proposition~\ref{prop:consolidated-computational-interface} fixes the
+exhaustive row ledger and the exact mathematical predicates behind every
+machine-decided sign.  Finally,
 Theorem~\ref{thm:full-cone-reduction} gives the asserted cone promotion and
-the vanishing of every odd-minus sector.
+the vanishing of every odd-minus sector.  The final exponential specialization
+is admissible by Lemma~\ref{lem:nonpolynomial-cone-examples}.
 \end{proof}
 
 \begin{remark}[Exact sense in which the result matches Ginibre]
@@ -2913,7 +3017,8 @@ impossible: Proposition~\ref{prop:all-pd-counterexample} gives the exact
 $\mathrm{SO}(3)$ value $-8/279$.
 \end{remark}
 
-\section*{Code and data availability}
+\section{Code and data availability}
+\label{sec:code-data-availability}
 
 \subsection*{Certificate semantics and trusted base}
 
@@ -2953,20 +3058,24 @@ the source authority for the present theorem; the historical tag
 \texttt{v1.0.0} identifies that snapshot.  For the present submission,
 the canonical source bytes are the files in the submitted archive whose
 hashes are listed in
-\path{certificates/full_q3/full_q3_source_manifest.sha256}.  The generated
+\begin{center}
+\small\path{certificates/full_q3/full_q3_source_manifest.sha256}.
+\end{center}
+The generated
 formal PDFs are separately bound by \path{publication_artifacts.sha256}.
 A public release of the final submission must preserve the submitted archive
 and reproduce both manifests exactly.
 
 The formal submission is one unified file, \path{submission.pdf}.  Its source
-wrapper \path{submission.tex} includes \path{paper.pdf}, the compact guide
-\path{full_q3_main.pdf}, and the present \path{full_q3_extension.pdf}.  The
+wrapper \path{submission.tex} includes \path{paper.pdf} and the present
+\path{full_q3_extension.pdf} after a unified abstract and proof map.  The
+standalone \path{full_q3_main.pdf} remains a manifested navigation aid.  The
 optional \path{paper_full.pdf} preserves
 longer combinatorial derivations and ledgers but is not a theorem dependency.
 The archived computation-bearing sources include \path{paper.tex} and
 \path{full_q3_extension.tex}.  The historical commit authenticates only its
 arithmetic snapshot.  The current publication sources are bound directly by
-\path{certificates/full_q3/full_q3_source_manifest.sha256} and are the inputs
+the source manifest displayed above and are the inputs
 rebuilt by the commands below.  The final publication artifacts are rebuilt before
 their hashes are checked against \path{publication_artifacts.sha256}; mere
 existence of a pre-existing PDF is not an acceptance condition.  The
@@ -3145,8 +3254,9 @@ transcripts:
 \bibitem{AdjointTwoMinus}
 L.~P. Polzer,
 The two-minus adjoint-character case of Ginibre's $Q_3$ condition,
-Parts I--II: classification and exact certificates, formal journal
-manuscript, 2026.  The exact submitted source bytes are bound
+Parts I--II: classification and exact certificates, formal journal manuscript,
+2026; Parts I--II component of the present unified manuscript.  The exact
+submitted source bytes are bound
 by \path{certificates/full_q3/full_q3_source_manifest.sha256} in the
 inseparable submission archive; the historical execution snapshot is
 \url{https://github.com/skypher/ginibre-q3-adjoint/tree/91363c3cebb37a44349f613ab0a5aa6dcd412af3/ginibre_q3}.
@@ -3179,7 +3289,8 @@ Villain action in lattice gauge theory,
 \bibitem{HKKO2025}
 J.~Huh, J.~S. Kim, C.~Krattenthaler, and S.~Okada,
 Bounded Littlewood identities with fixed number of odd rows or odd columns,
-\emph{Electron. J. Combin.} \textbf{33} (2026), no.~3, Paper~P3.5.
+\emph{Electron. J. Combin.} \textbf{33} (2026), no.~3, Paper~P3.5,
+doi:10.37236/14854.
 
 \bibitem{Etingof2009}
 P.~Etingof,
