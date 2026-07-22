@@ -6,6 +6,9 @@
 #include <iostream>
 #include <limits>
 #include <map>
+#include <numeric>
+#include <queue>
+#include <set>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -294,6 +297,239 @@ bool source_balance(
     return true;
 }
 
+Vector bender_knuth_swap_top(
+    const Vector& degrees,
+    const Vector& top,
+    std::size_t first
+) {
+    if (first + 1U >= degrees.size()) {
+        throw std::runtime_error("Bender--Knuth swap is out of range");
+    }
+    int height = 0;
+    for (std::size_t i = 0U; i < first; ++i) {
+        height += 2 * top[i] - degrees[i];
+    }
+    const int first_bottom = degrees[first] - top[first];
+    const int second_bottom = degrees[first + 1U] - top[first + 1U];
+    const int paired = std::max(
+        0, first_bottom + second_bottom - height
+    );
+    Vector swapped = top;
+    swapped[first] = top[first + 1U] + paired;
+    swapped[first + 1U] = top[first] - paired;
+    return swapped;
+}
+
+bool bender_knuth_bijection(
+    const Vector& degrees,
+    const std::vector<Vector>& bases,
+    std::size_t& coordinate,
+    Vector& witness,
+    Vector& image
+) {
+    for (std::size_t first = 0U; first + 1U < degrees.size(); ++first) {
+        Vector swapped_degrees = degrees;
+        std::swap(swapped_degrees[first], swapped_degrees[first + 1U]);
+        const std::vector<Vector> swapped_bases = tops(swapped_degrees);
+        std::set<Vector> images;
+        for (const Vector& top : bases) {
+            const Vector swapped = bender_knuth_swap_top(
+                degrees, top, first
+            );
+            if (!valid_top(swapped_degrees, swapped)
+                || bender_knuth_swap_top(
+                    swapped_degrees, swapped, first
+                ) != top) {
+                coordinate = first;
+                witness = top;
+                image = swapped;
+                return false;
+            }
+            images.insert(swapped);
+        }
+        if (images != std::set<Vector>(
+                swapped_bases.begin(), swapped_bases.end()
+            )) {
+            coordinate = first;
+            return false;
+        }
+    }
+    return true;
+}
+
+void apply_bender_knuth_swap(
+    Vector& degrees,
+    Vector& top,
+    std::size_t first
+) {
+    top = bender_knuth_swap_top(degrees, top, first);
+    std::swap(degrees[first], degrees[first + 1U]);
+}
+
+bool bender_knuth_braid(
+    const Vector& degrees,
+    const std::vector<Vector>& bases,
+    std::size_t& coordinate,
+    Vector& witness,
+    Vector& first_image,
+    Vector& second_image
+) {
+    for (std::size_t first = 0U; first + 2U < degrees.size(); ++first) {
+        for (const Vector& top : bases) {
+            Vector first_degrees = degrees;
+            first_image = top;
+            apply_bender_knuth_swap(
+                first_degrees, first_image, first
+            );
+            apply_bender_knuth_swap(
+                first_degrees, first_image, first + 1U
+            );
+            apply_bender_knuth_swap(
+                first_degrees, first_image, first
+            );
+
+            Vector second_degrees = degrees;
+            second_image = top;
+            apply_bender_knuth_swap(
+                second_degrees, second_image, first + 1U
+            );
+            apply_bender_knuth_swap(
+                second_degrees, second_image, first
+            );
+            apply_bender_knuth_swap(
+                second_degrees, second_image, first + 1U
+            );
+            if (first_degrees != second_degrees
+                || first_image != second_image) {
+                coordinate = first;
+                witness = top;
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+using State = std::pair<Vector, Vector>;
+
+Vector bender_knuth_raw_neighbor(
+    const Vector& physical_degrees,
+    const State& state,
+    std::size_t first
+) {
+    const Vector& order = state.first;
+    const Vector& raw_top = state.second;
+    int height = 0;
+    for (std::size_t position = 0U; position < first; ++position) {
+        const std::size_t vertex = static_cast<std::size_t>(order[position]);
+        height += 2 * raw_top[vertex] - physical_degrees[vertex];
+    }
+    const std::size_t first_vertex
+        = static_cast<std::size_t>(order[first]);
+    const std::size_t second_vertex
+        = static_cast<std::size_t>(order[first + 1U]);
+    const int first_bottom
+        = physical_degrees[first_vertex] - raw_top[first_vertex];
+    const int second_bottom
+        = physical_degrees[second_vertex] - raw_top[second_vertex];
+    const int transferred = std::max(
+        0, first_bottom + second_bottom - height
+    );
+    Vector neighbor = raw_top;
+    neighbor[first_vertex] -= transferred;
+    neighbor[second_vertex] += transferred;
+    return neighbor;
+}
+
+bool bender_knuth_connected(
+    const Vector& physical_degrees,
+    bool classify_by_gcd,
+    std::uint64_t& state_count,
+    std::uint64_t& component_count,
+    State& witness
+) {
+    Vector order(physical_degrees.size(), 0);
+    for (std::size_t i = 0U; i < order.size(); ++i) {
+        order[i] = static_cast<int>(i);
+    }
+    std::set<State> states;
+    do {
+        Vector ordered_degrees(order.size(), 0);
+        for (std::size_t position = 0U;
+             position < order.size(); ++position) {
+            ordered_degrees[position] = physical_degrees[
+                static_cast<std::size_t>(order[position])
+            ];
+        }
+        for (const Vector& ordered_top : tops(ordered_degrees)) {
+            Vector raw_top(order.size(), 0);
+            for (std::size_t position = 0U;
+                 position < order.size(); ++position) {
+                raw_top[static_cast<std::size_t>(order[position])]
+                    = ordered_top[position];
+            }
+            states.emplace(order, std::move(raw_top));
+        }
+    } while (std::next_permutation(order.begin(), order.end()));
+
+    state_count = static_cast<std::uint64_t>(states.size());
+    std::set<State> visited;
+    std::map<int, std::uint64_t> gcd_components;
+    component_count = 0U;
+    for (const State& initial : states) {
+        if (visited.contains(initial)) {
+            continue;
+        }
+        ++component_count;
+        if (component_count == 2U) {
+            witness = initial;
+        }
+        int state_gcd = 0;
+        for (int degree : physical_degrees) {
+            state_gcd = std::gcd(state_gcd, degree);
+        }
+        for (int value : initial.second) {
+            state_gcd = std::gcd(state_gcd, value);
+        }
+        ++gcd_components[state_gcd];
+        if (gcd_components[state_gcd] == 2U) {
+            witness = initial;
+        }
+        std::queue<State> frontier;
+        visited.insert(initial);
+        frontier.push(initial);
+        while (!frontier.empty()) {
+            const State current = frontier.front();
+            frontier.pop();
+            for (std::size_t i = 0U; i + 1U < current.first.size(); ++i) {
+                State neighbor{
+                    current.first,
+                    bender_knuth_raw_neighbor(physical_degrees, current, i)
+                };
+                std::swap(neighbor.first[i], neighbor.first[i + 1U]);
+                if (!states.contains(neighbor)) {
+                    throw std::runtime_error(
+                        "Bender--Knuth connectivity neighbor is missing"
+                    );
+                }
+                if (visited.insert(neighbor).second) {
+                    frontier.push(std::move(neighbor));
+                }
+            }
+        }
+    }
+    if (!classify_by_gcd) {
+        return component_count == 1U;
+    }
+    for (const auto& [state_gcd, count] : gcd_components) {
+        (void)state_gcd;
+        if (count != 1U) {
+            return false;
+        }
+    }
+    return true;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -305,10 +541,15 @@ int main(int argc, char** argv) {
             );
         }
         const std::string mode = argv[1];
-        if (mode != "bases" && mode != "pairs"
-            && mode != "support-pairs" && mode != "balance") {
+        if (mode != "bases" && mode != "pairs" && mode != "bk"
+            && mode != "bk-braid"
+            && mode != "bk-connected"
+            && mode != "bk-gcd-connected"
+            && mode != "support-pairs" && mode != "balance"
+            && mode != "balance-min2") {
             throw std::runtime_error(
-                "mode must be bases, pairs, support-pairs, or balance"
+                "mode must be bases, bk, bk-braid, bk-connected, "
+                "bk-gcd-connected, pairs, support-pairs, or balance"
             );
         }
         const int maximum_vertices = parse_nonnegative(argv[2], "vertices");
@@ -324,10 +565,18 @@ int main(int argc, char** argv) {
                     total += degree;
                 }
                 if (total <= maximum_total && (total & 1) == 0) {
+                    if (mode == "balance-min2"
+                        && std::any_of(
+                            degrees.begin(), degrees.end(),
+                            [](int degree) { return degree < 2; }
+                        )) {
+                        more = increment(degrees, maximum_degree);
+                        continue;
+                    }
                     const std::vector<Vector> bases = tops(degrees);
                     if (!bases.empty()) {
                         ++cases;
-                        if (mode == "balance") {
+                        if (mode == "balance" || mode == "balance-min2") {
                             unsigned int minus_groups = 0U;
                             std::uint64_t odd_sources = 0U;
                             std::uint64_t positive_sources = 0U;
@@ -378,6 +627,73 @@ int main(int argc, char** argv) {
                                 print_vector(second);
                                 std::cout << " coordinate=" << coordinate
                                           << " bases=" << bases.size() << '\n';
+                                return 1;
+                            }
+                        } else if (mode == "bk") {
+                            std::size_t coordinate = 0U;
+                            Vector witness;
+                            Vector image;
+                            if (!bender_knuth_bijection(
+                                    degrees, bases, coordinate,
+                                    witness, image
+                                )) {
+                                std::cout
+                                    << "SU2_GT_BK_BIJECTION result=FAIL "
+                                    << "degrees=";
+                                print_vector(degrees);
+                                std::cout << " coordinate=" << coordinate
+                                          << " witness=";
+                                print_vector(witness);
+                                std::cout << " image=";
+                                print_vector(image);
+                                std::cout << '\n';
+                                return 1;
+                            }
+                        } else if (mode == "bk-braid") {
+                            std::size_t coordinate = 0U;
+                            Vector witness;
+                            Vector first_image;
+                            Vector second_image;
+                            if (!bender_knuth_braid(
+                                    degrees, bases, coordinate, witness,
+                                    first_image, second_image
+                                )) {
+                                std::cout
+                                    << "SU2_GT_BK_BRAID result=FAIL degrees=";
+                                print_vector(degrees);
+                                std::cout << " coordinate=" << coordinate
+                                          << " witness=";
+                                print_vector(witness);
+                                std::cout << " first_image=";
+                                print_vector(first_image);
+                                std::cout << " second_image=";
+                                print_vector(second_image);
+                                std::cout << '\n';
+                                return 1;
+                            }
+                        } else if (mode == "bk-connected"
+                                   || mode == "bk-gcd-connected") {
+                            std::uint64_t state_count = 0U;
+                            std::uint64_t component_count = 0U;
+                            State witness;
+                            if (!bender_knuth_connected(
+                                    degrees, mode == "bk-gcd-connected",
+                                    state_count, component_count, witness
+                                )) {
+                                std::cout
+                                    << (mode == "bk-gcd-connected"
+                                        ? "SU2_GT_BK_GCD_CONNECTED"
+                                        : "SU2_GT_BK_CONNECTED")
+                                    << " result=FAIL "
+                                    << "degrees=";
+                                print_vector(degrees);
+                                std::cout << " states=" << state_count
+                                          << " components=" << component_count
+                                          << " witness_order=";
+                                print_vector(witness.first);
+                                std::cout << " witness_top=";
+                                print_vector(witness.second);
+                                std::cout << '\n';
                                 return 1;
                             }
                         } else {
@@ -441,7 +757,13 @@ int main(int argc, char** argv) {
                       << " cases=" << cases << '\n' << std::flush;
         }
         std::cout << (mode == "bases" ? "SU2_GT_EXCHANGE"
-                      : mode == "balance" ? "SU2_GT_SOURCE_BALANCE"
+                      : mode == "bk" ? "SU2_GT_BK_BIJECTION"
+                      : mode == "bk-braid" ? "SU2_GT_BK_BRAID"
+                      : mode == "bk-connected" ? "SU2_GT_BK_CONNECTED"
+                      : mode == "bk-gcd-connected"
+                          ? "SU2_GT_BK_GCD_CONNECTED"
+                      : mode == "balance" || mode == "balance-min2"
+                          ? "SU2_GT_SOURCE_BALANCE"
                       : mode == "support-pairs"
                           ? "SU2_GT_SUPPORT_PAIR_XOR"
                           : "SU2_GT_PAIR_XOR")

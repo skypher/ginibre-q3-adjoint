@@ -182,12 +182,35 @@ struct Counts {
     unsigned int xor_mask = 0U;
     std::uint64_t xor_demand = 0U;
     std::uint64_t xor_capacity = 0U;
+    std::uint64_t order_count = 0U;
+    std::uint64_t rank_sum = 0U;
+    std::uint64_t odd_pair_collisions = 0U;
+    std::uint64_t pair_collision_sum = 0U;
+    std::uint64_t component_count = 0U;
+    std::uint64_t minimum_component_states = 0U;
+    std::uint64_t minimum_component_relations = 0U;
+    std::uint64_t minimum_component_positive = 0U;
+    std::uint64_t minimum_component_slack = 0U;
+    std::uint64_t active_component_count = 0U;
+    std::uint64_t loaded_component_count = 0U;
+    Key alpha_witness;
 };
 
 struct ToricFiber {
     std::array<std::uint64_t, 2U> parity_counts{};
     std::vector<unsigned int> odd_cuts;
     std::vector<unsigned int> nonempty_even_cuts;
+};
+
+struct AlphaAverage {
+    std::uint64_t odd_occurrences = 0U;
+    std::uint64_t positive_occurrences = 0U;
+    std::uint64_t hit_orders = 0U;
+};
+
+struct FiberCounts {
+    std::uint64_t odd = 0U;
+    std::uint64_t positive = 0U;
 };
 
 using GraphCache = std::map<std::vector<int>, std::vector<Graph>>;
@@ -318,7 +341,9 @@ Counts analyze_gt_case(
     int target,
     unsigned int minus_mask,
     ToricCache& cache,
-    const std::vector<std::size_t>& order
+    const std::vector<std::size_t>& order,
+    std::map<Key, AlphaAverage>* alpha_average = nullptr,
+    std::map<Key, FiberCounts>* state_fibers = nullptr
 ) {
     const std::size_t factors = labels.size();
     if (order.size() != factors + 1U) {
@@ -383,7 +408,42 @@ Counts analyze_gt_case(
     std::map<unsigned int, std::uint64_t> used_capacity;
     std::map<unsigned int, std::uint64_t> xor_demand;
     for (const auto& [key, fiber] : fibers) {
-        (void)key;
+        if (alpha_average != nullptr || state_fibers != nullptr) {
+            Key raw_top(key.size(), 0);
+            for (std::size_t vertex = 0U;
+                 vertex < position.size(); ++vertex) {
+                raw_top[vertex] = key[position[vertex]];
+            }
+            if (alpha_average != nullptr) {
+                AlphaAverage& average = (*alpha_average)[raw_top];
+                average.odd_occurrences += static_cast<std::uint64_t>(
+                    fiber.odd_cuts.size()
+                );
+                average.positive_occurrences += static_cast<std::uint64_t>(
+                    fiber.nonempty_even_cuts.size()
+                );
+                if (!fiber.odd_cuts.empty()) {
+                    ++average.hit_orders;
+                }
+            }
+            if (state_fibers != nullptr) {
+                state_fibers->emplace(
+                    std::move(raw_top),
+                    FiberCounts{
+                        static_cast<std::uint64_t>(fiber.odd_cuts.size()),
+                        static_cast<std::uint64_t>(
+                            fiber.nonempty_even_cuts.size()
+                        )
+                    }
+                );
+            }
+        }
+        const std::uint64_t odd_in_fiber
+            = static_cast<std::uint64_t>(fiber.odd_cuts.size());
+        if (odd_in_fiber >= 2U) {
+            counts.odd_pair_collisions
+                += odd_in_fiber * (odd_in_fiber - 1U) / 2U;
+        }
         if (fiber.parity_counts[1U] > fiber.parity_counts[0U]) {
             counts.fiber_parity = false;
             counts.fiber_even = fiber.parity_counts[0U];
@@ -665,6 +725,71 @@ bool support_disjoint(
     return true;
 }
 
+std::vector<int> signed_vertex_classes(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask
+) {
+    std::vector<std::pair<int, int>> keys;
+    keys.reserve(labels.size() + 1U);
+    for (std::size_t i = 0U; i < labels.size(); ++i) {
+        const int sign = ((minus_mask >> i) & 1U) != 0U ? -1 : 1;
+        keys.emplace_back(labels[i], sign);
+    }
+    const int target_sign = (popcount(minus_mask) & 1) != 0 ? -1 : 1;
+    keys.emplace_back(target, target_sign);
+    std::map<std::pair<int, int>, int> identifiers;
+    for (const std::pair<int, int>& key : keys) {
+        if (!identifiers.contains(key)) {
+            identifiers.emplace(
+                key, static_cast<int>(identifiers.size())
+            );
+        }
+    }
+    std::vector<int> classes;
+    classes.reserve(keys.size());
+    for (const std::pair<int, int>& key : keys) {
+        classes.push_back(identifiers.at(key));
+    }
+    return classes;
+}
+
+std::vector<std::size_t> representative_vertex_order(
+    const std::vector<int>& vertex_classes,
+    const std::vector<int>& class_order
+) {
+    if (vertex_classes.size() != class_order.size()) {
+        throw std::runtime_error("class order has the wrong size");
+    }
+    int maximum_class = -1;
+    for (int vertex_class : vertex_classes) {
+        maximum_class = std::max(maximum_class, vertex_class);
+    }
+    std::vector<std::vector<std::size_t>> members(
+        static_cast<std::size_t>(maximum_class + 1)
+    );
+    for (std::size_t i = 0U; i < vertex_classes.size(); ++i) {
+        members[static_cast<std::size_t>(vertex_classes[i])].push_back(i);
+    }
+    std::vector<std::size_t> used(members.size(), 0U);
+    std::vector<std::size_t> order;
+    order.reserve(class_order.size());
+    for (int vertex_class : class_order) {
+        if (vertex_class < 0
+            || static_cast<std::size_t>(vertex_class) >= members.size()) {
+            throw std::runtime_error("class order is out of range");
+        }
+        const std::size_t class_index
+            = static_cast<std::size_t>(vertex_class);
+        if (used[class_index] >= members[class_index].size()) {
+            throw std::runtime_error("class order has excess multiplicity");
+        }
+        order.push_back(members[class_index][used[class_index]]);
+        ++used[class_index];
+    }
+    return order;
+}
+
 Counts analyze_gt_best_case(
     const std::vector<int>& labels,
     int target,
@@ -765,38 +890,42 @@ Counts analyze_gt_monotone_case(
         first.xor_payment = true;
         return first;
     }
-    std::map<
-        std::vector<std::size_t>,
-        std::pair<std::size_t, bool>
-    > landscape;
+    const std::size_t required_rank = static_cast<std::size_t>(
+        first.odd_sources - first.positive_sources
+    );
+    const std::vector<int> vertex_classes = signed_vertex_classes(
+        labels, target, minus_mask
+    );
+    std::vector<int> class_order = vertex_classes;
+    std::sort(class_order.begin(), class_order.end());
+    std::map<std::vector<int>, std::size_t> landscape;
     do {
+        order = representative_vertex_order(vertex_classes, class_order);
         const Counts counts = analyze_gt_case(
             labels, target, minus_mask, cache, order
         );
-        landscape.emplace(
-            order,
-            std::pair<std::size_t, bool>{
-                counts.odd_rank, counts.xor_payment
-            }
-        );
-    } while (std::next_permutation(order.begin(), order.end()));
-    std::set<std::vector<std::size_t>> reachable;
-    std::queue<std::vector<std::size_t>> frontier;
-    for (const auto& [candidate, data] : landscape) {
-        if (data.second) {
+        landscape.emplace(class_order, counts.odd_rank);
+    } while (std::next_permutation(class_order.begin(), class_order.end()));
+    std::set<std::vector<int>> reachable;
+    std::queue<std::vector<int>> frontier;
+    for (const auto& [candidate, rank] : landscape) {
+        if (rank >= required_rank) {
             reachable.insert(candidate);
             frontier.push(candidate);
         }
     }
     while (!frontier.empty()) {
-        const std::vector<std::size_t> current = frontier.front();
+        const std::vector<int> current = frontier.front();
         frontier.pop();
-        const std::size_t current_rank = landscape.at(current).first;
+        const std::size_t current_rank = landscape.at(current);
         for (std::size_t i = 0U; i + 1U < current.size(); ++i) {
-            std::vector<std::size_t> predecessor = current;
+            if (current[i] == current[i + 1U]) {
+                continue;
+            }
+            std::vector<int> predecessor = current;
             std::swap(predecessor[i], predecessor[i + 1U]);
             if (reachable.contains(predecessor)
-                || landscape.at(predecessor).first > current_rank) {
+                || landscape.at(predecessor) > current_rank) {
                 continue;
             }
             reachable.insert(predecessor);
@@ -808,9 +937,286 @@ Counts analyze_gt_monotone_case(
         first.xor_demand = static_cast<std::uint64_t>(
             landscape.size() - reachable.size()
         );
-        first.xor_capacity = 0U;
+        first.xor_capacity = static_cast<std::uint64_t>(required_rank);
     }
     return first;
+}
+
+Counts analyze_gt_average_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache,
+    bool require_pair_bound
+) {
+    std::vector<std::size_t> order(labels.size() + 1U, 0U);
+    for (std::size_t i = 0U; i < order.size(); ++i) {
+        order[i] = i;
+    }
+    Counts first = analyze_gt_case(
+        labels, target, minus_mask, cache, order
+    );
+    if (first.odd_sources <= first.positive_sources) {
+        first.xor_payment = true;
+        return first;
+    }
+    const std::vector<int> vertex_classes = signed_vertex_classes(
+        labels, target, minus_mask
+    );
+    std::vector<int> class_order = vertex_classes;
+    std::sort(class_order.begin(), class_order.end());
+    do {
+        order = representative_vertex_order(vertex_classes, class_order);
+        const Counts counts = analyze_gt_case(
+            labels, target, minus_mask, cache, order
+        );
+        if (first.rank_sum
+            > std::numeric_limits<std::uint64_t>::max()
+                - static_cast<std::uint64_t>(counts.odd_rank)) {
+            throw std::runtime_error("GT average rank sum overflow");
+        }
+        first.rank_sum += static_cast<std::uint64_t>(counts.odd_rank);
+        if (first.pair_collision_sum
+            > std::numeric_limits<std::uint64_t>::max()
+                - counts.odd_pair_collisions) {
+            throw std::runtime_error("GT average pair sum overflow");
+        }
+        first.pair_collision_sum += counts.odd_pair_collisions;
+        ++first.order_count;
+    } while (std::next_permutation(class_order.begin(), class_order.end()));
+    const std::uint64_t required_rank
+        = first.odd_sources - first.positive_sources;
+    if (required_rank != 0U
+        && first.order_count
+            > std::numeric_limits<std::uint64_t>::max() / required_rank) {
+        throw std::runtime_error("GT average threshold overflow");
+    }
+    const std::uint64_t required_sum = first.order_count * required_rank;
+    if (first.positive_sources != 0U
+        && first.order_count > std::numeric_limits<std::uint64_t>::max()
+            / first.positive_sources) {
+        throw std::runtime_error("GT average positive sum overflow");
+    }
+    const std::uint64_t positive_sum
+        = first.order_count * first.positive_sources;
+    first.xor_payment = require_pair_bound
+        ? first.pair_collision_sum <= positive_sum
+        : first.rank_sum >= required_sum;
+    if (!first.xor_payment) {
+        first.xor_demand = require_pair_bound
+            ? first.pair_collision_sum : required_sum;
+        first.xor_capacity = require_pair_bound
+            ? positive_sum : first.rank_sum;
+    }
+    return first;
+}
+
+Counts analyze_gt_alpha_average_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    std::vector<std::size_t> order(labels.size() + 1U, 0U);
+    for (std::size_t i = 0U; i < order.size(); ++i) {
+        order[i] = i;
+    }
+    Counts first = analyze_gt_case(
+        labels, target, minus_mask, cache, order
+    );
+    if (first.odd_sources <= first.positive_sources) {
+        first.xor_payment = true;
+        return first;
+    }
+    std::map<Key, AlphaAverage> averages;
+    do {
+        (void)analyze_gt_case(
+            labels, target, minus_mask, cache, order, &averages
+        );
+        ++first.order_count;
+    } while (std::next_permutation(order.begin(), order.end()));
+    first.xor_payment = true;
+    for (const auto& [raw_top, average] : averages) {
+        (void)raw_top;
+        if (average.odd_occurrences < average.hit_orders) {
+            throw std::runtime_error("GT alpha average count underflow");
+        }
+        const std::uint64_t relations
+            = average.odd_occurrences - average.hit_orders;
+        first.rank_sum += average.hit_orders;
+        if (relations > average.positive_occurrences) {
+            first.xor_payment = false;
+            first.xor_demand = relations;
+            first.xor_capacity = average.positive_occurrences;
+            first.alpha_witness = raw_top;
+            break;
+        }
+    }
+    return first;
+}
+
+using StateKey = std::pair<std::vector<std::size_t>, Key>;
+
+Key bender_knuth_raw_neighbor(
+    const std::vector<int>& degrees,
+    const StateKey& state,
+    std::size_t first
+) {
+    const std::vector<std::size_t>& order = state.first;
+    const Key& raw_top = state.second;
+    if (first + 1U >= order.size()) {
+        throw std::runtime_error("GT state swap is out of range");
+    }
+    int height = 0;
+    for (std::size_t position = 0U; position < first; ++position) {
+        const std::size_t vertex = order[position];
+        height += 2 * raw_top[vertex] - degrees[vertex];
+    }
+    const std::size_t first_vertex = order[first];
+    const std::size_t second_vertex = order[first + 1U];
+    const int first_bottom
+        = degrees[first_vertex] - raw_top[first_vertex];
+    const int second_bottom
+        = degrees[second_vertex] - raw_top[second_vertex];
+    const int transferred = std::max(
+        0, first_bottom + second_bottom - height
+    );
+    Key neighbor = raw_top;
+    neighbor[first_vertex] -= transferred;
+    neighbor[second_vertex] += transferred;
+    return neighbor;
+}
+
+Counts analyze_gt_bk_component_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    std::vector<std::size_t> order(labels.size() + 1U, 0U);
+    for (std::size_t i = 0U; i < order.size(); ++i) {
+        order[i] = i;
+    }
+    Counts first = analyze_gt_case(
+        labels, target, minus_mask, cache, order
+    );
+    if (first.odd_sources <= first.positive_sources) {
+        first.xor_payment = true;
+        return first;
+    }
+    std::map<StateKey, FiberCounts> states;
+    do {
+        std::map<Key, FiberCounts> fibers;
+        (void)analyze_gt_case(
+            labels, target, minus_mask, cache, order, nullptr, &fibers
+        );
+        for (const auto& [raw_top, counts] : fibers) {
+            states.emplace(StateKey{order, raw_top}, counts);
+        }
+        ++first.order_count;
+    } while (std::next_permutation(order.begin(), order.end()));
+    first.rank_sum = static_cast<std::uint64_t>(states.size());
+
+    std::vector<int> degrees = labels;
+    degrees.push_back(target);
+    std::set<StateKey> visited;
+    first.xor_payment = true;
+    for (const auto& [initial, initial_counts] : states) {
+        (void)initial_counts;
+        if (visited.contains(initial)) {
+            continue;
+        }
+        std::queue<StateKey> frontier;
+        visited.insert(initial);
+        frontier.push(initial);
+        std::uint64_t relations = 0U;
+        std::uint64_t positive = 0U;
+        std::uint64_t odd_occurrences = 0U;
+        std::uint64_t component_states = 0U;
+        while (!frontier.empty()) {
+            const StateKey current = frontier.front();
+            frontier.pop();
+            ++component_states;
+            const FiberCounts counts = states.at(current);
+            relations += counts.odd
+                - static_cast<std::uint64_t>(counts.odd != 0U);
+            odd_occurrences += counts.odd;
+            positive += counts.positive;
+            for (std::size_t i = 0U; i + 1U < current.first.size(); ++i) {
+                StateKey neighbor{
+                    current.first,
+                    bender_knuth_raw_neighbor(degrees, current, i)
+                };
+                std::swap(neighbor.first[i], neighbor.first[i + 1U]);
+                if (!states.contains(neighbor)) {
+                    throw std::runtime_error(
+                        "Bender--Knuth neighbor is missing"
+                    );
+                }
+                if (visited.insert(neighbor).second) {
+                    frontier.push(std::move(neighbor));
+                }
+            }
+        }
+        ++first.component_count;
+        if (odd_occurrences != 0U || positive != 0U) {
+            ++first.active_component_count;
+        }
+        if (relations != 0U || positive != 0U) {
+            ++first.loaded_component_count;
+        }
+        const std::uint64_t slack
+            = positive >= relations ? positive - relations : 0U;
+        if (first.component_count == 1U
+            || slack < first.minimum_component_slack) {
+            first.minimum_component_states = component_states;
+            first.minimum_component_relations = relations;
+            first.minimum_component_positive = positive;
+            first.minimum_component_slack = slack;
+        }
+        if (relations > positive) {
+            first.xor_payment = false;
+            first.xor_demand = relations;
+            first.xor_capacity = positive;
+            first.alpha_witness = initial.second;
+            break;
+        }
+    }
+    return first;
+}
+
+Counts analyze_gt_bk_single_active_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    Counts counts = analyze_gt_bk_component_case(
+        labels, target, minus_mask, cache
+    );
+    counts.xor_payment = counts.active_component_count <= 1U;
+    if (!counts.xor_payment) {
+        counts.xor_demand = counts.active_component_count;
+        counts.xor_capacity = 1U;
+    }
+    return counts;
+}
+
+Counts analyze_gt_bk_single_loaded_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    Counts counts = analyze_gt_bk_component_case(
+        labels, target, minus_mask, cache
+    );
+    counts.xor_payment = counts.loaded_component_count <= 1U;
+    if (!counts.xor_payment) {
+        counts.xor_demand = counts.loaded_component_count;
+        counts.xor_capacity = 1U;
+    }
+    return counts;
 }
 
 void print_case(
@@ -849,6 +1255,39 @@ void print_case(
                   << " xor_demand=" << counts.xor_demand
                   << " xor_capacity=" << counts.xor_capacity;
     }
+    if (counts.order_count != 0U) {
+        std::cout << " orders=" << counts.order_count
+                  << " rank_sum=" << counts.rank_sum;
+    }
+    if (counts.pair_collision_sum != 0U) {
+        std::cout << " pair_collision_sum="
+                  << counts.pair_collision_sum;
+    }
+    if (!counts.alpha_witness.empty()) {
+        std::cout << " alpha_witness=[";
+        for (std::size_t i = 0U; i < counts.alpha_witness.size(); ++i) {
+            if (i != 0U) {
+                std::cout << ',';
+            }
+            std::cout << counts.alpha_witness[i];
+        }
+        std::cout << ']';
+    }
+    if (counts.component_count != 0U) {
+        std::cout << " components=" << counts.component_count
+                  << " active_components="
+                  << counts.active_component_count
+                  << " loaded_components="
+                  << counts.loaded_component_count
+                  << " minimum_component_states="
+                  << counts.minimum_component_states
+                  << " minimum_component_relations="
+                  << counts.minimum_component_relations
+                  << " minimum_component_positive="
+                  << counts.minimum_component_positive
+                  << " minimum_component_slack="
+                  << counts.minimum_component_slack;
+    }
 }
 
 bool increment_labels(std::vector<int>& labels, int maximum_label) {
@@ -879,6 +1318,29 @@ int parse_nonnegative(const char* text, const char* name) {
 
 int main(int argc, char** argv) {
     try {
+        if (argc >= 5 && std::string(argv[1]) == "gt-bk-case") {
+            const int target = parse_nonnegative(argv[2], "target");
+            const int parsed_mask = parse_nonnegative(argv[3], "minus mask");
+            std::vector<int> labels;
+            for (int argument = 4; argument < argc; ++argument) {
+                labels.push_back(parse_nonnegative(argv[argument], "label"));
+            }
+            if (labels.empty()
+                || labels.size() >= std::numeric_limits<unsigned int>::digits
+                || parsed_mask >= static_cast<int>(1U << labels.size())) {
+                throw std::runtime_error("invalid gt-bk-case data");
+            }
+            const unsigned int minus_mask
+                = static_cast<unsigned int>(parsed_mask);
+            ToricCache cache;
+            const Counts counts = analyze_gt_bk_component_case(
+                labels, target, minus_mask, cache
+            );
+            print_case(labels, target, minus_mask, counts);
+            std::cout << " result="
+                      << (counts.xor_payment ? "PASS" : "FAIL") << '\n';
+            return counts.xor_payment ? 0 : 1;
+        }
         if (argc >= 5 && std::string(argv[1]) == "gt-case") {
             const int target = parse_nonnegative(argv[2], "target");
             const int parsed_mask = parse_nonnegative(argv[3], "minus mask");
@@ -1042,7 +1504,7 @@ int main(int argc, char** argv) {
                     }
                 }
             }
-            std::cout << "monotone_reachability_result="
+            std::cout << "hxc_monotone_reachability_result="
                       << (monotone_traps == 0U ? "PASS" : "FAIL")
                       << " monotone_traps=" << monotone_traps
                       << " first_monotone_trap=[";
@@ -1059,7 +1521,7 @@ int main(int argc, char** argv) {
                 )) {
                 std::vector<std::size_t> path_order
                     = first_failing_local_maximum;
-                std::cout << "plateau_escape=";
+                std::cout << "hxc_plateau_escape=";
                 bool first_step = true;
                 while (!order_landscape.at(path_order).second) {
                     const std::vector<std::size_t>& next
@@ -1082,6 +1544,112 @@ int main(int argc, char** argv) {
                 std::cout << ',' << order_landscape.at(path_order).first
                           << ":PASS\n";
             }
+            const std::size_t required_rank
+                = best.odd_sources > best.positive_sources
+                    ? static_cast<std::size_t>(
+                        best.odd_sources - best.positive_sources
+                    )
+                    : 0U;
+            const auto rank_reachable_to = [&order_landscape](
+                std::size_t threshold
+            ) {
+                std::set<std::vector<std::size_t>> reachable;
+                std::queue<std::vector<std::size_t>> rank_frontier;
+                for (const auto& [candidate, data] : order_landscape) {
+                    if (data.first >= threshold) {
+                        reachable.insert(candidate);
+                        rank_frontier.push(candidate);
+                    }
+                }
+                while (!rank_frontier.empty()) {
+                    const std::vector<std::size_t> current
+                        = rank_frontier.front();
+                    rank_frontier.pop();
+                    const std::size_t current_rank
+                        = order_landscape.at(current).first;
+                    for (std::size_t i = 0U;
+                         i + 1U < current.size(); ++i) {
+                        std::vector<std::size_t> predecessor = current;
+                        std::swap(predecessor[i], predecessor[i + 1U]);
+                        if (reachable.contains(predecessor)
+                            || order_landscape.at(predecessor).first
+                                > current_rank) {
+                            continue;
+                        }
+                        reachable.insert(predecessor);
+                        rank_frontier.push(predecessor);
+                    }
+                }
+                return reachable;
+            };
+            const std::set<std::vector<std::size_t>> rank_reachable
+                = rank_reachable_to(required_rank);
+            std::uint64_t rank_monotone_traps = 0U;
+            std::vector<std::size_t> first_rank_monotone_trap;
+            for (const auto& [candidate, data] : order_landscape) {
+                if (data.first < required_rank
+                    && !rank_reachable.contains(candidate)) {
+                    ++rank_monotone_traps;
+                    if (first_rank_monotone_trap.empty()) {
+                        first_rank_monotone_trap = candidate;
+                    }
+                }
+            }
+            std::cout << "rank_threshold=" << required_rank
+                      << " rank_monotone_reachability_result="
+                      << (rank_monotone_traps == 0U ? "PASS" : "FAIL")
+                      << " rank_monotone_traps=" << rank_monotone_traps
+                      << " first_rank_monotone_trap=[";
+            for (std::size_t i = 0U;
+                 i < first_rank_monotone_trap.size(); ++i) {
+                if (i != 0U) {
+                    std::cout << ',';
+                }
+                std::cout << first_rank_monotone_trap[i];
+            }
+            std::cout << "]\n";
+            std::map<std::size_t, std::uint64_t> rank_histogram;
+            for (const auto& [candidate, data] : order_landscape) {
+                (void)candidate;
+                ++rank_histogram[data.first];
+            }
+            std::cout << "rank_histogram=[";
+            bool first_rank_entry = true;
+            for (const auto& [rank, count] : rank_histogram) {
+                if (!first_rank_entry) {
+                    std::cout << ',';
+                }
+                std::cout << rank << ':' << count;
+                first_rank_entry = false;
+            }
+            std::cout << "]\n";
+            const std::set<std::vector<std::size_t>> maximum_reachable
+                = rank_reachable_to(best.odd_rank);
+            std::uint64_t maximum_monotone_traps = 0U;
+            std::vector<std::size_t> first_maximum_monotone_trap;
+            for (const auto& [candidate, data] : order_landscape) {
+                if (data.first < best.odd_rank
+                    && !maximum_reachable.contains(candidate)) {
+                    ++maximum_monotone_traps;
+                    if (first_maximum_monotone_trap.empty()) {
+                        first_maximum_monotone_trap = candidate;
+                    }
+                }
+            }
+            std::cout << "maximum_rank=" << best.odd_rank
+                      << " maximum_monotone_reachability_result="
+                      << (maximum_monotone_traps == 0U ? "PASS" : "FAIL")
+                      << " maximum_monotone_traps="
+                      << maximum_monotone_traps
+                      << " first_maximum_monotone_trap=[";
+            for (std::size_t i = 0U;
+                 i < first_maximum_monotone_trap.size(); ++i) {
+                if (i != 0U) {
+                    std::cout << ',';
+                }
+                std::cout << first_maximum_monotone_trap[i];
+            }
+            std::cout << "]\n";
             return kernel <= best.positive_sources ? 0 : 1;
         }
         if (argc != 6) {
@@ -1097,6 +1665,10 @@ int main(int argc, char** argv) {
                 "gt-xor-label-rounds; or "
                 "gt-deficit-xor-label-rounds; or "
                 "gt-deficit-xor-insert; or "
+                "gt-average, gt-average-pairs, or gt-alpha-average; or "
+                "gt-bk-components; or "
+                "gt-bk-single-active; or "
+                "gt-bk-single-loaded; or "
                 "gt-monotone; or "
                 "gt-case TARGET "
                 "MINUS_MASK LABEL..."
@@ -1114,6 +1686,12 @@ int main(int argc, char** argv) {
             && model != "gt-xor-label-rounds"
             && model != "gt-deficit-xor-label-rounds"
             && model != "gt-deficit-xor-insert"
+            && model != "gt-average"
+            && model != "gt-average-pairs"
+            && model != "gt-alpha-average"
+            && model != "gt-bk-components"
+            && model != "gt-bk-single-active"
+            && model != "gt-bk-single-loaded"
             && model != "gt-monotone") {
             throw std::runtime_error(
                 "model must be sr, gt, gt-zigzag, gt-best, gt-fiber, or "
@@ -1123,6 +1701,12 @@ int main(int argc, char** argv) {
                 ", gt-scalar-best, gt-xor-best, gt-xor-rounds, "
                 "gt-xor-label-rounds, gt-deficit-xor-label-rounds"
                 ", gt-deficit-xor-insert"
+                ", gt-average"
+                ", gt-average-pairs"
+                ", gt-alpha-average"
+                ", gt-bk-components"
+                ", gt-bk-single-active"
+                ", gt-bk-single-loaded"
                 ", gt-monotone"
             );
         }
@@ -1185,6 +1769,12 @@ int main(int argc, char** argv) {
                              || model == "gt-xor-label-rounds"
                              || model == "gt-deficit-xor-label-rounds"
                              || model == "gt-deficit-xor-insert"
+                             || model == "gt-average"
+                             || model == "gt-average-pairs"
+                             || model == "gt-alpha-average"
+                             || model == "gt-bk-components"
+                             || model == "gt-bk-single-active"
+                             || model == "gt-bk-single-loaded"
                              || model == "gt-monotone")
                             && !support_disjoint(labels, minus_mask)) {
                             continue;
@@ -1254,6 +1844,38 @@ int main(int argc, char** argv) {
                                                                 minus_mask,
                                                                 toric_cache
                                                             )
+                                                        : (model == "gt-average"
+                                                            || model == "gt-average-pairs"
+                                                            ? analyze_gt_average_case(
+                                                                labels, target,
+                                                                minus_mask,
+                                                                toric_cache,
+                                                                model == "gt-average-pairs"
+                                                            )
+                                                        : (model == "gt-alpha-average"
+                                                            ? analyze_gt_alpha_average_case(
+                                                                labels, target,
+                                                                minus_mask,
+                                                                toric_cache
+                                                            )
+                                                        : (model == "gt-bk-components"
+                                                            ? analyze_gt_bk_component_case(
+                                                                labels, target,
+                                                                minus_mask,
+                                                                toric_cache
+                                                            )
+                                                        : (model == "gt-bk-single-active"
+                                                            ? analyze_gt_bk_single_active_case(
+                                                                labels, target,
+                                                                minus_mask,
+                                                                toric_cache
+                                                            )
+                                                        : (model == "gt-bk-single-loaded"
+                                                            ? analyze_gt_bk_single_loaded_case(
+                                                                labels, target,
+                                                                minus_mask,
+                                                                toric_cache
+                                                            )
                                                         : (model
                                                             == "gt-deficit-xor-insert"
                                                             ? analyze_gt_xor_insert_case(
@@ -1265,7 +1887,7 @@ int main(int argc, char** argv) {
                                                             labels, target,
                                                             minus_mask,
                                                             toric_cache
-                                                        )))))))))))));
+                                                        ))))))))))))))))));
                         ++cases;
                         const std::uint64_t kernel = counts.odd_sources
                             - static_cast<std::uint64_t>(counts.odd_rank);
@@ -1284,6 +1906,12 @@ int main(int argc, char** argv) {
                                 || model == "gt-xor-label-rounds"
                                 || model == "gt-deficit-xor-label-rounds"
                                 || model == "gt-deficit-xor-insert"
+                                || model == "gt-average"
+                                || model == "gt-average-pairs"
+                                || model == "gt-alpha-average"
+                                || model == "gt-bk-components"
+                                || model == "gt-bk-single-active"
+                                || model == "gt-bk-single-loaded"
                                 || model == "gt-monotone"
                                 ? !counts.xor_payment
                             : kernel > counts.positive_sources;
@@ -1333,11 +1961,23 @@ int main(int argc, char** argv) {
                                                     == "gt-deficit-xor-label-rounds"
                                                     ? "GT_DEFICIT_XOR_LABEL_ROUNDS"
                                                 : (model == "gt-monotone"
-                                                    ? "GT_MONOTONE"
+                                                    ? "GT_RANK_MONOTONE"
+                                                : (model == "gt-average"
+                                                    ? "GT_AVERAGE"
+                                                : (model == "gt-average-pairs"
+                                                    ? "GT_AVERAGE_PAIRS"
+                                                : (model == "gt-alpha-average"
+                                                    ? "GT_ALPHA_AVERAGE"
+                                                : (model == "gt-bk-components"
+                                                    ? "GT_BK_COMPONENTS"
+                                                : (model == "gt-bk-single-active"
+                                                    ? "GT_BK_SINGLE_ACTIVE"
+                                                : (model == "gt-bk-single-loaded"
+                                                    ? "GT_BK_SINGLE_LOADED"
                                                 : (model
                                                     == "gt-deficit-xor-insert"
                                                     ? "GT_DEFICIT_XOR_INSERT"
-                                                    : "GT_LABEL_ROUNDS"))))))))))))))))))
+                                                    : "GT_LABEL_ROUNDS"))))))))))))))))))))))))
                   << "_PARITY cases=" << cases
                   << " cached_degrees="
                   << (model == "sr" ? cache.size() : toric_cache.size())

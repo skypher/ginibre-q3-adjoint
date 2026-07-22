@@ -6899,10 +6899,311 @@ constructs every fibre for every order.  Its `gt-case` mode exhausts all
 residual demand by cut mask and checks `(HXC)`.  The exact outputs are in
 `certificates/su2_plucker_adaptive_capacity.log`.  QED.
 
+The distinguished target can be removed from the combinatorics.  Give every
+remainder vertex its prescribed sign `s_i` and give the target vertex the
+exchange sign
+
+```text
+s_star=product_i s_i.                                  (P22.15)
+```
+
+The product of all vertex signs is then `+1`.
+
+**Lemma 22F0 (root-free even-sign form).**  Regard a channel as an unordered
+bipartition of the enlarged vertex set into two invariant-admissible sides.
+Its sign is the product of the vertex signs on either side.  This sign is
+well-defined, and the coefficient `g_p`, the dimensions `dim O_p,P_p`, and
+the GT rank `r(prec)` are unchanged if any vertex is chosen as the target.
+
+**Proof.**  Since the product of all signs is one, the two side products are
+equal.  For a chosen target, exactly one side of every unordered bipartition
+omits it; this is the cut `T` in `(P22.1)`.  The two invariant multiplicities
+in `U_(p,T)` are the multiplicities of the two sides and their product is
+symmetric under interchanging them.  Hence changing the target merely changes
+which side represents the same unordered bipartition.  The empty channel is
+the unique trivial bipartition and remains empty for every target.  Thus the
+signed coefficient, the odd and nontrivial even source dimensions, and the
+sets of tableau products in every ordered fibre are all unchanged.  QED.
+
+**Corollary 22F0B (signed-class quotient).**  Vertices with the same pair
+`(degree,sign)` are interchangeable, including the target after `(P22.15)`.
+Consequently `r(prec)` is a function of the word of signed degree classes.
+If class `c` has multiplicity `m_c`, every class word represents exactly
+`product_c m_c!` physical orders.  Targets 22F1 and 22F2 may therefore be
+checked on the multiset-permutation graph without changing either statement.
+
+**Proof.**  Relabelling equal signed degrees preserves every box, queue,
+cut parity, and tableau product.  If the relabelling moves the chosen target,
+first apply Lemma 22F0.  The fibre size of the map from physical orders to
+class words is the displayed constant, and adjacent unequal class swaps are
+exactly the nontrivial edges of the quotient order graph.  QED.
+
+There is an exact queue description of the order dependence.  Fix an order
+and write
+
+```text
+beta_i=d_i-alpha_i.
+```
+
+For a cut `T`, colour its vertices one and the complementary vertices zero;
+the target vertex has colour zero.  For `c=0,1` put
+
+```text
+H_c(j)=sum_(i<j, colour(i)=c) alpha_i
+       -sum_(i<=j, colour(i)=c) beta_i.               (P22.16)
+```
+
+Thus a vertex first consumes its `beta_i` units from its colour queue and
+then produces its `alpha_i` units.
+
+**Lemma 22F (two-queue and adjacent-swap normal form).**
+
+1.  A cut `T` belongs to `F_alpha` if and only if both colour queues in
+    `(P22.16)` are nonnegative at every vertex and each returns to zero.
+
+2.  Suppose positions `i,i+1` are interchanged.  Set
+
+```text
+h=sum_(j<i)(alpha_j-beta_j),
+z=max(0,beta_i+beta_(i+1)-h).                          (P22.17)
+```
+
+    The Bender--Knuth bijection from the old `B(d)` to the `B(d')` for the
+    interchanged degree sequence is
+
+```text
+alpha'_i     =alpha_(i+1)+z,
+alpha'_(i+1) =alpha_i-z,                               (P22.18)
+```
+
+    with every other coordinate fixed.  It is an involution after the two
+    degrees are interchanged.
+
+**Proof.**  The first assertion is `(P22.5)` applied separately to the two
+restrictions in `(P22.6)`: its prefix inequality says exactly that the
+current queue can pay the current `beta_i`, and its total-degree condition
+says that the queue returns to zero.
+
+For the second, global validity at positions `i` and `i+1` gives
+
+```text
+h>=beta_i,
+h-beta_i+alpha_i>=beta_(i+1).
+```
+
+Consequently `0<=z<=beta_(i+1)` and `0<=z<=alpha_i`.  After `(P22.18)` the
+two new bottom multiplicities are
+
+```text
+beta'_i=beta_(i+1)-z,          beta'_(i+1)=beta_i+z.   (P22.19)
+```
+
+If `z=0`, then `h>=beta_i+beta_(i+1)`; if `z>0`, then
+`h=beta_i+beta_(i+1)-z`.  In either case the two new prefix inequalities
+follow immediately from `(P22.18)--(P22.19)`.  The combined top and bottom
+totals are unchanged.  Applying the same formula to the interchanged pair
+again gives the same `z` and recovers `alpha`.  This proves both validity
+and bijectivity.  QED.
+
+**Corollary 22F0A (fixed-universe rank).**  Let
+
+```text
+A(d)={alpha: 0<=alpha_i<=d_i and
+             sum_i alpha_i=(sum_i d_i)/2}.             (P22.20)
+```
+
+For an order `prec`, `r(prec)` is the number of `alpha in A(d)` for which
+there is an odd two-colouring whose two induced job sequences both satisfy
+the queue condition `(P22.16)`.  In particular, adjacent orders can be
+compared inside the same box slice `A(d)`; no transport of `alpha` is needed.
+
+**Proof.**  If both colour queues are feasible and return to zero, their sum
+is the feasible global queue, so `alpha in B_prec(d)`.  Lemma 22F then says
+that the colouring is precisely an odd admissible cut.  The converse is the
+same lemma.  QED.
+
+For an order `prec`, let
+
+```text
+r(prec)=number of alpha in B_prec(d) admitting at least one odd cut,
+R=max(0,dim O_p-P_p).                                  (P22.21)
+```
+
+Both dimensions in `R` are independent of the order, and `(AGT)` is exactly
+`r(prec)>=R`.
+
+**Target 22F1 (rank-threshold plateau lemma).**  In the adjacent-transposition
+graph of vertex orders, every connected component of a level set
+`r(prec)=r<R` has an adjacent edge to an order of strictly larger rank.
+
+Target 22F1 implies Target 22C: move inside the current rank plateau to such
+an edge and cross it.  Rank increases at most `|B(d)|` times, so the process
+terminates at an order with `r>=R`.  This target is weaker than monotone
+reachability of an `(HXC)` certificate.  The latter is already false for the
+deterministic anchor/payment rule: for
+
+```text
+remainder=[1^+,1^+,2^+,2^+,3^+,4^-],       target=1,  (P22.22)
+```
+
+there are 32 trapped orders in the `7!`-order landscape.  This does not
+obstruct `(AGT)`: here `dim O_p=25`, `P_p=18`, so `R=7`, while the best order
+has rank `15` and kernel `10<=18`.  Every subthreshold order in this
+landscape does satisfy Target 22F1.
+
+The formulas `(P22.17)--(P22.18)` make Target 22F1 a local statement about two coloured
+queues.  A proof must show that a subthreshold plateau cannot be closed under
+all adjacent queue transfers; no choice of anchors or local payments occurs
+in this reduced statement.
+
+There is an even weaker averaged target.  If `o_alpha(prec)` is the number of
+odd admissible cuts in one ordered fibre, then for every order
+
+```text
+dim O_p-r(prec)
+ =sum_alpha[o_alpha(prec)-indicator_(o_alpha(prec)>0)]. (P22.23)
+```
+
+**Target 22F2 (average-order relation bound).**  With `n` remainder vertices,
+
+```text
+sum_prec sum_alpha
+ [o_alpha(prec)-indicator_(o_alpha(prec)>0)]
+ <=(n+1)! P_p.                                         (P22.24)
+```
+
+Equivalently,
+
+```text
+(1/(n+1)!) sum_prec r(prec)>=dim O_p-P_p.              (P22.25)
+```
+
+Target 22F2 implies Target 22C by averaging.  Unlike Target 22F1, it does not
+require a monotone path or even a preferred order.  The strict `gt-average`
+mode passed all `2,422` support-disjoint cases with at most seven factors,
+labels and targets at most four, and total degree at most sixteen.  After the
+signed-class quotient of Corollary 22F0B, both this mode and the independent
+rank-threshold plateau mode passed all `3,201` cases at the same label and
+factor bounds with total degree at most eighteen.  The exact replays and the
+three obstruction outputs below are recorded in
+`certificates/su2_gt_rank_average.log`.
+
+Two tempting simplifications of `(P22.23)` are false.  First, the transports
+`(P22.18)` do not define a symmetric-group action: for
+
+```text
+d=[1,1,1,1],                 alpha=[1,0,1,0],          (P22.26)
+```
+
+the two braid words at the first three positions give respectively
+`[1,1,0,0]` and `[1,0,1,0]`.  Thus an averaged proof must work on the order
+graph itself, not on path-independent Bender--Knuth orbits.  Second, replacing
+the minimal relation count `o_alpha-1` by all odd pairs
+`binomial(o_alpha,2)` is too expensive.  For
+
+```text
+remainder=[1^+,1^+,1^+,1^+,2^-],          target=0,   (P22.27)
+```
+
+one has `dim O_0=9`, `P_0=6`, and the sum of the ranks over all `6!=720`
+orders is `2,160`, exactly the required average rank three.  But the sum of
+the odd-pair collision counts is `7,488`, exceeding the available averaged
+capacity `720*6=4,320`.  A proof of `(P22.23)` must therefore select a spanning
+set of fibre relations rather than charge every colliding pair.
+
+Nor can `(P22.24)` be proved separately for each raw `alpha` in the fixed
+box slice of Corollary 22F0A.  The first exact obstruction is
+
+```text
+remainder=[1^-,1^-,2^+,3^+],             target=1,
+alpha=[0,0,0,3,1].                                  (P22.28)
+```
+
+Across all `5!=120` physical orders this `alpha` carries fourteen excess odd
+relations and no positive object with the same raw top vector.  The complete
+case still satisfies `(AGT)`: `dim O_1=2`, `P_1=1`, and rank one suffices.
+Thus an averaged proof must transfer capacity between different `alpha` as
+well as between different orders.  Formula `(P22.18)` supplies exactly such
+an adjacent transfer, even though `(P22.26)` shows it is path-dependent.
+
+The path dependence can be retained rather than quotiented out.  Define the
+Bender--Knuth state graph `K(d)` to have vertices
+
+```text
+(prec,alpha),                  alpha in B_prec(d),     (P22.29)
+```
+
+and join two vertices when their orders differ by one adjacent transposition
+and their top vectors are related by `(P22.18)`.  Lemma 22F makes every edge
+an involutive bijection.  For a state `x`, let `o(x)` and `e(x)` be its odd
+and nonempty even admissible-cut counts.
+
+**Target 22F3 (componentwise BK average).**  In the nontrivial sector
+`dim O_p>P_p`, every connected component `C` of `K(d)` satisfies
+
+```text
+sum_(x in C)[o(x)-indicator_(o(x)>0)]
+ <=sum_(x in C)e(x).                                  (P22.30)
+```
+
+Summing `(P22.30)` over the components gives Target 22F2.  Unlike the false
+fixed-`alpha` statement, Target 22F3 allows exactly the cross-`alpha`
+transfers generated by adjacent tableau switching; unlike an unrestricted
+average, it presents a local graph on which a spanning forest or discrete
+Morse matching could prove the inequality.  The strict component enumerator
+passed every source-deficit instance occurring among the `1,001`
+support-disjoint cases with at most five factors, labels and targets at most
+four, and total degree at most fourteen.
+
+The queue formulation has an exact finite-level analogue.  For an ordered
+list `d_1,...,d_m` and a level-`k` fusion path
+
+```text
+h_0=0,h_1,...,h_m=0,
+```
+
+put
+
+```text
+alpha_i=(d_i+h_i-h_(i-1))/2,       beta_i=d_i-alpha_i. (P22.31)
+```
+
+**Lemma 22G (two-sided level queue).**  Level-`k` invariant fusion paths are
+in bijection with integer vectors in `(P22.31)` satisfying, at every step,
+
+```text
+0<=alpha_i,beta_i<=d_i,
+beta_i<=h_(i-1),                 alpha_i<=k-h_(i-1),
+h_i=h_(i-1)-beta_i+alpha_i.                       (P22.32)
+```
+
+Thus `beta_i` consumes the lower queue while `alpha_i` consumes the upper
+hole queue.  Omitting the upper inequality recovers the ordinary queue in
+Lemma 22F.
+
+**Proof.**  The ordinary Clebsch--Gordan conditions for
+`V_(h_(i-1)) tensor V_(d_i)` are equivalent to the integrality in `(P22.31)`,
+`0<=alpha_i,beta_i<=d_i`, and `beta_i<=h_(i-1)`.  The extra affine-wall
+condition is
+
+```text
+h_(i-1)+d_i+h_i<=2k.
+```
+
+Substituting `h_i=h_(i-1)+d_i-2beta_i` turns it into
+`h_(i-1)+alpha_i<=k`, which is the upper inequality in `(P22.32)`.
+Every transformation is reversible.  QED.
+
+Lemma 22G identifies the uniform finite target: construct the required
+odd-to-positive matching on pairs of two-sided queue paths using moves that
+preserve both inequalities in `(P22.32)`.  Such a matching would prove
+`(PCP_k)` simultaneously for every `k`; dropping the upper queue would give
+the ordinary matching studied in Targets 22C--22F.
+
 Thus the remaining proof cannot be an order-independent polymatroid
 exchange, an order-independent pairwise XOR injection, or a fibrewise
 parity theorem.  The surviving statement is the adaptive cumulative Hall
-matching of Target 22C2.
+matching of Target 22C2, or the weaker rank-plateau statement Target 22F1.
 
 Two still stronger fixed-degeneration shortcuts are also false.  In the squarefree
 Stanley--Reisner degeneration of the Plucker ring, crossing products vanish.

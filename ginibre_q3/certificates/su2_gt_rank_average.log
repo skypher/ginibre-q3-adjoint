@@ -1,0 +1,58 @@
+# Exact integer diagnostics for the root-free/order-average reduction.
+# Commands are run from ginibre_q3/character_ring_iter after a strict build.
+
+$ ./analyze_su2_gt_exchange bk 8 4 20
+progress vertices=1 cases=1
+progress vertices=2 cases=6
+progress vertices=3 cases=48
+progress vertices=4 cases=317
+progress vertices=5 cases=1800
+progress vertices=6 cases=9459
+progress vertices=7 cases=47205
+progress vertices=8 cases=221588
+SU2_GT_BK_BIJECTION cases=221588 result=PASS
+
+$ ./analyze_su2_gt_exchange bk-braid 6 4 16
+progress vertices=1 cases=1
+progress vertices=2 cases=6
+progress vertices=3 cases=48
+SU2_GT_BK_BRAID result=FAIL degrees=[1,1,1,1] coordinate=0 witness=[1,0,1,0] first_image=[1,1,0,0] second_image=[1,0,1,0]
+
+$ ./analyze_su2_plucker_sr_parity gt-monotone 4 7 4 18
+progress factors=1 cases=10 cached_degrees=17
+progress factors=2 cases=64 cached_degrees=88
+progress factors=3 cases=234 cached_degrees=419
+progress factors=4 cases=624 cached_degrees=2792
+progress factors=5 cases=1330 cached_degrees=15462
+progress factors=6 cases=2264 cached_degrees=77276
+progress factors=7 cases=3201 cached_degrees=329011
+SU2_PLUCKER_GT_RANK_MONOTONE_PARITY cases=3201 cached_degrees=329011 result=PASS
+
+$ ./analyze_su2_plucker_sr_parity gt-average 4 7 4 18
+progress factors=1 cases=10 cached_degrees=17
+progress factors=2 cases=64 cached_degrees=88
+progress factors=3 cases=234 cached_degrees=419
+progress factors=4 cases=624 cached_degrees=2792
+progress factors=5 cases=1330 cached_degrees=15462
+progress factors=6 cases=2264 cached_degrees=77276
+progress factors=7 cases=3201 cached_degrees=329011
+SU2_PLUCKER_GT_AVERAGE_PARITY cases=3201 cached_degrees=329011 result=PASS
+
+$ ./analyze_su2_plucker_sr_parity gt-average-pairs 2 5 0 6
+progress factors=1 cases=1 cached_degrees=2
+progress factors=2 cases=3 cached_degrees=9
+progress factors=3 cases=7 cached_degrees=58
+progress factors=4 cases=11 cached_degrees=86
+labels=[1,1,1,1,2] target=0 minus_mask=16 odd_sources=9 odd_rank=3 degenerate_kernel=6 positive_sources=6 odd_zero=0 positive_zero=0 fiber_parity=PASS xor_payment=FAIL xor_mask=0 xor_demand=312 xor_capacity=180 orders=30 rank_sum=90 pair_collision_sum=312 result=FAIL
+
+# The 30 signed-class words each represent 4!=24 physical orders.  Thus the
+# preceding rank, collision, and capacity sums become 2160, 7488, and 4320.
+
+$ ./analyze_su2_plucker_sr_parity gt-alpha-average 4 5 4 14
+progress factors=1 cases=10 cached_degrees=17
+progress factors=2 cases=64 cached_degrees=88
+progress factors=3 cases=233 cached_degrees=418
+labels=[1,1,2,3] target=1 minus_mask=3 odd_sources=2 odd_rank=1 degenerate_kernel=1 positive_sources=1 odd_zero=0 positive_zero=0 fiber_parity=FAIL xor_payment=FAIL fiber_odd=2 fiber_even=1 xor_mask=0 xor_demand=14 xor_capacity=0 orders=120 rank_sum=26 alpha_witness=[0,0,0,3,1] result=FAIL
+
+$ ./analyze_su2_plucker_sr_parity gt-bk-case 1 3 1 1 2 3
+labels=[1,1,2,3] target=1 minus_mask=3 odd_sources=2 odd_rank=1 degenerate_kernel=1 positive_sources=1 odd_zero=0 positive_zero=0 fiber_parity=FAIL xor_payment=PASS fiber_odd=2 fiber_even=1 orders=120 rank_sum=360 components=1 result=PASS
