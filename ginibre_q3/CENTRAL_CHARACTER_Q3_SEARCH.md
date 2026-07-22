@@ -6651,6 +6651,163 @@ problem is no longer to guess the Euler characteristic: it is to construct
 the Plucker/Temperley--Lieb differential and prove that it covers
 `ker(mu_-)` without using more positive-channel dimension than `P_p`.
 
+There is an exact tableau refinement of this target which does not require a
+choice of Plucker straightening coefficients.  Adjoin a distinguished target
+vertex `star` of degree `p` and choose any total order on the remainder
+vertices together with `star`.  For a degree vector `d=(d_v)` of even total
+degree, put `2D=sum_v d_v` and let `B(d)` be the set of integer vectors
+`alpha=(alpha_v)` satisfying
+
+```text
+0<=alpha_v<=d_v,              sum_v alpha_v=D,
+sum_(v<=w)(d_v-alpha_v)<=sum_(v<w)alpha_v   for every vertex w.   (P22.5)
+```
+
+The vector `alpha` records the multiplicity of each vertex in the top row of
+a semistandard tableau of rectangular shape `(D,D)` and content `d`; the
+bottom-row multiplicity is `d_v-alpha_v`.  The last inequalities say exactly
+that, after both rows are sorted, every column is strictly increasing.
+For odd total degree set `B(d)=emptyset`.
+
+For a cut `T` not containing `star`, write `d_T` for the degree vector
+obtained by zeroing all vertices outside `T`, and write
+`d_(T^c star)` for its complementary degree vector, including `star`.  If
+`alpha in B(d)`, call `T` admissible for `alpha` when
+
+```text
+alpha|_T in B(d_T),
+alpha|_(T^c union {star}) in B(d_(T^c star)),             (P22.6)
+```
+
+and denote the family of such cuts by `F_alpha`.
+
+**Proposition 22A (diagonal-tableau fibre identity).**  For every signed
+remainder, target `p`, and total order of the vertices,
+
+```text
+dim U_(p,T)=number of alpha in B(d) for which T in F_alpha,       (P22.7)
+
+g_p=sum_(alpha in B(d))
+       sum_(T in F_alpha)(-1)^(|T intersect M|).                  (P22.8)
+```
+
+**Proof.**  The standard monomial basis of the multigraded bracket ring is
+the set of semistandard two-row tableaux.  Once the content and the top-row
+multiplicities are fixed, both sorted rows, and hence the tableau, are
+unique.  This identifies the basis with `(P22.5)`.  It applies to
+`I_T=Inv(tensor_(i in T)V_i)` and, after adjoining the target vertex, to
+`C_(p,T)=Inv(V_p tensor tensor_(i notin T)V_i)`.
+
+Take one tableau from each factor.  Their vertex supports are disjoint, so
+adding their top-row multiplicity vectors gives an element `alpha` of
+`B(d)`: every inequality in `(P22.5)` is the sum of the corresponding two
+inequalities.  Conversely, for fixed `alpha` and `T`, the two factor vectors
+can only be the restrictions in `(P22.6)`.  Thus a pair of factor tableaux
+exists if and only if `T in F_alpha`, and it is then unique.  Summing over
+`alpha` proves `(P22.7)`.  Substitution in `(P22.4)` proves `(P22.8)`.  QED.
+
+The fibre identity suggests the following sufficient strengthening.  Suppose
+that equal nontrivial remainder labels all carry the same sign, as allowed by
+Proposition 5, and seek a total order for which every `alpha in B(d)` obeys
+
+```text
+number of T in F_alpha with |T intersect M| even
+ >= number of T in F_alpha with |T intersect M| odd.             (P22.9)
+```
+
+This strengthening is false, even after optimizing the vertex order.
+
+**Proposition 22B (order-independent fibrewise obstruction).**  Take
+
+```text
+remainder labels=[1,2,3,3,3,3],       target=3,
+minus labels=[1,2],                    plus labels=[3,3,3,3].     (P22.10)
+```
+
+The remainder is support-disjoint.  For every total order of its six
+vertices and `star`, some diagonal-tableau fibre violates `(P22.9)`.
+
+**Proof.**  There are `7!=5,040` orders before quotienting by the four
+identical plus vertices.  The strict integer enumerator constructs `B(d)`
+from `(P22.5)`, tests both restrictions in `(P22.6)`, and exhausts every
+order.  No order passes all fibres.  In an order maximizing the number of
+odd fibres hit, the odd source dimension is `20`, the number of hit fibres
+is `15`, and the nonempty even supply is `80`; one remaining bad fibre has
+four odd and three even cuts.  The replay is
+`certificates/su2_plucker_fibre_obstruction.log`.  QED.
+
+Thus compensation must move between different tableau fibres.  For a fixed
+order put
+
+```text
+o_alpha=number of odd cuts in F_alpha,
+e_alpha=number of nonempty even cuts in F_alpha,
+r_-=number of alpha with o_alpha>0.                              (P22.11)
+```
+
+In the diagonal Gelfand--Tsetlin degeneration, all odd basis products in one
+fibre have the same monomial image and products in distinct fibres have
+distinct images.  Its negative multiplication kernel therefore has
+dimension
+
+```text
+kappa_GT=sum_alpha(o_alpha-indicator_(o_alpha>0)),
+P_p=sum_alpha e_alpha.                                           (P22.12)
+```
+
+**Target 22C (cross-fibre Hall matching).**  Prove, for every
+support-disjoint remainder and target, that some vertex order satisfies
+
+```text
+There is an order with kappa_GT<=P_p.                            (AGT)
+```
+
+Unlike `(P22.9)`, `(AGT)` holds in `(P22.10)`: the displayed best order has
+`kappa_GT=20-15=5<=80`.
+
+**Proposition 22D (aggregate degeneration transfer).**  Target 22C implies
+`(UKS)`, hence `(PCP)` and the full ordinary `SU(2)` central-character `Q3`
+theorem.
+
+**Proof.**  The diagonal toric algebra is a flat degeneration of the bracket
+ring, and the direct sum of odd multiplication maps specializes with it.
+Matrix rank can only drop on the special fibre.  Hence the original negative
+kernel dimension is at most `kappa_GT`, while every multigraded channel
+dimension in `P_p` is constant in the flat family.  Target 22C gives
+`kappa_p<=kappa_GT<=P_p`, which is `(UKS)`.  Proposition 22 and Proposition
+19 finish the implication.  QED.
+
+Target 22C is the current cumulative Plucker target; a fibre-preserving
+involution is no longer viable.
+
+Two still stronger fixed-degeneration shortcuts are also false.  In the squarefree
+Stanley--Reisner degeneration of the Plucker ring, crossing products vanish.
+For remainder labels `[1,1,1,1]`, target `2`, and minus mask `3`, the odd
+source dimension is four, its degenerate rank is one, and the nonempty even
+supply is two.  Thus the special-fibre kernel has dimension three and is too
+large by one.  In the domain Gelfand--Tsetlin degeneration a fixed vertex
+order can also lose too much rank: for support-disjoint labels
+`[1,1,2,2,3]`, target `1`, and minus mask `3`, the odd source dimension,
+degenerate rank, and nonempty even supply are respectively `8,2,5`.
+Reordering the six vertices as `[0,2,4,1,3,5]` raises the rank to six and
+makes every tableau fibre satisfy `(P22.9)`.  Hence neither standard fixed
+degeneration proves even the aggregate estimate automatically.
+
+The strict exact C++ diagnostic
+`character_ring_iter/analyze_su2_plucker_sr_parity.cpp` constructs both
+degenerations and the tableau fibres.  Its order-adapted support-disjoint
+fibre-order mode passed all 505 cases with at most six factors, remainder labels at most
+three, targets at most three, and total degree at most fourteen.  A wider
+replay passed all 2,422 support-disjoint cases with at most seven factors,
+labels and targets at most four, and total degree at most sixteen.  Proposition
+22B first occurs beyond that replay's total-degree cutoff.  Outside the
+support-disjoint sector the fibrewise claim itself can fail for every vertex
+order: six label-two factors, target two, and three minus copies have a fibre
+with six odd and four even cuts.  Proposition 5 removes precisely this type
+of mixed-sign equal-label case before Target 22B is invoked.
+The earlier bounded replay is recorded in
+`certificates/su2_plucker_gt_sd_best_4_7_4_16.log`.
+
 The divided-difference factorization used earlier for the all-minus search
 has a useful categorical and finite-level form.  In the ordinary
 representation ring, or in `R_k` with `q<=k`, put

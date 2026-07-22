@@ -1,0 +1,1 @@
+labels=[1,2,3,3,3,3] target=3 minus_mask=3 odd_sources=20 odd_rank=15 degenerate_kernel=5 positive_sources=80 odd_zero=0 positive_zero=0 fiber_parity=FAIL fiber_odd=4 fiber_even=3 orders=5040 best_order=[0,2,3,4,5,1,6] result=PASS fiber_result=FAIL first_fiber_order=[]
