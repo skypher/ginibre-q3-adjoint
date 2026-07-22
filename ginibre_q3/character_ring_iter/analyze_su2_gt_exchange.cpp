@@ -530,10 +530,220 @@ bool bender_knuth_connected(
     return true;
 }
 
+bool bender_knuth_single_decomposable_component(
+    const Vector& physical_degrees,
+    std::uint64_t& decomposable_components,
+    State& witness
+) {
+    Vector order(physical_degrees.size(), 0);
+    std::iota(order.begin(), order.end(), 0);
+    std::set<State> states;
+    do {
+        Vector ordered_degrees(order.size(), 0);
+        for (std::size_t position = 0U; position < order.size(); ++position) {
+            ordered_degrees[position]
+                = physical_degrees[static_cast<std::size_t>(order[position])];
+        }
+        for (const Vector& ordered_top : tops(ordered_degrees)) {
+            Vector raw_top(order.size(), 0);
+            for (std::size_t position = 0U; position < order.size(); ++position) {
+                raw_top[static_cast<std::size_t>(order[position])]
+                    = ordered_top[position];
+            }
+            states.emplace(order, std::move(raw_top));
+        }
+    } while (std::next_permutation(order.begin(), order.end()));
+
+    std::set<State> visited;
+    decomposable_components = 0U;
+    for (const State& initial : states) {
+        if (visited.contains(initial)) {
+            continue;
+        }
+        bool decomposable = false;
+        State cut_witness;
+        std::queue<State> frontier;
+        visited.insert(initial);
+        frontier.push(initial);
+        while (!frontier.empty()) {
+            const State current = frontier.front();
+            frontier.pop();
+            Vector ordered_degrees(current.first.size(), 0);
+            Vector ordered_top(current.first.size(), 0);
+            for (std::size_t position = 0U;
+                 position < current.first.size(); ++position) {
+                const std::size_t vertex
+                    = static_cast<std::size_t>(current.first[position]);
+                ordered_degrees[position] = physical_degrees[vertex];
+                ordered_top[position] = current.second[vertex];
+            }
+            const unsigned int cut_limit
+                = 1U << (current.first.size() - 1U);
+            for (unsigned int cut = 1U; cut < cut_limit; ++cut) {
+                if (admissible_cut(ordered_degrees, ordered_top, cut)) {
+                    if (!decomposable) {
+                        cut_witness = current;
+                    }
+                    decomposable = true;
+                    break;
+                }
+            }
+            for (std::size_t i = 0U; i + 1U < current.first.size(); ++i) {
+                State neighbor{
+                    current.first,
+                    bender_knuth_raw_neighbor(physical_degrees, current, i)
+                };
+                std::swap(neighbor.first[i], neighbor.first[i + 1U]);
+                if (!states.contains(neighbor)) {
+                    throw std::runtime_error(
+                        "Bender--Knuth decomposable neighbor is missing"
+                    );
+                }
+                if (visited.insert(neighbor).second) {
+                    frontier.push(std::move(neighbor));
+                }
+            }
+        }
+        if (decomposable) {
+            ++decomposable_components;
+            if (decomposable_components == 2U) {
+                witness = std::move(cut_witness);
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+void print_bender_knuth_components(const Vector& physical_degrees) {
+    if (physical_degrees.empty()) {
+        throw std::runtime_error("Bender--Knuth case has no vertices");
+    }
+    if (physical_degrees.size()
+        >= std::numeric_limits<unsigned int>::digits) {
+        throw std::runtime_error(
+            "Bender--Knuth case has too many vertices"
+        );
+    }
+    const int degree_total = std::accumulate(
+        physical_degrees.begin(), physical_degrees.end(), 0
+    );
+    if ((degree_total & 1) != 0) {
+        throw std::runtime_error("Bender--Knuth case has odd total degree");
+    }
+
+    Vector order(physical_degrees.size(), 0);
+    std::iota(order.begin(), order.end(), 0);
+    const Vector identity_order = order;
+    std::set<State> states;
+    do {
+        Vector ordered_degrees(order.size(), 0);
+        for (std::size_t position = 0U; position < order.size(); ++position) {
+            ordered_degrees[position]
+                = physical_degrees[static_cast<std::size_t>(order[position])];
+        }
+        for (const Vector& ordered_top : tops(ordered_degrees)) {
+            Vector raw_top(order.size(), 0);
+            for (std::size_t position = 0U; position < order.size(); ++position) {
+                raw_top[static_cast<std::size_t>(order[position])]
+                    = ordered_top[position];
+            }
+            states.emplace(order, std::move(raw_top));
+        }
+    } while (std::next_permutation(order.begin(), order.end()));
+
+    std::set<State> visited;
+    std::uint64_t component = 0U;
+    std::cout << "degrees=";
+    print_vector(physical_degrees);
+    std::cout << " states=" << states.size() << '\n';
+    for (const State& initial : states) {
+        if (visited.contains(initial)) {
+            continue;
+        }
+        ++component;
+        std::queue<State> frontier;
+        std::vector<Vector> identity_tops;
+        std::uint64_t component_states = 0U;
+        std::uint64_t cut_states = 0U;
+        std::uint64_t cut_occurrences = 0U;
+        visited.insert(initial);
+        frontier.push(initial);
+        while (!frontier.empty()) {
+            const State current = frontier.front();
+            frontier.pop();
+            ++component_states;
+            Vector ordered_degrees(current.first.size(), 0);
+            Vector ordered_top(current.first.size(), 0);
+            for (std::size_t position = 0U;
+                 position < current.first.size(); ++position) {
+                const std::size_t vertex
+                    = static_cast<std::size_t>(current.first[position]);
+                ordered_degrees[position] = physical_degrees[vertex];
+                ordered_top[position] = current.second[vertex];
+            }
+            bool has_cut = false;
+            const unsigned int cut_limit
+                = 1U << (current.first.size() - 1U);
+            for (unsigned int cut = 1U; cut < cut_limit; ++cut) {
+                if (admissible_cut(ordered_degrees, ordered_top, cut)) {
+                    has_cut = true;
+                    ++cut_occurrences;
+                }
+            }
+            cut_states += has_cut ? 1U : 0U;
+            if (current.first == identity_order) {
+                identity_tops.push_back(current.second);
+            }
+            for (std::size_t i = 0U; i + 1U < current.first.size(); ++i) {
+                State neighbor{
+                    current.first,
+                    bender_knuth_raw_neighbor(physical_degrees, current, i)
+                };
+                std::swap(neighbor.first[i], neighbor.first[i + 1U]);
+                if (!states.contains(neighbor)) {
+                    throw std::runtime_error(
+                        "Bender--Knuth component neighbor is missing"
+                    );
+                }
+                if (visited.insert(neighbor).second) {
+                    frontier.push(std::move(neighbor));
+                }
+            }
+        }
+        std::sort(identity_tops.begin(), identity_tops.end());
+        std::cout << "component=" << component
+                  << " states=" << component_states
+                  << " sheet_degree=" << identity_tops.size()
+                  << " cut_states=" << cut_states
+                  << " cut_occurrences=" << cut_occurrences
+                  << " identity_tops=";
+        std::cout << '[';
+        for (std::size_t i = 0U; i < identity_tops.size(); ++i) {
+            if (i != 0U) {
+                std::cout << ',';
+            }
+            print_vector(identity_tops[i]);
+        }
+        std::cout << "]\n";
+    }
+    std::cout << "components=" << component << '\n';
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
     try {
+        if (argc >= 3 && std::string(argv[1]) == "bk-case") {
+            Vector physical_degrees;
+            for (int argument = 2; argument < argc; ++argument) {
+                physical_degrees.push_back(
+                    parse_nonnegative(argv[argument], "degree")
+                );
+            }
+            print_bender_knuth_components(physical_degrees);
+            return 0;
+        }
         if (argc != 5) {
             throw std::runtime_error(
                 "usage: analyze_su2_gt_exchange MODE MAXIMUM_VERTICES "
@@ -545,16 +755,25 @@ int main(int argc, char** argv) {
             && mode != "bk-braid"
             && mode != "bk-connected"
             && mode != "bk-gcd-connected"
+            && mode != "bk-single-decomposable"
             && mode != "support-pairs" && mode != "balance"
             && mode != "balance-min2") {
             throw std::runtime_error(
                 "mode must be bases, bk, bk-braid, bk-connected, "
-                "bk-gcd-connected, pairs, support-pairs, or balance"
+                "bk-gcd-connected, bk-single-decomposable, pairs, "
+                "support-pairs, balance, or balance-min2"
             );
         }
         const int maximum_vertices = parse_nonnegative(argv[2], "vertices");
         const int maximum_degree = parse_nonnegative(argv[3], "degree");
         const int maximum_total = parse_nonnegative(argv[4], "total degree");
+        if (maximum_vertices <= 0
+            || maximum_vertices
+                >= static_cast<int>(
+                    std::numeric_limits<unsigned int>::digits
+                )) {
+            throw std::runtime_error("vertex bound is out of range");
+        }
         std::uint64_t cases = 0U;
         for (int vertices = 1; vertices <= maximum_vertices; ++vertices) {
             Vector degrees(static_cast<std::size_t>(vertices), 0);
@@ -565,6 +784,14 @@ int main(int argc, char** argv) {
                     total += degree;
                 }
                 if (total <= maximum_total && (total & 1) == 0) {
+                    if (mode == "bk-single-decomposable"
+                        && std::any_of(
+                            degrees.begin(), degrees.end(),
+                            [](int degree) { return degree == 0; }
+                        )) {
+                        more = increment(degrees, maximum_degree);
+                        continue;
+                    }
                     if (mode == "balance-min2"
                         && std::any_of(
                             degrees.begin(), degrees.end(),
@@ -671,6 +898,25 @@ int main(int argc, char** argv) {
                                 std::cout << '\n';
                                 return 1;
                             }
+                        } else if (mode == "bk-single-decomposable") {
+                            std::uint64_t decomposable_components = 0U;
+                            State witness;
+                            if (!bender_knuth_single_decomposable_component(
+                                    degrees, decomposable_components, witness
+                                )) {
+                                std::cout
+                                    << "SU2_GT_BK_SINGLE_DECOMPOSABLE "
+                                    << "result=FAIL degrees=";
+                                print_vector(degrees);
+                                std::cout << " decomposable_components="
+                                          << decomposable_components
+                                          << " witness_order=";
+                                print_vector(witness.first);
+                                std::cout << " witness_top=";
+                                print_vector(witness.second);
+                                std::cout << '\n';
+                                return 1;
+                            }
                         } else if (mode == "bk-connected"
                                    || mode == "bk-gcd-connected") {
                             std::uint64_t state_count = 0U;
@@ -762,6 +1008,8 @@ int main(int argc, char** argv) {
                       : mode == "bk-connected" ? "SU2_GT_BK_CONNECTED"
                       : mode == "bk-gcd-connected"
                           ? "SU2_GT_BK_GCD_CONNECTED"
+                      : mode == "bk-single-decomposable"
+                          ? "SU2_GT_BK_SINGLE_DECOMPOSABLE"
                       : mode == "balance" || mode == "balance-min2"
                           ? "SU2_GT_SOURCE_BALANCE"
                       : mode == "support-pairs"

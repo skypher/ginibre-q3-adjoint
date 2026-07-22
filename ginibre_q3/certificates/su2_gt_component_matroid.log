@@ -1,0 +1,83 @@
+Exact C++ replay excerpts for Lemmas/diagnostics 22F3--22F5.
+
+Command:
+  /tmp/analyze_su2_gt_exchange_components2 bk-case 2 2 2 2
+Output:
+  degrees=[2,2,2,2] states=72
+  component=1 states=48 sheet_degree=2 cut_states=48 cut_occurrences=72 identity_tops=[[2,0,2,0],[2,2,0,0]]
+  component=2 states=24 sheet_degree=1 cut_states=0 cut_occurrences=0 identity_tops=[[2,1,1,0]]
+  components=2
+
+Command:
+  /tmp/analyze_su2_gt_exchange_components2 bk-case 2 2 3 3
+Output:
+  degrees=[2,2,3,3] states=72
+  component=1 states=48 sheet_degree=2 cut_states=24 cut_occurrences=24 identity_tops=[[2,0,3,0],[2,2,1,0]]
+  component=2 states=24 sheet_degree=1 cut_states=0 cut_occurrences=0 identity_tops=[[2,1,2,0]]
+  components=2
+
+Command:
+  /tmp/analyze_su2_gt_exchange_components2 bk-case 2 2 3 4 5 2
+Output:
+  degrees=[2,2,3,4,5,2] states=15840
+  component=1 states=15120 sheet_degree=21 cut_states=5688 cut_occurrences=9360 identity_tops=[[2,0,3,2,2,0],[2,0,3,3,1,0],[2,0,3,4,0,0],[2,1,1,3,2,0],[2,1,1,4,1,0],[2,1,2,2,2,0],[2,1,2,4,0,0],[2,1,3,1,2,0],[2,1,3,2,1,0],[2,1,3,3,0,0],[2,2,0,3,2,0],[2,2,0,4,1,0],[2,2,1,2,2,0],[2,2,1,3,1,0],[2,2,1,4,0,0],[2,2,2,1,2,0],[2,2,2,2,1,0],[2,2,2,3,0,0],[2,2,3,0,2,0],[2,2,3,1,1,0],[2,2,3,2,0,0]]
+  component=2 states=720 sheet_degree=1 cut_states=0 cut_occurrences=0 identity_tops=[[2,1,2,3,1,0]]
+  components=2
+
+Command:
+  /tmp/analyze_su2_gt_exchange_components2 bk-case 2 2 2 2 2 2
+Output:
+  degrees=[2,2,2,2,2,2] states=10800
+  component=1 states=3600 sheet_degree=5 cut_states=3600 cut_occurrences=21600 identity_tops=[[2,0,2,0,2,0],[2,0,2,2,0,0],[2,2,0,0,2,0],[2,2,0,2,0,0],[2,2,2,0,0,0]]
+  component=2 states=6480 sheet_degree=9 cut_states=6480 cut_occurrences=18000 identity_tops=[[2,0,2,1,1,0],[2,1,0,2,1,0],[2,1,1,0,2,0],[2,1,1,2,0,0],[2,1,2,0,1,0],[2,1,2,1,0,0],[2,2,0,1,1,0],[2,2,1,0,1,0],[2,2,1,1,0,0]]
+  component=3 states=720 sheet_degree=1 cut_states=0 cut_occurrences=0 identity_tops=[[2,1,1,1,1,0]]
+  components=3
+
+Command:
+  /tmp/analyze_su2_gt_exchange_decomposable bk-single-decomposable 5 4 14
+Output:
+  progress vertices=1 cases=0
+  progress vertices=2 cases=4
+  progress vertices=3 cases=33
+  progress vertices=4 cases=160
+  progress vertices=5 cases=591
+  SU2_GT_BK_SINGLE_DECOMPOSABLE cases=591 result=PASS
+
+Command:
+  /tmp/analyze_su2_plucker_sr_parity_goal12 gt-bk-single-loaded 4 6 4 16
+Output:
+  progress factors=6 cases=1868 cached_degrees=65144
+  SU2_PLUCKER_GT_BK_SINGLE_LOADED_PARITY cases=1868 cached_degrees=65144 result=PASS
+  elapsed=1528.32 maxrss_kib=109056
+
+Command:
+  /tmp/analyze_su2_plucker_sr_parity_universal gt-average-case rank 1 3 1 1 2 2 3
+Output:
+  labels=[1,1,2,2,3] target=1 minus_mask=3 odd_sources=8 odd_rank=2 degenerate_kernel=6 positive_sources=5 odd_zero=0 positive_zero=0 fiber_parity=FAIL xor_payment=PASS fiber_odd=4 fiber_even=1 orders=180 rank_sum=876 pair_collision_sum=720 method=rank result=PASS
+
+Command:
+  /tmp/analyze_su2_plucker_sr_parity_components gt-bk-case 1 3 1 1 2 2 3
+Output:
+  component=1 states=5040 odd=5760 active_states=3504 relations=2256 positive=3600 slack=1344
+  labels=[1,1,2,2,3] target=1 minus_mask=3 odd_sources=8 odd_rank=2 degenerate_kernel=6 positive_sources=5 odd_zero=0 positive_zero=0 fiber_parity=FAIL xor_payment=PASS fiber_odd=4 fiber_even=1 orders=720 rank_sum=5040 components=1 active_components=1 loaded_components=1 minimum_component_states=5040 minimum_component_relations=2256 minimum_component_positive=3600 minimum_component_slack=1344 result=PASS
+
+Command:
+  /tmp/analyze_su2_plucker_sr_parity_fiber_boolean gt-average-case tree 1 3 1 1 2 2 3
+Output:
+  labels=[1,1,2,2,3] target=1 minus_mask=3 odd_sources=8 odd_rank=2 degenerate_kernel=6 positive_sources=5 odd_zero=0 positive_zero=0 fiber_parity=FAIL xor_payment=FAIL fiber_odd=4 fiber_even=1 xor_mask=4 xor_demand=564 xor_capacity=484 orders=180 rank_sum=0 method=tree result=FAIL
+
+Command:
+  /tmp/analyze_su2_plucker_sr_parity_boolean2 gt-average-case boolean 1 3 1 1 2 2 3
+Output:
+  labels=[1,1,2,2,3] target=1 minus_mask=3 odd_sources=8 odd_rank=2 degenerate_kernel=6 positive_sources=5 odd_zero=0 positive_zero=0 fiber_parity=FAIL xor_payment=FAIL fiber_odd=4 fiber_even=1 xor_mask=4 xor_demand=564 xor_capacity=548 orders=180 rank_sum=0 method=boolean result=FAIL
+
+Command:
+  /tmp/analyze_su2_plucker_sr_parity_fiber_boolean gt-average-case fiber-boolean 1 3 1 1 2 2 3
+Output:
+  labels=[1,1,2,2,3] target=1 minus_mask=3 odd_sources=8 odd_rank=2 degenerate_kernel=6 positive_sources=5 odd_zero=0 positive_zero=0 fiber_parity=FAIL xor_payment=FAIL fiber_odd=4 fiber_even=1 xor_mask=4 xor_demand=564 xor_capacity=548 orders=180 rank_sum=0 method=fiber-boolean result=FAIL
+
+Control command:
+  /tmp/analyze_su2_plucker_sr_parity_universal gt-average-case universal 1 3 1 1 2 2 3
+Output:
+  labels=[1,1,2,2,3] target=1 minus_mask=3 odd_sources=8 odd_rank=2 degenerate_kernel=6 positive_sources=5 odd_zero=0 positive_zero=0 fiber_parity=FAIL xor_payment=PASS fiber_odd=4 fiber_even=1 orders=180 rank_sum=0 method=universal result=PASS
+  elapsed=631.88 maxrss_kib=10752

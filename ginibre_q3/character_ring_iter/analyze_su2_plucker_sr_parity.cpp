@@ -2,14 +2,18 @@
 #include <array>
 #include <cstdint>
 #include <cstdlib>
+#include <functional>
 #include <iostream>
 #include <limits>
 #include <map>
+#include <numeric>
 #include <queue>
 #include <set>
 #include <stdexcept>
 #include <string>
 #include <vector>
+
+#include <boost/multiprecision/cpp_int.hpp>
 
 namespace {
 
@@ -202,11 +206,20 @@ struct ToricFiber {
     std::vector<unsigned int> nonempty_even_cuts;
 };
 
+struct CutFiberData {
+    std::vector<unsigned int> odd_cuts;
+    std::vector<unsigned int> positive_cuts;
+};
+
 struct AlphaAverage {
     std::uint64_t odd_occurrences = 0U;
     std::uint64_t positive_occurrences = 0U;
     std::uint64_t hit_orders = 0U;
 };
+
+using WeightedPairCounts = std::map<
+    std::pair<unsigned int, std::uint64_t>, std::uint64_t
+>;
 
 struct FiberCounts {
     std::uint64_t odd = 0U;
@@ -343,7 +356,11 @@ Counts analyze_gt_case(
     ToricCache& cache,
     const std::vector<std::size_t>& order,
     std::map<Key, AlphaAverage>* alpha_average = nullptr,
-    std::map<Key, FiberCounts>* state_fibers = nullptr
+    std::map<Key, FiberCounts>* state_fibers = nullptr,
+    WeightedPairCounts* weighted_pair_counts = nullptr,
+    std::map<unsigned int, std::uint64_t>* channel_capacity = nullptr,
+    std::vector<std::vector<unsigned int>>* odd_fibers = nullptr,
+    std::vector<CutFiberData>* cut_fibers = nullptr
 ) {
     const std::size_t factors = labels.size();
     if (order.size() != factors + 1U) {
@@ -398,6 +415,9 @@ Counts analyze_gt_case(
                     ++fiber.parity_counts[0U];
                     fiber.nonempty_even_cuts.push_back(subset);
                     ++positive_capacity[subset];
+                    if (channel_capacity != nullptr) {
+                        ++(*channel_capacity)[subset];
+                    }
                 } else {
                     ++fibers[std::move(product)].parity_counts[0U];
                 }
@@ -440,9 +460,31 @@ Counts analyze_gt_case(
         }
         const std::uint64_t odd_in_fiber
             = static_cast<std::uint64_t>(fiber.odd_cuts.size());
+        if (cut_fibers != nullptr
+            && (!fiber.odd_cuts.empty()
+                || !fiber.nonempty_even_cuts.empty())) {
+            cut_fibers->push_back(CutFiberData{
+                fiber.odd_cuts, fiber.nonempty_even_cuts
+            });
+        }
+        if (odd_fibers != nullptr && odd_in_fiber >= 2U) {
+            odd_fibers->push_back(fiber.odd_cuts);
+        }
         if (odd_in_fiber >= 2U) {
             counts.odd_pair_collisions
                 += odd_in_fiber * (odd_in_fiber - 1U) / 2U;
+            if (weighted_pair_counts != nullptr) {
+                for (std::size_t first = 0U;
+                     first < fiber.odd_cuts.size(); ++first) {
+                    for (std::size_t second = first + 1U;
+                         second < fiber.odd_cuts.size(); ++second) {
+                        ++(*weighted_pair_counts)[{
+                            fiber.odd_cuts[first] ^ fiber.odd_cuts[second],
+                            odd_in_fiber
+                        }];
+                    }
+                }
+            }
         }
         if (fiber.parity_counts[1U] > fiber.parity_counts[0U]) {
             counts.fiber_parity = false;
@@ -1011,6 +1053,592 @@ Counts analyze_gt_average_case(
     return first;
 }
 
+Counts analyze_gt_weighted_pair_average_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    std::vector<std::size_t> order(labels.size() + 1U, 0U);
+    std::iota(order.begin(), order.end(), 0U);
+    Counts first = analyze_gt_case(
+        labels, target, minus_mask, cache, order
+    );
+    if (first.odd_sources <= first.positive_sources) {
+        first.xor_payment = true;
+        return first;
+    }
+
+    const std::vector<int> vertex_classes = signed_vertex_classes(
+        labels, target, minus_mask
+    );
+    std::vector<int> class_order = vertex_classes;
+    std::sort(class_order.begin(), class_order.end());
+    WeightedPairCounts weighted_pairs;
+    std::map<unsigned int, std::uint64_t> capacities;
+    do {
+        order = representative_vertex_order(vertex_classes, class_order);
+        (void)analyze_gt_case(
+            labels, target, minus_mask, cache, order, nullptr, nullptr,
+            &weighted_pairs, &capacities
+        );
+        ++first.order_count;
+    } while (std::next_permutation(class_order.begin(), class_order.end()));
+
+    std::uint64_t maximum_odd = 1U;
+    for (const auto& [key, count] : weighted_pairs) {
+        (void)count;
+        maximum_odd = std::max(maximum_odd, key.second);
+    }
+    boost::multiprecision::cpp_int common_denominator = 1;
+    for (std::uint64_t divisor = 2U;
+         divisor <= maximum_odd; ++divisor) {
+        const std::uint64_t remainder
+            = (common_denominator % divisor).convert_to<std::uint64_t>();
+        const std::uint64_t common = std::gcd(divisor, remainder);
+        common_denominator
+            = common_denominator / common * divisor;
+    }
+
+    std::map<unsigned int, boost::multiprecision::cpp_int> demands;
+    for (const auto& [key, count] : weighted_pairs) {
+        const unsigned int mask = key.first;
+        const std::uint64_t odd = key.second;
+        demands[mask] += boost::multiprecision::cpp_int(count) * 2
+            * (common_denominator / odd);
+    }
+    first.xor_payment = true;
+    for (const auto& [mask, demand] : demands) {
+        const boost::multiprecision::cpp_int capacity
+            = boost::multiprecision::cpp_int(capacities[mask])
+                * common_denominator;
+        if (demand > capacity) {
+            first.xor_payment = false;
+            first.xor_mask = mask;
+            break;
+        }
+    }
+    return first;
+}
+
+struct TreePairEdge {
+    std::size_t fiber = 0U;
+    unsigned int left = 0U;
+    unsigned int right = 0U;
+    unsigned int channel = 0U;
+};
+
+struct PositiveResource {
+    std::size_t fiber = 0U;
+    unsigned int channel = 0U;
+};
+
+std::vector<std::size_t> graphic_pair_circuit(
+    const std::vector<TreePairEdge>& edges,
+    const std::vector<bool>& selected,
+    std::size_t candidate
+) {
+    const TreePairEdge& edge = edges[candidate];
+    std::map<unsigned int, std::pair<unsigned int, std::size_t>> parent;
+    std::queue<unsigned int> frontier;
+    parent.emplace(edge.left, std::pair{edge.left, edges.size()});
+    frontier.push(edge.left);
+    while (!frontier.empty() && !parent.contains(edge.right)) {
+        const unsigned int current = frontier.front();
+        frontier.pop();
+        for (std::size_t i = 0U; i < edges.size(); ++i) {
+            if (!selected[i] || edges[i].fiber != edge.fiber) {
+                continue;
+            }
+            unsigned int neighbor = 0U;
+            if (edges[i].left == current) {
+                neighbor = edges[i].right;
+            } else if (edges[i].right == current) {
+                neighbor = edges[i].left;
+            } else {
+                continue;
+            }
+            if (!parent.contains(neighbor)) {
+                parent.emplace(neighbor, std::pair{current, i});
+                frontier.push(neighbor);
+            }
+        }
+    }
+    std::vector<std::size_t> circuit;
+    if (!parent.contains(edge.right)) {
+        return circuit;
+    }
+    unsigned int current = edge.right;
+    while (current != edge.left) {
+        const auto [previous, path_edge] = parent.at(current);
+        circuit.push_back(path_edge);
+        current = previous;
+    }
+    return circuit;
+}
+
+std::vector<std::ptrdiff_t> transversal_pair_matching(
+    const std::vector<std::vector<std::size_t>>& allowed,
+    const std::vector<bool>& selected,
+    std::size_t resource_count
+) {
+    std::vector<std::ptrdiff_t> resource_match(resource_count, -1);
+    for (std::size_t element = 0U; element < selected.size(); ++element) {
+        if (!selected[element]) {
+            continue;
+        }
+        std::vector<bool> seen(resource_count, false);
+        std::function<bool(std::size_t)> augment
+            = [&](std::size_t current) -> bool {
+                for (std::size_t resource : allowed[current]) {
+                    if (seen[resource]) {
+                        continue;
+                    }
+                    seen[resource] = true;
+                    if (resource_match[resource] < 0
+                        || augment(static_cast<std::size_t>(
+                            resource_match[resource]
+                        ))) {
+                        resource_match[resource]
+                            = static_cast<std::ptrdiff_t>(current);
+                        return true;
+                    }
+                }
+                return false;
+            };
+        if (!augment(element)) {
+            throw std::runtime_error(
+                "selected tree pairs have no transversal matching"
+            );
+        }
+    }
+    return resource_match;
+}
+
+std::pair<bool, std::vector<std::size_t>> transversal_pair_circuit(
+    const std::vector<std::vector<std::size_t>>& allowed,
+    const std::vector<std::ptrdiff_t>& resource_match,
+    std::size_t candidate
+) {
+    std::vector<bool> seen_resource(resource_match.size(), false);
+    std::vector<bool> seen_element(allowed.size(), false);
+    std::queue<std::size_t> frontier;
+    for (std::size_t resource : allowed[candidate]) {
+        if (!seen_resource[resource]) {
+            seen_resource[resource] = true;
+            frontier.push(resource);
+        }
+    }
+    while (!frontier.empty()) {
+        const std::size_t resource = frontier.front();
+        frontier.pop();
+        if (resource_match[resource] < 0) {
+            return {true, {}};
+        }
+        const std::size_t element
+            = static_cast<std::size_t>(resource_match[resource]);
+        if (seen_element[element]) {
+            continue;
+        }
+        seen_element[element] = true;
+        for (std::size_t next : allowed[element]) {
+            if (!seen_resource[next]) {
+                seen_resource[next] = true;
+                frontier.push(next);
+            }
+        }
+    }
+    std::vector<std::size_t> circuit;
+    for (std::size_t element = 0U; element < seen_element.size(); ++element) {
+        if (seen_element[element]) {
+            circuit.push_back(element);
+        }
+    }
+    return {false, circuit};
+}
+
+bool graphic_pair_addable(
+    const std::vector<TreePairEdge>& edges,
+    const std::vector<bool>& selected,
+    std::size_t candidate,
+    std::size_t removed
+) {
+    const TreePairEdge& edge = edges[candidate];
+    std::set<unsigned int> reached{edge.left};
+    std::queue<unsigned int> frontier;
+    frontier.push(edge.left);
+    while (!frontier.empty()) {
+        const unsigned int current = frontier.front();
+        frontier.pop();
+        for (std::size_t i = 0U; i < edges.size(); ++i) {
+            if (!selected[i] || i == removed
+                || edges[i].fiber != edge.fiber) {
+                continue;
+            }
+            unsigned int neighbor = 0U;
+            if (edges[i].left == current) {
+                neighbor = edges[i].right;
+            } else if (edges[i].right == current) {
+                neighbor = edges[i].left;
+            } else {
+                continue;
+            }
+            if (reached.insert(neighbor).second) {
+                frontier.push(neighbor);
+            }
+        }
+    }
+    return !reached.contains(edge.right);
+}
+
+Counts analyze_gt_tree_pair_average_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    std::vector<std::size_t> order(labels.size() + 1U, 0U);
+    std::iota(order.begin(), order.end(), 0U);
+    Counts first = analyze_gt_case(
+        labels, target, minus_mask, cache, order
+    );
+    if (first.odd_sources <= first.positive_sources) {
+        first.xor_payment = true;
+        return first;
+    }
+
+    const std::vector<int> vertex_classes = signed_vertex_classes(
+        labels, target, minus_mask
+    );
+    std::vector<int> class_order = vertex_classes;
+    std::sort(class_order.begin(), class_order.end());
+    std::vector<std::vector<unsigned int>> odd_fibers;
+    std::map<unsigned int, std::uint64_t> capacities;
+    do {
+        order = representative_vertex_order(vertex_classes, class_order);
+        (void)analyze_gt_case(
+            labels, target, minus_mask, cache, order, nullptr, nullptr,
+            nullptr, &capacities, &odd_fibers
+        );
+        ++first.order_count;
+    } while (std::next_permutation(class_order.begin(), class_order.end()));
+
+    std::vector<TreePairEdge> edges;
+    std::uint64_t target_rank = 0U;
+    for (std::size_t fiber = 0U; fiber < odd_fibers.size(); ++fiber) {
+        const std::vector<unsigned int>& cuts = odd_fibers[fiber];
+        target_rank += static_cast<std::uint64_t>(cuts.size() - 1U);
+        for (std::size_t left = 0U; left < cuts.size(); ++left) {
+            for (std::size_t right = left + 1U;
+                 right < cuts.size(); ++right) {
+                edges.push_back(TreePairEdge{
+                    fiber, cuts[left], cuts[right], cuts[left] ^ cuts[right]
+                });
+            }
+        }
+    }
+
+    std::vector<bool> selected(edges.size(), false);
+    std::map<unsigned int, std::uint64_t> used;
+    std::uint64_t cardinality = 0U;
+    while (cardinality < target_rank) {
+        const std::ptrdiff_t unvisited = -2;
+        std::vector<std::ptrdiff_t> parent(edges.size(), unvisited);
+        std::queue<std::size_t> frontier;
+        for (std::size_t edge = 0U; edge < edges.size(); ++edge) {
+            if (!selected[edge]
+                && graphic_pair_addable(
+                    edges, selected, edge, edges.size()
+                )) {
+                parent[edge] = -1;
+                frontier.push(edge);
+            }
+        }
+
+        std::size_t sink = edges.size();
+        while (!frontier.empty() && sink == edges.size()) {
+            const std::size_t current = frontier.front();
+            frontier.pop();
+            if (!selected[current]) {
+                const unsigned int channel = edges[current].channel;
+                if (used[channel] < capacities[channel]) {
+                    sink = current;
+                    break;
+                }
+                for (std::size_t edge = 0U; edge < edges.size(); ++edge) {
+                    if (selected[edge] && parent[edge] == unvisited
+                        && edges[edge].channel == channel) {
+                        parent[edge] = static_cast<std::ptrdiff_t>(current);
+                        frontier.push(edge);
+                    }
+                }
+            } else {
+                for (std::size_t edge = 0U; edge < edges.size(); ++edge) {
+                    if (!selected[edge] && parent[edge] == unvisited
+                        && graphic_pair_addable(
+                            edges, selected, edge, current
+                        )) {
+                        parent[edge] = static_cast<std::ptrdiff_t>(current);
+                        frontier.push(edge);
+                    }
+                }
+            }
+        }
+        if (sink == edges.size()) {
+            break;
+        }
+        std::ptrdiff_t current = static_cast<std::ptrdiff_t>(sink);
+        while (current >= 0) {
+            const std::size_t edge = static_cast<std::size_t>(current);
+            selected[edge] = !selected[edge];
+            current = parent[edge];
+        }
+        used.clear();
+        cardinality = 0U;
+        for (std::size_t edge = 0U; edge < edges.size(); ++edge) {
+            if (selected[edge]) {
+                ++used[edges[edge].channel];
+                ++cardinality;
+            }
+        }
+    }
+    first.xor_payment = cardinality == target_rank;
+    if (!first.xor_payment) {
+        first.xor_demand = target_rank;
+        first.xor_capacity = cardinality;
+    }
+    return first;
+}
+
+Counts analyze_gt_transversal_pair_average_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache,
+    bool boolean_channels = false,
+    bool universal_channels = false,
+    bool fiber_boolean_channels = false
+) {
+    std::vector<std::size_t> order(labels.size() + 1U, 0U);
+    std::iota(order.begin(), order.end(), 0U);
+    Counts first = analyze_gt_case(
+        labels, target, minus_mask, cache, order
+    );
+    if (first.odd_sources <= first.positive_sources) {
+        first.xor_payment = true;
+        return first;
+    }
+
+    const std::vector<int> vertex_classes = signed_vertex_classes(
+        labels, target, minus_mask
+    );
+    std::vector<int> class_order = vertex_classes;
+    std::sort(class_order.begin(), class_order.end());
+    std::vector<CutFiberData> cut_fibers;
+    do {
+        order = representative_vertex_order(vertex_classes, class_order);
+        (void)analyze_gt_case(
+            labels, target, minus_mask, cache, order, nullptr, nullptr,
+            nullptr, nullptr, nullptr, &cut_fibers
+        );
+        ++first.order_count;
+    } while (std::next_permutation(class_order.begin(), class_order.end()));
+
+    std::vector<PositiveResource> resources;
+    std::map<std::size_t, std::vector<std::size_t>> resources_by_fiber;
+    std::map<unsigned int, std::vector<std::size_t>> resources_by_channel;
+    for (std::size_t fiber = 0U; fiber < cut_fibers.size(); ++fiber) {
+        for (unsigned int channel : cut_fibers[fiber].positive_cuts) {
+            const std::size_t resource = resources.size();
+            resources.push_back(PositiveResource{fiber, channel});
+            resources_by_fiber[fiber].push_back(resource);
+            resources_by_channel[channel].push_back(resource);
+        }
+    }
+
+    std::vector<TreePairEdge> edges;
+    std::uint64_t target_rank = 0U;
+    for (std::size_t fiber = 0U; fiber < cut_fibers.size(); ++fiber) {
+        const std::vector<unsigned int>& cuts = cut_fibers[fiber].odd_cuts;
+        if (cuts.size() < 2U) {
+            continue;
+        }
+        target_rank += static_cast<std::uint64_t>(cuts.size() - 1U);
+        for (std::size_t left = 0U; left < cuts.size(); ++left) {
+            for (std::size_t right = left + 1U;
+                 right < cuts.size(); ++right) {
+                edges.push_back(TreePairEdge{
+                    fiber, cuts[left], cuts[right], cuts[left] ^ cuts[right]
+                });
+            }
+        }
+    }
+
+    std::vector<std::vector<std::size_t>> allowed(edges.size());
+    for (std::size_t edge = 0U; edge < edges.size(); ++edge) {
+        allowed[edge] = resources_by_fiber[edges[edge].fiber];
+        std::vector<unsigned int> channels{edges[edge].channel};
+        if (universal_channels) {
+            for (const auto& [channel, channel_resources]
+                 : resources_by_channel) {
+                (void)channel_resources;
+                channels.push_back(channel);
+            }
+        } else if (fiber_boolean_channels) {
+            const unsigned int universe
+                = (1U << labels.size()) - 1U;
+            std::vector<unsigned int> atoms{universe};
+            for (unsigned int cut : cut_fibers[edges[edge].fiber].odd_cuts) {
+                std::vector<unsigned int> refined;
+                for (unsigned int atom : atoms) {
+                    if ((atom & cut) != 0U) {
+                        refined.push_back(atom & cut);
+                    }
+                    if ((atom & ~cut & universe) != 0U) {
+                        refined.push_back(atom & ~cut & universe);
+                    }
+                }
+                atoms = std::move(refined);
+            }
+            if (atoms.size() >= std::numeric_limits<unsigned int>::digits) {
+                throw std::runtime_error(
+                    "too many fibre Boolean atoms"
+                );
+            }
+            const unsigned int atom_limit = 1U << atoms.size();
+            for (unsigned int atom_mask = 1U;
+                 atom_mask < atom_limit; ++atom_mask) {
+                unsigned int channel = 0U;
+                for (std::size_t atom = 0U; atom < atoms.size(); ++atom) {
+                    if (((atom_mask >> atom) & 1U) != 0U) {
+                        channel |= atoms[atom];
+                    }
+                }
+                channels.push_back(channel);
+            }
+        } else if (boolean_channels) {
+            const unsigned int universe
+                = (1U << labels.size()) - 1U;
+            const std::array<unsigned int, 4U> atoms{
+                edges[edge].left & edges[edge].right,
+                edges[edge].left & ~edges[edge].right,
+                edges[edge].right & ~edges[edge].left,
+                universe & ~(edges[edge].left | edges[edge].right)
+            };
+            for (unsigned int atom_mask = 1U;
+                 atom_mask < 16U; ++atom_mask) {
+                unsigned int channel = 0U;
+                for (std::size_t atom = 0U; atom < atoms.size(); ++atom) {
+                    if (((atom_mask >> atom) & 1U) != 0U) {
+                        channel |= atoms[atom];
+                    }
+                }
+                channels.push_back(channel);
+            }
+        }
+        for (unsigned int channel : channels) {
+            if (channel == 0U
+                || (popcount(channel & minus_mask) & 1) != 0) {
+                continue;
+            }
+            const std::vector<std::size_t>& channel_resources
+                = resources_by_channel[channel];
+            allowed[edge].insert(
+                allowed[edge].end(),
+                channel_resources.begin(), channel_resources.end()
+            );
+        }
+        std::sort(allowed[edge].begin(), allowed[edge].end());
+        allowed[edge].erase(
+            std::unique(allowed[edge].begin(), allowed[edge].end()),
+            allowed[edge].end()
+        );
+    }
+
+    std::vector<bool> selected(edges.size(), false);
+    std::uint64_t cardinality = 0U;
+    while (cardinality < target_rank) {
+        const std::vector<std::ptrdiff_t> resource_match
+            = transversal_pair_matching(
+                allowed, selected, resources.size()
+            );
+        std::vector<std::vector<std::size_t>> graphic_circuits(edges.size());
+        std::vector<std::vector<std::size_t>> transversal_circuits(
+            edges.size()
+        );
+        std::vector<bool> transversal_addable(edges.size(), false);
+        for (std::size_t edge = 0U; edge < edges.size(); ++edge) {
+            if (selected[edge]) {
+                continue;
+            }
+            graphic_circuits[edge]
+                = graphic_pair_circuit(edges, selected, edge);
+            auto [addable, circuit] = transversal_pair_circuit(
+                allowed, resource_match, edge
+            );
+            transversal_addable[edge] = addable;
+            transversal_circuits[edge] = std::move(circuit);
+        }
+
+        const std::ptrdiff_t unvisited = -2;
+        std::vector<std::ptrdiff_t> parent(edges.size(), unvisited);
+        std::queue<std::size_t> frontier;
+        for (std::size_t edge = 0U; edge < edges.size(); ++edge) {
+            if (!selected[edge] && graphic_circuits[edge].empty()) {
+                parent[edge] = -1;
+                frontier.push(edge);
+            }
+        }
+        std::size_t sink = edges.size();
+        while (!frontier.empty() && sink == edges.size()) {
+            const std::size_t current = frontier.front();
+            frontier.pop();
+            if (!selected[current]) {
+                if (transversal_addable[current]) {
+                    sink = current;
+                    break;
+                }
+                for (std::size_t next : transversal_circuits[current]) {
+                    if (parent[next] == unvisited) {
+                        parent[next] = static_cast<std::ptrdiff_t>(current);
+                        frontier.push(next);
+                    }
+                }
+            } else {
+                for (std::size_t next = 0U; next < edges.size(); ++next) {
+                    if (selected[next] || parent[next] != unvisited) {
+                        continue;
+                    }
+                    if (std::find(
+                            graphic_circuits[next].begin(),
+                            graphic_circuits[next].end(), current
+                        ) != graphic_circuits[next].end()) {
+                        parent[next] = static_cast<std::ptrdiff_t>(current);
+                        frontier.push(next);
+                    }
+                }
+            }
+        }
+        if (sink == edges.size()) {
+            break;
+        }
+        std::ptrdiff_t current = static_cast<std::ptrdiff_t>(sink);
+        while (current >= 0) {
+            const std::size_t edge = static_cast<std::size_t>(current);
+            selected[edge] = !selected[edge];
+            current = parent[edge];
+        }
+        ++cardinality;
+    }
+
+    first.xor_payment = cardinality == target_rank;
+    if (!first.xor_payment) {
+        first.xor_demand = target_rank;
+        first.xor_capacity = cardinality;
+    }
+    return first;
+}
+
 Counts analyze_gt_alpha_average_case(
     const std::vector<int>& labels,
     int target,
@@ -1091,7 +1719,8 @@ Counts analyze_gt_bk_component_case(
     const std::vector<int>& labels,
     int target,
     unsigned int minus_mask,
-    ToricCache& cache
+    ToricCache& cache,
+    bool print_components = false
 ) {
     std::vector<std::size_t> order(labels.size() + 1U, 0U);
     for (std::size_t i = 0U; i < order.size(); ++i) {
@@ -1132,6 +1761,7 @@ Counts analyze_gt_bk_component_case(
         std::uint64_t relations = 0U;
         std::uint64_t positive = 0U;
         std::uint64_t odd_occurrences = 0U;
+        std::uint64_t active_states = 0U;
         std::uint64_t component_states = 0U;
         while (!frontier.empty()) {
             const StateKey current = frontier.front();
@@ -1141,6 +1771,7 @@ Counts analyze_gt_bk_component_case(
             relations += counts.odd
                 - static_cast<std::uint64_t>(counts.odd != 0U);
             odd_occurrences += counts.odd;
+            active_states += counts.odd != 0U ? 1U : 0U;
             positive += counts.positive;
             for (std::size_t i = 0U; i + 1U < current.first.size(); ++i) {
                 StateKey neighbor{
@@ -1159,6 +1790,18 @@ Counts analyze_gt_bk_component_case(
             }
         }
         ++first.component_count;
+        if (print_components) {
+            std::cout << "component=" << first.component_count
+                      << " states=" << component_states
+                      << " odd=" << odd_occurrences
+                      << " active_states=" << active_states
+                      << " relations=" << relations
+                      << " positive=" << positive
+                      << " slack="
+                      << (positive >= relations
+                          ? positive - relations : 0U)
+                      << '\n';
+        }
         if (odd_occurrences != 0U || positive != 0U) {
             ++first.active_component_count;
         }
@@ -1318,6 +1961,54 @@ int parse_nonnegative(const char* text, const char* name) {
 
 int main(int argc, char** argv) {
     try {
+        if (argc >= 6 && std::string(argv[1]) == "gt-average-case") {
+            const std::string method = argv[2];
+            const int target = parse_nonnegative(argv[3], "target");
+            const int parsed_mask = parse_nonnegative(argv[4], "minus mask");
+            std::vector<int> labels;
+            for (int argument = 5; argument < argc; ++argument) {
+                labels.push_back(parse_nonnegative(argv[argument], "label"));
+            }
+            if (labels.empty()
+                || labels.size() >= std::numeric_limits<unsigned int>::digits
+                || parsed_mask >= static_cast<int>(1U << labels.size())) {
+                throw std::runtime_error("invalid gt-average-case data");
+            }
+            const unsigned int minus_mask
+                = static_cast<unsigned int>(parsed_mask);
+            ToricCache cache;
+            Counts counts;
+            if (method == "rank") {
+                counts = analyze_gt_average_case(
+                    labels, target, minus_mask, cache, false
+                );
+            } else if (method == "weighted") {
+                counts = analyze_gt_weighted_pair_average_case(
+                    labels, target, minus_mask, cache
+                );
+            } else if (method == "tree") {
+                counts = analyze_gt_tree_pair_average_case(
+                    labels, target, minus_mask, cache
+                );
+            } else if (method == "transversal" || method == "boolean"
+                       || method == "universal"
+                       || method == "fiber-boolean") {
+                counts = analyze_gt_transversal_pair_average_case(
+                    labels, target, minus_mask, cache,
+                    method == "boolean", method == "universal",
+                    method == "fiber-boolean"
+                );
+            } else {
+                throw std::runtime_error(
+                    "gt-average-case method must be rank, weighted, tree, "
+                    "transversal, boolean, fiber-boolean, or universal"
+                );
+            }
+            print_case(labels, target, minus_mask, counts);
+            std::cout << " method=" << method << " result="
+                      << (counts.xor_payment ? "PASS" : "FAIL") << '\n';
+            return counts.xor_payment ? 0 : 1;
+        }
         if (argc >= 5 && std::string(argv[1]) == "gt-bk-case") {
             const int target = parse_nonnegative(argv[2], "target");
             const int parsed_mask = parse_nonnegative(argv[3], "minus mask");
@@ -1334,7 +2025,7 @@ int main(int argc, char** argv) {
                 = static_cast<unsigned int>(parsed_mask);
             ToricCache cache;
             const Counts counts = analyze_gt_bk_component_case(
-                labels, target, minus_mask, cache
+                labels, target, minus_mask, cache, true
             );
             print_case(labels, target, minus_mask, counts);
             std::cout << " result="
@@ -1665,7 +2356,10 @@ int main(int argc, char** argv) {
                 "gt-xor-label-rounds; or "
                 "gt-deficit-xor-label-rounds; or "
                 "gt-deficit-xor-insert; or "
-                "gt-average, gt-average-pairs, or gt-alpha-average; or "
+                "gt-average, gt-average-pairs, "
+                "gt-average-weighted-pairs, gt-average-tree-pairs, or "
+                "gt-average-transversal-pairs, gt-average-boolean-pairs, "
+                "or gt-alpha-average; or "
                 "gt-bk-components; or "
                 "gt-bk-single-active; or "
                 "gt-bk-single-loaded; or "
@@ -1688,6 +2382,10 @@ int main(int argc, char** argv) {
             && model != "gt-deficit-xor-insert"
             && model != "gt-average"
             && model != "gt-average-pairs"
+            && model != "gt-average-weighted-pairs"
+            && model != "gt-average-tree-pairs"
+            && model != "gt-average-transversal-pairs"
+            && model != "gt-average-boolean-pairs"
             && model != "gt-alpha-average"
             && model != "gt-bk-components"
             && model != "gt-bk-single-active"
@@ -1703,6 +2401,10 @@ int main(int argc, char** argv) {
                 ", gt-deficit-xor-insert"
                 ", gt-average"
                 ", gt-average-pairs"
+                ", gt-average-weighted-pairs"
+                ", gt-average-tree-pairs"
+                ", gt-average-transversal-pairs"
+                ", gt-average-boolean-pairs"
                 ", gt-alpha-average"
                 ", gt-bk-components"
                 ", gt-bk-single-active"
@@ -1771,6 +2473,10 @@ int main(int argc, char** argv) {
                              || model == "gt-deficit-xor-insert"
                              || model == "gt-average"
                              || model == "gt-average-pairs"
+                             || model == "gt-average-weighted-pairs"
+                             || model == "gt-average-tree-pairs"
+                             || model == "gt-average-transversal-pairs"
+                             || model == "gt-average-boolean-pairs"
                              || model == "gt-alpha-average"
                              || model == "gt-bk-components"
                              || model == "gt-bk-single-active"
@@ -1846,12 +2552,36 @@ int main(int argc, char** argv) {
                                                             )
                                                         : (model == "gt-average"
                                                             || model == "gt-average-pairs"
-                                                            ? analyze_gt_average_case(
-                                                                labels, target,
-                                                                minus_mask,
-                                                                toric_cache,
-                                                                model == "gt-average-pairs"
-                                                            )
+                                                            || model == "gt-average-weighted-pairs"
+                                                            || model == "gt-average-tree-pairs"
+                                                            || model == "gt-average-transversal-pairs"
+                                                            || model == "gt-average-boolean-pairs"
+                                                            ? (model == "gt-average-weighted-pairs"
+                                                                ? analyze_gt_weighted_pair_average_case(
+                                                                    labels, target,
+                                                                    minus_mask,
+                                                                    toric_cache
+                                                                )
+                                                                : (model == "gt-average-tree-pairs"
+                                                                    ? analyze_gt_tree_pair_average_case(
+                                                                        labels, target,
+                                                                        minus_mask,
+                                                                        toric_cache
+                                                                    )
+                                                                : (model == "gt-average-transversal-pairs"
+                                                                    || model == "gt-average-boolean-pairs"
+                                                                    ? analyze_gt_transversal_pair_average_case(
+                                                                        labels, target,
+                                                                        minus_mask,
+                                                                        toric_cache,
+                                                                        model == "gt-average-boolean-pairs"
+                                                                    )
+                                                                : analyze_gt_average_case(
+                                                                    labels, target,
+                                                                    minus_mask,
+                                                                    toric_cache,
+                                                                    model == "gt-average-pairs"
+                                                                ))))
                                                         : (model == "gt-alpha-average"
                                                             ? analyze_gt_alpha_average_case(
                                                                 labels, target,
@@ -1908,6 +2638,10 @@ int main(int argc, char** argv) {
                                 || model == "gt-deficit-xor-insert"
                                 || model == "gt-average"
                                 || model == "gt-average-pairs"
+                                || model == "gt-average-weighted-pairs"
+                                || model == "gt-average-tree-pairs"
+                                || model == "gt-average-transversal-pairs"
+                                || model == "gt-average-boolean-pairs"
                                 || model == "gt-alpha-average"
                                 || model == "gt-bk-components"
                                 || model == "gt-bk-single-active"
@@ -1966,6 +2700,14 @@ int main(int argc, char** argv) {
                                                     ? "GT_AVERAGE"
                                                 : (model == "gt-average-pairs"
                                                     ? "GT_AVERAGE_PAIRS"
+                                                : (model == "gt-average-weighted-pairs"
+                                                    ? "GT_AVERAGE_WEIGHTED_PAIRS"
+                                                : (model == "gt-average-tree-pairs"
+                                                    ? "GT_AVERAGE_TREE_PAIRS"
+                                                : (model == "gt-average-transversal-pairs"
+                                                    ? "GT_AVERAGE_TRANSVERSAL_PAIRS"
+                                                : (model == "gt-average-boolean-pairs"
+                                                    ? "GT_AVERAGE_BOOLEAN_PAIRS"
                                                 : (model == "gt-alpha-average"
                                                     ? "GT_ALPHA_AVERAGE"
                                                 : (model == "gt-bk-components"
@@ -1977,7 +2719,7 @@ int main(int argc, char** argv) {
                                                 : (model
                                                     == "gt-deficit-xor-insert"
                                                     ? "GT_DEFICIT_XOR_INSERT"
-                                                    : "GT_LABEL_ROUNDS"))))))))))))))))))))))))
+                                                    : "GT_LABEL_ROUNDS"))))))))))))))))))))))))))))
                   << "_PARITY cases=" << cases
                   << " cached_degrees="
                   << (model == "sr" ? cache.size() : toric_cache.size())
