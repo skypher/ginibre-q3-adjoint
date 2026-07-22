@@ -7326,6 +7326,456 @@ C_Q(a,k)<=C_Q(0,k-a)=C_Q(k-a,0).
 
 This is `(SCB)`.  QED.
 
+The preceding reflection is the boundary shadow of an exact finite
+type-`C_2` transform.  It gives a stronger result and, crucially, survives
+one arbitrary irreducible plus block.
+
+**Lemma 22H3G (finite `C_2` transform and affine top-row cancellation).**
+Fix a level `k`, put
+
+```text
+theta_j=(j+1)pi/(k+2),       x_j=2cos(theta_j),
+w_j=2 sin(theta_j)^2/(k+2),  0<=j<=k,
+mu_k=sum_j w_j delta_(x_j),
+dnu_k(x,y)=(1/2)(x-y)^2 dmu_k(x)dmu_k(y).
+```
+
+For `0<=s<=r<=k-1`, let
+
+```text
+Psi_(r,s)(x,y)
+ =[chi_(r+1)(x)chi_s(y)-chi_s(x)chi_(r+1)(y)]/(x-y),
+D_a=Psi_(a-1,0).
+```
+
+Then the `Psi_(r,s)` form an orthonormal basis on the unordered
+off-diagonal spectral grid.  For every finite plus word `Q` and
+`1<=a,b<=k`,
+
+```text
+E_Q(a,b)=<D_a D_b F_Q>_(nu_k),
+F_Q=product_(q in Q)[chi_q(x)+chi_q(y)].              (P22.5zj)
+```
+
+Writing `ell=k-1`, multiplication by the fundamental plus generator is the
+nonnegative triangular-alcove adjacency
+
+```text
+Psi_(1,0)Psi_(r,s)
+ =sum Psi_(u,v),                                      (P22.5zk)
+```
+
+where `(u,v)` runs through `(r+1,s),(r-1,s),(r,s+1),
+(r,s-1)` which satisfy `0<=v<=u<=ell`.  At the affine top row one has the
+two-term cancellation
+
+```text
+D_k[chi_q(x)+chi_q(y)]
+ =Psi_(ell,q)+Psi_(ell-q,0),       1<=q<k.             (P22.5zl)
+```
+
+Consequently:
+
+```text
+E_[1^n](a,b)>=0                         (1<=a,b<=k),
+E_[1^n,q](a,k)>=0                       (1<=a<=k,
+                                         n>=0, 1<=q<k). (P22.5zm)
+```
+
+Thus the complete finite two-minus defect is nonnegative on every
+fundamental plus ray, and the full simple-current boundary column remains
+nonnegative after adjoining one arbitrary irreducible plus label.
+
+**Proof.**  The finite fusion ring is the function algebra on the displayed
+`SU(2)_k` spectral nodes, with the `chi_a` orthonormal for `mu_k`.  If
+`C_Q` is the plus coefficient matrix and `d_Q=C_Qe_0`, then
+
+```text
+H(d_Q)_(a,b)
+ =integral chi_a(x)chi_b(x)F_Q(x,y)dmu_k(x)dmu_k(y).
+```
+
+Subtract the analogous formula for `C_Q(a,b)` and average with its image
+under `x<->y`.  This gives
+
+```text
+E_Q(a,b)
+ =(1/2)integral [chi_a(x)-chi_a(y)]
+                  [chi_b(x)-chi_b(y)]F_Q dmu_k(x)dmu_k(y),
+```
+
+which is `(P22.5zj)`.
+
+After multiplication by `(x-y)`, the numerator defining `Psi_(r,s)` is the
+exterior product of the two orthonormal vectors `chi_(r+1)` and `chi_s`.
+Exterior-product orthogonality therefore makes the displayed `Psi_(r,s)`
+orthonormal for `nu_k`.  There are
+
+```text
+k(k+1)/2
+```
+
+of them, exactly the number of unordered pairs of distinct spectral nodes,
+so they form a basis.  The ordinary minuscule `USp(4)` rule gives the four
+neighbors in `(P22.5zk)`.  At `r=ell`, its outward term is zero on the
+finite grid because `chi_(k+1)(x_j)=0`; the remaining lower-wall terms are
+deleted by dominance.  Hence `(P22.5zk)` is an exact nonnegative adjacency
+rule on the finite triangle.
+
+Finally `chi_k chi_q=chi_(k-q)` at level `k`, and hence
+
+```text
+(x-y)D_k[chi_q(x)+chi_q(y)]
+ =chi_(k-q)(x)-chi_(k-q)(y)
+   +chi_k(x)chi_q(y)-chi_q(x)chi_k(y).
+```
+
+The two terms after division by `x-y` are respectively
+`Psi_(ell-q,0)` and `Psi_(ell,q)`, proving `(P22.5zl)`.  For a fundamental
+word, `(P22.5zj)` is the coefficient of `D_a` in the nonnegative walk
+`D_b Psi_(1,0)^n`, proving the first line of `(P22.5zm)`.  After adjoining
+`q`, move `D_k[chi_q(x)+chi_q(y)]` together and use `(P22.5zl)`; the desired
+coefficient is the sum of two nonnegative triangular-walk counts.  This
+proves the second line.  QED.
+
+The strict C++ mode `finite-c2-fundamental` compares `(P22.5zj)` against the
+triangular adjacency through level thirty-two and one hundred fundamental
+factors (1,155,440 exact entries).  The mode `finite-c2-wall-generator`
+checks that `(P22.5zl)` has exactly its two stated unit coefficients through
+level forty.  Their outputs are in
+`certificates/su2_finite_c2_boundary.log`.
+
+The tempting extension from `(P22.5zl)` to an invariant character-positive
+wall cone is false.  Already at level three,
+
+```text
+D_3[chi_2(x)+chi_2(y)]^2
+```
+
+has coefficient `-2` at `Psi_(1,1)`, although all its row coefficients
+needed for `(SCB)` are nonnegative.  The exact mode `finite-c2-wall-cone`
+records this first obstruction.  A general proof must therefore preserve a
+larger signed packet while controlling its row projection; ordinary finite
+`C_2` character positivity cannot by itself close the induction.
+
+The entire signed packet nevertheless has a closed allocation formula.  It
+pinpoints the exact global switch which remains.
+
+**Lemma 22H3H (affine cut-determinant expansion).**  For a subset `S` of a
+finite plus word `Q`, let `m_S(r)` be the level-`k` fusion multiplicity of
+`e_r` in the product over `S`, and put `T=Q\S`.  With `ell=k-1`,
+
+```text
+D_k F_Q
+ =sum_(S,r,s: k-r!=s) m_S(r)m_T(s) sign(k-r-s)
+    Psi_(max(k-r,s)-1,min(k-r,s)).                    (P22.5zo)
+```
+
+In particular its row coefficient is
+
+```text
+[Psi_(a-1,0)]D_kF_Q
+ =sum_S [m_S(k-a)m_T(0)-m_S(k)m_T(a)]
+ =E_Q(a,k).                                          (P22.5zp)
+```
+
+Thus negative `C_2` packets are exactly the allocation channels beyond the
+affine cut `r+s=k`.  Boundary domination asks for a global switch from the
+negative cut data `(r,s)=(k,a)` to the positive cut data
+`(r,s)=(k-a,0)`.
+
+**Proof.**  Expand the symmetric plus product as
+
+```text
+F_Q=sum_S A_S(x)A_T(y),
+A_S=sum_r m_S(r)chi_r.
+```
+
+In the term containing `-chi_k(y)`, replace `S` by its complement.  Since
+the simple current satisfies `chi_k chi_r=chi_(k-r)`, this gives
+
+```text
+D_kF_Q
+ =sum_(S,r,s) m_S(r)m_T(s)
+   [chi_(k-r)(x)chi_s(y)-chi_s(x)chi_(k-r)(y)]/(x-y).
+```
+
+If `k-r>s`, the quotient is `Psi_(k-r-1,s)`; if `k-r<s`, it is
+`-Psi_(s-1,k-r)`; and it vanishes at equality.  This proves `(P22.5zo)`.
+A row index has second coordinate zero.  Its positive occurrences have
+`s=0,k-r=a`, while its negative occurrences have `r=k,s=a`, which proves
+`(P22.5zp)`.  QED.
+
+For one fixed cut, fusing a negative pair of trees `S->k`, `T->a` gives a
+tree on all factors with output `k-a`, but different cuts need not remain
+linearly independent after this reassociation.  The allocation and shell
+counterexamples below show that this loss is real.  Hence `(P22.5zp)` calls
+for a differential across the Boolean lattice of cuts, not independent
+associativity injections for each cut.  This is the finite fusion analogue
+of the Plucker row-ideal contraction in Target 22H3.
+
+There is an equivalent exterior formulation which discards every packet
+direction not seen by the desired row.
+
+**Lemma 22H3I (simple-current exterior minor).**  Put
+
+```text
+K_Q(z)=product_(i in Q)(I+z_i N_(q_i))
+```
+
+and let `dGamma(N)=N tensor I+I tensor N` act on the exterior square of the
+level-`k` fusion module.  Then
+
+```text
+E_Q(a,k)
+ =[e_a wedge e_0]
+   product_(i in Q)dGamma(N_(q_i))(e_k wedge e_0)       (P22.5zs)
+
+ =[product_i z_i]
+   det K_Q(z)[rows (a,0), columns (k,0)].               (P22.5zt)
+```
+
+The first update from the simple-current source is the positive two-packet
+
+```text
+dGamma(N_q)(e_k wedge e_0)
+ =e_(k-q) wedge e_0+e_k wedge e_q.                     (P22.5zu)
+```
+
+If `J=N_k`, the source, target, and their entire orbit lie in the
+`J wedge J=-1` sector.  Thus `(SCB)` is exactly positivity of the boundary
+matrix coefficients in the cyclic exterior module generated by
+`e_k wedge e_0`; no inequality on the complementary `C_2` packet directions
+is required.
+
+**Proof.**  Exterior powers turn `K_Q(z)` into the ordered product of the
+exterior powers of its factors.  The coefficient linear in `z_i` in
+`wedge^2(I+z_iN_(q_i))` is `dGamma(N_(q_i))`; hence selecting every variable
+once proves the equality of the two displays.  The indicated minor is
+
+```text
+K_Q(a,k)K_Q(0,0)-K_Q(a,0)K_Q(0,k).
+```
+
+Since every fusion matrix commutes with the simple current,
+`K_Q(a,k)=K_Q(k-a,0)`.  Its square-free coefficient is therefore
+
+```text
+sum_S [m_S(k-a)m_(S^c)(0)-m_S(a)m_(S^c)(k)],
+```
+
+which is `E_Q(a,k)` by `(P22.5ze)` and equals `(P22.5zp)` after complementing
+the subsets in the negative term.  Finally
+`N_qe_k=e_(k-q)` and `N_qe_0=e_q`, giving `(P22.5zu)`.  Commutation with
+`J wedge J` proves the sector statement.  QED.
+
+Formula `(P22.5zs)` also explains both the success and the limitation of
+the affine top-row cancellation.  The first factor creates two positive
+exterior carriers, but a later long fusion jump can cross the stationary
+carrier and acquire the wedge sign.  The required Boolean-cut differential
+is precisely a cancellation of those crossing histories inside this cyclic
+sector.  The global sign-gauge obstruction below concerns the full exterior
+square and therefore does not by itself decide this smaller boundary orbit.
+
+The strict C++ mode `simple-current-exterior` constructs the additive
+compounds directly and checks `(P22.5zs)` independently against the
+fusion-Hankel defect.  Through level ten and seven plus factors it verifies
+218,789 boundary coefficients and the `J wedge J=-1` symmetry in 1,113,397
+exterior entries; every boundary coefficient is nonnegative.  The cyclic
+sector is not entrywise positive: its first negative interior value is
+
+```text
+k=3, Q=[2,2], state=e_2 wedge e_1: value=-2.           (P22.5zv)
+```
+
+There are 165,463 negative interior entries in the full bounded run.  Thus
+the evidence isolates a genuine boundary-positivity phenomenon rather than
+an accidentally nonnegative transfer matrix.  The exact output is in
+`certificates/su2_finite_c2_boundary.log`.
+
+At odd level the cyclic exterior sector has a further exact factorization.
+It shows that the wall problem is itself a full signed-correlation problem
+for the simple-current orbit ring.
+
+**Lemma 22H3J (odd-level orbit-ring equivalence).**  Let `k=2m-1`, let
+`J=N_k`, and decompose the real fusion module as `V=V_+ direct-sum V_-`
+under `J`.  For `0<=r<m`, use the orthonormal vectors
+
+```text
+u_r=(e_r+e_(k-r))/sqrt(2),
+w_r=(-1)^r(e_r-e_(k-r))/sqrt(2).
+```
+
+The parity operator identifies `u_r` with `w_r`.  If `A_q` is the matrix of
+`N_q` on `V_+` in the `u` basis, then `A_q` is entrywise nonnegative,
+`A_(k-q)=A_q`, and on `V_-` one has
+
+```text
+N_q=(-1)^q A_q.                                      (P22.5zw)
+```
+
+Under the isometry
+
+```text
+Phi:V_+ tensor V_+ -> (wedge^2 V)_(J wedge J=-1),
+Phi(u_r tensor u_s)=u_r wedge w_s,
+```
+
+the exterior transfer becomes
+
+```text
+Phi^(-1)dGamma(N_q)Phi
+ =A_q tensor I+(-1)^q I tensor A_q,                  (P22.5zx)
+```
+
+and `Phi(u_0 tensor u_0)=e_k wedge e_0`.
+
+For a word `Q`, put `epsilon_Q=sum_(q in Q)q mod 2`.  For each `0<=r<m`,
+exactly one of the paired boundary targets `r,k-r` can be nonzero.  If
+
+```text
+a_r=r       when epsilon_Q == k-r mod 2,
+a_r=k-r     otherwise,
+```
+
+then
+
+```text
+E_Q(a_r,k)
+ =[u_r tensor u_0]
+   product_(q in Q)[A_q tensor I+(-1)^q I tensor A_q]
+   (u_0 tensor u_0),
+E_Q(k-a_r,k)=0.                                      (P22.5zy)
+```
+
+The distinct matrices `A_0,...,A_(m-1)` form the nonnegative based orbit
+fusion ring `O_k`; folding `q` and `k-q` gives its product coefficients.
+Since `A_(k-q)=A_q` while `q` and `k-q` have opposite parity, either sign of
+every nontrivial orbit generator can be realized in `(P22.5zx)`.  Therefore
+the corner inequality `(SCW0)` for all plus words in `SU(2)_k` is
+equivalent, when `k` is odd, to the full `GKS2*` property for `O_k`.  The
+whole column `(SCB)` is equivalent to the strictly stronger assertion that
+every partial-character coefficient of every signed orbit-ring word is
+nonnegative.
+
+**Proof.**  Let `P e_r=(-1)^r e_r`.  Fusion parity gives
+`P N_q P=(-1)^qN_q`, while oddness of `k` gives `PJ=-JP`.  Thus `P` maps
+`V_+` isometrically onto `V_-` and proves `(P22.5zw)`.  Acting on an orbit
+sum `u_r`, the coefficient of `u_s` is the sum of the two nonnegative fusion
+coefficients to `s` and `k-s`; hence every `A_q` is nonnegative.  Commutation
+with `J` and the simple-current identity `N_(k-q)=JN_q` give
+`A_(k-q)=A_q`.
+
+The `J wedge J=-1` space is exactly `V_+ wedge V_-`, so `Phi` is an
+isometry.  Applying `N_q` to its two wedge factors and using `(P22.5zw)`
+gives `(P22.5zx)`.  The displayed formulas for `u_0,w_0` give
+`e_k wedge e_0=u_0 wedge w_0`.
+
+The ordered product in `(P22.5zx)` has coordinate-swap parity
+`(-1)^(epsilon_Q)`.  Expanding `e_r wedge e_0` and
+`e_(k-r) wedge e_0` into their `V_+ wedge V_-` parts shows that one target
+selects the coefficient of `u_r tensor u_0`, while the other has the
+opposite swap parity and vanishes.  This proves `(P22.5zy)`.  Restriction of
+the fusion product to `V_+` proves closure and nonnegative structure
+constants for the orbit ring.  Finally the two lifts `q` and `k-q` realize
+the two signs.  At `r=0`, `(P22.5zy)` is the signed orbit-ring integral and
+the parity-opposite target is zero, proving the `(SCW0)`--`GKS2*`
+equivalence.  Allowing every `r` gives precisely partial-character
+positivity and proves the final column statement.  QED.
+
+The `simple-current-exterior` verifier independently checks `(P22.5zy)` in
+40,101 odd-level word/target entries through level nine and seven factors.
+This factorization is a structural reduction, not yet a proof: the orbit
+rings are smaller, but they are non-group fusion rings (level three already
+produces the Fibonacci ring), so their full `GKS2*` property still requires
+an argument.
+
+The orbit system in Lemma 22H3J is an explicit one-dimensional polynomial
+hypergroup.
+
+**Lemma 22H3K (tadpole spectral normal form).**  For `k=2m-1`, the
+fundamental orbit matrix `A=A_1` acts on `u_0,...,u_(m-1)` by
+
+```text
+A u_0=u_1,
+A u_r=u_(r-1)+u_(r+1)                 (1<=r<=m-2),
+A u_(m-1)=u_(m-2)+u_(m-1).                         (P22.5zz)
+```
+
+Thus it is the path adjacency with one loop at the folded endpoint.  Put
+
+```text
+theta_j=(2j+1)pi/(2m+1),       x_j=2cos(theta_j),
+omega_j=4 sin(theta_j)^2/(2m+1),       0<=j<m.       (P22.5zz1)
+```
+
+The `x_j` are the complete spectrum of `A`, the `omega_j` sum to one, and
+the orbit characters are
+
+```text
+varphi_r(x_j)=chi_r(x_j),              0<=r<m.
+```
+
+They form an orthonormal real `GKS1` system for the measure
+`sum_j omega_j delta_(x_j)`.  Consequently the full odd-level
+simple-current boundary column is equivalent to the explicit inequalities
+
+```text
+sum_(i,j) omega_i omega_j varphi_r(x_i)
+  product_t [varphi_(p_t)(x_i)
+             +sigma_t varphi_(p_t)(x_j)] >=0,         (P22.5zz2)
+```
+
+for every `r`, every word `p_t in {1,...,m-1}`, and arbitrary signs
+`sigma_t in {+1,-1}`.  The `r=0` specialization is exactly the corner
+inequality `(SCW0)`, equivalently full `GKS2*` for the orbit ring; allowing
+all `r` is the stronger partial-character positivity required by the whole
+column `(SCB)`.
+
+**Proof.**  Fold the ordinary `A_(2m)` fundamental fusion graph by its
+endpoint reversal.  Every nonterminal orbit has the two path neighbors,
+whereas the two middle vertices form one orbit and produce the terminal
+loop, proving `(P22.5zz)`.  An eigenvector with first coordinate one has
+coordinates `chi_r(2cos theta)`.  The loop boundary condition is
+
+```text
+chi_m(2cos theta)=chi_(m-1)(2cos theta),
+```
+
+whose roots are exactly the angles in `(P22.5zz1)`.  Folding the
+`SU(2)_(2m-1)` sine-transform weight gives `omega_j`; alternatively the
+spectral theorem at the cyclic vector `u_0` gives the same weights and their
+sum one.  Since `chi_r(A)u_0=u_r`, spectral orthogonality proves that the
+`varphi_r` are orthonormal.  Their nonnegative linearization is the folded
+fusion product.  Finally `(P22.5zz2)` is `(P22.5zy)` written in this spectral
+basis, with the two lifts `p_t,2m-1-p_t` realizing the sign `sigma_t`.
+QED.
+
+Two larger standard packet cones still do not isolate that differential.
+For the level-three word `Q=[2,2,2]`, the full affine packet is
+
+```text
+5 Psi_(0,0)-6 Psi_(1,1)+2 Psi_(2,0)+5 Psi_(2,2).      (P22.5zq)
+```
+
+Its constant-`r+s=2` inward prefix has value `2-6=-4`, although its row
+coefficient is `2`.  Thus diagonal-prefix positivity is false.  Adding the
+lower-degree reservoir gives the canonical two-layer packet
+`Psi_(2,0)+Psi_(1,1)+Psi_(0,0)`, which has value one here, but that larger
+cone also eventually fails.  The first bounded obstruction is
+
+```text
+k=5, Q=[1,1,3,3,4,4], (a,b)=(3,3):
+two-layer packet=-2.                                  (P22.5zr)
+```
+
+The strict mode `finite-c2-wall-packets` finds this after checking every
+smaller level/word in its bounds; all its `b=1` packets, which are exactly
+the row coefficients `(P22.5zp)`, remain nonnegative before the obstruction.
+Hence the required invariant cone is genuinely row-adapted: it is weaker
+than character positivity, diagonal-prefix positivity, and the ordinary
+two-layer packet inequalities.
+
 The nearest-neighbor hypothesis is substantive.  A general label `q` gives
 a fusion jump which may cross `x+y=k` without landing on it; reflecting only
 the suffix would then split one irreducible `q`-block between the two
@@ -7354,6 +7804,36 @@ fail, while the combined recurrence always passes in the bounded domain.
 The output is in `certificates/su2_simple_current_boundary.log`.  Hence a
 proof of `(SCBI)` must transfer capacity between its two displayed positive
 terms; separate domination is false.
+
+Nor can that transfer be confined to one allocation of the plus factors and
+its coordinate-reversed complement.  Decompose `C_Q` linearly into matrices
+
+```text
+x tensor y+y tensor x,
+```
+
+where `x` and `y` are the two subset fusion-multiplicity vectors.  At level
+three, with
+
+```text
+Q=[1,1,1,1],       allocation mask=1,       q=2,       a=3,
+```
+
+the corresponding local `(SCBI)` terms are
+
+```text
+boundary=-1,       lower=-1,       sink=0,       slack=-2.  (P22.5zn)
+```
+
+Even summing all complementary allocation pairs of a fixed cardinality does
+not repair the inequality: cardinality shell one in the same example has
+slack `-8`.  A separate boundary failure occurs for
+`Q=[1,1,2,2]`, shell two, with value `-2`.  The global sum is nevertheless
+nonnegative.  Thus the required block switch must move between distinct
+complement pairs and change the number of whole factors assigned to a
+coordinate, just as the minuscule suffix reflection does.  The exact mode
+`simple-current-boundary-local` records these obstructions in
+`certificates/su2_finite_c2_boundary.log`.
 
 For `Q=[2,2,2,2,3]` and `p=2`, exact fusion-path enumeration gives
 
