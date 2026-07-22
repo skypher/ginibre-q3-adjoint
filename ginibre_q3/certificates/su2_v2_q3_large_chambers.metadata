@@ -1,0 +1,10 @@
+certificate=su2_v2_q3_large_chambers.log
+scope=q=3, odd r>=7, ordered positive even labels, outside Lemmas 12F15, 12F18, 12F24A, 12F24B
+logic=quantifier-free Presburger integer arithmetic (Z3 qflia)
+command=/tmp/verify_su2_v2_presburger_enumerated --full-q3-large-chambers
+source_sha256=e22b694f8129d207f561809805e682fb213124c3404b097c0b610104adeefc4d
+binary_sha256=08dbcb44924f2d6b91697d6364dc94f9a126587e2b5256d31ee37cac548e60df
+log_sha256=27c3c96ef136e83f5909c2e5f76723972300521d02bb78dba690040652ec7910
+result=56/56 chambers UNSAT
+elapsed_seconds=362.33
+maximum_resident_kib=55228

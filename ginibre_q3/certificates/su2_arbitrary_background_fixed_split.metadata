@@ -1,0 +1,10 @@
+purpose=finite-field diagnostic for arbitrary-background fixed 3|(n-3) Plucker payments
+status=diagnostic only; modular deficiency is not a rational rank certificate and is not a Q3 counterexample
+compiler=g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+build=g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror -fopenmp verify_su2_plucker_second_syzygies.cpp -o verify_su2_plucker_second_syzygies
+source_sha256=e259b22b83b67640196ccd8efd3f359113abfc883e5cc09c677644c26736df8c
+binary_sha256=c68880c773f07fe5971f166929bb2732c13715dcf726728a3746ba65dae79664
+log_sha256=8a2426860de5ad489d7a13234469af1fe63af341330ec263f3c5ca6e502ad6ee
+modulus=1000000007
+threads=1
+resource_policy=one nice thread because the pre-existing 64-thread search kept machine load above available CPU count

@@ -1,0 +1,3 @@
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_RECURSIVE_PASS pattern=6 bases=94 nodes=4694 leaves=2394 splits=2255 maximum_depth=50 coefficients=2874549 maximum_base=11,15,44,4,3
+elapsed=989.33 maxrss_kib=194560

@@ -64,9 +64,12 @@ primes by a plain-arithmetic determinant implementation using Newton
 differences. The
 628-bit modulus exceeds the 607-bit character bound, so the residues determine
 those moments uniquely. It finally checks the remaining 5,509 hierarchy
-values exactly.  The optional aggregate
-`full-q3-extension-independent-controls` additionally reruns the older large
-reverse-Pieri B/D supplier.
+values exactly.  The mandatory Part III aggregate also rebuilds and reruns the
+reverse-Pieri B/D supplier on the complementary 4,869-case subledger.  Thus
+the modular/Newton and reverse-Pieri programs give disjoint secondary coverage
+of all 17,862 finite classical cases.  The
+`full-q3-extension-independent-controls` alias runs this secondary pair
+without the primary suppliers.
 
 ## Trusted-computation boundary
 

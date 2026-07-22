@@ -1,0 +1,17 @@
+purpose=consolidated exact proof certificate for all eight normalized deficit-eight sign patterns
+status=proof certificate for Proposition 17F; not a proof of deficit ten or full Q3
+compiler=g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+build=g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror analyze_su2_outer_eight.cpp -o analyze_su2_outer_eight
+command=for p in 0 1 2 3; do nice -n 19 ./analyze_su2_outer_eight 1 recursive $p; done; for p in 4 5 6 7; do nice -n 19 ./analyze_su2_outer_eight 1 deficit8-chambers $p; done
+source=character_ring_iter/analyze_su2_outer_eight.cpp
+source_sha256=8017798c63808a0fb8ee6456d1f63009db822f9e5002837915b22c37f0615de1
+binary_sha256=f87bed4bb8fae7ef5bda381bd3ff38a2b9fdf4a7b9cec3661451f2160593876f
+log_sha256=22a94c2557ed5bbcec9ffffaf23177595eb5d169de7d6195c1d3f471c8044f53
+arithmetic=boost::multiprecision::cpp_int exact integers
+threads=1
+resource_policy=one nice thread because the pre-existing 64-thread search kept machine load above available CPU count
+coverage=patterns 0-3 on all 37 original minimal orthants; patterns 4-7 on 32 lower, 20 middle, and 20 upper transformed minimal orthants
+exhaustiveness=total polynomial degree at most 8; transformed coordinate bound 16; analytic integer prefixes have proved search bounds and coefficientwise infinite tails
+result=4 recursive pattern passes and 4 global chamber pattern passes; all eight normalized deficit-eight sign sectors proved
+elapsed_seconds=260.38
+pipeline_maxrss_kib=1536

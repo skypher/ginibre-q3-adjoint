@@ -1,0 +1,6 @@
+command=OMP_NUM_THREADS=1 /tmp/verify_su2_plucker_second_syzygies_equal_source_audit --tau-even-source-formula-sweep 12
+source=character_ring_iter/verify_su2_plucker_second_syzygies.cpp
+source_sha256=3fc2a4796ac2c68e13fb99949c4e0ed61c0044c5985e66303d361c556da7e4f8
+binary_sha256=2af599ff4dffbfcd54e8a91515a83e46c654a732ea67e6701be566545e448d26
+log_sha256=626bd3c47c7cd7c5da345577949ba3ee46228d3bba5f7e3b39ab21ecb1264646
+result=All 840 unequal/equal terminal tuples through label 12 matched the explicit source formulas with multiplicity; 585 were nonempty.

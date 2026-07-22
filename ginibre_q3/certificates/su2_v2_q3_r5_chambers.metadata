@@ -1,0 +1,6 @@
+command=/tmp/verify_su2_v2_presburger_q3r5_uniform --full-q3-r5-chambers
+source=character_ring_iter/verify_su2_v2_presburger.cpp
+source_sha256=034437944006737759056ed74d9c8776a31d9ac76ae152ea945205e64718f2a6
+binary_sha256=69b0d0b53a73fdefdcec655e84c081d123d2f58d9509d24267e2250e4b2d6dd1
+log_sha256=06825bf8e73bfad544dc353a3d77ae8b907cf082b387de2e9c1121d4ec23c962
+result=20/20 fixed q=3,r=5 ordered chambers close; nineteen uniform V2 certificates and one empty chamber.

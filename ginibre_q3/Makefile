@@ -168,4 +168,4 @@ full-q3-extension-main-shard: full-q3-document-audit full-q3-classification-ledg
 	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_extension.tex
 	timeout --foreground $(REPLAY_MAX_STAGE_SECONDS)s pdflatex -interaction=nonstopmode -halt-on-error full_q3_extension.tex
 
-full-q3-extension: full-q3-extension-main-shard full-q3-bcd-bounded-littlewood-audit full-q3-bcd-independent-audit
+full-q3-extension: full-q3-extension-main-shard full-q3-bcd-bounded-littlewood-audit full-q3-bcd-independent-audit full-q3-bd-residual-audit

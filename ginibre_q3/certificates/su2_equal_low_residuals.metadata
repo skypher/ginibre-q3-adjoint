@@ -1,0 +1,6 @@
+command=Run --tau-even-equal-diagonal on the 19 q=3,5 residual triples listed by Lemma 12F28A.
+source=character_ring_iter/verify_su2_plucker_second_syzygies.cpp
+source_sha256=addff802c535a8e738f6bbe70d500e76f3232e943358f2ded6847c22d00ce90c
+binary_sha256=30b57f57dde79760e93f7e725bf950098b0dd5c28b051bbd0d19fce54ed09267
+log_sha256=727c35af59829193b5dac017df1575e5a91fa465d811c3d606e4c3e30cfc7eb2
+result=All 19 fixed low-degree residuals satisfy the corrected symmetric/antisymmetric criteria, with the cubic case carrying the expected one-dimensional antisymmetric kernel.

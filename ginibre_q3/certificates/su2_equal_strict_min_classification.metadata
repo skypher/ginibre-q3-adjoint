@@ -1,0 +1,6 @@
+command=/tmp/verify_su2_v2_presburger_equal_all_clean --full-equal-strict-min-classification
+source=character_ring_iter/verify_su2_v2_presburger.cpp
+source_sha256=73fc2916605594765bb2a1bd4047753445a42a2f4484545fc705eed628dc5df0
+binary_sha256=517d25109030c993d9d313d88db921618655f837a3a28f169fb6cf6f97b45364
+log_sha256=750b1b1be0bfaa1a523db97d3664a03f010e68ae5e36c2552ff11e6ecae7fa80
+result=For every odd q>=3, every strict-minimum V2 residual is one of 19 fixed q=3,5 cases or belongs to one of 13 affine q>=7 families.

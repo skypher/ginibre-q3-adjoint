@@ -1,0 +1,244 @@
+minimal_bases=37
+RECURSIVE_NEWTON_PASS pattern=0 bases=37 nodes=37 leaves=37 splits=0 maximum_depth=0 maximum_base=9,5,4,3
+minimal_bases=37
+RECURSIVE_NEWTON_PASS pattern=1 bases=37 nodes=37 leaves=37 splits=0 maximum_depth=0 maximum_base=9,5,4,3
+minimal_bases=37
+RECURSIVE_NEWTON_PASS pattern=2 bases=37 nodes=71 leaves=54 splits=17 maximum_depth=4 maximum_base=9,5,4,3
+minimal_bases=37
+RECURSIVE_NEWTON_PASS pattern=3 bases=37 nodes=71 leaves=54 splits=17 maximum_depth=4 maximum_base=9,5,4,3
+minimal_bases=37
+PATTERN4_TEMPLATE_SELF_AUDIT middle_boundary=26 middle_discriminants=PASS
+PATTERN4_CHAMBER_BASES chamber=lower count=32
+PATTERN4_CHAMBER_SUMMARY chamber=lower passes=32 exceptions=0 analytic_exceptions=0
+PATTERN4_CHAMBER_BASES chamber=middle count=20
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,0,0,3 base=0,0,0,3 chamber=middle degree=5,2,0,0
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,0,2,2 base=0,0,2,2 chamber=middle degree=5,2,0,0
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,0,3,1 base=0,0,3,1 chamber=middle degree=5,2,0,0
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,0,4,0 base=0,0,4,0 chamber=middle degree=5,2,0,0
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,1,0,2 base=1,2,0,2 chamber=middle degree=1,6,0,0
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,1,1,1 base=1,2,1,1 chamber=middle degree=1,6,0,0
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,1,2,0 base=1,2,2,0 chamber=middle degree=1,6,0,0
+PATTERN4_CHAMBER_EXCEPTION transformed_base=1,0,1,2 base=1,1,1,2 chamber=middle degree=1,6,0,0
+PATTERN4_CHAMBER_EXCEPTION transformed_base=1,0,2,1 base=1,1,2,1 chamber=middle degree=1,6,0,0
+PATTERN4_CHAMBER_EXCEPTION transformed_base=1,0,3,0 base=1,1,3,0 chamber=middle degree=1,6,0,0
+PATTERN4_CHAMBER_SUMMARY chamber=middle passes=10 exceptions=10 analytic_exceptions=10
+PATTERN4_CHAMBER_BASES chamber=upper count=20
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,0,0,3 base=0,0,0,3 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,0,0,3 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,0,2,2 base=0,0,2,2 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,0,2,2 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,0,3,1 base=0,0,3,1 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,0,3,1 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,0,4,0 base=0,0,4,0 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,0,4,0 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,1,1,2 base=0,1,1,2 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,1,1,2 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,1,2,1 base=0,1,2,1 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,1,2,1 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,1,3,0 base=0,1,3,0 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,1,3,0 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,2,0,2 base=0,2,0,2 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,2,0,2 a_tail=3 negative_linear_threshold=34 discriminant_tail=34
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,3,1,1 base=0,3,1,1 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,3,1,1 a_tail=3 negative_linear_threshold=34 discriminant_tail=34
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,3,2,0 base=0,3,2,0 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,3,2,0 a_tail=3 negative_linear_threshold=34 discriminant_tail=34
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,4,0,1 base=0,4,0,1 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,4,0,1 a_tail=3 negative_linear_threshold=35 discriminant_tail=35
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,4,1,0 base=0,4,1,0 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,4,1,0 a_tail=3 negative_linear_threshold=35 discriminant_tail=35
+PATTERN4_CHAMBER_EXCEPTION transformed_base=0,5,0,0 base=0,5,0,0 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=0,5,0,0 a_tail=5 negative_linear_threshold=35 discriminant_tail=35
+PATTERN4_CHAMBER_EXCEPTION transformed_base=1,0,0,2 base=1,2,0,2 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=1,0,0,2 a_tail=1 negative_linear_threshold=31 discriminant_tail=31
+PATTERN4_CHAMBER_EXCEPTION transformed_base=1,0,1,1 base=1,2,1,1 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=1,0,1,1 a_tail=1 negative_linear_threshold=31 discriminant_tail=31
+PATTERN4_CHAMBER_EXCEPTION transformed_base=1,0,2,0 base=1,2,2,0 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=1,0,2,0 a_tail=1 negative_linear_threshold=31 discriminant_tail=31
+PATTERN4_CHAMBER_EXCEPTION transformed_base=1,2,0,1 base=1,4,0,1 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=1,2,0,1 a_tail=1 negative_linear_threshold=32 discriminant_tail=32
+PATTERN4_CHAMBER_EXCEPTION transformed_base=1,2,1,0 base=1,4,1,0 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=1,2,1,0 a_tail=1 negative_linear_threshold=32 discriminant_tail=32
+PATTERN4_CHAMBER_EXCEPTION transformed_base=1,3,0,0 base=1,5,0,0 chamber=upper degree=7,0,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=1,3,0,0 a_tail=1 negative_linear_threshold=33 discriminant_tail=33
+PATTERN4_CHAMBER_EXCEPTION transformed_base=2,0,0,0 base=2,4,0,0 chamber=upper degree=6,1,0,0
+PATTERN4_UPPER_ANALYTIC_PASS transformed_base=2,0,0,0 a_tail=0 negative_linear_threshold=30 discriminant_tail=30
+PATTERN4_CHAMBER_SUMMARY chamber=upper passes=0 exceptions=20 analytic_exceptions=20
+PATTERN4_GLOBAL_CHAMBER_CERTIFICATE PASS
+minimal_bases=37
+PATTERN5_TEMPLATE_SELF_AUDIT middle_boundary=26 middle_discriminants=PASS
+PATTERN5_CHAMBER_BASES chamber=lower count=32
+PATTERN5_CHAMBER_SUMMARY chamber=lower passes=32 exceptions=0 analytic_exceptions=0
+PATTERN5_CHAMBER_BASES chamber=middle count=20
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,0,0,3 base=0,0,0,3 chamber=middle degree=5,2,0,0
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,0,2,2 base=0,0,2,2 chamber=middle degree=5,2,0,0
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,0,3,1 base=0,0,3,1 chamber=middle degree=5,2,0,0
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,0,4,0 base=0,0,4,0 chamber=middle degree=5,2,0,0
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,1,0,2 base=1,2,0,2 chamber=middle degree=1,6,0,0
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,1,1,1 base=1,2,1,1 chamber=middle degree=1,6,0,0
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,1,2,0 base=1,2,2,0 chamber=middle degree=1,6,0,0
+PATTERN5_CHAMBER_EXCEPTION transformed_base=1,0,1,2 base=1,1,1,2 chamber=middle degree=1,6,0,0
+PATTERN5_CHAMBER_EXCEPTION transformed_base=1,0,2,1 base=1,1,2,1 chamber=middle degree=1,6,0,0
+PATTERN5_CHAMBER_EXCEPTION transformed_base=1,0,3,0 base=1,1,3,0 chamber=middle degree=1,6,0,0
+PATTERN5_CHAMBER_SUMMARY chamber=middle passes=10 exceptions=10 analytic_exceptions=10
+PATTERN5_CHAMBER_BASES chamber=upper count=20
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,0,0,3 base=0,0,0,3 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,0,0,3 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,0,2,2 base=0,0,2,2 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,0,2,2 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,0,3,1 base=0,0,3,1 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,0,3,1 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,0,4,0 base=0,0,4,0 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,0,4,0 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,1,1,2 base=0,1,1,2 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,1,1,2 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,1,2,1 base=0,1,2,1 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,1,2,1 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,1,3,0 base=0,1,3,0 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,1,3,0 a_tail=3 negative_linear_threshold=33 discriminant_tail=33
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,2,0,2 base=0,2,0,2 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,2,0,2 a_tail=3 negative_linear_threshold=34 discriminant_tail=34
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,3,1,1 base=0,3,1,1 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,3,1,1 a_tail=3 negative_linear_threshold=34 discriminant_tail=34
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,3,2,0 base=0,3,2,0 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,3,2,0 a_tail=3 negative_linear_threshold=34 discriminant_tail=34
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,4,0,1 base=0,4,0,1 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,4,0,1 a_tail=3 negative_linear_threshold=35 discriminant_tail=35
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,4,1,0 base=0,4,1,0 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,4,1,0 a_tail=3 negative_linear_threshold=35 discriminant_tail=35
+PATTERN5_CHAMBER_EXCEPTION transformed_base=0,5,0,0 base=0,5,0,0 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=0,5,0,0 a_tail=5 negative_linear_threshold=35 discriminant_tail=35
+PATTERN5_CHAMBER_EXCEPTION transformed_base=1,0,0,2 base=1,2,0,2 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=1,0,0,2 a_tail=1 negative_linear_threshold=31 discriminant_tail=31
+PATTERN5_CHAMBER_EXCEPTION transformed_base=1,0,1,1 base=1,2,1,1 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=1,0,1,1 a_tail=1 negative_linear_threshold=31 discriminant_tail=31
+PATTERN5_CHAMBER_EXCEPTION transformed_base=1,0,2,0 base=1,2,2,0 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=1,0,2,0 a_tail=1 negative_linear_threshold=31 discriminant_tail=31
+PATTERN5_CHAMBER_EXCEPTION transformed_base=1,2,0,1 base=1,4,0,1 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=1,2,0,1 a_tail=1 negative_linear_threshold=32 discriminant_tail=32
+PATTERN5_CHAMBER_EXCEPTION transformed_base=1,2,1,0 base=1,4,1,0 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=1,2,1,0 a_tail=1 negative_linear_threshold=32 discriminant_tail=32
+PATTERN5_CHAMBER_EXCEPTION transformed_base=1,3,0,0 base=1,5,0,0 chamber=upper degree=7,0,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=1,3,0,0 a_tail=1 negative_linear_threshold=33 discriminant_tail=33
+PATTERN5_CHAMBER_EXCEPTION transformed_base=2,0,0,0 base=2,4,0,0 chamber=upper degree=6,1,0,0
+PATTERN5_UPPER_ANALYTIC_PASS transformed_base=2,0,0,0 a_tail=0 negative_linear_threshold=30 discriminant_tail=30
+PATTERN5_CHAMBER_SUMMARY chamber=upper passes=0 exceptions=20 analytic_exceptions=20
+PATTERN5_GLOBAL_CHAMBER_CERTIFICATE PASS
+minimal_bases=37
+PATTERN6_TEMPLATE_SELF_AUDIT middle_boundary=26 middle_discriminants=PASS label_three_middle_block=PASS
+PATTERN6_CHAMBER_BASES chamber=lower count=32
+PATTERN6_CHAMBER_SUMMARY chamber=lower passes=32 exceptions=0 analytic_exceptions=0
+PATTERN6_CHAMBER_BASES chamber=middle count=20
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,0,0,3 base=0,0,0,3 chamber=middle degree=5,2,0,0
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,0,2,2 base=0,0,2,2 chamber=middle degree=5,2,0,0
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,0,3,1 base=0,0,3,1 chamber=middle degree=5,2,0,0
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,0,4,0 base=0,0,4,0 chamber=middle degree=5,2,0,0
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,1,0,2 base=1,2,0,2 chamber=middle degree=1,6,0,0
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,1,1,1 base=1,2,1,1 chamber=middle degree=1,6,0,0
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,1,2,0 base=1,2,2,0 chamber=middle degree=1,6,0,0
+PATTERN6_CHAMBER_EXCEPTION transformed_base=1,0,1,2 base=1,1,1,2 chamber=middle degree=1,6,0,0
+PATTERN6_CHAMBER_EXCEPTION transformed_base=1,0,2,1 base=1,1,2,1 chamber=middle degree=1,6,0,0
+PATTERN6_CHAMBER_EXCEPTION transformed_base=1,0,3,0 base=1,1,3,0 chamber=middle degree=1,6,0,0
+PATTERN6_CHAMBER_SUMMARY chamber=middle passes=10 exceptions=10 analytic_exceptions=10
+PATTERN6_CHAMBER_BASES chamber=upper count=20
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,0,0,3 base=0,0,0,3 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,0,0,3 label_three_tail=3 discriminant_tail=6
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,0,2,2 base=0,0,2,2 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,0,2,2 label_three_tail=3 discriminant_tail=4
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,0,3,1 base=0,0,3,1 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,0,3,1 label_three_tail=3 discriminant_tail=4
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,0,4,0 base=0,0,4,0 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,0,4,0 label_three_tail=3 discriminant_tail=4
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,1,1,2 base=0,1,1,2 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,1,1,2 label_three_tail=3 discriminant_tail=7
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,1,2,1 base=0,1,2,1 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,1,2,1 label_three_tail=3 discriminant_tail=7
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,1,3,0 base=0,1,3,0 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,1,3,0 label_three_tail=3 discriminant_tail=6
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,2,0,2 base=0,2,0,2 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,2,0,2 label_three_tail=3 discriminant_tail=10
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,3,1,1 base=0,3,1,1 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,3,1,1 label_three_tail=3 discriminant_tail=10
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,3,2,0 base=0,3,2,0 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,3,2,0 label_three_tail=3 discriminant_tail=10
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,4,0,1 base=0,4,0,1 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,4,0,1 label_three_tail=3 discriminant_tail=12
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,4,1,0 base=0,4,1,0 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,4,1,0 label_three_tail=3 discriminant_tail=12
+PATTERN6_CHAMBER_EXCEPTION transformed_base=0,5,0,0 base=0,5,0,0 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=0,5,0,0 label_three_tail=3 discriminant_tail=13
+PATTERN6_CHAMBER_EXCEPTION transformed_base=1,0,0,2 base=1,2,0,2 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=1,0,0,2 label_three_tail=0 discriminant_tail=9
+PATTERN6_CHAMBER_EXCEPTION transformed_base=1,0,1,1 base=1,2,1,1 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=1,0,1,1 label_three_tail=0 discriminant_tail=9
+PATTERN6_CHAMBER_EXCEPTION transformed_base=1,0,2,0 base=1,2,2,0 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=1,0,2,0 label_three_tail=0 discriminant_tail=9
+PATTERN6_CHAMBER_EXCEPTION transformed_base=1,2,0,1 base=1,4,0,1 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=1,2,0,1 label_three_tail=0 discriminant_tail=10
+PATTERN6_CHAMBER_EXCEPTION transformed_base=1,2,1,0 base=1,4,1,0 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=1,2,1,0 label_three_tail=0 discriminant_tail=10
+PATTERN6_CHAMBER_EXCEPTION transformed_base=1,3,0,0 base=1,5,0,0 chamber=upper degree=7,0,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=1,3,0,0 label_three_tail=0 discriminant_tail=12
+PATTERN6_CHAMBER_EXCEPTION transformed_base=2,0,0,0 base=2,4,0,0 chamber=upper degree=6,1,0,0
+PATTERN6_UPPER_ANALYTIC_PASS transformed_base=2,0,0,0 label_three_tail=0 discriminant_tail=9
+PATTERN6_CHAMBER_SUMMARY chamber=upper passes=0 exceptions=20 analytic_exceptions=20
+PATTERN6_GLOBAL_CHAMBER_CERTIFICATE PASS
+minimal_bases=37
+PATTERN7_TEMPLATE_SELF_AUDIT middle_boundary=26 middle_discriminants=PASS label_three_middle_block=PASS
+PATTERN7_CHAMBER_BASES chamber=lower count=32
+PATTERN7_CHAMBER_SUMMARY chamber=lower passes=32 exceptions=0 analytic_exceptions=0
+PATTERN7_CHAMBER_BASES chamber=middle count=20
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,0,0,3 base=0,0,0,3 chamber=middle degree=5,2,0,0
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,0,2,2 base=0,0,2,2 chamber=middle degree=5,2,0,0
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,0,3,1 base=0,0,3,1 chamber=middle degree=5,2,0,0
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,0,4,0 base=0,0,4,0 chamber=middle degree=5,2,0,0
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,1,0,2 base=1,2,0,2 chamber=middle degree=1,6,0,0
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,1,1,1 base=1,2,1,1 chamber=middle degree=1,6,0,0
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,1,2,0 base=1,2,2,0 chamber=middle degree=1,6,0,0
+PATTERN7_CHAMBER_EXCEPTION transformed_base=1,0,1,2 base=1,1,1,2 chamber=middle degree=1,6,0,0
+PATTERN7_CHAMBER_EXCEPTION transformed_base=1,0,2,1 base=1,1,2,1 chamber=middle degree=1,6,0,0
+PATTERN7_CHAMBER_EXCEPTION transformed_base=1,0,3,0 base=1,1,3,0 chamber=middle degree=1,6,0,0
+PATTERN7_CHAMBER_SUMMARY chamber=middle passes=10 exceptions=10 analytic_exceptions=10
+PATTERN7_CHAMBER_BASES chamber=upper count=20
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,0,0,3 base=0,0,0,3 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,0,0,3 label_three_tail=3 discriminant_tail=7
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,0,2,2 base=0,0,2,2 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,0,2,2 label_three_tail=3 discriminant_tail=4
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,0,3,1 base=0,0,3,1 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,0,3,1 label_three_tail=3 discriminant_tail=4
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,0,4,0 base=0,0,4,0 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,0,4,0 label_three_tail=3 discriminant_tail=4
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,1,1,2 base=0,1,1,2 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,1,1,2 label_three_tail=3 discriminant_tail=7
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,1,2,1 base=0,1,2,1 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,1,2,1 label_three_tail=3 discriminant_tail=7
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,1,3,0 base=0,1,3,0 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,1,3,0 label_three_tail=3 discriminant_tail=6
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,2,0,2 base=0,2,0,2 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,2,0,2 label_three_tail=3 discriminant_tail=10
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,3,1,1 base=0,3,1,1 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,3,1,1 label_three_tail=3 discriminant_tail=10
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,3,2,0 base=0,3,2,0 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,3,2,0 label_three_tail=3 discriminant_tail=10
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,4,0,1 base=0,4,0,1 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,4,0,1 label_three_tail=3 discriminant_tail=12
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,4,1,0 base=0,4,1,0 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,4,1,0 label_three_tail=3 discriminant_tail=12
+PATTERN7_CHAMBER_EXCEPTION transformed_base=0,5,0,0 base=0,5,0,0 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=0,5,0,0 label_three_tail=3 discriminant_tail=13
+PATTERN7_CHAMBER_EXCEPTION transformed_base=1,0,0,2 base=1,2,0,2 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=1,0,0,2 label_three_tail=0 discriminant_tail=9
+PATTERN7_CHAMBER_EXCEPTION transformed_base=1,0,1,1 base=1,2,1,1 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=1,0,1,1 label_three_tail=0 discriminant_tail=9
+PATTERN7_CHAMBER_EXCEPTION transformed_base=1,0,2,0 base=1,2,2,0 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=1,0,2,0 label_three_tail=0 discriminant_tail=9
+PATTERN7_CHAMBER_EXCEPTION transformed_base=1,2,0,1 base=1,4,0,1 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=1,2,0,1 label_three_tail=0 discriminant_tail=10
+PATTERN7_CHAMBER_EXCEPTION transformed_base=1,2,1,0 base=1,4,1,0 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=1,2,1,0 label_three_tail=0 discriminant_tail=10
+PATTERN7_CHAMBER_EXCEPTION transformed_base=1,3,0,0 base=1,5,0,0 chamber=upper degree=7,0,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=1,3,0,0 label_three_tail=0 discriminant_tail=12
+PATTERN7_CHAMBER_EXCEPTION transformed_base=2,0,0,0 base=2,4,0,0 chamber=upper degree=6,1,0,0
+PATTERN7_UPPER_ANALYTIC_PASS transformed_base=2,0,0,0 label_three_tail=0 discriminant_tail=9
+PATTERN7_CHAMBER_SUMMARY chamber=upper passes=0 exceptions=20 analytic_exceptions=20
+PATTERN7_GLOBAL_CHAMBER_CERTIFICATE PASS

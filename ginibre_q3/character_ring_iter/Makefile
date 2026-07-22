@@ -59,6 +59,30 @@ all: dunkl_exceptional_coefficients_gmp
 
 replay-build: $(REPLAY_TARGETS)
 
+verify_su2_plucker_second_syzygies: verify_su2_plucker_second_syzygies.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror -fopenmp $< -o $@
+
+verify_su2_v2_presburger: verify_su2_v2_presburger.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+verify_su2_equal_terminal_exception: verify_su2_equal_terminal_exception.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+search_su2_equal_terminal_tropical_minor: search_su2_equal_terminal_tropical_minor.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+analyze_su2_outer_eight: analyze_su2_outer_eight.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_outer_ten: analyze_su2_outer_ten.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 post_m29_bc_frontiers_unified: post_m29_bc_frontiers_unified.cpp $(addsuffix .cpp,$(REPLAY_LIGHT_TARGETS)) frontier_runtime_scope.hpp
 	$(CXX) -O0 -march=native -std=c++20 -Wall -fopenmp $< $(LIBS) -o $@
 	@for alias in $(REPLAY_LIGHT_TARGETS); do ln -sf post_m29_bc_frontiers_unified $$alias; done

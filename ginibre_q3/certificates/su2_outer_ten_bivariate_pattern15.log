@@ -1,0 +1,6 @@
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_BIVARIATE_STURM_PASS pattern=15 chamber=lower bases=78 direct_passes=65 bivariate_passes=13 polynomials=728 direct_polynomials=520 sturm_polynomials=208 sturm_slices=26 finite_newton_slices=6162 maximum_cutoff=64 maximum_weight=10
+SU2_OUTER_TEN_BIVARIATE_STURM_PASS pattern=15 chamber=middle bases=54 direct_passes=0 bivariate_passes=54 polynomials=3024 direct_polynomials=2423 sturm_polynomials=601 sturm_slices=442 finite_newton_slices=28914 maximum_cutoff=256 maximum_weight=10
+SU2_OUTER_TEN_BIVARIATE_STURM_PASS pattern=15 chamber=upper bases=57 direct_passes=0 bivariate_passes=57 polynomials=3192 direct_polynomials=2395 sturm_polynomials=797 sturm_slices=63725 finite_newton_slices=21038 maximum_cutoff=1024 maximum_weight=10
+SU2_OUTER_TEN_BIVARIATE_STURM_GLOBAL_PASS pattern=15
+elapsed=278.99 maxrss_kib=27136

@@ -1,0 +1,6 @@
+command=OMP_NUM_THREADS=1 /tmp/verify_su2_plucker_second_syzygies_strict_min --tau-even-equal-diagonal-sweep 16
+source=character_ring_iter/verify_su2_plucker_second_syzygies.cpp
+source_sha256=5ea67ac31fd83cd6c1ab99b18938a0aa74501dbb6f2bf8625db88f859ff11260
+binary_sha256=217cc2a8a16ec2796b8e480d3aa42eea1c2e8f6f38d64b569cccc6630c534cc5
+log_sha256=15a65b6ef626b02773cacfdd09980234a71dbe0b317bb2e1d6acf7f5f0a87bce
+result=343/343 nonempty equal-terminal cases pass the corrected union criterion

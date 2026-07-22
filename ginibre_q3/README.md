@@ -36,8 +36,11 @@ one run; `fullq3bcdboundedfinal0001_current_source` authenticates that unified
 run, while `fullq3bcdmodularfinal0001_current_source` authenticates the
 separate modular/Newton check of the 12,993-case low-row subledger.  The older
 `fullq3bcd0010` and `fullq3bcd0002` transcripts provide independent historical
-coverage of the 12,993-case and complementary 4,869-case subledgers.  No
-single secondary checker covers the complete 17,862-case box. The
+coverage of the 12,993-case and complementary 4,869-case subledgers.  The
+current aggregate now rebuilds both the modular/Newton checker and the
+algorithmically independent reverse-Pieri checker for the complementary
+4,869-case box.  Their disjoint union is a mandatory secondary check of all
+17,862 residual inequalities. The
 finite-rank analytic tail is separately pinned by
 the corrected machine-C replay `fullq3bcdanalytic0003`: in type B the fixed
 `+1` eigenvalue cancels the `-1` mean of the random eigenvalue contribution,

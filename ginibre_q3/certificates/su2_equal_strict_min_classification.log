@@ -1,0 +1,2 @@
+SU2_EQUAL_STRICT_MIN_CLASSIFICATION q>=3 result=unsat low_cases=19 residual_families=13
+elapsed=192.75 maxrss_kib=144280

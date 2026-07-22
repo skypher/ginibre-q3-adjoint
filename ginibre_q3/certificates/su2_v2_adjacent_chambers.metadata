@@ -1,0 +1,6 @@
+command=/tmp/verify_su2_v2_presburger_uniform_chambers --full-adjacent-chambers
+source=character_ring_iter/verify_su2_v2_presburger.cpp
+binary_sha256=e502cfd5110558e86b2f508b0d18eeaf7b8882824445f60c880214d57c079930
+log_sha256=3c2b76c841676c7af82bdeaf9285ce52f07858968b5393095121550fafd01c7c
+result=35/35 ordered chambers closed; five excluded chambers are Lemma 12F24A
+note=The current source has only additive equal-terminal diagnostics after this binary build; the adjacent branch is unchanged.

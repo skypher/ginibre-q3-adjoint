@@ -1,0 +1,16 @@
+certificate: SU(2) outer deficit ten, normalized patterns 8 through 15
+date_utc: 2026-07-22
+arithmetic: boost::multiprecision::cpp_int and boost::rational<cpp_int>
+build: make analyze_su2_outer_ten
+replay: for p in 8 9 10 11 12 13 14 15; do ./analyze_su2_outer_ten 1 bivariate-sturm "$p"; done
+source_sha256: 3129521367ae6fef839548021e5c6118a6f0aed74c6f538dac6507ddaf8bc03f
+binary_sha256: 25d14ed30e8be113babeb226c1988ccb90002f7caff1580764db1f5e62c77ea5
+pattern8_log_sha256: d435c2902ebef7126d94c82b793f9ca1ad63182c4d18ed9ddb3e0c471acb95b3
+pattern9_log_sha256: 560501a646d6c343e7c9b79ab683f1f4cd652bd5bb860dba8e6113aed802f0ea
+pattern10_log_sha256: 449bbd7ffa67197270da6c43040a85cc4c2de84c139d3f927ad6256b823d9438
+pattern11_log_sha256: 9bf4590d028f4b2506c590d6bec119d2c4a49d5378781c2f263bfa5caef9d18a
+pattern12_log_sha256: 8f028e12fdb294489fbd22a700337efffeeffc74368390b664ec351b657e051b
+pattern13_log_sha256: ed33f41b41f4b8096db9c4b7be4c961ab1b8b1a01f3dd5d50b72e667e74f19b0
+pattern14_log_sha256: 6e6a356f8e09650772209c66c4aa0dbc5cb25ef9e0c732feca303c0972fa6b1d
+pattern15_log_sha256: 4ca64aa230eac371a3dd43087283f339a1550dea88f40bef368096ad220ac202
+scope_note: Together with the direct/recursive certificates for patterns 0 through 7, these exact chamber certificates prove every normalized deficit-ten sign sector. They do not by themselves prove higher deficits or full GKS2*.

@@ -1,0 +1,3 @@
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_SEARCH PASS tested=846112 maximum_total_count=20 minimum=9 pattern=0 counts=0,0,0,0,3
+elapsed=110.45 maxrss_kib=22528

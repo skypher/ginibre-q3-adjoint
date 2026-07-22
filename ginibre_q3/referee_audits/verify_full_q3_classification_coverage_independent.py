@@ -570,6 +570,19 @@ def main() -> int:
     general_a_residual = validate_general_type_a(text)
     exceptional = parse_exceptional_rows(text)
     b_finite_residual, d_finite_residual = validate_finite_bd_rows(text)
+    secondary_low_keys = set(low_rows)
+    secondary_reverse_pieri_keys = (
+        {("B", rank) for rank in range(18, 22)}
+        | {("D", rank) for rank in range(31, 71)}
+    )
+    require(
+        not (secondary_low_keys & secondary_reverse_pieri_keys),
+        "secondary finite-classical checker domains overlap",
+    )
+    require(
+        secondary_low_keys | secondary_reverse_pieri_keys == expected_bounded_keys,
+        "secondary finite-classical checker domains do not exhaust the primary ledger",
+    )
     require(
         low_residual + b_finite_residual + d_finite_residual == 17862,
         "unified bounded residual count is not 17,862",
@@ -602,6 +615,7 @@ def main() -> int:
         f"exceptional_groups={len(exceptional)} exceptional_residual_pairs={exceptional_residual} "
         f"finite_B_residual_pairs={b_finite_residual} "
         f"finite_D_residual_pairs={d_finite_residual} "
+        "secondary_partitions=12993+4869 secondary_scope=17862 "
         f"sampled_classical_ranks={classical_ranks} rank_overlaps={rank_overlaps} "
         "rank_gaps=0 degree_gaps=0 scope_gaps=0 "
         f"mutations_rejected={mutation_count}"

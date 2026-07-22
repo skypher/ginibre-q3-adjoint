@@ -1,0 +1,48 @@
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_PASS pattern=0 bases=94 coefficients=282282
+PATTERN_TIME pattern=0 elapsed=61.38 maxrss_kib=16384
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_PASS pattern=1 bases=94 coefficients=282282
+PATTERN_TIME pattern=1 elapsed=43.14 maxrss_kib=14848
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_PASS pattern=2 bases=94 coefficients=282282
+PATTERN_TIME pattern=2 elapsed=35.88 maxrss_kib=15872
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_PASS pattern=3 bases=94 coefficients=282282
+PATTERN_TIME pattern=3 elapsed=75.84 maxrss_kib=16384
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=4 base=0,0,0,0,3 degree=1,1,1,1,0 value=-1 tested=106
+PATTERN_TIME pattern=4 elapsed=0.02 maxrss_kib=3072
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=5 base=0,0,0,0,3 degree=1,1,1,1,0 value=-1 tested=106
+PATTERN_TIME pattern=5 elapsed=0.04 maxrss_kib=3072
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=6 base=0,0,0,0,3 degree=1,2,1,0,0 value=-2 tested=110
+PATTERN_TIME pattern=6 elapsed=0.04 maxrss_kib=3072
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=7 base=0,0,0,0,3 degree=1,2,1,0,0 value=-2 tested=110
+PATTERN_TIME pattern=7 elapsed=0.03 maxrss_kib=3584
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=8 base=0,0,0,0,3 degree=1,1,2,0,0 value=-1 tested=107
+PATTERN_TIME pattern=8 elapsed=0.03 maxrss_kib=3072
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=9 base=0,0,0,0,3 degree=1,1,2,0,0 value=-1 tested=107
+PATTERN_TIME pattern=9 elapsed=0.02 maxrss_kib=3584
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=10 base=0,0,0,0,3 degree=1,1,2,0,0 value=-1 tested=107
+PATTERN_TIME pattern=10 elapsed=0.02 maxrss_kib=3072
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=11 base=0,0,0,0,3 degree=1,1,2,0,0 value=-1 tested=107
+PATTERN_TIME pattern=11 elapsed=0.02 maxrss_kib=3584
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=12 base=0,0,0,0,3 degree=4,1,0,0,1 value=-1 tested=454
+PATTERN_TIME pattern=12 elapsed=0.06 maxrss_kib=3584
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=13 base=0,0,0,0,3 degree=4,1,0,0,1 value=-1 tested=454
+PATTERN_TIME pattern=13 elapsed=0.05 maxrss_kib=3584
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=14 base=0,0,0,0,3 degree=4,1,0,0,1 value=-1 tested=454
+PATTERN_TIME pattern=14 elapsed=0.05 maxrss_kib=3584
+SU2_OUTER_TEN_MINIMAL_BASES count=94
+SU2_OUTER_TEN_NEWTON_FAIL pattern=15 base=0,0,0,0,3 degree=4,1,0,0,1 value=-1 tested=454
+PATTERN_TIME pattern=15 elapsed=0.06 maxrss_kib=3072

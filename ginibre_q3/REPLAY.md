@@ -196,7 +196,10 @@ unified current-source exact transcript is
 requires its verifier/data hashes, terminal marker, wrapper exit status zero,
 and adjacent SHA-256 sidecar.  The older `fullq3bcd0010` and
 `fullq3bcd0002` transcripts retain independent historical coverage of the
-12,993-case and 4,869-case subledgers.  The mandatory modular/Newton result is
+12,993-case and 4,869-case subledgers.  The aggregate now rebuilds both the
+modular/Newton checker for the first subledger and the reverse-Pieri checker
+for the second, giving mandatory partitioned secondary coverage of all 17,862
+cases.  The modular/Newton result is
 separately authenticated by
 `certificates/full_q3/fullq3bcdmodularfinal0001_current_source.log` and its
 adjacent sidecar.
@@ -323,11 +326,12 @@ modulus-dominance test pass.
 The modular checker is a mandatory dependency of
 `make -C ginibre_q3 full-q3-extension`; a successful Part III aggregate must
 therefore pass both the promotion verifier and this distinct implementation.
-The optional aggregate
-`make -C ginibre_q3 full-q3-extension-independent-controls` additionally
-runs the historical reverse-Pieri supplier for the 4,869-case B/D box.  That
-larger traversal is retained as a further algorithmically independent overlap,
-not as a second mandatory supplier.
+The same aggregate also runs the reverse-Pieri supplier for the complementary
+4,869-case B/D box.  The alias
+`make -C ginibre_q3 full-q3-extension-independent-controls` runs the same two
+secondary programs without the primary suppliers.  The classification audit
+checks that their disjoint scopes have sizes 12,993 and 4,869 and exhaust the
+17,862-case primary box.
 
 To preserve a timestamped raw audit log, use the wrapper with a new absolute
 directory:

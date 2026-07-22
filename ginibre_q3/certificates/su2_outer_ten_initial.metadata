@@ -1,0 +1,16 @@
+purpose=initial exact finite diagnostic for the deficit-ten outer layer
+status=diagnostic only; finite search is not an unbounded deficit-ten proof
+compiler=g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+build=g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror analyze_su2_outer_ten.cpp -o analyze_su2_outer_ten
+command=nice -n 19 ./analyze_su2_outer_ten 20 search
+source=character_ring_iter/analyze_su2_outer_ten.cpp
+source_sha256=ca71917d370d1fae2f7a8d3c0154af0e6ac366dd5b03a1ed78adbd6a07023e9e
+binary_sha256=742efa57fc1dc2de54aeed81697d9a8bd3bbb7b5a1928474231b6de1e280b1dd
+log_sha256=e64786ad319702d81d087dc48fc169733af4e28a67724febdd71eefc4f77b66c
+arithmetic=boost::multiprecision::cpp_int exact integers
+threads=1
+resource_policy=one nice thread because the pre-existing 64-thread search kept machine load above available CPU count
+reduction=labels 1-5, 16 normalized sign patterns, 94 exhaustive minimal bases
+result=846112 cases through 20 factors passed; minimum 9
+elapsed_seconds=110.45
+maxrss_kib=22528

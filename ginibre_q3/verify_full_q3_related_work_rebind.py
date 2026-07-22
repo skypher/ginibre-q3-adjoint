@@ -582,14 +582,14 @@ def main() -> int:
     independent_recipe = target_header("full-q3-extension-independent-controls")
     require(
         "full-q3-bcd-bounded-littlewood-audit" in extension_recipe
-        and "full-q3-bd-residual-audit" not in extension_recipe
+        and "full-q3-bd-residual-audit" in extension_recipe
         and "full-q3-bcd-independent-audit" in extension_recipe,
-        "mandatory Part III target omits the unified supplier or modular cross-check",
+        "mandatory Part III target omits a primary or complete-secondary supplier",
     )
     require(
         "full-q3-bd-residual-audit" in independent_recipe
         and "full-q3-bcd-independent-audit" in independent_recipe,
-        "optional Part III controls omit an independent overlap",
+        "Part III secondary controls omit part of the complete independent overlap",
     )
     require(
         "PUBLICATION_SOURCE_DATE_EPOCH ?= 1784419200" in live_makefile

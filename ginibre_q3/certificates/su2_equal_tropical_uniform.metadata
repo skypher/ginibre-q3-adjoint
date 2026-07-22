@@ -1,0 +1,6 @@
+command=for family in 0 2 3 4 5 6 7 8 9 10 11 12; do ./search_su2_equal_terminal_tropical_minor --uniform-family $family; done
+source=character_ring_iter/search_su2_equal_terminal_tropical_minor.cpp
+source_sha256=f51a8e75aea07beecde92399bddf314fac935a91378660be59398fa99db7a34b
+binary_sha256=39a0e7981036d6660c5973b111dae2ae88b7e4236101ece0080d2a2e359398ea
+log_sha256=8714d71f70b19d952240f52d827914e1c0bffe651412c2f0e6cd2ce4b16a3282
+result=24/24 symmetric/antisymmetric sectors in the twelve nonexceptional affine families have exact uniform tropical minors for every odd q>=7.

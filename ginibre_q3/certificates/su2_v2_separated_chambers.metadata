@@ -1,0 +1,6 @@
+command=/tmp/verify_su2_v2_presburger_q3r5_uniform --full-separated-chambers
+source=character_ring_iter/verify_su2_v2_presburger.cpp
+source_sha256=034437944006737759056ed74d9c8776a31d9ac76ae152ea945205e64718f2a6
+binary_sha256=69b0d0b53a73fdefdcec655e84c081d123d2f58d9509d24267e2250e4b2d6dd1
+log_sha256=ac02f72727811b178455d85e6f13a24602553f130fb8edf332bd65d3b592ae0c
+result=84/84 ordered separated chambers close; 74 uniform V2 certificates and 10 empty chambers.
