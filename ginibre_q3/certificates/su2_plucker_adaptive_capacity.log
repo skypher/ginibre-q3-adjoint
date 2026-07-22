@@ -1,0 +1,19 @@
+$ ./analyze_su2_gt_exchange bases 8 4 20
+progress vertices=1 cases=1
+progress vertices=2 cases=6
+progress vertices=3 cases=48
+progress vertices=4 cases=317
+SU2_GT_EXCHANGE result=FAIL degrees=[1,1,2,1,1] first=[1,1,0,1,0] second=[1,0,2,0,0] coordinate=1 bases=3
+
+$ ./analyze_su2_gt_exchange support-pairs 8 4 20
+progress vertices=1 cases=1
+progress vertices=2 cases=6
+progress vertices=3 cases=48
+progress vertices=4 cases=317
+progress vertices=5 cases=1800
+SU2_GT_SUPPORT_PAIR_XOR result=FAIL degrees=[1,1,1,3,2,2] first_cut=19 second_cut=25 xor_cut=10 common_fibres=1 xor_capacity=0 bases=7
+witness_top=[1,1,1,2,0,0] admissible_cuts=[0,19,21,22,25,26,28]
+
+$ ./analyze_su2_plucker_sr_parity gt-case 2 1 1 2 2 2 2 3 4
+labels=[1,2,2,2,2,3,4] target=2 minus_mask=1 odd_sources=180 odd_rank=74 degenerate_kernel=106 positive_sources=156 odd_zero=0 positive_zero=0 fiber_parity=FAIL xor_payment=PASS fiber_odd=4 fiber_even=3 orders=40320 best_order=[0,1,5,6,2,3,4,7] result=PASS fiber_result=FAIL first_fiber_order=[]
+xor_result=PASS first_xor_order=[0,1,5,6,2,3,4,7]

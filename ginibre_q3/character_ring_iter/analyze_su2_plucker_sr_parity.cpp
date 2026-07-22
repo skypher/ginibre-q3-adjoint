@@ -5,6 +5,7 @@
 #include <iostream>
 #include <limits>
 #include <map>
+#include <queue>
 #include <set>
 #include <stdexcept>
 #include <string>
@@ -324,10 +325,15 @@ Counts analyze_gt_case(
         throw std::runtime_error("GT vertex order has the wrong size");
     }
     std::vector<std::size_t> position(factors + 1U, 0U);
+    std::vector<bool> seen(factors + 1U, false);
     for (std::size_t i = 0U; i < order.size(); ++i) {
         if (order[i] >= order.size()) {
             throw std::runtime_error("GT vertex order is out of range");
         }
+        if (seen[order[i]]) {
+            throw std::runtime_error("GT vertex order has a duplicate");
+        }
+        seen[order[i]] = true;
         position[order[i]] = i;
     }
     const unsigned int subset_limit = 1U << factors;
@@ -399,8 +405,12 @@ Counts analyze_gt_case(
         }
     }
     for (const auto& [mask, demand] : xor_demand) {
-        const std::uint64_t capacity
-            = positive_capacity[mask] - used_capacity[mask];
+        const std::uint64_t total_capacity = positive_capacity[mask];
+        const std::uint64_t local_use = used_capacity[mask];
+        if (local_use > total_capacity) {
+            throw std::runtime_error("local GT use exceeds channel capacity");
+        }
+        const std::uint64_t capacity = total_capacity - local_use;
         if (demand > capacity) {
             counts.xor_payment = false;
             counts.xor_mask = mask;
@@ -474,6 +484,93 @@ Counts analyze_gt_label_rounds_case(
         order.push_back(labels.size());
     }
     return analyze_gt_case(labels, target, minus_mask, cache, order);
+}
+
+Counts analyze_gt_xor_rounds_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    std::map<int, std::vector<std::size_t>> label_groups;
+    for (std::size_t i = 0U; i < labels.size(); ++i) {
+        label_groups[labels[i]].push_back(i);
+    }
+    std::size_t maximum_group = 0U;
+    for (const auto& [label, group] : label_groups) {
+        (void)label;
+        maximum_group = std::max(maximum_group, group.size());
+    }
+    std::vector<std::size_t> order;
+    order.reserve(labels.size() + 1U);
+    for (std::size_t round = 0U; round < maximum_group; ++round) {
+        for (const auto& [label, group] : label_groups) {
+            (void)label;
+            if (round < group.size()) {
+                order.push_back(group[round]);
+            }
+        }
+    }
+    order.push_back(labels.size());
+    return analyze_gt_case(labels, target, minus_mask, cache, order);
+}
+
+Counts analyze_gt_deficit_xor_label_rounds_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    Counts counts = analyze_gt_label_rounds_case(
+        labels, target, minus_mask, cache
+    );
+    if (counts.odd_sources <= counts.positive_sources) {
+        counts.xor_payment = true;
+    }
+    return counts;
+}
+
+Counts analyze_gt_xor_insert_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    std::map<int, std::vector<std::size_t>> label_groups;
+    for (std::size_t i = 0U; i < labels.size(); ++i) {
+        label_groups[labels[i]].push_back(i);
+    }
+    std::size_t maximum_group = 0U;
+    for (const auto& [label, group] : label_groups) {
+        (void)label;
+        maximum_group = std::max(maximum_group, group.size());
+    }
+    std::vector<std::size_t> remainder_order;
+    remainder_order.reserve(labels.size());
+    for (std::size_t round = 0U; round < maximum_group; ++round) {
+        for (const auto& [label, group] : label_groups) {
+            (void)label;
+            if (round < group.size()) {
+                remainder_order.push_back(group[round]);
+            }
+        }
+    }
+    Counts last;
+    for (std::size_t gap = 0U; gap <= remainder_order.size(); ++gap) {
+        std::vector<std::size_t> order = remainder_order;
+        order.insert(
+            order.begin() + static_cast<std::ptrdiff_t>(gap), labels.size()
+        );
+        last = analyze_gt_case(labels, target, minus_mask, cache, order);
+        if (gap == 0U && last.odd_sources <= last.positive_sources) {
+            last.xor_payment = true;
+            return last;
+        }
+        if (last.xor_payment) {
+            return last;
+        }
+    }
+    return last;
 }
 
 Counts analyze_gt_scalar_balanced_case(
@@ -617,6 +714,20 @@ Counts analyze_gt_fiber_best_case(
     return last;
 }
 
+Counts analyze_gt_deficit_fiber_best_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    Counts first = analyze_gt_case(labels, target, minus_mask, cache);
+    if (first.odd_sources <= first.positive_sources) {
+        first.fiber_parity = true;
+        return first;
+    }
+    return analyze_gt_fiber_best_case(labels, target, minus_mask, cache);
+}
+
 Counts analyze_gt_xor_best_case(
     const std::vector<int>& labels,
     int target,
@@ -635,6 +746,71 @@ Counts analyze_gt_xor_best_case(
         }
     } while (std::next_permutation(order.begin(), order.end()));
     return last;
+}
+
+Counts analyze_gt_monotone_case(
+    const std::vector<int>& labels,
+    int target,
+    unsigned int minus_mask,
+    ToricCache& cache
+) {
+    std::vector<std::size_t> order(labels.size() + 1U, 0U);
+    for (std::size_t i = 0U; i < order.size(); ++i) {
+        order[i] = i;
+    }
+    Counts first = analyze_gt_case(
+        labels, target, minus_mask, cache, order
+    );
+    if (first.odd_sources <= first.positive_sources) {
+        first.xor_payment = true;
+        return first;
+    }
+    std::map<
+        std::vector<std::size_t>,
+        std::pair<std::size_t, bool>
+    > landscape;
+    do {
+        const Counts counts = analyze_gt_case(
+            labels, target, minus_mask, cache, order
+        );
+        landscape.emplace(
+            order,
+            std::pair<std::size_t, bool>{
+                counts.odd_rank, counts.xor_payment
+            }
+        );
+    } while (std::next_permutation(order.begin(), order.end()));
+    std::set<std::vector<std::size_t>> reachable;
+    std::queue<std::vector<std::size_t>> frontier;
+    for (const auto& [candidate, data] : landscape) {
+        if (data.second) {
+            reachable.insert(candidate);
+            frontier.push(candidate);
+        }
+    }
+    while (!frontier.empty()) {
+        const std::vector<std::size_t> current = frontier.front();
+        frontier.pop();
+        const std::size_t current_rank = landscape.at(current).first;
+        for (std::size_t i = 0U; i + 1U < current.size(); ++i) {
+            std::vector<std::size_t> predecessor = current;
+            std::swap(predecessor[i], predecessor[i + 1U]);
+            if (reachable.contains(predecessor)
+                || landscape.at(predecessor).first > current_rank) {
+                continue;
+            }
+            reachable.insert(predecessor);
+            frontier.push(predecessor);
+        }
+    }
+    first.xor_payment = reachable.size() == landscape.size();
+    if (!first.xor_payment) {
+        first.xor_demand = static_cast<std::uint64_t>(
+            landscape.size() - reachable.size()
+        );
+        first.xor_capacity = 0U;
+    }
+    return first;
 }
 
 void print_case(
@@ -725,6 +901,11 @@ int main(int argc, char** argv) {
             Counts best;
             std::vector<std::size_t> best_order = order;
             std::vector<std::size_t> first_fiber_order;
+            std::vector<std::size_t> first_xor_order;
+            std::map<
+                std::vector<std::size_t>,
+                std::pair<std::size_t, bool>
+            > order_landscape;
             bool initialized = false;
             std::uint64_t orders = 0U;
             do {
@@ -732,6 +913,12 @@ int main(int argc, char** argv) {
                     labels, target, minus_mask, cache, order
                 );
                 ++orders;
+                order_landscape.emplace(
+                    order,
+                    std::pair<std::size_t, bool>{
+                        counts.odd_rank, counts.xor_payment
+                    }
+                );
                 if (!initialized || counts.odd_rank > best.odd_rank) {
                     best = counts;
                     best_order = order;
@@ -739,6 +926,9 @@ int main(int argc, char** argv) {
                 }
                 if (first_fiber_order.empty() && counts.fiber_parity) {
                     first_fiber_order = order;
+                }
+                if (first_xor_order.empty() && counts.xor_payment) {
+                    first_xor_order = order;
                 }
             } while (std::next_permutation(order.begin(), order.end()));
             print_case(labels, target, minus_mask, best);
@@ -763,6 +953,135 @@ int main(int argc, char** argv) {
                 std::cout << first_fiber_order[i];
             }
             std::cout << "]\n";
+            std::cout << "xor_result="
+                      << (!first_xor_order.empty() ? "PASS" : "FAIL")
+                      << " first_xor_order=[";
+            for (std::size_t i = 0U; i < first_xor_order.size(); ++i) {
+                if (i != 0U) {
+                    std::cout << ',';
+                }
+                std::cout << first_xor_order[i];
+            }
+            std::cout << "]\n";
+            std::uint64_t failing_local_maxima = 0U;
+            std::vector<std::size_t> first_failing_local_maximum;
+            if (best.odd_sources > best.positive_sources) {
+                for (const auto& [candidate, data] : order_landscape) {
+                    if (data.second) {
+                        continue;
+                    }
+                    bool strict_ascent = false;
+                    for (std::size_t i = 0U; i + 1U < candidate.size(); ++i) {
+                        std::vector<std::size_t> neighbor = candidate;
+                        std::swap(neighbor[i], neighbor[i + 1U]);
+                        if (order_landscape.at(neighbor).first > data.first) {
+                            strict_ascent = true;
+                            break;
+                        }
+                    }
+                    if (!strict_ascent) {
+                        ++failing_local_maxima;
+                        if (first_failing_local_maximum.empty()) {
+                            first_failing_local_maximum = candidate;
+                        }
+                    }
+                }
+            }
+            std::cout << "strict_ascent_result="
+                      << (failing_local_maxima == 0U ? "PASS" : "FAIL")
+                      << " failing_local_maxima=" << failing_local_maxima
+                      << " first_failing_local_maximum=[";
+            for (std::size_t i = 0U;
+                 i < first_failing_local_maximum.size(); ++i) {
+                if (i != 0U) {
+                    std::cout << ',';
+                }
+                std::cout << first_failing_local_maximum[i];
+            }
+            std::cout << "]\n";
+            std::set<std::vector<std::size_t>> monotone_reachable;
+            std::map<
+                std::vector<std::size_t>,
+                std::vector<std::size_t>
+            > monotone_next;
+            std::queue<std::vector<std::size_t>> frontier;
+            for (const auto& [candidate, data] : order_landscape) {
+                if (data.second) {
+                    monotone_reachable.insert(candidate);
+                    frontier.push(candidate);
+                }
+            }
+            while (!frontier.empty()) {
+                const std::vector<std::size_t> current = frontier.front();
+                frontier.pop();
+                const std::size_t current_rank
+                    = order_landscape.at(current).first;
+                for (std::size_t i = 0U; i + 1U < current.size(); ++i) {
+                    std::vector<std::size_t> predecessor = current;
+                    std::swap(predecessor[i], predecessor[i + 1U]);
+                    if (monotone_reachable.contains(predecessor)
+                        || order_landscape.at(predecessor).first
+                            > current_rank) {
+                        continue;
+                    }
+                    monotone_reachable.insert(predecessor);
+                    monotone_next.emplace(predecessor, current);
+                    frontier.push(predecessor);
+                }
+            }
+            std::uint64_t monotone_traps = 0U;
+            std::vector<std::size_t> first_monotone_trap;
+            if (best.odd_sources > best.positive_sources) {
+                for (const auto& [candidate, data] : order_landscape) {
+                    if (!data.second
+                        && !monotone_reachable.contains(candidate)) {
+                        ++monotone_traps;
+                        if (first_monotone_trap.empty()) {
+                            first_monotone_trap = candidate;
+                        }
+                    }
+                }
+            }
+            std::cout << "monotone_reachability_result="
+                      << (monotone_traps == 0U ? "PASS" : "FAIL")
+                      << " monotone_traps=" << monotone_traps
+                      << " first_monotone_trap=[";
+            for (std::size_t i = 0U; i < first_monotone_trap.size(); ++i) {
+                if (i != 0U) {
+                    std::cout << ',';
+                }
+                std::cout << first_monotone_trap[i];
+            }
+            std::cout << "]\n";
+            if (!first_failing_local_maximum.empty()
+                && monotone_reachable.contains(
+                    first_failing_local_maximum
+                )) {
+                std::vector<std::size_t> path_order
+                    = first_failing_local_maximum;
+                std::cout << "plateau_escape=";
+                bool first_step = true;
+                while (!order_landscape.at(path_order).second) {
+                    const std::vector<std::size_t>& next
+                        = monotone_next.at(path_order);
+                    std::size_t swap_index = 0U;
+                    while (swap_index + 1U < path_order.size()
+                           && (path_order[swap_index] != next[swap_index + 1U]
+                               || path_order[swap_index + 1U]
+                                   != next[swap_index])) {
+                        ++swap_index;
+                    }
+                    if (!first_step) {
+                        std::cout << ',';
+                    }
+                    std::cout << order_landscape.at(path_order).first
+                              << ":s" << swap_index;
+                    first_step = false;
+                    path_order = next;
+                }
+                std::cout << ',' << order_landscape.at(path_order).first
+                          << ":PASS\n";
+            }
             return kernel <= best.positive_sources ? 0 : 1;
         }
         if (argc != 6) {
@@ -771,8 +1090,14 @@ int main(int argc, char** argv) {
                 "MAXIMUM_FACTORS MAXIMUM_TARGET MAXIMUM_TOTAL_DEGREE; "
                 "MODEL is sr, gt, gt-zigzag, gt-best, gt-fiber, "
                 "gt-fiber-best, gt-sd-best, gt-one-minus, or "
+                "gt-deficit-fiber-best, "
                 "gt-label-rounds, gt-scalar-sorted, or gt-scalar-balanced; "
                 "gt-scalar-best, gt-xor-best; or "
+                "gt-xor-rounds; or "
+                "gt-xor-label-rounds; or "
+                "gt-deficit-xor-label-rounds; or "
+                "gt-deficit-xor-insert; or "
+                "gt-monotone; or "
                 "gt-case TARGET "
                 "MINUS_MASK LABEL..."
             );
@@ -781,15 +1106,24 @@ int main(int argc, char** argv) {
         if (model != "sr" && model != "gt" && model != "gt-zigzag"
             && model != "gt-best" && model != "gt-fiber"
             && model != "gt-fiber-best" && model != "gt-sd-best"
+            && model != "gt-deficit-fiber-best"
             && model != "gt-one-minus" && model != "gt-label-rounds"
             && model != "gt-scalar-sorted"
             && model != "gt-scalar-balanced" && model != "gt-scalar-best"
-            && model != "gt-xor-best") {
+            && model != "gt-xor-best" && model != "gt-xor-rounds"
+            && model != "gt-xor-label-rounds"
+            && model != "gt-deficit-xor-label-rounds"
+            && model != "gt-deficit-xor-insert"
+            && model != "gt-monotone") {
             throw std::runtime_error(
                 "model must be sr, gt, gt-zigzag, gt-best, gt-fiber, or "
                 "gt-fiber-best, gt-sd-best, gt-one-minus, or "
+                "gt-deficit-fiber-best, "
                 "gt-label-rounds, gt-scalar-sorted, or gt-scalar-balanced"
-                ", gt-scalar-best, gt-xor-best"
+                ", gt-scalar-best, gt-xor-best, gt-xor-rounds, "
+                "gt-xor-label-rounds, gt-deficit-xor-label-rounds"
+                ", gt-deficit-xor-insert"
+                ", gt-monotone"
             );
         }
         const int maximum_label = parse_nonnegative(argv[2], "maximum label");
@@ -841,11 +1175,17 @@ int main(int argc, char** argv) {
                         }
                         if ((model == "gt-label-rounds"
                              || model == "gt-sd-best"
+                             || model == "gt-deficit-fiber-best"
                              || model == "gt-one-minus"
                              || model == "gt-scalar-sorted"
                              || model == "gt-scalar-balanced"
                              || model == "gt-scalar-best"
-                             || model == "gt-xor-best")
+                             || model == "gt-xor-best"
+                             || model == "gt-xor-rounds"
+                             || model == "gt-xor-label-rounds"
+                             || model == "gt-deficit-xor-label-rounds"
+                             || model == "gt-deficit-xor-insert"
+                             || model == "gt-monotone")
                             && !support_disjoint(labels, minus_mask)) {
                             continue;
                         }
@@ -872,6 +1212,12 @@ int main(int argc, char** argv) {
                                                 labels, target, minus_mask,
                                                 toric_cache
                                             )
+                                            : (model
+                                                == "gt-deficit-fiber-best"
+                                                ? analyze_gt_deficit_fiber_best_case(
+                                                    labels, target, minus_mask,
+                                                    toric_cache
+                                                )
                                             : (model == "gt-scalar-balanced"
                                                 ? analyze_gt_scalar_balanced_case(
                                                     labels, minus_mask,
@@ -888,17 +1234,45 @@ int main(int argc, char** argv) {
                                                             minus_mask,
                                                             toric_cache
                                                         )
+                                                        : (model
+                                                            == "gt-xor-rounds"
+                                                            ? analyze_gt_xor_rounds_case(
+                                                                labels, target,
+                                                                minus_mask,
+                                                                toric_cache
+                                                            )
+                                                        : (model
+                                                            == "gt-deficit-xor-label-rounds"
+                                                            ? analyze_gt_deficit_xor_label_rounds_case(
+                                                                labels, target,
+                                                                minus_mask,
+                                                                toric_cache
+                                                            )
+                                                        : (model == "gt-monotone"
+                                                            ? analyze_gt_monotone_case(
+                                                                labels, target,
+                                                                minus_mask,
+                                                                toric_cache
+                                                            )
+                                                        : (model
+                                                            == "gt-deficit-xor-insert"
+                                                            ? analyze_gt_xor_insert_case(
+                                                                labels, target,
+                                                                minus_mask,
+                                                                toric_cache
+                                                            )
                                                         : analyze_gt_label_rounds_case(
                                                             labels, target,
                                                             minus_mask,
                                                             toric_cache
-                                                        ))))))));
+                                                        )))))))))))));
                         ++cases;
                         const std::uint64_t kernel = counts.odd_sources
                             - static_cast<std::uint64_t>(counts.odd_rank);
                         const bool failure = model == "gt-fiber"
                                 || model == "gt-fiber-best"
                                 || model == "gt-sd-best"
+                                || model == "gt-deficit-fiber-best"
                                 || model == "gt-label-rounds"
                                 || model == "gt-one-minus"
                                 || model == "gt-scalar-sorted"
@@ -906,6 +1280,11 @@ int main(int argc, char** argv) {
                                 || model == "gt-scalar-best"
                             ? !counts.fiber_parity
                             : model == "gt-xor-best"
+                                || model == "gt-xor-rounds"
+                                || model == "gt-xor-label-rounds"
+                                || model == "gt-deficit-xor-label-rounds"
+                                || model == "gt-deficit-xor-insert"
+                                || model == "gt-monotone"
                                 ? !counts.xor_payment
                             : kernel > counts.positive_sources;
                         if (failure) {
@@ -921,7 +1300,7 @@ int main(int argc, char** argv) {
                       << " cases=" << cases
                       << " cached_degrees="
                       << (model == "sr" ? cache.size() : toric_cache.size())
-                      << '\n';
+                      << '\n' << std::flush;
         }
         std::cout << "SU2_PLUCKER_"
                   << (model == "sr" ? "SR"
@@ -933,6 +1312,8 @@ int main(int argc, char** argv) {
                                         ? "GT_FIBER_BEST"
                                     : (model == "gt-sd-best"
                                         ? "GT_SD_BEST"
+                                      : (model == "gt-deficit-fiber-best"
+                                            ? "GT_DEFICIT_FIBER_BEST"
                                       : (model == "gt-one-minus"
                                             ? "GT_ONE_MINUS"
                                         : (model == "gt-scalar-sorted"
@@ -943,7 +1324,20 @@ int main(int argc, char** argv) {
                                                 ? "GT_SCALAR_BEST"
                                               : (model == "gt-xor-best"
                                                     ? "GT_XOR_BEST"
-                                                    : "GT_LABEL_ROUNDS"))))))))))))
+                                                : (model == "gt-xor-rounds"
+                                                    ? "GT_XOR_ROUNDS"
+                                                : (model
+                                                    == "gt-xor-label-rounds"
+                                                    ? "GT_XOR_LABEL_ROUNDS"
+                                                : (model
+                                                    == "gt-deficit-xor-label-rounds"
+                                                    ? "GT_DEFICIT_XOR_LABEL_ROUNDS"
+                                                : (model == "gt-monotone"
+                                                    ? "GT_MONOTONE"
+                                                : (model
+                                                    == "gt-deficit-xor-insert"
+                                                    ? "GT_DEFICIT_XOR_INSERT"
+                                                    : "GT_LABEL_ROUNDS"))))))))))))))))))
                   << "_PARITY cases=" << cases
                   << " cached_degrees="
                   << (model == "sr" ? cache.size() : toric_cache.size())

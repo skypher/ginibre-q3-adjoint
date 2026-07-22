@@ -83,6 +83,10 @@ analyze_su2_plucker_sr_parity: analyze_su2_plucker_sr_parity.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wshadow -Werror $< -o $@
 
+analyze_su2_gt_exchange: analyze_su2_gt_exchange.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -o $@
+
 verify_su2_equal_terminal_exception: verify_su2_equal_terminal_exception.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@

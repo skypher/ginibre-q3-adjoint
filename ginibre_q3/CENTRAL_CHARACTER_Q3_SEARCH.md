@@ -6755,6 +6755,59 @@ kappa_GT=sum_alpha(o_alpha-indicator_(o_alpha>0)),
 P_p=sum_alpha e_alpha.                                           (P22.12)
 ```
 
+There is a concrete capacitated version of the required cross-fibre
+compensation.  For a fixed order, let `O_alpha` be the odd cuts in
+`F_alpha` and let `E_alpha` be its nonempty even cuts.  Whenever
+`O_alpha` is nonempty, choose an anchor `A_alpha in O_alpha`.  Pair any
+
+```text
+l_alpha=min(|O_alpha|-1,|E_alpha|)
+```
+
+of the remaining odd cuts with distinct members of `E_alpha`; these are
+the local payments.  Denote the unpaired odd cuts by `R_alpha`.  For every
+nonempty even cut `S`, put
+
+```text
+u(S)=number of locally used pairs (alpha,S),
+d(S)=number of (alpha,T) with T in R_alpha and A_alpha triangle T=S,
+c(S)=dim U_(p,S).                                           (P22.13)
+```
+
+Here `triangle` denotes symmetric difference.  Since both `A_alpha` and
+`T` are odd, `S` is even; since they are distinct, it is nonempty.
+
+**Lemma 22C1 (local-plus-XOR capacity implication).**  If the order,
+anchors, and local pairings can be chosen so that
+
+```text
+d(S)+u(S)<=c(S) for every nonempty even S,                   (HXC)
+```
+
+then `(AGT)` holds.
+
+**Proof.**  The locally paired objects are distinct positive source-basis
+objects `(alpha,S)`.  For fixed `S`, the remaining positive source contains
+exactly `c(S)-u(S)` unused objects with cut `S`, irrespective of their
+tableau fibres.  Condition `(HXC)` injects the `d(S)` residual relations
+into those objects.  Therefore
+
+```text
+kappa_GT
+ =sum_alpha(|O_alpha|-1)
+ =sum_alpha l_alpha+sum_S d(S)
+ <=sum_S u(S)+sum_S(c(S)-u(S))=P_p.
+```
+
+This is `(AGT)`.  QED.
+
+**Target 22C2 (adaptive hybrid-capacity lemma).**  Prove that every
+support-disjoint signed remainder and target admit a vertex order, anchors,
+and local pairings satisfying `(HXC)`.  This target is strictly explicit:
+it is a capacitated Hall matching between the special-fibre kernel
+generators and the positive source-basis objects, with edges either inside
+one fibre or in the symmetric-difference channel.
+
 **Target 22C (cross-fibre Hall matching).**  Prove, for every
 support-disjoint remainder and target, that some vertex order satisfies
 
@@ -6779,6 +6832,77 @@ dimension in `P_p` is constant in the flat family.  Target 22C gives
 
 Target 22C is the current cumulative Plucker target; a fibre-preserving
 involution is no longer viable.
+
+Several natural strengthenings of Target 22C2 are false.
+
+**Proposition 22E (exchange and fixed-fibre obstructions).**
+
+1.  The sets `B(d)` are not, in general, bases of discrete polymatroids.
+    For
+
+```text
+d=[1,1,2,1,1]
+```
+
+    they contain
+
+```text
+u=[1,1,0,1,0],                 v=[1,0,2,0,0].
+```
+
+    The only coordinate toward which the excess of `u` in coordinate two
+    can move is coordinate three, but
+    `u-epsilon_2+epsilon_3=[1,0,1,1,0]` is not in `B(d)`.  Thus neither the
+    lattice-path-polymatroid exchange theorem nor its sorting Gröbner basis
+    applies directly to `(P22.5)`.
+
+2.  Pairwise XOR capacity can vanish even for two support-disjoint odd cuts
+    in one fibre.  In the order with degree vector
+
+```text
+[1,1,1,3,2,2_star]
+```
+
+    take only the label-two remainder vertex negative.  The fibre
+
+```text
+alpha=[1,1,1,2,0,0]
+```
+
+    admits the two odd cuts with masks `19` and `25`, but their symmetric
+    difference has mask `10`, carrying labels `[1,3]`; hence its invariant
+    multiplicity and `c(10)` are zero.
+
+3.  Even after restricting to the genuine source-deficit sector, no order
+    need balance every fibre.  Take
+
+```text
+remainder=[1^-,2^+,2^+,2^+,2^+,3^+,4^+],       target=2.   (P22.14)
+```
+
+    Here `dim O_p=180` and `P_p=156`, so a rank contribution of at least
+    `24` is genuinely needed.  Exhaustion of all `8!=40,320` vertex orders
+    finds no order satisfying `(P22.9)`.  Nevertheless the order
+
+```text
+[1^-,2^+,3^+,4^+,2^+,2^+,2^+,2_star]
+```
+
+    has `r_-=74`, hence `kappa_GT=106<=156`, and its deterministic
+    local-plus-XOR payment satisfies `(HXC)`.
+
+**Proof.**  The first claim is the displayed failed base exchange.  For the
+second, direct substitution in `(P22.5)--(P22.6)` gives the listed fibre and
+cuts; `Inv(V_1 tensor V_3)=0`.  For the third, the strict integer enumerator
+constructs every fibre for every order.  Its `gt-case` mode exhausts all
+`40,320` permutations, while its hybrid mode counts every local use and
+residual demand by cut mask and checks `(HXC)`.  The exact outputs are in
+`certificates/su2_plucker_adaptive_capacity.log`.  QED.
+
+Thus the remaining proof cannot be an order-independent polymatroid
+exchange, an order-independent pairwise XOR injection, or a fibrewise
+parity theorem.  The surviving statement is the adaptive cumulative Hall
+matching of Target 22C2.
 
 Two still stronger fixed-degeneration shortcuts are also false.  In the squarefree
 Stanley--Reisner degeneration of the Plucker ring, crossing products vanish.
