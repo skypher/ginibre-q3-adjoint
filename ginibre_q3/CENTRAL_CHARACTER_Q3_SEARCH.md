@@ -6708,6 +6708,132 @@ P_q(t)-t^(q/2)chi_q(y)
    sum_(j=0)^(q-1)t^(j/2)P_(q-1-j)(t)chi_j(y).           (P23.5)
 ```
 
+There is an exact supermodule behind both factors in `(P23.5)`.  Put
+`a=t^(1/2)`, let `V=V_1`, and grade
+
+```text
+E=exterior^bullet(aV)=1 direct-sum aV direct-sum a^2 1.  (P23.6)
+```
+
+Here the displayed expression is the ordinary graded character; its
+supercharacter is
+
+```text
+B(a,y)=1-a chi_1(y)+a^2.                                (P23.7)
+```
+
+**Lemma 23A (exterior--symmetric-power form).**  For every `q>=1`,
+
+```text
+Q_q(a,y)=sum_(j=0)^(q-1) a^j P_(q-1-j)(a^2) chi_j(y)
+        =character Sym^(q-1)(E),                         (P23.8)
+
+P_q(a^2)-a^q chi_q(y)=B(a,y)Q_q(a,y).                   (P23.9)
+```
+
+Consequently the outer polynomial `A_R` is the invariant super-Hilbert
+polynomial of the genuine graded supermodule
+
+```text
+K_R=
+ tensor_(i minus)[exterior^bullet(aV) tensor Sym^(q_i-1)(E)]
+ tensor_(i plus)[(direct-sum_(j=0)^q_i a^(2j)1)
+                  direct-sum a^(q_i)V_(q_i)],           (P23.10)
+```
+
+where parity occurs only in the first exterior factor of each minus
+position.
+
+**Proof.**  If `z,z^(-1)` are the weights of `V`, then
+
+```text
+sum_(n>=0) character Sym^n(E) u^n
+ =1/[(1-u)(1-a^2u)(1-azu)(1-az^(-1)u)].                 (P23.11)
+```
+
+The first two denominator factors have coefficient `P_l(a^2)` in degree
+`l`, and the last two have coefficient `a^j chi_j(y)` in degree `j`.
+Convolution gives `(P23.8)`, while `(P23.9)` is `(P23.5)`.  Multiplying the
+supercharacters of the factors in `(P23.10)` and extracting `SU(2)`
+invariants gives exactly `(P18.3)`.  QED.
+
+This supplies a concrete Koszul/Dirac object, but superdimension alone does
+not give the required sign.  In particular, a natural attempt to use the
+positive product formula for a higher-multiplicity rank-two Jacobi system
+fails exactly.
+
+For `m>=1`, put
+
+```text
+dnu_m=(x-y)^(2m)dmu(x)dmu(y).                            (P23.12)
+```
+
+Split `2m` minus factors into two groups of `m`.  The signed integral is
+
+```text
+< product_(i=1)^m D_(q_i),
+  product_(plus j)S_(r_j) product_(i=m+1)^(2m)D_(q_i) >_(nu_m). (P23.13)
+```
+
+The measure `(P23.12)` is a rank-two `C_2/BC_2` Jacobi weight.  One could
+therefore hope that every `m`-fold row product belongs to the nonnegative
+cone of its triangular orthogonal basis and that every `S_q` preserves that
+cone.  Both necessary statements are false at the first available degrees.
+
+**Proposition 23B (`BC_2` hypergroup-cone obstruction).**  Let
+`P_lambda^(m)` be obtained by Gram--Schmidt orthogonalization of the
+`USp(4)` characters `Psi_lambda` against `(P23.12)`, with leading
+coefficient one and the lower dominance terms taken first.
+
+1.  At `m=1`, this is the ordinary `USp(4)` character basis, and
+
+```text
+S_2=Psi_(2,0)-Psi_(1,1)+Psi_(0,0).                      (P23.14)
+```
+
+Thus `S_2` has coefficient `-1` and does not preserve its nonnegative cone.
+
+2.  At `m=2`,
+
+```text
+P_(1,1)^(2)=Psi_(1,1)+3/5,
+<P_(1,1)^(2),P_(1,1)^(2)>_(nu_2)=42/5,                 (P23.15)
+
+<D_1 D_3,P_(1,1)^(2)>_(nu_2)=-14/5.                   (P23.16)
+```
+
+Hence the coefficient of `P_(1,1)^(2)` in the two-row half-product
+`D_1D_3=Psi_(2,0)` is `-1/3`.
+
+**Proof.**  Formula `(P23.14)` is `(P8.2)` at `q=2`.  For the second
+statement use `Psi_(1,1)=xy+1`, `Psi_(2,0)=x^2+xy+y^2-2`, and the semicircle
+moments
+
+```text
+integral x^2 dmu=1,  integral x^4 dmu=2,
+integral x^6 dmu=5.                                  (P23.17)
+```
+
+Direct expansion of `(x-y)^4` gives
+
+```text
+integral (x-y)^4 dmu^2=10,
+integral (x-y)^4 Psi_(1,1)dmu^2=-6,
+```
+
+which yields the first line of `(P23.15)`.  The same expansion gives the
+norm and pairing in `(P23.15)--(P23.16)`; their quotient is `-1/3`.
+QED.
+
+The strict exact rational C++ diagnostic
+`character_ring_iter/analyze_su2_bc2_hypergroup.cpp` constructs the
+triangular basis directly from the semicircle moments.  The commands with
+arguments `1 4` and `2 4` reproduce respectively `(P23.14)` and
+`(P23.16)`.  Proposition 23B does not contradict `Q3`: it rules out the
+stronger proof in which generic Jacobi-hypergroup positivity is applied
+after the half-product split.  Any successful use of `(P23.10)` or
+`(P23.13)` must retain cancellations between several orthogonal types.
+
 Thus all label dependence has moved into an explicitly positive quotient;
 all cancellation is carried by the single fundamental factor `Delta^m`.
 This is the natural place to seek the missing Temperley--Lieb differential
@@ -6723,7 +6849,7 @@ A=V_1 tensor 1,                 B=1 tensor V_1,
 then the symmetric-power decomposition gives
 
 ```text
-D_q=character Sym^(q-1)(A direct-sum B).                 (P23.6)
+D_q=character Sym^(q-1)(A direct-sum B).                 (P23.18)
 ```
 
 Thus `(FDC)` is not asking for positivity of an artificial quotient: after

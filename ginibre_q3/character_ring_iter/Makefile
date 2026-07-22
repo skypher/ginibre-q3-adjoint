@@ -75,6 +75,10 @@ analyze_su2_opd_four_suffix: analyze_su2_opd_four_suffix.cpp
 	$(CXX) -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
 		-Wconversion -Wshadow -Werror $< -o $@
 
+analyze_su2_bc2_hypergroup: analyze_su2_bc2_hypergroup.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -o $@
+
 verify_su2_equal_terminal_exception: verify_su2_equal_terminal_exception.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
