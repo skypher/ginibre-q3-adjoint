@@ -83,6 +83,9 @@ analyze_su2_plucker_sr_parity: analyze_su2_plucker_sr_parity.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wshadow -Werror $< -o $@
 
+analyze_su2_plucker_kernel: analyze_su2_plucker_kernel.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Werror $< -o $@
+
 analyze_su2_gt_exchange: analyze_su2_gt_exchange.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wshadow -Werror $< -o $@

@@ -1,0 +1,57 @@
+Exact relative-Plucker diagnostics, 2026-07-22
+
+Build:
+  make analyze_su2_plucker_kernel
+
+Hard GT obstruction in the original Plucker ring:
+  ./analyze_su2_plucker_kernel 1 3 1 1 2 2 3
+  labels=[1,1,2,2,3] target=1 minus_mask=3 codomain_dimension=7 odd_sources=8 original_rank=6 original_kernel=2 positive_sources=5 straightening_states=33 raw_collision_relations=0 pair_intersection_relations=0 edge_exchange_relations=3 candidate_relation_rank=2 candidate_relations_valid=PASS fundamental_lifts_valid=PASS fundamental_owned_lifts_valid=PASS fundamental_combined_valid=PASS fundamental_kernel_quotient_rank=0 fundamental_candidate_quotient_rank=0 fundamental_covered_rank=0 result=PASS
+
+Bounded fundamental-strand replay:
+  ./analyze_su2_plucker_kernel fundamental-sweep 3 5 3 12
+  progress factors=1 cases=2 deficit_cases=0 nonzero_kernels=0
+  progress factors=2 cases=6 deficit_cases=0 nonzero_kernels=0
+  progress factors=3 cases=12 deficit_cases=1 nonzero_kernels=0
+  progress factors=4 cases=20 deficit_cases=5 nonzero_kernels=0
+  nonzero_kernel labels=[1,2,2,2,3] target=0 minus_mask=1 codomain=5 odd=8 rank=5 kernel=3 positive=3
+  tight_kernel labels=[1,2,2,2,3] target=0 minus_mask=1 codomain=5 odd=8 rank=5 kernel=3 positive=3
+  nonzero_kernel labels=[1,2,2,2,3] target=2 minus_mask=1 codomain=12 odd=9 rank=8 kernel=1 positive=7
+  nonzero_kernel labels=[1,2,3,3,3] target=0 minus_mask=1 codomain=6 odd=9 rank=6 kernel=3 positive=3
+  tight_kernel labels=[1,2,3,3,3] target=0 minus_mask=1 codomain=6 odd=9 rank=6 kernel=3 positive=3
+  progress factors=5 cases=26 deficit_cases=8 nonzero_kernels=3
+  SU2_PLUCKER_ORIGINAL_KERNEL cases=26 deficit_cases=8 nonzero_kernels=3 maximum_kernel=3 minimum_slack=0 result=PASS
+  SU2_PLUCKER_FUNDAMENTAL_LIFT cases=26 deficit_cases=8 result=PASS
+
+First uncovered higher relative direction:
+  SU2_PLUCKER_VERBOSE=1 ./analyze_su2_plucker_kernel 2 1 1 2 2 2 2 3
+  labels=[1,2,2,2,2,3] target=2 minus_mask=1 codomain_dimension=30 odd_sources=44 original_rank=25 original_kernel=19 positive_sources=41 straightening_states=566 raw_collision_relations=0 pair_intersection_relations=12 edge_exchange_relations=72 candidate_relation_rank=12 candidate_relations_valid=PASS fundamental_lifts_valid=PASS fundamental_owned_lifts_valid=FAIL fundamental_combined_valid=FAIL fundamental_kernel_quotient_rank=3 fundamental_candidate_quotient_rank=2 fundamental_covered_rank=18 result=PASS
+  fundamental_missing_relation mask=37 basis=0 coefficient=-32 mask=37 basis=2 coefficient=32 mask=39 basis=0 coefficient=-64 mask=39 basis=1 coefficient=64 mask=41 basis=0 coefficient=32 mask=41 basis=2 coefficient=-32 mask=43 basis=0 coefficient=64 mask=43 basis=1 coefficient=-64 mask=49 basis=0 coefficient=-32 mask=49 basis=2 coefficient=32 mask=51 basis=0 coefficient=-64 mask=51 basis=1 coefficient=64
+
+Interpretation:
+  UKS passes in every line above.  The final FAIL concerns only the provisional
+  pair/four-term/F1-face differential: it covers 18 of the 19 true kernel
+  directions and isolates one seven-vertex, 12-term higher syzygy.
+
+Section-defect recovery of that direction:
+  ./analyze_su2_plucker_kernel 2 1 1 2 2 2 2 3
+  labels=[1,2,2,2,2,3] target=2 minus_mask=1 codomain_dimension=30 odd_sources=44 original_rank=25 original_kernel=19 positive_sources=41 straightening_states=651 raw_collision_relations=0 pair_intersection_relations=12 edge_exchange_relations=72 section_defect_relations=74 candidate_relation_rank=19 candidate_relations_valid=PASS fundamental_lifts_valid=PASS fundamental_owned_lifts_valid=FAIL fundamental_combined_valid=PASS fundamental_kernel_quotient_rank=3 fundamental_candidate_quotient_rank=3 fundamental_covered_rank=19 positive_internal_kernel_rank=13 allocation_dimension=2 carrier_dimension=17 optimal_section_rank=28 optimal_section_criterion=PASS result=PASS
+  section_trial_ranks=17,17,18,19,19,19
+  section_individual_ranks=17,17,18,19,19,19
+  section_criteria=24:17:8:FAIL,24:17:8:FAIL,38:3:12:FAIL,38:3:11:FAIL,38:3:13:FAIL,37:4:10:FAIL
+
+Here optimal_section_rank is
+  dim((image(iota_-) intersect ker(phi))
+      +(image(iota_+) intersect ker(phi))) = 28.
+The exact allocation/carrier split is 2+17=19, and the stronger capacity
+criterion is 2+28<=41.  The individual section criterion is deliberately
+reported separately: the section family spans the full kernel, while none of
+the six displayed sections alone simultaneously meets both capacity tests.
+
+Wider bounded fundamental-strand replay:
+  ./analyze_su2_plucker_kernel fundamental-sweep 4 6 4 14
+  SU2_PLUCKER_ORIGINAL_KERNEL cases=71 deficit_cases=23 nonzero_kernels=10 maximum_kernel=19 minimum_slack=0 result=PASS
+  SU2_PLUCKER_FUNDAMENTAL_LIFT cases=71 deficit_cases=23 result=PASS
+
+The wider replay validates the exact fundamental lifts, the combined
+section-defect relation span, and the stronger two-sided carrier-capacity
+criterion in every enumerated case.
