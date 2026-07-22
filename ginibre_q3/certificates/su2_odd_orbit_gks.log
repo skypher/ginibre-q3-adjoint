@@ -1,0 +1,151 @@
+Odd-level SU(2) simple-current orbit GKS diagnostics
+Date: 2026-07-22 UTC
+
+Build
+-----
+$ make -B -j1 search_su2_odd_orbit_gks
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    search_su2_odd_orbit_gks.cpp -o search_su2_odd_orbit_gks
+
+1. Independent odd-cyclic Monge identity
+-----------------------------------------
+$ ./search_su2_odd_orbit_gks cyclic-check 6 8
+...
+progress rank=6 level=11 factors=8 degree_words=5890 \
+    cumulative_words=13073 boundary_entries=78438 cyclic_entries=78438
+SU2_ODD_ORBIT_GKS ranks=2..6 maximum_factors=8 words=17717 \
+    corner_entries=17717 boundary_entries=100484 zero_corners=8465 \
+    zero_boundary_entries=9028 cyclic_entries=100484 \
+    minimum_corner=0@target0:[+1] \
+    minimum_positive_corner=1@target0:[] \
+    minimum_boundary=0@target1:[] \
+    minimum_positive_boundary=1@target0:[] result=PASS
+
+The orbit calculation uses the folded SU(2) fusion rule.  Independently,
+the cyclic calculation relabels each orbit by its even lift, evolves the
+Laurent coefficient array on C_(2m+1) x C_(2m+1) by signed interval
+convolution, and extracts the adjacent Monge difference
+
+  P_hat(c,0)-P_hat(c,1)-P_hat(c+1,0)+P_hat(c+1,1).
+
+All 100,484 compared partial-character coefficients agree exactly.
+
+2. Symbolic cyclic outer-Turan telescope
+----------------------------------------
+$ ./search_su2_odd_orbit_gks turan-check 100
+SU2_ODD_ORBIT_TURAN ranks=2..100 identities=9900 result=PASS
+
+For both possible exchange parities and every radius at each tested rank,
+this constructs the complete local interval feature string as an exact
+integer quadratic form in the remainder charges.  It agrees term by term
+with
+
+  2[(b_a^2-b_(a-1)b_(a+1))
+    -(b_(a+1)^2-b_a b_(a+2))],
+
+including the cyclic antipodal convention at a=m-1.
+
+3. Extended support-disjoint signed-word search
+------------------------------------------------
+$ /usr/bin/time -f 'elapsed=%e maxrss=%MKB' \
+    ./search_su2_odd_orbit_gks 8 12
+...
+progress rank=8 level=15 factors=12 degree_words=596610 \
+    cumulative_words=1392065 boundary_entries=11136520
+SU2_ODD_ORBIT_GKS ranks=2..8 maximum_factors=12 words=1866279 \
+    corner_entries=1866279 boundary_entries=14328179 \
+    zero_corners=917181 zero_boundary_entries=921295 \
+    minimum_corner=0@target0:[+1] \
+    minimum_positive_corner=1@target0:[] \
+    minimum_boundary=0@target1:[] \
+    minimum_positive_boundary=1@target0:[] result=PASS
+elapsed=74.22 maxrss=3072KB
+
+For each orbit label, the exhaustive enumeration uses multiplicity zero or
+a positive multiplicity carrying one common sign.  This is precisely the
+support-disjoint chamber supplied by Proposition 5.  The corner entries are
+the GKS2* inequalities.  Testing every target is the stronger
+partial-character positivity statement equivalent to the full
+simple-current boundary column.  These bounded PASS results are evidence,
+not a uniform proof.
+
+4. Rank-three all-length theorem validation
+--------------------------------------------
+$ /usr/bin/time -f 'elapsed=%e maxrss=%MKB' \
+    ./search_su2_odd_orbit_gks 3 500
+...
+progress rank=3 level=5 factors=500 degree_words=2000 \
+    cumulative_words=501001 boundary_entries=1503003 cyclic_entries=0
+SU2_ODD_ORBIT_GKS ranks=2..3 maximum_factors=500 words=502002 \
+    corner_entries=502002 boundary_entries=1505005 \
+    zero_corners=188006 zero_boundary_entries=188015 cyclic_entries=0 \
+    minimum_corner=0@target0:[+1] \
+    minimum_positive_corner=1@target0:[] \
+    minimum_boundary=0@target1:[] \
+    minimum_positive_boundary=1@target0:[] result=PASS
+elapsed=520.53 maxrss=3072KB
+
+$ ./search_su2_odd_orbit_gks rank3-depth 500
+SU2_ODD_ORBIT_RANK3_DEPTH maximum_power=500 words=1004004 \
+    boundary_entries=3012012 minimum_corner=0 minimum_boundary=0 \
+    result=PASS
+
+The first scan enumerates the complete support-disjoint chamber by total
+degree.  The second independently scans the rectangle 0<=p,q<=500 for all
+four sign choices, checking the scalar corner and all three boundary
+coefficients with arbitrary-precision integers.  These are cross-checks of
+the uniform spectral-pair proof in Proposition 22H3N, not substitutes for
+that proof.
+
+5. Rank-three standard-orthant no-go diagnostic
+------------------------------------------------
+$ make -B -j1 analyze_su2_odd_orbit_rank3_cone
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    analyze_su2_odd_orbit_rank3_cone.cpp \
+    -o analyze_su2_odd_orbit_rank3_cone
+
+$ ./analyze_su2_odd_orbit_rank3_cone
+U=T1_plus
+0 2 0 0 0 0
+1 1 1 1 0 0
+0 1 1 0 1 0
+0 2 0 2 2 0
+0 0 1 1 2 1
+0 0 0 0 2 2
+Q=T2_plus
+0 0 2 0 0 0
+0 1 1 0 1 0
+1 1 0 0 0 1
+0 0 0 2 2 0
+0 1 0 1 1 1
+0 0 2 0 2 0
+P=T1_minus_squared
+2 2 2 -2 0 0
+1 2 2 -1 -1 0
+1 2 3 -2 -1 1
+-2 -2 -4 4 0 -2
+0 -1 -1 0 1 0
+0 0 2 -2 0 2
+R=T2_minus_squared
+2 2 0 0 0 -2
+1 3 1 1 -2 -2
+0 1 1 0 -1 0
+0 2 0 2 -2 -2
+0 -2 -1 -1 2 1
+-2 -4 0 -2 2 4
+T=T1_minus_T2_minus
+0 2 2 0 -2 0
+1 2 1 0 -1 -1
+1 1 1 -1 0 0
+0 0 -2 2 0 -2
+-1 -1 0 0 0 1
+0 -2 0 -2 2 2
+
+The analyzer first verifies the exact rank-three fusion relation
+A_2=A_1^2-A_1-I.  The plus matrices U,Q preserve the standard symmetric-
+square orthant.  Each paired-minus matrix P,R,T has negative entries, so
+that standard orthant is not a common invariant cone.  Proposition 22H3N
+instead proves positivity by dominance among the three unordered spectral
+pairs.

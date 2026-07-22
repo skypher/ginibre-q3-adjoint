@@ -97,6 +97,14 @@ search_su2_level_partial_character_cone: search_su2_level_partial_character_cone
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wshadow -Werror $< -o $@
 
+search_su2_odd_orbit_gks: search_su2_odd_orbit_gks.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_odd_orbit_rank3_cone: analyze_su2_odd_orbit_rank3_cone.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 analyze_su2_gt_exchange: analyze_su2_gt_exchange.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wshadow -Werror $< -o $@

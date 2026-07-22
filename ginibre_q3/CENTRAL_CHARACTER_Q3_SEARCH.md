@@ -7751,6 +7751,487 @@ fusion product.  Finally `(P22.5zz2)` is `(P22.5zy)` written in this spectral
 basis, with the two lifts `p_t,2m-1-p_t` realizing the sign `sigma_t`.
 QED.
 
+There is a second spectral model in which the folded fusion rule becomes
+literal interval convolution on an odd cyclic group.  Unlike the tadpole
+coordinates, it also turns the desired coefficient into one local discrete
+mixed derivative.
+
+**Lemma 22H3L (odd cyclic-gradient and Monge model).**  Keep `k=2m-1` and
+put `n=k+2=2m+1`.  Relabel the orbit basis by its unique even lift:
+
+```text
+B_a=A_(min(2a,k-2a)),                    0<=a<m.
+```
+
+Then
+
+```text
+B_a B_b=sum_(c=|a-b|)^(min(a+b,2m-1-a-b)) B_c.       (P22.5zz3)
+```
+
+Let `C_n` be the group of `n`th roots of unity, write
+
+```text
+beta_a(u)=sum_(t=-a)^a u^t,
+h(u)=2-u-u^(-1)=(1-u)(1-u^(-1)),
+```
+
+and identify `u` with `u^(-1)`.  On the `m` nontrivial inverse pairs put
+
+```text
+rho_m([u])=h(u)/n.                                  (P22.5zz4)
+```
+
+This is a probability measure, and `B_a` is represented by `beta_a`.
+Equivalently, for every inversion-invariant function,
+
+```text
+<f>_(rho_m)=(1/(2n)) sum_(u^n=1) h(u)f(u).           (P22.5zz5)
+```
+
+The functions `beta_0,...,beta_(m-1)` are orthonormal for this measure.
+Their cyclic gradients are the two-point roots
+
+```text
+(1-u)beta_a(u)=u^(-a)-u^(a+1).                       (P22.5zz6)
+```
+
+Now take any signed orbit word and set
+
+```text
+P(u,v)=product_i[beta_(a_i)(u)+sigma_i beta_(a_i)(v)]
+      =sum_(r,s in Z/nZ) P_hat(r,s)u^r v^s.          (P22.5zz7)
+```
+
+If `g_c` is its partial-character coefficient at `B_c`, then
+
+```text
+g_c=P_hat(c,0)-P_hat(c,1)
+       -P_hat(c+1,0)+P_hat(c+1,1),       0<=c<m.     (P22.5zz8)
+```
+
+Thus the corner `GKS2*` inequality is exactly
+
+```text
+P_hat(0,0)+P_hat(1,1)>=2P_hat(1,0),                  (P22.5zz9)
+```
+
+and the whole column `(SCB)` is the adjacent Monge family `(P22.5zz8)`.
+The coefficient array in `(P22.5zz7)` is obtained from the unit mass at
+`(0,0)` by the signed interval-convolution updates
+
+```text
+C -> (1_[-a,a] *_1 C)+sigma(1_[-a,a] *_2 C)          (P22.5zz10)
+```
+
+on `C_n times C_n`.
+
+Finally, because `n` is odd, the change of variables
+
+```text
+u=zw,                     v=z/w
+```
+
+is a bijection of `C_n times C_n`.  In these coordinates every factor and
+the Weyl weight have the rank-one expansions
+
+```text
+beta_a(zw)+beta_a(z/w)
+ =2+sum_(t=1)^a(z^t+z^(-t))(w^t+w^(-t)),
+
+beta_a(zw)-beta_a(z/w)
+ =sum_(t=1)^a(z^t-z^(-t))(w^t-w^(-t)),
+
+h(zw)h(z/w)
+ =[(z+z^(-1))-(w+w^(-1))]^2.                        (P22.5zz11)
+```
+
+**Proof.**  The orbit of every label contains exactly one even label.
+Restrict the level-`k` fusion rule for `2a` and `2b` to its even outputs
+`2c`.  Dividing the ordinary lower and affine upper bounds by two gives
+`(P22.5zz3)`.
+
+The nontrivial elements of `C_n` are `m` inverse pairs.  Since
+
+```text
+sum_(u^n=1) h(u)=2n
+```
+
+and `h(1)=0`, `(P22.5zz4)` has total mass one and `(P22.5zz5)` follows.
+Identity `(P22.5zz6)` is the telescoping sum of the interval polynomial.
+For `0<=a,b<m`, it gives
+
+```text
+(1-u)beta_a(u)(1-u^(-1))beta_b(u)
+ =(u^(-a)-u^(a+1))(u^b-u^(-b-1)).
+```
+
+The four exponents have absolute value below `n`; their cyclic constant
+term is two when `a=b` and zero otherwise.  The factor `1/2` in
+`(P22.5zz5)` therefore proves orthonormality.
+
+Put `t_c(u)=u^c+u^(-c)`, including `t_0=2`.  A second telescoping identity
+is
+
+```text
+h(u)beta_c(u)=t_c(u)-t_(c+1)(u).                    (P22.5zz12)
+```
+
+The polynomial `P` is invariant under inversion in either variable, so
+uniform cyclic averaging gives
+
+```text
+(1/n^2)sum_(u,v) t_r(u)t_s(v)P(u,v)=4P_hat(r,s).
+```
+
+Apply `(P22.5zz5)` in both variables, insert `(P22.5zz12)` for
+`h(u)beta_c(u)` and `h(v)=t_0(v)-t_1(v)`, and divide the last display by
+four.  The result is exactly `(P22.5zz8)`.  Its `c=0` case is
+`(P22.5zz9)`, while multiplication by an interval polynomial in either
+variable is `(P22.5zz10)`.
+
+The determinant of the exponent change `(z,w)->(zw,z/w)` is `-2`, which
+is invertible modulo odd `n`; hence it is bijective.  Pairing the `t` and
+`-t` terms in each interval polynomial proves the first two identities in
+`(P22.5zz11)`.  The last is the elementary identity
+
+```text
+(2-zw-z^(-1)w^(-1))(2-z/w-z^(-1)w)
+ =[(z+z^(-1))-(w+w^(-1))]^2.
+```
+
+This completes the proof.  QED.
+
+Lemma 22H3L replaces the non-group tadpole multiplication by a group
+convolution problem with only one residual local inequality.  It does not
+by itself prove that inequality: after the change in `(P22.5zz11)`, plus
+factors are positive-semidefinite rank-one kernels and minus factors are
+negative-semidefinite sine kernels, so an even-minus product is
+positive-semidefinite by the Schur product theorem; however the squared
+Weyl difference is not a positive-semidefinite kernel (its diagonal is zero
+but it is not the zero kernel).  The missing step is
+therefore a precise adjacent-Monge theorem for products of the nested cyclic
+interval kernels, rather than a general positive-semidefinite argument.
+
+The strict C++ program `search_su2_odd_orbit_gks.cpp` independently evolves
+both sides of `(P22.5zz8)`.  Its `cyclic-check` mode compares every orbit
+boundary coefficient with the cyclic Monge difference.  The larger direct
+orbit run exhausts support-disjoint sign choices; its exact output is
+recorded in `certificates/su2_odd_orbit_gks.log`: ranks two through eight,
+up to twelve factors, give 1,866,279 signed words and 14,328,179 boundary
+coefficients, all nonnegative.  The independent cyclic model agrees in all
+100,484 boundary entries through rank six and eight factors.  These are
+bounded checks, not the missing adjacent-Monge theorem.
+
+The rank-one expansion also has a finite three-charge form parallel to
+Propositions 13--15.
+
+**Lemma 22H3M (cyclic three-charge Gram and outer Turan reduction).**  For a
+signed word in the `B_a` basis, make one local feature choice per factor:
+
+```text
+plus B_a:   either 1 with weight 2, or C_t(z)=z^t+z^(-t), 1<=t<=a;
+minus B_a:  S_t(z)=z^t-z^(-t),                         1<=t<=a.
+```
+
+A complete choice `gamma` has weight `w_gamma` and cyclic Laurent
+polynomial
+
+```text
+A_gamma(z)=sum_(r in Z/nZ) a_r(gamma)z^r.
+```
+
+If the number of minus factors is even, then the corner coefficient is
+
+```text
+g_0=sum_gamma w_gamma[
+       a_0(gamma)^2-2a_1(gamma)^2
+                         +a_0(gamma)a_2(gamma)].       (P22.5zz13)
+```
+
+Equivalently, there are structured charge vectors `v_r` such that
+
+```text
+g_0=||v_0||^2-2||v_1||^2+<v_0,v_2>.                  (P22.5zz14)
+```
+
+All charge indices in these displays are modulo `n`.
+
+Remove one factor `B_a` of sign `epsilon` from an even-minus word and
+call the remainder `R`.  For each feature polynomial of `R`, write
+
+```text
+B_gamma(z)=sum_r b_r(gamma)z^r,
+b_(-r)(gamma)=epsilon b_r(gamma),
+H_r(R)=sum_gamma w_gamma[
+          b_r(gamma)^2-b_(r-1)(gamma)b_(r+1)(gamma)]. (P22.5zz15)
+```
+
+Then
+
+```text
+g_0(full word)=2g_a(R)=2[H_a(R)-H_(a+1)(R)].          (P22.5zz16)
+```
+
+Consequently odd-level orbit-ring `GKS2*` is equivalent to the structured
+cyclic outer-Turan assertion
+
+```text
+H_a(R)>=H_(a+1)(R)                                   (COTM)
+```
+
+whenever every radius in `R` is at most `a<m` and the inversion parity
+of `R` is `epsilon`.  It is enough to use `(COTM)` after removing a
+factor of largest radius.
+
+**Proof.**  Under the bijection `u=zw,v=z/w`, the first two identities in
+`(P22.5zz11)` give the positive orthogonal feature expansion
+
+```text
+P(zw,z/w)=sum_gamma w_gamma A_gamma(z)A_gamma(w).
+```
+
+For even minus parity, `a_(-r)=a_r`.  Uniform cyclic averaging gives
+
+```text
+E A=a_0,
+E C_1 A=2a_1,
+E C_1^2 A=2a_0+2a_2.
+```
+
+The corner integral is one quarter of the average of
+
+```text
+[C_1(z)-C_1(w)]^2 A_gamma(z)A_gamma(w).
+```
+
+Expanding the square therefore gives the summand in `(P22.5zz13)`.
+Taking the local feature vectors to be orthonormal and tensoring them gives
+
+```text
+<v_r,v_s>=sum_gamma w_gamma a_r(gamma)a_s(gamma),
+```
+
+which proves `(P22.5zz14)`.
+
+It remains to telescope one complete local interval string.  Fix a feature
+polynomial `B=sum_r b_rz^r` of the remainder.  When `epsilon=+1`, add
+
+```text
+2q(B)+sum_(t=1)^a q(C_tB);
+```
+
+when `epsilon=-1`, add
+
+```text
+sum_(t=1)^a q(S_tB),
+```
+
+where `q(A)=a_0^2-2a_1^2+a_0a_2`.  Direct expansion and cancellation of
+the consecutive `t`-terms gives, in both cases,
+
+```text
+2[(b_a^2-b_(a-1)b_(a+1))
+  -(b_(a+1)^2-b_a b_(a+2))].                        (P22.5zz17)
+```
+
+The endpoint convention is automatic modulo odd `n`; in particular, when
+`a=m-1`, one has `b_(m+1)=b_(-m)=epsilon b_m`.  Summing
+`(P22.5zz17)` over the remainder features proves the last equality in
+`(P22.5zz16)`.  The first equality is the partial-character identity:
+exchange parity of `R` is exactly the sign of the removed factor, so
+adjoining it pairs the two equal contributions to the coefficient of
+`B_a`.  Finally, removing a largest radius makes every remaining radius at
+most `a`, proving the equivalence with `(COTM)`.  QED.
+
+The form `(COTM)` is the odd finite, unit-spaced analogue of the ordinary
+outer monotonicity target `(OTM)` in Proposition 15.  As there, the Gram
+matrix alone is insufficient; the vectors come from tensor products of
+complete nested interval strings.  The gain is that all affine wrapping is
+now confined to the cyclic charge convention in `(P22.5zz15)`.  The
+`turan-check` mode of `search_su2_odd_orbit_gks.cpp` independently expands
+both sides of `(P22.5zz17)` as exact integer quadratic forms.  It passes all
+9,900 radius/parity identities through rank one hundred, including every
+cyclic endpoint case; see `certificates/su2_odd_orbit_gks.log`.
+
+The first non-group orbit rank beyond Fibonacci can be settled completely.
+
+**Proposition 22H3N (uniform `GKS2*` for the level-five orbit ring).**
+The rank-three orbit ring `O_5` satisfies full `GKS2*` for signed words
+of arbitrary length.  Consequently the corner `(SCW0)` holds at level
+five for every plus word.  Together with the general partial-character
+equivalence, this also proves the full boundary column `(SCB)` at level
+five.
+
+**Proof.**  Use the even-lift basis `1,B_1,B_2`.  Its fusion relations are
+
+```text
+B_1^2=1+B_1+B_2,       B_1B_2=B_1+B_2,
+B_2^2=1+B_1.                                      (P22.5zz18)
+```
+
+Put `x=B_1` and `y=B_2=x^2-x-1`.  The three spectral values
+`x_1>x_2>x_3` are the roots of
+
+```text
+f(X)=X^3-2X^2-X+1.
+```
+
+The cyclic model gives their masses
+
+```text
+w_i=(3-x_i)/7.                                    (P22.5zz19)
+```
+
+Direct rational sign checks give the isolating intervals
+
+```text
+2<x_1<9/4,       11/20<x_2<2/3,       -1<x_3<-4/5. (P22.5zz20)
+```
+
+Indeed `f(2)<0<f(9/4)`, `f(11/20)>0>f(2/3)`, and
+`f(-1)<0<f(-4/5)`; the three disjoint intervals contain all three roots.
+
+The map `T(X)=2+X-X^2` permutes these roots cyclically, since
+
+```text
+f(T(X))=f(X)(-X^3+X^2+2X-1),
+```
+
+and the intervals identify the images.
+Since `y_i=1-T(x_i)`, after choosing the cyclic orientation one has
+
+```text
+y_1=1-x_3,       y_2=1-x_1,       y_3=1-x_2.       (P22.5zz21)
+```
+
+Set
+
+```text
+A=x_1-x_2,       B=x_2-x_3,       C=x_1-x_3=A+B,
+alpha=A/B,       beta=C/A.
+```
+
+The root sum is two.  Since `x_2<2/3`, it follows that `A>B`, hence
+`alpha>1` and `C/B>2`.  The sharper intervals in `(P22.5zz20)` give
+
+```text
+B/A>27/34>3/4,       beta>61/34>7/4,               (P22.5zz22)
+w_1/w_2>1/4,         w_1/w_3>3/16,
+w_2/w_3>7/12.                                       (P22.5zz23)
+```
+
+Apply the disjoint-support reduction.  There are only two nontrivial labels,
+so an irreducible signed word has the form
+
+```text
+[B_1(x)+sigma B_1(y)]^p
+[B_2(x)+tau B_2(y)]^q.                              (P22.5zz24)
+```
+
+All-plus words are positive by the fusion rule, and odd exchange parity
+vanishes.  In every remaining even-parity case, diagonal spectral pairs
+vanish and exchange of the two nodes gives
+
+```text
+J/2=sum_(i<j) w_iw_j
+       (x_i+sigma x_j)^p(y_i+tau y_j)^q.             (P22.5zz24a)
+```
+
+If `sigma=-1,tau=+1`, take `p>=2` even.  Even `q` is
+pointwise nonnegative on every unordered spectral pair.  For odd `q`, the
+only negative pair is `{2,3}`; the positive pair `{1,3}` dominates it
+because
+
+```text
+[w_1w_3 C^p x_1^q]/[w_2w_3 B^p |x_3|^q]
+ =(w_1/w_2)(C/B)^p(x_1/|x_3|)^q>1.                  (P22.5zz25)
+```
+
+Here `w_1/w_2>1/4`, `C/B>2`, and `x_1/|x_3|>2`.
+
+If `sigma=+1,tau=-1`, take `q>=2` even.  Odd `p` is the only
+non-pointwise case.  The negative pair is again `{2,3}`, and now the
+positive pair `{1,2}` dominates since
+
+```text
+[w_1w_2(2-x_3)^p C^q]/
+ [w_2w_3(x_1-2)^p A^q]
+ =(w_1/w_3)[(2-x_3)/(x_1-2)]^p(C/A)^q>1.             (P22.5zz26)
+```
+
+Indeed the first weight ratio is greater than `3/16`, while the middle
+ratio is greater than eight.
+
+It remains to put both labels in the minus support.  If `p,q` are even,
+every pair is nonnegative.  If both are odd, write
+`p=2r+1,q=2s+1` and put
+
+```text
+L_1=w_1w_2AC,       L_2=w_1w_3CB,       N=w_2w_3BA.
+```
+
+Orthogonality of the distinct characters `B_1,B_2` is exactly the
+two-factor identity
+
+```text
+N=L_1+L_2.                                          (P22.5zz27)
+```
+
+After division by the negative pair's extra factor `B^(2r)A^(2s)`, the
+two positive multipliers are
+
+```text
+M_1=alpha^(2r) beta^(2s),
+M_2=alpha^(2(r-s)) beta^(2r).                        (P22.5zz28)
+```
+
+When `r>=s`, both are at least one and `(P22.5zz27)` finishes the
+comparison.  If `s=r+d` with `d>=1`, discard the common factors at least
+one.  It is enough to prove
+
+```text
+L_1 beta^(2d)+L_2 alpha^(-2d)>=L_1+L_2.
+```
+
+But
+
+```text
+(1-alpha^(-2d))/(beta^(2d)-1)
+ <1/(beta^2-1)<16/33
+ <7/12<(w_2/w_3)alpha=L_1/L_2,                       (P22.5zz29)
+```
+
+which is precisely that inequality.  Words containing only one minus label
+to an even power are pointwise nonnegative.  These cases exhaust every
+support-disjoint word.  Proposition 5 then restores words with overlapping
+sign supports by induction on their length, proving full `GKS2*`.
+
+Lemma 22H3J transfers the scalar statement to `(SCW0)`.  Proposition 21
+applied to `O_5` gives all partial-character coefficients, and
+`(P22.5zy)` transfers those to `(SCB)`.  QED.
+
+Two independent exact C++ scans cross-check this all-length proof.  The
+support-disjoint total-degree scan through degree five hundred tests 502,002
+signed words and 1,505,005 partial-character coefficients.  The rectangular
+rank-three scan tests every exponent pair `0<=p,q<=500`, all four sign
+choices, and all three boundary targets: 1,004,004 words and 3,012,012
+coefficients.  Both pass.  These finite scans validate the spectral formulas
+and their implementation; Proposition 22H3N, not the bounds of the scans, is
+the uniform argument.
+
+The companion exact analyzer
+`character_ring_iter/analyze_su2_odd_orbit_rank3_cone.cpp` also explains why
+the preceding pair-dominance proof is useful.  In the standard six-dimensional
+symmetric-square fusion basis the two plus operators have nonnegative
+matrices, but each of the two squared-minus operators and the mixed-minus
+operator already has negative entries.  Thus the ordinary symmetric-square
+orthant is not a common invariant cone even at orbit rank three.  This is a
+no-go statement for that naive cone, not an obstruction to another cone.
+Full transcripts are in `certificates/su2_odd_orbit_gks.log`.
+
+
+
 Two larger standard packet cones still do not isolate that differential.
 For the level-three word `Q=[2,2,2]`, the full affine packet is
 
