@@ -55,3 +55,42 @@ Wider bounded fundamental-strand replay:
 The wider replay validates the exact fundamental lifts, the combined
 section-defect relation span, and the stronger two-sided carrier-capacity
 criterion in every enumerated case.
+
+Residual-capacity and optimal-section refinement, 2026-07-22:
+  ./analyze_su2_plucker_kernel 2 1 1 2 2 2 2 3
+  labels=[1,2,2,2,2,3] target=2 minus_mask=1 codomain_dimension=30 odd_sources=44 original_rank=25 original_kernel=19 positive_sources=41 straightening_states=685 raw_collision_relations=0 pair_intersection_relations=12 edge_exchange_relations=72 cut_boundary_relations=6 cut_boundary_rank=6 cut_order_best_rank=12 cut_order_combined_rank=12 section_defect_relations=74 candidate_relation_rank=19 candidate_relations_valid=PASS fundamental_lifts_valid=PASS fundamental_owned_lifts_valid=FAIL fundamental_combined_valid=PASS fundamental_kernel_quotient_rank=3 fundamental_candidate_quotient_rank=3 fundamental_covered_rank=19 positive_internal_kernel_rank=13 allocation_dimension=2 carrier_dimension=17 f0_dimension=75 f0_kernel_dimension=45 negative_stripped_rank=42 positive_stripped_rank=40 positive_global_rank=27 carrier_overlap_dimension=2 positive_allocation_dimension=1 unshared_negative_carrier_dimension=15 residual_negative_demand=17 residual_positive_supply=28 optimal_section_cover_feasible=PASS ambient_kernel_criterion=FAIL optimal_section_rank=28 optimal_section_criterion=PASS result=PASS
+  cut_order_ranks=6,6,9,10,9,6,12,12,12,12,12,12,12,0,9,9,9,9,9,0,3,7,7,7,7,0,3,5,6,6,6,0,3,5,6,6,6,0,3,5,6,6,6,6,6,5,3,0,0
+
+Writing alpha=dim ker(iota_-), beta=dim ker(iota_+),
+  c=dim(K_-/(K_- intersect K_+)), r=rank(mu_+),
+the exact residual criterion is alpha+c<=beta+r.  Here it reads
+  2+15<=1+27.
+The additional optimal-section cover condition is c<=r, here 15<=27.
+Both pass.  The ambient shortcut fails because dim ker(phi)=45>41-2.
+
+The raw cut-boundary construction is valid but insufficient in this case.
+Its natural-order rank is 6; the best of 49 tested target/fundamental order
+placements has rank 12, and the union of all 49 images still has rank 12.
+Thus vertex reordering does not recover the seven higher kernel directions.
+
+Revalidated optimized replay:
+  ./analyze_su2_plucker_kernel fundamental-sweep 4 6 4 14
+  SU2_PLUCKER_ORIGINAL_KERNEL cases=71 deficit_cases=23 nonzero_kernels=10 maximum_kernel=19 minimum_slack=0 result=PASS
+  SU2_PLUCKER_FUNDAMENTAL_LIFT cases=71 deficit_cases=23 result=PASS
+  elapsed=52.02 maxrss=9916KB
+
+The fundamental-lift PASS now also requires both residual optimal-section
+conditions in every source-deficit case.
+
+First failure of the ad hoc section family, recovered by the exact optimal
+section construction:
+  ./analyze_su2_plucker_kernel 2 1 1 2 2 2 3 4
+  labels=[1,2,2,2,3,4] target=2 minus_mask=1 codomain_dimension=34 odd_sources=36 original_rank=27 original_kernel=9 positive_sources=25 straightening_states=687 raw_collision_relations=0 pair_intersection_relations=3 edge_exchange_relations=0 cut_boundary_relations=0 cut_boundary_rank=0 cut_order_best_rank=3 cut_order_combined_rank=3 section_defect_relations=6 candidate_relation_rank=9 candidate_relations_valid=PASS fundamental_lifts_valid=PASS fundamental_owned_lifts_valid=FAIL fundamental_combined_valid=PASS fundamental_kernel_quotient_rank=2 fundamental_candidate_quotient_rank=2 fundamental_covered_rank=9 positive_internal_kernel_rank=0 allocation_dimension=1 carrier_dimension=8 f0_dimension=85 f0_kernel_dimension=51 negative_stripped_rank=35 positive_stripped_rank=25 positive_global_rank=25 carrier_overlap_dimension=0 positive_allocation_dimension=0 unshared_negative_carrier_dimension=8 residual_negative_demand=9 residual_positive_supply=25 optimal_section_cover_feasible=PASS optimal_defect_rank=8 optimal_defect_kernel=17 optimal_relation_rank=9 ambient_kernel_criterion=FAIL optimal_section_rank=8 optimal_section_criterion=PASS result=PASS
+  section_trial_ranks=4,4,4,4,4,4
+  section_individual_ranks=4,4,4,4,4,4
+
+The six old section choices span only four of the nine true kernel
+directions.  The constructed optimal defect has image K_- of rank 8 and
+kernel dimension 17; adding ker(iota_-) of dimension 1 gives exact relation
+rank 9.  Every generated relation is checked against the original Plucker
+multiplication matrix.

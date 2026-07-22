@@ -143,6 +143,42 @@ Graph standard_graph(
     return graph;
 }
 
+std::vector<Graph> ordered_standard_graphs(
+    const std::vector<int>& degrees,
+    const std::vector<std::size_t>& order
+) {
+    if (order.size() != degrees.size()) {
+        throw std::runtime_error("ordered basis has wrong vertex count");
+    }
+    std::vector<bool> seen(order.size(), false);
+    std::vector<int> ordered_degrees(order.size(), 0);
+    for (std::size_t position = 0U; position < order.size(); ++position) {
+        if (order[position] >= order.size() || seen[order[position]]) {
+            throw std::runtime_error("ordered basis is not a permutation");
+        }
+        seen[order[position]] = true;
+        ordered_degrees[position] = degrees[order[position]];
+    }
+    std::vector<Graph> answer;
+    for (const Key& top : tops(ordered_degrees)) {
+        const Graph ordered_graph = standard_graph(ordered_degrees, top);
+        Graph graph(degrees.size(), std::vector<int>(degrees.size(), 0));
+        for (std::size_t first = 0U; first < order.size(); ++first) {
+            for (std::size_t second = first + 1U;
+                 second < order.size(); ++second) {
+                const std::size_t original_first
+                    = std::min(order[first], order[second]);
+                const std::size_t original_second
+                    = std::max(order[first], order[second]);
+                graph[original_first][original_second]
+                    += ordered_graph[first][second];
+            }
+        }
+        answer.push_back(std::move(graph));
+    }
+    return answer;
+}
+
 void add_scaled(
     Expansion& target,
     const Expansion& source,
@@ -525,6 +561,10 @@ struct Result {
     std::size_t raw_collision_relations = 0U;
     std::size_t pair_intersection_relations = 0U;
     std::size_t edge_exchange_relations = 0U;
+    std::size_t cut_boundary_relations = 0U;
+    std::size_t cut_boundary_rank = 0U;
+    std::vector<std::size_t> cut_order_ranks;
+    std::size_t cut_order_combined_rank = 0U;
     std::size_t section_defect_relations = 0U;
     std::vector<std::size_t> section_trial_ranks;
     std::vector<std::size_t> section_individual_ranks;
@@ -562,6 +602,23 @@ struct Result {
     bool optimal_section_criterion = true;
     std::size_t allocation_dimension = 0U;
     std::size_t carrier_dimension = 0U;
+    std::size_t f0_dimension = 0U;
+    std::size_t f0_kernel_dimension = 0U;
+    std::size_t negative_stripped_rank = 0U;
+    std::size_t positive_stripped_rank = 0U;
+    std::size_t positive_global_rank = 0U;
+    std::size_t carrier_overlap_dimension = 0U;
+    bool ambient_kernel_criterion = true;
+    std::size_t positive_allocation_dimension = 0U;
+    std::size_t unshared_negative_carrier_dimension = 0U;
+    std::size_t residual_negative_demand = 0U;
+    std::size_t residual_positive_supply = 0U;
+    bool optimal_section_cover_feasible = true;
+    std::size_t optimal_defect_rank = 0U;
+    std::size_t optimal_defect_kernel = 0U;
+    std::size_t optimal_relation_rank = 0U;
+    std::size_t merged_row_kernel_dimension = 0U;
+    bool deletion_contraction_valid = true;
 };
 
 std::vector<std::vector<Integer>> column_matrix(
@@ -761,66 +818,308 @@ Result analyze_case(
             }
         }
 
-        const auto lift_to_odd = [
+        const auto lift_to_odd_subset = [
             &odd_source_indices,
             &straightening_cache,
             factors,
             minus_mask,
-            subset_limit,
             source_count = columns.size()
+        ](
+            const Graph& graph,
+            unsigned int subset,
+            std::vector<Integer>& lift
+        ) {
+            if ((popcount(subset & minus_mask) & 1) == 0
+                || !respects_cut(graph, subset, factors)) {
+                return false;
+            }
+            const Graph left = restrict_graph(graph, subset);
+            Graph right = graph;
+            for (std::size_t first = 0U;
+                 first < graph.size(); ++first) {
+                for (std::size_t second = first + 1U;
+                     second < graph.size(); ++second) {
+                    if (first < factors && second < factors
+                        && ((subset >> first) & 1U) != 0U
+                        && ((subset >> second) & 1U) != 0U) {
+                        right[first][second] = 0;
+                    }
+                }
+            }
+            const Key left_key = flatten(left);
+            const Key right_key = flatten(right);
+            const Expansion& left_expansion = straighten(
+                left_key, graph.size(), straightening_cache
+            );
+            const Expansion& right_expansion = straighten(
+                right_key, graph.size(), straightening_cache
+            );
+            std::vector<Integer> answer(source_count, 0);
+            for (const auto& [left_graph_key, left_coefficient]
+                 : left_expansion) {
+                for (const auto& [right_graph_key, right_coefficient]
+                     : right_expansion) {
+                    const auto found = odd_source_indices.find(
+                        ChannelKey{
+                            subset, left_graph_key, right_graph_key
+                        }
+                    );
+                    if (found == odd_source_indices.end()) {
+                        throw std::runtime_error(
+                            "odd lift left the channel basis"
+                        );
+                    }
+                    answer[found->second]
+                        += left_coefficient * right_coefficient;
+                }
+            }
+            lift = std::move(answer);
+            return true;
+        };
+
+        const auto lift_to_odd = [
+            &lift_to_odd_subset,
+            subset_limit
         ](
             const Graph& graph,
             std::vector<Integer>& lift
         ) {
             for (unsigned int subset = 0U;
                  subset < subset_limit; ++subset) {
-                if ((popcount(subset & minus_mask) & 1) == 0
-                    || !respects_cut(graph, subset, factors)) {
-                    continue;
+                if (lift_to_odd_subset(graph, subset, lift)) {
+                    return true;
                 }
-                const Graph left = restrict_graph(graph, subset);
-                Graph right = graph;
-                for (std::size_t first = 0U;
-                     first < graph.size(); ++first) {
-                    for (std::size_t second = first + 1U;
-                         second < graph.size(); ++second) {
-                        if (first < factors && second < factors
-                            && ((subset >> first) & 1U) != 0U
-                            && ((subset >> second) & 1U) != 0U) {
-                            right[first][second] = 0;
-                        }
-                    }
-                }
-                const Key left_key = flatten(left);
-                const Key right_key = flatten(right);
-                const Expansion& left_expansion = straighten(
-                    left_key, graph.size(), straightening_cache
-                );
-                const Expansion& right_expansion = straighten(
-                    right_key, graph.size(), straightening_cache
-                );
-                std::vector<Integer> answer(source_count, 0);
-                for (const auto& [left_key, left_coefficient]
-                     : left_expansion) {
-                    for (const auto& [right_key, right_coefficient]
-                         : right_expansion) {
-                        const auto found = odd_source_indices.find(
-                            ChannelKey{subset, left_key, right_key}
-                        );
-                        if (found == odd_source_indices.end()) {
-                            throw std::runtime_error(
-                                "odd lift left the channel basis"
-                            );
-                        }
-                        answer[found->second]
-                            += left_coefficient * right_coefficient;
-                    }
-                }
-                lift = std::move(answer);
-                return true;
             }
             return false;
         };
+
+        std::vector<std::vector<Integer>> cut_boundary_relations;
+        if (popcount(minus_mask) == 1) {
+            std::size_t fundamental = 0U;
+            while (((minus_mask >> fundamental) & 1U) == 0U) {
+                ++fundamental;
+            }
+            if (labels[fundamental] == 1) {
+                const auto build_cut_boundary = [
+                    &lift_to_odd_subset,
+                    factors,
+                    fundamental
+                ](const std::vector<Result::PositiveSource>& sources) {
+                    std::vector<std::vector<Integer>> relations;
+                    for (const Result::PositiveSource& source : sources) {
+                        Graph stripped = source.graph;
+                        std::size_t neighbor = stripped.size();
+                        for (std::size_t vertex = 0U;
+                             vertex < stripped.size(); ++vertex) {
+                            if (vertex == fundamental) {
+                                continue;
+                            }
+                            const std::size_t first
+                                = std::min(vertex, fundamental);
+                            const std::size_t second
+                                = std::max(vertex, fundamental);
+                            if (stripped[first][second] == 0) {
+                                continue;
+                            }
+                            if (stripped[first][second] != 1
+                                || neighbor != stripped.size()) {
+                                throw std::runtime_error(
+                                    "positive fundamental edge is not unique"
+                                );
+                            }
+                            neighbor = vertex;
+                            stripped[first][second] = 0;
+                        }
+                        if (neighbor == stripped.size()) {
+                            throw std::runtime_error(
+                                "positive fundamental edge is missing"
+                            );
+                        }
+                        std::vector<bool> component(
+                            stripped.size(), false
+                        );
+                        std::vector<std::size_t> queue{neighbor};
+                        component[neighbor] = true;
+                        for (std::size_t head = 0U;
+                             head < queue.size(); ++head) {
+                            const std::size_t vertex = queue[head];
+                            for (std::size_t other = 0U;
+                                 other < stripped.size(); ++other) {
+                                const std::size_t first
+                                    = std::min(vertex, other);
+                                const std::size_t second
+                                    = std::max(vertex, other);
+                                if (first == second
+                                    || stripped[first][second] == 0
+                                    || component[other]) {
+                                    continue;
+                                }
+                                component[other] = true;
+                                queue.push_back(other);
+                            }
+                        }
+                        if (component[factors]) {
+                            continue;
+                        }
+                        unsigned int component_mask = 0U;
+                        for (std::size_t vertex = 0U;
+                             vertex < factors; ++vertex) {
+                            if (component[vertex]) {
+                                component_mask |= 1U << vertex;
+                            }
+                        }
+                        if ((component_mask & source.mask) != 0U) {
+                            throw std::runtime_error(
+                                "positive cut meets neighbor component"
+                            );
+                        }
+                        const unsigned int base_mask
+                            = (1U << fundamental) | component_mask;
+                        const unsigned int extended_mask
+                            = base_mask | source.mask;
+                        std::vector<Integer> base_lift;
+                        std::vector<Integer> extended_lift;
+                        if (!lift_to_odd_subset(
+                                source.graph, base_mask, base_lift
+                            )
+                            || !lift_to_odd_subset(
+                                source.graph,
+                                extended_mask,
+                                extended_lift
+                            )) {
+                            throw std::runtime_error(
+                                "cut-boundary odd lift failed"
+                            );
+                        }
+                        for (std::size_t entry = 0U;
+                             entry < base_lift.size(); ++entry) {
+                            extended_lift[entry] -= base_lift[entry];
+                        }
+                        if (std::any_of(
+                                extended_lift.begin(),
+                                extended_lift.end(),
+                                [](const Integer& value) {
+                                    return value != 0;
+                                }
+                            )) {
+                            relations.push_back(std::move(extended_lift));
+                        }
+                    }
+                    return relations;
+                };
+                cut_boundary_relations = build_cut_boundary(
+                    result.positive_source_graphs
+                );
+                result.cut_boundary_relations
+                    = cut_boundary_relations.size();
+                candidate_relations.insert(
+                    candidate_relations.end(),
+                    cut_boundary_relations.begin(),
+                    cut_boundary_relations.end()
+                );
+
+                if (diagnostics) {
+                    std::vector<std::vector<std::size_t>> trial_orders;
+                    std::vector<std::vector<Integer>> all_order_relations;
+                    const std::size_t vertices = degrees.size();
+                    for (std::size_t shift = 0U;
+                         shift < vertices; ++shift) {
+                    std::vector<std::size_t> order(vertices, 0U);
+                    for (std::size_t position = 0U;
+                         position < vertices; ++position) {
+                        order[position] = (position + shift) % vertices;
+                    }
+                    trial_orders.push_back(std::move(order));
+                    }
+                    for (std::size_t target_position = 0U;
+                         target_position < vertices; ++target_position) {
+                        for (std::size_t fundamental_position = 0U;
+                             fundamental_position < vertices;
+                             ++fundamental_position) {
+                            if (target_position == fundamental_position) {
+                                continue;
+                            }
+                            std::vector<std::size_t> order;
+                            order.reserve(vertices);
+                            std::size_t next_other = 0U;
+                            for (std::size_t position = 0U;
+                                 position < vertices; ++position) {
+                                if (position == target_position) {
+                                    order.push_back(factors);
+                                } else if (position
+                                           == fundamental_position) {
+                                    order.push_back(fundamental);
+                                } else {
+                                    while (next_other == fundamental
+                                           || next_other == factors) {
+                                        ++next_other;
+                                    }
+                                    order.push_back(next_other++);
+                                }
+                            }
+                            trial_orders.push_back(std::move(order));
+                        }
+                    }
+                    for (const std::vector<std::size_t>& order
+                         : trial_orders) {
+                        std::vector<Result::PositiveSource> ordered_sources;
+                        for (unsigned int subset = 1U;
+                             subset < subset_limit; ++subset) {
+                            if ((popcount(subset & minus_mask) & 1) != 0) {
+                                continue;
+                            }
+                            std::vector<int> left_degrees(
+                                factors + 1U, 0
+                            );
+                            std::vector<int> right_degrees(
+                                factors + 1U, 0
+                            );
+                            for (std::size_t factor = 0U;
+                                 factor < factors; ++factor) {
+                                if (((subset >> factor) & 1U) != 0U) {
+                                    left_degrees[factor] = labels[factor];
+                                } else {
+                                    right_degrees[factor] = labels[factor];
+                                }
+                            }
+                            right_degrees[factors] = target;
+                            std::size_t basis = 0U;
+                            const auto left_graphs = ordered_standard_graphs(
+                                left_degrees, order
+                            );
+                            const auto right_graphs
+                                = ordered_standard_graphs(
+                                    right_degrees, order
+                                );
+                            for (const Graph& left : left_graphs) {
+                                for (const Graph& right : right_graphs) {
+                                    ordered_sources.push_back(
+                                        Result::PositiveSource{
+                                            subset,
+                                            basis++,
+                                            add_graphs(left, right)
+                                        }
+                                    );
+                                }
+                            }
+                        }
+                        auto ordered_relations
+                            = build_cut_boundary(ordered_sources);
+                        result.cut_order_ranks.push_back(exact_rank(
+                            ordered_relations
+                        ));
+                        all_order_relations.insert(
+                            all_order_relations.end(),
+                            ordered_relations.begin(),
+                            ordered_relations.end()
+                        );
+                    }
+                    result.cut_order_combined_rank
+                        = exact_rank(std::move(all_order_relations));
+                }
+            }
+        }
+        result.cut_boundary_rank = exact_rank(cut_boundary_relations);
 
         const auto add_edge_exchange = [
             &candidate_relations,
@@ -965,6 +1264,7 @@ Result analyze_case(
                         f0_basis.push_back(key);
                     }
                 }
+                result.f0_dimension = f0_basis.size();
                 std::vector<F1Element> f1_basis;
                 for (std::size_t first = 0U;
                      first < degrees.size(); ++first) {
@@ -1144,6 +1444,8 @@ Result analyze_case(
                     = candidate_relations;
                 std::size_t section_begin = candidate_relations.size();
                 const std::size_t iota_rank = exact_rank(iota);
+                result.negative_stripped_rank = iota_rank;
+                result.positive_stripped_rank = exact_rank(positive_iota);
                 const std::size_t allocation_dimension
                     = columns.size() - iota_rank;
                 const std::size_t carrier_dimension
@@ -1176,6 +1478,7 @@ Result analyze_case(
                         }
                     );
                 };
+                if (diagnostics) {
                 std::vector<std::vector<Integer>> section(
                     basis_index.size(),
                     std::vector<Integer>(f0_basis.size(), 0)
@@ -1505,6 +1808,7 @@ Result analyze_case(
                         section_begin = candidate_relations.size();
                     }
                 }
+                }
                 result.candidate_relation_rank = exact_rank(
                     candidate_relations
                 );
@@ -1597,6 +1901,7 @@ Result analyze_case(
                 const auto positive_global_kernel = exact_nullspace(
                     column_matrix(positive_global, basis_index.size())
                 );
+                result.positive_global_rank = exact_rank(positive_global);
                 std::vector<std::vector<Integer>> positive_internal_rows;
                 for (const std::vector<Rational>& relation
                      : positive_global_kernel) {
@@ -1631,11 +1936,293 @@ Result analyze_case(
                 result.optimal_section_rank = exact_rank(
                     std::move(optimal_section_rows)
                 );
+                result.carrier_overlap_dimension
+                    = result.carrier_dimension
+                        + result.positive_internal_kernel_rank
+                        - result.optimal_section_rank;
+                result.positive_allocation_dimension
+                    = result.positive_sources
+                        - result.positive_stripped_rank;
+                result.unshared_negative_carrier_dimension
+                    = result.carrier_dimension
+                        - result.carrier_overlap_dimension;
+                result.residual_negative_demand
+                    = result.allocation_dimension
+                        + result.unshared_negative_carrier_dimension;
+                result.residual_positive_supply
+                    = result.positive_allocation_dimension
+                        + result.positive_global_rank;
+                result.optimal_section_cover_feasible
+                    = result.unshared_negative_carrier_dimension
+                        <= result.positive_global_rank;
                 result.optimal_section_criterion
                     = result.positive_sources >= result.optimal_section_rank
                     && result.positive_sources
                             - result.optimal_section_rank
                         >= allocation_dimension;
+                if (result.optimal_section_criterion
+                    != (result.residual_negative_demand
+                        <= result.residual_positive_supply)) {
+                    throw std::runtime_error(
+                        "residual capacity identity failed"
+                    );
+                }
+                if (result.f0_dimension < result.codomain_dimension) {
+                    throw std::runtime_error("F0 is smaller than its image");
+                }
+                result.f0_kernel_dimension
+                    = result.f0_dimension - result.codomain_dimension;
+                std::vector<int> merged_degrees;
+                merged_degrees.reserve(degrees.size() - 1U);
+                for (std::size_t vertex = 0U;
+                     vertex < degrees.size(); ++vertex) {
+                    if (vertex == fundamental) {
+                        continue;
+                    }
+                    merged_degrees.push_back(
+                        vertex + 1U == degrees.size()
+                            ? degrees[vertex] + 1 : degrees[vertex]
+                    );
+                }
+                const std::size_t merged_target
+                    = merged_degrees.size() - 1U;
+                std::size_t merged_f0_dimension = 0U;
+                for (std::size_t neighbor = 0U;
+                     neighbor < merged_degrees.size(); ++neighbor) {
+                    if (neighbor == merged_target
+                        || merged_degrees[neighbor] == 0) {
+                        continue;
+                    }
+                    std::vector<int> residual = merged_degrees;
+                    --residual[merged_target];
+                    --residual[neighbor];
+                    merged_f0_dimension += tops(residual).size();
+                }
+                const std::size_t merged_codomain_dimension
+                    = tops(merged_degrees).size();
+                if (merged_f0_dimension < merged_codomain_dimension) {
+                    throw std::runtime_error(
+                        "merged row space is smaller than its image"
+                    );
+                }
+                result.merged_row_kernel_dimension
+                    = merged_f0_dimension - merged_codomain_dimension;
+                result.deletion_contraction_valid
+                    = result.merged_row_kernel_dimension
+                        == result.f0_kernel_dimension;
+                result.ambient_kernel_criterion
+                    = result.positive_sources
+                            >= result.f0_kernel_dimension
+                    && result.positive_sources
+                            - result.f0_kernel_dimension
+                        >= allocation_dimension;
+
+                if (result.optimal_section_cover_feasible) {
+                    std::vector<std::vector<Integer>> domain_basis;
+                    std::vector<std::vector<Rational>> desired_outputs;
+                    domain_basis.reserve(result.positive_source_graphs.size());
+                    desired_outputs.reserve(
+                        result.positive_source_graphs.size()
+                    );
+                    for (const std::vector<Rational>& relation
+                         : positive_global_kernel) {
+                        std::vector<Integer> integer_relation
+                            = integerize(relation);
+                        std::vector<Rational> target(
+                            f0_basis.size(), Rational(0)
+                        );
+                        for (std::size_t positive = 0U;
+                             positive < integer_relation.size(); ++positive) {
+                            for (std::size_t column = 0U;
+                                 column < f0_basis.size(); ++column) {
+                                target[column]
+                                    += Rational(integer_relation[positive])
+                                        * Rational(
+                                            positive_iota[positive][column]
+                                        );
+                            }
+                        }
+                        domain_basis.push_back(
+                            std::move(integer_relation)
+                        );
+                        desired_outputs.push_back(std::move(target));
+                    }
+                    std::vector<std::vector<Integer>> independent_mu_rows;
+                    std::vector<std::size_t> complement_sources;
+                    std::size_t mu_rank = 0U;
+                    for (std::size_t positive = 0U;
+                         positive < positive_global.size(); ++positive) {
+                        auto trial = independent_mu_rows;
+                        trial.push_back(positive_global[positive]);
+                        const std::size_t next_rank = exact_rank(trial);
+                        if (next_rank == mu_rank) {
+                            continue;
+                        }
+                        independent_mu_rows.push_back(
+                            positive_global[positive]
+                        );
+                        complement_sources.push_back(positive);
+                        mu_rank = next_rank;
+                    }
+                    if (mu_rank != result.positive_global_rank) {
+                        throw std::runtime_error(
+                            "positive complement rank mismatch"
+                        );
+                    }
+                    std::vector<std::vector<Integer>> carrier_span
+                        = positive_internal_rows;
+                    std::vector<std::vector<Rational>> carrier_complement;
+                    std::size_t carrier_span_rank = exact_rank(carrier_span);
+                    for (const std::vector<Rational>& target
+                         : kernel_targets) {
+                        std::vector<Integer> integer_target
+                            = integerize(target);
+                        auto trial = carrier_span;
+                        trial.push_back(integer_target);
+                        const std::size_t next_rank = exact_rank(trial);
+                        if (next_rank == carrier_span_rank) {
+                            continue;
+                        }
+                        carrier_span.push_back(std::move(integer_target));
+                        carrier_complement.push_back(target);
+                        carrier_span_rank = next_rank;
+                    }
+                    if (carrier_complement.size()
+                        != result.unshared_negative_carrier_dimension) {
+                        throw std::runtime_error(
+                            "negative carrier quotient rank mismatch"
+                        );
+                    }
+                    for (std::size_t complement = 0U;
+                         complement < complement_sources.size();
+                         ++complement) {
+                        std::vector<Integer> coordinate(
+                            result.positive_source_graphs.size(), 0
+                        );
+                        coordinate[complement_sources[complement]] = 1;
+                        domain_basis.push_back(std::move(coordinate));
+                        if (complement < carrier_complement.size()) {
+                            desired_outputs.push_back(
+                                carrier_complement[complement]
+                            );
+                        } else {
+                            desired_outputs.emplace_back(
+                                f0_basis.size(), Rational(0)
+                            );
+                        }
+                    }
+                    if (domain_basis.size()
+                            != result.positive_source_graphs.size()
+                        || desired_outputs.size() != domain_basis.size()) {
+                        throw std::runtime_error(
+                            "optimal defect basis is incomplete"
+                        );
+                    }
+                    std::vector<std::vector<Integer>> optimal_defects;
+                    optimal_defects.reserve(domain_basis.size());
+                    for (std::size_t positive = 0U;
+                         positive < domain_basis.size(); ++positive) {
+                        std::vector<Rational> unit(
+                            domain_basis.size(), Rational(0)
+                        );
+                        unit[positive] = Rational(1);
+                        const auto [solved, coordinates]
+                            = solve_left(domain_basis, unit);
+                        if (!solved) {
+                            throw std::runtime_error(
+                                "optimal defect domain basis is singular"
+                            );
+                        }
+                        std::vector<Rational> target(
+                            f0_basis.size(), Rational(0)
+                        );
+                        for (std::size_t basis = 0U;
+                             basis < coordinates.size(); ++basis) {
+                            for (std::size_t column = 0U;
+                                 column < f0_basis.size(); ++column) {
+                                target[column] += coordinates[basis]
+                                    * desired_outputs[basis][column];
+                            }
+                        }
+                        optimal_defects.push_back(integerize(target));
+                    }
+                    result.optimal_defect_rank = exact_rank(optimal_defects);
+                    result.optimal_defect_kernel
+                        = optimal_defects.size()
+                            - result.optimal_defect_rank;
+                    if (result.optimal_defect_rank
+                            != result.optimal_section_rank
+                        || result.optimal_defect_kernel
+                            < result.allocation_dimension) {
+                        throw std::runtime_error(
+                            "constructed optimal defect has wrong capacity"
+                        );
+                    }
+
+                    const auto allocation_relations = exact_nullspace(
+                        column_matrix(iota, f0_basis.size())
+                    );
+                    for (const std::vector<Rational>& relation
+                         : allocation_relations) {
+                        candidate_relations.push_back(
+                            integerize(relation)
+                        );
+                    }
+                    std::vector<std::vector<Integer>> intersection_columns
+                        = optimal_defects;
+                    intersection_columns.insert(
+                        intersection_columns.end(), iota.begin(), iota.end()
+                    );
+                    const auto optimal_intersection = exact_nullspace(
+                        column_matrix(
+                            intersection_columns, f0_basis.size()
+                        )
+                    );
+                    for (const std::vector<Rational>& solution
+                         : optimal_intersection) {
+                        std::vector<Rational> relation(
+                            columns.size(), Rational(0)
+                        );
+                        for (std::size_t source = 0U;
+                             source < columns.size(); ++source) {
+                            relation[source] = solution[
+                                optimal_defects.size() + source
+                            ];
+                        }
+                        if (std::any_of(
+                                relation.begin(), relation.end(),
+                                [](const Rational& value) {
+                                    return value != 0;
+                                }
+                            )) {
+                            candidate_relations.push_back(
+                                integerize(relation)
+                            );
+                        }
+                    }
+                    result.optimal_relation_rank = exact_rank(
+                        candidate_relations
+                    );
+                    for (const std::vector<Integer>& relation
+                         : candidate_relations) {
+                        for (std::size_t row = 0U;
+                             row < full_matrix.size(); ++row) {
+                            Integer value = 0;
+                            for (std::size_t source = 0U;
+                                 source < relation.size(); ++source) {
+                                value += full_matrix[row][source]
+                                    * relation[source];
+                            }
+                            if (value != 0) {
+                                throw std::runtime_error(
+                                    "optimal defect produced invalid relation"
+                                );
+                            }
+                        }
+                    }
+                    result.candidate_relation_rank
+                        = result.optimal_relation_rank;
+                }
                 const std::size_t owned_rank = exact_rank(
                     owned_differential
                 );
@@ -1896,6 +2483,8 @@ int main(int argc, char** argv) {
                 = std::string(argv[1]) == "relation-sweep";
             const bool fundamental_sweep
                 = std::string(argv[1]) == "fundamental-sweep";
+            const bool capacity_verbose
+                = std::getenv("SU2_PLUCKER_CAPACITY_VERBOSE") != nullptr;
             const int maximum_label
                 = parse_nonnegative(argv[2], "maximum label");
             const int maximum_factors
@@ -1916,6 +2505,10 @@ int main(int argc, char** argv) {
             std::uint64_t nonzero_kernels = 0U;
             std::uint64_t maximum_kernel = 0U;
             std::uint64_t minimum_slack
+                = std::numeric_limits<std::uint64_t>::max();
+            std::uint64_t minimum_residual_slack
+                = std::numeric_limits<std::uint64_t>::max();
+            std::uint64_t minimum_cover_slack
                 = std::numeric_limits<std::uint64_t>::max();
             std::uint64_t printed_nonzero = 0U;
             std::uint64_t printed_tight = 0U;
@@ -1966,7 +2559,9 @@ int main(int argc, char** argv) {
                             if (fundamental_sweep
                                 && (!result.fundamental_lifts_valid
                                     || !result.fundamental_combined_valid
-                                    || !result.optimal_section_criterion)) {
+                                    || !result.optimal_section_criterion
+                                    || !result.optimal_section_cover_feasible
+                                    || !result.deletion_contraction_valid)) {
                                 std::cout
                                     << "SU2_PLUCKER_FUNDAMENTAL_LIFT "
                                     << "result=FAIL labels=";
@@ -1997,8 +2592,77 @@ int main(int argc, char** argv) {
                                           << " optimal="
                                           << (result.optimal_section_criterion
                                                   ? "PASS" : "FAIL")
+                                          << " cover="
+                                          << (result.optimal_section_cover_feasible
+                                                  ? "PASS" : "FAIL")
+                                          << " optimal_defect_rank="
+                                          << result.optimal_defect_rank
+                                          << " optimal_defect_kernel="
+                                          << result.optimal_defect_kernel
+                                          << " optimal_relation_rank="
+                                          << result.optimal_relation_rank
+                                          << " merged_row_kernel="
+                                          << result.merged_row_kernel_dimension
+                                          << " deletion_contraction="
+                                          << (result.deletion_contraction_valid
+                                                  ? "PASS" : "FAIL")
                                           << '\n';
                                 return 1;
+                            }
+                            if (fundamental_sweep) {
+                                minimum_residual_slack = std::min(
+                                    minimum_residual_slack,
+                                    static_cast<std::uint64_t>(
+                                        result.residual_positive_supply
+                                            - result.residual_negative_demand
+                                    )
+                                );
+                                minimum_cover_slack = std::min(
+                                    minimum_cover_slack,
+                                    static_cast<std::uint64_t>(
+                                        result.positive_global_rank
+                                            - result.unshared_negative_carrier_dimension
+                                    )
+                                );
+                            }
+                            if (fundamental_sweep && capacity_verbose) {
+                                std::cout << "capacity labels=";
+                                print_vector(labels);
+                                std::cout << " target=" << target
+                                          << " odd=" << result.odd_sources
+                                          << " positive="
+                                          << result.positive_sources
+                                          << " allocation="
+                                          << result.allocation_dimension
+                                          << " negative_carrier="
+                                          << result.carrier_dimension
+                                          << " positive_carrier="
+                                          << result.positive_internal_kernel_rank
+                                          << " carrier_sum="
+                                          << result.optimal_section_rank
+                                          << " carrier_overlap="
+                                          << result.carrier_overlap_dimension
+                                          << " f0=" << result.f0_dimension
+                                          << " ker_f0="
+                                          << result.f0_kernel_dimension
+                                          << " rank_iota_minus="
+                                          << result.negative_stripped_rank
+                                          << " rank_iota_plus="
+                                          << result.positive_stripped_rank
+                                          << " rank_mu_plus="
+                                          << result.positive_global_rank
+                                          << " positive_allocation="
+                                          << result.positive_allocation_dimension
+                                          << " unshared_carrier="
+                                          << result.unshared_negative_carrier_dimension
+                                          << " residual_demand="
+                                          << result.residual_negative_demand
+                                          << " residual_supply="
+                                          << result.residual_positive_supply
+                                          << " ambient="
+                                          << (result.ambient_kernel_criterion
+                                                  ? "PASS" : "FAIL")
+                                          << '\n';
                             }
                             if (relation_sweep
                                 && (!result.candidate_relations_valid
@@ -2019,6 +2683,10 @@ int main(int argc, char** argv) {
                                           << result.pair_intersection_relations
                                           << " edge_relations="
                                           << result.edge_exchange_relations
+                                          << " cut_boundary_relations="
+                                          << result.cut_boundary_relations
+                                          << " cut_boundary_rank="
+                                          << result.cut_boundary_rank
                                           << " section_defect_relations="
                                           << result.section_defect_relations
                                           << " valid="
@@ -2105,6 +2773,16 @@ int main(int argc, char** argv) {
             if (fundamental_sweep) {
                 std::cout << "SU2_PLUCKER_FUNDAMENTAL_LIFT cases="
                           << cases << " deficit_cases=" << deficit_cases
+                          << " minimum_residual_slack="
+                          << (minimum_residual_slack
+                                      == std::numeric_limits<
+                                          std::uint64_t>::max()
+                                  ? 0U : minimum_residual_slack)
+                          << " minimum_cover_slack="
+                          << (minimum_cover_slack
+                                      == std::numeric_limits<
+                                          std::uint64_t>::max()
+                                  ? 0U : minimum_cover_slack)
                           << " result=PASS\n";
             }
             return 0;
@@ -2146,6 +2824,19 @@ int main(int argc, char** argv) {
                   << result.pair_intersection_relations
                   << " edge_exchange_relations="
                   << result.edge_exchange_relations
+                  << " cut_boundary_relations="
+                  << result.cut_boundary_relations
+                  << " cut_boundary_rank="
+                  << result.cut_boundary_rank
+                  << " cut_order_best_rank="
+                  << (result.cut_order_ranks.empty()
+                          ? 0U
+                          : *std::max_element(
+                                result.cut_order_ranks.begin(),
+                                result.cut_order_ranks.end()
+                            ))
+                  << " cut_order_combined_rank="
+                  << result.cut_order_combined_rank
                   << " section_defect_relations="
                   << result.section_defect_relations
                   << " candidate_relation_rank="
@@ -2171,6 +2862,40 @@ int main(int argc, char** argv) {
                   << result.allocation_dimension
                   << " carrier_dimension="
                   << result.carrier_dimension
+                  << " f0_dimension=" << result.f0_dimension
+                  << " f0_kernel_dimension="
+                  << result.f0_kernel_dimension
+                  << " negative_stripped_rank="
+                  << result.negative_stripped_rank
+                  << " positive_stripped_rank="
+                  << result.positive_stripped_rank
+                  << " positive_global_rank="
+                  << result.positive_global_rank
+                  << " carrier_overlap_dimension="
+                  << result.carrier_overlap_dimension
+                  << " positive_allocation_dimension="
+                  << result.positive_allocation_dimension
+                  << " unshared_negative_carrier_dimension="
+                  << result.unshared_negative_carrier_dimension
+                  << " residual_negative_demand="
+                  << result.residual_negative_demand
+                  << " residual_positive_supply="
+                  << result.residual_positive_supply
+                  << " optimal_section_cover_feasible="
+                  << (result.optimal_section_cover_feasible
+                          ? "PASS" : "FAIL")
+                  << " optimal_defect_rank="
+                  << result.optimal_defect_rank
+                  << " optimal_defect_kernel="
+                  << result.optimal_defect_kernel
+                  << " optimal_relation_rank="
+                  << result.optimal_relation_rank
+                  << " merged_row_kernel_dimension="
+                  << result.merged_row_kernel_dimension
+                  << " deletion_contraction_valid="
+                  << (result.deletion_contraction_valid ? "PASS" : "FAIL")
+                  << " ambient_kernel_criterion="
+                  << (result.ambient_kernel_criterion ? "PASS" : "FAIL")
                   << " optimal_section_rank="
                   << result.optimal_section_rank
                   << " optimal_section_criterion="
@@ -2179,6 +2904,15 @@ int main(int argc, char** argv) {
                   << (kernel <= result.positive_sources ? "PASS" : "FAIL")
                   << '\n';
         if (!result.section_trial_ranks.empty()) {
+            std::cout << "cut_order_ranks=";
+            for (std::size_t trial = 0U;
+                 trial < result.cut_order_ranks.size(); ++trial) {
+                if (trial != 0U) {
+                    std::cout << ',';
+                }
+                std::cout << result.cut_order_ranks[trial];
+            }
+            std::cout << '\n';
             std::cout << "section_trial_ranks=";
             for (std::size_t trial = 0U;
                  trial < result.section_trial_ranks.size(); ++trial) {

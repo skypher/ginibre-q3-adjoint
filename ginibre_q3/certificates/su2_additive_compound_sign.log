@@ -1,0 +1,32 @@
+Common-sign-gauge diagnostic, 2026-07-22
+
+Build:
+  make analyze_su2_additive_compound_sign
+
+Ordinary half-line, truncated only for detecting a finite contradiction:
+  ./analyze_su2_additive_compound_sign 20 10
+  SU2_ADDITIVE_COMPOUND_COMMON_SIGN result=FAIL label=3 input=(2,0) output=(3,2) coefficient=-1 maximum_state=20 maximum_label=10 minimum_label=2 level=-1
+
+Finite fusion graph SU(2)_3:
+  ./analyze_su2_additive_compound_sign 3 3 3
+  SU2_ADDITIVE_COMPOUND_COMMON_SIGN result=FAIL label=3 input=(2,0) output=(3,2) coefficient=-1 maximum_state=3 maximum_label=3 minimum_label=2 level=3
+
+Exact contradiction, with s_(u,v) the diagonal gauge sign of
+e_u wedge e_v for u>v:
+
+  dGamma(N_2), (1,0)->(3,0), coefficient +1:
+      s_(3,0)=s_(1,0)
+  dGamma(N_2), (3,0)->(3,2), coefficient +1:
+      s_(3,2)=s_(3,0)
+  dGamma(N_3), (2,0)->(1,0), coefficient +1:
+      s_(2,0)=s_(1,0)
+  dGamma(N_3), (2,0)->(3,2), coefficient -1:
+      s_(3,2)=-s_(2,0)
+
+Thus no common diagonal sign gauge makes both additive compounds entrywise
+nonnegative.  The obstruction uses only labels 2 and 3, so it remains after
+the support-disjoint reduction removes plus label 1.
+
+Single-label sanity check:
+  ./analyze_su2_additive_compound_sign 20 2
+  SU2_ADDITIVE_COMPOUND_COMMON_SIGN result=PASS states=210 constraints=932 maximum_state=20 maximum_label=2 minimum_label=2 level=-1
