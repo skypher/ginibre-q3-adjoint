@@ -89,6 +89,14 @@ analyze_su2_plucker_kernel: analyze_su2_plucker_kernel.cpp
 analyze_su2_additive_compound_sign: analyze_su2_additive_compound_sign.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Werror $< -o $@
 
+search_su2_fundamental_transfer: search_su2_fundamental_transfer.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -o $@
+
+search_su2_level_partial_character_cone: search_su2_level_partial_character_cone.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -o $@
+
 analyze_su2_gt_exchange: analyze_su2_gt_exchange.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wshadow -Werror $< -o $@

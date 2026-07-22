@@ -1,0 +1,40 @@
+Exact finite simple-current boundary-column diagnostic, 2026-07-22
+
+Build:
+  make search_su2_level_partial_character_cone
+
+Run:
+  ./search_su2_level_partial_character_cone simple-current-boundary 10 7
+
+First component failures:
+  lower_only_failure level=2 prefix=[+1] next=1 target=0 boundary=1 lower=0 sink=1
+  boundary_only_failure level=4 prefix=[+1,+1,+1,+1,+1,+3,+3] next=3 target=2 boundary=24 lower=19 sink=32
+  strict_boundary_only_failure level=4 prefix=[+2,+2,+2] next=3 target=1 boundary=5 lower=8 sink=8
+  strict_joint_failure level=5 prefix=[+1,+1,+1,+1,+3] next=4 target=2 boundary=28 lower=8 sink=29
+  fully_disjoint_joint_failure level=5 prefix=[+2,+2,+2,+2,+2,+3,+3] next=4 target=1 boundary=101 lower=249 sink=327
+
+Progress:
+  progress level=2 words=8 entries=16 boundary_only_failures=0 lower_only_failures=4 strict_boundary_only_failures=0 strict_joint_failures=0 fully_disjoint_joint_failures=0
+  progress level=3 words=44 entries=120 boundary_only_failures=0 lower_only_failures=23 strict_boundary_only_failures=0 strict_joint_failures=0 fully_disjoint_joint_failures=0
+  progress level=4 words=164 entries=580 boundary_only_failures=12 lower_only_failures=113 strict_boundary_only_failures=5 strict_joint_failures=0 fully_disjoint_joint_failures=0
+  progress level=5 words=494 entries=2224 boundary_only_failures=68 lower_only_failures=415 strict_boundary_only_failures=15 strict_joint_failures=6 fully_disjoint_joint_failures=5
+  progress level=6 words=1286 entries=7266 boundary_only_failures=336 lower_only_failures=1293 strict_boundary_only_failures=142 strict_joint_failures=32 fully_disjoint_joint_failures=26
+  progress level=7 words=3002 entries=20986 boundary_only_failures=1182 lower_only_failures=3848 strict_boundary_only_failures=514 strict_joint_failures=284 fully_disjoint_joint_failures=234
+  progress level=8 words=6434 entries=54868 boundary_only_failures=3782 lower_only_failures=9976 strict_boundary_only_failures=1976 strict_joint_failures=912 fully_disjoint_joint_failures=773
+  progress level=9 words=12869 entries=132078 boundary_only_failures=10216 lower_only_failures=25080 strict_boundary_only_failures=5739 strict_joint_failures=3448 fully_disjoint_joint_failures=2842
+  progress level=10 words=24309 entries=296517 boundary_only_failures=25593 lower_only_failures=55743 strict_boundary_only_failures=15872 strict_joint_failures=8730 fully_disjoint_joint_failures=7483
+  SU2_SIMPLE_CURRENT_BOUNDARY levels=2..10 maximum_prefix_factors=7 words=24309 entries=296517 boundary_only_failures=25593 lower_only_failures=55743 strict_boundary_only_failures=15872 strict_joint_failures=8730 fully_disjoint_joint_failures=7483 minimum_combined=0 result=PASS
+
+Interpretation:
+  For every all-plus prefix Q, next label q, and boundary target a absent
+  from the extended plus support, the mode constructs C_Q and
+  E_Q=H(C_Q e_0)-C_Q exactly.  It verifies
+    E_(qQ)(a,k)
+      =sum_(u in a star_k q)E_Q(u,k)
+        +E_Q(a,k-q)-E_Q(k-a,q)
+  against a direct reconstruction after adjoining q, and requires the
+  resulting boundary entry to be nonnegative.  The individual-reservoir
+  counts are negative diagnostics, not failures of the combined target.
+  The fully-disjoint count additionally requires q to be new and both sink
+  terminals k-a,q to be absent from Q.  The displayed level-five example
+  proves that both reservoirs are essential even after these reductions.

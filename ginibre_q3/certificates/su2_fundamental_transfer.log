@@ -1,0 +1,64 @@
+Exact one-fundamental transfer diagnostic, 2026-07-22
+
+Build:
+  make search_su2_fundamental_transfer
+
+Run:
+  ./search_su2_fundamental_transfer 5 7 20
+
+Output:
+  stronger_failure labels=[2,2,2,2,2,2,3] target=2 A_1p=930 A_0_previous=482 A_0_next=716
+  stronger_failure labels=[2,2,2,2,2,3] target=2 A_1p=200 A_0_previous=115 A_0_next=167
+  stronger_failure labels=[2,2,2,2,2,3,3] target=3 A_1p=940 A_0_previous=716 A_0_next=666
+  stronger_failure labels=[2,2,2,2,2,3,4] target=2 A_1p=880 A_0_previous=426 A_0_next=666
+  stronger_failure labels=[2,2,2,2,2,3,5] target=5 A_1p=640 A_0_previous=646 A_0_next=556
+  stronger_failure labels=[2,2,2,2,2,4,5] target=2 A_1p=695 A_0_previous=361 A_0_next=646
+  stronger_failure labels=[2,2,2,2,3] target=2 A_1p=44 A_0_previous=28 A_0_next=43
+  stronger_failure labels=[2,2,2,2,3,3] target=3 A_1p=192 A_0_previous=167 A_0_next=151
+  stronger_failure labels=[2,2,2,2,3,3,3] target=2 A_1p=1014 A_0_previous=510 A_0_next=798
+  stronger_failure labels=[2,2,2,2,3,3,4] target=3 A_1p=1004 A_0_previous=666 A_0_next=716
+  stronger_failure labels=[2,2,2,2,3,3,5] target=2 A_1p=771 A_0_previous=389 A_0_next=682
+  stronger_failure labels=[2,2,2,2,3,4] target=2 A_1p=180 A_0_previous=95 A_0_next=151
+  SU2_FUNDAMENTAL_TRANSFER cases=176 stronger_failures=33 maximum_label=5 maximum_factors=7 maximum_total=20 required=PASS
+  elapsed=0.08 maxrss=3072KB
+
+Wider run:
+  ./search_su2_fundamental_transfer 7 9 28
+  SU2_FUNDAMENTAL_TRANSFER cases=1261 stronger_failures=383 maximum_label=7 maximum_factors=9 maximum_total=28 required=PASS
+  elapsed=2.14 maxrss=3072KB
+
+Finite affine-wall run:
+  ./search_su2_fundamental_transfer finite 8 7
+  SU2_LEVEL_FUNDAMENTAL_TRANSFER levels=2..8 maximum_factors=7 cases=6434 active_wall_cases=2632 tight_wall_cases=1529 simple_current_cases=3431 minimum_wall_slack=0 required=PASS
+  elapsed=2.97 maxrss=3072KB
+
+The finite mode checks every target against
+  A_(1,p) <= sum_(s in p star_k 1) A_(0,s).
+It separately enforces the proved simple-current wall identity.  If one
+label k is removed and A is the coefficient array of the remaining word,
+then
+  A'_(r,s)=A_(k-r,s)+A_(r,k-s).
+Consequently
+  A'_(1,k)=A_(k-1,k)+A_(1,0)
+           =A_(k,k-1)+A_(0,1)=A'_(0,k-1).
+Thus every plus word containing the invertible object e_k has wall
+coefficient exactly zero, uniformly in k; the finite run independently
+checks this identity in all 3,431 enumerated simple-current words.
+
+The same wall equality is not restricted to one negative fundamental.
+After removing one plus e_k from any odd-sign remainder, exchange
+antisymmetry forces every diagonal coefficient h_(r,r) to vanish.
+Reattaching e_k contributes h_(0,0)+h_(k,k)=0 at target k.  This proves the
+odd-sign simple-current wall family uniformly; the enumerator above is an
+independent check of its fundamental specialization.
+
+Here
+  A_(r,s)=sum_S mult_r(tensor_(i in S)V_(q_i))
+                    mult_s(tensor_(i notin S)V_(q_i)).
+The required one-fundamental coefficient inequality is
+  A_(1,p)<=A_(0,p-1)+A_(0,p+1).
+The tempting upper-branch-only strengthening A_(1,p)<=A_(0,p+1) is false.
+Its smallest displayed failure is the hard Plucker word [2,2,2,2,3] at
+target 2: 44>43, while the lower branch supplies 28.  Thus the p-1 term in
+the deletion--contraction exact row is essential; the merged p+1 branch
+cannot carry the proof by itself.

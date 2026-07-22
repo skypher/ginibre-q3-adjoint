@@ -6967,7 +6967,10 @@ defect supplies it exactly.  A bounded exact replay through six factors,
 labels and targets at most four, and total label degree at most 14 checks 71
 fundamental-strand cases, including 23 source-deficit cases, and verifies
 the recovered relation span, `(P22.5j)`, and the two inequalities in
-`(P22.5m)` in every case.  The remaining uniform task is to prove the
+`(P22.5m)` in every case.  It now also checks the deletion--contraction
+kernel-dimension identity below in every source-deficit case.  The minimum
+slacks in both inequalities in `(P22.5m)` are zero, so neither admits a
+uniform positive-margin weakening.  The remaining uniform task is to prove the
 residual inequality `(P22.5j)` in arbitrary multidegree; proving also
 `c_p<=r_p` realizes it by the optimal differential of Lemma 22H2.  By Lemma
 22H0 only positive targets remain in the odd-sign strand.  The exact commands,
@@ -7054,6 +7057,321 @@ can be restated entirely in the syzygy space `ker(bar(phi))`, with no
 fundamental vertex left.  This is the natural ordinary precursor of the
 two-branch Temperley--Lieb recursion; at the affine wall the `p+1` branch is
 simply absent.
+
+The isomorphism `(P22.5v)` does not permit the lower branch in `(P22.5u)` to
+be discarded from the source-capacity argument.  For a plus word `Q`, put
+
+```text
+A_(r,s)=sum_(S subset Q)
+          mult_r(tensor_(i in S)V_(q_i))
+          mult_s(tensor_(i notin S)V_(q_i)).             (P22.5w)
+```
+
+**Lemma 22H3B (exact two-branch fundamental transfer).**  The coefficient
+of `V_p` in the partial character with one negative fundamental and plus
+word `Q` is
+
+```text
+g_p=A_(0,p-1)+A_(0,p+1)-A_(1,p),                        (P22.5x)
+```
+
+with an invalid label interpreted as zero.  In `SU(2)_k` the exact formula
+is
+
+```text
+g_p^(k)=sum_(s in p star_k 1) A_(0,s)^(k)-A_(1,p)^(k).  (P22.5xk)
+```
+
+Consequently the complete ordinary fundamental strand is equivalent to
+
+```text
+A_(1,p)<=A_(0,p-1)+A_(0,p+1),
+```
+
+and at the affine wall `p=k` the finite target becomes
+`A_(1,k)^(k)<=A_(0,k-1)^(k)`.
+
+**Proof.**  Expand the all-plus two-coordinate character as
+
+```text
+F_Q=sum_(r,s) A_(r,s) chi_r tensor chi_s.
+```
+
+The numbers in `(P22.5w)` are its coefficients, and complementing `S`
+shows `A_(r,s)=A_(s,r)`.  Multiply by
+`chi_1 tensor 1-1 tensor chi_1` and extract the coefficient of
+`chi_p tensor chi_0`.  The first term contributes
+`A_(p-1,0)+A_(p+1,0)`, while the second contributes `-A_(p,1)`.
+Symmetry gives `(P22.5x)`.  The same argument in the finite fusion ring
+replaces the two ordinary neighbors by `p star_k 1`, proving
+`(P22.5xk)`.  QED.
+
+The sharp affine-wall cases containing the simple current close exactly.
+
+**Lemma 22H3C (odd-sign simple-current wall equality).**  In `SU(2)_k`, let
+a signed remainder have odd exchange parity and suppose one of its plus
+factors is the invertible label `k`.  Then its partial-character coefficient
+at the wall is exactly zero.  In particular, for one negative fundamental,
+
+```text
+g_k^(k)=A_(0,k-1)^(k)-A_(1,k)^(k)=0.                  (P22.5z)
+```
+
+**Proof.**  Remove one plus occurrence of `k` and write the resulting signed
+two-coordinate product as
+
+```text
+H=sum_(r,s) h_(r,s)e_r tensor e_s.
+```
+
+Odd exchange parity gives `h_(s,r)=-h_(r,s)`, so every `h_(r,r)` is zero.
+Since `e_k e_r=e_(k-r)`, the coefficient of `e_k tensor e_0` after
+reattaching `e_k tensor 1+1 tensor e_k` is exactly
+
+```text
+h_(0,0)+h_(k,k)=0.                                    (P22.5za)
+```
+
+For the final assertion, denote the coefficient array of the all-plus word
+remaining after removal of `k` by `A`.  Adjoining the removed factor changes
+the array to
+
+```text
+A'_(r,s)=A_(k-r,s)+A_(r,k-s).                          (P22.5zb)
+```
+
+Therefore
+
+```text
+A'_(1,k)=A_(k-1,k)+A_(1,0),
+A'_(0,k-1)=A_(k,k-1)+A_(0,1).
+```
+
+Both pairs agree by the complement symmetry `A_(r,s)=A_(s,r)`.  Formula
+`(P22.5xk)` now gives `(P22.5z)`.  QED.
+
+This is uniform in the level and number of factors.  It removes every wall
+case of odd exchange parity containing the affine simple current from the
+remaining finite target.  In the fundamental strand, only plus words
+supported in `2,...,k-1` can have positive wall slack.
+
+There is an equally exact reduction when the simple current carries a minus
+sign.
+
+**Lemma 22H3D (negative simple-current wall reduction).**  Remove one
+negative factor `e_k tensor 1-1 tensor e_k` from an odd-sign remainder and
+write the resulting even-sign product as
+
+```text
+H=sum_(r,s) h_(r,s)e_r tensor e_s.
+```
+
+Then the wall coefficient of the original remainder is
+
+```text
+g_k^(k)=h_(0,0)-h_(k,k).                               (P22.5zc)
+```
+
+If `T` is the product of the corresponding signed two-coordinate fusion
+operators and `P=N_k tensor N_k`, the same difference is
+
+```text
+h_(0,0)-h_(k,k)
+ =1/2 <e_(0,0)-e_(k,k),T(e_(0,0)-e_(k,k))>.            (P22.5zd)
+```
+
+**Proof.**  Multiplication by the removed negative factor contributes
+`h_(0,0)` from its first-coordinate term and `-h_(k,k)` from its
+second-coordinate term, proving `(P22.5zc)`.  Every fusion matrix commutes
+with `N_k`, so `T` commutes with `P`; all are self-adjoint and
+`P e_(0,0)=e_(k,k)`.  Expanding the quadratic form in `(P22.5zd)` gives two
+copies of `h_(0,0)` on the diagonal and two copies of `h_(k,k)` off the
+diagonal.  QED.
+
+Thus the remaining simple-current wall target is the single-vector
+diagonal dominance
+
+```text
+h_(0,0)>=h_(k,k)                                      (SCW)
+```
+
+for every even-sign support-disjoint remainder which does not contain a
+second label `k`.  This is weaker than positivity of `T` on the whole
+`P=-1` eigenspace and retains exactly the vector needed by the wall
+coefficient.  The strict C++ mode
+`search_su2_level_partial_character_cone simple-current-wall` checked
+266,627 such even-sign remainders through level eight and seven remaining
+factors.  Among 93,365 cases with `h_(k,k)>0`, none was tight and the minimum
+value of `h_(0,0)-h_(k,k)` was two.  The numerical value two is the smallest
+possible strict gap, not evidence of a larger analytic margin: for every
+nonempty even-sign remainder, complementing a factor assignment pairs two
+equal contributions to each diagonal coefficient `h_(r,r)`, so every such
+coefficient and their difference are even.  The substantive bounded
+observation is the absence of an active equality.  This is bounded evidence
+for `(SCW)`, not its uniform proof; its exact output is in
+`certificates/su2_simple_current_wall.log`.
+
+Stratifying the same run by the number of minus factors in `H` gives active
+counts `2,310`, `33,790`, `47,992`, and `9,273` for respectively zero, two,
+four, and six minus factors; every stratum has minimum strict gap two.  Thus
+`(SCW)` is already nontrivial before signed cancellation.  Its first
+uniform subtarget is the unsigned boundary-channel inequality
+
+```text
+sum_S m_0(S)m_0(S^c) >= sum_S m_k(S)m_k(S^c),          (SCW0)
+```
+
+where `m_r(S)` is the multiplicity of `e_r` in the product over `S`.
+Higher even-minus sectors require a signed refinement of `(SCW0)`, but are
+not the source of the first wall obstruction.
+
+The unsigned target is an outer-corner specialization of the fusion-Hankel
+defect from Proposition 6, and its update loses the negative Hankel term.
+
+**Lemma 22H3E (simple-current boundary-column reduction).**  Let `C_Q` be
+the coefficient matrix of a finite all-plus word, put
+
+```text
+d_Q=C_Q e_0,                 E_Q=H(d_Q)-C_Q,
+```
+
+and let the level be `k`.  Then
+
+```text
+E_Q(a,k)=C_Q(k-a,0)-C_Q(a,k),                           (P22.5ze)
+E_Q(k,k)=C_Q(0,0)-C_Q(k,k).                             (P22.5zf)
+```
+
+If a further plus label `q` is adjoined, then
+
+```text
+E_(qQ)(a,k)
+ =sum_(u in a star_k q)E_Q(u,k)
+    +E_Q(a,k-q)-E_Q(k-a,q),                            (P22.5zg)
+
+E_(qQ)(k,k)=2E_Q(k-q,k).                                (P22.5zh)
+```
+
+**Proof.**  The simple-current rule gives
+`N_r(a,k)=indicator_(r=k-a)`.  Hence
+
+```text
+H(d_Q)_(a,k)=d_Q(k-a)=C_Q(k-a,0),
+```
+
+which proves `(P22.5ze)` and its corner specialization.  Proposition 6
+gives
+
+```text
+E_(qQ)=N_qE_Q+E_QN_q-H(E_Qe_q).
+```
+
+At `(a,k)`, the first two terms are respectively the fusion-interval sum
+and `E_Q(a,k-q)`.  The simple-current rule used above makes the Hankel term
+`(E_Qe_q)_(k-a)=E_Q(k-a,q)`, proving the first recurrence.  At `(k,k)`,
+each of the first two terms is `E_Q(k-q,k)`.  The last term is
+`(E_Qe_q)_0=E_Q(0,q)=0`, because every fusion-Hankel defect has zero row and
+column at zero.  This proves the corner specialization.  QED.
+
+Consequently `(SCW0)` for every nonempty word follows from the strictly
+sharper boundary-column target
+
+```text
+C_Q(a,k)<=C_Q(k-a,0),             0<=a<=k.             (SCB)
+```
+
+The induction is exact: choose any last factor `q` and use `(P22.5zh)` at
+`a=k-q`.  Target `(SCB)` is the two-layer switching defect with one terminal
+equal to the affine simple current.  It retains much less state than the
+full finite defect matrix and supplies exactly the datum required by the
+outer-corner update.  A proof still needs a recurrence or injection for the
+whole displayed boundary column.  By `(P22.5zg)`, its exact one-step form is
+the finite fusion-concavity inequality
+
+```text
+E_Q(k-a,q)
+ <=sum_(u in a star_k q)E_Q(u,k)+E_Q(a,k-q).            (SCBI)
+```
+
+Proving `(SCBI)` along an ordered construction of every plus word preserves
+`(SCB)` and hence proves `(SCW0)`.  The negative term is now one specified
+interior defect entry; no unspecified wall correction remains.
+
+The complete boundary column can be proved uniformly on the finite
+minuscule ray.
+
+**Lemma 22H3F (anti-diagonal reflection for fundamental plus words).**  In
+`SU(2)_k`, if `Q` consists of any number of plus labels `1`, then `(SCB)`
+holds for every `0<=a<=k`.
+
+**Proof.**  The coefficient `C_Q(a,b)` counts walks in the square graph
+`{0,...,k}^2`, starting at `(0,0)`, in which each fundamental plus factor
+moves exactly one coordinate by one edge of the `A_(k+1)` fusion graph.
+Every walk ending at `(a,k)` meets the anti-diagonal `x+y=k`.  At its first
+meeting, reflect the remaining suffix by
+
+```text
+R(x,y)=(k-y,k-x).
+```
+
+The map `R` fixes the anti-diagonal pointwise and is an automorphism of the
+square graph, so the reflected suffix is again a valid walk with the same
+number and order of steps.  Its endpoint is `R(a,k)=(0,k-a)`.  Reflection
+after the first meeting is injective (indeed reversible on the image), and
+coordinate exchange gives
+
+```text
+C_Q(a,k)<=C_Q(0,k-a)=C_Q(k-a,0).
+```
+
+This is `(SCB)`.  QED.
+
+The nearest-neighbor hypothesis is substantive.  A general label `q` gives
+a fusion jump which may cross `x+y=k` without landing on it; reflecting only
+the suffix would then split one irreducible `q`-block between the two
+coordinates.  Thus Lemma 22H3F does not by itself extend to arbitrary plus
+labels, but it supplies a uniform finite-level base cone on which a
+block-level recoupling proof of `(SCBI)` can build.
+
+The two reservoirs on the right of `(SCBI)` must be coupled, even in the
+fully support-disjoint chamber and when the next label is strictly larger
+than every prefix label.  The first exact example is
+
+```text
+k=5, Q=[2,2,2,2,2,3,3], q=4, a=1:
+boundary interval sum=101,       lower term=249,
+interior sink=327,               combined slack=23.    (P22.5zi)
+```
+
+Here the final minus terminals are `1,5`, the sink terminals are `4,4`, and
+none occurs in `Q`; the appended `q=4` is also new.  Thus both `101<327` and
+`249<327`, whereas their sum pays the sink.  The strict C++ mode
+`search_su2_level_partial_character_cone simple-current-boundary` verifies
+the exact recurrence and `(SCB)` in 296,517 ordered prefix/next/target
+entries through level ten and seven prefix factors.  It finds 7,483
+fully-disjoint strict-next instances in which both individual reservoirs
+fail, while the combined recurrence always passes in the bounded domain.
+The output is in `certificates/su2_simple_current_boundary.log`.  Hence a
+proof of `(SCBI)` must transfer capacity between its two displayed positive
+terms; separate domination is false.
+
+For `Q=[2,2,2,2,3]` and `p=2`, exact fusion-path enumeration gives
+
+```text
+A_(1,2)=44,              A_(0,3)=43,              A_(0,1)=28. (P22.5y)
+```
+
+Thus the upper-branch-only strengthening `A_(1,p)<=A_(0,p+1)` already fails
+in the first hard Plucker case, by one dimension.  The lower `p-1` branch
+has ample supply and the combined coefficient has value `27`, but it must
+be coupled to the merged row-syzygy space rather than omitted.  The strict
+C++ enumerator `character_ring_iter/search_su2_fundamental_transfer.cpp`
+finds 383 such upper-only failures in 1,261 words through nine plus factors,
+label seven, and total degree twenty-eight, while `(P22.5x)` passes
+throughout.
+The exact output is in
+`certificates/su2_fundamental_transfer.log`.  This is bounded evidence for
+`(P22.5x)` and an exact obstruction to a one-branch proof.
 
 A simultaneous sign gauge of the exterior fusion matrices does not prove
 this target, even after the support-disjoint reduction removes plus label

@@ -1,0 +1,42 @@
+Exact finite simple-current wall diagnostic, 2026-07-22
+
+Build:
+  make search_su2_level_partial_character_cone
+
+Run:
+  ./search_su2_level_partial_character_cone simple-current-wall 8 7
+
+Output:
+  progress level=2 tested=128 active=40 tight=0
+  progress level=3 tested=1025 active=246 tight=0
+  progress level=4 tested=4737 active=1694 tight=0
+  progress level=5 tested=16386 active=4994 tight=0
+  progress level=6 tested=46978 active=15899 tight=0
+  progress level=7 tested=117763 active=37689 tight=0
+  progress level=8 tested=266627 active=93365 tight=0
+  minus_sector count=0 tested=6434 active=2310 tight=0 minimum_active_slack=2
+  minus_sector count=2 tested=101529 active=33790 tight=0 minimum_active_slack=2
+  minus_sector count=4 tested=135927 active=47992 tight=0 minimum_active_slack=2
+  minus_sector count=6 tested=22737 active=9273 tight=0 minimum_active_slack=2
+  SU2_SIMPLE_CURRENT_WALL levels=2..8 maximum_remainder_factors=7 tested=266627 active=93365 tight=0 minimum_active_slack=2 result=PASS
+  elapsed=8.39 maxrss=3072KB
+
+Interpretation:
+  Remove a negative simple-current factor e_k from an odd-sign remainder.
+  The remaining product has even exchange parity and coefficient matrix h.
+  Reattaching the negative e_k makes the target-k partial coefficient
+    h_(0,0)-h_(k,k).
+  The mode enumerates every multiset with labels 1,...,k-1, every even
+  minus mask, and at most seven remaining factors.  It checks h_(0,0)>=0
+  and h_(0,0)-h_(k,k)>=0 exactly with arbitrary-precision integers.
+  An active case has h_(k,k)>0.  No active equality occurred in this domain;
+  the smallest active slack was two.  Complementary factor assignments pair
+  equal diagonal contributions for every nonempty even-sign remainder, so
+  both diagonal coefficients and the slack are even.  Thus two is merely the
+  smallest possible strict integral gap.  This is bounded evidence, not a
+  proof of strictness or of diagonal dominance outside the tested domain.
+
+The count-zero sector is already active in 2,310 words.  Thus the first
+unproved layer of the wall target is the unsigned inequality
+  sum_S m_0(S)m_0(S^c) >= sum_S m_k(S)m_k(S^c),
+not a cancellation phenomenon requiring two or more remaining minus signs.
