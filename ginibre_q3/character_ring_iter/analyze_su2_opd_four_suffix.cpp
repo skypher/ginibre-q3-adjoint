@@ -97,10 +97,39 @@ void print_case(const std::tuple<int, int, int, int, int, int>& value) {
 
 int main(int argc, char** argv) {
     try {
-        if (argc != 2) {
+        if (argc != 2 && argc != 7) {
             throw std::runtime_error(
-                "usage: analyze_su2_opd_four_suffix MAXIMUM_LABEL"
+                "usage: analyze_su2_opd_four_suffix MAXIMUM_LABEL\n"
+                "   or: analyze_su2_opd_four_suffix p q r s t target"
             );
+        }
+        if (argc == 7) {
+            const int p = std::stoi(argv[1]);
+            const int q = std::stoi(argv[2]);
+            const int r = std::stoi(argv[3]);
+            const int s = std::stoi(argv[4]);
+            const int t = std::stoi(argv[5]);
+            const int target = std::stoi(argv[6]);
+            if (p < 2 || p > q || q > r || r > s || s > t
+                || target < 1) {
+                throw std::runtime_error("invalid ordered case");
+            }
+            const Decomposition current = decomposition(
+                p, {q, r, s, t}, target
+            );
+            int prefix = 0;
+            std::cout << "SU2_OPD_FOUR_SUFFIX_CASE p=" << p
+                      << " q=" << q << " r=" << r << " s=" << s
+                      << " t=" << t << " target=" << target
+                      << " positive=" << current.positive
+                      << " negative=" << current.negative << '\n';
+            for (int layer = 0; layer <= 4; ++layer) {
+                prefix += current.layers[static_cast<std::size_t>(layer)];
+                std::cout << "layer=" << layer << " contribution="
+                          << current.layers[static_cast<std::size_t>(layer)]
+                          << " prefix=" << prefix << '\n';
+            }
+            return prefix < 0 ? EXIT_FAILURE : EXIT_SUCCESS;
         }
         const int maximum_label = std::stoi(argv[1]);
         if (maximum_label < 2 || maximum_label > 30) {
@@ -109,6 +138,15 @@ int main(int argc, char** argv) {
         long long tested = 0;
         int minimum_total = std::numeric_limits<int>::max();
         int minimum_main_slack = std::numeric_limits<int>::max();
+        std::array<int, 3> minimum_shell{
+            std::numeric_limits<int>::max(),
+            std::numeric_limits<int>::max(),
+            std::numeric_limits<int>::max()
+        };
+        std::array<int, 2> minimum_parity{
+            std::numeric_limits<int>::max(),
+            std::numeric_limits<int>::max()
+        };
         std::array<int, 5> minimum_prefix{
             std::numeric_limits<int>::max(),
             std::numeric_limits<int>::max(),
@@ -118,6 +156,8 @@ int main(int argc, char** argv) {
         };
         std::tuple<int, int, int, int, int, int> total_case{};
         std::tuple<int, int, int, int, int, int> main_case{};
+        std::array<std::tuple<int, int, int, int, int, int>, 3> shell_case{};
+        std::array<std::tuple<int, int, int, int, int, int>, 2> parity_case{};
         std::array<std::tuple<int, int, int, int, int, int>, 5> prefix_case{};
         for (int p = 2; p <= maximum_label; ++p) {
             for (int q = p; q <= maximum_label; ++q) {
@@ -143,6 +183,16 @@ int main(int argc, char** argv) {
                                     = main - current.negative;
                                 const auto current_case
                                     = std::tuple{p, q, r, s, t, target};
+                                const std::array<int, 3> shells{
+                                    current.layers[0U] + current.layers[4U],
+                                    current.layers[1U] + current.layers[3U],
+                                    current.layers[2U]
+                                };
+                                const std::array<int, 2> parity_blocks{
+                                    current.layers[0U] + current.layers[2U]
+                                        + current.layers[4U],
+                                    current.layers[1U] + current.layers[3U]
+                                };
                                 ++tested;
                                 if (total < minimum_total) {
                                     minimum_total = total;
@@ -151,6 +201,41 @@ int main(int argc, char** argv) {
                                 if (main_slack < minimum_main_slack) {
                                     minimum_main_slack = main_slack;
                                     main_case = current_case;
+                                }
+                                for (int shell = 0; shell < 3; ++shell) {
+                                    if (shells[static_cast<std::size_t>(shell)]
+                                        < minimum_shell[
+                                            static_cast<std::size_t>(shell)]) {
+                                        minimum_shell[
+                                            static_cast<std::size_t>(shell)]
+                                            = shells[static_cast<std::size_t>(
+                                                shell
+                                            )];
+                                        shell_case[
+                                            static_cast<std::size_t>(shell)]
+                                            = current_case;
+                                    }
+                                }
+                                for (int parity = 0; parity < 2; ++parity) {
+                                    const int value = parity_blocks[
+                                        static_cast<std::size_t>(parity)];
+                                    if (value < minimum_parity[
+                                            static_cast<std::size_t>(parity)]) {
+                                        minimum_parity[
+                                            static_cast<std::size_t>(parity)]
+                                            = value;
+                                        parity_case[
+                                            static_cast<std::size_t>(parity)]
+                                            = current_case;
+                                    }
+                                    if (value < 0) {
+                                        std::cout << "FAIL parity_block="
+                                                  << parity << " value="
+                                                  << value << " case=";
+                                        print_case(current_case);
+                                        std::cout << '\n';
+                                        return EXIT_FAILURE;
+                                    }
                                 }
                                 int prefix = 0;
                                 for (int layer = 0; layer <= 4; ++layer) {
@@ -194,6 +279,20 @@ int main(int argc, char** argv) {
                       << minimum_prefix[static_cast<std::size_t>(layer)]
                       << " case=";
             print_case(prefix_case[static_cast<std::size_t>(layer)]);
+            std::cout << '\n';
+        }
+        for (int shell = 0; shell < 3; ++shell) {
+            std::cout << "shell=" << shell << " minimum="
+                      << minimum_shell[static_cast<std::size_t>(shell)]
+                      << " case=";
+            print_case(shell_case[static_cast<std::size_t>(shell)]);
+            std::cout << '\n';
+        }
+        for (int parity = 0; parity < 2; ++parity) {
+            std::cout << "parity_block=" << parity << " minimum="
+                      << minimum_parity[static_cast<std::size_t>(parity)]
+                      << " case=";
+            print_case(parity_case[static_cast<std::size_t>(parity)]);
             std::cout << '\n';
         }
         return EXIT_SUCCESS;
