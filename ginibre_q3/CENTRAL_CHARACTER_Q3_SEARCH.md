@@ -6802,6 +6802,300 @@ source--sink pair.  A path injection proving that the source contribution
 dominates the sink would settle the complete one-minus partial-character
 sector simultaneously in ordinary `SU(2)` and all `SU(2)_k`.
 
+The first previously open edge beyond Proposition 12E1 can now be closed
+uniformly outside three bottom packet labels.  The point is that in the
+support-disjoint problem the complete negative allocation load has only
+three types, while either of the two types involving a channel `1` forces a
+quadratic reservoir.
+
+For a submultiset `B` of `L={q,r,s,t}`, write `m_B(c)` for the multiplicity
+of `V_c` in its tensor product and put
+
+```text
+M=m_(p-1,q,r,s,t)(a).
+```
+
+Assume throughout this paragraph that
+
+```text
+2<=p<=q<=r<=s<=t,          a notin {p,q,r,s,t}.          (P25.1)
+```
+
+In the exact allocation formula `(P12E1.2)`, now with four suffix labels,
+all singleton negative terms vanish.  Disjoint support kills the first
+three-label negative term and both four-label negative terms.  Hence the
+whole negative load is
+
+```text
+N=N_A+N_B+N_C,                                      (P25.2)
+
+N_A=sum_(B subset L, |B|=2) m_B(p-1)m_(L minus B)(a),
+
+N_B=sum_(B subset L, |B|=2) m_B(1)
+                              m_((L minus B) union {p})(a),
+
+N_C=sum_(B subset L, |B|=3) m_B(1)
+                              indicator_(a in (L minus B) star p).
+```
+
+The empty allocation contributes `M`, and every omitted term is positive.
+Thus `M>=N` is sufficient for the ordered packet coefficient.
+
+**Lemma 25 (two tent-overlap bounds).**  Let `p>=2`.
+
+1.  If `u,v,x,y>=p`, `|u-v|=1`, `a` is different from `x,y`, and
+    `m_(x,y,p)(a)>0`, then
+
+```text
+m_(p-1,u,v,x,y)(a)>=p(p+2).                         (P25.3)
+```
+
+2.  If `u,v,w,x>=p`, `m_(u,v,w)(1)>0`, `a!=x`, and
+    `a in x star p`, then
+
+```text
+m_(p-1,u,v,w,x)(a)>=p(p+2).                         (P25.4)
+```
+
+**Proof.**  We use only the interval form of the Clebsch--Gordan rule.  For
+three labels set
+
+```text
+T_(b,c,d)(n)=#(I(b,c) intersection I(d,n)).          (P25.5)
+```
+
+For `(P25.3)`, the adjacent pair satisfies
+
+```text
+chi_u chi_v >= chi_p chi_(p+1)                       (P25.6)
+```
+
+coefficientwise.  It is therefore enough to bound
+
+```text
+<chi_(p-1)chi_p chi_(p+1), chi_a chi_x chi_y>.       (P25.7)
+```
+
+The interval `I(x,y)` has at least `p+1` points and, by the hypothesis in
+`(P25.3)`, meets `I(a,p)`.  Choose `p+1` consecutive points of `I(x,y)`
+containing a point of this intersection.  They form `I(c,p)` for some
+`c>=p`, so `(P25.7)` is bounded below by
+
+```text
+<chi_(p-1)chi_p chi_(p+1), chi_a chi_c chi_p>.       (P25.8)
+```
+
+Put `d=(c-a)/2` and `h=(c+a)/2`.  The intersection condition says
+`|d|<=p`; positivity of `a,c` gives `h-d>=1` and `h+d>=p`.  Pair the six
+factors in `(P25.8)` as `(p-1,p+1)`, `(p,p)`, and `(a,c)`, and divide all
+three intermediate labels by two.  The resulting invariant paths are
+
+```text
+1<=i<=p,       0<=j<=p,       |d|<=k<=h,
+|i-j|<=k<=i+j.                                      (P25.9)
+```
+
+If `f_p(k)` denotes the number of `(i,j)` in the first two ranges satisfying
+the last inequalities, then for `0<=k<=p+1`
+
+```text
+f_p(k)=p(p+1)-max(p-k,0)^2-k(k-1)/2.                 (P25.10)
+```
+
+This follows by deleting the disjoint regions `|i-j|>k` and `i+j<k` from
+the `p` by `p+1` rectangle.  Summing `(P25.10)` under the three constraints
+on `d,h` shows that the minimum is attained at `d=p,h=p+1`.  Terms with
+`k>p+1` are nonnegative and cannot lower the sum.  At the minimum,
+
+```text
+f_p(p)+f_p(p+1)
+ =p(p+3)/2+p(p+1)/2=p(p+2).                         (P25.11)
+```
+
+This proves `(P25.3)`.
+
+For `(P25.4)`, choose `p+1` consecutive channels in `I(u,v)` containing
+one of the channels in `I(w,1)`.  They again form `I(c,p)` with `c>=p`.
+Moreover `p in I(a,x)`.  Since `a!=x`, `x>=p`, and the endpoints have the
+same parity, the upper endpoint of `I(a,x)` is at least `p+2`; hence
+
+```text
+chi_a chi_x >= chi_p+chi_(p+2)=chi_1 chi_(p+1).       (P25.12)
+```
+
+It is therefore enough to count
+
+```text
+<chi_c chi_p chi_w, chi_(p-1)chi_1 chi_(p+1)>.       (P25.13)
+```
+
+Pair the factors as `(c,w)`, `(p-1,p+1)`, and `(p,1)`.  The last two
+fusion intervals are
+
+```text
+{2,4,...,2p},                 {p-1,p+1}.              (P25.14)
+```
+
+The common-channel hypothesis says that the lower endpoint of `I(c,w)` is
+at most `p+1`, with the required parity.  Among all such intervals with
+`c,w>=p`, the number of invariant triples with the two intervals in
+`(P25.14)` is minimized when the lower endpoint is `p+1`.  In that extremal
+case `I(c,w)` contains every label from `p+1` through `3p+1`.  For the
+channel `2i`, `1<=i<=p`, the choices paired with `p-1` and `p+1` number
+respectively `i` and `i+1`.  Therefore the minimum is
+
+```text
+sum_(i=1)^p (i+i+1)=p(p+2).                          (P25.15)
+```
+
+Moving the lower endpoint inward only adds channels inside one of these
+triangle intervals, so it cannot decrease the count.  This proves
+`(P25.4)`.  QED.
+
+There is also a sharp linear bound for `(P25.2)`.
+
+**Lemma 25A (negative-load bound).**  Under `(P25.1)`,
+
+```text
+N<=4p+12.                                             (P25.16)
+```
+
+**Proof.**  Every term in `(P25.2)` is a quantifier-free Presburger
+function.  In particular,
+
+```text
+m_(x,y,p)(a)=#(I(x,y) intersection I(a,p))            (P25.17)
+```
+
+is the cardinality of the intersection of two parity intervals.  The
+strict C++/Z3 verifier
+`character_ring_iter/verify_su2_opd_four_suffix_z3.cpp`, in mode
+`--negative-bound`, encodes `(P25.1)`, all six two-label allocations, all
+four three-label allocations, and the exact interval cardinality
+`(P25.17)`.  It asks for an integer solution of `N>4p+12`.  Z3 4.8.12
+returns `unsat`.  No label cutoff or bounded enumeration occurs in this
+query.  QED.
+
+**Proposition 25B (support-disjoint four-suffix edge for `p>=5`).**  If
+`(P25.1)` holds and `p>=5`, then
+
+```text
+coefficient_(e_a wedge e_0)
+ dGamma(N_t)dGamma(N_s)dGamma(N_r)dGamma(N_q)Y_p >=0. (P25.18)
+```
+
+**Proof.**  If `N_B+N_C>0`, one of the hypotheses of Lemma 25 occurs, so
+
+```text
+M>=p(p+2)>=4p+12>=N,                                 (P25.19)
+```
+
+where the middle inequality is equivalent to `(p-5)(p+3)>=0`.  If
+`N_B=N_C=0`, every term of `N=N_A` is a distinct admissible `3|3` split of
+the six labels `(p-1,q,r,s,t,a)`.  Proposition 1C gives `M>=N_A`.  In both
+cases the empty positive allocation pays the complete negative load; all
+other allocations are nonnegative surplus.  QED.
+
+It remains to close the three fixed values `p=2,3,4`.  This can be done by
+a second cutoff-free Presburger certificate.  The certificate is much
+smaller after Lemma 25: it only needs to consider
+
+```text
+N>p(p+2).                                             (P25.20)
+```
+
+Indeed, if `(P25.20)` fails and `N_B+N_C>0`, Lemma 25 gives `M>=N`; if
+`N_B=N_C=0`, Proposition 1C does so.
+
+Here is the explicit path pool used in the remaining chamber.  The first
+channel in the fusion tree for `M` is
+
+```text
+x_i=q-p+1+2i,                         0<=i<p.          (P25.21)
+```
+
+Let `delta(s,t,a)` be the smallest label in the support of
+`chi_s chi_t chi_a`, namely
+
+```text
+delta=max(2 max(s,t,a)-s-t-a, (s+t+a) mod 2).         (P25.22)
+```
+
+For each `x_i`, start at
+
+```text
+l_i=max(|x_i-r|,delta),
+y_(i,j)=l_i+2j.                                       (P25.23)
+```
+
+Retain the first `h_p` valid values, where
+
+```text
+h_2=10,                 h_3=8,                 h_4=7. (P25.24)
+```
+
+For each retained `y_(i,j)`, put
+
+```text
+z_(i,j,k)=max(|y_(i,j)-s|,|a-t|)+2k,       0<=k<4,   (P25.25)
+```
+
+and retain it exactly when it lies below both upper fusion endpoints.
+Parity agreement and the two upper bounds are linear predicates.  Every
+retained triple `(x_i,y_(i,j),z_(i,j,k))` is a distinct fusion path counted
+by `M`.
+
+For `p=3,4`, let `C_p` be the number of retained paths.  The verifier asks
+for a solution of
+
+```text
+(P25.1), (P25.20),                    C_p<N.          (P25.26)
+```
+
+For `p=2`, the selected positive reservoir also includes
+
+```text
+S=sum_(u in L, u=2) m_((L minus {u}) union {1})(a),
+E=indicator_(a=1)[m_L(0)+m_L(2)].                    (P25.27)
+```
+
+The corresponding query is `C_2+S+E<N`.  Interval cardinalities in `S,E`
+are encoded exactly; truncation merely selects genuine paths and is never
+used as an equality for the full multiplicity.
+
+The verifier partitions `p=2` into the endpoint, strict-minimum interior,
+and repeated-minimum interior chambers.  It partitions `p=3,4` according
+to `q=p` or `q>p`; the source now refines these further by endpoint and the
+position of `a`, only to reduce solver time.  Every chamber returned
+`unsat`:
+
+```text
+p=2: endpoint, strict interior, repeated-minimum interior;
+p=3: q=p, q>p;
+p=4: q=p, q>p.                                       (P25.28)
+```
+
+These are unbounded integer queries.  The constants in `(P25.24)` and
+`(P25.25)` bound only the displayed witness pool; there is no bound on
+`q,r,s,t,a`.
+
+**Proposition 25C (complete support-disjoint four-suffix edge).**  Under
+`(P25.1)`, the ordered packet coefficient `(P25.18)` is nonnegative for
+every `p>=2`.
+
+**Proof.**  Proposition 25B handles `p>=5`.  For `p=2,3,4`, first use
+Lemma 25 or Proposition 1C unless `(P25.20)` holds.  In the remaining
+chamber, the unsatisfiability statements `(P25.26)`--`(P25.28)` give
+`C_p>=N` for `p=3,4` and `C_2+S+E>=N` for `p=2`.  These are counts of
+distinct fusion paths inside the positive allocations, so the complete
+packet coefficient is nonnegative.  QED.
+
+This closes the first support-disjoint ordered packet case beyond
+Proposition 12E1.  It is the four-suffix, seven-factor edge leaf.  General
+ordered packet domination still requires a mechanism that survives
+arbitrarily many suffix factors; Proposition 12E2 shows that neither a
+cardinality prefix nor an outside-in shell filtration can provide it.
+
 The strict exact C++ verifier
 `character_ring_iter/verify_su2_torus_factorization.cpp` independently
 compares `(P13.1)` with the subset invariant-multiplicity formula.  It passed

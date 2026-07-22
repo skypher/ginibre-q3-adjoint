@@ -67,6 +67,14 @@ verify_su2_v2_presburger: verify_su2_v2_presburger.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
 
+verify_su2_opd_four_suffix_z3: verify_su2_opd_four_suffix_z3.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -lz3 -pthread -o $@
+
+analyze_su2_opd_four_suffix: analyze_su2_opd_four_suffix.cpp
+	$(CXX) -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
+		-Wconversion -Wshadow -Werror $< -o $@
+
 verify_su2_equal_terminal_exception: verify_su2_equal_terminal_exception.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
