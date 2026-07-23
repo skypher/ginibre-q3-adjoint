@@ -1,0 +1,24 @@
+Command:
+  make -j1 analyze_su2_tadpole_ray
+
+Strict build:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    analyze_su2_tadpole_ray.cpp -o analyze_su2_tadpole_ray
+
+Command:
+  /usr/bin/time -f 'elapsed=%e maxrss=%MKB' \
+    ./analyze_su2_tadpole_ray 20 20 39
+
+Output:
+  SU2_TADPOLE_RAY maximum_rank=20 maximum_minus_pairs=20 \
+  maximum_plus_power=39 checks=16800 rational_checks=8000 result=PASS
+  elapsed=19.90 maxrss=3072KB
+
+Scope:
+  The 16,800 exact integer checks compare the direct tadpole transfer with
+  the unfolded A_(2m) path transfer and the cyclic Laurent-moment formula.
+  The 8,000 cases with a nonempty even minus block and odd plus exponent
+  also compare all three cyclic moments with the rational generating
+  function coefficients in Lemma 22H3R.  Nonnegativity in this bounded
+  rectangle is diagnostic; the all-index target remains (SPT).

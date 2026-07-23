@@ -1,0 +1,36 @@
+Command:
+  /usr/bin/time -f 'elapsed=%e maxrss=%MKB' \
+    ./analyze_su2_odd_orbit_transport_fan 5 100
+
+Output:
+  SU2_ODD_ORBIT_TRANSPORT_FAN result=FAIL rank=5 support_code=56 \
+  parity_code=3 residual_code=3 variables=1,4,
+    term=0 sign=1 coefficient=0.0188197504069171 \
+      lambda=0.725353779881619,12.9707519219053,
+    term=1 sign=1 coefficient=0.0143692768793262 \
+      lambda=3.86962696254837,0.371203205783522,
+    term=2 sign=1 coefficient=0.14291194416371 \
+      lambda=8.95343159700833,7.56148788664607,
+    term=3 sign=1 coefficient=0.121054714128669 \
+      lambda=12.9707519219053,2.67112041951896,
+    term=4 sign=-1 coefficient=0.147362417691301 \
+      lambda=1.2442503480137,8.95343159700833,
+    term=5 sign=-1 coefficient=0.116604240601078 \
+      lambda=4.5819606980133,0.725353779881619,
+    term=6 sign=-1 coefficient=0.40967000354933 \
+      lambda=7.56148788664607,3.86962696254837,
+    term=7 sign=1 coefficient=0.274246012541335 \
+      lambda=1.05081318068085,4.5819606980133,
+    term=8 sign=1 coefficient=0.247938308978703 \
+      lambda=2.67112041951896,1.05081318068085,
+    term=9 sign=-1 coefficient=0.145703345256951 \
+      lambda=0.371203205783522,1.2442503480137,
+  Command exited with non-zero status 1
+  elapsed=1433.04 maxrss=3584KB
+
+Scope:
+  Primitive rational two-dimensional fan rays with numerator and denominator
+  at most 100 do not yield a capacitated pairwise Hall transport for this
+  chamber.  This is a no-go result for that transport ansatz, not a negative
+  GKS2* value.  Lemma 22H3R identifies the same chamber as the top-orbit
+  tadpole ray and reduces it to the separated-pole Turan target (SPT).

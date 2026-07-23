@@ -8433,6 +8433,152 @@ is `certificates/su2_odd_orbit_tropical.log`.
 
 
 
+The first rank-five transport exception has a uniform one-variable
+description.  It converts that chamber into one sharp coefficient
+log-concavity problem whose parameters no longer depend on a spectral fan.
+The recursive transport analyzer still fails there after all primitive
+two-dimensional rays with coordinates at most one hundred and every common
+shift through one hundred.  Its transcript is
+`certificates/su2_odd_orbit_transport_fan_rank5.log`.  This excludes that
+pairwise Hall ansatz; it is not a negative orbit-ring value.
+
+**Lemma 22H3R (top-orbit ray and separated-pole Turan reduction).**  At odd
+level `k=2m-1`, let `Y=B_(m-1)=A_1` be the top even-lift orbit generator and
+put `n=2m+1`.  For `M>=1` and `q>=0`, set
+
+```text
+J_(M,q)=< [Y(x)-Y(y)]^(2M)[Y(x)+Y(y)]^q >_(rho_m tensor rho_m).
+```
+
+Write `C(v)=v+v^(-1)` and
+
+```text
+A_(M,r)=(1/n)sum_(v^n=1)[4-C(v)^2]^M C(v)^r.        (P22.5zz42)
+```
+
+Then
+
+```text
+J_(M,q)=(1/2)[A_(M,q)A_(M,q+4)-A_(M,q+2)^2]  (q even),
+J_(M,q)=(1/2)[A_(M,q+2)^2-A_(M,q)A_(M,q+4)]  (q odd). (P22.5zz43)
+```
+
+The first line is nonnegative pointwise.  For `q=2h+1`, define
+
+```text
+t_ell=4cos^2(ell pi/n),                    1<=ell<=m,
+P_m(T)=U_(2m)(sqrt(T)/2)=product_ell(T-t_ell),
+Q_m(z)=z^m P_m(1/z)=product_ell(1-t_ell z)
+      =sum_(j=0)^m (-1)^j binom(2m-j,j)z^j,          (P22.5zz44)
+
+F_(m,M)(z)=(4z-1)^(M-1)/Q_m(z)=sum_(N>=0)c_N z^N,
+c_N=0                                                (N<0).
+```
+
+With `N=M+h-m`, one has the exact identity
+
+```text
+J_(M,2h+1)=2[c_(N+1)^2-c_N c_(N+2)].                (P22.5zz45)
+```
+
+Consequently full `GKS2*` on the one-generator top-orbit ray, uniformly in
+the odd level, is equivalent to the separated-pole coefficient inequalities
+
+```text
+c_(N+1)^2>=c_N c_(N+2),
+F_(m,M)(z)=(4z-1)^(M-1)/product_ell(1-t_ell z),
+0<t_ell<4.                                          (SPT)
+```
+
+Only the displayed Chebyshev pole sets and indices `N=M+h-m` are required;
+`(SPT)` is not being asserted here for arbitrary pole sets.  Its numerator
+zero `1/4` lies strictly before every denominator pole `1/t_ell`.  Thus the
+rank-five obstruction is a concrete sign-regularity problem for one rational
+generating function, rather than a failure of the orbit inequality.
+
+**Proof.**  Since the complete interval on `C_n` sums to zero away from the
+identity,
+
+```text
+Y(u)=beta_(m-1)(u)=-(u^m+u^(-m)).
+```
+
+The automorphism `v=u^m`, whose inverse is `u=v^(-2)`, changes the orbit
+measure into
+
+```text
+<f(Y)>_(rho_m)
+ =(1/(2n))sum_(v^n=1)[4-C(v)^2]f(-C(v)).             (P22.5zz46)
+```
+
+For two roots put `v=ab,w=a/b`; this is a bijection because `n` is odd.
+The elementary identities
+
+```text
+C(ab)+C(a/b)=C(a)C(b),
+C(ab)-C(a/b)=(a-a^(-1))(b-b^(-1)),
+
+[4-C(ab)^2][4-C(a/b)^2]=[C(a)^2-C(b)^2]^2
+```
+
+turn the double sum into a rank-two determinant.  Expanding its last square
+gives `(P22.5zz43)`; the two factors
+`(a-a^(-1))^(2M)` contribute the same sign, while the sign of the plus
+factor is `(-1)^q`.
+
+It remains to evaluate the odd cyclic moments.  Squaring is an automorphism
+of `C_n`, its inverse exponent is `m+1`, and `C_(m+1)=C_m`.  Hence
+
+```text
+A_(M,2h+1)
+ =(1/n)sum_(v^n=1) C_m(v)[2-C(v)]^M[2+C(v)]^h.
+```
+
+The identity root contributes zero.  On the other inverse pairs, ordered by
+`ell=1,...,m`, one has
+
+```text
+C_m(v)=(-1)^ell sqrt(t_ell),
+1/P_m'(t_ell)=(-1)^(ell+1)sqrt(t_ell)(4-t_ell)/n.
+```
+
+Therefore
+
+```text
+A_(M,2h+1)
+ =-2 sum_(ell=1)^m
+      t_ell^h(4-t_ell)^(M-1)/P_m'(t_ell)
+ =-2 [t_1,...,t_m]{T^h(4-T)^(M-1)}.                 (P22.5zz47)
+```
+
+The last expression is an ordinary divided difference.  Expanding the
+power of `4-T` and using
+
+```text
+[t_1,...,t_m]T^d=[z^(d-m+1)]1/Q_m(z)
+```
+
+with coefficients of negative degree set to zero gives
+
+```text
+[t_1,...,t_m]{T^h(4-T)^(M-1)}=c_(M+h-m).            (P22.5zz48)
+```
+
+Substitution in the odd line of `(P22.5zz43)` proves `(P22.5zz45)`.
+The even line was already pointwise nonnegative, so the asserted equivalence
+with `(SPT)` follows.  QED.
+
+The strict C++ analyzer `character_ring_iter/analyze_su2_tadpole_ray.cpp`
+checks `(P22.5zz43)--(P22.5zz48)` by three independent integer calculations:
+direct tadpole transfer, unfolding to the bipartite `A_(2m)` path, and
+cyclic Laurent coefficients.  Its inequalities are still bounded checks;
+the needed all-index conclusion is exactly `(SPT)`.  The reduction is useful
+even before that conclusion: it replaces the first `O_9` spectral-fan
+exception by a rank-independent one-dimensional lemma with explicitly
+interlacing algebraic poles.  The exact transcript through rank twenty,
+twenty minus pairs, and plus exponent thirty-nine is
+`certificates/su2_tadpole_ray.log`.
+
 Two larger standard packet cones still do not isolate that differential.
 For the level-three word `Q=[2,2,2]`, the full affine packet is
 
