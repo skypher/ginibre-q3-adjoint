@@ -1,0 +1,39 @@
+Command:
+  make -j2 probe_tp2_winding_sectors
+
+Strict build:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    probe_tp2_winding_sectors.cpp \
+    -o probe_tp2_winding_sectors
+
+Command:
+  /usr/bin/time -f 'elapsed=%e maxrss=%MKB' \
+    ./probe_tp2_winding_sectors 5 40 8
+
+Output:
+  TP2_WINDING first_negative rank=5 minus_pairs=6 half_power=2 \
+    first=-1 second=-1 twice_sector=-2
+  TP2_WINDING first_negative_sum_group rank=5 minus_pairs=6 \
+    half_power=2 winding_sum=-2 value=-2
+  TP2_WINDING first_negative_shell_group rank=5 minus_pairs=9 \
+    half_power=2 shell=1 value=-91732
+  TP2_WINDING first_negative_cyclic_correction rank=5 minus_pairs=9 \
+    half_power=2 cyclic=3204806 ordinary=3250672
+  TP2_WINDING first_negative_shell_prefix rank=5 minus_pairs=37 \
+    half_power=5 shell=1 prefix=-16865348928368453742537769860112
+  TP2_WINDING maximum_rank=5 maximum_minus_pairs=40 \
+    maximum_half_power=8 systems=238 sectors=8101 \
+    negative_sectors=4022 negative_sum_groups=1113 \
+    negative_shell_groups=356 negative_shell_prefixes=6 \
+    same_sign_adjacent_coefficients=23 negative_cyclic_corrections=176 \
+    result=PASS
+  elapsed=1.43 maxrss=3072KB
+
+Scope:
+  Exact cpp_int arithmetic checks the full winding decomposition, the
+  ordinary-versus-cyclic comparison, and both adjacent Christoffel forms.
+  The total cyclic target is nonnegative throughout the displayed box.
+  The reported negative sectors, groups, prefixes, and cyclic corrections
+  are exact counterexamples to those stronger proof ansatzes; they are not
+  counterexamples to the full cyclic target.

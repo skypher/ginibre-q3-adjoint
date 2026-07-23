@@ -8942,6 +8942,161 @@ supports exactly the needed theorem and rules out a blanket
 connection-minor positivity claim.  The transcript is
 `certificates/cyclic_christoffel_minors.log`.
 
+The finite alias target also has an exact two-particle linearization.  It
+does not yet settle the sign, but it removes the nonlinear moment
+determinant and exposes the precise boundary coefficient which remains.
+
+**Lemma 22H3W (cyclic Wronskian and multiplicative-compound reduction).**
+Let `n=2m+1`, let `S` be cyclic translation on `R^(Z/nZ)`, and put
+
+```text
+A=2I-S-S^(-1),                 B=2I+S+S^(-1)=4I-A.
+```
+
+For `M,r>=0`, set `c=A^M B^r e_0` and write `c_j` for its cyclic
+coordinates.  Then the `j=2` cross minor is
+
+```text
+Q=c_2c_4+c_2^2-c_3^2-c_1c_3
+ =c_3(Ac)_2-c_2(Ac)_3
+ =-<e_2 wedge e_3,
+      (wedge^2(A^M B^r))(e_0 wedge Ae_0)>.           (P22.5zz66)
+```
+
+For the target parameters `M=4+u+v`, `r=2+u`, define
+
+```text
+P=wedge^2 A,       R=wedge^2 B,
+L=P^2 R,           U=e_2 wedge e_3,
+V=e_0 wedge Ae_0.
+```
+
+Then
+
+```text
+Q=-<LU, P^v(PR)^u LV>.                              (P22.5zz67)
+```
+
+The three middle operators `P`, `R`, and `PR` are commuting positive
+semidefinite operators.  Consequently the remaining finite-alias claim is
+exactly the boundary bilinear inequality
+
+```text
+<LU, P^v(PR)^u LV> <= 0,             u,v>=0.         (CBW)
+```
+
+**Proof.**  On the Fourier vector of an `n`th root `z`, the eigenvalues of
+`A` and `B` are respectively
+
+```text
+2-z-z^(-1)=-z^(-1)(1-z)^2,
+2+z+z^(-1)= z^(-1)(1+z)^2.
+```
+
+Thus `A^M B^r e_0` has exactly the periodized Laurent coefficients used in
+the winding decomposition of `(TP2)`.  The middle equality in
+`(P22.5zz66)` follows by inserting
+
+```text
+(Ac)_j=2c_j-c_(j-1)-c_(j+1).
+```
+
+For any operator `T`, the coefficient of `e_i wedge e_j` in
+`(wedge^2 T)(x wedge y)` is the corresponding two-by-two minor.  Taking
+`T=A^M B^r`, `x=e_0`, and `y=Ae_0`, and using commutativity of `A` with
+`T`, gives the last equality in `(P22.5zz66)`.
+
+Exterior powers are multiplicative.  Since `P` and `R` commute,
+
+```text
+P^(4+u+v)R^(2+u)=L P^v(PR)^u L,
+```
+
+which proves `(P22.5zz67)`.  Both `A` and `B` are positive semidefinite on
+an odd cycle (in fact `B` is positive definite).  Their second exterior
+powers are therefore positive semidefinite.  Commutativity also makes
+`PR` positive semidefinite.  This proves the last assertion.  QED.
+
+There is a second equivalent form which identifies the same coefficient
+with cyclic outer-Turan monotonicity.  Put
+
+```text
+D=I-S,              E=I+S,              H=D^M E^r,
+g=H^*e_0,           X=g wedge Sg,
+R_j(X)=<X,(wedge^2 S)^j X>.
+```
+
+Since `A=DD^*`, `B=EE^*`, and all four factors commute,
+
+```text
+A^M B^r=HH^*,                 Q=R_2(X)-R_3(X).        (P22.5zz67a)
+```
+
+Indeed, Cauchy--Binet gives
+
+```text
+Q=-<(wedge^2 H^*)U,(wedge^2 H^*)V>.
+```
+
+The two transformed wedges are
+
+```text
+(wedge^2 H^*)U=(wedge^2 S)^2X,
+(wedge^2 H^*)V=-X+(wedge^2 S)^(-1)X.
+```
+
+Translation is orthogonal, so their inner product is exactly
+`R_3(X)-R_2(X)`, proving `(P22.5zz67a)`.  Thus `(CBW)` is not merely
+analogous to `(COTM)`: it is the first unresolved outer-Turan drop for the
+single structured Plucker vector `g wedge Sg`.
+
+The reduction is useful but the final inference is deliberately not made:
+a positive-semidefinite middle operator does not fix the sign of a
+bilinear form between two different vectors.  Exact probes rule out four
+shortcuts.  First, winding-shell prefixes need not be positive.  Already
+at `n=11`, `M=37`, `r=5`, the depth-one prefix is
+
+```text
+-16865348928368453742537769860112.                  (P22.5zz68)
+```
+
+Second, the complete cyclic value need not dominate the continuous one:
+at `n=11`, `M=9`, `r=2`, they are respectively `3,204,806` and
+`3,250,672`.  Third, the reachable multiplicative-compound vector has no
+fixed coordinate sign gauge; the first conflict occurs at `n=11`,
+`M-r=2`, `r=4`, in the coordinate `e_2 wedge e_5`.  Fourth, at `n=11`
+there is no exact Gram collapse among the symmetric split, any of the
+fifteen endpoint-power splits of `A^4B^2`, or endpoint-polynomial
+intertwiners of bidegree at most `(6,6)`.  The defect from the symmetric
+split also has nonzero mixed moments.  These are no-go statements for the
+tested ansatzes, not counterexamples to `(CBW)`.
+
+The square-root form does not make the sign termwise.  At `n=11`,
+`M-r=2`, `r=2`, the Cauchy--Binet coordinate `e_7 wedge e_8` has the two
+minors `1` and `6`, hence contributes with the wrong sign.  Even summing by
+cyclic centre gives a positive wrong-sign group of value `6` in centre
+class four.  Summing by cyclic separation also fails, first at
+`M-r=3`, `r=2`, where separation five has wrong-sign sum `14`.  Therefore
+the cancellation in `(P22.5zz67a)` genuinely mixes both centre and relative
+motion; neither natural orbit filtration proves the drop.
+
+The strict program
+`character_ring_iter/probe_tp2_multiplicative_compound.cpp` constructs the
+two multiplicative compounds without spectral floating point and compares
+`(P22.5zz66)` independently with direct cycle evolution.  Through rank
+twelve and `2<=M-r,r<=12`, all `968` identities agree and every target is
+nonnegative.  It also checks all `968` Cauchy--Binet identities, while
+`25,102` interior sign conflicts and the exact wrong-sign minor groups
+confirm that full orthant or orbitwise positivity is false.  The transcript is
+`certificates/tp2_multiplicative_compound.log`.  The independent winding
+program verifies the coefficient, Christoffel, and sector forms and
+records `(P22.5zz68)` in `certificates/tp2_winding_sectors.log`.
+
+Thus the next proof target for this chamber is `(CBW)`, preferably by a
+boundary cone for the commuting compounds `P` and `PR`, or by a coupled
+spectral allocation.  A shell-prefix induction, comparison with the
+continuous determinant, and a single fixed sign gauge are now excluded.
+
 Two larger standard packet cones still do not isolate that differential.
 For the level-three word `Q=[2,2,2]`, the full affine packet is
 

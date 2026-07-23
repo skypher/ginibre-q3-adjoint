@@ -1,0 +1,53 @@
+Command:
+  make -j2 probe_tp2_multiplicative_compound
+
+Strict build:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    probe_tp2_multiplicative_compound.cpp \
+    -o probe_tp2_multiplicative_compound
+
+Command:
+  /usr/bin/time -f 'elapsed=%e maxrss=%MKB' \
+    ./probe_tp2_multiplicative_compound 12 12 12
+
+Output:
+  TP2_COMPOUND symmetric_square_intertwiner=false
+  TP2_COMPOUND asymmetric_intertwiner=false
+  TP2_COMPOUND polynomial_intertwiner=false
+  TP2_COMPOUND nonorthogonal_defect_moments=169
+  TP2_COMPOUND first_positive_cauchy_binet_term rank=5 difference=2 \
+    half_power=2 pair=(7,8) target_minor=1 source_minor=6
+  TP2_COMPOUND first_positive_cauchy_binet_center rank=5 difference=2 \
+    half_power=2 center=4 value=6
+  TP2_COMPOUND first_sign_conflict rank=5 difference=2 half_power=4 \
+    pair=(2,5) previous_sign=-1 current_sign=1
+  TP2_COMPOUND first_positive_cauchy_binet_separation rank=5 \
+    difference=3 half_power=2 separation=5 value=14
+  TP2_COMPOUND maximum_rank=12 maximum_difference=12 \
+    maximum_half_power=12 systems=968 sign_conflicts=25102 \
+    negative_targets=0 square_source_checks=8 identity_checks=968 \
+    positive_cauchy_binet_terms=48796 \
+    positive_cauchy_binet_separation_groups=1028 \
+    positive_cauchy_binet_center_groups=4932 \
+    result=PASS
+  elapsed=9.69 maxrss=3072KB
+
+Scope:
+  Exact cpp_int arithmetic checks the identity
+
+    Q=-[e_2 wedge e_3]
+       (wedge^2(A^(difference+half_power) B^half_power))
+       (e_0 wedge Ae_0)
+
+  against direct cyclic evolution, where A=2I-S-S^(-1),
+  B=2I+S+S^(-1), and AB=2I-S^2-S^(-2).  The target range is
+  difference>=2 and half_power>=2.  Nonnegativity in the displayed
+  finite box is evidence only.  The exterior identity itself is exact.
+  The program independently factors A^M B^r=HH^* with
+  H=(I-S)^M(I+S)^r and checks the resulting Cauchy--Binet identity.
+  The sign-conflict and intertwiner lines rule out the corresponding
+  simple invariant-orthant and Gram-collapse ansatzes.  The positive
+  Cauchy--Binet counters show that neither individual minors nor grouping
+  them by cyclic separation or centre has the sign needed for a direct
+  termwise proof.

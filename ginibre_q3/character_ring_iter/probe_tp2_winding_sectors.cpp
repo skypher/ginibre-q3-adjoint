@@ -52,6 +52,17 @@ cpp_int coefficient(const std::vector<cpp_int>& values, int exponent) {
   return values[static_cast<std::size_t>(degree + exponent)];
 }
 
+cpp_int cyclic_coefficient(const std::vector<cpp_int>& values, int modulus,
+                           int offset) {
+  const int degree = (static_cast<int>(values.size()) - 1) / 2;
+  const int bound = (degree + std::abs(offset)) / modulus + 2;
+  cpp_int result = 0;
+  for (int winding = -bound; winding <= bound; ++winding) {
+    result += coefficient(values, offset + winding * modulus);
+  }
+  return result;
+}
+
 std::vector<int> winding_indices(int modulus, int degree) {
   std::vector<int> result;
   const int bound = (degree + 4) / modulus + 2;
@@ -88,6 +99,8 @@ int main(int argc, char** argv) {
   std::size_t negative_sum_groups = 0;
   std::size_t negative_shell_groups = 0;
   std::size_t negative_shell_prefixes = 0;
+  std::size_t same_sign_adjacent_coefficients = 0;
+  std::size_t negative_cyclic_corrections = 0;
   bool reported = false;
   bool reported_sum = false;
   bool reported_shell = false;
@@ -179,6 +192,56 @@ int main(int argc, char** argv) {
             }
           }
         }
+        const cpp_int c1 = cyclic_coefficient(values, modulus, 1);
+        const cpp_int c2 = cyclic_coefficient(values, modulus, 2);
+        const cpp_int c3 = cyclic_coefficient(values, modulus, 3);
+        const cpp_int c4 = cyclic_coefficient(values, modulus, 4);
+        const cpp_int target = c2 * c4 + c2 * c2 - c3 * c3 - c1 * c3;
+        const cpp_int ordinary_c1 = coefficient(values, 1);
+        const cpp_int ordinary_c2 = coefficient(values, 2);
+        const cpp_int ordinary_c3 = coefficient(values, 3);
+        const cpp_int ordinary_c4 = coefficient(values, 4);
+        const cpp_int ordinary_target =
+            ordinary_c2 * ordinary_c4 + ordinary_c2 * ordinary_c2 -
+            ordinary_c3 * ordinary_c3 - ordinary_c1 * ordinary_c3;
+        if (total != 2 * target) {
+          std::cout << "TP2_WINDING result=DECOMPOSITION_FAIL"
+                    << " rank=" << rank
+                    << " minus_pairs=" << minus_pairs
+                    << " half_power=" << half_power << '\n';
+          return 1;
+        }
+        const std::vector<cpp_int> next_minus_values =
+            fourier_coefficients(minus_pairs + 1, half_power);
+        const std::vector<cpp_int> next_half_values =
+            fourier_coefficients(minus_pairs, half_power + 1);
+        const cpp_int minus_christoffel =
+            c3 * cyclic_coefficient(next_minus_values, modulus, 2) -
+            c2 * cyclic_coefficient(next_minus_values, modulus, 3);
+        const cpp_int plus_christoffel =
+            c2 * cyclic_coefficient(next_half_values, modulus, 3) -
+            c3 * cyclic_coefficient(next_half_values, modulus, 2);
+        if (target != minus_christoffel || target != plus_christoffel) {
+          std::cout << "TP2_WINDING result=CHRISTOFFEL_FAIL"
+                    << " rank=" << rank
+                    << " minus_pairs=" << minus_pairs
+                    << " half_power=" << half_power << '\n';
+          return 1;
+        }
+        if (c2 * c3 > 0) {
+          ++same_sign_adjacent_coefficients;
+        }
+        if (target < ordinary_target) {
+          ++negative_cyclic_corrections;
+          if (negative_cyclic_corrections == 1U) {
+            std::cout << "TP2_WINDING first_negative_cyclic_correction"
+                      << " rank=" << rank
+                      << " minus_pairs=" << minus_pairs
+                      << " half_power=" << half_power
+                      << " cyclic=" << target
+                      << " ordinary=" << ordinary_target << '\n';
+          }
+        }
         ++systems;
         if (total < 0) {
           std::cout << "TP2_WINDING result=TOTAL_FAIL"
@@ -199,6 +262,10 @@ int main(int argc, char** argv) {
             << " negative_sum_groups=" << negative_sum_groups
             << " negative_shell_groups=" << negative_shell_groups
             << " negative_shell_prefixes=" << negative_shell_prefixes
+            << " same_sign_adjacent_coefficients="
+            << same_sign_adjacent_coefficients
+            << " negative_cyclic_corrections="
+            << negative_cyclic_corrections
             << " result=PASS\n";
   return 0;
 }
