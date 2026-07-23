@@ -1,0 +1,51 @@
+Command:
+  make -j1 probe_cyclic_christoffel_minors
+
+Strict build:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    probe_cyclic_christoffel_minors.cpp \
+    -o probe_cyclic_christoffel_minors
+
+Command:
+  /usr/bin/time -f 'elapsed=%e maxrss=%MKB' \
+    ./probe_cyclic_christoffel_minors 20 30 30 6
+
+Output:
+  CYCLIC_CHRISTOFFEL first_negative rank=2 minus_pairs=0 \
+    half_power=0 difference=0 index=4 determinant=-4
+  CYCLIC_CHRISTOFFEL first_negative rank=2 minus_pairs=0 \
+    half_power=1 difference=-1 index=3 determinant=-4
+  CYCLIC_CHRISTOFFEL first_negative rank=3 minus_pairs=0 \
+    half_power=0 difference=0 index=6 determinant=-4
+  CYCLIC_CHRISTOFFEL first_negative rank=3 minus_pairs=0 \
+    half_power=1 difference=-1 index=5 determinant=-4
+  CYCLIC_CHRISTOFFEL maximum_rank=20 maximum_minus_pairs=30 \
+    maximum_half_power=30 maximum_index=6 checks=109554 \
+    negative=7664 target_checks=7182 alternating_failures=26625 \
+    result=PASS
+  elapsed=56.50 maxrss=3072KB
+
+Command:
+  /usr/bin/time -f 'elapsed=%e maxrss=%MKB' \
+    ./probe_cyclic_christoffel_minors 25 40 40 2
+
+Output:
+  CYCLIC_CHRISTOFFEL maximum_rank=25 maximum_minus_pairs=40 \
+    maximum_half_power=40 maximum_index=2 checks=80688 negative=0 \
+    target_checks=16872 alternating_failures=31147 result=PASS
+  elapsed=93.80 maxrss=3072KB
+
+Scope:
+  Exact integer arithmetic checks the cross determinant
+
+    Lambda(TR_(j+1))Lambda(R_j)-Lambda(R_(j+1))Lambda(TR_j)
+
+  for all displayed ranks, endpoint powers, and `1<=j<=6`.  The 7,182
+  target cases are exactly `j=2`, `r>=2`, and `M-r>=2`; all pass.  The
+  second run finds no negative `j=2` minor anywhere in its larger box,
+  even outside the target cone.  The
+  reported negative higher-index minors and alternating-sign failures show
+  that neither unrestricted connection-minor positivity nor a naive
+  checkerboard-sign theorem explains the result.  The target checks remain
+  bounded evidence for the cyclic-alias range.

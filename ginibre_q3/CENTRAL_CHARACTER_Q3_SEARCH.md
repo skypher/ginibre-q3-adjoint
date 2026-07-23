@@ -8568,16 +8568,379 @@ Substitution in the odd line of `(P22.5zz43)` proves `(P22.5zz45)`.
 The even line was already pointwise nonnegative, so the asserted equivalence
 with `(SPT)` follows.  QED.
 
+**Lemma 22H3S (separated-pole Toeplitz Turan theorem).**  Let `a>0`, let
+
+```text
+0<x_1<...<x_m<a,
+R(z)=(az-1)^p/product_(i=1)^m(1-x_i z)=sum_(r>=0)c_r z^r,
+```
+
+where `p` is a nonnegative integer.  If
+
+```text
+r>=max(0,p+1-m),
+```
+
+then
+
+```text
+c_(r+1)^2-c_r c_(r+2)>=0.                           (P22.5zz49)
+```
+
+The inequality is strict for `m>=2`; for `m=1` it is an equality.  Thus
+`(SPT)` holds for arbitrary distinct separated poles, not only for the
+Chebyshev pole sets in Lemma 22H3R.
+
+**Proof.**  The case `m=1` is the geometric tail following the polynomial
+part, so assume `m>=2`.  Put
+
+```text
+q=r+m-1-p>=0,       f(X)=X^q(a-X)^p,
+D_j=[x_1,...,x_m]{X^j f(X)}.
+```
+
+Partial fractions are valid beyond the polynomial part and give
+
+```text
+c_(r+j)=D_j,                                      j=0,1,2. (P22.5zz50)
+```
+
+Indeed, the coefficient of `(1-x_i z)^(-1)` is
+`(a-x_i)^p x_i^(m-1-p)/P'(x_i)`, where
+`P(X)=product_i(X-x_i)`.
+
+Let `V=product_(i<j)(x_j-x_i)>0`, and let `E` be the determinant whose
+rows, evaluated at the columns `x_1,...,x_m`, are
+
+```text
+f, Xf, 1, X, ..., X^(m-3).                          (P22.5zz51)
+```
+
+The last block is absent when `m=2`.  Expanding `(P22.5zz50)` in barycentric
+form, or equivalently expanding `E` in its first two rows, gives
+
+```text
+D_1^2-D_0D_2=E/V.                                  (P22.5zz52)
+```
+
+For completeness, the contribution of a pair `i<j` to either side after
+multiplication by `V` is obtained from
+
+```text
+-(x_i-x_j)^2/[P'(x_i)P'(x_j)]
+ =1/product_(k notin {i,j})[(x_i-x_k)(x_j-x_k)].
+```
+
+It remains only to determine the sign of `E`.  Order the functions exactly
+as in `(P22.5zz51)`.  Their first two leading Wronskians are `f` and `f^2`.
+More generally, for `1<=s<=m-2`, expansion in the polynomial columns gives
+
+```text
+W(f,Xf,1,X,...,X^(s-1))
+ =product_(j=0)^(s-1)j!
+  {(s+1)[f^(s)]^2-s f^(s-1)f^(s+1)}.               (P22.5zz53)
+```
+
+Set `g=f^(s-1)`.  Since `f=X^q(a-X)^p` is real-rooted, so is every
+derivative `g`, and Laguerre's elementary identity gives
+
+```text
+(g')^2-gg''>=0.
+```
+
+The braces in `(P22.5zz53)` are
+
+```text
+(g')^2+s[(g')^2-gg''].
+```
+
+They are strictly positive on `(0,a)`.  To see the only possible equality
+case directly, all non-endpoint roots of every derivative of
+`X^q(a-X)^p` are simple by strict Rolle interlacing.  Hence `g=g'=0`
+cannot occur in the open interval, while at a point with `g'=0` and
+`g!=0` the Laguerre expression is strict.  Also
+`deg f=p+q=r+m-1>=m-1`, so none of the derivatives used above is constant.
+
+Thus every leading Wronskian of `(P22.5zz51)` is positive on `(0,a)`.
+The elementary Wronskian criterion (successive Rolle induction) says that
+such an ordered family is an extended complete Chebyshev system.  Therefore
+its evaluation determinant is positive whenever
+`x_1<...<x_m`; that is, `E>0`.  Now `(P22.5zz52)` proves
+`(P22.5zz49)`.  QED.
+
+**Corollary 22H3T (full top-orbit ray).**  The one-generator top-orbit ray
+of every odd fusion level satisfies `GKS2*` for arbitrary word length.
+
+**Proof.**  In Lemma 22H3R take `a=4`, `p=M-1`, `r=N=M+h-m` and
+`x_i=t_i`.  If `N>=0`, then
+
+```text
+N>=p+1-m,
+```
+
+so Lemma 22H3S proves `(SPT)`.  If `N<=-2`, both `c_N` and `c_(N+1)`
+vanish; if `N=-1`, the Turan expression is `c_0^2`.  Hence the odd-plus
+line of `(P22.5zz43)` is nonnegative for every `M,h`.  Its even-plus line
+was already pointwise nonnegative.  QED.
+
 The strict C++ analyzer `character_ring_iter/analyze_su2_tadpole_ray.cpp`
 checks `(P22.5zz43)--(P22.5zz48)` by three independent integer calculations:
 direct tadpole transfer, unfolding to the bipartite `A_(2m)` path, and
 cyclic Laurent coefficients.  Its inequalities are still bounded checks;
-the needed all-index conclusion is exactly `(SPT)`.  The reduction is useful
-even before that conclusion: it replaces the first `O_9` spectral-fan
-exception by a rank-independent one-dimensional lemma with explicitly
-interlacing algebraic poles.  The exact transcript through rank twenty,
-twenty minus pairs, and plus exponent thirty-nine is
+the all-index conclusion is Corollary 22H3T, not an extrapolation from those
+checks.  The reduction and Lemma 22H3S replace the first `O_9` spectral-fan
+exception by a rank-independent Chebyshev-system argument.  The exact
+transcript through rank twenty, twenty minus pairs, and plus exponent
+thirty-nine is
 `certificates/su2_tadpole_ray.log`.
+
+The independent strict verifier
+`character_ring_iter/verify_separated_pole_turan_ect.cpp` evaluates the
+rational coefficients directly, computes the determinant `(P22.5zz51)` by
+exact Bareiss elimination, and checks every leading-Wronskian identity
+`(P22.5zz53)`.  Its bounded audit through separation nine, numerator power
+ten, and coefficient degree sixteen comprises `77,518` coefficient checks,
+`72,898` generalized-determinant identities, and `1,532,426` Wronskian
+identities.  The transcript is
+`certificates/separated_pole_turan_ect.log`.
+
+Feeding Corollary 22H3T back into the rank-five chamber analyzer exposes
+the next obstruction rather than merely renaming the old one.  At `O_9`
+the former support-56 exception has odd exponents `p,r` on the two minus
+labels `B_1,B_4`.  Since `Y=B_4` and
+
+```text
+B_1(x)-B_1(y)=[Y(x)-Y(y)][Y(x)+Y(y)],
+```
+
+that entire chamber is a top-orbit word with even difference exponent and
+is proved by Corollary 22H3T.  The first still-untransported regime is
+
+```text
+[B_1(x)-B_1(y)]^(4+2u)[B_2(x)+B_2(y)]
+[B_4(x)-B_4(y)]^(4+2v),                 u,v>=0.       (P22.5zz54)
+```
+
+Here `Y=B_4` and, on the top-orbit spectrum,
+
+```text
+B_1=Y^2-1,             B_2=Y^4-3Y^2+1=:Z.
+```
+
+Thus `(P22.5zz54)` is exactly the two-parameter partial-character target
+
+```text
+< [Y(x)-Y(y)]^(8+2u+2v)[Y(x)+Y(y)]^(4+2u)
+   [Z(x)+Z(y)] > >=0.                                 (TP2)
+```
+
+It is twice the `B_2` partial coefficient of the even-plus top-orbit word.
+The scalar theorem 22H3T does not by itself control that coefficient.  The
+modified analyzer fails pairwise Hall transport for `(TP2)` after all
+primitive rational two-dimensional rays with coordinates at most one
+hundred and all common shifts through one hundred.  This is again a no-go
+for that ansatz, not a negative value.  The transcript is
+`certificates/su2_odd_orbit_transport_fan_rank5_after_spt.log`.
+
+**Lemma 22H3U (three-feature partial top-orbit reduction).**  There is an
+exact rank-independent reduction of this next target.  Put
+
+```text
+M=4+u+v,      q=4+2u,      a_j=A_(M,q+2j),   0<=j<=4,
+b_j=a_(j+1)-2a_j,                              0<=j<=2,
+e_j=a_(j+2)-4a_(j+1)+2a_j,                    0<=j<=2. (P22.5zz55)
+```
+
+Then the left side of `(TP2)` is
+
+```text
+(a_0a_2-a_1^2)
+ +(1/2)(b_0b_2-b_1^2)
+ +(1/2)(e_0e_2-e_1^2).                         (TPD) (P22.5zz56)
+```
+
+**Proof.**  After the root-of-unity change `v=ab,w=a/b` used in Lemma
+22H3R,
+
+```text
+Z(-C(ab))+Z(-C(a/b))
+ =2+C_2(a)C_2(b)+C_4(a)C_4(b).                 (P22.5zz57)
+```
+
+For any one of the three features `R=1,C_2,C_4`, multiplication by
+`[C(a)^2-C(b)^2]^2` contributes one half of
+
+```text
+L_0(R)L_4(R)-L_2(R)^2,
+L_j(R)=(1/n)sum_(z^n=1)(4-C(z)^2)^M C(z)^(q+j)R(C(z)).
+```
+
+The coefficient two of the constant feature and the identities
+`C_2=C^2-2`, `C_4=C^4-4C^2+2` give `(P22.5zz56)`.
+
+There is a shorter equivalent form.  Put
+
+```text
+R_1(T)=T-2,
+R_2(T)=T^2-4T+2,
+R_3(T)=T^3-6T^2+9T-2,
+Lambda(G)=(1/n)sum_(z^n=1)
+             (4-C(z)^2)^M C(z)^q G(C(z)^2).
+```
+
+The elementary Christoffel--Darboux identity
+
+```text
+2+R_1(T)R_1(U)+R_2(T)R_2(U)
+ =[R_3(T)R_2(U)-R_2(T)R_3(U)]/(T-U)                (P22.5zz58)
+```
+
+turns `(TPD)` into the single cross determinant
+
+```text
+2(TPD)=Lambda(TR_3)Lambda(R_2)
+       -Lambda(R_3)Lambda(TR_2).                    (P22.5zz59)
+```
+
+To obtain it, write every ordinary `2 by 2` moment determinant as one half
+of its double-sum form, insert `(P22.5zz58)`, and exchange `T,U` in the
+second term.  This also proves `(P22.5zz59)`.
+QED.
+
+Unlike Lemma 22H3S, the last two determinants are moments of signed
+features, so their separate positivity is false in general; `(TPD)` is the
+new combined target.  The tadpole analyzer independently compares `(TPD)`
+with direct orbit transfer in `7,056` exact cases through rank twenty and
+`0<=u,v<=20`, all nonnegative.  This is bounded evidence, not yet an
+all-index proof.
+
+**Lemma 22H3V (stable and no-alias `TP2`).**  The target `(TP2)` is
+strictly positive in the continuous cyclic limit.  At finite orbit rank
+`m`, it is also positive whenever
+
+```text
+M+r+4<2m+1,
+M=4+u+v,       r=2+u.                               (P22.5zz60)
+```
+
+In particular, every fixed pair `u,v` is proved for all sufficiently large
+odd levels; the base pair `u=v=0` is already in the no-alias range at
+`O_9`.
+
+**Proof.**  Let `Lambda_infinity` be the uniform circle limit of `Lambda`.
+Under `T=2+2cos(theta)`, its tilted measure is, up to a positive constant,
+
+```text
+T^(r-1/2)(4-T)^(M-1/2)dT,             0<T<4.
+```
+
+Put
+
+```text
+d=M-r,       s=M+r+1,
+ell_j=Lambda_infinity(R_j)/Lambda_infinity(R_0).
+```
+
+The beta Pearson identity and the Chebyshev derivative identity are
+
+```text
+Lambda_infinity(T(4-T)F')
+ =Lambda_infinity([sT-(4r+2)]F),
+
+T(4-T)R_j'=j(R_(j-1)-R_(j+1)).                      (P22.5zz61)
+```
+
+Together with `TR_j=R_(j+1)+2R_j+R_(j-1)`, they give
+
+```text
+(s+j)ell_(j+1)+2d ell_j+(s-j)ell_(j-1)=0,
+ell_0=1,       ell_1=-d/s.                           (P22.5zz62)
+```
+
+Set
+
+```text
+A=2d^2-s^2+s,       B=3s^2-3s-2-4d^2.
+```
+
+The first two needed coefficients are
+
+```text
+ell_2=A/[s(s+1)],
+ell_3=dB/[s(s+1)(s+2)].                              (P22.5zz63)
+```
+
+If `J` denotes the right side of `(P22.5zz59)` divided by
+`Lambda_infinity(R_0)^2`, two further uses of `(P22.5zz62)` give
+
+```text
+J=N/[s^2(s+1)^2(s+2)^2(s+3)(s-2)],                  (P22.5zz64)
+
+N=6(s-2)(s+2)^2 A^2+10d^2(s+2)AB+4(s+3)d^2B^2.
+```
+
+The middle summand in this last presentation is not manifestly positive.
+The required parameter substitution is decisive: `r=2+u`, `d=2+v`, hence
+`s=7+2u+v`.  Direct expansion gives
+
+```text
+N=sum_(i=0)^7 u^i P_i(v),                            (P22.5zz65)
+
+P_0=3353400+2915280v+985070v^2+170330v^3
+    +18870v^4+1750v^5+100v^6,
+P_1=7477920+5687192v+1623228v^2+220152v^3
+    +16628v^4+1000v^5+40v^6,
+P_2=7027704+4555912v+1061000v^2+107048v^3
+    +4792v^4+120v^5,
+P_3=3605232+1915712v+343408v^2+23296v^3+464v^4,
+P_4=1089600+445248v+54912v^2+1920v^3,
+P_5=193920+54144v+3456v^2,
+P_6=18816+2688v,
+P_7=768.
+```
+
+Every coefficient is strictly positive, while the denominator in
+`(P22.5zz64)` is positive because `s>=7`.  Equations `(P22.5zz59)` and
+`(P22.5zz64)` therefore prove the continuous assertion.
+
+For the finite statement, write the circle variable after the squaring
+automorphism.  The Laurent degree of
+`T^r(4-T)^M R_j(T)` is at most `M+r+j`.  Every functional in
+`(P22.5zz59)` has `j<=4`.  If `(P22.5zz60)` holds, averaging over the
+`(2m+1)`st roots of unity extracts only the ordinary constant term, exactly
+as continuous circle averaging does.  Thus the same positive determinant
+applies.  For fixed `u,v`, condition `(P22.5zz60)` eventually holds as
+`m` tends to infinity.  QED.
+
+The strict C++ program `character_ring_iter/derive_continuous_tp2.cpp`
+performs the expansion `(P22.5zz65)` independently in exact bivariate
+`cpp_int` arithmetic.  Its transcript, including all thirty-five positive
+coefficients, is `certificates/continuous_tp2.log`.  Lemma 22H3V leaves
+only the finite cyclic-alias range
+
+```text
+M+r+4>=2m+1                                           (TP2-alias)
+```
+
+for this chamber.
+
+The exact diagnostic `character_ring_iter/probe_cyclic_christoffel_minors.cpp`
+tests the broader cross-minor family
+
+```text
+Lambda(TR_(j+1))Lambda(R_j)-Lambda(R_(j+1))Lambda(TR_j).
+```
+
+Through rank twenty and endpoint powers thirty, all `7,182` cases with
+`j=2`, `r>=2`, and `M-r>=2` pass, including the alias range.  The stronger
+`j=2` scan through rank twenty-five and both powers forty finds no negative
+minor in any of its `80,688` cases, even outside the target parameter cone.
+The still broader unrestricted pattern is false: the `j<=6` run finds
+`7,664` negative minors
+at higher indices or outside the target parameter cone.  Thus the evidence
+supports exactly the needed theorem and rules out a blanket
+connection-minor positivity claim.  The transcript is
+`certificates/cyclic_christoffel_minors.log`.
 
 Two larger standard packet cones still do not isolate that differential.
 For the level-three word `Q=[2,2,2]`, the full affine packet is

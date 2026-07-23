@@ -1,0 +1,56 @@
+Command:
+  make -j1 derive_continuous_tp2
+
+Strict build:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    derive_continuous_tp2.cpp -o derive_continuous_tp2
+
+Command:
+  ./derive_continuous_tp2
+
+Output:
+  CONTINUOUS_TP2_NUMERATOR terms=35
+    u^0 v^0 coefficient=3353400
+    u^0 v^1 coefficient=2915280
+    u^0 v^2 coefficient=985070
+    u^0 v^3 coefficient=170330
+    u^0 v^4 coefficient=18870
+    u^0 v^5 coefficient=1750
+    u^0 v^6 coefficient=100
+    u^1 v^0 coefficient=7477920
+    u^1 v^1 coefficient=5687192
+    u^1 v^2 coefficient=1623228
+    u^1 v^3 coefficient=220152
+    u^1 v^4 coefficient=16628
+    u^1 v^5 coefficient=1000
+    u^1 v^6 coefficient=40
+    u^2 v^0 coefficient=7027704
+    u^2 v^1 coefficient=4555912
+    u^2 v^2 coefficient=1061000
+    u^2 v^3 coefficient=107048
+    u^2 v^4 coefficient=4792
+    u^2 v^5 coefficient=120
+    u^3 v^0 coefficient=3605232
+    u^3 v^1 coefficient=1915712
+    u^3 v^2 coefficient=343408
+    u^3 v^3 coefficient=23296
+    u^3 v^4 coefficient=464
+    u^4 v^0 coefficient=1089600
+    u^4 v^1 coefficient=445248
+    u^4 v^2 coefficient=54912
+    u^4 v^3 coefficient=1920
+    u^5 v^0 coefficient=193920
+    u^5 v^1 coefficient=54144
+    u^5 v^2 coefficient=3456
+    u^6 v^0 coefficient=18816
+    u^6 v^1 coefficient=2688
+    u^7 v^0 coefficient=768
+  CONTINUOUS_TP2_NUMERATOR result=PASS
+
+Scope:
+  The program performs exact bivariate polynomial arithmetic with cpp_int.
+  It independently expands the numerator in Lemma 22H3V after the
+  substitutions `r=2+u`, `M-r=2+v`.  Every one of its 35 coefficients is
+  strictly positive.  This audits the stable/no-alias proof; it is not an
+  argument for the remaining finite cyclic-alias range.

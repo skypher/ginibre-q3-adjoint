@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -160,6 +161,47 @@ Vec apply_path(const Vec& input, int vertices, int sign_second) {
   return output;
 }
 
+Vec apply_tadpole_side(const Vec& input, int rank, bool first_side) {
+  Vec output(static_cast<std::size_t>(rank * rank));
+  const auto index = [rank](int first, int second) {
+    return static_cast<std::size_t>(first * rank + second);
+  };
+  for (int first = 0; first < rank; ++first) {
+    for (int second = 0; second < rank; ++second) {
+      const cpp_int& value = input[index(first, second)];
+      if (value == 0) {
+        continue;
+      }
+      const int coordinate = first_side ? first : second;
+      if (coordinate > 0) {
+        const int next_first = first_side ? first - 1 : first;
+        const int next_second = first_side ? second : second - 1;
+        output[index(next_first, next_second)] += value;
+      }
+      if (coordinate + 1 < rank) {
+        const int next_first = first_side ? first + 1 : first;
+        const int next_second = first_side ? second : second + 1;
+        output[index(next_first, next_second)] += value;
+      } else {
+        output[index(first, second)] += value;
+      }
+    }
+  }
+  return output;
+}
+
+Vec apply_fourth_character_side(const Vec& input, int rank, bool first_side) {
+  const Vec square = apply_tadpole_side(
+      apply_tadpole_side(input, rank, first_side), rank, first_side);
+  const Vec fourth = apply_tadpole_side(
+      apply_tadpole_side(square, rank, first_side), rank, first_side);
+  Vec output(input.size());
+  for (std::size_t index = 0; index < input.size(); ++index) {
+    output[index] = fourth[index] - 3 * square[index] + input[index];
+  }
+  return output;
+}
+
 cpp_int tadpole_value(int rank, int minus_pairs, int plus_power) {
   Vec state(static_cast<std::size_t>(rank * rank));
   state[0] = 1;
@@ -188,6 +230,65 @@ cpp_int unfolded_value(int rank, int minus_pairs, int plus_power) {
   return 2 * state[0];
 }
 
+cpp_int top_partial_value(int rank, int first_excess, int second_excess) {
+  const int total_minus_pairs = 4 + first_excess + second_excess;
+  const int plus_power = 4 + 2 * first_excess;
+  Vec state(static_cast<std::size_t>(rank * rank));
+  state[0] = 1;
+  for (int step = 0; step < 2 * total_minus_pairs; ++step) {
+    state = apply_tadpole(state, rank, -1);
+  }
+  for (int step = 0; step < plus_power; ++step) {
+    state = apply_tadpole(state, rank, +1);
+  }
+  const Vec first = apply_fourth_character_side(state, rank, true);
+  const Vec second = apply_fourth_character_side(state, rank, false);
+  return first[0] + second[0];
+}
+
+cpp_int top_partial_moment_value(int rank, int first_excess,
+                                 int second_excess) {
+  const int modulus = 2 * rank + 1;
+  const int minus_pairs = 4 + first_excess + second_excess;
+  const int initial_power = 4 + 2 * first_excess;
+  Vec moments(5U);
+  for (int index = 0; index < 5; ++index) {
+    moments[static_cast<std::size_t>(index)] = cyclic_weighted_moment(
+        modulus, minus_pairs, initial_power + 2 * index);
+  }
+  const cpp_int base = moments[0] * moments[2] - moments[1] * moments[1];
+  Vec second(3U);
+  Vec fourth(3U);
+  for (int index = 0; index < 3; ++index) {
+    second[static_cast<std::size_t>(index)] =
+        moments[static_cast<std::size_t>(index + 1)] -
+        2 * moments[static_cast<std::size_t>(index)];
+    fourth[static_cast<std::size_t>(index)] =
+        moments[static_cast<std::size_t>(index + 2)] -
+        4 * moments[static_cast<std::size_t>(index + 1)] +
+        2 * moments[static_cast<std::size_t>(index)];
+  }
+  const cpp_int second_determinant =
+      second[0] * second[2] - second[1] * second[1];
+  const cpp_int fourth_determinant =
+      fourth[0] * fourth[2] - fourth[1] * fourth[1];
+  const cpp_int twice_result =
+      2 * base + second_determinant + fourth_determinant;
+  const cpp_int sixth0 = moments[3] - 6 * moments[2] + 9 * moments[1] -
+                         2 * moments[0];
+  const cpp_int sixth1 = moments[4] - 6 * moments[3] + 9 * moments[2] -
+                         2 * moments[1];
+  const cpp_int christoffel_darboux =
+      sixth1 * fourth[0] - sixth0 * fourth[1];
+  if (twice_result != christoffel_darboux) {
+    throw std::runtime_error("Christoffel-Darboux reduction mismatch");
+  }
+  if (twice_result % 2 != 0) {
+    throw std::runtime_error("nonintegral top-partial moment formula");
+  }
+  return twice_result / 2;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -203,6 +304,7 @@ int main(int argc, char** argv) {
 
   std::size_t checks = 0;
   std::size_t rational_checks = 0;
+  std::size_t partial_checks = 0;
   for (int rank = 1; rank <= maximum_rank; ++rank) {
     for (int minus_pairs = 0; minus_pairs <= maximum_minus_pairs;
          ++minus_pairs) {
@@ -263,10 +365,31 @@ int main(int argc, char** argv) {
       }
     }
   }
+  for (int rank = 5; rank <= maximum_rank; ++rank) {
+    for (int first_excess = 0; first_excess <= maximum_minus_pairs;
+         ++first_excess) {
+      for (int second_excess = 0; second_excess <= maximum_minus_pairs;
+           ++second_excess) {
+        const cpp_int direct =
+            top_partial_value(rank, first_excess, second_excess);
+        const cpp_int moment =
+            top_partial_moment_value(rank, first_excess, second_excess);
+        ++partial_checks;
+        if (direct != moment || direct < 0) {
+          std::cout << "rank=" << rank << " first_excess=" << first_excess
+                    << " second_excess=" << second_excess
+                    << " direct=" << direct << " moment=" << moment
+                    << " result=PARTIAL_FAIL\n";
+          return 1;
+        }
+      }
+    }
+  }
   std::cout << "SU2_TADPOLE_RAY maximum_rank=" << maximum_rank
             << " maximum_minus_pairs=" << maximum_minus_pairs
             << " maximum_plus_power=" << maximum_plus_power
             << " checks=" << checks
-            << " rational_checks=" << rational_checks << " result=PASS\n";
+            << " rational_checks=" << rational_checks
+            << " partial_checks=" << partial_checks << " result=PASS\n";
   return 0;
 }

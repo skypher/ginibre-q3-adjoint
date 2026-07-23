@@ -38,10 +38,28 @@ struct Statistics {
     std::uint64_t rational_fan_nodes = 0U;
     std::uint64_t shifted_nodes = 0U;
     std::uint64_t exact_leaves = 0U;
+    std::uint64_t separated_pole_regimes = 0U;
     int maximum_shift = 0;
     int maximum_depth = 0;
     int maximum_fan_bound = 0;
 };
+
+bool is_separated_pole_regime(const Chamber& chamber) {
+    const int last_label = chamber.rank - 2;
+    for (int label = 0; label < chamber.rank - 1; ++label) {
+        const bool active = label == 0 || label == last_label;
+        const std::size_t index = static_cast<std::size_t>(label);
+        if (active) {
+            if (chamber.signs[index] != -1 ||
+                chamber.minimum_power[index] != 1) {
+                return false;
+            }
+        } else if (chamber.signs[index] != 0) {
+            return false;
+        }
+    }
+    return true;
+}
 
 long double magnitude_at(
     const Term& term,
@@ -530,6 +548,10 @@ bool analyze_rank(int rank, int maximum_shift, Statistics& statistics) {
                     ++residual_index;
                 }
                 ++statistics.regimes;
+                if (is_separated_pole_regime(chamber)) {
+                    ++statistics.separated_pole_regimes;
+                    continue;
+                }
                 if (!certify_region(
                         chamber,
                         floors,
@@ -603,6 +625,8 @@ int main(int argc, char** argv) {
                   << statistics.rational_fan_nodes
                   << " shifted_nodes=" << statistics.shifted_nodes
                   << " exact_leaves=" << statistics.exact_leaves
+                  << " separated_pole_regimes="
+                  << statistics.separated_pole_regimes
                   << " maximum_shift=" << statistics.maximum_shift
                   << " maximum_depth=" << statistics.maximum_depth
                   << " maximum_fan_bound="

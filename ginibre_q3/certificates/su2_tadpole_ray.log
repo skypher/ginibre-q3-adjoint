@@ -12,8 +12,9 @@ Command:
 
 Output:
   SU2_TADPOLE_RAY maximum_rank=20 maximum_minus_pairs=20 \
-  maximum_plus_power=39 checks=16800 rational_checks=8000 result=PASS
-  elapsed=19.90 maxrss=3072KB
+  maximum_plus_power=39 checks=16800 rational_checks=8000 \
+  partial_checks=7056 result=PASS
+  elapsed=61.14 maxrss=3072KB
 
 Scope:
   The 16,800 exact integer checks compare the direct tadpole transfer with
@@ -21,4 +22,10 @@ Scope:
   The 8,000 cases with a nonempty even minus block and odd plus exponent
   also compare all three cyclic moments with the rational generating
   function coefficients in Lemma 22H3R.  Nonnegativity in this bounded
-  rectangle is diagnostic; the all-index target remains (SPT).
+  rectangle is diagnostic; the all-index scalar target is proved by Lemma
+  22H3S.  The additional 7,056 checks compare the direct tadpole transfer
+  for (TP2) with its three-determinant cyclic-moment reduction through rank
+  twenty and `0<=u,v<=20`.  Their nonnegativity is bounded evidence for the
+  still-open partial-character target (TP2).
+  Each partial check also verifies the Christoffel--Darboux cross-determinant
+  form (P22.5zz59).

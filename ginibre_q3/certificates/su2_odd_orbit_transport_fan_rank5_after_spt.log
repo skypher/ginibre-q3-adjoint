@@ -1,0 +1,46 @@
+Command:
+  make -j1 analyze_su2_odd_orbit_transport_fan
+
+Strict build:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    analyze_su2_odd_orbit_transport_fan.cpp \
+    -o analyze_su2_odd_orbit_transport_fan
+
+Command:
+  /usr/bin/time -f 'elapsed=%e maxrss=%MKB' \
+    ./analyze_su2_odd_orbit_transport_fan 5 100
+
+Output:
+  SU2_ODD_ORBIT_TRANSPORT_FAN result=FAIL rank=5 support_code=59 \
+  parity_code=2 residual_code=5 variables=1,4,
+    term=0 sign=1 coefficient=0.232892361413483 \
+      lambda=0.725353779881619,12.9707519219053,
+    term=1 sign=1 coefficient=0.0397772663593442 \
+      lambda=3.86962696254837,0.371203205783522,
+    term=2 sign=1 coefficient=3.43240812980269 \
+      lambda=8.95343159700833,7.56148788664607,
+    term=3 sign=1 coefficient=3.04744494975835 \
+      lambda=12.9707519219053,2.67112041951896,
+    term=4 sign=-1 coefficient=0.335693193310395 \
+      lambda=1.2442503480137,8.95343159700833,
+    term=5 sign=-1 coefficient=0.0155696423177772 \
+      lambda=4.5819606980133,0.725353779881619,
+    term=6 sign=1 coefficient=2.84675634156602 \
+      lambda=7.56148788664607,3.86962696254837,
+    term=7 sign=-1 coefficient=1.08195803841953 \
+      lambda=1.05081318068085,4.5819606980133,
+    term=8 sign=-1 coefficient=0.182809630434521 \
+      lambda=2.67112041951896,1.05081318068085,
+    term=9 sign=1 coefficient=0.016751455582345 \
+      lambda=0.371203205783522,1.2442503480137,
+  Command exited with non-zero status 1
+  elapsed=53.72 maxrss=3584KB
+
+Scope:
+  The analyzer treats the support-56/parity-3 chamber as proved by Lemma
+  22H3S and Corollary 22H3T.  The displayed support-59/parity-2 chamber is
+  the next regime not covered by pairwise Hall transport after all
+  primitive rational two-dimensional rays with coordinates at most 100
+  and every common shift through 100.  This is a no-go result for that
+  transport ansatz, not a negative orbit-ring value.

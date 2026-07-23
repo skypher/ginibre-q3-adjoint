@@ -1,0 +1,26 @@
+Command:
+  make -j1 verify_separated_pole_turan_ect
+
+Strict build:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    verify_separated_pole_turan_ect.cpp -o verify_separated_pole_turan_ect
+
+Command:
+  /usr/bin/time -f 'elapsed=%e maxrss=%MKB' \
+    ./verify_separated_pole_turan_ect 9 10 16
+
+Output:
+  SEPARATED_POLE_ECT maximum_separation=9 maximum_power=10 \
+  maximum_degree=16 coefficient_checks=77518 \
+  determinant_checks=72898 wronskian_checks=1532426 result=PASS
+  elapsed=75.88 maxrss=3072KB
+
+Scope:
+  Every check is exact integer arithmetic.  The coefficient checks evaluate
+  the rational series directly.  The determinant checks independently use
+  Bareiss elimination on the generalized Vandermonde matrix in Lemma 22H3S.
+  The Wronskian checks compare the direct derivative determinant with
+  formula (P22.5zz53) and verify strict positivity.  These bounded checks
+  audit the identities; the all-parameter conclusion is supplied by the
+  Chebyshev-system proof, not by extrapolation.
