@@ -542,6 +542,8 @@ bool inspect_state(
     return true;
 }
 
+void print_witness(const char* name, const Witness& witness);
+
 bool enumerate_exact_degree(
     int rank,
     int label,
@@ -599,6 +601,96 @@ bool enumerate_exact_degree(
     return true;
 }
 
+bool enumerate_rectangular_depth(
+    int rank,
+    int label,
+    int maximum_power,
+    const std::vector<cpp_int>& state,
+    std::vector<SignedBlock>& blocks,
+    Statistics& statistics
+) {
+    if (label == rank) {
+        return inspect_state(rank, state, blocks, false, statistics);
+    }
+
+    if (!enumerate_rectangular_depth(
+            rank,
+            label + 1,
+            maximum_power,
+            state,
+            blocks,
+            statistics
+        )) {
+        return false;
+    }
+
+    for (int sign : {1, -1}) {
+        std::vector<cpp_int> updated = state;
+        for (int multiplicity = 1;
+             multiplicity <= maximum_power;
+             ++multiplicity) {
+            updated = apply_factor(rank, updated, label, sign);
+            blocks.push_back(SignedBlock{label, sign, multiplicity});
+            const bool passed = enumerate_rectangular_depth(
+                rank,
+                label + 1,
+                maximum_power,
+                updated,
+                blocks,
+                statistics
+            );
+            blocks.pop_back();
+            if (!passed) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool run_rectangular_depth(int rank, int maximum_power) {
+    if (rank < 2 || maximum_power < 0) {
+        throw std::runtime_error("invalid rectangular-depth bounds");
+    }
+    std::vector<cpp_int> state(
+        static_cast<std::size_t>(rank * rank), 0
+    );
+    state[0] = 1;
+    std::vector<SignedBlock> blocks;
+    Statistics statistics;
+    if (!enumerate_rectangular_depth(
+            rank,
+            1,
+            maximum_power,
+            state,
+            blocks,
+            statistics
+        )) {
+        return false;
+    }
+    std::cout << "SU2_ODD_ORBIT_RECTANGULAR_DEPTH rank=" << rank
+              << " level=" << 2 * rank - 1
+              << " maximum_power=" << maximum_power
+              << " words=" << statistics.words
+              << " corner_entries=" << statistics.corner_entries
+              << " boundary_entries=" << statistics.boundary_entries
+              << " zero_corners=" << statistics.zero_corners
+              << " zero_boundary_entries="
+              << statistics.zero_boundary_entries;
+    print_witness("minimum_corner", statistics.minimum_corner);
+    print_witness(
+        "minimum_positive_corner",
+        statistics.minimum_positive_corner
+    );
+    print_witness("minimum_boundary", statistics.minimum_boundary);
+    print_witness(
+        "minimum_positive_boundary",
+        statistics.minimum_positive_boundary
+    );
+    std::cout << " result=PASS\n";
+    return true;
+}
+
 void print_witness(const char* name, const Witness& witness) {
     std::cout << ' ' << name << '=';
     if (!witness.initialized) {
@@ -613,6 +705,14 @@ void print_witness(const char* name, const Witness& witness) {
 
 int main(int argc, char** argv) {
     try {
+        if (argc == 4
+            && std::string(argv[1]) == "rectangular-depth") {
+            const int rank = std::stoi(argv[2]);
+            const int maximum_power = std::stoi(argv[3]);
+            return run_rectangular_depth(rank, maximum_power)
+                ? EXIT_SUCCESS
+                : EXIT_FAILURE;
+        }
         if (argc == 3 && std::string(argv[1]) == "rank3-depth") {
             const int maximum_power = std::stoi(argv[2]);
             return run_rank_three_depth(maximum_power)
@@ -637,6 +737,8 @@ int main(int argc, char** argv) {
                       << " turan-check MAXIMUM_RANK\n"
                       << "       " << argv[0]
                       << " rank3-depth MAXIMUM_POWER\n";
+            std::cerr << "       " << argv[0]
+                      << " rectangular-depth RANK MAXIMUM_POWER\n";
             return EXIT_FAILURE;
         }
         const int argument_offset = check_cyclic_model ? 1 : 0;

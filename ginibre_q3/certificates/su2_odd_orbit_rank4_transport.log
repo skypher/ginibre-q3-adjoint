@@ -1,0 +1,57 @@
+Odd-level SU(2) rank-four orbit transport certificate
+Date: 2026-07-22 UTC
+
+Build
+-----
+$ make -B -j1 verify_su2_odd_orbit_rank4_transport
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    verify_su2_odd_orbit_rank4_transport.cpp \
+    -o verify_su2_odd_orbit_rank4_transport
+
+Exact all-exponent certificate
+------------------------------
+$ ./verify_su2_odd_orbit_rank4_transport
+SU2_ODD_ORBIT_RANK4_TRANSPORT chambers=30 \
+    pointwise_chambers=19 exact_base_points=30 direct_regimes=161 \
+    exact_peeled_points=5 tail_regimes=4 two_cone_regimes=6 \
+    shifted_two_cone_regimes=3 strip_regimes=18 \
+    strip_peeled_points=24 unresolved_regimes=0 result=PASS
+
+This is not a bounded exponent scan.  For each support/sign/parity chamber,
+write every positive exponent as its minimum parity representative plus
+twice a nonnegative residual exponent.  The verifier stratifies by the
+support of the residual exponent vector.  It then proves the complete
+residual orthant by fractional transport from negative spectral pairs to
+positive spectral pairs whose squared bases dominate coordinatewise.
+Capacitated Hall inequalities certify the existence of every transport.
+
+Four one-variable regimes require finite peeling before tail transport.
+Six regimes use the cones r_1>=r_3 and r_3>=r_1 directly.  Three require a
+common shift followed by the same cone split; their eighteen boundary
+strips reduce to one-variable transported tails.  All thirty chamber base
+points and all twenty-nine peeled points are evaluated directly with exact
+integer fusion arithmetic.
+
+The spectral values other than the rational node -1 are roots of
+X^3-3X+1.  The verifier proves their rational isolating intervals by exact
+endpoint signs and derivative bounds.  All subsequent interval operations,
+base comparisons, capacities, and Hall inequalities use arbitrary-precision
+rational arithmetic.  No floating-point comparison contributes to PASS.
+
+Independent rectangular validation
+----------------------------------
+$ ./search_su2_odd_orbit_gks rectangular-depth 4 30
+SU2_ODD_ORBIT_RECTANGULAR_DEPTH rank=4 level=7 maximum_power=30 \
+    words=226981 corner_entries=226981 boundary_entries=907924 \
+    zero_corners=98612 zero_boundary_entries=98649 \
+    minimum_corner=0@target0:[+3] \
+    minimum_positive_corner=1@target0:[] \
+    minimum_boundary=0@target1:[] \
+    minimum_positive_boundary=1@target0:[] result=PASS
+
+This second program evolves the integral orbit fusion ring directly and
+checks every exponent in the rectangular box, every support-disjoint sign
+choice, the scalar corner, and all four boundary coefficients.  It is a
+bounded implementation cross-check; the transport certificate above is the
+arbitrary-length proof.

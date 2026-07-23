@@ -8230,6 +8230,207 @@ orthant is not a common invariant cone even at orbit rank three.  This is a
 no-go statement for that naive cone, not an obstruction to another cone.
 Full transcripts are in `certificates/su2_odd_orbit_gks.log`.
 
+The cyclic Turan reduction has a closed one-step shell formula.  It does not
+by itself prove `(COTM)`, but it identifies exactly which extra inequalities
+an invariant cone must retain.
+
+**Lemma 22H3O (cyclic shell update).**  In the notation of Lemma 22H3M put
+
+```text
+K_(r,s)(R)=sum_gamma w_gamma b_r(gamma)b_s(gamma),
+W_(r,d)(R)=K_(r-d,r+d)-K_(r-d-1,r+d+1).              (P22.5zz30)
+```
+
+If `R'` is obtained from `R` by adjoining a factor of radius `d` and sign
+`delta`, then
+
+```text
+H_r(R')=sum_(t=-d)^d H_(r+t)(R)+delta W_(r,d)(R),     (P22.5zz31)
+
+H_r(R')-H_(r+1)(R')
+ =H_(r-d)(R)-H_(r+d+1)(R)
+   +delta[W_(r,d)(R)-W_(r+1,d)(R)].                   (P22.5zz32)
+```
+
+Consequently `(COTM)` for all words is equivalent to the two-sided shell
+family
+
+```text
+H_(a-d)(R)-H_(a+d+1)(R)
+ >=abs[W_(a,d)(R)-W_(a+1,d)(R)]                       (CSL)
+```
+
+for every `d<=a<m` and every remainder whose radii are at most `a`.
+
+**Proof.**  For one local feature, multiplication by `C_t` replaces
+`b_r` by `b_(r-t)+b_(r+t)`, while multiplication by `S_t` replaces it by
+`b_(r-t)-b_(r+t)`.  In the update of `H_r`, the two diagonal terms give
+`H_(r-t)+H_(r+t)`.  The two cross terms are
+
+```text
+W_(r,t)-W_(r,t-1).
+```
+
+They telescope from `t=1` to `d`.  The weight-two constant plus feature
+supplies the remaining `H_r`, giving `(P22.5zz31)` for either sign.
+Subtracting its translate by one telescopes the `H` sum and proves
+`(P22.5zz32)`.  Adjoining the two possible signs gives the two inequalities
+equivalent to `(CSL)`; conversely, remove any one factor from a nonempty
+word and use `(P22.5zz32)`.  The empty word is immediate.  QED.
+
+At orbit rank four, the spectral-pair problem is still finite enough for an
+exact all-exponent transport certificate.  The elementary transport lemma
+used by that certificate is recorded first.
+
+**Lemma 22H3P (fractional exponential transport).**  Let
+
+```text
+F(r)=sum_(p in P)c_p product_a lambda_(p,a)^r_a
+     -sum_(q in N)d_q product_a mu_(q,a)^r_a,          (P22.5zz33)
+```
+
+where all coefficients and bases are nonnegative and `r_a` range over the
+nonnegative integers.  Join `q` to `p` when
+`lambda_(p,a)>=mu_(q,a)` for every `a`.  If for every subset `X` of `N`,
+
+```text
+sum_(q in X)d_q<=sum_(p in Gamma(X))c_p,               (P22.5zz34)
+```
+
+then `F(r)>=0` for all `r`.
+
+**Proof.**  The capacitated Hall theorem gives nonnegative transports
+`theta_(q,p)`, supported on the displayed edges, whose row sums are `d_q`
+and whose column sums are at most `c_p`.  On every edge the positive
+monomial dominates the negative monomial coordinatewise for all `r`.
+Multiply by `theta_(q,p)`, sum, and use the unused positive column capacity.
+QED.
+
+**Proposition 22H3Q (uniform `GKS2*` for the level-seven orbit ring).**
+The rank-four orbit ring `O_7` satisfies full `GKS2*` for signed words of
+arbitrary length.  Consequently `(SCW0)` and the full simple-current
+boundary column `(SCB)` hold at level seven.
+
+**Proof.**  Put `x_j=2cos(2 pi j/9)`, `1<=j<=4`.  The three values other
+than `x_3=-1` are the roots, in decreasing order, of
+
+```text
+f(X)=X^3-3X+1.                                       (P22.5zz35)
+```
+
+In the even-lift basis `1,B_1,B_2,B_3`, set
+
+```text
+b_1(X)=1+X,
+b_2(X)=X^2+X-1,
+b_3(X)=X^3+X^2-2X-1,       w_j=(2-x_j)/9.             (P22.5zz36)
+```
+
+These are respectively the three orbit characters and their spectral
+masses.  After the support-disjoint reduction, write a word as
+
+```text
+product_(a=1)^3[B_a(x)+s_a B_a(y)]^p_a,
+s_a in {+1,-1},                                      (P22.5zz37)
+```
+
+omitting labels of exponent zero.  All-plus words are positive by fusion,
+and odd exchange parity vanishes.  In every remaining even-parity chamber
+the diagonal spectral terms vanish and
+
+```text
+J=2 sum_(i<j)w_iw_j
+       product_(a=1)^3[b_a(x_i)+s_a b_a(x_j)]^p_a.    (P22.5zz38)
+```
+
+Fix the support, the signs, and the parity of each positive exponent.  Put
+`p_a=p_a^0+2r_a`, where `p_a^0` is one or two and `r_a>=0`.  The signs of
+the six summands in `(P22.5zz38)` are now fixed, while every increment of
+`r_a` multiplies a summand by the nonnegative base
+
+```text
+lambda_((i,j),a)=[b_a(x_i)+s_a b_a(x_j)]^2.           (P22.5zz39)
+```
+
+Lemma 22H3P can therefore prove a whole exponent orthant from finitely many
+base comparisons and Hall inequalities.
+
+Here is the complete exact coverage.  There are nineteen even-parity
+chambers containing a minus label in which every nonzero spectral pair is
+already positive.  The remaining thirty chambers have negative pairs.  At
+`r=(0,0,0)`, their thirty values are checked directly in the integral
+fusion ring.  For every nonempty support
+`E={a:r_a>0}`, first write `r_a=1+u_a` on `E`.  Of the resulting regimes,
+161 satisfy Lemma 22H3P directly.
+
+Four one-variable exceptions have signed minimum-exponent vectors
+
+```text
+(-1, 0,-1),       ( 0,+1,-2),
+(-2,+1,-2),       (-1,+2,-1),                         (P22.5zz40)
+```
+
+and `E={3}`.  Peeling respectively two, one, one, and one values of `u_3`
+leaves a tail satisfying Lemma 22H3P; the five peeled values are checked in
+the exact fusion ring.
+
+Six further regimes are covered by splitting the positive quadrant into
+`u_1>=u_3` and `u_3>=u_1`.  In the first cone replace the two bases
+`lambda_1,lambda_3` by `lambda_1 lambda_3,lambda_1`; in the second use
+`lambda_1 lambda_3,lambda_3`.  Lemma 22H3P then applies.  Three last regimes
+use the same two cones after common shifts four, three, and two.  The
+complement consists of eighteen one-variable boundary strips.  Each strip
+has a transported tail; its twenty-four peeled lattice points are checked
+exactly.  These cases exhaust every support of `r`, so `(P22.5zz38)` is
+nonnegative for arbitrary exponents.
+
+For reproducibility, the strict verifier
+`character_ring_iter/verify_su2_odd_orbit_rank4_transport.cpp` performs all
+of the preceding tests with rational interval arithmetic.  It isolates the
+three cubic nodes in
+
+```text
+1532088886237/10^12 < x_1 < 1532088886238/10^12,
+ 347296355333/10^12 < x_2 <  347296355334/10^12,
+-1879385241572/10^12 < x_4 < -1879385241571/10^12,    (P22.5zz41)
+```
+
+checking the signs of `f` at both endpoints and the nonvanishing of `f'`.
+Every dominance comparison and every one of the finitely many Hall
+inequalities is then certified by ordered rational enclosures; no
+floating-point decision is used.  The exact fusion calculation handles all
+base and peeled points.  Its coverage line is
+
+```text
+chambers=30 pointwise_chambers=19 exact_base_points=30
+direct_regimes=161 exact_peeled_points=5 tail_regimes=4
+two_cone_regimes=6 shifted_two_cone_regimes=3
+strip_regimes=18 strip_peeled_points=24
+unresolved_regimes=0 result=PASS.
+```
+
+Thus full `GKS2*` holds in `O_7`; Proposition 5 restores overlapping sign
+supports.  Lemma 22H3J transfers the scalar statement to `(SCW0)`.
+Proposition 21 applied to `O_7`, followed by `(P22.5zy)`, gives the whole
+column `(SCB)`.  QED.
+
+This enlarges the all-length orbit theorem from ranks three to four, but it
+is still a fixed-rank certificate.  The uniform odd-level problem is to
+replace its finite spectral fan by a rank-independent transport, or
+equivalently to prove the shell cone `(CSL)` directly.
+
+The deterministic C++ diagnostic
+`character_ring_iter/search_su2_odd_orbit_tropical.cpp` tests the most
+immediate obstruction to such a transport.  For a sampled support, sign,
+parity, and nonnegative exponent direction, it asks whether a negative
+spectral pair is the unique maximizer of the logarithmic squared-base
+functional.  Such a pair would dominate after scaling that direction and
+would produce an eventual counterexample.  One million trials at each
+orbit rank from five through fifteen, with direction coordinates at most
+fifty, find no such pair.  This is bounded evidence only: it neither checks
+every direction nor proves the required convex transport.  The transcript
+is `certificates/su2_odd_orbit_tropical.log`.
+
 
 
 Two larger standard packet cones still do not isolate that differential.
