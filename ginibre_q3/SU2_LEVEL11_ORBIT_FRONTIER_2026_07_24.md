@@ -29,39 +29,30 @@ The former first obstruction
 ```
 
 is now proved for all exponents by five exact denominator-100 AM-GM
-certificates and four exact zero leaves. The strict C++ proof is
+certificates and four exact zero leaves. The authoritative strict C++ proof is
 
 ```text
 character_ring_iter/verify_su2_o11_first_chamber_exact.cpp.
 ```
 
-## Further exact progress
+## Supplementary exact progress
 
-The same weighted AM-GM mechanism proves:
+The same turn produced locally exact rational C++ replays for
 
 ```text
 25 hand-audited residual keys, using 26 certificates;
-1558 batch-ledger residual keys in 294 support/parity chambers.
+1558 batch-generated residual keys in 294 support/parity chambers.
 ```
 
-Every accepted inequality is replayed with rational Sturm isolation and
-rational interval arithmetic. The numerical allocation search is not proof
-evidence.
+The candidate allocations were generated with four parallel MILP workers but
+accepted only after rational Sturm isolation and rational interval replay. The
+numerical allocation search itself is not proof evidence.
 
-The compact selector payload is
-
-```text
-certificates/su2_o11_amgm_batch_ledger.b64
-```
-
-with SHA-256
-
-```text
-4bad077b05a9f5554729da30af081728abe1578b70dc271a50813dab01794c69.
-```
-
-The proof structure and reproduction commands are in
-`SU2_LEVEL11_AMGM_ADVANCE_2026_07_24.md`.
+The supplementary selector payload was not added to the authoritative archive
+in this turn because the connector could not reliably upload the compact
+90 KiB object. Its run summary and hashes are recorded in
+`certificates/su2_o11_amgm_exact.log`; the authoritative repository theorem is
+the complete first-chamber proof above.
 
 ## Remaining frontier
 
