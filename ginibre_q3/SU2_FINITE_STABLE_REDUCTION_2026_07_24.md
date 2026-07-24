@@ -87,7 +87,7 @@ identity is immediate for `a=1,2`.  Equivalently it is the standard formula
 
 ```text
 (U_a(X)-U_a(Y))/(2X-2Y)
- = (1/2) sum_(j=0)^(a-1) U_j(X)U_(a-1-j)(Y).
+ = sum_(j=0)^(a-1) U_j(X)U_(a-1-j)(Y).
 ```
 
 Every coefficient in the kernel in (3.1) is nonnegative.  Hence a word with
