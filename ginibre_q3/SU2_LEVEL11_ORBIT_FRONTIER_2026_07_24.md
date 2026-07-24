@@ -10,45 +10,57 @@ By odd-level simple-current lifting,
 full SU(2)_11 scalar GKS2*  <=>  scalar GKS2* in the rank-six orbit ring O_11.
 ```
 
-The full theorem remains open, but the former first obstruction is now
-resolved exactly.
+Once the scalar theorem is proved, adjoining one plus factor gives the
+complete partial-character column. The remaining odd-level problem is
+therefore entirely the rank-six orbit ring.
 
-## First chamber proved
-
-For all `p,q>=0`,
-
-```text
-[V_0 tensor V_0]
- (B_1 tensor 1-1 tensor B_1)^(2+2p)
- (B_5 tensor 1+1 tensor B_5)^(1+2q) >= 0.
-```
-
-Five denominator-100 weighted AM-GM certificates cover the infinite regions
+Use the even-lift basis
 
 ```text
-q>=4; q=3; q=2,p>=1; q=1,p>=1; q=0,p>=2,
+B_0=V_0, B_1=V_2, B_2=V_4, B_3=V_6, B_4=V_8, B_5=V_10.
 ```
 
-and exact integral fusion arithmetic gives zero at the four omitted points.
+## First chamber resolved
 
-## Further exact progress
-
-The same rational-algebraic method proves 25 additional residual orthants by
-26 exact certificates. One orthant is split into a finite strip and translated
-tail. The strict four-thread replay reports
+The former first obstruction
 
 ```text
-SU2_O11_AMGM_FRONTIER_EXACT PASS
-certificates=26 residual_keys=25 denominator=100 threads=4.
+(B_1^-)^(2+2p) (B_5^+)^(1+2q),       p,q>=0,
 ```
 
-All roots are isolated by rational Sturm sequences, and every base and capacity
-inequality is decided by rational interval endpoints. Numerical optimization
-was used only to discover integer weight tables.
+is now proved for all exponents by five exact denominator-100 AM-GM
+certificates and four exact zero leaves. The authoritative strict C++ proof is
 
-## Remaining target
+```text
+character_ring_iter/verify_su2_o11_first_chamber_exact.cpp.
+```
 
-Full `O_11`, and hence full `SU(2)_11`, remains unproved. The next work is to
-classify the residual orthants not covered by Hall/fan transport or the current
-AM-GM ledger, seeking translated-tail and endpoint-lattice certificates with
-exact face checks.
+## Supplementary exact progress
+
+The same turn produced locally exact rational C++ replays for
+
+```text
+25 hand-audited residual keys, using 26 certificates;
+1558 batch-generated residual keys in 294 support/parity chambers.
+```
+
+The candidate allocations were generated with four parallel MILP workers but
+accepted only after rational Sturm isolation and rational interval replay. The
+numerical allocation search itself is not proof evidence.
+
+The supplementary selector payload was not added to the authoritative archive
+in this turn because the connector could not reliably upload the compact
+90 KiB object. Its run summary and hashes are recorded in
+`certificates/su2_o11_amgm_exact.log`; the authoritative repository theorem is
+the complete first-chamber proof above.
+
+## Remaining frontier
+
+A conservative reduced-budget transport census left 142 candidate regions
+not covered by one global denominator-100 AM-GM allocation. This is not a
+counterexample signal. The remaining regions may require lattice splitting,
+translated tails with exact face certificates, a different transport, or a
+structural Turan identity.
+
+An authoritative full 100-ray/100-shift census is also still needed. Full
+`O_11`, and hence full `SU(2)_11`, remains open.

@@ -2,31 +2,30 @@
 
 Date: 2026-07-24
 
-## Status
+## Authoritative theorem on `main`
 
-This note proves the first previously unresolved all-exponent chamber in the
-rank-six odd simple-current orbit ring `O_11` and supplies exact certificates
-for 25 further residual orthants.
+The former first unresolved chamber
 
-The complete `O_11` theorem is not yet proved.  The new results are:
+```text
+(B_1^-)^(2+2p) (B_5^+)^(1+2q),       p,q>=0,
+```
 
-1. the two-label chamber
+is nonnegative for all exponents.
 
-   ```text
-   (B_1^-)^(2+2p) (B_5^+)^(1+2q),       p,q>=0,
-   ```
+The strict self-contained replay is
 
-   is nonnegative for all exponents;
-2. 25 further residual keys have hand-audited exact AM-GM certificates,
-   using 26 certificates because one orthant is split into a strip and tail.
+```text
+character_ring_iter/verify_su2_o11_first_chamber_exact.cpp.
+```
 
-By odd simple-current lifting, completion of the remaining `O_11` chambers
-would prove full `GKS2*` and the whole partial-character column in
-`SU(2)_11`.
+It constructs rational Sturm sequences, isolates all six trace nodes of
+`O_11`, evaluates the orbit characters by rational interval arithmetic, and
+checks five denominator-100 weighted AM-GM certificates. No floating-point
+comparison contributes to PASS.
 
-## 1. Spectral arithmetic
+## 1. Algebraic model
 
-The six trace nodes of `O_11` are represented by the six real roots of
+The six trace nodes are the six real roots of
 
 ```text
 f(x)=x^6-5x^5+5x^4+6x^3-7x^2-2x+1.
@@ -44,81 +43,56 @@ B_5=x^5-4x^4+2x^3+5x^2-2x-1,
 
 and the trace weight is `(3-x)/13`.
 
-Every exact verifier in this note constructs a rational Sturm sequence,
-checks that six rational intervals isolate all six roots, evaluates all orbit
-characters by rational interval arithmetic, and accepts a sign or inequality
-only when the rational interval endpoints prove it.  Floating-point output
-from the allocation search is not part of the proof.
+## 2. Weighted AM-GM certificate
 
-## 2. Capacitated weighted AM-GM lemma
-
-Fix a support/sign/parity chamber and a residual orthant.  After absorbing the
-orthant floor into the coefficients, its corner has the form
+After absorbing a residual-orthant floor into the coefficients, write
 
 ```text
 F(r)=sum_(j in P) C_j product_l lambda_(j,l)^r_l
-     -sum_(n in N) D_n product_l mu_(n,l)^r_l,
+     -sum_(n in N) D_n product_l mu_(n,l)^r_l.
 ```
 
-where every coefficient and base is positive.
-
-**Lemma 2.1.**  Suppose that for each negative term `n` there are rational
-weights `alpha_(n,j)>=0` such that
+For every negative term choose rational weights `alpha_(n,j)>=0` satisfying
 
 ```text
 sum_j alpha_(n,j)=1,
-product_j lambda_(j,l)^alpha_(n,j) >= mu_(n,l)
-                                      for every residual coordinate l,
-sum_n alpha_(n,j)D_n <= C_j           for every positive term j.
+product_j lambda_(j,l)^alpha_(n,j) >= mu_(n,l),
+sum_n alpha_(n,j)D_n <= C_j.
 ```
 
-Then `F(r)>=0` for every nonnegative integral residual vector `r`.
+Weighted AM-GM then proves `F(r)>=0` for every nonnegative integral residual
+vector. The verifier checks the geometric inequalities after raising the
+algebraic intervals to integer powers, so it trusts neither logarithms nor
+numerical convex optimization.
 
-**Proof.**  The base inequalities and weighted AM-GM give
+## 3. Complete chamber proof
+
+The lattice is partitioned into
 
 ```text
-D_n product_l mu_(n,l)^r_l
- <= sum_j alpha_(n,j)D_n product_l lambda_(j,l)^r_l.
+q>=4, p>=0;
+q=3,  p>=0;
+q=2,  p>=1;
+q=1,  p>=1;
+q=0,  p>=2.
 ```
 
-Sum over `n` and use the capacity inequalities.  QED.
-
-All certificates below use integer weights with denominator one hundred.  The
-verifiers raise the algebraic base intervals to the corresponding integer
-powers, so no logarithm or approximate convex comparison is trusted.
-
-## 3. Complete proof of the first chamber
-
-For
+Each region has an exact denominator-100 certificate. The four omitted points
 
 ```text
-W_(p,q)=(B_1 tensor 1-1 tensor B_1)^(2+2p)
-        (B_5 tensor 1+1 tensor B_5)^(1+2q),
-```
-
-`verify_su2_o11_first_chamber_exact.cpp` partitions the nonnegative lattice
-into five regions:
-
-```text
-q>=4,                         p>=0,
-q=3,                          p>=0,
-q=2,                          p>=1,
-q=1,                          p>=1,
-q=0,                          p>=2.
-```
-
-Each region has a denominator-100 AM-GM certificate.  The four omitted points
-
-```text
-(p,q)=(0,0),(1,0),(0,1),(0,2)
+(0,0), (1,0), (0,1), (0,2)
 ```
 
 are evaluated by exact integral orbit-fusion dynamic programming and all have
-corner zero.  Therefore
+corner zero. Therefore
 
 ```text
-[V_0 tensor V_0] W_(p,q) >= 0       for every p,q>=0.
+[V_0 tensor V_0]
+ (B_1 tensor 1-1 tensor B_1)^(2+2p)
+ (B_5 tensor 1+1 tensor B_5)^(1+2q) >= 0
 ```
+
+for every `p,q>=0`.
 
 The strict replay reports
 
@@ -128,51 +102,35 @@ roots=6 spectral_pairs=15 regions=5
 amgm_denominator=100 exact_leaves=4 threads=5
 ```
 
-This replaces the earlier bounded `101 x 101` scan by an all-exponent proof.
+On the recorded five-core host it completed in 2.36 seconds with peak resident
+memory below 6 MiB.
 
-## 4. Exact frontier block
+## 4. Supplementary frontier computation
 
-`verify_su2_o11_amgm_frontier_exact.cpp` proves 25 distinct residual keys by
-26 certificates; one key is divided into a boundary strip and a translated
-tail. The strict replay reports
+The same turn produced additional locally exact C++ replays:
 
 ```text
-SU2_O11_AMGM_FRONTIER_EXACT PASS
-certificates=26 residual_keys=25 denominator=100 threads=4
+25 hand-audited residual keys, using 26 certificates;
+1558 batch-generated residual keys in 294 support/parity chambers.
 ```
 
-The block includes two-, three-, and four-variable residual interiors and
-shows that the weighted AM-GM method is not restricted to the original
-two-label chamber. Every certificate is reconstructed from the six algebraic
-trace nodes and checked with rational interval arithmetic.
+The batch selector was generated by four parallel MILP workers and then
+accepted only by rational Sturm/interval C++ replay. The numerical MILP output
+was not treated as proof. These supplementary payloads are not yet part of
+the authoritative repository archive because the connector could not upload
+the compact 90 KiB selector reliably in this turn. The source-matched run
+summary is recorded in `certificates/su2_o11_amgm_exact.log`.
 
-## 5. Remaining frontier
+These computations do not prove the complete `O_11` theorem. A conservative
+reduced-budget census still leaves 142 candidate regions requiring lattice
+splitting, translated tails with exact face certificates, a different
+transport, or a structural Turan argument.
 
-The complete rank-six orbit theorem is still open. A reduced-budget transport
-census and parallel mixed-integer allocation search produced a much larger
-candidate ledger, but that exploratory batch is not included in this theorem:
-its compact repository replay still needs a complete source-matched run.
-
-The next rigorous task is to extend the exact frontier ledger with translated
-orthants and exact boundary faces, and then run an authoritative full
-100-ray/100-shift census.
-
-## 6. Reproduction
-
-Build the two exact verifiers with
+## 5. Reproduction
 
 ```text
 g++ -O3 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
   -Wsign-conversion -Wshadow -Werror -pthread \
   verify_su2_o11_first_chamber_exact.cpp \
   -o verify_su2_o11_first_chamber_exact
-
-g++ -O3 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
-  -Wsign-conversion -Wshadow -Werror -pthread \
-  verify_su2_o11_amgm_frontier_exact.cpp \
-  -o verify_su2_o11_amgm_frontier_exact
 ```
-
-
-The full source-matched transcript is
-`certificates/su2_o11_amgm_exact.log`.
