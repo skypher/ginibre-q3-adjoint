@@ -1,0 +1,128 @@
+CONFIG mode=finite parameter=1 max_n=8 threads=45 cpus=64 load1=17.56 mem_available=89771020288
+BATCH parameter=1 n=0 words=1 triples=2 equalities=2 nonzero_equalities=1
+BATCH parameter=1 n=1 words=1 triples=2 equalities=2 nonzero_equalities=0
+BATCH parameter=1 n=2 words=1 triples=2 equalities=2 nonzero_equalities=0
+BATCH parameter=1 n=3 words=1 triples=2 equalities=2 nonzero_equalities=0
+BATCH parameter=1 n=4 words=1 triples=2 equalities=2 nonzero_equalities=0
+BATCH parameter=1 n=5 words=1 triples=2 equalities=2 nonzero_equalities=0
+BATCH parameter=1 n=6 words=1 triples=2 equalities=2 nonzero_equalities=0
+BATCH parameter=1 n=7 words=1 triples=2 equalities=2 nonzero_equalities=0
+BATCH parameter=1 n=8 words=1 triples=2 equalities=2 nonzero_equalities=0
+CONFIG mode=finite parameter=2 max_n=8 threads=45 cpus=64 load1=17.56 mem_available=89771020288
+BATCH parameter=2 n=0 words=1 triples=12 equalities=9 nonzero_equalities=2
+BATCH parameter=2 n=1 words=2 triples=24 equalities=23 nonzero_equalities=7
+SIGN_COUNTEREXAMPLE mode=finite parameter=2 word=[2] p=1 q=1 a=2 (p-a)*C=1
+F_NONZERO (0,2)=1 (2,0)=1
+C_FIRST=0 C_SECOND=1 C=-1 ABS_C=1
+RHS_TERMS B(q,1)=1
+RHS=1 GAP=0
+REPLAY_COMMAND /tmp/search_su2_boundary_oscillation_sign --replay finite 2 1 1 2 2
+BATCH parameter=2 n=2 words=3 triples=36 equalities=35 nonzero_equalities=7
+BATCH parameter=2 n=3 words=4 triples=48 equalities=47 nonzero_equalities=7
+BATCH parameter=2 n=4 words=5 triples=60 equalities=59 nonzero_equalities=7
+BATCH parameter=2 n=5 words=6 triples=72 equalities=71 nonzero_equalities=7
+BATCH parameter=2 n=6 words=7 triples=84 equalities=83 nonzero_equalities=7
+BATCH parameter=2 n=7 words=8 triples=96 equalities=95 nonzero_equalities=7
+BATCH parameter=2 n=8 words=9 triples=108 equalities=107 nonzero_equalities=7
+CONFIG mode=finite parameter=3 max_n=8 threads=45 cpus=64 load1=17.56 mem_available=89771024384
+BATCH parameter=3 n=0 words=1 triples=36 equalities=26 nonzero_equalities=3
+BATCH parameter=3 n=1 words=3 triples=108 equalities=84 nonzero_equalities=18 max_strict_ratio=1/2 ratio_word=[1] ratio_pqa=1,2,2 ratio_gap=1
+BATCH parameter=3 n=2 words=6 triples=216 equalities=174 nonzero_equalities=38 max_strict_ratio=3/4 ratio_word=[2,2] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=3 n=3 words=10 triples=360 equalities=296 nonzero_equalities=62 max_strict_ratio=11/12 ratio_word=[2,2,2] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=3 n=4 words=15 triples=540 equalities=450 nonzero_equalities=93 max_strict_ratio=35/36 ratio_word=[2,2,2,2] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=3 n=5 words=21 triples=756 equalities=636 nonzero_equalities=129 max_strict_ratio=115/116 ratio_word=[2,2,2,2,2] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=3 n=6 words=28 triples=1008 equalities=854 nonzero_equalities=172 max_strict_ratio=371/372 ratio_word=[2,2,2,2,2,2] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=3 n=7 words=36 triples=1296 equalities=1104 nonzero_equalities=220 max_strict_ratio=1203/1204 ratio_word=[2,2,2,2,2,2,2] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=3 n=8 words=45 triples=1620 equalities=1386 nonzero_equalities=275 max_strict_ratio=3891/3892 ratio_word=[2,2,2,2,2,2,2,2] ratio_pqa=1,1,2 ratio_gap=1
+CONFIG mode=finite parameter=4 max_n=8 threads=45 cpus=64 load1=17.56 mem_available=89771024384
+BATCH parameter=4 n=0 words=1 triples=80 equalities=58 nonzero_equalities=4
+BATCH parameter=4 n=1 words=4 triples=320 equalities=227 nonzero_equalities=34 max_strict_ratio=1/2 ratio_word=[2] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=4 n=2 words=10 triples=800 equalities=582 nonzero_equalities=111 max_strict_ratio=2/3 ratio_word=[1,2] ratio_pqa=1,3,3 ratio_gap=1
+BATCH parameter=4 n=3 words=20 triples=1600 equalities=1198 nonzero_equalities=244 max_strict_ratio=5/6 ratio_word=[2,2,4] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=4 n=4 words=35 triples=2800 equalities=2122 nonzero_equalities=426 max_strict_ratio=21/22 ratio_word=[2,2,2,4] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=4 n=5 words=56 triples=4480 equalities=3445 nonzero_equalities=705 max_strict_ratio=85/86 ratio_word=[2,2,2,2,4] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=4 n=6 words=84 triples=6720 equalities=5204 nonzero_equalities=1054 max_strict_ratio=341/342 ratio_word=[2,2,2,2,2,4] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=4 n=7 words=120 triples=9600 equalities=7500 nonzero_equalities=1534 max_strict_ratio=1365/1366 ratio_word=[2,2,2,2,2,2,4] ratio_pqa=1,1,2 ratio_gap=1
+BATCH parameter=4 n=8 words=165 triples=13200 equalities=10360 nonzero_equalities=2104 max_strict_ratio=5461/5462 ratio_word=[2,2,2,2,2,2,2,4] ratio_pqa=1,1,2 ratio_gap=1
+CONFIG mode=finite parameter=5 max_n=8 threads=45 cpus=64 load1=17.56 mem_available=89771024384
+BATCH parameter=5 n=0 words=1 triples=150 equalities=110 nonzero_equalities=5
+BATCH parameter=5 n=1 words=5 triples=750 equalities=510 nonzero_equalities=56 max_strict_ratio=1/2 ratio_word=[3] ratio_pqa=1,1,3 ratio_gap=1
+BATCH parameter=5 n=2 words=15 triples=2250 equalities=1534 nonzero_equalities=248 max_strict_ratio=2/3 ratio_word=[4,4] ratio_pqa=1,5,4 ratio_gap=1
+BATCH parameter=5 n=3 words=35 triples=5250 equalities=3654 nonzero_equalities=664 max_strict_ratio=4/5 ratio_word=[2,4,4] ratio_pqa=1,5,4 ratio_gap=1
+BATCH parameter=5 n=4 words=70 triples=10500 equalities=7424 nonzero_equalities=1395 max_strict_ratio=12/14 ratio_word=[2,2,4,4] ratio_pqa=1,5,4 ratio_gap=2
+BATCH parameter=5 n=5 words=126 triples=18900 equalities=13528 nonzero_equalities=2580 max_strict_ratio=79/84 ratio_word=[2,2,2,4,4] ratio_pqa=1,1,4 ratio_gap=5
+BATCH parameter=5 n=6 words=210 triples=31500 equalities=22768 nonzero_equalities=4388 max_strict_ratio=358/367 ratio_word=[2,2,2,2,4,4] ratio_pqa=1,1,4 ratio_gap=9
+BATCH parameter=5 n=7 words=330 triples=49500 equalities=36064 nonzero_equalities=6996 max_strict_ratio=1303/1317 ratio_word=[2,2,2,2,4,4,4] ratio_pqa=1,1,4 ratio_gap=14
+BATCH parameter=5 n=8 words=495 triples=74250 equalities=54454 nonzero_equalities=10621 max_strict_ratio=5821/5844 ratio_word=[2,2,2,2,2,4,4,4] ratio_pqa=1,1,4 ratio_gap=23
+CONFIG mode=finite parameter=6 max_n=8 threads=45 cpus=64 load1=17.56 mem_available=89771024384
+BATCH parameter=6 n=0 words=1 triples=252 equalities=187 nonzero_equalities=6
+BATCH parameter=6 n=1 words=6 triples=1512 equalities=1007 nonzero_equalities=85 max_strict_ratio=1/2 ratio_word=[3] ratio_pqa=1,1,3 ratio_gap=1
+BATCH parameter=6 n=2 words=21 triples=5292 equalities=3452 nonzero_equalities=469 max_strict_ratio=2/3 ratio_word=[2,5] ratio_pqa=1,1,5 ratio_gap=1
+BATCH parameter=6 n=3 words=56 triples=14112 equalities=9324 nonzero_equalities=1503 max_strict_ratio=4/5 ratio_word=[2,5,5] ratio_pqa=1,6,5 ratio_gap=1
+BATCH parameter=6 n=4 words=126 triples=31752 equalities=21266 nonzero_equalities=3624 max_strict_ratio=12/14 ratio_word=[2,2,5,5] ratio_pqa=1,6,5 ratio_gap=2
+BATCH parameter=6 n=5 words=252 triples=63504 equalities=43058 nonzero_equalities=7560 max_strict_ratio=40/44 ratio_word=[2,5,5,5,5] ratio_pqa=1,6,5 ratio_gap=4
+BATCH parameter=6 n=6 words=462 triples=116424 equalities=79684 nonzero_equalities=14192 max_strict_ratio=138/146 ratio_word=[1,1,2,2,2,2] ratio_pqa=1,5,6 ratio_gap=8
+BATCH parameter=6 n=7 words=792 triples=199584 equalities=137744 nonzero_equalities=24862 max_strict_ratio=2856/2936 ratio_word=[2,2,2,2,2,4,4] ratio_pqa=1,1,2 ratio_gap=80
+BATCH parameter=6 n=8 words=1287 triples=324324 equalities=225329 nonzero_equalities=40992 max_strict_ratio=5440/5504 ratio_word=[2,2,2,2,2,2,2,6] ratio_pqa=1,1,4 ratio_gap=64
+CONFIG mode=finite parameter=7 max_n=8 threads=45 cpus=64 load1=17.56 mem_available=89771024384
+BATCH parameter=7 n=0 words=1 triples=392 equalities=294 nonzero_equalities=7
+BATCH parameter=7 n=1 words=7 triples=2744 equalities=1808 nonzero_equalities=122 max_strict_ratio=1/2 ratio_word=[3] ratio_pqa=1,1,3 ratio_gap=1
+BATCH parameter=7 n=2 words=28 triples=10976 equalities=6950 nonzero_equalities=806 max_strict_ratio=2/3 ratio_word=[2,6] ratio_pqa=1,1,6 ratio_gap=1
+BATCH parameter=7 n=3 words=84 triples=32928 equalities=20928 nonzero_equalities=2984 max_strict_ratio=4/5 ratio_word=[1,1,2] ratio_pqa=1,6,7 ratio_gap=1
+BATCH parameter=7 n=4 words=210 triples=82320 equalities=52908 nonzero_equalities=8154 max_strict_ratio=12/14 ratio_word=[2,2,6,6] ratio_pqa=1,7,6 ratio_gap=2
+BATCH parameter=7 n=5 words=462 triples=181104 equalities=117672 nonzero_equalities=18819 max_strict_ratio=40/44 ratio_word=[2,6,6,6,6] ratio_pqa=1,7,6 ratio_gap=4
+BATCH parameter=7 n=6 words=924 triples=362208 equalities=237540 nonzero_equalities=38840 max_strict_ratio=128/136 ratio_word=[2,2,6,6,6,6] ratio_pqa=1,7,6 ratio_gap=8
+BATCH parameter=7 n=7 words=1716 triples=672672 equalities=444648 nonzero_equalities=73848 max_strict_ratio=1082/1120 ratio_word=[2,2,2,2,4,6,6] ratio_pqa=1,1,6 ratio_gap=38
+BATCH parameter=7 n=8 words=3003 triples=1177176 equalities=783426 nonzero_equalities=131721 max_strict_ratio=5568/5657 ratio_word=[2,2,2,2,4,4,6,6] ratio_pqa=1,1,6 ratio_gap=89
+CONFIG mode=finite parameter=8 max_n=8 threads=45 cpus=64 load1=17.56 mem_available=89771417600
+BATCH parameter=8 n=0 words=1 triples=576 equalities=436 nonzero_equalities=8
+BATCH parameter=8 n=1 words=8 triples=4608 equalities=3019 nonzero_equalities=168 max_strict_ratio=1/2 ratio_word=[6] ratio_pqa=1,1,6 ratio_gap=1
+BATCH parameter=8 n=2 words=36 triples=20736 equalities=12854 nonzero_equalities=1287 max_strict_ratio=2/3 ratio_word=[7,7] ratio_pqa=1,8,7 ratio_gap=1
+BATCH parameter=8 n=3 words=120 triples=69120 equalities=42664 nonzero_equalities=5416 max_strict_ratio=4/5 ratio_word=[1,1,2] ratio_pqa=1,7,8 ratio_gap=1
+BATCH parameter=8 n=4 words=330 triples=190080 equalities=118278 nonzero_equalities=16472 max_strict_ratio=12/14 ratio_word=[2,2,7,7] ratio_pqa=1,8,7 ratio_gap=2
+BATCH parameter=8 n=5 words=792 triples=456192 equalities=286630 nonzero_equalities=41783 max_strict_ratio=40/44 ratio_word=[2,2,2,7,7] ratio_pqa=1,8,7 ratio_gap=4
+BATCH parameter=8 n=6 words=1716 triples=988416 equalities=626396 nonzero_equalities=93739 max_strict_ratio=128/136 ratio_word=[2,2,7,7,7,7] ratio_pqa=1,8,7 ratio_gap=8
+BATCH parameter=8 n=7 words=3432 triples=1976832 equalities=1262356 nonzero_equalities=192614 max_strict_ratio=456/474 ratio_word=[2,2,2,7,7,7,7] ratio_pqa=1,8,7 ratio_gap=18
+BATCH parameter=8 n=8 words=6435 triples=3706560 equalities=2382410 nonzero_equalities=368848 max_strict_ratio=1887/1936 ratio_word=[2,2,2,2,5,7,7,7] ratio_pqa=7,1,8 ratio_gap=49
+CONFIG mode=finite parameter=9 max_n=8 threads=45 cpus=64 load1=17.56 mem_available=89769869312
+BATCH parameter=9 n=0 words=1 triples=810 equalities=618 nonzero_equalities=9
+BATCH parameter=9 n=1 words=9 triples=7290 equalities=4762 nonzero_equalities=224 max_strict_ratio=1/2 ratio_word=[5] ratio_pqa=1,1,5 ratio_gap=1
+BATCH parameter=9 n=2 words=45 triples=36450 equalities=22250 nonzero_equalities=1952 max_strict_ratio=2/3 ratio_word=[1,2] ratio_pqa=1,8,8 ratio_gap=1
+BATCH parameter=9 n=3 words=165 triples=133650 equalities=80642 nonzero_equalities=9167 max_strict_ratio=4/5 ratio_word=[2,8,8] ratio_pqa=1,9,8 ratio_gap=1
+BATCH parameter=9 n=4 words=495 triples=400950 equalities=243190 nonzero_equalities=30744 max_strict_ratio=12/14 ratio_word=[2,2,8,8] ratio_pqa=1,9,8 ratio_gap=2
+BATCH parameter=9 n=5 words=1287 triples=1042470 equalities=637534 nonzero_equalities=84822 max_strict_ratio=40/44 ratio_word=[2,8,8,8,8] ratio_pqa=1,9,8 ratio_gap=4
+BATCH parameter=9 n=6 words=3003 triples=2432430 equalities=1499458 nonzero_equalities=205698 max_strict_ratio=128/136 ratio_word=[2,2,8,8,8,8] ratio_pqa=1,9,8 ratio_gap=8
+BATCH parameter=9 n=7 words=6435 triples=5212350 equalities=3236050 nonzero_equalities=453680 max_strict_ratio=456/474 ratio_word=[1,1,1,1,2,2,2] ratio_pqa=1,8,9 ratio_gap=18
+BATCH parameter=9 n=8 words=12870 triples=10424700 equalities=6512752 nonzero_equalities=928819 max_strict_ratio=1922/1972 ratio_word=[2,2,2,2,6,8,8,8] ratio_pqa=1,9,8 ratio_gap=50
+CONFIG mode=finite parameter=10 max_n=8 threads=45 cpus=64 load1=17.56 mem_available=89767837696
+BATCH parameter=10 n=0 words=1 triples=1100 equalities=845 nonzero_equalities=10
+BATCH parameter=10 n=1 words=10 triples=11000 equalities=7175 nonzero_equalities=291 max_strict_ratio=1/2 ratio_word=[6] ratio_pqa=1,1,6 ratio_gap=1
+BATCH parameter=10 n=2 words=55 triples=60500 equalities=36504 nonzero_equalities=2837 max_strict_ratio=2/3 ratio_word=[9,9] ratio_pqa=1,10,9 ratio_gap=1
+BATCH parameter=10 n=3 words=220 triples=242000 equalities=143430 nonzero_equalities=14713 max_strict_ratio=4/5 ratio_word=[1,1,2] ratio_pqa=1,9,10 ratio_gap=1
+BATCH parameter=10 n=4 words=715 triples=786500 equalities=467255 nonzero_equalities=53818 max_strict_ratio=12/14 ratio_word=[1,1,2,2] ratio_pqa=1,9,10 ratio_gap=2
+BATCH parameter=10 n=5 words=2002 triples=2202200 equalities=1317491 nonzero_equalities=160601 max_strict_ratio=40/44 ratio_word=[1,1,2,2,2] ratio_pqa=1,9,10 ratio_gap=4
+BATCH parameter=10 n=6 words=5005 triples=5505500 equalities=3317556 nonzero_equalities=418149 max_strict_ratio=128/136 ratio_word=[1,1,1,1,2,2] ratio_pqa=1,9,10 ratio_gap=8
+BATCH parameter=10 n=7 words=11440 triples=12584000 equalities=7633556 nonzero_equalities=985649 max_strict_ratio=456/474 ratio_word=[2,2,2,9,9,9,9] ratio_pqa=1,10,9 ratio_gap=18
+BATCH parameter=10 n=8 words=24310 triples=26741000 equalities=16317466 nonzero_equalities=2147044 max_strict_ratio=1922/1972 ratio_word=[2,2,2,2,7,9,9,9] ratio_pqa=1,10,9 ratio_gap=50
+CONFIG mode=finite parameter=11 max_n=8 threads=42 cpus=64 load1=20.72 mem_available=89790042112
+BATCH parameter=11 n=0 words=1 triples=1452 equalities=1122 nonzero_equalities=11
+BATCH parameter=11 n=1 words=11 triples=15972 equalities=10412 nonzero_equalities=370 max_strict_ratio=1/2 ratio_word=[6] ratio_pqa=1,1,6 ratio_gap=1
+BATCH parameter=11 n=2 words=66 triples=95832 equalities=57310 nonzero_equalities=3990 max_strict_ratio=2/3 ratio_word=[1,1] ratio_pqa=1,10,11 ratio_gap=1
+BATCH parameter=11 n=3 words=286 triples=415272 equalities=242604 nonzero_equalities=22602 max_strict_ratio=4/5 ratio_word=[2,10,10] ratio_pqa=1,11,10 ratio_gap=1
+BATCH parameter=11 n=4 words=1001 triples=1453452 equalities=848990 nonzero_equalities=89569 max_strict_ratio=12/14 ratio_word=[1,1,2,2] ratio_pqa=1,10,11 ratio_gap=2
+BATCH parameter=11 n=5 words=3003 triples=4360356 equalities=2561608 nonzero_equalities=287108 max_strict_ratio=40/44 ratio_word=[1,1,1,1,2] ratio_pqa=1,10,11 ratio_gap=4
+BATCH parameter=11 n=6 words=8008 triples=11627616 equalities=6875706 nonzero_equalities=798994 max_strict_ratio=128/136 ratio_word=[2,2,10,10,10,10] ratio_pqa=1,11,10 ratio_gap=8
+BATCH parameter=11 n=7 words=19448 triples=28238496 equalities=16801228 nonzero_equalities=2003408 max_strict_ratio=456/474 ratio_word=[2,2,2,10,10,10,10] ratio_pqa=1,11,10 ratio_gap=18
+BATCH parameter=11 n=8 words=43758 triples=63536616 equalities=38013800 nonzero_equalities=4626810 max_strict_ratio=1922/1972 ratio_word=[1,1,1,2,2,2,2,3] ratio_pqa=1,10,11 ratio_gap=50
+CONFIG mode=finite parameter=12 max_n=8 threads=39 cpus=64 load1=23.38 mem_available=89799168000
+BATCH parameter=12 n=0 words=1 triples=1872 equalities=1454 nonzero_equalities=12
+BATCH parameter=12 n=1 words=12 triples=22464 equalities=14643 nonzero_equalities=462 max_strict_ratio=1/2 ratio_word=[5] ratio_pqa=1,1,5 ratio_gap=1
+BATCH parameter=12 n=2 words=78 triples=146016 equalities=86710 nonzero_equalities=5455 max_strict_ratio=2/3 ratio_word=[1,2] ratio_pqa=1,11,11 ratio_gap=1
+BATCH parameter=12 n=3 words=364 triples=681408 equalities=393426 nonzero_equalities=33507 max_strict_ratio=4/5 ratio_word=[1,1,2] ratio_pqa=1,11,12 ratio_gap=1
+BATCH parameter=12 n=4 words=1365 triples=2555280 equalities=1471716 nonzero_equalities=142846 max_strict_ratio=12/14 ratio_word=[1,1,2,2] ratio_pqa=1,11,12 ratio_gap=2
+BATCH parameter=12 n=5 words=4368 triples=8176896 equalities=4731271 nonzero_equalities=489615 max_strict_ratio=40/44 ratio_word=[2,11,11,11,11] ratio_pqa=1,12,11 ratio_gap=4
+BATCH parameter=12 n=6 words=12376 triples=23167872 equalities=13484086 nonzero_equalities=1449484 max_strict_ratio=128/136 ratio_word=[2,2,11,11,11,11] ratio_pqa=1,12,11 ratio_gap=8
+BATCH parameter=12 n=7 words=31824 triples=59574528 equalities=34871616 nonzero_equalities=3852502 max_strict_ratio=456/474 ratio_word=[2,2,2,11,11,11,11] ratio_pqa=1,12,11 ratio_gap=18
+BATCH parameter=12 n=8 words=75582 triples=141489504 equalities=83253042 nonzero_equalities=9399802 max_strict_ratio=1922/1972 ratio_word=[2,2,2,2,9,11,11,11] ratio_pqa=1,12,11 ratio_gap=50
+PASS_OSCILLATION mode=finite parameters=1..12 min_n=0 max_n=8 words=293929 triples=424317348 sign_conjecture=FAIL
+SEARCH_EXIT_STATUS=5

@@ -1,0 +1,5 @@
+source=character_ring_iter/verify_su2_c1_transport_nogo.cpp
+source_sha256=1696cb24abc3cb4b11b6f2e3fbeb590954b5aa02d5b8b1628f265cf3d6f5ddbd
+build=g++ -std=c++20 -O2 -Wall -Wextra -Wpedantic character_ring_iter/verify_su2_c1_transport_nogo.cpp -o /tmp/verify_su2_c1_transport_nogo
+run=/tmp/verify_su2_c1_transport_nogo
+PASS polynomial=t^3+t^2-2t-1 bracket_lower=-24084669191229575729010427922763841/125000000000000000000000000000000 bracket_upper=-11383042764028581341963127060977211/62500000000000000000000000000000

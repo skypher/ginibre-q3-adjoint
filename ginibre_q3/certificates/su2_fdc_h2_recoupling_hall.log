@@ -1,0 +1,66 @@
+Command:
+g++ -std=c++20 -O2 -pthread -Wall -Wextra -Wpedantic -Werror \
+  ginibre_q3/character_ring_iter/search_su2_fdc_h2_recoupling_hall.cpp \
+  -o /tmp/search_su2_fdc_h2_recoupling_hall
+/tmp/search_su2_fdc_h2_recoupling_hall 5 4 4
+
+Output:
+thread_policy hardware=64 ram_limit=168 load_limit=29 chosen=29 load1=34.8452 mem_available_bytes=90605752320
+graph=recoupling-saturated upper graph on essential H1(0) sources
+scope=paired H1(j+1) sources displaced by H2(j) use are excluded; bounded pass is not a full-differential rank proof
+CYCLIC_FIRST_DESCENT_SATURATED_HALL_DEFICIT
+q=2 plus_labels=1,1,1,1, scalar_index_grade=2
+left_total=6 right_total=4 matching_rank=4
+hall_left_size=6 hall_neighborhood_size=4 hall_deficit=2
+first_collision_factor_count=4
+minimality_order=factor_count,ordered_plus_word,q,grade
+configurations_checked=241
+ hall_left_sample mask=3 scalar_grades=-1,-1,0,0, canonical_heights=1,0,-1,-1,
+ hall_left_sample mask=5 scalar_grades=-1,0,-1,0, canonical_heights=1,-1,0,-1,
+ hall_left_sample mask=6 scalar_grades=0,-1,-1,0, canonical_heights=-1,1,0,-1,
+ hall_left_sample mask=9 scalar_grades=-1,0,0,-1, canonical_heights=1,-1,-1,0,
+ hall_left_sample mask=10 scalar_grades=0,-1,0,-1, canonical_heights=-1,1,-1,0,
+ hall_left_sample mask=12 scalar_grades=0,0,-1,-1, canonical_heights=-1,-1,1,0,
+ hall_right_sample key=1,1,1,-1,0,0,0,0,-1,-1,-1,
+ hall_right_sample key=1,1,2,0,-1,0,0,-1,0,-1,-1,
+ hall_right_sample key=1,1,4,0,0,-1,0,-1,-1,0,-1,
+ hall_right_sample key=1,1,8,0,0,0,-1,-1,-1,-1,0,
+ALL_PERMUTATIONS_FIRST_DESCENT_SATURATED_HALL_DEFICIT
+q=2 plus_labels=1,1,1,1, scalar_index_grade=2
+left_total=6 right_total=4 matching_rank=4
+hall_left_size=6 hall_neighborhood_size=4 hall_deficit=2
+first_collision_factor_count=4
+minimality_order=factor_count,ordered_plus_word,q,grade
+configurations_checked=241
+ hall_left_sample mask=3 scalar_grades=-1,-1,0,0, canonical_heights=1,0,-1,-1,
+ hall_left_sample mask=5 scalar_grades=-1,0,-1,0, canonical_heights=1,-1,0,-1,
+ hall_left_sample mask=6 scalar_grades=0,-1,-1,0, canonical_heights=-1,1,0,-1,
+ hall_left_sample mask=9 scalar_grades=-1,0,0,-1, canonical_heights=1,-1,-1,0,
+ hall_left_sample mask=10 scalar_grades=0,-1,0,-1, canonical_heights=-1,1,-1,0,
+ hall_left_sample mask=12 scalar_grades=0,0,-1,-1, canonical_heights=-1,-1,1,0,
+ hall_right_sample key=1,1,1,-1,0,0,0,0,-1,-1,-1,
+ hall_right_sample key=1,1,2,0,-1,0,0,-1,0,-1,-1,
+ hall_right_sample key=1,1,4,0,0,-1,0,-1,-1,0,-1,
+ hall_right_sample key=1,1,8,0,0,0,-1,-1,-1,-1,0,
+ALL_PERMUTATIONS_ALL_H2_PREFIXES_SATURATED_HALL_DEFICIT
+q=2 plus_labels=1,1,1,1, scalar_index_grade=2
+left_total=6 right_total=5 matching_rank=5
+hall_left_size=6 hall_neighborhood_size=5 hall_deficit=1
+first_collision_factor_count=4
+minimality_order=factor_count,ordered_plus_word,q,grade
+configurations_checked=241
+ hall_left_sample mask=3 scalar_grades=-1,-1,0,0, canonical_heights=1,0,-1,-1,
+ hall_left_sample mask=5 scalar_grades=-1,0,-1,0, canonical_heights=1,-1,0,-1,
+ hall_left_sample mask=6 scalar_grades=0,-1,-1,0, canonical_heights=-1,1,0,-1,
+ hall_left_sample mask=9 scalar_grades=-1,0,0,-1, canonical_heights=1,-1,-1,0,
+ hall_left_sample mask=10 scalar_grades=0,-1,0,-1, canonical_heights=-1,1,-1,0,
+ hall_left_sample mask=12 scalar_grades=0,0,-1,-1, canonical_heights=-1,-1,1,0,
+ hall_right_sample key=1,0,0,0,0,0,0,-1,-1,-1,-1,
+ hall_right_sample key=1,1,1,-1,0,0,0,0,-1,-1,-1,
+ hall_right_sample key=1,1,2,0,-1,0,0,-1,0,-1,-1,
+ hall_right_sample key=1,1,4,0,0,-1,0,-1,-1,0,-1,
+ hall_right_sample key=1,1,8,0,0,0,-1,-1,-1,-1,0,
+OPTIMISTIC_ESSENTIAL_H1_0_HYBRID_UPPER_GRAPH_BOUNDED_PASS q<=5 label<=4 factors<=4 configurations=820
+
+Source SHA-256:
+a30d433f958a3f00a7687a0d75fe3462b236c8b1165ac8ad5ed6a91c80d9d15e

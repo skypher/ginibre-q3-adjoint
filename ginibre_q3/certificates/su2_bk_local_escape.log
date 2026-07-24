@@ -1,0 +1,624 @@
+SU(2) BK plateau-escape certificate
+Date: 2026-07-23
+
+Source:
+  ginibre_q3/character_ring_iter/search_su2_bk_local_escape.cpp
+
+Strict build:
+  g++ -O2 -std=c++20 \
+    -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror \
+    ginibre_q3/character_ring_iter/search_su2_bk_local_escape.cpp \
+    -o /tmp/search_su2_bk_local_escape
+
+The checker enumerates ordered valid queue paths directly.  For every target
+position it assigns signs by degree, so equal irreducible labels cannot occur
+in both sign supports.  It computes (delta,f) with the signed two-queue
+transfer.  Every displayed witness was independently checked by direct
+subset enumeration.
+
+For every negative state it removes the target constraint and verifies
+  target_free_total=2*total,
+  target_free_delta=2*delta       (even minus parity),
+  target_free_delta=0             (odd minus parity).
+
+For every state requiring more than two moves, it independently computes
+the global source totals O and P by the ordinary SU(2) Clebsch--Gordan
+recursion.  A run fails only if an O>P state has a closed plateau or requires
+more than N moves to reach a lower (q,o) value.
+
+First unrestricted counterexample to the two-move rule:
+  vertices=7
+  target_position=2
+  alpha=[1,2,2,1,0,0,0]
+  beta=[0,1,0,0,1,2,2]
+  signs=[1,1,0,1,1,-1,-1]
+  delta=-2
+  total=6
+  direct_delta=-2
+  direct_total=6
+  O=30
+  P=31
+  neighbor (delta,total) values:
+    {0:(-2,6),1:(-3,9),2:(-2,6),
+     3:(-3,5),4:(-2,6),5:(-2,6)}
+  shortest plateau escape word, zero-based:
+    [2,3,2]
+
+This case has even minus parity and support-disjoint signs, but O<=P.  It
+does not test the source-deficit hypothesis of Target 22F3.
+
+First source-deficit counterexample to the two-move rule:
+  vertices=8
+  target_position=5
+  alpha=[2,1,1,0,2,0,1,0]
+  beta=[0,0,0,2,1,1,1,2]
+  signs=[1,-1,-1,1,1,0,1,1]
+  degrees=[2,1,1,2,3,1,2,2]
+  delta=-1
+  total=7
+  direct_delta=-1
+  direct_total=7
+  empty_sources=42
+  O=144
+  P=129
+  signed_source_integer=27
+  neighbor (delta,total) values:
+    {0:(-1,7),1:(-1,7),2:(-2,6),3:(-1,11),
+     4:(-1,7),5:(-5,11),6:(-1,7)}
+  shortest plateau escape word, zero-based:
+    [0,1,2]
+
+Thus Target 22F3F is false in the relevant sector.  The witness still
+satisfies the linear-radius Target 22F3G.
+
+Source-deficit counterexample to the three-move Target 22F3H:
+  vertices=8
+  maximum_queue_part=3
+  target_position=2
+  alpha=[2,3,3,2,0,0,0,0]
+  beta=[0,1,0,0,1,2,3,3]
+  signs=[1,1,0,1,1,1,-1,-1]
+  degrees=[2,4,3,2,1,2,3,3]
+  delta=-1
+  total=7
+  direct_delta=-1
+  direct_total=7
+  empty_sources=129
+  O=200
+  P=183
+  signed_source_integer=112
+  neighbor (delta,total) values:
+    {0:(-1,7),1:(-2,10),2:(-1,7),3:(-1,7),
+     4:(-1,7),5:(-1,7),6:(-1,7)}
+  shortest plateau escape word, zero-based:
+    [2,5,4,3]
+
+This refutes every proposed constant bound through three moves.  The witness
+still satisfies the linear N-step Target 22F3G.
+
+Complete queue-part-at-most-two sweeps:
+
+  /tmp/search_su2_bk_local_escape 6 2
+  SU2_BK_LOCAL_ESCAPE vertices=6 maximum_queue_part=2 \
+    queue_paths=3459 signed_states=60060 negative_states=1432 \
+    direct_escapes=1428 two_step_escapes=4 \
+    three_step_braid_escapes=0 longer_plateau_escapes=0 \
+    source_deficit_beyond_two_steps=0 \
+    trivial_sector_beyond_two_steps=0 \
+    closed_odd_minus_plateaus=0 \
+    closed_even_minus_trivial_plateaus=0 \
+    maximum_escape_length=2 result=PASS
+
+  /tmp/search_su2_bk_local_escape 7 2
+  SU2_BK_LOCAL_ESCAPE vertices=7 maximum_queue_part=2 \
+    queue_paths=24579 signed_states=529593 negative_states=19918 \
+    direct_escapes=19542 two_step_escapes=372 \
+    three_step_braid_escapes=4 longer_plateau_escapes=0 \
+    source_deficit_beyond_two_steps=0 \
+    trivial_sector_beyond_two_steps=4 \
+    closed_odd_minus_plateaus=0 \
+    closed_even_minus_trivial_plateaus=0 \
+    maximum_escape_length=3 result=PASS
+
+  /tmp/search_su2_bk_local_escape 8 2
+  SU2_BK_LOCAL_ESCAPE vertices=8 maximum_queue_part=2 \
+    queue_paths=180389 signed_states=4520948 negative_states=217916 \
+    direct_escapes=215068 two_step_escapes=2792 \
+    three_step_braid_escapes=40 longer_plateau_escapes=16 \
+    source_deficit_beyond_two_steps=16 \
+    trivial_sector_beyond_two_steps=40 \
+    closed_odd_minus_plateaus=0 \
+    closed_even_minus_trivial_plateaus=0 \
+    maximum_escape_length=5 result=PASS
+
+  /tmp/search_su2_bk_local_escape 9 2
+  SU2_BK_LOCAL_ESCAPE vertices=9 maximum_queue_part=2 \
+    queue_paths=1356743 signed_states=37763456 negative_states=2349240 \
+    direct_escapes=2319790 two_step_escapes=28594 \
+    three_step_braid_escapes=336 longer_plateau_escapes=472 \
+    source_deficit_beyond_two_steps=172 \
+    trivial_sector_beyond_two_steps=684 \
+    closed_odd_minus_plateaus=30 \
+    closed_even_minus_trivial_plateaus=18 \
+    maximum_escape_length=5 result=PASS
+
+  The source-deficit escape-word histogram has 172 entries and every word
+  has length at most three.  It includes separated-generator words
+  [2,5], [4,2], [0,2,1], and [5,7,6].  Thus the source-deficit maximum is
+  three; the displayed global maximum five occurs only in O<=P cases.
+
+Source-filtered deterministic sharded sweep:
+  machine CPUs=64
+  launch shard count chosen from live CPU headroom=24
+  /tmp/search_su2_bk_local_escape source-shard 8 3 24 SHARD_INDEX
+
+  SU2_BK_SOURCE_SHARDS shards=24 \
+    selected_queue_paths=6204388 \
+    signed_states=36289940 negative_states=2161376 \
+    direct_escapes=2096058 two_step_escapes=64478 \
+    three_step_braid_escapes=502 longer_plateau_escapes=338 \
+    source_deficit_beyond_two_steps=840 \
+    closed_odd=0 closed_even=0 \
+    maximum_escape_length=4 failures=0 result=PASS
+
+Every selected state has even minus parity and O>P.  The shard residue
+classes are disjoint and cover every enumerated queue path.  This refutes
+Target 22F3H but verifies Target 22F3G throughout the displayed domain.
+Inspection of the complete source-deficit word histograms also gives zero
+violations of Target 22F3I: each generator occurs once, except that at most
+one generator occurs twice.  The current checker reports this field as
+source_forest_word_failures.
+
+Higher queue-part source-forest sweep:
+  launch shard count chosen from live CPU headroom=20
+  /tmp/search_su2_bk_local_escape \
+    source-forest-shard 7 4 20 SHARD_INDEX
+
+  SU2_BK_SOURCE_FOREST_SHARDS shards=20 \
+    selected_queue_paths=4981977 \
+    signed_states=61209516 negative_states=1347306 \
+    direct_escapes=1299010 two_step_escapes=48022 \
+    three_step_braid_escapes=136 longer_plateau_escapes=138 \
+    source_deficit_beyond_two_steps=274 \
+    source_forest_word_failures=0 \
+    maximum_escape_length=4 failures=0 result=PASS
+
+Every selected signed state has even minus parity and O>P.  The deterministic
+shards are disjoint and cover all displayed queue paths.
+
+Stronger square-free-proper-prefix replays:
+  worker counts chosen from live CPU headroom and RAM availability
+
+  vertices=8 maximum_queue_part=3 dynamic_shards=29
+  SU2_BK_PREFIX_FOREST_SHARDS shards=29 \
+    selected_queue_paths=6204388 \
+    signed_states=36289940 negative_states=2161376 \
+    source_deficit_beyond_two_steps=840 \
+    source_forest_word_failures=0 \
+    source_prefix_forest_word_failures=0 \
+    closed_odd=0 closed_even=0 \
+    maximum_escape_length=4 result=PASS
+
+  vertices=7 maximum_queue_part=4 dynamic_shards=24
+  SU2_BK_PREFIX_FOREST_SHARDS shards=24 \
+    selected_queue_paths=4981977 \
+    signed_states=61209516 negative_states=1347306 \
+    source_deficit_beyond_two_steps=274 \
+    source_forest_word_failures=0 \
+    source_prefix_forest_word_failures=0 \
+    closed_odd=0 closed_even=0 \
+    maximum_escape_length=4 result=PASS
+
+The stronger field requires every generator in the proper plateau prefix
+to occur at most once.  Only the final exit generator may repeat a prefix
+generator.  Hence these replays verify Target 22F3J on both complete
+domains.
+
+Primitive-excursion diagnostics:
+
+  vertices=9 maximum_queue_part=2
+  SU2_BK_PRIMITIVE \
+    source_deficit_beyond_two_steps=94 \
+    source_nonzero_transfer_prefix_states=20 \
+    source_nonzero_transfer_prefix_steps=20 \
+    source_nonprimitive_beyond_two_steps=0 result=PASS
+
+  vertices=8 maximum_queue_part=3 dynamic_shards=28
+  SU2_BK_PRIMITIVE_SHARDS shards=28 \
+    selected_queue_paths=6204388 \
+    signed_states=36289940 negative_states=2161376 \
+    source_deficit_beyond_two_steps=840 \
+    source_forest_word_failures=0 \
+    source_prefix_forest_word_failures=0 \
+    source_nonzero_transfer_prefix_states=48 \
+    source_nonzero_transfer_prefix_steps=48 \
+    source_nonprimitive_beyond_two_steps=0 \
+    closed_odd=0 closed_even=0 \
+    maximum_escape_length=4 result=PASS
+
+  vertices=7 maximum_queue_part=4 dynamic_shards=22
+  SU2_BK_PRIMITIVE_SHARDS shards=22 \
+    selected_queue_paths=4981977 \
+    signed_states=61209516 negative_states=1347306 \
+    source_deficit_beyond_two_steps=274 \
+    source_forest_word_failures=0 \
+    source_prefix_forest_word_failures=0 \
+    source_nonzero_transfer_prefix_states=0 \
+    source_nonzero_transfer_prefix_steps=0 \
+    source_nonprimitive_beyond_two_steps=0 \
+    closed_odd=0 closed_even=0 \
+    maximum_escape_length=4 result=PASS
+
+The zero nonprimitive counts originally motivated Target 22F3K, but the
+source-deficit counterexample below shows that this bounded pattern is not
+uniform.  The nonzero transfer counts show that a general proof must allow
+BK moves which change the raw top allocation.
+
+Single-transfer refinement:
+  (N,max_part)=(9,2):
+    source_nonzero_transfer_prefix_states=20
+    source_nonzero_transfer_prefix_steps=20
+    source_multiple_transfer_prefix_states=0
+  (N,max_part)=(8,3):
+    source_nonzero_transfer_prefix_states=48
+    source_nonzero_transfer_prefix_steps=48
+    source_multiple_transfer_prefix_states=0
+  (N,max_part)=(7,4):
+    source_nonzero_transfer_prefix_states=0
+    source_nonzero_transfer_prefix_steps=0
+    source_multiple_transfer_prefix_states=0
+
+For the last two domains the multiple-transfer count follows already from
+equality of the previously recorded state and step counts.  This verifies
+Target 22F3M on all three complete domains.  The composite counterexample
+below also satisfies Target 22F3M, with zero positive transfers in its
+square-free proper prefix.
+
+Unrestricted composite-path obstruction:
+  vertices=9 maximum_queue_part=2
+  nonprimitive_beyond_two_steps=12
+
+  first witness:
+    alpha=[1,0,1,2,2,1,0,0,0]
+    beta =[0,1,0,1,0,0,1,2,2]
+    sign =[+,+,+,+,+,+,+,-,-]
+    target_position=4
+    delta=-4 total=12 empty=59 O=400 P=464
+    shortest_escape_word=[4,5,4]
+
+This disproves the version of Target 22F3K without the global O>P
+hypothesis.  The witness is in the trivial sector O<P.
+
+Return-shell-only obstruction:
+  source-filtered vertices=9 maximum_queue_part=2
+  source_nonprimitive_negative_states=4238
+  source_return_shell_direct_escapes=310
+  source_return_shell_two_step_escapes=580
+  source_return_shell_failures=3348
+
+All 3,348 return-shell failures nevertheless have a generic escape within
+two moves.  Their exits are supported inside an excursion.  Hence Target
+22F3K would require both the internal-excursion factorization branch and
+the return-shell correlation branch.
+
+Quantized composite replay:
+  /tmp/search_su2_bk_local_escape source 9 2
+  source_nonprimitive_negative_states=4238
+  source_composite_direct_escapes=4148
+  source_composite_two_step_escapes=90
+  source_composite_escape_failures=0
+  source_composite_two_step_return_shell=16
+  source_composite_no_normal_negative_excursion=0
+  source_composite_two_step_potential_histogram={
+    (-2,6):66,(-2,14):20,(-2,22):4}
+  source_composite_two_step_factor_histogram={
+    (-1,3;+1,1):66,(-1,7;+1,1):20,(-1,11;+1,1):4}
+  result=PASS
+
+Thus every delayed composite state in this complete source-deficit domain
+has the minimal possible deficit delta=-2.  Lemma 22F3A16 proves that a
+composite state with this deficit has exactly two excursions and
+f=2 modulo 4.  The factor histogram further shows that every delayed state
+has one rigid positive excursion factor.  The replay is evidence for the
+patterns later formulated as Targets 22F3K2--22F3K3.  The exact
+counterexample below refutes those targets outside this bounded domain.
+
+Forced-composite randomized falsification search:
+  /tmp/search_su2_bk_local_escape random-composite 30000 10 6 22036
+  trials=30000 valid_paths=24895
+  tested_negative_states=273
+  direct_escapes=269 two_step_escapes=4
+  longer_escapes=0
+  prefix_forest_failures=0
+  multiple_transfer_failures=0
+  maximum_escape_length=2
+  two_step_factor_histogram={
+    (-1,3;+1,1):3,(+1,1;-1,3):1}
+  result=PASS
+
+The generator forces an internal block-Dyck return and samples thirty-two
+support-disjoint sign/target assignments per valid path.  All four delayed
+states have delta=-2.  This deterministic-seed replay probes beyond the
+exhaustive box but remains random falsification evidence only.
+
+Unconditional minimal-deficit falsification search:
+  /tmp/search_su2_bk_local_escape \
+    random-composite-any 50000 10 8 22040
+  trials=50000 valid_paths=42530
+  tested_negative_states=2298
+  direct_escapes=2252 two_step_escapes=46
+  longer_escapes=0
+  prefix_forest_failures=0
+  multiple_transfer_failures=0
+  maximum_escape_length=2
+  two_step_factor_histogram={
+    (-1,3;+1,1):37,(-1,7;+1,1):1,
+    (-1,9;+1,1):1,(+1,1;-1,3):7}
+  result=PASS
+
+This mode drops O>P and retains only delta=-2.  It found no failure, but
+the deterministic embedding below shows that this random sample missed an
+exact obstruction.
+
+Source-deficit composite two-step counterexample:
+  /tmp/search_su2_bk_local_escape composite-counterexample
+
+  alpha=[2,3,3,2,0,0,0,0,3,0]
+  beta =[0,1,0,0,1,2,3,3,0,3]
+  signs=[+,+,0,+,+,+,-,-,-,-]
+  target_position=2
+  delta=-2 total=14
+  O=6864 P=6778
+  excursion_factors=(-1,7;+1,1)
+  two_step_depth=0
+  positive_prefix_transfers=0
+  scheduling_directions=[0,0,0]
+  shortest_escape_word=[2,5,4,3]
+  word_potentials=[
+    (-2,14),(-2,14),(-2,14),(2,10)]
+  direct_subset_check=PASS
+  result=PASS
+
+The final two jobs are the rigid excursion
+  alpha=[3,0], beta=[0,3], signs=[-,-].
+Removing them gives the primitive four-step state (P22.30N7).  The
+appended pair preserves its long internal escape while changing the global
+source dimensions to O>P.  This exact state refutes Targets
+22F3K, 22F3K2(1), and 22F3K3(2).  It retains the square-free prefix and
+zero-transfer scheduling normal forms in Targets 22F3J--22F3M.
+
+Unidirectional scheduling-prefix replays:
+  (N,max_part)=(7,3):
+    source_deficit_beyond_two_steps=10
+    source_prefix_threshold_tie_steps=12
+    source_prefix_positive_scheduling_steps=2
+    source_prefix_negative_scheduling_steps=6
+    source_prefix_mixed_scheduling_states=0
+    source_prefix_multiple_strict_scheduling_states=0
+    source_maximum_strict_scheduling_steps=1
+
+  (N,max_part)=(8,2):
+    source_deficit_beyond_two_steps=8
+    source_prefix_threshold_tie_steps=7
+    source_prefix_positive_scheduling_steps=2
+    source_prefix_negative_scheduling_steps=5
+    source_prefix_mixed_scheduling_states=0
+    source_prefix_multiple_strict_scheduling_states=1
+    source_maximum_strict_scheduling_steps=2
+
+  (N,max_part)=(9,2):
+    source_deficit_beyond_two_steps=94
+    source_prefix_threshold_tie_steps=95
+    source_prefix_positive_scheduling_steps=15
+    source_prefix_negative_scheduling_steps=56
+    source_prefix_mixed_scheduling_states=0
+    source_prefix_multiple_strict_scheduling_states=7
+    source_maximum_strict_scheduling_steps=2
+
+Every strict zero-transfer step within one proper prefix has the same
+scheduling orientation.  These exact complete replays support Target
+22F3Q.  They also support Target 22F3Q1: after contracting ties, no prefix
+uses more than two strict scheduling moves.  Tie steps use the threshold
+identities of Lemma 22F3A23.
+
+Zero-transfer normal-form and extremal-shell replays:
+  (N,max_part)=(7,3):
+    negative_states=122026 direct_escapes=118120
+    source_normal_zero_transfer_states=3906
+    source_normal_zero_transfer_escapes=3906
+    source_normal_zero_transfer_failures=0
+    source_extremal_shell_states=10
+    source_extremal_shell_escapes=10
+    source_extremal_sink_escapes=10
+    source_extremal_source_escapes=10
+    source_extremal_source_shrink_escapes=10
+    source_extremal_source_enlarge_escapes=0
+    source_extremal_source_positive_escapes=0
+    source_extremal_shell_obstructions=0
+    source_extremal_positive_plateau_states=8
+    source_maximum_zero_transfer_component=144
+    source_maximum_threshold_tie_quotient=15
+
+  (N,max_part)=(8,2):
+    negative_states=15744 direct_escapes=15378
+    source_normal_zero_transfer_states=366
+    source_normal_zero_transfer_escapes=366
+    source_normal_zero_transfer_failures=0
+    source_extremal_shell_states=8
+    source_extremal_shell_escapes=8
+    source_extremal_sink_escapes=8
+    source_extremal_source_escapes=8
+    source_extremal_source_shrink_escapes=8
+    source_extremal_source_enlarge_escapes=2
+    source_extremal_source_positive_escapes=0
+    source_extremal_shell_obstructions=0
+    source_extremal_positive_plateau_states=8
+    source_maximum_zero_transfer_component=80
+    source_maximum_threshold_tie_quotient=29
+
+  (N,max_part)=(9,2), dynamically sharded complete replay:
+    negative_states=201620 direct_escapes=198064
+    source_normal_zero_transfer_states=3556
+    source_normal_zero_transfer_escapes=3556
+    source_normal_zero_transfer_failures=0
+    source_extremal_shell_states=94
+    source_extremal_shell_escapes=94
+    source_extremal_sink_escapes=74
+    source_extremal_source_escapes=94
+    source_extremal_source_shrink_escapes=94
+    source_extremal_source_enlarge_escapes=8
+    source_extremal_source_positive_escapes=10
+    source_extremal_shell_obstructions=0
+    source_extremal_positive_plateau_states=84
+    source_maximum_zero_transfer_component=720
+    source_maximum_threshold_tie_quotient=169
+
+The normal search is constrained independently: proper-prefix generators
+are square-free, every prefix transfer is zero, all strict scheduling
+moves have one orientation, and at most two are strict.  The extremal
+analyzer enumerates the complete zero-transfer plateau component, contracts
+exact threshold ties, constructs the strict scheduling DAG, and checks all
+reachable sinks and sources for a descending boundary.  These are exact
+bounded checks of Targets 22F3R and 22F3R1, not proofs.
+
+Rigid-label scan:
+  /tmp/search_su2_bk_local_escape embedding-scan 30
+  tested=56 source_deficit=49
+  source_deficit_beyond_two=46 result=FAIL
+
+The FAIL status is intentional: it certifies that the proposed two-step
+target is false.  The first source-deficit failure already occurs at
+appended label three with negative sign, as displayed above.
+
+Negative-excursion release audit:
+  /tmp/search_su2_bk_local_escape source 9 2
+  source_nonprimitive_negative_states=4238
+  source_composite_no_normal_negative_excursion=0
+  result=PASS
+
+For each composite state, the checker splits at every internal return,
+selects each negative signed excursion factor, and independently searches
+its local plateau component.  A factor counts as released only when its
+local word has length at most its job count, square-free proper prefix, and
+at most one positive prefix transfer.  This is exact bounded evidence for
+Target 22F3P.
+
+Closed-core rigid-padding source scan:
+  /tmp/search_su2_bk_local_escape closed-embedding-scan 30
+  maximum_pairs=1 tested=57 source_deficit=0
+  source_without_two_step=0 result=PASS
+
+The core is the locally closed negative primitive state (P22.30N8).
+Across every compatible appended label at most thirty and both allowed
+signs, rigid padding leaves O<=P.  This is evidence that O>P excludes
+composites built entirely from trapped negative factors.
+
+Repeated closed-core padding:
+  /tmp/search_su2_bk_local_escape closed-padding-scan 12 3
+  tested=63 source_deficit=0 result=PASS
+
+  /tmp/search_su2_bk_local_escape closed-padding-scan 10 4
+  tested=68 source_deficit=0 result=PASS
+
+These deterministic sweeps append up to three or four separate rigid
+excursions of the same compatible signed label.  No padded trapped core
+enters O>P.
+
+Mixed-label trapped-core padding:
+  /tmp/search_su2_bk_local_escape closed-mixed-padding-scan 15 2
+  tested=366 source_deficit=0 result=PASS
+
+  /tmp/search_su2_bk_local_escape closed-mixed-padding-scan 10 3
+  tested=850 source_deficit=0 result=PASS
+
+Here the two or three rigid excursions may have independently chosen
+labels and signs, subject only to support-disjoint sign consistency.  Again
+no padded trapped core enters O>P.
+
+Arbitrary-path randomized J/M replay:
+  /tmp/search_su2_bk_local_escape random-source 30000 10 6 22042
+  valid_paths=29478
+  tested_negative_states=2483
+  direct_escapes=2411 two_step_escapes=72 longer_escapes=0
+  prefix_forest_failures=0 multiple_transfer_failures=0
+  maximum_escape_length=2 result=PASS
+
+Unlike the forced-composite generator, this mode samples arbitrary
+block-Dyck paths.  It checks the surviving linear-radius,
+square-free-prefix, and single-transfer properties directly.
+
+Larger arbitrary-path Target-P/J/M replay:
+  /tmp/search_su2_bk_local_escape random-source 10000 12 6 22043
+  valid_paths=9836 tested_negative_states=822
+  direct_escapes=808 two_step_escapes=13 longer_escapes=1
+  nonprimitive_negative_states=29
+  no_normal_negative_excursion=0
+  prefix_forest_failures=0 multiple_transfer_failures=0
+  mixed_scheduling_direction_failures=0
+  over_two_strict_scheduling_failures=0
+  normal_zero_transfer_states=14
+  normal_zero_transfer_failures=0
+  maximum_strict_scheduling_steps=2
+  maximum_escape_length=3 result=PASS
+
+This replay simultaneously stress-tests the primitive/composite normal
+escape, negative-excursion release, and unidirectional/two-strict-move
+scheduling targets beyond the complete domains.  Its normal-form search
+also verifies that every nondirect sample has a square-free prefix with
+zero positive transfers.
+
+  /tmp/search_su2_bk_local_escape 6 3
+  SU2_BK_LOCAL_ESCAPE vertices=6 maximum_queue_part=3 \
+    queue_paths=38364 signed_states=1485028 negative_states=19184 \
+    direct_escapes=18872 two_step_escapes=312 \
+    three_step_braid_escapes=0 longer_plateau_escapes=0 \
+    source_deficit_beyond_two_steps=0 \
+    trivial_sector_beyond_two_steps=0 \
+    closed_odd_minus_plateaus=0 \
+    closed_even_minus_trivial_plateaus=0 \
+    maximum_escape_length=2 result=PASS
+
+  /tmp/search_su2_bk_local_escape 7 3
+  SU2_BK_LOCAL_ESCAPE vertices=7 maximum_queue_part=3 \
+    queue_paths=479388 signed_states=27021430 negative_states=629370 \
+    direct_escapes=615734 two_step_escapes=13576 \
+    three_step_braid_escapes=36 longer_plateau_escapes=24 \
+    source_deficit_beyond_two_steps=16 \
+    trivial_sector_beyond_two_steps=44 \
+    closed_odd_minus_plateaus=0 \
+    closed_even_minus_trivial_plateaus=0 \
+    maximum_escape_length=3 result=PASS
+
+Even-minus closed plateau outside the source-deficit sector:
+  vertices=9
+  target_position=0
+  alpha=[1,1,1,1,1,2,0,0,0]
+  beta=[0,0,0,0,0,1,2,2,2]
+  signs=[0,1,1,1,1,-1,-1,-1,-1]
+  delta=-14
+  total=46
+  direct_delta=-14
+  direct_total=46
+  empty_sources=59
+  O=344
+  P=520
+  signed_source_integer=235
+  shortest plateau escape word:
+    none
+  neighbor (delta,total) values:
+    {0:(-14,46),1:(-14,46),2:(-14,46),3:(-14,46),
+     4:(-17,43),5:(-19,41),6:(-14,46),7:(-14,46)}
+
+This proves that the global O>P hypothesis is necessary in any every-state
+plateau theorem.  The case is already capacity-rich and is not part of
+Target 22F3.
+
+Closed-core order-slice identity:
+  /tmp/search_su2_bk_local_escape closed-core-slice
+  states=59 negative_states=8 delta_sum=235
+  empty=59 O=344 P=520
+  result=PASS
+
+The exact equality is delta_sum=empty+P-O.  It independently checks Lemma
+22F3A25 and shows why the trapped negative states are harmless only after
+order-slice aggregation.

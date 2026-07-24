@@ -1,0 +1,12 @@
+Command:
+g++ -O3 -DNDEBUG -std=c++20 \
+  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror \
+  ginibre_q3/character_ring_iter/verify_su2_label2_ray_cyclic.cpp \
+  -o /tmp/verify_su2_label2_ray_cyclic
+/tmp/verify_su2_label2_ray_cyclic 14 10 25
+
+Output:
+PASS max_level=14 max_minus_pairs=10 max_plus_count=25 cases=3380 negative_individual_minors=2470 minimum_value=0
+
+Source SHA-256:
+9c3047f31138ef4f12cbf88681b0e5bc440dbdb7ee7808ae7bf7f75c062f3a85

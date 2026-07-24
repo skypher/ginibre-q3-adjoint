@@ -1,0 +1,2 @@
+SU2_SEVEN_TWO_MINUS_COUNT result=PASS maximum_label=3 cases=9 minimum minus=[2,3] plus=[1,1,1,1,1] N7=10 Tminus=10 margin=0
+SU2_SEVEN_TWO_MINUS_COUNT result=FAIL minus=[2,2] plus=[1,1,1,1,4] N7=11 Tminus=12 margin=-1 cases=25 orientation0=6 orientation1=6

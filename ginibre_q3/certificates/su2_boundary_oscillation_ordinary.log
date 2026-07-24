@@ -1,0 +1,19 @@
+CONFIG mode=ordinary parameter=10 max_n=9 threads=38 cpus=64 load1=24.44 mem_available=89798565888
+BATCH parameter=10 n=0 words=1 triples=1100 equalities=750 nonzero_equalities=10
+BATCH parameter=10 n=1 words=10 triples=11000 equalities=6320 nonzero_equalities=350 max_strict_ratio=1/2 ratio_word=[8] ratio_pqa=1,1,8 ratio_gap=1
+SIGN_COUNTEREXAMPLE mode=ordinary parameter=10 word=[2] p=1 q=1 a=2 (p-a)*C=1
+F_NONZERO (0,2)=1 (2,0)=1
+C_FIRST=0 C_SECOND=1 C=-1 ABS_C=1
+RHS_TERMS B(q,1)=1 B(q,3)=1
+RHS=2 GAP=1
+REPLAY_COMMAND /tmp/search_su2_boundary_oscillation_sign --replay ordinary 10 1 1 2 2
+BATCH parameter=10 n=2 words=55 triples=60500 equalities=33260 nonzero_equalities=2570 max_strict_ratio=3/5 ratio_word=[2,2] ratio_pqa=1,1,2 ratio_gap=2
+BATCH parameter=10 n=3 words=220 triples=242000 equalities=132132 nonzero_equalities=10876 max_strict_ratio=12/16 ratio_word=[2,2,2] ratio_pqa=1,1,2 ratio_gap=4
+BATCH parameter=10 n=4 words=715 triples=786500 equalities=429053 nonzero_equalities=35687 max_strict_ratio=46/56 ratio_word=[2,2,2,2] ratio_pqa=1,1,2 ratio_gap=10
+BATCH parameter=10 n=5 words=2002 triples=2202200 equalities=1201217 nonzero_equalities=100072 max_strict_ratio=190/217 ratio_word=[2,2,2,2,2] ratio_pqa=1,1,2 ratio_gap=27
+BATCH parameter=10 n=6 words=5005 triples=5505500 equalities=3003004 nonzero_equalities=250240 max_strict_ratio=665/731 ratio_word=[2,2,2,2,2,4] ratio_pqa=1,1,2 ratio_gap=66
+BATCH parameter=10 n=7 words=11440 triples=12584000 equalities=6864000 nonzero_equalities=571997 max_strict_ratio=3156/3368 ratio_word=[2,2,2,2,2,2,4] ratio_pqa=1,1,2 ratio_gap=212
+BATCH parameter=10 n=8 words=24310 triples=26741000 equalities=14586000 nonzero_equalities=1215500 max_strict_ratio=16276/17008 ratio_word=[2,2,2,2,2,2,4,4] ratio_pqa=1,1,2 ratio_gap=732
+BATCH parameter=10 n=9 words=48620 triples=53482000 equalities=29172000 nonzero_equalities=2431000 max_strict_ratio=94356/97184 ratio_word=[2,2,2,2,2,2,4,4,4] ratio_pqa=1,1,2 ratio_gap=2828
+PASS_OSCILLATION mode=ordinary parameters=10..10 min_n=0 max_n=9 words=92378 triples=101615800 sign_conjecture=FAIL
+SEARCH_EXIT_STATUS=5

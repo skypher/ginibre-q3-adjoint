@@ -1,0 +1,17 @@
+DATE: 2026-07-23
+SOURCE_SHA256: d95088645d56ca696ec18dbe58841e43bb809a543817d80adef73ddde785b9b8
+BUILD: g++ -std=c++20 -O2 -Wall -Wextra -Werror -pedantic character_ring_iter/search_su2_level_partial_character_cone.cpp
+COMMAND: search_su2_level_partial_character_cone 8 4
+SU2_LEVEL_PARTIAL_CHARACTER_CONE level=1 tested=30 PASS
+SU2_LEVEL_PARTIAL_CHARACTER_CONE level=2 tested=128 PASS
+SU2_LEVEL_PARTIAL_CHARACTER_CONE level=3 tested=350 PASS
+SU2_LEVEL_PARTIAL_CHARACTER_CONE level=4 tested=768 PASS
+SU2_LEVEL_PARTIAL_CHARACTER_CONE level=5 tested=1470 PASS
+SU2_LEVEL_PARTIAL_CHARACTER_CONE level=6 tested=2560 PASS
+SU2_LEVEL_PARTIAL_CHARACTER_CONE level=7 tested=4158 PASS
+SU2_LEVEL_PARTIAL_CHARACTER_CONE level=8 tested=6400 PASS
+SU2_LEVEL_PARTIAL_CHARACTER_CONE total_tested=15864 maximum_level=8 maximum_factors=4 PASS
+
+This bounded run independently cross-checks Corollary 25D2.  The proof of
+that corollary is the unbounded complement-pair argument in
+CENTRAL_CHARACTER_Q3_SEARCH.md.

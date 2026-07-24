@@ -536,6 +536,120 @@ std::vector<Integer> integerize(const std::vector<Rational>& vector) {
     return answer;
 }
 
+std::vector<std::vector<Integer>> column_matrix(
+    const std::vector<std::vector<Integer>>& columns,
+    std::size_t rows
+);
+
+std::vector<std::vector<Integer>> apply_row_map(
+    const std::vector<std::vector<Integer>>& rows,
+    const std::vector<std::vector<Integer>>& linear_map
+) {
+    if (linear_map.empty()) {
+        if (rows.empty()) {
+            return {};
+        }
+        if (!rows.front().empty()) {
+            throw std::runtime_error("empty row map has nonempty domain");
+        }
+        return std::vector<std::vector<Integer>>(rows.size());
+    }
+    const std::size_t domain = linear_map.size();
+    const std::size_t codomain = linear_map.front().size();
+    for (const auto& image : linear_map) {
+        if (image.size() != codomain) {
+            throw std::runtime_error("ragged row map");
+        }
+    }
+    std::vector<std::vector<Integer>> answer(
+        rows.size(), std::vector<Integer>(codomain, 0)
+    );
+    for (std::size_t row = 0U; row < rows.size(); ++row) {
+        if (rows[row].size() != domain) {
+            throw std::runtime_error("row-map domain mismatch");
+        }
+        for (std::size_t source = 0U; source < domain; ++source) {
+            if (rows[row][source] == 0) {
+                continue;
+            }
+            for (std::size_t target = 0U; target < codomain; ++target) {
+                answer[row][target]
+                    += rows[row][source] * linear_map[source][target];
+            }
+        }
+    }
+    return answer;
+}
+
+std::vector<std::vector<Integer>> span_intersection(
+    const std::vector<std::vector<Integer>>& first,
+    const std::vector<std::vector<Integer>>& second,
+    std::size_t ambient_dimension
+) {
+    if (first.empty() || second.empty()) {
+        return {};
+    }
+    std::vector<std::vector<Integer>> combined = first;
+    combined.insert(combined.end(), second.begin(), second.end());
+    const auto relations = exact_nullspace(
+        column_matrix(combined, ambient_dimension)
+    );
+    std::vector<std::vector<Integer>> basis;
+    std::size_t basis_rank = 0U;
+    for (const std::vector<Rational>& relation : relations) {
+        std::vector<Rational> target(ambient_dimension, Rational(0));
+        for (std::size_t source = 0U; source < first.size(); ++source) {
+            for (std::size_t coordinate = 0U;
+                 coordinate < ambient_dimension; ++coordinate) {
+                target[coordinate]
+                    += relation[source] * Rational(first[source][coordinate]);
+            }
+        }
+        if (std::all_of(
+                target.begin(), target.end(),
+                [](const Rational& value) { return value == 0; }
+            )) {
+            continue;
+        }
+        std::vector<Integer> integer_target = integerize(target);
+        auto trial = basis;
+        trial.push_back(integer_target);
+        const std::size_t next_rank = exact_rank(trial);
+        if (next_rank != basis_rank) {
+            basis.push_back(std::move(integer_target));
+            basis_rank = next_rank;
+        }
+    }
+    return basis;
+}
+
+Graph delete_graph_vertex(const Graph& graph, std::size_t deleted) {
+    if (deleted >= graph.size()) {
+        throw std::runtime_error("deleted graph vertex is out of range");
+    }
+    Graph answer(
+        graph.size() - 1U,
+        std::vector<int>(graph.size() - 1U, 0)
+    );
+    for (std::size_t first = 0U; first < graph.size(); ++first) {
+        if (first == deleted) {
+            continue;
+        }
+        const std::size_t new_first
+            = first < deleted ? first : first - 1U;
+        for (std::size_t second = first + 1U;
+             second < graph.size(); ++second) {
+            if (second == deleted) {
+                continue;
+            }
+            const std::size_t new_second
+                = second < deleted ? second : second - 1U;
+            answer[new_first][new_second] = graph[first][second];
+        }
+    }
+    return answer;
+}
+
 struct Result {
     std::uint64_t odd_sources = 0U;
     std::uint64_t positive_sources = 0U;
@@ -619,6 +733,16 @@ struct Result {
     std::size_t optimal_relation_rank = 0U;
     std::size_t merged_row_kernel_dimension = 0U;
     bool deletion_contraction_valid = true;
+    std::size_t projected_allocation_dimension = 0U;
+    std::size_t projected_positive_allocation_dimension = 0U;
+    std::size_t projected_unshared_carrier_dimension = 0U;
+    std::size_t projected_positive_rank = 0U;
+    std::size_t negative_lower_branch_dimension = 0U;
+    std::size_t positive_lower_branch_dimension = 0U;
+    std::size_t negative_lift_obstruction_rank = 0U;
+    std::size_t positive_lift_obstruction_rank = 0U;
+    bool enriched_deletion_contraction_valid = true;
+    bool projected_carrier_criterion = true;
 };
 
 std::vector<std::vector<Integer>> column_matrix(
@@ -1986,7 +2110,8 @@ Result analyze_case(
                 }
                 const std::size_t merged_target
                     = merged_degrees.size() - 1U;
-                std::size_t merged_f0_dimension = 0U;
+                std::vector<F0Key> merged_f0_basis;
+                std::map<F0Key, std::size_t> merged_f0_indices;
                 for (std::size_t neighbor = 0U;
                      neighbor < merged_degrees.size(); ++neighbor) {
                     if (neighbor == merged_target
@@ -1996,8 +2121,19 @@ Result analyze_case(
                     std::vector<int> residual = merged_degrees;
                     --residual[merged_target];
                     --residual[neighbor];
-                    merged_f0_dimension += tops(residual).size();
+                    for (const Key& top : tops(residual)) {
+                        const F0Key key{
+                            neighbor,
+                            flatten(standard_graph(residual, top))
+                        };
+                        merged_f0_indices.emplace(
+                            key, merged_f0_basis.size()
+                        );
+                        merged_f0_basis.push_back(key);
+                    }
                 }
+                const std::size_t merged_f0_dimension
+                    = merged_f0_basis.size();
                 const std::size_t merged_codomain_dimension
                     = tops(merged_degrees).size();
                 if (merged_f0_dimension < merged_codomain_dimension) {
@@ -2010,6 +2146,200 @@ Result analyze_case(
                 result.deletion_contraction_valid
                     = result.merged_row_kernel_dimension
                         == result.f0_kernel_dimension;
+
+                std::map<Key, Expansion> merged_straightening_cache;
+                std::vector<std::vector<Integer>> projection(
+                    f0_basis.size(),
+                    std::vector<Integer>(merged_f0_dimension, 0)
+                );
+                const std::size_t target_vertex = degrees.size() - 1U;
+                for (std::size_t source = 0U;
+                     source < f0_basis.size(); ++source) {
+                    const std::size_t neighbor = f0_basis[source].first;
+                    if (neighbor == target_vertex) {
+                        continue;
+                    }
+                    const std::size_t merged_neighbor
+                        = neighbor < fundamental
+                            ? neighbor : neighbor - 1U;
+                    const Graph graph = delete_graph_vertex(
+                        unflatten(
+                            f0_basis[source].second, degrees.size()
+                        ),
+                        fundamental
+                    );
+                    const Key graph_key_input = flatten(graph);
+                    for (const auto& [graph_key, coefficient]
+                         : straighten(
+                               graph_key_input,
+                               merged_degrees.size(),
+                               merged_straightening_cache
+                           )) {
+                        const auto found = merged_f0_indices.find(
+                            F0Key{merged_neighbor, graph_key}
+                        );
+                        if (found == merged_f0_indices.end()) {
+                            throw std::runtime_error(
+                                "deletion projection left merged F0"
+                            );
+                        }
+                        projection[source][found->second] += coefficient;
+                    }
+                }
+                if (exact_rank(projection) != merged_f0_dimension) {
+                    throw std::runtime_error(
+                        "deletion projection is not onto merged F0"
+                    );
+                }
+
+                const auto projected_kernel = apply_row_map(
+                    differential, projection
+                );
+                const std::size_t differential_rank
+                    = exact_rank(differential);
+                const std::size_t projected_kernel_rank
+                    = exact_rank(projected_kernel);
+                if (differential_rank != result.f0_kernel_dimension
+                    || projected_kernel_rank
+                        != result.merged_row_kernel_dimension
+                    || differential_rank != projected_kernel_rank) {
+                    throw std::runtime_error(
+                        "deletion projection failed kernel isomorphism"
+                    );
+                }
+                const auto projected_iota = apply_row_map(iota, projection);
+                const auto projected_positive_iota = apply_row_map(
+                    positive_iota, projection
+                );
+                const std::size_t projected_negative_rank
+                    = exact_rank(projected_iota);
+                const std::size_t projected_positive_rank
+                    = exact_rank(projected_positive_iota);
+                const auto projected_negative_carrier = span_intersection(
+                    projected_iota,
+                    projected_kernel,
+                    merged_f0_dimension
+                );
+                const auto projected_positive_carrier = span_intersection(
+                    projected_positive_iota,
+                    projected_kernel,
+                    merged_f0_dimension
+                );
+                const std::size_t projected_negative_carrier_dimension
+                    = exact_rank(projected_negative_carrier);
+                const std::size_t projected_positive_carrier_dimension
+                    = exact_rank(projected_positive_carrier);
+                const auto projected_carrier_overlap = span_intersection(
+                    projected_negative_carrier,
+                    projected_positive_carrier,
+                    merged_f0_dimension
+                );
+                const std::size_t projected_carrier_overlap_dimension
+                    = exact_rank(projected_carrier_overlap);
+
+                std::vector<std::vector<Integer>>
+                    negative_carrier_rows;
+                negative_carrier_rows.reserve(kernel_targets.size());
+                for (const std::vector<Rational>& row : kernel_targets) {
+                    if (std::any_of(
+                            row.begin(), row.end(),
+                            [](const Rational& value) {
+                                return value != 0;
+                            }
+                        )) {
+                        negative_carrier_rows.push_back(integerize(row));
+                    }
+                }
+                const auto projected_realized_negative_carrier
+                    = apply_row_map(negative_carrier_rows, projection);
+                const auto projected_realized_positive_carrier
+                    = apply_row_map(positive_internal_rows, projection);
+                if (exact_rank(projected_realized_negative_carrier)
+                        != result.carrier_dimension
+                    || exact_rank(projected_realized_positive_carrier)
+                        != result.positive_internal_kernel_rank) {
+                    throw std::runtime_error(
+                        "realized carrier lost rank under deletion"
+                    );
+                }
+                auto negative_containment = projected_negative_carrier;
+                negative_containment.insert(
+                    negative_containment.end(),
+                    projected_realized_negative_carrier.begin(),
+                    projected_realized_negative_carrier.end()
+                );
+                auto positive_containment = projected_positive_carrier;
+                positive_containment.insert(
+                    positive_containment.end(),
+                    projected_realized_positive_carrier.begin(),
+                    projected_realized_positive_carrier.end()
+                );
+                if (exact_rank(negative_containment)
+                        != projected_negative_carrier_dimension
+                    || exact_rank(positive_containment)
+                        != projected_positive_carrier_dimension) {
+                    throw std::runtime_error(
+                        "realized carrier left projected carrier space"
+                    );
+                }
+
+                result.negative_lower_branch_dimension
+                    = iota_rank - projected_negative_rank;
+                result.positive_lower_branch_dimension
+                    = result.positive_stripped_rank
+                        - projected_positive_rank;
+                result.projected_allocation_dimension
+                    = columns.size() - projected_negative_rank;
+                result.projected_positive_allocation_dimension
+                    = result.positive_source_graphs.size()
+                        - projected_positive_rank;
+                result.projected_unshared_carrier_dimension
+                    = projected_negative_carrier_dimension
+                        - projected_carrier_overlap_dimension;
+                result.projected_positive_rank
+                    = projected_positive_rank
+                        - projected_positive_carrier_dimension;
+                if (projected_negative_carrier_dimension
+                        < result.carrier_dimension
+                    || projected_positive_carrier_dimension
+                        < result.positive_internal_kernel_rank) {
+                    throw std::runtime_error(
+                        "negative lift-obstruction rank"
+                    );
+                }
+                result.negative_lift_obstruction_rank
+                    = projected_negative_carrier_dimension
+                        - result.carrier_dimension;
+                result.positive_lift_obstruction_rank
+                    = projected_positive_carrier_dimension
+                        - result.positive_internal_kernel_rank;
+
+                result.enriched_deletion_contraction_valid
+                    = result.allocation_dimension
+                        + result.negative_lower_branch_dimension
+                            == result.projected_allocation_dimension
+                    && result.positive_allocation_dimension
+                        + result.positive_lower_branch_dimension
+                            == result.projected_positive_allocation_dimension
+                    && result.positive_global_rank
+                        == result.projected_positive_rank
+                            + result.positive_lower_branch_dimension
+                            + result.positive_lift_obstruction_rank
+                    && result.unshared_negative_carrier_dimension
+                        <= result.projected_unshared_carrier_dimension
+                            + result.positive_lift_obstruction_rank;
+                if (!result.enriched_deletion_contraction_valid) {
+                    throw std::runtime_error(
+                        "enriched deletion-contraction recurrence failed"
+                    );
+                }
+                result.projected_carrier_criterion
+                    = result.projected_unshared_carrier_dimension
+                            <= result.projected_positive_rank
+                        && result.projected_allocation_dimension
+                                + result.projected_unshared_carrier_dimension
+                            <= result.projected_positive_allocation_dimension
+                                + result.projected_positive_rank;
                 result.ambient_kernel_criterion
                     = result.positive_sources
                             >= result.f0_kernel_dimension
@@ -2510,6 +2840,15 @@ int main(int argc, char** argv) {
                 = std::numeric_limits<std::uint64_t>::max();
             std::uint64_t minimum_cover_slack
                 = std::numeric_limits<std::uint64_t>::max();
+            std::uint64_t projected_cases = 0U;
+            std::uint64_t projected_failures = 0U;
+            std::uint64_t printed_projected_failures = 0U;
+            std::uint64_t minimum_projected_cover_slack
+                = std::numeric_limits<std::uint64_t>::max();
+            std::uint64_t minimum_projected_capacity_slack
+                = std::numeric_limits<std::uint64_t>::max();
+            std::uint64_t maximum_projected_cover_deficit = 0U;
+            std::uint64_t maximum_projected_capacity_deficit = 0U;
             std::uint64_t printed_nonzero = 0U;
             std::uint64_t printed_tight = 0U;
             for (int factors = 1; factors <= maximum_factors; ++factors) {
@@ -2548,6 +2887,119 @@ int main(int argc, char** argv) {
                                 relation_sweep, fundamental_sweep
                             );
                             ++cases;
+                            if (fundamental_sweep && target > 0) {
+                                ++projected_cases;
+                                if (!result.enriched_deletion_contraction_valid) {
+                                    std::cout
+                                        << "SU2_PLUCKER_PROJECTED_CARRIER "
+                                        << "result=FAIL labels=";
+                                    print_vector(labels);
+                                    std::cout
+                                        << " target=" << target
+                                        << " minus_mask=" << minus_mask
+                                        << " hat_alpha="
+                                        << result.projected_allocation_dimension
+                                        << " hat_beta="
+                                        << result.projected_positive_allocation_dimension
+                                        << " hat_c="
+                                        << result.projected_unshared_carrier_dimension
+                                        << " bar_r="
+                                        << result.projected_positive_rank
+                                        << " A0="
+                                        << result.negative_lower_branch_dimension
+                                        << " B0="
+                                        << result.positive_lower_branch_dimension
+                                        << " theta_minus="
+                                        << result.negative_lift_obstruction_rank
+                                        << " theta_plus="
+                                        << result.positive_lift_obstruction_rank
+                                        << " recurrences="
+                                        << (result.enriched_deletion_contraction_valid
+                                                ? "PASS" : "FAIL")
+                                        << " inequalities="
+                                        << (result.projected_carrier_criterion
+                                                ? "PASS" : "FAIL")
+                                        << '\n';
+                                    return 1;
+                                }
+                                const std::size_t projected_demand
+                                    = result.projected_unshared_carrier_dimension;
+                                const std::size_t projected_supply
+                                    = result.projected_positive_rank;
+                                const std::size_t projected_capacity_demand
+                                    = result.projected_allocation_dimension
+                                        + projected_demand;
+                                const std::size_t projected_capacity_supply
+                                    = result.projected_positive_allocation_dimension
+                                        + projected_supply;
+                                if (projected_demand <= projected_supply
+                                    && projected_capacity_demand
+                                        <= projected_capacity_supply) {
+                                    minimum_projected_cover_slack = std::min(
+                                        minimum_projected_cover_slack,
+                                        static_cast<std::uint64_t>(
+                                            projected_supply
+                                                - projected_demand
+                                        )
+                                    );
+                                    minimum_projected_capacity_slack = std::min(
+                                        minimum_projected_capacity_slack,
+                                        static_cast<std::uint64_t>(
+                                            projected_capacity_supply
+                                                - projected_capacity_demand
+                                        )
+                                    );
+                                } else {
+                                    ++projected_failures;
+                                    if (projected_demand > projected_supply) {
+                                        maximum_projected_cover_deficit
+                                            = std::max(
+                                                maximum_projected_cover_deficit,
+                                                static_cast<std::uint64_t>(
+                                                    projected_demand
+                                                        - projected_supply
+                                                )
+                                            );
+                                    }
+                                    if (projected_capacity_demand
+                                            > projected_capacity_supply) {
+                                        maximum_projected_capacity_deficit
+                                            = std::max(
+                                                maximum_projected_capacity_deficit,
+                                                static_cast<std::uint64_t>(
+                                                    projected_capacity_demand
+                                                        - projected_capacity_supply
+                                                )
+                                            );
+                                    }
+                                    if (printed_projected_failures < 12U) {
+                                        std::cout
+                                            << "projected_failure labels=";
+                                        print_vector(labels);
+                                        std::cout
+                                            << " target=" << target
+                                            << " minus_mask=" << minus_mask
+                                            << " hat_alpha="
+                                            << result.projected_allocation_dimension
+                                            << " hat_beta="
+                                            << result.projected_positive_allocation_dimension
+                                            << " hat_c="
+                                            << result.projected_unshared_carrier_dimension
+                                            << " bar_r="
+                                            << result.projected_positive_rank
+                                            << " A0="
+                                            << result.negative_lower_branch_dimension
+                                            << " B0="
+                                            << result.positive_lower_branch_dimension
+                                            << " theta_minus="
+                                            << result.negative_lift_obstruction_rank
+                                            << " theta_plus="
+                                            << result.positive_lift_obstruction_rank
+                                            << '\n';
+                                        ++printed_projected_failures;
+                                    }
+                                }
+                            }
                             if (result.odd_sources
                                 <= result.positive_sources) {
                                 continue;
@@ -2561,7 +3013,8 @@ int main(int argc, char** argv) {
                                     || !result.fundamental_combined_valid
                                     || !result.optimal_section_criterion
                                     || !result.optimal_section_cover_feasible
-                                    || !result.deletion_contraction_valid)) {
+                                    || !result.deletion_contraction_valid
+                                    || !result.enriched_deletion_contraction_valid)) {
                                 std::cout
                                     << "SU2_PLUCKER_FUNDAMENTAL_LIFT "
                                     << "result=FAIL labels=";
@@ -2605,6 +3058,9 @@ int main(int argc, char** argv) {
                                           << result.merged_row_kernel_dimension
                                           << " deletion_contraction="
                                           << (result.deletion_contraction_valid
+                                                  ? "PASS" : "FAIL")
+                                          << " projected="
+                                          << (result.projected_carrier_criterion
                                                   ? "PASS" : "FAIL")
                                           << '\n';
                                 return 1;
@@ -2659,6 +3115,22 @@ int main(int argc, char** argv) {
                                           << result.residual_negative_demand
                                           << " residual_supply="
                                           << result.residual_positive_supply
+                                          << " hat_alpha="
+                                          << result.projected_allocation_dimension
+                                          << " hat_beta="
+                                          << result.projected_positive_allocation_dimension
+                                          << " hat_c="
+                                          << result.projected_unshared_carrier_dimension
+                                          << " bar_r="
+                                          << result.projected_positive_rank
+                                          << " A0="
+                                          << result.negative_lower_branch_dimension
+                                          << " B0="
+                                          << result.positive_lower_branch_dimension
+                                          << " theta_minus="
+                                          << result.negative_lift_obstruction_rank
+                                          << " theta_plus="
+                                          << result.positive_lift_obstruction_rank
                                           << " ambient="
                                           << (result.ambient_kernel_criterion
                                                   ? "PASS" : "FAIL")
@@ -2784,6 +3256,26 @@ int main(int argc, char** argv) {
                                           std::uint64_t>::max()
                                   ? 0U : minimum_cover_slack)
                           << " result=PASS\n";
+                std::cout << "SU2_PLUCKER_PROJECTED_CARRIER cases="
+                          << projected_cases
+                          << " failures=" << projected_failures
+                          << " minimum_cover_slack="
+                          << (minimum_projected_cover_slack
+                                      == std::numeric_limits<
+                                          std::uint64_t>::max()
+                                  ? 0U : minimum_projected_cover_slack)
+                          << " minimum_capacity_slack="
+                          << (minimum_projected_capacity_slack
+                                      == std::numeric_limits<
+                                          std::uint64_t>::max()
+                                  ? 0U : minimum_projected_capacity_slack)
+                          << " maximum_cover_deficit="
+                          << maximum_projected_cover_deficit
+                          << " maximum_capacity_deficit="
+                          << maximum_projected_capacity_deficit
+                          << " recurrences=PASS inequalities="
+                          << (projected_failures == 0U ? "PASS" : "FAIL")
+                          << '\n';
             }
             return 0;
         }
@@ -2894,6 +3386,27 @@ int main(int argc, char** argv) {
                   << result.merged_row_kernel_dimension
                   << " deletion_contraction_valid="
                   << (result.deletion_contraction_valid ? "PASS" : "FAIL")
+                  << " projected_allocation_dimension="
+                  << result.projected_allocation_dimension
+                  << " projected_positive_allocation_dimension="
+                  << result.projected_positive_allocation_dimension
+                  << " projected_unshared_carrier_dimension="
+                  << result.projected_unshared_carrier_dimension
+                  << " projected_positive_rank="
+                  << result.projected_positive_rank
+                  << " negative_lower_branch_dimension="
+                  << result.negative_lower_branch_dimension
+                  << " positive_lower_branch_dimension="
+                  << result.positive_lower_branch_dimension
+                  << " negative_lift_obstruction_rank="
+                  << result.negative_lift_obstruction_rank
+                  << " positive_lift_obstruction_rank="
+                  << result.positive_lift_obstruction_rank
+                  << " enriched_deletion_contraction_valid="
+                  << (result.enriched_deletion_contraction_valid
+                          ? "PASS" : "FAIL")
+                  << " projected_carrier_criterion="
+                  << (result.projected_carrier_criterion ? "PASS" : "FAIL")
                   << " ambient_kernel_criterion="
                   << (result.ambient_kernel_criterion ? "PASS" : "FAIL")
                   << " optimal_section_rank="

@@ -1,0 +1,5 @@
+SOURCE_SHA256 dd5322625a9441b04ff516c1bdeb056accf6891f5fbe8c6b93d5471cc15a9e14  character_ring_iter/analyze_su2_boundary_primitive_suppliers.cpp
+WORKDIR ginibre_q3
+COMMAND g++ -std=c++20 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror character_ring_iter/analyze_su2_boundary_primitive_suppliers.cpp -o /tmp/analyze_su2_boundary_primitive_suppliers
+COMMAND /tmp/analyze_su2_boundary_primitive_suppliers 8 5
+BOUNDARY_PRIMITIVE_SUPPLIERS OBSTRUCTION labels=[1,1,1,2] q=1 a=0 demand=9 primitive_capacity=6 full_capacity=9 lists=57 entries=4221

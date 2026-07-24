@@ -1,0 +1,14 @@
+Command:
+g++ -O3 -DNDEBUG -std=c++20 \
+  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror \
+  ginibre_q3/character_ring_iter/analyze_su2_two_generator_cyclic.cpp \
+  -o /tmp/analyze_su2_two_generator_cyclic
+/tmp/analyze_su2_two_generator_cyclic 14 8 8 25
+
+Output:
+FIRST_PREFIX_CONE_FAILURE level=3 m=1 n=2 c=0 parity=1 max_left=3 max_right=3 value=-4
+FIRST_RESIDUAL_PREFIX_CONE_FAILURE level=3 m=2 n=3 c=0 parity=1 max_left=3 max_right=3 value=-20
+PASS max_level=14 max_m=8 max_n=8 max_c=25 cases=21632 negative_sectors=0 prefix_cone_failures=11921
+
+Source SHA-256:
+8c15988f7d7697b0614e8fb9c13a5e1ae2339215f233c21ddacb92a0bd32143e

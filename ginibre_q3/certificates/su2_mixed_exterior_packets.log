@@ -1,0 +1,1 @@
+SU2_MIXED_EXTERIOR_PACKET result=FAIL word=[1,1,1,1,1,1] first=[1,1,1] second=[1,1,1] source=3 target=3 packet=-2 total=155 negative_oriented_packets=20 words=6 packets=1871

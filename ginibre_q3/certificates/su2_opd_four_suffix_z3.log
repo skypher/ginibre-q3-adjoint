@@ -1,0 +1,21 @@
+DATE: 2026-07-23
+SOURCE_SHA256: 06b117250e466dbdea7348df573c0c27ad95ed97f23c41f297ddcd10b3f820c7
+BUILD: g++ -std=c++20 -O2 -Wall -Wextra -Werror -pedantic character_ring_iter/verify_su2_opd_four_suffix_z3.cpp -lz3
+COMMAND: verify_su2_opd_four_suffix_z3 --negative-bound
+SU2_OPD_FOUR_SUFFIX_NEGATIVE_BOUND_Z3 PASS result=unsat
+COMMAND: verify_su2_opd_four_suffix_z3
+p=2 case=endpoint result=unsat caps=10x4
+p=2 case=strict-interior-low-target result=unsat caps=10x4
+p=2 case=strict-interior-high-target result=unsat caps=10x4
+p=2 case=repeated-minimum-interior result=unsat caps=10x4
+p=3 case=repeated-minimum-endpoint result=unsat caps=8x4
+p=3 case=repeated-minimum-interior result=unsat caps=8x4
+p=3 case=strict-minimum-endpoint result=unsat caps=8x4
+p=3 case=strict-minimum-interior-low-target result=unsat caps=8x4
+p=3 case=strict-minimum-interior-high-target result=unsat caps=8x4
+p=4 case=repeated-minimum-endpoint result=unsat caps=7x4
+p=4 case=repeated-minimum-interior result=unsat caps=7x4
+p=4 case=strict-minimum-endpoint result=unsat caps=7x4
+p=4 case=strict-minimum-interior-low-target result=unsat caps=7x4
+p=4 case=strict-minimum-interior-high-target result=unsat caps=7x4
+SU2_OPD_FOUR_SUFFIX_Z3 PASS spins=2,...,4

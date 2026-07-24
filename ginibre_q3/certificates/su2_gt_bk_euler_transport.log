@@ -1,0 +1,300 @@
+Strict build:
+  make -j2 analyze_su2_plucker_sr_parity
+
+Compiler:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wshadow -Werror analyze_su2_plucker_sr_parity.cpp \
+    -o analyze_su2_plucker_sr_parity
+
+Commands:
+  ./analyze_su2_plucker_sr_parity gt-bk-case 1 3 1 1 2 3
+  ./analyze_su2_plucker_sr_parity gt-bk-case 1 3 1 1 2 2 3
+  ./analyze_su2_plucker_sr_parity gt-bk-case 2 4 2 2 3 4 5
+
+Selected exact output:
+  component=1 states=360 odd=240 active_states=200 relations=40 \
+    positive=120 slack=80 \
+    euler_histogram={-1:40,0:80,1:200,2:40} \
+    residual_histogram={-1:40,0:200,1:120} \
+    demand=40 supply=120 \
+    radius_flows={1:0,2:0,3:32,4:40} minimum_radius=4 \
+    promotion_cycles=72 negative_promotion_cycles=20 \
+    minimum_promotion_sum=-3 minimum_promotion_size=5 \
+    dihedral_orbits=36 negative_dihedral_orbits=10 \
+    minimum_dihedral_sum=-6 minimum_dihedral_size=10
+  labels=[1,1,2,3] target=1 minus_mask=3 result=PASS
+
+  component=1 states=5040 odd=5760 active_states=3504 relations=2256 \
+    positive=3600 slack=1344 \
+    euler_histogram={-3:120,-2:48,-1:576,0:1344,1:2088,2:768,3:96} \
+    residual_histogram={-3:120,-2:48,-1:576,0:2064,1:2088,2:144} \
+    demand=1032 supply=2376 \
+    radius_flows={1:104,2:304,3:696,4:1008,5:1032} \
+    minimum_radius=5 \
+    promotion_cycles=840 negative_promotion_cycles=224 \
+    minimum_promotion_sum=-8 minimum_promotion_size=6 \
+    dihedral_orbits=420 negative_dihedral_orbits=112 \
+    minimum_dihedral_sum=-16 minimum_dihedral_size=12
+  labels=[1,1,2,2,3] target=1 minus_mask=3 result=PASS
+
+  component=1 states=15120 odd=6480 active_states=4776 \
+    relations=1704 positive=2880 slack=1176 \
+    euler_histogram={-3:56,-2:16,-1:800,0:2672,1:10648,2:912,3:16} \
+    residual_histogram={-3:56,-2:16,-1:800,0:12104,1:2112,2:32} \
+    demand=1000 supply=2176 \
+    radius_flows={1:8,2:32,3:504,4:796,5:996,6:1000} \
+    minimum_radius=6 \
+    promotion_cycles=2520 negative_promotion_cycles=560 \
+    minimum_promotion_sum=-8 minimum_promotion_size=6 \
+    dihedral_orbits=1260 negative_dihedral_orbits=280 \
+    minimum_dihedral_sum=-16 minimum_dihedral_size=12
+  component=2 states=720 odd=0 active_states=0 relations=0 \
+    positive=0 slack=0 demand=0 supply=0 radius_flows={} \
+    minimum_radius=0
+  labels=[2,2,3,4,5] target=2 minus_mask=4 result=PASS
+
+Scope:
+  For a BK state x, the diagnostic computes
+
+    delta(x)=1+e(x)-o(x),
+    rho(x)=delta(x)-indicator_(o(x)=0).
+
+  It checks the component identity
+
+    sum rho = positive-relations
+
+  and solves the exact capacitated transport problem from -rho to +rho
+  when endpoints are restricted by BK graph distance.  The displayed
+  minimum radii are exact for these three components.  The promotion and
+  dihedral lines are exact counterexamples to proving component positivity
+  by summing independent canonical sweep cycles.  The radius computations
+  are finite certificates, not a proof of a uniform radius theorem.
+
+Bounded linear-radius sweep:
+  ./analyze_su2_plucker_sr_parity gt-bk-radius 4 5 4 14
+
+  progress factors=1 cases=10 cached_degrees=17
+  progress factors=2 cases=64 cached_degrees=88
+  progress factors=3 cases=233 cached_degrees=418
+  progress factors=4 cases=572 cached_degrees=2727
+  progress factors=5 cases=1001 cached_degrees=13101
+  SU2_PLUCKER_GT_BK_RADIUS_PARITY cases=1001 \
+    cached_degrees=13101 result=PASS
+
+  Here the tested radius is N, the number of enlarged vertices including
+  the exchange target.  PASS means that the exact weighted transport
+  saturates every negative residual in every loaded BK component in the
+  stated bounded domain.  This is evidence for Target 22F3C, not a proof
+  of the uniform radius-N Hall inequality.
+
+Deficit-gradient bounded sweep:
+  ./analyze_su2_plucker_sr_parity \
+    gt-bk-radius-deficit 4 5 4 14
+
+  progress factors=1 cases=10 cached_degrees=17
+  progress factors=2 cases=64 cached_degrees=88
+  progress factors=3 cases=233 cached_degrees=418
+  progress factors=4 cases=572 cached_degrees=2727
+  progress factors=5 cases=1001 cached_degrees=13101
+  SU2_PLUCKER_GT_BK_RADIUS_DEFICIT_PARITY cases=1001 \
+    cached_degrees=13101 result=PASS
+
+  A directed BK edge x -> y is permitted here only when
+
+    max(0,-rho(y)) <= max(0,-rho(x)).
+
+  Thus PASS verifies the weighted radius-N Hall transport with
+  nonincreasing local deficit throughout the bounded domain.
+
+Two-stage gradient bounded sweep:
+  ./analyze_su2_plucker_sr_parity \
+    gt-bk-radius-gradient 4 5 4 14
+
+  progress factors=1 cases=10 cached_degrees=17
+  progress factors=2 cases=64 cached_degrees=88
+  progress factors=3 cases=233 cached_degrees=418
+  progress factors=4 cases=572 cached_degrees=2727
+  progress factors=5 cases=1001 cached_degrees=13101
+  SU2_PLUCKER_GT_BK_RADIUS_GRADIENT_PARITY cases=1001 \
+    cached_degrees=13101 result=PASS
+
+  While q=max(0,-rho) is positive, a directed edge is permitted only when
+  (q,o) is lexicographically nonincreasing.  At q=0, every edge which
+  remains at q=0 is allowed.  This separates deficit descent from
+  redistribution inside the zero-deficit reservoir.
+
+Two-move local gradient sweep:
+  ./analyze_su2_plucker_sr_parity \
+    gt-bk-gradient-local 4 5 4 14
+
+  progress factors=1 cases=10 cached_degrees=17
+  progress factors=2 cases=64 cached_degrees=88
+  progress factors=3 cases=233 cached_degrees=418
+  progress factors=4 cases=572 cached_degrees=2727
+  progress factors=5 cases=1001 cached_degrees=13101
+  SU2_PLUCKER_GT_BK_GRADIENT_LOCAL_PARITY cases=1001 \
+    cached_degrees=13101 result=PASS
+
+  In addition to the two-stage Hall transport, this mode requires every
+  q>0 state either to have a lexicographically lower (q,o) neighbor or to
+  reach a state with such a neighbor by one constant-(q,o) BK edge.  The
+  plateau swap and the lowering swap are additionally required to be
+  adjacent generators.  Every visited BK state is also independently
+  evaluated by the signed one-queue transfer of Lemma 22F3A1; the program
+  aborts unless its unsigned and signed terminal counts equal respectively
+  1+e+o and 1+e-o.
+
+Plateau and scalar-Laplacian diagnostics:
+  case [1^-,1^-,2^+,3^+], target 1:
+
+    positive_deficit_plateaus=2
+    closed_positive_deficit_plateaus=0
+    maximum_plateau_escape_distance=1
+    direct_lower_gradient_states=36
+    two_step_gradient_states=4
+    adjacent_gradient_swap_pairs=4
+    commuting_gradient_swap_pairs=0
+    two_step_gradient_type_histogram={(1,2):4}
+    deficit_superharmonic_failures=0
+
+  case [1^-,1^-,2^+,2^+,3^+], target 1:
+
+    positive_deficit_plateaus=64
+    closed_positive_deficit_plateaus=0
+    maximum_plateau_escape_distance=1
+    direct_lower_gradient_states=712
+    two_step_gradient_states=32
+    adjacent_gradient_swap_pairs=32
+    commuting_gradient_swap_pairs=0
+    two_step_gradient_type_histogram={(1,2):16,(1,3):16}
+    deficit_superharmonic_failures=144
+    minimum_deficit_laplacian=-2
+    delta_subharmonic_failures=128
+    minimum_delta_laplacian=-2
+    qo_lyapunov_interval=FAIL
+    qo_lyapunov_lower=-0.1875
+    qo_lyapunov_upper=-0.333333
+
+  case [2^+,2^+,3^-,4^+,5^+], target 2:
+
+    positive_deficit_plateaus=28
+    closed_positive_deficit_plateaus=0
+    maximum_plateau_escape_distance=1
+    direct_lower_gradient_states=836
+    two_step_gradient_states=36
+    adjacent_gradient_swap_pairs=36
+    commuting_gradient_swap_pairs=0
+    two_step_gradient_type_histogram={(1,2):36}
+    deficit_superharmonic_failures=56
+    minimum_deficit_laplacian=-2
+    delta_subharmonic_failures=48
+    minimum_delta_laplacian=-2
+    qo_lyapunov_interval=FAIL
+    qo_lyapunov_lower=-0.1875
+    qo_lyapunov_upper=-0.2
+
+  case [1^+,2^+,3^+,3^+,4^-], target 1:
+
+    positive_deficit_plateaus=14
+    closed_positive_deficit_plateaus=0
+    maximum_plateau_escape_distance=1
+    direct_lower_gradient_states=524
+    two_step_gradient_states=36
+    adjacent_gradient_swap_pairs=36
+    commuting_gradient_swap_pairs=0
+    two_step_gradient_type_histogram={(1,2):28,(2,3):8}
+    deficit_superharmonic_failures=4
+    minimum_deficit_laplacian=-1
+    qo_lyapunov_interval=PASS
+    qo_lyapunov_lower=-0.25
+    qo_lyapunov_upper=-0.25
+
+  The q-o Lyapunov interval asks for a scalar lambda such that
+  q(1+lambda o) is nonnegative and superharmonic at every negative state.
+  The empty intervals in the two larger benchmarks rule out this scalar
+  averaging shortcut.
+
+Nonincreasing-odd counterexample:
+  ./analyze_su2_plucker_sr_parity \
+    gt-bk-radius-odd 4 5 4 14
+
+  labels=[1,2,3,3,4] target=1 minus_mask=16 \
+    odd_sources=6 odd_rank=4 positive_sources=3 \
+    xor_demand=640 xor_capacity=628 result=FAIL
+
+  Exact single-case comparison:
+
+    demand=640 supply=2032
+    nonincreasing_odd_flow=628
+    nonincreasing_deficit_flow=640
+    deficit_odd_gradient_flow=640
+    radius_flows={1:12,2:64,3:320,4:528,5:632,6:640}
+    minimum_radius=6
+
+  Hence raw odd-cut count is not the correct monotone potential.  The local
+  deficit survives this obstruction exactly.
+
+Exact metric-XOR obstruction:
+  For [1^-,1^-,2^+,2^+,3^+], target 1:
+
+    xor_pairs=1848
+    xor_pair_missing_within_N=392
+    xor_pair_globally_absent=384
+    negative_fibers=744
+    xor_disconnected_negative_fibers=64
+    metric_tree_relations=2192
+    metric_tree_disconnected_fibers=64
+    metric_tree_disconnected_profiles={(2,0):64}
+    metric_tree_matching=2192
+    metric_tree_target=2256
+
+  For [2^+,2^+,3^-,4^+,5^+], target 2, loaded component:
+
+    xor_pairs=1184
+    xor_pair_missing_within_N=448
+    xor_pair_globally_absent=448
+    negative_fibers=872
+    xor_disconnected_negative_fibers=320
+    metric_tree_relations=1384
+    metric_tree_disconnected_fibers=320
+    metric_tree_disconnected_profiles={(2,0):320}
+    metric_tree_matching=1384
+    metric_tree_target=1704
+
+  The metric-tree rule gives every odd-pair edge all positive resources in
+  its own fibre and all resources in its XOR channel at BK distance at most
+  N.  It chooses a minimum-distance spanning forest and computes an exact
+  transversal matching.  The disconnected profiles show that every missing
+  tree relation comes from a two-odd-cut, zero-positive fibre.  The globally
+  absent counts prove that increasing the transport radius cannot repair
+  the pairwise-XOR rule.
+
+Nearest-positive Hall escape profiles:
+  [1^-,1^-,2^+,3^+], target 1:
+
+    hall_escape_profiles={
+      [2.0.-1.0.0.0.0.0.0.0.0.0.1.1.1]:2,
+      [2.0.-1.2.0.-1.1.0.0.1.0.0.1.1.1]:6}
+    hall_escape_swap_words={
+      [1.2.1.2]:2,[1.2.3.2]:6}
+
+  [1^-,1^-,2^+,2^+,3^+], target 1:
+
+    hall_escape_profiles={
+      [4.0.-3.2.0.-1.1.0.0.1.0.0.1.1.1]:4,
+      [4.0.-3.4.0.-3.2.0.-1.2.0.-1.2.2.1]:12}
+    hall_escape_swap_words={
+      [0.2.1.2]:4,[2.1.0.1]:8,[2.3.4.3]:4}
+
+  [2^+,2^+,3^-,4^+,5^+], target 2:
+
+    hall_escape_profiles={
+      [2.0.-1.1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.1.1.1]:2,
+      [2.0.-1.2.0.-1.2.0.-1.2.0.-1.1.0.0.1.0.0.1.1.1]:2}
+    hall_escape_swap_words={
+      [0.1.2.3.4.3]:2,[1.3.2.3.2.1]:2}
+
+  Each profile is a concatenation of (o,e,rho) triples along a
+  deterministic shortest path from a last-radius Hall demand state to a
+  positive-residual state.  These are path witnesses, not a canonical
+  differential.

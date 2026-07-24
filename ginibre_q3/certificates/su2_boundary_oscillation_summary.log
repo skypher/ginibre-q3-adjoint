@@ -1,0 +1,125 @@
+SU(2) boundary oscillation diagnostic summary
+=============================================
+
+Source:
+  character_ring_iter/search_su2_boundary_oscillation.cpp
+SHA-256:
+  c048dfabce959f9cadd2a8a7841ca5ac0c0c8f083d76043bd5b016d2f8c57b4a
+
+Compile:
+  g++ -std=c++20 -O3 -march=native -fopenmp -Wall -Wextra -Wpedantic \
+    -Wconversion -Wsign-conversion -Werror \
+    character_ring_iter/search_su2_boundary_oscillation.cpp \
+    -o /tmp/search_su2_boundary_oscillation
+
+The executable selected its OpenMP thread count at runtime from online
+CPUs, one-minute machine load, and available RAM.  No fixed thread count
+was supplied.
+
+Complete finite rectangle
+-------------------------
+
+Scope:
+  1 <= k <= 16
+  0 <= background length n <= 9
+  every nondecreasing background word in labels 1,...,k
+  every p,q in 1,...,k
+  every a in 0,...,k
+
+The rectangle was partitioned into four nonoverlapping runs:
+
+  k=1..10, n=0..8:
+    backgrounds=92377 triples=78756444
+  k=11..14, n=0..8:
+    backgrounds=724812 triples=1767142044
+  k=1..16, n=9:
+    backgrounds=3268760 triples=11320904520
+  k=15..16, n=0..8:
+    backgrounds=1225785 triples=4965900192
+
+Totals:
+  backgrounds=5311734
+  triples=18132703200
+
+Result:
+  PASS_OSCILLATION
+  no negative background boundary defect
+  no oscillation inequality counterexample
+
+These are bounded exact-integer diagnostics, not a proof.
+
+Ordinary ring
+-------------
+
+Command:
+  /tmp/search_su2_boundary_oscillation ordinary 10 9
+
+Scope:
+  background labels and p,q <= 10
+  background length n <= 9
+  every a <= 10
+
+Output summary:
+  backgrounds=92378
+  triples=101615800
+  PASS_OSCILLATION
+  no negative background boundary defect
+
+The raw batch output is in su2_boundary_oscillation_ordinary.log.
+The raw finite k<=12,n<=8 replay is in
+su2_boundary_oscillation_finite.log.
+
+Disjoint-support extrema
+------------------------
+
+The disjoint filter requires q and a to be absent from the background
+word together with the appended plus leaf p.
+
+Exact finite family:
+  mode=finite k=3
+  background=[2,2,...,2] (n copies)
+  (p,q,a)=(2,1,1)
+  R-|C|=1 for every n
+
+Selected exact outputs:
+  n=9:  |C|/R=12595/12596, gap=1
+  n=10: |C|/R=40755/40756, gap=1
+  n=11: |C|/R=131891/131892, gap=1
+  n=12: |C|/R=426803/426804, gap=1
+
+Ordinary maximum strict disjoint ratio in the declared n=9 batch:
+  word=[2,2,2,2,2,2,4,4,4]
+  (p,q,a)=(2,1,1)
+  |C|/R=94356/97184
+  gap=2828
+
+There are also disjoint exact equalities |C|/R=1 on wall/support faces,
+often with q=a.  The strict k=3 family proves that no uniform relative
+gap below one is available even after the minimal-counterexample filter.
+
+Sign conjecture falsification
+-----------------------------
+
+Smallest finite witness:
+  mode=finite k=2
+  background=[2]
+  (p,q,a)=(2,1,1)
+  C=1
+  (p-a)C=1 > 0
+  R=1
+  gap=0
+
+The same C=1 calculation holds in every finite level k>=2 and in the
+ordinary ring.  Thus sign(C)=-sign(p-a) is false independently of the
+oscillation inequality.
+
+Replay:
+  /tmp/search_su2_boundary_oscillation --replay finite 2 2 1 1 2
+
+Expected:
+  F_NONZERO (0,2)=1 (2,0)=1
+  C_FIRST=1 C_SECOND=0 C=1 ABS_C=1
+  RHS_TERMS B(q,1)=1
+  RHS=1 GAP=0
+  IDENTITY B_AFTER_P=2 RHS_PLUS_C=2 B_AFTER_A=0 RHS_MINUS_C=0
+  SIGN_TEST (p-a)*C=1 result=FAIL

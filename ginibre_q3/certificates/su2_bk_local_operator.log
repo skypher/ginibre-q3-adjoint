@@ -1,0 +1,61 @@
+SU(2) BK local transfer-operator rank certificate
+Date: 2026-07-23
+
+Source:
+  ginibre_q3/character_ring_iter/analyze_su2_bk_local_operator.cpp
+
+Strict build:
+  g++ -O2 -std=c++20 \
+    -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror \
+    ginibre_q3/character_ring_iter/analyze_su2_bk_local_operator.cpp \
+    -o /tmp/analyze_su2_bk_local_operator
+
+Run:
+  /tmp/analyze_su2_bk_local_operator 5 12
+
+Output:
+  SU2_BK_LOCAL_OPERATOR cases=49392 \
+    signed_rank_histogram={0:12332,1:2816,2:16620,3:4560,4:7798,5:1600,6:2530,7:316,8:672,9:52,10:96} \
+    unsigned_rank_histogram={0:3003,1:740,2:4107,3:1192,4:1963,5:418,6:635,7:84,8:168,9:14,10:24} \
+    maximum_signed_rank=10 \
+    signed_witness=[9,0,5,5,0,-1,-1,0] \
+    maximum_unsigned_rank=10 \
+    unsigned_witness=[9,0,5,5,0,0] \
+    unsigned_nonnegative_defects=4431 \
+    unsigned_nonpositive_defects=4914 \
+    unsigned_zero_defects=3003 \
+    unsigned_mixed_defects=0 \
+    unsigned_delta_orientation_failures=1739 \
+    unsigned_determinant_orientation_failures=58 \
+    unsigned_threshold_orientation_failures=0 \
+    scheduling_tie_classification_failures=0 \
+    unsigned_mixed_witness=[] \
+    unsigned_delta_orientation_witness=[1,1,0,2,1,0,1] \
+    unsigned_determinant_orientation_witness=[3,2,1,5,2,0,1] \
+    unsigned_threshold_orientation_witness=[] result=PASS
+
+Uniform exact family:
+  m>=1
+  incoming total H=2m-1
+  a=(alpha,beta)=(0,m)
+  b=(alpha,beta)=(m,0)
+  z=0
+  T_(a,b;H)-T_(b,a;H)=-I_(2m)
+
+Therefore the same-sign signed and unsigned local defects have rank 2m.
+The diagnostic's rank-ten witnesses are the m=5 member of this family.
+
+Uniform unsigned orientation:
+  L(c,d)=max(beta_c,beta_d-(alpha_c-beta_c))
+  T_(a,b;H)-T_(b',a';H) is entrywise nonnegative if L(a,b)<L(b',a'),
+  zero if the thresholds agree, and entrywise nonpositive if the first
+  threshold is larger.
+
+The zero mixed-sign count and zero threshold-orientation-failure count are
+regression checks for this exact lemma.  The nonzero delta and determinant
+failure counts rule out those two simpler orientation classifiers.
+
+The zero scheduling-tie-classification count independently checks the
+three exact equality cases in Lemma 22F3A23 throughout the displayed local
+domain.  The lemma itself is proved uniformly; this is only its regression
+test.

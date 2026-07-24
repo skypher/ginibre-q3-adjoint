@@ -1,0 +1,5 @@
+SOURCE_SHA256 e44d62d963b8505aeea82b8859ae4ac5bb291b5b7ee2225241eaf69b88d8e75c  character_ring_iter/analyze_su2_crystal_tagged_hall.cpp
+WORKDIR ginibre_q3
+COMMAND g++ -std=c++20 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror character_ring_iter/analyze_su2_crystal_tagged_hall.cpp -o /tmp/analyze_su2_crystal_tagged_hall
+COMMAND /tmp/analyze_su2_crystal_tagged_hall 6 4
+CRYSTAL_TAGGED_HALL OVERLOAD labels=[1,1,1] q=1 retained_mask=0 retained_elements=[] x_weight=0 demand=4 capacity=2 global_demand=5 global_capacity=5 instances=61

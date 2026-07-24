@@ -224,6 +224,151 @@ using WeightedPairCounts = std::map<
 struct FiberCounts {
     std::uint64_t odd = 0U;
     std::uint64_t positive = 0U;
+    std::vector<unsigned int> odd_cuts;
+    std::vector<unsigned int> positive_cuts;
+};
+
+struct FlowEdge {
+    std::size_t to = 0U;
+    std::size_t reverse = 0U;
+    std::uint64_t capacity = 0U;
+};
+
+class DinicFlow {
+public:
+    explicit DinicFlow(std::size_t vertices)
+        : graph_(vertices), level_(vertices), next_(vertices) {}
+
+    void add_edge(
+        std::size_t from,
+        std::size_t to,
+        std::uint64_t capacity
+    ) {
+        const std::size_t forward_reverse = graph_[to].size();
+        const std::size_t backward_reverse = graph_[from].size();
+        graph_[from].push_back(FlowEdge{
+            to, forward_reverse, capacity
+        });
+        graph_[to].push_back(FlowEdge{
+            from, backward_reverse, 0U
+        });
+    }
+
+    std::uint64_t maximum_flow(std::size_t source, std::size_t sink) {
+        std::uint64_t result = 0U;
+        while (build_levels(source, sink)) {
+            std::fill(next_.begin(), next_.end(), 0U);
+            while (true) {
+                const std::uint64_t pushed = push(
+                    source, sink,
+                    std::numeric_limits<std::uint64_t>::max()
+                );
+                if (pushed == 0U) {
+                    break;
+                }
+                if (result
+                    > std::numeric_limits<std::uint64_t>::max()
+                        - pushed) {
+                    throw std::runtime_error("maximum flow overflow");
+                }
+                result += pushed;
+            }
+        }
+        return result;
+    }
+
+    std::vector<bool> residual_reachable(std::size_t source) const {
+        std::vector<bool> reachable(graph_.size(), false);
+        std::queue<std::size_t> frontier;
+        reachable[source] = true;
+        frontier.push(source);
+        while (!frontier.empty()) {
+            const std::size_t current = frontier.front();
+            frontier.pop();
+            for (const FlowEdge& edge : graph_[current]) {
+                if (edge.capacity == 0U || reachable[edge.to]) {
+                    continue;
+                }
+                reachable[edge.to] = true;
+                frontier.push(edge.to);
+            }
+        }
+        return reachable;
+    }
+
+    std::uint64_t edge_flow(
+        std::size_t from,
+        std::size_t edge_index
+    ) const {
+        if (from >= graph_.size()
+            || edge_index >= graph_[from].size()) {
+            throw std::runtime_error("invalid flow edge handle");
+        }
+        const FlowEdge& edge = graph_[from][edge_index];
+        return graph_[edge.to][edge.reverse].capacity;
+    }
+
+    std::size_t add_tracked_edge(
+        std::size_t from,
+        std::size_t to,
+        std::uint64_t capacity
+    ) {
+        const std::size_t edge_index = graph_[from].size();
+        add_edge(from, to, capacity);
+        return edge_index;
+    }
+
+private:
+    bool build_levels(std::size_t source, std::size_t sink) {
+        std::fill(level_.begin(), level_.end(), -1);
+        std::queue<std::size_t> frontier;
+        level_[source] = 0;
+        frontier.push(source);
+        while (!frontier.empty()) {
+            const std::size_t current = frontier.front();
+            frontier.pop();
+            for (const FlowEdge& edge : graph_[current]) {
+                if (edge.capacity == 0U || level_[edge.to] >= 0) {
+                    continue;
+                }
+                level_[edge.to] = level_[current] + 1;
+                frontier.push(edge.to);
+            }
+        }
+        return level_[sink] >= 0;
+    }
+
+    std::uint64_t push(
+        std::size_t current,
+        std::size_t sink,
+        std::uint64_t available
+    ) {
+        if (current == sink) {
+            return available;
+        }
+        for (std::size_t& index = next_[current];
+             index < graph_[current].size(); ++index) {
+            FlowEdge& edge = graph_[current][index];
+            if (edge.capacity == 0U
+                || level_[edge.to] != level_[current] + 1) {
+                continue;
+            }
+            const std::uint64_t pushed = push(
+                edge.to, sink, std::min(available, edge.capacity)
+            );
+            if (pushed == 0U) {
+                continue;
+            }
+            edge.capacity -= pushed;
+            graph_[edge.to][edge.reverse].capacity += pushed;
+            return pushed;
+        }
+        return 0U;
+    }
+
+    std::vector<std::vector<FlowEdge>> graph_;
+    std::vector<int> level_;
+    std::vector<std::size_t> next_;
 };
 
 using GraphCache = std::map<std::vector<int>, std::vector<Graph>>;
@@ -453,7 +598,9 @@ Counts analyze_gt_case(
                         static_cast<std::uint64_t>(fiber.odd_cuts.size()),
                         static_cast<std::uint64_t>(
                             fiber.nonempty_even_cuts.size()
-                        )
+                        ),
+                        fiber.odd_cuts,
+                        fiber.nonempty_even_cuts
                     }
                 );
             }
@@ -1715,12 +1862,357 @@ Key bender_knuth_raw_neighbor(
     return neighbor;
 }
 
+std::pair<std::uint64_t, std::int64_t>
+signed_queue_transfer_counts(
+    const StateKey& state,
+    const std::vector<int>& degrees,
+    unsigned int minus_mask,
+    std::size_t target_vertex
+) {
+    std::map<int, std::pair<std::uint64_t, std::int64_t>>
+        current{{0, {1U, 1}}};
+    int total_height = 0;
+    for (std::size_t vertex : state.first) {
+        const int alpha = state.second[vertex];
+        const int beta = degrees[vertex] - alpha;
+        std::map<int, std::pair<std::uint64_t, std::int64_t>> next;
+        const auto add_counts = [](
+            std::pair<std::uint64_t, std::int64_t>& destination,
+            std::uint64_t unsigned_count,
+            std::int64_t signed_count
+        ) {
+            if (destination.first
+                > std::numeric_limits<std::uint64_t>::max()
+                    - unsigned_count) {
+                throw std::runtime_error(
+                    "signed queue unsigned count overflow"
+                );
+            }
+            if ((signed_count > 0
+                 && destination.second
+                    > std::numeric_limits<std::int64_t>::max()
+                        - signed_count)
+                || (signed_count < 0
+                    && destination.second
+                        < std::numeric_limits<std::int64_t>::min()
+                            - signed_count)) {
+                throw std::runtime_error(
+                    "signed queue signed count overflow"
+                );
+            }
+            destination.first += unsigned_count;
+            destination.second += signed_count;
+        };
+        for (const auto& [cut_height, counts] : current) {
+            if (total_height - cut_height >= beta) {
+                add_counts(
+                    next[cut_height], counts.first, counts.second
+                );
+            }
+            if (vertex != target_vertex && cut_height >= beta) {
+                const int next_height
+                    = cut_height + alpha - beta;
+                const int sign
+                    = (minus_mask & (1U << vertex)) != 0U
+                        ? -1 : 1;
+                add_counts(
+                    next[next_height], counts.first,
+                    static_cast<std::int64_t>(sign) * counts.second
+                );
+            }
+        }
+        total_height += alpha - beta;
+        current = std::move(next);
+    }
+    if (total_height != 0) {
+        throw std::runtime_error(
+            "signed queue transfer has nonzero terminal height"
+        );
+    }
+    const auto found = current.find(0);
+    return found == current.end()
+        ? std::pair<std::uint64_t, std::int64_t>{0U, 0}
+        : found->second;
+}
+
+struct BkTransportResult {
+    std::uint64_t demand = 0U;
+    std::uint64_t supply = 0U;
+    std::uint64_t transported = 0U;
+    std::uint64_t bad_gradient_escape_states = 0U;
+};
+
+enum class BkTransportConstraint {
+    none,
+    nonincreasing_odd,
+    nonincreasing_deficit,
+    deficit_odd_gradient
+};
+
+BkTransportResult bk_transport_at_radius(
+    const std::vector<StateKey>& component_keys,
+    const std::map<StateKey, FiberCounts>& states,
+    const std::vector<int>& degrees,
+    std::size_t radius,
+    BkTransportConstraint constraint
+) {
+    BkTransportResult result;
+    if (component_keys.empty()) {
+        return result;
+    }
+    std::map<StateKey, std::size_t> component_index;
+    for (std::size_t index = 0U;
+         index < component_keys.size(); ++index) {
+        component_index.emplace(component_keys[index], index);
+    }
+    std::vector<std::vector<std::size_t>> adjacency(
+        component_keys.size()
+    );
+    std::vector<std::int64_t> residuals(
+        component_keys.size(), 0
+    );
+    std::vector<std::size_t> negative_states;
+    std::vector<std::size_t> positive_states;
+    for (std::size_t index = 0U;
+         index < component_keys.size(); ++index) {
+        const StateKey& state = component_keys[index];
+        const FiberCounts counts = states.at(state);
+        if (counts.odd > static_cast<std::uint64_t>(
+                std::numeric_limits<std::int64_t>::max()
+            )
+            || counts.positive > static_cast<std::uint64_t>(
+                std::numeric_limits<std::int64_t>::max()
+            )) {
+            throw std::runtime_error(
+                "BK bounded transport count overflow"
+            );
+        }
+        residuals[index] = std::int64_t{1}
+            + static_cast<std::int64_t>(counts.positive)
+            - static_cast<std::int64_t>(counts.odd)
+            - static_cast<std::int64_t>(counts.odd == 0U);
+        if (residuals[index] < 0) {
+            negative_states.push_back(index);
+            result.demand += static_cast<std::uint64_t>(
+                -residuals[index]
+            );
+        } else if (residuals[index] > 0) {
+            positive_states.push_back(index);
+            result.supply += static_cast<std::uint64_t>(
+                residuals[index]
+            );
+        }
+        for (std::size_t position = 0U;
+             position + 1U < state.first.size(); ++position) {
+            StateKey neighbor{
+                state.first,
+                bender_knuth_raw_neighbor(
+                    degrees, state, position
+                )
+            };
+            std::swap(
+                neighbor.first[position],
+                neighbor.first[position + 1U]
+            );
+            adjacency[index].push_back(
+                component_index.at(neighbor)
+            );
+        }
+    }
+    if (constraint == BkTransportConstraint::deficit_odd_gradient) {
+        std::vector<std::int64_t> deficits(
+            component_keys.size(), 0
+        );
+        std::vector<std::uint64_t> odd_counts(
+            component_keys.size(), 0U
+        );
+        std::vector<bool> has_lower_neighbor(
+            component_keys.size(), false
+        );
+        for (std::size_t index = 0U;
+             index < component_keys.size(); ++index) {
+            deficits[index] = std::max<std::int64_t>(
+                0, -residuals[index]
+            );
+            odd_counts[index] = states.at(
+                component_keys[index]
+            ).odd;
+        }
+        for (std::size_t index = 0U;
+             index < component_keys.size(); ++index) {
+            if (deficits[index] == 0) {
+                continue;
+            }
+            for (std::size_t neighbor : adjacency[index]) {
+                if (deficits[neighbor] < deficits[index]
+                    || (deficits[neighbor] == deficits[index]
+                        && odd_counts[neighbor]
+                            < odd_counts[index])) {
+                    has_lower_neighbor[index] = true;
+                    break;
+                }
+            }
+        }
+        for (std::size_t index = 0U;
+             index < component_keys.size(); ++index) {
+            if (deficits[index] == 0
+                || has_lower_neighbor[index]) {
+                continue;
+            }
+            bool has_plateau_step_to_exit = false;
+            for (std::size_t first_swap = 0U;
+                 first_swap < adjacency[index].size()
+                    && !has_plateau_step_to_exit;
+                 ++first_swap) {
+                const std::size_t neighbor
+                    = adjacency[index][first_swap];
+                if (deficits[neighbor] != deficits[index]
+                    || odd_counts[neighbor] != odd_counts[index]) {
+                    continue;
+                }
+                for (std::size_t second_swap = 0U;
+                     second_swap < adjacency[neighbor].size();
+                     ++second_swap) {
+                    const std::size_t separation
+                        = first_swap > second_swap
+                            ? first_swap - second_swap
+                            : second_swap - first_swap;
+                    if (separation != 1U) {
+                        continue;
+                    }
+                    const std::size_t lower_neighbor
+                        = adjacency[neighbor][second_swap];
+                    if (deficits[lower_neighbor] < deficits[index]
+                        || (deficits[lower_neighbor]
+                                == deficits[index]
+                            && odd_counts[lower_neighbor]
+                                < odd_counts[index])) {
+                        has_plateau_step_to_exit = true;
+                        break;
+                    }
+                }
+            }
+            if (!has_plateau_step_to_exit) {
+                ++result.bad_gradient_escape_states;
+            }
+        }
+    }
+    if (result.demand == 0U) {
+        return result;
+    }
+    const std::size_t absent = component_keys.size();
+    std::vector<std::size_t> supply_number(
+        component_keys.size(), absent
+    );
+    for (std::size_t index = 0U;
+         index < positive_states.size(); ++index) {
+        supply_number[positive_states[index]] = index;
+    }
+    const std::size_t source = 0U;
+    const std::size_t demand_offset = 1U;
+    const std::size_t supply_offset
+        = demand_offset + negative_states.size();
+    const std::size_t sink
+        = supply_offset + positive_states.size();
+    DinicFlow flow(sink + 1U);
+    for (std::size_t index = 0U;
+         index < negative_states.size(); ++index) {
+        flow.add_edge(
+            source, demand_offset + index,
+            static_cast<std::uint64_t>(
+                -residuals[negative_states[index]]
+            )
+        );
+    }
+    for (std::size_t index = 0U;
+         index < positive_states.size(); ++index) {
+        flow.add_edge(
+            supply_offset + index, sink,
+            static_cast<std::uint64_t>(
+                residuals[positive_states[index]]
+            )
+        );
+    }
+    std::vector<int> distance(component_keys.size(), -1);
+    std::queue<std::size_t> frontier;
+    for (std::size_t demand = 0U;
+         demand < negative_states.size(); ++demand) {
+        std::fill(distance.begin(), distance.end(), -1);
+        while (!frontier.empty()) {
+            frontier.pop();
+        }
+        distance[negative_states[demand]] = 0;
+        frontier.push(negative_states[demand]);
+        while (!frontier.empty()) {
+            const std::size_t current = frontier.front();
+            frontier.pop();
+            const std::size_t supply = supply_number[current];
+            if (supply != absent) {
+                flow.add_edge(
+                    demand_offset + demand,
+                    supply_offset + supply,
+                    result.demand
+                );
+            }
+            if (distance[current] == static_cast<int>(radius)) {
+                continue;
+            }
+            for (std::size_t neighbor : adjacency[current]) {
+                if (distance[neighbor] >= 0) {
+                    continue;
+                }
+                bool allowed = true;
+                if (constraint
+                    == BkTransportConstraint::nonincreasing_odd) {
+                    allowed = states.at(component_keys[neighbor]).odd
+                        <= states.at(component_keys[current]).odd;
+                } else if (
+                    constraint
+                    == BkTransportConstraint::nonincreasing_deficit
+                    || constraint
+                        == BkTransportConstraint::deficit_odd_gradient
+                ) {
+                    const std::int64_t current_deficit
+                        = std::max<std::int64_t>(
+                            0, -residuals[current]
+                        );
+                    const std::int64_t neighbor_deficit
+                        = std::max<std::int64_t>(
+                            0, -residuals[neighbor]
+                        );
+                    allowed = neighbor_deficit <= current_deficit;
+                    if (allowed
+                        && constraint
+                            == BkTransportConstraint::deficit_odd_gradient
+                        && current_deficit > 0
+                        && neighbor_deficit == current_deficit) {
+                        allowed
+                            = states.at(component_keys[neighbor]).odd
+                                <= states.at(component_keys[current]).odd;
+                    }
+                }
+                if (!allowed) {
+                    continue;
+                }
+                distance[neighbor] = distance[current] + 1;
+                frontier.push(neighbor);
+            }
+        }
+    }
+    result.transported = flow.maximum_flow(source, sink);
+    return result;
+}
+
 Counts analyze_gt_bk_component_case(
     const std::vector<int>& labels,
     int target,
     unsigned int minus_mask,
     ToricCache& cache,
-    bool print_components = false
+    bool print_components = false,
+    std::size_t transport_radius_bound = 0U,
+    BkTransportConstraint transport_constraint
+        = BkTransportConstraint::none,
+    bool require_local_gradient_escape = false
 ) {
     std::vector<std::size_t> order(labels.size() + 1U, 0U);
     for (std::size_t i = 0U; i < order.size(); ++i) {
@@ -1746,6 +2238,20 @@ Counts analyze_gt_bk_component_case(
     } while (std::next_permutation(order.begin(), order.end()));
     first.rank_sum = static_cast<std::uint64_t>(states.size());
 
+    const auto local_euler = [](const FiberCounts& counts) {
+        if (counts.odd > static_cast<std::uint64_t>(
+                std::numeric_limits<std::int64_t>::max()
+            )
+            || counts.positive > static_cast<std::uint64_t>(
+                std::numeric_limits<std::int64_t>::max()
+            )) {
+            throw std::runtime_error("BK local Euler count overflow");
+        }
+        return std::int64_t{1}
+            + static_cast<std::int64_t>(counts.positive)
+            - static_cast<std::int64_t>(counts.odd);
+    };
+
     std::vector<int> degrees = labels;
     degrees.push_back(target);
     std::set<StateKey> visited;
@@ -1763,16 +2269,65 @@ Counts analyze_gt_bk_component_case(
         std::uint64_t odd_occurrences = 0U;
         std::uint64_t active_states = 0U;
         std::uint64_t component_states = 0U;
+        std::map<std::int64_t, std::uint64_t> euler_histogram;
+        std::map<std::int64_t, std::uint64_t> residual_histogram;
+        std::uint64_t component_edges = 0U;
+        std::uint64_t negative_to_positive_edges = 0U;
+        std::uint64_t negative_to_negative_edges = 0U;
+        std::int64_t maximum_edge_jump = 0;
+        std::vector<StateKey> component_keys;
         while (!frontier.empty()) {
             const StateKey current = frontier.front();
             frontier.pop();
+            component_keys.push_back(current);
             ++component_states;
             const FiberCounts counts = states.at(current);
+            const auto [transfer_total, transfer_signed]
+                = signed_queue_transfer_counts(
+                    current, degrees, minus_mask, labels.size()
+                );
+            if (counts.positive
+                    == std::numeric_limits<std::uint64_t>::max()
+                || counts.odd
+                    > std::numeric_limits<std::uint64_t>::max()
+                        - counts.positive - 1U) {
+                throw std::runtime_error(
+                    "BK cut total count overflow"
+                );
+            }
+            const std::uint64_t expected_total
+                = 1U + counts.odd + counts.positive;
+            if (counts.odd > static_cast<std::uint64_t>(
+                    std::numeric_limits<std::int64_t>::max()
+                )
+                || counts.positive
+                    > static_cast<std::uint64_t>(
+                        std::numeric_limits<std::int64_t>::max()
+                    )) {
+                throw std::runtime_error(
+                    "BK signed cut count overflow"
+                );
+            }
+            const std::int64_t expected_signed
+                = std::int64_t{1}
+                  + static_cast<std::int64_t>(counts.positive)
+                  - static_cast<std::int64_t>(counts.odd);
+            if (transfer_total != expected_total
+                || transfer_signed != expected_signed) {
+                throw std::runtime_error(
+                    "signed queue transfer count mismatch"
+                );
+            }
             relations += counts.odd
                 - static_cast<std::uint64_t>(counts.odd != 0U);
             odd_occurrences += counts.odd;
             active_states += counts.odd != 0U ? 1U : 0U;
             positive += counts.positive;
+            const std::int64_t euler = local_euler(counts);
+            const std::int64_t residual = euler
+                - static_cast<std::int64_t>(counts.odd == 0U);
+            ++euler_histogram[euler];
+            ++residual_histogram[residual];
             for (std::size_t i = 0U; i + 1U < current.first.size(); ++i) {
                 StateKey neighbor{
                     current.first,
@@ -1783,6 +2338,26 @@ Counts analyze_gt_bk_component_case(
                     throw std::runtime_error(
                         "Bender--Knuth neighbor is missing"
                     );
+                }
+                if (current < neighbor) {
+                    ++component_edges;
+                    const FiberCounts neighbor_counts = states.at(neighbor);
+                    const std::int64_t neighbor_euler
+                        = local_euler(neighbor_counts);
+                    const std::int64_t neighbor_residual = neighbor_euler
+                        - static_cast<std::int64_t>(
+                            neighbor_counts.odd == 0U
+                        );
+                    maximum_edge_jump = std::max(
+                        maximum_edge_jump,
+                        std::abs(residual - neighbor_residual)
+                    );
+                    if ((residual < 0 && neighbor_residual > 0)
+                        || (residual > 0 && neighbor_residual < 0)) {
+                        ++negative_to_positive_edges;
+                    } else if (residual < 0 && neighbor_residual < 0) {
+                        ++negative_to_negative_edges;
+                    }
                 }
                 if (visited.insert(neighbor).second) {
                     frontier.push(std::move(neighbor));
@@ -1800,7 +2375,2092 @@ Counts analyze_gt_bk_component_case(
                       << " slack="
                       << (positive >= relations
                           ? positive - relations : 0U)
-                      << '\n';
+                      << " euler_histogram={";
+            bool first_entry = true;
+            for (const auto& [value, count] : euler_histogram) {
+                if (!first_entry) {
+                    std::cout << ',';
+                }
+                first_entry = false;
+                std::cout << value << ':' << count;
+            }
+            std::cout << "} residual_histogram={";
+            first_entry = true;
+            for (const auto& [value, count] : residual_histogram) {
+                if (!first_entry) {
+                    std::cout << ',';
+                }
+                first_entry = false;
+                std::cout << value << ':' << count;
+            }
+            std::cout << "} edges=" << component_edges
+                      << " negative_to_positive_edges="
+                      << negative_to_positive_edges
+                      << " negative_to_negative_edges="
+                      << negative_to_negative_edges
+                      << " maximum_edge_jump=" << maximum_edge_jump;
+
+            std::map<StateKey, std::size_t> component_index;
+            for (std::size_t index = 0U;
+                 index < component_keys.size(); ++index) {
+                component_index.emplace(component_keys[index], index);
+            }
+            std::vector<std::vector<std::size_t>> adjacency(
+                component_keys.size()
+            );
+            std::vector<std::int64_t> residuals(
+                component_keys.size(), 0
+            );
+            std::vector<std::size_t> negative_states;
+            std::vector<std::size_t> positive_states;
+            std::uint64_t total_demand = 0U;
+            std::uint64_t total_supply = 0U;
+            for (std::size_t index = 0U;
+                 index < component_keys.size(); ++index) {
+                const StateKey& state = component_keys[index];
+                const FiberCounts counts = states.at(state);
+                residuals[index] = local_euler(counts)
+                    - static_cast<std::int64_t>(counts.odd == 0U);
+                if (residuals[index] < 0) {
+                    negative_states.push_back(index);
+                    total_demand += static_cast<std::uint64_t>(
+                        -residuals[index]
+                    );
+                } else if (residuals[index] > 0) {
+                    positive_states.push_back(index);
+                    total_supply += static_cast<std::uint64_t>(
+                        residuals[index]
+                    );
+                }
+                for (std::size_t position = 0U;
+                     position + 1U < state.first.size(); ++position) {
+                    StateKey neighbor{
+                        state.first,
+                        bender_knuth_raw_neighbor(
+                            degrees, state, position
+                        )
+                    };
+                    std::swap(
+                        neighbor.first[position],
+                        neighbor.first[position + 1U]
+                    );
+                    adjacency[index].push_back(
+                        component_index.at(neighbor)
+                    );
+                }
+            }
+
+            if (total_supply
+                    > static_cast<std::uint64_t>(
+                        std::numeric_limits<std::int64_t>::max()
+                    )
+                || total_demand
+                    > static_cast<std::uint64_t>(
+                        std::numeric_limits<std::int64_t>::max()
+                    )
+                || positive
+                    > static_cast<std::uint64_t>(
+                        std::numeric_limits<std::int64_t>::max()
+                    )
+                || relations
+                    > static_cast<std::uint64_t>(
+                        std::numeric_limits<std::int64_t>::max()
+                    )) {
+                throw std::runtime_error(
+                    "BK Euler transport balance overflow"
+                );
+            }
+            const std::int64_t transport_balance
+                = static_cast<std::int64_t>(total_supply)
+                  - static_cast<std::int64_t>(total_demand);
+            const std::int64_t component_balance
+                = static_cast<std::int64_t>(positive)
+                  - static_cast<std::int64_t>(relations);
+            if (transport_balance != component_balance) {
+                throw std::runtime_error(
+                    "BK Euler transport balance mismatch"
+                );
+            }
+
+            std::map<
+                unsigned int, std::vector<std::size_t>
+            > positive_cut_states;
+            for (std::size_t index = 0U;
+                 index < component_keys.size(); ++index) {
+                const FiberCounts counts
+                    = states.at(component_keys[index]);
+                for (unsigned int cut : counts.positive_cuts) {
+                    positive_cut_states[cut].push_back(index);
+                }
+            }
+            std::uint64_t xor_pair_count = 0U;
+            std::uint64_t xor_pair_missing = 0U;
+            std::uint64_t xor_pair_globally_absent = 0U;
+            std::map<std::size_t, std::uint64_t>
+                xor_activation_distance_histogram;
+            std::uint64_t negative_fiber_count = 0U;
+            std::uint64_t xor_disconnected_negative_fibers = 0U;
+            std::map<std::size_t, std::uint64_t>
+                xor_connectivity_radius_histogram;
+            const std::size_t xor_radius_bound
+                = component_keys.front().first.size();
+            for (std::size_t state_index : negative_states) {
+                ++negative_fiber_count;
+                const FiberCounts counts
+                    = states.at(component_keys[state_index]);
+                if (counts.odd_cuts.size() < 2U) {
+                    throw std::runtime_error(
+                        "negative BK residual has fewer than two odd cuts"
+                    );
+                }
+                std::vector<int> distance(
+                    component_keys.size(), -1
+                );
+                std::queue<std::size_t> xor_frontier;
+                distance[state_index] = 0;
+                xor_frontier.push(state_index);
+                while (!xor_frontier.empty()) {
+                    const std::size_t current = xor_frontier.front();
+                    xor_frontier.pop();
+                    if (distance[current]
+                        == static_cast<int>(xor_radius_bound)) {
+                        continue;
+                    }
+                    for (std::size_t neighbor : adjacency[current]) {
+                        if (distance[neighbor] >= 0) {
+                            continue;
+                        }
+                        distance[neighbor] = distance[current] + 1;
+                        xor_frontier.push(neighbor);
+                    }
+                }
+                struct XorEdgeDistance {
+                    std::size_t first = 0U;
+                    std::size_t second = 0U;
+                    std::size_t distance = 0U;
+                };
+                std::vector<XorEdgeDistance> xor_edges;
+                for (std::size_t first_cut = 0U;
+                     first_cut < counts.odd_cuts.size();
+                     ++first_cut) {
+                    for (std::size_t second_cut = first_cut + 1U;
+                         second_cut < counts.odd_cuts.size();
+                         ++second_cut) {
+                        ++xor_pair_count;
+                        const unsigned int xor_cut
+                            = counts.odd_cuts[first_cut]
+                              ^ counts.odd_cuts[second_cut];
+                        std::size_t minimum_distance
+                            = xor_radius_bound + 1U;
+                        const auto found
+                            = positive_cut_states.find(xor_cut);
+                        if (found != positive_cut_states.end()) {
+                            for (std::size_t positive_state
+                                 : found->second) {
+                                if (distance[positive_state] < 0) {
+                                    continue;
+                                }
+                                minimum_distance = std::min(
+                                    minimum_distance,
+                                    static_cast<std::size_t>(
+                                        distance[positive_state]
+                                    )
+                                );
+                            }
+                        } else {
+                            ++xor_pair_globally_absent;
+                        }
+                        if (minimum_distance > xor_radius_bound) {
+                            ++xor_pair_missing;
+                            continue;
+                        }
+                        ++xor_activation_distance_histogram[
+                            minimum_distance
+                        ];
+                        xor_edges.push_back(XorEdgeDistance{
+                            first_cut, second_cut, minimum_distance
+                        });
+                    }
+                }
+                std::sort(
+                    xor_edges.begin(), xor_edges.end(),
+                    [](const XorEdgeDistance& left,
+                       const XorEdgeDistance& right) {
+                        if (left.distance != right.distance) {
+                            return left.distance < right.distance;
+                        }
+                        if (left.first != right.first) {
+                            return left.first < right.first;
+                        }
+                        return left.second < right.second;
+                    }
+                );
+                std::vector<std::size_t> parent(
+                    counts.odd_cuts.size(), 0U
+                );
+                std::iota(parent.begin(), parent.end(), 0U);
+                const auto find_root = [&parent](std::size_t start) {
+                    std::size_t root = start;
+                    while (parent[root] != root) {
+                        root = parent[root];
+                    }
+                    std::size_t current = start;
+                    while (parent[current] != current) {
+                        const std::size_t next = parent[current];
+                        parent[current] = root;
+                        current = next;
+                    }
+                    return root;
+                };
+                std::size_t selected_edges = 0U;
+                std::size_t connectivity_radius = 0U;
+                for (const XorEdgeDistance& edge : xor_edges) {
+                    const std::size_t first_root
+                        = find_root(edge.first);
+                    const std::size_t second_root
+                        = find_root(edge.second);
+                    if (first_root == second_root) {
+                        continue;
+                    }
+                    parent[second_root] = first_root;
+                    ++selected_edges;
+                    connectivity_radius = std::max(
+                        connectivity_radius, edge.distance
+                    );
+                }
+                if (selected_edges + 1U
+                    != counts.odd_cuts.size()) {
+                    ++xor_disconnected_negative_fibers;
+                } else {
+                    ++xor_connectivity_radius_histogram[
+                        connectivity_radius
+                    ];
+                }
+            }
+
+            struct MetricPositiveResource {
+                std::size_t state = 0U;
+                unsigned int cut = 0U;
+            };
+            std::vector<MetricPositiveResource> metric_resources;
+            std::vector<std::vector<std::size_t>> resources_by_state(
+                component_keys.size()
+            );
+            std::map<unsigned int, std::vector<std::size_t>>
+                resources_by_cut;
+            for (std::size_t state_index = 0U;
+                 state_index < component_keys.size(); ++state_index) {
+                const FiberCounts counts
+                    = states.at(component_keys[state_index]);
+                for (unsigned int cut : counts.positive_cuts) {
+                    const std::size_t resource
+                        = metric_resources.size();
+                    metric_resources.push_back(
+                        MetricPositiveResource{state_index, cut}
+                    );
+                    resources_by_state[state_index].push_back(resource);
+                    resources_by_cut[cut].push_back(resource);
+                }
+            }
+            struct MetricTreeRelation {
+                std::vector<std::size_t> allowed;
+            };
+            std::vector<MetricTreeRelation> metric_tree_relations;
+            std::uint64_t metric_tree_disconnected_fibers = 0U;
+            std::map<
+                std::pair<std::uint64_t, std::uint64_t>,
+                std::uint64_t
+            > metric_tree_disconnected_profiles;
+            for (std::size_t state_index = 0U;
+                 state_index < component_keys.size(); ++state_index) {
+                const FiberCounts counts
+                    = states.at(component_keys[state_index]);
+                if (counts.odd_cuts.size() < 2U) {
+                    continue;
+                }
+                std::vector<int> distance(
+                    component_keys.size(), -1
+                );
+                std::queue<std::size_t> metric_frontier;
+                distance[state_index] = 0;
+                metric_frontier.push(state_index);
+                while (!metric_frontier.empty()) {
+                    const std::size_t current
+                        = metric_frontier.front();
+                    metric_frontier.pop();
+                    if (distance[current]
+                        == static_cast<int>(xor_radius_bound)) {
+                        continue;
+                    }
+                    for (std::size_t neighbor : adjacency[current]) {
+                        if (distance[neighbor] >= 0) {
+                            continue;
+                        }
+                        distance[neighbor] = distance[current] + 1;
+                        metric_frontier.push(neighbor);
+                    }
+                }
+                struct CandidateMetricRelation {
+                    std::size_t first = 0U;
+                    std::size_t second = 0U;
+                    std::size_t distance = 0U;
+                    std::vector<std::size_t> allowed;
+                };
+                std::vector<CandidateMetricRelation> candidates;
+                for (std::size_t first_cut = 0U;
+                     first_cut < counts.odd_cuts.size();
+                     ++first_cut) {
+                    for (std::size_t second_cut = first_cut + 1U;
+                         second_cut < counts.odd_cuts.size();
+                         ++second_cut) {
+                        const unsigned int xor_cut
+                            = counts.odd_cuts[first_cut]
+                              ^ counts.odd_cuts[second_cut];
+                        std::vector<std::size_t> allowed
+                            = resources_by_state[state_index];
+                        std::size_t minimum_distance
+                            = allowed.empty() ? xor_radius_bound + 1U : 0U;
+                        const auto found = resources_by_cut.find(xor_cut);
+                        if (found != resources_by_cut.end()) {
+                            for (std::size_t resource : found->second) {
+                                const std::size_t resource_state
+                                    = metric_resources[resource].state;
+                                if (distance[resource_state] < 0) {
+                                    continue;
+                                }
+                                const std::size_t resource_distance
+                                    = static_cast<std::size_t>(
+                                        distance[resource_state]
+                                    );
+                                if (resource_distance > xor_radius_bound) {
+                                    continue;
+                                }
+                                allowed.push_back(resource);
+                                minimum_distance = std::min(
+                                    minimum_distance, resource_distance
+                                );
+                            }
+                        }
+                        std::sort(allowed.begin(), allowed.end());
+                        allowed.erase(
+                            std::unique(allowed.begin(), allowed.end()),
+                            allowed.end()
+                        );
+                        if (allowed.empty()) {
+                            continue;
+                        }
+                        candidates.push_back(CandidateMetricRelation{
+                            first_cut, second_cut, minimum_distance,
+                            std::move(allowed)
+                        });
+                    }
+                }
+                std::sort(
+                    candidates.begin(), candidates.end(),
+                    [](const CandidateMetricRelation& left,
+                       const CandidateMetricRelation& right) {
+                        if (left.distance != right.distance) {
+                            return left.distance < right.distance;
+                        }
+                        if (left.first != right.first) {
+                            return left.first < right.first;
+                        }
+                        return left.second < right.second;
+                    }
+                );
+                std::vector<std::size_t> parent(
+                    counts.odd_cuts.size(), 0U
+                );
+                std::iota(parent.begin(), parent.end(), 0U);
+                const auto find_root = [&parent](std::size_t start) {
+                    std::size_t root = start;
+                    while (parent[root] != root) {
+                        root = parent[root];
+                    }
+                    std::size_t current = start;
+                    while (parent[current] != current) {
+                        const std::size_t next = parent[current];
+                        parent[current] = root;
+                        current = next;
+                    }
+                    return root;
+                };
+                std::size_t selected = 0U;
+                for (CandidateMetricRelation& candidate : candidates) {
+                    const std::size_t first_root
+                        = find_root(candidate.first);
+                    const std::size_t second_root
+                        = find_root(candidate.second);
+                    if (first_root == second_root) {
+                        continue;
+                    }
+                    parent[second_root] = first_root;
+                    ++selected;
+                    metric_tree_relations.push_back(
+                        MetricTreeRelation{
+                            std::move(candidate.allowed)
+                        }
+                    );
+                    if (selected + 1U
+                        == counts.odd_cuts.size()) {
+                        break;
+                    }
+                }
+                if (selected + 1U != counts.odd_cuts.size()) {
+                    ++metric_tree_disconnected_fibers;
+                    ++metric_tree_disconnected_profiles[{
+                        counts.odd, counts.positive
+                    }];
+                }
+            }
+            std::vector<std::ptrdiff_t> metric_resource_match(
+                metric_resources.size(), -1
+            );
+            std::uint64_t metric_tree_matching = 0U;
+            for (std::size_t relation = 0U;
+                 relation < metric_tree_relations.size(); ++relation) {
+                std::vector<bool> seen(metric_resources.size(), false);
+                std::function<bool(std::size_t)> augment
+                    = [&](std::size_t current) -> bool {
+                        for (std::size_t resource
+                             : metric_tree_relations[current].allowed) {
+                            if (seen[resource]) {
+                                continue;
+                            }
+                            seen[resource] = true;
+                            if (metric_resource_match[resource] < 0
+                                || augment(
+                                    static_cast<std::size_t>(
+                                        metric_resource_match[resource]
+                                    )
+                                )) {
+                                metric_resource_match[resource]
+                                    = static_cast<std::ptrdiff_t>(current);
+                                return true;
+                            }
+                        }
+                        return false;
+                    };
+                if (augment(relation)) {
+                    ++metric_tree_matching;
+                }
+            }
+            const auto constrained_transport = [
+                &adjacency, &component_keys, &negative_states,
+                &positive_states, &residuals, &states,
+                total_demand, xor_radius_bound
+            ](BkTransportConstraint constraint) {
+                if (total_demand == 0U) {
+                    return std::uint64_t{0};
+                }
+                const std::size_t absent = component_keys.size();
+                std::vector<std::size_t> supply_number(
+                    component_keys.size(), absent
+                );
+                for (std::size_t index = 0U;
+                     index < positive_states.size(); ++index) {
+                    supply_number[positive_states[index]] = index;
+                }
+                const std::size_t source = 0U;
+                const std::size_t demand_offset = 1U;
+                const std::size_t supply_offset
+                    = demand_offset + negative_states.size();
+                const std::size_t sink
+                    = supply_offset + positive_states.size();
+                DinicFlow flow(sink + 1U);
+                for (std::size_t index = 0U;
+                     index < negative_states.size(); ++index) {
+                    flow.add_edge(
+                        source, demand_offset + index,
+                        static_cast<std::uint64_t>(
+                            -residuals[negative_states[index]]
+                        )
+                    );
+                }
+                for (std::size_t index = 0U;
+                     index < positive_states.size(); ++index) {
+                    flow.add_edge(
+                        supply_offset + index, sink,
+                        static_cast<std::uint64_t>(
+                            residuals[positive_states[index]]
+                        )
+                    );
+                }
+                std::vector<int> distance(
+                    component_keys.size(), -1
+                );
+                std::queue<std::size_t> constrained_frontier;
+                for (std::size_t demand = 0U;
+                     demand < negative_states.size(); ++demand) {
+                    std::fill(distance.begin(), distance.end(), -1);
+                    while (!constrained_frontier.empty()) {
+                        constrained_frontier.pop();
+                    }
+                    const std::size_t initial_state
+                        = negative_states[demand];
+                    distance[initial_state] = 0;
+                    constrained_frontier.push(initial_state);
+                    while (!constrained_frontier.empty()) {
+                        const std::size_t current
+                            = constrained_frontier.front();
+                        constrained_frontier.pop();
+                        const std::size_t supply
+                            = supply_number[current];
+                        if (supply != absent) {
+                            flow.add_edge(
+                                demand_offset + demand,
+                                supply_offset + supply,
+                                total_demand
+                            );
+                        }
+                        if (distance[current]
+                            == static_cast<int>(xor_radius_bound)) {
+                            continue;
+                        }
+                        const FiberCounts& current_counts
+                            = states.at(component_keys[current]);
+                        const std::int64_t current_deficit
+                            = std::max<std::int64_t>(
+                                0, -residuals[current]
+                            );
+                        for (std::size_t neighbor
+                             : adjacency[current]) {
+                            if (distance[neighbor] >= 0) {
+                                continue;
+                            }
+                            const FiberCounts& neighbor_counts
+                                = states.at(component_keys[neighbor]);
+                            const std::int64_t neighbor_deficit
+                                = std::max<std::int64_t>(
+                                    0, -residuals[neighbor]
+                                );
+                            bool allowed = true;
+                            if (constraint
+                                == BkTransportConstraint::nonincreasing_odd) {
+                                allowed = neighbor_counts.odd
+                                    <= current_counts.odd;
+                            } else {
+                                allowed = neighbor_deficit
+                                    <= current_deficit;
+                                if (allowed
+                                    && constraint
+                                        == BkTransportConstraint::
+                                            deficit_odd_gradient
+                                    && current_deficit > 0
+                                    && neighbor_deficit
+                                        == current_deficit) {
+                                    allowed = neighbor_counts.odd
+                                        <= current_counts.odd;
+                                }
+                            }
+                            if (!allowed) {
+                                continue;
+                            }
+                            distance[neighbor]
+                                = distance[current] + 1;
+                            constrained_frontier.push(neighbor);
+                        }
+                    }
+                }
+                return flow.maximum_flow(source, sink);
+            };
+            const std::uint64_t nonincreasing_odd_flow
+                = constrained_transport(
+                    BkTransportConstraint::nonincreasing_odd
+                );
+            const std::uint64_t nonincreasing_deficit_flow
+                = constrained_transport(
+                    BkTransportConstraint::nonincreasing_deficit
+                );
+            const std::uint64_t deficit_odd_gradient_flow
+                = constrained_transport(
+                    BkTransportConstraint::deficit_odd_gradient
+                );
+            std::vector<std::int64_t> local_deficits(
+                component_keys.size(), 0
+            );
+            std::vector<std::uint64_t> local_odd_counts(
+                component_keys.size(), 0U
+            );
+            for (std::size_t index = 0U;
+                 index < component_keys.size(); ++index) {
+                local_deficits[index] = std::max<std::int64_t>(
+                    0, -residuals[index]
+                );
+                local_odd_counts[index]
+                    = states.at(component_keys[index]).odd;
+            }
+            std::vector<bool> plateau_visited(
+                component_keys.size(), false
+            );
+            std::uint64_t positive_deficit_plateaus = 0U;
+            std::uint64_t closed_positive_deficit_plateaus = 0U;
+            std::size_t maximum_plateau_escape_distance = 0U;
+            std::map<std::size_t, std::uint64_t>
+                plateau_escape_distance_histogram;
+            std::map<
+                std::pair<std::int64_t, std::uint64_t>,
+                std::uint64_t
+            > plateau_type_histogram;
+            std::uint64_t direct_lower_gradient_states = 0U;
+            std::uint64_t two_step_gradient_states = 0U;
+            std::uint64_t missing_two_step_gradient_states = 0U;
+            std::uint64_t adjacent_gradient_swap_pairs = 0U;
+            std::uint64_t commuting_gradient_swap_pairs = 0U;
+            std::map<
+                std::pair<std::size_t, std::size_t>,
+                std::uint64_t
+            > gradient_swap_pair_histogram;
+            std::map<
+                std::pair<std::int64_t, std::uint64_t>,
+                std::uint64_t
+            > two_step_gradient_type_histogram;
+            std::map<std::vector<int>, std::uint64_t>
+                gradient_braid_signature_histogram;
+            for (std::size_t state_index : negative_states) {
+                bool has_lower = false;
+                for (std::size_t neighbor : adjacency[state_index]) {
+                    if (local_deficits[neighbor]
+                            < local_deficits[state_index]
+                        || (local_deficits[neighbor]
+                                == local_deficits[state_index]
+                            && local_odd_counts[neighbor]
+                                < local_odd_counts[state_index])) {
+                        has_lower = true;
+                        break;
+                    }
+                }
+                if (has_lower) {
+                    ++direct_lower_gradient_states;
+                    continue;
+                }
+                bool found_escape = false;
+                for (std::size_t first_swap = 0U;
+                     first_swap < adjacency[state_index].size()
+                         && !found_escape;
+                     ++first_swap) {
+                    const std::size_t plateau_neighbor
+                        = adjacency[state_index][first_swap];
+                    if (local_deficits[plateau_neighbor]
+                            != local_deficits[state_index]
+                        || local_odd_counts[plateau_neighbor]
+                            != local_odd_counts[state_index]) {
+                        continue;
+                    }
+                    for (std::size_t second_swap = 0U;
+                         second_swap
+                            < adjacency[plateau_neighbor].size();
+                         ++second_swap) {
+                        const std::size_t lower_neighbor
+                            = adjacency[plateau_neighbor][second_swap];
+                        if (local_deficits[lower_neighbor]
+                                > local_deficits[state_index]
+                            || (local_deficits[lower_neighbor]
+                                    == local_deficits[state_index]
+                                && local_odd_counts[lower_neighbor]
+                                    >= local_odd_counts[state_index])) {
+                            continue;
+                        }
+                        found_escape = true;
+                        ++two_step_gradient_states;
+                        ++two_step_gradient_type_histogram[{
+                            local_deficits[state_index],
+                            local_odd_counts[state_index]
+                        }];
+                        ++gradient_swap_pair_histogram[{
+                            first_swap, second_swap
+                        }];
+                        const std::size_t separation
+                            = first_swap > second_swap
+                                ? first_swap - second_swap
+                                : second_swap - first_swap;
+                        if (separation == 1U) {
+                            ++adjacent_gradient_swap_pairs;
+                            const std::size_t left_position
+                                = std::min(first_swap, second_swap);
+                            const StateKey& original_state
+                                = component_keys[state_index];
+                            int incoming_height = 0;
+                            for (std::size_t position = 0U;
+                                 position < left_position;
+                                 ++position) {
+                                const std::size_t vertex
+                                    = original_state.first[position];
+                                incoming_height
+                                    += 2 * original_state.second[vertex]
+                                       - degrees[vertex];
+                            }
+                            std::vector<int> signature;
+                            signature.reserve(11U);
+                            signature.push_back(
+                                second_swap > first_swap ? 1 : -1
+                            );
+                            signature.push_back(incoming_height);
+                            const std::size_t target_vertex
+                                = labels.size();
+                            for (std::size_t offset = 0U;
+                                 offset < 3U; ++offset) {
+                                const std::size_t vertex
+                                    = original_state.first[
+                                        left_position + offset
+                                    ];
+                                if (vertex == target_vertex) {
+                                    signature.push_back(0);
+                                } else {
+                                    signature.push_back(
+                                        (minus_mask & (1U << vertex))
+                                                != 0U
+                                            ? -1 : 1
+                                    );
+                                }
+                                signature.push_back(degrees[vertex]);
+                                signature.push_back(
+                                    original_state.second[vertex]
+                                );
+                            }
+                            ++gradient_braid_signature_histogram[
+                                signature
+                            ];
+                        } else if (separation >= 2U) {
+                            ++commuting_gradient_swap_pairs;
+                        } else {
+                            throw std::runtime_error(
+                                "BK plateau escape immediately backtracks"
+                            );
+                        }
+                        break;
+                    }
+                }
+                if (!found_escape) {
+                    ++missing_two_step_gradient_states;
+                }
+            }
+            std::uint64_t deficit_superharmonic_failures = 0U;
+            std::uint64_t deficit_strict_descent_averages = 0U;
+            std::int64_t minimum_deficit_laplacian = 0;
+            bool have_deficit_laplacian = false;
+            std::uint64_t delta_subharmonic_failures = 0U;
+            std::uint64_t delta_strict_ascent_averages = 0U;
+            std::int64_t minimum_delta_laplacian = 0;
+            bool have_delta_laplacian = false;
+            long double lyapunov_lower
+                = -std::numeric_limits<long double>::infinity();
+            long double lyapunov_upper
+                = std::numeric_limits<long double>::infinity();
+            bool lyapunov_interval_possible = true;
+            std::uint64_t maximum_negative_odd = 0U;
+            for (std::size_t index : negative_states) {
+                std::int64_t neighbor_deficit_sum = 0;
+                long double neighbor_deficit_odd_sum = 0.0L;
+                for (std::size_t neighbor : adjacency[index]) {
+                    if (local_deficits[neighbor]
+                        > std::numeric_limits<std::int64_t>::max()
+                            - neighbor_deficit_sum) {
+                        throw std::runtime_error(
+                            "BK deficit Laplacian sum overflow"
+                        );
+                    }
+                    neighbor_deficit_sum
+                        += local_deficits[neighbor];
+                    neighbor_deficit_odd_sum
+                        += static_cast<long double>(
+                            local_deficits[neighbor]
+                        ) * static_cast<long double>(
+                            local_odd_counts[neighbor]
+                        );
+                }
+                if (adjacency[index].size()
+                    > static_cast<std::size_t>(
+                        std::numeric_limits<std::int64_t>::max()
+                    )) {
+                    throw std::runtime_error(
+                        "BK deficit Laplacian degree overflow"
+                    );
+                }
+                const std::int64_t degree
+                    = static_cast<std::int64_t>(
+                        adjacency[index].size()
+                    );
+                if (local_deficits[index] != 0
+                    && degree
+                        > std::numeric_limits<std::int64_t>::max()
+                            / local_deficits[index]) {
+                    throw std::runtime_error(
+                        "BK deficit Laplacian product overflow"
+                    );
+                }
+                const std::int64_t deficit_laplacian
+                    = degree * local_deficits[index]
+                      - neighbor_deficit_sum;
+                const FiberCounts& index_counts
+                    = states.at(component_keys[index]);
+                const std::int64_t index_delta
+                    = std::int64_t{1}
+                      + static_cast<std::int64_t>(
+                            index_counts.positive
+                        )
+                      - static_cast<std::int64_t>(index_counts.odd);
+                std::int64_t delta_laplacian
+                    = -degree * index_delta;
+                for (std::size_t neighbor : adjacency[index]) {
+                    const FiberCounts& neighbor_counts
+                        = states.at(component_keys[neighbor]);
+                    delta_laplacian
+                        += std::int64_t{1}
+                           + static_cast<std::int64_t>(
+                                neighbor_counts.positive
+                             )
+                           - static_cast<std::int64_t>(
+                                neighbor_counts.odd
+                             );
+                }
+                if (delta_laplacian < 0) {
+                    ++delta_subharmonic_failures;
+                }
+                if (delta_laplacian > 0) {
+                    ++delta_strict_ascent_averages;
+                }
+                if (!have_delta_laplacian
+                    || delta_laplacian < minimum_delta_laplacian) {
+                    have_delta_laplacian = true;
+                    minimum_delta_laplacian = delta_laplacian;
+                }
+                maximum_negative_odd = std::max(
+                    maximum_negative_odd,
+                    local_odd_counts[index]
+                );
+                const long double weighted_laplacian
+                    = static_cast<long double>(degree)
+                        * static_cast<long double>(
+                            local_deficits[index]
+                        )
+                        * static_cast<long double>(
+                            local_odd_counts[index]
+                        )
+                      - neighbor_deficit_odd_sum;
+                if (weighted_laplacian > 0.0L) {
+                    lyapunov_lower = std::max(
+                        lyapunov_lower,
+                        -static_cast<long double>(
+                            deficit_laplacian
+                        ) / weighted_laplacian
+                    );
+                } else if (weighted_laplacian < 0.0L) {
+                    lyapunov_upper = std::min(
+                        lyapunov_upper,
+                        -static_cast<long double>(
+                            deficit_laplacian
+                        ) / weighted_laplacian
+                    );
+                } else if (deficit_laplacian < 0) {
+                    lyapunov_interval_possible = false;
+                }
+                if (deficit_laplacian < 0) {
+                    ++deficit_superharmonic_failures;
+                }
+                if (deficit_laplacian > 0) {
+                    ++deficit_strict_descent_averages;
+                }
+                if (!have_deficit_laplacian
+                    || deficit_laplacian
+                        < minimum_deficit_laplacian) {
+                    have_deficit_laplacian = true;
+                    minimum_deficit_laplacian
+                        = deficit_laplacian;
+                }
+            }
+            if (maximum_negative_odd != 0U) {
+                lyapunov_lower = std::max(
+                    lyapunov_lower,
+                    -1.0L / static_cast<long double>(
+                        maximum_negative_odd
+                    )
+                );
+            }
+            if (lyapunov_lower > lyapunov_upper) {
+                lyapunov_interval_possible = false;
+            }
+            for (std::size_t initial_index = 0U;
+                 initial_index < component_keys.size(); ++initial_index) {
+                if (plateau_visited[initial_index]
+                    || local_deficits[initial_index] == 0) {
+                    continue;
+                }
+                const std::int64_t plateau_deficit
+                    = local_deficits[initial_index];
+                const std::uint64_t plateau_odd
+                    = local_odd_counts[initial_index];
+                std::vector<std::size_t> plateau_states;
+                std::queue<std::size_t> plateau_frontier;
+                plateau_visited[initial_index] = true;
+                plateau_frontier.push(initial_index);
+                while (!plateau_frontier.empty()) {
+                    const std::size_t current
+                        = plateau_frontier.front();
+                    plateau_frontier.pop();
+                    plateau_states.push_back(current);
+                    for (std::size_t neighbor : adjacency[current]) {
+                        if (plateau_visited[neighbor]
+                            || local_deficits[neighbor]
+                                != plateau_deficit
+                            || local_odd_counts[neighbor]
+                                != plateau_odd) {
+                            continue;
+                        }
+                        plateau_visited[neighbor] = true;
+                        plateau_frontier.push(neighbor);
+                    }
+                }
+                ++positive_deficit_plateaus;
+                ++plateau_type_histogram[{
+                    plateau_deficit, plateau_odd
+                }];
+                std::map<std::size_t, std::size_t>
+                    plateau_local_index;
+                for (std::size_t index = 0U;
+                     index < plateau_states.size(); ++index) {
+                    plateau_local_index.emplace(
+                        plateau_states[index], index
+                    );
+                }
+                std::vector<int> escape_distance(
+                    plateau_states.size(), -1
+                );
+                std::queue<std::size_t> escape_frontier;
+                for (std::size_t local_index = 0U;
+                     local_index < plateau_states.size();
+                     ++local_index) {
+                    const std::size_t state_index
+                        = plateau_states[local_index];
+                    bool has_lower_neighbor = false;
+                    for (std::size_t neighbor
+                         : adjacency[state_index]) {
+                        if (local_deficits[neighbor]
+                                < plateau_deficit
+                            || (local_deficits[neighbor]
+                                    == plateau_deficit
+                                && local_odd_counts[neighbor]
+                                    < plateau_odd)) {
+                            has_lower_neighbor = true;
+                            break;
+                        }
+                    }
+                    if (has_lower_neighbor) {
+                        escape_distance[local_index] = 0;
+                        escape_frontier.push(local_index);
+                    }
+                }
+                if (escape_frontier.empty()) {
+                    ++closed_positive_deficit_plateaus;
+                    continue;
+                }
+                while (!escape_frontier.empty()) {
+                    const std::size_t local_index
+                        = escape_frontier.front();
+                    escape_frontier.pop();
+                    const std::size_t state_index
+                        = plateau_states[local_index];
+                    for (std::size_t neighbor
+                         : adjacency[state_index]) {
+                        const auto found
+                            = plateau_local_index.find(neighbor);
+                        if (found == plateau_local_index.end()
+                            || escape_distance[found->second] >= 0) {
+                            continue;
+                        }
+                        escape_distance[found->second]
+                            = escape_distance[local_index] + 1;
+                        escape_frontier.push(found->second);
+                    }
+                }
+                std::size_t plateau_maximum_distance = 0U;
+                for (int distance : escape_distance) {
+                    if (distance < 0) {
+                        throw std::runtime_error(
+                            "constant-potential BK plateau disconnected"
+                        );
+                    }
+                    plateau_maximum_distance = std::max(
+                        plateau_maximum_distance,
+                        static_cast<std::size_t>(distance)
+                    );
+                }
+                maximum_plateau_escape_distance = std::max(
+                    maximum_plateau_escape_distance,
+                    plateau_maximum_distance
+                );
+                ++plateau_escape_distance_histogram[
+                    plateau_maximum_distance
+                ];
+            }
+
+            std::cout << " demand=" << total_demand
+                      << " supply=" << total_supply
+                      << " xor_pairs=" << xor_pair_count
+                      << " xor_pair_missing_within_N="
+                      << xor_pair_missing
+                      << " xor_pair_globally_absent="
+                      << xor_pair_globally_absent
+                      << " xor_activation_distance_histogram={";
+            bool first_xor_entry = true;
+            for (const auto& [distance, count]
+                 : xor_activation_distance_histogram) {
+                if (!first_xor_entry) {
+                    std::cout << ',';
+                }
+                first_xor_entry = false;
+                std::cout << distance << ':' << count;
+            }
+            std::cout << "} negative_fibers="
+                      << negative_fiber_count
+                      << " xor_disconnected_negative_fibers="
+                      << xor_disconnected_negative_fibers
+                      << " xor_connectivity_radius_histogram={";
+            first_xor_entry = true;
+            for (const auto& [radius, count]
+                 : xor_connectivity_radius_histogram) {
+                if (!first_xor_entry) {
+                    std::cout << ',';
+                }
+                first_xor_entry = false;
+                std::cout << radius << ':' << count;
+            }
+            std::cout
+                      << "} metric_tree_relations="
+                      << metric_tree_relations.size()
+                      << " metric_tree_disconnected_fibers="
+                      << metric_tree_disconnected_fibers
+                      << " metric_tree_disconnected_profiles={";
+            bool first_disconnected_profile = true;
+            for (const auto& [profile, count]
+                 : metric_tree_disconnected_profiles) {
+                if (!first_disconnected_profile) {
+                    std::cout << ',';
+                }
+                first_disconnected_profile = false;
+                std::cout << '(' << profile.first << ','
+                          << profile.second << "):" << count;
+            }
+            std::cout
+                      << '}'
+                      << " metric_tree_matching="
+                      << metric_tree_matching
+                      << " metric_tree_target=" << relations
+                      << " nonincreasing_odd_flow="
+                      << nonincreasing_odd_flow
+                      << " nonincreasing_deficit_flow="
+                      << nonincreasing_deficit_flow
+                      << " deficit_odd_gradient_flow="
+                      << deficit_odd_gradient_flow
+                      << " positive_deficit_plateaus="
+                      << positive_deficit_plateaus
+                      << " closed_positive_deficit_plateaus="
+                      << closed_positive_deficit_plateaus
+                      << " maximum_plateau_escape_distance="
+                      << maximum_plateau_escape_distance
+                      << " plateau_escape_distance_histogram={";
+            bool first_plateau_entry = true;
+            for (const auto& [distance, count]
+                 : plateau_escape_distance_histogram) {
+                if (!first_plateau_entry) {
+                    std::cout << ',';
+                }
+                first_plateau_entry = false;
+                std::cout << distance << ':' << count;
+            }
+            std::cout << "} plateau_type_histogram={";
+            first_plateau_entry = true;
+            for (const auto& [type, count]
+                 : plateau_type_histogram) {
+                if (!first_plateau_entry) {
+                    std::cout << ',';
+                }
+                first_plateau_entry = false;
+                std::cout << '(' << type.first << ','
+                          << type.second << "):" << count;
+            }
+            std::cout << '}'
+                      << " direct_lower_gradient_states="
+                      << direct_lower_gradient_states
+                      << " two_step_gradient_states="
+                      << two_step_gradient_states
+                      << " missing_two_step_gradient_states="
+                      << missing_two_step_gradient_states
+                      << " adjacent_gradient_swap_pairs="
+                      << adjacent_gradient_swap_pairs
+                      << " commuting_gradient_swap_pairs="
+                      << commuting_gradient_swap_pairs
+                      << " gradient_swap_pair_histogram={";
+            bool first_gradient_pair = true;
+            for (const auto& [pair, count]
+                 : gradient_swap_pair_histogram) {
+                if (!first_gradient_pair) {
+                    std::cout << ',';
+                }
+                first_gradient_pair = false;
+                std::cout << '(' << pair.first << ','
+                          << pair.second << "):" << count;
+            }
+            std::cout << '}'
+                      << " two_step_gradient_type_histogram={";
+            bool first_two_step_type = true;
+            for (const auto& [type, count]
+                 : two_step_gradient_type_histogram) {
+                if (!first_two_step_type) {
+                    std::cout << ',';
+                }
+                first_two_step_type = false;
+                std::cout << '(' << type.first << ','
+                          << type.second << "):" << count;
+            }
+            std::cout << '}'
+                      << " gradient_braid_signature_classes="
+                      << gradient_braid_signature_histogram.size()
+                      << " gradient_braid_signatures={";
+            std::size_t displayed_braid_signatures = 0U;
+            bool first_braid_signature = true;
+            for (const auto& [signature, count]
+                 : gradient_braid_signature_histogram) {
+                if (displayed_braid_signatures == 20U) {
+                    std::cout << ",...";
+                    break;
+                }
+                if (!first_braid_signature) {
+                    std::cout << ',';
+                }
+                first_braid_signature = false;
+                std::cout << '[';
+                for (std::size_t index = 0U;
+                     index < signature.size(); ++index) {
+                    if (index != 0U) {
+                        std::cout << '.';
+                    }
+                    std::cout << signature[index];
+                }
+                std::cout << "]:" << count;
+                ++displayed_braid_signatures;
+            }
+            std::cout << '}'
+                      << " deficit_superharmonic_failures="
+                      << deficit_superharmonic_failures
+                      << " deficit_strict_descent_averages="
+                      << deficit_strict_descent_averages
+                      << " minimum_deficit_laplacian="
+                      << minimum_deficit_laplacian
+                      << " delta_subharmonic_failures="
+                      << delta_subharmonic_failures
+                      << " delta_strict_ascent_averages="
+                      << delta_strict_ascent_averages
+                      << " minimum_delta_laplacian="
+                      << minimum_delta_laplacian
+                      << " qo_lyapunov_interval="
+                      << (lyapunov_interval_possible ? "PASS" : "FAIL")
+                      << " qo_lyapunov_lower="
+                      << static_cast<double>(lyapunov_lower)
+                      << " qo_lyapunov_upper="
+                      << static_cast<double>(lyapunov_upper)
+                      << " radius_flows={";
+            const std::size_t absent = component_keys.size();
+            std::vector<std::size_t> supply_number(
+                component_keys.size(), absent
+            );
+            for (std::size_t index = 0U;
+                 index < positive_states.size(); ++index) {
+                supply_number[positive_states[index]] = index;
+            }
+            bool first_radius = true;
+            std::size_t minimum_radius
+                = total_demand == 0U ? 0U : component_keys.size();
+            std::size_t last_failed_radius = 0U;
+            std::uint64_t last_hall_demand = 0U;
+            std::uint64_t last_hall_supply = 0U;
+            std::size_t last_hall_demand_states = 0U;
+            std::size_t last_hall_supply_states = 0U;
+            std::map<std::int64_t, std::uint64_t>
+                last_hall_demand_histogram;
+            std::map<std::int64_t, std::uint64_t>
+                last_hall_supply_histogram;
+            std::map<std::size_t, std::uint64_t>
+                last_hall_demand_target_positions;
+            std::map<std::size_t, std::uint64_t>
+                last_hall_supply_target_positions;
+            std::map<
+                std::pair<std::uint64_t, std::uint64_t>,
+                std::uint64_t
+            > last_hall_demand_fibers;
+            std::map<
+                std::pair<std::uint64_t, std::uint64_t>,
+                std::uint64_t
+            > last_hall_supply_fibers;
+            std::map<std::vector<int>, std::uint64_t>
+                last_hall_demand_signatures;
+            std::map<std::vector<int>, std::uint64_t>
+                last_hall_supply_signatures;
+            std::vector<std::size_t> last_hall_demand_indices;
+            std::uint64_t hall_expanded_supply = 0U;
+            std::uint64_t hall_new_shell_supply = 0U;
+            std::size_t hall_new_shell_supply_states = 0U;
+            std::map<
+                std::pair<std::uint64_t, std::uint64_t>,
+                std::uint64_t
+            > hall_new_shell_fibers;
+            std::map<std::vector<int>, std::uint64_t>
+                hall_new_shell_signatures;
+            std::map<std::vector<int>, std::uint64_t>
+                hall_escape_profiles;
+            std::map<std::vector<std::size_t>, std::uint64_t>
+                hall_escape_swap_words;
+            std::map<std::size_t, std::uint64_t>
+                successful_distance_flow;
+            std::map<
+                std::pair<std::int64_t, std::int64_t>,
+                std::uint64_t
+            > successful_residual_pair_flow;
+            std::map<std::vector<std::size_t>, std::uint64_t>
+                successful_swap_word_flow;
+            std::uint64_t successful_used_pairs = 0U;
+            const std::size_t maximum_radius = std::min<std::size_t>(
+                component_keys.size(), 8U
+            );
+            for (std::size_t radius = 1U;
+                 total_demand != 0U && radius <= maximum_radius;
+                 ++radius) {
+                const std::size_t source = 0U;
+                const std::size_t demand_offset = 1U;
+                const std::size_t supply_offset
+                    = demand_offset + negative_states.size();
+                const std::size_t sink
+                    = supply_offset + positive_states.size();
+                DinicFlow flow(sink + 1U);
+                struct TrackedTransportEdge {
+                    std::size_t demand = 0U;
+                    std::size_t supply = 0U;
+                    std::size_t edge_index = 0U;
+                    std::size_t distance = 0U;
+                };
+                std::vector<TrackedTransportEdge> tracked_edges;
+                for (std::size_t index = 0U;
+                     index < negative_states.size(); ++index) {
+                    flow.add_edge(
+                        source, demand_offset + index,
+                        static_cast<std::uint64_t>(
+                            -residuals[negative_states[index]]
+                        )
+                    );
+                }
+                for (std::size_t index = 0U;
+                     index < positive_states.size(); ++index) {
+                    flow.add_edge(
+                        supply_offset + index, sink,
+                        static_cast<std::uint64_t>(
+                            residuals[positive_states[index]]
+                        )
+                    );
+                }
+                std::vector<int> distance(
+                    component_keys.size(), -1
+                );
+                std::queue<std::size_t> local_frontier;
+                for (std::size_t demand = 0U;
+                     demand < negative_states.size(); ++demand) {
+                    std::fill(distance.begin(), distance.end(), -1);
+                    while (!local_frontier.empty()) {
+                        local_frontier.pop();
+                    }
+                    const std::size_t demand_initial
+                        = negative_states[demand];
+                    distance[demand_initial] = 0;
+                    local_frontier.push(demand_initial);
+                    while (!local_frontier.empty()) {
+                        const std::size_t current_index
+                            = local_frontier.front();
+                        local_frontier.pop();
+                        const std::size_t supply
+                            = supply_number[current_index];
+                        if (supply != absent) {
+                            const std::size_t edge_index
+                                = flow.add_tracked_edge(
+                                demand_offset + demand,
+                                supply_offset + supply,
+                                total_demand
+                            );
+                            tracked_edges.push_back(
+                                TrackedTransportEdge{
+                                    demand,
+                                    supply,
+                                    edge_index,
+                                    static_cast<std::size_t>(
+                                        distance[current_index]
+                                    )
+                                }
+                            );
+                        }
+                        if (distance[current_index]
+                            == static_cast<int>(radius)) {
+                            continue;
+                        }
+                        for (std::size_t neighbor
+                             : adjacency[current_index]) {
+                            if (distance[neighbor] >= 0) {
+                                continue;
+                            }
+                            distance[neighbor]
+                                = distance[current_index] + 1;
+                            local_frontier.push(neighbor);
+                        }
+                    }
+                }
+                const std::uint64_t transported
+                    = flow.maximum_flow(source, sink);
+                if (!first_radius) {
+                    std::cout << ',';
+                }
+                first_radius = false;
+                std::cout << radius << ':' << transported;
+                if (transported == total_demand) {
+                    minimum_radius = radius;
+                    const auto shortest_swap_word
+                        = [&adjacency, absent](
+                            std::size_t initial_index,
+                            std::size_t final_index
+                        ) {
+                            std::vector<std::size_t> predecessor(
+                                adjacency.size(), absent
+                            );
+                            std::vector<std::size_t> predecessor_swap(
+                                adjacency.size(), absent
+                            );
+                            std::queue<std::size_t> path_frontier;
+                            predecessor[initial_index] = initial_index;
+                            path_frontier.push(initial_index);
+                            while (!path_frontier.empty()
+                                   && predecessor[final_index] == absent) {
+                                const std::size_t current
+                                    = path_frontier.front();
+                                path_frontier.pop();
+                                for (std::size_t swap = 0U;
+                                     swap < adjacency[current].size();
+                                     ++swap) {
+                                    const std::size_t neighbor
+                                        = adjacency[current][swap];
+                                    if (predecessor[neighbor] != absent) {
+                                        continue;
+                                    }
+                                    predecessor[neighbor] = current;
+                                    predecessor_swap[neighbor] = swap;
+                                    path_frontier.push(neighbor);
+                                }
+                            }
+                            if (predecessor[final_index] == absent) {
+                                throw std::runtime_error(
+                                    "BK transport endpoints disconnected"
+                                );
+                            }
+                            std::vector<std::size_t> word;
+                            for (std::size_t current = final_index;
+                                 current != initial_index;
+                                 current = predecessor[current]) {
+                                word.push_back(
+                                    predecessor_swap[current]
+                                );
+                            }
+                            std::reverse(word.begin(), word.end());
+                            return word;
+                        };
+                    for (const TrackedTransportEdge& edge
+                         : tracked_edges) {
+                        const std::size_t from
+                            = demand_offset + edge.demand;
+                        const std::uint64_t amount
+                            = flow.edge_flow(from, edge.edge_index);
+                        if (amount == 0U) {
+                            continue;
+                        }
+                        ++successful_used_pairs;
+                        successful_distance_flow[edge.distance] += amount;
+                        const std::size_t negative_state
+                            = negative_states[edge.demand];
+                        const std::size_t positive_state
+                            = positive_states[edge.supply];
+                        successful_residual_pair_flow[{
+                            residuals[negative_state],
+                            residuals[positive_state]
+                        }] += amount;
+                        const std::vector<std::size_t> word
+                            = shortest_swap_word(
+                                negative_state, positive_state
+                            );
+                        if (word.size() != edge.distance) {
+                            throw std::runtime_error(
+                                "BK transport distance mismatch"
+                            );
+                        }
+                        successful_swap_word_flow[word] += amount;
+                    }
+                    break;
+                }
+                const std::vector<bool> reachable
+                    = flow.residual_reachable(source);
+                last_failed_radius = radius;
+                last_hall_demand = 0U;
+                last_hall_supply = 0U;
+                last_hall_demand_states = 0U;
+                last_hall_supply_states = 0U;
+                last_hall_demand_histogram.clear();
+                last_hall_supply_histogram.clear();
+                last_hall_demand_target_positions.clear();
+                last_hall_supply_target_positions.clear();
+                last_hall_demand_fibers.clear();
+                last_hall_supply_fibers.clear();
+                last_hall_demand_signatures.clear();
+                last_hall_supply_signatures.clear();
+                last_hall_demand_indices.clear();
+                const std::size_t target_vertex = labels.size();
+                const auto state_signature = [
+                    &component_keys, &degrees, minus_mask, target_vertex
+                ](std::size_t state_index) {
+                    const StateKey& state
+                        = component_keys[state_index];
+                    std::vector<int> signature;
+                    signature.reserve(3U * state.first.size());
+                    for (std::size_t vertex : state.first) {
+                        if (vertex == target_vertex) {
+                            signature.push_back(0);
+                        } else {
+                            signature.push_back(
+                                (minus_mask & (1U << vertex)) != 0U
+                                    ? -1 : 1
+                            );
+                        }
+                        signature.push_back(degrees[vertex]);
+                        signature.push_back(state.second[vertex]);
+                    }
+                    return signature;
+                };
+                for (std::size_t demand = 0U;
+                     demand < negative_states.size(); ++demand) {
+                    if (!reachable[demand_offset + demand]) {
+                        continue;
+                    }
+                    const std::size_t state_index
+                        = negative_states[demand];
+                    const std::int64_t residual
+                        = residuals[state_index];
+                    const std::uint64_t weight
+                        = static_cast<std::uint64_t>(-residual);
+                    last_hall_demand += weight;
+                    ++last_hall_demand_states;
+                    ++last_hall_demand_histogram[residual];
+                    const StateKey& state
+                        = component_keys[state_index];
+                    const auto target_iterator = std::find(
+                        state.first.begin(), state.first.end(),
+                        target_vertex
+                    );
+                    if (target_iterator == state.first.end()) {
+                        throw std::runtime_error(
+                            "target missing from BK order"
+                        );
+                    }
+                    const std::size_t target_position
+                        = static_cast<std::size_t>(
+                            target_iterator - state.first.begin()
+                        );
+                    last_hall_demand_target_positions[
+                        target_position
+                    ] += weight;
+                    const FiberCounts counts = states.at(state);
+                    ++last_hall_demand_fibers[{
+                        counts.odd, counts.positive
+                    }];
+                    ++last_hall_demand_signatures[
+                        state_signature(state_index)
+                    ];
+                    last_hall_demand_indices.push_back(state_index);
+                }
+                for (std::size_t supply = 0U;
+                     supply < positive_states.size(); ++supply) {
+                    if (!reachable[supply_offset + supply]) {
+                        continue;
+                    }
+                    const std::size_t state_index
+                        = positive_states[supply];
+                    const std::int64_t residual
+                        = residuals[state_index];
+                    const std::uint64_t weight
+                        = static_cast<std::uint64_t>(residual);
+                    last_hall_supply += weight;
+                    ++last_hall_supply_states;
+                    ++last_hall_supply_histogram[residual];
+                    const StateKey& state
+                        = component_keys[state_index];
+                    const auto target_iterator = std::find(
+                        state.first.begin(), state.first.end(),
+                        target_vertex
+                    );
+                    if (target_iterator == state.first.end()) {
+                        throw std::runtime_error(
+                            "target missing from BK order"
+                        );
+                    }
+                    const std::size_t target_position
+                        = static_cast<std::size_t>(
+                            target_iterator - state.first.begin()
+                        );
+                    last_hall_supply_target_positions[
+                        target_position
+                    ] += weight;
+                    const FiberCounts counts = states.at(state);
+                    ++last_hall_supply_fibers[{
+                        counts.odd, counts.positive
+                    }];
+                    ++last_hall_supply_signatures[
+                        state_signature(state_index)
+                    ];
+                }
+                if (last_hall_demand < last_hall_supply
+                    || last_hall_demand - last_hall_supply
+                        != total_demand - transported) {
+                    throw std::runtime_error(
+                        "BK Hall witness deficit mismatch"
+                    );
+                }
+            }
+            if (minimum_radius == component_keys.size()
+                && total_demand != 0U) {
+                minimum_radius = 0U;
+            }
+            if (minimum_radius != 0U
+                && last_failed_radius != 0U) {
+                std::vector<int> distance(
+                    component_keys.size(), -1
+                );
+                std::queue<std::size_t> hall_frontier;
+                for (std::size_t state_index
+                     : last_hall_demand_indices) {
+                    distance[state_index] = 0;
+                    hall_frontier.push(state_index);
+                }
+                while (!hall_frontier.empty()) {
+                    const std::size_t current
+                        = hall_frontier.front();
+                    hall_frontier.pop();
+                    if (distance[current]
+                        == static_cast<int>(minimum_radius)) {
+                        continue;
+                    }
+                    for (std::size_t neighbor : adjacency[current]) {
+                        if (distance[neighbor] >= 0) {
+                            continue;
+                        }
+                        distance[neighbor] = distance[current] + 1;
+                        hall_frontier.push(neighbor);
+                    }
+                }
+                const std::size_t target_vertex = labels.size();
+                const auto state_signature = [
+                    &component_keys, &degrees, minus_mask, target_vertex
+                ](std::size_t state_index) {
+                    const StateKey& state
+                        = component_keys[state_index];
+                    std::vector<int> signature;
+                    signature.reserve(3U * state.first.size());
+                    for (std::size_t vertex : state.first) {
+                        if (vertex == target_vertex) {
+                            signature.push_back(0);
+                        } else {
+                            signature.push_back(
+                                (minus_mask & (1U << vertex)) != 0U
+                                    ? -1 : 1
+                            );
+                        }
+                        signature.push_back(degrees[vertex]);
+                        signature.push_back(state.second[vertex]);
+                    }
+                    return signature;
+                };
+                std::uint64_t failed_neighborhood_supply = 0U;
+                for (std::size_t state_index : positive_states) {
+                    if (distance[state_index] < 0
+                        || distance[state_index]
+                            > static_cast<int>(minimum_radius)) {
+                        continue;
+                    }
+                    const std::uint64_t weight
+                        = static_cast<std::uint64_t>(
+                            residuals[state_index]
+                        );
+                    hall_expanded_supply += weight;
+                    if (distance[state_index]
+                        <= static_cast<int>(last_failed_radius)) {
+                        failed_neighborhood_supply += weight;
+                        continue;
+                    }
+                    hall_new_shell_supply += weight;
+                    ++hall_new_shell_supply_states;
+                    const FiberCounts counts
+                        = states.at(component_keys[state_index]);
+                    ++hall_new_shell_fibers[{
+                        counts.odd, counts.positive
+                    }];
+                    ++hall_new_shell_signatures[
+                        state_signature(state_index)
+                    ];
+                }
+                if (failed_neighborhood_supply != last_hall_supply
+                    || hall_expanded_supply
+                        != last_hall_supply
+                            + hall_new_shell_supply) {
+                    throw std::runtime_error(
+                        "BK Hall neighborhood mismatch"
+                    );
+                }
+                const std::size_t absent_state = component_keys.size();
+                for (std::size_t initial_state
+                     : last_hall_demand_indices) {
+                    std::vector<std::size_t> predecessor(
+                        component_keys.size(), absent_state
+                    );
+                    std::vector<std::size_t> predecessor_swap(
+                        component_keys.size(), absent_state
+                    );
+                    std::queue<std::size_t> escape_frontier;
+                    predecessor[initial_state] = initial_state;
+                    escape_frontier.push(initial_state);
+                    std::size_t final_state = absent_state;
+                    while (!escape_frontier.empty()
+                           && final_state == absent_state) {
+                        const std::size_t current
+                            = escape_frontier.front();
+                        escape_frontier.pop();
+                        if (residuals[current] > 0) {
+                            final_state = current;
+                            break;
+                        }
+                        for (std::size_t swap = 0U;
+                             swap < adjacency[current].size(); ++swap) {
+                            const std::size_t neighbor
+                                = adjacency[current][swap];
+                            if (predecessor[neighbor] != absent_state) {
+                                continue;
+                            }
+                            predecessor[neighbor] = current;
+                            predecessor_swap[neighbor] = swap;
+                            escape_frontier.push(neighbor);
+                        }
+                    }
+                    if (final_state == absent_state) {
+                        throw std::runtime_error(
+                            "Hall witness has no positive escape"
+                        );
+                    }
+                    std::vector<std::size_t> reverse_path{final_state};
+                    std::vector<std::size_t> reverse_word;
+                    for (std::size_t current = final_state;
+                         current != initial_state;
+                         current = predecessor[current]) {
+                        reverse_word.push_back(
+                            predecessor_swap[current]
+                        );
+                        reverse_path.push_back(predecessor[current]);
+                    }
+                    std::reverse(
+                        reverse_path.begin(), reverse_path.end()
+                    );
+                    std::reverse(
+                        reverse_word.begin(), reverse_word.end()
+                    );
+                    std::vector<int> profile;
+                    profile.reserve(3U * reverse_path.size());
+                    for (std::size_t path_state : reverse_path) {
+                        const FiberCounts counts
+                            = states.at(component_keys[path_state]);
+                        if (counts.odd
+                                > static_cast<std::uint64_t>(
+                                    std::numeric_limits<int>::max()
+                                )
+                            || counts.positive
+                                > static_cast<std::uint64_t>(
+                                    std::numeric_limits<int>::max()
+                                )
+                            || residuals[path_state]
+                                < std::numeric_limits<int>::min()
+                            || residuals[path_state]
+                                > std::numeric_limits<int>::max()) {
+                            throw std::runtime_error(
+                                "Hall escape profile overflow"
+                            );
+                        }
+                        profile.push_back(
+                            static_cast<int>(counts.odd)
+                        );
+                        profile.push_back(
+                            static_cast<int>(counts.positive)
+                        );
+                        profile.push_back(
+                            static_cast<int>(residuals[path_state])
+                        );
+                    }
+                    ++hall_escape_profiles[profile];
+                    ++hall_escape_swap_words[reverse_word];
+                }
+            }
+            std::cout << "} minimum_radius=" << minimum_radius;
+            if (last_failed_radius != 0U) {
+                const auto print_count_map = [](
+                    const auto& entries
+                ) {
+                    bool first_item = true;
+                    std::cout << '{';
+                    for (const auto& [key, count] : entries) {
+                        if (!first_item) {
+                            std::cout << ',';
+                        }
+                        first_item = false;
+                        std::cout << key << ':' << count;
+                    }
+                    std::cout << '}';
+                };
+                std::cout << " hall_witness_radius="
+                          << last_failed_radius
+                          << " hall_demand_states="
+                          << last_hall_demand_states
+                          << " hall_demand=" << last_hall_demand
+                          << " hall_supply_states="
+                          << last_hall_supply_states
+                          << " hall_supply=" << last_hall_supply
+                          << " hall_deficit="
+                          << (last_hall_demand - last_hall_supply)
+                          << " hall_demand_histogram=";
+                print_count_map(last_hall_demand_histogram);
+                std::cout << " hall_supply_histogram=";
+                print_count_map(last_hall_supply_histogram);
+                std::cout << " hall_demand_target_positions=";
+                print_count_map(last_hall_demand_target_positions);
+                std::cout << " hall_supply_target_positions=";
+                print_count_map(last_hall_supply_target_positions);
+                const auto print_pair_count_map = [](
+                    const auto& entries
+                ) {
+                    bool first_item = true;
+                    std::cout << '{';
+                    for (const auto& [key, count] : entries) {
+                        if (!first_item) {
+                            std::cout << ',';
+                        }
+                        first_item = false;
+                        std::cout << '(' << key.first << ','
+                                  << key.second << "):" << count;
+                    }
+                    std::cout << '}';
+                };
+                std::cout << " hall_demand_fibers=";
+                print_pair_count_map(last_hall_demand_fibers);
+                std::cout << " hall_supply_fibers=";
+                print_pair_count_map(last_hall_supply_fibers);
+                const auto print_signatures = [](
+                    const auto& entries
+                ) {
+                    bool first_item = true;
+                    std::size_t displayed = 0U;
+                    std::cout << '{';
+                    for (const auto& [signature, count] : entries) {
+                        if (displayed == 12U) {
+                            std::cout << ",...";
+                            break;
+                        }
+                        if (!first_item) {
+                            std::cout << ',';
+                        }
+                        first_item = false;
+                        std::cout << '[';
+                        for (std::size_t index = 0U;
+                             index < signature.size(); ++index) {
+                            if (index != 0U) {
+                                std::cout << '.';
+                            }
+                            std::cout << signature[index];
+                        }
+                        std::cout << "]:" << count;
+                        ++displayed;
+                    }
+                    std::cout << '}';
+                };
+                std::cout << " hall_demand_signatures=";
+                print_signatures(last_hall_demand_signatures);
+                std::cout << " hall_supply_signatures=";
+                print_signatures(last_hall_supply_signatures);
+                if (minimum_radius != 0U) {
+                    std::cout << " hall_expanded_supply="
+                              << hall_expanded_supply
+                              << " hall_new_shell_supply_states="
+                              << hall_new_shell_supply_states
+                              << " hall_new_shell_supply="
+                              << hall_new_shell_supply
+                              << " hall_new_shell_fibers=";
+                    print_pair_count_map(hall_new_shell_fibers);
+                    std::cout
+                        << " hall_new_shell_signature_classes="
+                        << hall_new_shell_signatures.size();
+                    const auto print_vector_map = [](
+                        const auto& entries
+                    ) {
+                        bool first_item = true;
+                        std::size_t displayed = 0U;
+                        std::cout << '{';
+                        for (const auto& [values, count] : entries) {
+                            if (displayed == 12U) {
+                                std::cout << ",...";
+                                break;
+                            }
+                            if (!first_item) {
+                                std::cout << ',';
+                            }
+                            first_item = false;
+                            std::cout << '[';
+                            for (std::size_t index = 0U;
+                                 index < values.size(); ++index) {
+                                if (index != 0U) {
+                                    std::cout << '.';
+                                }
+                                std::cout << values[index];
+                            }
+                            std::cout << "]:" << count;
+                            ++displayed;
+                        }
+                        std::cout << '}';
+                    };
+                    std::cout << " hall_escape_profiles=";
+                    print_vector_map(hall_escape_profiles);
+                    std::cout << " hall_escape_swap_words=";
+                    print_vector_map(hall_escape_swap_words);
+                }
+            }
+            if (minimum_radius != 0U) {
+                const auto print_count_map = [](
+                    const auto& entries
+                ) {
+                    bool first_item = true;
+                    std::cout << '{';
+                    for (const auto& [key, count] : entries) {
+                        if (!first_item) {
+                            std::cout << ',';
+                        }
+                        first_item = false;
+                        std::cout << key << ':' << count;
+                    }
+                    std::cout << '}';
+                };
+                std::cout << " used_transport_pairs="
+                          << successful_used_pairs
+                          << " transport_distance_flow=";
+                print_count_map(successful_distance_flow);
+                std::cout << " transport_residual_pair_flow={";
+                bool first_pair = true;
+                for (const auto& [pair, amount]
+                     : successful_residual_pair_flow) {
+                    if (!first_pair) {
+                        std::cout << ',';
+                    }
+                    first_pair = false;
+                    std::cout << '(' << pair.first << ','
+                              << pair.second << "):" << amount;
+                }
+                std::cout << "} transport_swap_words="
+                          << successful_swap_word_flow.size();
+                std::vector<std::pair<
+                    std::uint64_t, std::vector<std::size_t>
+                >> ranked_words;
+                ranked_words.reserve(
+                    successful_swap_word_flow.size()
+                );
+                for (const auto& [word, amount]
+                     : successful_swap_word_flow) {
+                    ranked_words.emplace_back(amount, word);
+                }
+                std::sort(
+                    ranked_words.begin(), ranked_words.end(),
+                    [](const auto& left, const auto& right) {
+                        if (left.first != right.first) {
+                            return left.first > right.first;
+                        }
+                        return left.second < right.second;
+                    }
+                );
+                std::cout << " top_transport_swap_words={";
+                const std::size_t displayed_words
+                    = std::min<std::size_t>(
+                        ranked_words.size(), 12U
+                    );
+                for (std::size_t index = 0U;
+                     index < displayed_words; ++index) {
+                    if (index != 0U) {
+                        std::cout << ',';
+                    }
+                    std::cout << '[';
+                    for (std::size_t position = 0U;
+                         position < ranked_words[index].second.size();
+                         ++position) {
+                        if (position != 0U) {
+                            std::cout << '.';
+                        }
+                        std::cout
+                            << ranked_words[index].second[position];
+                    }
+                    std::cout << "]:" << ranked_words[index].first;
+                }
+                std::cout << '}';
+            }
+            std::cout
+                      << " promotion_cycles=";
+            std::vector<std::size_t> promotion(
+                component_keys.size(), absent
+            );
+            for (std::size_t index = 0U;
+                 index < component_keys.size(); ++index) {
+                StateKey image = component_keys[index];
+                for (std::size_t position = 0U;
+                     position + 1U < image.first.size(); ++position) {
+                    image.second = bender_knuth_raw_neighbor(
+                        degrees, image, position
+                    );
+                    std::swap(
+                        image.first[position],
+                        image.first[position + 1U]
+                    );
+                }
+                promotion[index] = component_index.at(image);
+            }
+            std::vector<bool> promotion_visited(
+                component_keys.size(), false
+            );
+            std::uint64_t promotion_cycle_count = 0U;
+            std::uint64_t negative_promotion_cycles = 0U;
+            std::int64_t minimum_promotion_sum = 0;
+            std::size_t minimum_promotion_size = 0U;
+            bool have_promotion_cycle = false;
+            for (std::size_t initial_index = 0U;
+                 initial_index < component_keys.size(); ++initial_index) {
+                if (promotion_visited[initial_index]) {
+                    continue;
+                }
+                std::size_t current_index = initial_index;
+                std::int64_t cycle_sum = 0;
+                std::size_t cycle_size = 0U;
+                do {
+                    if (promotion_visited[current_index]) {
+                        throw std::runtime_error(
+                            "BK promotion map is not a permutation"
+                        );
+                    }
+                    promotion_visited[current_index] = true;
+                    cycle_sum += residuals[current_index];
+                    ++cycle_size;
+                    current_index = promotion[current_index];
+                } while (current_index != initial_index);
+                ++promotion_cycle_count;
+                if (cycle_sum < 0) {
+                    ++negative_promotion_cycles;
+                }
+                if (!have_promotion_cycle
+                    || cycle_sum < minimum_promotion_sum) {
+                    have_promotion_cycle = true;
+                    minimum_promotion_sum = cycle_sum;
+                    minimum_promotion_size = cycle_size;
+                }
+            }
+            std::cout << promotion_cycle_count
+                      << " negative_promotion_cycles="
+                      << negative_promotion_cycles
+                      << " minimum_promotion_sum="
+                      << minimum_promotion_sum
+                      << " minimum_promotion_size="
+                      << minimum_promotion_size;
+
+            std::vector<std::size_t> reversal(
+                component_keys.size(), absent
+            );
+            for (std::size_t index = 0U;
+                 index < component_keys.size(); ++index) {
+                StateKey image = component_keys[index];
+                for (std::size_t remaining = image.first.size();
+                     remaining > 1U; --remaining) {
+                    for (std::size_t position = 0U;
+                         position + 1U < remaining; ++position) {
+                        image.second = bender_knuth_raw_neighbor(
+                            degrees, image, position
+                        );
+                        std::swap(
+                            image.first[position],
+                            image.first[position + 1U]
+                        );
+                    }
+                }
+                reversal[index] = component_index.at(image);
+            }
+            std::vector<bool> dihedral_visited(
+                component_keys.size(), false
+            );
+            std::uint64_t dihedral_orbits = 0U;
+            std::uint64_t negative_dihedral_orbits = 0U;
+            std::int64_t minimum_dihedral_sum = 0;
+            std::size_t minimum_dihedral_size = 0U;
+            bool have_dihedral_orbit = false;
+            std::queue<std::size_t> dihedral_frontier;
+            for (std::size_t initial_index = 0U;
+                 initial_index < component_keys.size(); ++initial_index) {
+                if (dihedral_visited[initial_index]) {
+                    continue;
+                }
+                dihedral_visited[initial_index] = true;
+                dihedral_frontier.push(initial_index);
+                std::int64_t orbit_sum = 0;
+                std::size_t orbit_size = 0U;
+                while (!dihedral_frontier.empty()) {
+                    const std::size_t current_index
+                        = dihedral_frontier.front();
+                    dihedral_frontier.pop();
+                    orbit_sum += residuals[current_index];
+                    ++orbit_size;
+                    for (std::size_t neighbor : {
+                             promotion[current_index],
+                             reversal[current_index]
+                         }) {
+                        if (dihedral_visited[neighbor]) {
+                            continue;
+                        }
+                        dihedral_visited[neighbor] = true;
+                        dihedral_frontier.push(neighbor);
+                    }
+                }
+                ++dihedral_orbits;
+                if (orbit_sum < 0) {
+                    ++negative_dihedral_orbits;
+                }
+                if (!have_dihedral_orbit
+                    || orbit_sum < minimum_dihedral_sum) {
+                    have_dihedral_orbit = true;
+                    minimum_dihedral_sum = orbit_sum;
+                    minimum_dihedral_size = orbit_size;
+                }
+            }
+            std::cout << " dihedral_orbits=" << dihedral_orbits
+                      << " negative_dihedral_orbits="
+                      << negative_dihedral_orbits
+                      << " minimum_dihedral_sum="
+                      << minimum_dihedral_sum
+                      << " minimum_dihedral_size="
+                      << minimum_dihedral_size << '\n';
+        }
+        BkTransportResult bounded_transport;
+        const bool check_bounded_transport
+            = transport_radius_bound != 0U
+              && (relations != 0U || positive != 0U);
+        if (check_bounded_transport) {
+            bounded_transport = bk_transport_at_radius(
+                component_keys, states, degrees,
+                transport_radius_bound, transport_constraint
+            );
         }
         if (odd_occurrences != 0U || positive != 0U) {
             ++first.active_component_count;
@@ -1821,6 +4481,25 @@ Counts analyze_gt_bk_component_case(
             first.xor_payment = false;
             first.xor_demand = relations;
             first.xor_capacity = positive;
+            first.alpha_witness = initial.second;
+            break;
+        }
+        if (check_bounded_transport
+            && bounded_transport.transported
+                != bounded_transport.demand) {
+            first.xor_payment = false;
+            first.xor_demand = bounded_transport.demand;
+            first.xor_capacity = bounded_transport.transported;
+            first.alpha_witness = initial.second;
+            break;
+        }
+        if (check_bounded_transport
+            && require_local_gradient_escape
+            && bounded_transport.bad_gradient_escape_states != 0U) {
+            first.xor_payment = false;
+            first.xor_demand
+                = bounded_transport.bad_gradient_escape_states;
+            first.xor_capacity = 0U;
             first.alpha_witness = initial.second;
             break;
         }
@@ -2361,6 +5040,11 @@ int main(int argc, char** argv) {
                 "gt-average-transversal-pairs, gt-average-boolean-pairs, "
                 "or gt-alpha-average; or "
                 "gt-bk-components; or "
+                "gt-bk-radius; or "
+                "gt-bk-radius-odd; or "
+                "gt-bk-radius-deficit; or "
+                "gt-bk-radius-gradient; or "
+                "gt-bk-gradient-local; or "
                 "gt-bk-single-active; or "
                 "gt-bk-single-loaded; or "
                 "gt-monotone; or "
@@ -2388,6 +5072,11 @@ int main(int argc, char** argv) {
             && model != "gt-average-boolean-pairs"
             && model != "gt-alpha-average"
             && model != "gt-bk-components"
+            && model != "gt-bk-radius"
+            && model != "gt-bk-radius-odd"
+            && model != "gt-bk-radius-deficit"
+            && model != "gt-bk-radius-gradient"
+            && model != "gt-bk-gradient-local"
             && model != "gt-bk-single-active"
             && model != "gt-bk-single-loaded"
             && model != "gt-monotone") {
@@ -2407,6 +5096,11 @@ int main(int argc, char** argv) {
                 ", gt-average-boolean-pairs"
                 ", gt-alpha-average"
                 ", gt-bk-components"
+                ", gt-bk-radius"
+                ", gt-bk-radius-odd"
+                ", gt-bk-radius-deficit"
+                ", gt-bk-radius-gradient"
+                ", gt-bk-gradient-local"
                 ", gt-bk-single-active"
                 ", gt-bk-single-loaded"
                 ", gt-monotone"
@@ -2479,6 +5173,11 @@ int main(int argc, char** argv) {
                              || model == "gt-average-boolean-pairs"
                              || model == "gt-alpha-average"
                              || model == "gt-bk-components"
+                             || model == "gt-bk-radius"
+                             || model == "gt-bk-radius-odd"
+                             || model == "gt-bk-radius-deficit"
+                             || model == "gt-bk-radius-gradient"
+                             || model == "gt-bk-gradient-local"
                              || model == "gt-bk-single-active"
                              || model == "gt-bk-single-loaded"
                              || model == "gt-monotone")
@@ -2594,6 +5293,27 @@ int main(int argc, char** argv) {
                                                                 minus_mask,
                                                                 toric_cache
                                                             )
+                                                        : (model == "gt-bk-radius"
+                                                            || model == "gt-bk-radius-odd"
+                                                            || model == "gt-bk-radius-deficit"
+                                                            || model == "gt-bk-radius-gradient"
+                                                            || model == "gt-bk-gradient-local"
+                                                            ? analyze_gt_bk_component_case(
+                                                                labels, target,
+                                                                minus_mask,
+                                                                toric_cache,
+                                                                false,
+                                                                labels.size() + 1U,
+                                                                model == "gt-bk-radius-odd"
+                                                                    ? BkTransportConstraint::nonincreasing_odd
+                                                                    : (model == "gt-bk-radius-deficit"
+                                                                        ? BkTransportConstraint::nonincreasing_deficit
+                                                                        : (model == "gt-bk-radius-gradient"
+                                                                            || model == "gt-bk-gradient-local"
+                                                                            ? BkTransportConstraint::deficit_odd_gradient
+                                                                            : BkTransportConstraint::none)),
+                                                                model == "gt-bk-gradient-local"
+                                                            )
                                                         : (model == "gt-bk-single-active"
                                                             ? analyze_gt_bk_single_active_case(
                                                                 labels, target,
@@ -2617,7 +5337,7 @@ int main(int argc, char** argv) {
                                                             labels, target,
                                                             minus_mask,
                                                             toric_cache
-                                                        ))))))))))))))))));
+                                                        )))))))))))))))))));
                         ++cases;
                         const std::uint64_t kernel = counts.odd_sources
                             - static_cast<std::uint64_t>(counts.odd_rank);
@@ -2644,6 +5364,11 @@ int main(int argc, char** argv) {
                                 || model == "gt-average-boolean-pairs"
                                 || model == "gt-alpha-average"
                                 || model == "gt-bk-components"
+                                || model == "gt-bk-radius"
+                                || model == "gt-bk-radius-odd"
+                                || model == "gt-bk-radius-deficit"
+                                || model == "gt-bk-radius-gradient"
+                                || model == "gt-bk-gradient-local"
                                 || model == "gt-bk-single-active"
                                 || model == "gt-bk-single-loaded"
                                 || model == "gt-monotone"
@@ -2712,6 +5437,20 @@ int main(int argc, char** argv) {
                                                     ? "GT_ALPHA_AVERAGE"
                                                 : (model == "gt-bk-components"
                                                     ? "GT_BK_COMPONENTS"
+                                                : (model == "gt-bk-radius"
+                                                    || model == "gt-bk-radius-odd"
+                                                    || model == "gt-bk-radius-deficit"
+                                                    || model == "gt-bk-radius-gradient"
+                                                    || model == "gt-bk-gradient-local"
+                                                    ? (model == "gt-bk-radius-odd"
+                                                        ? "GT_BK_RADIUS_ODD"
+                                                        : (model == "gt-bk-radius-deficit"
+                                                            ? "GT_BK_RADIUS_DEFICIT"
+                                                            : (model == "gt-bk-radius-gradient"
+                                                                ? "GT_BK_RADIUS_GRADIENT"
+                                                                : (model == "gt-bk-gradient-local"
+                                                                    ? "GT_BK_GRADIENT_LOCAL"
+                                                                    : "GT_BK_RADIUS"))))
                                                 : (model == "gt-bk-single-active"
                                                     ? "GT_BK_SINGLE_ACTIVE"
                                                 : (model == "gt-bk-single-loaded"
@@ -2719,7 +5458,7 @@ int main(int argc, char** argv) {
                                                 : (model
                                                     == "gt-deficit-xor-insert"
                                                     ? "GT_DEFICIT_XOR_INSERT"
-                                                    : "GT_LABEL_ROUNDS"))))))))))))))))))))))))))))
+                                                    : "GT_LABEL_ROUNDS")))))))))))))))))))))))))))))
                   << "_PARITY cases=" << cases
                   << " cached_degrees="
                   << (model == "sr" ? cache.size() : toric_cache.size())

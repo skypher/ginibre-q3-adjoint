@@ -1,0 +1,8 @@
+DATE: 2026-07-23
+SOURCE_SHA256: bd1238ee25cdda916a7514e1920546b54f36b77069afbfdb0c504c173ebf52d5
+BUILD: g++ -std=c++20 -O3 -Wall -Wextra -Werror -pedantic character_ring_iter/verify_su2_finite_distinct_six.cpp
+COMMAND: verify_su2_finite_distinct_six
+SU2_FINITE_DISTINCT_SIX PASS max_k=30 cases=2629575 active_cases=562678 minimum_margin=2
+
+The run is a bounded cross-check of Proposition 25D3.  Its proof is the
+unbounded tetrahedral interval argument in CENTRAL_CHARACTER_Q3_SEARCH.md.

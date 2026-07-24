@@ -1,7 +1,9 @@
+#include <algorithm>
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 #include <boost/multiprecision/cpp_int.hpp>
@@ -10,11 +12,9 @@ using boost::multiprecision::cpp_int;
 
 namespace {
 
-bool inspect_word(
+std::vector<cpp_int> partial_character_coefficients(
     const std::vector<int>& labels,
-    std::uint64_t minus_mask,
-    int& failed_target,
-    cpp_int& failed_value
+    std::uint64_t minus_mask
 ) {
     int total = 0;
     for (int label : labels) {
@@ -57,13 +57,127 @@ bool inspect_word(
         support += label;
         current = std::move(next);
     }
+    std::vector<cpp_int> result(static_cast<std::size_t>(width));
     for (int target = 0; target <= total; ++target) {
-        const cpp_int& value = current[static_cast<std::size_t>(
-            target * width
-        )];
+        result[static_cast<std::size_t>(target)]
+            = current[static_cast<std::size_t>(target * width)];
+    }
+    return result;
+}
+
+bool inspect_word(
+    const std::vector<int>& labels,
+    std::uint64_t minus_mask,
+    int& failed_target,
+    cpp_int& failed_value
+) {
+    const std::vector<cpp_int> coefficients
+        = partial_character_coefficients(labels, minus_mask);
+    for (std::size_t target = 0U;
+         target < coefficients.size(); ++target) {
+        const cpp_int& value = coefficients[target];
         if (value < 0) {
-            failed_target = target;
+            failed_target = static_cast<int>(target);
             failed_value = value;
+            return false;
+        }
+    }
+    return true;
+}
+
+cpp_int binomial(int n, int k) {
+    if (k < 0 || k > n) {
+        return 0;
+    }
+    k = std::min(k, n - k);
+    cpp_int result = 1;
+    for (int index = 1; index <= k; ++index) {
+        result *= n - k + index;
+        result /= index;
+    }
+    return result;
+}
+
+bool inspect_gamma(
+    const std::vector<int>& labels,
+    std::uint64_t minus_mask,
+    int& failed_index,
+    cpp_int& failed_value
+) {
+    int total = 0;
+    for (const int label : labels) {
+        total += label;
+    }
+    const std::vector<cpp_int> coefficients
+        = partial_character_coefficients(labels, minus_mask);
+    const int middle = total / 2;
+    std::vector<cpp_int> hilbert(
+        static_cast<std::size_t>(total + 1), 0
+    );
+    cpp_int cumulative = 0;
+    for (int degree = 0; degree <= middle; ++degree) {
+        cumulative += coefficients[static_cast<std::size_t>(
+            total - 2 * degree
+        )];
+        hilbert[static_cast<std::size_t>(degree)] = cumulative;
+        hilbert[static_cast<std::size_t>(total - degree)]
+            = cumulative;
+    }
+    std::vector<cpp_int> gamma(
+        static_cast<std::size_t>(middle + 1), 0
+    );
+    for (int index = 0; index <= middle; ++index) {
+        cpp_int value = hilbert[static_cast<std::size_t>(index)];
+        for (int earlier = 0; earlier < index; ++earlier) {
+            value -= gamma[static_cast<std::size_t>(earlier)]
+                * binomial(
+                    total - 2 * earlier, index - earlier
+                );
+        }
+        gamma[static_cast<std::size_t>(index)] = value;
+        if (value < 0) {
+            failed_index = index;
+            failed_value = value;
+            return false;
+        }
+    }
+    return true;
+}
+
+bool inspect_log_concavity(
+    const std::vector<int>& labels,
+    std::uint64_t minus_mask,
+    int& failed_index,
+    cpp_int& failed_value
+) {
+    int total = 0;
+    for (const int label : labels) {
+        total += label;
+    }
+    const std::vector<cpp_int> coefficients
+        = partial_character_coefficients(labels, minus_mask);
+    const int middle = total / 2;
+    std::vector<cpp_int> hilbert(
+        static_cast<std::size_t>(total + 1), 0
+    );
+    cpp_int cumulative = 0;
+    for (int degree = 0; degree <= middle; ++degree) {
+        cumulative += coefficients[static_cast<std::size_t>(
+            total - 2 * degree
+        )];
+        hilbert[static_cast<std::size_t>(degree)] = cumulative;
+        hilbert[static_cast<std::size_t>(total - degree)]
+            = cumulative;
+    }
+    for (int index = 1; index < total; ++index) {
+        const cpp_int defect
+            = hilbert[static_cast<std::size_t>(index)]
+                * hilbert[static_cast<std::size_t>(index)]
+              - hilbert[static_cast<std::size_t>(index - 1)]
+                * hilbert[static_cast<std::size_t>(index + 1)];
+        if (defect < 0) {
+            failed_index = index;
+            failed_value = defect;
             return false;
         }
     }
@@ -86,10 +200,18 @@ void print_word(const std::vector<int>& labels, std::uint64_t minus_mask) {
 
 int main(int argc, char** argv) {
     try {
-        if (argc != 3) {
+        if (argc != 3 && argc != 4) {
             throw std::runtime_error(
                 "usage: search_su2_partial_character_cone MAXIMUM_LABEL "
-                "MAXIMUM_FACTORS"
+                "MAXIMUM_FACTORS [gamma|logconcave]"
+            );
+        }
+        const std::string mode = argc == 4
+            ? std::string(argv[3]) : std::string("character");
+        if (mode != "character" && mode != "gamma"
+            && mode != "logconcave") {
+            throw std::runtime_error(
+                "optional mode must be gamma or logconcave"
             );
         }
         const int maximum_label = std::stoi(argv[1]);
@@ -113,12 +235,30 @@ int main(int argc, char** argv) {
                     int failed_target = -1;
                     cpp_int failed_value = 0;
                     ++tested;
-                    if (!inspect_word(
+                    const bool passed = mode == "gamma"
+                        ? inspect_gamma(
                             labels, mask, failed_target, failed_value
-                        )) {
-                        std::cout << "FAIL factors=";
+                        ) : mode == "logconcave"
+                        ? inspect_log_concavity(
+                            labels, mask, failed_target, failed_value
+                        ) : inspect_word(
+                            labels, mask, failed_target, failed_value
+                        );
+                    if (!passed) {
+                        std::cout
+                            << (mode == "gamma"
+                                ? "GAMMA_FAIL factors="
+                                : mode == "logconcave"
+                                ? "LOGCONCAVITY_FAIL factors="
+                                : "FAIL factors=");
                         print_word(labels, mask);
-                        std::cout << " target=" << failed_target
+                        std::cout
+                                  << (mode == "gamma"
+                                      ? " gamma_index="
+                                      : mode == "logconcave"
+                                      ? " coefficient_index="
+                                      : " target=")
+                                  << failed_target
                                   << " coefficient=" << failed_value
                                   << " tested=" << tested << '\n';
                         failed = true;
@@ -142,7 +282,13 @@ int main(int argc, char** argv) {
         if (failed) {
             return EXIT_FAILURE;
         }
-        std::cout << "SU2_PARTIAL_CHARACTER_CONE PASS tested=" << tested
+        std::cout
+                  << (mode == "gamma"
+                      ? "SU2_PARTIAL_CHARACTER_GAMMA PASS tested="
+                      : mode == "logconcave"
+                      ? "SU2_PARTIAL_CHARACTER_LOGCONCAVITY PASS tested="
+                      : "SU2_PARTIAL_CHARACTER_CONE PASS tested=")
+                  << tested
                   << " maximum_label=" << maximum_label
                   << " maximum_factors=" << maximum_factors << '\n';
         return EXIT_SUCCESS;

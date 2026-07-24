@@ -1,0 +1,8 @@
+DATE: 2026-07-23
+SOURCE_SHA256: cc4df7c5db335b5f6a1cb4454253c1ce2111b4f61a39c3911352070cc3ce9587
+BUILD: g++ -std=c++20 -O2 -Wall -Wextra -Werror -pedantic character_ring_iter/verify_su2_terminal_feature_freeze.cpp
+COMMAND: verify_su2_terminal_feature_freeze
+SU2_TERMINAL_FEATURE_FREEZE PASS odd_targets=249 frozen_top=-6 target5_breakdown=8,2,6,0,-6 complete_sum=10
+
+The bounded run is a cross-check.  The unbounded proof is the charge-support
+calculation in Lemma 25E of CENTRAL_CHARACTER_Q3_SEARCH.md.

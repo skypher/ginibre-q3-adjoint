@@ -1,0 +1,19 @@
+Command:
+g++ -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror \
+  ginibre_q3/character_ring_iter/search_su2_fdc_h2_first_descent.cpp \
+  -o /tmp/search_su2_fdc_h2_first_descent
+/tmp/search_su2_fdc_h2_first_descent 5 4 7
+
+Output:
+H2_FIRST_DESCENT_COLLISION
+q=2 plus_labels=1,1,1, scalar_index_grade=2 carrier_label=1
+ mask=5 scalar_grades=-1,0,-1, fusion_heights=1,-1,0,
+ mask=6 scalar_grades=0,-1,-1, fusion_heights=-1,1,0,
+ target_status=0,0,-1, suffix_heights=-3,-3,0,
+neighborhood_size=1 left_subset_size=2 hall_deficit=1
+first_collision_factor_count=3
+minimality_order=factor_count,ordered_plus_word,q
+configurations_checked=69 left_states_checked=28
+
+Source SHA-256:
+3b8ef9c268ba51029f028ae84b392daa0d2fa81aef6f6a9fd3677b3a06327393

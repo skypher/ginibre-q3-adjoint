@@ -1,0 +1,12 @@
+Command:
+g++ -O3 -DNDEBUG -std=c++20 \
+  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror \
+  ginibre_q3/character_ring_iter/analyze_su2_cyclic_jacobi_matching.cpp \
+  -o /tmp/analyze_su2_cyclic_jacobi_matching
+/tmp/analyze_su2_cyclic_jacobi_matching 30
+
+Output:
+CYCLIC_JACOBI_MATCHING max_level=30 graphs=116 loads=880 edges=20362 maximum_loads=22 first_matching_failure_level=-1 non_ferrers_graphs=84 first_non_ferrers_level=9
+
+Source SHA-256:
+bbf1b3626f51d61a9244019d3d82a4508f30015541fcaa68d0c984369e9cf8ae

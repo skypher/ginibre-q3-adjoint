@@ -1,0 +1,16 @@
+command:
+  g++ -O3 -DNDEBUG -std=c++20 -fopenmp \
+    -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror \
+    ginibre_q3/character_ring_iter/search_su2_all_even_two_minus_dense.cpp \
+    -o /tmp/search_su2_all_even_two_minus_dense_strict
+  OMP_NUM_THREADS="$(nproc)" \
+    /tmp/search_su2_all_even_two_minus_dense_strict 40
+
+source_sha256:
+  7789206c2ae0841a1c33a6622d91d450981f33faf3a9c7781908f4db4d165164
+
+output:
+SU2_ALL_EVEN_TWO_MINUS_DENSE maximum=40 cases=5673128 dense_cases=2071772 threads=64 result=RAW_PASS minimum minus=[4,4] plus=[2,2,2,2,2] N=50 T=40 P_eq=76 raw_margin=10 paid_margin=86 active=20 max_d=2
+MAX_D_ENDPOINT d=1 minimum none
+MAX_D_ENDPOINT d=2 minimum minus=[4,4] plus=[2,2,2,2,2] N=50 T=40 P_eq=76 raw_margin=10 paid_margin=86 active=20 max_d=2 N_minus_20d=10
+MAX_D_ENDPOINT d=3 minimum minus=[4,4] plus=[2,2,2,6,8] N=98 T=28 P_eq=42 raw_margin=70 paid_margin=112 active=14 max_d=3 N_minus_20d=38

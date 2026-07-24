@@ -1,0 +1,28 @@
+Command:
+g++ -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror \
+  ginibre_q3/character_ring_iter/verify_su2_fdc_evaluation_hall.cpp \
+  -o /tmp/verify_su2_fdc_evaluation_hall
+/tmp/verify_su2_fdc_evaluation_hall
+
+Output:
+FALSE_TARGET_23A6A PASS
+fusion_multiplicities=1,2,5,12
+off_support_allocations=16,6,2,1
+left_by_support_size=80,120,100,60
+left=360
+ambient_scalar=312
+excluded_scalar=7
+neighborhood=305
+hall_deficit=55
+carrier_multiplicities=1,1,3,6
+residual_multiplicities=0,1,2,6
+carrier_by_support_size=80,60,60,30
+carrier_capacity=230
+residual_left=130
+residual_matching_rank=130
+reduced_essential_rank=360
+paired_h1_columns_not_included=230
+full_schur_complement_checked=NO
+
+Source SHA-256:
+2f52a108f54bca3da56270897354a10d1c37deee08b0d5ab962853c836d4ee40

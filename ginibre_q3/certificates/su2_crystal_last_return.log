@@ -1,0 +1,5 @@
+SOURCE_SHA256 4d62f4909d90906e65007bb57567116dec3b0f858efe2b47a498aecadeaea37a  character_ring_iter/analyze_su2_crystal_last_return.cpp
+WORKDIR ginibre_q3
+COMMAND g++ -std=c++20 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror character_ring_iter/analyze_su2_crystal_last_return.cpp -o /tmp/analyze_su2_crystal_last_return
+COMMAND /tmp/analyze_su2_crystal_last_return 5 4
+CRYSTAL_LAST_RETURN COLLISION labels=[1,1] q=1 first={ymask=1 y=[0] x=[0]} second={ymask=2 y=[0] x=[0]} target=0::-1/0,0/1,1/0,

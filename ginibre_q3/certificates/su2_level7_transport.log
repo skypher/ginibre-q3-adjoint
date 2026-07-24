@@ -1,0 +1,5 @@
+source=character_ring_iter/verify_su2_level7_transport.cpp
+source_sha256=d61a24604fb808452250cbc215fbdc9840269e3031265757e7bfa06f6fe1b8cb
+build=g++ -std=c++20 -O2 -Wall -Wextra -Wpedantic character_ring_iter/verify_su2_level7_transport.cpp -o /tmp/verify_su2_level7_transport
+run=/tmp/verify_su2_level7_transport
+PASS polynomial=t^3-3t+1 m_ge_n_ratio_lower=345430145445392/226809671401777 n_ge_m_ratio_lower=573582736783056896/200934617892538035

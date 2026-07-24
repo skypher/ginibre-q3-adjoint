@@ -1,0 +1,13 @@
+DATE: 2026-07-23
+SOURCE_SHA256: f73b2a82c0f316e9fcba4b69a34e70915c05ac90379939f32c82dddd280df0aa
+BUILD: g++ -std=c++20 -O3 -Wall -Wextra -Werror -pedantic -fopenmp character_ring_iter/verify_su2_finite_six_pair_reservoir.cpp
+COMMAND: OMP_NUM_THREADS=48 verify_su2_finite_six_pair_reservoir 14
+MACHINE_AT_LAUNCH: 64 logical CPUs, 84 GiB available RAM, load average 15.90
+SU2_FINITE_SIX_PAIR_RESERVOIR PASS max_k=14 threads=48 sextuples=77520 active_sextuples=17123 signed_support_disjoint_cases=913200 minimum_margin=0 minimum_active_margin=1 minimum_signed_half=0 minimum_active_signed_half=1
+
+The verifier exhausts all sorted positive sextuples through level fourteen.
+For each sextuple it computes all 64 subset invariant multiplicities by exact
+integer fusion DP, checks T<=N+P, enumerates every even support-disjoint sign
+assignment, and independently checks both the full subset contraction and the
+half-integral identity.  This is a bounded cross-check of Proposition 25D4;
+the proof is the unbounded case analysis in CENTRAL_CHARACTER_Q3_SEARCH.md.

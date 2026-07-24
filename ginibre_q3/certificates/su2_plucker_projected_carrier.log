@@ -1,0 +1,180 @@
+Exact projected-carrier audit for Lemma 22H3A1 / Target 22H3A2
+================================================================
+
+Build:
+
+  g++ -std=c++20 -O2 -Wall -Wextra -Werror -pedantic \
+    ginibre_q3/character_ring_iter/analyze_su2_plucker_kernel.cpp \
+    -o /tmp/analyze_su2_plucker_kernel_projected
+
+Run (performed twice):
+
+  /tmp/analyze_su2_plucker_kernel_projected \
+    fundamental-sweep 4 6 4 14
+
+Both transcripts were byte-identical:
+
+  efd0755b05a3500373367a758a765f261f4cff0be1dff4aa1ffae29b394fc3dd
+
+Source SHA-256:
+
+  c6447f258312ce79034ba90dae202ac9046a77b066fa87d85754dd6cc4895075
+
+Executable SHA-256:
+
+  b8352ca3f76ce31d90cd006ac1ae2c07e0fc933f15a39ea0d417c910a251076d
+
+The exact enriched deletion--contraction recurrences passed in all 71
+fundamental-strand cases.  There were 56 positive-target projected systems.
+Target 22H3A2 failed exactly once:
+
+  labels=[1,2,2,2,2,3]
+  target=2
+  minus_mask=1
+  hat_alpha=2
+  hat_beta=1
+  hat_c=19
+  bar_r=15
+  A0=0
+  B0=0
+  theta_minus=8
+  theta_plus=12
+
+Thus
+
+  hat_c <= bar_r                         is 19 <= 15, false;
+  hat_alpha + hat_c <= hat_beta + bar_r is 21 <= 16, false.
+
+The corresponding upstairs quantities remain valid:
+
+  alpha=2, beta=1, c=15, r=27,
+  c <= r                         is 15 <= 27;
+  alpha + c <= beta + r          is 17 <= 28.
+
+The positive lift-obstruction rank twelve is essential:
+
+  r = bar_r + B0 + rank(theta_plus) = 15 + 0 + 12 = 27.
+
+Extended run
+------------
+
+Command:
+
+  /tmp/analyze_su2_plucker_kernel_projected_v2 \
+    fundamental-sweep 4 6 4 16
+
+Transcript SHA-256:
+
+  8cc50fe03931b15d7c17560a060a9d2b0fd5d565d6f7ddae2b506dad6bcf8f49
+
+Summary:
+
+  94 fundamental cases
+  75 positive-target projected systems
+  all enriched recurrences passed
+  3 false-target failures
+  maximum cover deficit 4
+  maximum capacity deficit 5
+
+The three failures are:
+
+  [1,2,2,2,2,3], target 2
+  [1,2,2,2,3,3], target 3
+  [1,2,2,2,3,4], target 2
+
+Independent two-odd-label witness
+---------------------------------
+
+Command:
+
+  /tmp/analyze_su2_plucker_kernel_projected 3 1 1 2 2 2 3 3
+
+Exact summary:
+
+  labels=[1,2,2,2,3,3]
+  target=3
+  minus_mask=1
+  hat_alpha=0
+  hat_beta=9
+  dim_Z_minus=20
+  dim_Z_plus=16
+  dim_Z_intersection=1
+  hat_c=19
+  bar_r=15
+  A0=0
+  B0=9
+  theta_minus=10
+  theta_plus=6
+
+Thus hat_c <= bar_r is 19 <= 15, false.  Upstairs,
+
+  alpha=0, beta=0, c=10, r=30,
+
+so both required inequalities pass.  This witness lies in the first
+genuinely open scalar parity sector: there are two odd plus labels.
+
+Two-cut component-switch obstruction
+-------------------------------------
+
+Command:
+
+  /tmp/analyze_su2_plucker_kernel_projected 1 1 1 2 2 2 3 3
+
+Exact summary:
+
+  labels=[1,2,2,2,3,3]
+  target=1
+  minus_mask=1
+  alpha=0
+  beta=5
+  dim_K_minus=7
+  dim_K_plus=13
+  dim_K_intersection=1
+  c=6
+  bar_r=15
+  B0=7
+  theta_plus=0
+  pair_intersection_relations=0
+  cut_boundary_relations=0
+  cut_boundary_rank=0
+
+The corrected target has positive capacity 15+7+0=22, but every
+two-crossing-cut intersection is zero.  The first displayed higher
+relation is the four-cut square
+
+  -(19,basis1)-(27,basis1)+(37,basis1)+(45,basis1)=0.
+
+Thus a component switch cannot realize any of the six demanded carrier
+directions; a four-face or higher Plucker homotopy is necessary.
+
+Full deterministic transcript
+-----------------------------
+
+progress factors=1 cases=2 deficit_cases=0 nonzero_kernels=0
+progress factors=2 cases=9 deficit_cases=0 nonzero_kernels=0
+progress factors=3 cases=23 deficit_cases=2 nonzero_kernels=0
+progress factors=4 cases=45 deficit_cases=11 nonzero_kernels=0
+nonzero_kernel labels=[1,2,2,2,3] target=0 minus_mask=1 codomain=5 odd=8 rank=5 kernel=3 positive=3
+tight_kernel labels=[1,2,2,2,3] target=0 minus_mask=1 codomain=5 odd=8 rank=5 kernel=3 positive=3
+nonzero_kernel labels=[1,2,2,2,3] target=2 minus_mask=1 codomain=12 odd=9 rank=8 kernel=1 positive=7
+nonzero_kernel labels=[1,2,2,3,4] target=0 minus_mask=1 codomain=5 odd=6 rank=5 kernel=1 positive=1
+tight_kernel labels=[1,2,2,3,4] target=0 minus_mask=1 codomain=5 odd=6 rank=5 kernel=1 positive=1
+nonzero_kernel labels=[1,2,3,3,3] target=0 minus_mask=1 codomain=6 odd=9 rank=6 kernel=3 positive=3
+tight_kernel labels=[1,2,3,3,3] target=0 minus_mask=1 codomain=6 odd=9 rank=6 kernel=3 positive=3
+nonzero_kernel labels=[1,2,3,4,4] target=0 minus_mask=1 codomain=6 odd=7 rank=6 kernel=1 positive=1
+tight_kernel labels=[1,2,3,4,4] target=0 minus_mask=1 codomain=6 odd=7 rank=6 kernel=1 positive=1
+nonzero_kernel labels=[1,3,3,3,4] target=0 minus_mask=1 codomain=7 odd=10 rank=7 kernel=3 positive=3
+tight_kernel labels=[1,3,3,3,4] target=0 minus_mask=1 codomain=7 odd=10 rank=7 kernel=3 positive=3
+progress factors=5 cases=63 deficit_cases=19 nonzero_kernels=6
+nonzero_kernel labels=[1,2,2,2,2,3] target=0 minus_mask=1 codomain=12 odd=28 rank=12 kernel=16 positive=16
+tight_kernel labels=[1,2,2,2,2,3] target=0 minus_mask=1 codomain=12 odd=28 rank=12 kernel=16 positive=16
+projected_failure labels=[1,2,2,2,2,3] target=2 minus_mask=1 hat_alpha=2 hat_beta=1 hat_c=19 bar_r=15 A0=0 B0=0 theta_minus=8 theta_plus=12
+nonzero_kernel labels=[1,2,2,2,2,3] target=2 minus_mask=1 codomain=30 odd=44 rank=25 kernel=19 positive=41
+nonzero_kernel labels=[1,2,2,2,3,4] target=0 minus_mask=1 codomain=13 odd=23 rank=13 kernel=10 positive=10
+tight_kernel labels=[1,2,2,2,3,4] target=0 minus_mask=1 codomain=13 odd=23 rank=13 kernel=10 positive=10
+nonzero_kernel labels=[1,2,2,3,3,3] target=0 minus_mask=1 codomain=15 odd=29 rank=15 kernel=14 positive=14
+tight_kernel labels=[1,2,2,3,3,3] target=0 minus_mask=1 codomain=15 odd=29 rank=15 kernel=14 positive=14
+progress factors=6 cases=71 deficit_cases=23 nonzero_kernels=10
+SU2_PLUCKER_ORIGINAL_KERNEL cases=71 deficit_cases=23 nonzero_kernels=10 maximum_kernel=19 minimum_slack=0 result=PASS
+SU2_PLUCKER_FUNDAMENTAL_LIFT cases=71 deficit_cases=23 minimum_residual_slack=0 minimum_cover_slack=0 result=PASS
+SU2_PLUCKER_PROJECTED_CARRIER cases=56 failures=1 minimum_cover_slack=0 minimum_capacity_slack=0 maximum_cover_deficit=4 maximum_capacity_deficit=5 recurrences=PASS inequalities=FAIL

@@ -1,0 +1,18 @@
+source=character_ring_iter/search_su2_boundary_support_monotone.cpp
+source_sha256=9198638494c7a9be1b737f5d675bd2eb9d0ec5fa8bbb0fd82f5aff896f568767
+build=g++ -std=c++20 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror
+
+command=./search_su2_boundary_support_monotone --word 24 1 1 1
+FAIL level=24 labels=1,1,1, q=1 a=0 total_demand=5 total_capacity=5 monotone_rank=4
+left={0}:1 {1}:1 {2}:1
+neighbor={}:2
+witness_demand=3 witness_capacity=2
+
+command=./search_su2_boundary_support_monotone --one-import-word 24 1 1 1
+PASS level=24 labels=1,1,1,
+
+command=./search_su2_boundary_support_monotone --one-import-word 5 1 1 2 3 5
+FAIL level=5 labels=1,1,2,3,5, q=4 a=4 total_demand=12 total_capacity=14 monotone_rank=11
+left={0,3}:1 {1,3}:1 {0,2,3}:2 {1,2,3}:2 {0,4}:2 {1,4}:2 {0,2,4}:1 {1,2,4}:1
+neighbor={}:6 {0,1}:2 {0,1,2}:1 {2,3,4}:2
+witness_demand=12 witness_capacity=11

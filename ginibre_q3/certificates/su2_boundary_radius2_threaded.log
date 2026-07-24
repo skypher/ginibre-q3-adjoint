@@ -1,0 +1,17 @@
+source=character_ring_iter/search_su2_boundary_radius2_threaded.cpp
+source_sha256=6b2747ab3e1eb06b3e154081a2898afb3c168711a38ac49d7d44528cfff372b9
+build=g++ -std=c++20 -O3 -fopenmp -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror
+
+machine_at_launch=64 logical CPUs, 84 GiB available RAM, load average 14.38
+thread_policy=maximize subject to available RAM and current machine load
+
+command=OMP_NUM_THREADS=48 ./search_su2_boundary_radius2_threaded 20 12 5000 20260723 6
+PASS level=20 maximum_factors=12 trials=5000 threads=48 top_window=6
+
+command=OMP_NUM_THREADS=48 ./search_su2_boundary_radius2_threaded 20 12 750 20260724 20
+PASS level=20 maximum_factors=12 trials=750 threads=48 top_window=20
+
+command=OMP_NUM_THREADS=48 ./search_su2_boundary_radius2_threaded 30 15 1500 20260725 8
+PASS level=30 maximum_factors=15 trials=1500 threads=48 top_window=8
+
+scope=diagnostic finite randomized Hall audit only; no theorem claim

@@ -1,0 +1,14 @@
+Command:
+g++ -std=c++20 -O2 -pthread -Wall -Wextra -Wpedantic -Werror \
+  ginibre_q3/character_ring_iter/search_su2_fdc_h2_recoupling_hall.cpp \
+  -o /tmp/search_su2_fdc_h2_recoupling_hall
+/tmp/search_su2_fdc_h2_recoupling_hall 5 4 6 HYBRID_ONLY
+
+Output:
+thread_policy hardware=64 ram_limit=168 load_limit=43 chosen=43 load1=20.3979 mem_available_bytes=90590830592
+graph=recoupling-saturated upper graph on essential H1(0) sources
+scope=paired H1(j+1) sources displaced by H2(j) use are excluded; bounded pass is not a full-differential rank proof
+OPTIMISTIC_ESSENTIAL_H1_0_HYBRID_UPPER_GRAPH_BOUNDED_PASS q<=5 label<=4 factors<=6 configurations=9828
+
+Source SHA-256:
+a30d433f958a3f00a7687a0d75fe3462b236c8b1165ac8ad5ed6a91c80d9d15e

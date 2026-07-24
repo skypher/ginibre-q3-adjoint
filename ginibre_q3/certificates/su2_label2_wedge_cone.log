@@ -1,0 +1,17 @@
+Command:
+g++ -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror \
+  ginibre_q3/character_ring_iter/verify_su2_label2_wedge_cone.cpp \
+  -o /tmp/verify_su2_label2_wedge_cone
+/tmp/verify_su2_label2_wedge_cone 128 128
+
+Output:
+SU2_LABEL2_WEDGE_CONE PASS
+ordinary_columns=4096 maximum_ordinary_label=128
+ordinary_fundamental_columns=8256
+finite_level_columns=176800 maximum_level=128
+finite_level_fundamental_columns=357759 odd_seed_parity_bridges=4159
+higher_even_label_obstruction=A_p(e_(p-2) wedge e_0) has coefficient -1 at e_p wedge e_(p-2), p>=4
+bounded_grouped_power_obstructions=30 labels=4,6,...,12 powers=1,...,6
+
+Source SHA-256:
+ba2f9b357166804a59df4ea1208687d0700339c4850fccf9cb0cc55c9f914c4c
