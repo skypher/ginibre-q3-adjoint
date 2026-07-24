@@ -1,0 +1,43 @@
+SU(2) levels 1--4 all-length GKS2* certificate
+Date: 2026-07-24 UTC
+
+Proof note:
+  ginibre_q3/SU2_LEVELS_1_4_GKS2_2026_07_24.md
+
+Exact all-exponent level-four verifier:
+  ginibre_q3/character_ring_iter/verify_su2_level4_transport.py
+  sha256=a6f63c08f2c230270f43e0d1d734013b035ae8ad2f612a957d1b0b9190552938
+
+Command:
+  python3 ginibre_q3/character_ring_iter/verify_su2_level4_transport.py
+
+Output:
+  SU2_LEVEL4_ALL_EXPONENT_TRANSPORT PASS regimes=272 direct_hall=258 radial=3 crossed=10 combined=1 unresolved=0
+  RADIAL_TEMPLATE PASS inequality=2*3^n+12^n>=3*4^n reason=n=0 equality; n>=1 uses 12^n>=3*4^n
+  CROSSED_TEMPLATE PASS L=4+2sqrt(3) S=4-2sqrt(3) LS=4 inequality=L^u*S^v+S^u*L^v>=2
+
+The verifier enumerates every support-disjoint sign chamber and every parity
+class of positive exponents. It writes p_a=p_a^0+2r_a and checks every
+capacitated Hall inequality over the negative spectral pairs using exact
+arithmetic in Q(sqrt(3)). The fourteen non-Hall regimes are exactly the
+three radial, ten crossed, and one combined regimes listed in the proof note.
+The proof note establishes their two unbounded inequalities.
+
+Independent bounded fusion-DP regression:
+  ginibre_q3/character_ring_iter/verify_su2_levels_1_4_regression.py
+  sha256=ecb97e0d87af523773008f6e487080ddd527ae0903efff4d0fb2b49e26e63923
+
+Command:
+  python3 ginibre_q3/character_ring_iter/verify_su2_levels_1_4_regression.py --max-power 8
+
+Output:
+  SU2_LEVEL_1_REGRESSION PASS cases=4 partial_coefficients=8 minimum=0 minimum_positive=2 max_power=8
+  SU2_LEVEL_2_REGRESSION PASS cases=104 partial_coefficients=312 minimum=0 minimum_positive=1 max_power=8
+  SU2_LEVEL_3_REGRESSION PASS cases=2092 partial_coefficients=8368 minimum=0 minimum_positive=1 max_power=8
+  SU2_LEVEL_4_REGRESSION PASS cases=38480 partial_coefficients=192400 minimum=0 minimum_positive=1 max_power=8
+  SU2_LEVELS_1_4_REGRESSION PASS cases=40680 partial_coefficients=201088 max_power=8
+
+The regression evolves the finite fusion rings directly and checks every
+partial-character target in the displayed exponent box. It is independent
+bounded validation; the all-length proof is the spectral chamber argument
+and exact transport certificate in the proof note.
