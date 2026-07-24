@@ -1,0 +1,18 @@
+Command:
+  python3 ginibre_q3/character_ring_iter/verify_su2_odd_orbit_rank5_exact.py
+
+Output:
+  SU2_ODD_ORBIT_RANK5_EXACT PASS chambers=272 pointwise_chambers=66 pointwise_regimes=560 certified_regimes=2408 direct=1828 endpoint=332 leaf=205 shift=39 separated=4 minimum_leaf=0 zero_leaves=16
+
+Measured local replay:
+  elapsed=26.54 seconds
+  maxrss=155680 KB
+
+Scope:
+  The verifier reconstructs all rank-five orbit-ring support/sign/parity chambers and all residual orthants. It isolates the five spectral roots of
+
+    x^5 + x^4 - 4x^3 - 3x^2 + 3x + 1
+
+  by exact rational Sturm calculations. Every algebraic comparison is then checked using rational interval arithmetic. The compressed ledger selects certificate types but does not supply unchecked signs: the verifier reconstructs the complete expected key set and rechecks every Hall inequality, endpoint-lattice inequality, shifted face decomposition, and exact integral fusion leaf.
+
+  The four separated-pole residual regimes invoke the previously proved all-index separated-pole theorem (Lemma 22H3S); the verifier checks that those records have exactly the required chamber shape.
