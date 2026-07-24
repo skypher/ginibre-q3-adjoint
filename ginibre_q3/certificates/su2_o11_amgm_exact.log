@@ -1,0 +1,21 @@
+Host resources: nproc=5; memory=5.9 GiB; four or five workers used.
+
+Strict first-chamber replay:
+SU2_O11_FIRST_CHAMBER_EXACT PASS roots=6 spectral_pairs=15 regions=5 amgm_denominator=100 exact_leaves=4 threads=5
+elapsed=2.36 maxrss=5764KB
+
+Strict hand-frontier replay:
+SU2_O11_AMGM_FRONTIER_EXACT PASS certificates=26 residual_keys=25 denominator=100 threads=4
+elapsed=37.13 maxrss=8748KB
+
+Exact batch text-ledger replay:
+ledger_records=1558 support_parity_chambers=294
+ledger_sha256=48694102da2812b1feb29d154df40f64f84413b410148ac480614fd9ab798950
+15 ranges of 100 records: PASS
+1 range of 58 records: PASS
+total exact accepted records=1558
+per-range peak RSS below 19 MiB
+
+Compact binary selector:
+base64_sha256=4bad077b05a9f5554729da30af081728abe1578b70dc271a50813dab01794c69
+binary decoder and representative range replay: PASS
