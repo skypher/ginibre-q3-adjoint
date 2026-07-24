@@ -1,0 +1,12 @@
+Command:
+  python3 ginibre_q3/character_ring_iter/verify_su2_finite_stable_transfer.py
+
+Output:
+  SU2_STABLE_TRANSFER PASS cases=2169 max_total=10 max_factors=6 max_label=8 levels=T,T+1
+
+Scope:
+  Exact integer dynamic programming compares every signed product in the
+  displayed box in the ordinary SU(2) representation ring with SU(2)_k at
+  k=T and k=T+1, where T is the sum of the word labels.  The bounded run is
+  an implementation regression; the unbounded proof is in
+  SU2_FINITE_STABLE_REDUCTION_2026_07_24.md.
