@@ -1,0 +1,13 @@
+O11 exact AM-GM replay
+Date: 2026-07-24
+Host: 5 CPUs, 5.9 GiB RAM
+
+First chamber build:
+g++ -O3 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror -pthread verify_su2_o11_first_chamber_exact.cpp -o verify_su2_o11_first_chamber_exact
+SU2_O11_FIRST_CHAMBER_EXACT PASS roots=6 spectral_pairs=15 regions=5 amgm_denominator=100 exact_leaves=4 threads=5
+elapsed=2.36 maxrss=5764KB
+
+Frontier build:
+g++ -O3 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror -pthread verify_su2_o11_amgm_frontier_exact.cpp -o verify_su2_o11_amgm_frontier_exact
+SU2_O11_AMGM_FRONTIER_EXACT PASS certificates=26 residual_keys=25 denominator=100 threads=4
+elapsed=22.20 maxrss=12396KB

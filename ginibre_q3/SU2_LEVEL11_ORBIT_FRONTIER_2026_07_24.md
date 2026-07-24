@@ -10,77 +10,45 @@ By odd-level simple-current lifting,
 full SU(2)_11 scalar GKS2*  <=>  scalar GKS2* in the rank-six orbit ring O_11.
 ```
 
-Once the scalar theorem is proved, adjoining one plus factor gives the complete partial-character column. Thus the next unresolved odd-level problem is entirely the rank-six orbit ring.
+The full theorem remains open, but the former first obstruction is now
+resolved exactly.
 
-Use the even-lift basis
+## First chamber proved
 
-```text
-B_0=V_0, B_1=V_2, B_2=V_4, B_3=V_6, B_4=V_8, B_5=V_10.
-```
-
-The cyclic-gradient and outer-Turan reductions from the odd-orbit program apply unchanged, now on `C_13 x C_13`.
-
-## First all-exponent transport obstruction
-
-After support-overlap reduction and removal of the already proved separated-pole sector, the generalized transport-fan analyzer stops first at
+For all `p,q>=0`,
 
 ```text
-support_code=83
-parity_code=2
-residual_code=3
-variables=1,5.
+[V_0 tensor V_0]
+ (B_1 tensor 1-1 tensor B_1)^(2+2p)
+ (B_5 tensor 1+1 tensor B_5)^(1+2q) >= 0.
 ```
 
-Decoded in the orbit basis, this is the two-label chamber
+Five denominator-100 weighted AM-GM certificates cover the infinite regions
 
 ```text
-(B_1^- )^(2+2p) (B_5^+ )^(1+2q),      p,q>=0.        (1)
+q>=4; q=3; q=2,p>=1; q=1,p>=1; q=0,p>=2,
 ```
 
-Thus the first rank-six obstruction is simpler in support than the first rank-five obstruction: only the two extreme active orbit labels occur. It is not covered by direct coordinatewise Hall transport or by the endpoint-reserve template that completed the rank-five theorem.
+and exact integral fusion arithmetic gives zero at the four omitted points.
 
-This is a failure of those sufficient transport ansatzes, not a negative coefficient.
+## Further exact progress
 
-## Exact bounded scan
-
-The program
+The same rational-algebraic method proves 25 additional residual orthants by
+26 exact certificates. One orthant is split into a finite strip and translated
+tail. The strict four-thread replay reports
 
 ```text
-character_ring_iter/verify_su2_o11_first_chamber.py
+SU2_O11_AMGM_FRONTIER_EXACT PASS
+certificates=26 residual_keys=25 denominator=100 threads=4.
 ```
 
-uses exact integer orbit-fusion dynamic programming. It evolves the two commuting paired transfer operators
+All roots are isolated by rational Sturm sequences, and every base and capacity
+inequality is decided by rational interval endpoints. Numerical optimization
+was used only to discover integer weight tables.
 
-```text
-(B_1 tensor 1-1 tensor B_1)^2,
-(B_5 tensor 1+1 tensor B_5)^2
-```
+## Remaining target
 
-from the base word `(B_1^-)^2 B_5^+`. The recorded rectangle is
-
-```text
-0<=p<=100,       0<=q<=100.
-```
-
-Its result is
-
-```text
-SU2_O11_FIRST_CHAMBER PASS
-checks=10201
-minimum=0
-zeros=[(0,0),(0,1),(0,2),(1,0)].
-```
-
-Every other coefficient in the rectangle is strictly positive. This is bounded evidence only; the all-exponent two-variable inequality remains open.
-
-The transcript is `certificates/su2_o11_first_chamber.log`.
-
-## Precise next target
-
-The next useful lemma is:
-
-> For all nonnegative integers `p,q`, the scalar corner of (1) is nonnegative.
-
-Because the two paired transfer matrices commute on the 36-dimensional tensor-square orbit space, the bivariate generating function is rational. A promising route is therefore to compute its exact denominator and prove coefficient positivity by a finite recurrence or a positive partial-fraction grouping. The four boundary zeros above must be built into any such formula.
-
-A proof of this first chamber will allow the transport-fan census to advance to the next genuinely new rank-six obstruction. A proof of all rank-six chambers would, by simple-current lifting, establish full `GKS2*` and every partial-character coefficient for `SU(2)_11`, extending the ordinary stable range to `K(c)<=11`.
+Full `O_11`, and hence full `SU(2)_11`, remains unproved. The next work is to
+classify the residual orthants not covered by Hall/fan transport or the current
+AM-GM ledger, seeking translated-tail and endpoint-lattice certificates with
+exact face checks.
