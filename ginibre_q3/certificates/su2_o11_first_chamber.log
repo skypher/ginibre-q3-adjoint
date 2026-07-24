@@ -1,0 +1,12 @@
+Command:
+  python3 ginibre_q3/character_ring_iter/verify_su2_o11_first_chamber.py --max-p 100 --max-q 100
+
+Output:
+  SU2_O11_FIRST_CHAMBER PASS checks=10201 max_p=100 max_q=100 minimum=0 zeros=[(0, 0), (0, 1), (0, 2), (1, 0)]
+
+Measured local replay:
+  elapsed=1.20 seconds
+  maxrss=109816 KB
+
+Scope:
+  Exact integer orbit-fusion dynamic programming for the first rank-six orbit chamber missed by direct Hall transport. This is bounded evidence, not an all-exponent proof.
