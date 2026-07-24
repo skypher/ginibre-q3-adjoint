@@ -1,74 +1,70 @@
-# `SU(2)_5` finite-level frontier after the `k<=4` theorem
+# `SU(2)_5` chamber census and its resolution
 
 Date: 2026-07-24
 
-## Status
+## Current status: resolved
 
-The preceding note proves full all-length `GKS2*` and partial-character
-positivity for `SU(2)_k`, `1<=k<=4`.  This note records the first complete
-spectral chamber census for level five.  It is **not** a proof of the level-five
-theorem.
+The original version of this note recorded a direct spectral chamber census
+for the full level-five fusion ring and correctly marked 129 chambers as not
+covered by coordinatewise Hall transport.  Those chambers are now resolved
+by the odd-level simple-current lifting theorem in
+
+```text
+SU2_ODD_SIMPLE_CURRENT_LIFT_2026_07_24.md.
+```
+
+The rank-three simple-current orbit ring `O_5` already had an all-length proof
+(Proposition 22H3N).  The exact lifting identity proves that scalar `GKS2*` in
+`O_5` is equivalent to scalar `GKS2*` in the complete ring `SU(2)_5`.
+Adjoining one plus factor then proves the full partial-character column.
+
+Therefore:
+
+```text
+SU(2)_5 satisfies full all-length GKS2*,
+and every partial-character coefficient is nonnegative.
+```
+
+## Historical direct-transport census
 
 Let `V_1,...,V_5` be the nontrivial simples.  After eliminating labels which
 occur with both signs, each label is absent, plus, or minus.  Fixing the
 parity of every positive exponent and requiring even total minus parity gives
-exactly
 
 ```text
-1441 support/parity chambers.                         (1)
+1441 support/parity chambers.
 ```
 
-Write each positive exponent as
-
-```text
-p_a=p_a^0+2r_a,
-```
-
-with `p_a^0` equal to one or two according to its parity.  The Verlinde
-spectral formula then writes the corner as a finite signed sum of exponential
-monomials in the residual variables `r_a`.
-
-A high-precision chamber analyzer applies the same coordinatewise
-capacitated-Hall transport used exactly at level four.  Its census is
+Writing each positive exponent as `p_a=p_a^0+2r_a`, the Verlinde formula
+turns each chamber into a finite signed sum of exponential monomials.  The
+direct coordinatewise capacitated-Hall test gave
 
 ```text
 all chambers                 1441
 proved by direct Hall        1312
-not covered by direct Hall    129.                    (2)
+not covered by direct Hall    129.
 ```
 
-Thus the elementary transport proves more than ninety-one percent of all
-level-five parity chambers at arbitrary exponent depth.  The 129 failures
-are failures of this sufficient transport criterion, not negative fusion-ring
-coefficients.
+The 129 failures collapse to 67 spectral signatures.  They are now known to
+be failures only of that sufficient transport ansatz: the simple-current
+lifting theorem proves their nonnegativity simultaneously.  In particular,
+the earlier proposed program of deriving 67 separate spectral inequalities
+is unnecessary for level five.
 
-Grouping the failures by their positive and negative spectral coefficient/base
-arrays leaves
+The direct census remains useful diagnostically because the same transport
+ansatz reappears in higher odd orbit ranks.
 
-```text
-67 distinct spectral signatures.                     (3)
-```
+## Independent bounded regression
 
-Fifty signatures occur twice, thirteen occur once, and four occur four times.
-Simple reversal of the five label coordinates alone is not the full symmetry:
-it gives 115 orbits, so further compression must use the simple-current and
-node symmetries at the spectral level rather than bare label reversal.
-
-Seven non-Hall regimes already have only two active labels.  These provide a
-small first target for exact closed-form analysis before attacking the
-higher-dimensional signatures.
-
-## Exact bounded fusion regression
-
-The independent program
+The program
 
 ```text
 character_ring_iter/verify_su2_level5_regression.py
 ```
 
-evolves the integral `SU(2)_5` fusion ring directly.  With every active
-exponent in `1,...,6`, it checks all support-disjoint sign chambers of even
-minus parity and every target `V_c`, `0<=c<=5`.  The recorded result is
+checks the complete integral `SU(2)_5` fusion ring with every active exponent
+in `1,...,6`, every support-disjoint even-minus chamber, and every target.
+Its recorded output is
 
 ```text
 SU2_LEVEL_5_REGRESSION PASS
@@ -76,20 +72,15 @@ cases=177243
 partial_coefficients=1063458
 minimum=0
 minimum_positive=1
-max_power=6.                                          (4)
+max_power=6.
 ```
 
-This is exact bounded evidence for the full partial-character conjecture.  It
-is not an all-exponent proof.
+This remains an implementation cross-check.  The all-length theorem is the
+orbit proof plus exact simple-current lifting.
 
-## Next exact targets
+## New frontier
 
-The efficient order of attack is now:
-
-1. derive exact formulas for the seven two-label non-Hall regimes;
-2. identify the full simple-current action on spectral signatures;
-3. replace the numerical chamber census by exact algebraic-number comparisons;
-4. search for a small collection of Turan or crossed-pair inequalities which
-   covers the remaining signatures, as happened at level four.
-
-No counterexample to `GKS2*` or partial-character positivity was found.
+For odd levels, the full-ring problem is now exactly the orbit-ring problem.
+The next unproved odd full fusion ring is therefore `SU(2)_9`, equivalently
+the rank-five orbit ring `O_9`.  Existing files already prove its separated-
+pole top ray and record the first transport obstructions beyond that sector.

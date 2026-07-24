@@ -1,0 +1,22 @@
+Command:
+  python3 ginibre_q3/character_ring_iter/verify_su2_odd_simple_current_lift.py \
+    --max-level 9 --max-total 12 --max-factors 5
+
+Output:
+  ODD_SIMPLE_CURRENT_LIFT level=1 cases=321 result=PASS
+  ODD_SIMPLE_CURRENT_LIFT level=3 cases=2433 result=PASS
+  ODD_SIMPLE_CURRENT_LIFT level=5 cases=6001 result=PASS
+  ODD_SIMPLE_CURRENT_LIFT level=7 cases=8345 result=PASS
+  ODD_SIMPLE_CURRENT_LIFT level=9 cases=9401 result=PASS
+  SU2_ODD_SIMPLE_CURRENT_LIFT PASS cases=26501 forced_zero=11782 \
+    two_term=14719 max_level=9 max_total=12 max_factors=5
+
+Scope:
+  Exact integer fusion dynamic programming checks every displayed signed word.
+  When the number of odd-labelled occurrences is odd, the full corner is
+  checked to vanish.  Otherwise it is checked to equal one half of the sum of
+  the two even-lift orbit corners, with the second sign mask flipped exactly
+  at the odd-labelled positions.
+
+  The computation is a regression for the identity.  The unbounded proof is
+  SU2_ODD_SIMPLE_CURRENT_LIFT_2026_07_24.md.
