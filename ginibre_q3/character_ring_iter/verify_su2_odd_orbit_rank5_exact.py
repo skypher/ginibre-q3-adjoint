@@ -171,8 +171,9 @@ def rec(sc,pc,ch,cert,f=None,v=None):
  raise AssertionError(m)
 
 def main():
- R=roots();path=Path(__file__).resolve().parents[1]/'certificates'/'su2_odd_orbit_rank5_ledger.gz.b64'
- L=ast.literal_eval(gzip.decompress(base64.b64decode(path.read_bytes())).decode());D={};
+ R=roots();certdir=Path(__file__).resolve().parents[1]/'certificates'
+ payload=b''.join((certdir/f'su2_odd_orbit_rank5_ledger.part{i:02d}').read_bytes() for i in range(4))
+ L=ast.literal_eval(gzip.decompress(base64.b64decode(payload)).decode());D={};
  for sc,pc,rc,m,c in L:
   k=(sc,pc,rc);assert k not in D;D[k]=(m,c)
  E=set();chs=pts=ptr=0
