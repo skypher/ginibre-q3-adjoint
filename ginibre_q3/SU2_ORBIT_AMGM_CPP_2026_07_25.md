@@ -42,9 +42,26 @@ C++ certifies slightly more at every rank, 2,052 against 1,998 at rank six,
 because long double logarithms give the linear program better conditioned data
 than Python's float conversion did.
 
-This is the flat allocation stage only. The recursive orthant decomposition
-that lifted Python's rank six to 87.4% is not yet ported, so these numbers are
-a floor rather than the technique's ceiling.
+## Decomposition, and a cross-validation
+
+The recursive orthant decomposition is now ported too.  Because the port routes
+both paths through one node function, running with decomposition disabled sets
+the depth to zero and must reproduce the flat stage exactly.  It does, 185 at
+rank five and 2,052 at rank six, which is the refactor's own check.
+
+With decomposition enabled the C++ reproduces the Python's coverage exactly at
+every shared rank:
+
+```text
+rank  level  residual  flat AM-GM  split  certified  coverage   Python
+  4      7        13          11      1         12     92.3%     92.3%
+  5      9       201         185     11        196     97.5%     97.5%
+  6     11     2,589       2,052    211      2,263     87.4%     87.4%
+```
+
+Two independent implementations, in different languages with different
+arithmetic and different linear-programming code paths, agreeing to the regime
+is far better evidence than either alone.
 
 ## Agreement with the recorded census
 

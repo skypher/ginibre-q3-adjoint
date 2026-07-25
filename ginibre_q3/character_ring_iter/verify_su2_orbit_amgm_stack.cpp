@@ -436,6 +436,183 @@ bool verify_alloc(const std::vector<std::vector<Iv>>& lam, const std::vector<Iv>
     return true;
 }
 
+
+// ------------------------------------------------------- nodes and recursion
+
+// A node of the decomposition: terms over K free coordinates, in both
+// arithmetics.  The float side proposes, the interval side decides.
+struct Node {
+    std::vector<int> sign;
+    std::vector<long double> coeff;
+    std::vector<std::vector<long double>> lam;   // [term][k]
+    std::vector<Iv> icoeff;
+    std::vector<std::vector<Iv>> ilam;
+    std::size_t k = 0;
+};
+
+struct Stats {
+    std::uint64_t amgm = 0, leaves = 0, nodes = 0, cap = 400000;
+    std::array<std::uint64_t, 5> den{};
+};
+
+// A zero-dimensional node is one exponent point: decide it outright.
+bool leaf_nonneg(const Node& nd) {
+    Iv total;
+    for (std::size_t t = 0; t < nd.sign.size(); ++t) {
+        Iv nxt;
+        if (nd.sign[t] > 0) iv_add(nxt, total, nd.icoeff[t]);
+        else iv_sub(nxt, total, nd.icoeff[t]);
+        total = nxt;
+    }
+    return mpfr_sgn(total.lo) >= 0;
+}
+
+// Try one capacitated allocation at this node.
+bool amgm_node(const Node& nd, Stats& st) {
+    std::vector<int> pos, neg;
+    for (std::size_t t = 0; t < nd.sign.size(); ++t)
+        (nd.sign[t] < 0 ? neg : pos).push_back(static_cast<int>(t));
+    if (neg.empty()) return true;                    // nothing to dominate
+    if (pos.empty()) return false;
+
+    const std::size_t P = pos.size(), X = neg.size(), K = nd.k;
+    const std::size_t nv = P * X + 1, dj = P * X;
+    auto aidx = [&](std::size_t pi, std::size_t xi) { return pi * X + xi; };
+
+    std::vector<std::vector<double>> A;
+    std::vector<double> bb;
+    for (std::size_t xi = 0; xi < X; ++xi) {
+        std::vector<double> r(nv, 0.0);
+        for (std::size_t pi = 0; pi < P; ++pi) r[aidx(pi, xi)] = 1.0;
+        A.push_back(r); bb.push_back(1.0);
+        for (double& q : r) q = -q;
+        A.push_back(r); bb.push_back(-1.0);
+    }
+    for (std::size_t pi = 0; pi < P; ++pi) {
+        std::vector<double> r(nv, 0.0);
+        for (std::size_t xi = 0; xi < X; ++xi) r[aidx(pi, xi)] = 1.0;
+        A.push_back(r); bb.push_back(1.0);
+    }
+    for (std::size_t xi = 0; xi < X; ++xi) {
+        for (std::size_t kk = 0; kk < K; ++kk) {
+            std::vector<double> r(nv, 0.0);
+            for (std::size_t pi = 0; pi < P; ++pi)
+                r[aidx(pi, xi)] = -static_cast<double>(logl(nd.lam[static_cast<std::size_t>(pos[pi])][kk]));
+            r[dj] = 1.0;
+            A.push_back(r);
+            bb.push_back(-static_cast<double>(logl(nd.lam[static_cast<std::size_t>(neg[xi])][kk])));
+        }
+        std::vector<double> r(nv, 0.0);
+        for (std::size_t pi = 0; pi < P; ++pi)
+            r[aidx(pi, xi)] = -static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(pos[pi])]));
+        r[dj] = 1.0;
+        A.push_back(r);
+        bb.push_back(-static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(neg[xi])])));
+    }
+    std::vector<double> c(nv, 0.0); c[dj] = 1.0;
+    std::vector<double> sol;
+    if (!simplex(A, bb, c, static_cast<int>(nv), sol)) return false;
+
+    // Never trust the solver: discard a proposal violating its own constraints.
+    for (double q : sol) if (q < -1e-7) return false;
+    for (std::size_t i = 0; i < A.size(); ++i) {
+        double acc = 0.0;
+        for (std::size_t j = 0; j < nv; ++j) acc += A[i][j] * sol[j];
+        if (acc - bb[i] > 1e-6) return false;
+    }
+    if (sol[dj] <= 0.0) return false;
+
+    static const long ladder[5] = {100, 200, 500, 1000, 5000};
+    for (int di = 0; di < 5; ++di) {
+        const long d = ladder[di];
+        std::vector<std::vector<long>> units(P, std::vector<long>(X, 0));
+        bool roundable = true;
+        for (std::size_t xi = 0; xi < X && roundable; ++xi) {
+            std::vector<double> col(P);
+            for (std::size_t pi = 0; pi < P; ++pi) col[pi] = sol[aidx(pi, xi)];
+            std::vector<long> u;
+            if (!round_column(col, d, u)) { roundable = false; break; }
+            for (std::size_t pi = 0; pi < P; ++pi) units[pi][xi] = u[pi];
+        }
+        if (!roundable) continue;
+        if (verify_alloc(nd.ilam, nd.icoeff, pos, neg, units, d, K)) {
+            ++st.den[static_cast<std::size_t>(di)];
+            return true;
+        }
+    }
+    return false;
+}
+
+// How deep to split, by dimension.  A uniform cap is wrong: the recorded O11
+// final chamber needed a threshold of 75 before its tail closed, with 73,150
+// finite lattice checks below it, so a ray can need tens of splits.  Depth is
+// cheap in low dimension, where one split costs one leaf, and expensive in high
+// dimension, where the face subtree branches.  The node budget is the real
+// ceiling.
+int depth_for(std::size_t k) {
+    switch (k) {
+        case 0: return 0;
+        case 1: return 240;
+        case 2: return 40;
+        case 3: return 14;
+        case 4: return 9;
+        default: return 6;
+    }
+}
+
+// Close a node by allocation, or split it and recurse.
+//
+// For a free coordinate l the index set splits exactly:
+//     {u_l >= 0} = {u_l = 0} disjoint-union {u_l >= 1}.
+// The face drops l; the tail absorbs one factor of lambda into every
+// coefficient.  Both are strictly simpler and their union is the parent, so the
+// split is sound by construction.  Acceptance never widens: a node closes only
+// by an interval-verified allocation or an interval evaluation.
+bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
+    if (++st.nodes > st.cap) return false;
+    if (nd.k == 0) { ++st.leaves; return leaf_nonneg(nd); }
+    if (amgm_node(nd, st)) { ++st.amgm; return true; }
+    if (depth >= max_depth) return false;
+
+    // Split where the negative terms hold the largest advantage: that is the
+    // obstruction the allocation could not pay for.
+    std::size_t best = 0;
+    long double best_score = -1.0L;
+    for (std::size_t kk = 0; kk < nd.k; ++kk) {
+        long double worst = 0.0L;
+        for (std::size_t t = 0; t < nd.sign.size(); ++t)
+            if (nd.sign[t] < 0) worst = std::max(worst, nd.lam[t][kk]);
+        if (worst > best_score) { best_score = worst; best = kk; }
+    }
+
+    // Face u_best = 0: drop the coordinate.
+    Node face;
+    face.sign = nd.sign;
+    face.coeff = nd.coeff;
+    face.icoeff = nd.icoeff;
+    face.k = nd.k - 1;
+    face.lam.resize(nd.sign.size());
+    face.ilam.resize(nd.sign.size());
+    for (std::size_t t = 0; t < nd.sign.size(); ++t)
+        for (std::size_t kk = 0; kk < nd.k; ++kk)
+            if (kk != best) { face.lam[t].push_back(nd.lam[t][kk]); face.ilam[t].push_back(nd.ilam[t][kk]); }
+    if (!certify_node(face, 0, depth_for(face.k), st)) return false;
+
+    // Tail u_best >= 1: absorb one factor of lambda.
+    Node tail;
+    tail.sign = nd.sign;
+    tail.lam = nd.lam;
+    tail.ilam = nd.ilam;
+    tail.k = nd.k;
+    tail.coeff.resize(nd.sign.size());
+    tail.icoeff.resize(nd.sign.size());
+    for (std::size_t t = 0; t < nd.sign.size(); ++t) {
+        tail.coeff[t] = nd.coeff[t] * nd.lam[t][best];
+        iv_mul(tail.icoeff[t], nd.icoeff[t], nd.ilam[t][best]);
+    }
+    return certify_node(tail, depth + 1, max_depth, st);
+}
+
 }  // namespace
 
 // ---------------------------------------------------------------- driver
@@ -502,6 +679,7 @@ int main(int argc, char** argv) {
     std::array<std::uint64_t, 5> den_used{};
     std::uint64_t sound_regimes = 0, sound_points = 0, sound_viol = 0;
     std::uint64_t ctl_tried = 0, ctl_refused = 0;
+    std::uint64_t flat_total = 0, split_total = 0;
 
     const int supports = static_cast<int>(std::llround(std::pow(3.0, L)));
 
@@ -509,6 +687,7 @@ int main(int argc, char** argv) {
         std::uint64_t ld = 0, lr = 0, lp = 0, ls = 0, lok = 0, lcert = 0;
         std::array<std::uint64_t, 5> lden{};
         std::uint64_t lsound_regimes = 0, lsound_points = 0, lsound_viol = 0;
+        std::uint64_t lflat = 0, lsplit = 0;
         std::uint64_t lctl_tried = 0, lctl_refused = 0;
         for (;;) {
             const int support = next.fetch_add(1);
@@ -580,136 +759,84 @@ int main(int argc, char** argv) {
                     if (hall) { ++ld; continue; }
                     ++lr;
 
-                    // AM-GM proposal: maximise the worst-case slack.
-                    const std::size_t P = pos.size(), X = neg.size(), K = freev.size();
-                    if (P == 0) continue;
-                    const std::size_t nv = P * X + 1, dj = P * X;
-                    std::vector<std::vector<double>> A;
-                    std::vector<double> bb;
-                    auto aidx = [&](std::size_t pi, std::size_t xi) { return pi * X + xi; };
-                    for (std::size_t xi = 0; xi < X; ++xi) {
-                        std::vector<double> r(nv, 0.0);
-                        for (std::size_t pi = 0; pi < P; ++pi) r[aidx(pi, xi)] = 1.0;
-                        A.push_back(r); bb.push_back(1.0);
-                        for (double& q : r) q = -q;
-                        A.push_back(r); bb.push_back(-1.0);
-                    }
-                    for (std::size_t pi = 0; pi < P; ++pi) {
-                        std::vector<double> r(nv, 0.0);
-                        for (std::size_t xi = 0; xi < X; ++xi) r[aidx(pi, xi)] = 1.0;
-                        A.push_back(r); bb.push_back(1.0);
-                    }
-                    for (std::size_t xi = 0; xi < X; ++xi) {
-                        for (std::size_t k = 0; k < K; ++k) {
-                            std::vector<double> r(nv, 0.0);
-                            for (std::size_t pi = 0; pi < P; ++pi)
-                                r[aidx(pi, xi)] = -static_cast<double>(logl(terms[static_cast<std::size_t>(pos[pi])].lam[static_cast<std::size_t>(freev[k])]));
-                            r[dj] = 1.0;
-                            A.push_back(r);
-                            bb.push_back(-static_cast<double>(logl(terms[static_cast<std::size_t>(neg[xi])].lam[static_cast<std::size_t>(freev[k])])));
-                        }
-                        std::vector<double> r(nv, 0.0);
-                        for (std::size_t pi = 0; pi < P; ++pi)
-                            r[aidx(pi, xi)] = -static_cast<double>(logl(mag[static_cast<std::size_t>(pos[pi])]));
-                        r[dj] = 1.0;
-                        A.push_back(r);
-                        bb.push_back(-static_cast<double>(logl(mag[static_cast<std::size_t>(neg[xi])])));
-                    }
-                    std::vector<double> c(nv, 0.0); c[dj] = 1.0;
-                    std::vector<double> sol;
-                    if (!simplex(A, bb, c, static_cast<int>(nv), sol)) continue;
-                    // never trust the solver
-                    bool feas = true;
-                    for (double q : sol) if (q < -1e-7) { feas = false; break; }
-                    if (feas)
-                        for (std::size_t i = 0; i < A.size() && feas; ++i) {
-                            double s = 0.0;
-                            for (std::size_t j = 0; j < nv; ++j) s += A[i][j] * sol[j];
-                            if (s - bb[i] > 1e-6) feas = false;
-                        }
-                    if (!feas || sol[dj] <= 0.0) continue;
-                    ++lok;
-                    (void)decompose;
-
-                    // Rational rounding, then the decision in interval
-                    // arithmetic.  Nothing above this point is accepted.
-                    std::vector<std::vector<Iv>> ilam(terms.size());
-                    std::vector<Iv> icoef(terms.size());
+                    // Build the root node and certify it.  With --decompose
+                    // off the depth is zero, so this is exactly the flat
+                    // allocation stage and must reproduce its numbers.
+                    const std::size_t K = freev.size();
+                    Node root;
+                    root.k = K;
+                    root.sign.resize(terms.size());
+                    root.coeff.resize(terms.size());
+                    root.icoeff.resize(terms.size());
+                    root.lam.assign(terms.size(), {});
+                    root.ilam.assign(terms.size(), {});
                     for (std::size_t t = 0; t < terms.size(); ++t) {
-                        ilam[t].resize(K);
-                        Iv cc = terms[t].icoeff;
-                        for (std::size_t k = 0; k < K; ++k) {
-                            ilam[t][k] = terms[t].ilam[static_cast<std::size_t>(freev[k])];
-                            Iv tmp; iv_mul(tmp, cc, ilam[t][k]); cc = tmp;
+                        root.sign[t] = terms[t].sign;
+                        long double cc = terms[t].coeff;
+                        Iv icc = terms[t].icoeff;
+                        for (std::size_t kk = 0; kk < K; ++kk) {
+                            const std::size_t l = static_cast<std::size_t>(freev[kk]);
+                            root.lam[t].push_back(terms[t].lam[l]);
+                            root.ilam[t].push_back(terms[t].ilam[l]);
+                            cc *= terms[t].lam[l];
+                            Iv tmp; iv_mul(tmp, icc, terms[t].ilam[l]); icc = tmp;
                         }
-                        icoef[t] = cc;
+                        root.coeff[t] = cc;
+                        root.icoeff[t] = icc;
                     }
-                    static const long ladder[5] = {100, 200, 500, 1000, 5000};
-                    bool certified = false;
-                    for (int di = 0; di < 5 && !certified; ++di) {
-                        const long d = ladder[di];
-                        std::vector<std::vector<long>> units(P, std::vector<long>(X, 0));
-                        bool roundable = true;
-                        for (std::size_t xi = 0; xi < X && roundable; ++xi) {
-                            std::vector<double> col(P);
-                            for (std::size_t pi = 0; pi < P; ++pi) col[pi] = sol[aidx(pi, xi)];
-                            std::vector<long> u;
-                            if (!round_column(col, d, u)) { roundable = false; break; }
-                            for (std::size_t pi = 0; pi < P; ++pi) units[pi][xi] = u[pi];
+                    Stats st;
+                    const int md = decompose ? depth_for(K) : 0;
+                    const bool certified = certify_node(root, 0, md, st);
+                    if (!certified) continue;
+                    ++lcert;
+                    if (st.amgm == 1 && st.leaves == 0) ++lflat; else ++lsplit;
+                    for (std::size_t di = 0; di < 5; ++di) lden[di] += st.den[di];
+                    lok += 1;
+
+                    // Soundness: the certificate claims the signed sum is
+                    // nonnegative across the whole regime.  Evaluate the actual
+                    // sum at pseudo-random exponent points, independently of the
+                    // certificate logic.
+                    if (soundness && lsound_regimes < static_cast<std::uint64_t>(soundness)) {
+                        ++lsound_regimes;
+                        std::uint64_t rng = static_cast<std::uint64_t>(0x9e3779b97f4a7c15ULL);
+                        rng ^= static_cast<std::uint64_t>(support) << 20;
+                        rng ^= static_cast<std::uint64_t>(parity) << 8;
+                        rng ^= static_cast<std::uint64_t>(res);
+                        for (int trial = 0; trial < 40; ++trial) {
+                            std::vector<int> expo(K);
+                            for (std::size_t kk = 0; kk < K; ++kk) {
+                                rng ^= rng << 13; rng ^= rng >> 7; rng ^= rng << 17;
+                                expo[kk] = 1 + static_cast<int>(rng % 12);
+                            }
+                            long double tot = 0.0L;
+                            for (std::size_t t = 0; t < terms.size(); ++t) {
+                                long double v = terms[t].coeff;
+                                for (std::size_t kk = 0; kk < K; ++kk)
+                                    for (int q = 0; q < expo[kk]; ++q)
+                                        v *= terms[t].lam[static_cast<std::size_t>(freev[kk])];
+                                tot += static_cast<long double>(terms[t].sign) * v;
+                            }
+                            ++lsound_points;
+                            if (tot < -1.0e-18L * (1.0L + fabsl(tot))) ++lsound_viol;
                         }
-                        if (!roundable) continue;
-                        if (verify_alloc(ilam, icoef, pos, neg, units, d, K)) {
-                            certified = true;
-                            ++lcert;
-                            ++lden[static_cast<std::size_t>(di)];
+                    }
 
-                            // Soundness: the certificate claims the signed sum
-                            // is nonnegative on the whole regime.  Evaluate the
-                            // actual sum at pseudo-random exponent points and
-                            // check that directly, independently of the
-                            // certificate logic.
-                            if (soundness && lsound_regimes < static_cast<std::uint64_t>(soundness)) {
-                                ++lsound_regimes;
-                                std::uint64_t rng = static_cast<std::uint64_t>(0x9e3779b97f4a7c15ULL);
-                                rng ^= static_cast<std::uint64_t>(support) << 20;
-                                rng ^= static_cast<std::uint64_t>(parity) << 8;
-                                rng ^= static_cast<std::uint64_t>(res);
-                                for (int trial = 0; trial < 40; ++trial) {
-                                    // One exponent vector per trial, shared by
-                                    // every term.  Drawing it per term would
-                                    // evaluate a different point for each term
-                                    // and mean nothing.
-                                    std::vector<int> expo(K);
-                                    for (std::size_t k = 0; k < K; ++k) {
-                                        rng ^= rng << 13; rng ^= rng >> 7; rng ^= rng << 17;
-                                        expo[k] = 1 + static_cast<int>(rng % 12);
-                                    }
-                                    long double tot = 0.0L;
-                                    for (std::size_t t = 0; t < terms.size(); ++t) {
-                                        long double v = terms[t].coeff;
-                                        for (std::size_t k = 0; k < K; ++k)
-                                            for (int q = 0; q < expo[k]; ++q)
-                                                v *= terms[t].lam[static_cast<std::size_t>(freev[k])];
-                                        tot += static_cast<long double>(terms[t].sign) * v;
-                                    }
-                                    ++lsound_points;
-                                    if (tot < -1.0e-18L * (1.0L + fabsl(tot))) ++lsound_viol;
-                                }
-                            }
-
-                            // Negative control: corrupt the allocation and
-                            // require the verifier to reject it.  Breaking
-                            // normalisation must not be certifiable.
-                            if (control && lctl_tried < 200) {
-                                ++lctl_tried;
-                                std::vector<std::vector<long>> bad = units;
-                                bad[0][0] += 1;                    // column no longer sums to d
-                                if (!verify_alloc(ilam, icoef, pos, neg, bad, d, K)) ++lctl_refused;
-                                std::vector<std::vector<long>> bad2 = units;
-                                for (std::size_t xi2 = 0; xi2 < X; ++xi2) bad2[0][xi2] = d;   // capacity blown
-                                ++lctl_tried;
-                                if (!verify_alloc(ilam, icoef, pos, neg, bad2, d, K)) ++lctl_refused;
-                            }
+                    // Negative control: corrupt a verified allocation at the
+                    // root and require the verifier to reject it.
+                    if (control && lctl_tried < 200 && st.amgm >= 1 && K > 0) {
+                        std::vector<int> cpos, cneg;
+                        for (std::size_t t = 0; t < root.sign.size(); ++t)
+                            (root.sign[t] < 0 ? cneg : cpos).push_back(static_cast<int>(t));
+                        if (!cneg.empty() && !cpos.empty()) {
+                            const long d = 100;
+                            std::vector<std::vector<long>> u(cpos.size(), std::vector<long>(cneg.size(), 0));
+                            for (std::size_t xi = 0; xi < cneg.size(); ++xi) u[0][xi] = d;
+                            ++lctl_tried;                              // capacity blown
+                            if (!verify_alloc(root.ilam, root.icoeff, cpos, cneg, u, d, K)) ++lctl_refused;
+                            for (std::size_t xi = 0; xi < cneg.size(); ++xi) u[0][xi] = d + 1;
+                            ++lctl_tried;                              // normalisation broken
+                            if (!verify_alloc(root.ilam, root.icoeff, cpos, cneg, u, d, K)) ++lctl_refused;
                         }
                     }
                 }
@@ -721,6 +848,7 @@ int main(int argc, char** argv) {
         for (std::size_t i = 0; i < 5; ++i) den_used[i] += lden[i];
         sound_regimes += lsound_regimes; sound_points += lsound_points; sound_viol += lsound_viol;
         ctl_tried += lctl_tried; ctl_refused += lctl_refused;
+        flat_total += lflat; split_total += lsplit;
     };
 
     std::vector<std::thread> pool;
@@ -733,6 +861,8 @@ int main(int argc, char** argv) {
     std::printf("  pointwise        %llu\n", static_cast<unsigned long long>(pointwise));
     std::printf("  lp_feasible      %llu\n", static_cast<unsigned long long>(lp_ok));
     std::printf("  certified        %llu\n", static_cast<unsigned long long>(certified_total));
+    std::printf("  by_flat_amgm     %llu\n", static_cast<unsigned long long>(flat_total));
+    std::printf("  by_split         %llu\n", static_cast<unsigned long long>(split_total));
     static const int ladder_out[5] = {100, 200, 500, 1000, 5000};
     std::printf("  denominators    ");
     for (std::size_t i = 0; i < 5; ++i)
