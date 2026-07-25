@@ -32,6 +32,7 @@
 #include <numeric>
 #include <string>
 #include <thread>
+#include <chrono>
 #include <vector>
 
 #include <gmp.h>
@@ -1387,6 +1388,9 @@ int main(int argc, char** argv) {
         else if (!std::strcmp(argv[i], "--level") && i + 1 < argc) level = std::atoi(argv[++i]);
         else if (!std::strcmp(argv[i], "--certify-all")) g_certify_all = true;
     }
+    // A killed run must leave a usable partial transcript, and a multi-hour
+    // run must show it is alive.  Line-buffer stdout even when redirected.
+    setvbuf(stdout, nullptr, _IOLBF, 0);
     if (level > 0) {
         if (level < 2) { std::fprintf(stderr, "level must be at least 2\n"); return 2; }
         g_full_level = true;
@@ -1478,6 +1482,8 @@ int main(int argc, char** argv) {
     }
 
     std::atomic<int> next{0};
+    std::atomic<std::uint64_t> prog_res{0}, prog_cert{0};
+    std::atomic<bool> all_done{false};
     std::mutex mu;
     std::mutex dump_mu;
     std::uint64_t direct = 0, residual = 0, pointwise = 0, sep = 0, parity_zero = 0;
@@ -1496,7 +1502,10 @@ int main(int argc, char** argv) {
         std::uint64_t lsound_regimes = 0, lsound_points = 0, lsound_viol = 0;
         std::uint64_t lflat = 0, lsplit = 0, lnodes = 0, lbudget = 0, lexact = 0, label_ = 0, lfold = 0, lfarey = 0;
         std::uint64_t lctl_tried = 0, lctl_refused = 0;
+        std::uint64_t mirror_res = 0, mirror_cert = 0;
         for (;;) {
+            if (lr > mirror_res)   { prog_res.fetch_add(lr - mirror_res, std::memory_order_relaxed);   mirror_res = lr; }
+            if (lcert > mirror_cert) { prog_cert.fetch_add(lcert - mirror_cert, std::memory_order_relaxed); mirror_cert = lcert; }
             const int support = next.fetch_add(1);
             if (support >= supports) break;
             std::vector<int> signs(static_cast<std::size_t>(L), 0);
@@ -1750,9 +1759,29 @@ int main(int argc, char** argv) {
         node_total += lnodes; budget_hit += lbudget; exact_leaf_total += lexact; abel_total += label_; folded_total += lfold; farey_total += lfarey;
     };
 
+    // Progress heartbeat: one line every thirty seconds with the support
+    // cursor and live counters, so a transcript shows liveness and a killed
+    // run still tells how far it got.
+    std::thread reporter([&]() {
+        const auto t0 = std::chrono::steady_clock::now();
+        while (!all_done.load()) {
+            std::this_thread::sleep_for(std::chrono::seconds(30));
+            if (all_done.load()) break;
+            const auto el = std::chrono::duration_cast<std::chrono::seconds>(
+                std::chrono::steady_clock::now() - t0).count();
+            std::fprintf(stderr, "PROGRESS elapsed=%llds supports=%d/%d residual=%llu certified=%llu\n",
+                         static_cast<long long>(el),
+                         std::min(next.load(), supports), supports,
+                         static_cast<unsigned long long>(prog_res.load()),
+                         static_cast<unsigned long long>(prog_cert.load()));
+            std::fflush(stderr);
+        }
+    });
     std::vector<std::thread> pool;
     for (int i = 0; i < threads; ++i) pool.emplace_back(worker);
     for (auto& t : pool) t.join();
+    all_done.store(true);
+    reporter.join();
 
     if (g_full_level)
         std::printf("SU2_LEVEL_AMGM_CPP level=%d labels=%d nodes=%d threads=%d certify_all=1\n",
