@@ -1,0 +1,38 @@
+Host resources: nproc=5; memory=5.9 GiB. Parallel searches used four or five workers.
+
+Exact transfer regression:
+O13_SUPPORT245_B1_RAY checks=2001 minimum=0 zeros=0
+values=0,2,110,4398,158738,5437680,180762400,5894116054,...
+minimal_recurrence_degree=20
+
+O13_SUPPORT245_B6_RAY checks=2001 minimum=0 zeros=0,1,2
+values=0,0,0,2,132,5814,225244,8251256,293772412,...
+minimal_recurrence_degree=20
+
+O13_SUPPORT245_PLANE PASS checks=14641 minimum=0 zeros=0:0 threads=5
+elapsed=0.24 seconds; peak RSS=3620KB
+
+Exact all-exponent replay:
+SU2_O13_SUPPORT245_EXACT PASS pieces=18 denominator=100 leaves=20 zeros=5 minimum_leaf=0 slope=3 strips=12
+elapsed=1.13 seconds; peak RSS=5444KB
+
+Certificate partition:
+standalone B1 ray tail              1
+standalone B6 ray tail              1
+low and high plane cones            2
+diagonal slope-three strips        12
+left-column tails                   2
+                                   --
+AM-GM pieces                       18
+exact finite leaves                20
+
+Deterministic package:
+sha256=da31783b2297c692d7dbc4b10e9f41bc7a03b07b664b43c137403ad06995c76f
+package_size=5418 bytes
+package reconstruction and replay PASS
+
+Conclusion:
+O13_SUPPORT245_FULL_CHAMBER PASS residual_keys=3
+O13_EXACT_FRONTIER_CLOSED_KEYS=175
+
+Next support in order: 248.
