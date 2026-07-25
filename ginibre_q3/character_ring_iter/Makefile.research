@@ -126,7 +126,13 @@ analyze_su2_outer_ten: analyze_su2_outer_ten.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+verify_su2_orbit_amgm_stack: verify_su2_orbit_amgm_stack.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror -pthread $< \
+		-l:libmpfr.so.6 -lgmp -o $@
+
 RESEARCH_TARGETS = \
+	verify_su2_orbit_amgm_stack \
 	verify_su2_plucker_second_syzygies \
 	verify_su2_v2_presburger \
 	verify_su2_opd_four_suffix_z3 \

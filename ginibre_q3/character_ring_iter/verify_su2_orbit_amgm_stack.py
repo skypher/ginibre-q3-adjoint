@@ -29,6 +29,7 @@ from su2_orbit_amgm import chamber_terms, nodes_and_characters
 from su2_amgm_lp import propose_allocation
 from su2_amgm_certify import prepare, round_allocation, verify
 from su2_amgm_decompose import build_node, certify as decompose_certify
+from su2_amgm_fan import certify_fan
 
 TOL = mp.mpf(10) ** -12
 
@@ -106,12 +107,21 @@ def regimes(rank):
                 yield support, parity, signs, powers, terms, free
 
 
-def try_decompose(signs, powers, free, rank, weights, table, max_depth) -> bool:
-    """Last resort: split the regime recursively.  Acceptance is unchanged --
-    every node still closes by interval-verified AM-GM or interval evaluation."""
+def try_decompose(signs, powers, free, rank, weights, table, max_depth):
+    """Split the regime, then if that fails try the order-cone fan.
+
+    Acceptance is unchanged throughout: every node closes by an
+    interval-verified AM-GM certificate or an interval evaluation.
+    Returns "split", "fan", or None.
+    """
     node = build_node(signs, powers, list(free), rank, weights, table)
     ok, _stats = decompose_certify(*node, denom=100, max_depth=max_depth)
-    return bool(ok)
+    if ok:
+        return "split"
+    ok, _cones = certify_fan(*node, denom=100)
+    if ok:
+        return "fan"
+    return None
 
 
 def main() -> int:
@@ -131,7 +141,7 @@ def main() -> int:
     t0 = time.time()
 
     direct = closed = failed_lp = failed_round = failed_verify = 0
-    closed_split = 0
+    closed_split = closed_fan = 0
     denom_used: dict[int, int] = {}
     seen = 0
     worst_margin = None
@@ -152,9 +162,13 @@ def main() -> int:
 
         delta, proposal = propose_allocation(log_lam, log_c, tsigns, len(free))
         if proposal is None or delta is None or delta <= 0:
-            if args.decompose and try_decompose(signs, powers, free, rank,
-                                                weights, table, args.max_depth):
-                closed_split += 1
+            how = (try_decompose(signs, powers, free, rank, weights, table,
+                                 args.max_depth) if args.decompose else None)
+            if how:
+                if how == "fan":
+                    closed_fan += 1
+                else:
+                    closed_split += 1
                 continue
             failed_lp += 1
             unresolved.append((support, parity, tuple(free), "lp"))
@@ -175,9 +189,13 @@ def main() -> int:
                 used = d
                 break
         if not ok:
-            if args.decompose and try_decompose(signs, powers, free, rank,
-                                                weights, table, args.max_depth):
-                closed_split += 1
+            how = (try_decompose(signs, powers, free, rank, weights, table,
+                                 args.max_depth) if args.decompose else None)
+            if how:
+                if how == "fan":
+                    closed_fan += 1
+                else:
+                    closed_split += 1
                 continue
             failed_verify += 1
             unresolved.append((support, parity, tuple(free), "verify"))
@@ -197,6 +215,7 @@ def main() -> int:
     print(f"  closed_amgm      {closed}")
     if args.decompose:
         print(f"  closed_split     {closed_split}")
+        print(f"  closed_fan       {closed_fan}")
     print(f"  lp_infeasible    {failed_lp}")
     print(f"  round_failed     {failed_round}")
     if denom_used:
@@ -206,7 +225,7 @@ def main() -> int:
     if worst_margin is not None:
         print(f"  min_slack        {mp.nstr(mp.mpf(worst_margin), 8)}")
     print(f"  elapsed_seconds  {elapsed:.1f}")
-    total_closed = closed + closed_split
+    total_closed = closed + closed_split + closed_fan
     if args.decompose:
         print(f"  closed_total     {total_closed}")
     if seen:

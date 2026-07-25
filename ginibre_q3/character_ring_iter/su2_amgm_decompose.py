@@ -119,11 +119,27 @@ def _amgm_node(fl_sign, fl_coeff, fl_lam, iv_sign, iv_coeff, iv_lam, denom):
     return False
 
 
+def depth_for(nfree: int) -> int:
+    """How deep to split, by dimension.
+
+    A uniform cap of six was far too shallow.  The recorded O11 final chamber
+    needed a threshold of 75 before its AM-GM tail closed, with 73,150 finite
+    lattice checks below it, so a regime can easily need tens of splits along a
+    ray.  Depth is cheap in low dimension -- a one-coordinate walk costs one
+    leaf per level -- and expensive in high dimension, where the face subtree
+    branches, so scale it down as dimension rises.  The node budget remains the
+    real ceiling.
+    """
+    return {1: 240, 2: 40, 3: 14, 4: 9}.get(nfree, 6)
+
+
 def certify(fl_sign, fl_coeff, fl_lam, iv_sign, iv_coeff, iv_lam,
-            denom=100, depth=0, max_depth=6, budget=None):
+            denom=100, depth=0, max_depth=None, budget=None):
     """Close a node by AM-GM, or split and recurse.  Returns (ok, stats)."""
+    if max_depth is None:
+        max_depth = depth_for(len(fl_lam[0]) if fl_lam else 0)
     if budget is None:
-        budget = {"nodes": 0, "leaves": 0, "amgm": 0, "cap": 4000}
+        budget = {"nodes": 0, "leaves": 0, "amgm": 0, "cap": 60000}
     budget["nodes"] += 1
     if budget["nodes"] > budget["cap"]:
         return False, budget
@@ -160,8 +176,10 @@ def certify(fl_sign, fl_coeff, fl_lam, iv_sign, iv_coeff, iv_lam,
     f_coeff = list(fl_coeff)
     f_lam = [[row[j] for j in range(nfree) if j != l] for row in fl_lam]
     i_lam = [[row[j] for j in range(nfree) if j != l] for row in iv_lam]
+    # The face has one fewer coordinate, so it gets its own dimension-based
+    # allowance rather than inheriting the parent's remaining depth.
     ok, budget = certify(f_sign, f_coeff, f_lam, iv_sign, iv_coeff, i_lam,
-                         denom, depth + 1, max_depth, budget)
+                         denom, 0, depth_for(nfree - 1), budget)
     if not ok:
         return False, budget
 

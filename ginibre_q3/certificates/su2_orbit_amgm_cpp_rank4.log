@@ -1,0 +1,11 @@
+  spectral_crosscheck 16 values agree
+SU2_ORBIT_AMGM_CPP rank=4 level=7 threads=5
+  direct_hall      191
+  residual         13
+  pointwise        98
+  lp_feasible      11
+  certified        11
+  denominators     100:11
+  soundness        regimes=11 points=440 violations=0
+  negative_control corrupted=22 refused=22
+  coverage         84.6% of residual regimes
