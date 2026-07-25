@@ -1,6 +1,6 @@
 # `SU(2)_13` and the rank-seven odd-orbit frontier
 
-Date: 2026-07-24
+Date: 2026-07-25
 
 ## Exact reduction
 
@@ -36,82 +36,13 @@ Every theorem below is instead replayed with rational Sturm isolation, exact
 rational capacities, directed-rounding MPFR logarithms where needed, and
 integral fusion arithmetic for finite leaves.
 
-## Exact initial-frontier advance
+## Exact frontier: 175 closed failure keys
 
-The exact program now closes 172 direct-Hall failure keys.
+The exact program now closes 175 direct-Hall failure keys.
 
-### First two rays
+### Initial 172-key package
 
-The previously published first obstruction is
-
-```text
-support=56, parity=3, residual=1,
-(B_1^-)^(1+2p) B_4^-,                 p>=0.
-```
-
-Exact leaves are `0,0,8`, and a denominator-100 weighted AM-GM certificate
-proves the tail from residual floor two.
-
-The next ray is
-
-```text
-support=83, parity=2, residual=1,
-(B_1^-)^(2+2p) B_5^+,                 p>=0.
-```
-
-Two spectral pairs vanish identically. Exact values are `0,0,10`, and a
-second denominator-100 AM-GM certificate proves the entire remaining tail.
-
-### Complete `B_1^- B_5^-` chamber
-
-All residual faces of
-
-```text
-(B_1^-)^(1+2p)(B_5^-)^(1+2q),         p,q>=0,
-```
-
-are proved. The two axes have exact initial values `0,0,2` and `0,0,20`,
-respectively. The interior has a two-coordinate denominator-100 allocation
-and first exact value eight. Thus the whole two-parameter chamber is
-nonnegative.
-
-### Decorated rays and support 169
-
-The ray
-
-```text
-(B_1^-)^(1+2p) B_2^+ B_5^-
-```
-
-has exact leaf zero and a denominator-100 tail beginning with value two.
-At support `169`, the ray `B_1^+B_2^-B_5^-` and both three-variable parity
-interiors are also proved. Their first interior values are `7914` and `2348`.
-
-### Generic multivariable replay
-
-A reusable strict C++ verifier proves 163 additional three-, four-, and
-five-variable residual regimes:
-
-```text
-support 178      8
-support 187      8
-support 196      8
-support 205     32
-support 214     32
-support 223      8
-support 232     32
-support 241     32
-support 250      3
-                 ---
-total           163.
-```
-
-The support-205 tables include six denominator-1000 certificates and two
-near-boundary denominator-10000 tables. Directed rounding confirms every
-geometric and capacity inequality. The complete 163-case replay runs in
-about 4.84 seconds and uses under 6 MiB resident memory on the recorded host.
-
-The exact key count is therefore
+The earlier exact package proves:
 
 ```text
 first ray                         1
@@ -124,51 +55,110 @@ generic multivariable replay    163
 total                           172.
 ```
 
-## Reproducibility package
-
-The exact sources, allocation tables, and transcripts are stored in a
-SHA-256-pinned compressed package split into GitHub-safe base64 chunks:
+The first two rays are
 
 ```text
-certificates/su2_o13_initial_frontier_package.b64.part00
-certificates/su2_o13_initial_frontier_package.b64.part01
-certificates/su2_o13_initial_frontier_package.b64.part02
-certificates/su2_o13_initial_frontier_package.b64.part03
+(B_1^-)^(1+2p) B_4^-,
+(B_1^-)^(2+2p) B_5^+,
 ```
 
-The reconstructed archive must have hash
+and both are proved by exact finite leaves followed by denominator-100
+weighted AM-GM tails. The package also proves the full two-variable
+`B_1^-B_5^-` chamber, decorated rays, and 163 multivariable regimes through
+supports `178,187,196,205,214,223,232,241,250`.
 
-```text
-a407bf8d0cfb683e54422a84c36533401f5359b751908c3bb36053c78f6ad8b2.
-```
-
-Replay with
+Replay the initial package with
 
 ```text
 character_ring_iter/replay_su2_o13_initial_frontier_package.sh
 ```
 
-The run transcript is
+Its SHA-256 is
 
 ```text
-certificates/su2_o13_initial_frontier_exact.log.
+a407bf8d0cfb683e54422a84c36533401f5359b751908c3bb36053c78f6ad8b2.
+```
+
+### Support 245: complete
+
+Support code `245` has signs
+
+```text
+B_1 minus, B_6 plus,
+```
+
+with minimum exponents two and one. All three non-Hall residual faces are now
+proved:
+
+```text
+(B_1^-)^(4+2p) B_6^+,
+(B_1^-)^2 (B_6^+)^(3+2q),
+(B_1^-)^(4+2p) (B_6^+)^(3+2q),          p,q>=0.
+```
+
+Exact transfer arithmetic found:
+
+```text
+B_1 ray zeros: p=0 only;
+B_6 ray zeros: q=0,1,2 only;
+121 x 121 plane scan: only (0,0) is zero.
+```
+
+The all-exponent proof uses a slope-three decomposition of the residual plane:
+
+```text
+2 cones,
+12 diagonal strips,
+2 column tails,
+14 finite column points,
+```
+
+plus the two standalone ray tails. In total the strict verifier checks
+
+```text
+18 denominator-100 AM-GM pieces,
+20 exact finite leaves.
+```
+
+It reports
+
+```text
+SU2_O13_SUPPORT245_EXACT PASS
+pieces=18 denominator=100 leaves=20 zeros=5
+minimum_leaf=0 slope=3 strips=12.
+```
+
+The detailed theorem is
+
+```text
+SU2_O13_SUPPORT245_GKS2_2026_07_25.md.
+```
+
+Replay with
+
+```text
+character_ring_iter/replay_su2_o13_support245_package.sh
+```
+
+The deterministic package SHA-256 is
+
+```text
+da31783b2297c692d7dbc4b10e9f41bc7a03b07b664b43c137403ad06995c76f.
 ```
 
 ## Next precise target
 
-The next unresolved key in support order is
+The next support in exact support order is `248`. The diagnostic failure keys
+are
 
 ```text
-support=245, parity=2, residual=1.
+support=248 parity=4 residual=5
+support=248 parity=4 residual=7
+support=248 parity=6 residual=1
+support=248 parity=6 residual=4
+support=248 parity=6 residual=5
+support=248 parity=6 residual=7.
 ```
 
-It decodes to the one-variable tail
-
-```text
-(B_1^-)^(4+2r) B_6^+,                  r>=0.
-```
-
-The other two non-Hall residual faces at the same support have residual codes
-`2` and `3`. This support is the next exact rank-seven orbit target.
-
-Full `O_13`, and hence full `SU(2)_13`, remains open.
+Their residual variables involve `B_1`, `B_2`, and `B_6`. Full `O_13`, and
+hence full `SU(2)_13`, remains open.
