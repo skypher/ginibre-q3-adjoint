@@ -1,16 +1,22 @@
 name: Certificate build
 
+# These are the expensive replays: five jobs at up to ten minutes each.
+#
+# They used to run on every push with `cancel-in-progress: true`.  At the
+# commit rate this repository sustains, each run was cancelled by the next
+# push seconds after starting, so the workflow effectively never rendered a
+# verdict -- 39 cancelled and 20 failed out of 60 consecutive runs, with no
+# successes.  A stale source manifest survived three days and sixty commits
+# behind that silence.
+#
+# Running them on a schedule instead means they complete.  The fast
+# per-push gate is preflight.yml.  Use workflow_dispatch to force a run on
+# demand.
+
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/certificates.yml"
-      - "ginibre_q3/**"
-  pull_request:
-    paths:
-      - ".github/workflows/certificates.yml"
-      - "ginibre_q3/**"
+  schedule:
+    # Every 30 minutes.  Jobs cap at 10 minutes, so runs never overlap.
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -18,7 +24,7 @@ permissions:
 
 concurrency:
   group: certificates-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   LC_ALL: C

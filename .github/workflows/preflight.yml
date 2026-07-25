@@ -1,0 +1,71 @@
+name: Preflight
+
+# Fast, always-completing gate.
+#
+# The expensive replays live in certificates.yml and now run on a schedule.
+# This workflow exists so that every push to main gets a verdict.  It is pure
+# Python, needs no compiler or TeX, and finishes in well under a minute, so
+# `cancel-in-progress: false` is safe here even at a high commit rate: runs
+# queue briefly instead of cancelling each other.
+#
+# This is the check that catches a manifested publication source drifting out
+# of sync with its recorded hash.  See .githooks/pre-commit for the local
+# equivalent.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/preflight.yml"
+      - "ginibre_q3/**"
+  pull_request:
+    paths:
+      - ".github/workflows/preflight.yml"
+      - "ginibre_q3/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: preflight-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  LC_ALL: C
+  PYTHONHASHSEED: "0"
+  SOURCE_DATE_EPOCH: "1784419200"
+
+jobs:
+  preflight:
+    name: Authenticate proof contracts and source manifests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Select Python 3.12
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+
+      - name: Authenticate certificate inputs and proof contracts
+        run: |
+          set -o pipefail
+          mkdir -p ci-logs
+          make -C ginibre_q3 publication-preflight \
+            2>&1 | tee ci-logs/publication-preflight.log
+
+      - name: Upload preflight log
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: preflight-log
+          path: ci-logs/
+          if-no-files-found: warn
+          retention-days: 14

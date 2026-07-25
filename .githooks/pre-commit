@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# Refuse a commit that leaves a manifested publication source out of sync
+# with its recorded hash.
+#
+# Background: character_ring_iter/Makefile is bound by three manifests
+# (full_q3_source_manifest.sha256, replay_sources.sha256, and
+# post_m29/bc_interval_tail_code.sha256).  Twenty-seven SU(2) research
+# targets were appended to it across thirteen commits, silently invalidating
+# the publication source binding.  It went unnoticed for three days because
+# CI never completed a run.
+#
+# Research targets belong in character_ring_iter/Makefile.research.
+#
+# Install with:  git config core.hooksPath .githooks
+# Bypass with:   git commit --no-verify   (only when re-binding a manifest
+#                on purpose, in the same commit as the regenerated .sha256)
+
+set -uo pipefail
+
+root=$(git rev-parse --show-toplevel)
+
+# Only spend the ~1.5s when something under ginibre_q3/ is actually staged.
+if ! git diff --cached --name-only --diff-filter=ACMR \
+     | grep -q '^ginibre_q3/'; then
+  exit 0
+fi
+
+# verify_manifests reads the working tree.  Warn when staged content differs
+# from the working tree, since the check then does not describe the commit.
+if ! git diff --quiet -- ginibre_q3/; then
+  echo "pre-commit: note: unstaged changes under ginibre_q3/ are present;" >&2
+  echo "            manifest check reflects the working tree, not the index." >&2
+fi
+
+out=$(cd "$root/ginibre_q3" && python3 -c '
+import sys
+from pathlib import Path
+try:
+    from clean_room_replay import verify_manifests
+except Exception as exc:
+    print(f"pre-commit: could not import verify_manifests: {exc}", file=sys.stderr)
+    sys.exit(0)   # do not block on a broken local environment
+try:
+    n, e = verify_manifests(Path("."))
+except Exception as exc:
+    print(str(exc), file=sys.stderr)
+    sys.exit(1)
+print(f"pre-commit: manifests={n} entries={e} OK")
+' 2>&1)
+status=$?
+
+if [ $status -ne 0 ]; then
+  echo "" >&2
+  echo "COMMIT REJECTED: publication source manifest is out of sync." >&2
+  echo "" >&2
+  echo "$out" >&2
+  echo "" >&2
+  echo "If you added a research target, move it to" >&2
+  echo "  ginibre_q3/character_ring_iter/Makefile.research" >&2
+  echo "and restore the manifested file." >&2
+  echo "" >&2
+  echo "If you are re-binding a manifest deliberately, regenerate the" >&2
+  echo ".sha256 in this same commit and re-run, or use --no-verify." >&2
+  exit 1
+fi
+
+echo "$out"
+exit 0
