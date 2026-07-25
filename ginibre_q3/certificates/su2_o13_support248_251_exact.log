@@ -1,0 +1,53 @@
+Host resources: nproc=5; memory=5.9 GiB. Expensive searches used four workers; exact replays were memory-light.
+
+Global and shifted exact replay:
+SU2_O13_SUPPORT248_251_EXACT PASS cases=13 finite_prefix_checks=7
+
+This verifier covers:
+- all 6 support-248 non-Hall regimes;
+- all 2 support-249 non-Hall regimes;
+- 5 of the 9 support-251 regimes.
+
+Support-248 B6-axis regression:
+values=0,2,58,1030,15000,196094,2396950,27801780,...
+zero leaves=1
+tail floor=2
+denominator=100
+
+Support-249 B6-axis regression:
+values=0,2,110,4398,158738,5437680,180762400,5894116054,...
+zero leaves=1
+tail floor=2
+denominator=100
+
+Support-251 ray data:
+even-parity B6 ray: 16,128,1110,12924,194844,3347304,...; tail floor=3
+even-parity finite prefix checks=2
+odd-parity B1 ray: 0,10,724,32346,...; tail floor=2
+odd-parity B6 ray: 0,0,2,612,93650,...; tail floor=3
+odd-parity zero leaves=3
+all ray and global-face allocations use denominator=100
+
+Mixed support-251 replay:
+SU2_O13_SUPPORT251_MIXED_EXACT PASS pieces=35 fan_pieces=31 recursive_pieces=4 denominator=100
+elapsed=0.89 seconds; peak RSS=5360KB
+
+Mixed geometry:
+- even B1-B6 face: slope-one Farey fan, four strips;
+- odd B1-B6 face: slope-one Farey fan, four strips;
+- odd three-variable face: slope-one Farey fan, two strips, B2 independent;
+- even three-variable face: four-piece translated-tail recursion.
+
+Exact closed-key increment:
+support 248 = 6
+support 249 = 2
+support 251 = 9
+total increment = 17
+cumulative exact O13 direct-Hall failure keys = 192
+
+Deterministic package:
+sha256=0422d1fd71b20e3229730abfcd07f4b67d17497a1566e6f9c5b053733f37fdaf
+package reconstruction PASS
+both strict C++ verifiers replayed successfully from a clean extraction.
+
+Next support in exact order: 259.
