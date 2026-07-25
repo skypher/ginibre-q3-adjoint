@@ -28,6 +28,7 @@ import mpmath as mp
 from su2_orbit_amgm import chamber_terms, nodes_and_characters
 from su2_amgm_lp import propose_allocation
 from su2_amgm_certify import prepare, round_allocation, verify
+from su2_amgm_decompose import build_node, certify as decompose_certify
 
 TOL = mp.mpf(10) ** -12
 
@@ -105,19 +106,32 @@ def regimes(rank):
                 yield support, parity, signs, powers, terms, free
 
 
+def try_decompose(signs, powers, free, rank, weights, table, max_depth) -> bool:
+    """Last resort: split the regime recursively.  Acceptance is unchanged --
+    every node still closes by interval-verified AM-GM or interval evaluation."""
+    node = build_node(signs, powers, list(free), rank, weights, table)
+    ok, _stats = decompose_certify(*node, denom=100, max_depth=max_depth)
+    return bool(ok)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--rank", type=int, default=6)
     ap.add_argument("--denominator", type=int, default=100)
     ap.add_argument("--limit", type=int, default=0, help="stop after N residual regimes")
     ap.add_argument("--progress", action="store_true")
+    ap.add_argument("--decompose", action="store_true",
+                    help="recursively split regimes no single allocation closes")
+    ap.add_argument("--max-depth", type=int, default=6)
     args = ap.parse_args()
 
     rank = args.rank
     denom = args.denominator
+    weights, table = nodes_and_characters(rank)
     t0 = time.time()
 
     direct = closed = failed_lp = failed_round = failed_verify = 0
+    closed_split = 0
     denom_used: dict[int, int] = {}
     seen = 0
     worst_margin = None
@@ -138,6 +152,10 @@ def main() -> int:
 
         delta, proposal = propose_allocation(log_lam, log_c, tsigns, len(free))
         if proposal is None or delta is None or delta <= 0:
+            if args.decompose and try_decompose(signs, powers, free, rank,
+                                                weights, table, args.max_depth):
+                closed_split += 1
+                continue
             failed_lp += 1
             unresolved.append((support, parity, tuple(free), "lp"))
             continue
@@ -157,6 +175,10 @@ def main() -> int:
                 used = d
                 break
         if not ok:
+            if args.decompose and try_decompose(signs, powers, free, rank,
+                                                weights, table, args.max_depth):
+                closed_split += 1
+                continue
             failed_verify += 1
             unresolved.append((support, parity, tuple(free), "verify"))
             continue
@@ -172,7 +194,9 @@ def main() -> int:
     print(f"SU2_ORBIT_AMGM_STACK rank={rank} level={level} denominator={denom}")
     print(f"  direct_hall      {direct}")
     print(f"  residual         {seen}")
-    print(f"  closed           {closed}")
+    print(f"  closed_amgm      {closed}")
+    if args.decompose:
+        print(f"  closed_split     {closed_split}")
     print(f"  lp_infeasible    {failed_lp}")
     print(f"  round_failed     {failed_round}")
     if denom_used:
@@ -182,8 +206,11 @@ def main() -> int:
     if worst_margin is not None:
         print(f"  min_slack        {mp.nstr(mp.mpf(worst_margin), 8)}")
     print(f"  elapsed_seconds  {elapsed:.1f}")
+    total_closed = closed + closed_split
+    if args.decompose:
+        print(f"  closed_total     {total_closed}")
     if seen:
-        print(f"  coverage         {100.0*closed/seen:.1f}% of residual regimes")
+        print(f"  coverage         {100.0*total_closed/seen:.1f}% of residual regimes")
     for u in unresolved[:20]:
         print(f"UNRESOLVED support={u[0]} parity={u[1]} free={u[2]} stage={u[3]}")
     if len(unresolved) > 20:

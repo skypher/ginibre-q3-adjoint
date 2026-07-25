@@ -58,12 +58,16 @@ verifies, so each certificate records its own cost.
 ## 3. Results
 
 ```text
-rank  level  direct Hall  residual  closed  coverage
-  4      7          191        13      10     76.9%
-  5      9        2,207       201     169     84.1%
-  6     11       22,491     2,589   1,998     77.2%
-  7     13       26,377       400*    216     54.0%
+rank  level  residual   AM-GM   split   total  coverage
+  4      7        13      10       2      12     92.3%
+  5      9       201     169      27     196     97.5%
+  6     11     2,589   1,998     264   2,262     87.4%
+  7     13       400*    216       -     216     54.0%
 ```
+
+`split` counts regimes closed by the recursive orthant decomposition of
+Section 3a, which runs only where a single allocation fails.  The rank seven
+row predates that stage.
 
 `*` rank seven is a sample of the first 400 residual regimes in support
 order, not a random draw, so its rate is indicative rather than an estimate
@@ -96,6 +100,33 @@ The rank seven sample took 636 seconds for 400 regimes, so the full ring is
 roughly fifteen hours in Python.  That is tolerable once but is the point at
 which a C++ port of the inner loop becomes worthwhile.
 
+## 3a. Recursive orthant decomposition
+
+408 rank-six regimes are genuinely LP-infeasible: no capacitated allocation
+exists, so the regime must be split before it can be certified.  For a free
+coordinate `l` the index set splits exactly,
+
+```text
+{u_l >= 0} = {u_l = 0}  disjoint-union  {u_l >= 1},
+```
+
+giving a face that drops `l` from the free set and a tail in which every
+coefficient absorbs one factor of `lambda_(t,l)`.  Both branches are strictly
+simpler than the parent and their union is the parent exactly, so the split is
+sound by construction rather than by estimate.  A leaf with no free
+coordinates is a single exponent point, evaluated in interval arithmetic.
+
+Acceptance is unchanged: every node closes either by an interval-verified
+AM-GM certificate or by an interval evaluation of the actual signed sum.  The
+recursion is capped at depth six and four thousand nodes.
+
+Alone this closes 88 of the 408 LP-infeasible rank-six regimes, 21.6%.  Wired
+into the stack, where it also catches regimes whose allocation existed but
+would not round, it lifts rank six from 77.2% to 87.4%, rank five from 84.1%
+to 97.5%, and rank four from 76.9% to 92.3%.
+
+`O_9` is now within five regimes of being closed entirely by automation.
+
 ## 4. Validation
 
 The Python enumeration reproduces the C++ `O_11` census exactly on all six
@@ -108,6 +139,12 @@ actual signed sum at 7,200 exponent points across 120 certified regimes, with
 no violation. As a negative control the verifier was fed allocations with
 broken normalisation, broken capacity, and permuted columns, and rejected all
 three.
+
+The decomposition stage was validated the same way: 3,200 exponent points
+across 40 decomposition-closed regimes with no violation, and a control in
+which the dominant positive term of a closed regime has its sign flipped,
+making the statement genuinely false.  The decomposition refused all fifteen
+such cases.
 
 Two real solver bugs were caught by making the LP validate its own output:
 negating a row of `A x <= b` reverses that inequality rather than preserving
@@ -129,9 +166,10 @@ degenerate vertices are common. Different rules yield different allocations of
 equal margin, and occasionally one rounds successfully where another does not.
 Acceptance is unaffected: only interval-verified allocations are counted.
 
-This stack is a certificate engine, not a theorem. It closes 77.2% of the
-rank-six residual regimes; the remainder still needs the decomposition
-techniques, and `O_11` is not reproved until those are supplied.
+This stack is a certificate engine, not a theorem.  It closes 87.4% of the
+rank-six residual regimes; the remaining 327, of which 320 are still
+LP-infeasible after splitting, need the finite Farey fan and translated
+cone-tree techniques.  `O_11` is not reproved until those are supplied.
 
 ## 6. Replay
 
