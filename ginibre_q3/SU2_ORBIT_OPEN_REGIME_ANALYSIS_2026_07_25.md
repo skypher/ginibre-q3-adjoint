@@ -130,6 +130,56 @@ in cost rather than coverage at rank six, and in both at rank seven, where the
 greedy flat pass alone beats the previous flat-plus-decomposition result by 592
 regimes while running twenty-four times faster.
 
+## What blocks the genuinely infeasible regimes
+
+For a regime whose root allocation is infeasible, re-solving with each
+constraint family dropped in turn identifies the obstruction:
+
+```text
+rank six, 168 root-infeasible regimes
+  domination (D) blocks                 89   53.0%
+  both block individually               65   38.7%
+  constant condition (K) blocks         14    8.3%
+```
+
+The one-coordinate survivors invert this. Of the 25 at rank six, thirteen are
+blocked by the constant condition and only two by domination. On a single ray
+there is one growth direction and it is usually dominable; what fails is paying
+the negative term's magnitude.
+
+## The indicated generalisation
+
+The certificate as formulated requires each negative to be covered by a
+*convex* combination of positives, `sum_p alpha[p][x] = 1`. That is stronger
+than necessary. Weighted AM-GM needs only that the weights used in the
+geometric mean sum to one, so allocate total mass `S >= 1` and set
+`beta = alpha / S`:
+
+```text
+sum_p alpha_p v_p = S sum_p beta_p v_p >= S prod_p v_p^(beta_p).
+```
+
+The conditions become
+
+```text
+(D)  sum_p beta[p][x] log lambda[p][l] >= log lambda[x][l]
+(K)  log S + sum_p beta[p][x] log c[p]  >= log c[x]
+```
+
+with capacity `sum_x S_x beta[p][x] <= 1`. The domination condition is
+unchanged, and the constant condition gains a free `log S`. That is exactly the
+slack the K-blocked regimes are missing, and it strictly subsumes the present
+certificate, which is the case `S = 1`.
+
+For fixed `S` the system is still linear, so the existing solver handles it by
+sweeping a few values of `S` rather than by any new machinery. This targets the
+14 K-blocked regimes and the 13 K-blocked one-coordinate rays directly, and may
+reach some of the 65 that block on both.
+
+It will not help the 89 blocked purely on domination. Those need the positives
+to grow at least as fast as the negative in every free coordinate, which no
+reweighting can manufacture.
+
 ## Replay
 
 ```text

@@ -584,6 +584,73 @@ bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr,
     return false;
 }
 
+// For a regime whose root allocation is infeasible, find which constraint
+// family is responsible by re-solving with each dropped in turn.
+//
+//   (D) coordinatewise domination in each free coordinate
+//   (K) the single constant condition on the coefficients
+//
+// If dropping (K) restores feasibility the obstruction is one of magnitude:
+// the positives cannot pay the negative's constant even though they dominate
+// its growth.  If dropping (D) restores it the obstruction is directional.
+// If neither does, both bind and the regime is far from certifiable.
+int diagnose_infeasible(const Node& nd) {
+    std::vector<int> pos, neg;
+    for (std::size_t t = 0; t < nd.sign.size(); ++t)
+        (nd.sign[t] < 0 ? neg : pos).push_back(static_cast<int>(t));
+    if (neg.empty() || pos.empty()) return 0;
+    const std::size_t P = pos.size(), X = neg.size(), K = nd.k;
+    const std::size_t nv = P * X + 1, dj = P * X;
+    auto aidx = [&](std::size_t pi, std::size_t xi) { return pi * X + xi; };
+
+    auto solve = [&](bool useD, bool useK) -> bool {
+        std::vector<std::vector<double>> A;
+        std::vector<double> bb;
+        for (std::size_t xi = 0; xi < X; ++xi) {
+            std::vector<double> r(nv, 0.0);
+            for (std::size_t pi = 0; pi < P; ++pi) r[aidx(pi, xi)] = 1.0;
+            A.push_back(r); bb.push_back(1.0);
+            for (double& q : r) q = -q;
+            A.push_back(r); bb.push_back(-1.0);
+        }
+        for (std::size_t pi = 0; pi < P; ++pi) {
+            std::vector<double> r(nv, 0.0);
+            for (std::size_t xi = 0; xi < X; ++xi) r[aidx(pi, xi)] = 1.0;
+            A.push_back(r); bb.push_back(1.0);
+        }
+        for (std::size_t xi = 0; xi < X; ++xi) {
+            if (useD)
+                for (std::size_t kk = 0; kk < K; ++kk) {
+                    std::vector<double> r(nv, 0.0);
+                    for (std::size_t pi = 0; pi < P; ++pi)
+                        r[aidx(pi, xi)] = -static_cast<double>(logl(nd.lam[static_cast<std::size_t>(pos[pi])][kk]));
+                    r[dj] = 1.0;
+                    A.push_back(r);
+                    bb.push_back(-static_cast<double>(logl(nd.lam[static_cast<std::size_t>(neg[xi])][kk])));
+                }
+            if (useK) {
+                std::vector<double> r(nv, 0.0);
+                for (std::size_t pi = 0; pi < P; ++pi)
+                    r[aidx(pi, xi)] = -static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(pos[pi])]));
+                r[dj] = 1.0;
+                A.push_back(r);
+                bb.push_back(-static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(neg[xi])])));
+            }
+        }
+        std::vector<double> c(nv, 0.0); c[dj] = 1.0;
+        std::vector<double> sol;
+        if (!simplex(A, bb, c, static_cast<int>(nv), sol)) return false;
+        return sol[dj] > 0.0;
+    };
+
+    const bool dropK = solve(true, false);     // domination alone
+    const bool dropD = solve(false, true);     // constant alone
+    if (dropK && dropD) return 3;              // each alone fine, together not
+    if (dropK) return 1;                       // constant condition blocks
+    if (dropD) return 2;                       // domination blocks
+    return 4;                                  // both block individually
+}
+
 // How deep to split, by dimension.  A uniform cap is wrong: the recorded O11
 // final chamber needed a threshold of 75 before its tail closed, with 73,150
 // finite lattice checks below it, so a ray can need tens of splits.  Depth is
@@ -843,9 +910,10 @@ int main(int argc, char** argv) {
                             for (int sg : root.sign) if (sg < 0) ++nneg;
                             std::lock_guard<std::mutex> dg(dump_mu);
                             std::printf("OPEN support=%d parity=%d k=%zu neg=%zu pos=%zu"
-                                        " root_lp=%s margin=%.3e nodes=%llu\n",
+                                        " root_lp=%s margin=%.3e block=%d nodes=%llu\n",
                                         support, parity, K, nneg, root.sign.size() - nneg,
                                         st.root_lp_ok ? "feasible" : "infeasible", st.root_margin,
+                                        st.root_lp_ok ? 0 : diagnose_infeasible(root),
                                         static_cast<unsigned long long>(st.nodes));
                         }
                         continue;
