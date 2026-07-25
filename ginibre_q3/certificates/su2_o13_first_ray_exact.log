@@ -1,0 +1,18 @@
+Host resources: nproc=5; memory=5.9 GiB.
+
+Five-thread diagnostic direct census:
+O13_DIRECT_CENSUS chambers=6783 regimes=243008 direct=208084 separated=4 failures=34924 threads=5
+elapsed=0.83 seconds; peak RSS=8900KB
+
+Exact integer ray regression:
+O13_FIRST_RAY_REGRESSION PASS checks=2001 minimum=0 zeros=0,1
+values=0,0,8,196,3456,54430,816270,11950512,172734144,...
+minimal_recurrence_degree=20 (three-prime Berlekamp-Massey agreement)
+
+Exact all-exponent verifier:
+SU2_O13_FIRST_RAY_EXACT PASS roots=7 spectral_pairs=21 positives=10 negatives=10 floor=2 denominator=100 leaves=2 leaf_values=0,0 tail_first=8
+elapsed=0.14 seconds; peak RSS=4056KB
+
+Next diagnostic obstruction:
+support=83 parity=2 residual=1
+word=(B_1^-)^(2+2r) B_5^+, r>=1
