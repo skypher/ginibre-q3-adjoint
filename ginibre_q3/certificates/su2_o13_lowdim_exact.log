@@ -1,0 +1,41 @@
+Host resources:
+  logical CPUs: 5
+  memory: 5.9 GiB
+  expensive checks used five C++ worker threads
+
+Exact direct census:
+  dim=0 total=7448 pointwise=665 direct=6669 leaf=114 fail=0
+  dim=1 total=36042 pointwise=2724 direct=32808 leaf=0 fail=510
+  dim=2 total=72570 pointwise=4620 direct=63914 leaf=0 fail=4036
+  O13_LOWDIM_DIRECT_FAST_EXACT PASS chambers=7448 threads=5
+  elapsed=34.55 maxrss=46984KB
+
+Exact post-Hall replays:
+  O13_DIM1_TAIL_EXACT PASS keys=508 maximum_threshold=23 exact_leaves=3142 threads=5
+  O13_DIM2_TAIL_EXACT PASS keys=411 maximum_threshold=20 exact_simplex_leaves=7728 threads=5
+  O13_DIM2_AMGM_EXACT PASS certificates=255 denominators=100,200,500,1000 threads=5
+  O13_DIM2_BRAID_FAN_FAST_EXACT PASS braid=1480 fan=0 bound=10 threads=5
+  O13_DIM2_BRAID_FAN_FAST_EXACT PASS braid=0 fan=1300 bound=10 threads=5
+  O13_DIM2_MARGIN_GENERIC_EXACT PASS certificates=314 finite_checks=548849 zero_leaves=51 threads=5
+  O13_DIM2_MARGIN_GENERIC_EXACT PASS certificates=272 finite_checks=328711 zero_leaves=40 threads=5
+  O13_KEY251_MARGIN_EXACT PASS delta=0.1 overbooking_log=1.5 threshold=15 finite_checks=120 finite_min=2
+  O13_KEY251_P7_MARGIN_EXACT PASS delta=0.1 overbooking_log=5.9 threshold=59 finite_checks=1770 finite_min=0
+  O13_TOP_ORBIT_IDENTITY PASS B6^2=B0+B1 D1=D6*S6 key245_reduces_to_top_ray
+
+Literal coverage audit:
+  O13_LOWDIM_KEY_AUDIT PASS dim1_post_hall=510 dim2_post_hall=4036 overlaps=0 missing=0 extra=0
+  dominant_tail=411
+  amgm=255
+  braid_fan=2780
+  shift_margin=272
+  final_margin314=314
+  key251=2
+  top_ray=1
+  separated_pole=1
+
+Clean extracted archive replay:
+  O13_LOWDIM_REPLAY PASS
+
+Archive:
+  su2_o13_lowdim_exact_replay.tar.gz
+  sha256=7497005a39233054e35efe3449ae8df8c7693f0f9def96a2b3b18eb7c8cd5796
