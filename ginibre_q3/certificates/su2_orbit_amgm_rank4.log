@@ -1,0 +1,14 @@
+SU2_ORBIT_AMGM_STACK rank=4 level=7 denominator=100
+  direct_hall      191
+  residual         13
+  closed           10
+  lp_infeasible    3
+  round_failed     0
+  denominators     100:10
+  verify_failed    0
+  min_slack        0.13351643
+  elapsed_seconds  0.2
+  coverage         76.9% of residual regimes
+UNRESOLVED support=20 parity=3 free=(2,) stage=lp
+UNRESOLVED support=20 parity=3 free=(0, 2) stage=lp
+UNRESOLVED support=21 parity=1 free=(2,) stage=lp
