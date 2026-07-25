@@ -1,0 +1,38 @@
+Host resources: nproc=5; memory=5.9 GiB. Candidate searches used four workers.
+
+Support-259 diagnostic failure keys:
+parity=1 residual=11,15
+parity=2 residual=3,11,15
+parity=4 residual=2,3,10,11,14,15
+parity=7 residual=8,9,10,11,12,13,14,15
+case_count=19
+
+Rational allocation search:
+denominator 100: 18 cases
+denominator 200: 1 case
+lattice subdivisions: 0
+translated tails: 0
+finite leaves: 0
+
+The parity-7 residual-9 table was found after common logarithmic coefficient
+rescaling and then replayed against the unscaled algebraic spectral data.
+
+Strict exact replay:
+SU2_O13_SUPPORT259_EXACT PASS cases=19
+
+Exact arithmetic:
+- rational Sturm isolation of seven trace nodes;
+- rational interval orbit characters, coefficients, bases, and capacities;
+- 512-bit directed-rounding MPFR logarithmic product inequalities;
+- literal support/parity/residual key audit.
+
+Conclusion:
+O13_SUPPORT259_FULL PASS residual_keys=19
+O13_EXACT_FRONTIER_CLOSED_KEYS=211
+
+Reproducibility note:
+The strict verifier and deterministic local package were replayed successfully.
+The source package was not persisted in this turn because the connector altered
+larger text chunks during upload. Archive restoration remains pending.
+
+Next support in exact order: 260.
