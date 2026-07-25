@@ -1,0 +1,8 @@
+Command:
+g++ -O3 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror \
+  ginibre_q3/character_ring_iter/verify_su2_o11_b1plus_topminus_transport.cpp \
+  -o /tmp/verify_su2_o11_b1plus_topminus_transport
+/tmp/verify_su2_o11_b1plus_topminus_transport
+
+Output:
+SU2_O11_B1PLUS_TOPMINUS_TRANSPORT PASS roots=6 pairs=15 negative_pairs=3 hall_subsets=7 residual_dimensions=2
