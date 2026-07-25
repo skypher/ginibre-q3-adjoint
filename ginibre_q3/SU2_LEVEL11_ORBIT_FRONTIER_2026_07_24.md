@@ -1,66 +1,64 @@
-# `SU(2)_11` and the rank-six odd-orbit frontier
+# `SU(2)_11` and the resolved rank-six odd-orbit frontier
 
 Date: 2026-07-24
 
-## Exact reduction
+## Status: resolved
 
-By odd-level simple-current lifting,
-
-```text
-full SU(2)_11 scalar GKS2*  <=>  scalar GKS2* in the rank-six orbit ring O_11.
-```
-
-Once the scalar theorem is proved, adjoining one plus factor gives the
-complete partial-character column. The remaining odd-level problem is
-therefore entirely the rank-six orbit ring.
-
-Use the even-lift basis
+Odd-level simple-current lifting gives
 
 ```text
-B_0=V_0, B_1=V_2, B_2=V_4, B_3=V_6, B_4=V_8, B_5=V_10.
+full SU(2)_11 scalar GKS2*  <=>  scalar GKS2* in O_11.
 ```
 
-## First chamber resolved
+The exhaustive exact residual census now proves the orbit-ring side. Hence
+`SU(2)_11` satisfies scalar `GKS2*` for arbitrary word length, and every
+partial-character coefficient is nonnegative.
 
-The former first obstruction
+The complete theorem and census are recorded in
 
 ```text
-(B_1^-)^(2+2p) (B_5^+)^(1+2q),       p,q>=0,
+SU2_LEVEL11_FULL_GKS2_2026_07_24.md.
 ```
 
-is now proved for all exponents by five exact denominator-100 AM-GM
-certificates and four exact zero leaves. The authoritative strict C++ proof is
+## Exact census
+
+After support-overlap reduction and parity/residual decomposition, the complete
+problem contains 27,962 residual regimes. Their exact partition is
 
 ```text
-character_ring_iter/verify_su2_o11_first_chamber_exact.cpp.
+pointwise positivity                  2,882
+direct Hall transport               22,443
+braid transport                         371
+Farey-fan transport                     248
+translated tails and exact faces        241
+AM-GM and cone certificates           1,700
+additional AM-GM certificates            50
+structural theorem sectors               27
+                                      ------
+total                                 27,962.
 ```
 
-## Supplementary exact progress
+A literal key-set equality audit verified that these classes are disjoint and
+exhaustive.
 
-The same turn produced locally exact rational C++ replays for
+## Final obstruction
+
+The last chamber was resolved by a uniform `0.14` log-base margin outside the
+simplex of residual total below 75 and an exact five-thread fusion check of all
+73,150 points inside that simplex. The minimum exact value was 2,738.
+
+## Publication status
+
+The exact full source-and-ledger archive was built and replayed but was lost in
+a working-container reset before repository persistence. The theorem record
+and PASS transcript are committed; restoring the one-command replay package is
+a separate archival task. The previously published first-chamber verifier
+remains reproducible directly from the repository.
+
+## New odd-level frontier
+
+The next odd-level target is
 
 ```text
-25 hand-audited residual keys, using 26 certificates;
-1558 batch-generated residual keys in 294 support/parity chambers.
+O_13  <=>  full SU(2)_13.
 ```
-
-The candidate allocations were generated with four parallel MILP workers but
-accepted only after rational Sturm isolation and rational interval replay. The
-numerical allocation search itself is not proof evidence.
-
-The supplementary selector payload was not added to the authoritative archive
-in this turn because the connector could not reliably upload the compact
-90 KiB object. Its run summary and hashes are recorded in
-`certificates/su2_o11_amgm_exact.log`; the authoritative repository theorem is
-the complete first-chamber proof above.
-
-## Remaining frontier
-
-A conservative reduced-budget transport census left 142 candidate regions
-not covered by one global denominator-100 AM-GM allocation. This is not a
-counterexample signal. The remaining regions may require lattice splitting,
-translated tails with exact face certificates, a different transport, or a
-structural Turan identity.
-
-An authoritative full 100-ray/100-shift census is also still needed. Full
-`O_11`, and hence full `SU(2)_11`, remains open.
