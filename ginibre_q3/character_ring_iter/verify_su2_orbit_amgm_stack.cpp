@@ -1594,9 +1594,9 @@ int main(int argc, char** argv) {
                             std::size_t nneg = 0;
                             for (int sg : root.sign) if (sg < 0) ++nneg;
                             std::lock_guard<std::mutex> dg(dump_mu);
-                            std::printf("OPEN support=%d parity=%d k=%zu neg=%zu pos=%zu"
+                            std::printf("OPEN support=%d parity=%d res=%d k=%zu neg=%zu pos=%zu"
                                         " root_lp=%s margin=%.3e block=%d nodes=%llu\n",
-                                        support, parity, K, nneg, root.sign.size() - nneg,
+                                        support, parity, res, K, nneg, root.sign.size() - nneg,
                                         st.root_lp_ok ? "feasible" : "infeasible", st.root_margin,
                                         st.root_lp_ok ? 0 : diagnose_infeasible(root),
                                         static_cast<unsigned long long>(st.nodes));

@@ -110,14 +110,18 @@ characterisation, established by measurement rather than guess:
   lambda product lands in the fixed subfield -- values like 2 and 4 are
   rational outright, the rest live in `Q(sqrt 2)`.
 
-So the zero-margin faces are Galois-symmetric: the optimal weights want a
-term and its conjugate treated identically, and the irrationality sits in the
-conjugate split, not in the pair.  The indicated proposer folds the linear
-program over the symmetry -- one weight per conjugate pair -- so pair
-products live in the fixed subfield where ties become rationally expressible,
-and a certificate for a negative's conjugate is the conjugate of its
-certificate.  Propose/verify unchanged: the folded proposal is still checked
-row by row in interval arithmetic with exact escalation.
+**Correction (same day).**  The Galois-folded proposer built on this
+characterisation closed zero regimes, and the null result exposed the error:
+the probe had hit the wrong regime.  The dump line did not carry the residual
+code, and the probed regime at that support and parity turned out to have LP
+margin 0.59 at 120-digit precision -- a healthy regime, not a survivor.  The
+conjugate pairing observed there is real but generic; the zero-margin
+analysis must be redone on an actual survivor.  The dump now records the
+residual code, and the folding conclusion above should be treated as
+unestablished until a true survivor has been probed.  Three proposer
+variations built on inferred consequences have now returned null or
+near-null; the standing rule tightens to probing the exact failing object
+before any further construction.
 
 ## Order of work
 
