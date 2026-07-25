@@ -87,6 +87,49 @@ The 168 infeasible regimes at rank six remain genuinely open. The node budget
 is never the binding constraint at any rank measured, so they will not yield to
 more compute.
 
+## Follow-up: the diagnosis was wrong, the fix worked anyway
+
+The analysis above predicted that the root-feasible regimes were losing their
+certificates to rational rounding, and that a rounding-aware margin would
+recover them.  Measuring the linear program's worst-case slack on exactly those
+regimes refutes it:
+
+```text
+root margin, root-feasible open regimes at rank six
+  1e-4 .. 2e-3      2    1.3%
+  2e-3 .. 1e-2      4    2.6%
+  >= 1e-2         145   96.0%
+```
+
+The perturbation scale at the finest denominator, 5,000, is `2e-4`.  Not one
+regime has a margin below it, and 96% sit two orders of magnitude above.  The
+margins were never thin, so "lost in rounding for want of resolution" was
+simply the wrong explanation.
+
+Replacing round-to-nearest-plus-fixup with a capacity-aware greedy -- start
+from the floor and hand out each remaining unit to whichever positive term
+maximises the resulting minimum slack -- nonetheless produced a large gain:
+
+```text
+rank 7, flat allocation stage only
+  round-to-nearest   22,596   64.7%   41s
+  greedy             29,175   83.5%   39s
+```
+
+The reason is not resolution but structure.  Round-to-nearest is blind to the
+constraints: a comfortable margin at the linear program's vertex says nothing
+about whether the nearest lattice point of the allocation polytope is feasible,
+because the slack moves by `sum_p |delta_p| |log lambda_p|` and the logarithms
+are large.  The greedy optimises the quantity that actually decides the
+certificate.
+
+At rank six the same change moves 180 regimes from needing a split to closing
+flat, 2,052 to 2,232, while the total rises only from 2,263 to 2,270 because
+decomposition was already catching most of them.  The value is therefore mostly
+in cost rather than coverage at rank six, and in both at rank seven, where the
+greedy flat pass alone beats the previous flat-plus-decomposition result by 592
+regimes while running twenty-four times faster.
+
 ## Replay
 
 ```text

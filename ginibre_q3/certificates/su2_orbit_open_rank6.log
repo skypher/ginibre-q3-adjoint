@@ -1,338 +1,331 @@
   spectral_crosscheck 36 values agree
-OPEN support=56 parity=3 k=1 neg=7 pos=8 root_lp=infeasible nodes=2
-OPEN support=83 parity=2 k=1 neg=6 pos=9 root_lp=infeasible nodes=2
-OPEN support=83 parity=2 k=1 neg=6 pos=9 root_lp=infeasible nodes=2
-OPEN support=89 parity=7 k=1 neg=7 pos=8 root_lp=infeasible nodes=2
-OPEN support=89 parity=7 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=98 parity=11 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=107 parity=11 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=89 parity=7 k=3 neg=7 pos=8 root_lp=feasible nodes=144
-OPEN support=116 parity=11 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=98 parity=11 k=3 neg=7 pos=8 root_lp=feasible nodes=114
-OPEN support=107 parity=11 k=3 neg=7 pos=8 root_lp=feasible nodes=120
-OPEN support=125 parity=11 k=3 neg=6 pos=9 root_lp=feasible nodes=35
-OPEN support=116 parity=11 k=3 neg=7 pos=8 root_lp=feasible nodes=126
-OPEN support=98 parity=11 k=3 neg=7 pos=8 root_lp=feasible nodes=134
-OPEN support=125 parity=11 k=4 neg=6 pos=9 root_lp=feasible nodes=21
-OPEN support=107 parity=11 k=3 neg=7 pos=8 root_lp=feasible nodes=92
-OPEN support=125 parity=11 k=4 neg=6 pos=9 root_lp=feasible nodes=21
-OPEN support=98 parity=11 k=4 neg=7 pos=8 root_lp=feasible nodes=60
-OPEN support=116 parity=11 k=3 neg=7 pos=8 root_lp=infeasible nodes=483
-OPEN support=107 parity=11 k=4 neg=7 pos=8 root_lp=feasible nodes=48
-OPEN support=135 parity=2 k=1 neg=6 pos=9 root_lp=infeasible nodes=2
-OPEN support=137 parity=3 k=1 neg=7 pos=8 root_lp=infeasible nodes=2
-OPEN support=116 parity=11 k=4 neg=7 pos=8 root_lp=feasible nodes=109
-OPEN support=140 parity=7 k=2 neg=9 pos=6 root_lp=infeasible nodes=482
-OPEN support=125 parity=19 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=134 parity=11 k=3 neg=6 pos=9 root_lp=feasible nodes=33
-OPEN support=141 parity=3 k=1 neg=8 pos=7 root_lp=infeasible nodes=481
-OPEN support=134 parity=11 k=4 neg=6 pos=9 root_lp=feasible nodes=25
-OPEN support=140 parity=7 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=134 parity=11 k=4 neg=6 pos=9 root_lp=feasible nodes=19
-OPEN support=125 parity=19 k=3 neg=7 pos=8 root_lp=feasible nodes=112
-OPEN support=134 parity=11 k=5 neg=6 pos=9 root_lp=feasible nodes=13
-OPEN support=141 parity=3 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=140 parity=7 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=125 parity=19 k=3 neg=7 pos=8 root_lp=feasible nodes=118
-OPEN support=143 parity=6 k=1 neg=8 pos=7 root_lp=infeasible nodes=481
-OPEN support=140 parity=7 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=134 parity=19 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=125 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=80
-OPEN support=149 parity=11 k=2 neg=9 pos=6 root_lp=infeasible nodes=482
-OPEN support=134 parity=19 k=3 neg=7 pos=8 root_lp=feasible nodes=116
-OPEN support=143 parity=6 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=149 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=125 parity=19 k=3 neg=7 pos=8 root_lp=infeasible nodes=483
-OPEN support=152 parity=10 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=134 parity=19 k=3 neg=7 pos=8 root_lp=feasible nodes=104
-OPEN support=143 parity=6 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=149 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=134 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=42
-OPEN support=125 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=119
-OPEN support=152 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=149 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=143 parity=6 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=152 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=134 parity=19 k=3 neg=7 pos=8 root_lp=infeasible nodes=483
-OPEN support=125 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=123
-OPEN support=152 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=125 parity=19 k=5 neg=7 pos=8 root_lp=feasible nodes=47
-OPEN support=149 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=134 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=99
-OPEN support=143 parity=6 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=149 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=152 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=134 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=103
-OPEN support=143 parity=6 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=134 parity=19 k=5 neg=7 pos=8 root_lp=feasible nodes=41
-OPEN support=149 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=152 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=143 parity=11 k=1 neg=7 pos=8 root_lp=infeasible nodes=481
-OPEN support=152 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=149 parity=11 k=5 neg=9 pos=6 root_lp=infeasible nodes=485
-OPEN support=158 parity=11 k=2 neg=9 pos=6 root_lp=infeasible nodes=482
-OPEN support=143 parity=11 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=152 parity=10 k=5 neg=8 pos=7 root_lp=infeasible nodes=485
-OPEN support=158 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=164 parity=3 k=1 neg=6 pos=9 root_lp=infeasible nodes=2
-OPEN support=164 parity=3 k=1 neg=6 pos=9 root_lp=infeasible nodes=2
-OPEN support=164 parity=3 k=2 neg=6 pos=9 root_lp=infeasible nodes=3
-OPEN support=167 parity=7 k=1 neg=6 pos=9 root_lp=infeasible nodes=2
-OPEN support=168 parity=3 k=1 neg=7 pos=8 root_lp=infeasible nodes=2
-OPEN support=161 parity=10 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=143 parity=11 k=3 neg=7 pos=8 root_lp=feasible nodes=118
-OPEN support=158 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=152 parity=19 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=161 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=169 parity=7 k=1 neg=8 pos=7 root_lp=infeasible nodes=481
-OPEN support=169 parity=7 k=1 neg=8 pos=7 root_lp=infeasible nodes=2
-OPEN support=158 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=143 parity=11 k=2 neg=7 pos=8 root_lp=feasible nodes=131
-OPEN support=152 parity=19 k=3 neg=7 pos=8 root_lp=feasible nodes=124
-OPEN support=169 parity=7 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=143 parity=11 k=3 neg=7 pos=8 root_lp=feasible nodes=142
-OPEN support=158 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=161 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=152 parity=19 k=3 neg=7 pos=8 root_lp=feasible nodes=128
-OPEN support=169 parity=7 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=158 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=143 parity=11 k=4 neg=7 pos=8 root_lp=feasible nodes=80
-OPEN support=152 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=54
-OPEN support=161 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=170 parity=6 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=169 parity=7 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=171 parity=1 k=1 neg=6 pos=9 root_lp=infeasible nodes=2
-OPEN support=158 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=152 parity=19 k=3 neg=7 pos=8 root_lp=feasible nodes=108
-OPEN support=158 parity=11 k=5 neg=9 pos=6 root_lp=infeasible nodes=485
-OPEN support=170 parity=6 k=3 neg=7 pos=8 root_lp=feasible nodes=122
-OPEN support=180 parity=3 k=1 neg=6 pos=9 root_lp=infeasible nodes=2
-OPEN support=152 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=46
-OPEN support=161 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=161 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=189 parity=1 k=1 neg=7 pos=8 root_lp=infeasible nodes=2
-OPEN support=152 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=78
-OPEN support=190 parity=3 k=1 neg=6 pos=9 root_lp=infeasible nodes=2
-OPEN support=152 parity=19 k=5 neg=7 pos=8 root_lp=feasible nodes=42
-OPEN support=161 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=179 parity=10 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=193 parity=7 k=2 neg=6 pos=9 root_lp=feasible nodes=129
-OPEN support=161 parity=10 k=5 neg=8 pos=7 root_lp=infeasible nodes=485
-OPEN support=188 parity=10 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=193 parity=7 k=3 neg=6 pos=9 root_lp=feasible nodes=92
-OPEN support=179 parity=10 k=3 neg=7 pos=8 root_lp=feasible nodes=112
-OPEN support=193 parity=7 k=3 neg=6 pos=9 root_lp=feasible nodes=35
-OPEN support=193 parity=7 k=4 neg=6 pos=9 root_lp=feasible nodes=32
-OPEN support=188 parity=10 k=3 neg=7 pos=8 root_lp=feasible nodes=96
-OPEN support=161 parity=19 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=179 parity=10 k=3 neg=7 pos=8 root_lp=feasible nodes=100
-OPEN support=196 parity=11 k=1 neg=8 pos=7 root_lp=infeasible nodes=481
-OPEN support=179 parity=10 k=4 neg=7 pos=8 root_lp=feasible nodes=48
-OPEN support=161 parity=19 k=3 neg=7 pos=8 root_lp=feasible nodes=116
-OPEN support=188 parity=10 k=3 neg=7 pos=8 root_lp=feasible nodes=96
-OPEN support=196 parity=11 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=161 parity=19 k=3 neg=7 pos=8 root_lp=feasible nodes=92
-OPEN support=188 parity=10 k=4 neg=7 pos=8 root_lp=feasible nodes=38
-OPEN support=161 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=50
-OPEN support=197 parity=10 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=196 parity=11 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=161 parity=19 k=3 neg=7 pos=8 root_lp=feasible nodes=110
-OPEN support=197 parity=10 k=3 neg=7 pos=8 root_lp=feasible nodes=104
-OPEN support=196 parity=11 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=161 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=60
-OPEN support=161 parity=19 k=4 neg=7 pos=8 root_lp=feasible nodes=32
-OPEN support=197 parity=10 k=3 neg=7 pos=8 root_lp=feasible nodes=102
-OPEN support=196 parity=11 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=197 parity=10 k=4 neg=7 pos=8 root_lp=feasible nodes=34
-OPEN support=161 parity=19 k=5 neg=7 pos=8 root_lp=feasible nodes=42
-OPEN support=202 parity=11 k=2 neg=6 pos=9 root_lp=feasible nodes=87
-OPEN support=196 parity=11 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=202 parity=11 k=3 neg=6 pos=9 root_lp=feasible nodes=92
-OPEN support=202 parity=11 k=3 neg=6 pos=9 root_lp=feasible nodes=29
-OPEN support=196 parity=11 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=202 parity=11 k=4 neg=6 pos=9 root_lp=feasible nodes=30
-OPEN support=202 parity=11 k=3 neg=6 pos=9 root_lp=feasible nodes=37
-OPEN support=202 parity=11 k=4 neg=6 pos=9 root_lp=feasible nodes=32
-OPEN support=196 parity=11 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=202 parity=11 k=4 neg=6 pos=9 root_lp=feasible nodes=19
-OPEN support=202 parity=11 k=5 neg=6 pos=9 root_lp=feasible nodes=20
-OPEN support=205 parity=19 k=1 neg=8 pos=7 root_lp=infeasible nodes=481
-OPEN support=205 parity=19 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=211 parity=11 k=2 neg=6 pos=9 root_lp=feasible nodes=83
-OPEN support=205 parity=19 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=211 parity=11 k=3 neg=6 pos=9 root_lp=feasible nodes=88
-OPEN support=206 parity=18 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=211 parity=11 k=3 neg=6 pos=9 root_lp=feasible nodes=37
-OPEN support=211 parity=11 k=4 neg=6 pos=9 root_lp=feasible nodes=30
-OPEN support=206 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=108
-OPEN support=214 parity=19 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=211 parity=11 k=3 neg=6 pos=9 root_lp=feasible nodes=29
-OPEN support=205 parity=19 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=211 parity=11 k=4 neg=6 pos=9 root_lp=feasible nodes=32
-OPEN support=206 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=108
-OPEN support=211 parity=11 k=4 neg=6 pos=9 root_lp=feasible nodes=19
-OPEN support=214 parity=19 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=206 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=32
-OPEN support=211 parity=11 k=5 neg=6 pos=9 root_lp=feasible nodes=22
-OPEN support=205 parity=19 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=206 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=94
-OPEN support=214 parity=19 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=205 parity=19 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=206 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=30
-OPEN support=218 parity=3 k=1 neg=7 pos=8 root_lp=infeasible nodes=2
-OPEN support=206 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=40
-OPEN support=205 parity=19 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=206 parity=18 k=5 neg=7 pos=8 root_lp=feasible nodes=20
-OPEN support=214 parity=19 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=205 parity=19 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=214 parity=19 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=205 parity=19 k=5 neg=8 pos=7 root_lp=infeasible nodes=485
-OPEN support=215 parity=18 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=214 parity=19 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=214 parity=19 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=215 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=106
-OPEN support=221 parity=5 k=2 neg=7 pos=8 root_lp=feasible nodes=239
-OPEN support=222 parity=3 k=1 neg=8 pos=7 root_lp=infeasible nodes=481
-OPEN support=221 parity=5 k=3 neg=7 pos=8 root_lp=feasible nodes=43
-OPEN support=214 parity=19 k=5 neg=8 pos=7 root_lp=infeasible nodes=485
-OPEN support=215 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=104
-OPEN support=222 parity=3 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=221 parity=5 k=3 neg=7 pos=8 root_lp=feasible nodes=59
-OPEN support=215 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=42
-OPEN support=221 parity=5 k=4 neg=7 pos=8 root_lp=feasible nodes=25
-OPEN support=223 parity=6 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=221 parity=7 k=2 neg=9 pos=6 root_lp=infeasible nodes=482
-OPEN support=224 parity=5 k=1 neg=7 pos=8 root_lp=infeasible nodes=481
-OPEN support=215 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=92
-OPEN support=215 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=30
-OPEN support=221 parity=7 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=223 parity=11 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=215 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=34
-OPEN support=218 parity=3 k=2 neg=7 pos=8 root_lp=infeasible nodes=3305
-OPEN support=215 parity=18 k=5 neg=7 pos=8 root_lp=feasible nodes=20
-OPEN support=218 parity=3 k=3 neg=7 pos=8 root_lp=feasible nodes=41
-OPEN support=221 parity=7 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=221 parity=7 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=230 parity=9 k=2 neg=7 pos=8 root_lp=feasible nodes=143
-OPEN support=232 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=227 parity=5 k=2 neg=7 pos=8 root_lp=feasible nodes=361
-OPEN support=230 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=35
-OPEN support=233 parity=9 k=2 neg=7 pos=8 root_lp=feasible nodes=135
-OPEN support=232 parity=10 k=5 neg=8 pos=7 root_lp=infeasible nodes=485
-OPEN support=227 parity=5 k=3 neg=7 pos=8 root_lp=feasible nodes=51
-OPEN support=230 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=37
-OPEN support=233 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=35
-OPEN support=227 parity=5 k=3 neg=7 pos=8 root_lp=feasible nodes=41
-OPEN support=224 parity=5 k=2 neg=7 pos=8 root_lp=feasible nodes=1213
-OPEN support=230 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=25
-OPEN support=227 parity=5 k=4 neg=7 pos=8 root_lp=feasible nodes=23
-OPEN support=233 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=49
-OPEN support=224 parity=5 k=2 neg=7 pos=8 root_lp=feasible nodes=135
-OPEN support=232 parity=19 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=233 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=23
-OPEN support=230 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=65
-OPEN support=233 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=45
-OPEN support=230 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=33
-OPEN support=224 parity=5 k=3 neg=7 pos=8 root_lp=feasible nodes=67
-OPEN support=232 parity=19 k=5 neg=8 pos=7 root_lp=infeasible nodes=485
-OPEN support=233 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=23
-OPEN support=230 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=27
-OPEN support=224 parity=5 k=3 neg=7 pos=8 root_lp=feasible nodes=69
-OPEN support=230 parity=9 k=5 neg=7 pos=8 root_lp=feasible nodes=13
-OPEN support=233 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=29
-OPEN support=236 parity=5 k=2 neg=7 pos=8 root_lp=feasible nodes=261
-OPEN support=224 parity=5 k=4 neg=7 pos=8 root_lp=feasible nodes=25
-OPEN support=233 parity=9 k=5 neg=7 pos=8 root_lp=feasible nodes=19
-OPEN support=230 parity=11 k=2 neg=9 pos=6 root_lp=infeasible nodes=482
-OPEN support=236 parity=5 k=3 neg=7 pos=8 root_lp=feasible nodes=39
-OPEN support=224 parity=6 k=1 neg=8 pos=7 root_lp=infeasible nodes=481
-OPEN support=239 parity=9 k=2 neg=7 pos=8 root_lp=feasible nodes=119
-OPEN support=230 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=236 parity=5 k=3 neg=7 pos=8 root_lp=feasible nodes=41
-OPEN support=239 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=43
-OPEN support=233 parity=10 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=239 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=35
-OPEN support=224 parity=6 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=230 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=236 parity=5 k=4 neg=7 pos=8 root_lp=feasible nodes=41
-OPEN support=239 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=25
-OPEN support=233 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=224 parity=6 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=230 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=239 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=47
-OPEN support=233 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=241 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=224 parity=6 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=239 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=47
-OPEN support=233 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=230 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=239 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=43
-OPEN support=241 parity=10 k=5 neg=8 pos=7 root_lp=infeasible nodes=485
-OPEN support=230 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=224 parity=6 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=239 parity=9 k=5 neg=7 pos=8 root_lp=feasible nodes=25
-OPEN support=241 parity=11 k=5 neg=7 pos=8 root_lp=feasible nodes=13
-OPEN support=233 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=239 parity=11 k=2 neg=9 pos=6 root_lp=infeasible nodes=482
-OPEN support=230 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=224 parity=6 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=233 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=241 parity=19 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=239 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=230 parity=11 k=5 neg=9 pos=6 root_lp=infeasible nodes=485
-OPEN support=233 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=239 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=241 parity=19 k=5 neg=8 pos=7 root_lp=infeasible nodes=485
-OPEN support=233 parity=10 k=5 neg=8 pos=7 root_lp=infeasible nodes=485
-OPEN support=224 parity=10 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=239 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=224 parity=10 k=3 neg=7 pos=8 root_lp=feasible nodes=96
-OPEN support=239 parity=11 k=3 neg=9 pos=6 root_lp=infeasible nodes=483
-OPEN support=242 parity=9 k=2 neg=7 pos=8 root_lp=feasible nodes=171
-OPEN support=224 parity=10 k=3 neg=7 pos=8 root_lp=feasible nodes=150
-OPEN support=239 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=242 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=53
-OPEN support=224 parity=10 k=4 neg=7 pos=8 root_lp=feasible nodes=44
-OPEN support=242 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=47
-OPEN support=239 parity=11 k=4 neg=9 pos=6 root_lp=infeasible nodes=484
-OPEN support=242 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=25
-OPEN support=233 parity=18 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=239 parity=11 k=5 neg=9 pos=6 root_lp=infeasible nodes=485
-OPEN support=242 parity=9 k=3 neg=7 pos=8 root_lp=feasible nodes=69
-OPEN support=233 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=110
-OPEN support=242 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=29
-OPEN support=233 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=102
-OPEN support=242 parity=9 k=4 neg=7 pos=8 root_lp=feasible nodes=49
-OPEN support=233 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=50
-OPEN support=242 parity=9 k=5 neg=7 pos=8 root_lp=feasible nodes=21
-OPEN support=233 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=156
-OPEN support=233 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=44
-OPEN support=242 parity=10 k=2 neg=8 pos=7 root_lp=infeasible nodes=482
-OPEN support=233 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=46
-OPEN support=242 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=233 parity=18 k=5 neg=7 pos=8 root_lp=feasible nodes=40
-OPEN support=242 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=242 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=242 parity=10 k=3 neg=8 pos=7 root_lp=infeasible nodes=483
-OPEN support=242 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=242 parity=10 k=4 neg=8 pos=7 root_lp=infeasible nodes=484
-OPEN support=242 parity=10 k=5 neg=8 pos=7 root_lp=infeasible nodes=485
-OPEN support=242 parity=18 k=2 neg=7 pos=8 root_lp=infeasible nodes=482
-OPEN support=242 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=108
-OPEN support=242 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=90
-OPEN support=242 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=34
-OPEN support=242 parity=18 k=3 neg=7 pos=8 root_lp=feasible nodes=128
-OPEN support=242 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=40
-OPEN support=242 parity=18 k=4 neg=7 pos=8 root_lp=feasible nodes=36
-OPEN support=242 parity=18 k=5 neg=7 pos=8 root_lp=feasible nodes=32
+OPEN support=56 parity=3 k=1 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=83 parity=2 k=1 neg=6 pos=9 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=83 parity=2 k=1 neg=6 pos=9 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=89 parity=7 k=1 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=89 parity=7 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=98 parity=11 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=107 parity=11 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=116 parity=11 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=89 parity=7 k=3 neg=7 pos=8 root_lp=feasible margin=3.142e-02 nodes=130
+OPEN support=98 parity=11 k=3 neg=7 pos=8 root_lp=feasible margin=2.239e-01 nodes=82
+OPEN support=107 parity=11 k=3 neg=7 pos=8 root_lp=feasible margin=9.897e-02 nodes=82
+OPEN support=98 parity=11 k=3 neg=7 pos=8 root_lp=feasible margin=1.283e+00 nodes=82
+OPEN support=116 parity=11 k=3 neg=7 pos=8 root_lp=feasible margin=2.977e-02 nodes=102
+OPEN support=107 parity=11 k=3 neg=7 pos=8 root_lp=feasible margin=1.011e+00 nodes=82
+OPEN support=98 parity=11 k=4 neg=7 pos=8 root_lp=feasible margin=9.807e-01 nodes=30
+OPEN support=116 parity=11 k=3 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=125 parity=19 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=107 parity=11 k=4 neg=7 pos=8 root_lp=feasible margin=1.020e+00 nodes=30
+OPEN support=135 parity=2 k=1 neg=6 pos=9 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=137 parity=3 k=1 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=116 parity=11 k=4 neg=7 pos=8 root_lp=feasible margin=1.324e-01 nodes=83
+OPEN support=125 parity=19 k=3 neg=7 pos=8 root_lp=feasible margin=4.801e-01 nodes=82
+OPEN support=140 parity=7 k=2 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=140 parity=7 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=134 parity=19 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=141 parity=3 k=1 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=481
+OPEN support=125 parity=19 k=3 neg=7 pos=8 root_lp=feasible margin=1.446e+00 nodes=82
+OPEN support=143 parity=6 k=1 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=481
+OPEN support=125 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=1.006e+00 nodes=30
+OPEN support=140 parity=7 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=141 parity=3 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=134 parity=19 k=3 neg=7 pos=8 root_lp=feasible margin=4.080e-01 nodes=82
+OPEN support=140 parity=7 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=125 parity=19 k=3 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=143 parity=6 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=134 parity=19 k=3 neg=7 pos=8 root_lp=feasible margin=1.295e+00 nodes=82
+OPEN support=149 parity=11 k=2 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=143 parity=6 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=134 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=1.062e+00 nodes=30
+OPEN support=125 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=7.042e-01 nodes=83
+OPEN support=149 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=152 parity=10 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=143 parity=6 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=134 parity=19 k=3 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=125 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=1.481e+00 nodes=83
+OPEN support=149 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=152 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=125 parity=19 k=5 neg=7 pos=8 root_lp=feasible margin=1.028e+00 nodes=31
+OPEN support=152 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=149 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=143 parity=6 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=134 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=6.235e-01 nodes=83
+OPEN support=152 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=143 parity=6 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=134 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=1.547e+00 nodes=83
+OPEN support=149 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=152 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=134 parity=19 k=5 neg=7 pos=8 root_lp=feasible margin=1.086e+00 nodes=31
+OPEN support=149 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=143 parity=11 k=1 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=481
+OPEN support=158 parity=11 k=2 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=152 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=158 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=149 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=143 parity=11 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=152 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=158 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=149 parity=11 k=5 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=152 parity=10 k=5 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=161 parity=10 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=158 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=143 parity=11 k=3 neg=7 pos=8 root_lp=feasible margin=1.158e-02 nodes=100
+OPEN support=161 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=164 parity=3 k=1 neg=6 pos=9 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=164 parity=3 k=1 neg=6 pos=9 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=164 parity=3 k=2 neg=6 pos=9 root_lp=infeasible margin=0.000e+00 nodes=3
+OPEN support=167 parity=7 k=1 neg=6 pos=9 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=168 parity=3 k=1 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=158 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=152 parity=19 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=158 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=143 parity=11 k=2 neg=7 pos=8 root_lp=feasible margin=9.202e-03 nodes=93
+OPEN support=169 parity=7 k=1 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=481
+OPEN support=169 parity=7 k=1 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=161 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=152 parity=19 k=3 neg=7 pos=8 root_lp=feasible margin=5.142e-01 nodes=82
+OPEN support=158 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=169 parity=7 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=161 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=158 parity=11 k=5 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=143 parity=11 k=3 neg=7 pos=8 root_lp=feasible margin=1.815e-03 nodes=94
+OPEN support=152 parity=19 k=3 neg=7 pos=8 root_lp=feasible margin=1.452e+00 nodes=82
+OPEN support=169 parity=7 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=143 parity=11 k=4 neg=7 pos=8 root_lp=feasible margin=7.915e-01 nodes=30
+OPEN support=152 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=1.003e+00 nodes=30
+OPEN support=171 parity=1 k=1 neg=6 pos=9 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=161 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=169 parity=7 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=170 parity=6 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=180 parity=3 k=1 neg=6 pos=9 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=161 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=152 parity=19 k=3 neg=7 pos=8 root_lp=feasible margin=6.816e-01 nodes=82
+OPEN support=152 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=8.544e-01 nodes=30
+OPEN support=152 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=6.865e-01 nodes=30
+OPEN support=170 parity=6 k=3 neg=7 pos=8 root_lp=feasible margin=2.534e-02 nodes=98
+OPEN support=189 parity=1 k=1 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=161 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=190 parity=3 k=1 neg=6 pos=9 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=152 parity=19 k=5 neg=7 pos=8 root_lp=feasible margin=6.860e-01 nodes=20
+OPEN support=161 parity=10 k=5 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=161 parity=19 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=193 parity=7 k=2 neg=6 pos=9 root_lp=feasible margin=3.295e-02 nodes=117
+OPEN support=196 parity=11 k=1 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=481
+OPEN support=161 parity=19 k=3 neg=7 pos=8 root_lp=feasible margin=4.228e-01 nodes=82
+OPEN support=193 parity=7 k=3 neg=6 pos=9 root_lp=feasible margin=9.539e-02 nodes=82
+OPEN support=179 parity=10 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=193 parity=7 k=3 neg=6 pos=9 root_lp=feasible margin=3.240e-01 nodes=29
+OPEN support=193 parity=7 k=4 neg=6 pos=9 root_lp=feasible margin=5.409e-01 nodes=30
+OPEN support=161 parity=19 k=3 neg=7 pos=8 root_lp=feasible margin=1.280e+00 nodes=82
+OPEN support=196 parity=11 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=179 parity=10 k=3 neg=7 pos=8 root_lp=feasible margin=8.410e-01 nodes=82
+OPEN support=188 parity=10 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=161 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=1.014e+00 nodes=30
+OPEN support=196 parity=11 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=179 parity=10 k=3 neg=7 pos=8 root_lp=feasible margin=1.325e+00 nodes=82
+OPEN support=188 parity=10 k=3 neg=7 pos=8 root_lp=feasible margin=8.426e-01 nodes=82
+OPEN support=161 parity=19 k=3 neg=7 pos=8 root_lp=feasible margin=6.358e-01 nodes=82
+OPEN support=179 parity=10 k=4 neg=7 pos=8 root_lp=feasible margin=1.138e+00 nodes=30
+OPEN support=196 parity=11 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=161 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=8.415e-01 nodes=30
+OPEN support=161 parity=19 k=4 neg=7 pos=8 root_lp=feasible margin=8.859e-01 nodes=30
+OPEN support=196 parity=11 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=161 parity=19 k=5 neg=7 pos=8 root_lp=feasible margin=8.563e-01 nodes=20
+OPEN support=188 parity=10 k=3 neg=7 pos=8 root_lp=feasible margin=1.733e+00 nodes=82
+OPEN support=196 parity=11 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=188 parity=10 k=4 neg=7 pos=8 root_lp=feasible margin=1.173e+00 nodes=30
+OPEN support=196 parity=11 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=197 parity=10 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=196 parity=11 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=202 parity=11 k=2 neg=6 pos=9 root_lp=feasible margin=5.633e-01 nodes=81
+OPEN support=197 parity=10 k=3 neg=7 pos=8 root_lp=feasible margin=6.276e-01 nodes=82
+OPEN support=205 parity=19 k=1 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=481
+OPEN support=202 parity=11 k=3 neg=6 pos=9 root_lp=feasible margin=5.936e-01 nodes=82
+OPEN support=202 parity=11 k=3 neg=6 pos=9 root_lp=feasible margin=6.092e-01 nodes=29
+OPEN support=205 parity=19 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=202 parity=11 k=4 neg=6 pos=9 root_lp=feasible margin=6.250e-01 nodes=30
+OPEN support=197 parity=10 k=3 neg=7 pos=8 root_lp=feasible margin=3.651e-01 nodes=82
+OPEN support=202 parity=11 k=3 neg=6 pos=9 root_lp=feasible margin=6.421e-01 nodes=29
+OPEN support=197 parity=10 k=4 neg=7 pos=8 root_lp=feasible margin=6.456e-01 nodes=30
+OPEN support=202 parity=11 k=4 neg=6 pos=9 root_lp=feasible margin=6.406e-01 nodes=30
+OPEN support=205 parity=19 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=202 parity=11 k=4 neg=6 pos=9 root_lp=feasible margin=6.456e-01 nodes=19
+OPEN support=202 parity=11 k=5 neg=6 pos=9 root_lp=feasible margin=6.456e-01 nodes=20
+OPEN support=205 parity=19 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=211 parity=11 k=2 neg=6 pos=9 root_lp=feasible margin=5.970e-01 nodes=81
+OPEN support=205 parity=19 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=211 parity=11 k=3 neg=6 pos=9 root_lp=feasible margin=6.141e-01 nodes=82
+OPEN support=211 parity=11 k=3 neg=6 pos=9 root_lp=feasible margin=6.328e-01 nodes=29
+OPEN support=205 parity=19 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=211 parity=11 k=4 neg=6 pos=9 root_lp=feasible margin=6.456e-01 nodes=30
+OPEN support=214 parity=19 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=211 parity=11 k=3 neg=6 pos=9 root_lp=feasible margin=6.456e-01 nodes=29
+OPEN support=211 parity=11 k=4 neg=6 pos=9 root_lp=feasible margin=6.456e-01 nodes=30
+OPEN support=205 parity=19 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=206 parity=18 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=211 parity=11 k=4 neg=6 pos=9 root_lp=feasible margin=6.456e-01 nodes=19
+OPEN support=214 parity=19 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=211 parity=11 k=5 neg=6 pos=9 root_lp=feasible margin=6.456e-01 nodes=20
+OPEN support=205 parity=19 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=206 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=9.260e-01 nodes=82
+OPEN support=214 parity=19 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=205 parity=19 k=5 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=218 parity=3 k=1 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=2
+OPEN support=206 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=1.428e+00 nodes=82
+OPEN support=214 parity=19 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=206 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=1.199e+00 nodes=30
+OPEN support=214 parity=19 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=206 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=6.456e-01 nodes=82
+OPEN support=214 parity=19 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=206 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=6.456e-01 nodes=30
+OPEN support=206 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=6.456e-01 nodes=30
+OPEN support=214 parity=19 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=206 parity=18 k=5 neg=7 pos=8 root_lp=feasible margin=6.456e-01 nodes=20
+OPEN support=214 parity=19 k=5 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=215 parity=18 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=222 parity=3 k=1 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=481
+OPEN support=223 parity=6 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=222 parity=3 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=215 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=9.675e-01 nodes=82
+OPEN support=221 parity=5 k=2 neg=7 pos=8 root_lp=feasible margin=8.565e-03 nodes=289
+OPEN support=223 parity=11 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=221 parity=5 k=3 neg=7 pos=8 root_lp=feasible margin=1.247e-01 nodes=29
+OPEN support=224 parity=5 k=1 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=481
+OPEN support=221 parity=5 k=3 neg=7 pos=8 root_lp=feasible margin=1.263e-01 nodes=29
+OPEN support=221 parity=5 k=4 neg=7 pos=8 root_lp=feasible margin=1.502e-01 nodes=19
+OPEN support=221 parity=7 k=2 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=215 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=1.746e+00 nodes=82
+OPEN support=215 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=1.197e+00 nodes=30
+OPEN support=221 parity=7 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=215 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=6.343e-01 nodes=82
+OPEN support=221 parity=7 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=215 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=6.456e-01 nodes=30
+OPEN support=221 parity=7 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=215 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=6.456e-01 nodes=30
+OPEN support=215 parity=18 k=5 neg=7 pos=8 root_lp=feasible margin=6.456e-01 nodes=20
+OPEN support=230 parity=9 k=2 neg=7 pos=8 root_lp=feasible margin=3.478e-02 nodes=81
+OPEN support=232 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=230 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.333e-01 nodes=29
+OPEN support=232 parity=10 k=5 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=230 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.316e-01 nodes=29
+OPEN support=230 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.604e-01 nodes=19
+OPEN support=230 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.338e-01 nodes=29
+OPEN support=230 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.597e-01 nodes=19
+OPEN support=232 parity=19 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=230 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.559e-01 nodes=19
+OPEN support=230 parity=9 k=5 neg=7 pos=8 root_lp=feasible margin=1.900e-01 nodes=13
+OPEN support=232 parity=19 k=5 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=230 parity=11 k=2 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=230 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=230 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=233 parity=9 k=2 neg=7 pos=8 root_lp=feasible margin=2.324e-02 nodes=81
+OPEN support=230 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=233 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.050e-01 nodes=29
+OPEN support=233 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.180e-01 nodes=29
+OPEN support=230 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=233 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.523e-01 nodes=19
+OPEN support=230 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=233 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.319e-01 nodes=29
+OPEN support=233 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.532e-01 nodes=19
+OPEN support=230 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=233 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.528e-01 nodes=19
+OPEN support=233 parity=9 k=5 neg=7 pos=8 root_lp=feasible margin=1.693e-01 nodes=13
+OPEN support=230 parity=11 k=5 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=227 parity=5 k=2 neg=7 pos=8 root_lp=feasible margin=2.705e-03 nodes=707
+OPEN support=233 parity=10 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=227 parity=5 k=3 neg=7 pos=8 root_lp=feasible margin=1.009e-01 nodes=29
+OPEN support=218 parity=3 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=3819
+OPEN support=227 parity=5 k=3 neg=7 pos=8 root_lp=feasible margin=1.246e-01 nodes=29
+OPEN support=218 parity=3 k=3 neg=7 pos=8 root_lp=feasible margin=6.927e-02 nodes=29
+OPEN support=233 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=227 parity=5 k=4 neg=7 pos=8 root_lp=feasible margin=1.433e-01 nodes=19
+OPEN support=233 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=233 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=241 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=239 parity=9 k=2 neg=7 pos=8 root_lp=feasible margin=4.055e-02 nodes=83
+OPEN support=233 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=239 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.321e-01 nodes=29
+OPEN support=241 parity=10 k=5 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=239 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.294e-01 nodes=29
+OPEN support=241 parity=11 k=5 neg=7 pos=8 root_lp=feasible margin=5.731e-02 nodes=13
+OPEN support=233 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=239 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.587e-01 nodes=19
+OPEN support=239 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.333e-01 nodes=29
+OPEN support=233 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=239 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.627e-01 nodes=19
+OPEN support=241 parity=19 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=239 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.531e-01 nodes=19
+OPEN support=233 parity=10 k=5 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=239 parity=9 k=5 neg=7 pos=8 root_lp=feasible margin=1.778e-01 nodes=13
+OPEN support=241 parity=19 k=5 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=239 parity=11 k=2 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=239 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=239 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=242 parity=9 k=2 neg=7 pos=8 root_lp=feasible margin=2.789e-02 nodes=81
+OPEN support=239 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=242 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.108e-01 nodes=29
+OPEN support=242 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.295e-01 nodes=29
+OPEN support=239 parity=11 k=3 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=242 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.597e-01 nodes=19
+OPEN support=239 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=233 parity=18 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=242 parity=9 k=3 neg=7 pos=8 root_lp=feasible margin=1.322e-01 nodes=29
+OPEN support=242 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.552e-01 nodes=19
+OPEN support=239 parity=11 k=4 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=242 parity=9 k=4 neg=7 pos=8 root_lp=feasible margin=1.534e-01 nodes=19
+OPEN support=233 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=9.338e-01 nodes=82
+OPEN support=242 parity=9 k=5 neg=7 pos=8 root_lp=feasible margin=1.807e-01 nodes=13
+OPEN support=239 parity=11 k=5 neg=9 pos=6 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=233 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=1.416e+00 nodes=82
+OPEN support=242 parity=10 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=233 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=1.217e+00 nodes=30
+OPEN support=233 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=7.740e-01 nodes=82
+OPEN support=242 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=233 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=8.462e-01 nodes=30
+OPEN support=233 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=7.221e-01 nodes=30
+OPEN support=242 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=233 parity=18 k=5 neg=7 pos=8 root_lp=feasible margin=7.079e-01 nodes=20
+OPEN support=224 parity=5 k=2 neg=7 pos=8 root_lp=feasible margin=2.190e-04 nodes=2037
+OPEN support=242 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=224 parity=5 k=2 neg=7 pos=8 root_lp=feasible margin=6.430e-01 nodes=81
+OPEN support=242 parity=10 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=224 parity=5 k=3 neg=7 pos=8 root_lp=feasible margin=6.616e-02 nodes=29
+OPEN support=242 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=224 parity=5 k=3 neg=7 pos=8 root_lp=feasible margin=1.183e-01 nodes=29
+OPEN support=224 parity=5 k=4 neg=7 pos=8 root_lp=feasible margin=1.438e-01 nodes=19
+OPEN support=224 parity=6 k=1 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=481
+OPEN support=242 parity=10 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=224 parity=6 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=242 parity=10 k=5 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=485
+OPEN support=224 parity=6 k=2 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=224 parity=6 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=224 parity=6 k=3 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=483
+OPEN support=236 parity=5 k=2 neg=7 pos=8 root_lp=feasible margin=5.639e-03 nodes=1105
+OPEN support=224 parity=6 k=4 neg=8 pos=7 root_lp=infeasible margin=0.000e+00 nodes=484
+OPEN support=236 parity=5 k=3 neg=7 pos=8 root_lp=feasible margin=1.030e-01 nodes=29
+OPEN support=236 parity=5 k=3 neg=7 pos=8 root_lp=feasible margin=1.242e-01 nodes=29
+OPEN support=236 parity=5 k=4 neg=7 pos=8 root_lp=feasible margin=1.403e-01 nodes=19
+OPEN support=242 parity=18 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=242 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=9.752e-01 nodes=82
+OPEN support=224 parity=10 k=2 neg=7 pos=8 root_lp=infeasible margin=0.000e+00 nodes=482
+OPEN support=242 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=1.739e+00 nodes=82
+OPEN support=242 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=1.192e+00 nodes=30
+OPEN support=224 parity=10 k=3 neg=7 pos=8 root_lp=feasible margin=5.201e-01 nodes=82
+OPEN support=242 parity=18 k=3 neg=7 pos=8 root_lp=feasible margin=8.073e-01 nodes=82
+OPEN support=242 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=8.802e-01 nodes=30
+OPEN support=242 parity=18 k=4 neg=7 pos=8 root_lp=feasible margin=8.482e-01 nodes=30
+OPEN support=224 parity=10 k=3 neg=7 pos=8 root_lp=feasible margin=1.606e-01 nodes=82
+OPEN support=242 parity=18 k=5 neg=7 pos=8 root_lp=feasible margin=8.441e-01 nodes=20
+OPEN support=224 parity=10 k=4 neg=7 pos=8 root_lp=feasible margin=8.254e-01 nodes=30
 SU2_ORBIT_AMGM_CPP rank=6 level=11 threads=5
   direct_hall      22491
   residual         2589
   pointwise        2882
-  certified        2263
-  by_flat_amgm     2052
-  by_split         211
-  split_nodes      3059
+  certified        2270
+  by_flat_amgm     2232
+  by_split         38
+  split_nodes      2476
   budget_exhausted 0
-  denominators     100:1454 200:582 500:215 1000:189 5000:131
-  coverage         87.4% of residual regimes
+  denominators     100:2184 200:72 500:23 1000:11 5000:5
+  coverage         87.7% of residual regimes

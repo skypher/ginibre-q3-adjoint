@@ -367,29 +367,6 @@ bool simplex(const std::vector<std::vector<double>>& A, const std::vector<double
     return true;
 }
 
-// Round a column of the allocation to multiples of 1/denom summing to denom.
-bool round_column(const std::vector<double>& col, long denom, std::vector<long>& units) {
-    const std::size_t P = col.size();
-    units.assign(P, 0);
-    long total = 0;
-    for (std::size_t i = 0; i < P; ++i) {
-        units[i] = static_cast<long>(std::llround(col[i] * static_cast<double>(denom)));
-        if (units[i] < 0) units[i] = 0;
-        total += units[i];
-    }
-    std::vector<std::size_t> order(P);
-    std::iota(order.begin(), order.end(), std::size_t{0});
-    std::sort(order.begin(), order.end(), [&](std::size_t a, std::size_t b) { return col[a] > col[b]; });
-    std::size_t k = 0;
-    while (total != denom && k < 10 * P + 20) {
-        const std::size_t i = order[k % P];
-        const long step = (total < denom) ? 1 : -1;
-        if (units[i] + step >= 0) { units[i] += step; total += step; }
-        ++k;
-    }
-    return total == denom;
-}
-
 // Verify one rational allocation in interval arithmetic.  `lam` and `coef` are
 // the regime's interval data, already carrying the minimum-exponent shift.
 bool verify_alloc(const std::vector<std::vector<Iv>>& lam, const std::vector<Iv>& coef,
@@ -453,6 +430,7 @@ struct Node {
 struct Stats {
     std::uint64_t amgm = 0, leaves = 0, nodes = 0, cap = 400000;
     bool root_lp_ok = false;   // did a root allocation exist at all
+    double root_margin = 0.0;  // and with what worst-case slack
     std::array<std::uint64_t, 5> den{};
 };
 
@@ -469,7 +447,8 @@ bool leaf_nonneg(const Node& nd) {
 }
 
 // Try one capacitated allocation at this node.
-bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr) {
+bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr,
+               double* margin_out = nullptr) {
     std::vector<int> pos, neg;
     for (std::size_t t = 0; t < nd.sign.size(); ++t)
         (nd.sign[t] < 0 ? neg : pos).push_back(static_cast<int>(t));
@@ -523,20 +502,80 @@ bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr) {
     }
     if (sol[dj] <= 0.0) return false;
     if (proposal_existed) *proposal_existed = true;   // an allocation exists
+    if (margin_out) *margin_out = sol[dj];            // its worst-case slack
+
+    // Rounding, done properly.
+    //
+    // Round-to-nearest with a crude fixup was losing certificates that the
+    // linear program had already found: at rank six 158 of 326 open regimes,
+    // and at rank seven 3,631 of 6,344, had a feasible root allocation whose
+    // certificate died in the conversion to a rational.  A finer denominator
+    // does not rescue them, which points at the rounding rule rather than the
+    // resolution.
+    //
+    // So start from the floor and hand out the remaining units one at a time,
+    // each to whichever positive term maximises the resulting minimum slack.
+    // Capacity is tracked across columns, since spending a positive term on one
+    // negative leaves less of it for the next.
+    std::vector<double> G;                    // per positive, per constraint
+    const std::size_t NC = K + 1;             // K domination rows plus the constant row
+    G.assign(P * NC, 0.0);
+    for (std::size_t pi = 0; pi < P; ++pi) {
+        for (std::size_t kk = 0; kk < K; ++kk)
+            G[pi * NC + kk] = static_cast<double>(logl(nd.lam[static_cast<std::size_t>(pos[pi])][kk]));
+        G[pi * NC + K] = static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(pos[pi])]));
+    }
+    std::vector<double> H(X * NC, 0.0);
+    for (std::size_t xi = 0; xi < X; ++xi) {
+        for (std::size_t kk = 0; kk < K; ++kk)
+            H[xi * NC + kk] = static_cast<double>(logl(nd.lam[static_cast<std::size_t>(neg[xi])][kk]));
+        H[xi * NC + K] = static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(neg[xi])]));
+    }
 
     static const long ladder[5] = {100, 200, 500, 1000, 5000};
     for (int di = 0; di < 5; ++di) {
         const long d = ladder[di];
+        std::vector<long> cap_left(P, d);
         std::vector<std::vector<long>> units(P, std::vector<long>(X, 0));
-        bool roundable = true;
-        for (std::size_t xi = 0; xi < X && roundable; ++xi) {
-            std::vector<double> col(P);
-            for (std::size_t pi = 0; pi < P; ++pi) col[pi] = sol[aidx(pi, xi)];
-            std::vector<long> u;
-            if (!round_column(col, d, u)) { roundable = false; break; }
-            for (std::size_t pi = 0; pi < P; ++pi) units[pi][xi] = u[pi];
+        bool ok = true;
+        for (std::size_t xi = 0; xi < X && ok; ++xi) {
+            long assigned = 0;
+            for (std::size_t pi = 0; pi < P; ++pi) {
+                long u = static_cast<long>(std::floor(sol[aidx(pi, xi)] * static_cast<double>(d)));
+                if (u < 0) u = 0;
+                if (u > cap_left[pi]) u = cap_left[pi];
+                units[pi][xi] = u;
+                assigned += u;
+            }
+            // Hand out the remainder greedily by resulting minimum slack.
+            std::vector<double> acc(NC, 0.0);
+            for (std::size_t pi = 0; pi < P; ++pi)
+                if (units[pi][xi])
+                    for (std::size_t cc = 0; cc < NC; ++cc)
+                        acc[cc] += static_cast<double>(units[pi][xi]) * G[pi * NC + cc];
+            while (assigned < d) {
+                int best = -1;
+                double best_score = 0.0;
+                for (std::size_t pi = 0; pi < P; ++pi) {
+                    if (units[pi][xi] >= cap_left[pi]) continue;
+                    double worst = 0.0;
+                    bool first = true;
+                    for (std::size_t cc = 0; cc < NC; ++cc) {
+                        const double v = (acc[cc] + G[pi * NC + cc]) / static_cast<double>(d) - H[xi * NC + cc];
+                        if (first || v < worst) { worst = v; first = false; }
+                    }
+                    if (best < 0 || worst > best_score) { best_score = worst; best = static_cast<int>(pi); }
+                }
+                if (best < 0) { ok = false; break; }      // capacity exhausted
+                const std::size_t bp = static_cast<std::size_t>(best);
+                units[bp][xi] += 1;
+                for (std::size_t cc = 0; cc < NC; ++cc) acc[cc] += G[bp * NC + cc];
+                ++assigned;
+            }
+            if (!ok) break;
+            for (std::size_t pi = 0; pi < P; ++pi) cap_left[pi] -= units[pi][xi];
         }
-        if (!roundable) continue;
+        if (!ok) continue;
         if (verify_alloc(nd.ilam, nd.icoeff, pos, neg, units, d, K)) {
             ++st.den[static_cast<std::size_t>(di)];
             return true;
@@ -573,7 +612,8 @@ int depth_for(std::size_t k) {
 bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
     if (++st.nodes > st.cap) return false;
     if (nd.k == 0) { ++st.leaves; return leaf_nonneg(nd); }
-    if (amgm_node(nd, st, depth == 0 ? &st.root_lp_ok : nullptr)) { ++st.amgm; return true; }
+    if (amgm_node(nd, st, depth == 0 ? &st.root_lp_ok : nullptr,
+                  depth == 0 ? &st.root_margin : nullptr)) { ++st.amgm; return true; }
     if (depth >= max_depth) return false;
 
     // Split where the negative terms hold the largest advantage: that is the
@@ -803,9 +843,9 @@ int main(int argc, char** argv) {
                             for (int sg : root.sign) if (sg < 0) ++nneg;
                             std::lock_guard<std::mutex> dg(dump_mu);
                             std::printf("OPEN support=%d parity=%d k=%zu neg=%zu pos=%zu"
-                                        " root_lp=%s nodes=%llu\n",
+                                        " root_lp=%s margin=%.3e nodes=%llu\n",
                                         support, parity, K, nneg, root.sign.size() - nneg,
-                                        st.root_lp_ok ? "feasible" : "infeasible",
+                                        st.root_lp_ok ? "feasible" : "infeasible", st.root_margin,
                                         static_cast<unsigned long long>(st.nodes));
                         }
                         continue;

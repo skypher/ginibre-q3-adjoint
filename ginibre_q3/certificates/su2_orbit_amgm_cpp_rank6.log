@@ -3,12 +3,12 @@ SU2_ORBIT_AMGM_CPP rank=6 level=11 threads=5
   direct_hall      22491
   residual         2589
   pointwise        2882
-  certified        2263
-  by_flat_amgm     2052
-  by_split         211
-  split_nodes      3059
+  certified        2270
+  by_flat_amgm     2232
+  by_split         38
+  split_nodes      2476
   budget_exhausted 0
-  denominators     100:1454 200:582 500:215 1000:189 5000:131
-  soundness        regimes=1893 points=75720 violations=0
+  denominators     100:2184 200:72 500:23 1000:11 5000:5
+  soundness        regimes=1833 points=73320 violations=0
   negative_control corrupted=1000 refused=1000
-  coverage         87.4% of residual regimes
+  coverage         87.7% of residual regimes
