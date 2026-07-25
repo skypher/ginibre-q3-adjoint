@@ -41,6 +41,7 @@ namespace {
 
 constexpr mpfr_prec_t kPrec = 512;
 constexpr long double kHallTol = 1.0e-12L;
+bool g_total_mass_sweep = false;
 
 // ---------------------------------------------------------------- intervals
 
@@ -369,19 +370,25 @@ bool simplex(const std::vector<std::vector<double>>& A, const std::vector<double
 
 // Verify one rational allocation in interval arithmetic.  `lam` and `coef` are
 // the regime's interval data, already carrying the minimum-exponent shift.
+// Total allocated mass S = sn/sd >= 1.  Weighted AM-GM needs only the weights
+// inside the geometric mean to sum to one, so with beta = alpha/S the
+// domination rows are unchanged and the constant row gains a free log S.
+// S = 1 is the ordinary convex certificate.
 bool verify_alloc(const std::vector<std::vector<Iv>>& lam, const std::vector<Iv>& coef,
                   const std::vector<int>& pos, const std::vector<int>& neg,
-                  const std::vector<std::vector<long>>& units, long denom, std::size_t K) {
+                  const std::vector<std::vector<long>>& units, long denom, std::size_t K,
+                  long sn = 1, long sd = 1) {
     // structural conditions, exact over the integers
     for (std::size_t xi = 0; xi < neg.size(); ++xi) {
         long s = 0;
         for (std::size_t pi = 0; pi < pos.size(); ++pi) s += units[pi][xi];
         if (s != denom) return false;
     }
+    // capacity: sum_x S * beta[p][x] <= 1, i.e. sn * sum_x u <= sd * denom
     for (std::size_t pi = 0; pi < pos.size(); ++pi) {
         long s = 0;
         for (std::size_t xi = 0; xi < neg.size(); ++xi) s += units[pi][xi];
-        if (s > denom) return false;
+        if (sn * s > sd * denom) return false;
     }
     // logarithms of the interval data
     std::vector<std::vector<Iv>> llam(lam.size());
@@ -407,6 +414,14 @@ bool verify_alloc(const std::vector<std::vector<Iv>>& lam, const std::vector<Iv>
         for (std::size_t pi = 0; pi < pos.size(); ++pi)
             if (units[pi][xi])
                 iv_addmul_q(acc, lcoef[static_cast<std::size_t>(pos[pi])], units[pi][xi], denom);
+        if (sn != sd) {                       // add log S, enclosed rigorously
+            Iv sv;
+            mpfr_set_si(sv.lo, sn, MPFR_RNDD); mpfr_div_si(sv.lo, sv.lo, sd, MPFR_RNDD);
+            mpfr_set_si(sv.hi, sn, MPFR_RNDU); mpfr_div_si(sv.hi, sv.hi, sd, MPFR_RNDU);
+            Iv ls;
+            if (!iv_log(ls, sv)) return false;
+            Iv t; iv_add(t, acc, ls); acc = t;
+        }
         Iv slack; iv_sub(slack, acc, lcoef[static_cast<std::size_t>(neg[xi])]);
         if (mpfr_sgn(slack.lo) <= 0) return false;
     }
@@ -415,6 +430,9 @@ bool verify_alloc(const std::vector<std::vector<Iv>>& lam, const std::vector<Iv>
 
 
 // ------------------------------------------------------- nodes and recursion
+struct Node;
+struct Stats;
+bool amgm_node_S(const Node&, Stats&, long, long, bool*, double*);
 
 // A node of the decomposition: terms over K free coordinates, in both
 // arithmetics.  The float side proposes, the interval side decides.
@@ -449,6 +467,27 @@ bool leaf_nonneg(const Node& nd) {
 // Try one capacitated allocation at this node.
 bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr,
                double* margin_out = nullptr) {
+    // Total-mass values to sweep.  S = 1 first, so behaviour is unchanged
+    // wherever the ordinary certificate already works.
+    // Off by default.  The sweep is mathematically sound but empirically
+    // inert here: total positive supply is the number of positive terms and
+    // demand at total mass S is S times the number of negatives, so S > 1 needs
+    // #pos/#neg >= S, and 80% of root-infeasible regimes have that ratio below
+    // 1.5.  Enabling it costs five times the linear-program solves for no
+    // measured gain.  Retained behind a flag because the generalisation is
+    // correct and may apply in a setting with more positive mass.
+    static const long SN[5] = {1, 3, 2, 3, 4};
+    static const long SD[5] = {1, 2, 1, 1, 1};
+    const int nsweep = g_total_mass_sweep ? 5 : 1;
+    for (int si = 0; si < nsweep; ++si) {
+        if (amgm_node_S(nd, st, SN[si], SD[si], si == 0 ? proposal_existed : nullptr,
+                        si == 0 ? margin_out : nullptr)) return true;
+    }
+    return false;
+}
+
+bool amgm_node_S(const Node& nd, Stats& st, long sn, long sd,
+                 bool* proposal_existed, double* margin_out) {
     std::vector<int> pos, neg;
     for (std::size_t t = 0; t < nd.sign.size(); ++t)
         (nd.sign[t] < 0 ? neg : pos).push_back(static_cast<int>(t));
@@ -471,7 +510,7 @@ bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr,
     for (std::size_t pi = 0; pi < P; ++pi) {
         std::vector<double> r(nv, 0.0);
         for (std::size_t xi = 0; xi < X; ++xi) r[aidx(pi, xi)] = 1.0;
-        A.push_back(r); bb.push_back(1.0);
+        A.push_back(r); bb.push_back(static_cast<double>(sd) / static_cast<double>(sn));
     }
     for (std::size_t xi = 0; xi < X; ++xi) {
         for (std::size_t kk = 0; kk < K; ++kk) {
@@ -487,7 +526,8 @@ bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr,
             r[aidx(pi, xi)] = -static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(pos[pi])]));
         r[dj] = 1.0;
         A.push_back(r);
-        bb.push_back(-static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(neg[xi])])));
+        bb.push_back(-static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(neg[xi])]))
+                     + std::log(static_cast<double>(sn) / static_cast<double>(sd)));
     }
     std::vector<double> c(nv, 0.0); c[dj] = 1.0;
     std::vector<double> sol;
@@ -529,13 +569,14 @@ bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr,
     for (std::size_t xi = 0; xi < X; ++xi) {
         for (std::size_t kk = 0; kk < K; ++kk)
             H[xi * NC + kk] = static_cast<double>(logl(nd.lam[static_cast<std::size_t>(neg[xi])][kk]));
-        H[xi * NC + K] = static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(neg[xi])]));
+        H[xi * NC + K] = static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(neg[xi])]))
+                         - std::log(static_cast<double>(sn) / static_cast<double>(sd));
     }
 
     static const long ladder[5] = {100, 200, 500, 1000, 5000};
     for (int di = 0; di < 5; ++di) {
         const long d = ladder[di];
-        std::vector<long> cap_left(P, d);
+        std::vector<long> cap_left(P, (sd * d) / sn);
         std::vector<std::vector<long>> units(P, std::vector<long>(X, 0));
         bool ok = true;
         for (std::size_t xi = 0; xi < X && ok; ++xi) {
@@ -576,7 +617,7 @@ bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr,
             for (std::size_t pi = 0; pi < P; ++pi) cap_left[pi] -= units[pi][xi];
         }
         if (!ok) continue;
-        if (verify_alloc(nd.ilam, nd.icoeff, pos, neg, units, d, K)) {
+        if (verify_alloc(nd.ilam, nd.icoeff, pos, neg, units, d, K, sn, sd)) {
             ++st.den[static_cast<std::size_t>(di)];
             return true;
         }
@@ -739,6 +780,7 @@ int main(int argc, char** argv) {
         else if (!std::strcmp(argv[i], "--soundness") && i + 1 < argc) soundness = std::atoi(argv[++i]);
         else if (!std::strcmp(argv[i], "--control")) control = true;
         else if (!std::strcmp(argv[i], "--dump-open")) dump = true;
+        else if (!std::strcmp(argv[i], "--total-mass")) g_total_mass_sweep = true;
     }
     if (rank < 3) { std::fprintf(stderr, "rank must be at least 3\n"); return 2; }
     if (threads < 1) threads = 1;

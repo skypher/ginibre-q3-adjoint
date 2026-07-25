@@ -180,6 +180,61 @@ It will not help the 89 blocked purely on domination. Those need the positives
 to grow at least as fast as the negative in every free coordinate, which no
 reweighting can manufacture.
 
+## Rank seven, and why the generalisation fails
+
+```text
+                        rank 7            rank 6
+domination (D) blocks   1,690  62.3%      53.0%
+both block                970  35.7%      38.7%
+constant (K) blocks        51   1.9%       8.3%
+```
+
+Only 51 rank-seven regimes are purely blocked by the constant condition, and 49
+of those are one-coordinate rays, so `K`-blockage is essentially a
+one-dimensional phenomenon.
+
+The `S >= 1` generalisation was implemented and measured. It closes **zero**
+additional regimes at ranks four, five and six. `S = 1` reproduces the previous
+counts exactly, so the implementation is faithful; the idea simply does not
+apply.
+
+The reason is structural rather than numerical, and it rules out the whole
+family. Total positive supply is the number of positive terms, while demand at
+total mass `S` is `S` times the number of negatives, so `S > 1` is only possible
+when
+
+```text
+#positives / #negatives >= S.
+```
+
+Of 400 root-infeasible regimes sampled at rank six, 318 -- 80% -- have that
+ratio below 1.5, so even `S = 1.5` exceeds the available supply before any
+inequality is consulted. Raising `S` buys `log S` on the constant row and pays
+for it by tightening capacity to `1/S`, and there is no spare positive mass to
+pay with.
+
+The sweep is retained behind `--total-mass`, off by default, since it is correct
+and costs five times the linear-program solves for no gain here.
+
+## Where this leaves the certificate class
+
+Three variations have now been tried against the surviving regimes: the
+order-cone fan closed one, the rounding fix worked but for a different reason
+than predicted and helped mainly by cost, and the total-mass generalisation
+closed none. The common thread is that all three vary *how positives are
+allocated*, and the dominant obstruction is not allocation but domination:
+62.3% of rank-seven survivors have a negative term that outgrows every positive
+in some coordinate.
+
+No reweighting, rounding, or splitting can repair that, because the certificate
+class requires term-by-term domination in the first place. Closing those
+regimes needs a certificate that does not: one that exploits cancellation among
+positive terms, groups several negatives against several positives jointly, or
+abandons the spectral term-by-term expansion for the fusion ring's integrality.
+
+That is a change of approach rather than another increment, and it is the point
+at which this line of work should be decided rather than continued.
+
 ## Replay
 
 ```text
