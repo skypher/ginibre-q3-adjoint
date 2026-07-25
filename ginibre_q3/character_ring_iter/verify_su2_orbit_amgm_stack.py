@@ -27,7 +27,7 @@ import mpmath as mp
 
 from su2_orbit_amgm import chamber_terms, nodes_and_characters
 from su2_amgm_lp import propose_allocation
-from su2_amgm_certify import round_allocation, verify
+from su2_amgm_certify import prepare, round_allocation, verify
 
 TOL = mp.mpf(10) ** -12
 
@@ -146,11 +146,13 @@ def main() -> int:
         # rounded allocation verifies, and record the denominator actually
         # needed so the certificate states its own cost.
         ok, margin, used = False, None, None
+        prepared = prepare(signs, powers, free, rank)
         for d in denom_ladder(denom):
             alloc = round_allocation(alpha, d)
             if alloc is None:
                 continue
-            ok, margin = verify(signs, powers, free, rank, alloc, pos, neg, d)
+            ok, margin = verify(signs, powers, free, rank, alloc, pos, neg, d,
+                                prepared=prepared)
             if ok:
                 used = d
                 break

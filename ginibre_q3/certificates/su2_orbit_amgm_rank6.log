@@ -1,0 +1,32 @@
+SU2_ORBIT_AMGM_STACK rank=6 level=11 denominator=100
+  direct_hall      22491
+  residual         2589
+  closed           1998
+  lp_infeasible    408
+  round_failed     0
+  denominators     100:1183 200:446 500:158 1000:122 5000:89
+  verify_failed    183
+  min_slack        0.0046855908
+  elapsed_seconds  258.2
+  coverage         77.2% of residual regimes
+UNRESOLVED support=29 parity=2 free=(0,) stage=lp
+UNRESOLVED support=56 parity=3 free=(0,) stage=lp
+UNRESOLVED support=83 parity=2 free=(0,) stage=lp
+UNRESOLVED support=83 parity=2 free=(4,) stage=lp
+UNRESOLVED support=83 parity=2 free=(0, 4) stage=lp
+UNRESOLVED support=86 parity=6 free=(4,) stage=lp
+UNRESOLVED support=86 parity=6 free=(0, 4) stage=lp
+UNRESOLVED support=86 parity=6 free=(0, 1, 4) stage=lp
+UNRESOLVED support=87 parity=2 free=(4,) stage=lp
+UNRESOLVED support=89 parity=7 free=(4,) stage=lp
+UNRESOLVED support=89 parity=7 free=(0, 4) stage=lp
+UNRESOLVED support=89 parity=7 free=(0, 1, 4) stage=lp
+UNRESOLVED support=98 parity=11 free=(0, 4) stage=lp
+UNRESOLVED support=98 parity=11 free=(0, 1, 4) stage=lp
+UNRESOLVED support=98 parity=11 free=(0, 2, 4) stage=lp
+UNRESOLVED support=98 parity=11 free=(0, 1, 2, 4) stage=lp
+UNRESOLVED support=101 parity=3 free=(4,) stage=lp
+UNRESOLVED support=101 parity=3 free=(0, 4) stage=lp
+UNRESOLVED support=101 parity=3 free=(0, 2, 4) stage=lp
+UNRESOLVED support=107 parity=5 free=(0, 1, 4) stage=verify
+UNRESOLVED ... and 571 more

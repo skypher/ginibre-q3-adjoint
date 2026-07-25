@@ -18,6 +18,7 @@ strictly positive, or when the two sides are provably equal by structure.
 from __future__ import annotations
 
 from fractions import Fraction
+from functools import lru_cache
 
 import mpmath as mp
 
@@ -30,8 +31,14 @@ def _iv():
     return ctx
 
 
+@lru_cache(maxsize=None)
 def iv_nodes_and_characters(rank: int):
-    """Rigorous interval enclosures of the weights and character table."""
+    """Rigorous interval enclosures of the weights and character table.
+
+    Cached: the table depends only on the rank, and recomputing interval pi and
+    every character at 512 bits once per verification attempt dominated the
+    runtime once the denominator ladder started escalating.
+    """
     ctx = _iv()
     n = 2 * rank + 1
     labels = rank - 1
@@ -102,26 +109,41 @@ def round_allocation(alpha, denom: int):
     return out
 
 
-def verify(signs_chamber, powers, free, rank, alloc, pos, neg, denom):
-    """Re-verify a rational allocation from scratch in interval arithmetic.
+def prepare(signs_chamber, powers, free, rank):
+    """Build the interval logarithms for one regime.
 
-    Returns (ok, min_slack_lower_bound).
+    Split out from `verify` because it depends only on the regime, not on the
+    allocation.  The denominator ladder re-verifies the same regime several
+    times, and rebuilding the interval terms and their logarithms on each rung
+    dominated the runtime.
     """
     ctx = _iv()
     weights, table = iv_nodes_and_characters(rank)
     terms = iv_terms(signs_chamber, powers, weights, table)
-    if len(terms) <= max(max(pos, default=-1), max(neg, default=-1)):
-        return False, None
-
-    # Absorb the regime's minimum exponent, exactly as the real problem does.
-    lam = []
-    coeff = []
-    for (s, c, lm) in terms:
+    lam, coeff = [], []
+    for (_s, c, lm) in terms:
         cc = c
         for l in free:
             cc = cc * lm[l]
         coeff.append(cc)
         lam.append([lm[l] for l in free])
+    log_lam = [[ctx.log(v) for v in row] for row in lam]
+    log_c = [ctx.log(v) for v in coeff]
+    return len(terms), log_lam, log_c
+
+
+def verify(signs_chamber, powers, free, rank, alloc, pos, neg, denom, prepared=None):
+    """Re-verify a rational allocation in interval arithmetic.
+
+    Returns (ok, min_slack_lower_bound).  `prepared` is the result of
+    `prepare` for this regime; it is recomputed when omitted.
+    """
+    ctx = _iv()
+    if prepared is None:
+        prepared = prepare(signs_chamber, powers, free, rank)
+    n_terms, log_lam, log_c = prepared
+    if n_terms <= max(max(pos, default=-1), max(neg, default=-1)):
+        return False, None
 
     # Rational structural conditions, checked exactly.
     for xi in range(len(neg)):
@@ -130,9 +152,6 @@ def verify(signs_chamber, powers, free, rank, alloc, pos, neg, denom):
     for pi in range(len(pos)):
         if sum(alloc[pi][xi] for xi in range(len(neg))) > 1:
             return False, None
-
-    log_lam = [[ctx.log(v) for v in row] for row in lam]
-    log_c = [ctx.log(v) for v in coeff]
 
     worst = None
     for xi, x in enumerate(neg):

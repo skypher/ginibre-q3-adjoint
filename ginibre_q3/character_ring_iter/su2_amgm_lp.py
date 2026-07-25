@@ -48,12 +48,26 @@ def _simplex(c, A, b, n_real):
         T[m, :] -= T[i, :]
 
     def pivot(T, basis, allowed):
+        # Dantzig's rule (steepest reduced cost) is far faster in practice but
+        # can cycle on degenerate vertices, which these transportation-shaped
+        # problems produce in quantity.  Fall back to Bland's rule, which is
+        # slow but provably terminating, once an instance looks degenerate.
+        it, bland_after = 0, 4 * (T.shape[1] + T.shape[0])
+        cap = 200 * (T.shape[1] + T.shape[0])
         while True:
+            it += 1
+            if it > cap:
+                return False           # abandon a pathological instance
             col = -1
-            for j in allowed:
-                if T[-1, j] < -TOL:
-                    col = j
-                    break              # Bland: lowest index
+            if it < bland_after:
+                cand = [j for j in allowed if T[-1, j] < -TOL]
+                if cand:
+                    col = min(cand, key=lambda j: T[-1, j])
+            else:
+                for j in allowed:
+                    if T[-1, j] < -TOL:
+                        col = j
+                        break
             if col < 0:
                 return True
             row, best = -1, None
