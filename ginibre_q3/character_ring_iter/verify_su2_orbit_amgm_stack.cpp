@@ -631,7 +631,9 @@ struct Node {
     // face split fixes a label at its current exponent; a tail split raises
     // one.  At a zero-dimensional leaf these data reconstruct the word
     // exactly, so the corner can be computed as an integer.
-    std::vector<int> col_label;
+    // Labels behind each free coordinate.  Ordinarily one label per column;
+    // a Farey merge makes a column stand for u_a = u_b, incrementing both.
+    std::vector<std::vector<int>> col_label;
     std::vector<int> expo;
     const std::vector<int>* chamber_signs = nullptr;
     std::vector<cyclo::Field::Elt> ecoeff;
@@ -643,6 +645,7 @@ struct Stats {
     std::uint64_t exact_leaves = 0;
     std::uint64_t abel = 0;
     std::uint64_t folded = 0;
+    std::uint64_t farey = 0;
     bool root_lp_ok = false;   // did a root allocation exist at all
     double root_margin = 0.0;  // and with what worst-case slack
     std::array<std::uint64_t, 5> den{};
@@ -1282,6 +1285,56 @@ bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
             if (kk != best) { face.lam[t].push_back(nd.lam[t][kk]); face.ilam[t].push_back(nd.ilam[t][kk]); }
     if (!certify_node(face, 0, depth_for(face.k), st)) return false;
 
+    // Farey merge: when the allocation LP sits exactly on its feasibility
+    // boundary, competing rows cross at an irrational weight and no single
+    // rational allocation exists on the whole orthant.  The published O_11
+    // census called the remedy the Farey fan: split {u_a >= u_b} against
+    // {u_a <= u_b}.  Each half is a unimodular substitution merging the pair
+    // into one coordinate whose base is the product lambda_a lambda_b, and in
+    // each half one competing row goes slack, while near-tie signs are decided
+    // exactly by the cyclotomic escalation.  Try every coordinate pair before
+    // falling back to the axis tail split.
+    // Root only: the zero-margin crossing is a property of the regime, and
+    // trying every pair at every recursive node multiplies cost for nothing.
+    if (depth == 0 && nd.k >= 2) {
+        for (std::size_t a = 0; a < nd.k; ++a) {
+            for (std::size_t b = a + 1; b < nd.k; ++b) {
+                bool both = true;
+                for (int half = 0; half < 2 && both; ++half) {
+                    const std::size_t keep = half == 0 ? a : b;   // surviving pure coordinate
+                    const std::size_t merge = half == 0 ? b : a;  // u_keep >= u_merge half
+                    Node child;
+                    child.sign = nd.sign;
+                    child.k = nd.k;
+                    child.expo = nd.expo;
+                    child.chamber_signs = nd.chamber_signs;
+                    child.col_label = nd.col_label;
+                    // merged column: carries both labels
+                    child.col_label[merge].insert(child.col_label[merge].end(),
+                                                  nd.col_label[keep].begin(),
+                                                  nd.col_label[keep].end());
+                    child.coeff = nd.coeff;
+                    child.icoeff = nd.icoeff;
+                    child.ecoeff = nd.ecoeff;
+                    child.lam = nd.lam;
+                    child.ilam = nd.ilam;
+                    child.elam = nd.elam;
+                    for (std::size_t t = 0; t < nd.sign.size(); ++t) {
+                        child.lam[t][merge] = nd.lam[t][merge] * nd.lam[t][keep];
+                        Iv tmp; iv_mul(tmp, nd.ilam[t][merge], nd.ilam[t][keep]);
+                        child.ilam[t][merge] = tmp;
+                        child.elam[t][merge] = g_field.mulE(nd.elam[t][merge], nd.elam[t][keep]);
+                    }
+                    Stats sub;
+                    sub.cap = 2000;                       // bounded probe per half
+                    if (!certify_node(child, depth + 1, max_depth, sub)) both = false;
+                    st.nodes += sub.nodes;
+                }
+                if (both) { ++st.farey; return true; }
+            }
+        }
+    }
+
     // Tail u_best >= 1: absorb one factor of lambda.
     Node tail;
     tail.sign = nd.sign;
@@ -1295,7 +1348,8 @@ bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
     tail.ecoeff.resize(nd.ecoeff.size());
     for (std::size_t t = 0; t < nd.ecoeff.size(); ++t)
         tail.ecoeff[t] = g_field.mulE(nd.ecoeff[t], nd.elam[t][best]);
-    if (best < nd.col_label.size()) tail.expo[static_cast<std::size_t>(nd.col_label[best])] += 1;
+    if (best < nd.col_label.size())
+        for (int lbl : nd.col_label[best]) tail.expo[static_cast<std::size_t>(lbl)] += 1;
     tail.coeff.resize(nd.sign.size());
     tail.icoeff.resize(nd.sign.size());
     for (std::size_t t = 0; t < nd.sign.size(); ++t) {
@@ -1430,7 +1484,7 @@ int main(int argc, char** argv) {
     std::uint64_t sound_regimes = 0, sound_points = 0, sound_viol = 0;
     std::uint64_t ctl_tried = 0, ctl_refused = 0;
     std::uint64_t flat_total = 0, split_total = 0;
-    std::uint64_t node_total = 0, budget_hit = 0, exact_leaf_total = 0, abel_total = 0, folded_total = 0;
+    std::uint64_t node_total = 0, budget_hit = 0, exact_leaf_total = 0, abel_total = 0, folded_total = 0, farey_total = 0;
 
     const int supports = static_cast<int>(std::llround(std::pow(3.0, L)));
 
@@ -1438,7 +1492,7 @@ int main(int argc, char** argv) {
         std::uint64_t ld = 0, lr = 0, lp = 0, ls = 0, lcert = 0, lpz = 0;
         std::array<std::uint64_t, 5> lden{};
         std::uint64_t lsound_regimes = 0, lsound_points = 0, lsound_viol = 0;
-        std::uint64_t lflat = 0, lsplit = 0, lnodes = 0, lbudget = 0, lexact = 0, label_ = 0, lfold = 0;
+        std::uint64_t lflat = 0, lsplit = 0, lnodes = 0, lbudget = 0, lexact = 0, label_ = 0, lfold = 0, lfarey = 0;
         std::uint64_t lctl_tried = 0, lctl_refused = 0;
         for (;;) {
             const int support = next.fetch_add(1);
@@ -1534,7 +1588,8 @@ int main(int argc, char** argv) {
                     const std::size_t K = freev.size();
                     Node root;
                     root.k = K;
-                    root.col_label = freev;
+                    root.col_label.clear();
+                    for (int fv : freev) root.col_label.push_back({fv});
                     root.expo = powers;
                     root.chamber_signs = &signs;
                     root.ecoeff.resize(terms.size());
@@ -1609,6 +1664,7 @@ int main(int argc, char** argv) {
                     lexact += st.exact_leaves;
                     label_ += st.abel;
                     lfold += st.folded;
+                    lfarey += st.farey;
                     for (std::size_t di = 0; di < 5; ++di) lden[di] += st.den[di];
 
                     // Soundness: the certificate claims the signed sum is
@@ -1678,7 +1734,7 @@ int main(int argc, char** argv) {
         sound_regimes += lsound_regimes; sound_points += lsound_points; sound_viol += lsound_viol;
         ctl_tried += lctl_tried; ctl_refused += lctl_refused;
         flat_total += lflat; split_total += lsplit;
-        node_total += lnodes; budget_hit += lbudget; exact_leaf_total += lexact; abel_total += label_; folded_total += lfold;
+        node_total += lnodes; budget_hit += lbudget; exact_leaf_total += lexact; abel_total += label_; folded_total += lfold; farey_total += lfarey;
     };
 
     std::vector<std::thread> pool;
@@ -1703,6 +1759,7 @@ int main(int argc, char** argv) {
     std::printf("  exact_leaves     %llu\n", static_cast<unsigned long long>(exact_leaf_total));
     std::printf("  abel_chain       %llu\n", static_cast<unsigned long long>(abel_total));
     std::printf("  galois_folded    %llu\n", static_cast<unsigned long long>(folded_total));
+    std::printf("  farey_merge      %llu\n", static_cast<unsigned long long>(farey_total));
     static const int ladder_out[5] = {100, 200, 500, 1000, 5000};
     std::printf("  denominators    ");
     for (std::size_t i = 0; i < 5; ++i)
