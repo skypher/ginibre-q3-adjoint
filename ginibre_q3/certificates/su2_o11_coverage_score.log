@@ -1,0 +1,25 @@
+O11_DIRECT_CENSUS chambers=1230 regimes=25076 direct=22490 separated=4 pointwise=2882 failures=2586 threads=5
+
+residual keys parsed: 2586
+
+by number of active labels:
+  2 labels     14   cumulative     14  (  0.5%)
+  3 labels    139   cumulative    153  (  5.9%)
+  4 labels    697   cumulative    850  ( 32.9%)
+  5 labels   1736   cumulative   2586  (100.0%)
+
+two-label keys, by pair (14 total):
+  B1,B4  2
+  B1,B5  3
+  B2,B5  3
+  B3,B5  2
+  B4,B5  4
+
+sector coverage:
+  all two-label pairs (fan verifier scope)      14 / 2586  (  0.5%)
+  B1,B5 only (top-ray reduction)                 3 / 2586  (  0.1%)
+  at most three labels                         153 / 2586  (  5.9%)
+
+four- and five-label keys: 2433 / 2586 (94.1%)
+That mass is what the bulk AM-GM machinery covered, and no
+two-label theorem reaches it.
