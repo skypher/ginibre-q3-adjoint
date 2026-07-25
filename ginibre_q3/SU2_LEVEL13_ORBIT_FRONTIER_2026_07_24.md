@@ -31,93 +31,144 @@ non-Hall regimes         34,924
 separated-pole regimes        4.
 ```
 
-This census uses long-double spectral arithmetic and is a frontier diagnostic,
-not the exact theorem below.
+This census uses long-double spectral arithmetic and is a frontier diagnostic.
+Every theorem below is instead replayed with rational Sturm isolation, exact
+rational capacities, directed-rounding MPFR logarithms where needed, and
+integral fusion arithmetic for finite leaves.
 
-## First direct-Hall obstruction: proved
+## Exact initial-frontier advance
 
-The first non-Hall residual ray has
+The exact program now closes 172 direct-Hall failure keys.
+
+### First two rays
+
+The previously published first obstruction is
 
 ```text
 support=56, parity=3, residual=1,
+(B_1^-)^(1+2p) B_4^-,                 p>=0.
 ```
 
-which decodes to
+Exact leaves are `0,0,8`, and a denominator-100 weighted AM-GM certificate
+proves the tail from residual floor two.
+
+The next ray is
 
 ```text
-F_p=[B_0 tensor B_0]
-    (B_1 tensor 1-1 tensor B_1)^(1+2p)
-    (B_4 tensor 1-1 tensor B_4),          p>=0.
+support=83, parity=2, residual=1,
+(B_1^-)^(2+2p) B_5^+,                 p>=0.
 ```
 
-**Theorem 1.** `F_p>=0` for every `p>=0`.
+Two spectral pairs vanish identically. Exact values are `0,0,10`, and a
+second denominator-100 AM-GM certificate proves the entire remaining tail.
 
-The exact verifier uses the seven real roots of
+### Complete `B_1^- B_5^-` chamber
+
+All residual faces of
 
 ```text
-x^7-6x^6+9x^5+5x^4-15x^3+5x
- =x(x^2-x-1)(x^4-5x^3+5x^2+5x-5).
+(B_1^-)^(1+2p)(B_5^-)^(1+2q),         p,q>=0,
 ```
 
-At a trace node,
+are proved. The two axes have exact initial values `0,0,2` and `0,0,20`,
+respectively. The interior has a two-coordinate denominator-100 allocation
+and first exact value eight. Thus the whole two-parameter chamber is
+nonnegative.
+
+### Decorated rays and support 169
+
+The ray
 
 ```text
-B_1=x,
-B_4=x^4-3x^3+3x,
-weight=(3-x)/15.
+(B_1^-)^(1+2p) B_2^+ B_5^-
 ```
 
-Rational Sturm sequences isolate all seven roots. One nominal spectral pair
-vanishes identically: the two roots of `x^2-x-1` both have `B_4=-1`.
-The remaining spectral sum has ten positive and ten negative terms.
+has exact leaf zero and a denominator-100 tail beginning with value two.
+At support `169`, the ray `B_1^+B_2^-B_5^-` and both three-variable parity
+interiors are also proved. Their first interior values are `7914` and `2348`.
 
-Exact integral orbit-fusion arithmetic gives
+### Generic multivariable replay
+
+A reusable strict C++ verifier proves 163 additional three-, four-, and
+five-variable residual regimes:
 
 ```text
-F_0=0,
-F_1=0,
-F_2=8.
+support 178      8
+support 187      8
+support 196      8
+support 205     32
+support 214     32
+support 223      8
+support 232     32
+support 241     32
+support 250      3
+                 ---
+total           163.
 ```
 
-After shifting the residual floor to `p=2`, a denominator-100 capacitated
-weighted AM-GM allocation proves the entire tail. Every coefficient,
-squared base, geometric inequality, and capacity inequality is checked with
-rational interval arithmetic. Thus the two zero leaves and the AM-GM tail
-cover every `p>=0`.
+The support-205 tables include six denominator-1000 certificates and two
+near-boundary denominator-10000 tables. Directed rounding confirms every
+geometric and capacity inequality. The complete 163-case replay runs in
+about 4.84 seconds and uses under 6 MiB resident memory on the recorded host.
 
-The strict replay reports
+The exact key count is therefore
 
 ```text
-SU2_O13_FIRST_RAY_EXACT PASS
-roots=7 spectral_pairs=21 positives=10 negatives=10
-floor=2 denominator=100 leaves=2 leaf_values=0,0 tail_first=8.
+first ray                         1
+second ray                        1
+complete support-164 chamber      3
+support-167 ray                   1
+support-169 regimes               3
+generic multivariable replay    163
+                                ---
+total                           172.
 ```
 
-A separate exact integer scan through `p=2000` found no additional zero and no
-negative value. The relevant scalar sequence has a degree-20 minimal linear
-recurrence; its first values are
+## Reproducibility package
+
+The exact sources, allocation tables, and transcripts are stored in a
+SHA-256-pinned compressed package split into GitHub-safe base64 chunks:
 
 ```text
-0, 0, 8, 196, 3456, 54430, 816270, 11950512, ...
+certificates/su2_o13_initial_frontier_package.b64.part00
+certificates/su2_o13_initial_frontier_package.b64.part01
+certificates/su2_o13_initial_frontier_package.b64.part02
+certificates/su2_o13_initial_frontier_package.b64.part03
 ```
 
-The recurrence is a regression and structural diagnostic; the AM-GM
-certificate is the all-exponent proof.
+The reconstructed archive must have hash
+
+```text
+a407bf8d0cfb683e54422a84c36533401f5359b751908c3bb36053c78f6ad8b2.
+```
+
+Replay with
+
+```text
+character_ring_iter/replay_su2_o13_initial_frontier_package.sh
+```
+
+The run transcript is
+
+```text
+certificates/su2_o13_initial_frontier_exact.log.
+```
 
 ## Next precise target
 
-After removing the separated-pole sector and the proved ray above, the next
-direct-Hall obstruction is
+The next unresolved key in support order is
 
 ```text
-support=83, parity=2, residual=1.
+support=245, parity=2, residual=1.
 ```
 
 It decodes to the one-variable tail
 
 ```text
-(B_1^-)^(2+2r) B_5^+,       r>=1,
+(B_1^-)^(4+2r) B_6^+,                  r>=0.
 ```
 
-with the `r=0` face handled separately. This is the next exact rank-seven
-orbit target. Full `O_13`, and hence full `SU(2)_13`, remains open.
+The other two non-Hall residual faces at the same support have residual codes
+`2` and `3`. This support is the next exact rank-seven orbit target.
+
+Full `O_13`, and hence full `SU(2)_13`, remains open.
