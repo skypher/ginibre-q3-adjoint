@@ -1,0 +1,4 @@
+CLEBSCH_GORDAN_SQUARES checked=25 max_u=24
+KNOWN_INSTANCE D_2 = D_1 S_1 PASS
+UNIQUENESS pairs_tested=2303 max_a=48 extra_instances=0
+SU2_DIFFERENCE_FACTORIZATION_LIMIT PASS clebsch_gordan=25 pairs=2303 instances=1 unique_pair=(a=2,u=1)
