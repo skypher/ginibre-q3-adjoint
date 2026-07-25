@@ -20,6 +20,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
@@ -183,7 +184,18 @@ struct Field {
     // rising precision.  Returns 0 only for the zero element.
     int sign(const Elt& a) const {
         if (isZero(a)) return 0;
-        for (mpfr_prec_t prec = 512; prec <= 16384; prec *= 2) {
+        // The needed precision scales with the element's height: a
+        // denominator-5000 escalation raises lambda to the 5000th power and
+        // its coefficients to tens of thousands of bits, and resolving a
+        // near-cancelling difference requires precision above that height.
+        // A nonzero algebraic number of degree D and height H cannot be
+        // smaller than roughly H^-D, so D*height plus slack always suffices.
+        std::size_t hbits = 0;
+        for (const auto& c : a)
+            hbits = std::max(hbits, mpz_sizeinbase(c.get_mpz_t(), 2));
+        const mpfr_prec_t cap = static_cast<mpfr_prec_t>(
+            static_cast<std::size_t>(D) * (hbits + 64) + 4096);
+        for (mpfr_prec_t prec = 512; prec <= cap; prec *= 2) {
             mpfr_t zlo, zhi, plo, phi_, t;
             mpfr_init2(zlo, prec); mpfr_init2(zhi, prec);
             mpfr_init2(plo, prec); mpfr_init2(phi_, prec); mpfr_init2(t, prec);
@@ -232,7 +244,7 @@ struct Field {
             if (slo > 0) return 1;
             if (shi < 0) return -1;
         }
-        std::fprintf(stderr, "cyclotomic: sign undecided at 16384 bits (element nonzero)\n");
+        std::fprintf(stderr, "cyclotomic: sign undecided at height-scaled cap (element nonzero)\n");
         std::abort();
     }
 };
