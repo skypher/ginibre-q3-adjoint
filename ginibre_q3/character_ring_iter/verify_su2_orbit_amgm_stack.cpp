@@ -452,6 +452,7 @@ struct Node {
 
 struct Stats {
     std::uint64_t amgm = 0, leaves = 0, nodes = 0, cap = 400000;
+    bool root_lp_ok = false;   // did a root allocation exist at all
     std::array<std::uint64_t, 5> den{};
 };
 
@@ -468,7 +469,7 @@ bool leaf_nonneg(const Node& nd) {
 }
 
 // Try one capacitated allocation at this node.
-bool amgm_node(const Node& nd, Stats& st) {
+bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr) {
     std::vector<int> pos, neg;
     for (std::size_t t = 0; t < nd.sign.size(); ++t)
         (nd.sign[t] < 0 ? neg : pos).push_back(static_cast<int>(t));
@@ -521,6 +522,7 @@ bool amgm_node(const Node& nd, Stats& st) {
         if (acc - bb[i] > 1e-6) return false;
     }
     if (sol[dj] <= 0.0) return false;
+    if (proposal_existed) *proposal_existed = true;   // an allocation exists
 
     static const long ladder[5] = {100, 200, 500, 1000, 5000};
     for (int di = 0; di < 5; ++di) {
@@ -571,7 +573,7 @@ int depth_for(std::size_t k) {
 bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
     if (++st.nodes > st.cap) return false;
     if (nd.k == 0) { ++st.leaves; return leaf_nonneg(nd); }
-    if (amgm_node(nd, st)) { ++st.amgm; return true; }
+    if (amgm_node(nd, st, depth == 0 ? &st.root_lp_ok : nullptr)) { ++st.amgm; return true; }
     if (depth >= max_depth) return false;
 
     // Split where the negative terms hold the largest advantage: that is the
@@ -622,12 +624,14 @@ int main(int argc, char** argv) {
     bool decompose = false;
     int soundness = 0;      // sample this many certified regimes
     bool control = false;   // check the verifier rejects corrupted allocations
+    bool dump = false;      // print one line per unresolved regime
     for (int i = 1; i < argc; ++i) {
         if (!std::strcmp(argv[i], "--rank") && i + 1 < argc) rank = std::atoi(argv[++i]);
         else if (!std::strcmp(argv[i], "--threads") && i + 1 < argc) threads = std::atoi(argv[++i]);
         else if (!std::strcmp(argv[i], "--decompose")) decompose = true;
         else if (!std::strcmp(argv[i], "--soundness") && i + 1 < argc) soundness = std::atoi(argv[++i]);
         else if (!std::strcmp(argv[i], "--control")) control = true;
+        else if (!std::strcmp(argv[i], "--dump-open")) dump = true;
     }
     if (rank < 3) { std::fprintf(stderr, "rank must be at least 3\n"); return 2; }
     if (threads < 1) threads = 1;
@@ -674,6 +678,7 @@ int main(int argc, char** argv) {
 
     std::atomic<int> next{0};
     std::mutex mu;
+    std::mutex dump_mu;
     std::uint64_t direct = 0, residual = 0, pointwise = 0, sep = 0;
     std::uint64_t certified_total = 0;
     std::array<std::uint64_t, 5> den_used{};
@@ -793,6 +798,16 @@ int main(int argc, char** argv) {
                         // from "ran out of node budget", since only the second
                         // is fixable by spending more.
                         if (st.nodes > st.cap) ++lbudget;
+                        if (dump) {
+                            std::size_t nneg = 0;
+                            for (int sg : root.sign) if (sg < 0) ++nneg;
+                            std::lock_guard<std::mutex> dg(dump_mu);
+                            std::printf("OPEN support=%d parity=%d k=%zu neg=%zu pos=%zu"
+                                        " root_lp=%s nodes=%llu\n",
+                                        support, parity, K, nneg, root.sign.size() - nneg,
+                                        st.root_lp_ok ? "feasible" : "infeasible",
+                                        static_cast<unsigned long long>(st.nodes));
+                        }
                         continue;
                     }
                     ++lcert;
