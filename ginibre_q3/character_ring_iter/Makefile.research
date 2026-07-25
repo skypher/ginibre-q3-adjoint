@@ -1,0 +1,165 @@
+# SU(2) central-character research targets.
+#
+# These programs belong to the open central-character / GKS2* investigation
+# recorded in CENTRAL_CHARACTER_Q3_SEARCH.md and the dated SU2_* notes.  They
+# are diagnostics, probes, and frontier verifiers.  None of them is an
+# incoming node of the published Parts I--III theorem.
+#
+# They live here, and not in `Makefile`, on purpose.  `Makefile` is a
+# manifested publication source: its bytes are bound by
+#   certificates/full_q3/full_q3_source_manifest.sha256
+#   replay_sources.sha256
+#   certificates/post_m29/bc_interval_tail_code.sha256
+# and `make -C ginibre_q3 publication-preflight` fails closed when they
+# change.  Appending research targets to that file silently invalidates the
+# publication source binding, which is exactly what happened between
+# 2026-07-22 and 2026-07-25.
+#
+# Add new research targets HERE.  Build with:
+#   make -f Makefile.research <target>
+
+CXX ?= g++
+
+verify_su2_plucker_second_syzygies: verify_su2_plucker_second_syzygies.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror -fopenmp $< -o $@
+
+verify_su2_v2_presburger: verify_su2_v2_presburger.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+verify_su2_opd_four_suffix_z3: verify_su2_opd_four_suffix_z3.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -lz3 -pthread -o $@
+
+analyze_su2_opd_four_suffix: analyze_su2_opd_four_suffix.cpp
+	$(CXX) -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
+		-Wconversion -Wshadow -Werror $< -o $@
+
+analyze_su2_bc2_hypergroup: analyze_su2_bc2_hypergroup.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -o $@
+
+analyze_su2_plucker_sr_parity: analyze_su2_plucker_sr_parity.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -o $@
+
+analyze_su2_plucker_kernel: analyze_su2_plucker_kernel.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Werror $< -o $@
+
+analyze_su2_additive_compound_sign: analyze_su2_additive_compound_sign.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Werror $< -o $@
+
+search_su2_fundamental_transfer: search_su2_fundamental_transfer.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -o $@
+
+search_su2_level_partial_character_cone: search_su2_level_partial_character_cone.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -o $@
+
+search_su2_odd_orbit_gks: search_su2_odd_orbit_gks.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_odd_orbit_rank3_cone: analyze_su2_odd_orbit_rank3_cone.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+verify_su2_odd_orbit_rank4_transport: verify_su2_odd_orbit_rank4_transport.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+search_su2_odd_orbit_tropical: search_su2_odd_orbit_tropical.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_odd_orbit_transport_fan: analyze_su2_odd_orbit_transport_fan.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_tadpole_ray: analyze_su2_tadpole_ray.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_separated_pole_turan: probe_separated_pole_turan.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+verify_separated_pole_turan_ect: verify_separated_pole_turan_ect.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+derive_continuous_tp2: derive_continuous_tp2.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_cyclic_christoffel_minors: probe_cyclic_christoffel_minors.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_tp2_winding_sectors: probe_tp2_winding_sectors.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_tp2_multiplicative_compound: probe_tp2_multiplicative_compound.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_gt_exchange: analyze_su2_gt_exchange.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -o $@
+
+verify_su2_equal_terminal_exception: verify_su2_equal_terminal_exception.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+search_su2_equal_terminal_tropical_minor: search_su2_equal_terminal_tropical_minor.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+analyze_su2_outer_eight: analyze_su2_outer_eight.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_outer_ten: analyze_su2_outer_ten.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+RESEARCH_TARGETS = \
+	verify_su2_plucker_second_syzygies \
+	verify_su2_v2_presburger \
+	verify_su2_opd_four_suffix_z3 \
+	analyze_su2_opd_four_suffix \
+	analyze_su2_bc2_hypergroup \
+	analyze_su2_plucker_sr_parity \
+	analyze_su2_plucker_kernel \
+	analyze_su2_additive_compound_sign \
+	search_su2_fundamental_transfer \
+	search_su2_level_partial_character_cone \
+	search_su2_odd_orbit_gks \
+	analyze_su2_odd_orbit_rank3_cone \
+	verify_su2_odd_orbit_rank4_transport \
+	search_su2_odd_orbit_tropical \
+	analyze_su2_odd_orbit_transport_fan \
+	analyze_su2_tadpole_ray \
+	probe_separated_pole_turan \
+	verify_separated_pole_turan_ect \
+	derive_continuous_tp2 \
+	probe_cyclic_christoffel_minors \
+	probe_tp2_winding_sectors \
+	probe_tp2_multiplicative_compound \
+	analyze_su2_gt_exchange \
+	verify_su2_equal_terminal_exception \
+	search_su2_equal_terminal_tropical_minor \
+	analyze_su2_outer_eight \
+	analyze_su2_outer_ten
+
+# Not a default build: several targets need -lz3, which the publication
+# replay does not require.
+research-all: $(RESEARCH_TARGETS)
+
+clean-research:
+	rm -f $(RESEARCH_TARGETS)
+
+.PHONY: research-all clean-research
