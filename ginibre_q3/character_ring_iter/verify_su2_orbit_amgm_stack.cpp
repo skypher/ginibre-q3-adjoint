@@ -778,6 +778,13 @@ bool amgm_node_S(const Node& nd, Stats& st, long sn, long sd,
     std::vector<double> c(nv, 0.0); c[dj] = 1.0;
     std::vector<double> sol;
     if (!simplex(A, bb, c, static_cast<int>(nv), sol)) return false;
+    // The allocation polytope's optimum is usually a face, not a point, and
+    // which vertex the solver lands on decides whether rational rounding can
+    // reproduce its tie structure.  On failure, retry from other optimal-face
+    // vertices reached by small deterministic objective perturbations; the
+    // verifier still decides every candidate, so this only varies the
+    // proposer.
+    const int kJitter = 24;
 
     // Never trust the solver: discard a proposal violating its own constraints.
     for (double q : sol) if (q < -1e-7) return false;
@@ -824,6 +831,27 @@ bool amgm_node_S(const Node& nd, Stats& st, long sn, long sd,
     }
 
     static const long ladder[5] = {100, 200, 500, 1000, 5000};
+    for (int jitter = 0; jitter <= kJitter; ++jitter) {
+    if (jitter > 0) {
+        std::vector<double> cj = c;
+        std::uint64_t rng = 0x243f6a8885a308d3ULL ^ (static_cast<std::uint64_t>(jitter) << 32);
+        for (std::size_t v = 0; v + 1 < nv; ++v) {
+            rng ^= rng << 13; rng ^= rng >> 7; rng ^= rng << 17;
+            cj[v] = 1.0e-7 * static_cast<double>(rng % 1000);
+        }
+        std::vector<double> sj;
+        if (!simplex(A, bb, cj, static_cast<int>(nv), sj)) continue;
+        bool jfeas = true;
+        for (double q : sj) if (q < -1e-7) { jfeas = false; break; }
+        if (jfeas)
+            for (std::size_t i = 0; i < A.size() && jfeas; ++i) {
+                double acc2 = 0.0;
+                for (std::size_t jx = 0; jx < nv; ++jx) acc2 += A[i][jx] * sj[jx];
+                if (acc2 - bb[i] > 1e-6) jfeas = false;
+            }
+        if (!jfeas || sj[dj] < -1.0e-9) continue;
+        sol = sj;
+    }
     for (int di = 0; di < 5; ++di) {
         const long d = ladder[di];
         std::vector<long> cap_left(P, (sd * d) / sn);
@@ -873,6 +901,7 @@ bool amgm_node_S(const Node& nd, Stats& st, long sn, long sd,
             ++st.den[static_cast<std::size_t>(di)];
             return true;
         }
+    }
     }
     return false;
 }
