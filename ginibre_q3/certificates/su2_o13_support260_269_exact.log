@@ -1,0 +1,31 @@
+Host resources: nproc=5; memory=5.9 GiB. Candidate searches used four independent workers.
+
+Target supports:
+260
+268
+269
+
+Allocation search:
+all diagnostic direct-Hall failure regimes at the three supports received one
+global rational weighted-AM-GM allocation.
+subdivisions=0
+translated tails=0
+finite leaves=0
+
+Strict exact replay:
+SU2_O13_SUPPORT260_269_EXACT PASS
+
+Exact arithmetic:
+- rational Sturm isolation of seven real trace nodes;
+- rational interval orbit characters, spectral coefficients, bases, and
+  coefficient capacities;
+- 512-bit directed-rounding MPFR logarithmic inequalities;
+- literal support/parity/residual key-set audit.
+
+Conclusion:
+O13_SUPPORT260_268_269_FULL PASS
+
+Reproducibility note:
+The strict verifier and deterministic local package replayed successfully. The
+source package was not persisted because the connector altered larger text
+chunks during upload. Archive restoration remains pending.
