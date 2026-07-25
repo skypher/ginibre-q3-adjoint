@@ -42,6 +42,20 @@ namespace {
 constexpr mpfr_prec_t kPrec = 512;
 constexpr long double kHallTol = 1.0e-12L;
 bool g_total_mass_sweep = false;
+// Full fusion-ring mode: labels 1..k at all k+1 Verlinde nodes, instead of the
+// odd-level orbit ring.  The two-node spectral structure is identical, so the
+// whole certificate pipeline applies unchanged; the orbit reduction was an
+// optimisation, never a prerequisite.  This is what opens the even levels.
+bool g_full_level = false;
+// In full-level mode every regime is taken through the LP + interval pipeline;
+// the long double Hall pre-filter is only a speed statistic, and a closed
+// level must not rest on a tolerance-based test.
+bool g_certify_all = false;
+// Fusion level for exact integer leaf evaluation.  In full-level mode this
+// is the level itself with labels 1..k; the orbit ring embeds as the even
+// labels 2,4,... at level 2*rank-1.
+int g_leaf_level = 0;
+int g_label_stride = 1;
 
 // ---------------------------------------------------------------- intervals
 
@@ -94,6 +108,33 @@ bool iv_log(Iv& r, const Iv& a) {
     mpfr_log(r.lo, a.lo, MPFR_RNDD);
     mpfr_log(r.hi, a.hi, MPFR_RNDU);
     return true;
+}
+
+// Sound enclosure of sin over an interval that may contain an extremum.
+// The endpoint enclosure is only valid where sin is monotone; when the cosine
+// changes sign across the interval an extremum lies inside, and the affected
+// bound is widened to the true extreme value +-1.
+void iv_sin_enclose(Iv& r, const Iv& a) {
+    mpfr_t c0, c1;
+    mpfr_init2(c0, kPrec); mpfr_init2(c1, kPrec);
+    mpfr_sin(c0, a.lo, MPFR_RNDD);
+    mpfr_sin(c1, a.hi, MPFR_RNDD);
+    mpfr_set(r.lo, mpfr_less_p(c0, c1) ? c0 : c1, MPFR_RNDD);
+    mpfr_sin(c0, a.lo, MPFR_RNDU);
+    mpfr_sin(c1, a.hi, MPFR_RNDU);
+    mpfr_set(r.hi, mpfr_greater_p(c0, c1) ? c0 : c1, MPFR_RNDU);
+    mpfr_cos(c0, a.lo, MPFR_RNDD);
+    mpfr_cos(c1, a.hi, MPFR_RNDU);
+    const int s0 = mpfr_sgn(c0), s1 = mpfr_sgn(c1);
+    if (s0 >= 0 && s1 <= 0) mpfr_set_si(r.hi, 1, MPFR_RNDU);    // max inside
+    if (s0 <= 0 && s1 >= 0) mpfr_set_si(r.lo, -1, MPFR_RNDD);   // min inside
+    mpfr_clear(c0); mpfr_clear(c1);
+}
+
+// x / d for a divisor interval with d.lo > 0.
+void iv_div_pos(Iv& r, const Iv& x, const Iv& d) {
+    mpfr_div(r.lo, x.lo, mpfr_sgn(x.lo) >= 0 ? d.hi : d.lo, MPFR_RNDD);
+    mpfr_div(r.hi, x.hi, mpfr_sgn(x.hi) >= 0 ? d.lo : d.hi, MPFR_RNDU);
 }
 
 // r += a * (num/den), with num/den a nonnegative rational.
@@ -199,6 +240,64 @@ void build_model(Model& m, int rank) {
     }
 }
 
+// Full fusion-ring spectrum of SU(2)_k, in the normalisation of the level 1-4
+// note: node j = 0..k carries weight w_j = 2/(k+2) sin^2((j+1)pi/(k+2)) and
+// character values chi_a(j) = sin((a+1)(j+1)pi/(k+2)) / sin((j+1)pi/(k+2)).
+// Validated end to end against exact integer fusion DP by
+// verify_su2_level_spectral_dp.py before this builder was written.
+void build_model_level(Model& m, int k) {
+    m.rank = k + 1;            // node count; the field name predates this mode
+    m.labels = k;
+    m.order = k + 2;
+    const long double pi = acosl(-1.0L);
+    m.w.assign(static_cast<std::size_t>(m.rank), 0.0L);
+    m.v.assign(static_cast<std::size_t>(m.rank),
+               std::vector<long double>(static_cast<std::size_t>(m.labels), 0.0L));
+    for (int j = 0; j <= k; ++j) {
+        const std::size_t sj = static_cast<std::size_t>(j);
+        const long double ang = pi * static_cast<long double>(j + 1) / static_cast<long double>(m.order);
+        m.w[sj] = 2.0L * sinl(ang) * sinl(ang) / static_cast<long double>(m.order);
+        for (int a = 1; a <= k; ++a)
+            m.v[sj][static_cast<std::size_t>(a - 1)] =
+                sinl(static_cast<long double>(a + 1) * ang) / sinl(ang);
+    }
+    m.iw.resize(static_cast<std::size_t>(m.rank));
+    m.iv_tab.assign(static_cast<std::size_t>(m.rank),
+                    std::vector<Iv>(static_cast<std::size_t>(m.labels)));
+    Iv ivpi;
+    mpfr_const_pi(ivpi.lo, MPFR_RNDD);
+    mpfr_const_pi(ivpi.hi, MPFR_RNDU);
+    for (int j = 0; j <= k; ++j) {
+        const std::size_t sj = static_cast<std::size_t>(j);
+        Iv ang;
+        mpfr_mul_si(ang.lo, ivpi.lo, j + 1, MPFR_RNDD);
+        mpfr_div_si(ang.lo, ang.lo, m.order, MPFR_RNDD);
+        mpfr_mul_si(ang.hi, ivpi.hi, j + 1, MPFR_RNDU);
+        mpfr_div_si(ang.hi, ang.hi, m.order, MPFR_RNDU);
+        // The base angle lies in (0, pi), where sin may pass its maximum, so
+        // the extremum-aware enclosure is required here, unlike the orbit case.
+        Iv s;
+        iv_sin_enclose(s, ang);
+        if (mpfr_sgn(s.lo) <= 0) {
+            std::fprintf(stderr, "level model: sin enclosure not positive at node %d\n", j);
+            std::abort();
+        }
+        Iv s2; iv_mul(s2, s, s);
+        mpfr_mul_ui(m.iw[sj].lo, s2.lo, 2, MPFR_RNDD);
+        mpfr_div_si(m.iw[sj].lo, m.iw[sj].lo, m.order, MPFR_RNDD);
+        mpfr_mul_ui(m.iw[sj].hi, s2.hi, 2, MPFR_RNDU);
+        mpfr_div_si(m.iw[sj].hi, m.iw[sj].hi, m.order, MPFR_RNDU);
+        for (int a = 1; a <= k; ++a) {
+            Iv na;
+            mpfr_mul_si(na.lo, ang.lo, a + 1, MPFR_RNDD);
+            mpfr_mul_si(na.hi, ang.hi, a + 1, MPFR_RNDU);
+            Iv sn;
+            iv_sin_enclose(sn, na);
+            iv_div_pos(m.iv_tab[sj][static_cast<std::size_t>(a - 1)], sn, s);
+        }
+    }
+}
+
 // ---------------------------------------------------------------- terms
 
 struct Term {
@@ -231,13 +330,34 @@ std::vector<Term> chamber_terms(const Model& m, const std::vector<int>& signs,
                 if (signs[l] == 0) continue;
                 const long double b = m.v[static_cast<std::size_t>(i)][l] +
                     static_cast<long double>(signs[l]) * m.v[static_cast<std::size_t>(j)][l];
-                if (fabsl(b) < 1.0e-30L) { degenerate = true; break; }
                 Iv ib;
                 if (signs[l] > 0) iv_add(ib, m.iv_tab[static_cast<std::size_t>(i)][l], m.iv_tab[static_cast<std::size_t>(j)][l]);
                 else iv_sub(ib, m.iv_tab[static_cast<std::size_t>(i)][l], m.iv_tab[static_cast<std::size_t>(j)][l]);
-                if (mpfr_sgn(ib.lo) <= 0 && mpfr_sgn(ib.hi) >= 0) { degenerate = true; break; }
+                const bool iv_zero = (mpfr_sgn(ib.lo) <= 0 && mpfr_sgn(ib.hi) >= 0);
+                // Full-level spectra have genuine interior character zeros:
+                // chi_a(j) = 0 exactly whenever (a+1)(j+1) is a multiple of
+                // k+2.  The float side computes sin(m*pi) as roundoff of order
+                // 1e-19 rather than 0, so its zero test must sit at roundoff
+                // scale.  A genuine nonzero base for these small-height
+                // algebraic values is at least of order 1e-2, five orders
+                // above the threshold, so the two cannot be confused.
+                const bool fl_zero = (fabsl(b) < 1.0e-12L);
+                // A base is dropped only when both arithmetics call it zero;
+                // any disagreement means a model bug and must stop the run.
+                if (iv_zero != fl_zero) {
+                    std::fprintf(stderr, "degenerate-base disagreement at pair (%d,%d) label %zu\n", i, j, l);
+                    std::abort();
+                }
+                if (iv_zero) { degenerate = true; break; }
+                // The interval is authoritative for the sign; the float must
+                // agree or the run stops.
+                const bool iv_negative = (mpfr_sgn(ib.hi) < 0);
+                if (iv_negative != (b < 0)) {
+                    std::fprintf(stderr, "sign disagreement at pair (%d,%d) label %zu\n", i, j, l);
+                    std::abort();
+                }
                 const int q = powers[l];
-                if (b < 0 && (q % 2 == 1)) t.sign = -t.sign;
+                if (iv_negative && (q % 2 == 1)) t.sign = -t.sign;
                 long double ab = fabsl(b);
                 for (int e = 0; e < q; ++e) t.coeff *= ab;
                 Iv iab = ib;
@@ -443,14 +563,74 @@ struct Node {
     std::vector<Iv> icoeff;
     std::vector<std::vector<Iv>> ilam;
     std::size_t k = 0;
+    // Exact-leaf bookkeeping: which label each free column refers to, the
+    // current minimum exponent of every label, and the chamber's signs.  A
+    // face split fixes a label at its current exponent; a tail split raises
+    // one.  At a zero-dimensional leaf these data reconstruct the word
+    // exactly, so the corner can be computed as an integer.
+    std::vector<int> col_label;
+    std::vector<int> expo;
+    const std::vector<int>* chamber_signs = nullptr;
 };
 
 struct Stats {
     std::uint64_t amgm = 0, leaves = 0, nodes = 0, cap = 400000;
+    std::uint64_t exact_leaves = 0;
     bool root_lp_ok = false;   // did a root allocation exist at all
     double root_margin = 0.0;  // and with what worst-case slack
     std::array<std::uint64_t, 5> den{};
 };
+
+// Exact integer corner of the word given by (signs, exponents), by dynamic
+// programming over coefficient matrices in the doubled fusion ring at level
+// g_leaf_level.  This is the same computation as the repository's integral
+// fusion leaf evaluations: an exact integer, so J = 0 certifies as
+// nonnegative, which no strict interval test can do.
+//
+// A strictly negative return would be a counterexample to GKS2* itself and is
+// reported loudly rather than treated as an ordinary failure.
+bool leaf_exact_nonneg(const std::vector<int>& signs, const std::vector<int>& expo) {
+    const int k = g_leaf_level;
+    const int dim = k + 1;
+    std::vector<mpz_t> grid(static_cast<std::size_t>(dim * dim));
+    std::vector<mpz_t> next_grid(static_cast<std::size_t>(dim * dim));
+    for (auto& z : grid) mpz_init(z);
+    for (auto& z : next_grid) mpz_init(z);
+    mpz_set_ui(grid[0], 1);
+    auto idx = [&](int c, int d) { return static_cast<std::size_t>(c * dim + d); };
+    for (std::size_t l = 0; l < signs.size(); ++l) {
+        if (signs[l] == 0) continue;
+        const int a = g_label_stride * (static_cast<int>(l) + 1);
+        const int eps = signs[l];
+        for (int e = 0; e < expo[l]; ++e) {
+            for (auto& z : next_grid) mpz_set_ui(z, 0);
+            for (int c = 0; c < dim; ++c)
+                for (int d = 0; d < dim; ++d) {
+                    if (mpz_sgn(grid[idx(c, d)]) == 0) continue;
+                    const int chi = std::min(a + c, 2 * k - a - c);
+                    for (int c2 = std::abs(a - c); c2 <= chi; c2 += 2)
+                        mpz_add(next_grid[idx(c2, d)], next_grid[idx(c2, d)], grid[idx(c, d)]);
+                    const int dhi = std::min(a + d, 2 * k - a - d);
+                    for (int d2 = std::abs(a - d); d2 <= dhi; d2 += 2) {
+                        if (eps > 0) mpz_add(next_grid[idx(c, d2)], next_grid[idx(c, d2)], grid[idx(c, d)]);
+                        else mpz_sub(next_grid[idx(c, d2)], next_grid[idx(c, d2)], grid[idx(c, d)]);
+                    }
+                }
+            std::swap(grid, next_grid);
+        }
+    }
+    const int sgn = mpz_sgn(grid[0]);
+    if (sgn < 0) {
+        std::fprintf(stderr, "COUNTEREXAMPLE CANDIDATE: exact corner negative at a leaf\n");
+        for (std::size_t l = 0; l < signs.size(); ++l)
+            if (signs[l])
+                std::fprintf(stderr, "  label %d sign %+d exponent %d\n",
+                             g_label_stride * (static_cast<int>(l) + 1), signs[l], expo[l]);
+    }
+    for (auto& z : grid) mpz_clear(z);
+    for (auto& z : next_grid) mpz_clear(z);
+    return sgn >= 0;
+}
 
 // A zero-dimensional node is one exponent point: decide it outright.
 bool leaf_nonneg(const Node& nd) {
@@ -719,7 +899,18 @@ int depth_for(std::size_t k) {
 // by an interval-verified allocation or an interval evaluation.
 bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
     if (++st.nodes > st.cap) return false;
-    if (nd.k == 0) { ++st.leaves; return leaf_nonneg(nd); }
+    if (nd.k == 0) {
+        ++st.leaves;
+        // Interval evaluation is the fast path; where it cannot decide --
+        // exact zeros have enclosures straddling zero -- the integer DP is
+        // the decider, not a fallback heuristic.
+        if (leaf_nonneg(nd)) return true;
+        if (nd.chamber_signs != nullptr && g_leaf_level > 0) {
+            ++st.exact_leaves;
+            return leaf_exact_nonneg(*nd.chamber_signs, nd.expo);
+        }
+        return false;
+    }
     if (amgm_node(nd, st, depth == 0 ? &st.root_lp_ok : nullptr,
                   depth == 0 ? &st.root_margin : nullptr)) { ++st.amgm; return true; }
     if (depth >= max_depth) return false;
@@ -741,6 +932,10 @@ bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
     face.coeff = nd.coeff;
     face.icoeff = nd.icoeff;
     face.k = nd.k - 1;
+    face.expo = nd.expo;
+    face.chamber_signs = nd.chamber_signs;
+    face.col_label = nd.col_label;
+    if (best < face.col_label.size()) face.col_label.erase(face.col_label.begin() + static_cast<std::ptrdiff_t>(best));
     face.lam.resize(nd.sign.size());
     face.ilam.resize(nd.sign.size());
     for (std::size_t t = 0; t < nd.sign.size(); ++t)
@@ -754,6 +949,10 @@ bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
     tail.lam = nd.lam;
     tail.ilam = nd.ilam;
     tail.k = nd.k;
+    tail.col_label = nd.col_label;
+    tail.expo = nd.expo;
+    tail.chamber_signs = nd.chamber_signs;
+    if (best < nd.col_label.size()) tail.expo[static_cast<std::size_t>(nd.col_label[best])] += 1;
     tail.coeff.resize(nd.sign.size());
     tail.icoeff.resize(nd.sign.size());
     for (std::size_t t = 0; t < nd.sign.size(); ++t) {
@@ -769,6 +968,7 @@ bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
 
 int main(int argc, char** argv) {
     int rank = 6, threads = static_cast<int>(std::thread::hardware_concurrency());
+    int level = 0;
     bool decompose = false;
     int soundness = 0;      // sample this many certified regimes
     bool control = false;   // check the verifier rejects corrupted allocations
@@ -781,13 +981,25 @@ int main(int argc, char** argv) {
         else if (!std::strcmp(argv[i], "--control")) control = true;
         else if (!std::strcmp(argv[i], "--dump-open")) dump = true;
         else if (!std::strcmp(argv[i], "--total-mass")) g_total_mass_sweep = true;
+        else if (!std::strcmp(argv[i], "--level") && i + 1 < argc) level = std::atoi(argv[++i]);
+        else if (!std::strcmp(argv[i], "--certify-all")) g_certify_all = true;
     }
-    if (rank < 3) { std::fprintf(stderr, "rank must be at least 3\n"); return 2; }
+    if (level > 0) {
+        if (level < 2) { std::fprintf(stderr, "level must be at least 2\n"); return 2; }
+        g_full_level = true;
+        // A closed level cannot rest on the tolerance-based Hall pre-filter,
+        // and at higher levels its bitmasks overflow anyway.
+        g_certify_all = true;
+    } else if (rank < 3) { std::fprintf(stderr, "rank must be at least 3\n"); return 2; }
     if (threads < 1) threads = 1;
 
     Model model;
-    build_model(model, rank);
+    if (g_full_level) build_model_level(model, level);
+    else build_model(model, rank);
+    g_leaf_level = g_full_level ? level : (2 * rank - 1);
+    g_label_stride = g_full_level ? 1 : 2;
     const int L = model.labels;
+    const int nodes = model.rank;
 
     // Cross-check the two spectral models against each other.  They are built
     // independently -- long double trigonometry versus 512-bit interval
@@ -806,7 +1018,7 @@ int main(int argc, char** argv) {
             const long double mid = 0.5L * (lo + hi);
             return fabsl(mid - f) <= tol * (1.0L + fabsl(f));
         };
-        for (int i = 0; i < rank; ++i) {
+        for (int i = 0; i < nodes; ++i) {
             const std::size_t si = static_cast<std::size_t>(i);
             if (!agrees(model.iw[si], model.w[si])) {
                 std::fprintf(stderr, "spectral cross-check failed: weight %d\n", i);
@@ -828,21 +1040,21 @@ int main(int argc, char** argv) {
     std::atomic<int> next{0};
     std::mutex mu;
     std::mutex dump_mu;
-    std::uint64_t direct = 0, residual = 0, pointwise = 0, sep = 0;
+    std::uint64_t direct = 0, residual = 0, pointwise = 0, sep = 0, parity_zero = 0;
     std::uint64_t certified_total = 0;
     std::array<std::uint64_t, 5> den_used{};
     std::uint64_t sound_regimes = 0, sound_points = 0, sound_viol = 0;
     std::uint64_t ctl_tried = 0, ctl_refused = 0;
     std::uint64_t flat_total = 0, split_total = 0;
-    std::uint64_t node_total = 0, budget_hit = 0;
+    std::uint64_t node_total = 0, budget_hit = 0, exact_leaf_total = 0;
 
     const int supports = static_cast<int>(std::llround(std::pow(3.0, L)));
 
     auto worker = [&]() {
-        std::uint64_t ld = 0, lr = 0, lp = 0, ls = 0, lcert = 0;
+        std::uint64_t ld = 0, lr = 0, lp = 0, ls = 0, lcert = 0, lpz = 0;
         std::array<std::uint64_t, 5> lden{};
         std::uint64_t lsound_regimes = 0, lsound_points = 0, lsound_viol = 0;
-        std::uint64_t lflat = 0, lsplit = 0, lnodes = 0, lbudget = 0;
+        std::uint64_t lflat = 0, lsplit = 0, lnodes = 0, lbudget = 0, lexact = 0;
         std::uint64_t lctl_tried = 0, lctl_refused = 0;
         for (;;) {
             const int support = next.fetch_add(1);
@@ -868,6 +1080,20 @@ int main(int argc, char** argv) {
                     if (signs[static_cast<std::size_t>(l)] < 0 && odd) mp ^= 1;
                 }
                 if (mp) continue;
+                if (g_full_level) {
+                    // Parity selection rule (proved in
+                    // SU2_PARITY_SELECTION_RULE_2026_07_24.md): the corner
+                    // vanishes identically unless the total degree
+                    // sum_a a*p_a is even.  Residual increments change it by
+                    // 2a, so the parity is fixed per chamber, and odd-parity
+                    // chambers are exactly zero rather than certifiable.
+                    int deg = 0;
+                    for (std::size_t i = 0; i < act.size(); ++i) {
+                        const int l = act[i];
+                        if (((l + 1) & 1) != 0) deg += powers[static_cast<std::size_t>(l)];
+                    }
+                    if (deg & 1) { lpz += static_cast<std::uint64_t>(1) << act.size(); continue; }
+                }
                 std::vector<Term> terms = chamber_terms(model, signs, powers);
                 if (terms.empty()) continue;
                 bool anyneg = false;
@@ -892,6 +1118,7 @@ int main(int argc, char** argv) {
                         return a + kHallTol * (1.0L + fabsl(a) + fabsl(b)) >= b;
                     };
                     std::vector<std::uint32_t> edge(neg.size(), 0);
+                    if (!g_certify_all && pos.size() <= 31 && neg.size() <= 22)
                     for (std::size_t x = 0; x < neg.size(); ++x)
                         for (std::size_t p = 0; p < pos.size(); ++p) {
                             bool ok = true;
@@ -900,7 +1127,9 @@ int main(int argc, char** argv) {
                                         terms[static_cast<std::size_t>(neg[x])].lam[static_cast<std::size_t>(l)])) { ok = false; break; }
                             if (ok) edge[x] |= (1U << p);
                         }
-                    bool hall = true;
+                    bool hall = false;
+                    if (!g_certify_all && pos.size() <= 31 && neg.size() <= 22) {
+                    hall = true;
                     const std::uint64_t lim = std::uint64_t{1} << neg.size();
                     for (std::uint64_t s = 1; s < lim && hall; ++s) {
                         long double d = 0.0L, cap = 0.0L;
@@ -911,6 +1140,7 @@ int main(int argc, char** argv) {
                             if ((nb >> p) & 1U) cap += mag[static_cast<std::size_t>(pos[p])];
                         if (!ge(cap, d)) hall = false;
                     }
+                    }
                     if (hall) { ++ld; continue; }
                     ++lr;
 
@@ -920,6 +1150,9 @@ int main(int argc, char** argv) {
                     const std::size_t K = freev.size();
                     Node root;
                     root.k = K;
+                    root.col_label = freev;
+                    root.expo = powers;
+                    root.chamber_signs = &signs;
                     root.sign.resize(terms.size());
                     root.coeff.resize(terms.size());
                     root.icoeff.resize(terms.size());
@@ -963,6 +1196,7 @@ int main(int argc, char** argv) {
                     ++lcert;
                     if (st.amgm == 1 && st.leaves == 0) ++lflat; else ++lsplit;
                     lnodes += st.nodes;
+                    lexact += st.exact_leaves;
                     for (std::size_t di = 0; di < 5; ++di) lden[di] += st.den[di];
 
                     // Soundness: the certificate claims the signed sum is
@@ -981,16 +1215,21 @@ int main(int argc, char** argv) {
                                 rng ^= rng << 13; rng ^= rng >> 7; rng ^= rng << 17;
                                 expo[kk] = 1 + static_cast<int>(rng % 12);
                             }
-                            long double tot = 0.0L;
+                            long double tot = 0.0L, mass = 0.0L;
                             for (std::size_t t = 0; t < terms.size(); ++t) {
                                 long double v = terms[t].coeff;
                                 for (std::size_t kk = 0; kk < K; ++kk)
                                     for (int q = 0; q < expo[kk]; ++q)
                                         v *= terms[t].lam[static_cast<std::size_t>(freev[kk])];
                                 tot += static_cast<long double>(terms[t].sign) * v;
+                                mass += fabsl(v);
                             }
                             ++lsound_points;
-                            if (tot < -1.0e-18L * (1.0L + fabsl(tot))) ++lsound_viol;
+                            // Exact-zero points are certified now, so the
+                            // sampler visits sums that cancel exactly; its
+                            // roundoff scales with the cancelling mass, not
+                            // with the tiny result.
+                            if (tot < -1.0e-16L * (1.0L + mass)) ++lsound_viol;
                         }
                     }
 
@@ -1003,9 +1242,15 @@ int main(int argc, char** argv) {
                         if (!cneg.empty() && !cpos.empty()) {
                             const long d = 100;
                             std::vector<std::vector<long>> u(cpos.size(), std::vector<long>(cneg.size(), 0));
-                            for (std::size_t xi = 0; xi < cneg.size(); ++xi) u[0][xi] = d;
-                            ++lctl_tried;                              // capacity blown
-                            if (!verify_alloc(root.ilam, root.icoeff, cpos, cneg, u, d, K)) ++lctl_refused;
+                            // With a single negative, giving it all of one
+                            // positive's capacity is a legitimate allocation,
+                            // not a corruption, so that control applies only
+                            // when at least two negatives compete.
+                            if (cneg.size() >= 2) {
+                                for (std::size_t xi = 0; xi < cneg.size(); ++xi) u[0][xi] = d;
+                                ++lctl_tried;                          // capacity blown
+                                if (!verify_alloc(root.ilam, root.icoeff, cpos, cneg, u, d, K)) ++lctl_refused;
+                            }
                             for (std::size_t xi = 0; xi < cneg.size(); ++xi) u[0][xi] = d + 1;
                             ++lctl_tried;                              // normalisation broken
                             if (!verify_alloc(root.ilam, root.icoeff, cpos, cneg, u, d, K)) ++lctl_refused;
@@ -1015,20 +1260,26 @@ int main(int argc, char** argv) {
             }
         }
         std::lock_guard<std::mutex> g(mu);
-        direct += ld; residual += lr; pointwise += lp; sep += ls;
+        direct += ld; residual += lr; pointwise += lp; sep += ls; parity_zero += lpz;
         certified_total += lcert;
         for (std::size_t i = 0; i < 5; ++i) den_used[i] += lden[i];
         sound_regimes += lsound_regimes; sound_points += lsound_points; sound_viol += lsound_viol;
         ctl_tried += lctl_tried; ctl_refused += lctl_refused;
         flat_total += lflat; split_total += lsplit;
-        node_total += lnodes; budget_hit += lbudget;
+        node_total += lnodes; budget_hit += lbudget; exact_leaf_total += lexact;
     };
 
     std::vector<std::thread> pool;
     for (int i = 0; i < threads; ++i) pool.emplace_back(worker);
     for (auto& t : pool) t.join();
 
-    std::printf("SU2_ORBIT_AMGM_CPP rank=%d level=%d threads=%d\n", rank, 2 * rank - 1, threads);
+    if (g_full_level)
+        std::printf("SU2_LEVEL_AMGM_CPP level=%d labels=%d nodes=%d threads=%d certify_all=1\n",
+                    level, L, nodes, threads);
+    else
+        std::printf("SU2_ORBIT_AMGM_CPP rank=%d level=%d threads=%d\n", rank, 2 * rank - 1, threads);
+    if (g_full_level)
+        std::printf("  parity_zero      %llu\n", static_cast<unsigned long long>(parity_zero));
     std::printf("  direct_hall      %llu\n", static_cast<unsigned long long>(direct));
     std::printf("  residual         %llu\n", static_cast<unsigned long long>(residual));
     std::printf("  pointwise        %llu\n", static_cast<unsigned long long>(pointwise));
@@ -1037,6 +1288,7 @@ int main(int argc, char** argv) {
     std::printf("  by_split         %llu\n", static_cast<unsigned long long>(split_total));
     std::printf("  split_nodes      %llu\n", static_cast<unsigned long long>(node_total));
     std::printf("  budget_exhausted %llu\n", static_cast<unsigned long long>(budget_hit));
+    std::printf("  exact_leaves     %llu\n", static_cast<unsigned long long>(exact_leaf_total));
     static const int ladder_out[5] = {100, 200, 500, 1000, 5000};
     std::printf("  denominators    ");
     for (std::size_t i = 0; i < 5; ++i)
@@ -1051,7 +1303,15 @@ int main(int argc, char** argv) {
         std::printf("  negative_control corrupted=%llu refused=%llu\n",
                     static_cast<unsigned long long>(ctl_tried),
                     static_cast<unsigned long long>(ctl_refused));
-    if (residual)
+    if (g_full_level) {
+        const std::uint64_t nonzero = residual + pointwise;
+        const std::uint64_t closed = certified_total + pointwise;
+        std::printf("  regimes_nonzero  %llu\n", static_cast<unsigned long long>(nonzero));
+        std::printf("  open             %llu\n", static_cast<unsigned long long>(nonzero - closed));
+        if (nonzero)
+            std::printf("  coverage         %.1f%% of nonzero regimes\n",
+                        100.0 * static_cast<double>(closed) / static_cast<double>(nonzero));
+    } else if (residual)
         std::printf("  coverage         %.1f%% of residual regimes\n",
                     100.0 * static_cast<double>(certified_total) / static_cast<double>(residual));
     return 0;
