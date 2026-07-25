@@ -1,0 +1,12 @@
+Exact full O_11 / SU(2)_11 replay
+Host: nproc=5; memory=5.9Gi
+
+O11_FULL_CENSUS_FAST_EXACT PASS all=27962 pointwise=2882 direct=22443 braid=371 post_braid=2266 threads=5
+O11_AMGM_EXACT PASS records=1623 threads=5
+O11_AMGM_EXACT PASS records=248 threads=5
+O11_TREE_EXACT PASS roots=387 amgm=1394 splits=1207 leaves=200 threads=5
+O11_MARGIN2_EXACT PASS cases=2 delta=0.14 finite_checks=7068 finite_min=48 threads=5
+O11_KEY_PARTITION_EXACT PASS post_braid=2266 amgm=1623 former_fan=248 tree=387 margin=2 structural=6
+
+Archive SHA-256:
+c2d50ce9fbb48cbe3caec61aff18f1d768b1c067a630eeb33524e5a6c73d1091  su2_o11_full_gks2_certificate.tar.gz
