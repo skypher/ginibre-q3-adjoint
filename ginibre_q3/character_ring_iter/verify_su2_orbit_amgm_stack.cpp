@@ -1371,6 +1371,7 @@ int main(int argc, char** argv) {
     bool control = false;   // check the verifier rejects corrupted allocations
     bool dump = false;      // print one line per unresolved regime
     int probe_s = -1, probe_p = -1, probe_r = -1;   // print one regime's exact data
+    bool dump_cert = false;  // one line per certified regime with its closing class
     for (int i = 1; i < argc; ++i) {
         if (!std::strcmp(argv[i], "--rank") && i + 1 < argc) rank = std::atoi(argv[++i]);
         else if (!std::strcmp(argv[i], "--threads") && i + 1 < argc) threads = std::atoi(argv[++i]);
@@ -1378,6 +1379,7 @@ int main(int argc, char** argv) {
         else if (!std::strcmp(argv[i], "--soundness") && i + 1 < argc) soundness = std::atoi(argv[++i]);
         else if (!std::strcmp(argv[i], "--control")) control = true;
         else if (!std::strcmp(argv[i], "--dump-open")) dump = true;
+        else if (!std::strcmp(argv[i], "--dump-certified")) dump_cert = true;
         else if (!std::strcmp(argv[i], "--probe") && i + 3 < argc) {
             probe_s = std::atoi(argv[++i]); probe_p = std::atoi(argv[++i]); probe_r = std::atoi(argv[++i]);
         }
@@ -1640,6 +1642,17 @@ int main(int argc, char** argv) {
                     Stats st;
                     const int md = decompose ? depth_for(K) : 0;
                     const bool certified = certify_node(root, 0, md, st);
+                    if (certified && dump_cert) {
+                        const char* how = "amgm";
+                        if (st.farey) how = "farey";
+                        else if (st.abel) how = "abel";
+                        else if (st.exact_leaves) how = "leaves";
+                        else if (st.amgm > 1 || st.leaves) how = "split";
+                        std::lock_guard<std::mutex> dg(dump_mu);
+                        std::printf("CERT support=%d parity=%d res=%d k=%zu class=%s nodes=%llu\n",
+                                    support, parity, res, K, how,
+                                    static_cast<unsigned long long>(st.nodes));
+                    }
                     if (!certified) {
                         // Distinguish "no certificate exists at this depth"
                         // from "ran out of node budget", since only the second
