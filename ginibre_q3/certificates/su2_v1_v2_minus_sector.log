@@ -1,0 +1,8 @@
+Command:
+g++ -O3 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror -pthread \
+  ginibre_q3/character_ring_iter/verify_su2_v1_v2_minus_sector.cpp \
+  -o /tmp/verify_su2_v1_v2_minus_sector
+/tmp/verify_su2_v1_v2_minus_sector
+
+Output:
+SU2_V1_V2_MINUS_SECTOR PASS cases=1105 max_exponent=12 threads=4 scalar=1 partial_v1=1 stable_transfer=1
