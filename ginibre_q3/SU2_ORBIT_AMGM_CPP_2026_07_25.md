@@ -63,6 +63,37 @@ Two independent implementations, in different languages with different
 arithmetic and different linear-programming code paths, agreeing to the regime
 is far better evidence than either alone.
 
+### Full `O_13` with decomposition
+
+```text
+certified   28,583 of 34,927      81.8%
+  by flat allocation  22,596
+  by decomposition     5,987
+wall                15m40s  (against 41s for the flat pass alone)
+```
+
+Decomposition adds 5,987 regimes, lifting coverage from 64.7% to 81.8%, and
+costs about twenty-three times the wall clock.  For a stage that runs once and
+whose output is a certificate archive, that is a reasonable trade; it would not
+be if it sat in a loop.
+
+### What the remaining failures are
+
+The recursion now reports its own cost and whether it ran out of room:
+
+```text
+rank  split nodes  budget exhausted
+  4            14                 0
+  5           236                 0
+  6         3,059                 0
+```
+
+`budget_exhausted` counts regimes abandoned because the node ceiling was hit
+rather than because no certificate exists.  It is zero at every rank measured,
+so the node budget is not the binding constraint and the regimes that remain
+are genuine failures of the technique at this depth, not starved searches.
+Spending more compute on them will not help; they need a different technique.
+
 ## Agreement with the recorded census
 
 The enumeration reproduces the published `O_13` diagnostic census:
@@ -126,9 +157,10 @@ rank means more spectral terms and more free coordinates, so a single
 allocation covers proportionally less. That is the expected shape and it is the
 argument for porting the decomposition next, not evidence against the method.
 
-The 12,331 rank-seven regimes still open are the real remaining work. They are
-now enumerated and addressable in seconds rather than hours, which is the point
-of this increment.
+The 6,344 rank-seven regimes still open after decomposition are the real
+remaining work.  Since the node budget is never the binding constraint, they
+are not a matter of spending longer: they need a technique this stack does not
+have.  Identifying which one is the next question, and it is now cheap to ask.
 
 ## Replay
 

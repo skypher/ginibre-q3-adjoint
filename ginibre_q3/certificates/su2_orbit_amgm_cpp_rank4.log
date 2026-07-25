@@ -3,10 +3,11 @@ SU2_ORBIT_AMGM_CPP rank=4 level=7 threads=5
   direct_hall      191
   residual         13
   pointwise        98
-  lp_feasible      12
   certified        12
   by_flat_amgm     11
   by_split         1
+  split_nodes      14
+  budget_exhausted 0
   denominators     100:12
   soundness        regimes=12 points=480 violations=0
   negative_control corrupted=24 refused=24

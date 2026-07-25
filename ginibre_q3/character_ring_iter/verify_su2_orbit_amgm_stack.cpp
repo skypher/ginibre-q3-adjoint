@@ -674,20 +674,21 @@ int main(int argc, char** argv) {
 
     std::atomic<int> next{0};
     std::mutex mu;
-    std::uint64_t direct = 0, residual = 0, pointwise = 0, sep = 0, lp_ok = 0;
+    std::uint64_t direct = 0, residual = 0, pointwise = 0, sep = 0;
     std::uint64_t certified_total = 0;
     std::array<std::uint64_t, 5> den_used{};
     std::uint64_t sound_regimes = 0, sound_points = 0, sound_viol = 0;
     std::uint64_t ctl_tried = 0, ctl_refused = 0;
     std::uint64_t flat_total = 0, split_total = 0;
+    std::uint64_t node_total = 0, budget_hit = 0;
 
     const int supports = static_cast<int>(std::llround(std::pow(3.0, L)));
 
     auto worker = [&]() {
-        std::uint64_t ld = 0, lr = 0, lp = 0, ls = 0, lok = 0, lcert = 0;
+        std::uint64_t ld = 0, lr = 0, lp = 0, ls = 0, lcert = 0;
         std::array<std::uint64_t, 5> lden{};
         std::uint64_t lsound_regimes = 0, lsound_points = 0, lsound_viol = 0;
-        std::uint64_t lflat = 0, lsplit = 0;
+        std::uint64_t lflat = 0, lsplit = 0, lnodes = 0, lbudget = 0;
         std::uint64_t lctl_tried = 0, lctl_refused = 0;
         for (;;) {
             const int support = next.fetch_add(1);
@@ -787,11 +788,17 @@ int main(int argc, char** argv) {
                     Stats st;
                     const int md = decompose ? depth_for(K) : 0;
                     const bool certified = certify_node(root, 0, md, st);
-                    if (!certified) continue;
+                    if (!certified) {
+                        // Distinguish "no certificate exists at this depth"
+                        // from "ran out of node budget", since only the second
+                        // is fixable by spending more.
+                        if (st.nodes > st.cap) ++lbudget;
+                        continue;
+                    }
                     ++lcert;
                     if (st.amgm == 1 && st.leaves == 0) ++lflat; else ++lsplit;
+                    lnodes += st.nodes;
                     for (std::size_t di = 0; di < 5; ++di) lden[di] += st.den[di];
-                    lok += 1;
 
                     // Soundness: the certificate claims the signed sum is
                     // nonnegative across the whole regime.  Evaluate the actual
@@ -843,12 +850,13 @@ int main(int argc, char** argv) {
             }
         }
         std::lock_guard<std::mutex> g(mu);
-        direct += ld; residual += lr; pointwise += lp; sep += ls; lp_ok += lok;
+        direct += ld; residual += lr; pointwise += lp; sep += ls;
         certified_total += lcert;
         for (std::size_t i = 0; i < 5; ++i) den_used[i] += lden[i];
         sound_regimes += lsound_regimes; sound_points += lsound_points; sound_viol += lsound_viol;
         ctl_tried += lctl_tried; ctl_refused += lctl_refused;
         flat_total += lflat; split_total += lsplit;
+        node_total += lnodes; budget_hit += lbudget;
     };
 
     std::vector<std::thread> pool;
@@ -859,10 +867,11 @@ int main(int argc, char** argv) {
     std::printf("  direct_hall      %llu\n", static_cast<unsigned long long>(direct));
     std::printf("  residual         %llu\n", static_cast<unsigned long long>(residual));
     std::printf("  pointwise        %llu\n", static_cast<unsigned long long>(pointwise));
-    std::printf("  lp_feasible      %llu\n", static_cast<unsigned long long>(lp_ok));
     std::printf("  certified        %llu\n", static_cast<unsigned long long>(certified_total));
     std::printf("  by_flat_amgm     %llu\n", static_cast<unsigned long long>(flat_total));
     std::printf("  by_split         %llu\n", static_cast<unsigned long long>(split_total));
+    std::printf("  split_nodes      %llu\n", static_cast<unsigned long long>(node_total));
+    std::printf("  budget_exhausted %llu\n", static_cast<unsigned long long>(budget_hit));
     static const int ladder_out[5] = {100, 200, 500, 1000, 5000};
     std::printf("  denominators    ");
     for (std::size_t i = 0; i < 5; ++i)
