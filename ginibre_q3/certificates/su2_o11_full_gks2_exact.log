@@ -1,0 +1,50 @@
+Host resources: nproc=5; memory=5.9 GiB; four or five workers used.
+
+Exhaustive residual census:
+TOTAL 27962
+POINTWISE 2882
+DIRECT_HALL 22443
+BRAID 371
+FAREY_FAN 248
+SHIFTED_FACE 241
+AMGM_CONE_HARD 1700
+AMGM_EXTRA 50
+STRUCTURAL 27
+SUM 27962
+KEY_SET_EQUALITY PASS
+
+Bulk exact AM-GM replay:
+SU2_O11_AMGM_BATCH_MPFR PASS certificates=1558 chambers=294 threads=5
+elapsed=3.50 seconds; peak RSS approximately 21 MiB
+
+Recursive orthant replay:
+SU2_O11_RECURSIVE_EXACT PASS roots=134
+
+Finite fan replay:
+SU2_O11_FAN_EXACT PASS roots=4 pieces=167 threads=4
+
+Cone-tree replay:
+SU2_O11_CONE_TREE_EXACT PASS roots=2 cones=43 subdivisions=22 shifts=19 leaves=0 threads=2
+
+Parity-five terminal fan:
+SU2_O11_FAN_EXACT PASS roots=1 pieces=100 threads=4
+
+Final chamber replay:
+SU2_O11_FINAL_CHAMBER_EXACT PASS delta=0.14 threshold=75 margin_terms=7 finite_checks=73150 finite_min=2738 threads=5
+
+Hand frontier replay:
+SU2_O11_AMGM_FRONTIER_EXACT PASS certificates=26 residual_keys=25 denominator=100 threads=4
+
+First chamber replay:
+SU2_O11_FIRST_CHAMBER_EXACT PASS roots=6 spectral_pairs=15 regions=5 amgm_denominator=100 exact_leaves=4 threads=5
+
+Conclusion:
+O11_FULL_GKS2 PASS residual_regimes=27962
+SU2_LEVEL11_FULL_GKS2 PASS by odd simple-current lifting
+PARTIAL_CHARACTER_COLUMN PASS by adjoining one plus factor
+
+Archival note:
+The deterministic full source-and-ledger tarball was built and replayed, but a
+working-container reset occurred before repository persistence. This transcript
+records the completed exact run; restoration of the one-command replay archive
+remains a publication task.
