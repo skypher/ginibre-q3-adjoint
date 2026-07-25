@@ -1146,6 +1146,7 @@ int main(int argc, char** argv) {
     int soundness = 0;      // sample this many certified regimes
     bool control = false;   // check the verifier rejects corrupted allocations
     bool dump = false;      // print one line per unresolved regime
+    int probe_s = -1, probe_p = -1, probe_r = -1;   // print one regime's exact data
     for (int i = 1; i < argc; ++i) {
         if (!std::strcmp(argv[i], "--rank") && i + 1 < argc) rank = std::atoi(argv[++i]);
         else if (!std::strcmp(argv[i], "--threads") && i + 1 < argc) threads = std::atoi(argv[++i]);
@@ -1153,6 +1154,9 @@ int main(int argc, char** argv) {
         else if (!std::strcmp(argv[i], "--soundness") && i + 1 < argc) soundness = std::atoi(argv[++i]);
         else if (!std::strcmp(argv[i], "--control")) control = true;
         else if (!std::strcmp(argv[i], "--dump-open")) dump = true;
+        else if (!std::strcmp(argv[i], "--probe") && i + 3 < argc) {
+            probe_s = std::atoi(argv[++i]); probe_p = std::atoi(argv[++i]); probe_r = std::atoi(argv[++i]);
+        }
         else if (!std::strcmp(argv[i], "--total-mass")) g_total_mass_sweep = true;
         else if (!std::strcmp(argv[i], "--level") && i + 1 < argc) level = std::atoi(argv[++i]);
         else if (!std::strcmp(argv[i], "--certify-all")) g_certify_all = true;
@@ -1390,6 +1394,23 @@ int main(int argc, char** argv) {
                             ec = g_field.mulE(ec, terms[t].elam[l]);
                         }
                         root.ecoeff[t] = ec;
+                    }
+                    if (support == probe_s && parity == probe_p && res == probe_r) {
+                        std::lock_guard<std::mutex> pg(dump_mu);
+                        std::printf("PROBE support=%d parity=%d res=%d k=%zu terms=%zu\n",
+                                    support, parity, res, K, root.sign.size());
+                        for (std::size_t t = 0; t < root.sign.size(); ++t) {
+                            std::printf("T %+d coeff %.20Le lam", root.sign[t], root.coeff[t]);
+                            for (std::size_t kk = 0; kk < K; ++kk)
+                                std::printf(" %.20Le", root.lam[t][kk]);
+                            std::printf(" | ecoeff");
+                            for (const auto& c : root.ecoeff[t]) std::printf(" %s", c.get_str().c_str());
+                            for (std::size_t kk = 0; kk < K; ++kk) {
+                                std::printf(" | elam%zu", kk);
+                                for (const auto& c : root.elam[t][kk]) std::printf(" %s", c.get_str().c_str());
+                            }
+                            std::printf("\n");
+                        }
                     }
                     Stats st;
                     const int md = decompose ? depth_for(K) : 0;

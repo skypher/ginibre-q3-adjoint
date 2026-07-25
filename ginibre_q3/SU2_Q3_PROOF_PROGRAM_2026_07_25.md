@@ -97,6 +97,28 @@ Sturm isolation, rational interval arithmetic" layer of the published O_11
 work. That is the next engine build. It is also the difference between "the
 engine certifies most of a level" and "the engine can close a level".
 
+## The level-6 residue is Galois-structured
+
+The 137 regimes surviving every certificate class at level 6 have a clean
+characterisation, established by measurement rather than guess:
+
+- every one is LP-feasible, with the optimum at a zero-margin vertex whose
+  tie structure rational rounding cannot reproduce at any denominator, and
+  widening the vertex search (jitter 6 to 24) recovers nothing further;
+- probing a survivor exactly shows its terms pair perfectly under the Galois
+  automorphism `zeta -> -zeta` of `Q(2cos(pi/8))`, and every conjugate pair's
+  lambda product lands in the fixed subfield -- values like 2 and 4 are
+  rational outright, the rest live in `Q(sqrt 2)`.
+
+So the zero-margin faces are Galois-symmetric: the optimal weights want a
+term and its conjugate treated identically, and the irrationality sits in the
+conjugate split, not in the pair.  The indicated proposer folds the linear
+program over the symmetry -- one weight per conjugate pair -- so pair
+products live in the fixed subfield where ties become rationally expressible,
+and a certificate for a negative's conjugate is the conjugate of its
+certificate.  Propose/verify unchanged: the folded proposal is still checked
+row by row in interval arithmetic with exact escalation.
+
 ## Order of work
 
 1. Level 6 measurement (running), then the cyclotomic-exact layer, then close
