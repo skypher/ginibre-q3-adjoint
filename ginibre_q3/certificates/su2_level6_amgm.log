@@ -1,0 +1,20 @@
+  exact_crosscheck 42 values agree (field degree 4)
+  spectral_crosscheck 49 values agree
+SU2_LEVEL_AMGM_CPP level=6 labels=6 nodes=7 threads=5 certify_all=1
+  parity_zero      124928
+  direct_hall      0
+  residual         62336
+  pointwise        70644
+  certified        61820
+  by_flat_amgm     58989
+  by_split         2831
+  split_nodes      66258
+  budget_exhausted 0
+  exact_leaves     74
+  abel_chain       669
+  denominators     100:60344 200:102 500:795 1000:45 5000:107
+  soundness        regimes=2000 points=80000 violations=0
+  negative_control corrupted=1000 refused=1000
+  regimes_nonzero  132980
+  open             516
+  coverage         99.6% of nonzero regimes
