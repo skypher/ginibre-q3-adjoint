@@ -5,15 +5,16 @@ SU2_LEVEL_AMGM_CPP level=3 labels=3 nodes=4 threads=5 certify_all=1
   direct_hall      0
   residual         28
   pointwise        154
-  certified        26
+  certified        28
   by_flat_amgm     21
-  by_split         5
-  split_nodes      26
+  by_split         7
+  split_nodes      28
   budget_exhausted 0
   exact_leaves     2
+  abel_chain       2
   denominators     100:21
-  soundness        regimes=26 points=1040 violations=0
+  soundness        regimes=28 points=1120 violations=0
   negative_control corrupted=21 refused=21
   regimes_nonzero  182
-  open             2
-  coverage         98.9% of nonzero regimes
+  open             0
+  coverage         100.0% of nonzero regimes

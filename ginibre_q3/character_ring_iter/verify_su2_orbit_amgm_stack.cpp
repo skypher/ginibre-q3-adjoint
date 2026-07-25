@@ -641,6 +641,7 @@ struct Node {
 struct Stats {
     std::uint64_t amgm = 0, leaves = 0, nodes = 0, cap = 400000;
     std::uint64_t exact_leaves = 0;
+    std::uint64_t abel = 0;
     bool root_lp_ok = false;   // did a root allocation exist at all
     double root_margin = 0.0;  // and with what worst-case slack
     std::array<std::uint64_t, 5> den{};
@@ -943,6 +944,68 @@ int diagnose_infeasible(const Node& nd) {
     return 4;                                  // both block individually
 }
 
+// Exact Abel chain certificate.
+//
+// Group the node's terms by exact equality of their lambda vectors in
+// Z[zeta].  A group's signed coefficient sum sigma_g is exact and linear --
+// precisely what an AM-GM allocation cannot see, since a geometric mean of
+// several tied positives is strictly below their sum.  If the groups form a
+// chain under exact coordinatewise dominance, then for every exponent vector
+// u >= 0 the group values x_g = prod lambda^u are ordered the same way, and
+// Abel summation gives
+//
+//     sum_g sigma_g x_g = sum_g S_g (x_g - x_{g+1}) + S_G x_G,
+//
+// with every bracket nonnegative.  So exact nonnegativity of every prefix sum
+// S_g certifies the node for all exponents simultaneously -- no tail bound,
+// no finite leaves, any dimension.  The r -> infinity and r = 0 limits force
+// the first and last prefix conditions, so on rays this is close to
+// necessary as well.
+bool abel_chain_certificate(const Node& nd) {
+    if (nd.ecoeff.empty() || nd.elam.empty()) return false;
+    const std::size_t T = nd.sign.size();
+    // Group by exact lambda-vector equality.
+    std::vector<std::vector<std::size_t>> groups;
+    for (std::size_t t = 0; t < T; ++t) {
+        bool placed = false;
+        for (auto& g : groups) {
+            bool same = true;
+            for (std::size_t kk = 0; kk < nd.k && same; ++kk)
+                if (!cyclo::Field::isZero(g_field.sub(nd.elam[t][kk], nd.elam[g[0]][kk])))
+                    same = false;
+            if (same) { g.push_back(t); placed = true; break; }
+        }
+        if (!placed) groups.push_back({t});
+    }
+    // Exact coordinatewise dominance must totally order the groups.
+    const std::size_t G = groups.size();
+    auto dominates = [&](std::size_t a, std::size_t b) {
+        for (std::size_t kk = 0; kk < nd.k; ++kk)
+            if (g_field.sign(g_field.sub(nd.elam[groups[a][0]][kk],
+                                         nd.elam[groups[b][0]][kk])) < 0)
+                return false;
+        return true;
+    };
+    std::vector<std::size_t> order(G);
+    for (std::size_t i = 0; i < G; ++i) order[i] = i;
+    std::sort(order.begin(), order.end(), [&](std::size_t a, std::size_t b) {
+        return dominates(a, b) && !dominates(b, a);
+    });
+    for (std::size_t i = 0; i + 1 < G; ++i)
+        if (!dominates(order[i], order[i + 1])) return false;   // not a chain
+    // Exact prefix sums of the signed coefficient numerators; the positive
+    // rational scalar shared by every term cancels in each sum's sign.
+    cyclo::Field::Elt prefix = g_field.fromInt(0);
+    for (std::size_t i = 0; i < G; ++i) {
+        for (std::size_t t : groups[order[i]]) {
+            if (nd.sign[t] > 0) prefix = g_field.add(prefix, nd.ecoeff[t]);
+            else prefix = g_field.sub(prefix, nd.ecoeff[t]);
+        }
+        if (g_field.sign(prefix) < 0) return false;
+    }
+    return true;
+}
+
 // How deep to split, by dimension.  A uniform cap is wrong: the recorded O11
 // final chamber needed a threshold of 75 before its tail closed, with 73,150
 // finite lattice checks below it, so a ray can need tens of splits.  Depth is
@@ -984,6 +1047,7 @@ bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
     }
     if (amgm_node(nd, st, depth == 0 ? &st.root_lp_ok : nullptr,
                   depth == 0 ? &st.root_margin : nullptr)) { ++st.amgm; return true; }
+    if (abel_chain_certificate(nd)) { ++st.abel; return true; }
     if (depth >= max_depth) return false;
 
     // Split where the negative terms hold the largest advantage: that is the
@@ -1163,7 +1227,7 @@ int main(int argc, char** argv) {
     std::uint64_t sound_regimes = 0, sound_points = 0, sound_viol = 0;
     std::uint64_t ctl_tried = 0, ctl_refused = 0;
     std::uint64_t flat_total = 0, split_total = 0;
-    std::uint64_t node_total = 0, budget_hit = 0, exact_leaf_total = 0;
+    std::uint64_t node_total = 0, budget_hit = 0, exact_leaf_total = 0, abel_total = 0;
 
     const int supports = static_cast<int>(std::llround(std::pow(3.0, L)));
 
@@ -1171,7 +1235,7 @@ int main(int argc, char** argv) {
         std::uint64_t ld = 0, lr = 0, lp = 0, ls = 0, lcert = 0, lpz = 0;
         std::array<std::uint64_t, 5> lden{};
         std::uint64_t lsound_regimes = 0, lsound_points = 0, lsound_viol = 0;
-        std::uint64_t lflat = 0, lsplit = 0, lnodes = 0, lbudget = 0, lexact = 0;
+        std::uint64_t lflat = 0, lsplit = 0, lnodes = 0, lbudget = 0, lexact = 0, label_ = 0;
         std::uint64_t lctl_tried = 0, lctl_refused = 0;
         for (;;) {
             const int support = next.fetch_add(1);
@@ -1323,6 +1387,7 @@ int main(int argc, char** argv) {
                     if (st.amgm == 1 && st.leaves == 0) ++lflat; else ++lsplit;
                     lnodes += st.nodes;
                     lexact += st.exact_leaves;
+                    label_ += st.abel;
                     for (std::size_t di = 0; di < 5; ++di) lden[di] += st.den[di];
 
                     // Soundness: the certificate claims the signed sum is
@@ -1392,7 +1457,7 @@ int main(int argc, char** argv) {
         sound_regimes += lsound_regimes; sound_points += lsound_points; sound_viol += lsound_viol;
         ctl_tried += lctl_tried; ctl_refused += lctl_refused;
         flat_total += lflat; split_total += lsplit;
-        node_total += lnodes; budget_hit += lbudget; exact_leaf_total += lexact;
+        node_total += lnodes; budget_hit += lbudget; exact_leaf_total += lexact; abel_total += label_;
     };
 
     std::vector<std::thread> pool;
@@ -1415,6 +1480,7 @@ int main(int argc, char** argv) {
     std::printf("  split_nodes      %llu\n", static_cast<unsigned long long>(node_total));
     std::printf("  budget_exhausted %llu\n", static_cast<unsigned long long>(budget_hit));
     std::printf("  exact_leaves     %llu\n", static_cast<unsigned long long>(exact_leaf_total));
+    std::printf("  abel_chain       %llu\n", static_cast<unsigned long long>(abel_total));
     static const int ladder_out[5] = {100, 200, 500, 1000, 5000};
     std::printf("  denominators    ");
     for (std::size_t i = 0; i < 5; ++i)
