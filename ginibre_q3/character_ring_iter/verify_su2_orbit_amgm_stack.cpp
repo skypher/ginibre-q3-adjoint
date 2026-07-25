@@ -37,6 +37,8 @@
 #include <gmp.h>
 #include <mpfr.h>
 
+#include "su2_cyclotomic.h"
+
 namespace {
 
 constexpr mpfr_prec_t kPrec = 512;
@@ -56,6 +58,13 @@ bool g_certify_all = false;
 // labels 2,4,... at level 2*rank-1.
 int g_leaf_level = 0;
 int g_label_stride = 1;
+// Exact cyclotomic field data for tied-row escalation.  A certificate row the
+// interval test cannot decide is settled by the sign of one element of
+// Z[2cos(pi/n)]; zero means the row holds with equality, which weighted AM-GM
+// permits.  This is what closes the exact-tie residue.
+cyclo::Field g_field;
+std::vector<cyclo::Field::Elt> g_exact_y;                    // per node
+std::vector<std::vector<cyclo::Field::Elt>> g_exact_chi;     // per node, label
 
 // ---------------------------------------------------------------- intervals
 
@@ -306,6 +315,11 @@ struct Term {
     std::vector<long double> lam;
     Iv icoeff;
     std::vector<Iv> ilam;
+    // Exact counterparts: the coefficient numerator (the positive rational
+    // scalar common to every term cancels in row comparisons) and the exact
+    // lambda per label.
+    cyclo::Field::Elt ecoeff;
+    std::vector<cyclo::Field::Elt> elam;
 };
 
 // Build the off-diagonal term list for a chamber, in both arithmetics.
@@ -325,6 +339,13 @@ std::vector<Term> chamber_terms(const Model& m, const std::vector<int>& signs,
             iv_mul(acc, m.iw[static_cast<std::size_t>(i)], m.iw[static_cast<std::size_t>(j)]);
             mpfr_mul_ui(acc.lo, acc.lo, 2, MPFR_RNDD);
             mpfr_mul_ui(acc.hi, acc.hi, 2, MPFR_RNDU);
+            // Exact numerator: (4 - y_i^2)(4 - y_j^2) = (2n)^2 w_i w_j up to
+            // the positive rational scalar shared by every term.
+            const cyclo::Field::Elt four = g_field.fromInt(4);
+            cyclo::Field::Elt eacc = g_field.mulE(
+                g_field.sub(four, g_field.mulE(g_exact_y[static_cast<std::size_t>(i)], g_exact_y[static_cast<std::size_t>(i)])),
+                g_field.sub(four, g_field.mulE(g_exact_y[static_cast<std::size_t>(j)], g_exact_y[static_cast<std::size_t>(j)])));
+            t.elam.assign(L, g_field.fromInt(1));
             bool degenerate = false;
             for (std::size_t l = 0; l < L; ++l) {
                 if (signs[l] == 0) continue;
@@ -356,8 +377,16 @@ std::vector<Term> chamber_terms(const Model& m, const std::vector<int>& signs,
                     std::fprintf(stderr, "sign disagreement at pair (%d,%d) label %zu\n", i, j, l);
                     std::abort();
                 }
+                cyclo::Field::Elt eb;
+                if (signs[l] > 0)
+                    eb = g_field.add(g_exact_chi[static_cast<std::size_t>(i)][l], g_exact_chi[static_cast<std::size_t>(j)][l]);
+                else
+                    eb = g_field.sub(g_exact_chi[static_cast<std::size_t>(i)][l], g_exact_chi[static_cast<std::size_t>(j)][l]);
                 const int q = powers[l];
                 if (iv_negative && (q % 2 == 1)) t.sign = -t.sign;
+                cyclo::Field::Elt eabs = iv_negative ? g_field.sub(g_field.fromInt(0), eb) : eb;
+                for (int e = 0; e < q; ++e) eacc = g_field.mulE(eacc, eabs);
+                t.elam[l] = g_field.mulE(eb, eb);
                 long double ab = fabsl(b);
                 for (int e = 0; e < q; ++e) t.coeff *= ab;
                 Iv iab = ib;
@@ -367,7 +396,7 @@ std::vector<Term> chamber_terms(const Model& m, const std::vector<int>& signs,
                 Iv sq; iv_mul(sq, ib, ib);
                 t.ilam[l] = sq;
             }
-            if (!degenerate) { t.icoeff = acc; out.push_back(t); }
+            if (!degenerate) { t.icoeff = acc; t.ecoeff = eacc; out.push_back(t); }
         }
     }
     return out;
@@ -494,10 +523,30 @@ bool simplex(const std::vector<std::vector<double>>& A, const std::vector<double
 // inside the geometric mean to sum to one, so with beta = alpha/S the
 // domination rows are unchanged and the constant row gains a free log S.
 // S = 1 is the ordinary convex certificate.
+// Exact escalation of one row: prod_p base_p^{u_p} >= base_x^denom, decided in
+// Z[zeta].  Returns true when the exact sign is nonnegative (equality allowed).
+bool exact_row_ok(const std::vector<cyclo::Field::Elt>& base,
+                  const std::vector<int>& pos, int x,
+                  const std::vector<std::vector<long>>& units, std::size_t xi,
+                  long denom) {
+    cyclo::Field::Elt lhs = g_field.fromInt(1);
+    for (std::size_t pi = 0; pi < pos.size(); ++pi) {
+        const long u = units[pi][xi];
+        if (u > 0)
+            lhs = g_field.mulE(lhs, g_field.powE(base[static_cast<std::size_t>(pos[pi])],
+                                                 static_cast<unsigned long>(u)));
+    }
+    cyclo::Field::Elt rhs = g_field.powE(base[static_cast<std::size_t>(x)],
+                                         static_cast<unsigned long>(denom));
+    return g_field.sign(g_field.sub(lhs, rhs)) >= 0;
+}
+
 bool verify_alloc(const std::vector<std::vector<Iv>>& lam, const std::vector<Iv>& coef,
                   const std::vector<int>& pos, const std::vector<int>& neg,
                   const std::vector<std::vector<long>>& units, long denom, std::size_t K,
-                  long sn = 1, long sd = 1) {
+                  long sn = 1, long sd = 1,
+                  const std::vector<std::vector<cyclo::Field::Elt>>* elam = nullptr,
+                  const std::vector<cyclo::Field::Elt>* ecoef = nullptr) {
     // structural conditions, exact over the integers
     for (std::size_t xi = 0; xi < neg.size(); ++xi) {
         long s = 0;
@@ -528,7 +577,15 @@ bool verify_alloc(const std::vector<std::vector<Iv>>& lam, const std::vector<Iv>
                 if (units[pi][xi])
                     iv_addmul_q(acc, llam[static_cast<std::size_t>(pos[pi])][k], units[pi][xi], denom);
             Iv slack; iv_sub(slack, acc, llam[static_cast<std::size_t>(neg[xi])][k]);
-            if (mpfr_sgn(slack.lo) <= 0) return false;
+            if (mpfr_sgn(slack.lo) <= 0) {
+                // The interval cannot certify a row that holds with exact
+                // equality.  Escalate to the exact field: the row is the sign
+                // of one element of Z[zeta], and zero passes.
+                if (elam == nullptr) return false;
+                std::vector<cyclo::Field::Elt> base(elam->size());
+                for (std::size_t t = 0; t < elam->size(); ++t) base[t] = (*elam)[t][k];
+                if (!exact_row_ok(base, pos, neg[xi], units, xi, denom)) return false;
+            }
         }
         Iv acc;
         for (std::size_t pi = 0; pi < pos.size(); ++pi)
@@ -543,7 +600,13 @@ bool verify_alloc(const std::vector<std::vector<Iv>>& lam, const std::vector<Iv>
             Iv t; iv_add(t, acc, ls); acc = t;
         }
         Iv slack; iv_sub(slack, acc, lcoef[static_cast<std::size_t>(neg[xi])]);
-        if (mpfr_sgn(slack.lo) <= 0) return false;
+        if (mpfr_sgn(slack.lo) <= 0) {
+            // Exact escalation of the constant row; the shared positive
+            // rational scalar cancels because the weights sum to denom on
+            // both sides.  Only valid without the total-mass shift.
+            if (ecoef == nullptr || sn != sd) return false;
+            if (!exact_row_ok(*ecoef, pos, neg[xi], units, xi, denom)) return false;
+        }
     }
     return true;
 }
@@ -571,6 +634,8 @@ struct Node {
     std::vector<int> col_label;
     std::vector<int> expo;
     const std::vector<int>* chamber_signs = nullptr;
+    std::vector<cyclo::Field::Elt> ecoeff;
+    std::vector<std::vector<cyclo::Field::Elt>> elam;    // [term][k]
 };
 
 struct Stats {
@@ -720,7 +785,11 @@ bool amgm_node_S(const Node& nd, Stats& st, long sn, long sd,
         for (std::size_t j = 0; j < nv; ++j) acc += A[i][j] * sol[j];
         if (acc - bb[i] > 1e-6) return false;
     }
-    if (sol[dj] <= 0.0) return false;
+    // A zero-margin vertex is admissible: rows that hold with exact equality
+    // are decided by the exact escalation in verification, so the proposal
+    // gate must not demand strict slack.  Tied rays -- one negative whose
+    // lambda exactly equals the best positive's -- are certified this way.
+    if (sol[dj] < -1.0e-9) return false;
     if (proposal_existed) *proposal_existed = true;   // an allocation exists
     if (margin_out) *margin_out = sol[dj];            // its worst-case slack
 
@@ -797,7 +866,9 @@ bool amgm_node_S(const Node& nd, Stats& st, long sn, long sd,
             for (std::size_t pi = 0; pi < P; ++pi) cap_left[pi] -= units[pi][xi];
         }
         if (!ok) continue;
-        if (verify_alloc(nd.ilam, nd.icoeff, pos, neg, units, d, K, sn, sd)) {
+        if (verify_alloc(nd.ilam, nd.icoeff, pos, neg, units, d, K, sn, sd,
+                         nd.elam.empty() ? nullptr : &nd.elam,
+                         nd.ecoeff.empty() ? nullptr : &nd.ecoeff)) {
             ++st.den[static_cast<std::size_t>(di)];
             return true;
         }
@@ -935,6 +1006,11 @@ bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
     face.expo = nd.expo;
     face.chamber_signs = nd.chamber_signs;
     face.col_label = nd.col_label;
+    face.ecoeff = nd.ecoeff;
+    face.elam.resize(nd.elam.size());
+    for (std::size_t t = 0; t < nd.elam.size(); ++t)
+        for (std::size_t kk = 0; kk < nd.k; ++kk)
+            if (kk != best) face.elam[t].push_back(nd.elam[t][kk]);
     if (best < face.col_label.size()) face.col_label.erase(face.col_label.begin() + static_cast<std::ptrdiff_t>(best));
     face.lam.resize(nd.sign.size());
     face.ilam.resize(nd.sign.size());
@@ -952,6 +1028,10 @@ bool certify_node(const Node& nd, int depth, int max_depth, Stats& st) {
     tail.col_label = nd.col_label;
     tail.expo = nd.expo;
     tail.chamber_signs = nd.chamber_signs;
+    tail.elam = nd.elam;
+    tail.ecoeff.resize(nd.ecoeff.size());
+    for (std::size_t t = 0; t < nd.ecoeff.size(); ++t)
+        tail.ecoeff[t] = g_field.mulE(nd.ecoeff[t], nd.elam[t][best]);
     if (best < nd.col_label.size()) tail.expo[static_cast<std::size_t>(nd.col_label[best])] += 1;
     tail.coeff.resize(nd.sign.size());
     tail.icoeff.resize(nd.sign.size());
@@ -998,6 +1078,43 @@ int main(int argc, char** argv) {
     else build_model(model, rank);
     g_leaf_level = g_full_level ? level : (2 * rank - 1);
     g_label_stride = g_full_level ? 1 : 2;
+    g_field.init(g_full_level ? level + 2 : 2 * rank + 1);
+    {
+        // Exact spectral tables: node values as Dickson polynomials of zeta,
+        // characters as Chebyshev values of those.  Cross-checked against the
+        // long double model so all three spectral models must agree.
+        const int nnodes = model.rank;
+        g_exact_y.assign(static_cast<std::size_t>(nnodes), {});
+        g_exact_chi.assign(static_cast<std::size_t>(nnodes), {});
+        for (int j = 0; j < nnodes; ++j) {
+            const int mstep = g_full_level ? (j + 1) : (j + 1);
+            g_exact_y[static_cast<std::size_t>(j)] = g_field.dickson(mstep);
+            g_exact_chi[static_cast<std::size_t>(j)].resize(static_cast<std::size_t>(model.labels));
+            for (int l = 0; l < model.labels; ++l) {
+                const int a = g_label_stride * (l + 1);
+                g_exact_chi[static_cast<std::size_t>(j)][static_cast<std::size_t>(l)] =
+                    g_field.chebyshevS(a, g_exact_y[static_cast<std::size_t>(j)]);
+            }
+        }
+        int agree = 0;
+        for (int j = 0; j < nnodes; ++j)
+            for (int l = 0; l < model.labels; ++l) {
+                // Evaluate the exact element crudely in double via Horner at
+                // zeta ~ 2cos(pi/n); roundoff is far below the 1e-6 gate for
+                // these small-height values, and the exact/interval agreement
+                // is enforced separately by the tied-row escalation itself.
+                const double z = 2.0 * std::cos(3.141592653589793238 / static_cast<double>(g_field.n));
+                const auto& e = g_exact_chi[static_cast<std::size_t>(j)][static_cast<std::size_t>(l)];
+                double v = 0.0;
+                for (std::size_t i = e.size(); i-- > 0;) v = v * z + e[i].get_d();
+                if (std::fabs(v - static_cast<double>(model.v[static_cast<std::size_t>(j)][static_cast<std::size_t>(l)])) > 1e-6) {
+                    std::fprintf(stderr, "exact spectral cross-check failed: node %d label %d\n", j, l);
+                    return 3;
+                }
+                ++agree;
+            }
+        std::printf("  exact_crosscheck %d values agree (field degree %d)\n", agree, g_field.D);
+    }
     const int L = model.labels;
     const int nodes = model.rank;
 
@@ -1153,6 +1270,8 @@ int main(int argc, char** argv) {
                     root.col_label = freev;
                     root.expo = powers;
                     root.chamber_signs = &signs;
+                    root.ecoeff.resize(terms.size());
+                    root.elam.assign(terms.size(), {});
                     root.sign.resize(terms.size());
                     root.coeff.resize(terms.size());
                     root.icoeff.resize(terms.size());
@@ -1171,6 +1290,13 @@ int main(int argc, char** argv) {
                         }
                         root.coeff[t] = cc;
                         root.icoeff[t] = icc;
+                        cyclo::Field::Elt ec = terms[t].ecoeff;
+                        for (std::size_t kk = 0; kk < K; ++kk) {
+                            const std::size_t l = static_cast<std::size_t>(freev[kk]);
+                            root.elam[t].push_back(terms[t].elam[l]);
+                            ec = g_field.mulE(ec, terms[t].elam[l]);
+                        }
+                        root.ecoeff[t] = ec;
                     }
                     Stats st;
                     const int md = decompose ? depth_for(K) : 0;

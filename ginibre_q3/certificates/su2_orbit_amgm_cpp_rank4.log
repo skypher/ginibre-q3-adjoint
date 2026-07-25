@@ -1,3 +1,4 @@
+  exact_crosscheck 12 values agree (field degree 3)
   spectral_crosscheck 16 values agree
 SU2_ORBIT_AMGM_CPP rank=4 level=7 threads=5
   direct_hall      0
