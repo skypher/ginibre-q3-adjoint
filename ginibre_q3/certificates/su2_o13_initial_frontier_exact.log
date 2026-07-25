@@ -1,0 +1,42 @@
+Host resources: nproc=5; memory=5.9 GiB. Expensive searches and replays used four or five workers.
+
+Existing exact first ray:
+SU2_O13_FIRST_RAY_EXACT PASS roots=7 spectral_pairs=21 positives=10 negatives=10 floor=2 denominator=100 leaves=2 leaf_values=0,0 tail_first=8
+
+Additional exact rays and chambers:
+SU2_O13_SECOND_RAY_EXACT PASS roots=7 spectral_pairs=21 positives=11 negatives=8 floor=2 denominator=100 leaves=2 leaf_values=0,0 tail_first=10
+SU2_O13_THIRD_RAY_EXACT PASS roots=7 positives=12 negatives=8 floor=2 denominator=100 leaves=2 leaf_values=0,0 tail_first=2
+SU2_O13_FOURTH_RAY_EXACT PASS roots=7 positives=12 negatives=8 floor=2 denominator=100 leaves=2 leaf_values=0,0 tail_first=20
+SU2_O13_TWO_RAY_PLANE_EXACT PASS roots=7 denominator=100 floors=1,1 first_interior=8
+SU2_O13_SIXTH_RAY_EXACT PASS roots=7 positives=11 negatives=9 floor=1 denominator=100 leaf=0 tail_first=2
+SU2_O13_SEVENTH_RAY_EXACT PASS roots=7 floor=1 denominator=100 leaf=0 tail_first=2
+SU2_O13_SUPPORT169_PARITY6_EXACT PASS denominator=100 first_interior=7914
+SU2_O13_SUPPORT169_PARITY7_EXACT PASS denominator=100 first_interior=2348
+
+Generic strict multivariable replay:
+SU2_O13_INITIAL_MULTIVAR_163_EXACT PASS cases=163
+supports=178:8,187:8,196:8,205:32,214:32,223:8,232:32,241:32,250:3
+elapsed=4.84 seconds; peak RSS approximately 5.8 MiB
+
+Exact direct-Hall failure keys closed:
+first ray=1
+second ray=1
+support 164 chamber=3
+support 167 ray=1
+support 169=3
+multivariable generic replay=163
+total=172
+
+Deterministic source package:
+sha256=a407bf8d0cfb683e54422a84c36533401f5359b751908c3bb36053c78f6ad8b2
+package reconstruction PASS
+all exact sources replayed successfully from the reconstructed archive; the longer combined replay was also checked source-by-source after the outer execution cap interrupted one aggregate invocation.
+
+Five-thread diagnostic direct census:
+O13_DIRECT_CENSUS chambers=6783 regimes=243008 direct=208084 separated=4 failures=34924 threads=5
+
+Next unresolved key in support order:
+support=245 parity=2 residual=1
+word=(B_1^-)^(4+2r) B_6^+, r>=0
+
+Full O_13 and full SU(2)_13 remain open.
