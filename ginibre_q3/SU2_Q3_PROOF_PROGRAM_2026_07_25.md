@@ -22,9 +22,11 @@ passing to the stable limit.
 4. **Even-level reduction** (`SU2_EVEN_MIXED_TRACE_REDUCTION_2026_07_24.md`):
    the fixed-node correction is a finite integral fusion coefficient.
 
-Level status: `k <= 5, 7, 9, 11` proved. **Every even level `>= 6` open** —
-the nearest gap in the base. `O_13` at 84% machine coverage with the
-remainder's obstruction characterised.
+Level status: `k <= 7, 9, 11` proved — **`SU(2)_6` closed 2026-07-25**
+(`SU2_LEVEL6_GKS2_2026_07_25.md`), the first new level since eleven and the
+first even level beyond four. Levels 8, 10, 12 are the next targets with the
+same engine. `O_13` at 84% machine coverage, exact layers not yet measured
+there.
 
 ## What certificates can and cannot contribute
 
