@@ -61,6 +61,17 @@ jobs:
           make -C ginibre_q3 publication-preflight \
             2>&1 | tee ci-logs/publication-preflight.log
 
+      # Deliberately a separate step, not part of `publication-preflight`.
+      # These packages are SU(2) research artifacts, not incoming nodes of the
+      # published theorem, and ACTIVE_PROOF_SUPPLEMENT.md keeps that boundary
+      # explicit.  Invoked directly rather than via a make target because
+      # ginibre_q3/Makefile is itself a manifested publication source.
+      - name: Authenticate SU(2) research certificate packages
+        run: |
+          set -o pipefail
+          python3 -u ginibre_q3/verify_su2_certificate_packages.py \
+            2>&1 | tee ci-logs/su2-package-audit.log
+
       - name: Upload preflight log
         if: always()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0

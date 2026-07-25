@@ -172,7 +172,15 @@ def rec(sc,pc,ch,cert,f=None,v=None):
 
 def main():
  R=roots();certdir=Path(__file__).resolve().parents[1]/'certificates'
- payload=b''.join((certdir/f'su2_odd_orbit_rank5_ledger.part{i:02d}').read_bytes() for i in range(4))
+ # Read the ledger whether it is stored as one file or as chunks.  The old
+ # form hardcoded range(4), which would silently drop a fifth chunk.
+ _stem='su2_odd_orbit_rank5_ledger';_chunks=sorted(certdir.glob(f'{_stem}.part*'))
+ if _chunks:
+  _want=[f'{_stem}.part{i:02d}' for i in range(len(_chunks))]
+  assert [c.name for c in _chunks]==_want,f'non-contiguous ledger chunks: {[c.name for c in _chunks]}'
+  payload=b''.join(c.read_bytes() for c in _chunks)
+ else:
+  payload=(certdir/_stem).read_bytes()
  L=ast.literal_eval(gzip.decompress(base64.b64decode(payload)).decode());D={};
  for sc,pc,rc,m,c in L:
   k=(sc,pc,rc);assert k not in D;D[k]=(m,c)
