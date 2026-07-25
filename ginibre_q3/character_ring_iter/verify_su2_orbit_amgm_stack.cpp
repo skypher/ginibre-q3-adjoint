@@ -642,6 +642,7 @@ struct Stats {
     std::uint64_t amgm = 0, leaves = 0, nodes = 0, cap = 400000;
     std::uint64_t exact_leaves = 0;
     std::uint64_t abel = 0;
+    std::uint64_t folded = 0;
     bool root_lp_ok = false;   // did a root allocation exist at all
     double root_margin = 0.0;  // and with what worst-case slack
     std::array<std::uint64_t, 5> den{};
@@ -711,6 +712,174 @@ bool leaf_nonneg(const Node& nd) {
 }
 
 // Try one capacitated allocation at this node.
+// Galois-folded proposer.
+//
+// At even levels psi is an even polynomial, so zeta -> -zeta is a field
+// automorphism, and the surviving zero-margin regimes pair their terms under
+// it with pair lambda-products in the fixed subfield.  The optimal weights on
+// those faces want conjugate terms treated identically; the irrationality
+// lives in the conjugate split, which the certificate never needs to resolve.
+// So fold the allocation: one weight per conjugate class, every member of a
+// class carrying an equal rational share.  The folded LP's row coefficients
+// are averages over classes -- fixed-subfield data -- and its tight faces are
+// rationally reachable where the unfolded ones were not.
+//
+// Proposer only: the resulting per-member allocation is verified by the same
+// interval-plus-exact row checks as every other candidate.
+cyclo::Field::Elt conj_elt(const cyclo::Field::Elt& a) {
+    cyclo::Field::Elt r = a;
+    for (std::size_t i = 1; i < r.size(); i += 2) r[i] = -r[i];
+    return r;
+}
+
+bool psi_is_even() {
+    for (std::size_t i = 1; i < g_field.psi.size(); i += 2)
+        if (g_field.psi[i] != 0) return false;
+    return true;
+}
+
+bool amgm_folded(const Node& nd, Stats& st, long sn, long sd) {
+    if (sn != sd) return false;                    // no total-mass interplay
+    if (!psi_is_even()) return false;              // conjugation not an automorphism
+    if (nd.ecoeff.empty()) return false;
+    std::vector<int> pos, neg;
+    for (std::size_t t = 0; t < nd.sign.size(); ++t)
+        (nd.sign[t] < 0 ? neg : pos).push_back(static_cast<int>(t));
+    if (neg.empty() || pos.empty()) return false;
+
+    // Exact conjugate pairing among the positives.
+    const std::size_t P = pos.size(), X = neg.size(), K = nd.k;
+    std::vector<int> partner(P, -1);
+    for (std::size_t i = 0; i < P; ++i) {
+        if (partner[i] >= 0) continue;
+        const std::size_t ti = static_cast<std::size_t>(pos[i]);
+        for (std::size_t j = i + 1; j < P; ++j) {
+            if (partner[j] >= 0) continue;
+            const std::size_t tj = static_cast<std::size_t>(pos[j]);
+            if (conj_elt(nd.ecoeff[ti]) != nd.ecoeff[tj]) continue;
+            bool same = true;
+            for (std::size_t kk = 0; kk < K && same; ++kk)
+                if (conj_elt(nd.elam[ti][kk]) != nd.elam[tj][kk]) same = false;
+            if (same) { partner[i] = static_cast<int>(j); partner[j] = static_cast<int>(i); break; }
+        }
+    }
+    std::vector<std::vector<std::size_t>> classes;
+    for (std::size_t i = 0; i < P; ++i) {
+        if (partner[i] < 0) classes.push_back({i});
+        else if (static_cast<std::size_t>(partner[i]) > i)
+            classes.push_back({i, static_cast<std::size_t>(partner[i])});
+    }
+    if (classes.size() == P) return false;         // nothing folded
+
+    // Folded LP: one variable per class per negative, plus the margin.
+    const std::size_t NC = classes.size();
+    const std::size_t nv = NC * X + 1, dj = NC * X;
+    auto cidx = [&](std::size_t ci, std::size_t xi) { return ci * X + xi; };
+    std::vector<std::vector<double>> A;
+    std::vector<double> bb;
+    for (std::size_t xi = 0; xi < X; ++xi) {
+        std::vector<double> r(nv, 0.0);
+        for (std::size_t ci = 0; ci < NC; ++ci) r[cidx(ci, xi)] = 1.0;
+        A.push_back(r); bb.push_back(1.0);
+        for (double& q : r) q = -q;
+        A.push_back(r); bb.push_back(-1.0);
+    }
+    for (std::size_t ci = 0; ci < NC; ++ci) {
+        std::vector<double> r(nv, 0.0);
+        for (std::size_t xi = 0; xi < X; ++xi) r[cidx(ci, xi)] = 1.0;
+        A.push_back(r); bb.push_back(static_cast<double>(classes[ci].size()));
+    }
+    // Class log data: average of member logs.
+    std::vector<std::vector<double>> clog(NC, std::vector<double>(K + 1, 0.0));
+    for (std::size_t ci = 0; ci < NC; ++ci) {
+        for (std::size_t m : classes[ci]) {
+            const std::size_t t = static_cast<std::size_t>(pos[m]);
+            for (std::size_t kk = 0; kk < K; ++kk)
+                clog[ci][kk] += static_cast<double>(logl(nd.lam[t][kk]));
+            clog[ci][K] += static_cast<double>(logl(nd.coeff[t]));
+        }
+        for (double& v : clog[ci]) v /= static_cast<double>(classes[ci].size());
+    }
+    for (std::size_t xi = 0; xi < X; ++xi) {
+        const std::size_t tx = static_cast<std::size_t>(neg[xi]);
+        for (std::size_t kk = 0; kk < K; ++kk) {
+            std::vector<double> r(nv, 0.0);
+            for (std::size_t ci = 0; ci < NC; ++ci) r[cidx(ci, xi)] = -clog[ci][kk];
+            r[dj] = 1.0;
+            A.push_back(r);
+            bb.push_back(-static_cast<double>(logl(nd.lam[tx][kk])));
+        }
+        std::vector<double> r(nv, 0.0);
+        for (std::size_t ci = 0; ci < NC; ++ci) r[cidx(ci, xi)] = -clog[ci][K];
+        r[dj] = 1.0;
+        A.push_back(r);
+        bb.push_back(-static_cast<double>(logl(nd.coeff[tx])));
+    }
+    std::vector<double> c(nv, 0.0); c[dj] = 1.0;
+    std::vector<double> sol;
+    if (!simplex(A, bb, c, static_cast<int>(nv), sol)) return false;
+    for (double q : sol) if (q < -1e-7) return false;
+    for (std::size_t i = 0; i < A.size(); ++i) {
+        double acc = 0.0;
+        for (std::size_t jx = 0; jx < nv; ++jx) acc += A[i][jx] * sol[jx];
+        if (acc - bb[i] > 1e-6) return false;
+    }
+    if (sol[dj] < -1.0e-9) return false;
+
+    // Class-step greedy rounding: a pair always receives one unit per member,
+    // so conjugate terms carry equal rational weights by construction.
+    static const long ladder[5] = {100, 200, 500, 1000, 5000};
+    for (int di = 0; di < 5; ++di) {
+        const long d = ladder[di];
+        std::vector<long> cap_left(P, d);
+        std::vector<std::vector<long>> units(P, std::vector<long>(X, 0));
+        bool ok = true;
+        for (std::size_t xi = 0; xi < X && ok; ++xi) {
+            long assigned = 0;
+            std::vector<double> acc(K + 1, 0.0);
+            while (assigned < d) {
+                int best = -1;
+                double best_score = 0.0;
+                for (std::size_t ci = 0; ci < NC; ++ci) {
+                    const long step = static_cast<long>(classes[ci].size());
+                    if (assigned + step > d) continue;
+                    bool room = true;
+                    for (std::size_t m : classes[ci])
+                        if (units[m][xi] + 1 > cap_left[m]) { room = false; break; }
+                    if (!room) continue;
+                    double worst = 0.0;
+                    bool first = true;
+                    for (std::size_t cc = 0; cc <= K; ++cc) {
+                        const double v = (acc[cc] + static_cast<double>(step) * clog[ci][cc])
+                                         / static_cast<double>(d)
+                                         - (cc < K
+                                            ? static_cast<double>(logl(nd.lam[static_cast<std::size_t>(neg[xi])][cc]))
+                                            : static_cast<double>(logl(nd.coeff[static_cast<std::size_t>(neg[xi])])));
+                        if (first || v < worst) { worst = v; first = false; }
+                    }
+                    if (best < 0 || worst > best_score) { best_score = worst; best = static_cast<int>(ci); }
+                }
+                if (best < 0) { ok = false; break; }
+                const std::size_t bc = static_cast<std::size_t>(best);
+                for (std::size_t m : classes[bc]) units[m][xi] += 1;
+                for (std::size_t cc = 0; cc <= K; ++cc)
+                    acc[cc] += static_cast<double>(classes[bc].size()) * clog[bc][cc];
+                assigned += static_cast<long>(classes[bc].size());
+            }
+            if (!ok) break;
+            for (std::size_t m = 0; m < P; ++m) cap_left[m] -= units[m][xi];
+        }
+        if (!ok) continue;
+        if (verify_alloc(nd.ilam, nd.icoeff, pos, neg, units, d, K, 1, 1,
+                         nd.elam.empty() ? nullptr : &nd.elam,
+                         nd.ecoeff.empty() ? nullptr : &nd.ecoeff)) {
+            ++st.den[static_cast<std::size_t>(di)];
+            return true;
+        }
+    }
+    return false;
+}
+
 bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr,
                double* margin_out = nullptr) {
     // Total-mass values to sweep.  S = 1 first, so behaviour is unchanged
@@ -729,6 +898,7 @@ bool amgm_node(const Node& nd, Stats& st, bool* proposal_existed = nullptr,
         if (amgm_node_S(nd, st, SN[si], SD[si], si == 0 ? proposal_existed : nullptr,
                         si == 0 ? margin_out : nullptr)) return true;
     }
+    if (amgm_folded(nd, st, 1, 1)) { ++st.folded; return true; }
     return false;
 }
 
@@ -1260,7 +1430,7 @@ int main(int argc, char** argv) {
     std::uint64_t sound_regimes = 0, sound_points = 0, sound_viol = 0;
     std::uint64_t ctl_tried = 0, ctl_refused = 0;
     std::uint64_t flat_total = 0, split_total = 0;
-    std::uint64_t node_total = 0, budget_hit = 0, exact_leaf_total = 0, abel_total = 0;
+    std::uint64_t node_total = 0, budget_hit = 0, exact_leaf_total = 0, abel_total = 0, folded_total = 0;
 
     const int supports = static_cast<int>(std::llround(std::pow(3.0, L)));
 
@@ -1268,7 +1438,7 @@ int main(int argc, char** argv) {
         std::uint64_t ld = 0, lr = 0, lp = 0, ls = 0, lcert = 0, lpz = 0;
         std::array<std::uint64_t, 5> lden{};
         std::uint64_t lsound_regimes = 0, lsound_points = 0, lsound_viol = 0;
-        std::uint64_t lflat = 0, lsplit = 0, lnodes = 0, lbudget = 0, lexact = 0, label_ = 0;
+        std::uint64_t lflat = 0, lsplit = 0, lnodes = 0, lbudget = 0, lexact = 0, label_ = 0, lfold = 0;
         std::uint64_t lctl_tried = 0, lctl_refused = 0;
         for (;;) {
             const int support = next.fetch_add(1);
@@ -1438,6 +1608,7 @@ int main(int argc, char** argv) {
                     lnodes += st.nodes;
                     lexact += st.exact_leaves;
                     label_ += st.abel;
+                    lfold += st.folded;
                     for (std::size_t di = 0; di < 5; ++di) lden[di] += st.den[di];
 
                     // Soundness: the certificate claims the signed sum is
@@ -1507,7 +1678,7 @@ int main(int argc, char** argv) {
         sound_regimes += lsound_regimes; sound_points += lsound_points; sound_viol += lsound_viol;
         ctl_tried += lctl_tried; ctl_refused += lctl_refused;
         flat_total += lflat; split_total += lsplit;
-        node_total += lnodes; budget_hit += lbudget; exact_leaf_total += lexact; abel_total += label_;
+        node_total += lnodes; budget_hit += lbudget; exact_leaf_total += lexact; abel_total += label_; folded_total += lfold;
     };
 
     std::vector<std::thread> pool;
@@ -1531,6 +1702,7 @@ int main(int argc, char** argv) {
     std::printf("  budget_exhausted %llu\n", static_cast<unsigned long long>(budget_hit));
     std::printf("  exact_leaves     %llu\n", static_cast<unsigned long long>(exact_leaf_total));
     std::printf("  abel_chain       %llu\n", static_cast<unsigned long long>(abel_total));
+    std::printf("  galois_folded    %llu\n", static_cast<unsigned long long>(folded_total));
     static const int ladder_out[5] = {100, 200, 500, 1000, 5000};
     std::printf("  denominators    ");
     for (std::size_t i = 0; i < 5; ++i)
