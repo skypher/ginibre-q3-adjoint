@@ -224,6 +224,10 @@ verify_su2_seven_residual_z3: verify_su2_seven_residual_z3.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -pthread -o $@
 
+verify_su2_seven_deep_small_z3: verify_su2_seven_deep_small_z3.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -pthread -o $@
+
 verify_su2_four_minus_shallow_z3: verify_su2_four_minus_shallow_z3.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -pthread -o $@
@@ -253,6 +257,7 @@ RESEARCH_TARGETS = \
 	prove_su2_simple_current_dp9 \
 	verify_su2_global_cut_payment_small \
 	verify_su2_seven_residual_z3 \
+	verify_su2_seven_deep_small_z3 \
 	verify_su2_four_minus_shallow_z3 \
 	verify_su2_plucker_second_syzygies \
 	verify_su2_v2_presburger \

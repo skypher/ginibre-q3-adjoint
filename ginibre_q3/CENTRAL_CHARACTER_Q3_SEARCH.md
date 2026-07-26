@@ -1748,6 +1748,56 @@ The large-rank part of these cells is uniform and does not require a
 Presburger replay.  The all-even hypothesis in the band estimate of
 Proposition 5A4 was stronger than its proof uses.
 
+**Lemma 5A7A0 (parity-free finite endpoint-band count).**  Let `I,J` be
+two finite binary fusion intervals of the same parity in `SU(2)_k`, and
+write
+
+```text
+K=I intersection J={s,s+2,...,s+2(d-1)},    q=k-s-2(d-1).
+```
+
+Assume `d>=3`, `s>=1`, and `(s,q)!=(1,0)`.  If
+
+```text
+B_t(I,J)=sum_(x in I,y in J) N_(xy)^t,
+```
+
+then
+
+```text
+B_2(I,J)>=3d-3,   B_4(I,J)>=5d-9,
+B_6(I,J)>=7d-19.                              (P5A.25A0)
+```
+
+**Proof.**  Restrict the sum to `K^2`.  For `t=2r`, the ordered pairs
+whose indices differ by at most `r` number
+
+```text
+(2r+1)d-r(r+1),             r=1,2,3.          (P5A.25A1)
+```
+
+Such a pair can fail to fuse to `2r` only at a triangle endpoint:
+
+```text
+x+y<2r                    or
+(k-x)+(k-y)<2r.                                (P5A.25A2)
+```
+
+For a step-two interval beginning at distance `u` from an endpoint, the
+numbers of excluded pairs for `r=1,2,3` are respectively
+
+```text
+u=0:  (1,3,6),     u=1:  (0,1,3),
+u=2:  (0,0,1),     u>=3: (0,0,0).              (P5A.25A3)
+```
+
+Indeed, after writing the two indices as `u+2i,u+2j`, these are just the
+pairs with `i+j<r-u`.  At the lower endpoint `u=s>=1`.  If `q=0`, the
+excluded case `(s,q)=(1,0)` gives `s>=2`, so the combined losses in
+`(P5A.25A3)` are at most `(1,3,7)`.  If `q>=1`, they are at most
+`(0,2,6)`.  Subtracting the former bounds from `(P5A.25A1)` proves
+`(P5A.25A0)`.  QED.
+
 **Lemma 5A7A (parity-free deep large-cut bound).**  Retain the
 support-disjoint hypotheses of Lemma 5A7 and assume
 
@@ -1761,7 +1811,7 @@ Let `C|C^c` be any active negative `3|4` cut and put
 d=w(C)=m_0(C)m_0(C^c)>0.
 ```
 
-Then
+If `d>=6`, then
 
 ```text
 sum_(t in {0,2,4,6})m_t(C)m_t(C^c)>=24d-43.        (P5A.25B)
@@ -1774,10 +1824,11 @@ four minus positions and d>=6:   24d-43>=16d;
 six minus positions and d>=11:   24d-43>=20d.      (P5A.25C)
 ```
 
-In either line the displayed low channels alone are at least the total
-negative-cut ceiling `c_-d`, where `c_-=16` or `20`.  Thus every
-cap-at-least-three residual cell is reduced to selected rank at most five
-in the four-minus orbits and at most ten in the six-minus orbits.
+If `C` is chosen with maximal weight, the total negative-cut sum is at
+most `c_-d`, where `c_-=16` or `20`, and the displayed low channels pay
+that ceiling.  Thus every cap-at-least-three residual cell is reduced to
+selected rank at most five in the four-minus orbits and at most ten in
+the six-minus orbits.
 
 **Proof.**  Write `A=C` and `B=C^c`.  A threefold invariant has
 multiplicity at most one, so activity gives
@@ -1786,12 +1837,30 @@ multiplicity at most one, so activity gives
 m_0(A)=1,                       m_0(B)=d.
 ```
 
+First note that activity forces `k>=6`.  For `k<=3` there is no positive
+label of cap at least three.  For `k=4`, the only such label is `2`,
+contradicting disjoint sign support.  For `k=5`, the only such labels are
+`2,3`; disjoint support makes one sign use only `2` and the other only
+`3`.  Since the number of minus positions is even and the number of plus
+positions is odd, even total parity forces the plus label to be `2` and
+the minus label to be `3`.  A negative three-subset then has odd label
+sum, contradicting its activity.
+
 Let `I` be the binary fusion interval of two labels in `A`.  The third
-label lies in `I`.  Every binary interval determined by labels of cap at
-least three has at least three entries.  The interval for fusing the
-third label with outputs `2` and `4` contains that label and both of its
-nearest step-two neighbors.  Intersecting the two intervals therefore
-gives the parity-free profile
+label `c` lies in `I`.  A finite binary interval has
+
+```text
+min(a,b,k-a,k-b)+1
+```
+
+entries, so `I` has at least three.  Since `2<=c<=k-2`, fusion with
+output `2` meets `I` in at least two entries.  Fusion with output `4`
+does likewise: away from `c=2,3,k-3,k-2` this follows from the two
+nearest step-two neighbours, and at those four endpoints it follows
+from the fact that a three-entry interval containing `c` must extend
+toward the interior.  Fusion with output `6` contains `c` unless
+`c=2` or `c=k-2`; in those two cases it contains the inward neighbour
+that `I` must also contain.  Hence
 
 ```text
 (m_0(A),m_2(A),m_4(A),m_6(A)) >= (1,2,2,1).        (P5A.25D)
@@ -1801,23 +1870,20 @@ The four-position block `B` contains an odd number of minus positions,
 and hence contains both signs.  Pair one minus label with one plus label
 and pair the remaining two labels.  The first pair has unequal labels by
 support disjointness, so its fusion interval does not contain zero.
-The two pair intervals have a step-two intersection `K` of size `d`.
-
-The offset count in the proof of Proposition 5A4 now applies verbatim.
-Before the lower and affine triangle walls, the output-`2,4,6` bands
-contain respectively
+Write the two pair intervals as `I',J'` and their intersection as
 
 ```text
-3d-2,                    5d-6,                    7d-12
+K={s,s+2,...,s+2(d-1)},       q=k-s-2(d-1).
 ```
 
-ordered pairs.  The lower wall removes none from the first two retained
-subfamilies and at most two from the third; the affine wall removes at
-most one, three, and six.  These losses depend only on the step-two
-interval endpoints.  If the common intermediate parity is odd, both
-intervals are shifted away from the lower endpoint, so the losses cannot
-increase; the two level parities at the affine endpoint were already
-included in Proposition 5A4.  Hence, without any label-parity assumption,
+Thus `s>=1`.  The exceptional endpoint configuration `(s,q)=(1,0)`
+cannot occur.  If it did, both `I'` and `J'` would contain the complete
+parity interval `{1,3,...,k}`.  Their lower and upper fusion endpoints
+would force the two input labels to differ by one and sum to `k`, which
+determines the same unordered input pair for `I'` and `J'`.  But `I'`
+is an opposite-sign pair and `J'` is the remaining same-sign pair, so
+one of those labels would occur with both signs, contrary to disjoint
+support.  Lemma 5A7A0 therefore gives
 
 ```text
 m_2(B)>=3d-3,       m_4(B)>=5d-9,
@@ -1833,6 +1899,170 @@ d+2(3d-3)+2(5d-9)+(7d-19)=24d-43,
 which proves `(P5A.25B)`.  There are sixteen negative indexed triples
 when there are four minus positions and twenty when there are six.
 Thus `(P5A.25C)` proves the stated ceilings.  QED.
+
+The small-rank frontier is smaller whenever the selected triple has no
+repeated label.
+
+**Lemma 5A7A1 (distinct-anchor deep bound).**  Retain the hypotheses and
+notation of Lemma 5A7A, assume `d>=3`, and suppose that the three labels
+in `A=C` are pairwise distinct.  Then
+
+```text
+(m_0(A),m_2(A),m_4(A),m_6(A)) >= (1,2,3,2),        (P5A.25F)
+```
+
+and consequently
+
+```text
+sum_(t in {0,2,4,6})m_t(A)m_t(B)>=36d-71.           (P5A.25G)
+```
+
+In particular, if `C` has maximal weight, the selected low channels pay
+the complete negative-cut ceiling when
+
+```text
+four minus positions and d>=4:   36d-71>=16d;
+six minus positions and d>=5:    36d-71>=20d.       (P5A.25H)
+```
+
+**Proof.**  Let `I` be the fusion interval of the first two labels in
+`A`, and let `c` be the third.  As in Lemma 5A7A, `I` has at least three
+entries and contains `c`, so the output-zero and output-two
+multiplicities are at least one and two.
+
+For output four, first suppose `4<=c<=k-4`.  The fusion interval of
+`c` with `4` contains the two nearest step-two neighbours on both sides,
+so any three-entry interval containing `c` meets it in at least three
+entries.  At `c=2`, an intersection of size at most two would force
+
+```text
+I={0,2,4},
+```
+
+because `I` has three entries, contains `2`, and would have to omit `6`.
+Its lower endpoint zero would give equal input labels, contrary to the
+distinctness hypothesis.  The case `c=3` is immediate except at `k=6`;
+there the only three distinct deep labels are `2,3,4`, whose odd sum
+makes the triple inactive.  Reflection through the simple current gives
+the cases `c=k-3,k-2`.  Hence `m_4(A)>=3`.
+
+For output six, if `3<=c<=k-3` and `k>=7`, its fusion interval contains
+`c` and an inward step-two neighbour, so its intersection with `I` has
+at least two entries.  At `c=2`, an intersection of size at most one
+again forces `I={0,2,4}` and hence equal input labels; reflection handles
+`c=k-2`.  The only omitted level is `k=6`, where an active distinct deep
+triple is impossible by the preceding parity check.  This proves
+`(P5A.25F)`.
+
+Lemma 5A7A0 applies because `d>=3`, and therefore
+
+```text
+d+2(3d-3)+3(5d-9)+2(7d-19)=36d-71.
+```
+
+This is `(P5A.25G)`, and the two elementary comparisons in
+`(P5A.25H)` finish the proof.  QED.
+
+The complementary repeated-anchor case is paid by the indexed equal-pair
+reservoir.
+
+**Lemma 5A7A2 (repeated-anchor deep bound).**  Retain the hypotheses and
+notation of Lemma 5A7A, assume `d>=4`, and suppose that two labels in
+`A=C` are equal.  Then
+
+```text
+L(C)+P_eq>=30d-49.                                  (P5A.25I)
+```
+
+Consequently a maximal selected cut pays the complete negative-cut
+ceiling when
+
+```text
+four minus positions and d>=4:   30d-49>=16d;
+six minus positions and d>=5:    30d-49>=20d.       (P5A.25J)
+```
+
+**Proof.**  Write the repeated triple as `{p,p,c}`.  Support
+disjointness makes the equal indexed pair same-sign, so its term in
+`P_eq` is
+
+```text
+m(E^c)=m_c(B),                E=the indexed pair {p,p}. (P5A.25K)
+```
+
+Activity forces `c` to be even.  The fusion interval of `p` with itself
+is
+
+```text
+{0,2,...,h},             h=2min(p,k-p)>=4,
+```
+
+and activity gives `2<=c<=h`.
+
+Pair the four labels in `B` as in Lemma 5A7A and let
+
+```text
+K={s,s+2,...,s+2(d-1)}
+```
+
+be the intersection of the two pair intervals.  For even `t`, let `b_t`
+be the number of ordered pairs in `K^2` which fuse to `t`.  Thus
+
+```text
+m_t(B)>=b_t,        b_0=d,
+b_2>=3d-3,          b_4>=5d-9,       b_6>=7d-19.   (P5A.25L)
+```
+
+The last three inequalities are Lemma 5A7A0.
+
+Put `a_t=m_t(A)`.  The interval `{0,2,...,h}` gives the following four
+exhaustive profiles; the extra `b_c` is supplied by `(P5A.25K)`:
+
+```text
+c=2:    a_2>=3, a_4>=2, a_6>=1;
+c=4:    a_2>=2, a_4>=3, a_6>=1;
+c=6:    a_2>=2, a_4>=3, a_6>=3;
+c>=8:   a_2>=2, a_4>=3, a_6>=3.                   (P5A.25M)
+```
+
+For example, when `c>=8`, fusion with outputs `2,4,6` meets
+`{0,2,...,h}` in at least
+
+```text
+{c-2,c},  {c-4,c-2,c},  {c-6,c-4,c-2},
+```
+
+respectively.  The cases `c=2,4,6` follow by writing the same three
+finite intervals explicitly.  The affine upper wall does not remove any
+displayed entry: `c<=k-2`.
+
+Restricting every fourfold multiplicity to `K^2`, using the low channels
+inside `L(C)`, and retaining `b_c` from `(P5A.25K)` now gives,
+respectively,
+
+```text
+c=2:   L+P_eq >= d+4b_2+2b_4+b_6 >=30d-49;
+c=4:   L+P_eq >= d+2b_2+4b_4+b_6 >=34d-61;
+c=6:   L+P_eq >= d+2b_2+3b_4+4b_6>=50d-109;
+c>=8:  L+P_eq >= d+2b_2+3b_4+3b_6>=43d-90.        (P5A.25N)
+```
+
+For `d>=4`, the last three lower bounds are all at least `30d-49`.
+This proves `(P5A.25I)`, and `(P5A.25J)` follows.  QED.
+
+**Corollary 5A7A3 (reduced deep residual ranks).**  In every
+cap-at-least-three residual parity orbit of Lemma 5A7, the maximal
+negative-cut rank may be restricted to
+
+```text
+d<=3  for four minus positions,
+d<=4  for six minus positions.                     (P5A.25O)
+```
+
+**Proof.**  The selected triple is either pairwise distinct or contains
+an indexed equal pair.  Lemma 5A7A1 closes the former case for `d>=4`
+in the four-minus strata and `d>=5` in the six-minus strata; Lemma
+5A7A2 closes the latter over the same ranges.  QED.
 
 The seven-factor direct payment has an exact arbitrary-factor
 formulation.  Unlike the feature-shell proposals below, it aggregates

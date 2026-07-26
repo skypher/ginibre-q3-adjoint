@@ -54,10 +54,20 @@ lanes the repository's own record supports:
   closes `d <= 5` by 160 cutoff-free QF-LIA queries, so Corollary 5A6 proves
   the complete finite cap-at-least-three stratum.  The fourteen-cell
   cutoff-free replay in Corollary 5A6A closes the complementary shallow
-  rows and hence the complete finite all-even four-minus stratum.  Frontier:
+  rows and hence the complete finite all-even four-minus stratum.
+  Lemma 5A7A0 now gives the parity-free finite endpoint-band estimate for
+  the other seven parity orbits.  Lemmas 5A7A1 and 5A7A2 treat,
+  respectively, distinct and repeated selected triples; the repeated case
+  uses an actual indexed equal-pair term from `P_eq`.  Corollary 5A7A3
+  therefore reduces the remaining deep cells uniformly to maximal rank
+  `d<=3` for four-minus words and `d<=4` for six-minus words.  The exact
+  equality-partition replay for this residual is in flight and is an
+  overcomplete check because it also includes the analytically closed
+  larger ranks.  Frontier:
   finish the deep rank-at-most-two two-minus replay (Corollary 23A9ZZ8
   now assembles every complementary rank-at-least-three case),
-  close the other seven parity-orbit types with the active 56-cell replay,
+  close the reduced deep and shallow cells in the other seven
+  parity-orbit types,
   consolidate the uniform seven-factor theorem, and then prove the
   arbitrary-factor induction. Everything here is uniform in `k`, which is
   why it can finish.

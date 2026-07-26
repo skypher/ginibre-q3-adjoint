@@ -710,7 +710,7 @@ struct ResidualTask {
     int selected_orbit;
 };
 
-std::vector<ResidualTask> residual_tasks() {
+[[maybe_unused]] std::vector<ResidualTask> residual_tasks() {
     std::vector<ResidualTask> result;
     for (int orbit_index = 0;
          orbit_index < static_cast<int>(residual_orbits.size());
@@ -738,6 +738,7 @@ std::vector<ResidualTask> residual_tasks() {
 
 }  // namespace
 
+#ifndef SU2_SEVEN_RESIDUAL_NO_MAIN
 int main(int argc, char** argv) {
     const std::vector<ResidualTask> tasks = residual_tasks();
     if (argc >= 4 && argc <= 10) {
@@ -891,3 +892,4 @@ int main(int argc, char** argv) {
               << " counterexamples=UNSAT result=PASS\n";
     return EXIT_SUCCESS;
 }
+#endif
