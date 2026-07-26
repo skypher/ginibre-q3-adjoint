@@ -44,8 +44,9 @@ proves the goal. The proof must come from a `k`-uniform argument. The two
 lanes the repository's own record supports:
 
 - **Factor axis**: all words of `<= 6` factors are proved in *every* `SU(2)_k`
-  (the pair reservoir `T <= N + P`, Prop 25D4), and the ordinary seven-factor
-  two-minus case is closed.  Corollary 5A1 now reduces the remaining
+  (the pair reservoir `T <= N + P`, Prop 25D4), and the complete finite
+  seven-factor two-minus case is closed by Corollary 23A9ZZ10.
+  Corollary 5A1 now reduces the remaining
   four-/six-minus sign patterns to eight exact parity-orbit types, and Proposition
   5A2 closes the ordinary all-even four-minus orbit by the raw bound
   `T_- <= 16d <= N`.  Corollary 5A3 carries the same proof uniformly through
@@ -71,13 +72,35 @@ lanes the repository's own record supports:
   rank-three six-minus cells with `c!=6`.  Lemma 5A7A9 proves the final
   inequality `L+P_eq>=60` by an endpoint/equality-placement table, and
   Corollary 5A7A10 closes the complete cap-at-least-three seven-factor
-  stratum.  A focused exact C++ diagnostic found minimum margin six
-  through `k=14`, validating the symbolic case split.
+  stratum.  Lemma 5A7B now localizes the complementary shallow wall:
+  a fourfold block containing a cap-at-most-two label has rank at most
+  two, so at selected rank at least three every shallow position lies
+  in the selected triple.  Formula `(P5A.25Z17)` then gives the exact
+  competing-cut ceiling.  Lemma 5A7B2 classifies the five possible
+  selected-triple endpoint profiles and applies the deep complementary
+  band estimate; every rank at least 28 closes, and the sole weaker
+  six-minus simple-current profile closes already at rank nine by its
+  complementary-pair graph.  Corollary 5A7B3 therefore leaves only the
+  exact finite ranks `1<=d<=27`, with substantially smaller per-profile
+  bounds.  The reduced strict verifier has 3,468 exact QF-LIA cells:
+  568 rank-one/two endpoint cells and 2,900 selected-triple cells at
+  ranks three through 27.  Its source-bound replay is in flight on
+  machine B with 48 load/RAM-selected workers.  An older overcomplete
+  7,668-cell replay remains in flight on machine C with 32 workers.
+  Neither partial transcript is theorem evidence until every cell is
+  `UNSAT`.  The current-source disjoint endpoint-pattern refinement has
+  only 2,216 cells: the same 568 rank-one/two cells plus 1,648 complete
+  selected-triple patterns, each stopped below its analytic threshold.
+  Its `--patterns` subcover is also in flight locally.  A focused
+  exact C++ diagnostic found minimum margin six through `k=14`,
+  validating the symbolic deep case split.
   The exact equality-partition replay for this residual is in flight and is an
   overcomplete check because it also includes the analytically closed
-  larger ranks.  Frontier:
-  finish the deep rank-at-most-two two-minus replay (Corollary 23A9ZZ8
-  now assembles every complementary rank-at-least-three case),
+  larger ranks.  The 768-cell deep rank-at-most-two two-minus replay has
+  completed with every cell `UNSAT`.  Corollary 23A9ZZ9 combines it with
+  the shallow-minus theorem, and Corollary 23A9ZZ10 combines those
+  rank-one/two branches with Corollary 23A9ZZ8 to prove the complete
+  finite seven-factor two-minus theorem.  Frontier:
   close the reduced deep and shallow cells in the other seven
   parity-orbit types,
   consolidate the uniform seven-factor theorem, and then prove the
@@ -272,15 +295,13 @@ before any further construction.
    is doubled explicitly.  Splitting the selected maximal rank into its
    two exact values removes the last rank disjunction.  Its cutoff-free
    768-query QF-LIA replay is
-   `character_ring_iter/verify_su2_d12_deep_minus_z3.cpp` and is in
-   progress; if it returns `UNSAT` throughout, it combines with
-   Corollary 23A9S2N1 to give a single non-reusing proof of the complete
-   rank-at-most-two two-minus layer.  The complementary dependency audit
-   is now complete: Corollary 23A9ZZ8 assembles the existing all-even and
-   mixed-parity descents into a uniform finite theorem for every maximal
-   negative-cut rank at least three.  Thus the 768-cell replay is exactly
-   the last unproved rank stratum, not one input to a further unclassified
-   branch.
+   `character_ring_iter/verify_su2_d12_deep_minus_z3.cpp`.  Every cell
+   returned `UNSAT` with 48 workers; the source-bound transcript is
+   `certificates/su2_d12_deep_minus_z3.log`.  Corollary 23A9ZZ9 combines
+   it with Corollary 23A9S2N1 to close rank at most two.  Corollary
+   23A9ZZ8 supplies every rank-at-least-three case, and Corollary
+   23A9ZZ10 is therefore the complete finite seven-factor two-minus
+   theorem.
    After the deep-minus leaf, proceed to
    the eight parity-orbit types of Corollary 5A1.  The first of those,
    ordinary all-even four-minus, is now closed by Proposition 5A2;

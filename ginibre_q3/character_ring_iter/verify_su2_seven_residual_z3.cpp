@@ -32,7 +32,7 @@ int residual_bit_count(unsigned int value) {
     return result;
 }
 
-int orbit_label_parity(
+constexpr int orbit_label_parity(
     const ResidualOrbit& orbit,
     int index
 ) {
@@ -438,7 +438,11 @@ QueryResult verify_residual_query(
     int selected_interval_mask = -1,
     int equality_mask = -1,
     int target_mode = 0,
-    int selected_rank_value = 0
+    int selected_rank_value = 0,
+    int shallow_position = -1,
+    int shallow_kind = -1,
+    bool selected_complement_deep = false,
+    int endpoint_pattern = -1
 ) {
     const ResidualOrbit& orbit =
         residual_orbits[static_cast<std::size_t>(orbit_index)];
@@ -473,6 +477,44 @@ QueryResult verify_residual_query(
         solver.add(label >= 1 && label <= k);
         if (target_mode != 0) {
             solver.add(label >= 2 && label <= k - 2);
+        }
+    }
+    if (shallow_position >= 0) {
+        const z3::expr& shallow =
+            labels[static_cast<std::size_t>(shallow_position)];
+        if (shallow_kind == 0) {
+            solver.add(shallow == 1);
+        } else if (shallow_kind == 1) {
+            solver.add(shallow == k - 1);
+        } else {
+            solver.add(shallow == k);
+        }
+    }
+    if (selected_complement_deep) {
+        for (int index = 0; index < 7; ++index) {
+            if (((selected_mask >> index) & 1U) != 0U) {
+                continue;
+            }
+            const z3::expr& label =
+                labels[static_cast<std::size_t>(index)];
+            solver.add(label >= 2 && label <= k - 2);
+        }
+    }
+    if (endpoint_pattern >= 0) {
+        for (int index = 0; index < 7; ++index) {
+            const int code =
+                (endpoint_pattern >> (2 * index)) & 3;
+            const z3::expr& label =
+                labels[static_cast<std::size_t>(index)];
+            if (code == 0) {
+                solver.add(label >= 2 && label <= k - 2);
+            } else if (code == 1) {
+                solver.add(label == 1);
+            } else if (code == 2) {
+                solver.add(label == k - 1);
+            } else {
+                solver.add(label == k);
+            }
         }
     }
     if (cap_mask >= 0) {

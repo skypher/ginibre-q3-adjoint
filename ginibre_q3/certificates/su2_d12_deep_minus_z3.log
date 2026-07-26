@@ -1,0 +1,22 @@
+RUN_UTC=2026-07-26
+HOST=optimus
+COMMAND=/usr/bin/time -f elapsed=%e maxrss_kib=%M ./verify_su2_d12_deep_minus_z3
+
+SOURCE_SHA256:
+  32a05b998980ac167f7595effbe9e93bfc31858ae1c7dd42a170d5a6cfd60a52  verify_su2_d12_deep_minus_z3.cpp
+
+BINARY_SHA256:
+  9a179b3c409dd87647a0b7d09b519bc7156c18cf77d7a8678ff510a991ca756b  verify_su2_d12_deep_minus_z3
+
+SCOPE:
+  Both deep-minus equality kinds, both level parities, both first-minus
+  parities, all 32 plus-label parity masks, the two distinct-minus
+  selected orientations or one equal-minus orientation, and selected
+  maximal ranks one and two.  The resulting 768 cutoff-free QF-LIA
+  cells are exhaustive.
+
+TERMINAL_OUTPUT:
+  SU2_D12_DEEP_MINUS_Z3 kinds=2 level_parities=2 q_parities=2 plus_masks=32 selected_orbits=(2 distinct,1 equal) queries=768 workers=48 counterexamples=UNSAT result=PASS
+  elapsed=37429.99 maxrss_kib=9073156
+
+RESULT=PASS

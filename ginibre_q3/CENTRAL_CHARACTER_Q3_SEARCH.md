@@ -2671,6 +2671,340 @@ cap-at-least-three residual parity orbit of Lemma 5A7 is closed.
 **Proof.**  Corollary 5A7A8 leaves only `(P5A.25Z13)`, which is
 Lemma 5A7A9.  QED.
 
+The complementary shallow wall has a rank-two localization which is
+independent of label parity.
+
+**Lemma 5A7B (shallow-label localization and cut ceiling).**  Retain
+the support-disjoint hypotheses and maximal negative cut `C|C^c` of
+Lemma 5A7, and write
+
+```text
+d=w(C)>0,                    c_-=16 or 20
+```
+
+according as there are four or six minus positions.  Let `S` be the
+set of positions whose labels have `cap_k(a)<=2`, put `s=|S|`, and let
+`j=|S intersect M|`.
+
+1. If `S` meets `C^c`, then `d<=2`.
+2. If `d>=3`, then `S` is a nonempty subset of `C`, and
+
+```text
+T<=h_m(s,j)d+2(c_--h_m(s,j)),                       (P5A.25Z17)
+```
+
+where `m=|M|` and
+
+```text
+h_m(s,j)=
+ sum_(x=0)^(3-s) 1_(j+x odd)
+   binom(m-j,x) binom(7-m-s+j,3-s-x).               (P5A.25Z18)
+```
+
+The nonzero values compatible with a negative selected triple are
+
+```text
+m=4:
+ (s,j)=(1,0),(1,1),(2,0),(2,1),(2,2),(3,1),(3,3),
+ h=       8,     6,     4,     2,     2,     1,     1;
+
+m=6:
+ (s,j)=(1,1),(2,2),(3,3),
+ h=      10,     4,     1.                         (P5A.25Z19)
+```
+
+**Proof.**  A positive label has cap at most two exactly when it is
+one of
+
+```text
+1,                         k-1,                         k.
+```
+
+For any such label `r` and arbitrary `x`, the binary fusion interval
+`r star_k x` has
+
+```text
+|r star_k x|=min(cap_k(r),cap_k(x))<=2.
+```
+
+Pairing `r,x` first in a fourfold invariant therefore gives
+
+```text
+m_0(r,x,y,z)<=2.                                  (P5A.25Z20)
+```
+
+The invariant multiplicity of a three-label block is at most one.
+Hence every `3|4` cut whose four-label side contains a position in
+`S` has weight at most two.  This proves part 1.  If `d>=3`, it also
+forces every shallow position into `C`.
+
+Now consider any negative indexed triple `D`.  If `S` is not a subset
+of `D`, then `D^c` contains a shallow position and `(P5A.25Z20)` gives
+`w(D)<=2`.  If `S` is a subset of `D`, maximality gives `w(D)<=d`.
+There are exactly `h_m(s,j)` negative indexed triples containing `S`:
+choose `x` of the `3-s` remaining positions from the `m-j` remaining
+minus positions and impose that `j+x` be odd.  Summing the two bounds
+over all `c_-` negative triples proves `(P5A.25Z17)` and
+`(P5A.25Z18)`.  Direct evaluation gives `(P5A.25Z19)`.  For six minus
+positions every negative triple consists of three minus positions, so
+the only possible rows have `s=j` and counts
+`binom(6-s,3-s)=10,4,1`.  QED.
+
+**Corollary 5A7B1 (reduced shallow seven-factor leaf).**  After
+Corollary 5A7A10, the seven-factor residual of Lemma 5A7 is reduced to
+the following disjoint shallow cells:
+
+```text
+d=1 or 2;                                           (P5A.25Z21)
+
+d>=3, S subset C, and the demand ceiling is the
+corresponding row of (P5A.25Z17)--(P5A.25Z19).      (P5A.25Z22)
+```
+
+**Proof.**  A residual word not covered by Corollary 5A7A10 has
+`S` nonempty.  Lemma 5A7B gives `(P5A.25Z21)` when a shallow label
+lies in the four-position side and gives `(P5A.25Z22)` otherwise.
+These alternatives exhaust the maximal selected rank.  QED.
+
+The selected-triple endpoint profiles make the second alternative
+finite in rank.
+
+**Lemma 5A7B2 (finite-rank reduction of the selected shallow wall).**
+Retain the `d>=3` alternative of Corollary 5A7B1.  Pair the four labels
+of `B=C^c` as in Lemma 5A7A.  Then
+
+```text
+(m_0(B),m_2(B),m_4(B),m_6(B))
+ >=(d,3d-3,5d-9,7d-19).                            (P5A.25Z23)
+```
+
+The active selected triple `A=C` has one of the following profiles:
+
+```text
+s=1, shallow label 1 or k-1:       (1,2,2,0);
+s=1, shallow label k,
+     other depth exactly three:    (1,1,1,0);
+s=1, shallow label k,
+     other depth at least four:    (1,1,1,1);
+s=2:                               (1,2,1,0);
+s=3:                               (1,1,0,0),       (P5A.25Z24)
+```
+
+where the four entries are lower bounds for outputs `0,2,4,6`.
+Consequently the retained local supply satisfies, in the same order,
+
+```text
+L(C)>=17d-24,  9d-12,  16d-31,  12d-15,  4d-3.
+                                                               (P5A.25Z25)
+```
+
+Comparison with `(P5A.25Z17)--(P5A.25Z19)` closes the indicated rows
+at the following ranks:
+
+```text
+selected profile             m=4,j=0   m=4,j=1   m=6
+
+one 1 or k-1                    d>=5      d>=4     d>=7
+one k, other depth >=4          d>=6      d>=6     d>=9
+one k, other depth =3           d>=28     d>=11    see below
+two shallow labels              d>=5      d>=5     d>=6
+three shallow labels            d>=11     d>=11    d>=14.
+                                                               (P5A.25Z26)
+```
+
+In the omitted six-minus row the selected triple is
+
+```text
+A={k,2,k-2}.
+```
+
+It is closed for `d>=9`.
+
+**Proof.**  Lemma 5A7B puts every shallow label in `A`, so all four
+labels of `B` have cap at least three.  Pair one opposite-sign pair in
+`B`; its fusion interval excludes zero by support disjointness.  The
+exceptional full odd interval is excluded exactly as in the proof of
+Lemma 5A7A.  Lemma 5A7A0 therefore gives `(P5A.25Z23)`.
+
+It remains to prove the finite list `(P5A.25Z24)`.  Write `J=V_k` and
+`F=V_1`, so
+
+```text
+V_(k-a)=J tensor V_a,          J tensor J=V_0.
+```
+
+If the sole shallow label is `k`, activity makes
+
+```text
+A={k,u,k-u},                  product A=V_u tensor V_u.
+```
+
+The output profile is one on
+`0,2,...,2min(u,k-u)`.  The other two labels are deep, so this gives
+the second or third row of `(P5A.25Z24)`.  If the sole shallow label is
+`1`, the other two labels are adjacent, say `a,a+1`, and both are
+deep.  The identity
+
+```text
+F tensor V_a=V_(a-1)+V_(a+1)
+```
+
+shows directly that the multiplicities at outputs `0,2,4` are at least
+`1,2,2`.  Reflecting two factors by `J` gives the identical statement
+for the sole shallow label `k-1`.
+
+With exactly two shallow labels, activity leaves, up to simultaneous
+simple-current reflection, precisely
+
+```text
+{1,1,2},        {k-1,k-1,2},        {1,k-1,k-2}.
+```
+
+Each product is `F tensor F tensor V_2`, whose output profile begins
+`(1,2,1)`.  With three shallow labels, the only active triple at the
+levels allowed by a deep four-label complement is
+
+```text
+{1,k-1,k},
+```
+
+whose product is `F tensor F` and has profile `(1,1)` at outputs
+zero and two.  Indeed, the deep block `B` contains both signs; at
+`k<=4` there is at most one deep label, so support disjointness makes
+such a block impossible.  Thus `k>=5`, where the displayed endpoint
+products exhaust the active triples.  This proves `(P5A.25Z24)`.
+Multiplication by `(P5A.25Z23)` gives `(P5A.25Z25)`.
+
+For four minus positions, the ceilings from Lemma 5A7B are
+
+```text
+s=1,j=0: 8d+16;       s=1,j=1: 6d+20;
+s=2,j=0: 4d+24;       s=2,j=1 or 2: 2d+28;
+s=3: d+30.                                             (P5A.25Z27)
+```
+
+For six minus positions they are respectively
+
+```text
+s=1:10d+20,          s=2:4d+32,          s=3:d+38.
+                                                               (P5A.25Z28)
+```
+
+The comparisons of `(P5A.25Z25)` with `(P5A.25Z27)` and
+`(P5A.25Z28)` are exactly the integer thresholds in
+`(P5A.25Z26)`.
+
+Finally consider the omitted six-minus profile
+`A={k,2,k-2}`.  Among the five minus positions other than the indexed
+copy of `k`, join two positions when their labels sum to `k`, and let
+`g` be the number of edges.  A negative triple containing `k` is
+active exactly on one of these edges and has weight at most `d`.
+Every negative triple omitting `k` has a four-label complement
+containing `k`, hence has weight at most one.  Thus
+
+```text
+T<=gd+(20-g).                                      (P5A.25Z29)
+```
+
+The complement graph is a union of complete bipartite graphs between
+nonfixed simple-current orbits and at most one clique on the fixed
+label `k/2`.  A nonfixed component on `n` vertices has at most
+`floor(n^2/4)` edges.  If the fixed clique has `q<=4` vertices, direct
+maximization with the remaining `5-q` vertices gives respectively at
+most
+
+```text
+q=0,1,2,3,4:                 6,4,3,4,6
+```
+
+edges in total; splitting the nonfixed vertices among several
+simple-current orbits can only decrease the sum.  Thus `g>6` forces
+all five vertices to carry the fixed label.  That case is impossible
+here because the selected edge has labels `2,k-2`; it would force
+`k=4`, while a deep support-disjoint four-label complement does not
+exist at level four.  Hence `g<=6`, and
+
+```text
+T<=6d+14<=9d-12<=L(C),                 d>=9.
+```
+
+This closes the last row.  QED.
+
+**Corollary 5A7B3 (bounded selected rank on the shallow wall).**
+Every shallow residual cell not already closed by Lemma 5A7B2 has
+
+```text
+1<=d<=27.                                           (P5A.25Z30)
+```
+
+More sharply, its rank is below the corresponding threshold in
+`(P5A.25Z26)`, and the exceptional six-minus
+`{k,2,k-2}` row has `d<=8`.
+
+**Proof.**  Ranks one and two are retained in Corollary 5A7B1.  For
+`d>=3`, apply the exhaustive endpoint profiles and thresholds of
+Lemma 5A7B2.  The largest threshold is 28.  QED.
+
+The strict C++ verifier
+
+```text
+character_ring_iter/verify_su2_seven_shallow_z3.cpp
+```
+
+implements the remaining exact cover.  Before the rank reduction, fixing
+one shallow position to one of `1,k-1,k`, respecting its forced parity,
+gives 284 endpoint cells across the seven residual parity orbits not
+already covered by Corollary 5A6A.  The bounded mode combines all 284
+cells with ranks one and two.  At ranks three through 27 it retains only
+shallow positions in the selected triple and imposes the deep
+four-position complement proved by Lemma 5A7B.  Thus its exact
+source-level count is
+
+```text
+568 rank-one/two cells + 2900 selected-triple cells = 3468.   (P5A.25Z31)
+```
+
+Each cell is the QF-LIA negation of `(P5A.24)` with the selected rank
+fixed.  The formulas for binary fusion, fourfold interval rank, maximal
+negative rank, the endpoint channels, indexed equal-pair reservoir, and
+all positive cuts are the exact formulas of Lemma 5A7.  The source
+SHA-256 identities of the in-flight reduced replay are
+
+```text
+921b483a4f9ea70c0caf173826011d7706519599f90198d9210300b94d4a23a6
+  verify_su2_seven_shallow_z3.cpp
+b0ec8c1fc0142e19436e145820df0737a9f0a6a56eb1df40da7159db0a06bc47
+  verify_su2_seven_residual_z3.cpp.
+```
+
+This paragraph records the exhaustive cover and active computation, not
+an `UNSAT` theorem.  That replay closes the shallow leaf only if every
+one of its 3,468 cells returns `UNSAT` and the source-bound transcript
+is imported.
+
+A current-source refinement partitions the complete selected triple at
+rank at least three into its unique endpoint/deep pattern and stops each
+pattern immediately below the analytic threshold in `(P5A.25Z26)`.
+It leaves
+
+```text
+568 rank-one/two cells + 1648 selected-pattern cells = 2216.  (P5A.25Z32)
+```
+
+The `--patterns` mode runs the second, disjoint subcover independently.
+Its current source SHA-256 identities are
+
+```text
+59d992e5683c0985fb013341882b39275975ea5839a3eb23e1d81934d5509c92
+  verify_su2_seven_shallow_z3.cpp
+623328dc185cac0d8ce7108d150334fc535c9c8d6dfd6f4a8f28b72986a7f32f
+  verify_su2_seven_residual_z3.cpp.
+```
+
+The 3,468-cell machine-B replay remains a valid overcomplete cover bound
+to its displayed older source snapshot; the 2,216-cell refinement is
+the current exact cover.
+
 The strict C++ diagnostic
 `character_ring_iter/analyze_su2_six_minus_d3.cpp` evaluates the exact
 finite fusion multiplicities, all twenty negative cuts, all fifteen
@@ -32637,6 +32971,77 @@ Corollaries 23A9ZY and 23A9ZZ.  At `d=5`, they are Corollaries 23A9ZX
 and 23A9ZW.  Every `d>=6` case is Corollary 23A9ZQ.  Thus
 `T<=N+P_eq+U` in every parity and rank branch, and Proposition 23A9S
 proves the signed contraction nonnegative.  QED.
+
+The complementary deep rank-one/two layer has now completed its exact
+cutoff-free replay.
+
+**Corollary 23A9ZZ9 (complete finite deep-minus rank-at-most-two
+theorem).**  Retain the positive-label, disjoint-support hypotheses of
+Proposition 23A9S.  Suppose both minus labels have cap at least three
+and every negative indexed cut has rank at most two.  Then
+
+```text
+T<=N+P_eq+U.                                        (P23.11z5zzzh1)
+```
+
+Hence the corresponding seven-factor contraction is nonnegative in
+every `SU(2)_k`.
+
+**Proof.**  If `T=0` there is nothing to prove.  Otherwise choose a
+maximal active cut.  Retain its output-`0,2,4,6,8` orthogonality
+channels, the first two channels of every indexed equal-plus term, all
+positive cuts, and the one-path equal-minus contribution when the two
+minus labels agree.  These are disjoint sub-supplies of `N`, `P_eq`,
+and `U`, exactly as in Lemma 23A9S2N.
+
+For distinct minus labels the selected cut has two orientations; for
+equal labels it has one, with the demand multiplicity retained
+explicitly.  Splitting by those two equality kinds, both level
+parities, both first-minus parities, all 32 plus-label parity masks,
+and selected rank one or two gives exactly
+
+```text
+(2+1)*2*2*32*2=768                                 (P23.11z5zzzh2)
+```
+
+cutoff-free cells.  The strict C++ verifier
+
+```text
+character_ring_iter/verify_su2_d12_deep_minus_z3.cpp
+```
+
+represents binary fusion, fourfold interval multiplicity, maximality,
+the five fixed output channels, the equal-pair channels, and all
+positive cuts exactly in QF-LIA.  Every negated direct-payment cell
+returned `UNSAT`:
+
+```text
+queries=768 workers=48 counterexamples=UNSAT result=PASS.
+```
+
+The source-bound transcript is
+
+```text
+certificates/su2_d12_deep_minus_z3.log,
+```
+
+and the verifier source SHA-256 is
+`32a05b998980ac167f7595effbe9e93bfc31858ae1c7dd42a170d5a6cfd60a52`.
+Thus the retained disjoint supply is at least `T`, proving
+`(P23.11z5zzzh1)`.  QED.
+
+**Corollary 23A9ZZ10 (complete finite seven-factor two-minus
+theorem).**  In every `SU(2)_k`, every seven-factor word with exactly
+two minus positions has nonnegative contraction.
+
+**Proof.**  Trivial labels and support overlap reduce to the uniform
+at-most-six-factor theorem by Proposition 25D4 and Proposition 5.
+Assume positive labels and disjoint sign support.  If `T=0`, the signed
+contraction is nonnegative from Proposition 23A9S.  Otherwise, if the maximal
+negative-cut rank is at least three, apply Corollary 23A9ZZ8.  Otherwise
+it is one or two.  If at least one minus label has cap at most two,
+apply Corollary 23A9S2N1; if both have cap at least three, apply
+Corollary 23A9ZZ9.  These cases are exhaustive.  QED.
 
 The precise obstruction to assembling a one-minus boundary theorem by
 iteration is already visible before choosing a path basis.  Expand an
