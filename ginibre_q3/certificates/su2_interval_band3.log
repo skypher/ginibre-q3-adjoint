@@ -1,0 +1,4 @@
+RUN_UTC=2026-07-26
+HOST=optimus
+SOURCE_SHA256 test_su2_interval_band3.cpp 1802c011714e46c6ae6e4f6be7b5ece9b5f67623effa8203b16f1ea6b1320f7f
+SU2_INTERVAL_BAND3 levels=27 d1=44044 d2=58660 one_by_three=26936 two_by_three=91968 shallow_rejected=69925 result=PASS

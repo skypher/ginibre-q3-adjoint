@@ -1235,6 +1235,2200 @@ with no more odd minus positions than odd plus positions.  If the total
 number of odd-labelled factors is odd, simultaneous central translation in
 both variables already makes the contraction zero.
 
+For seven factors this gives a short exact list of the sign-parity orbits
+which remain after the two-minus theorem.
+
+**Corollary 5A1 (eight-stratum seven-factor frontier).**  Let `m` be the
+number of minus positions in a seven-factor word, let `o` be the number of
+odd labels, and let `r` be the number of odd-labelled minus positions.
+An odd-label toggle sends
+
+```text
+(m,o,r) -> (m+o-2r,o,o-r).                          (P5A.2)
+```
+
+Every nonzero word has `m,o` even.  Among words with `m=4` or `m=6`,
+every toggle orbit either contains a word with at most two minus positions
+or admits a representative in one of the following count strata:
+
+```text
+m=4:  (o,r)=(0,0),(2,0),(2,1),(4,1),(4,2),(6,3);
+m=6:  (o,r)=(0,0),(2,1).                            (P5A.3)
+```
+
+The two nonfixed four-minus representatives have partners
+
+```text
+(4,2,0) <-> (6,2,2),          (4,4,1) <-> (6,4,3); (P5A.4)
+```
+
+the other six count strata in `(P5A.3)` are fixed at the level of
+the counts `(m,o,r)`.  Thus `(P5A.3)` is the exact list of residual
+parity-orbit types, not a bounded-search observation.
+
+**Proof.**  Evenness of `m` follows by interchanging the two Haar
+variables, and evenness of `o` is the usual `SU(2)` parity rule.  Under
+Proposition 5A, the `r` odd minus positions become plus positions and
+the `o-r` odd plus positions become minus positions, proving `(P5A.2)`.
+
+For `m=4`, the three plus positions impose
+
+```text
+max(0,o-3)<=r<=min(4,o).
+```
+
+Enumerating `o=0,2,4,6`, formula `(P5A.2)` maps every case with
+`m+o-2r` equal to zero or two into an already reduced stratum.  The
+remaining cases are the six four-minus entries in `(P5A.3)`.  The two
+for which the new minus count is six give `(P5A.4)`; the other four
+have new minus count four.  For `m=6`, the single plus position imposes
+
+```text
+max(0,o-1)<=r<=min(6,o).
+```
+
+The same enumeration leaves the two fixed entries in `(P5A.3)`, the
+two partners displayed in `(P5A.4)`, and cases toggling to zero or two
+minus positions.  QED.
+
+The all-even four-minus orbit admits a stronger raw payment than the
+two-minus sector: no equal-pair reservoir is required.
+
+**Proposition 5A2 (ordinary all-even four-minus raw closure).**  In the
+ordinary representation ring, take seven positive even labels with four
+minus and three plus positions.  After the disjoint-support reduction,
+let `N` be the sevenfold invariant, let `T_-` be the negative `3|4`
+middle sum, and let `d` be the largest contribution of one indexed
+negative cut.  Then
+
+```text
+T_-<=16d<=N.                                         (P5A.5)
+```
+
+Consequently every ordinary all-even seven-factor contraction with four
+minus positions is nonnegative, including the support-overlap cases.
+
+**Proof.**  If no negative cut is active there is nothing to prove.
+Otherwise choose a maximal negative cut `A|B`, with `|A|=3`.  Its triple
+contains either one or three minus positions.  Pair the four positions of
+`B` so that one pair has opposite signs and the other has equal signs.
+Write their ordinary Clebsch--Gordan intervals as `I,J` and put
+
+```text
+K=I intersection J,                 |K|=m_0(B)=d.
+```
+
+The active triple has multiplicity one, so its cut contribution is exactly
+`d`.  The two intervals each have at least three entries.  Moreover
+`0 notin K`, since zero in the opposite-sign pair interval would repeat a
+label across the two sign supports.  The intervals cannot coincide: an
+ordinary fusion interval determines its unordered input pair, so equality
+would again identify one label across the two sign supports.  Hence, for
+
+```text
+K={s,s+2,...,s+2(d-1)},                 s>=2,
+```
+
+the same elementary band count gives
+
+```text
+d>=3:  m_2(B)>=3d-1, m_4(B)>=5d-5, m_6(B)>=7d-12;
+d=2:   m_2(B)>=6,    m_4(B)>=7,      m_6(B)>=6;
+d=1:   m_2(B)>=3,    m_4(B)>=6,      m_6(B)>=7.     (P5A.6)
+```
+
+For completeness, when `d>=3` count the pairs in `K^2` whose indices
+differ by at most one, two, or three; a strict interval extension replaces
+the only possible lower-triangle loss.  When `d=2`, after exchanging
+`I,J`, use the rectangle
+
+```text
+{s-2,s,s+2} times {s,s+2,s+4};
+```
+
+when `d=1`, use
+
+```text
+{s-4,s-2,s} times {s,s+2,s+4}.
+```
+
+Direct triangle counting gives the last two lines of `(P5A.6)`.
+
+It remains to record a universal profile for `A`.  Write its labels as
+`2x<=2y<=2z`.  Invariance says that `z` belongs to the integer interval
+
+```text
+L={y-x,y-x+1,...,x+y}.
+```
+
+Since `x>=1`, this interval has at least three entries.  Intersecting it
+with the radius-`j` interval about `z`, for `j=0,1,2,3`, gives
+
+```text
+(m_0(A),m_2(A),m_4(A),m_6(A))>=(1,2,2,1).          (P5A.7)
+```
+
+Orthogonality across the selected cut and `(P5A.6)--(P5A.7)` now give
+
+```text
+d>=3: N>=d+2(3d-1)+2(5d-5)+(7d-12)=24d-24>=16d;
+d=2:  N>=2+2*6+2*7+6=34>32;
+d=1:  N>=1+2*3+2*6+7=26>16.                        (P5A.8)
+```
+
+There are only
+
+```text
+binom(4,1)binom(3,2)+binom(4,3)=16
+```
+
+indexed triples containing an odd number of minus positions.  Maximality
+therefore gives `T_-<=16d`, proving `(P5A.5)`.  In disjoint support the
+exact half-contraction is `N+P+T_+-T_-`, with `P,T_+>=0`, so it is
+nonnegative.  Proposition 5 reduces support overlap to contractions with
+fewer factors, already covered by the uniform six-factor theorem.  QED.
+
+The proof is also uniform in a finite stable box substantially larger than
+the total-degree stable range.
+
+**Corollary 5A3 (finite half-level all-even four-minus box).**  Let
+`k>=3`, put `h=floor((k-3)/2)`, and suppose the seven positive even labels
+of a four-minus word in `SU(2)_k` are at most `h`.  Then
+
+```text
+T_-<=16d<=N,                                         (P5A.9)
+```
+
+so the finite contraction is nonnegative.
+
+**Proof.**  Binary fusion of two labels in the box is untruncated because
+their sum is at most `2h<=k-3`.  For the four-label block, all intermediate
+channels are at most `2h`; for `r<=6`,
+
+```text
+u+v+r<=4h+6<=2k.
+```
+
+Thus its finite coefficients `m_r(B)`, `r=0,2,4,6`, equal the ordinary
+ones.  For the triple, the corresponding bound is
+
+```text
+u+c+r<=3h+6<=2k.
+```
+
+Hence `(P5A.6)--(P5A.8)` pass unchanged through the affine wall.
+The parity count of sixteen cuts is also unchanged, proving `(P5A.9)`.
+If the two sign supports overlap, Proposition 5 reduces the word to
+six-factor contractions before this argument is needed.
+QED.
+
+The first genuinely wall-touching part also closes without an endpoint
+classification once the maximal cut is moderately large.
+
+**Proposition 5A4 (finite deep large-cut four-minus closure).**  In
+`SU(2)_k`, take an all-even seven-factor word with four minus positions.
+Assume that every label `a` has
+
+```text
+cap_k(a)=min(a,k-a)+1>=3,                            (P5A.10)
+```
+
+and that a maximal negative `3|4` cut has contribution `d>=6`.  Then
+
+```text
+T_-<=16d<=N,                                         (P5A.11)
+```
+
+so the finite contraction is nonnegative.
+
+**Proof.**  Reduce support overlap and choose a maximal cut `A|B` exactly
+as in Proposition 5A2.  The finite tetrahedral formula
+`(P25.29e3)` gives
+
+```text
+(m_0(A),m_2(A),m_4(A),m_6(A))>=(1,2,2,1).           (P5A.12)
+```
+
+Indeed `(P5A.10)` excludes both a top label `k` and the sole all-even
+exceptional triple `{2,k-1,k-1}`; the endpoint check in
+`(P25.29e3)--(P25.29e5)` then gives `(P5A.12)`, with repetitions allowed.
+
+Pair `B` into one opposite-sign and one equal-sign pair and let `K` be
+the intersection of their finite fusion intervals.  As before,
+`0 notin K` and `|K|=d`.  Count only ordered pairs in `K^2`.  Before the
+two triangle walls, the output-two, -four, and -six bands have respectively
+
+```text
+3d-2,                    5d-6,                    7d-12
+```
+
+pairs.  The lower triangle wall removes none in the first two bands and
+at most `(2,2)` in the third.  At the affine upper wall, the worst parity
+is even `k`: it removes at most one, three, and six ordered pairs,
+respectively.  For odd `k` the corresponding losses are smaller.  Hence
+
+```text
+m_2(B)>=3d-3,       m_4(B)>=5d-9,       m_6(B)>=7d-19. (P5A.13)
+```
+
+Orthogonality and `(P5A.12)--(P5A.13)` give
+
+```text
+N>=d+2(3d-3)+2(5d-9)+(7d-19)
+  =24d-43>=16d,                                      (P5A.14)
+```
+
+where the last inequality uses `d>=6`.  The parity count still gives at
+most sixteen negative cuts, so `T_-<=16d`.  QED.
+
+The five small depths admit one cutoff-free Presburger certificate.  The
+certificate proves the local statement for every maximal cut, so no
+selection convention is hidden in the computation.
+
+**Proposition 5A5 (finite deep small-cut four-minus closure).**  Retain
+the hypotheses of Proposition 5A4, but suppose that the maximal negative
+cut contribution satisfies
+
+```text
+1<=d<=5.
+```
+
+Then every maximal negative cut `A|B` satisfies
+
+```text
+L_(A|B)=sum_(t in {0,2,4,6})m_t(A)m_t(B)>=16d.      (P5A.15)
+```
+
+Consequently `T_-<=16d<=N`.
+
+**Proof.**  Sort the four minus and three plus labels within their sign
+classes.  There are exactly sixteen indexed negative triples: twelve
+contain one minus and two plus positions, and four contain three minus
+positions.  For such a triple `E`, put
+
+```text
+d_E=m_0(E)m_0(E^c).
+```
+
+The triple factor is zero or one.  The strict C++/Z3 verifier
+`character_ring_iter/verify_su2_four_minus_deep_small_z3.cpp` makes the
+following exact query.  It writes all seven labels as `2z`, treats the two
+parities of `k` separately, imposes
+
+```text
+2<=a_i<=k-2
+```
+
+and disjoint plus/minus supports, selects one of the sixteen triples and
+one `d in {1,...,5}`, and asserts
+
+```text
+d_E=d,              d_F<=d for all negative triples F,
+L_(E|E^c)<16d.                                      (P5A.16)
+```
+
+The label bounds are exactly `cap_k(a_i)>=3` in the all-even sector.
+Every `d_F` is the intersection cardinality of two finite binary fusion
+intervals.  For `t=0,2,4,6`, the verifier computes `m_t(E)` by the same
+two-interval formula and computes `m_t(E^c)` by the exact shifted-interval
+formula `(P23.11z5zy7z25)`.  Since `m_t(E)<=t+1`, its product with
+`m_t(E^c)` is the finite linear sum
+
+```text
+m_t(E)m_t(E^c)
+ =sum_(j=1)^(t+1) indicator_(m_t(E)>=j)m_t(E^c).    (P5A.17)
+```
+
+Thus every constraint is quantifier-free linear integer arithmetic; no
+label cutoff, floating arithmetic, or nonlinear solver relaxation occurs.
+All
+
+```text
+2*16*5=160
+```
+
+queries return `UNSAT`.  Because the selected triple is arbitrary, this
+proves `(P5A.15)` for every maximal cut.  Orthogonality gives
+`N>=L_(A|B)`, while the sixteen-cut count gives `T_-<=16d`.  QED.
+
+The full transcript is
+`certificates/su2_four_minus_deep_small_z3.log`; the source SHA-256 is
+`24d882458db5742422c53102719611ebc09221988b3df25df4a1742b1e987dfb`.
+
+**Corollary 5A6 (complete finite deep all-even four-minus theorem).**
+For every `SU(2)_k`, an all-even seven-factor word with four minus
+positions and `cap_k(a)>=3` at every position has nonnegative contraction.
+More strongly,
+
+```text
+T_-<=16d<=N.                                         (P5A.18)
+```
+
+**Proof.**  Proposition 5A5 handles `d<=5` and Proposition 5A4 handles
+`d>=6`; an inactive negative layer is immediate.  Support overlap reduces
+to the uniform six-factor theorem.  QED.
+
+The strict exact C++ cross-check
+`character_ring_iter/verify_su2_seven_four_minus_even.cpp` verifies
+`N>=16d` directly in both the ordinary ring and the finite half-level
+box, and separately checks all deep affine depths.  Its bounded replay is
+`certificates/su2_seven_four_minus_even.log`; the source SHA-256 is
+`d7c0c4fcc4e22592b1d384c0196f902ad52f70497aa1eaa7a3eb1cbcc94ea96f`.
+The replay is only an independent check; Propositions 5A2, 5A4, 5A5 and
+Corollaries 5A3, 5A6 are the unbounded proofs.
+
+The complementary shallow wall is now closed by one finite orbit
+certificate.
+
+**Corollary 5A6A (complete finite all-even four-minus theorem).**  Every
+seven-factor word in `SU(2)_k` whose seven labels are positive and even
+and whose sign pattern has four minus positions has nonnegative
+contraction, uniformly for every level `k`.
+
+**Proof.**  Support overlap reduces to the uniform six-factor theorem, so
+assume the two sign supports are disjoint.  If every label has
+`cap_k(a)>=3`, this is Corollary 5A6.  Otherwise, positivity and evenness
+of the labels imply that a shallow label is
+
+```text
+k                    if k is even,
+k-1                  if k is odd.                  (P5A.18A)
+```
+
+For `k<=3`, disjoint sign support is impossible, so take `k>=4`.  Choose a
+maximal negative indexed cut.  Its stabilizer has two cut types: one minus
+and two plus positions, or three minus positions.  Within the selected and
+complementary sign-class blocks, the position of a label in `(P5A.18A)`
+has respectively four and three orbits.  The two level parities therefore
+give exactly
+
+```text
+2(4+3)=14                                             (P5A.18B)
+```
+
+cutoff-free cells.
+
+The strict C++ verifier
+
+```text
+character_ring_iter/verify_su2_four_minus_shallow_z3.cpp
+```
+
+sorts within those stabilizer blocks, imposes disjoint sign support and
+maximality of the selected cut, and asks whether the first and last five
+orthogonality channels of that cut, together with the analogous channels
+of every indexed equal same-sign pair, can be smaller than the complete
+negative `3|4` demand.  Binary fusion, fourfold interval multiplicity, and
+every fixed-output product are represented exactly in QF-LIA.  All
+fourteen negated cells are `UNSAT`.  The selected-cut channels lie in `N`
+and the equal-pair channels lie in `P_eq`, with no reuse, so
+
+```text
+T<=L+R<=N+P_eq.
+```
+
+The nonnegative positive-cut reservoir finishes the signed contraction.
+The source-bound transcript is
+`certificates/su2_four_minus_shallow_z3.log`; the source SHA-256 is
+`af0e904decac2958aabb8f396653d5189c707edcbbf98732d8273cadba572b2e`.
+QED.
+
+The same disjoint-reservoir architecture gives one uniform target for all
+eight parity orbits of Corollary 5A1.  It does not require a cap or
+maximal-rank split.
+
+**Lemma 5A7 (canonical direct-payment reduction for the residual
+seven-factor orbits).**  Take a disjoint-support seven-factor word with
+an even number of minus positions and even total label parity.  For an
+indexed three-subset `C` of positions put
+
+```text
+w(C)=m(C)m(C^c),
+U=sum_(|C|=3, |C intersect M| even)w(C),
+T=sum_(|C|=3, |C intersect M| odd)w(C).              (P5A.19)
+```
+
+Let
+
+```text
+P_eq=sum_(E an indexed equal pair of the same sign)m(E^c),
+N=m({1,...,7}).
+```
+
+Then the signed contraction is
+
+```text
+N+P_eq+U-T.                                         (P5A.20)
+```
+
+If `T>0`, choose a negative cut `C_*` of maximal weight.  Let
+`epsilon` be the common output parity across `C_*|C_*^c`, and retain
+the first and last five output channels of that parity:
+
+```text
+H_(k,epsilon)
+ ={epsilon,epsilon+2,...,epsilon+8} intersect [0,k]
+  union
+  {k-eta,k-eta-2,...,k-eta-8} intersect [0,k],
+eta=(k-epsilon) mod 2,                              (P5A.21)
+```
+
+where duplicates are removed.  Put
+
+```text
+L(C_*)=sum_(t in H_(k,epsilon))m_t(C_*)m_t(C_*^c).
+                                                               (P5A.22)
+```
+
+For each indexed equal same-sign pair `E`, split its five-position
+complement deterministically into its first two and last three indices.
+Let `R(E)` be the analogue of `(P5A.22)` for that `2|3` split and put
+`R=sum_E R(E)`.  Then
+
+```text
+L(C_*)<=N,                 R<=P_eq,                  (P5A.23)
+```
+
+and therefore
+
+```text
+L(C_*)+R+U>=T                                      (P5A.24)
+```
+
+is sufficient for the complete signed inequality.
+
+For the eight count strata in `(P5A.3)`, the negation of `(P5A.24)`
+has a cutoff-free QF-LIA cover with 56 canonical cells.  In the order
+displayed in `(P5A.3)`, the numbers of selected-cut orbits are
+
+```text
+2,3,6,4,6,4,1,2,                                   (P5A.25)
+```
+
+and each is combined with the two level parities.
+
+**Proof.**  Expand the seven factors by indexed subsets assigned to the
+first Haar coordinate and pair a subset with its complement.  The empty
+and full subsets give `N`.  A two-subset contributes only when its two
+labels are equal.  Disjoint sign support makes such a pair same-sign, so
+its sign is positive and the paired size-five term gives `P_eq`.
+The remaining `3|4` terms have the sign in `(P5A.19)`, proving
+`(P5A.20)`.
+
+Orthogonality across `C_*|C_*^c` gives
+
+```text
+N=sum_(t=0)^k m_t(C_*)m_t(C_*^c),
+```
+
+so retaining `(P5A.21)` proves the first inequality in `(P5A.23)`.
+The identical orthogonality calculation after deleting an equal pair
+proves the second.  These supplies lie respectively in `N`, `P_eq`,
+and `U`, so they are disjoint and `(P5A.24)` implies `(P5A.20)`.
+
+For the finite cover, partition the seven indexed positions into the
+four sign/parity classes
+
+```text
+M_odd, M_even, P_odd, P_even.
+```
+
+A selected cut is determined up to the class stabilizer by the number
+of its positions in these four classes.  Enumerating the negative
+three-subsets gives exactly `(P5A.25)`.  After selecting one
+representative, sort labels separately in each of the eight
+class-by-side blocks; this loses no assignment.  Binary fusion,
+fourfold interval rank, maximality of `C_*`, and the reservoirs in
+`(P5A.21)--(P5A.24)` are all QF-LIA.  High channels are evaluated at
+small output by reflecting one factor on each side through the simple
+current, so the repeated-sum linearization uses at most ten terms and is
+exact.  Thus the 56 cells are exhaustive.  QED.
+
+The seven-factor direct payment has an exact arbitrary-factor
+formulation.  Unlike the feature-shell proposals below, it aggregates
+every positive cut before asking for a sign.
+
+**Proposition 5A8 (global maximal-cut reduction).**  Let
+`L={a_1,...,a_n}` be an indexed positive-label list in `SU(2)_k`, let
+`M` be an even set of minus positions, and assume the total label parity
+is even.  For an unordered nontrivial cut
+`C={A,A^c}` put
+
+```text
+w(C)=m(A)m(A^c),             sign(C)=(-1)^|A intersect M|.
+```
+
+The sign is independent of the side chosen because `|M|` is even.  Put
+
+```text
+U_n=sum_(nontrivial C, sign(C)=+1)w(C),
+T_n=sum_(nontrivial C, sign(C)=-1)w(C),
+N_n=m(L).                                             (P5A.26)
+```
+
+Then the signed contraction is exactly
+
+```text
+J(L,M)=N_n+U_n-T_n.                                  (P5A.27)
+```
+
+If `T_n>0`, choose a negative cut `C_*={A_*,A_*^c}` of maximal
+weight, let `epsilon` be its common output parity, and define
+
+```text
+L_n(C_*)=
+  sum_(t in H_(k,epsilon))m_t(A_*)m_t(A_*^c),         (P5A.28)
+```
+
+with `H_(k,epsilon)` from `(P5A.21)`.  Then
+
+```text
+0<w(C_*)<=L_n(C_*)<=N_n.                             (P5A.29)
+```
+
+Consequently the single global-cut inequality
+
+```text
+T_n<=U_n+L_n(C_*)                                    (GCP)
+```
+
+for every maximal negative cut would prove finite `GKS2*` for every
+factor count and every level.
+
+**Proof.**  Expand each signed factor by assigning its label to the
+first or second Haar coordinate.  Pair an allocation `A` with `A^c`.
+The empty/full pair contributes `N_n`; every other unordered cut
+contributes `sign(C)w(C)`.  This proves `(P5A.27)`.
+Orthogonality across `A_*|A_*^c` gives
+
+```text
+N_n=sum_(t=0)^k m_t(A_*)m_t(A_*^c).
+```
+
+The `t=0` summand is `w(C_*)`, and retaining the first and last five
+parity-compatible channels gives `(P5A.29)`.  Under `(GCP)`,
+
+```text
+J(L,M)>=N_n-L_n(C_*)>=0.
+```
+
+Odd `|M|` or odd total label parity gives zero by the two central
+symmetries, while overlapping sign support reduces inductively by
+Proposition 5.  Thus `(GCP)` on the displayed chamber suffices for the
+complete finite theorem.  QED.
+
+At seven factors, Lemma 5A7 proves the exact finite-cell reduction of
+`(GCP)` and even replaces the full positive-cut reservoir by its first
+and last five channels in the equal-pair terms.  The strict exact C++
+diagnostic
+
+```text
+character_ring_iter/analyze_su2_global_cut_payment.cpp
+```
+
+tests `(GCP)` at arbitrary factor count using all unordered cuts and the
+exact finite fusion recurrence.  Its high-level randomized replay
+evaluated `108,841` disjoint-support words through level 100 and twelve
+factors.  Of the `45,931` active words, `41,305` had
+`L_n(C_*)<N_n`; the minimum margin in that genuine interior subfamily
+was eight.  The transcript is
+`certificates/su2_global_cut_payment_random.log`.  This is discovery
+evidence only.  Independently,
+`character_ring_iter/verify_su2_global_cut_payment_small.cpp`
+exhausts every sorted label multiset, every disjoint sign-class
+assignment, and every factor count through twelve at levels at most
+six.  Its `125,731` exact rows include `91,573` active rows and have
+minimum `(GCP)` margin one; the source-bound transcript is
+`certificates/su2_global_cut_payment_small.log`.  This finite theorem
+also does not prove the unbounded claim.  The remaining arbitrary-factor
+task is to prove `(GCP)`,
+most plausibly by a cut-switching injection or a closed recurrence for
+the aggregate `U_n-T_n`.
+
+Repeated-label words are poorly represented in the indexed random sampler
+once the support-disjoint reduction is imposed.  The independent strict C++
+diagnostic
+
+```text
+character_ring_iter/analyze_su2_global_cut_payment_counts.cpp
+```
+
+therefore stores one fusion state for each sub-count vector, but restores
+the exact number
+`product_i binom(n_i,c_i)` of indexed cuts in every positive and negative
+sum.  It uses arbitrary-precision integers for fusion multiplicities,
+binomial orbit sizes, and margins, and tests `(GCP)` separately from the
+weaker exact `GKS2*` conclusion.  A deterministic replay sampled `5,230`
+admissible support-disjoint cases with at most four distinct labels,
+`k<=20`, and as many as sixty factors.  It found no failure of either
+inequality; the minimum doubled `(GCP)` margin was four.  The source-bound
+transcript is
+`certificates/su2_global_cut_payment_counts.log`.  This is high-factor
+discovery evidence, not an unbounded theorem.
+
+**Corollary 5A8A (exact small-box global cut payment).**  Inequality
+`(GCP)` holds for every `SU(2)_k` with `k<=6` and every positive signed
+list with at most twelve factors.
+
+**Proof.**  After the two symmetry reductions and Proposition 5, sort
+the label multiset and assign each distinct label wholly to one sign
+class.  The strict C++ verifier
+`character_ring_iter/verify_su2_global_cut_payment_small.cpp`
+enumerates every such multiset and every even sign-class assignment,
+constructs all subset fusion states by the exact finite recurrence, and
+checks every unordered cut for factor counts two through twelve; the
+zero- and one-factor cases are immediate.  Its `125,731` rows contain `91,573` active
+maximal-cut inequalities; the minimum margin is one.  Fusion-state
+addition is checked for overflow and fails closed.  The transcript is
+`certificates/su2_global_cut_payment_small.log`; the verifier source
+SHA-256 is
+`e2e917f7450cebc7a1570a105049ad8c74d8032c5b32779c8201ab7d9c1cd360`
+and its included recurrence source SHA-256 is
+`91eb8241c0821907fae340edd2cd08e955bf09dc9f8d35b956b09c970c5558e0`.
+QED.
+
+The nonzero channels in `(GCP)` cannot be discarded in favour of the
+maximal zero-channel weight alone.
+
+**Proposition 5A8A1 (exact obstruction to anchor-only payment).**  In
+`SU(2)_4`, take the support-disjoint word
+
+```text
+plus:  1^10, 2^18, 4^8,
+minus: 3^18.
+```
+
+A maximal negative cut has type `(1,0,1,1)` in the four displayed label
+classes.  For that cut,
+
+```text
+N=L(C_*)=208971104256,
+T-U       =208903079808,
+w(C_*)     =69657034752.                            (P5A.29A)
+```
+
+Thus
+
+```text
+T>U+w(C_*),
+T<=U+L(C_*),
+J=N+U-T=68024448>0.                                 (P5A.29B)
+```
+
+In particular the stronger anchor-only inequality is false, while both
+`(GCP)` and `GKS2*` hold strictly on the same word.  Any proof of `(ASI)`
+must therefore use the nonzero anchor channels on its right side.
+
+**Proof.**  The fixed mode
+
+```text
+character_ring_iter/analyze_su2_global_cut_payment_counts \
+  --anchor-counterexample
+```
+
+uses the exact finite fusion recurrence and arbitrary-precision integer
+cut multiplicities.  It asserts the invariant, both oriented cut sums,
+the maximal cut weight, the complete retained local payment, and all three
+margins against the integers in `(P5A.29A)--(P5A.29B)`, and fails closed
+on any mismatch.  Its source-bound output is in
+`certificates/su2_global_cut_payment_counts.log`.  QED.
+
+The positive-cut sum in `(GCP)` can be eliminated exactly after choosing
+the anchor.  This exposes the switching statement which remains to be
+proved.
+
+**Lemma 5A8B (anchored symmetric-difference identity).**  Retain the
+notation of Proposition 5A8 and fix any negative cut `C`.  Symmetric
+difference defines a bijection
+
+```text
+Phi_C:{negative cuts D!=C}->{nontrivial positive cuts},
+Phi_C(D)=C triangle D.                               (P5A.30)
+```
+
+Consequently
+
+```text
+T_n-U_n
+ =w(C)+sum_(negative D!=C)
+          [w(D)-w(C triangle D)].                    (P5A.31)
+```
+
+For a maximal negative cut `C_*`, global cut payment is therefore
+equivalent to the anchored switching inequality
+
+```text
+sum_(negative D!=C_*)
+ [w(D)-w(C_* triangle D)]
+ <=L_n(C_*)-w(C_*).                                  (ASI)
+```
+
+The right side is exactly the contribution of the retained nonzero
+channels across the anchor.
+
+**Proof.**  Work on unordered cuts, so a subset and its complement
+represent the same cut.  Since `|M|` is even, cut parity is well defined.
+For negative `C`,
+
+```text
+|M intersect (C triangle D)|
+ =|M intersect C|+|M intersect D| mod 2,
+```
+
+so `Phi_C` interchanges negative and positive parity.  It is an
+involution.  Its only negative preimage of the trivial cut is `C`;
+hence removing `C` and the trivial cut gives `(P5A.30)`.  Reindex `U_n`
+through this bijection to obtain `(P5A.31)`.  Substituting
+`(P5A.31)` into `(GCP)` and subtracting `w(C_*)` proves the equivalence
+with `(ASI)`.  Finally the `t=0` summand of `(P5A.28)` is `w(C_*)`,
+so the stated interpretation of the right side is exact.  QED.
+
+Each summand in `(ASI)` is a literal `2 x 2` minor of four block
+multiplicity vectors.
+
+**Lemma 5A8C (four-block determinant form).**  Orient representatives
+of an anchor cut `C` and another cut `D`, and put
+
+```text
+X=C intersect D,          Y=C intersect D^c,
+Z=C^c intersect D,        W=C^c intersect D^c.
+```
+
+For a block `B`, let `b=(m_0(B),...,m_k(B))`.  Then
+
+```text
+w(D)-w(C triangle D)
+ =<x,z><y,w>-<y,z><x,w>
+
+ =det [[<x,z>,<x,w>],
+       [<y,z>,<y,w>]].                               (P5A.32)
+```
+
+Also
+
+```text
+w(C)=<x,y><z,w>.                                     (P5A.33)
+```
+
+Thus the complete arbitrary-factor problem is reduced to bounding the
+sum of the four-block minors `(P5A.32)` by the retained nonzero
+fusion-channel pairing across the maximal anchor.
+
+**Proof.**  In the finite fusion ring the irreducible basis is
+orthonormal for the Frobenius trace.  Hence for any two indexed blocks
+`B_1,B_2`,
+
+```text
+m(B_1 union B_2)
+ =sum_(r=0)^k m_r(B_1)m_r(B_2)
+ =<b_1,b_2>.                                         (P5A.34)
+```
+
+Apply `(P5A.34)` to the two sides of `D`, of
+`C triangle D`, and of `C`.  The three resulting products are exactly
+`(P5A.32)--(P5A.33)`.  QED.
+
+**Corollary 5A8D (exterior-square switching form).**  For vectors
+`u,v` put
+
+```text
+p_(r,s)(u,v)=u_r v_s-u_s v_r,             0<=r<s<=k.
+```
+
+Then every anchored switching defect is
+
+```text
+w(D)-w(C triangle D)
+ =sum_(0<=r<s<=k)
+    p_(r,s)(x,y)p_(r,s)(z,w)
+ =<x wedge y,z wedge w>.                            (P5A.35)
+```
+
+Consequently `(ASI)` is exactly
+
+```text
+sum_(negative D!=C_*)
+ <x_D wedge y_D,z_D wedge w_D>
+ <=sum_(t in H_(k,epsilon),t!=0)
+      m_t(C_*)m_t(C_*^c).                            (P5A.36)
+```
+
+**Proof.**  Apply the `2 x 2` Cauchy--Binet identity to the determinant
+in `(P5A.32)` and then sum over the negative cuts in `(ASI)`.  The right
+side is `L_n(C_*)-w(C_*)` by `(P5A.28)` and its zero-channel identity.
+QED.
+
+The exterior coordinates also factor the full signed contraction, not
+only its anchored defect.  This gives a closed arbitrary-factor state
+space for the remaining induction.
+
+**Proposition 5A8E (odd-block exterior allocation cone).**  Let `A` be
+an indexed signed block with an odd number of minus positions.  For
+`X subset A`, let `v_X=(m_0(X),...,m_k(X))` and define
+
+```text
+Omega_A=
+ sum_(X subset A, |X intersect M_A| even)
+    v_X wedge v_(A minus X)
+ in exterior^2 R^(k+1).                              (P5A.37)
+```
+
+If `A,B` are disjoint odd-minus blocks, then their even-minus signed
+contraction is exactly
+
+```text
+J(A union B)=<Omega_A,Omega_B>.                      (P5A.38)
+```
+
+Consequently finite `GKS2*` in `SU(2)_k` is equivalent to the assertion
+that the set of all vectors `Omega_A` is pairwise acute:
+
+```text
+<Omega_A,Omega_B>>=0
+for all odd-minus signed blocks A,B.                 (OAC_k)
+```
+
+This state space has exact factor recurrences.  Identify an exterior
+vector with its antisymmetric coefficient matrix `K`.  If `N_p` is the
+symmetric fusion matrix of label `p`, adjoining a plus or minus factor
+updates the full coefficient matrix by
+
+```text
+K -> N_p K+K N_p                  (plus),
+K -> N_p K-K N_p                  (minus).           (P5A.39)
+```
+
+The first map preserves antisymmetry.  The second sends an antisymmetric
+matrix to a symmetric one and a second minus update returns it to the
+antisymmetric sector.  Thus `(P5A.39)` is a closed plus/double-minus
+recurrence for the cone in `(OAC_k)`.
+
+**Proof.**  Expand the signed two-coordinate product of block `A` as
+
+```text
+R_A=sum_(r,s)K_A(r,s)e_r tensor e_s.
+```
+
+Because the block has odd exchange parity, `K_A` is antisymmetric.
+Pair a subset `X` of even minus parity with its complement, which has
+odd minus parity.  For `r<s` their combined coefficient is
+
+```text
+K_A(r,s)
+ =-[m_r(X)m_s(A-X)-m_s(X)m_r(A-X)].
+```
+
+Summing gives `K_A(r,s)=-(Omega_A)_(r,s)`.  Frobenius orthogonality of
+the fusion basis now yields
+
+```text
+J(A union B)
+ =(1/2)sum_(r,s)K_A(r,s)K_B(r,s)
+ =sum_(r<s)(Omega_A)_(r,s)(Omega_B)_(r,s),
+```
+
+which is `(P5A.38)`.  A zero-minus word is termwise nonnegative; every
+nonzero even-minus word splits into two odd-minus blocks.  Conversely
+every such pair is an even-minus word, proving the equivalence with
+`(OAC_k)`.
+
+Finally multiplication by
+`e_p tensor e_0+/-e_0 tensor e_p` acts on a coefficient matrix from
+the left by `N_p` and from the right by `+/-N_p`, proving `(P5A.39)`.
+The symmetry assertions follow by transposition.  QED.
+
+The recurrence has a completely diagonal form which removes any ambiguity
+about the remaining cone target.  Put `h=k+2`,
+
+```text
+S_(a,r)=sqrt(2/h)sin((a+1)(r+1)pi/h),
+u_r=S_(0,r),
+lambda_p(r)=S_(p,r)/S_(0,r),                 0<=r<=k.
+```
+
+Thus `S` is orthogonal and
+`N_p=S diag(lambda_p(0),...,lambda_p(k)) S^T`.
+
+**Proposition 5A8F (exact spectral-pair form of the allocation cone).**
+For an odd-minus block `A`, write `P_A` and `M_A` for its indexed plus
+and minus positions.  In the exterior basis obtained from the columns of
+`S`, the coordinate of `Omega_A` at `r<s` is
+
+```text
+widehat(Omega_A)_(r,s)
+ =-u_r u_s
+   product_(i in P_A)[lambda_(a_i)(r)+lambda_(a_i)(s)]
+   product_(j in M_A)[lambda_(a_j)(r)-lambda_(a_j)(s)].   (P5A.40)
+```
+
+Consequently, for two odd-minus blocks `A,B`,
+
+```text
+J(A union B)
+ =sum_(0<=r<s<=k) u_r^2 u_s^2
+   product_(i in P_A union P_B)
+      [lambda_(a_i)(r)+lambda_(a_i)(s)]
+   product_(j in M_A union M_B)
+      [lambda_(a_j)(r)-lambda_(a_j)(s)].             (P5A.41)
+```
+
+In particular `(OAC_k)` is exactly the pairwise acuteness of the
+multiplicative feature vectors in `(P5A.40)`, not merely a consequence of
+the matrix recurrence.
+
+**Proof.**  Let `K_0=e_0e_0^T`.  Before the final identification with the
+exterior square, the coefficient matrix of `A` is
+
+```text
+K_A=
+ product_(i in P_A)(L_(a_i)+R_(a_i))
+ product_(j in M_A)(L_(a_j)-R_(a_j)) K_0,
+```
+
+where `L_p(K)=N_pK` and `R_p(K)=KN_p`.  Conjugating by `S` makes every
+`L_p` and `R_p` diagonal, while
+`S^T K_0 S=(u_r u_s)_(r,s)`.  Hence
+
+```text
+(S^T K_A S)_(r,s)
+ =u_r u_s
+   product_(i in P_A)[lambda_(a_i)(r)+lambda_(a_i)(s)]
+   product_(j in M_A)[lambda_(a_j)(r)-lambda_(a_j)(s)].
+```
+
+Proposition 5A8E gives `K_A(r,s)=-(Omega_A)_(r,s)` for `r<s`;
+orthogonality of the induced exterior transformation proves `(P5A.40)`.
+Taking the exterior inner product for `A,B` cancels the two leading minus
+signs and gives `(P5A.41)`.  QED.
+
+The spectral-pair form separates the parity of each label multiplicity from
+its unbounded even part.  This gives a finite signed moment problem at each
+level.
+
+**Lemma 5A8G (parity-square moment and exposed-face reduction).**  Fix
+`k`, assign each label in a support `D subset {1,...,k}` either plus or
+minus sign, and fix multiplicity parities
+`epsilon_p in {0,1}` such that the total minus multiplicity is even.  For
+an unordered spectral pair `e={r,s}`, put
+
+```text
+f_p(e)=lambda_p(r)+lambda_p(s)    if p is plus,
+f_p(e)=lambda_p(r)-lambda_p(s)    if p is minus,
+z_p(e)=f_p(e)^2,
+a(e)=u_r^2 u_s^2 product_(p in D)f_p(e)^epsilon_p.   (P5A.42)
+```
+
+Group pairs with the same squared-feature vector
+`z(e)=(z_p(e))_(p in D)`, and let `A_z` be the sum of their `a(e)`.
+Then the signed value for multiplicities
+`epsilon_p+2q_p` is exactly
+
+```text
+J(q)=sum_z A_z product_(p in D)z_p^q_p.              (P5A.43)
+```
+
+Consequently the fixed support/sign/parity chamber is valid at every
+multiplicity if and only if every nonnegative integer moment in `(P5A.43)`
+is nonnegative.
+
+There are two useful rigorous tests on this finite signed measure.
+
+1. If `c in N^D` and the total coefficient
+
+```text
+sum_(z: product_p z_p^c_p is maximal) A_z             (P5A.44)
+```
+
+is negative, with a positive maximum, then the chamber has a genuine
+counterexample for all sufficiently large multiplicities
+`epsilon+2tc`.
+
+2. Write `A_z=A_z^+-A_z^-`.  If there is a nonnegative transport
+`gamma_(z,z')` from every negative atom to positive atoms such that
+
+```text
+sum_(z')gamma_(z,z')=A_z^-,
+sum_(z) gamma_(z,z')<=A_(z')^+,
+gamma_(z,z')>0 implies z_p<=z'_p for every p,          (P5A.45)
+```
+
+then every moment `(P5A.43)` is nonnegative.
+
+Thus a uniform classification of the squared-feature dominance relation
+in `(P5A.45)`, with separate treatment of undominated exposed faces
+`(P5A.44)`, is an exact alternative to constructing the allocation cone
+directly.
+
+**Proof.**  Substitute
+`n_p=epsilon_p+2q_p` in `(P5A.41)` and collect equal vectors `z(e)` to
+obtain `(P5A.43)`.  This proves the equivalence because every multiplicity
+in the chamber has a unique such decomposition.
+
+For `(P5A.44)`, evaluate `(P5A.43)` at `q=tc`, divide by the positive
+`t`-th power of the maximal score, and let `t` tend to infinity.  Every
+nonmaximal score vanishes relative to the maximum, so a negative maximal
+aggregate makes `J(tc)` negative for all large `t`.
+
+Under `(P5A.45)`, coordinatewise dominance gives
+`z^q<=z'^q` on every transported pair.  Hence
+
+```text
+sum_z A_z^- z^q
+ <=sum_(z,z')gamma_(z,z')z'^q
+ <=sum_(z')A_(z')^+ z'^q,
+```
+
+which is `(P5A.43)>=0`.  QED.
+
+The direct coordinatewise transport in `(P5A.45)` is only a sufficient
+criterion and already fails in a two-factor exact-zero chamber.  Hence it
+cannot itself be the sought common acute cone.
+
+**Proposition 5A8G1 (exact obstruction to direct squared-feature
+transport).**  In `SU(2)_6`, take the chamber with one minus factor of
+label one and one minus factor of label five.  The spectral pair
+`e={1,5}` has
+
+```text
+z(e)=(8,8),                  a(e)=-1/8.              (P5A.46)
+```
+
+The only positive spectral atom whose two squared features both dominate
+`(8,8)` is `e'={0,6}`, and its mass is
+
+```text
+a(e')=(2-sqrt(2))/32<1/8.                            (P5A.47)
+```
+
+Thus no transport satisfying `(P5A.45)` exists, although the signed value
+of the chamber is exactly zero by orthogonality.  Any successful spectral
+proof must allow collective log-convex/AM--GM payments, cancellation
+inside equal exposed faces, or a larger lifted cone.
+
+**Proof.**  Put `x_r=lambda_1(r)`.  At level six,
+
+```text
+lambda_5(r)=(-1)^r x_r,
+x_1=sqrt(2),       x_5=-sqrt(2),
+u_1^2=u_5^2=1/8.
+```
+
+This gives `(P5A.46)`.  For a same-parity pair the two squared
+minus-features coincide.  Odd--odd pairs have negative coefficient.
+Among the even nodes, whose `x`-values are
+
+```text
+sqrt(2+sqrt(2)), sqrt(2-sqrt(2)),
+-sqrt(2-sqrt(2)), -sqrt(2+sqrt(2)),
+```
+
+only the endpoint pair `{0,6}` has squared difference at least eight;
+its mass is the value in `(P5A.47)`.  For an opposite-parity pair the
+two squared features are `(x_r-x_s)^2` and `(x_r+x_s)^2`.  If both were
+at least eight, their sum would give
+`x_r^2+x_s^2>=8`, whereas every two spectral values have squared sum at
+most `4+2sqrt(2)<8`.  Hence there is no other dominating positive atom.
+The capacity available above `(8,8)` is therefore strictly smaller than
+the negative mass `1/8`, violating the necessary Hall condition for
+`(P5A.45)`.  Finally the doubled integral with distinct irreducible
+labels one and five is zero by character orthogonality.  QED.
+
+The next natural transport relaxation is collective and logarithmic.  It
+matches the weighted AM--GM mechanism used by the finite-level certificate
+engine but is stated directly on the exact squared-feature atoms.  Lemma
+5A8G2 is a valid sufficient criterion; Proposition 5A8G3 below shows that
+it is still not universal.
+
+**Lemma 5A8G2 (log-convex packet transport).**  Retain the signed atomic
+measure of Lemma 5A8G.  Suppose there are nonnegative allocations
+`gamma_(z,z')`, from negative atoms `z` to positive atoms `z'`, such that
+
+```text
+sum_(z')gamma_(z,z')=A_z^-,
+sum_z gamma_(z,z')<=A_(z')^+,                       (P5A.48)
+```
+
+and, for every negative `z` and every feature coordinate `p`,
+
+```text
+product_(z') (z'_p)^[gamma_(z,z')/A_z^-] >= z_p.    (P5A.49)
+```
+
+Here a zero on the right makes that coordinate condition void; if the
+right side is positive, `(P5A.49)` requires every positively allocated
+`z'_p` to be positive.  Then every moment `(P5A.43)` is nonnegative.
+
+Thus it is sufficient to place each negative squared-feature vector below
+the weighted log-convex hull of a capacity-feasible packet of positive
+vectors.  Direct dominance `(P5A.45)` is the special case in which every
+packet is supported on individually dominating atoms.
+
+**Proof.**  Fix a negative atom `z`, put
+`b=A_z^-`, and apply weighted AM--GM to the allocated positive
+contributions for any `q in N^D`:
+
+```text
+sum_(z') gamma_(z,z') (z')^q
+ >=b product_(z')[(z')^q]^[gamma_(z,z')/b]
+ = b product_p {
+       product_(z')(z'_p)^[gamma_(z,z')/b]
+     }^q_p
+ >=b z^q.                                           (P5A.50)
+```
+
+Sum `(P5A.50)` over the negative atoms and use the positive capacity
+condition in `(P5A.48)`.  The available positive moment dominates the
+complete negative moment, proving `(P5A.43)>=0`.  QED.
+
+Even collective positive packets cannot pay every negative atom
+separately.
+
+**Proposition 5A8G3 (exact obstruction to atomwise log-convex
+payment).**  The `SU(2)_6` chamber `[-1,-5]` of Proposition 5A8G1 does
+not admit an allocation satisfying `(P5A.48)--(P5A.49)`.
+
+**Proof.**  Put
+
+```text
+A=2+sqrt(2),                C=2-sqrt(2).
+```
+
+For a positive squared-feature atom `z'`, define its two-coordinate
+geometric score
+
+```text
+g(z')=sqrt(z'_1 z'_5).
+```
+
+The endpoint atom `{0,6}` has
+
+```text
+g=4A,                       mass=C/32.               (P5A.51)
+```
+
+Every other positive atom has `g<=2A`.  Indeed, for an even--even
+spectral pair this follows by inspecting the four values
+`+/-sqrt(A),+/-sqrt(C)`; after the endpoints, the largest squared
+difference is `2A`.  For an opposite-parity positive pair,
+
+```text
+g=|x_r^2-x_s^2|<=A<2A.
+```
+
+Odd--odd pairs are negative, as in Proposition 5A8G1.
+
+Now try to pay the negative atom `{1,5}`, whose mass is `b=1/8` and
+whose feature vector is `(8,8)`.  If `e` units of its packet use the
+endpoint atom, the capacity bound gives
+
+```text
+eta=e/b<=C/4.                                      (P5A.52)
+```
+
+Adding the logarithms of the two conditions `(P5A.49)` and dividing by
+two shows that the packet's average logarithmic score must be at least
+`log(8)`.  Using `(P5A.51)` and the upper bound for every other atom,
+
+```text
+eta log(4A)+(1-eta)log(2A)>=log(8),
+```
+
+so necessarily
+
+```text
+eta>=log(4/A)/log(2)=log(2C)/log(2).                (P5A.53)
+```
+
+This contradicts `(P5A.52)`.  To see the strict inequality exactly, put
+`x=3-2sqrt(2)>0`.  Then `2C=1+x` and
+
+```text
+x/(1+x)=C/4.
+```
+
+The elementary bound `log(1+x)>x/(1+x)`, together with `log(2)<1`,
+gives
+
+```text
+log(2C)/log(2)>C/4.
+```
+
+Thus no atomwise log-convex packet allocation exists.  QED.
+
+The simple-current pair behind the preceding obstruction has a useful
+grouped reduction.  It is the first multi-negative packet which should be
+handled before any spectral transport is attempted.
+
+**Lemma 5A8H (odd simple-current-pair packet reduction).**  Fix
+`1<=q<k-q` in `SU(2)_k` and take odd positive multiplicities `A,B` of
+the two minus labels `q,k-q`, with no plus factors.
+
+1. If `k` is odd, the contraction is zero.
+2. If `k` is even and `q` is odd, the contraction is termwise
+   nonnegative.
+3. The only unresolved parity is `k,q` even.  In the doubled fusion ring
+   put
+
+```text
+X=e_q tensor e_0,              Y=e_0 tensor e_q,
+J_1=e_k tensor e_0,            J_2=e_0 tensor e_k,
+R=J_1J_2,                      P_+/-=(1+/-R)/2,
+d=X-Y,                         s=X+Y.
+```
+
+If `phi=tau_k tensor tau_k`, then the exact grouped identity is
+
+```text
+phi(d_q^A d_(k-q)^B)
+ =phi{J_1[d^(A+B)+d^A s^B]}
+ =[e_k tensor e_0]{d^(A+B)+d^A s^B}.                (P5A.54)
+```
+
+Thus the remaining even--even simple-current packet is one sum of two
+boundary coefficients of the single-label `q` doubled algebra.  Formula
+`(P5A.54)` permits cancellation between the spectral atoms before a sign
+is requested; it is not an atomwise payment criterion.
+
+There is an equivalent one-particle path form.  Let
+
+```text
+f_n=(N_q^n)_(0,0),                 g_n=(N_q^n)_(0,k),
+L=A+B,
+C_i=sum_(j odd)
+      binom(B,j)binom(A,i-j),                         (P5A.56)
+```
+
+where an out-of-range binomial coefficient is zero.  Then
+
+```text
+phi(d_q^A d_(k-q)^B)
+ =2 sum_(i=0)^L (-1)^i C_i g_i f_(L-i).             (P5A.57)
+```
+
+The sought sign is therefore a precise alternating endpoint/return-path
+convolution for the single nonnegative fusion matrix `N_q`.  Proving
+`(P5A.57)>=0` for even `k,q` would close the complete odd
+simple-current-pair packet.
+
+**Proof.**  If `k` is odd, the labels `q,k-q` have opposite parity.
+Proposition 5A toggles the odd-labelled factors to plus signs, leaving an
+odd number of minus factors, so exchange of the two coordinates makes the
+contraction zero.  If `k` is even and `q` is odd, both labels are odd and
+Proposition 20 applies termwise.
+
+It remains to prove `(P5A.54)`.  The simple-current identity
+`e_k e_q=e_(k-q)` gives
+
+```text
+d_(k-q)=J_1X-J_2Y=J_1(X-RY).
+```
+
+All displayed elements commute, `R^2=1`, and `B` is odd.  Resolving the
+last factor on the two `R`-eigenspaces therefore gives
+
+```text
+d_(k-q)^B=J_1{P_+d^B+P_-s^B}.                       (P5A.55)
+```
+
+The element `d^(A+B)` is exchange-symmetric, whereas `d^A s^B` is
+exchange-antisymmetric.  Since exchange interchanges `J_1` and `J_2=J_1R`,
+
+```text
+phi(J_1P_+d^(A+B))=phi(J_1d^(A+B)),
+phi(J_1P_-d^A s^B)=phi(J_1d^A s^B).
+```
+
+Multiply `(P5A.55)` by `d^A` and add these two identities.  Finally
+Frobenius orthogonality identifies `phi(J_1H)` with the coefficient of
+`e_k tensor e_0` in `H`, proving `(P5A.54)`.
+
+For `(P5A.57)`, set `Y=1` in
+
+```text
+(X-Y)^A{(X-Y)^B+(X+Y)^B}.
+```
+
+Only odd powers `X^j` occur in the expression in braces.  Since `A,j`
+are odd, the coefficient of `X^iY^(L-i)` is
+`2(-1)^i C_i`.  The coefficient of `e_k tensor e_0` in
+`X^iY^(L-i)` is exactly `g_i f_(L-i)`.  Substitution in `(P5A.54)`
+proves `(P5A.57)`.  QED.
+
+The first three odd multiplicity layers of the even--even residue, and one
+genuinely new eight-factor layer, admit a short coefficient proof.
+
+**Lemma 5A8H1 (complete first eight-factor simple-current-pair
+chamber).**
+Retain the even-level, even-label case of Lemma 5A8H.  If
+
+```text
+{A,B} in {{1,1},{1,3},{1,5},{1,7}},
+```
+
+then
+
+```text
+phi(d_q^A d_(k-q)^B)>=0.                            (P5A.58)
+```
+
+More precisely, with `f_n,g_n` as in Lemma 5A8H, the values needed below
+are
+
+```text
+{A,B}={1,1}:       0,
+{A,B}={1,3}:       2g_4,
+{A,B}={1,5}:       2{g_6+10(g_4-f_3g_3)},
+(A,B)=(1,7):       2{g_8+21(g_6-g_5)
+                         +35(g_4f_4-g_3f_5)},
+(A,B)=(7,1):       2{g_8+21g_6-35g_5
+                         +35g_4f_4-21g_3f_5}.       (P5A.59)
+```
+
+**Proof.**  Since `q<k-q`, the product `e_q^2` cannot reach `e_k`, so
+`g_2=0`.  Also
+
+```text
+f_0=1,             f_1=g_1=0,             f_2=1.
+```
+
+Substitution in the alternating convolution `(P5A.57)` gives the three
+identities in `(P5A.59)`; the same surviving coefficients occur after
+interchanging `A` and `B` in the first three cases.  The same substitution
+gives the two displayed multiplicity-seven identities.
+
+It remains only to prove `g_4>=f_3g_3`.  Binary `SU(2)_k` fusion is
+multiplicity-free, and Frobenius reciprocity gives
+
+```text
+f_3=N_(q,q)^q in {0,1},
+g_3=N_(q,q)^(k-q) in {0,1}.                         (P5A.60)
+```
+
+If their product is zero, the claim is immediate.  If it is one, the
+two channels `q` and `k-q` both occur in `e_q^2`.  Their product contains
+`e_k` once because
+
+```text
+N_(q,k-q)^k=1.
+```
+
+Selecting these two channels in `e_q^2 e_q^2` shows `g_4>=1`.
+Therefore `g_4-f_3g_3>=0`; also `g_4,g_6>=0`, proving the first three
+cases of `(P5A.58)`.
+
+It remains to treat `(A,B)=(1,7)`.  Since `q` is even and `q<k/2`,
+the channel `q` occurs once in
+
+```text
+e_q^2=e_0+e_2+...+e_(2q).
+```
+
+Thus `f_3=1` and coefficientwise `e_q^2>=e_q`, which gives
+`g_6>=g_5`.  If `g_3=0`, every term in the `(1,7)` line of `(P5A.59)`
+is therefore nonnegative.
+
+Suppose `g_3=1`.  Then `e_q^2` also contains `e_(k-q)`.  Multiplying the
+coefficientwise inequality
+
+```text
+e_q^2-e_q>=e_(k-q)
+```
+
+by `e_q^4` and taking the `e_k` coefficient gives
+
+```text
+g_6-g_5>=f_5.                                      (P5A.61)
+```
+
+Moreover `f_4=q+1`.  The condition `g_3=1` is `k<=3q`, and direct
+counting of complementary pairs in the displayed interval gives
+
+```text
+g_4=2q-k/2+1>=q/2+1.                               (P5A.62)
+```
+
+Finally `f_5` counts a subset of the `(q+1)^2` ordered pairs of channels
+in `e_q^2`, so
+
+```text
+5g_4f_4
+ >=5(q/2+1)(q+1)
+ >=2(q+1)^2
+ >=2f_5.                                           (P5A.63)
+```
+
+Using `(P5A.61)--(P5A.63)` in `(P5A.59)` yields
+
+```text
+(1/2)phi(d_q d_(k-q)^7)
+ >=g_8+35g_4f_4-14f_5>=0.
+```
+
+This proves the `(1,7)` orientation.
+
+For completeness, consider the reverse orientation `(A,B)=(7,1)`.
+If `g_3=1`, inequalities `(P5A.61)--(P5A.62)` and the crude bound
+`g_5<=(q+1)^2` give
+
+```text
+g_6-g_5>=f_5,
+35g_4f_4>=14g_5.                                  (P5A.64)
+```
+
+Writing its value in `(P5A.59)` as
+
+```text
+g_8+21(g_6-g_5)-14g_5+35g_4f_4-21f_5
+```
+
+therefore proves nonnegativity.
+
+It remains that `g_3=0`, equivalently `k-q>2q`.  Put
+`c_s=[e_s]e_q^4`.  For every `s>=2q`, the exact fusion formula writes
+`c_s` as the number of ordered channels `r,t in {0,2,...,2q}` satisfying
+
+```text
+s<=r+t<=2k-s.
+```
+
+Lowering `s` by two enlarges this interval, so
+
+```text
+c_(s-2)>=c_s.                                      (P5A.65)
+```
+
+Since `q+2` is a channel of `e_q^2` distinct from `q`,
+
+```text
+g_6-g_5
+ =[e_k]e_q^4(e_q^2-e_q)
+ >=c_(k-q-2)
+ >=c_(k-q)=g_5.                                    (P5A.66)
+```
+
+The reverse value is consequently at least
+`g_8+7g_5+35g_4f_4>=0`.  This completes both orientations and the
+lemma.
+QED.
+
+The next odd layer reduces to one adjacent determinant comparison and
+already closes away from the affine wall.
+
+**Lemma 5A8H2 (ten-factor simple-current determinant reduction).**
+Retain the even-level, even-label hypotheses of Lemma 5A8H and take
+`(A,B)=(1,9)`.  Put
+
+```text
+Delta_3=g_4f_6-g_3f_7,
+Delta_5=g_6f_4-g_5f_5.                             (P5A.67)
+```
+
+Then
+
+```text
+(1/2)phi(d_q d_(k-q)^9)
+ =42(2Delta_3+3Delta_5)+36(g_8-g_7)+g_10.          (P5A.68)
+```
+
+Consequently the single inequality
+
+```text
+2Delta_3+3Delta_5>=0                               (DP9)
+```
+
+proves the complete oriented `(1,9)` packet.  Moreover `(DP9)`, and hence the
+packet, holds uniformly for every admissible `q<k/2`.
+
+**Proof.**  In `(P5A.57)` with `A=1,B=9`, pair each odd exponent with
+the following even exponent.  The binomial coefficients agree inside
+each pair, giving
+
+```text
+84(g_4f_6-g_3f_7)
++126(g_6f_4-g_5f_5)
++36(g_8f_2-g_7f_3)+g_10f_0.
+```
+
+As in Lemma 5A8H1, `f_0=f_2=f_3=1`.  Also
+`e_q^2>=e_q` coefficientwise, so `g_8>=g_7`.  This proves
+`(P5A.68)` and the sufficiency of `(DP9)`.
+
+If `k>5q`, no product of three or five copies of `e_q` can reach the
+top label `k`; hence `g_3=g_5=0`.  Both determinants in `(P5A.67)` are
+then nonnegative:
+
+```text
+Delta_3=g_4f_6>=0,               Delta_5=g_6f_4>=0.
+```
+
+It remains here to close `4q<=k<=5q`.  Write
+
+```text
+q=2Q,                 k=2K,                 a=5Q-K,
+0<=a<=Q.                                            (P5A.70)
+```
+
+The product `e_q^2` is the untruncated interval
+`{e_0,e_2,...,e_(2q)}`.  Pair two copies of this interval to compute
+the coefficient of a high label.  For a channel indexed by `j`, output
+`k-2j` requires the two half-label indices to have sum in
+
+```text
+[K-j,K+j].
+```
+
+Because `K>=4Q=2q`, summing these upper-tail triangles gives exactly
+
+```text
+g_5=binom(a+2,2),
+g_6=binom(Q+a+3,3).                                (P5A.71)
+```
+
+No affine image can enter the return moments of orders four and five in
+this range, and the ordinary triangle count gives
+
+```text
+f_4=2Q+1,
+f_5=(5Q^2+5Q+2)/2.                                (P5A.72)
+```
+
+Put `R(a)=g_6/g_5`.  Direct cancellation of adjacent binomial
+coefficients gives
+
+```text
+R(a+1)/R(a)
+ ={(Q+a+4)(a+1)}/{(Q+a+1)(a+3)}<=1,
+```
+
+because `a<=Q<=2Q-1` (the case `Q=1` is included at equality in the
+needed bound).  Hence `R(a)>=R(Q)`, and
+
+```text
+R(Q)=2(2Q+3)(2Q+1)/{3(Q+2)}
+    >=(5Q^2+5Q+2)/{2(2Q+1)}
+    =f_5/f_4.                                      (P5A.73)
+```
+
+After clearing the positive denominator, the middle inequality is
+
+```text
+17Q^3+35Q^2+20Q>=0.
+```
+
+Thus `Delta_5>=0`.  Also `k>3q` throughout this range, so
+`g_3=0` and `Delta_3>=0`.
+Therefore `(DP9)` holds throughout `4q<=k<=5q`.
+
+The same endpoint count also closes the next band.  For
+`3q<=k<=4q`, write
+
+```text
+q=2Q,                 k=2K,                 b=4Q-K,
+0<=b<=Q.
+```
+
+Splitting the two interval indices at the two affine-wall crossings
+gives
+
+```text
+g_5=binom(Q+b+2,2),
+g_6=binom(2Q+3,3)-2binom(b+2,3)
+    +b(2Q+1)(Q+1)+b(b+1)(2Q-b-1)/2.               (P5A.74)
+```
+
+The return moments are still the values in `(P5A.72)`.  Put
+`H(b)=g_5` and `G(b)=g_6`.  The adjacent difference is
+
+```text
+G(b+1)-G(b)
+ =(2Q+1)(Q+1)+(b+1)(4Q-5b-8)/2.
+```
+
+Since `H(b+1)-H(b)=Q+b+2`, the assertion that `G/H` decreases is
+equivalent, after cancelling the positive factor `Q+b+2`, to
+
+```text
+2G(b)-(Q+b+1)(G(b+1)-G(b))>=0.
+```
+
+Substitution from `(P5A.74)` makes its left side
+
+```text
+(2/3)Q^3+Q^2+(16/3)Q+5
+ +(15/2)Qb+(55/6)b
+ +(5/2)Qb^2+5b^2+(5/6)b^3,
+```
+
+which is positive.  At the worst endpoint `b=Q`,
+
+```text
+H(Q)=(Q+1)(2Q+1),
+G(Q)=(Q+1)(7Q^2+5Q+2)/2,
+Delta_5=Q^2(Q+1)(2Q+1)>0.                         (P5A.75)
+```
+
+Thus `Delta_5>=0` on the whole band.  If `k>3q`, then `g_3=0`,
+so `Delta_3>=0` as well.
+
+It remains only the endpoint `k=3q`.  Here `k=6Q`, `q=2Q`, and
+`g_3=1`, `g_4=Q+1`.  For completeness, let
+
+```text
+W_n(s)=[z^s](1+z+...+z^(2Q))^n
+      =sum_(j>=0)(-1)^j binom(n,j)
+         binom(s-j(2Q+1)+n-1,n-1),
+```
+
+with an out-of-range binomial coefficient interpreted as zero.  If
+`m_n(2L)` denotes the ordinary `SU(2)` multiplicity, then
+
+```text
+m_n(2L)=W_n(nQ-L)-W_n(nQ-L-1).
+```
+
+The sixfold product has not yet met an affine image, while the
+Kac--Walton reflection formula for the sevenfold return is
+
+```text
+f_6=m_6(0),
+f_7=m_7(0)-m_7(12Q+2)+m_7(12Q+4).
+```
+
+Substitution in the displayed finite binomial sum yields exactly
+
+```text
+f_6=4Q^3+6Q^2+4Q+1,
+f_7=(153Q^4+302Q^3+255Q^2+106Q+24)/24.
+```
+
+Consequently
+
+```text
+Delta_3
+ =-Q(57Q^3+62Q^2+15Q-14)/24,
+Delta_5=Q^2(Q+1)(2Q+1),
+2Delta_3+3Delta_5
+ =Q(15Q^3+46Q^2+21Q+14)/12>0.                    (P5A.76)
+```
+
+This closes the boundary.  Together with the preceding band and the
+far-wall argument, `(DP9)` holds for every `k>=3q`.
+
+It remains to prove the strip `2q<k<3q`.  Write
+
+```text
+q=2Q,                 k=2K,                 c=3Q-K,
+1<=c<=Q-1.                                          (P5A.77)
+```
+
+For `n<=6`, the next affine image lies beyond the ordinary tensor
+support, so
+
+```text
+g_n=m_n(2K)-m_n(2K+2).
+```
+
+Applying the coefficient formula used above gives
+
+```text
+g_3=1,
+g_4=Q+c+1,
+g_5=binom(2Q+c+2,2)-5binom(c+1,2),
+g_6=binom(3Q+c+3,3)-6binom(Q+c+2,3).               (P5A.78)
+```
+
+The return coefficients are
+
+```text
+f_4=2Q+1,
+f_5=(5Q^2+5Q+2)/2-binom(2c-Q+1,2)_+,
+f_6=4Q^3+6Q^2+4Q+1-binom(2c+2,3),
+f_7=F_7-binom(Q+2c+3,4)
+          +7binom(2c-Q+2,4)_+,                    (P5A.79)
+```
+
+where the subscript `+` means that a binomial coefficient below its
+lower index is zero, and
+
+```text
+F_7=binom(7Q+5,5)-7binom(5Q+4,5)
+    +21binom(3Q+3,5)-35binom(Q+2,5).
+```
+
+These identities follow directly from
+`f_n=m_n(0)+m_n(2k+4)-m_n(2k+2)` and the finite sum for `W_n`;
+there is no further affine image in the displayed orders.
+
+Now substitute `(P5A.78)--(P5A.79)` into `(DP9)`.  If `2c<=Q`, put
+`x=c>=1`, `y=Q-2c>=0`.  The left side becomes
+
+```text
+62x^4+99x^3y+(149/2)x^3
++54x^2y^2+(189/2)x^2y+27x^2
++(38/3)xy^3+35xy^2+(107/6)xy+(13/2)x
++(5/4)y^4+(23/6)y^3+(7/4)y^2+(7/6)y.              (P5A.80)
+```
+
+If `2c>=Q`, put `x=Q-c>=1`, `y=2c-Q>=0`.  The same left side becomes
+
+```text
+62x^4+149x^3y+(149/2)x^3
++144x^2y^2+144x^2y+27x^2
++(184/3)xy^3+92xy^2+(131/3)xy+(13/2)x
++8y^4+16y^3+16y^2+8y.                             (P5A.81)
+```
+
+Every coefficient is nonnegative and the `x`-part is positive.
+Thus `(DP9)` holds also in `2q<k<3q`, completing the uniform oriented
+`(A,B)=(1,9)` packet.  QED.
+
+The independent strict C++ moment diagnostic
+
+```text
+character_ring_iter/analyze_su2_simple_current_moments.cpp
+```
+
+constructs `f_n,g_n` by the exact finite fusion recurrence and evaluates
+the two sides isolated in `(P5A.68)` and `(DP9)`.  Its discovery scan
+over all even `k<=300` and even `q<k/2` covered 5,550 parameter pairs and
+found no negative `(DP9)` value.  This bounded scan does not prove the
+theorem above, but independently checks its finite-fusion values.  Its
+source-bound transcript is
+`certificates/su2_simple_current_moments.log`; the source SHA-256 is
+`4fb9400b11eb8ae64035aa43aa006f5e61a737ab3d8d77c11b0b843036f7d0a6`.
+
+Orientation matters at this layer.  Direct substitution in `(P5A.57)`
+gives for the reverse multiplicities `(A,B)=(9,1)`
+
+```text
+(1/2)phi(d_q^9 d_(k-q))
+ =84g_4f_6-36g_3f_7+126Delta_5
+   +36g_8-84g_7+g_10.                              (P5A.82)
+```
+
+The exact diagnostic finds no negative reverse value through level 300.
+A tempting deduction from the proved `(DP9)` would additionally require
+
+```text
+3Delta_5+2(g_4f_6-g_7)>=0.
+```
+
+That inequality is false already at `(k,q)=(10,2)`, where its value is
+`-12`; its minimum through level 100 is `-46982`.  Thus `(P5A.82)` needs
+a genuinely grouped argument, just as the reverse `(7,1)` packet did.
+The following exact chamber expansion supplies it.
+
+**Lemma 5A8H3 (reverse ten-factor simple-current packet).**  Retain the
+even-level, even-label hypotheses of Lemma 5A8H.  Then
+
+```text
+phi(d_q^9 d_(k-q))>=0                              (P5A.83)
+```
+
+for every `q<k/2`.  Consequently both orientations of the complete
+`{A,B}={1,9}` chamber are uniform.
+
+**Proof.**  Write `q=2Q`, `k=2K`, and put `M=2Q+1`.  The two finite
+binomial-difference operators
+
+```text
+A_n(x)=sum_(t>=0)(-1)^t binom(n,t)
+          binom(x-tM+n-2,n-2),
+D_n(x)=sum_(t>=0)(-1)^t binom(n,t)
+          binom(x-tM+n-3,n-3)                     (P5A.84)
+```
+
+use the convention that an out-of-range binomial coefficient is zero.
+The ordinary weight count and the Kac--Walton reflection formula give,
+exactly,
+
+```text
+f_n=A_n(nQ)-sum_(j>=1)
+       D_n(nQ-j(2K+2)+1),
+g_n=sum_(j>=0)
+       D_n(nQ-(2j+1)K-2j).                         (P5A.85)
+```
+
+Every sum in `(P5A.84)--(P5A.85)` is finite.  Thus `(P5A.82)` is a
+piecewise polynomial identity, not an asymptotic approximation.
+
+First suppose `k>=3q`.  If `k>7q`, then `g_7=0` and `(P5A.82)` is
+manifestly nonnegative.  If `6q<k<=7q`, put `a=7Q-K`, so
+`0<=a<Q`.  Formula `(P5A.85)` gives
+
+```text
+g_7=binom(a+4,4),          g_8=binom(Q+a+5,5).
+```
+
+Since
+
+```text
+g_8/g_7
+ >=binom(a+6,5)/binom(a+4,4)
+ ={(a+6)(a+5)}/{5(a+1)}>=7/3,
+```
+
+the term `36g_8-84g_7` is nonnegative; all earlier wall moments vanish
+and `g_10>=0`.
+
+For the remaining bands, substitute `(P5A.85)` directly into
+`(P5A.82)`.  Use respectively
+
+```text
+5q<k<=6q:   a=6Q-K,  Q=a+y+1,
+k=5q:       Q=x+1,
+4q<k<=5q:   a=5Q-K,  Q=a+y+1,
+3q<k<=4q:   b=4Q-K,  Q=b+y+1,
+k=3q:       Q=x+1.                                 (P5A.86)
+```
+
+Here every displayed free coordinate is nonnegative.  In the
+`3q<k<=4q` band one may discard the nonnegative next affine image of
+`g_10`.  After clearing positive factorial denominators, the five lower
+polynomials in `(P5A.86)` have respectively `36,8,36,36,8` nonzero
+coefficients, and every coefficient is positive.
+
+It remains `2q<k<3q`.  Retain `c=3Q-K` from `(P5A.77)` and put
+
+```text
+u=2c-Q,                 r=Q-c.
+```
+
+In `(P5A.85)`, discard the nonnegative next affine images of `g_8` and
+`g_10`, replace `f_5` by its larger stable value, and replace `f_7` by
+the upper bound consisting of its stable value plus
+`7binom(u+2,4)_+`.  The only adverse extra wall term left is
+`binom(3c-2Q+2,4)_+` in `g_7`.  These replacements give a lower bound
+for `(P5A.82)`.
+
+The omitted `g_8` image and the `3q<k<=4q` image of `g_10` are single
+ordinary-tail binomial coefficients.  In the present strip the only
+two-term image that needs a sign check is
+
+```text
+binom(Q+3c+5,7)-10binom(3c-Q+4,7).
+```
+
+If the second term is active, put `A=3c-Q+4` and `M=2Q+1`; then
+`A<=M`, and
+
+```text
+binom(A+M,7)/binom(A,7)
+ >=binom(2M,7)/binom(M,7)>10.
+```
+
+Small `M<7` has a zero second binomial.  Thus every discarded image is
+indeed nonnegative.  The four exhaustive lattice chambers are
+
+```text
+u<=0:       Q=2(x+1)+y,       c=x+1,
+u=1:        Q=2x+3,            c=x+2,
+u>=2,
+ u-r<=1:    Q=3x+2y+4,         c=2x+y+3,
+u-r>=2:     Q=3x+y+5,          c=2x+y+4,            (P5A.87)
+```
+
+with `x,y>=0`.  On substitution, the four lower polynomials have
+`36,8,36,36` nonzero coefficients, respectively, and every coefficient
+is positive.  Hence the reverse value is positive throughout the strip.
+
+The strict exact C++ certificate
+`character_ring_iter/prove_su2_simple_current_dp9.cpp` performs all nine
+coefficient expansions in `(P5A.86)--(P5A.87)` over
+`boost::rational<cpp_int>` and rejects a nonpositive result.  It also
+checks the strip lower bounds against all 192 direct finite-fusion values
+through level 100.  The exact coefficient proof is unbounded; the scan is
+only an independent formula audit.  The source-bound transcript is
+`certificates/su2_simple_current_dp9.log`, and the source SHA-256 is
+`0235480f98ef2328942a6f270fdf603a2e6f67b8787abf8811b79b92cca24955`.
+QED.
+
+The strict exact C++ certificate
+
+```text
+character_ring_iter/prove_su2_simple_current_dp9.cpp
+```
+
+expands both chamber substitutions `(P5A.80)--(P5A.81)` over
+`boost::rational<cpp_int>`, rejects any negative coefficient, and compares
+the formulas with the direct finite-fusion recurrence in all 192 strip
+parameters through level 100.  It returns `PASS_EXACT`; the finite scan is
+only a formula audit, while coefficientwise positivity is the unbounded
+certificate.  Its source-bound transcript is
+`certificates/su2_simple_current_dp9.log`; the source SHA-256 is
+`0235480f98ef2328942a6f270fdf603a2e6f67b8787abf8811b79b92cca24955`.
+
+The complete odd tower with one copy of the first orientation has a
+factorization which isolates the next induction target.
+
+**Lemma 5A8H4 (positive-root factorization of the `(1,2m+1)` tower).**
+Retain the even-level, even-label hypotheses, let `m>=0`, and take
+`(A,B)=(1,2m+1)`.  Define
+
+```text
+Q_m(z,w)=sum_(j=0)^m binom(2m+1,2j)z^(m-j)w^j.
+```
+
+Then
+
+```text
+phi(d_q d_(k-q)^(2m+1))
+ =2[e_k tensor e_0] X(X-Y)Q_m(X^2,Y^2)             (P5A.88)
+
+ =2sum_(j=0)^m binom(2m+1,2j)
+    {g_(2m-2j+2)f_(2j)-g_(2m-2j+1)f_(2j+1)}.
+```
+
+Moreover
+
+```text
+Q_m(z,w)=product_(ell=1)^m
+  {z+cot^2((2ell-1)pi/(2(2m+1)))w}.                (P5A.89)
+```
+
+Thus every factor in the polynomial tower has a strictly positive
+quadratic slope.  The remaining all-`m` problem is precisely to prove
+endpoint positivity after the ordered quadratic transfers in `(P5A.89)`;
+it is no longer an unspecified alternating binomial sum.
+
+**Proof.**  With `B=2m+1`, identity `(P5A.54)` gives
+
+```text
+d^(B+1)+d s^B
+ =(X-Y){(X-Y)^B+(X+Y)^B}
+ =2X(X-Y)Q_m(X^2,Y^2).
+```
+
+Taking the boundary coefficient proves `(P5A.88)`.  For the factorization,
+put `t=w/z`.  The roots of
+
+```text
+Q_m(1,t)={(1+sqrt(t))^(2m+1)
+          +(1-sqrt(t))^(2m+1)}/2
+```
+
+are exactly
+`-tan^2((2ell-1)pi/(2(2m+1)))`, `1<=ell<=m`; hence
+the corresponding linear-factor slopes are their negative reciprocals,
+the displayed positive cotangent squares.
+Both sides of `(P5A.89)` are monic in `z`, so the roots determine the
+identity.  QED.
+
+The determinant needed by the fourth transfer has a uniform sign which
+was implicit, but not isolated, in Lemma 5A8H2.
+
+**Lemma 5A8H5 (uniform fifth adjacent determinant).**  Under the
+even-level, even-label hypotheses,
+
+```text
+Delta_5=g_6f_4-g_5f_5>=0                            (P5A.90)
+```
+
+for every `q<k/2`.
+
+**Proof.**  Lemma 5A8H2 proves `(P5A.90)` throughout `k>=3q`; see
+`(P5A.71)--(P5A.75)`.  In the remaining strip use `(P5A.78)--(P5A.79)`.
+For `2c<=Q`, `2c-Q=1`, and `2c-Q>=2`, substitute respectively
+
+```text
+Q=2(x+1)+y, c=x+1;
+Q=2x+3,      c=x+2;
+Q=2x+y+4,    c=x+y+3,
+```
+
+where `x,y>=0`.  After clearing positive denominators, `Delta_5`
+becomes a polynomial with respectively `15,5,15` nonzero coefficients.
+Every coefficient is positive.  These exact expansions are checked by
+`character_ring_iter/prove_su2_simple_current_dp9.cpp` and recorded in
+`certificates/su2_simple_current_dp9.log`.  QED.
+
+The positive-root factorization now gives a genuine uniform prefix of the
+quadratic-transfer induction, not only its final values at `m<=4`.
+
+**Lemma 5A8H6 (first four ascending quadratic transfers).**  In Lemma
+5A8H4 put `B=2m+1` and order the factor slopes increasingly:
+
+```text
+alpha_r=tan^2(r pi/B),                 1<=r<=m.
+```
+
+For every `j<=min(4,m)`,
+
+```text
+[e_k tensor e_0]X(X-Y)
+ product_(r=1)^j(X^2+alpha_rY^2)>=0.                (P5A.91)
+```
+
+**Proof.**  Let `e_s` denote the elementary symmetric functions of the
+first `j` slopes.  For positive variables the ratio `e_s/e_(s-1)` is
+coordinatewise nondecreasing.  Indeed, differentiating in one variable
+reduces the numerator to a Newton inequality for the remaining
+variables.
+
+For fixed `r`, `tan^2(r pi/B)` decreases as `B` increases.  At the
+smallest possible values `B=7` and `B=9`, identity `(P5A.88)` gives
+
+```text
+B=7: e_1=21,  e_2=35,              e_2/e_1=5/3,
+B=9: e_2=126, e_3=84,              e_3/e_2=2/3.    (P5A.92)
+```
+
+Thus the first three slopes always satisfy `e_2<=(5/3)e_1`, and the
+first four always satisfy `e_3<=(2/3)e_2`.
+
+The four successive boundary values, with the harmless common factor two
+removed, are
+
+```text
+j=1: g_4,
+j=2: g_6+e_1(g_4-f_3g_3),
+j=3: g_8+e_1(g_6-g_5)+e_2(g_4f_4-g_3f_5),
+j=4: g_10+e_1(g_8-g_7)+e_2Delta_5+e_3Delta_3.
+```
+
+The first two are nonnegative by Lemma 5A8H1.  For `j=3`, only `g_3=1`
+can be adverse.  Then `(P5A.65)--(P5A.66)` give
+
+```text
+g_6-g_5>=f_5,
+g_4f_4-f_5>=-(3/5)f_5,
+```
+
+and `(P5A.92)` pays the second term with the first.  For `j=4`,
+`g_8>=g_7`, Lemma 5A8H5 gives `Delta_5>=0`, and `(DP9)` gives
+`2Delta_3+3Delta_5>=0`.  If `Delta_3<0`, then
+
+```text
+e_2Delta_5+e_3Delta_3
+ >=(e_2/3)(3Delta_5+2Delta_3)>=0;
+```
+
+otherwise the assertion is immediate.  This proves `(P5A.91)`.  QED.
+
+The next transfer is also uniform.  This is the first step at which an
+individual adjacent determinant can be negative, so the weighted core
+must be retained.
+
+**Lemma 5A8H7 (fifth ascending quadratic transfer).**  Under the same
+hypotheses, put
+
+```text
+D_7=g_8f_4-g_7f_5,  D_5=g_6f_6-g_5f_7,
+D_3=g_4f_8-g_3f_9.
+```
+
+Then
+
+```text
+D_7>=0,  D_5>=0,  10D_7+14D_5+5D_3>=0.             (P5A.93)
+```
+
+Consequently `(P5A.91)` also holds for `j=5<=m`, uniformly in the
+eventual packet length.  In particular, the whole oriented `(1,11)`
+simple-current packet is nonnegative.
+
+**Proof.**  At `B=11` the fifth boundary value, with the common positive
+factor suppressed, is
+
+```text
+g_12+55(g_10-g_9)+330D_7+462D_5+165D_3.            (P5A.94)
+```
+
+Kac--Walton proves `(P5A.93)` by a finite chamber identity, not by a
+level cutoff.  In the strip `2q<k<3q`, split at the two image walls for
+`g_7,g_8` and refine the low `D_5` chamber into `c=1,Q=2`,
+`c=1,Q>=3`, and `c>=2`.  After the nonnegative changes of variables,
+the resulting exact polynomials for `D_7`, `D_5`, and the weighted core
+have only nonnegative rational coefficients.  The boundary `k=3q` and
+each band
+
+```text
+3q<k<=4q, ..., 7q<k<=8q
+```
+
+have the same property.  Beyond `8q` the relevant endpoint terms have
+stabilized or vanished, making the assertions immediate.  All
+polynomials, including the zero far chambers of `D_5`, are emitted by
+`character_ring_iter/prove_su2_simple_current_dp9.cpp`; its final status
+is `PASS_EXACT`.
+
+It remains to pass from `B=11` to every later packet.  Let `e_s` be the
+elementary symmetric functions of the first five increasing slopes.
+At `B=11`,
+
+```text
+e_2=330, e_3=462, e_4=165,
+e_3/e_2=7/5, e_4/e_3=5/14.                          (P5A.95)
+```
+
+The coordinatewise ratio monotonicity used in Lemma 5A8H6 and the
+decrease of each slope with `B` imply that the same two ratios are no
+larger for every `B>=11`.  Write `H=D_5+5D_3/14`.  If `D_3>=0`,
+positivity is immediate.  If `D_3<0`, then
+
+```text
+e_2D_7+e_3D_5+e_4D_3 >= e_2D_7+e_3H.
+```
+
+When `H>=0`, use `D_7>=0`.  When `H<0`, use
+`e_2/e_3>=5/7` and the last inequality in `(P5A.93)`:
+
+```text
+(e_2/e_3)D_7+H >= (5/7)D_7+D_5+(5/14)D_3 >=0.
+```
+
+Finally `g_12>=0` and `g_10-g_9>=0`, since `q^2>=q`.  This proves the
+fifth transfer and `(P5A.94)`.  QED.
+
+The strict C++ diagnostic
+`character_ring_iter/analyze_su2_simple_current_transfer.cpp` evaluates
+both orders of every positive-root prefix.  Through level 300 and `m=39`
+it tested 4,329,025 prefixes.  The ascending order had no negative value.
+The descending order has a robust numerical failure at level six, label
+two, `m=7`, after four factors.  These floating-point results are
+discovery evidence only; the exact content is the uniform five-prefix
+proof in Lemmas 5A8H6--5A8H7.  The transcript is
+`certificates/su2_simple_current_transfer.log`, and the source SHA-256 is
+`ec49cb32affa4f6e772b2decebf8d3f012b122e5316f2ecc1315b01b1f3d1dc3`.
+
+The strict exact C++ diagnostic
+
+```text
+character_ring_iter/analyze_su2_simple_current_pair.cpp
+```
+
+computes the left side directly in the doubled finite fusion ring with
+arbitrary-precision integer coefficients and independently checks the
+grouped boundary and alternating-path expressions.  Through level 36 and
+odd multiplicities at most 19 it checked 30,600 parity rows, found 16,646
+exact zeros and no negative value; the doubled-ring and grouped-boundary
+calculations agreed throughout.  A smaller CI replay also checks the
+alternating-path calculation independently.  These runs are bounded
+discovery evidence for the remaining even--even inequality; the first two
+parity cases, identities `(P5A.54)` and `(P5A.57)`, and the three
+multiplicity layers plus the complete `{1,7}` and `{1,9}` layers of
+Lemmas 5A8H1--5A8H3 are unbounded proofs.  Lemma 5A8H4 additionally
+factorizes the full oriented `(1,2m+1)` tower, but does not by itself prove
+all `m`.
+The source-bound transcript is
+`certificates/su2_simple_current_pair.log`; the verifier source SHA-256 is
+`e1c3c4d8a4e49900ae90dd1c2c12496fc3c4fad8db51c43a677a6a509402a351`.
+
+Propositions 5A8G1 and 5A8G3 force a structural change in the spectral
+route: a proof must permit cancellation or comparison between packets
+containing several negative atoms, or lift the signed atomic measure to a
+larger acute state space before applying AM--GM.  Paying each negative atom
+independently is intrinsically too strong, even with geometric averaging.
+
+For a block with exactly one minus factor, `Omega_A` is the oriented
+wedge state used later in Propositions 24A and 24B.  Those propositions
+therefore give genuine invariant subcones of `(OAC_k)`: the
+fundamental-suffix cone and the even-suffix/odd-source cone.  Proposition
+12F1 is the corresponding all-even ordered packet cone after the central
+parity twist.  The new content required for the full theorem is a common
+acute enlargement which contains these cones and is stable under the
+double-minus recurrence in `(P5A.39)`.
+
 For the second reduction, let `N_p` be the symmetric fusion matrix of label
 `p`, let `e_p` be the corresponding coordinate vector, and define the fusion
 Hankel extension
@@ -18405,23 +20599,18 @@ Finally, in a disjoint triangle and edge, the edge `{u,v}` makes
 the three-vertex part.  This proves `(P23.11z5zy7x)--(P23.11z5zy7y)`.
 QED.
 
-The interval-avoidance templates cannot remain in the four-deep
-interior.  The reason is a stronger fourfold output band.
+The interval-avoidance templates cannot remain once the complementary
+block is three-deep.  The reason is that three entries on each side
+already supply the full output-four band needed below.
 
-**Lemma 23A9S2F (four-deep complementary-band closure).**  Let a
-selected non-top active cut have
+**Lemma 23A9S2F (three-deep complementary-band closure).**  Let a
+selected non-top active cut of maximal complementary rank have
 
 ```text
 A={r,x,y},                         B={s,u,v,w},
 ```
 
-and suppose the active pair has
-
-```text
-cap_k(x),cap_k(y)>=4.
-```
-
-If the complementary block can be paired as two fusion intervals
+and pair the complementary block as two fusion intervals
 
 ```text
 I=alpha star_k beta,                L=gamma star_k delta
@@ -18430,41 +20619,68 @@ I=alpha star_k beta,                L=gamma star_k delta
 with
 
 ```text
-|I|>=4,               |L|>=4,       d=|I intersection L| in {1,2},
+|I|>=3,               |L|>=3,       d=|I intersection L| in {1,2}.
 ```
 
-then its profile satisfies
+Then its profile satisfies
 
 ```text
 d=1:       (b_0,b_2,b_4)>=(1,3,6);
 d=2:       (b_0,b_2,b_4)>=(2,6,6).                 (P23.11z5zy7z)
 ```
 
-Together with Lemma 23A9S2E this gives
+Since every nonexceptional active triple has profile at least
+`(1,2,1)`, orthogonality gives
 
 ```text
-d=1:                    N>=19;
-d=2:                    N>=26.                     (P23.11z5zy7z1)
+d=1:                    N>=13;
+d=2:                    N>=20.                     (P23.11z5zy7z1)
 ```
 
-Consequently, in either interval-avoidance template of
-`(P23.11z5zy7w)--(P23.11z5zy7y)`, a raw deficit forces
+There are also sharp one-step endpoint variants.  Suppose one interval is
 
 ```text
-cap_k(s)=3
+I=s star_k ell,             cap_k(s)>=3,            cap_k(ell)=2,
 ```
 
-or an incident plus label of cap at most three.  Here `s` is the minus
-label whose colored graph is empty.  Thus the no-`k`, one-color
-interior with every relevant cap at least four is closed; the residual
-is a genuine cap-three endpoint classification.
+the other interval has length at least three, and the invariant
+intersection does not contain zero.  Then
 
-**Proof.**  Two step-two intervals of length at least four whose
+```text
+d=1:       (b_0,b_2,b_4)>=(1,3,3),                 (P23.11z5zy7z1a0)
+d=2:       (b_0,b_2,b_4)>=(2,5,5).                 (P23.11z5zy7z1a)
+```
+
+In the rank-two line, if both labels in the selected active pair have
+cap at least three, the minimal-profile rigidity
+Lemma 23A9S2B2 strengthens its profile in either the output-two or
+output-four coordinate, and hence
+
+```text
+N>=22.                                             (P23.11z5zy7z1b)
+```
+
+Consequently, in the no-`k`, one-color setting the complete non-top
+demand is paid whenever one maximal-weight active edge contains every
+indexed plus label of cap two.  In either graph template of
+`(P23.11z5zy7w)--(P23.11z5zy7y)`, a residual therefore forces the set
+
+```text
+L_2={i: cap_k(p_i)=2}
+```
+
+to have at least two vertices.  If it has exactly two, every
+maximal-weight edge avoids both of them.  In particular the rank-one
+chamber has at least three cap-two positions.  Thus the one-color endpoint
+is a cap-two weighted-placement problem.  A cap-three inactive minus
+label or a cap-three plus label creates no residual by itself.
+
+**Proof.**  Two step-two intervals of length at least three whose
 intersection has size at most two meet at opposite ends.  If
 `I intersection L={z}`, exchange them so that
 
 ```text
-z-6,z-4,z-2,z in I,             z,z+2,z+4,z+6 in L.
+z-4,z-2,z in I,                    z,z+2,z+4 in L.
 ```
 
 The three ordered pairs
@@ -18481,14 +20697,14 @@ fuse to output two.  The six ordered pairs
 ```
 
 fuse to output four.  The displayed interval entries imply
-`6<=z<=k-6`, so none of the lower or affine upper triangle inequalities
+`4<=z<=k-4`, so none of the lower or affine upper triangle inequalities
 removes these paths.  This proves the first line of
 `(P23.11z5zy7z)`.
 
 If the intersection is `{z,z+2}`, exchange the intervals so that
 
 ```text
-z-4,z-2,z,z+2 in I,           z,z+2,z+4,z+6 in L.
+z-2,z,z+2 in I,                   z,z+2,z+4 in L.
 ```
 
 The six pairs
@@ -18498,40 +20714,848 @@ The six pairs
 (z+2,z),       (z+2,z+2),     (z+2,z+4)
 ```
 
-all fuse both to output two and to output four.  Indeed
-`4<=z<=k-6`, their distances are at most two, and their sums lie
-between the two output-four walls.  This proves the second line.
-Dotting `(P23.11z5zy7z)` with the active-triple profile
-`(1,2,2)` from Lemma 23A9S2E gives `(P23.11z5zy7z1)`.
-
-Consider first `K_3 disjoint-union K_2`, with notation as in Lemma
-23A9S2E.  Select the triangle edge `{y,z}` and pair its complement as
+fuse to output two.  The following six pairs fuse to output four:
 
 ```text
-(s,x) | (u,v).                                      (P23.11z5zy7z2)
+(z-2,z+2),     (z,z),         (z,z+2),
+(z,z+4),       (z+2,z),       (z+2,z+2).
 ```
 
-All three plus labels in this pairing are incident to graph edges.
-Hence, if all incident plus caps and `cap_k(s)` are at least four, both
-intervals in `(P23.11z5zy7z2)` have length at least four.  The selected
-rank is at most two, so `(P23.11z5zy7z1)` applies.  In the rank-one
-chamber the entire one-color demand is at most ten; in the rank-two
-chamber it is at most twenty.  Both are strictly below the respective
-bounds `19,26`.
+Indeed the displayed entries imply `2<=z<=k-4`; the six differences
+are at most four, and their sums lie between the output-four walls.
+This proves the second line.  Dotting `(P23.11z5zy7z)` with
+`(1,2,1)` proves `(P23.11z5zy7z1)`.
 
-For `K_2 join independent-set_3`, write the two-vertex part as
-`{x,y}` and the other part as `{z_1,z_2,z_3}`.  Select the edge
-`{x,z_1}` and pair its complement as
+There are ten indexed plus pairs.  In a one-color graph, maximal cut
+rank one gives total demand at most ten, while maximal cut rank two gives
+total demand at most twenty.  Thus `(P23.11z5zy7z1)` pays the complete
+one-color demand.
+
+For the endpoint variants, write
 
 ```text
-(s,z_2) | (y,z_3).                                  (P23.11z5zy7z3)
+I={z,z+2}.
 ```
 
-The same cap hypothesis again makes both intervals four-deep, and the
-same comparison closes the complete demand.  Fusion depth already gives
-`cap_k(s)>=3`; failure of the four-deep hypothesis therefore means
-exactly `cap_k(s)=3` or that one of the displayed incident plus labels
-has cap at most three.  This proves the endpoint reduction.  QED.
+The cap assumptions on `s,ell` give `1<=z<=k-3`.  First let the
+intersection have rank one.  The other interval meets `I` at one
+endpoint and extends away from it by at least two entries.  Up to affine
+reflection, it contains
+
+```text
+{z-4,z-2,z}.
+```
+
+The three pairs
+
+```text
+(z,z),                 (z,z-2),                 (z+2,z)
+```
+
+fuse to output two, while
+
+```text
+(z,z),                 (z,z-2),                 (z,z-4)
+```
+
+fuse to output four.  The displayed entries put all sums and
+differences inside the finite triangle walls.  This proves
+`(P23.11z5zy7z1a0)`.
+
+Now let the intersection have rank two.  The other interval contains
+`I` and at least one adjacent entry, hence contains either
+
+```text
+{z-2,z,z+2}                 or                 {z,z+2,z+4}.
+```
+
+The two cases are exchanged by the affine reflection.  In the second
+case the five pairs
+
+```text
+(z,z), (z,z+2), (z+2,z), (z+2,z+2), (z+2,z+4)
+```
+
+fuse to output two.  Five output-four pairs are
+
+```text
+(z,z+2), (z,z+4), (z+2,z), (z+2,z+2), (z+2,z+4).
+```
+
+At the sole upper endpoint where the last pair misses output four,
+replace it by `(z,z)`; the lower endpoint is already covered.  This
+proves `(P23.11z5zy7z1a)`.  Lemma 23A9S2B2 says that the active-triple
+profile has `m_2>=3` or `m_4>=2`.  Dotting either alternative with
+`(2,5,5)` gives `N>=22`, proving `(P23.11z5zy7z1b)`.
+
+It remains to translate the interval hypothesis into the graph
+statement.  Suppose a maximal-weight active edge contains every cap-two
+plus position.
+Its complementary block contains the other minus label `s` and three
+plus labels, all of cap at least three.  Pair `s` with any one of those
+labels and pair the other two together.  The exact interval-cardinality
+formula
+
+```text
+|alpha star_k beta|=min(cap_k(alpha),cap_k(beta))
+```
+
+and `cap_k(s)>=3` make both intervals three-deep.  The first part applies.
+
+If `|L_2|=1` and no maximal edge contains its vertex, choose any maximal
+edge.  Its active pair has cap at least three, while its complement has
+the unique cap-two label and two labels of cap at least three.  Pairing
+the other minus label with the cap-two label puts the complement under
+`(P23.11z5zy7z1a)--(P23.11z5zy7z1b)`.  Hence this case is also closed.
+
+Finally suppose `|L_2|=2`.  A maximal edge containing both is covered by
+the three-deep argument.  A maximal edge containing exactly one has a
+nonminimal active triple by Lemma 23A9S2B2, and its complement has exactly
+one cap-two label; the endpoint variant again gives `N>=22`.  Therefore
+every maximal edge in a residual avoids both cap-two positions.  In the
+rank-one chamber all active edges are maximal, while the dense graph has
+no isolated vertex, so this is impossible.  The stated placement
+conditions follow.  QED.
+
+The weighted cap-two placement residue has an exact unbounded
+Presburger classification.  Put
+
+```text
+J=k,                 J1=k-1,                 J2=k-2,
+J3=k-3,              J5=k-5.
+```
+
+**Lemma 23A9S2G (complete no-`J` one-color endpoint).**  Retain the
+no-`k`, one-color setting of Lemmas 23A9S2C--23A9S2F, let `r` be the
+active color and `s` the inactive minus label, and suppose the density
+conditions `(P23.11z5zy7m)` hold.  After the reductions of Lemma
+23A9S2F and sorting the five plus labels, the only possible rows are
+
+```text
+r    s     plus multiset                  c   h    N   P_eq   T
+
+2    3     {1,1,1,1,1}                  10   0   10    30   10
+2    J3    {J1,J1,J1,J1,J1}             10   0   10    30   10
+
+2    5     {1,1,1,3,3}                   9   3   19    16   12
+2    J5    {J3,J3,J1,J1,J1}              9   3   19    16   12
+
+J2   3     {1,1,J3,J3,J1}                6   6   21     9   12
+J2   J3    {1,3,3,J1,J1}                 6   6   21     9   12.
+                                                               (P23.11z5zy7z4)
+```
+
+At level seven the third row has `N=18` instead of `19`; rows which
+collide with disjoint support or fusion depth at levels six and seven are
+simply absent.  Every displayed feasible row satisfies
+
+```text
+T<=N+P_eq.                                          (P23.11z5zy7z5)
+```
+
+Thus the no-`k`, one-color `d<=2` endpoint is completely closed; it
+requires no positive-cut reservoir.
+
+**Proof.**  The classification is an exact symbolic integer calculation,
+not a bounded level sweep.  For labels `a,b,t` the verifier uses the
+finite fusion predicate
+
+```text
+|a-b|<=t<=min(a+b,2k-a-b),             a+b+t even.
+                                                               (P23.11z5zy7z6)
+```
+
+For a fourfold block `(a,b,c,d)`, put
+
+```text
+A_-=|a-b|,       A_+=min(a+b,2k-a-b),
+B_-=|c-d|,       B_+=min(c+d,2k-c-d).
+```
+
+If `A_-,B_-` have opposite parity its invariant rank is zero; otherwise
+it is exactly
+
+```text
+max(0, floor((min(A_+,B_+)-max(A_-,B_-))/2)+1).    (P23.11z5zy7z7)
+```
+
+The C++ verifier
+`character_ring_iter/verify_su2_d12_cap2_z3.cpp` introduces symbolic
+integers
+
+```text
+k>=6,       2<=r,s<=k-2,       1<=p_1<=...<=p_5<=k-1,
+```
+
+imposes disjoint sign support, and defines all twenty oriented cut
+booleans from `(P23.11z5zy7z6)--(P23.11z5zy7z7)`.  It requires the
+`r`-graph to be nonempty, the `s`-graph to be empty, every active rank
+to be at most two, and exactly the necessary density disjunction
+
+```text
+h=0 and c>=8,              or              h>0 and c+h>=12.
+                                                               (P23.11z5zy7z8)
+```
+
+The second branch deliberately includes both the all-extended threshold
+twelve and the stronger unextended threshold fourteen, so it does not
+discard a possible residual.  Finally it inserts precisely the output of
+Lemma 23A9S2F:
+
+```text
+|L_2|>=2;
+if |L_2|=2, every maximal-weight edge avoids both vertices.
+                                                               (P23.11z5zy7z9)
+```
+
+All formulas are quantifier-free linear integer arithmetic with parity,
+`min`, `max`, and `if-then-else`.  Z3 reports `UNSAT` after adjoining the
+negation of the six rows in `(P23.11z5zy7z4)`.  The replay also checks
+that the base constraints are satisfiable and that each of the six
+symbolic families has a satisfying witness, preventing a vacuous
+`UNSAT`.  Hence `(P23.11z5zy7z4)` is exhaustive for every integer
+`k>=6`.
+
+Direct substitution in the fusion rule gives the displayed values.  The
+two rows in each block are related by applying the simple current to all
+five plus labels and to `s`.  The only transition is the value `N=18`
+in the third row at `k=7`; from `k=8` onward its low total weight has no
+affine truncation.  The three raw margins `N+P_eq-T` are respectively
+
+```text
+30,                 22 at k=7 and 23 thereafter,                 18,
+```
+
+so every row proves `(P23.11z5zy7z5)`.  QED.
+
+The first three genuine mixed-colour levels are also closed exactly.
+This is a finite transition theorem, not the still-needed uniform
+mixed-colour argument.
+
+**Lemma 23A9S2H (exact mixed-colour transition levels).**  Retain the
+no-`k`, non-top setting of Lemma 23A9S2C, suppose the two minus labels
+are distinct and both colours occur, and let the maximal active-cut rank
+be at most two.  At levels
+
+```text
+k=6,7,8
+```
+
+the density alternatives `(P23.11z5zy7m)` imply
+
+```text
+T_nt<=N.                                             (P23.11z5zy7z10)
+```
+
+More precisely, some active cut `e` with three-leg and four-leg channel
+profiles `A_e,B_e` satisfies
+
+```text
+sum_(j in {0,2,4}) m_j(A_e)m_j(B_e)>=T_nt.           (P23.11z5zy7z11)
+```
+
+**Proof.**  The strict C++ replayer
+`character_ring_iter/test_su2_d12_mixed_local_small.cpp` enumerates the
+sorted five-label plus multisets with no `k`, the two distinct minus
+labels of fusion depth at least three, and all twenty indexed oriented
+cuts.  It computes every multiplicity from the exact finite
+`SU(2)_k` fusion recurrence, rejects a row if any active rank exceeds
+two, requires both colours and precisely the density disjunction
+
+```text
+h=0 and c>=8,              or              h>0 and c+h>=12,
+```
+
+and checks `(P23.11z5zy7z11)` for all 162 surviving rows.  Across the
+selected cut, orthogonality gives
+
+```text
+N=sum_(j=0)^k m_j(A_e)m_j(B_e),
+```
+
+whose summands are nonnegative; hence `(P23.11z5zy7z11)` implies
+`(P23.11z5zy7z10)`.  The replay transcript is
+`certificates/su2_d12_mixed_local_small.log`.  QED.
+
+The mixed chamber with no cap-two plus label admits a uniform local
+closure.  Its only global input is a sharp thirty-two bound for the
+weighted colored graphs.
+
+**Lemma 23A9S2I (uniform mixed three-deep closure).**  Retain the
+no-`k`, non-top setting of Lemma 23A9S2C, suppose the two minus labels
+are distinct and both colours occur, and let every active rank be at
+most two.  If
+
+```text
+cap_k(p_i)>=3                 for i=1,...,5,          (P23.11z5zy7z12)
+```
+
+then
+
+```text
+T_nt<=N.                                             (P23.11z5zy7z13)
+```
+
+**Proof.**  First strengthen the active-triple profile.  For an active
+cut write
+
+```text
+A={r,x,y},                         I=x star_k y.
+```
+
+The fusion interval `I` has at least three entries and contains `r`.
+Also `cap_k(r)>=3`.  Intersecting `I` with `r star_k 2` and
+`r star_k 4` gives
+
+```text
+m_0(A)=1,             m_2(A)>=2,             m_4(A)>=2,
+m_2(A)>=3             or                      m_4(A)>=3.
+                                                        (P23.11z5zy7z14)
+```
+
+Indeed, away from the two depth-three walls, `r star_k 4` contains the
+two step-two neighbours of `r` in either direction, so any three-entry
+subinterval of `I` through `r` contributes three output-four paths.  At
+`r=2` or `r=k-2`, the sole way to lose the second neighbour in the
+output-four interval makes `I` contain all three entries of
+`r star_k 2`.  This proves both the lower bounds and the final
+alternative in `(P23.11z5zy7z14)`.
+
+For the complementary block pair the other minus label with any one of
+its three plus labels and pair the remaining two plus labels together.
+All four labels have cap at least three.  Lemma 23A9S2F therefore gives
+
+```text
+d=1:       (b_0,b_2,b_4)>=(1,3,6),
+d=2:       (b_0,b_2,b_4)>=(2,6,6).                  (P23.11z5zy7z15)
+```
+
+Dotting `(P23.11z5zy7z14)` with `(P23.11z5zy7z15)` yields
+
+```text
+d=1:                         N>=22,
+d=2:                         N>=32.                 (P23.11z5zy7z16)
+```
+
+If every active cut has rank one, there are only twenty indexed
+oriented cuts, so `T_nt<=20<22`.  If a rank-two cut occurs, select one
+such cut in `(P23.11z5zy7z16)`.  It remains only to know that
+`T_nt<=32`.
+
+The levels `k=6,7,8` are already covered by Lemma 23A9S2H, so assume
+`k>=9`.  The last bound is part of an exact unbounded Presburger
+theorem.  The strict C++ verifier
+`character_ring_iter/verify_su2_d12_mixed_caps_z3.cpp` writes
+
+```text
+k,q,a,p_1,...,p_5
+```
+
+in each of their 256 parity chambers as `2x+epsilon`.  It imposes
+`k>=9`, distinct depth-three minus labels, sorted disjoint plus labels
+in `[1,k-1]`, both nonempty colours, and all twenty exact activity
+conditions.  For each complementary pair of fusion intervals, overlap
+by one, two, and three entries determines respectively positivity,
+rank two, and the forbidden rank-three condition.  Thus no division or
+nonlinear arithmetic remains.  If `n_2` is the number of cap-two plus
+positions, the simultaneous negation
+
+```text
+n_2=0 and T_nt>32;              n_2=1 and T_nt>24;
+n_2=2 and T_nt>27;              n_2=3 and T_nt>13;
+n_2>=4 and the density condition `(P23.11z5zy7m)`
+or, when h=0,
+n_2=0 and T_nt>10;              n_2=1 and T_nt>10;
+n_2=2 and T_nt>9;               n_2=3 and T_nt>=8
+                                                        (P23.11z5zy7z17)
+```
+
+is `UNSAT` in all 256 chambers.  The direct row
+
+```text
+k=13,             (q,a)=(4,6),             P={10,10,10,10,10}
+```
+
+has colour counts `(10,10)`, rank-two counts `(10,0)`, and `T_nt=30`;
+the verifier checks it before the symbolic queries, preventing a
+vacuous certificate.  Its replay is
+`certificates/su2_d12_mixed_caps_z3.log`.  Hence `T_nt<=32`, and
+`(P23.11z5zy7z13)` follows.  QED.
+
+The other four outputs of the same calculation will be used below.
+
+**Corollary 23A9S2I1 (uniform mixed cap-placement sieve).**  In the
+genuine mixed, no-`k` setting of Lemma 23A9S2I, let
+
+```text
+n_2=|{i:cap_k(p_i)=2}|.
+```
+
+At every level `k>=9`, the density alternatives
+`(P23.11z5zy7m)` imply
+
+```text
+n_2                  0       1       2       3       4 or 5
+T_nt                <=32    <=24    <=27    <=13     impossible
+T_nt when h=0       <=10    <=10    <=9     no dense row.
+                                                        (P23.11z5zy7z18)
+```
+
+Together with Lemma 23A9S2H, any unresolved uniform mixed row therefore
+has exactly one, two, or three cap-two plus positions.  QED.
+
+The one-cap chamber now closes without any classification of label
+families.
+
+**Lemma 23A9S2J (uniform mixed one-cap closure).**  Retain the genuine
+mixed, no-`k` setting and suppose
+
+```text
+|{i:cap_k(p_i)=2}|=1.
+```
+
+Then the density alternatives `(P23.11z5zy7m)` imply
+
+```text
+T_nt<=N.                                             (P23.11z5zy7z19)
+```
+
+**Proof.**  The transition levels `k=6,7,8` follow from
+Lemma 23A9S2H, so take `k>=9`.  If every cut has rank one,
+Corollary 23A9S2I1 gives `T_nt<=10`.  Choose any active cut.
+
+If its indexed pair contains the unique cap-two label, its complement
+is three-deep and has profile at least `(1,3,6)`.  The active triple
+cannot be one of the minimal rows in `(P23.11z5zy7i6)`, since each such
+row uses two indexed cap-two labels.  Hence Lemma 23A9S2B2 gives
+
+```text
+m_2(A)>=3                 or                 m_4(A)>=2,
+```
+
+and dotting with `(1,3,6)` gives `N>=16`.
+
+If the active pair avoids the cap-two position, its profile obeys the
+three-deep alternative `(P23.11z5zy7z14)`.  In the complement, pair the
+other minus label with the unique cap-two plus label and pair the two
+remaining plus labels.  The intervals have lengths two and at least
+three.  Their rank-one endpoint profile is at least `(1,3,3)` by
+`(P23.11z5zy7z1a0)`.  Either alternative in
+`(P23.11z5zy7z14)` again gives `N>=16`.  Thus
+`T_nt<=10<16<=N`.
+
+Now suppose a rank-two cut occurs and select one.  Corollary
+23A9S2I1 gives `T_nt<=24`.  If its pair contains the cap-two label, the
+complement has profile at least `(2,6,6)`, while the active triple is
+nonminimal as above.  Therefore
+
+```text
+N>=min(2+3*6+1*6, 2+2*6+2*6)=26.
+```
+
+If its pair avoids the cap-two label, use the active alternative
+`(P23.11z5zy7z14)` and the complementary rank-two endpoint profile
+`(2,5,5)` from `(P23.11z5zy7z1a)`.  This gives
+
+```text
+N>=min(2+3*5+2*5, 2+2*5+3*5)=27.
+```
+
+In both cases `T_nt<=24<N`, proving `(P23.11z5zy7z19)`.  QED.
+
+The three-cap chamber is finite up to simple-current and midpoint
+families.
+
+**Lemma 23A9S2K (complete mixed three-cap closure).**  Retain the
+genuine mixed, no-`k` setting and suppose
+
+```text
+|{i:cap_k(p_i)=2}|=3.
+```
+
+Put `J1=k-1`.  At every level `k>=9`, the complete dense list is
+
+```text
+q       a       plus multiset                    N          T_nt
+
+2       3       {1,1,1,4,4}                     22          13
+2       5       {1,1,1,4,4}                     23          12
+2       k-5     {4,4,J1,J1,J1}                  23          12
+2       k-3     {4,4,J1,J1,J1}                  22          13
+
+3       k-2     {1,1,2,2,J1}                    17          12
+k-3     k-2     {1,2,2,J1,J1}                   17          12
+
+2q=k-3  2a=k+1  {1,1,q+1,q+1,J1}              4k-7         12
+2q=k-1  2a=k+3  {1,1,a-1,a-1,J1}              4k-7     13 if k=9,
+                                                               12 if k>=11.
+                                                        (P23.11z5zy7z20)
+```
+
+The last two rows occur only for odd `k`; rows colliding with disjoint
+support at their first possible levels are absent.  Consequently every
+three-cap row satisfies
+
+```text
+T_nt<=N.                                             (P23.11z5zy7z21)
+```
+
+**Proof.**  Exhaustiveness and the `T_nt` column are further exact
+outputs of the 256-parity verifier
+`character_ring_iter/verify_su2_d12_mixed_caps_z3.cpp`.  In every
+parity chamber it adjoins the density condition, exactly three
+cap-two positions, and the negation of the eight rows in
+`(P23.11z5zy7z20)`; the result is `UNSAT`.  A second simultaneous query
+negates the displayed `T_nt` value inside each classified family and is
+also `UNSAT`.  Thus neither the list nor its transition value is
+inferred from a bounded level scan.
+
+For completeness, the `N` column follows directly from the fusion
+interval formula.  The first two rows are wall-stable from `k=9`
+onward and give `22,23`.  In the next two rows, write
+`V_(k-r)=J tensor V_r`; the three copies of `V_(k-1)=J tensor V_1`
+together with the high minus label contribute four simple currents,
+which cancel and reduce the rows to the first two.  Two analogous
+simple-current cancellations reduce each bridge row to
+
+```text
+m(3,2,1,1,2,2,1)=17.
+```
+
+Finally use
+
+```text
+V_1^3=2V_1+V_3.
+```
+
+In the first midpoint row write `k=2m+3` and move the simple current
+from `J1` onto the label `a=m+2`.  The remaining two pair intervals are
+
+```text
+{1,3,...,2m+1},                 {0,2,...,2m+2}.
+```
+
+They supply respectively `2m+2` paths to output one and `4m+1` paths
+to output three.  Hence
+
+```text
+N=2(2m+2)+(4m+1)=8m+5=4k-7.
+```
+
+For the second midpoint row write `k=2m+1`; moving the simple current
+onto `a=m+2` leaves the pair intervals
+
+```text
+{1,3,...,2m-1},                 {0,2,...,2m}.
+```
+
+Their output-one and output-three counts are `2m` and `4m-3`, so again
+
+```text
+N=2(2m)+(4m-3)=8m-3=4k-7.
+```
+
+This is at least `29` at the first possible level `k=9`.  Hence every
+entry in the `N` column is at least `17`, whereas every displayed
+demand is at most `13`, proving `(P23.11z5zy7z21)`.  The levels
+`k=6,7,8` were already closed by Lemma 23A9S2H.  QED.
+
+The last cap-placement chamber is closed by a deterministic
+colour-priority rule.
+
+**Lemma 23A9S2L (uniform mixed two-cap closure).**  Retain the genuine
+mixed, no-`k` setting and suppose
+
+```text
+|{i:cap_k(p_i)=2}|=2.
+```
+
+Then the density alternatives `(P23.11z5zy7m)` imply
+
+```text
+T_nt<=N.                                             (P23.11z5zy7z22)
+```
+
+**Proof.**  Lemma 23A9S2H covers `k=6,7,8`, so take `k>=9`.
+First suppose every active cut has rank one.  Corollary 23A9S2I1 gives
+
+```text
+T_nt=c<=9.
+```
+
+The three plus positions of cap at least three support only
+`2*binom(3,2)=6` indexed oriented cuts.  Since density gives `c>=8`,
+some active pair meets a cap-two position.  If it meets exactly one,
+the complementary block has one cap-two plus label and two three-deep
+plus labels.  Its rank-one endpoint profile is at least `(1,3,3)` by
+Lemma 23A9S2F.  The active triple is not one of the minimal rows
+`(P23.11z5zy7i6)`, because every such row uses two cap-two labels.
+Thus Lemma 23A9S2B2 gives
+
+```text
+m_2(A)>=3                 or                 m_4(A)>=2,
+```
+
+and in either case `N>=13`.  If the active pair contains both cap-two
+positions, its complementary block is three-deep and has profile at
+least `(1,3,6)`.  The ordinary nonexceptional active profile
+`(1,2,1)` again gives `N>=13`.  Hence
+`T_nt<=9<13<=N` in the rank-one chamber.
+
+Now suppose a rank-two cut occurs.  The 256-parity cap-placement
+verifier of Lemma 23A9S2I proves one further exact implication:
+
+```text
+n_2=2, h>0, density
+   implies a rank-two active edge containing exactly one
+           cap-two plus position.                  (P23.11z5zy7z23)
+```
+
+Indeed
+`character_ring_iter/verify_su2_d12_mixed_caps_z3.cpp` adjoins the
+negation of `(P23.11z5zy7z23)` to the same exact activity and
+rank-at-most-two formulas used in `(P23.11z5zy7z17)`; the result is
+`UNSAT` in every parity chamber.  The direct row
+
+```text
+k=9,          (q,a)=(3,5),          P={1,1,4,4,4}
+```
+
+has colour counts `(6,6)`, demand `24`, and such an edge, so this added
+branch is nonvacuous.
+
+Order the two minus labels as `q<a`.  Among the edges supplied by
+`(P23.11z5zy7z23)`, select a `q`-coloured edge if one exists; otherwise
+select an `a`-coloured edge.  Relabel its cap endpoint as `p_0`, its
+three-deep endpoint as `p_1`, the other cap endpoint as `p_4`, and sort
+the remaining two three-deep positions `p_2<=p_3`.  There are exactly
+four endpoint schemas:
+
+```text
+(p_0,p_4)=(1,1), (k-1,k-1), (1,k-1), (k-1,1).       (P23.11z5zy7z24)
+```
+
+The strict C++ verifier
+`character_ring_iter/verify_su2_d12_mixed_n2_z3.cpp` checks the local
+inequality for this selected edge.  For clarity, its exact formula is
+recorded here.  If
+
+```text
+I=a star_k b=[A_-,A_+]_2,       L=c star_k d=[B_-,B_+]_2,
+```
+
+then for `t in {0,2,4}` the coefficient of `V_t` in
+`V_a V_b V_c V_d` is the sum, over
+`delta=-t,-t+2,...,t`, of the step-two integers `x` satisfying
+
+```text
+A_-<=x<=A_+,               B_- - delta<=x<=B_+ - delta,
+(t-delta)/2<=x<=k-(t+delta)/2,
+x=A_- (mod 2),             x+delta=B_- (mod 2).     (P23.11z5zy7z25)
+```
+
+This is exact: put `y=x+delta`; the displayed bounds are precisely
+`x in I`, `y in L`, and the lower and affine upper triangle
+inequalities for `N_(x,y)^t=1`.  The active three-leg coefficient is
+the corresponding intersection of two binary fusion intervals.
+Consequently the verifier computes exactly
+
+```text
+L_e=sum_(t in {0,2,4}) m_t(A_e)m_t(B_e).             (P23.11z5zy7z26)
+```
+
+It writes all eight labels as `2z+epsilon`, checks all 256 parity
+chambers, the four schemas `(P23.11z5zy7z24)`, and both selection
+branches.  In the `a` branch it additionally imposes the absence of a
+`q`-coloured rank-two incidence-one edge, exactly implementing the
+priority rule.  The simultaneous counterexample condition
+
+```text
+L_e<T_nt
+```
+
+is `UNSAT` in all `4*2*256=2048` queries.  The row
+
+```text
+k=13,          (q,a)=(4,6),          P={8,8,8,12,12}
+```
+
+has `T_nt=27`; its indicated `q`- and `a`-coloured local bounds are
+respectively `32` and `26`.  The verifier checks these values directly,
+so the colour priority is both necessary for this local rule and
+nonvacuous.  Finally orthogonality across the selected cut gives
+
+```text
+N=sum_(t=0)^k m_t(A_e)m_t(B_e)>=L_e>=T_nt,
+```
+
+which proves `(P23.11z5zy7z22)`.  The replay transcript is
+`certificates/su2_d12_mixed_n2_z3.log`.  QED.
+
+The mixed no-simple-current leaf is therefore complete.
+
+**Corollary 23A9S2M (complete uniform mixed no-`k` closure).**  Retain
+the no-`k`, non-top setting of Lemma 23A9S2C, suppose the two minus
+labels are distinct and both colours occur, and let every active rank
+be at most two.  Then the density alternatives `(P23.11z5zy7m)` imply
+
+```text
+T_nt<=N.                                             (P23.11z5zy7z27)
+```
+
+**Proof.**  Lemma 23A9S2H handles `k=6,7,8`.  For `k>=9`, partition by
+the number `n_2` of cap-two plus positions.  Lemmas 23A9S2I,
+23A9S2J, 23A9S2L, and 23A9S2K handle respectively
+`n_2=0,1,2,3`; Corollary 23A9S2I1 says that `n_2>=4` has no dense row.
+QED.
+
+The preceding endpoint analysis has a shorter direct consolidation.  It
+is useful independently of the endpoint packets because it keeps the
+global invariant, the equal-pair terms, and the positive cuts in three
+disjoint summands.
+
+**Lemma 23A9S2N (canonical direct-payment reduction at rank at most
+two).**  Retain the disjoint-support hypotheses of Proposition 23A9S and
+suppose every indexed negative cut has rank at most two.  If `T>0`,
+choose a maximal indexed cut and write its two factorization blocks as
+`A|B`, with three and four tensor factors respectively.  Put
+
+```text
+L_4(A|B)=sum_(t in {0,2,4})       m_t(A)m_t(B),
+L_8(A|B)=sum_(t in {0,2,4,6,8})   m_t(A)m_t(B).       (P23.11z5zy7z28)
+```
+
+For each indexed equal pair `E` among the five plus positions, put
+`ell=|q-a|` and retain only the first two binary channels in its
+`P_eq` contribution:
+
+```text
+P_2=sum_(E equal)
+       {m_ell(P minus E)
+        +indicator_(ell+2 in q star_k a)m_(ell+2)(P minus E)}.
+                                                               (P23.11z5zy7z29)
+```
+
+Then
+
+```text
+L_4<=L_8<=N,             P_2<=P_eq-indicator_(q=a)m(P),          (P23.11z5zy7z30)
+```
+
+and an active cut with `q=a` has `m(P)>=1`.  Consequently either one
+of the following local inequalities proves the complete signed
+contraction:
+
+```text
+L_4+P_2+U+indicator_(q=a) >= T,     if a minus label has cap <=2,
+L_8+P_2+U+indicator_(q=a) >= T,     if both minus caps are at least 3.
+                                                               (P23.11z5zy7z31)
+```
+
+Moreover, the negations of `(P23.11z5zy7z31)` have the following finite,
+cutoff-free QF-LIA covers.
+
+```text
+shallow: 7 minus types * 2 level parities * 32 plus parity masks
+         * 2 selected orientations = 896 cells;
+
+deep:    (2 distinct selected orientations + 1 equal orientation)
+         * 2 level parities * 2 q parities * 32 plus parity masks
+         * 2 selected ranks = 768 cells.             (P23.11z5zy7z32)
+```
+
+Here the seven shallow types are the four sorted distinct possibilities
+
+```text
+(1,a),       (q,k-1),       (q,k),       (k-1,k),
+```
+
+with the overlaps removed in that order, and the three equal
+possibilities
+
+```text
+(1,1),       (k-1,k-1),       (k,k).
+```
+
+In the deep cover `2<=q<=a<=k-2`; the two kinds are `q<a` and `q=a`.
+Thus UNSAT in every cell of the two covers implies `(P23.11z5zy)` for
+every seven-factor two-minus word whose maximal negative-cut rank is at
+most two.
+
+**Proof.**  Orthogonality across the selected cut gives
+
+```text
+N=sum_(t=0)^k m_t(A)m_t(B),
+```
+
+with nonnegative integer summands, proving the first half of
+`(P23.11z5zy7z30)`.  Deleting an indexed equal plus pair leaves the
+fivefold invariant
+
+```text
+m(q,a,P minus E)
+  =sum_(t in q star_k a)m_t(P minus E).
+```
+
+The first two terms are exactly `(P23.11z5zy7z29)`, proving its stated
+lower bound.  If `q=a` and the selected cut is active, its selected plus
+pair and complementary plus triple both have a channel to `q`.  Fusing
+those two channels through `V_q tensor V_q -> V_0` gives `m(P)>=1`.
+The three retained reservoirs belong respectively to `N`, the indexed
+equal-plus part of `P_eq`, and `U`; the last unit belongs to the
+equal-minus part of `P_eq`.  Hence no summand is reused, and either
+inequality in `(P23.11z5zy7z31)` implies Proposition 23A9S.
+
+It remains only to justify the finite covers.  A positive label has cap
+at most two exactly when it is `1,k-1`, or `k`; sorting the two minus
+labels gives the seven displayed shallow types.  Otherwise both lie in
+`[2,k-2]`, giving the two deep kinds.  Total fusion parity determines
+the omitted minus-label parity from the five plus parities.  The
+stabilizer of a selected plus pair sorts that pair and its complementary
+triple.  For distinct minus labels it leaves two orientations, according
+to which minus label lies in the selected triple; for equal labels the
+orientations coincide.  Finally a positive maximal rank is one or two.
+These observations give `(P23.11z5zy7z32)` and lose no integer chamber.
+
+The verifier formulas are exact QF-LIA.  Binary fusion is the pair of
+triangle walls with its parity congruence; fourfold multiplicity is the
+intersection count of two step-two fusion intervals.  For fixed
+`t<=8`, a threefold coefficient is at most `t+1`, so its product with
+the complementary coefficient is represented without nonlinear
+arithmetic by the bounded repeated-sum formula.  Thus each solver cell
+is precisely the negation asserted above.  QED.
+
+**Corollary 23A9S2N1 (complete uniform shallow-minus rank-two
+closure).**  Under the hypotheses of Proposition 23A9S, suppose every
+negative-cut rank is at most two and at least one of the two minus
+labels has cap at most two.  Then
+
+```text
+T<=N+P_eq+U.                                         (P23.11z5zy7z33)
+```
+
+Hence every such seven-factor contraction is nonnegative in every
+`SU(2)_k`.
+
+**Proof.**  If `T=0` the assertion is immediate.  Otherwise choose a
+maximal active indexed cut and apply the shallow alternative of Lemma
+23A9S2N.  The strict C++ verifier
+
+```text
+character_ring_iter/verify_su2_d12_shallow_minus_z3.cpp
+```
+
+checks the 896 exhaustive cells in `(P23.11z5zy7z32)`.  Every negated
+local inequality is `UNSAT`, so `(P23.11z5zy7z31)` holds and
+Proposition 23A9S gives `(P23.11z5zy7z33)`.  The replay transcript is
+
+```text
+certificates/su2_d12_shallow_minus_z3.log.
+```
+
+Its source SHA-256 is
+`5f0c32515244ab1ed3360f7119efdf3a2d0cbee83fabbaea535b2cabdcab9e9d`.
+QED.
 
 The ordinary straightening target `kappa<=P_eq` does not pass unchanged
 through the affine wall.  The obstruction is an unbounded simple-current
@@ -28469,6 +31493,47 @@ deletions give `P_eq=7` (and, independently, `U=11`), so
 `26<=24+7`.  Thus every row of `(P23.11z5zzzg13)` is paid.  This
 exhausts the ten cells in `(P23.11z5zzza4)` and proves
 `(P23.11z5zzzg1)`.  QED.
+
+The preceding all-even and mixed-parity descents now assemble without
+any remaining large-rank branch.
+
+**Corollary 23A9ZZ8 (complete finite rank-at-least-three two-minus
+theorem).**  In every `SU(2)_k`, a seven-factor word with exactly two
+minus positions has nonnegative contraction whenever the maximal
+negative-cut rank is at least three.
+
+**Proof.**  A trivial minus label makes the contraction zero, while a
+trivial plus label reduces to Proposition 25D4, the uniform
+at-most-six-factor theorem.  Support overlap reduces to the same theorem
+by Proposition 5.  We may therefore impose the positive-label,
+disjoint-support hypotheses of
+Proposition 23A9S.  If its negative demand `T` vanishes there is nothing
+to prove; otherwise choose a maximal active cut and write
+
+```text
+d=max_C m(C)m(C^c)>=3.
+```
+
+The invariant multiplicity of an active three-label side is one, so this
+`d` is exactly the complementary fourfold rank used in all of the cited
+finite descents.
+
+First suppose all seven labels are even.  At `d=3`, Corollary 23A9ZH14
+gives `T<=N+P_eq`.  For `d>=4`, the maximal invariant triple lies in
+one of three exhaustive classes.  If it contains the simple current
+`k`, invariance makes it `{k,u,k-u}` and Corollary 23A9ZG4 applies.
+At odd level the sole exceptional triple is `{2,k-1,k-1}`, and
+Corollary 23A9ZS closes it for every `d>=1`.  Every remaining triple is
+nonexceptional in the sense of Corollary 23A9ZH, and Corollary 23A9ZH4
+closes it for every `d>=4`.
+
+Now suppose the labels have mixed parity.  Split according to whether
+the maximal invariant triple contains `k`.  At `d=3`, the top and
+non-top cases are Corollaries 23A9ZZ6 and 23A9ZZ7.  At `d=4`, they are
+Corollaries 23A9ZY and 23A9ZZ.  At `d=5`, they are Corollaries 23A9ZX
+and 23A9ZW.  Every `d>=6` case is Corollary 23A9ZQ.  Thus
+`T<=N+P_eq+U` in every parity and rank branch, and Proposition 23A9S
+proves the signed contraction nonnegative.  QED.
 
 The precise obstruction to assembling a one-minus boundary theorem by
 iteration is already visible before choosing a path basis.  Expand an

@@ -180,6 +180,31 @@ struct Field {
         return s1;
     }
 
+    // Outward enclosure of zeta = 2 cos(pi/n).  Since cos is decreasing on
+    // [0,pi/3] for n>=3, the lower zeta endpoint comes from the upper angle
+    // endpoint and the upper zeta endpoint comes from the lower angle
+    // endpoint.  The rounding directions must follow that reversal; computing
+    // cos(theta_lo) downward and cos(theta_hi) upward and merely swapping the
+    // results is not an outward enclosure.
+    void rootInterval(mpfr_ptr zlo, mpfr_ptr zhi) const {
+        if (n < 3 || mpfr_get_prec(zlo) != mpfr_get_prec(zhi)) std::abort();
+        const mpfr_prec_t prec = mpfr_get_prec(zlo);
+        mpfr_t theta_lo, theta_hi;
+        mpfr_init2(theta_lo, prec);
+        mpfr_init2(theta_hi, prec);
+        mpfr_const_pi(theta_lo, MPFR_RNDD);
+        mpfr_div_si(theta_lo, theta_lo, n, MPFR_RNDD);
+        mpfr_const_pi(theta_hi, MPFR_RNDU);
+        mpfr_div_si(theta_hi, theta_hi, n, MPFR_RNDU);
+        mpfr_cos(zlo, theta_hi, MPFR_RNDD);
+        mpfr_mul_ui(zlo, zlo, 2, MPFR_RNDD);
+        mpfr_cos(zhi, theta_lo, MPFR_RNDU);
+        mpfr_mul_ui(zhi, zhi, 2, MPFR_RNDU);
+        mpfr_clear(theta_lo);
+        mpfr_clear(theta_hi);
+        if (mpfr_greater_p(zlo, zhi)) std::abort();
+    }
+
     // Sign of a nonzero element's value at zeta, by interval evaluation at
     // rising precision.  Returns 0 only for the zero element.
     int sign(const Elt& a) const {
@@ -199,15 +224,7 @@ struct Field {
             mpfr_t zlo, zhi, plo, phi_, t;
             mpfr_init2(zlo, prec); mpfr_init2(zhi, prec);
             mpfr_init2(plo, prec); mpfr_init2(phi_, prec); mpfr_init2(t, prec);
-            mpfr_const_pi(zlo, MPFR_RNDD);
-            mpfr_div_si(zlo, zlo, n, MPFR_RNDD);
-            mpfr_cos(zlo, zlo, MPFR_RNDD);          // cos decreasing: use pi rounded down -> cos rounded ...
-            mpfr_mul_ui(zlo, zlo, 2, MPFR_RNDD);
-            mpfr_const_pi(zhi, MPFR_RNDU);
-            mpfr_div_si(zhi, zhi, n, MPFR_RNDU);
-            mpfr_cos(zhi, zhi, MPFR_RNDU);
-            mpfr_mul_ui(zhi, zhi, 2, MPFR_RNDU);
-            if (mpfr_greater_p(zlo, zhi)) mpfr_swap(zlo, zhi);   // cos is decreasing
+            rootInterval(zlo, zhi);
             // Horner in interval arithmetic over [zlo, zhi] (both positive
             // for n >= 3, but keep it general with four-corner products).
             mpfr_set_ui(plo, 0, MPFR_RNDD);

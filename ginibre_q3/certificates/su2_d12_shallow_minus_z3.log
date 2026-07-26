@@ -1,0 +1,7 @@
+RUN_UTC=2026-07-26
+HOST=optimus
+SOURCE_SHA256 verify_su2_d12_shallow_minus_z3.cpp 5f0c32515244ab1ed3360f7119efdf3a2d0cbee83fabbaea535b2cabdcab9e9d
+BINARY_SHA256 verify_su2_d12_shallow_minus_z3 f707c0f20b8df94f0f45fcd3bd839024e378736c6ab7ccce774c6d28237df4bf
+COMMAND=/usr/bin/time -f elapsed=%e maxrss_kib=%M ./verify_su2_d12_shallow_minus_z3
+SU2_D12_SHALLOW_MINUS_Z3 scope=all types=7 parities=2 plus_masks=32 selected_orbits=2 queries=896 workers=56 counterexamples=UNSAT result=PASS
+elapsed=3646.86 maxrss_kib=3987280

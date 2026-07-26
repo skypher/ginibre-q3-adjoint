@@ -56,6 +56,7 @@ jobs:
             make \
             libgmp-dev \
             libmpfr-dev \
+            libz3-dev \
             libomp-dev \
             lmodern \
             texlive-latex-base \
@@ -97,6 +98,83 @@ jobs:
           make -B -C ginibre_q3/character_ring_iter \
             -j"$(nproc)" replay-build \
             2>&1 | tee ci-logs/certificate-build.log
+
+      - name: Compile SU(2) research verifier and test cyclotomic signs
+        run: |
+          set -o pipefail
+          make -B -C ginibre_q3/character_ring_iter \
+            -f Makefile.research \
+            -j"$(nproc)" \
+            verify_su2_orbit_amgm_stack \
+            test_su2_cyclotomic_sign \
+            test_su2_interval_band3 \
+            verify_su2_d12_cap2_z3 \
+            verify_su2_d12_mixed_caps_z3 \
+            test_su2_d12_mixed_local_small \
+            verify_su2_d12_mixed_n2_z3 \
+            verify_su2_d12_shallow_minus_z3 \
+            verify_su2_d12_deep_minus_z3 \
+            verify_su2_seven_four_minus_even \
+            verify_su2_four_minus_deep_small_z3 \
+            analyze_su2_seven_parity_orbits \
+            analyze_su2_global_cut_payment \
+            analyze_su2_global_cut_payment_counts \
+            analyze_su2_simple_current_pair \
+            analyze_su2_simple_current_moments \
+            analyze_su2_simple_current_transfer \
+            prove_su2_simple_current_dp9 \
+            verify_su2_global_cut_payment_small \
+            verify_su2_seven_residual_z3 \
+            verify_su2_four_minus_shallow_z3 \
+            2>&1 | tee ci-logs/su2-research-build.log
+          ginibre_q3/character_ring_iter/test_su2_cyclotomic_sign \
+            2>&1 | tee ci-logs/su2-cyclotomic-sign.log
+          ginibre_q3/character_ring_iter/test_su2_interval_band3 \
+            2>&1 | tee ci-logs/su2-interval-band3.log
+          ginibre_q3/character_ring_iter/verify_su2_d12_cap2_z3 \
+            2>&1 | tee ci-logs/su2-d12-cap2-z3.log
+          ginibre_q3/character_ring_iter/verify_su2_d12_mixed_caps_z3 \
+            2>&1 | tee ci-logs/su2-d12-mixed-caps-z3.log
+          ginibre_q3/character_ring_iter/test_su2_d12_mixed_local_small \
+            2>&1 | tee ci-logs/su2-d12-mixed-local-small.log
+          ginibre_q3/character_ring_iter/verify_su2_d12_mixed_n2_z3 \
+            0 0 0 \
+            2>&1 | tee ci-logs/su2-d12-mixed-n2-z3-smoke-q.log
+          ginibre_q3/character_ring_iter/verify_su2_d12_mixed_n2_z3 \
+            1 1 1 \
+            2>&1 | tee ci-logs/su2-d12-mixed-n2-z3-smoke-a.log
+          ginibre_q3/character_ring_iter/verify_su2_d12_shallow_minus_z3 \
+            3 0 1 10 \
+            2>&1 | tee ci-logs/su2-d12-shallow-minus-z3-smoke.log
+          ginibre_q3/character_ring_iter/verify_su2_seven_four_minus_even \
+            10 20 \
+            2>&1 | tee ci-logs/su2-seven-four-minus-even.log
+          ginibre_q3/character_ring_iter/verify_su2_four_minus_deep_small_z3 \
+            0 0 1 \
+            2>&1 | tee ci-logs/su2-four-minus-deep-small-z3.log
+          ginibre_q3/character_ring_iter/verify_su2_seven_residual_z3 \
+            4 0 0 \
+            2>&1 | tee ci-logs/su2-seven-residual-z3-smoke.log
+          ginibre_q3/character_ring_iter/verify_su2_global_cut_payment_small \
+            4 8 \
+            2>&1 | tee ci-logs/su2-global-cut-payment-small.log
+          ginibre_q3/character_ring_iter/analyze_su2_global_cut_payment_counts \
+            1 200 6 12 3 \
+            2>&1 | tee ci-logs/su2-global-cut-payment-counts-smoke.log
+          ginibre_q3/character_ring_iter/analyze_su2_global_cut_payment_counts \
+            --anchor-counterexample \
+            2>&1 | tee ci-logs/su2-global-cut-anchor-counterexample.log
+          ginibre_q3/character_ring_iter/analyze_su2_simple_current_pair \
+            12 7 \
+            2>&1 | tee ci-logs/su2-simple-current-pair.log
+          ginibre_q3/character_ring_iter/analyze_su2_simple_current_moments \
+            --scan 30 \
+            2>&1 | tee ci-logs/su2-simple-current-moments.log
+          ginibre_q3/character_ring_iter/analyze_su2_simple_current_transfer \
+            30 9 \
+            2>&1 | tee ci-logs/su2-simple-current-transfer.log
+          ginibre_q3/character_ring_iter/prove_su2_simple_current_dp9 \
+            2>&1 | tee ci-logs/su2-simple-current-dp9.log
 
       - name: Run exact certificate smoke checks
         working-directory: ginibre_q3/character_ring_iter

@@ -1,14 +1,15 @@
-# The tight families split: stable zeros and wall families
+# Engine-hard families: stable zeros and candidate wall families
 
 Date: 2026-07-26
 
 ## Measurement
 
 The engine records which certificate class closes each regime
-(`--dump-certified`), and the heavy classes — Farey merges, Abel chains,
-exact integer leaves — mark the tight and zero regimes: the boundary
-structure of a level. Aggregating them by signed support family across the
-proved levels:
+(`--dump-certified`).  The heavy classes — Farey merges, Abel chains, exact
+integer leaves — mark regimes that are hard for this certificate engine.
+They are candidates for the actual equality and wall structure, but the
+certificate class alone does not prove mathematical tightness.  Aggregating
+them by signed support family across the measured levels gives:
 
 ```text
 level   hard regimes   families   containing V_k
@@ -44,9 +45,9 @@ reproduced identically at every level from `a+b` on. The recurring tight
 families with small labels are precisely these stable zeros; they are
 level-independent by the stability theorem, not by accident.
 
-## The corrected picture
+## The measured pattern
 
-The tight set of a level decomposes as
+The data suggest the candidate decomposition
 
 ```text
 tight(k) = { stable ordinary zeros, present for all k >= their threshold }
@@ -54,9 +55,11 @@ tight(k) = { stable ordinary zeros, present for all k >= their threshold }
            { wall families containing V_k, specific to the level }.
 ```
 
-Verified on every proved level: all tight families with small labels are
-stable zeros, and every remaining family contains the top label (22 of 25 at
-level 5, 7 of 8 at level 4, 2 of 2 at level 3).
+This is verified only for the displayed engine-hard families at levels
+three through five: all small-label families there are stable zeros, and
+every remaining family contains the top label (22 of 25 at level 5, 7 of 8
+at level 4, 2 of 2 at level 3).  It is not yet a theorem for arbitrary
+levels or arbitrary equality families.
 
 ## Consequence for the factor-axis induction
 
@@ -71,9 +74,10 @@ This splits the induction's burden in two:
    pair-reservoir domain the six-factor proof already handles at the wall.
    The induction's genuinely new content is only there.
 
-The same measurement on levels 6 and 8, once the running computations
-finish, tests whether the decomposition persists where it was not first
-observed.
+The corrected level-six certificate is complete, but its full
+`--dump-certified` aggregation and the level-eight measurement have not yet
+been recorded.  Those measurements test whether the candidate decomposition
+persists beyond the levels where it was first observed.
 
 ## Replay
 

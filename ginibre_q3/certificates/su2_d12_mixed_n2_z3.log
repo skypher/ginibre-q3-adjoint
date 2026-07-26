@@ -1,0 +1,4 @@
+RUN_UTC=2026-07-26
+HOST=optimus
+SOURCE_SHA256 verify_su2_d12_mixed_n2_z3.cpp 7a7686c5a515eaae638062f7ede9e1c0dcca7c44df0b62fd28c391a0b49aa48a
+SU2_D12_MIXED_N2_Z3 k>=9 schemas=4 orientations=q-first masks=256 queries=2048 workers=55 transition_cases=162 priority_witness=T27,q32,a26 local_counterexamples=UNSAT result=PASS

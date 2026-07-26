@@ -1,0 +1,22 @@
+SU2_SIMPLE_CURRENT_TRANSFER
+
+Command:
+  ./analyze_su2_simple_current_transfer 300 39
+
+Source SHA-256:
+  ec49cb32affa4f6e772b2decebf8d3f012b122e5316f2ecc1315b01b1f3d1dc3  analyze_su2_simple_current_transfer.cpp
+
+Binary SHA-256:
+  4af39a5eff297bba88b4d402f6314a36b7cfc737e660613f5332080964588171  analyze_su2_simple_current_transfer
+
+Output:
+SIMPLE_CURRENT_TRANSFER_NEGATIVE level=6 label=2 m=7 order=descending prefix=4 value=-6693.8995677064836736 absolute_sum=33305.999972698879752
+SU2_SIMPLE_CURRENT_TRANSFER maximum_level=300 maximum_m=39 cases=216450 prefixes=4329025 descending_prefix_nonnegative=false ascending_prefix_nonnegative=true result=PASS_DISCOVERY
+
+Interpretation:
+The long-double diagnostic evaluates every ascending and descending
+positive-root prefix in Lemma 5A8H4 through the declared bounds.  The
+ascending result is bounded discovery evidence only.  Lemmas 5A8H6--5A8H7
+prove the first five ascending prefixes uniformly and exactly.  The robust
+descending failure is a discovery obstruction, not an exact algebraic
+certificate.

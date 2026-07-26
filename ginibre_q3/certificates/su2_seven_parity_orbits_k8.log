@@ -1,0 +1,19 @@
+RUN_UTC=2026-07-26
+HOST=optimus
+SOURCE_SHA256 analyze_su2_seven_parity_orbits.cpp 6287101ff0a2bf97e811fb18344a1ec13ece61a2587767729c422b361ae459ad
+DEPENDENCY_SHA256 analyze_su2_four_minus_shallow.cpp 51447a70d899409ac599e34703d9e4b1b8ca4251a631b06431bcb272fb6117f9
+BINARY_SHA256 analyze_su2_seven_parity_orbits bd06772fdf65dd9d56a1661f2fe427046b47b7e63b5650212bfc63690bbda115
+COMMAND=/usr/bin/time -f elapsed=%e maxrss_kib=%M ./analyze_su2_seven_parity_orbits 8
+SCOPE=all eight residual parity orbits, every disjoint-support word through k=8
+DIRECT_TARGET=selected first/last five N channels + truncated indexed equal-pair channels + all positive 3|4 cuts - negative 3|4 demand
+MIN_DIRECT m4_o0_r0_deep=39 shallow=9
+MIN_DIRECT m4_o2_r0_deep=68 shallow=3
+MIN_DIRECT m4_o2_r1_deep=66 shallow=3
+MIN_DIRECT m4_o4_r1_deep=68 shallow=2
+MIN_DIRECT m4_o4_r2_deep=88 shallow=2
+MIN_DIRECT m4_o6_r3_deep=105 shallow=3
+MIN_DIRECT m6_o0_r0_deep=53 shallow=8
+MIN_DIRECT m6_o2_r1_deep=60 shallow=7
+COUNTEREXAMPLES=0
+elapsed=0.17 maxrss_kib=3584
+RESULT=PASS_BOUNDED_DISCOVERY_ONLY

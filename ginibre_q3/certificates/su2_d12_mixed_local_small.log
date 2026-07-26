@@ -1,0 +1,4 @@
+RUN_UTC=2026-07-26
+HOST=optimus
+SOURCE_SHA256 test_su2_d12_mixed_local_small.cpp e91224db64e3ec06018bbb1d0c8852181cfd70e261b0edd304d82147532cb5ae
+SU2_D12_MIXED_LOCAL_SMALL levels=6..8 cases=162 channels=0,2,4 result=PASS

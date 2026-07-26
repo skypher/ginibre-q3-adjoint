@@ -1,6 +1,15 @@
+RUN_START_UTC=2026-07-26T02:41:30Z
+HOST=nb1cb2f
+NPROC=32
+SOURCE_SHA256 verify_su2_orbit_amgm_stack.cpp ce15b19cacb13580cc09a09778c09c1f1bf25cdddbe8e48eb78e88f4723b9e0f
+SOURCE_SHA256 su2_cyclotomic.h 99b535fb69637cd4dfe8b8711006e099b4564cb04cc99b98c49682e4359ba128
   exact_crosscheck 42 values agree (field degree 4)
   spectral_crosscheck 49 values agree
-SU2_LEVEL_AMGM_CPP level=6 labels=6 nodes=7 threads=5 certify_all=1
+PROGRESS elapsed=30s supports=729/729 residual=53376 certified=53376
+PROGRESS elapsed=60s supports=729/729 residual=58752 certified=58752
+PROGRESS elapsed=90s supports=729/729 residual=60544 certified=60544
+PROGRESS elapsed=120s supports=729/729 residual=60544 certified=60544
+SU2_LEVEL_AMGM_CPP level=6 labels=6 nodes=7 threads=32 certify_all=1
   parity_zero      124928
   direct_hall      0
   residual         62336
@@ -15,8 +24,10 @@ SU2_LEVEL_AMGM_CPP level=6 labels=6 nodes=7 threads=5 certify_all=1
   galois_folded    0
   farey_merge      286
   denominators     100:58766 200:93 500:858 1000:489 5000:93
-  soundness        regimes=2000 points=80000 violations=0
-  negative_control corrupted=1000 refused=1000
+  soundness        regimes=3200 points=128000 violations=0
+  negative_control corrupted=6400 refused=6400
   regimes_nonzero  132980
   open             0
   coverage         100.0% of nonzero regimes
+RUN_END_UTC=2026-07-26T02:44:00Z
+VERIFIER_RC=0

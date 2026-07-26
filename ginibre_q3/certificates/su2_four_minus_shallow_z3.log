@@ -1,0 +1,29 @@
+SU(2) seven-factor all-even shallow four-minus QF-LIA certificate
+Date completed: 2026-07-26T12:52:58Z
+
+Compiler:
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+
+Build:
+make -B -f Makefile.research verify_su2_four_minus_shallow_z3
+
+Source SHA-256:
+af0e904decac2958aabb8f396653d5189c707edcbbf98732d8273cadba572b2e  verify_su2_four_minus_shallow_z3.cpp
+
+Binary SHA-256:
+bb0dcaa570b8756d77196a674099cc832addecc6e54aba9fd8a9cac41ed3b8dd  verify_su2_four_minus_shallow_z3
+
+Command:
+/usr/bin/time -f 'elapsed=%e maxrss_kib=%M' \
+  ./verify_su2_four_minus_shallow_z3
+
+Output:
+SU2_FOUR_MINUS_SHALLOW_Z3 parities=2 selected_orbits=2 shallow_orbits=7 queries=14 workers=6 counterexamples=UNSAT result=PASS
+elapsed=13043.42 maxrss_kib=3121528
+
+Interpretation:
+The fourteen cells are the two level parities times the seven
+selected-cut/stabilizer orbits of the position carrying an upper shallow
+even label.  Each query is cutoff-free QF-LIA and asserts the negation of
+the direct disjoint-reservoir payment.  Their joint UNSAT result is an
+unbounded certificate, not a bounded label scan.

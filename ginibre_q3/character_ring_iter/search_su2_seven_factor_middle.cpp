@@ -205,6 +205,10 @@ int main(int argc, char** argv) {
         Witness signed_distinct_witness;
         Witness pair_domination_witness;
         Witness active_exact_witness;
+        std::array<Witness, 4> signed_by_minus_count{};
+        std::array<Witness, 4> pair_by_minus_count{};
+        std::array<Witness, 4> exact_by_minus_count{};
+        std::array<Witness, 4> active_exact_by_minus_count{};
         std::uint64_t cases = 0;
 
         for (int minus_count = 2; minus_count <= 6; minus_count += 2) {
@@ -293,6 +297,25 @@ int main(int argc, char** argv) {
                         minus, plus, invariant, negative_middle,
                         positive_middle, pair_term
                     );
+                    const std::size_t minus_index =
+                        static_cast<std::size_t>(minus_count / 2);
+                    consider(
+                        signed_by_minus_count[minus_index],
+                        invariant - negative_middle, minus, plus,
+                        invariant, negative_middle,
+                        positive_middle, pair_term
+                    );
+                    consider(
+                        pair_by_minus_count[minus_index],
+                        invariant + pair_term - negative_middle,
+                        minus, plus, invariant, negative_middle,
+                        positive_middle, pair_term
+                    );
+                    consider(
+                        exact_by_minus_count[minus_index],
+                        exact_half, minus, plus, invariant,
+                        negative_middle, positive_middle, pair_term
+                    );
                     consider(
                         exact_half_witness, exact_half, minus, plus,
                         invariant, negative_middle, positive_middle, pair_term
@@ -303,6 +326,11 @@ int main(int argc, char** argv) {
                             active_exact_witness, exact_half, minus, plus,
                             invariant, negative_middle,
                             positive_middle, pair_term
+                        );
+                        consider(
+                            active_exact_by_minus_count[minus_index],
+                            exact_half, minus, plus, invariant,
+                            negative_middle, positive_middle, pair_term
                         );
                     }
                 }
@@ -317,6 +345,18 @@ int main(int argc, char** argv) {
         print_witness("pair_domination_minimum", pair_domination_witness);
         print_witness("exact_half_minimum", exact_half_witness);
         print_witness("active_exact_half_minimum", active_exact_witness);
+        for (int minus_count = 2; minus_count <= 6; minus_count += 2) {
+            const std::size_t index =
+                static_cast<std::size_t>(minus_count / 2);
+            std::cout << "minus_count=" << minus_count << '\n';
+            print_witness("  signed_minimum", signed_by_minus_count[index]);
+            print_witness("  pair_minimum", pair_by_minus_count[index]);
+            print_witness("  exact_minimum", exact_by_minus_count[index]);
+            print_witness(
+                "  active_exact_minimum",
+                active_exact_by_minus_count[index]
+            );
+        }
         std::cout << "SU2_SEVEN_FACTOR_MIDDLE "
                   << (exact_half_witness.value < 0 ? "FAIL" : "PASS") << '\n';
         return exact_half_witness.value < 0 ? 1 : 0;

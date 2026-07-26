@@ -1,0 +1,5 @@
+RUN_UTC=2026-07-26
+HOST=nb1cb2f
+SOURCE_SHA256 test_su2_cyclotomic_sign.cpp a3ae6b39c2cd256374ab1e0c8d995efc7b257f8a3e719a811b4fd9e7ab5315e5
+SOURCE_SHA256 su2_cyclotomic.h 99b535fb69637cd4dfe8b8711006e099b4564cb04cc99b98c49682e4359ba128
+SU2_CYCLOTOMIC_SIGN levels=30 elements=6000 legacy_rejected=4 result=PASS

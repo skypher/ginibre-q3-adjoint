@@ -1,0 +1,31 @@
+SU2 seven-factor all-even four-minus deep small-cut QF-LIA certificate
+Date: 2026-07-26
+
+Source:
+  character_ring_iter/verify_su2_four_minus_deep_small_z3.cpp
+SHA-256:
+  24d882458db5742422c53102719611ebc09221988b3df25df4a1742b1e987dfb
+
+Compile:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    verify_su2_four_minus_deep_small_z3.cpp \
+    -lz3 -pthread -o verify_su2_four_minus_deep_small_z3
+
+Solver package:
+  libz3-dev 4.8.12-3.1build1
+
+Replay:
+  ./verify_su2_four_minus_deep_small_z3
+
+Output:
+  SU2_FOUR_MINUS_DEEP_SMALL_Z3 parities=2 cuts=16 depths=5 queries=160 workers=60 counterexamples=UNSAT result=PASS
+
+Resources:
+  elapsed=746.38
+  maxrss_kib=3272360
+
+Each query is cutoff-free QF-LIA.  The 160 queries cover both level
+parities, every one of the sixteen indexed negative cuts, and maximal cut
+depths one through five.  Proposition 5A5 in
+CENTRAL_CHARACTER_Q3_SEARCH.md records the exact formulas and deduction.

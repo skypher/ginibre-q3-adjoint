@@ -1,0 +1,27 @@
+SU2_SIMPLE_CURRENT_MOMENTS
+
+Command:
+  ./analyze_su2_simple_current_moments --scan 300
+
+Source SHA-256:
+  4fb9400b11eb8ae64035aa43aa006f5e61a737ab3d8d77c11b0b843036f7d0a6  analyze_su2_simple_current_moments.cpp
+
+Binary SHA-256:
+  d690b0135b27bf703ef8b3fa140e3f309615ad89cd34fa53e3c0c8d66a63644f  analyze_su2_simple_current_moments
+
+Output:
+SU2_SIMPLE_CURRENT_MOMENTS rows=5550 maximum_level=300 minimum_paired=0 witness_level=14 witness_label=2 minimum_delta_five=0 delta_five_witness_level=14 delta_five_witness_label=2 minimum_reverse_half_packet=0 reverse_witness_level=22 reverse_witness_label=2 minimum_reverse_core=-3791982 reverse_core_witness_level=298 reverse_core_witness_label=74 minimum_eleven_delta7=0 eleven_delta7_witness=(18,2) minimum_eleven_delta5=0 eleven_delta5_witness=(6,2) minimum_eleven_delta3=-108389908780 eleven_delta3_witness=(300,100) minimum_eleven_half_packet=0 eleven_packet_witness=(26,2) minimum_eleven_paired=-362359572600 eleven_paired_witness=(300,108) minimum_eleven_core=0 eleven_core_witness=(18,2) counterexamples=0 result=PASS_DISCOVERY
+
+Interpretation:
+The scan evaluates the exact determinant target (DP9), the oriented
+(1,9) value in Lemma 5A8H2, and the reversed (9,1) value for every even
+level at most 300 and every positive even q with 2q<k.  It uses
+arbitrary-precision integer fusion recurrences.  The oriented (1,9)
+theorem has an independent unbounded polynomial proof.  The reverse scan
+is bounded discovery evidence only.  The negative reverse_core minimum
+shows that the direct regrouping
+3 Delta_5+2(g_4 f_6-g_7)>=0 is false and cannot prove the reverse packet.
+The scan also audits the (1,11) packet, its three determinants, and the
+coupled core 10 D_7+14 D_5+5 D_3.  D_3 and the simpler pairing
+14 D_5+5 D_3 can be negative, while the coupled core has an independent
+unbounded exact chamber proof in prove_su2_simple_current_dp9.cpp.

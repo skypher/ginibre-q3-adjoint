@@ -1,0 +1,12 @@
+RUN_UTC=2026-07-26
+HOST=optimus
+SOURCE_SHA256 verify_su2_global_cut_payment_small.cpp e2e917f7450cebc7a1570a105049ad8c74d8032c5b32779c8201ab7d9c1cd360
+DEPENDENCY_SHA256 analyze_su2_global_cut_payment.cpp 91eb8241c0821907fae340edd2cd08e955bf09dc9f8d35b956b09c970c5558e0
+BINARY_SHA256 verify_su2_global_cut_payment_small aa537d87243aa1cb9d174ec6f5607252e6fb4a4c24d76314cf61a17fbf22b152
+COMMAND=/usr/bin/time -f elapsed=%e maxrss_kib=%M ./verify_su2_global_cut_payment_small 6 12
+ARITHMETIC=int64 fusion states with fail-closed checked addition; int128 cut sums
+SU2_GLOBAL_CUT_PAYMENT_SMALL maximum_level=6 maximum_factors=12 rows=125731 active=91573 workers=1
+MINIMUM_DIRECT=1 level=3 minus_mask=24 labels=[1,1,1,2,2,3] selected_mask=11 N=3 U=4 T=6 L=3
+COUNTEREXAMPLES=0
+elapsed=21.35 maxrss_kib=3072
+RESULT=PASS_EXHAUSTIVE_FINITE_BOX

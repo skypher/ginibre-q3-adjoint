@@ -1,0 +1,5 @@
+RUN_UTC=2026-07-26
+HOST=optimus
+Z3=4.8.12-3.1build1
+SOURCE_SHA256 verify_su2_d12_cap2_z3.cpp d5f0234414b64568e51738d982273863c27e0534076781e7fb23ee3ed5307080
+SU2_D12_CAP2_Z3 k>=6 base=SAT family_witnesses=6 counterexample=UNSAT result=PASS

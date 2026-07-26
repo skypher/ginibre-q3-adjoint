@@ -1,0 +1,27 @@
+SU2 seven-factor all-even four-minus exact cross-check
+Date: 2026-07-26
+
+Source:
+  character_ring_iter/verify_su2_seven_four_minus_even.cpp
+SHA-256:
+  d7c0c4fcc4e22592b1d384c0196f902ad52f70497aa1eaa7a3eb1cbcc94ea96f
+
+Compile:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror \
+    verify_su2_seven_four_minus_even.cpp \
+    -o verify_su2_seven_four_minus_even
+
+Replay:
+  ./verify_su2_seven_four_minus_even 10 20 20
+
+Selected output summary:
+  SU2_SEVEN_FOUR_MINUS_EVEN ordinary_maximum=10 finite_maximum_level=20 finite_full_maximum_level=20
+  ordinary_cases=525 ordinary_active=519 ordinary_minimum_N_minus_16d=15 ordinary_minimum_level=-1 ordinary_minimum_minus=[2,2,2,2] ordinary_minimum_plus=[4,4,10] ordinary_raw_bound_failures=0 ordinary_raw_failures_with_k=0 ordinary_raw_failures_without_k=0 ordinary_raw_failures_all_cap_ge_3=0 ordinary_finite_deep_d_ge_6=0 ordinary_minimum_half=45 ordinary_minimum_half_level=-1 ordinary_minimum_half_minus=[2,2,2,2] ordinary_minimum_half_plus=[4,4,10]
+  finite_half_box_cases=340 finite_half_box_active=338 finite_half_box_minimum_N_minus_16d=16 finite_half_box_raw_bound_failures=0 finite_half_box_finite_deep_d_ge_6=60 finite_half_box_deep_local_margins_d1_to_d5=(66,18,16,29,38)
+  finite_full_discovery_cases=157488 finite_full_discovery_active=124015 finite_full_discovery_minimum_N_minus_16d=-71 finite_full_discovery_raw_bound_failures=9595 finite_full_discovery_raw_failures_with_k=7083 finite_full_discovery_raw_failures_without_k=2512 finite_full_discovery_raw_failures_all_cap_ge_3=0 finite_full_discovery_finite_deep_d_ge_6=13407 finite_full_discovery_deep_local_margins_d1_to_d5=(12,3,1,14,23) finite_full_discovery_minimum_half=0
+  SU2_SEVEN_FOUR_MINUS_EVEN PASS
+
+The replay uses exact integer fusion dynamic programming.  It is a bounded
+cross-check only.  Propositions 5A2, 5A4, 5A5 and Corollaries 5A3, 5A6 in
+CENTRAL_CHARACTER_Q3_SEARCH.md are the unbounded proofs.

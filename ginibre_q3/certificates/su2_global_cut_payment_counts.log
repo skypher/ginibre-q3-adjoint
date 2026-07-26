@@ -1,0 +1,12 @@
+d1a3b8bf3067d182cd5aa5305101449b4431e12e133b3e1d06d170297385ef03  analyze_su2_global_cut_payment_counts.cpp
+2aba5561e527af7adab61621e273c554400e46c4c9de84579235d05bd40f3b8d  analyze_su2_global_cut_payment_counts
+anchor_counterexample=-278492090112 level=4 labels=[1,2,3,4] counts=[10,18,18,8] signs=[+,+,-,+] selected_counts=[1,0,1,1] (2N,Uo,To,2w,2L)=(417942208512,156853697876420027319578880,156853697876420445125738496,139314069504,417942208512)
+SU2_GCP_ANCHOR_COUNTEREXAMPLE anchor_only=FAIL gcp=PASS gks=PASS result=PASS
+SU2_GLOBAL_CUT_PAYMENT_COUNTS seed=1 trials=20000 evaluated=5230 active=3005 maximum_level=20 maximum_factors=60 maximum_types=4 workers=1
+minimum_twice_exact=0 level=7 labels=[1,5] counts=[1,1] signs=[-,-] selected_counts=[0,0] (2N,Uo,To,2w,2L)=(0,0,0,0,0)
+minimum_twice_anchor=-5961012480 level=4 labels=[1,2,3,4] counts=[14,14,14,8] signs=[+,-,+,-] selected_counts=[1,0,1,1] (2N,Uo,To,2w,2L)=(26121388032,612709757329747037031936,612709757329761705173760,8707129344,26121388032)
+minimum_twice_direct=4 level=4 labels=[1,2,3,4] counts=[2,1,2,2] signs=[-,+,-,-] selected_counts=[1,0,1,1] (2N,Uo,To,2w,2L)=(6,14,16,2,6)
+gks_counterexample=none
+gcp_counterexample=none
+SU2_GLOBAL_CUT_PAYMENT_COUNTS counterexamples=0 result=PASS_DISCOVERY
+elapsed=42.80 maxrss_kib=75892

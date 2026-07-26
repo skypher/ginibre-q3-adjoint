@@ -1,0 +1,81 @@
+source_sha256=0235480f98ef2328942a6f270fdf603a2e6f67b8787abf8811b79b92cca24955
+binary_sha256=21750a1d931da1d1ac52692c0b5cd54ca5bb429b0391ed7447a05b3c1fe6a17a
+DP9_LOWER terms=14
+  x^0 y^1 coefficient=7/6
+  x^0 y^2 coefficient=7/4
+  x^0 y^3 coefficient=23/6
+  x^0 y^4 coefficient=5/4
+  x^1 y^0 coefficient=13/2
+  x^1 y^1 coefficient=107/6
+  x^1 y^2 coefficient=35/1
+  x^1 y^3 coefficient=38/3
+  x^2 y^0 coefficient=27/1
+  x^2 y^1 coefficient=189/2
+  x^2 y^2 coefficient=54/1
+  x^3 y^0 coefficient=149/2
+  x^3 y^1 coefficient=99/1
+  x^4 y^0 coefficient=62/1
+DP9_LOWER coefficientwise_nonnegative=true
+DP9_UPPER terms=14
+  x^0 y^1 coefficient=8/1
+  x^0 y^2 coefficient=16/1
+  x^0 y^3 coefficient=16/1
+  x^0 y^4 coefficient=8/1
+  x^1 y^0 coefficient=13/2
+  x^1 y^1 coefficient=131/3
+  x^1 y^2 coefficient=92/1
+  x^1 y^3 coefficient=184/3
+  x^2 y^0 coefficient=27/1
+  x^2 y^1 coefficient=144/1
+  x^2 y^2 coefficient=144/1
+  x^3 y^0 coefficient=149/2
+  x^3 y^1 coefficient=149/1
+  x^4 y^0 coefficient=62/1
+DP9_UPPER coefficientwise_nonnegative=true
+REVERSE9_BAND_5_6 terms=36 coefficientwise_nonnegative=true
+REVERSE9_BOUNDARY_5 terms=8 coefficientwise_nonnegative=true
+REVERSE9_BAND_4_5 terms=36 coefficientwise_nonnegative=true
+REVERSE9_BAND_3_4_LOWER terms=36 coefficientwise_nonnegative=true
+REVERSE9_BOUNDARY_3 terms=8 coefficientwise_nonnegative=true
+REVERSE9_STRIP_LOW terms=36 coefficientwise_nonnegative=true
+REVERSE9_STRIP_UNIT terms=8 coefficientwise_nonnegative=true
+REVERSE9_STRIP_MIDDLE terms=36 coefficientwise_nonnegative=true
+REVERSE9_STRIP_HIGH terms=36 coefficientwise_nonnegative=true
+DELTA5_STRIP_LOW terms=15 coefficientwise_nonnegative=true
+DELTA5_STRIP_UNIT terms=5 coefficientwise_nonnegative=true
+DELTA5_STRIP_HIGH terms=15 coefficientwise_nonnegative=true
+ELEVEN_CORE_STRIP_LOW terms=28 coefficientwise_nonnegative=true
+ELEVEN_CORE_STRIP_UNIT terms=7 coefficientwise_nonnegative=true
+ELEVEN_CORE_STRIP_MIDDLE terms=28 coefficientwise_nonnegative=true
+ELEVEN_CORE_STRIP_HIGH terms=28 coefficientwise_nonnegative=true
+ELEVEN_CORE_BOUNDARY_3 terms=7 coefficientwise_nonnegative=true
+ELEVEN_CORE_BAND_3_4 terms=28 coefficientwise_nonnegative=true
+ELEVEN_CORE_BAND_4_5 terms=28 coefficientwise_nonnegative=true
+ELEVEN_CORE_BAND_5_6 terms=28 coefficientwise_nonnegative=true
+ELEVEN_CORE_BAND_6_7 terms=28 coefficientwise_nonnegative=true
+ELEVEN_CORE_BAND_7_8 terms=13 coefficientwise_nonnegative=true
+ELEVEN_DELTA7_LOW terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA7_UNIT terms=7 coefficientwise_nonnegative=true
+ELEVEN_DELTA7_MIDDLE terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA7_HIGH terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_LOW_C1_ZERO terms=1 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_LOW_C1_TAIL terms=7 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_LOW_CGE2 terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_UNIT terms=7 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_MIDDLE terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_HIGH terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA7_BOUNDARY_3 terms=7 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_BOUNDARY_3 terms=6 coefficientwise_nonnegative=true
+ELEVEN_DELTA7_BAND_3_4 terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA7_BAND_4_5 terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA7_BAND_5_6 terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA7_BAND_6_7 terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA7_BAND_7_8 terms=13 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_BAND_3_4 terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_BAND_4_5 terms=28 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_BAND_5_6 terms=22 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_BAND_6_7 terms=0 coefficientwise_nonnegative=true
+ELEVEN_DELTA5_BAND_7_8 terms=0 coefficientwise_nonnegative=true
+DP9_RECURRENCE_AUDIT maximum_level=100 rows=192 dp9_mismatches=0 reverse_lower_mismatches=0 result=PASS_DISCOVERY
+REVERSE9_FAR_RECURRENCE_AUDIT maximum_level=100 rows=224 lower_mismatches=0 result=PASS_DISCOVERY
+SU2_SIMPLE_CURRENT_DP9 result=PASS_EXACT

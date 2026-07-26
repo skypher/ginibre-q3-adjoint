@@ -1,0 +1,26 @@
+SU2 simple-current-pair grouped packet replay
+Date: 2026-07-26T12:51:43Z
+
+Compiler:
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+
+Build:
+make -B -f Makefile.research analyze_su2_simple_current_pair
+
+Source SHA-256:
+e1c3c4d8a4e49900ae90dd1c2c12496fc3c4fad8db51c43a677a6a509402a351  analyze_su2_simple_current_pair.cpp
+
+Binary SHA-256:
+dbb2644d885dc638abbabf94f55a6aa2bb4a9602218f3a137f29aa3ff0b831c9  analyze_su2_simple_current_pair
+
+Command:
+./analyze_su2_simple_current_pair 36 19
+
+Output:
+SU2_SIMPLE_CURRENT_PAIR rows=30600 maximum_level=36 maximum_odd_count=19 minimum=0 maximum=8965447000770594195018324181730109900681902872 zeros=16646 witness_level=3 witness_labels={1,2} witness_counts={1,1} maximum_witness_level=36 maximum_witness_labels={17,19} maximum_witness_counts={19,19} nonbase_minimum=0 nonbase_witness_level=3 nonbase_witness_labels={1,2} nonbase_witness_counts={1,3} grouped_identity=PASS alternating_path_identity=PASS counterexamples=0 result=PASS_DISCOVERY
+elapsed=151.22 maxrss_kib=3072
+
+Interpretation:
+This is bounded exact discovery evidence only.  The unbounded content is
+the algebraic grouped-boundary and alternating-path identities proved in
+Lemma 5A8H; this replay independently evaluates all three integer formulas.

@@ -1,0 +1,11 @@
+RUN_UTC=2026-07-26
+HOST=optimus
+SOURCE_SHA256 verify_su2_d12_deep_minus_z3.cpp 32a05b998980ac167f7595effbe9e93bfc31858ae1c7dd42a170d5a6cfd60a52
+BINARY_SHA256 verify_su2_d12_deep_minus_z3 9a179b3c409dd87647a0b7d09b519bc7156c18cf77d7a8678ff510a991ca756b
+COMMAND=/usr/bin/time -f elapsed=%e maxrss_kib=%M ./verify_su2_d12_deep_minus_z3 1 0 0 0 0 1
+SU2_D12_DEEP_MINUS_Z3 kind=1 level_parity=0 q_parity=0 plus_mask=0 selected_cut=0 selected_rank=1 counterexample=UNSAT result=PASS
+elapsed=654.06 maxrss_kib=167936
+COMMAND=/usr/bin/time -f elapsed=%e maxrss_kib=%M ./verify_su2_d12_deep_minus_z3 1 0 0 0 0 2
+SU2_D12_DEEP_MINUS_Z3 kind=1 level_parity=0 q_parity=0 plus_mask=0 selected_cut=0 selected_rank=2 counterexample=UNSAT result=PASS
+elapsed=2928.43 maxrss_kib=210944
+RESULT=PASS_TWO_CANONICAL_SPOTS_ONLY

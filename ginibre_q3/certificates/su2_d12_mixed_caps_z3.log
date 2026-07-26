@@ -1,0 +1,4 @@
+RUN_UTC=2026-07-26
+HOST=optimus
+SOURCE_SHA256 verify_su2_d12_mixed_caps_z3.cpp 4af348175a9209ed4c1715c8986719b57af47ed85d6b7bf72952f3ec092a641f
+SU2_D12_MIXED_CAPS_Z3 k>=9 masks=256 workers=61 witness_T=30 bounds=n0:32,n1:24,n2:27,n3:13,n4+:no-dense rank1=n0:10,n1:10,n2:9,n3:no-dense n2_rank2=has-incidence-one n3_families=8 result=PASS
