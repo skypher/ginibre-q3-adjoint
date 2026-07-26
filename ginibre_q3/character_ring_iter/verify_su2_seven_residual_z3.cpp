@@ -356,7 +356,9 @@ z3::expr residual_positive_reservoir(
 QueryResult verify_residual_query(
     int orbit_index,
     int level_parity,
-    int selected_orbit
+    int selected_orbit,
+    int cap_mask = -1,
+    int selected_wall_mask = -1
 ) {
     const ResidualOrbit& orbit =
         residual_orbits[static_cast<std::size_t>(orbit_index)];
@@ -389,6 +391,40 @@ QueryResult verify_residual_query(
     solver.add(k >= 1);
     for (const z3::expr& label : labels) {
         solver.add(label >= 1 && label <= k);
+    }
+    if (cap_mask >= 0) {
+        for (int index = 0; index < 7; ++index) {
+            const z3::expr& label =
+                labels[static_cast<std::size_t>(index)];
+            solver.add(
+                ((cap_mask >> index) & 1) != 0
+                    ? 2 * label <= k
+                    : 2 * label > k
+            );
+        }
+    }
+    if (selected_wall_mask >= 0) {
+        const std::array<int, 3> cut =
+            mask_triple(selected_mask);
+        const std::array<int, 4> rest =
+            mask_complement(selected_mask);
+        const std::array<std::array<int, 2>, 3> pairs{{
+            {cut[0], cut[1]},
+            {rest[0], rest[1]},
+            {rest[2], rest[3]},
+        }};
+        for (int index = 0; index < 3; ++index) {
+            const auto& pair =
+                pairs[static_cast<std::size_t>(index)];
+            const z3::expr pair_sum =
+                labels[static_cast<std::size_t>(pair[0])]
+                + labels[static_cast<std::size_t>(pair[1])];
+            solver.add(
+                ((selected_wall_mask >> index) & 1) != 0
+                    ? pair_sum <= k
+                    : pair_sum > k
+            );
+        }
     }
     for (int minus = 0; minus < orbit.minus_count; ++minus) {
         for (int plus = orbit.minus_count; plus < 7; ++plus) {
@@ -511,10 +547,14 @@ std::vector<ResidualTask> residual_tasks() {
 
 int main(int argc, char** argv) {
     const std::vector<ResidualTask> tasks = residual_tasks();
-    if (argc == 4) {
+    if (argc >= 4 && argc <= 6) {
         const int orbit_index = std::atoi(argv[1]);
         const int level_parity = std::atoi(argv[2]);
         const int selected_orbit = std::atoi(argv[3]);
+        const int cap_mask =
+            argc >= 5 ? std::atoi(argv[4]) : -1;
+        const int selected_wall_mask =
+            argc == 6 ? std::atoi(argv[5]) : -1;
         if (orbit_index < 0
             || orbit_index >= static_cast<int>(
                 residual_orbits.size()
@@ -527,15 +567,23 @@ int main(int argc, char** argv) {
                         static_cast<std::size_t>(orbit_index)
                     ]
                 ).size()
-            )) {
+            )
+            || cap_mask < -1 || cap_mask >= (1 << 7)
+            || selected_wall_mask < -1
+            || selected_wall_mask >= (1 << 3)) {
             std::cerr
                 << "usage: verify_su2_seven_residual_z3 "
                 << "[ORBIT(0..7) LEVEL_PARITY(0..1) "
-                << "SELECTED_ORBIT]\n";
+                << "SELECTED_ORBIT [CAP_MASK(0..127) "
+                << "SELECTED_WALL_MASK(0..7)]]\n";
             return EXIT_FAILURE;
         }
         const QueryResult result = verify_residual_query(
-            orbit_index, level_parity, selected_orbit
+            orbit_index,
+            level_parity,
+            selected_orbit,
+            cap_mask,
+            selected_wall_mask
         );
         if (!result.passed) {
             std::cerr << "SU2_SEVEN_RESIDUAL_Z3 FAIL "
@@ -546,6 +594,8 @@ int main(int argc, char** argv) {
                   << " orbit=" << orbit_index
                   << " level_parity=" << level_parity
                   << " selected_orbit=" << selected_orbit
+                  << " cap_mask=" << cap_mask
+                  << " selected_wall_mask=" << selected_wall_mask
                   << " counterexample=UNSAT result=PASS\n";
         return EXIT_SUCCESS;
     }
@@ -553,7 +603,8 @@ int main(int argc, char** argv) {
         std::cerr
             << "usage: verify_su2_seven_residual_z3 "
             << "[ORBIT(0..7) LEVEL_PARITY(0..1) "
-            << "SELECTED_ORBIT]\n";
+            << "SELECTED_ORBIT [CAP_MASK(0..127) "
+            << "SELECTED_WALL_MASK(0..7)]]\n";
         return EXIT_FAILURE;
     }
 

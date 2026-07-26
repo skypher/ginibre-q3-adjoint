@@ -1,0 +1,26 @@
+SU2_SIMPLE_CURRENT_HIERARCHY
+
+Command:
+  ./analyze_su2_simple_current_hierarchy 500 20
+
+Source SHA-256:
+  4cfa190fe43d28b13e8ea896a034b7760f7c3c77249a2bc921d0689a525ed86c  analyze_su2_simple_current_hierarchy.cpp
+
+Binary SHA-256:
+  b8f728b75ca2bcb7238777b79002bb998b605745ff76864c62080193a4a66cc3  analyze_su2_simple_current_hierarchy
+
+Summary:
+SU2_SIMPLE_CURRENT_HIERARCHY rows=279000 partial_core_rows=2635000 single_crossing_rows=276170 sign_recrossings=3033 first_recrossing=(20,8,8,6) maximum_level=500 maximum_prefix=20 minimum_packet=0 packet_witness=(18,2,3) minimum_core=-119105 core_witness=(498,166,3) result=PASS_DISCOVERY
+
+Interpretation:
+The negative aggregate minimum occurs only at prefix three, where the
+binomial partial-core criterion is not asserted and the omitted easy wall
+terms supply necessary compensation.  For every prefix 4 through 20, all
+binomial partial cores P_(j,t) were nonnegative.  Individual adjacent
+determinants become negative, so determinantwise positivity is false.
+Their signs also need not change only once: the first exact negative-to-
+positive recrossing is at level 20, label 8, prefix 8, determinant index 6.
+Thus a naïve unimodality reduction of all partial cores is false.
+The scan uses exact arbitrary-precision finite-fusion recurrences but is
+bounded discovery evidence; Lemma 5A8H8 is the unbounded Abel-summation
+reduction, while the remaining all-j partial-core inequality is open.

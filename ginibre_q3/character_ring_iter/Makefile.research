@@ -208,6 +208,10 @@ analyze_su2_simple_current_transfer: analyze_su2_simple_current_transfer.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+analyze_su2_simple_current_hierarchy: analyze_su2_simple_current_hierarchy.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 prove_su2_simple_current_dp9: prove_su2_simple_current_dp9.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -245,6 +249,7 @@ RESEARCH_TARGETS = \
 	analyze_su2_simple_current_pair \
 	analyze_su2_simple_current_moments \
 	analyze_su2_simple_current_transfer \
+	analyze_su2_simple_current_hierarchy \
 	prove_su2_simple_current_dp9 \
 	verify_su2_global_cut_payment_small \
 	verify_su2_seven_residual_z3 \

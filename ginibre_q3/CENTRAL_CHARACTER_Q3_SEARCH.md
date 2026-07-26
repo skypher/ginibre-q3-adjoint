@@ -3380,6 +3380,98 @@ When `H>=0`, use `D_7>=0`.  When `H<0`, use
 Finally `g_12>=0` and `g_10-g_9>=0`, since `q^2>=q`.  This proves the
 fifth transfer and `(P5A.94)`.  QED.
 
+The preceding case split has a uniform Abel-summation form.  It replaces
+the growing list of determinant sign conditions by one triangular family
+of binomial partial cores.
+
+**Lemma 5A8H8 (binomial partial-core transfer criterion).**  Fix a prefix
+length `j>=4` and put
+
+```text
+c_(j,s)=binom(2j+1,2s),
+D_(j,s)=g_(2j+2-2s)f_(2s)-g_(2j+1-2s)f_(2s+1),
+P_(j,t)=sum_(s=2)^t c_(j,s)D_(j,s),   2<=t<=j-1.    (P5A.96)
+```
+
+If
+
+```text
+P_(j,t)>=0,                         2<=t<=j-1,       (BPC_j)
+```
+
+then the first `j` ascending quadratic transfers are nonnegative in
+every eventual packet `(1,2m+1)` with `m>=j`.  Consequently proving
+`(BPC_j)` for every `j>=4` completes the whole oriented
+`(1,2m+1)` simple-current tower.
+
+**Proof.**  Let `e_s` be the elementary symmetric function of degree
+`s` in the first `j` increasing slopes
+
+```text
+tan^2(pi/(2m+1)),...,tan^2(j pi/(2m+1)).
+```
+
+The boundary value after these transfers is
+
+```text
+g_(2j+2)+e_1{g_(2j)-g_(2j-1)}
+ +sum_(s=2)^(j-1)e_sD_(j,s).                         (P5A.97)
+```
+
+The omitted degree-`j` determinant vanishes because `2q<k` gives
+`g_1=g_2=0`.  The first term is nonnegative.  Moreover `e_q^2`
+contains `e_q` when `q` is even and `2q<k`, so
+`g_(2j)>=g_(2j-1)`.
+
+At the smallest eventual packet, `2m+1=2j+1`, Lemma 5A8H4 gives
+
+```text
+e_s=c_(j,s).
+```
+
+For a later packet every one of the first `j` slopes decreases.  The
+coordinatewise monotonicity of `e_(s+1)/e_s` from Lemma 5A8H6 therefore
+gives
+
+```text
+e_(s+1)/e_s
+ <=c_(j,s+1)/c_(j,s).
+```
+
+Thus `v_s=e_s/c_(j,s)` is nonincreasing for `2<=s<=j-1`.
+Set the auxiliary terminal value `v_j=0`.  Summation by parts gives the
+exact identity
+
+```text
+sum_(s=2)^(j-1)e_sD_(j,s)
+ =sum_(t=2)^(j-2)(v_t-v_(t+1))P_(j,t)
+   +v_(j-1)P_(j,j-1).                              (P5A.98)
+```
+
+Every coefficient on the right is nonnegative, so `(BPC_j)` proves
+`(P5A.97)>=0`.  QED.
+
+For `j=4`, `(BPC_j)` is exactly the sign of `Delta_5` together with
+`(DP9)`; for `j=5`, it is contained in `(P5A.93)`.  Hence Lemmas
+5A8H5--5A8H7 are the first two exact rows of this triangular criterion,
+not isolated coincidences.  The remaining exact target is
+
+```text
+P_(j,t)>=0 for all j>=6 and 2<=t<=j-1.              (P5A.99)
+```
+
+The strict arbitrary-precision C++ diagnostic
+`character_ring_iter/analyze_su2_simple_current_hierarchy.cpp` evaluates
+the finite fusion recurrence and every partial core in `(P5A.96)`.
+Through level 500 and prefix length 20 it checked 279,000 packet rows
+and 2,635,000 partial-core rows with no negative value.  Many individual
+`D_(j,s)` are negative, so Abel aggregation is essential.  Their signs
+are not even single-crossing: the first exact negative-to-positive
+recrossing occurs at `(k,q,j,s)=(20,8,8,6)`.  Thus endpoint signs plus
+unimodality cannot replace the full triangular target.  This run is
+bounded discovery evidence for `(P5A.99)`, not its proof; its transcript
+is `certificates/su2_simple_current_hierarchy.log`.
+
 The strict C++ diagnostic
 `character_ring_iter/analyze_su2_simple_current_transfer.cpp` evaluates
 both orders of every positive-root prefix.  Through level 300 and `m=39`

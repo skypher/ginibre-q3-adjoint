@@ -122,6 +122,7 @@ jobs:
             analyze_su2_simple_current_pair \
             analyze_su2_simple_current_moments \
             analyze_su2_simple_current_transfer \
+            analyze_su2_simple_current_hierarchy \
             prove_su2_simple_current_dp9 \
             verify_su2_global_cut_payment_small \
             verify_su2_seven_residual_z3 \
@@ -173,6 +174,9 @@ jobs:
           ginibre_q3/character_ring_iter/analyze_su2_simple_current_transfer \
             30 9 \
             2>&1 | tee ci-logs/su2-simple-current-transfer.log
+          ginibre_q3/character_ring_iter/analyze_su2_simple_current_hierarchy \
+            50 8 \
+            2>&1 | tee ci-logs/su2-simple-current-hierarchy.log
           ginibre_q3/character_ring_iter/prove_su2_simple_current_dp9 \
             2>&1 | tee ci-logs/su2-simple-current-dp9.log
 

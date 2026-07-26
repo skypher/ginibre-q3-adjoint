@@ -288,7 +288,26 @@ before any further construction.
    the unbounded claim to 56 QF-LIA cells, and
    `character_ring_iter/verify_su2_seven_residual_z3.cpp` is replaying
    them now.  A complete UNSAT result would close all eight residual
-   types, superseding the separate all-even shallow leaf.
+   types, superseding the separate all-even shallow leaf.  A per-cell
+   performance audit found a sharp split: 24 cells finish within two
+   minutes, while the other 32 all exceed ten minutes under Z3 4.8.12.
+   Rebuilding against Z3 4.16.0 did not solve a representative hard cell
+   within ten minutes, and the valid best-local tie-break did not move any
+   of the 32 into the two-minute class.  Thus the unsplit replay has no
+   credible short ETA; the next certificate step is to partition those 32
+   formulas along their active interval/minimum chambers.  The first exact
+   seven-bit cap split was tested on hard cell `(orbit,parity,cut)=(0,0,1)`:
+   96 of its 128 cap masks close within two minutes, but the 32
+   order-compatible masks all remain live.  Individual half-level sides
+   therefore do not resolve the hard core; the next split must expose the
+   pair-sum wall choices and absolute-difference orderings inside the
+   interval ranks.  Splitting only the three pair-sum walls used by the
+   selected cut removes inconsistent cells but does not accelerate the
+   compatible ones: cap mask zero leaves its unique compatible wall cell
+   hard, and cap mask 16 leaves both compatible wall cells hard.  The
+   required refinement must therefore include cross-sign
+   absolute-difference orderings and the wall choices of competing maximal
+   cuts, not only the anchor cut.
 3. Prove the global maximal-cut payment `(GCP)` of Proposition 5A8.
    This is now the precise arbitrary-factor target:
    `T_n<=U_n+L_n(C_*)`, where `U_n` aggregates every positive unordered
@@ -393,6 +412,15 @@ before any further construction.
    `D_7>=0`, `D_5>=0`, and the coupled inequality
    `10D_7+14D_5+5D_3>=0`; elementary-symmetric ratio monotonicity then
    transfers the `(1,11)` endpoint certificate to every later packet.
+   Lemma 5A8H8 now gives the scalable form of this mechanism.  Abel
+   summation reduces the complete oriented odd tower to the triangular
+   binomial partial-core inequalities `(BPC_j)`.  The already proved
+   fourth and fifth transfers are exactly its first two rows.  Exact
+   arbitrary-precision discovery through level 500 and prefix 20 checked
+   2,635,000 partial cores without a negative value, even though many
+   individual adjacent determinants are negative.  The next proof task is
+   therefore the all-`j` partial-core inequality, not another isolated
+   packet formula.
    Exact discovery through level 300 and
    `m=39` finds no failure of the ascending order over 4,329,025 tested
    prefixes.  The descending endpoint-prefix proposal has a robust
