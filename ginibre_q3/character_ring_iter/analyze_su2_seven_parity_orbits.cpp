@@ -17,6 +17,15 @@ struct Orbit {
 };
 
 struct OrbitStratum : Stratum {
+    Witness local_only;
+    Witness local_positive;
+    Witness maximal_ceiling;
+    Witness all_cut_local_ceiling;
+    Witness all_cut_pair_ceiling;
+    Witness all_cut_positive_ceiling;
+    Witness all_cut_ceiling;
+    Witness zero_pair_ceiling;
+    Witness low_band_bound;
     Witness direct;
 };
 
@@ -85,6 +94,20 @@ std::int64_t local_channels(
     return result;
 }
 
+std::int64_t low_band_channels(
+    const Labels& first,
+    const Labels& second,
+    int level
+) {
+    std::int64_t result = 0;
+    constexpr std::array<int, 4> outputs{0, 2, 4, 6};
+    for (const int output : outputs) {
+        result += multiplicity(first, output, level)
+            * multiplicity(second, output, level);
+    }
+    return result;
+}
+
 void merge_witness(Witness& target, const Witness& source) {
     if (source.initialized
         && (!target.initialized || source.value < target.value)) {
@@ -103,6 +126,24 @@ void merge_stratum(
     merge_witness(target.active_pair, source.active_pair);
     merge_witness(target.local_pair, source.local_pair);
     merge_witness(target.local_pair_low, source.local_pair_low);
+    merge_witness(target.local_only, source.local_only);
+    merge_witness(target.local_positive, source.local_positive);
+    merge_witness(target.maximal_ceiling, source.maximal_ceiling);
+    merge_witness(
+        target.all_cut_local_ceiling,
+        source.all_cut_local_ceiling
+    );
+    merge_witness(
+        target.all_cut_pair_ceiling,
+        source.all_cut_pair_ceiling
+    );
+    merge_witness(
+        target.all_cut_positive_ceiling,
+        source.all_cut_positive_ceiling
+    );
+    merge_witness(target.all_cut_ceiling, source.all_cut_ceiling);
+    merge_witness(target.zero_pair_ceiling, source.zero_pair_ceiling);
+    merge_witness(target.low_band_bound, source.low_band_bound);
     merge_witness(target.direct, source.direct);
     merge_witness(target.exact, source.exact);
     target.maximum_ratio = std::max(
@@ -191,7 +232,10 @@ std::array<OrbitStratum, 2> scan_level(
             std::int64_t positive = 0;
             std::int64_t negative = 0;
             std::int64_t maximum_cut = 0;
+            int negative_cut_count = 0;
             std::vector<unsigned int> maximum_masks;
+            std::vector<std::pair<unsigned int, std::int64_t>>
+                active_negative_cuts;
             for (unsigned int mask = 0U;
                  mask <= full_mask; ++mask) {
                 if (popcount(mask) != 3) {
@@ -211,7 +255,11 @@ std::array<OrbitStratum, 2> scan_level(
                 if ((minus_in_cut & 1) == 0) {
                     positive += term;
                 } else {
+                    ++negative_cut_count;
                     negative += term;
+                    if (term > 0) {
+                        active_negative_cuts.emplace_back(mask, term);
+                    }
                     if (term > maximum_cut) {
                         maximum_cut = term;
                         maximum_masks.clear();
@@ -233,6 +281,46 @@ std::array<OrbitStratum, 2> scan_level(
                         subset(labels, mask, false),
                         level
                     )
+                );
+            }
+            std::int64_t all_cut_ceiling =
+                std::numeric_limits<std::int64_t>::max();
+            std::int64_t all_cut_local_ceiling = all_cut_ceiling;
+            std::int64_t all_cut_pair_ceiling = all_cut_ceiling;
+            std::int64_t all_cut_positive_ceiling = all_cut_ceiling;
+            std::int64_t low_band_bound = all_cut_ceiling;
+            for (const auto& [mask, term] : active_negative_cuts) {
+                const Labels cut_labels =
+                    subset(labels, mask, true);
+                const Labels rest_labels =
+                    subset(labels, mask, false);
+                const std::int64_t cut_local =
+                    local_channels(cut_labels, rest_labels, level);
+                const std::int64_t cut_low =
+                    low_band_channels(
+                        cut_labels, rest_labels, level
+                    );
+                const std::int64_t ceiling =
+                    negative_cut_count * term;
+                low_band_bound = std::min(
+                    low_band_bound,
+                    cut_low - (24 * term - 43)
+                );
+                all_cut_local_ceiling = std::min(
+                    all_cut_local_ceiling,
+                    cut_local - ceiling
+                );
+                all_cut_pair_ceiling = std::min(
+                    all_cut_pair_ceiling,
+                    cut_local + pair_low - ceiling
+                );
+                all_cut_positive_ceiling = std::min(
+                    all_cut_positive_ceiling,
+                    cut_local + positive - ceiling
+                );
+                all_cut_ceiling = std::min(
+                    all_cut_ceiling,
+                    cut_local + pair_low + positive - ceiling
                 );
             }
 
@@ -273,6 +361,63 @@ std::array<OrbitStratum, 2> scan_level(
                     best_local + pair_low - negative, level,
                     minus, plus, sevenfold, pair_low, positive,
                     negative, maximum_cut
+                );
+                consider(
+                    stratum.local_only,
+                    best_local - negative, level,
+                    minus, plus, sevenfold, pair_low, positive,
+                    negative, maximum_cut
+                );
+                consider(
+                    stratum.local_positive,
+                    best_local + positive - negative, level,
+                    minus, plus, sevenfold, pair_low, positive,
+                    negative, maximum_cut
+                );
+                consider(
+                    stratum.maximal_ceiling,
+                    best_local + pair_low + positive
+                        - negative_cut_count * maximum_cut,
+                    level, minus, plus, sevenfold, pair_low,
+                    positive, negative, maximum_cut
+                );
+                consider(
+                    stratum.all_cut_ceiling,
+                    all_cut_ceiling, level,
+                    minus, plus, sevenfold, pair_low,
+                    positive, negative, maximum_cut
+                );
+                consider(
+                    stratum.all_cut_local_ceiling,
+                    all_cut_local_ceiling, level,
+                    minus, plus, sevenfold, pair_low,
+                    positive, negative, maximum_cut
+                );
+                consider(
+                    stratum.all_cut_pair_ceiling,
+                    all_cut_pair_ceiling, level,
+                    minus, plus, sevenfold, pair_low,
+                    positive, negative, maximum_cut
+                );
+                consider(
+                    stratum.all_cut_positive_ceiling,
+                    all_cut_positive_ceiling, level,
+                    minus, plus, sevenfold, pair_low,
+                    positive, negative, maximum_cut
+                );
+                if (pair_low == 0) {
+                    consider(
+                        stratum.zero_pair_ceiling,
+                        all_cut_local_ceiling, level,
+                        minus, plus, sevenfold, pair_low,
+                        positive, negative, maximum_cut
+                    );
+                }
+                consider(
+                    stratum.low_band_bound,
+                    low_band_bound, level,
+                    minus, plus, sevenfold, pair_low,
+                    positive, negative, maximum_cut
                 );
                 consider(
                     stratum.direct,
@@ -393,6 +538,8 @@ int main(int argc, char** argv) {
         std::cout << "SU2_SEVEN_PARITY_ORBITS maximum_level="
                   << maximum_level
                   << " workers=" << workers << '\n';
+        OrbitStratum aggregate{};
+        std::array<OrbitStratum, 2> depth_aggregates{};
         for (std::size_t index = 0U;
              index < orbits.size(); ++index) {
             const Orbit& orbit = orbits[index];
@@ -402,6 +549,8 @@ int main(int argc, char** argv) {
                 if (stratum.cases == 0U) {
                     continue;
                 }
+                merge_stratum(aggregate, stratum);
+                merge_stratum(depth_aggregates[depth], stratum);
                 std::cout
                     << "m=" << orbit.minus_count
                     << " o=" << orbit.odd_count
@@ -417,11 +566,126 @@ int main(int argc, char** argv) {
                     "local_pair_truncated",
                     stratum.local_pair_low
                 );
+                print_witness("local_only", stratum.local_only);
+                print_witness(
+                    "local_positive", stratum.local_positive
+                );
+                print_witness(
+                    "maximal_ceiling", stratum.maximal_ceiling
+                );
+                print_witness(
+                    "all_cut_ceiling", stratum.all_cut_ceiling
+                );
+                print_witness(
+                    "all_cut_local_ceiling",
+                    stratum.all_cut_local_ceiling
+                );
+                print_witness(
+                    "all_cut_pair_ceiling",
+                    stratum.all_cut_pair_ceiling
+                );
+                print_witness(
+                    "all_cut_positive_ceiling",
+                    stratum.all_cut_positive_ceiling
+                );
+                print_witness(
+                    "zero_pair_ceiling",
+                    stratum.zero_pair_ceiling
+                );
+                print_witness(
+                    "low_band_bound", stratum.low_band_bound
+                );
                 print_witness("direct", stratum.direct);
                 print_witness("exact", stratum.exact);
                 std::cout << " max_ceil_T_over_d="
                           << stratum.maximum_ratio << '\n';
             }
+        }
+        std::cout
+            << "ABLATION_SUMMARY cases=" << aggregate.cases
+            << " active=" << aggregate.active_cases;
+        print_witness("local_only", aggregate.local_only);
+        print_witness(
+            "local_pair_truncated", aggregate.local_pair_low
+        );
+        print_witness(
+            "local_positive", aggregate.local_positive
+        );
+        print_witness(
+            "maximal_ceiling", aggregate.maximal_ceiling
+        );
+        print_witness(
+            "all_cut_ceiling", aggregate.all_cut_ceiling
+        );
+        print_witness(
+            "all_cut_local_ceiling",
+            aggregate.all_cut_local_ceiling
+        );
+        print_witness(
+            "all_cut_pair_ceiling",
+            aggregate.all_cut_pair_ceiling
+        );
+        print_witness(
+            "all_cut_positive_ceiling",
+            aggregate.all_cut_positive_ceiling
+        );
+        print_witness(
+            "zero_pair_ceiling", aggregate.zero_pair_ceiling
+        );
+        print_witness(
+            "low_band_bound", aggregate.low_band_bound
+        );
+        print_witness("direct", aggregate.direct);
+        std::cout << '\n';
+        for (std::size_t depth = 0U; depth < 2U; ++depth) {
+            const OrbitStratum& depth_aggregate =
+                depth_aggregates[depth];
+            std::cout
+                << "ABLATION_DEPTH depth="
+                << (depth == 0U ? "deep" : "shallow")
+                << " cases=" << depth_aggregate.cases
+                << " active=" << depth_aggregate.active_cases;
+            print_witness(
+                "local_only", depth_aggregate.local_only
+            );
+            print_witness(
+                "local_pair_truncated",
+                depth_aggregate.local_pair_low
+            );
+            print_witness(
+                "local_positive",
+                depth_aggregate.local_positive
+            );
+            print_witness(
+                "maximal_ceiling",
+                depth_aggregate.maximal_ceiling
+            );
+            print_witness(
+                "all_cut_ceiling",
+                depth_aggregate.all_cut_ceiling
+            );
+            print_witness(
+                "all_cut_local_ceiling",
+                depth_aggregate.all_cut_local_ceiling
+            );
+            print_witness(
+                "all_cut_pair_ceiling",
+                depth_aggregate.all_cut_pair_ceiling
+            );
+            print_witness(
+                "all_cut_positive_ceiling",
+                depth_aggregate.all_cut_positive_ceiling
+            );
+            print_witness(
+                "zero_pair_ceiling",
+                depth_aggregate.zero_pair_ceiling
+            );
+            print_witness(
+                "low_band_bound",
+                depth_aggregate.low_band_bound
+            );
+            print_witness("direct", depth_aggregate.direct);
+            std::cout << '\n';
         }
         std::cout << "SU2_SEVEN_PARITY_ORBITS PASS\n";
         return 0;

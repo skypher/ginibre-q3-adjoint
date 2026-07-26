@@ -4,10 +4,10 @@ Command:
   ./analyze_su2_simple_current_hierarchy 500 20
 
 Source SHA-256:
-  4cfa190fe43d28b13e8ea896a034b7760f7c3c77249a2bc921d0689a525ed86c  analyze_su2_simple_current_hierarchy.cpp
+  314a501536684cf7aabd152e762346bf328bacf8be6e22ec0c2e6844f73d1ef6  analyze_su2_simple_current_hierarchy.cpp
 
 Binary SHA-256:
-  b8f728b75ca2bcb7238777b79002bb998b605745ff76864c62080193a4a66cc3  analyze_su2_simple_current_hierarchy
+  671298f3388e4898742e2204446fd9d7ea7f7e0d3a37bbe582c01d79a9c98ec2  analyze_su2_simple_current_hierarchy
 
 Summary:
 SU2_SIMPLE_CURRENT_HIERARCHY rows=279000 partial_core_rows=2635000 single_crossing_rows=276170 sign_recrossings=3033 first_recrossing=(20,8,8,6) maximum_level=500 maximum_prefix=20 minimum_packet=0 packet_witness=(18,2,3) minimum_core=-119105 core_witness=(498,166,3) result=PASS_DISCOVERY
@@ -24,3 +24,5 @@ Thus a naïve unimodality reduction of all partial cores is false.
 The scan uses exact arbitrary-precision finite-fusion recurrences but is
 bounded discovery evidence; Lemma 5A8H8 is the unbounded Abel-summation
 reduction, while the remaining all-j partial-core inequality is open.
+The replay also checks the two binomial coefficient identities in Lemma
+5A8H9 for every determinant row before evaluating its partial core.

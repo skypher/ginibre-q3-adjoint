@@ -1,0 +1,97 @@
+SU2_SEVEN_RESERVOIR_ABLATION
+
+RUN_UTC=2026-07-26
+HOST=optimus
+
+COMMAND:
+  ./analyze_su2_seven_parity_orbits 20
+
+SOURCE_SHA256:
+  033c2153a3c8dc866a0760f76d374f641015954c4d5ab70ce716d0fd08fc1f8a  analyze_su2_seven_parity_orbits.cpp
+
+BINARY_SHA256:
+  83c3d39cb910285aefa0e1d0d910b62cb8e7191aa54fd48023ab660f99947be0  analyze_su2_seven_parity_orbits
+
+SCOPE:
+  All eight residual parity orbits, every disjoint-support seven-factor
+  word through level 20, and every maximal negative cut.  All arithmetic
+  is exact.
+
+SUMMARY:
+  cases=8052336
+  active_cases=5883728
+  local_only_minimum=-15
+  local_plus_truncated_equal_pair_minimum=-1
+  local_plus_positive_cut_minimum=-6
+  maximal_cut_ceiling_minimum=-116
+  all_cut_ceiling_minimum=-116
+  all_cut_local_ceiling_minimum=-122
+  all_cut_equal_pair_ceiling_minimum=-122
+  all_cut_positive_ceiling_minimum=-116
+  zero_equal_pair_ceiling_minimum=-122
+  low_band_bound_minimum=-159
+  full_direct_minimum=2
+
+DEEP_CAP_AT_LEAST_THREE:
+  cases=2311062
+  active_cases=2149712
+  local_only_minimum=-5
+  local_plus_truncated_equal_pair_minimum=30
+  local_plus_positive_cut_minimum=8
+  maximal_cut_ceiling_minimum=10
+  all_cut_ceiling_minimum=10
+  all_cut_local_ceiling_minimum=-15
+  all_cut_equal_pair_ceiling_minimum=3
+  all_cut_positive_ceiling_minimum=-11
+  zero_equal_pair_ceiling_minimum=20
+  low_band_bound_minimum=12
+  full_direct_minimum=30
+
+SHALLOW_CAP_AT_MOST_TWO:
+  cases=5741274
+  active_cases=3734016
+  local_only_minimum=-15
+  local_plus_truncated_equal_pair_minimum=-1
+  local_plus_positive_cut_minimum=-6
+  maximal_cut_ceiling_minimum=-116
+  all_cut_ceiling_minimum=-116
+  all_cut_local_ceiling_minimum=-122
+  all_cut_equal_pair_ceiling_minimum=-122
+  all_cut_positive_ceiling_minimum=-116
+  zero_equal_pair_ceiling_minimum=-122
+  low_band_bound_minimum=-159
+  full_direct_minimum=2
+
+GLOBAL_WITNESSES:
+  local_only=-15 at
+    k=5 minus=[2,2,2,2,2,2] plus=[4]
+  local_plus_truncated_equal_pair=-1 at
+    k=4 minus=[1,1,2,2] plus=[3,3,4]
+  local_plus_positive_cut=-6 at
+    k=6 minus=[2,2,2,2,2,2] plus=[6]
+  full_direct=2 at
+    k=20 minus=[2,8,20,20] plus=[1,10,19]
+
+INTERPRETATION:
+  The selected first/last-five channels alone are insufficient, even
+  when every label has cap at least three.  In the deep cap-at-least-three
+  box, however, either auxiliary reservoir separately sufficed in every
+  tested row: the truncated indexed-equal-pair reservoir had minimum 30,
+  and the positive-cut reservoir had minimum 8.  The former failed only
+  in the shallow (m,o,r)=(4,4,2) stratum at the level-four witness above;
+  the latter had negative shallow minima in three residual strata.  The
+  complete disjoint-reservoir target stayed positive with minimum 2.
+
+  The all-cut deep ceiling stayed positive with minimum 10.  Retaining
+  only local supply failed (minimum -15), retaining the equal-pair supply
+  stayed positive (minimum 3), and retaining only positive-cut supply
+  failed (minimum -11).  Setting equal-pair supply to zero gave minimum
+  20, while the explicit low-output-band lower bound gave minimum 12.
+  These additional ablations isolate the indexed equal-pair reservoir
+  and the low-output band used by the proposed deep analytic argument.
+
+  This exact replay motivates a deep/shallow reservoir split in the
+  unbounded Presburger certificate.  It is bounded discovery evidence,
+  not a proof beyond level 20.
+
+RESULT=PASS_BOUNDED_DISCOVERY_ONLY

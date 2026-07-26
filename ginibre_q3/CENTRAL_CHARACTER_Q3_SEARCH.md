@@ -1744,6 +1744,96 @@ small output by reflecting one factor on each side through the simple
 current, so the repeated-sum linearization uses at most ten terms and is
 exact.  Thus the 56 cells are exhaustive.  QED.
 
+The large-rank part of these cells is uniform and does not require a
+Presburger replay.  The all-even hypothesis in the band estimate of
+Proposition 5A4 was stronger than its proof uses.
+
+**Lemma 5A7A (parity-free deep large-cut bound).**  Retain the
+support-disjoint hypotheses of Lemma 5A7 and assume
+
+```text
+cap_k(a_i)>=3                                  for every i. (P5A.25A)
+```
+
+Let `C|C^c` be any active negative `3|4` cut and put
+
+```text
+d=w(C)=m_0(C)m_0(C^c)>0.
+```
+
+Then
+
+```text
+sum_(t in {0,2,4,6})m_t(C)m_t(C^c)>=24d-43.        (P5A.25B)
+```
+
+Consequently:
+
+```text
+four minus positions and d>=6:   24d-43>=16d;
+six minus positions and d>=11:   24d-43>=20d.      (P5A.25C)
+```
+
+In either line the displayed low channels alone are at least the total
+negative-cut ceiling `c_-d`, where `c_-=16` or `20`.  Thus every
+cap-at-least-three residual cell is reduced to selected rank at most five
+in the four-minus orbits and at most ten in the six-minus orbits.
+
+**Proof.**  Write `A=C` and `B=C^c`.  A threefold invariant has
+multiplicity at most one, so activity gives
+
+```text
+m_0(A)=1,                       m_0(B)=d.
+```
+
+Let `I` be the binary fusion interval of two labels in `A`.  The third
+label lies in `I`.  Every binary interval determined by labels of cap at
+least three has at least three entries.  The interval for fusing the
+third label with outputs `2` and `4` contains that label and both of its
+nearest step-two neighbors.  Intersecting the two intervals therefore
+gives the parity-free profile
+
+```text
+(m_0(A),m_2(A),m_4(A),m_6(A)) >= (1,2,2,1).        (P5A.25D)
+```
+
+The four-position block `B` contains an odd number of minus positions,
+and hence contains both signs.  Pair one minus label with one plus label
+and pair the remaining two labels.  The first pair has unequal labels by
+support disjointness, so its fusion interval does not contain zero.
+The two pair intervals have a step-two intersection `K` of size `d`.
+
+The offset count in the proof of Proposition 5A4 now applies verbatim.
+Before the lower and affine triangle walls, the output-`2,4,6` bands
+contain respectively
+
+```text
+3d-2,                    5d-6,                    7d-12
+```
+
+ordered pairs.  The lower wall removes none from the first two retained
+subfamilies and at most two from the third; the affine wall removes at
+most one, three, and six.  These losses depend only on the step-two
+interval endpoints.  If the common intermediate parity is odd, both
+intervals are shifted away from the lower endpoint, so the losses cannot
+increase; the two level parities at the affine endpoint were already
+included in Proposition 5A4.  Hence, without any label-parity assumption,
+
+```text
+m_2(B)>=3d-3,       m_4(B)>=5d-9,
+m_6(B)>=7d-19.                                      (P5A.25E)
+```
+
+Multiplying `(P5A.25D)` and `(P5A.25E)` gives
+
+```text
+d+2(3d-3)+2(5d-9)+(7d-19)=24d-43,
+```
+
+which proves `(P5A.25B)`.  There are sixteen negative indexed triples
+when there are four minus positions and twenty when there are six.
+Thus `(P5A.25C)` proves the stated ceilings.  QED.
+
 The seven-factor direct payment has an exact arbitrary-factor
 formulation.  Unlike the feature-shell proposals below, it aggregates
 every positive cut before asking for a sign.
@@ -3459,6 +3549,80 @@ not isolated coincidences.  The remaining exact target is
 ```text
 P_(j,t)>=0 for all j>=6 and 2<=t<=j-1.              (P5A.99)
 ```
+
+There is an exact path-current form of this target.  It removes the
+adjacent-moment notation and identifies the precise cumulative switching
+statement that a combinatorial proof must establish.
+
+**Lemma 5A8H9 (binomial-flux form of the partial cores).**  In Lemma
+5A8H8 put
+
+```text
+n=2j+2,
+H_(n,l)=binom(n,l)g_(n-l)f_l,              0<=l<=n. (P5A.100)
+```
+
+Then, for `l=2s`,
+
+```text
+n c_(j,s)D_(j,s)
+ =(n-l)H_(n,l)-(l+1)H_(n,l+1).                     (P5A.101)
+```
+
+Consequently `(BPC_j)` is exactly the family of cumulative-current
+inequalities
+
+```text
+sum_(s=2)^t {(n-2s)H_(n,2s)
+             -(2s+1)H_(n,2s+1)} >=0,
+                                      2<=t<=j-1.   (P5A.102)
+```
+
+Let `Gamma_q` be the fusion multigraph with adjacency matrix `N_q`.
+The first term `c_(j,s)g_(n-2s)f_(2s)` counts walks of length `n` on
+`Gamma_q square Gamma_q` from `(0,0)` to `(k,0)` which make exactly
+`2s` moves in the second coordinate and whose last move is in the first
+coordinate.  The second term counts the analogous walks which make
+exactly `2s+1` second-coordinate moves and whose last move is in that
+coordinate.  Thus `(P5A.102)` compares the two last-direction currents
+after aggregating the even slices from four through `2t`.
+
+**Proof.**  The two elementary identities
+
+```text
+binom(n-1,l)={(n-l)/n}binom(n,l),
+binom(n-1,l)={(l+1)/n}binom(n,l+1)
+```
+
+give `(P5A.101)` immediately.  Summing it for `s=2,...,t` gives
+`(P5A.102)`.
+
+For the path interpretation, choose the `l` second-coordinate moves
+among the first `n-1` positions and force the last move to be in the
+first coordinate.  The two projected paths then have lengths `n-l`
+and `l`, with endpoint multiplicities `g_(n-l)` and `f_l`.  If the
+last move is instead forced into the second coordinate, choose its
+other `l` moves among the first `n-1` positions; the projected lengths
+are `n-l-1` and `l+1`.  These are precisely the two terms in
+`c_(j,s)D_(j,s)`.  QED.
+
+The final edge is unique in both currents:
+`N_(q,k-q)^k=N_(q,q)^0=1`.  Stripping it rewrites the unweighted
+determinant, with `r=n-2s`, as
+
+```text
+D_(j,s)
+ =(N_q^(r-1))_(k,q)(N_q^(2s))_(0,0)
+  -(N_q^(r-1))_(k,0)(N_q^(2s))_(0,q).              (P5A.103)
+```
+
+Here the simple current was used to move the first source from `0` to
+`k`.  Formula `(P5A.103)` is a mixed-time `2 by 2` path minor.  Its
+individual sign is not fixed, exactly as the recrossing examples below
+show.  Lemma 5A8H9 therefore does not prove `(P5A.99)` by itself; it
+sharpens the missing step to a cumulative, slice-preserving path
+switching argument rather than an invalid termwise total-positivity
+claim.
 
 The strict arbitrary-precision C++ diagnostic
 `character_ring_iter/analyze_su2_simple_current_hierarchy.cpp` evaluates

@@ -102,6 +102,7 @@ struct PrefixResult {
 
 PrefixResult prefix(const Moments& value, int prefix_length) {
     const int odd_power = 2 * prefix_length + 1;
+    const int total_power = odd_power + 1;
     PrefixResult result{
         value.wall[static_cast<std::size_t>(2 * prefix_length + 2)]
             + binomial(odd_power, 2)
@@ -133,6 +134,17 @@ PrefixResult prefix(const Moments& value, int prefix_length) {
                     static_cast<std::size_t>(closed_power + 1)
                 ];
         const Integer weight = binomial(odd_power, 2 * index);
+        const Integer scaled_weight = total_power * weight;
+        if (scaled_weight
+                != (total_power - 2 * index)
+                    * binomial(total_power, 2 * index)
+            || scaled_weight
+                != (2 * index + 1)
+                    * binomial(total_power, 2 * index + 1)) {
+            throw std::logic_error(
+                "binomial-flux identity failed"
+            );
+        }
         result.determinants.push_back(determinant);
         result.core += weight * determinant;
         result.partial_cores.push_back(result.core);

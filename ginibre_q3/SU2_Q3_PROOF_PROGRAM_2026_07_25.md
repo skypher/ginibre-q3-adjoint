@@ -295,7 +295,12 @@ before any further construction.
    within ten minutes, and the valid best-local tie-break did not move any
    of the 32 into the two-minute class.  Thus the unsplit replay has no
    credible short ETA; the next certificate step is to partition those 32
-   formulas along their active interval/minimum chambers.  The first exact
+   formulas along their active interval/minimum chambers.  The verifier
+   can now export any selected formula through
+   `SU2_SEVEN_DUMP_SMT2`; the representative hard cell also exceeded two
+   minutes in official cvc5 1.3.3 under forced `QF_LIA`, so merely changing
+   SMT backends does not remove the chamber burden
+   (`certificates/su2_seven_residual_cvc5_timeout.log`).  The first exact
    seven-bit cap split was tested on hard cell `(orbit,parity,cut)=(0,0,1)`:
    96 of its 128 cap masks close within two minutes, but the 32
    order-compatible masks all remain live.  Individual half-level sides
@@ -307,7 +312,21 @@ before any further construction.
    hard, and cap mask 16 leaves both compatible wall cells hard.  The
    required refinement must therefore include cross-sign
    absolute-difference orderings and the wall choices of competing maximal
-   cuts, not only the anchor cut.
+   cuts, not only the anchor cut.  A new exact reservoir-ablation replay
+   through level 20 covers 8,052,336 rows, including 5,883,728 active
+   rows.  It shows that the full direct target remains positive with
+   minimum two, while neither auxiliary reservoir may be discarded
+   globally.  The split is nevertheless sharp: when every label has cap
+   at least three, the selected endpoint channels plus the positive-cut
+   reservoir have minimum eight, and the endpoint channels plus the
+   truncated equal-pair reservoir have minimum 30.  All negative ablation
+   minima after retaining either one of those reservoirs are confined to
+   cap-at-most-two strata.  This supplies a better next Presburger
+   decomposition: separate cap-one/two position orbits first, and
+   use only one auxiliary reservoir in the complementary deep cells.
+   The exact transcript is
+   `certificates/su2_seven_reservoir_ablation_k20.log`; it is bounded
+   discovery, not the missing unbounded theorem.
 3. Prove the global maximal-cut payment `(GCP)` of Proposition 5A8.
    This is now the precise arbitrary-factor target:
    `T_n<=U_n+L_n(C_*)`, where `U_n` aggregates every positive unordered
@@ -420,7 +439,14 @@ before any further construction.
    2,635,000 partial cores without a negative value, even though many
    individual adjacent determinants are negative.  The next proof task is
    therefore the all-`j` partial-core inequality, not another isolated
-   packet formula.
+   packet formula.  Lemma 5A8H9 now rewrites every weighted determinant
+   as an exact binomial current on the Cartesian square of the `N_q`
+   fusion graph.  Thus `(BPC_j)` is equivalent to cumulative dominance
+   of first-coordinate over second-coordinate last-step currents across
+   the even allocation slices.  Stripping the forced final edge gives a
+   mixed-time `2 by 2` path minor.  Its individual sign is not fixed, so
+   ordinary termwise total positivity is ruled out; the remaining target
+   is a cumulative slice-preserving path switch.
    Exact discovery through level 300 and
    `m=39` finds no failure of the ascending order over 4,329,025 tested
    prefixes.  The descending endpoint-prefix proposal has a robust

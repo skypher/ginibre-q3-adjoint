@@ -1,0 +1,37 @@
+SU2_SEVEN_RESIDUAL_CVC5_BACKEND_CHECK
+
+RUN_UTC=2026-07-26
+HOST=optimus
+
+VERIFIER_SOURCE_SHA256:
+  866a9716cbcbd144135ce8315a78a904ce1e761457f350f0f91fec843730a577  verify_su2_seven_residual_z3.cpp
+
+EXPORTED_SMT2:
+  orbit=0
+  level_parity=0
+  selected_orbit=1
+  bytes=116709
+  lines=2154
+  sha256=68a0abb11cfe0e6a0280b938c82784966f1e95dda16dc3777940264b0f0c5dfd
+
+SOLVER:
+  cvc5 version 1.3.3, git 8ff882e
+  official Linux x86_64 static release
+  sha256=e8d7870d57ab55e81619d2373b043da05ea1d37ca393931bdb5d8b9788cd64c4
+
+COMMAND:
+  timeout 120s cvc5 --force-logic=QF_LIA --stats su2-seven-hard-001.smt2
+
+OUTPUT:
+  cvc5 interrupted by SIGTERM
+  elapsed=120.02
+  maxrss_kib=114024
+  exit=124
+
+INTERPRETATION:
+  The same representative hard formula that stalls Z3 also exceeds two
+  minutes in cvc5 under the exact QF_LIA logic.  This is a backend
+  performance diagnostic only.  It neither proves nor disproves the
+  formula and supports chamber refinement rather than solver substitution.
+
+RESULT=TIMEOUT_NOT_PROOF

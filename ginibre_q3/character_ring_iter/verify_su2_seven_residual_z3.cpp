@@ -153,6 +153,72 @@ z3::expr residual_rank(
     );
 }
 
+z3::expr residual_selected_rank_chamber(
+    z3::context& ctx,
+    const z3::expr& k,
+    const std::array<z3::expr, 7>& labels,
+    const ResidualOrbit& orbit,
+    unsigned int mask,
+    int selected_wall_mask,
+    int selected_interval_mask
+) {
+    const std::array<int, 3> cut = mask_triple(mask);
+    const std::array<int, 4> rest = mask_complement(mask);
+    const int first_parity =
+        orbit_label_parity(orbit, rest[0])
+        ^ orbit_label_parity(orbit, rest[1]);
+    const int second_parity =
+        orbit_label_parity(orbit, rest[2])
+        ^ orbit_label_parity(orbit, rest[3]);
+    if (first_parity != second_parity) {
+        return ctx.int_val(0);
+    }
+
+    const z3::expr& first =
+        labels[static_cast<std::size_t>(rest[0])];
+    const z3::expr& second =
+        labels[static_cast<std::size_t>(rest[1])];
+    const z3::expr& third =
+        labels[static_cast<std::size_t>(rest[2])];
+    const z3::expr& fourth =
+        labels[static_cast<std::size_t>(rest[3])];
+    const z3::expr first_lower =
+        ((selected_interval_mask >> 0) & 1) != 0
+            ? first - second
+            : second - first;
+    const z3::expr second_lower =
+        ((selected_interval_mask >> 1) & 1) != 0
+            ? third - fourth
+            : fourth - third;
+    const z3::expr first_upper =
+        ((selected_wall_mask >> 1) & 1) != 0
+            ? first + second
+            : 2 * k - first - second;
+    const z3::expr second_upper =
+        ((selected_wall_mask >> 2) & 1) != 0
+            ? third + fourth
+            : 2 * k - third - fourth;
+    const z3::expr lower =
+        ((selected_interval_mask >> 2) & 1) != 0
+            ? first_lower
+            : second_lower;
+    const z3::expr upper =
+        ((selected_interval_mask >> 3) & 1) != 0
+            ? first_upper
+            : second_upper;
+    const z3::expr active = fusion(
+        k,
+        labels[static_cast<std::size_t>(cut[0])],
+        labels[static_cast<std::size_t>(cut[1])],
+        labels[static_cast<std::size_t>(cut[2])]
+    );
+    return z3::ite(
+        active && lower <= upper,
+        (upper - lower) / 2 + 1,
+        ctx.int_val(0)
+    );
+}
+
 z3::expr residual_triple_output(
     z3::context& ctx,
     const z3::expr& k,
@@ -253,9 +319,11 @@ z3::expr residual_pair_reservoir(
     const z3::expr& k,
     const std::array<z3::expr, 7>& labels,
     const ResidualOrbit& orbit,
-    int level_parity
+    int level_parity,
+    int equality_mask = -1
 ) {
     z3::expr result = ctx.int_val(0);
+    int equality_index = 0;
     for (int first = 0; first < 7; ++first) {
         for (int second = first + 1; second < 7; ++second) {
             const bool same_sign =
@@ -264,6 +332,9 @@ z3::expr residual_pair_reservoir(
             if (!same_sign) {
                 continue;
             }
+            const bool equality_active =
+                equality_mask >= 0
+                && ((equality_mask >> equality_index) & 1) != 0;
             std::array<int, 5> rest{};
             int next = 0;
             for (int index = 0; index < 7; ++index) {
@@ -326,12 +397,17 @@ z3::expr residual_pair_reservoir(
                     ctx.int_val(0)
                 );
             }
-            result = result + z3::ite(
-                labels[static_cast<std::size_t>(first)]
-                    == labels[static_cast<std::size_t>(second)],
-                contribution,
-                ctx.int_val(0)
-            );
+            if (equality_mask < 0) {
+                result = result + z3::ite(
+                    labels[static_cast<std::size_t>(first)]
+                        == labels[static_cast<std::size_t>(second)],
+                    contribution,
+                    ctx.int_val(0)
+                );
+            } else if (equality_active) {
+                result = result + contribution;
+            }
+            ++equality_index;
         }
     }
     return result;
@@ -358,7 +434,11 @@ QueryResult verify_residual_query(
     int level_parity,
     int selected_orbit,
     int cap_mask = -1,
-    int selected_wall_mask = -1
+    int selected_wall_mask = -1,
+    int selected_interval_mask = -1,
+    int equality_mask = -1,
+    int target_mode = 0,
+    int selected_rank_value = 0
 ) {
     const ResidualOrbit& orbit =
         residual_orbits[static_cast<std::size_t>(orbit_index)];
@@ -391,6 +471,9 @@ QueryResult verify_residual_query(
     solver.add(k >= 1);
     for (const z3::expr& label : labels) {
         solver.add(label >= 1 && label <= k);
+        if (target_mode != 0) {
+            solver.add(label >= 2 && label <= k - 2);
+        }
     }
     if (cap_mask >= 0) {
         for (int index = 0; index < 7; ++index) {
@@ -426,12 +509,73 @@ QueryResult verify_residual_query(
             );
         }
     }
+    if (selected_interval_mask >= 0) {
+        const std::array<int, 4> rest =
+            mask_complement(selected_mask);
+        const z3::expr& first =
+            labels[static_cast<std::size_t>(rest[0])];
+        const z3::expr& second =
+            labels[static_cast<std::size_t>(rest[1])];
+        const z3::expr& third =
+            labels[static_cast<std::size_t>(rest[2])];
+        const z3::expr& fourth =
+            labels[static_cast<std::size_t>(rest[3])];
+        const z3::expr first_lower = zabs(first - second);
+        const z3::expr second_lower = zabs(third - fourth);
+        const z3::expr first_upper =
+            zmin(first + second, 2 * k - first - second);
+        const z3::expr second_upper =
+            zmin(third + fourth, 2 * k - third - fourth);
+        solver.add(
+            ((selected_interval_mask >> 0) & 1) != 0
+                ? first >= second
+                : first < second
+        );
+        solver.add(
+            ((selected_interval_mask >> 1) & 1) != 0
+                ? third >= fourth
+                : third < fourth
+        );
+        solver.add(
+            ((selected_interval_mask >> 2) & 1) != 0
+                ? first_lower >= second_lower
+                : first_lower < second_lower
+        );
+        solver.add(
+            ((selected_interval_mask >> 3) & 1) != 0
+                ? first_upper <= second_upper
+                : first_upper > second_upper
+        );
+    }
     for (int minus = 0; minus < orbit.minus_count; ++minus) {
         for (int plus = orbit.minus_count; plus < 7; ++plus) {
             solver.add(
                 labels[static_cast<std::size_t>(minus)]
                 != labels[static_cast<std::size_t>(plus)]
             );
+        }
+    }
+    if (equality_mask >= 0) {
+        int equality_index = 0;
+        for (int first = 0; first < 7; ++first) {
+            for (int second = first + 1; second < 7; ++second) {
+                const bool same_sign =
+                    (first < orbit.minus_count)
+                    == (second < orbit.minus_count);
+                if (!same_sign) {
+                    continue;
+                }
+                const z3::expr& first_label =
+                    labels[static_cast<std::size_t>(first)];
+                const z3::expr& second_label =
+                    labels[static_cast<std::size_t>(second)];
+                solver.add(
+                    ((equality_mask >> equality_index) & 1) != 0
+                        ? first_label == second_label
+                        : first_label != second_label
+                );
+                ++equality_index;
+            }
         }
     }
 
@@ -455,23 +599,46 @@ QueryResult verify_residual_query(
         }
     }
 
+    const std::vector<unsigned int> negative_masks =
+        signed_cut_masks(orbit, true);
+    const auto rank_for_mask = [&](unsigned int mask) {
+        return mask == selected_mask
+                && selected_wall_mask >= 0
+                && selected_interval_mask >= 0
+            ? residual_selected_rank_chamber(
+                ctx,
+                k,
+                labels,
+                orbit,
+                mask,
+                selected_wall_mask,
+                selected_interval_mask
+            )
+            : residual_rank(ctx, k, labels, mask);
+    };
+    z3::expr selected_rank =
+        rank_for_mask(selected_mask).simplify();
     z3::expr demand = ctx.int_val(0);
-    z3::expr selected_rank = ctx.int_val(0);
     std::vector<z3::expr> ranks;
-    for (const unsigned int mask :
-         signed_cut_masks(orbit, true)) {
-        const z3::expr rank = residual_rank(
-            ctx, k, labels, mask
-        );
-        ranks.push_back(rank);
-        demand = demand + rank;
-        if (mask == selected_mask) {
-            selected_rank = rank;
+    if (target_mode == 0) {
+        ranks.reserve(negative_masks.size());
+        for (const unsigned int mask : negative_masks) {
+            const z3::expr rank =
+                mask == selected_mask
+                ? selected_rank
+                : rank_for_mask(mask).simplify();
+            ranks.push_back(rank);
+            demand = demand + rank;
         }
     }
     solver.add(selected_rank > 0);
-    for (const z3::expr& rank : ranks) {
-        solver.add(rank <= selected_rank);
+    if (selected_rank_value > 0) {
+        solver.add(selected_rank == selected_rank_value);
+    }
+    if (target_mode == 0) {
+        for (const z3::expr& rank : ranks) {
+            solver.add(rank <= selected_rank);
+        }
     }
 
     const z3::expr local = residual_selected_local(
@@ -481,14 +648,40 @@ QueryResult verify_residual_query(
         orbit,
         selected_mask,
         level_parity
-    );
-    const z3::expr pair = residual_pair_reservoir(
-        ctx, k, labels, orbit, level_parity
-    );
-    const z3::expr positive = residual_positive_reservoir(
-        ctx, k, labels, orbit
-    );
-    solver.add(local + pair + positive < demand);
+    ).simplify();
+    z3::expr supply = local;
+    if (target_mode == 0 || target_mode == 1) {
+        supply = (
+            supply + residual_pair_reservoir(
+            ctx, k, labels, orbit, level_parity, equality_mask
+            )
+        ).simplify();
+    }
+    if (target_mode == 0) {
+        supply = (
+            supply + residual_positive_reservoir(
+            ctx, k, labels, orbit
+            )
+        ).simplify();
+        solver.add(supply < demand);
+    } else {
+        solver.add(
+            supply
+            < static_cast<int>(negative_masks.size()) * selected_rank
+        );
+    }
+
+    const char* dump_path = std::getenv("SU2_SEVEN_DUMP_SMT2");
+    if (dump_path != nullptr && dump_path[0] != '\0') {
+        std::ofstream dump(dump_path);
+        if (!dump) {
+            return {
+                false,
+                std::string("cannot open SMT2 dump path: ") + dump_path
+            };
+        }
+        dump << solver.to_smt2();
+    }
 
     const z3::check_result result = solver.check();
     if (result == z3::unsat) {
@@ -547,14 +740,22 @@ std::vector<ResidualTask> residual_tasks() {
 
 int main(int argc, char** argv) {
     const std::vector<ResidualTask> tasks = residual_tasks();
-    if (argc >= 4 && argc <= 6) {
+    if (argc >= 4 && argc <= 10) {
         const int orbit_index = std::atoi(argv[1]);
         const int level_parity = std::atoi(argv[2]);
         const int selected_orbit = std::atoi(argv[3]);
         const int cap_mask =
             argc >= 5 ? std::atoi(argv[4]) : -1;
         const int selected_wall_mask =
-            argc == 6 ? std::atoi(argv[5]) : -1;
+            argc >= 6 ? std::atoi(argv[5]) : -1;
+        const int selected_interval_mask =
+            argc >= 7 ? std::atoi(argv[6]) : -1;
+        const int equality_mask =
+            argc >= 8 ? std::atoi(argv[7]) : -1;
+        const int target_mode =
+            argc >= 9 ? std::atoi(argv[8]) : 0;
+        const int selected_rank_value =
+            argc == 10 ? std::atoi(argv[9]) : 0;
         if (orbit_index < 0
             || orbit_index >= static_cast<int>(
                 residual_orbits.size()
@@ -570,12 +771,23 @@ int main(int argc, char** argv) {
             )
             || cap_mask < -1 || cap_mask >= (1 << 7)
             || selected_wall_mask < -1
-            || selected_wall_mask >= (1 << 3)) {
+            || selected_wall_mask >= (1 << 3)
+            || selected_interval_mask < -1
+            || selected_interval_mask >= (1 << 4)
+            || equality_mask < -1
+            || equality_mask >= (1 << 15)
+            || target_mode < 0 || target_mode > 2
+            || selected_rank_value < 0) {
             std::cerr
                 << "usage: verify_su2_seven_residual_z3 "
                 << "[ORBIT(0..7) LEVEL_PARITY(0..1) "
                 << "SELECTED_ORBIT [CAP_MASK(0..127) "
-                << "SELECTED_WALL_MASK(0..7)]]\n";
+                << "SELECTED_WALL_MASK(0..7) "
+                << "SELECTED_INTERVAL_MASK(0..15) "
+                << "EQUALITY_MASK(0..32767) "
+                << "TARGET_MODE(0=direct,1=deep-pair-ceiling,"
+                << "2=deep-local-ceiling) "
+                << "SELECTED_RANK(0=unbounded)]]]]]]\n";
             return EXIT_FAILURE;
         }
         const QueryResult result = verify_residual_query(
@@ -583,7 +795,11 @@ int main(int argc, char** argv) {
             level_parity,
             selected_orbit,
             cap_mask,
-            selected_wall_mask
+            selected_wall_mask,
+            selected_interval_mask,
+            equality_mask,
+            target_mode,
+            selected_rank_value
         );
         if (!result.passed) {
             std::cerr << "SU2_SEVEN_RESIDUAL_Z3 FAIL "
@@ -596,6 +812,12 @@ int main(int argc, char** argv) {
                   << " selected_orbit=" << selected_orbit
                   << " cap_mask=" << cap_mask
                   << " selected_wall_mask=" << selected_wall_mask
+                  << " selected_interval_mask="
+                  << selected_interval_mask
+                  << " equality_mask=" << equality_mask
+                  << " target_mode=" << target_mode
+                  << " selected_rank_value="
+                  << selected_rank_value
                   << " counterexample=UNSAT result=PASS\n";
         return EXIT_SUCCESS;
     }
@@ -604,7 +826,12 @@ int main(int argc, char** argv) {
             << "usage: verify_su2_seven_residual_z3 "
             << "[ORBIT(0..7) LEVEL_PARITY(0..1) "
             << "SELECTED_ORBIT [CAP_MASK(0..127) "
-            << "SELECTED_WALL_MASK(0..7)]]\n";
+            << "SELECTED_WALL_MASK(0..7) "
+            << "SELECTED_INTERVAL_MASK(0..15) "
+            << "EQUALITY_MASK(0..32767) "
+            << "TARGET_MODE(0=direct,1=deep-pair-ceiling,"
+            << "2=deep-local-ceiling) "
+            << "SELECTED_RANK(0=unbounded)]]]]]]\n";
         return EXIT_FAILURE;
     }
 
