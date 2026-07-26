@@ -2945,20 +2945,775 @@ More sharply, its rank is below the corresponding threshold in
 `d>=3`, apply the exhaustive endpoint profiles and thresholds of
 Lemma 5A7B2.  The largest threshold is 28.  QED.
 
+The preceding ceiling counts every parity-incompatible triple and assigns
+the uniform value two to every nonselected shallow complement.  Both
+losses can be removed before invoking an exact solver.
+
+**Lemma 5A7B4 (parity- and cap-refined shallow ceiling).**  Retain the
+`d>=3` alternative of Corollary 5A7B1.  For each position `i`, put
+`pi_i=a_i mod 2`, and define
+
+```text
+A_pi={D subset {1,...,7}: |D|=3, |D intersect M| odd,
+                           sum_(i in D) pi_i=0 mod 2},
+
+h_pi(S)=#{D in A_pi:S subset D},
+
+c_pi(S)=sum_(D in A_pi, S not subset D)
+          min_(r in S minus D) cap_k(a_r).          (P5A.25Z30a)
+```
+
+Then
+
+```text
+T<=h_pi(S)d+c_pi(S).                                (P5A.25Z30b)
+```
+
+In `(P5A.25Z30a)` every summand is one if `D^c` contains the selected
+label `k`, and otherwise is at most two.
+
+For the five selected profiles in `(P5A.25Z24)`, write the general
+lower bounds `(P5A.25Z25)` as `alpha d-beta`.  Thus
+
+```text
+profile                         alpha       beta
+
+one 1 or k-1                      17          24
+one k, other depth exactly 3       9          12
+one k, other depth at least 4     16          31
+two shallow labels                12          15
+three shallow labels               4           3.  (P5A.25Z30c)
+```
+
+Whenever `alpha>h_pi(S)`, the cell is therefore closed at every
+
+```text
+d>=ceil((beta+c_pi(S))/(alpha-h_pi(S))).            (P5A.25Z30d)
+```
+
+The first two ranks above the shallow/deep split have the sharper local
+payments
+
+```text
+profile                              d=3       d=4
+
+one 1 or k-1                          31        48
+one k, other depth exactly 3          17        26
+one k, other depth at least 4         20        36
+two shallow labels                    24        36
+three shallow labels                  10        14. (P5A.25Z30e)
+```
+
+Consequently a rank-three or rank-four cell is closed whenever its
+entry in `(P5A.25Z30e)` is at least the right side of
+`(P5A.25Z30b)`.
+
+**Proof.**  A three-label block can contain the invariant only when its
+total label parity is even.  Hence every negative cut outside `A_pi`
+has weight zero.  For `D in A_pi` containing `S`, maximality gives
+`w(D)<=d`.  Otherwise choose any `r in S minus D`.  The four-label
+side `D^c` contains `r`, so pairing `r` first and using
+`(P5A.25Z20)` gives
+
+```text
+w(D)<=cap_k(a_r).
+```
+
+Minimizing over the omitted shallow positions and summing proves
+`(P5A.25Z30b)`.  The only shallow labels are `1,k-1,k`, with caps
+`2,2,1`, which proves the assertion following it.
+
+The general local payments in `(P5A.25Z30c)` are exactly
+`(P5A.25Z25)`, and comparison with `(P5A.25Z30b)` gives
+`(P5A.25Z30d)`.  At rank three, Lemma 5A7A4 gives the universal
+complementary profile
+
+```text
+(m_0(B),m_2(B),m_4(B),m_6(B))>=(3,7,7,3);
+```
+
+for `k>=7` its stronger first line only increases these entries.  At
+rank four the corresponding profile is `(4,10,12,10)`.  Taking the
+scalar products with the five rows of `(P5A.25Z24)` gives
+`(P5A.25Z30e)`.  QED.
+
+Sixteen endpoint patterns admit a direct graph payment which is sharper
+than the cap sum in Lemma 5A7B4.
+
+**Lemma 5A7B5 (three-endpoint graph packets).**  Suppose the selected
+triple contains all three shallow labels and the four-label complement
+is deep.  The following sixteen signed/parity patterns are closed for every
+`d>=3`:
+
+```text
+(|M|,number odd,odd minus)=(4,2,0):
+ k even: A={k^-,1^+,(k-1)^+};
+ k odd:  A={(k-1)^-,1^+,k^+};
+
+(|M|,number odd,odd minus)=(4,2,1), k even:
+ A={1^-,(k-1)^+,k^+};
+ A={(k-1)^-,1^+,k^+};
+
+(|M|,number odd,odd minus)=(4,4,1), k even:
+ A={k^-,1^+,(k-1)^+};
+
+(|M|,number odd,odd minus)=(4,4,1), k odd:
+ A={(k-1)^-,1^+,k^+};
+
+(|M|,number odd,odd minus)=(4,4,2):
+ k even: A={k^-,1^+,(k-1)^+};
+ k odd:  A={(k-1)^-,1^+,k^+};
+ k even: A={1^-,(k-1)^+,k^+};
+ k even: A={(k-1)^-,1^+,k^+};
+ k odd:  A={1^-,k^+,(k-1)^+};
+ k odd:  A={k^-,1^+,(k-1)^+};
+ k even: A={1^-,(k-1)^-,k^-};
+ k odd:  A={1^-,k^-,(k-1)^-};
+
+(|M|,number odd,odd minus)=(4,6,3), k even:
+ A={k^-,1^+,(k-1)^+};
+ A={1^-,(k-1)^-,k^-}.                              (P5A.25Z30f)
+```
+
+**Proof.**  Write the deep complement as
+
+```text
+B={x_1^-,x_2^-,x_3^-,p^+}.
+```
+
+The existence of this support-disjoint deep block forces `k>=5`.
+First take the even-level `(4,2,0)` row.  Among parity-compatible
+one-minus cuts, the selected cut has weight `d`; every other active
+one-minus cut requires `x_i=k-2` and has weight at most one because
+its complement contains `k`.  Put
+
+```text
+n=#{i:x_i=k-2},
+g=#{i<j:x_i+x_j=k}.
+```
+
+A parity-compatible three-minus cut containing `k` is active exactly
+on one of the `g` pairs and has weight at most two because its
+complement contains both `1` and `k-1`.  The sole three-minus cut
+omitting `k` has weight at most one.  Therefore
+
+```text
+T<=d+n+2g+1.                                        (P5A.25Z30g)
+```
+
+For `k!=4`, vertices labelled `k-2` are adjacent in the
+sum-`k` graph only to vertices labelled `2`.  If `n=3,2,1,0`, direct
+maximization on the remaining `3-n` vertices gives respectively
+`n+2g<=3,6,5,6`.  Equivalently, the only three-edge case is the
+fixed-label triangle `x_1=x_2=x_3=k/2`, where `n=0`.  Thus
+`n+2g<=6`, and `(P5A.25Z30g)` gives `T<=d+7`.
+
+At odd level in the same orbit, the selected cut is
+`{k-1,1,k}`.  Every competing parity-compatible one-minus cut would
+require a deep minus label to equal `k-1`, so it is inactive.  There
+are four parity-compatible three-minus cuts, and every complement
+contains `k`; each has weight at most one.  Hence
+
+```text
+T<=d+4.                                             (P5A.25Z30h)
+```
+
+Finally consider either even-level `(4,2,1)` orientation.  Besides the
+selected cut there is one possible endpoint cut
+`{1,k-1,p}`, active only when `p=k-2` and of weight at most one.
+There are three possible cuts `{x_i,k,p}`; each is active only when
+`x_i+p=k` and has weight at most two.  The sole parity-compatible
+three-minus cut is `{x_1,x_2,x_3}`.  Its complementary rank is nonzero
+only when `p=2`, and is then one.  The conditions `p=k-2` and `p=2`
+cannot coexist because `k=4` has already been excluded.  If
+`n=#{i:x_i+p=k}<=3`, it follows that
+
+```text
+T<=d+2n+1<=d+7.
+```
+
+For the final `(4,4,1)` row, write the even minus labels in `B` as
+`x,y`; its third minus label and `p` are odd.  Parity leaves the
+selected cut, the six possible one-minus cuts formed from `x` or `y`,
+and the sole three-minus cut `{k,x,y}`.  For `z in {x,y}`, the three
+one-minus cuts are active under the respective conditions
+
+```text
+z=k-2,             z in {p-1,p+1},
+                   z in {k-p-1,k-p+1}.
+```
+
+Every one of them has weight at most one because its complement
+contains `k`.  Let `e(z)` count the satisfied conditions and put
+`g=1_(x+y=k)`.  The three-minus cut has weight at most two, so
+
+```text
+T<=d+e(x)+e(y)+2g.
+```
+
+If `e(z)=3`, the first condition and depth of `p` force simultaneously
+`p=k-3` and `p=3`, hence `(k,p,z)=(6,3,4)`.  Thus `g=1` precludes
+`e(x)=e(y)=3`; if `g=0` the two counts are at most six in total.
+In either case
+
+```text
+e(x)+e(y)+2g<=7,
+```
+
+and again `T<=d+7`.
+
+At odd level in the same `(4,4,1)` orbit, write
+
+```text
+B={z^-,x^-,y^-,p^+},
+```
+
+where `z,p` are odd and `x,y` are even.  Besides the selected cut,
+the parity-compatible candidates contribute at most
+
+```text
+E+a+2b+g,
+E=1_(p=k-2),
+a=#{u in {x,y}:|u-p|=1},
+b=#{u in {x,y}:u+p=k},                              (P5A.25Z30i)
+```
+
+and `g<=1` is the sole possible three-minus cut.  The `E`-cut and the
+`a`-cuts have `k` in their complements and weight at most one; the
+`b`-cuts have `1,k-1` in their complements and weight at most two;
+the three-minus complement again contains `k`.
+
+If `E=0`, the right side of `(P5A.25Z30i)` is at most
+`2+2(2)+1=7`.  If `E=1`, then `p=k-2`.  An `a`-condition forces
+`u=k-3` (the alternative `k-1` is shallow), whereas a `b`-condition
+forces `u=2`.  They could coincide only at `k=5`; there the only odd
+deep label is `3`, so the odd labels `z^-` and `p^+` would violate
+support disjointness.  Thus the `a`- and `b`-conditions are disjoint
+for each of `x,y`, and
+
+```text
+E+a+2b+g<=1+2(2)+1=6.
+```
+
+Hence this final row also has `T<=d+7`.
+
+For the `(4,4,2)` one-minus row write
+
+```text
+B={a^-,b^-,x^-,p^+},
+```
+
+with `a,b` odd and `x,p` even.  At even level, parity leaves one
+competing endpoint cut through `x`, four cuts through `a,b`, and two
+three-minus cuts.  Their weights beyond the selected `d` are at most
+
+```text
+1, 1,1,1,1, 2,1,
+```
+
+so again `T<=d+8`.  Equality forces `x=k-2`; the weight-two cut and
+the last three-minus cut then both force `p=2`.  Activity of all four
+odd-label endpoint cuts gives
+
+```text
+a=b=3=k-3,                  k=6.
+```
+
+This is the same extremal block `{4^-,3^-,3^-,2^+}` as below.
+Deleting the indexed equal-minus pair `{3,3}` leaves
+`{1,5,6,4,2}` and contributes one to `P_eq`.  Hence the row is paid.
+
+At odd level the corresponding seven candidate bounds also total eight.
+Equality forces `p=2`, while simultaneous activity of the cuts through
+`1` and `k` gives `a=b=3=k-2`, hence `k=5`.  The only even deep label
+is then `2`, so `x^-=p^+`, contrary to support disjointness.  Thus this
+row has `T<=d+7`.
+
+Now take a `(4,4,2)` mixed one-minus/two-plus row and write
+
+```text
+B={a^-,x^-,y^-,p^+},
+```
+
+with `a,p` odd and `x,y` even.  At even level, the two competing cuts
+which retain one endpoint and `k` would force `a` or `p` to equal the
+other shallow endpoint, so they are inactive.  What remains beyond the
+selected cut has weights at most
+
+```text
+2, 1,1, 1,1,
+```
+
+from `{a,p,k}`, the two cuts through `x,y`, and the two
+parity-compatible three-minus cuts.  Hence `T<=d+6` in both endpoint
+orientations.
+
+At odd level first put `A={1^-,k^+,(k-1)^+}`.  The seven candidate
+weights total at most eight.  Equality would force successively
+
+```text
+p=k-2,        x=y=2,        a=3=k-3,
+```
+
+the last equality giving the even level `k=6`, a contradiction.  For
+the reverse orientation `A={k^-,1^+,(k-1)^+}`, equality would force
+
+```text
+a=k-2,        p=3,          x=y=2.
+```
+
+The two nominal weight-two three-minus complements are
+`{1,k-1,3,2}`.  Their rank can equal two only when `k=5`; then
+`a=p=3` across the sign supports.  Thus equality is again impossible,
+and both odd-level orientations have `T<=d+7`.
+
+It remains to treat the two all-minus rows in `(P5A.25Z30f)`.  Write
+
+```text
+B={x^-,u^+,v^+,p^+},
+```
+
+where `u,v` have odd label parity and `x,p` have even label parity.
+At even level, parity leaves the selected cut, one other three-minus
+cut, two one-minus cuts using the odd pair `{u,v}`, and four one-minus
+cuts using one of `u,v` with `p`.  Their weights are bounded,
+respectively, by
+
+```text
+d, 1, 2, 1, 1,1,1,1,
+```
+
+so `T<=d+8`.  If any bound is strict, then `T<=d+7`.  Equality in all
+eight extra units forces the complement of `{x,u,v}` to be active.
+That complement is `{1,k-1,k,p}`, whose invariant rank is nonzero only
+at `p=2`.  Activity of both endpoint cuts through each of `u,v` then
+forces
+
+```text
+u=v=3=k-3,               k=6.
+```
+
+The remaining three-minus cut forces `x=k-2=4`.  In this sole extremal
+row the rank-three profile gives `L(C)=10`, while deleting the indexed
+equal-plus pair `{3,3}` leaves
+
+```text
+{1,5,6,4,2}.
+```
+
+Canceling `6` against `5` reduces its invariant multiplicity to
+`m_0(1,1,4,2)=1`.  Hence `P_eq>=1` and
+`T=11<=L(C)+P_eq`.
+
+At odd level the same parity count gives `T<=d+8`.  Equality would again
+force the complement `{1,k,k-1,p}` of `{x,u,v}` to be active, hence
+`p=2`.  Simultaneous activity of the cuts through `1` and through `k`
+then forces `u=v=3=k-2`, so `k=5`.  But the only even deep label at
+level five is `2`; the remaining minus label `x` would equal the plus
+label `p`, contradicting support disjointness.  Therefore the odd-level
+row has `T<=d+7`.
+
+For the `(4,6,3)` one-minus selected row, write the deep block as
+`B={x_1^-,x_2^-,x_3^-,p^+}`; all four labels are odd.  Parity excludes
+every competing one-minus cut and the all-odd three-minus cut.  The
+only possible remaining cuts are `{k,x_i,x_j}`, active when
+`x_i+x_j=k`; there are at most three, and each has weight at most two
+because its complement contains `1,k-1`.  Thus `T<=d+6`.
+
+For the all-minus selected row write
+`B={z^-,u^+,v^+,p^+}`, again with all four labels odd.  Parity leaves
+only the three one-minus cuts consisting of `k` and a plus pair.  Each
+active pair sums to `k` and its complementary rank is at most two.
+The competing three-minus cuts would force the remaining deep minus
+label to equal `1` or `k-1`, so they are inactive.  Hence this row also
+has `T<=d+6`.
+
+For a three-shallow selected triple,
+`L(C)=m_0(B)+m_2(B)`.  At `d=3`, the rank-three profile in the proof
+of Lemma 5A7B4 gives `L(C)>=10`; for `d>=4`,
+`(P5A.25Z25)` gives `L(C)>=4d-3`.  These bounds dominate `d+7`
+and `d+4` in all nonexceptional displayed cases, and the indexed pair
+just exhibited pays the unique exception.  QED.
+
+**Corollary 5A7B6 (complete fully shallow selected-triple closure).**
+Retain the `d>=3` alternative of Corollary 5A7B1.  If all three labels
+of the selected triple are shallow, then
+
+```text
+T<=L(C)+P_eq,
+```
+
+and the residual seven-factor contraction is nonnegative.
+
+**Proof.**  Lemma 5A7B2 makes the selected label multiset exactly
+`{1,k-1,k}`.  Intersecting its forced label parities with the seven
+residual parity orbits gives precisely the sixteen signed placements in
+`(P5A.25Z30f)`: two each in the `(4,2,0)`, `(4,2,1)`, `(4,4,1)`,
+and `(4,6,3)` orbits, and eight in `(4,4,2)`.  The six-minus orbits
+cannot place their unique plus position and the endpoint parities into
+an active three-minus selected cut.  Lemma 5A7B5 closes every listed
+placement.  QED.
+
+The first one-shallow packet has the same complementary-value graph,
+with equality supplying exactly the selected rank.
+
+**Lemma 5A7B7 (single-top mixed-orbit closure).**  In the
+`(|M|,number odd,odd minus)=(4,4,1)` orbit at odd level, suppose the
+selected cut is
+
+```text
+A={q^-,(k-q)^+,k^+},
+```
+
+its complement is deep, and `3<=d<=5`.  Then
+
+```text
+T<=L(C)+P_eq.
+```
+
+**Proof.**  Put `u=k-q` and write
+
+```text
+B={a^-,x^-,y^-,p^+},
+```
+
+where `q,x,y` are even and `a,u,p` are odd.  Form the indexed
+bipartite graph between the three minus positions labelled `q,x,y`
+and the two plus positions labelled `u,p`, joining `r` to `s` when
+`r+s=k`; let `e` be its edge count.  The parity-compatible negative
+cuts containing `k` are exactly these edges, and maximality bounds
+each by `d`.  The only other parity-compatible negative cuts are the
+three cuts `{r,u,p}` and the three-minus cut `{q,x,y}`.  Every one has
+`k` in its four-label complement and hence weight at most one.  Thus
+
+```text
+T<=ed+4.                                             (P5A.25Z30j)
+```
+
+If `p!=u`, the two plus values have distinct complements, so every
+minus position has degree at most one and `e<=3`.  The local payments
+from `(P5A.25Z30e)` and `(P5A.25Z25)` dominate `3d+4` for
+`3<=d<=5`.
+
+Suppose `p=u`, and let `m` be the number of positions among `q,x,y`
+whose label is `q`.  Then `e=2m`.  Deleting the indexed equal-plus
+pair `{u,p}` leaves
+
+```text
+{q,k,a,x,y},
+```
+
+whose invariant multiplicity is
+
+```text
+m_0(q,k,a,x,y)=m_0(u,a,x,y)=d.
+```
+
+Hence `P_eq>=d`.  For `m<=2`, the payments in
+`(P5A.25Z30e)` and `(P5A.25Z25)`, plus this `d`, dominate
+`4d+4`.  For `m=3` they dominate `6d+4` except possibly when
+`d=3` and the selected top profile has depth exactly three.  Since
+`k` is odd and `q` is even, that profile forces `q=2`.  But then
+
+```text
+d=m_0(a,2,2,u)=3
+```
+
+requires the complete output set `{0,2,4}` of `2 star_k 2` to occur
+in `a star_k u`; its zero channel forces `a=u`, contrary to
+support disjointness.  Thus the exceptional row does not exist, and
+`(P5A.25Z30j)` is paid in every case.  QED.
+
+**Lemma 5A7B8 (single-top all-minus mixed-orbit closure).**  In the
+`(4,4,1)` orbit at even level, suppose the selected cut consists of
+three even minus positions, contains the sole shallow label `k`, and
+has rank `d=3`.  Then `T<=L(C)`.
+
+**Proof.**  Write the active selected triple as
+
+```text
+A={k^-,q^-,(k-q)^-}
+```
+
+and the deep complement as
+
+```text
+B={a^-,u^+,v^+,p^+},
+```
+
+where all four displayed labels are odd.  Parity excludes every
+competing three-minus cut.  A parity-compatible one-minus cut using
+`q` or `k-q` omits `k` and has weight at most one; there are six.
+The three cuts using `k` are indexed by complementary pairs among
+`u,v,p`; if `g` is their number, maximality gives
+
+```text
+T<=d+gd+6.                                          (P5A.25Z30k)
+```
+
+If `g<=2`, then `T<=15`, while the exact-depth rank-three payment in
+`(P5A.25Z30e)` is at least `17`.  If `g=3`, all three odd plus labels
+equal `h=k/2`, so `h` is odd.  But then
+
+```text
+d=m_0(a,h,h,h)=|a star_k h|.
+```
+
+The equality holds because `h star_k h` is the complete even interval
+from `0` to `k`.  Rank three would force `cap_k(a)=3`, hence
+`a in {2,k-2}`, both even.  This contradicts the odd parity of `a`.
+Therefore `g=3` is impossible and `(P5A.25Z30k)` is paid.  QED.
+
+**Lemma 5A7B9 (six-minus one-plus single-top closure).**  In the
+`(|M|,number odd,odd minus)=(6,2,1)` orbit at even level, suppose the
+selected cut contains the sole shallow label `k`, its complement is
+deep, and `3<=d<=5`.  Then `T<=L(C)+P_eq`.
+
+**Proof.**  Write
+
+```text
+A={k^-,q^-,(k-q)^-},
+B={a^-,x^-,y^-,p^+},
+```
+
+where `q,k-q,x,y` are even and `a,p` are odd.  Every negative cut is
+a three-minus cut.  Parity leaves only triples from the five even minus
+positions.  Put a complementary-value graph on
+`{q,k-q,x,y}`, joining two indexed positions when their labels sum to
+`k`, and let `e` be its edge count.  The cuts containing `k` are
+exactly these edges and have weight at most `d`; the four cuts omitting
+`k` have weight at most one.  Hence
+
+```text
+T<=ed+4.                                             (P5A.25Z30l)
+```
+
+The complement graph is a disjoint union of complete bipartite
+components, together with a possible clique on the fixed label `k/2`.
+On four vertices it has at most four edges unless all four vertices are
+fixed, when it has six.  If `e<=4`, the local payments in
+`(P5A.25Z30e)` and `(P5A.25Z25)` dominate `4d+4`.
+
+If `e=6`, then
+
+```text
+q=k-q=x=y=k/2.
+```
+
+The selected equal-minus pair `{q,k-q}` contributes
+
+```text
+m_0(k,x,y,a,p)=m_0(k/2,k/2,a,p)=d
+```
+
+to `P_eq`, using `k star_k (k/2)={k/2}`.  For `d>=4`, `L(C)` already
+dominates `6d+4`; at `d=3`, the depth-at-least-four payment is
+`L(C)>=20`, and the additional `d` gives `23>=22`.  Thus
+`(P5A.25Z30l)` is paid in the fixed clique as well.  QED.
+
+**Lemma 5A7B10 (all-even six-minus single-top closure).**  In the
+all-even six-minus orbit, suppose the selected cut contains the sole
+shallow label `k`, its complement is deep, and `d>=3`.  Then
+
+```text
+T<=L(C)+P_eq.
+```
+
+**Proof.**  Write the six minus labels as
+
+```text
+{k,r_1,r_2,r_3,r_4,r_5}
+```
+
+and the unique plus label as `p`.  Put a graph on the five indexed
+`r`-positions, joining `r_i,r_j` when `r_i+r_j=k`.  A negative cut
+containing `k` is active exactly on one of these edges.  Within a
+nonfixed simple-current component with `a` copies of `v` and `b`
+copies of `k-v`, every edge has the same weight `w`: deleting one
+endpoint of each value leaves the same indexed label multiset.
+
+Every indexed equal pair on the `v`-side contributes exactly `w` to
+`P_eq`.  Indeed, after deleting two copies of `v`, fuse `k` with one
+remaining copy of `k-v`; it becomes `v` and leaves precisely the
+four-label complement of an edge.  The same argument applies on the
+`k-v` side.  Thus the component's edge demand after equal-pair credits
+is at most
+
+```text
+rho(a,b)w,
+rho(a,b)=max(0,ab-binom(a,2)-binom(b,2)).           (P5A.25Z30m)
+```
+
+For a fixed component `v=k/2` of size at least three, each edge is
+itself an indexed equal pair; after deleting it, cancel `k` against
+one remaining fixed label.  Its whole edge demand is therefore paid.
+A fixed component of size two is retained as one uncovered edge.
+
+On five vertices the sum of the uncovered coefficients is at most two.
+For completeness, the positive nonfixed values of `rho` are
+
+```text
+rho(1,1)=rho(1,2)=1,
+rho(2,2)=rho(2,3)=2,
+```
+
+and all other possibilities with `a+b<=5` have `rho=0`.  A coefficient
+two uses at least four vertices; two coefficient-one components, or one
+such component and a fixed doubleton, use at least four.  Hence no
+disjoint component partition has total coefficient above two.
+Maximality gives `w<=d`, so
+
+```text
+sum_(active cuts containing k) w(C)<=P_eq+2d.
+                                                               (P5A.25Z30n)
+```
+
+There are ten three-minus cuts omitting `k`.  Every four-label
+complement then contains `k`, so each has weight at most one.  Therefore
+
+```text
+T<=P_eq+2d+10.                                     (P5A.25Z30o)
+```
+
+For the exact-depth top profile, the local payments are `17,26` at
+`d=3,4` and at least `9d-12` thereafter; for depth at least four they
+are `20,36` and then at least `16d-31`.  Every one is at least
+`2d+10` for `d>=3`.  Combining this with `(P5A.25Z30o)` proves the
+claim.  QED.
+
+**Lemma 5A7B11 (all-even six-minus single-neighbour ranks).**  Let `k`
+be odd.  In the all-even six-minus orbit, suppose the selected triple
+contains the sole shallow label `k-1`, its complement is deep, and
+`d>=4`.  Then `T<=L(C)+P_eq`.
+
+**Proof.**  Put `h=k-1` and write the other five minus labels as indexed
+vertices.  Join two vertices labelled `a,b` when
+
+```text
+h in a star_k b,
+```
+
+equivalently when `a+b` is `k-1` or `k+1`.  On the even labels the
+underlying value graph is a path; one endpoint may carry the loop
+`2a=k-1` or `2a=k+1`.  A cut containing `h` is active exactly on an
+indexed edge of this blow-up path, and every edge weight is at most
+`d`.
+
+Consider adjacent nonloop value classes with multiplicities `r,s` and
+common edge weight `w`.  Deleting an indexed equal pair in the first
+class and fusing `h` with one label in the second retains the output
+equal to the deleted label, because
+
+```text
+h star_k b={k-b-1,k-b+1}.
+```
+
+It therefore contributes at least `w` to `P_eq`; the same holds with
+the classes exchanged.  At a loop class, an equal pair has the
+corresponding loop or adjacent-edge channel whenever that channel is
+assigned to it.
+
+The following elementary weighted path bound now applies:
+
+```text
+sum_(active indexed edges) w_e <= P_eq+5d.          (P5A.25Z30p)
+```
+
+Here is a complete proof of the constant five.  Slice every edge weight
+at a height `0<lambda<=d`.  At that height the surviving value classes
+form a subpath, possibly with its endpoint loop.  Match an indexed equal
+pair at a class to any incident surviving edge; the fusion channel above
+pays that unit.  For a multiplicity partition of five vertices, at most
+five edge units remain unmatched.  Indeed, without an endpoint loop the
+surviving cross-edge graph is bipartite and has at most six edges; if
+some class is repeated, one equality removes the sixth, while if no
+class is repeated the path has at most four edges.  With an endpoint
+loop, its edge count is `binom(r,2)` and the same `binom(r,2)` equality
+units are available; if the loop class is a doubleton, assigning its
+single equality to the adjacent edge leaves the loop unmatched and a
+direct partition of the remaining three vertices gives at most four
+more.  Integrating the unmatched bound over `lambda` proves
+`(P5A.25Z30p)`.
+
+The ten cuts omitting `h` have a four-label complement containing the
+cap-two label `h`, hence total weight at most twenty.  Therefore
+
+```text
+T<=P_eq+5d+20.
+```
+
+The single-`1`/`k-1` local payment in `(P5A.25Z25)` is
+`17d-24`, which is at least `5d+20` for every integer `d>=4`.
+QED.
+
+**Lemma 5A7B12 (double-neighbour ranks).**  Let `k` be odd.  In the
+all-even six-minus orbit, suppose the selected triple contains two
+copies of `k-1`, its complement is deep, and `d>=4`.  Then `T<=L(C)`.
+
+**Proof.**  Activity and Lemma 5A7B2 make the selected triple
+
+```text
+{k-1,k-1,2}.
+```
+
+Write the other three minus labels as `x,y,z`, and let `N` be the
+number of copies of `2` among the four indexed positions
+`{2,x,y,z}`.  A negative cut containing both copies of `k-1` is active
+exactly when its third label is `2`; these cuts contribute at most
+`Nd`.
+
+A cut containing exactly one copy of `k-1` is indexed twice.  Put a
+graph on `{2,x,y,z}`, joining `a,b` when
+`a+b in {k-1,k+1}`, and let `e` be its edge count.  Each orientation
+has a complement containing the other cap-two endpoint and therefore
+weight at most two, so these cuts contribute at most `4e`.  The four
+cuts containing neither endpoint contribute at most eight.  Hence
+
+```text
+T<=Nd+4e+8.                                          (P5A.25Z30q)
+```
+
+The vertex labelled `2` is adjacent only to `k-3`, since `k-1` is
+shallow and absent from the deep positions.  Directly on the other
+three vertices this gives
+
+```text
+N=1: e<=6,       N=2: e<=5,
+N=3: e<=3,       N=4: e=0.                         (P5A.25Z30r)
+```
+
+For `N=2`, at most four edges join the two copies of `2` to the other
+two vertices, plus their one mutual edge.  For `N=3`, the remaining
+vertex supplies at most three edges.  If copies of `2` were mutually
+adjacent, then `k=3` or `5`; the former has no deep block, while at
+level five the only even deep label is `2`, forcing the unique plus
+label into the minus support.  This also proves the `N=4` row.
+
+At `d=4`, substitution in `(P5A.25Z30q)` gives respectively the upper
+bounds
+
+```text
+36, 36, 32, 24.
+```
+
+The sharp two-shallow payment in `(P5A.25Z30e)` is `36`.  For `d>=5`,
+the general payment `12d-15` dominates each of the four affine bounds
+from `(P5A.25Z30q)--(P5A.25Z30r)`.  QED.
+
 The strict C++ verifier
 
 ```text
 character_ring_iter/verify_su2_seven_shallow_z3.cpp
 ```
 
-implements the remaining exact cover.  Before the rank reduction, fixing
-one shallow position to one of `1,k-1,k`, respecting its forced parity,
-gives 284 endpoint cells across the seven residual parity orbits not
-already covered by Corollary 5A6A.  The bounded mode combines all 284
-cells with ranks one and two.  At ranks three through 27 it retains only
-shallow positions in the selected triple and imposes the deep
-four-position complement proved by Lemma 5A7B.  Thus its exact
-source-level count is
+implements the remaining exact cover.  In the original rank reduction,
+fixing one shallow position to one of `1,k-1,k`, respecting its forced
+parity, gave 284 endpoint cells across the seven residual parity orbits
+not already covered by Corollary 5A6A.  The original bounded mode
+combined all 284 cells with ranks one and two.  At ranks three through
+27 it retained only shallow positions in the selected triple and imposed
+the deep four-position complement proved by Lemma 5A7B.  Thus the older
+reduced replay has source-level count
 
 ```text
 568 rank-one/two cells + 2900 selected-triple cells = 3468.   (P5A.25Z31)
@@ -2983,27 +3738,46 @@ one of its 3,468 cells returns `UNSAT` and the source-bound transcript
 is imported.
 
 A current-source refinement partitions the complete selected triple at
-rank at least three into its unique endpoint/deep pattern and stops each
-pattern immediately below the analytic threshold in `(P5A.25Z26)`.
-It leaves
+rank at least three into its unique endpoint/deep pattern, discards the
+endpoint patterns excluded by the exact classification `(P5A.25Z24)`,
+and quotients endpoint placements by the stabilizer which permutes
+selected positions in the same sign/parity class.  This quotient is
+exact because the selected mask and every indexed sum in `(P5A.24)` are
+invariant under those permutations.  The generator uses the same
+stabilizer on ranks one and two: a designated shallow
+position is represented only once for each sign/parity class and each
+side of the selected cut.  Every word with a shallow label has such a
+representative, so this reduces 568 endpoint cells to 360 without
+changing their union.  The generator then
+applies the parity/cap ceiling `(P5A.25Z30b)`, the
+rank-three/four payments `(P5A.25Z30e)`, and the graph packets of
+Lemma 5A7B5, and stops each remaining pattern immediately below the
+analytic threshold `(P5A.25Z30d)`.  It leaves
 
 ```text
-568 rank-one/two cells + 1648 selected-pattern cells = 2216.  (P5A.25Z32)
+360 rank-one/two cells + 2 selected-pattern cells = 362.      (P5A.25Z32)
 ```
 
 The `--patterns` mode runs the second, disjoint subcover independently.
 Its current source SHA-256 identities are
 
 ```text
-59d992e5683c0985fb013341882b39275975ea5839a3eb23e1d81934d5509c92
+4a3df297e24169c2638a51cce2a28e8e30caf19fefce01a072325c29096b2cdb
   verify_su2_seven_shallow_z3.cpp
-623328dc185cac0d8ce7108d150334fc535c9c8d6dfd6f4a8f28b72986a7f32f
+22a53eaa083c50e648d2fd5ffa3f3afa84d123387765015c9ed71a587ff20457
   verify_su2_seven_residual_z3.cpp.
 ```
 
 The 3,468-cell machine-B replay remains a valid overcomplete cover bound
-to its displayed older source snapshot; the 2,216-cell refinement is
-the current exact cover.
+to its displayed older source snapshot.  The locally in-flight
+159-pattern replay likewise remains a valid overcomplete cover bound to
+source SHA-256
+`00c16bb5a9dd747a632006205bf0da5d5f47036c8e29d0b20296be20ef4d7006`.
+The 362-cell refinement is the current exact cover.  This paragraph
+records the exact reduction, not an `UNSAT` theorem: the shallow leaf
+closes only after all 360 rank-one/two cells and both
+selected-pattern cells have returned `UNSAT` in source-bound complete
+replays, or an older source-bound overcomplete cover has done so.
 
 The strict C++ diagnostic
 `character_ring_iter/analyze_su2_six_minus_d3.cpp` evaluates the exact

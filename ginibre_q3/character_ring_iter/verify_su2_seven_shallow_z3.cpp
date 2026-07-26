@@ -334,7 +334,108 @@ constexpr bool closes_by_three_endpoint_graph(
         return one_is_minus != neighbor_is_minus
             && top_position >= orbit.minus_count;
     }
+    if (orbit.odd_count == 4
+        && orbit.odd_minus_count == 1
+        && level_parity == 0) {
+        return one_position >= orbit.minus_count
+            && top_neighbor_position >= orbit.minus_count
+            && top_position >= 0
+            && top_position < orbit.minus_count;
+    }
+    if (orbit.odd_count == 4
+        && orbit.odd_minus_count == 1
+        && level_parity == 1) {
+        return one_position >= orbit.minus_count
+            && top_position >= orbit.minus_count
+            && top_neighbor_position >= 0
+            && top_neighbor_position < orbit.minus_count;
+    }
+    if (orbit.odd_count == 4
+        && orbit.odd_minus_count == 2) {
+        const bool all_minus =
+            one_position >= 0
+            && one_position < orbit.minus_count
+            && top_neighbor_position >= 0
+            && top_neighbor_position < orbit.minus_count
+            && top_position >= 0
+            && top_position < orbit.minus_count;
+        const bool one_minus_two_plus =
+            one_position >= orbit.minus_count
+            && top_neighbor_position >= orbit.minus_count
+            && top_position >= 0
+            && top_position < orbit.minus_count;
+        const bool mixed_one_minus_two_plus =
+            top_position >= orbit.minus_count
+            && (
+                (one_position < orbit.minus_count)
+                != (
+                    top_neighbor_position
+                        < orbit.minus_count
+                )
+            );
+        return all_minus
+            || one_minus_two_plus
+            || mixed_one_minus_two_plus;
+    }
+    if (orbit.odd_count == 6
+        && orbit.odd_minus_count == 3
+        && level_parity == 0) {
+        const bool one_is_minus =
+            one_position >= 0
+            && one_position < orbit.minus_count;
+        const bool neighbor_is_minus =
+            top_neighbor_position >= 0
+            && top_neighbor_position < orbit.minus_count;
+        return one_is_minus == neighbor_is_minus
+            && top_position >= 0
+            && top_position < orbit.minus_count;
+    }
     return false;
+}
+
+constexpr bool closes_by_single_top_graph(
+    int orbit_index,
+    int level_parity,
+    int selected_orbit,
+    int shallow_count,
+    int sole_kind
+) {
+    if (orbit_index != 3
+        && orbit_index != 6
+        && orbit_index != 7) {
+        return false;
+    }
+    if (shallow_count != 1
+        || sole_kind != 2) {
+        return false;
+    }
+    if (orbit_index == 3) {
+        return (level_parity == 1 && selected_orbit == 0)
+            || (level_parity == 0 && selected_orbit == 1);
+    }
+    if (orbit_index == 6) {
+        return level_parity == 0 && selected_orbit == 0;
+    }
+    return level_parity == 0 && selected_orbit == 0;
+}
+
+constexpr bool closes_by_single_neighbor_graph(
+    int orbit_index,
+    int level_parity,
+    int selected_orbit,
+    int shallow_count,
+    int sole_kind,
+    int rank
+) {
+    return orbit_index == 6
+        && level_parity == 1
+        && selected_orbit == 0
+        && (
+            shallow_count == 1
+            || shallow_count == 2
+        )
+        && sole_kind == 1
+        && rank >= 4;
 }
 
 static_assert(closes_by_three_endpoint_graph(
@@ -363,6 +464,7 @@ void append_selected_pattern_tasks(
                 int shallow_count = 0;
                 int shallow_minus_count = 0;
                 int sole_kind = -1;
+                int shallow_kind_mask = 0;
                 int pattern = 0;
                 unsigned int shallow_mask = 0U;
                 unsigned int cap_one_mask = 0U;
@@ -371,6 +473,18 @@ void append_selected_pattern_tasks(
                      offset < cut.size(); ++offset) {
                     const int position = cut[offset];
                     const int code = codes[offset];
+                    for (std::size_t earlier = 0U;
+                         earlier < offset; ++earlier) {
+                        if (orbit_label_class(
+                                orbit, cut[earlier]
+                            ) == orbit_label_class(orbit, position)
+                            && codes[earlier] > code) {
+                            compatible = false;
+                        }
+                    }
+                    if (!compatible) {
+                        break;
+                    }
                     if (code == 0) {
                         continue;
                     }
@@ -382,6 +496,7 @@ void append_selected_pattern_tasks(
                         break;
                     }
                     ++shallow_count;
+                    shallow_kind_mask |= 1 << kind;
                     if (position < orbit.minus_count) {
                         ++shallow_minus_count;
                     }
@@ -393,6 +508,14 @@ void append_selected_pattern_tasks(
                     }
                 }
                 if (!compatible || shallow_count == 0) {
+                    continue;
+                }
+                if (shallow_count == 3
+                    && shallow_kind_mask != 7) {
+                    continue;
+                }
+                if (shallow_count == 2
+                    && cap_one_mask != 0U) {
                     continue;
                 }
                 bool top_depth_at_least_four = false;
@@ -421,6 +544,15 @@ void append_selected_pattern_tasks(
                     )) {
                     continue;
                 }
+                if (closes_by_single_top_graph(
+                        orbit_index,
+                        level_parity,
+                        selected_orbit,
+                        shallow_count,
+                        sole_kind
+                    )) {
+                    continue;
+                }
                 const int threshold = parity_refined_threshold(
                     orbit,
                     shallow_count,
@@ -433,6 +565,16 @@ void append_selected_pattern_tasks(
                 const int last_rank =
                     std::min(maximum_rank, threshold - 1);
                 for (int rank = 3; rank <= last_rank; ++rank) {
+                    if (closes_by_single_neighbor_graph(
+                            orbit_index,
+                            level_parity,
+                            selected_orbit,
+                            shallow_count,
+                            sole_kind,
+                            rank
+                        )) {
+                        continue;
+                    }
                     if (closes_by_sharp_small_rank_profile(
                             orbit,
                             shallow_count,
@@ -489,6 +631,32 @@ std::vector<ShallowTask> shallow_tasks(
                  level_parity < 2; ++level_parity) {
                 if (!patterns_only) {
                     for (int position = 0; position < 7; ++position) {
+                        bool canonical_position = true;
+                        const unsigned int selected_mask =
+                            representatives[
+                                static_cast<std::size_t>(
+                                    selected_orbit
+                                )
+                            ];
+                        const bool position_is_selected =
+                            ((selected_mask >> position) & 1U) != 0U;
+                        for (int earlier = 0;
+                             earlier < position; ++earlier) {
+                            const bool earlier_is_selected =
+                                ((selected_mask >> earlier) & 1U) != 0U;
+                            if (earlier_is_selected
+                                    == position_is_selected
+                                && orbit_label_class(orbit, earlier)
+                                    == orbit_label_class(
+                                        orbit, position
+                                    )) {
+                                canonical_position = false;
+                                break;
+                            }
+                        }
+                        if (!canonical_position) {
+                            continue;
+                        }
                         const int required_parity =
                             orbit_label_parity(orbit, position);
                         for (int kind = 0; kind < 3; ++kind) {

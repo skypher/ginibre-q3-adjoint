@@ -82,16 +82,40 @@ lanes the repository's own record supports:
   six-minus simple-current profile closes already at rank nine by its
   complementary-pair graph.  Corollary 5A7B3 therefore leaves only the
   exact finite ranks `1<=d<=27`, with substantially smaller per-profile
-  bounds.  The reduced strict verifier has 3,468 exact QF-LIA cells:
+  bounds.  Lemma 5A7B4 then removes parity-incompatible cuts and weights
+  every omitted simple current by its exact cap one rather than the
+  uniform cap two; its rank-three/four band profiles close the associated
+  endpoint cells directly.  Lemma 5A7B5 closes sixteen complete
+  three-endpoint packets by complementary-pair graph bounds, and
+  Corollary 5A7B6 closes every fully shallow selected triple.  Lemma
+  5A7B7 closes the odd-level `(4,4,1)` single-simple-current packet by
+  a `3 x 2` complementary-value graph and an exact equal-plus rank
+  contribution.  Lemma 5A7B8 closes its even-level all-minus rank-three
+  companion by excluding the parity-incompatible cap-three extremum,
+  and Lemma 5A7B9 closes the `(6,2,1)` one-plus companion by its
+  four-vertex complementary graph and exact fixed-clique equality term.
+  Lemma 5A7B10 closes the complete all-even six-minus single-simple-
+  current family by a weighted complement-component inequality:
+  equal-pair credits leave at most two maximal-rank edges.  Lemma
+  5A7B11 treats the single-`k-1` value graph as a weighted blow-up path;
+  its equality matching leaves at most five maximal-rank edges and
+  closes every rank at least four.  Lemma 5A7B12 closes the double-
+  `k-1` ranks at least four by the exact four-row label-two/edge table.
+  The reduced
+  strict verifier has 3,468 exact QF-LIA cells:
   568 rank-one/two endpoint cells and 2,900 selected-triple cells at
   ranks three through 27.  Its source-bound replay is in flight on
   machine B with 48 load/RAM-selected workers.  An older overcomplete
   7,668-cell replay remains in flight on machine C with 32 workers.
   Neither partial transcript is theorem evidence until every cell is
-  `UNSAT`.  The current-source disjoint endpoint-pattern refinement has
-  only 2,216 cells: the same 568 rank-one/two cells plus 1,648 complete
-  selected-triple patterns, each stopped below its analytic threshold.
-  Its `--patterns` subcover is also in flight locally.  A focused
+  `UNSAT`.  The current-source disjoint endpoint-pattern refinement now
+  has only 362 cells: 360 rank-one/two cells after quotienting the
+  designated shallow position by the selected-cut stabilizer, plus two
+  complete selected-triple patterns, each stopped below its
+  parity/cap-refined analytic threshold.  A previous 159-cell
+  overcomplete `--patterns`
+  subcover remains in flight locally and is bound to its displayed source
+  snapshot.  A focused
   exact C++ diagnostic found minimum margin six through `k=14`,
   validating the symbolic deep case split.
   The exact equality-partition replay for this residual is in flight and is an
