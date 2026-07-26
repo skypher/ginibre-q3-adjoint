@@ -58,10 +58,22 @@ lanes the repository's own record supports:
   Lemma 5A7A0 now gives the parity-free finite endpoint-band estimate for
   the other seven parity orbits.  Lemmas 5A7A1 and 5A7A2 treat,
   respectively, distinct and repeated selected triples; the repeated case
-  uses an actual indexed equal-pair term from `P_eq`.  Corollary 5A7A3
-  therefore reduces the remaining deep cells uniformly to maximal rank
-  `d<=3` for four-minus words and `d<=4` for six-minus words.  The exact
-  equality-partition replay for this residual is in flight and is an
+  uses an actual indexed equal-pair term from `P_eq`.  Lemma 5A7A3 then
+  closes every rank-one cell and every rank-two cell.  Lemma 5A7A4
+  supplies the sharp rank-three/four endpoint profiles, closing the
+  entire deep four-minus stratum, every rank-four six-minus cell, and
+  the repeated-`c=6` rank-three six-minus cell.  Lemma 5A7A5 closes the
+  equality-free distinct-triple row by forcing its selected triple away
+  from the boundary quartet.  Lemma 5A7A6 proves that every equality
+  crossing the selected cut contributes at least three to `P_eq`, and
+  Lemma 5A7A7 uses the endpoint quartet to close every remaining
+  distinct-selected row.  Corollary 5A7A8 leaves only repeated-selected
+  rank-three six-minus cells with `c!=6`.  Lemma 5A7A9 proves the final
+  inequality `L+P_eq>=60` by an endpoint/equality-placement table, and
+  Corollary 5A7A10 closes the complete cap-at-least-three seven-factor
+  stratum.  A focused exact C++ diagnostic found minimum margin six
+  through `k=14`, validating the symbolic case split.
+  The exact equality-partition replay for this residual is in flight and is an
   overcomplete check because it also includes the analytically closed
   larger ranks.  Frontier:
   finish the deep rank-at-most-two two-minus replay (Corollary 23A9ZZ8

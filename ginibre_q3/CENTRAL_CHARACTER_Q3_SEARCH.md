@@ -2050,19 +2050,636 @@ c>=8:  L+P_eq >= d+2b_2+3b_4+3b_6>=43d-90.        (P5A.25N)
 For `d>=4`, the last three lower bounds are all at least `30d-49`.
 This proves `(P5A.25I)`, and `(P5A.25J)` follows.  QED.
 
-**Corollary 5A7A3 (reduced deep residual ranks).**  In every
-cap-at-least-three residual parity orbit of Lemma 5A7, the maximal
-negative-cut rank may be restricted to
+The first two ranks admit a sharper treatment.  The output-two and
+output-four part is already the three-deep interval count of Lemma
+23A9S2F; only one short output-six count is needed here.
+
+**Lemma 5A7A3 (parity-free deep rank-one/two payment).**  Retain the
+hypotheses and notation of Lemma 5A7A.  Let the selected maximal
+negative cut have rank `d`.
+
+1. If `d=1`, then
 
 ```text
-d<=3  for four minus positions,
-d<=4  for six minus positions.                     (P5A.25O)
+L(C)+P_eq>=25.                                      (P5A.25O)
+```
+
+Hence every rank-one four-minus or six-minus cell is closed.
+
+2. If `d=2` and there are four minus positions, then
+
+```text
+L(C)+P_eq>=32.                                      (P5A.25P)
+```
+
+Hence every rank-two four-minus cell is closed.
+
+3. If `d=2`, there are six minus positions, and the selected triple
+contains an indexed equal pair, then
+
+```text
+L(C)+P_eq>=41.                                      (P5A.25Q)
+```
+
+4. If `d=2`, there are six minus positions, and the selected triple is
+pairwise distinct, then
+
+```text
+L(C)>=42.                                           (P5A.25R)
+```
+
+Thus the cells in parts 3 and 4 are also closed.
+
+**Proof.**  Pair the four labels in `B=C^c` as in Lemma 5A7A.  Both
+fusion intervals have at least three entries.  Lemma 23A9S2F gives
+
+```text
+d=1: (m_0(B),m_2(B),m_4(B)) >= (1,3,6);
+d=2: (m_0(B),m_2(B),m_4(B)) >= (2,6,6).             (P5A.25S)
+```
+
+If the selected triple is pairwise distinct, the proof of
+`(P5A.25F)` gives the profile `(1,2,3,2)`; that profile argument does
+not use the later assumption `d>=3`.  The first line of `(P5A.25S)`
+therefore gives
+
+```text
+L(C)>=1+2(3)+3(6)=25                                (P5A.25T)
+```
+
+when `d=1`, while the second gives
+
+```text
+L(C)>=2+2(6)+3(6)=32                                (P5A.25U)
+```
+
+when `d=2`.
+
+If the selected triple is `{p,p,c}`, use the four profiles and the
+indexed equal-pair term `(P5A.25K)--(P5A.25M)`.  Their derivation does
+not use the hypothesis `d>=4` from Lemma 5A7A2.  At `d=1`, the lower
+bounds in the cases `c=2,4,6,c>=8` are respectively
+
+```text
+25, 31, 25+4m_6(B), 25+3m_6(B),                    (P5A.25V)
+```
+
+so `(P5A.25O)` follows.  At `d=2` they are at least
+
+```text
+38+m_6(B), 38+m_6(B),
+32+4m_6(B), 32+3m_6(B).                            (P5A.25W)
+```
+
+For two step-two intervals of length at least three whose intersection
+is `{z,z+2}`, exchange them so that they contain
+
+```text
+{z-2,z,z+2}             and             {z,z+2,z+4}.
+```
+
+All nine ordered pairs have difference at most six.  Write
+`z=2+a` and `k=z+4+b`, with `a,b>=0`.  Relative to `2z`, their sums
+have offsets
+
+```text
+-2, 0,0, 2,2,2, 4,4, 6.
+```
+
+The output-six walls retain the offsets in
+
+```text
+[2-2a,2+2b],
+```
+
+which always contains the three offset-two pairs.  Consequently
+
+```text
+m_6(B)>=3.                                         (P5A.25X)
+```
+
+Substitution in `(P5A.25W)` proves `(P5A.25Q)`.
+
+It remains to prove the last distinct-anchor strengthening.  In a
+six-minus word the selected negative triple consists of three minus
+positions, while `B` consists of the unique plus position and three
+minus positions.  If those three minus labels are not all equal, pair
+one of them with the plus label so that the remaining two minus labels
+are unequal.  Both pair intervals then exclude zero: the first by
+support disjointness and the second by inequality.  Thus, in the
+preceding rank-two rectangle, `z-2>=1`, so
+
+```text
+z>=3.
+```
+
+Equivalently `a>=1`, so the interval `[2-2a,2+2b]` contains both
+offset zero and offset two.  Their multiplicities in the displayed
+list are two and three, respectively.
+
+Suppose instead that all three minus labels in `B` are equal.  The
+opposite-sign pair interval still excludes zero.  The same argument
+applies unless `z=2`.  In that last case, if `k>=7` then `b>=1`, so
+the output-six walls retain the three offset-two and two offset-four
+pairs.  If `k=6`, the only three distinct labels of cap at least three
+are `2,3,4`; their odd sum makes the selected triple inactive.  Thus
+the exceptional endpoint cannot occur.  In every case
+
+```text
+m_6(B)>=5.                                         (P5A.25Y)
+```
+
+Adding this to `(P5A.25U)` with coefficient two gives
+`L(C)>=42`, proving `(P5A.25R)`.  Finally, the maximal-cut ceilings are
+`16d` and `20d`, so the four displayed payments close exactly the
+claimed cells.  QED.
+
+The same interval geometry also settles the last four-minus rank.
+
+**Lemma 5A7A4 (parity-free rank-three/four band profile).**  Retain the
+hypotheses and pairing of Lemma 5A7A3.
+
+1. If `d=3` and `k>=7`, then
+
+```text
+(m_0(B),m_2(B),m_4(B),m_6(B)) >= (3,7,8,5).        (P5A.25Z1)
+```
+
+2. If `d=4`, then `k>=8` and
+
+```text
+(m_0(B),m_2(B),m_4(B),m_6(B)) >= (4,10,12,10).     (P5A.25Z2)
+```
+
+Consequently every four-minus deep rank-three cell is closed.  In the
+six-minus strata the following cells are also closed:
+
+```text
+d=3 and the selected triple is {p,p,6};
+every d=4 cell.                                     (P5A.25Z3)
+```
+
+**Proof.**  Write
+
+```text
+K={s,s+2,...,s+2(d-1)},       q=k-s-2(d-1).
+```
+
+The opposite-sign pair interval excludes zero, so `s>=1`; as in Lemma
+5A7A, `(s,q)!=(1,0)`.
+
+First take `d=3`.  If both pair intervals equal `K`, their unordered
+input pairs must be simultaneous simple-current reflections.  If
+`q=0`, those two unordered pairs coincide, which would repeat a label
+across the sign supports.  Hence `q>=1`.  Counting in `K^2` gives
+
+```text
+m_2(B)>=7,       m_4(B)>=8,       m_6(B)>=5.        (P5A.25Z4)
+```
+
+Indeed the raw counts are `7,9,9`.  For output four, the lower and
+upper walls can each remove one pair only at `s=1` and `q=1`;
+simultaneous loss would give `k=6`, excluded here.  For output six the
+corresponding losses are at most three at either end; their sum is at
+most four when `k=s+4+q>=7`.
+
+If the pair intervals are unequal, one extends beyond `K`.  After
+simultaneous simple-current reflection, assume it contains `s-2`.
+Thus `s>=2`.  Pairing this extra entry with the first one, two, or
+three entries of `K` adds respectively
+
+```text
+1,       at least 1,       at least 1
+```
+
+paths in outputs `2,4,6`; the last two lower bounds improve to `2,2`
+when `s>=3`, and the output-six bound improves to `3` when `s>=4`.
+The only worst upper-wall row is `q=0`.  If `s=2` it would have
+`k=6`; if `s=3` the raw `K^2` profile plus the extra row is exactly
+at least `(3,7,8,5)`; for `s>=4` it is larger.  When `q>=1`, the
+upper losses are smaller and the same coordinatewise bound follows.
+This proves `(P5A.25Z1)`.
+
+For `d=4`, equality of the pair intervals again forces `q>=1`.
+The raw `K^2` counts are `10,14,16`.  The endpoint losses are at most
+
+```text
+(0,1,3) at s=1,          (0,1,3) at q=1,
+```
+
+which proves `(P5A.25Z2)` in the equal-interval case.  In the unequal
+case reflect so that `s-2` is present.  Its contributions to outputs
+`2,4,6` are at least `(1,1,1)` for `s=2`, `(1,2,2)` for `s=3`, and
+`(1,2,3)` for `s>=4`.  At `q=0`, the upper-wall losses from the raw
+counts are `(1,3,6)`; since `k=s+6>=8`, the three displayed extension
+profiles restore at least `(10,12,10)`.  For `q>=1` the upper losses
+are smaller.  This proves `(P5A.25Z2)` and also shows that `k>=8`;
+the sole rank-four interval at `k=7` would have `(s,q)=(1,0)`.
+
+Now apply the selected-triple profiles.  If it is pairwise distinct,
+`(1,2,3,2)` dotted with `(P5A.25Z1)` is
+
+```text
+3+2(7)+3(8)+2(5)=51>48.                            (P5A.25Z5)
+```
+
+If it is `{p,p,c}`, the four equal-pair payments for
+`c=2,4,6,c>=8` are respectively
+
+```text
+52,54,61,56.                                       (P5A.25Z6)
+```
+
+This closes every four-minus rank-three cell for `k>=7`.  An active
+distinct triple is impossible at `k=6`, because the three deep labels
+are `2,3,4` and have odd sum.  For a repeated triple, activity makes
+`c` equal to `2` or `4`.  The only possible rank-three intersections
+are `{1,3,5}` and `{2,4,6}`.  Direct endpoint counting, with the
+necessary strict extension in the second case, gives
+
+```text
+(m_0(B),m_2(B),m_4(B),m_6(B)) >= (3,7,7,3),
+```
+
+and both equal-pair payments are exactly at least `48`.  Lemma 5A7A
+already excludes `k<=5`.  Thus every four-minus rank-three cell is
+closed.
+
+Finally, `(P5A.25Z6)` pays the six-minus ceiling `60` when `c=6`.
+At rank four, the distinct payment from `(P5A.25Z2)` is
+
+```text
+4+2(10)+3(12)+2(10)=80,
+```
+
+while the repeated payments for `c=2,4,6,c>=8` are
+
+```text
+78,82,100,90.
+```
+
+Only the first value is short of `80`.  The endpoint counts above show
+that a value below `80` can occur only in one of the two geometries
+
+```text
+k=8, K={1,3,5,7},  I=J=K;
+k=8, K={2,4,6,8},  {I,J}={K,{0,2,4,6,8}}.          (P5A.25Z6a)
+```
+
+In the first geometry the two input pairs are `{3,4}` and `{4,5}`.
+Support disjointness forces the two indexed occurrences of label `4`
+to have the same sign.  In the second geometry the longer interval is
+the equal same-sign pair `{4,4}`, while the other pair is `{3,5}`.
+Thus either geometry supplies an additional indexed equal pair `F` in
+`B`, distinct from the selected equal pair.  Removing `F` leaves the
+selected triple `{p,p,2}` and the pair `{3,5}`.  Since
+
+```text
+3 star_8 5={2,4,6,8},       m_2(p,p,2)>=3,
+```
+
+its term in `P_eq` is at least three.  It raises the sole lower value
+`78` above `80`.  This proves every rank-four cell and hence exactly
+`(P5A.25Z3)`.  QED.
+
+The pairwise-distinct rank-three type closes whenever there is no
+indexed equality anywhere in the word.
+
+**Lemma 5A7A5 (equality-free rank-three six-minus closure).**  Retain
+the hypotheses of Lemma 5A7A4, suppose `d=3`, and assume all seven
+labels are pairwise distinct.  Then
+
+```text
+L(C)>=60.                                           (P5A.25Z8)
+```
+
+Hence the complete six-minus negative-cut ceiling is paid.
+
+**Proof.**  Put
+
+```text
+W_B=3+2m_2(B)+3m_4(B)+2m_6(B).
+```
+
+If `W_B>=60`, the distinct selected-triple profile `(1,2,3,2)`
+proves the assertion.  Suppose `W_B<60`.  The endpoint count in the
+proof of Lemma 5A7A4 has only the following strict rows, up to
+simultaneous simple-current reflection:
+
+```text
+I=J=K, with s=1 or q=1;
+q=0, with one interval K and the other K union {s-2}. (P5A.25Z9)
+```
+
+More explicitly, the profiles `(m_2(B),m_4(B),m_6(B))` below `60`
+are
+
+```text
+I=J=K:
+ (s,q)=(1,1):                (7,7,3);
+ (s,q)=(1,2) or (2,1):       (7,8,5);
+ min(s,q)=1, max(s,q)>=3:     (7,8,6);
+ (s,q)=(2,2):                (7,9,7);
+one strict extension at q=0:
+ s=3:                        (7,8,5);
+ s>=4:                       (7,8,6).               (P5A.25Z9a)
+```
+
+These follow by subtracting the endpoint losses from the raw `K^2`
+counts `(7,9,9)` and adding the extension row counted in Lemma 5A7A4.
+The equal-interval rows `(s,q)=(1,1)` and `(2,2)` have the two input
+pairs sharing the self-dual label and are excluded by pairwise
+distinctness.  Every additional interval entry or every extra unit of
+distance from the displayed endpoint rows raises the weighted band to
+at least `60`.
+
+The input pairs in every remaining row of `(P5A.25Z9)` are, in some
+order,
+
+```text
+{2,k-2} and {3,k-3}.                               (P5A.25Z10)
+```
+
+For equal intervals this follows by recovering the two input pairs
+from their common lower and upper endpoints; they are simultaneous
+simple-current reflections.  In the `q=0` row, the intervals
+
+```text
+{s,s+2,s+4} and {s-2,s,s+2,s+4},       k=s+4,
+```
+
+recover respectively the pairs `{2,k-2}` and `{3,k-3}`.  Thus the
+four labels in `B` are exactly
+
+```text
+{2,3,k-3,k-2}.                                     (P5A.25Z11)
+```
+
+All seven labels are distinct, so the three labels of `A` lie in
+`[4,k-4]`.  Among their three pair sums, at most one equals `k`.
+Choose a pair whose sum is not `k`, let `R` be its binary fusion
+interval, and let `c` be the third label.  Activity is symmetric in
+the three labels, so `R` contains `c`.  The interval `R` has at least
+five entries.  Its lower endpoint is positive because the paired labels
+are distinct, and its upper endpoint is strictly below `k` by the
+choice of pair.
+
+Write `ell,r` for the numbers of entries of `R` strictly below and
+above `c`.  Then `ell+r>=4`.  The fusion interval `c star_k 6`
+contains the first
+
+```text
+min(ell,3) and min(r,3)
+```
+
+strictly interior step-two neighbours of `c` on the two sides.  Indeed
+`4<=c<=k-4`; the ordinary and affine triangle walls clip the
+three-neighbour radius only at `0` and `k`, while the preceding endpoint
+observations ensure that every neighbour counted by `ell,r` is strictly
+inside those same walls.  Therefore
+
+```text
+m_6(A)>=1+min(ell,3)+min(r,3)>=4.                  (P5A.25Z12)
+```
+
+The last inequality uses `ell+r>=4`.  Relative to the baseline
+coefficient two in `W_B`, this supplies at least
+
+```text
+2m_6(B)>=10
+```
+
+additional units, because Lemma 5A7A4 gives `m_6(B)>=5`.
+That lemma also gives `W_B>=51`, so `L(C)>=61` in every strict row.
+This proves `(P5A.25Z8)`.  QED.
+
+**Lemma 5A7A6 (cross-cut equality payment).**  Retain the rank-three
+hypotheses of Lemma 5A7A4.  If a label `r` occurs at an indexed
+position in `A` and at an indexed same-sign position in `B`, the corresponding
+equal-pair term in `P_eq` is at least three.  Consequently, if there
+are `q` indexed equal pairs crossing `A|B`, then
+
+```text
+P_eq>=3q.                                           (P5A.25Z12a)
+```
+
+**Proof.**  Write
+
+```text
+A={r,a,b},                 B={r,y,u,v}.
+```
+
+Activity of `A` gives `N_(ab)^r=1`.  On the other side, self-duality
+and the selected rank give
+
+```text
+m_r(y,u,v)=m_0(r,y,u,v)=d=3.
+```
+
+After deleting the indexed equal pair `r,r`, retain in its fivefold
+invariant the fusion-tree channel in which `a,b` fuse to `r` and
+`y,u,v` fuse to `r`.  Hence that term is at least
+
+```text
+N_(ab)^r m_r(y,u,v)=3.
+```
+
+Different indexed cross pairs are different summands of `P_eq`, so
+their payments add.  QED.
+
+**Lemma 5A7A7 (distinct-anchor equality closure).**  Retain the
+hypotheses of Lemma 5A7A6.  Then
+
+```text
+L(C)+P_eq>=60.                                      (P5A.25Z12b)
+```
+
+Thus every rank-three six-minus cell with a pairwise-distinct selected
+triple is closed.
+
+**Proof.**  Let `e` be the number of indexed equal pairs crossing
+`A|B`.  If `L(C)>=60`, there is nothing to prove.  Otherwise the
+complementary pair intervals occur in the strict endpoint rows
+`(P5A.25Z9a)`.  Recovering their input labels and intersecting the
+active selected-triple interval with the output-two, -four, and -six
+intervals gives the following exhaustive table, up to simultaneous
+simple-current reflection:
+
+```text
+e=0:  m_6(A)>=4,                         L>=61;
+e=1:  (m_2(A),m_4(A),m_6(A))>=(2,3,3),  L>=59;
+e=2:                                      L>=59,
+      except A={2,k-4,k-2}, where          L=53;
+e=3:                                      L>=51.   (P5A.25Z12c)
+```
+
+For completeness, the table is obtained as follows.  Outside the two
+self-dual endpoint rows, the four labels in `B` are the boundary
+quartet `{2,3,k-3,k-2}` by `(P5A.25Z10)--(P5A.25Z11)`.  Choose the
+`e` labels of `A` which repeat minus labels in that quartet.  Every
+other selected label lies in `[4,k-4]`.  The step-two active-triple
+interval then gives the first, second, and fourth rows exactly as in
+the neighbour count `(P5A.25Z12)`.  With two boundary labels, the same
+count improves either the output-six coordinate or the weighted band,
+unless the two labels are `2,k-2` and the third is `k-4`; this is the
+displayed exception.  The reflected exception is identical.  The
+self-dual rows are at `k=6,8`: the former has no active distinct deep
+triple, while direct substitution of the labels
+`{2,4,4,6}` in the latter gives one of the four displayed bounds.
+Thus `(P5A.25Z12c)` is exhaustive and contains no unbounded
+enumeration.
+
+Lemma 5A7A6 now closes `e=1` and `e=3`, and it closes every
+nonexceptional `e=2` row.  It also closes `e=0`, which is the
+equality-free case already covered by Lemma 5A7A5 or a within-`B`
+equality row whose band is larger.
+
+It remains only the exceptional `e=2` row.  Its two sign placements
+are
+
+```text
+A={2,k-4,k-2},
+B={2,3,k-2; plus k-3}
+```
+
+and the version interchanging `3` with `k-3`.  Deleting either
+cross-cut equal pair and reflecting the even number of remaining
+high labels reduces its fivefold complement to the same multiset
+
+```text
+{2,2,3,3,4}.
+```
+
+In every `SU(2)_k` with `k>=8`,
+
+```text
+m_0(2,2,3,3,4)
+ =m_0(3,3,4)+m_2(3,3,4)+m_4(3,3,4)
+ =1+3+4=8.                                         (P5A.25Z12d)
+```
+
+Hence the two indexed pairs contribute `16`, while `L=53`.  This
+finishes the exceptional row and proves the lemma.  QED.
+
+**Corollary 5A7A8 (reduced deep residual ranks).**  Every four-minus
+cap-at-least-three residual parity orbit of Lemma 5A7 is closed.
+For six minus positions the only deep cells not yet closed analytically
+are
+
+```text
+d=3 with selected triple {p,p,c}, c!=6.             (P5A.25Z13)
 ```
 
 **Proof.**  The selected triple is either pairwise distinct or contains
-an indexed equal pair.  Lemma 5A7A1 closes the former case for `d>=4`
-in the four-minus strata and `d>=5` in the six-minus strata; Lemma
-5A7A2 closes the latter over the same ranges.  QED.
+an indexed equal pair.  Lemmas 5A7A1 and 5A7A2 close the two cases for
+`d>=4` in the four-minus strata and `d>=5` in the six-minus strata.
+Lemma 5A7A3 closes every rank-one cell and every rank-two four-minus
+cell, as well as both selected-triple types in the six-minus rank-two
+stratum.  Lemma 5A7A4 closes the remaining four-minus rank, every
+six-minus rank-four cell, and the repeated-`c=6` rank-three cell.
+Lemmas 5A7A5 and 5A7A7 close, respectively, the equality-free and
+equality-bearing distinct-triple cells.  QED.
+
+The last deep cells now have a two-lane formulation which is stronger
+than the exact signed inequality but substantially smaller than the
+full equality-partition replay.
+
+**Lemma 5A7A9 (repeated-anchor equality closure).**  Under the residual
+alternative in `(P5A.25Z13)`,
+
+```text
+L(C)+P_eq>=60.                                      (P5A.25Z14)
+```
+
+**Proof.**  Write the selected triple as `{p,p,c}` and let `e` be the
+number of indexed equal pairs crossing `A|B`.  The selected equal pair
+contributes `m_c(B)` to `P_eq`, and Lemma 5A7A6 contributes at least
+`3e` from the cross pairs.  Put `b_t=m_t(B)`.
+
+The profiles `(P5A.25M)` and the rank-three endpoint table
+`(P5A.25Z9a)` give the following complete refinements:
+
+```text
+c=2:
+ e=0: L+b_2>=60;
+ e=1: (b_2,b_4,b_6)>=(8,9,6);
+ e=2: (b_2,b_4,b_6)>=(8,10,8);
+ e>=3: use (b_2,b_4,b_6)>=(7,8,5).
+
+c=4:
+ e=0: L+b_4>=60;
+ e=1: (b_2,b_4,b_6)>=(8,9,6);
+ e>=2: use (b_2,b_4,b_6)>=(7,8,5).
+
+c>=8:
+ e=0: L>=60;
+ e=1: L>=59;
+ e>=2: L>=56.                                     (P5A.25Z15)
+```
+
+Here is the endpoint verification.  If the complementary band is not
+one of the strict rows `(P5A.25Z9a)`, direct substitution in the four
+profiles `(P5A.25M)` gives the `e=0` lines.  In a strict row, inversion
+of the two pair intervals gives the boundary quartet
+`{2,3,k-3,k-2}`, except for the two self-dual rows at `k=6,8`.
+Place the repeated label `p` and singleton `c` either off that quartet
+or at its three minus positions.  With no cross equality, `p,c` avoid
+the three minus labels and `c` also avoids the plus label by support
+disjointness.  The selected interval therefore gains the neighbour
+used in the `e=0` line.  With one or two cross equalities, substitution
+of the corresponding boundary label gives respectively the two
+displayed complementary profiles.  Three cross equalities permit the
+raw endpoint profile `(7,8,5)`.  For `c>=8`, the same substitution
+either gives a fourth output-six path or the stated `59`-unit row.
+The self-dual labels `{2,3,3,4}` and `{2,4,4,6}` give the same or
+larger values by direct substitution.  These are all placements of
+`p,p,c` relative to four complementary positions, so `(P5A.25Z15)`
+is exhaustive and independent of `k`.
+
+Now add the reservoirs.  For `c=2`, the selected profile
+`(3,2,1)` and `(P5A.25Z15)` give, for `e=1,2`,
+
+```text
+L+b_2+3e >=62,69,
+```
+
+while the raw endpoint profile gives `L+b_2+3e>=52+9=61`
+for `e>=3`.  The `e=0` line is already closed.  For `c=4`, the profile
+`(2,3,1)` gives at least `64` when `e=1`, while the raw endpoint
+payment `54+3e` is at least `60` for `e>=2`.  For `c>=8`, the three
+lines give respectively `60,62,62`.
+
+It remains only the possibility `p=c`, when the selected triple is
+all equal and contains three indexed equal pairs rather than one.
+If `L<60`, the selected interval count forces the sole short profile
+`(m_2(A),m_4(A),m_6(A))=(3,2,1)`, hence `p=2`; every other even `p`
+already has an additional low-channel path.  The three selected pair
+terms contribute `3b_2`, so the non-self-dual raw endpoint profile gives
+
+```text
+L+P_eq >=3+3(7)+2(8)+5+3(7)=66.                   (P5A.25Z16)
+```
+
+The smaller self-dual profile `(7,7,3)` gives `62` by the same
+calculation.
+All other equal pairs only add nonnegative terms.  This proves
+`(P5A.25Z14)`.  QED.
+
+**Corollary 5A7A10 (complete deep seven-factor closure).**  Every
+cap-at-least-three residual parity orbit of Lemma 5A7 is closed.
+
+**Proof.**  Corollary 5A7A8 leaves only `(P5A.25Z13)`, which is
+Lemma 5A7A9.  QED.
+
+The strict C++ diagnostic
+`character_ring_iter/analyze_su2_six_minus_d3.cpp` evaluates the exact
+finite fusion multiplicities, all twenty negative cuts, all fifteen
+positive cuts, and every indexed equal-pair term.  Through `k=14` it
+covered `56,309` deep words.  The minimum margin in `(P5A.25Z14)` was
+`6`.  The distinct equality-bearing row had minimum margin
+`8`, while its equality-free subcase had `L(C)-60=5`.  These finite
+data validate the endpoint split; the proof is the unbounded interval
+argument above.
 
 The seven-factor direct payment has an exact arbitrary-factor
 formulation.  Unlike the feature-shell proposals below, it aggregates

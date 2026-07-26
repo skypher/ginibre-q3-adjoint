@@ -188,6 +188,10 @@ analyze_su2_seven_parity_orbits: analyze_su2_seven_parity_orbits.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -pthread -o $@
 
+analyze_su2_six_minus_d3: analyze_su2_six_minus_d3.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 analyze_su2_global_cut_payment: analyze_su2_global_cut_payment.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -pthread -o $@
@@ -248,6 +252,7 @@ RESEARCH_TARGETS = \
 	verify_su2_four_minus_deep_small_z3 \
 	analyze_su2_four_minus_shallow \
 	analyze_su2_seven_parity_orbits \
+	analyze_su2_six_minus_d3 \
 	analyze_su2_global_cut_payment \
 	analyze_su2_global_cut_payment_counts \
 	analyze_su2_simple_current_pair \
