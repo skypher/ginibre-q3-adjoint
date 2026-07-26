@@ -101,6 +101,16 @@ lanes the repository's own record supports:
   its equality matching leaves at most five maximal-rank edges and
   closes every rank at least four.  Lemma 5A7B12 closes the double-
   `k-1` ranks at least four by the exact four-row label-two/edge table.
+  Lemma 5A7B13 closes its rank-three remainder: the exact decomposition
+  `T=3N+2W+R`, the four-vertex value graph, and the rank-three
+  output-two/four profile prove the stronger bound `T<=L(C)`.
+  Lemma 5A7B14 closes the sole-`k-1` rank-three row.  All-even parity
+  forces the complementary interval profile
+  `(b_2,b_4,b_6)>=(8,9,5)`; a weighted refinement gives
+  `2b_2+2b_4+b_6>=45`, hence `L(C)>=48>T-P_eq`.
+  Lemma 5A7B15 removes every rank-two task whose designated simple
+  current lies in the four-label side, because a fourfold invariant
+  containing `V_k` has rank at most one.
   The reduced
   strict verifier has 3,468 exact QF-LIA cells:
   568 rank-one/two endpoint cells and 2,900 selected-triple cells at
@@ -109,10 +119,10 @@ lanes the repository's own record supports:
   7,668-cell replay remains in flight on machine C with 32 workers.
   Neither partial transcript is theorem evidence until every cell is
   `UNSAT`.  The current-source disjoint endpoint-pattern refinement now
-  has only 362 cells: 360 rank-one/two cells after quotienting the
-  designated shallow position by the selected-cut stabilizer, plus two
-  complete selected-triple patterns, each stopped below its
-  parity/cap-refined analytic threshold.  A previous 159-cell
+  has only 324 cells, all at ranks one and two, after quotienting the
+  designated shallow position by the selected-cut stabilizer and
+  applying Lemma 5A7B15.  The selected-pattern subcover is empty.  A
+  previous 159-cell
   overcomplete `--patterns`
   subcover remains in flight locally and is bound to its displayed source
   snapshot.  A focused

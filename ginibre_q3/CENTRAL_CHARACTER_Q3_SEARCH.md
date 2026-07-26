@@ -3700,6 +3700,352 @@ The sharp two-shallow payment in `(P5A.25Z30e)` is `36`.  For `d>=5`,
 the general payment `12d-15` dominates each of the four affine bounds
 from `(P5A.25Z30q)--(P5A.25Z30r)`.  QED.
 
+**Lemma 5A7B13 (double-neighbour rank-three closure).**  Let `k` be
+odd.  In the all-even six-minus orbit, suppose the selected triple is
+
+```text
+A={2,k-1,k-1},
+```
+
+its four-label complement `B` is deep, and `m_0(B)=3`.  If the selected
+cut is maximal, then
+
+```text
+T<=L(C).
+```
+
+**Proof.**  Put `h=k-1`, and let
+
+```text
+Q={2,x,y,z}
+```
+
+be the four indexed minus positions other than the two copies of `h`;
+the first displayed `2` is the selected position.  Let `N` be the
+number of copies of `2` in `Q`.  Join two indexed positions of `Q` when
+their labels sum to `k-1` or `k+1`.  For an edge `{a,b}`, with
+complementary pair `{c,d}=Q\{a,b}`, put
+
+```text
+w_(ab)=m_0(h,c,d,p),             W=sum_edges w_(ab),
+```
+
+where `p` is the unique plus label.  Finally let `R` be the total
+weight of the four negative cuts containing neither copy of `h`.
+
+The fusion identities
+
+```text
+h star_k h={0,2},        h in a star_k b
+ iff a+b in {k-1,k+1}
+```
+
+give the exact decomposition
+
+```text
+T=3N+2W+R.                                      (P5A.25Z30s)
+```
+
+Indeed, a cut containing both copies of `h` is active precisely when
+its third position has label `2`; swapping that indexed copy with the
+selected `2` leaves the rank-three block `B`.  A cut containing one
+copy of `h` is indexed twice and gives the term defining `W`.  For a
+cut containing neither copy, the four-label complement has the form
+`{h,h,q,p}`.  Support disjointness gives `q!=p`, and hence
+
+```text
+m_0(h,h,q,p)=N_(q,p)^2<=1.
+```
+
+Thus
+
+```text
+R<=4.                                            (P5A.25Z30t)
+```
+
+There cannot be three copies of `2` in `Q`.  Otherwise `B` contains two
+of them.  Pairing those two labels gives the interval `{0,2,4}`.
+Rank three would force the other binary interval to contain zero, so
+its minus and plus labels would be equal, contrary to support
+disjointness.  Therefore
+
+```text
+N in {1,2}.                                      (P5A.25Z30u)
+```
+
+Write `b_j=m_j(B)`.  The rank-three profile in Lemma 5A7B4 gives
+
+```text
+b_2>=7,                 b_4>=7.                  (P5A.25Z30v)
+```
+
+We next prove
+
+```text
+W<=b_2.                                          (P5A.25Z30w)
+```
+
+First suppose `N=1`.  The even-label graph defined above is a path with
+one possible endpoint loop.  On the four indexed vertices of `Q`, with
+only one label `2`, its blow-up has at most three edges except for the
+following two configurations.  Indeed, four edges on four indexed
+vertices require either a `2+2` complete bipartite component, a
+threefold class with a loop and a neighbour, or a doubled degree-two
+class with both neighbours.  The first alternative would repeat the
+unique label `2` if it contains that value, and otherwise would omit
+`2` from `Q`.  A threefold value class can be adjacent to `2` and
+also carry the loop only when `k=7` and the class is `4`;
+then no even deep plus label is disjoint from `{2,4}`.  The other
+alternative has one doubled interior value and its two neighbours.
+Since one neighbour is the unique label `2`, the two edge equations
+make the other neighbour `4` and the doubled value `k-3`:
+
+```text
+Q={2,4,k-3,k-3}.                                 (P5A.25Z30x)
+```
+
+In the ordinary case `W<=6<=b_2`, since every `w_(ab)<=2`.  In
+`(P5A.25Z30x)`, put `t=k-3`.  The four edge weights occur in two equal
+pairs and
+
+```text
+m_0(h,t,4,p)+m_0(h,t,2,p)<=3.                    (P5A.25Z30y)
+```
+
+To check this directly, use `h star_k t={2,4}`.  The first summand can
+equal two only when the deep even label `p` is `6`; then
+`2 star_k p` contains only `4` from `{2,4}`.  The second summand cannot
+equal two unless `p` is `4`, which is excluded by support
+disjointness.  Hence `W<=6<=b_2` in the exceptional graph as well.
+
+Now suppose `N=2`.  Write the indexed values as `{2,2,r,s}`.  There
+are at most four edges.  Five would require
+
+```text
+r=s=k-3,             2(k-3) in {k-1,k+1},
+```
+
+so `k=5` or `7`; rank three and deep support exclude the former, while
+at level seven no even deep plus label is disjoint from `{2,4}`.
+Consequently `W<=8`.
+
+In this case `B` contains one copy of `2`; write
+
+```text
+B={2,r,s,p}.
+```
+
+Pairing the first two labels gives
+
+```text
+I=2 star_k r={r-2,r,r+2}.
+```
+
+Because `m_0(B)=3`, the other binary interval contains all three
+points of `I`.  Equality of the two intervals would make the unordered
+input pair either `{2,r}` or `{k-2,k-r}`.  The first alternative
+violates support disjointness and the second has odd labels, whereas
+`s,p` are even.  The other interval therefore extends strictly past
+`I`.  The seven ordered pairs in `I^2` at distance at most two all fuse
+to output two, and a nearest pair using the strict extension gives an
+eighth.  Thus `b_2>=8`, and again `W<=b_2`.  This proves
+`(P5A.25Z30w)`.
+
+Finally,
+
+```text
+h^2=V_0+V_2,
+V_2 h^2=V_0+2V_2+V_4,
+```
+
+so the complete local term is
+
+```text
+L(C)=3+2b_2+b_4.                                  (P5A.25Z30z)
+```
+
+Equations `(P5A.25Z30t)--(P5A.25Z30w)` give
+
+```text
+T=3N+2W+R
+ <=3+2b_2+[3(N-1)+R]
+ <=3+2b_2+b_4=L(C),
+```
+
+because `N<=2`, `R<=4`, and `b_4>=7`.  QED.
+
+**Lemma 5A7B14 (single-neighbour rank-three closure).**  Let `k` be
+odd.  In the all-even six-minus orbit, suppose the selected maximal
+cut is
+
+```text
+A={a,b,k-1},
+```
+
+its complement `B` is deep, and `m_0(B)=3`.  Then
+
+```text
+L(C)>=48,                 T<=L(C)+P_eq.
+```
+
+**Proof.**  Put `h=k-1`, order `a<=b`, and write
+
+```text
+b_j=m_j(B).
+```
+
+Activity of the selected triple is equivalent to
+
+```text
+a+b in {k-1,k+1}.                                (P5A.25Z30za)
+```
+
+Indeed, `h in a star_k b`, and all three labels are even.  If
+`r=b-a`, the binary interval is consequently
+
+```text
+a star_k b={r,r+2,...,h}.                         (P5A.25Z30zb)
+```
+
+We first record the rank-three profile forced by the all-even
+complement.  Pair its labels as
+
+```text
+B={x,y,z,p},              I=x star_k y, J=z star_k p,
+```
+
+where `p` is the plus label.  Their intersection has the form
+
+```text
+K=I intersection J={s,s+2,s+4}.
+```
+
+Since every label is even, `s` is even.  Support disjointness gives
+`z!=p`, hence `s>=2`.  If
+
+```text
+q=k-s-4,
+```
+
+then `q` is odd and `q>=1`.  Moreover `I!=J`.  Equality would make the
+two unordered input pairs identical or simultaneous simple-current
+reflections.  The first possibility repeats `p` in the minus support;
+the second would turn the even labels into odd labels because `k` is
+odd.
+
+Counting first in `K^2` and then using one nearest point from the
+strict extension gives
+
+```text
+b_2>=8,             b_4>=9,             b_6>=5.  (P5A.25Z30zc)
+```
+
+Here are the counts.  All seven ordered pairs of index distance at most
+one fuse to output two, and the strict extension supplies an eighth.
+All nine ordered pairs fuse to output four except possibly the top
+diagonal when `q=1`; in that case the strict extension is necessarily
+at the lower end and restores the ninth path.  For output six the nine
+ordered pairs lose at most the bottom diagonal when `s=2` and the three
+top pairs when `q=1`, leaving at least five.
+
+For `k>=9`, the same intersection also gives
+
+```text
+b_8>=1.                                           (P5A.25Z30zd)
+```
+
+If `s=2`, use the diagonal pair `(4,4)`; if `s>=4`, use `(s,s)`.
+In either case both the ordinary and affine triangle inequalities for
+output eight hold because `K` has three entries and `k>=9`.
+
+One selected endpoint profile needs a weighted refinement of
+`(P5A.25Z30zc)`.  Directly on `K^2`, the unrestricted counts for
+outputs `2,4,6` are `7,9,9`.  In
+
+```text
+F=2b_2+2b_4+b_6
+```
+
+the lower wall loses one unit only when `s=2`, and the upper wall loses
+five units only when `q=1`.  A nearest strict-extension point supplies
+at least one output-two, one output-four, and one output-six path, of
+total weight five.  When `q=1` and `s>=4`, that lower extension pairs
+with the three points of `K` to supply respectively the profiles
+`(1,1,1)`, `(0,1,1)`, and `(0,0,1)`, of total weight nine.  Therefore
+
+```text
+F>=45                                               (P5A.25Z30ze)
+```
+
+unless `(s,q)=(2,1)`, which has `k=7`.
+
+We now compute the selected coefficients in the five low channels.
+From `(P5A.25Z30zb)` and
+
+```text
+h star_k t={h-t,h-t+2}             (t=2,4,6,8),
+```
+
+they dominate one of the following three rows:
+
+```text
+a+b=k-1, a=2:       (m_0,m_2,m_4,m_6,m_8)(A)
+                                      =(1,2,2,1,0);
+a+b=k+1, a=4:                       =(1,2,2,2,1);
+all other cases:                    >=(1,2,2,2,2).
+                                                       (P5A.25Z30zf)
+```
+
+For the first row, `(P5A.25Z30ze)` gives
+
+```text
+L(C)>=b_0+2b_2+2b_4+b_6=3+F>=48.
+```
+
+For the second row, `(P5A.25Z30zc)--(P5A.25Z30zd)` give
+
+```text
+L(C)>=3+2(8)+2(9)+2(5)+1=48.
+```
+
+The last row is larger by at least one.  At `k=7`, the first selected
+row leaves no disjoint even deep plus label.  The only remaining row is
+
+```text
+A={4,4,6},             B={4,4,4,2},
+```
+
+up to indexed permutation.  Direct fusion gives the selected profile
+`(1,2,2,2)` and the complementary profile `(3,8,9,6)` in outputs
+`0,2,4,6`, hence `L(C)=3+16+18+12=49`.
+Consequently `L(C)>=48` in every case.
+
+Finally, the weighted-path argument `(P5A.25Z30p)` in Lemma 5A7B11 is
+valid at rank three: the cuts containing `h` total at most
+`P_eq+5d`, and the ten cuts omitting `h` total at most twenty.  With
+`d=3`,
+
+```text
+T<=P_eq+35<=P_eq+L(C).
+```
+
+This proves the claim.  QED.
+
+**Lemma 5A7B15 (rank-two simple-current localization).**  Retain the
+rank-two alternative `d=2` of Corollary 5A7B1.  If a position has
+label `k`, then that position lies in every selected maximal triple
+used in the rank-two cover.
+
+**Proof.**  If the label `k` lay in the complementary four-label block,
+pair it first.  Since
+
+```text
+k star_k x={k-x},
+```
+
+the fourfold invariant would have multiplicity at most one.  This
+contradicts selected rank two.  QED.
+
 The strict C++ verifier
 
 ```text
@@ -3751,18 +4097,21 @@ representative, so this reduces 568 endpoint cells to 360 without
 changing their union.  The generator then
 applies the parity/cap ceiling `(P5A.25Z30b)`, the
 rank-three/four payments `(P5A.25Z30e)`, and the graph packets of
-Lemma 5A7B5, and stops each remaining pattern immediately below the
-analytic threshold `(P5A.25Z30d)`.  It leaves
+Lemmas 5A7B5, 5A7B13, 5A7B14, and 5A7B15.  The last lemma removes
+the 36 rank-two cells which put the designated simple current in the
+four-label side.  No selected pattern remains.  It leaves
 
 ```text
-360 rank-one/two cells + 2 selected-pattern cells = 362.      (P5A.25Z32)
+324 rank-one/two cells + 0 selected-pattern cells = 324.     (P5A.25Z32)
 ```
 
-The `--patterns` mode runs the second, disjoint subcover independently.
+The `--patterns` mode confirms that the selected-pattern subcover is
+empty, while `--list-small` prints the complete indexed census of the
+remaining rank-one/two cover.
 Its current source SHA-256 identities are
 
 ```text
-4a3df297e24169c2638a51cce2a28e8e30caf19fefce01a072325c29096b2cdb
+15193ace1a0d32df6c61bb02a189cb45b5a39eae4f8a7fce894619f471576453
   verify_su2_seven_shallow_z3.cpp
 22a53eaa083c50e648d2fd5ffa3f3afa84d123387765015c9ed71a587ff20457
   verify_su2_seven_residual_z3.cpp.
@@ -3773,11 +4122,11 @@ to its displayed older source snapshot.  The locally in-flight
 159-pattern replay likewise remains a valid overcomplete cover bound to
 source SHA-256
 `00c16bb5a9dd747a632006205bf0da5d5f47036c8e29d0b20296be20ef4d7006`.
-The 362-cell refinement is the current exact cover.  This paragraph
+The 324-cell refinement is the current exact cover.  This paragraph
 records the exact reduction, not an `UNSAT` theorem: the shallow leaf
-closes only after all 360 rank-one/two cells and both
-selected-pattern cells have returned `UNSAT` in source-bound complete
-replays, or an older source-bound overcomplete cover has done so.
+closes only after all 324 rank-one/two cells have returned `UNSAT` in
+a source-bound complete replay, or an older source-bound overcomplete
+cover has done so.
 
 The strict C++ diagnostic
 `character_ring_iter/analyze_su2_six_minus_d3.cpp` evaluates the exact
@@ -3788,6 +4137,16 @@ covered `56,309` deep words.  The minimum margin in `(P5A.25Z14)` was
 `8`, while its equality-free subcase had `L(C)-60=5`.  These finite
 data validate the endpoint split; the proof is the unbounded interval
 argument above.
+
+The strict focused diagnostic
+`character_ring_iter/analyze_su2_seven_neighbor_d3.cpp` evaluates the
+two rank-three neighbour patterns directly.  Through odd level `31` it
+covered `34,521` sole-neighbour and `3,325` double-neighbour words.
+For the double-neighbour row its minimum exact value of `L(C)-T` was
+`5`, matching Lemma 5A7B13.  For the sole-neighbour row its minimum
+local value was `48`, matching Lemma 5A7B14, and its minimum diagnostic
+value of `L(C)+P_eq-60` was `4`.  These bounded data audit the two
+unbounded interval arguments but are not their proofs.
 
 The seven-factor direct payment has an exact arbitrary-factor
 formulation.  Unlike the feature-shell proposals below, it aggregates

@@ -435,7 +435,7 @@ constexpr bool closes_by_single_neighbor_graph(
             || shallow_count == 2
         )
         && sole_kind == 1
-        && rank >= 4;
+        && rank >= 3;
 }
 
 static_assert(closes_by_three_endpoint_graph(
@@ -673,6 +673,11 @@ std::vector<ShallowTask> shallow_tasks(
                                 ranks.push_back(2);
                             }
                             for (const int rank : ranks) {
+                                if (rank == 2
+                                    && kind == 2
+                                    && !position_is_selected) {
+                                    continue;
+                                }
                                 result.push_back(ShallowTask{
                                     orbit_index,
                                     level_parity,
@@ -748,17 +753,21 @@ int main(int argc, char** argv) {
         argc == 2 && std::string(argv[1]) == "--count-bounded";
     const bool count_patterns =
         argc == 2 && std::string(argv[1]) == "--count-patterns";
+    const bool list_small =
+        argc == 2 && std::string(argv[1]) == "--list-small";
     if (argc != 1
         && !small_rank
         && !bounded_rank
         && !patterns_only
         && !count
+        && !list_small
         && !show_pattern
         && !pattern_chambers) {
         std::cerr
             << "usage: verify_su2_seven_shallow_z3 "
             << "[--count|--count-small|--count-bounded"
             << "|--count-patterns|--small|--bounded|--patterns"
+            << "|--list-small"
             << "|--show-pattern INDEX|--pattern-chambers INDEX]\n";
         return EXIT_FAILURE;
     }
@@ -766,12 +775,18 @@ int main(int argc, char** argv) {
         bounded_rank || count_bounded || patterns_only || count_patterns
             || show_pattern || pattern_chambers
             ? 27
-            : (small_rank || count_small ? 2 : 0);
+            : (small_rank || count_small || list_small ? 2 : 0);
     const bool use_patterns_only =
         patterns_only || count_patterns || show_pattern
         || pattern_chambers;
     std::vector<ShallowTask> tasks =
         shallow_tasks(maximum_rank, use_patterns_only);
+    if (list_small) {
+        for (std::size_t index = 0U; index < tasks.size(); ++index) {
+            std::cout << index << ' ' << task_name(tasks[index]) << '\n';
+        }
+        return EXIT_SUCCESS;
+    }
     if (show_pattern || pattern_chambers) {
         char* end = nullptr;
         const long parsed = std::strtol(argv[2], &end, 10);
