@@ -12,17 +12,9 @@ name: Preflight
 # of sync with its recorded hash.  See .githooks/pre-commit for the local
 # equivalent.
 
+# Automatic GitHub CI is disabled.  Keep a manual trigger so this workflow
+# remains available for an explicitly requested preflight audit.
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/preflight.yml"
-      - "ginibre_q3/**"
-  pull_request:
-    paths:
-      - ".github/workflows/preflight.yml"
-      - "ginibre_q3/**"
   workflow_dispatch:
 
 permissions:

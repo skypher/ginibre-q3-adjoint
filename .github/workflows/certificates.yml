@@ -13,10 +13,9 @@ name: Certificate build
 # per-push gate is preflight.yml.  Use workflow_dispatch to force a run on
 # demand.
 
+# Automatic GitHub CI is disabled.  Keep a manual trigger so this workflow
+# remains available for an explicitly requested certificate audit.
 on:
-  schedule:
-    # Every 30 minutes.  Jobs cap at 10 minutes, so runs never overlap.
-    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
