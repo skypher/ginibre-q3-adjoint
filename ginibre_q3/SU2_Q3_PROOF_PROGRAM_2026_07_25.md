@@ -282,6 +282,15 @@ lanes the repository's own record supports:
   in flight locally, with concurrency chosen from live RAM and machine
   load.  Its first cell has independently returned `UNSAT`; completion
   of every cell remains required before the shallow leaf is a theorem.
+  The first long direct cell, task 99, is now independently closed by
+  its exact rank-one bad-switch query `|B_C|<=L(C)-1`.  A 128-chamber
+  supply-only split found a `SAT` negative control at
+  `(wall,interval)=(2,10)`, showing why that stronger surrogate stalled;
+  the switch query itself returned `UNSAT`.  Its corrected-source
+  transcript is `certificates/su2_corrected_task99_switch_z3.log`.
+  A fresh complete replay selected 44 workers from the then-current
+  64 logical CPUs, load approximately 20, and 98 GiB available RAM.
+  That observed launch count is not a fixed thread setting.
   A hash-checked machine-C package is staged at
   `/root/q3_su2_corrected_308_20260727`.  Its watcher preserves the
   currently running bounded replay and launches no corrected work until
@@ -779,6 +788,30 @@ before any further construction.
    a one-edge triangle shortcut.  The exact remaining issue is to carry
    the deleted triangle data through that shortcut without exceeding
    any positive marked-walk capacity.
+
+   Lemma 5A8H28 now supplies the needed state-retaining reduction.
+   In half-label coordinates, split the fusion graph under simple-current
+   reflection.  If `B` is its same-side half adjacency and `C` its
+   cross-midline adjacency, then
+   `C_(X,Y)=1_(X+Y>=K-Q)` and `C<=B`.  Hence the reflection-odd quotient
+   `A_-=B-C` and the reflection-even quotient `A_+` are both
+   entrywise nonnegative, and `Delta=A_+-A_->=0`.  The resolvent identity
+   factors the endpoint series through one recorded central crossing:
+   `2G=z[R_+ Delta R_-]_(0,0)`.  Keeping only post-crossing states
+   `V>=rho` defines nested central-to-outer shell series `S_rho`.
+   The exact remaining sufficient target is
+   `[z^(n-1)]P_(n,t)S_rho>=0` for every shell.  Its complete shell
+   `rho=0` is exactly `2Q_(j,t)`, so this is a genuine strengthening,
+   not a surrogate statement.
+   Individual crossing components are false at `(k,q,j,t)=(10,4,7,6)`,
+   and individual post-crossing columns are false at `(16,6,7,5)`.
+   Nevertheless all `4,212,000` exact cumulative shell rows through
+   level `100` and prefix `30` are nonnegative.  The next proof step is
+   therefore a Ferrers-shell induction along the outside-in
+   perfect-elimination order, retaining the crossing target until its
+   shell is paid.  This is narrower than the earlier unrestricted
+   cross-walk allocation and survives its scalar and componentwise
+   negative controls.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail

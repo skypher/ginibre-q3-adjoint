@@ -1,0 +1,31 @@
+STATUS
+Exact corrected-source bad-switch certificate for residual task 99.
+
+COMMAND
+character_ring_iter/verify_su2_seven_shallow_z3 --small-switch-task 99
+
+OUTPUT
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_TASK_Z3 tasks=1 workers=1 start=1
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_TASK_Z3 progress=0/1 assigned=1 failed=0
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_TASK_Z3 progress=0/1 assigned=1 failed=0
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_TASK_Z3 tasks=1 counterexamples=UNSAT result=PASS
+
+INTERPRETATION
+Task 99 is
+
+  orbit=3 parity=0 selected=0 position=1 kind=2 rank=1
+  pattern=-1 wall=-1 interval=-1 local=-1.
+
+The direct supply-only refinement is SAT in chamber (wall,interval)=(2,10);
+that is a negative control for the stronger local-supply target, not a
+GKS2* counterexample.  The displayed switch query retains the positive-cut
+allocation and proves the exact rank-one condition |B_C|<=L(C)-1.
+
+SOURCE_SHA256
+5c4f65cd45ca6d5237f43d0641b97cf288edc6a2f251405f605e9b2325ed86aa
+
+EXECUTABLE_SHA256
+efb0b72fb59940e56466fd33eef7a020700f05c138dc08fe49197de7ab6e1e1c
+
+RAW_TRANSCRIPT_SHA256
+9d367820914ffc4ed32a89094c368e4af94c66424e6d88bf2ec842670002bf08

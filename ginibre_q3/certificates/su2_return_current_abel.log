@@ -1,0 +1,26 @@
+STATUS
+Exact bounded negative controls for scalar Abel/first-passage reductions.
+These failures are not counterexamples to FBPC or CFBPC.
+
+COMMAND
+character_ring_iter/analyze_su2_return_current_abel 100 30
+
+OUTPUT
+FIRST_NEGATIVE_CUMULATIVE level=6 label=2 prefix=4 truncation=2 degree=5 value=-330
+FIRST_NEGATIVE_SECOND_CUMULATIVE level=6 label=2 prefix=4 truncation=3 degree=7 value=-252
+SU2_RETURN_CURRENT_ABEL maximum_level=100 maximum_prefix=30 parameters=600 rows=243000 cumulative_coefficients=10956600 cumulative_negatives=4897861 cumulative_minimum=-70209165632505672724446711857222981109353084328466832788935674879243449091267537063585348427 cumulative_witness=(100,48,30,29,61) second_cumulative_negatives=5016933 second_cumulative_minimum=-60070434908680129520935315552009424138584702571448383150641951599404138689392475947909643342 second_cumulative_witness=(100,48,30,29,61) first_passage_steps=37200 first_passage_decreases=0 first_passage_minimum=0 first_passage_witness=(6,2,1) result=FAIL_ABEL_CANDIDATE
+
+INTERPRETATION
+Let H_(n,t)(z)=P_(n,t)(z)F(z), with the notation of Lemma 5A8H26.
+The coefficients of H/(1-z) and H/(1-z)^2 are respectively the first
+and second cumulative coefficients tested above.  Both proposed
+coefficientwise sufficient conditions are false.  The exact division
+G=FE also found no decrease in the first-passage coefficients of E,
+consistent with the elementary initial-neighbour loop injection, but
+that scalar monotonicity is insufficient.
+
+SOURCE_SHA256
+2962e827242bc63571e9933599775ecbc58e27384a61e11e1668302664afbe66
+
+EXECUTABLE_SHA256
+221b57d5b7c5f82f85f020e87002fa94ee13472948711e1939c9a916192dad0a

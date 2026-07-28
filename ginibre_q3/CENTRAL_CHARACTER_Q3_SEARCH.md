@@ -6360,6 +6360,32 @@ already returned `UNSAT`; its transcript
 `certificates/su2_corrected_308_task0_z3.log` has SHA-256
 `62f3ad6d724e28ce5a4fdd5a3bdee8610348763e40527b442396e6bf89eab794`.
 
+The first long direct residual is indexed task `99`,
+
+```text
+orbit=3 parity=0 selected=0 position=1 kind=2 rank=1.
+```
+
+Its 128-way supply-only refinement has a `SAT` chamber at
+`(wall,interval)=(2,10)`.  This falsifies only the stronger local-supply
+target: mode four retains the positive-cut switch allocation and the
+exact corrected-source command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-task 99
+```
+
+returns `UNSAT`.  Thus task 99 is certified by the intended rank-one
+criterion `|B_C|<=L(C)-1`, not by the false supply-only surrogate.  The
+source-bound transcript is
+`certificates/su2_corrected_task99_switch_z3.log`.  A new complete
+direct replay was also launched with `44` workers chosen at launch from
+`64` logical CPUs, load approximately `20`, and `98 GiB` available
+RAM; the number is an observed scheduler output, not a fixed thread
+instruction.  The alternative task-99 certificate prevents that replay
+from making the whole finite gate depend on the known long direct
+formulation.
+
 Machine B now runs an independent complete replay of the same 308-cell
 cover.  Its previous 48-worker bounded job ended with status 137 after
 using approximately 44 GiB, so the corrected replay uses a
@@ -9980,6 +10006,191 @@ show that arbitrary shortcut choices cannot be injective.  The
 remaining task is to retain the eliminated triangle data while routing
 it into the positive marked-walk capacities.
 
+Two scalar ways of retaining extra length are still insufficient.  Put
+`H_(n,t)(z)=P_(n,t)(z)F(z)`.  Coefficientwise positivity of
+`H/(1-z)` first fails at
+
+```text
+(k,q,j,t,d)=(6,2,4,2,5),               value=-330,
+```
+
+and coefficientwise positivity of `H/(1-z)^2` first fails at
+
+```text
+(k,q,j,t,d)=(6,2,4,3,7),               value=-252.
+```
+
+The first-passage coefficients of `E=G/F` were nondecreasing in every
+one of `37,200` tested steps through level `100` and degree `62`, as
+also follows from inserting the self-loop at the forced first neighbour
+`q`.  The two negative controls show that one or two scalar Abel
+integrations cannot combine this monotonicity with last exit to prove
+the current.  The strict C++ transcript is
+`certificates/su2_return_current_abel.log`.
+
+Reflection gives a matrix-valued factorization which retains exactly
+the crossing state lost by those scalar reductions.
+
+**Lemma 5A8H28 (nonnegative reflection quotients and central-crossing
+factorization).**  Use half-label coordinates
+
+```text
+k=2K,                 q=2Q,                 K>2Q,
+```
+
+and let
+
+```text
+I={X in Z: 0<=X<K/2}.
+```
+
+For `X,Y in I`, put
+
+```text
+B_(X,Y)=1_(X adjacent Y),
+C_(X,Y)=1_(X adjacent K-Y).
+```
+
+Then
+
+```text
+C_(X,Y)=1_(X+Y>=K-Q),                 0<=C<=B.       (P5A.102AZ)
+```
+
+The reflection-odd quotient of the fusion adjacency is therefore the
+entrywise-nonnegative matrix
+
+```text
+A_-=B-C.                                             (P5A.102BA)
+```
+
+If `K` is odd, the reflection-even quotient is `A_+=B+C`.  If `K` is
+even, adjoin the fixed centre `c=K/2` and put
+
+```text
+(A_+)_(X,c)=1_(X>=K/2-Q),
+(A_+)_(c,X)=2 1_(X>=K/2-Q),
+(A_+)_(c,c)=1,                                      (P5A.102BB)
+```
+
+while its `I x I` block is again `B+C`.  Embed `A_-` by a zero row and
+column at `c` in the fixed-centre case, and define
+
+```text
+Delta=A_+-A_-.
+```
+
+Then `Delta>=0`, and on the only columns reachable from the embedded
+odd quotient,
+
+```text
+Delta_(U,V)=2 1_(U+V>=K-Q),       U in I union {c}, V in I. (P5A.102BC)
+```
+
+Let
+
+```text
+R_+/- (z)=(I-zA_+/-)^(-1).
+```
+
+For the return and endpoint series of Lemma 5A8H26,
+
+```text
+2G(z)
+ =z sum_(U,V) (R_+)_(0,U)(z) Delta_(U,V)
+                   (R_-)_(V,0)(z).                 (P5A.102BD)
+```
+
+All three factors on the right have nonnegative coefficients.
+
+**Proof.**  The crossed fusion condition is
+
+```text
+|X-Q|<=K-Y<=X+Q,             X+K-Y+Q<=2K.
+```
+
+Because `X,Y,Q<K/2`, all inequalities except
+`K-Y<=X+Q` are automatic; the latter is exactly
+`X+Y>=K-Q`.  This proves the first equality in `(P5A.102AZ)`.
+If the crossed edge exists, then `X+Y>=K-Q>Q`.  Assuming
+`Y>=X`, the bounds `Y<K/2` and `X+Y>=K-Q` give
+`Y-X<Q`; the ordinary upper fusion wall is also automatic.  Hence the
+same-side edge exists and `C<=B`.
+
+On a reflection-odd vector the paired upper value is the negative of
+the lower value, giving `B-C`.  On a reflection-even vector it is the
+same, giving `B+C`.  At a fixed centre the lower-to-centre and
+centre-to-lower multiplicities differ by the orbit size two, which is
+exactly `(P5A.102BB)`.  The centre is looped because `Q<K`.
+This proves `(P5A.102BA)--(P5A.102BC)`.
+
+If
+
+```text
+a_r=(A_+^r)_(0,0),                 b_r=(A_-^r)_(0,0),
+```
+
+reflection decomposition gives
+
+```text
+a_r=f_r+g_r,                       b_r=f_r-g_r.
+```
+
+Finally the resolvent identity
+
+```text
+R_+-R_-=z R_+ Delta R_-
+```
+
+and the preceding two equalities give `(P5A.102BD)` after taking the
+root entry.  QED.
+
+The Ferrers form `(P5A.102BC)` suggests the exact nested target which
+retains the outside-in crossing shell.  For `rho in I`, define
+
+```text
+S_rho(z)
+ =sum_(V in I, V>=rho) sum_U
+    (R_+)_(0,U)(z) Delta_(U,V)(R_-)_(V,0)(z).       (P5A.102BE)
+```
+
+Then `(P5A.102BD)` and Lemma 5A8H26 give the identity
+
+```text
+2Q_(j,t)=[z^(n-1)]P_(n,t)(z)S_0(z),       n=2j+2.  (P5A.102BF)
+```
+
+Thus the following is a sufficient strengthening of the missing
+global-payment lemma:
+
+```text
+[z^(n-1)]P_(n,t)(z)S_rho(z)>=0
+for every admissible K,Q,j,t,rho.                   (CCS)
+```
+
+`(CCS)` is strictly weaker than componentwise crossing payment.
+Individual `(U,V)` components first become negative at
+`(k,q,j,t,U,V)=(10,4,7,6,2,2)`, with value `-73,457,600`.
+Even aggregation over a single post-crossing column is false, first at
+`(16,6,7,5,V)=(16,6,7,5,2)`, with value `-324,069,258`.
+Pairing adjacent target columns is false at `(20,8,9,7)`, and using
+only the innermost column to pay every negative column is false at
+`(22,8,10,8)`.  Thus no fixed-radius or single-reservoir weakening has
+survived.  The nested central-to-outer suffix in `(P5A.102BE)` retains
+precisely the variable-depth payment needed in these cases.
+
+The strict arbitrary-precision C++ audit
+`character_ring_iter/analyze_su2_central_crossing_current.cpp` checked
+`4,212,000` exact shell rows through level `100` and prefix `30`.
+There were no negative suffixes, although `83,575` individual target
+columns were negative.  An independent original-moment evaluation
+verified `(P5A.102BF)` in all `243,000` parameter/prefix rows.  In the
+first component counterexample, summing all three crossing components
+gives `884,076,032`, exactly twice the independently computed endpoint
+current `442,038,016`.  The transcript is
+`certificates/su2_central_crossing_current.log`.  This is bounded
+evidence for `(CCS)`, not its unbounded proof.
+
 Thus the `D_(j,2)` and full-prefix `t=3` affine-wall gaps are closed.
 The remaining combinatorial statement is the arbitrary-prefix
 cumulative current, equivalently the full cross-slice allocation.  It
@@ -9987,7 +10198,10 @@ is narrower than validity of the candidate moves and narrower than
 objectwise matching: prove `(P5A.102R)` for every admissible
 `k,q,j,t`, construct a canonical projected allocation respecting the
 displayed capacities, or prove the equivalent total marked-return
-inequality `(P5A.102AS)`.
+inequality `(P5A.102AS)`.  Lemma 5A8H28 further reduces a viable route
+to the nested central-crossing shell inequality `(CCS)`: unlike all
+discarded scalar or componentwise variants, it preserves both the
+reflection crossing state and the outside-in cumulative order.
 
 The final edge is unique in both currents:
 `N_(q,k-q)^k=N_(q,q)^0=1`.  Stripping it rewrites the unweighted
