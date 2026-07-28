@@ -9324,6 +9324,81 @@ Exact finite-fusion discovery through level `300`, for every `2<=s<=20`,
 checks `10,738,325` coordinates of `(P5A.102AC)` without a negative
 value.  This is bounded evidence only.
 
+The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
+TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
+Then
+
+```text
+N_q=[
+ 0 1 0 0
+ 1 1 1 0
+ 0 1 1 1
+ 0 0 1 0],
+
+M=N_q^2=[
+ 1 1 1 0
+ 1 3 2 1
+ 1 2 3 1
+ 0 1 1 1].
+```
+
+Consequently
+
+```text
+det M_[{0,1},{1,2}]=1*2-1*3=-1.                 (P5A.102AD1)
+```
+
+Thus `(P5A.102AC)` cannot follow by declaring `N_q^2` totally
+positive, by closure of arbitrary two-row minors, or by a planar
+network for `M` in the natural label order.  A valid proof must retain
+the distinguished column zero (equivalently, the return boundary) in
+`(P5A.102AD)`.  This exact negative control is compatible with every
+tested anchored minor.
+
+There is an exact scalar description of that anchored cone.  Retain
+the fusion eigenvalues and root weights from Proposition 5A8F, and
+define the probability measure
+
+```text
+pi_s(r)=u_r^2 lambda_q(r)^(2s)/f_(2s).             (P5A.102AD2)
+```
+
+Then spectral expansion gives
+
+```text
+K_s(x)
+ =f_(2s)^2 Cov_(pi_s)(lambda_q,lambda_x).          (P5A.102AD3)
+```
+
+Equivalently, whenever the denominator is nonzero,
+
+```text
+K_s(x)>=0
+ iff
+ (N_q^(2s+1))_(0,x)/(N_q^(2s))_(0,x)
+   >=f_(2s+1)/f_(2s).                              (P5A.102AD4)
+```
+
+Indeed
+
+```text
+(N_q^n)_(0,x)
+ =sum_r u_r^2 lambda_x(r)lambda_q(r)^n,
+```
+
+and substitution proves both formulas.  In particular the anchored
+target at `x=q` is simply
+
+```text
+K_s(q)=f_(2s)^2 Var_(pi_s)(lambda_q)>=0.           (P5A.102AD5)
+```
+
+Thus the unresolved part of the lower-half kernel is a boundary
+likelihood-ratio minimum, or equivalently a positive covariance of
+`lambda_q` with every even spectral character `lambda_x`, under the
+even tilt `(P5A.102AD2)`.  This is strictly smaller than TP2 of
+`N_q^2`.
+
 The apparent upper-half mirror is false.  For every tested `p`, the
 candidate
 
