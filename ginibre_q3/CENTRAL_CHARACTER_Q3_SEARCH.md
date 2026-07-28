@@ -12269,7 +12269,7 @@ backtracks at every mandatory last-crossing slot.
 The strict C++ analyzer
 `character_ring_iter/analyze_su2_q1_core_suffix.cpp` verifies the
 factorization, reconstructs the endpoint current independently, and
-checks every suffix.  Through `K=60` and `j=60`, all `5,138,212` hard
+checks every suffix.  Through `K=100` and `j=100`, all `40,897,312` hard
 suffix coordinates with `t>=4` were nonnegative.  This is bounded
 evidence for `(P5A.102CM)`, not its proof.  The loop-refined negative
 control is independently reproduced by
@@ -12302,6 +12302,167 @@ continuing to audit the surviving outside-in suffix target.  Thus a
 proof of Target 5A8H28R7 must retain cancellation between the renewal
 remainder and the shifted current rather than proving either factor
 positive separately.
+
+For the minimal label, the full-prefix target itself admits a smaller
+reduction than Target 5A8H28R7.  Continue to write
+
+```text
+f_r=(M_K^r)_(0,0),                 g_r=(M_K^r)_(0,K),
+lambda_K=1+2cos(pi/(K+1)).
+```
+
+For an even slice `a=2s` and `b=n-a=2r`, its unweighted current is
+
+```text
+D_(s,r)=f_(2s)g_(2r)-f_(2s+1)g_(2r-1).           (P5A.102CN)
+```
+
+The return ratio is already bounded without a conjecture:
+
+```text
+f_(2s+1)/f_(2s)
+ =<M_K^s e_0,M_K M_K^s e_0>/||M_K^s e_0||^2
+ <=lambda_K.                                      (P5A.102CO)
+```
+
+Thus the following one-sequence statement would prove every individual
+slice for `K>=4`.
+
+**Target 5A8H28R8 (minimal-label endpoint-ratio descent).**  For every
+`K>=4` and every `r` for which the denominator is nonzero, prove
+
+```text
+g_(2r+2)g_(2r-1)<=g_(2r+1)g_(2r).                (P5A.102CP)
+```
+
+Indeed the positive ratios `g_(2r)/g_(2r-1)` would then decrease to
+the Perron root `lambda_K`.  Hence they are at least `lambda_K`, and
+`(P5A.102CO)` makes `(P5A.102CN)` nonnegative.  This would close the
+minimal-label full-prefix current for every `K>=4`.
+
+The ratio target also has a compact symmetric-function form.  Let
+
+```text
+Lambda_K={1+2cos(a pi/(K+1)):1<=a<=K+1}.
+```
+
+**Lemma 5A8H28AC (two-row Schur form of endpoint descent).**  Put
+`b=K+d`.  Then
+
+```text
+g_b=h_d(Lambda_K),                              (P5A.102CQ)
+```
+
+and, whenever `b` is even,
+
+```text
+g_(b+1)g_b-g_(b+2)g_(b-1)
+ =s_(d+1,d)(Lambda_K).                          (P5A.102CR)
+```
+
+Consequently Target 5A8H28R8 is equivalent to
+
+```text
+s_(d+1,d)(Lambda_K)>=0
+          for K>=4, d>=1, and d=K mod 2.
+```
+
+**Proof.**  The characteristic polynomial of `M_K` is
+
+```text
+p_K(x)=(x+1)U_K((x-1)/2),
+```
+
+whose roots are exactly `Lambda_K`.  Since
+`G(z)=z^K/det(I-zM_K)`, expansion of the reciprocal characteristic
+polynomial gives `(P5A.102CQ)`.  Jacobi--Trudi gives
+
+```text
+s_(d+1,d)=h_(d+1)h_d-h_(d+2)h_(d-1),
+```
+
+which is `(P5A.102CR)`.  The parity condition is exactly
+`b=K+d` even.  QED.
+
+The exceptional three-edge interval can be closed exactly rather than
+included in the target.
+
+**Lemma 5A8H28AB (exact `K=3` cumulative current).**  Every
+minimal-label full-prefix current at `K=3` is nonnegative.
+
+**Proof.**  Put `rho=3+2sqrt(2)` and
+
+```text
+C_r={(2-sqrt(2))rho^r+(2+sqrt(2))rho^(-r)}/4,
+P_r={rho^r-rho^(-r)}/(2sqrt(2)).
+```
+
+Direct diagonalization of `M_3` gives
+
+```text
+f_(2r)=(C_r+1)/2,             g_(2r)=(C_r-1)/2,
+f_(2r+1)=g_(2r+1)=P_r/2.
+```
+
+The Pell identities
+
+```text
+C_r^2-1=P_r P_(r-1),
+alpha_r=P_r/(C_r+1)=(C_r-1)/P_(r-1)
+```
+
+hold for `r>=1`.  The same second-order recurrence gives
+
+```text
+P_(r+1)(C_r+1)-P_r(C_(r+1)+1)=2(C_(r+1)+1),
+```
+
+so `alpha_(r+1)-alpha_r=2/(C_r+1)>0`.  Therefore
+
+```text
+D_(s,r)=f_(2s)g_(2r-1)(alpha_r-alpha_s),
+```
+
+so the slice signs change at most once, from positive to negative, as
+`s` increases with `s+r=j+1`.
+
+It remains only to check the terminal prefix, which equals the full
+even-direction sum because the omitted last slice has endpoint length
+at most two.  Put `X=M_3 tensor I`, `Y=I tensor M_3`,
+`v=e_0 tensor e_0`, `w_+=e_2 tensor e_0`, and
+`w_-=e_3 tensor e_1`.  Its value is one half of
+
+```text
+<w_+-w_-,(X+Y)^m v>+<w_+-w_-,(X-Y)^m v>,
+                                                    m=2j+1.
+```
+
+Reflecting a path suffix after its first visit to `x+y=3` injects the
+unrestricted paths ending at `(3,1)` into those ending at `(2,0)`;
+the first term is therefore nonnegative.  Since
+`w_+-w_-=<e_3 tensor e_0|(X-Y)`, the second term is
+
+```text
+<e_3 tensor e_0|(X-Y)^n|v>
+ =2^(3n/2-4)-2^(n-3)>0,                 n=m+1>=10,
+```
+
+by the four eigenvalues `1+sqrt(2),1,1-sqrt(2),-1` and their endpoint
+signs.  The terminal prefix is nonnegative.  Since the slice sequence
+has only one positive-to-negative crossing, every earlier prefix is at
+least the terminal one.  QED.
+
+The strict C++ analyzer
+`character_ring_iter/analyze_su2_q1_slice_pairing.cpp` checks
+`(P5A.102CN)` and `(P5A.102CP)` independently.  Through `K=100` and
+`j=100`, all `2,401` negative slices occur at `K=3`; every one of the
+`494,312` cumulative prefixes is nonnegative.  All `7,202` negative
+endpoint-ratio minors occur above `K=3`, in precisely the descent
+direction asserted by Target 5A8H28R8; no reverse minor occurs there.
+The simple mirror-pair strengthening is false, first at
+`(K,j,s,s')=(3,5,0,4)` with value `-2740`.  These are bounded
+diagnostics for Target 5A8H28R8, whereas Lemma 5A8H28AB is unbounded.
+The transcript is `certificates/su2_q1_slice_pairing.log`.
 
 The strict C++ analyzer
 `character_ring_iter/analyze_su2_reduced_current_payment.cpp`

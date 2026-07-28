@@ -11,6 +11,12 @@ character_ring_iter/analyze_su2_q1_core_suffix 60 60
 ARCHIVED OUTPUT
 SU2_Q1_CORE_SUFFIX maximum_half_level=60 maximum_prefix=60 parameters=58 rows=105792 identities=105792 residual_coordinates=7134 residual_negatives=0 suffix_coordinates=5650564 suffix_negatives=0 hard_suffix_coordinates=5138212 hard_suffix_negatives=0 negative_targets=0 result=PASS_Q1_CORE_SUFFIX_DISCOVERY
 
+ARCHIVED LARGE COMMAND
+character_ring_iter/analyze_su2_q1_core_suffix 100 100
+
+ARCHIVED LARGE OUTPUT
+SU2_Q1_CORE_SUFFIX maximum_half_level=100 maximum_prefix=100 parameters=98 rows=494312 identities=494312 residual_coordinates=19894 residual_negatives=0 suffix_coordinates=43254664 suffix_negatives=0 hard_suffix_coordinates=40897312 hard_suffix_negatives=0 negative_targets=0 result=PASS_Q1_CORE_SUFFIX_DISCOVERY
+
 CURRENT COMMAND
 character_ring_iter/analyze_su2_q1_core_suffix 30 30
 
@@ -21,16 +27,22 @@ SU2_Q1_CORE_SUFFIX maximum_half_level=30 maximum_prefix=30 parameters=28 rows=12
 
 INTERPRETATION
 For every audited row the program independently reconstructs the endpoint
-current from the Fibonacci residual and transformed current.  The archived
-run found all 5,138,212 hard outside-in suffixes nonnegative.  The current
-run again finds every audited suffix nonnegative and reproduces two exact
-obstructions: W_5 has coefficient [z^25] equal to -252388, and the shifted
-current at (K,j,t,d)=(3,7,3,7) equals -11198.  Hence neither shortcut proves
-the target.  The suffix result remains bounded evidence for Target
-5A8H28R7, not an unbounded proof.
+current from the Fibonacci residual and transformed current.  The largest
+archived run found all 40,897,312 hard outside-in suffixes nonnegative.
+The current run again finds every audited suffix nonnegative and reproduces
+two exact obstructions: W_5 has coefficient [z^25] equal to -252388, and
+the shifted current at (K,j,t,d)=(3,7,3,7) equals -11198.  Hence neither
+shortcut proves the target.  The suffix result remains bounded evidence
+for Target 5A8H28R7, not an unbounded proof.
 
 SOURCE_SHA256
 8e7fec6e863e0a2244a00e30b5d578b327a854bf5d312fa287ddb5df809ec531
 
 EXECUTABLE_SHA256
 a2f05bfb8a4f093cc9588346940316db26ec58254aeaa0eb4ee77b1de04a07aa
+
+ARCHIVED_LARGE_SOURCE_SHA256
+275d91b0f6ad53a17e74845abf9fca5ca723de2350e2c60c73597247994aa08a
+
+ARCHIVED_LARGE_EXECUTABLE_SHA256
+3308f9b9b296fedc01888f98355ba0b4c690ff4ac32bdb10071098c0b3c0bf76
