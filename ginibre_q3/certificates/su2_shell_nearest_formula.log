@@ -1,0 +1,60 @@
+STATUS
+Exact nearest-wall slack certificate and bounded independent recurrence
+audit.  The displayed nonnegative polynomial identities are the
+unbounded sign certificate; the range bound applies only to the audit.
+
+COMMAND
+character_ring_iter/analyze_su2_shell_nearest_formula 100 --certificate
+
+OUTPUT
+NEAREST_CERTIFICATE_TERM margin=same x_degree=0 y_degree=0 coefficient=42/1
+NEAREST_CERTIFICATE_TERM margin=same x_degree=0 y_degree=1 coefficient=76/1
+NEAREST_CERTIFICATE_TERM margin=same x_degree=0 y_degree=2 coefficient=200/3
+NEAREST_CERTIFICATE_TERM margin=same x_degree=0 y_degree=3 coefficient=32/1
+NEAREST_CERTIFICATE_TERM margin=same x_degree=0 y_degree=4 coefficient=16/3
+NEAREST_CERTIFICATE_TERM margin=same x_degree=1 y_degree=0 coefficient=100/1
+NEAREST_CERTIFICATE_TERM margin=same x_degree=1 y_degree=1 coefficient=560/3
+NEAREST_CERTIFICATE_TERM margin=same x_degree=1 y_degree=2 coefficient=152/1
+NEAREST_CERTIFICATE_TERM margin=same x_degree=1 y_degree=3 coefficient=160/3
+NEAREST_CERTIFICATE_TERM margin=same x_degree=1 y_degree=4 coefficient=16/3
+NEAREST_CERTIFICATE_TERM margin=same x_degree=2 y_degree=0 coefficient=104/1
+NEAREST_CERTIFICATE_TERM margin=same x_degree=2 y_degree=1 coefficient=544/3
+NEAREST_CERTIFICATE_TERM margin=same x_degree=2 y_degree=2 coefficient=112/1
+NEAREST_CERTIFICATE_TERM margin=same x_degree=2 y_degree=3 coefficient=64/3
+NEAREST_CERTIFICATE_TERM margin=same x_degree=3 y_degree=0 coefficient=184/3
+NEAREST_CERTIFICATE_TERM margin=same x_degree=3 y_degree=1 coefficient=80/1
+NEAREST_CERTIFICATE_TERM margin=same x_degree=3 y_degree=2 coefficient=80/3
+NEAREST_CERTIFICATE_TERM margin=same x_degree=4 y_degree=0 coefficient=20/1
+NEAREST_CERTIFICATE_TERM margin=same x_degree=4 y_degree=1 coefficient=40/3
+NEAREST_CERTIFICATE_TERM margin=same x_degree=5 y_degree=0 coefficient=8/3
+NEAREST_CERTIFICATE margin=same nonzero_terms=20 result=PASS_NONNEGATIVE_SLACK_EXPANSION
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=0 y_degree=0 coefficient=12/1
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=0 y_degree=1 coefficient=8/1
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=1 y_degree=0 coefficient=28/1
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=1 y_degree=1 coefficient=88/3
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=1 y_degree=2 coefficient=8/1
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=2 y_degree=0 coefficient=88/3
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=2 y_degree=1 coefficient=32/1
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=2 y_degree=2 coefficient=8/1
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=3 y_degree=0 coefficient=16/1
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=3 y_degree=1 coefficient=32/3
+NEAREST_CERTIFICATE_TERM margin=reflected x_degree=4 y_degree=0 coefficient=8/3
+NEAREST_CERTIFICATE margin=reflected nonzero_terms=11 result=PASS_NONNEGATIVE_SLACK_EXPANSION
+SU2_SHELL_NEAREST_FORMULA maximum_label=100 formula_rows=5150 recurrence_checks=30900 polynomial_identity_checks=5050 activation_masks=25 negative_same_endpoint=0 negative_reflected_endpoint=0 minimum_same=0 minimum_reflected=0 result=PASS_NEAREST_COLUMN_DISCOVERY
+
+INTERPRETATION
+At K=2Q+1 the reflection-odd quotient is the simple-current
+permutation V -> Q-V.  A single crossing column therefore has only a
+same and a reflected terminal endpoint.  With x=V-1 and y=Q-V, the
+program reconstructs both endpoint margins as the displayed
+nonnegative slack polynomials.  It independently checks the
+Kac--Walton formula against the quotient recurrence through Q=100.
+
+SOURCE_SHA256
+a8c9af1f3ef072ecdf0e3cdc704d339945ef7ec7d9d477fa9f3694c04f9e694b
+
+EXECUTABLE_SHA256
+ff87a98430d0e8f666d7389c058a8910732bc023c96234c64910d9f09ebb304f
+
+RAW_TRANSCRIPT_SHA256
+5b6bc95dd616d0a1fef1a9a605ea171677999ee6c6911f55e8669b5602819a52

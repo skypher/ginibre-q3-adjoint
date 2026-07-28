@@ -10145,6 +10145,102 @@ R_+-R_-=z R_+ Delta R_-
 and the preceding two equalities give `(P5A.102BD)` after taking the
 root entry.  QED.
 
+The odd quotient is itself an exact, strictly smaller fusion graph.
+This makes the level reduction in the right resolvent explicit.
+
+**Lemma 5A8H28A (half-level odd quotient and fixed crossing
+triangle).**  Put
+
+```text
+ell=K-1.
+```
+
+Under the bijection `X -> 2X`, the nonzero `I x I` block of `A_-`
+(equivalently, `A_-` before the harmless zero-centre embedding of
+Lemma 5A8H28) is exactly the restriction of the `SU(2)_ell` fusion
+matrix `N_(2Q)^(ell)` to its even-label component.  If
+
+```text
+d=ell-2Q=K-1-2Q,                  J=N_ell^(ell),
+```
+
+then, on the full `SU(2)_ell` fusion ring,
+
+```text
+N_(2Q)^(ell)=J N_d^(ell),
+(N_(2Q)^(ell))^r=J^r(N_d^(ell))^r.                (P5A.102BD1)
+```
+
+Moreover the nonzero part of `Delta` has a level-independent triangular
+form.  If `K=2m+1`, put
+
+```text
+a=m-U,             b=m-V.
+```
+
+If `K=2m`, include the centre `U=m` and put
+
+```text
+a=m-U,             b=m-1-V.
+```
+
+In both cases
+
+```text
+Delta_(U,V)=2 1_(a+b<=Q-1).                        (P5A.102BD2)
+```
+
+Thus only the `Q` innermost source and target depths occur in the
+crossing operator, while the right-hand paths are paths in a fusion
+graph whose level has fallen from `2K` to `K-1`.
+
+**Proof.**  For `X,Y in I`, the same-side edge condition is
+
+```text
+|X-Q|<=Y<=X+Q.
+```
+
+By `(P5A.102AZ)`, subtracting the crossed edge retains it precisely when
+
+```text
+X+Y<=K-Q-1,
+```
+
+or equivalently
+
+```text
+|X-Q|<=Y<=X+Q,             X+Y+Q<=ell.             (P5A.102BD3)
+```
+
+After the substitution `X -> 2X`, `Y -> 2Y`, these are exactly the
+`SU(2)_ell` fusion inequalities for multiplication by `V_(2Q)` on the
+even labels.  The even labels run from zero through
+`2 floor(ell/2)`, which is exactly the image of `I`.  This proves the
+first assertion.
+
+The simple current satisfies `J^2=I`, commutes with every fusion matrix,
+and
+
+```text
+J N_d^(ell)=N_(ell-d)^(ell)=N_(2Q)^(ell).
+```
+
+This proves `(P5A.102BD1)`.  For `K=2m+1`, substitution into
+`U+V>=K-Q` gives
+
+```text
+2m-a-b>=2m+1-Q,
+```
+
+which is `a+b<=Q-1`.  For `K=2m`, it gives
+
+```text
+2m-1-a-b>=2m-Q,
+```
+
+and the same conclusion follows.  Equation `(P5A.102BC)` now proves
+`(P5A.102BD2)`.  QED.
+
 The Ferrers form `(P5A.102BC)` suggests the exact nested target which
 retains the outside-in crossing shell.  For `rho in I`, define
 
@@ -10159,6 +10255,683 @@ Then `(P5A.102BD)` and Lemma 5A8H26 give the identity
 ```text
 2Q_(j,t)=[z^(n-1)]P_(n,t)(z)S_0(z),       n=2j+2.  (P5A.102BF)
 ```
+
+The shell filtration already has a uniform first transfer.
+
+**Lemma 5A8H28B (monotone shell coefficients and the first shell
+credit).**  Write
+
+```text
+s_rho(d)=[z^d]S_rho(z),
+T_(rho,t)=[z^(n-1)]P_(n,t)(z)S_rho(z).
+```
+
+Then
+
+```text
+0<=s_rho(d)<=s_rho(d+1)                            (P5A.102BF1)
+```
+
+for every `d>=0`.  Consequently
+
+```text
+T_(rho,0)>=0,             T_(rho,1)>=T_(rho,0).    (P5A.102BF2)
+```
+
+**Proof.**  Regard `A_+`, `A_-`, and `Delta` as adjacency matrices of
+directed multigraphs, retaining edge colours when an entry is two.  An
+object counted by `s_rho(d)` consists of an `A_+` path from zero to
+`U`, a distinguished `Delta` edge from `U` to some `V>=rho`, and an
+`A_-` path from `V` back to zero.  The two resolvent-path lengths sum
+to `d`; the distinguished crossing edge is the external `z` in
+`(P5A.102BD)` and is not included in `d`.
+
+No such object has an empty `A_+` prefix: `(P5A.102BC)` and
+`V<K/2<K-Q` give `Delta_(0,V)=0`.  The first edge of every nonempty
+`A_+` path from zero is the unique same-side edge `0 -> Q`.  There is
+also a distinguished same-side loop `Q -> Q`, since `Q` occurs in the
+fusion product `Q star Q`.  Insert this loop immediately after the
+first edge.  The crossing target `V`, its shell condition, and the
+`A_-` suffix are unchanged.  Deleting that distinguished inserted edge
+recovers the original object, so this is an injection from the objects
+of degree `d` to those of degree `d+1`.  This proves
+`(P5A.102BF1)`.
+
+The case `t=0` is
+
+```text
+T_(rho,0)=s_rho(n-1)>=0.
+```
+
+Since `f_2=f_3=1`, the sole new pair at `t=1` gives
+
+```text
+T_(rho,1)-T_(rho,0)
+ =binom(n-1,2){s_rho(n-3)-s_rho(n-4)}>=0.
+```
+
+This is `(P5A.102BF2)`.  QED.
+
+The next shell row reduces to one fixed-degree kernel.  Let
+`Pi_rho` be the diagonal projection onto the coordinates
+
+```text
+{V in I: V>=rho}
+```
+
+(and zero on the embedded centre coordinate), and put
+
+```text
+D_rho=Delta Pi_rho,
+B_rho=[
+  A_+   D_rho
+   0     A_-
+].                                                   (P5A.102BF3)
+```
+
+Write `u=(e_0,0)` for the plus root and `v=(0,e_0)` for the minus
+root.
+
+**Lemma 5A8H28C (last-crossing block and fixed-kernel reduction).**
+For every `r>=1`,
+
+```text
+<u,B_rho^r v>=s_rho(r-1).                           (P5A.102BF4)
+```
+
+Moreover the row vector
+
+```text
+u^T(B_rho^3-B_rho^2)
+```
+
+is entrywise nonnegative.  If the fixed six-step row inequality
+
+```text
+u^T{f_4B_rho^6-f_5B_rho^5}>=0                      (LBK2)
+```
+
+holds entrywise for every admissible `K,Q,rho`, then
+
+```text
+T_(rho,2)>=0                                       (P5A.102BF5)
+```
+
+for every `j>=4`.  Thus the complete `t=2` shell row has no
+prefix-length dependence beyond the single kernel `(LBK2)`.
+
+**Proof.**  The upper-right block of a power of `(P5A.102BF3)` is
+
+```text
+(B_rho^r)_(+,-)
+ =sum_(a+b=r-1) A_+^a D_rho A_-^b.
+```
+
+Taking its root entry is precisely the coefficient of degree `r-1` in
+`(P5A.102BE)`, proving `(P5A.102BF4)`.
+
+Every two-step `B_rho` path from the plus root begins with the forced
+same-side edge `0 -> Q`.  Insert the distinguished same-side loop
+`Q -> Q` immediately after that edge.  This preserves the endpoint,
+the block in which the endpoint lies, and any later distinguished
+crossing.  Deletion of the inserted edge is an inverse on the image.
+This proves the asserted entrywise sign of
+`u^T(B_rho^3-B_rho^2)`.
+
+Put `n=2j+2`.  Since `n>=10`, direct expansion of `P_(n,2)` and
+`(P5A.102BF4)` give
+
+```text
+T_(rho,2)
+ =<u,[
+      B_rho^n
+      +binom(n-1,2)B_rho^(n-5)(B_rho^3-B_rho^2)
+      +binom(n-1,4)B_rho^(n-10)
+         {f_4B_rho^6-f_5B_rho^5}
+    ]v>.                                            (P5A.102BF6)
+```
+
+All powers of `B_rho` are entrywise nonnegative.  The first term,
+the proved three-minus-two row, and `(LBK2)` therefore make every term
+on the right nonnegative.  This proves the implication
+`(LBK2) => (P5A.102BF5)`.  QED.
+
+**Target 5A8H28R2 (lifted five-step shell kernel).**  Prove `(LBK2)`
+for every admissible `K,Q,rho`.  This is an unbounded finite-degree
+fusion statement: its matrix power is fixed at six, while only the
+level, label, and shell wall vary.  It is strictly weaker than the
+unshifted proposal
+
+```text
+u^T{f_4B_rho^5-f_5B_rho^4}>=0,
+```
+
+which is false.
+
+The strict arbitrary-precision C++ analyzer
+`character_ring_iter/analyze_su2_shell_block_kernel.cpp` checked every
+entry of the two lifted rows through half-level `60`: `870`
+level/label parameters, `17,980` shell cuts, and `845,060` block
+entries.  The proved three-minus-two row and the candidate shifted
+kernel `(LBK2)` had no negative entry.  The unshifted negative control
+had four failures, first
+
+```text
+(K,Q,rho,target)= (55,14,27,29),       value=-8.
+```
+
+Its transcript is `certificates/su2_shell_block_kernel.log`.  The
+absence of shifted failures is bounded discovery evidence for Target
+5A8H28R2, not its proof.
+
+The shell projection can be removed from the bulk and confined to its
+boundary commutator.  This gives a sharper exact target than a direct
+four-parameter expansion of `(LBK2)`.
+
+**Lemma 5A8H28D (shell commutator localization).**  Put
+
+```text
+H_r^(rho)=sum_(a+b=r-1) A_+^a D_rho A_-^b,
+C_rho=Pi_rho A_- - A_- Pi_rho,
+p(X)=f_4X^5-f_5X^4,
+W_rho=f_4H_5^(rho)-f_5H_4^(rho).
+```
+
+Then
+
+```text
+H_r^(rho)
+ =A_+^r Pi_rho-Pi_rho A_-^r
+  +sum_(a+b=r-1)A_+^a C_rho A_-^b.                (P5A.102BF7)
+```
+
+The full shell `rho=0` satisfies
+
+```text
+u^T W_0 A_- >=0.                                  (P5A.102BF8)
+```
+
+For `rho>=1`,
+
+```text
+u^T W_rho A_-
+ =u^T p(A_+)Pi_rho A_- + E_rho,                   (P5A.102BF9)
+```
+
+where the first term is entrywise nonnegative and
+
+```text
+E_rho
+ =f_4 sum_(a+b=4)u^T A_+^a C_rho A_-^(b+1)
+  -f_5 sum_(a+b=3)u^T A_+^a C_rho A_-^(b+1).      (P5A.102BFA)
+```
+
+Moreover, for arbitrary rows `l,r`,
+
+```text
+l^T C_rho r
+ =sum_(v>=rho,w<rho)(A_-)_(v,w)
+      {l_v r_w-l_w r_v}.                          (P5A.102BFB)
+```
+
+Thus every possibly negative term in `(P5A.102BF9)` is supported on an
+edge crossing the single shell boundary and is an oriented `2 by 2`
+path minor.  All bulk shell dependence is contained in the already
+nonnegative folded five-step reserve `u^T p(A_+)Pi_rho A_-`.
+
+**Proof.**  Since `D_rho=(A_+-A_-)Pi_rho`,
+
+```text
+D_rho=A_+Pi_rho-Pi_rho A_-+C_rho.
+```
+
+The first two terms telescope in the definition of `H_r^(rho)`, proving
+`(P5A.102BF7)`.  At `rho=0`, `Pi_0` is the identity on the nonzero odd
+quotient, `C_0=0`, and the root row of
+`p(A_+)-p(A_-)` is twice the upper-orbit fold of the nonnegative full
+fusion row `p(N_(2Q))`.  Its nonnegativity is Lemma 5A8H20.  Right
+multiplication by `A_-` proves `(P5A.102BF8)`.
+
+If `rho>=1`, then `u^T Pi_rho=0`.  Multiply the `r=5` and `r=4`
+instances of `(P5A.102BF7)` on the right by `A_-` and take their
+`f_4,-f_5` combination.  This gives `(P5A.102BF9)` and
+`(P5A.102BFA)`.  Lemma 5A8H20, folded to the reflection-even quotient,
+gives `u^Tp(A_+)>=0`, so its product with `Pi_rho A_-` is nonnegative.
+Finally
+
+```text
+(C_rho)_(v,w)
+ ={1_(v>=rho)-1_(w>=rho)}(A_-)_(v,w).
+```
+
+Symmetry of `A_-` and pairing the two orientations of each cut edge
+give `(P5A.102BFB)`.  QED.
+
+**Target 5A8H28R3 (boundary-minor payment).**  Prove that the
+nonnegative folded reserve in `(P5A.102BF9)` pays the oriented cut-edge
+minors in `(P5A.102BFA)` for every `K,Q,rho`.  This target is sufficient
+for `(LBK2)`, because the plus block of the shifted kernel is
+`u^Tp(A_+)A_+>=0`, while its terminal block is
+
+```text
+u^Tp(A_+)D_rho+u^TW_rho A_-.
+```
+
+The reserve cannot simply be discarded: the boundary correction is
+already negative at `(K,Q,rho,target)=(3,1,1,0)`, where it is `-3`
+and the folded reserve is `15`.  Nor can the proof be reduced to
+nonnegative individual crossing columns or adjacent pairs.  The first
+individual-column failure is `-6` at `(8,3,2,0)`, and the first
+adjacent-pair failure is `-62` at `(12,5,2,5)`.  These are exact
+negative controls; they leave the full suffix and the boundary-minor
+payment target intact.
+
+The stable half-level band of the lifted kernel is already closed.
+
+**Lemma 5A8H28E (stable-band vanishing of the negative crossing
+term).**  If
+
+```text
+K>=10Q,
+```
+
+then `(LBK2)` holds for every shell `rho`.
+
+**Proof.**  Let
+
+```text
+H_r^(rho)=sum_(a+b=r-1)A_+^aD_rho A_-^b
+```
+
+as in Lemma 5A8H28D.  A nonzero path contributing to `H_5^(rho)` has
+crossing source `U` reached from the plus root in some `a<=4` steps.
+Unfolding the reflection-even quotient says that either the lower label
+`U` or its reflected label `K-U` is reached by `a` multiplications by
+`Q`.  Hence
+
+```text
+U<=4Q                 or                 K-U<=4Q.  (P5A.102BFC)
+```
+
+The second alternative and `U<=K/2` force `K<=8Q`, impossible in the
+stated band.  In the first alternative, a crossing target
+`V<K/2` would have to satisfy
+
+```text
+U+V>=K-Q.
+```
+
+If `K` is even, its left side is at most `4Q+K/2-1`, forcing
+`K<=10Q-2`.  If `K` is odd, it is at most
+`4Q+(K-1)/2`, forcing `K<=10Q-1`.  Both contradict `K>=10Q`.
+Thus
+
+```text
+H_5^(rho)=0.                                      (P5A.102BFD)
+```
+
+The terminal block of `(LBK2)` is therefore
+
+```text
+f_4H_6^(rho)-f_5H_5^(rho)=f_4H_6^(rho)>=0.
+```
+
+Its plus block is
+
+```text
+u^T{f_4A_+^6-f_5A_+^5}=u^Tp(A_+)A_+>=0
+```
+
+by the folded form of Lemma 5A8H20.  This proves `(LBK2)`.  QED.
+
+Consequently Target 5A8H28R3, and hence the complete `t=2` shell row,
+is now reduced to the finite-ratio but still unbounded band
+
+```text
+2Q<K<10Q.                                         (P5A.102BFE)
+```
+
+**Corollary 5A8H28F (complete small-label lifted kernel).**  Target
+5A8H28R2 holds for every
+
+```text
+1<=Q<=6,                 K>2Q.
+```
+
+**Proof.**  If `K>=10Q`, apply Lemma 5A8H28E.  Otherwise `K<10Q<=60`.
+The exact exhaustive analyzer
+`character_ring_iter/analyze_su2_shell_block_kernel.cpp` constructs
+`A_+`, `A_-`, and every `D_rho` directly from the finite fusion rule and
+checks every entry of `(LBK2)`.  Its half-level-60 certificate covers
+all such `(K,Q,rho)` and reports
+
+```text
+negative_shifted_k2=0.
+```
+
+All arithmetic is `boost::multiprecision::cpp_int`; no numerical sign
+decision is involved.  QED.
+
+The remaining `t=2` leaf is therefore
+
+```text
+Q>=7,                    2Q<K<10Q.                (P5A.102BFF)
+```
+
+The nearest affine wall also admits an unbounded termwise certificate.
+
+**Lemma 5A8H28G (nearest-wall lifted shell kernel).**  If
+
+```text
+K=2Q+1,
+```
+
+then `(LBK2)` holds for every `Q>=1` and every shell `rho`.
+
+**Proof.**  Lemma 5A8H28A gives
+
+```text
+A_-=J,                    J(V)=Q-V,                (P5A.102BFG)
+```
+
+because the lower fusion level is `ell=2Q` and its multiplier is the
+simple current `N_(2Q)`.  Put
+
+```text
+r_a(V)=(A_+^a)_(0,V),
+d_a(V)=(A_+^a Delta)_(0,V).
+```
+
+Since `A_+=J+Delta`,
+
+```text
+d_a(V)=r_(a+1)(V)-r_a(Q-V).                        (P5A.102BFH)
+```
+
+In fact no affine chamber split is needed.  The nearest-wall crossing
+matrix is the strict Ferrers triangle
+
+```text
+Delta_(U,V)=2 1_(U+V>=Q+1).
+```
+
+Consequently, starting from `r_0(V)=1_(V=0)`,
+
+```text
+r_(a+1)(V)
+ =r_a(Q-V)+2 sum_(U=Q+1-V)^Q r_a(U),
+
+d_a(V)=2 sum_(U=Q+1-V)^Q r_a(U).                  (P5A.102BFI)
+```
+
+This is an exact recurrence on the complete domain `0<=V<=Q`.  For
+`V>=1`, repeated use of the ordinary power-sum identities makes every
+`r_a(V)` and `d_a(V)`, `a<=5`, a polynomial in `V-1` and `Q-V`; no
+positive-part convention or activation mask remains.
+
+Fix one crossing column `V`.  Because `A_-=J`, its shifted terminal row
+has support only at `V` and `Q-V`.  Since
+
+```text
+f_4=2Q+1,                 f_5=2Q(Q+2),
+```
+
+the two entries are
+
+```text
+M_same
+ =f_4(d_1+d_3+d_5)-f_5(d_2+d_4),
+
+M_ref
+ =f_4(d_2+d_4)-f_5(d_1+d_3).                      (P5A.102BFJ)
+```
+
+At `V=0` both vanish.  For `1<=V<=Q`, put
+
+```text
+x=V-1,                    y=Q-V.
+```
+
+Direct iteration of `(P5A.102BFI)` and substitution into
+`(P5A.102BFJ)` give
+
+```text
+M_same
+ =42+76y+(200/3)y^2+32y^3+(16/3)y^4
+  +x{100+(560/3)y+152y^2+(160/3)y^3+(16/3)y^4}
+  +x^2{104+(544/3)y+112y^2+(64/3)y^3}
+  +x^3{184/3+80y+(80/3)y^2}
+  +x^4{20+(40/3)y}
+  +(8/3)x^5,
+
+M_ref
+ =12+8y
+  +x{28+(88/3)y+8y^2}
+  +x^2{88/3+32y+8y^2}
+  +x^3{16+(32/3)y}
+  +(8/3)x^4.                                      (P5A.102BFK)
+```
+
+Every displayed coefficient is positive and `x,y>=0`; hence each
+individual crossing column is nonnegative.  The terminal block for
+`D_rho` is the sum of these column rows over `V>=rho`, so it is
+nonnegative.  The plus block is `u^Tp(A_+)A_+>=0` by Lemma 5A8H20,
+as in Lemma 5A8H28E.  This proves `(LBK2)`.  QED.
+
+The strict C++ program
+`character_ring_iter/analyze_su2_shell_nearest_formula.cpp`
+independently constructs both quotient matrices, verifies
+`A_-=J`, compares the closed Kac--Walton evaluation with the direct
+Ferrers recurrence `(P5A.102BFI)`, and reconstructs both nonnegative
+slack expansions in
+`(P5A.102BFK)`.  Through `Q=100` it checked `30,900` recurrence
+coordinates and `5,050` polynomial identities.  Its transcript is
+`certificates/su2_shell_nearest_formula.log`.  Those bounded comparisons
+audit the formulas; the displayed polynomial identities are the
+unbounded sign certificate.
+
+Combining Lemma 5A8H28G with Corollary 5A8H28F leaves
+
+```text
+Q>=7,                  2Q+2<=K<10Q                (P5A.102BFL)
+```
+
+as the exact remaining `t=2` band.
+
+The next affine ray has finite reflected width.
+
+**Lemma 5A8H28H (offset-one finite-width shell reduction).**  Suppose
+
+```text
+K=2Q+2,                 Q>=7.
+```
+
+On the nonzero odd quotient,
+
+```text
+A_-=J N_1,              A_-^b=J^bN_1^b,           (P5A.102BFM)
+```
+
+at lower fusion level `ell=2Q+1`.  Put
+
+```text
+d_a(V)=(u^T A_+^a Delta)_V,
+P_b(V,x)=(A_-^b)_(V,x).
+```
+
+The terminal row of the shifted kernel splits exactly as
+
+```text
+E_(rho,x)
+ =sum_(V>=rho) [
+    f_4{d_1(V)P_4(V,x)+d_3(V)P_2(V,x)+d_5(V)P_0(V,x)}
+   -f_5{d_2(V)P_2(V,x)+d_4(V)P_0(V,x)}],
+
+O_(rho,x)
+ =sum_(V>=rho) [
+    f_4{d_2(V)P_3(V,x)+d_4(V)P_1(V,x)}
+   -f_5{d_1(V)P_3(V,x)+d_3(V)P_1(V,x)}].          (P5A.102BFN)
+```
+
+Here `E` uses only
+
+```text
+x-2<=V<=x+2,
+```
+
+and, writing `y=Q-x`, `O` uses only
+
+```text
+y-1<=V<=y+2.                                      (P5A.102BFO)
+```
+
+Consequently the shell cutoff enters only through the two finite-width
+offsets
+
+```text
+a=rho-x,                  b=rho-y.                 (P5A.102BFP)
+```
+
+For the outermost odd partial packet `b=2`, one has the exact formula
+
+```text
+O_(rho,x)=4{-Q^2+2Qy+y+4}.                         (P5A.102BFQ)
+```
+
+**Proof.**  Lemma 5A8H28A has
+
+```text
+d=K-1-2Q=1,
+```
+
+so `(P5A.102BFM)` follows from `(P5A.102BD1)`.  Splitting the powers
+`b` in the six-step and five-step divided differences into even and odd
+values gives `(P5A.102BFN)`.
+
+For even `b<=4`, the factor `J^b` is the identity and an `N_1^b` path
+from label `2V` to `2x` requires `|V-x|<=b/2`.  For odd `b<=3`, strip
+`J`: the target becomes the odd label `2(Q-x)+1`, so
+
+```text
+|2V-{2(Q-x)+1}|<=3.
+```
+
+These are exactly the two support intervals in `(P5A.102BFO)`.
+
+The crossing triangle at this ray gives
+
+```text
+d_1(V)=2 1_(V>=2),        d_2(V)=4V-2  (V>=1).
+```
+
+Indeed the first plus row is concentrated at `Q`; after one further
+step the active upper tail has values two and the fixed centre has
+value one.  If `b=2`, the suffix retains only `V=y+2` from the odd
+support.  Its three-step `N_1` path is the unique monotone path, while
+the one-step term is absent.  Therefore
+
+```text
+O_(rho,x)=f_4d_2(y+2)-f_5d_1(y+2).
+```
+
+Using `f_4=2Q+1` and `f_5=2Q^2+6Q-5` gives `(P5A.102BFQ)`.  QED.
+
+**Target 5A8H28R4 (offset-one finite packet payment).**  Prove
+`E_(rho,x)+O_(rho,x)>=0` for the finitely many cutoff profiles in
+`(P5A.102BFP)`.  Exact discovery through `Q=100` found:
+
+```text
+negative_even_packet=0,
+negative_total=0.
+```
+
+The odd packet can be negative only in the observed profiles
+
+```text
+b=1, a<=-3;
+b=2, a<=-3,-2,-1,0,1.                             (P5A.102BFR)
+```
+
+Thus six explicit polynomial payment chambers, rather than an
+unbounded shell-depth family, remain on this ray.  The profile list in
+`(P5A.102BFR)` is currently bounded discovery and must be proved
+exhaustive together with the six signs.  The exact C++ analyzer is
+`character_ring_iter/analyze_su2_shell_offset_one.cpp`; its transcript
+is `certificates/su2_shell_offset_one.log`.
+
+The six observed deficit chambers themselves admit exact polynomial
+payment certificates.
+
+**Lemma 5A8H28I (offset-one deficit-profile payment).**  Under the
+hypotheses of Lemma 5A8H28H, `E_(rho,x)+O_(rho,x)>=0` in every profile
+listed in `(P5A.102BFR)`.
+
+**Proof.**  First take `b=2` and `a=-2,-1,0,1`.  The relation
+`a-b=Q-2x` leaves one free nonnegative integer `t`; use respectively
+
+```text
+a=-2:  x=t+6, Q=2t+8;
+a=-1:  x=t+5, Q=2t+7;
+a= 0:  x=t+5, Q=2t+8;
+a= 1:  x=t+4, Q=2t+7.                             (P5A.102BFS)
+```
+
+Direct iteration of the finite-width recurrence `(P5A.102BFN)` gives
+
+```text
+E+O=sum_j c_j binom(t,j),
+```
+
+with coefficient rows
+
+```text
+a=-2: 116564,203692,221392,145728,53280,8320;
+a=-1:  61410,128012,160944,119712,48608,8320;
+a= 0: 103282,186620,208088,140032,52256,8320;
+a= 1:    930,   884,   456,    96.                (P5A.102BFT)
+```
+
+All coefficients are positive.
+
+It remains to treat the two full-even profiles `a<=-3`.  Put
+`y=Q-x`.  Their domains split into the following exhaustive rectangular
+slack cones:
+
+```text
+profile  b  domain             first slack       second slack
+   0     1  y>=2               Y=y-2             S=Q-2y-4
+   1     1  y=1                Y=0               S=Q-7
+   2     1  y=0                Y=0               S=Q-7
+   3     2  y>=2               Y=y-2             S=Q-2y-5
+   5     2  y=1                Y=0               S=Q-7
+   4     2  y=0                Y=0               S=Q-7.       (P5A.102BFU)
+```
+
+In every row, direct iteration gives a total-degree-at-most-five Newton
+expansion
+
+```text
+E+O=sum_(i+j<=5)c_(i,j)binom(Y,i)binom(S,j).
+```
+
+Profiles `0,3` have 21 nonzero coefficients, and the four boundary
+profiles have six.  Every coefficient is positive; the minimum is
+`320` in all six profiles.  Therefore all six full-even cones are
+nonnegative.
+
+The degree bound is structural: `d_a` has degree at most `a-1` after a
+fixed cutoff profile is substituted, while `f_4,f_5` have degrees one
+and two.  Hence no term in `(P5A.102BFN)` has degree above five.  The
+strict C++ certificate reconstructs every Newton coefficient by exact
+finite differences, rejects a negative coefficient, and rejects any
+nonzero difference above degree five.  Thus the computation verifies
+polynomial identities of the stated unbounded degree, not a finite
+range extrapolation.  QED.
+
+After Lemma 5A8H28I, Target 5A8H28R4 has only the sign-classification
+part left: prove `E>=0` for every cutoff and prove `O>=0` outside
+`(P5A.102BFR)`.  The payment of every possible deficit in that list is
+now closed.
 
 Thus the following is a sufficient strengthening of the missing
 global-payment lemma:

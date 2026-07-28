@@ -1,0 +1,49 @@
+STATUS
+Exact bounded discovery for the lifted shell block kernels and their
+smoothed terminal reduction.  This is not an unbounded proof of either
+the shifted five-step kernel or the boundary-minor payment target.
+
+COMMAND
+character_ring_iter/analyze_su2_shell_block_kernel 60
+
+OUTPUT
+FIRST_NEGATIVE_SMOOTHED_BOUNDARY_CORRECTION K=3 Q=1 rho=1 target=0 value=-3 reserve=15 total=12
+FIRST_NEGATIVE_SHIFTED_SINGLE_COLUMN_K2 K=8 Q=3 rho=2 target=0 value=-6
+FIRST_NEGATIVE_SMOOTHED_SINGLE_COLUMN_K2 K=8 Q=3 rho=2 target=0 value=-6
+FIRST_NEGATIVE_SMOOTHED_ADJACENT_PAIR K=12 Q=5 rho=2 target=5 value=-62
+FIRST_NEGATIVE_BLOCK_K2 K=55 Q=14 rho=27 target=29 terminal=1 value=-8
+SU2_SHELL_BLOCK_KERNEL maximum_half_level=60 parameters=870 shell_rows=17980 entries=845060 negative_k1=0 negative_terminal_k1=0 negative_k2=4 negative_terminal_k2=4 negative_shifted_k2=0 negative_terminal_shifted_k2=0 negative_smoothed_terminal_k2=0 negative_smoothed_single_column_k2=5509 negative_shifted_single_column_k2=5509 negative_nearest_shifted_single_column_k2=0 smoothed_single_column_rows=18415 smoothed_single_column_sign_recrossings=2035 maximum_smoothed_single_column_sign_changes=4 negative_smoothed_innermost_columns=0 negative_smoothed_adjacent_column_pairs=5188 negative_smoothed_boundary_corrections=147304 result=PASS_SMOOTHED_BLOCK_KERNEL_DISCOVERY
+
+INTERPRETATION
+For each reflection shell cut rho, let
+
+  B_rho = [[A_+, Delta Pi_rho], [0, A_-]].
+
+The row from the plus root of B_rho^3-B_rho^2 was entrywise
+nonnegative in every displayed case.  The stronger unshifted kernel
+
+  f_4 B_rho^5-f_5 B_rho^4
+
+is false, first by -8 at the displayed parameter and terminal-block
+entry.  In contrast, the exact kernel needed by the minimum t=2
+prefix,
+
+  f_4 B_rho^6-f_5 B_rho^5,
+
+had no negative entry in the displayed scan.  Its terminal block also
+remained nonnegative after factoring it into the folded five-step
+reserve and the smoothed unshifted terminal row.  The stronger claims
+that the boundary correction, each individual crossing column, or each
+adjacent column pair is nonnegative are all false at the displayed
+negative controls.  The extra block step and cumulative shell reserve
+are therefore essential.  The scan is bounded evidence for Targets
+5A8H28R2--5A8H28R3, not their proof.
+
+SOURCE_SHA256
+6fef9b1fdc9f360a8d684e32f6d4c848aa1742633ab5744e9e94da61aece248d
+
+EXECUTABLE_SHA256
+eb4f246879f2d120c3ff6ad875e877afe539101993c2172725d68500f34ac768
+
+RAW_TRANSCRIPT_SHA256
+74b1bd8d0d9eb645e6a260468430a20511b99b96487c54327875f5ff41786279

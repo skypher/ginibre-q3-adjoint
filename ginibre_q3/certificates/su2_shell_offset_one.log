@@ -1,0 +1,46 @@
+STATUS
+Exact bounded discovery for the offset-one finite-width shell packets.
+This is not an unbounded proof of Target 5A8H28R4.
+
+COMMAND
+character_ring_iter/analyze_su2_shell_offset_one 100
+
+OUTPUT
+FIRST_NEGATIVE_OFFSET_ONE_ODD_PACKET Q=2 rho=2 target=2 value=-2
+FIRST_NEGATIVE_OFFSET_ONE_ODD_MAIN Q=7 rho=4 target=5 even=61470 odd=-60 total=61410 even_cut_offset=-1 odd_cut_offset=2
+OFFSET_ONE_NEGATIVE_ODD_PROFILE even_cut_offset=-3 odd_cut_offset=1 count=87
+OFFSET_ONE_NEGATIVE_ODD_PROFILE even_cut_offset=-3 odd_cut_offset=2 count=2350
+OFFSET_ONE_NEGATIVE_ODD_PROFILE even_cut_offset=-2 odd_cut_offset=2 count=47
+OFFSET_ONE_NEGATIVE_ODD_PROFILE even_cut_offset=-1 odd_cut_offset=2 count=47
+OFFSET_ONE_NEGATIVE_ODD_PROFILE even_cut_offset=0 odd_cut_offset=2 count=47
+OFFSET_ONE_NEGATIVE_ODD_PROFILE even_cut_offset=1 odd_cut_offset=2 count=46
+OFFSET_ONE_NEWTON_CERTIFICATE even_cut_offset=-2 odd_cut_offset=2 nonzero_terms=6 minimum_coefficient=8320 maximum_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+OFFSET_ONE_NEWTON_CERTIFICATE even_cut_offset=-1 odd_cut_offset=2 nonzero_terms=6 minimum_coefficient=8320 maximum_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+OFFSET_ONE_NEWTON_CERTIFICATE even_cut_offset=0 odd_cut_offset=2 nonzero_terms=6 minimum_coefficient=8320 maximum_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+OFFSET_ONE_NEWTON_CERTIFICATE even_cut_offset=1 odd_cut_offset=2 nonzero_terms=4 minimum_coefficient=96 maximum_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=0 nonzero_terms=21 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=3 nonzero_terms=21 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=1 nonzero_terms=6 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=2 nonzero_terms=6 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=4 nonzero_terms=6 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=5 nonzero_terms=6 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+SU2_SHELL_OFFSET_ONE maximum_label=100 parameters=100 shell_entries=348550 negative_even_packet=0 negative_odd_packet=2633 negative_odd_main_band=2624 negative_odd_main_nonfull_even=140 negative_total=0 result=PASS_OFFSET_ONE_SUFFIX_DISCOVERY
+
+INTERPRETATION
+At K=2Q+2 the odd quotient is JN_1.  The analyzer separates the
+shifted terminal kernel into its even- and odd-suffix packets for every
+shell and endpoint.  The even packet and their combined total had no
+negative entry through Q=100.  Odd deficits occurred only in the six
+displayed clamped cutoff profiles.  These counts are discovery evidence
+for the packet sign classification, not its proof.  The ten Newton
+records are exact unbounded polynomial certificates for the six
+deficit-payment chambers of Lemma 5A8H28I.
+
+SOURCE_SHA256
+910254ede237a4c1d4668eb4f31c57a514457fd3c540917e8224ab24d0e61d13
+
+EXECUTABLE_SHA256
+624e7b5b403b5314517f4806bb62cf147daf85d0e540d1948e1d3314701fae6b
+
+RAW_TRANSCRIPT_SHA256
+06cae52256c2fa2de77abca0ebe29a60de6be715a6b9cf58c89054f71091c5e9

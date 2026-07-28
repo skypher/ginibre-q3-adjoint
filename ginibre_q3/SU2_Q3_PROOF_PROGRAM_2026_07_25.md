@@ -812,6 +812,59 @@ before any further construction.
    shell is paid.  This is narrower than the earlier unrestricted
    cross-walk allocation and survives its scalar and componentwise
    negative controls.
+   Lemma 5A8H28A identifies the right quotient exactly: after
+   `X -> 2X`, `A_-` is the even-label component of the
+   `SU(2)_(K-1)` fusion matrix `N_(2Q)`, and
+   `N_(2Q)=J N_(K-1-2Q)`.  In distance-from-centre coordinates the
+   crossing operator is the fixed triangle
+   `Delta_(a,b)=2 1_(a+b<=Q-1)`, independent of `K`.  Thus the
+   right-hand level has genuinely fallen from `2K` to `K-1`, while only
+   `Q` central depths remain active.  Lemma 5A8H28B closes the first
+   shell transfer uniformly: inserting the distinguished same-side
+   loop at the forced first neighbour `Q` proves
+   `[z^d]S_rho<=[z^(d+1)]S_rho`, hence
+   `T_(rho,1)>=T_(rho,0)>=0` for every shell.  Arbitrary truncation
+   `t>=2` remains the live Ferrers-shell obligation.
+   Lemma 5A8H28C now packages a shell as the off-diagonal block of
+   `B_rho=[[A_+,Delta Pi_rho],[0,A_-]]`.  It proves the lifted
+   three-minus-two row by the same distinguished-loop injection and
+   reduces the entire `t=2` shell family, for all prefix lengths, to
+   the single fixed-degree target
+   `f_4B_rho^6-f_5B_rho^5>=0` from the plus root.  The strict C++
+   audit checked 845,060 block entries through half-level 60 without
+   a shifted-kernel failure.  The stronger unshifted kernel is false:
+   it has 20 failures, first `-8` at `(K,Q,rho)=(55,14,27)`.
+   Lemma 5A8H28D now telescopes the shell projection out of the bulk.
+   The full shell `rho=0` closes by the already proved folded five-step
+   kernel.  Every proper shell reduces to a nonnegative folded reserve
+   plus oriented `2 by 2` path minors supported only on edges crossing
+   its single boundary.  Individual crossing columns and adjacent
+   pairs are false, so the next exact shell leaf is Target 5A8H28R3:
+   prove that the folded reserve pays this boundary-minor current.
+   This implies the fixed six-step Target 5A8H28R2 and closes `t=2`.
+   Lemma 5A8H28E already proves the lifted kernel throughout the stable
+   band `K>=10Q`: the negative five-step crossing block has empty
+   support there.  Thus the remaining `t=2` boundary-minor target is
+   confined to the finite-ratio band `2Q<K<10Q`, although `Q` remains
+   unbounded.  Corollary 5A8H28F combines that stable theorem with the
+   exact half-level-60 replay to close every `Q<=6` at all levels.  The
+   nearest-wall identity `A_-=J` then reduces every individual crossing
+   column to two scalar endpoints.  Lemma 5A8H28G expands both margins
+   as positive polynomials in `V-1` and `Q-V`, proving the full ray
+   `K=2Q+1`.  The active `t=2` leaf is now
+   `Q>=7`, `2Q+2<=K<10Q`.
+   Lemma 5A8H28H resolves the geometry of the first remaining ray
+   `K=2Q+2`: because `A_-=JN_1`, its even and odd suffix packets have
+   widths five and four, respectively.  The main odd deficit is the
+   explicit quadratic `4(-Q^2+2Qy+y+4)`.  Exact discovery through
+   `Q=100` leaves only six cutoff profiles for payment.  Proving their
+   polynomial signs is Target 5A8H28R4.  Lemma 5A8H28I now closes all
+   six payments by positive degree-five Newton expansions.  What remains
+   on this ray is only the sign-classification step: prove the even
+   packet nonnegative everywhere and the odd packet nonnegative outside
+   the six already-paid profiles.
+   Arbitrary `t>=3` still requires the general global-payment mechanism
+   after that leaf is closed.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail
