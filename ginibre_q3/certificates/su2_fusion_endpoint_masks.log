@@ -10,7 +10,10 @@ SU2_FUSION_ENDPOINT_MASKS power=1 hinges=38 masks=122 result=PASS_EXACT_CENSUS
 SU2_FUSION_ENDPOINT_MASKS power=2 hinges=38 masks=237 result=PASS_EXACT_CENSUS
 SU2_FUSION_ENDPOINT_MASKS power=3 hinges=46 masks=646 result=PASS_EXACT_CENSUS
 SU2_FUSION_ENDPOINT_MASKS power=4 hinges=46 masks=943 result=PASS_EXACT_CENSUS
+SU2_FUSION_ENDPOINT_JOINT_MASKS packet=odd powers=1,3 hinges=78 masks=1014 result=PASS_EXACT_CENSUS
+SU2_FUSION_ENDPOINT_JOINT_MASKS packet=even powers=2,4 hinges=78 masks=1576 result=PASS_EXACT_CENSUS
 SU2_FUSION_ENDPOINT_MASKS_TOTAL powers=4 masks=1948 result=PASS_EXACT_CENSUS
+SU2_FUSION_ENDPOINT_JOINT_MASKS_TOTAL packets=2 masks=2590 result=PASS_EXACT_CENSUS
 
 INTERPRETATION
 The Z3 solver ranges over unbounded integers ell,d,s,t with
@@ -19,12 +22,18 @@ records the parameter parities, every lower-maximum tie,
 upper-minimum tie, branch activation, and possible j=1 weight
 truncation in the four signed affine-fold branches.  Blocking complete
 masks and exhausting the solver is an exact census, not a bounded scan.
+The two joint censuses use common level, label, source, target, parity,
+and fusion-wall selectors for the powers that occur in the same packet.
+They are the exact common refinements needed for an individual matrix
+entry.  They do not yet perform the variable-range suffix sum over the
+crossing coordinate, so they are not by themselves a packet-sign
+certificate.
 
 SOURCE_SHA256
-7dd6fed7b500e66c3047b461a7f32fb739181aff24ee8ffc86776f062726dba0
+04e16480a22f8b0aa43e71648fbc1932a4286696e80ebeca568381b176748b49
 
 EXECUTABLE_SHA256
-5fd347e3d185dd3b536b6ffc4b6e5f974b304578e250a6b9446965ac0409fa2e
+56671965514e8c00e42b45b5d8231d06e8a33689503439075d11561992fd87cd
 
 RAW_TRANSCRIPT_SHA256
-49b52660ec6eb87c4edfc6e07d38dc02e5e6821e67e657666dc29de0c9416319
+d260e8b9f6385b53418ddf0ff7ccdace3242cc5805214ec81ef5f661dcc2dd25

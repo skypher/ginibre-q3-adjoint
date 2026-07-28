@@ -11489,6 +11489,14 @@ b=1: 122,        b=2: 237,        b=3: 646,        b=4: 943.
 ```
 
 Thus all four powers together have `1,948` feasible masks.
+Because the packet formulas combine powers of the same parity, their
+common refinements have the exact sizes
+
+```text
+odd packet,  b=1,3:       1,014 masks;
+even packet, b=2,4:       1,576 masks;
+both packets:              2,590 masks.            (P5A.102BT)
+```
 
 **Proof.**  For each of the four affine-fold branches, use doubled
 endpoint coordinates.  Its retained `r` interval is the intersection
@@ -11524,7 +11532,10 @@ polynomial in `(P5A.102BS)`, including all ties.
 
 The strict Z3 enumerator imposes the displayed integer domain and
 blocks each complete Boolean mask after finding it.  Exhaustion returns
-the four counts above.  Since the solver ranges over the unbounded
+the four marginal counts and the two joint counts above.  The joint
+solvers share `ell,d,s,t`, all four residue bits, and the ordinary and
+affine fusion selectors between the two powers in a packet; they then
+block the complete combined Boolean mask.  Since the solver ranges over the unbounded
 integer parameters themselves, this is an exact Presburger census, not
 a bounded parameter scan.  QED.
 
@@ -11532,9 +11543,16 @@ The source is
 `character_ring_iter/analyze_su2_fusion_endpoint_masks.cpp`, and the
 transcript is `certificates/su2_fusion_endpoint_masks.log`.
 Lemma 5A8H28P reduces the free-width part of Target 5A8H28R5 to
-substituting the endpoint polynomials on these `1,948` masks and proving
-their packet combinations nonnegative.  No further fusion-path or
-affine-wall case discovery remains.
+substituting the endpoint polynomials on the `2,590` joint entry masks.
+There is one further necessary refinement which the census deliberately
+does not claim to perform: a shell packet sums these entries over a
+variable interval of the crossing coordinate `V`, with the polynomial
+weights `d_a(V)`.  The `V`-axis must therefore be partitioned at the
+joint endpoint walls and each polynomial segment summed exactly before
+any packet sign certificate is available.  The earlier statement that
+the `1,948` marginal masks alone were the complete packet workload was
+too strong; they close entry-level affine-wall discovery, not the
+variable-range suffix summation.
 
 Thus the following is a sufficient strengthening of the missing
 global-payment lemma:
@@ -11578,6 +11596,70 @@ inequality `(P5A.102AS)`.  Lemma 5A8H28 further reduces a viable route
 to the nested central-crossing shell inequality `(CCS)`: unlike all
 discarded scalar or componentwise variants, it preserves both the
 reflection crossing state and the outside-in cumulative order.
+
+The projected matching evidence now isolates that order more sharply.
+Retain only positive path pairs whose even second length is strictly
+below the odd second length of the negative source.  In the first hard
+case `(k,q,j,t)=(6,2,4,3)`, same-slice capacity has Hall deficit `840`,
+whereas the full downward operation graph has an exact capacitated
+matching.  The latter continues to pass every row through `j=6` at
+`(k,q)=(6,2)`, including demand `9,970,688` at `t=5`, and the four
+original affine-wall cases.  This is the triangular direction required
+by a cumulative prefix, rather than an arbitrary cross-slice payment.
+
+Successively smaller valid operation families are false.  At
+`(12,4,4,3)`, one-cut splices plus the self-loop transfer have deficit
+`798`; adjoining two-cut segment exchanges reduces it to `500`, and
+concatenation with loop extraction reduces it to `412`.  The reflected
+shell family closes that case, but retaining only its two basic
+length-two shells is still false: the first new deficits are `424` at
+`(16,6,4,3)`, `1,064` at `(18,6,4,3)`, and `636` at `(20,8,4,3)`.
+Thus the deeper reflected-shell recoupling is genuine and cannot be
+replaced by the earlier local or fixed-depth rules.
+
+The graph-theoretic boundary of the phenomenon is also now explicit.
+Reflection and chordality alone fail with the exact value `-23,692`;
+the outside-in perfect-elimination order alone fails with value `-32`.
+A loop at the unique neighbor of each reflected leaf passes all
+`192,767` connected graphs through nine vertices and
+`2,024,542,625` prefix coordinates, but a deterministic larger-graph
+scan finds an exact `24`-vertex counterexample `-94,092,832`.  Even
+outside-in elimination plus those loops is false, with a `14`-vertex
+counterexample `-12,406,865,553,607`.
+
+The surviving abstraction is the actual fusion feature: reflected
+row-convex neighborhoods.  The complete nine-vertex census contains
+`527` connected reflected row-convex leaf graphs and
+`5,131,225` prefix coordinates, all nonnegative.  A deterministic
+larger scan through `40` vertices, prefix `50`, and `34,061` connected
+row-convex looped-leaf graphs checks `40,021,675` further rows without
+a failure.  These are bounded results, not a theorem.
+
+**Target 5A8H28R6 (reflected interval global current).**  Prove
+`(P5A.102AS)`, or equivalently the projected capacitated Hall
+inequalities `(P5A.102R)`, for every symmetric reflected row-convex
+fusion graph whose two boundary vertices are exchanged leaves and
+whose forced first neighbor has its distinguished loop.  It is enough
+to construct a downward allocation using the one-cut, loop-transfer,
+and reflected-shell recouplings above.  The `SU(2)` fusion graph
+satisfies every hypothesis by `(P5A.102E)`, `(P5A.102Q)`, and Lemma
+5A8H27, so this target implies every `(FBPC_j)` and hence the
+arbitrary-factor global-payment lemma.
+
+Two still stronger semigroup shortcuts are false.  The exact
+target-column current has `2,970` sign recrossings through level `60`
+and prefix `20` (maximum two sign changes), although all `380,800`
+outside-in suffixes are nonnegative.  Moreover the full suffix-sum cone
+is not invariant under the parity-twisted lower-half fusion matrix:
+the first failure is already `(ell,Q,rho,target)=(5,1,2,2)`, with
+successive column counts `1,0`.  A proof of Target 5A8H28R6 must
+therefore retain a smaller row-convex current cone or the explicit
+downward allocation; neither single-crossing nor invariance of the
+ambient suffix cone is valid.
+
+The strict diagnostics and all negative controls in this refinement are
+recorded in
+`certificates/su2_global_payment_refined_routes.log`.
 
 The final edge is unique in both currents:
 `N_(q,k-q)^k=N_(q,q)^0=1`.  Stripping it rewrites the unweighted

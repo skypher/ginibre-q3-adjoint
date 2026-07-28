@@ -166,6 +166,9 @@ int main(int argc, char** argv) {
         std::uint64_t component_negatives = 0U;
         std::uint64_t target_rows = 0U;
         std::uint64_t target_negatives = 0U;
+        std::uint64_t target_sign_recrossings = 0U;
+        std::uint64_t target_sign_reversals = 0U;
+        int maximum_target_sign_changes = 0;
         std::uint64_t target_suffix_rows = 0U;
         std::uint64_t target_suffix_negatives = 0U;
         std::uint64_t adjacent_target_rows = 0U;
@@ -610,6 +613,42 @@ int main(int argc, char** argv) {
                     for (int truncation = 2;
                          truncation <= prefix - 1;
                          ++truncation) {
+                        int last_target_sign = 0;
+                        int target_sign_changes = 0;
+                        bool seen_positive_target = false;
+                        for (int target = 0;
+                             target < paired;
+                             ++target) {
+                            const Integer& value = target_values[
+                                static_cast<std::size_t>(target)
+                            ][static_cast<std::size_t>(prefix)]
+                             [static_cast<std::size_t>(truncation)];
+                            const int sign =
+                                value < 0 ? -1 : (value > 0 ? 1 : 0);
+                            if (sign == 0) {
+                                continue;
+                            }
+                            if (
+                                last_target_sign != 0
+                                && sign != last_target_sign
+                            ) {
+                                ++target_sign_changes;
+                            }
+                            if (seen_positive_target && sign < 0) {
+                                ++target_sign_reversals;
+                            }
+                            if (sign > 0) {
+                                seen_positive_target = true;
+                            }
+                            last_target_sign = sign;
+                        }
+                        maximum_target_sign_changes = std::max(
+                            maximum_target_sign_changes,
+                            target_sign_changes
+                        );
+                        if (target_sign_changes > 1) {
+                            ++target_sign_recrossings;
+                        }
                         Integer inner_reserve = target_values[
                             static_cast<std::size_t>(paired - 1)
                         ][static_cast<std::size_t>(prefix)]
@@ -795,6 +834,12 @@ int main(int argc, char** argv) {
             << minimum.crossing_target << ')'
             << " target_rows=" << target_rows
             << " target_negatives=" << target_negatives
+            << " target_sign_recrossings="
+                << target_sign_recrossings
+            << " target_sign_reversals="
+                << target_sign_reversals
+            << " maximum_target_sign_changes="
+                << maximum_target_sign_changes
             << " target_minimum=" << target_minimum.value
             << " target_witness=("
             << target_minimum.level << ','

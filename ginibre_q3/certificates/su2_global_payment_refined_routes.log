@@ -1,0 +1,83 @@
+STATUS
+Bounded exact diagnostics refining the arbitrary-prefix global-payment
+route.  PASS lines below are discovery evidence, not unbounded proofs.
+
+PROJECTED DOWNWARD CAPACITY
+The operation graph is the projected capacitated graph of Lemma
+5A8H17.  A downward edge is retained only when the positive second-path
+length is at most the negative second-path length minus one.
+
+SU2_BPC_ADJACENT_CAPACITY_MATCHING level=6 label=2 prefix=4 truncation=3 negative_paths=17472 matched=16632 unmatched=840 hall_deficit=840 result=FAIL_CAPACITY
+SU2_BPC_DOWN_CAPACITY_MATCHING level=6 label=2 prefix=4 truncation=3 negative_paths=17472 matched=17472 unmatched=0 hall_deficit=0 result=PASS_CAPACITY
+SU2_BPC_DOWN_CAPACITY_MATCHING level=6 label=2 prefix=5 truncation=4 negative_paths=422400 matched=422400 unmatched=0 hall_deficit=0 result=PASS_CAPACITY
+SU2_BPC_DOWN_CAPACITY_MATCHING level=6 label=2 prefix=6 truncation=5 negative_paths=9970688 matched=9970688 unmatched=0 hall_deficit=0 result=PASS_CAPACITY
+
+The following exact negative controls progressively restrict the valid
+operation graph in the case level=12,label=4,prefix=4,truncation=3:
+
+SU2_BPC_DOWN_CORE_CAPACITY_MATCHING unmatched=798 hall_deficit=798 result=FAIL_CAPACITY
+SU2_BPC_DOWN_SEGMENT_CAPACITY_MATCHING unmatched=500 hall_deficit=500 result=FAIL_CAPACITY
+SU2_BPC_DOWN_CONCAT_CAPACITY_MATCHING unmatched=412 hall_deficit=412 result=FAIL_CAPACITY
+SU2_BPC_DOWN_SHELL_CAPACITY_MATCHING negative_paths=121320 matched=121320 unmatched=0 hall_deficit=0 result=PASS_CAPACITY
+
+The basic two-edge shell restriction is still false at larger labels:
+
+SU2_BPC_DOWN_BASIC_CAPACITY_MATCHING level=16 label=6 prefix=4 truncation=3 negative_paths=460740 matched=460316 unmatched=424 hall_deficit=424 result=FAIL_CAPACITY
+SU2_BPC_DOWN_BASIC_CAPACITY_MATCHING level=18 label=6 prefix=4 truncation=3 negative_paths=448560 matched=447496 unmatched=1064 hall_deficit=1064 result=FAIL_CAPACITY
+SU2_BPC_DOWN_BASIC_CAPACITY_MATCHING level=20 label=8 prefix=4 truncation=3 negative_paths=1214892 matched=1214256 unmatched=636 hall_deficit=636 result=FAIL_CAPACITY
+
+The full downward graph closes the first of those failures:
+
+SU2_BPC_DOWN_CAPACITY_MATCHING level=16 label=6 prefix=4 truncation=3 negative_paths=460740 negative_types=5564 positive_types=31376 projected_edges=142544 reached_supply=761084 matched=460740 unmatched=0 hall_deficit=0 result=PASS_CAPACITY
+
+GENERAL REFLECTED-GRAPH CONTROLS
+Chordality alone fails:
+
+GENERAL_GRAPH_FULL_PREFIX_KERNEL counterexample vertices=8 prefix=6 truncation=5 value=-23692 result=FAIL_UNIVERSAL
+
+Outside-in perfect elimination alone fails:
+
+GENERAL_GRAPH_FULL_PREFIX_KERNEL counterexample vertices=8 prefix=4 truncation=2 value=-32 result=FAIL_UNIVERSAL
+
+A loop at the unique root neighbor passes the complete nine-vertex
+census but is false in larger graphs:
+
+GENERAL_GRAPH_FULL_PREFIX_KERNEL maximum_vertices=9 maximum_prefix=50 reflected_loop_leaves=1 connected_graphs=192767 coordinates=2024542625 result=PASS_EXHAUSTIVE_DISCOVERY
+REFLECTED_LOOP_LEAF_RANDOM counterexample vertices=24 sample=524 prefix=10 truncation=5 value=-94092832 result=FAIL_RANDOM
+
+Even outside-in elimination plus that loop is false:
+
+REFLECTED_LOOP_LEAF_RANDOM counterexample vertices=14 sample=194 prefix=12 truncation=10 value=-12406865553607 construct_outside_in=1 result=FAIL_RANDOM
+
+Reflected row-convex graphs remain the surviving abstraction.  The
+complete nine-vertex census without an imposed loop and the larger
+deterministic random scan with looped leaves both pass:
+
+GENERAL_GRAPH_FULL_PREFIX_KERNEL maximum_vertices=9 maximum_prefix=50 reflected_convex_leaves=1 connected_graphs=527 coordinates=5131225 result=PASS_EXHAUSTIVE_DISCOVERY
+REFLECTED_LOOP_LEAF_RANDOM maximum_vertices=40 maximum_prefix=50 samples_per_size=1000 construct_row_convex=1 attempts=35000 connected_graphs=34061 prefix_rows=40021675 result=PASS_RANDOM_DISCOVERY
+
+TARGET-SHELL SHAPE CONTROL
+The target-column current is not single-crossing.  Through level 60
+and prefix 20 it has exact recrossings, while every outside-in suffix
+remains nonnegative:
+
+SU2_CENTRAL_CROSSING_CURRENT maximum_level=60 maximum_prefix=20 target_rows=380800 target_negatives=6881 target_sign_recrossings=2970 target_sign_reversals=6881 maximum_target_sign_changes=2 target_suffix_rows=380800 target_suffix_negatives=0 result=PASS_TARGET_SUFFIX_DISCOVERY
+
+The full suffix cone is not invariant under the parity-twisted
+lower-half fusion matrix:
+
+SU2_SUFFIX_CONE_INVARIANCE counterexample level=5 label=1 rho=2 target=2 previous=1 current=0 difference=-1 result=FAIL_INVARIANCE
+
+SOURCE_SHA256
+analyze_su2_bpc_suffix_reflection.cpp 77ea80102fc73b5c051e8e1396bc34c5269dd62b48b9d09f3e7dcab11be41387
+analyze_su2_central_crossing_current.cpp b3adcc717df28c7a556b6a25fabf94369da017c34b23ac520b174721568a34b2
+analyze_su2_suffix_cone_invariance.cpp 5f215e1b120d34f43badf7294b61ee6a1d707cb4617579a2d0f82d7cedb74cd8
+analyze_general_graph_full_prefix_kernel.cpp 4fa8c7db58d67361b1a5a60f515f005d3c3ab7c17cbfa23e4e4d63b4633a56c7
+analyze_reflected_loop_leaf_random.cpp 661ec6784beba56dbd8a2f75bf2a5b556ceb65bdf3898fb69337736b246a068a
+
+EXECUTABLE_SHA256
+analyze_su2_bpc_suffix_reflection eca31e96fe75d857fc0b85e8f6781a36985fef369c658f6d66dab3b280368c2a
+analyze_su2_central_crossing_current cbd4da924ef043fa1206b097e4531c39357e913655e9240465410069082227b1
+analyze_su2_suffix_cone_invariance ccc13c59b01893038ed367417ab5b77465a84c99a4bebdd9d201962d6ce8f5d1
+analyze_general_graph_full_prefix_kernel eefbb576c0e134ba69e1f7b910f7d6c61e336468bce520873dd4889edf2b5fe0
+analyze_reflected_loop_leaf_random cac32f140d73a57b26d22f0772fe19b4d9fb824320e5c2a4f8f59607fb1007df

@@ -309,6 +309,13 @@ int main(int argc, char** argv) {
                 "[--crossed|--aligned|--matching|--matching-local|"
                 "--matching-core|--matching-capacity|"
                 "--matching-capacity-local|--matching-capacity-down|"
+                "--matching-capacity-down-core|"
+                "--matching-capacity-down-segment|"
+                "--matching-capacity-down-word|"
+                "--matching-capacity-down-concat|"
+                "--matching-capacity-down-rotation|"
+                "--matching-capacity-down-shell|"
+                "--matching-capacity-down-basic|"
                 "--matching-capacity-adjacent]"
             );
         }
@@ -316,14 +323,53 @@ int main(int argc, char** argv) {
             argc == 6 && std::string(argv[5]) == "--crossed";
         const bool aligned_splice =
             argc == 6 && std::string(argv[5]) == "--aligned";
+        const bool capacity_down_core_matching =
+            argc == 6
+            && std::string(argv[5])
+                == "--matching-capacity-down-core";
+        const bool capacity_down_segment_matching =
+            argc == 6
+            && std::string(argv[5])
+                == "--matching-capacity-down-segment";
+        const bool capacity_down_word_matching =
+            argc == 6
+            && std::string(argv[5])
+                == "--matching-capacity-down-word";
+        const bool capacity_down_concat_matching =
+            argc == 6
+            && std::string(argv[5])
+                == "--matching-capacity-down-concat";
+        const bool capacity_down_rotation_matching =
+            argc == 6
+            && std::string(argv[5])
+                == "--matching-capacity-down-rotation";
+        const bool capacity_down_shell_matching =
+            argc == 6
+            && std::string(argv[5])
+                == "--matching-capacity-down-shell";
+        const bool capacity_down_basic_matching =
+            argc == 6
+            && std::string(argv[5])
+                == "--matching-capacity-down-basic";
         const bool minimal_matching =
-            argc == 6 && std::string(argv[5]) == "--matching-core";
+            (
+                argc == 6 && std::string(argv[5]) == "--matching-core"
+            ) || capacity_down_core_matching
+                || capacity_down_basic_matching;
         const bool capacity_local_matching =
             argc == 6
             && std::string(argv[5]) == "--matching-capacity-local";
         const bool capacity_down_matching =
-            argc == 6
-            && std::string(argv[5]) == "--matching-capacity-down";
+            (
+                argc == 6
+                && std::string(argv[5]) == "--matching-capacity-down"
+            ) || capacity_down_core_matching
+                || capacity_down_segment_matching
+                || capacity_down_word_matching
+                || capacity_down_concat_matching
+                || capacity_down_rotation_matching
+                || capacity_down_shell_matching
+                || capacity_down_basic_matching;
         const bool capacity_adjacent_matching =
             argc == 6
             && std::string(argv[5]) == "--matching-capacity-adjacent";
@@ -345,7 +391,10 @@ int main(int argc, char** argv) {
             throw std::runtime_error(
                 "the optional argument is --crossed, --aligned, "
                 "--matching, --matching-local, --matching-core, or "
-                "--matching-capacity[-local|-down|-adjacent]"
+                "--matching-capacity"
+                "[-local|-down|-down-core|-down-segment|-down-word|"
+                "-down-concat|-down-rotation|-down-shell|-down-basic|"
+                "-adjacent]"
             );
         }
         const std::string tag = capacity_matching
@@ -354,7 +403,35 @@ int main(int argc, char** argv) {
                     ? "SU2_BPC_LOCAL_CAPACITY_MATCHING"
                     : (
                         capacity_down_matching
-                            ? "SU2_BPC_DOWN_CAPACITY_MATCHING"
+                            ? (
+                                capacity_down_core_matching
+                                    ? "SU2_BPC_DOWN_CORE_CAPACITY_MATCHING"
+                                    : (
+                                        capacity_down_segment_matching
+                                            ? "SU2_BPC_DOWN_SEGMENT_CAPACITY_MATCHING"
+                                            : (
+                                                capacity_down_word_matching
+                                                    ? "SU2_BPC_DOWN_WORD_CAPACITY_MATCHING"
+                                                    : (
+                                                        capacity_down_concat_matching
+                                                            ? "SU2_BPC_DOWN_CONCAT_CAPACITY_MATCHING"
+                                                            : (
+                                                                capacity_down_rotation_matching
+                                                                    ? "SU2_BPC_DOWN_ROTATION_CAPACITY_MATCHING"
+                                                                    : (
+                                                                        capacity_down_shell_matching
+                                                                            ? "SU2_BPC_DOWN_SHELL_CAPACITY_MATCHING"
+                                                                            : (
+                                                                                capacity_down_basic_matching
+                                                                                    ? "SU2_BPC_DOWN_BASIC_CAPACITY_MATCHING"
+                                                                                    : "SU2_BPC_DOWN_CAPACITY_MATCHING"
+                                                                            )
+                                                                    )
+                                                            )
+                                                    )
+                                            )
+                                    )
+                            )
                             : (
                                 capacity_adjacent_matching
                                     ? "SU2_BPC_ADJACENT_CAPACITY_MATCHING"
@@ -1050,6 +1127,72 @@ int main(int argc, char** argv) {
                                     }
                                 }
                             }
+                            if (capacity_down_basic_matching) {
+                                const auto add_basic_shells =
+                                    [&](const std::vector<int>& loop) {
+                                        if (
+                                            loop.size() < 3U
+                                            || first_path.size() < 2U
+                                        ) {
+                                            return;
+                                        }
+                                        std::vector<int> upper_first(
+                                            first_path.begin(),
+                                            first_path.end() - 1
+                                        );
+                                        upper_first.insert(
+                                            upper_first.end(),
+                                            loop.begin() + 2,
+                                            loop.end() - 1
+                                        );
+                                        upper_first.push_back(level);
+                                        add_path_pair(
+                                            upper_first,
+                                            std::vector<int>{
+                                                level,
+                                                loop[1],
+                                                level
+                                            }
+                                        );
+
+                                        std::vector<int> reflected_loop;
+                                        reflected_loop.reserve(loop.size());
+                                        for (const int vertex : loop) {
+                                            reflected_loop.push_back(
+                                                level - vertex
+                                            );
+                                        }
+                                        std::vector<int> lower_first{
+                                            first_path[0],
+                                            first_path[1]
+                                        };
+                                        lower_first.insert(
+                                            lower_first.end(),
+                                            reflected_loop.begin() + 2,
+                                            reflected_loop.end() - 1
+                                        );
+                                        lower_first.insert(
+                                            lower_first.end(),
+                                            first_path.begin() + 2,
+                                            first_path.end()
+                                        );
+                                        add_path_pair(
+                                            lower_first,
+                                            std::vector<int>{
+                                                level,
+                                                level - reflected_loop[1],
+                                                level
+                                            }
+                                        );
+                                    };
+                                add_basic_shells(second_path);
+                                add_basic_shells(
+                                    std::vector<int>(
+                                        second_path.rbegin(),
+                                        second_path.rend()
+                                    )
+                                );
+                            }
                             if (!minimal_matching) {
                                 for (int first_begin = 0;
                                    first_begin < first_length;
@@ -1152,6 +1295,7 @@ int main(int argc, char** argv) {
                                 }
                                 }
 
+                            if (!capacity_down_segment_matching) {
                             int prefix_x = 0;
                             int prefix_y = 0;
                             for (int index = 0; index < length; ++index) {
@@ -1221,6 +1365,7 @@ int main(int argc, char** argv) {
                                     ++prefix_y;
                                 }
                             }
+                            if (!capacity_down_word_matching) {
                             std::vector<int> concatenated = first_path;
                             concatenated.insert(
                                 concatenated.end(),
@@ -1373,6 +1518,7 @@ int main(int argc, char** argv) {
                                     };
                             add_loop_extractions(concatenated);
                             add_loop_extractions(reverse_concatenated);
+                            if (!capacity_down_concat_matching) {
                             for (int rotation_start = 0;
                                  rotation_start < second_length;
                                  ++rotation_start) {
@@ -1416,7 +1562,10 @@ int main(int argc, char** argv) {
                                     );
                                     add_loop_extractions(full_path);
 
-                                    if (!local_matching) {
+                                    if (
+                                        !local_matching
+                                        && !capacity_down_rotation_matching
+                                    ) {
                                       if (oriented_loop.size() >= 3U
                                           && first_path.size() >= 2U) {
                                         std::vector<int> shell_first(
@@ -1449,6 +1598,39 @@ int main(int argc, char** argv) {
                                           lower_loop.push_back(
                                               level - vertex
                                           );
+                                      }
+                                      if (capacity_down_shell_matching) {
+                                          if (
+                                              lower_loop.size() >= 3U
+                                              && first_path.size() >= 2U
+                                          ) {
+                                              std::vector<int>
+                                                  lower_shell_first{
+                                                      first_path[0],
+                                                      first_path[1]
+                                                  };
+                                              lower_shell_first.insert(
+                                                  lower_shell_first.end(),
+                                                  lower_loop.begin() + 2,
+                                                  lower_loop.end() - 1
+                                              );
+                                              lower_shell_first.insert(
+                                                  lower_shell_first.end(),
+                                                  first_path.begin() + 2,
+                                                  first_path.end()
+                                              );
+                                              const std::vector<int>
+                                                  lower_shell_second{
+                                                      level,
+                                                      level - lower_loop[1],
+                                                      level
+                                                  };
+                                              add_path_pair(
+                                                  lower_shell_first,
+                                                  lower_shell_second
+                                              );
+                                          }
+                                          continue;
                                       }
                                       if (lower_loop.size() >= 3U
                                           && first_path.size() >= 2U) {
@@ -1775,6 +1957,9 @@ int main(int argc, char** argv) {
                                       }
                                     }
                                 }
+                            }
+                            }
+                            }
                             }
                             }
                             matching_edges.emplace_back(

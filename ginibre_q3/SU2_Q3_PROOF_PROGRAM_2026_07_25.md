@@ -903,11 +903,24 @@ before any further construction.
    all path summations and leaves only finitely many endpoint-order
    masks.  Lemma 5A8H28P now gives their parity-complete exact Z3
    census: 122, 237, 646, and 943 masks for `b=1,2,3,4`,
-   respectively, or 1,948 total.  The remaining free-width task is polynomial substitution
-   and sign certification on those masks; no further fusion-path case
-   discovery remains.
-   Arbitrary `t>=3` still requires the general global-payment mechanism
-   after that leaf is closed.
+   respectively, or 1,948 marginal masks.  The exact common refinements
+   needed by the actual same-parity packet combinations contain 1,014
+   odd `(b=1,3)` masks and 1,576 even `(b=2,4)` masks, or 2,590 total.
+   These are entry-level fans.  The remaining free-width task must also
+   partition and sum the variable crossing-coordinate interval `V`
+   with its weights `d_a(V)`; the earlier claim that the marginal masks
+   alone completed packet case discovery was too strong.
+   Arbitrary `t>=3` still requires the general global-payment mechanism.
+   Its current sharp form is Target 5A8H28R6: prove the full-prefix
+   current for reflected row-convex leaf graphs, or construct the
+   equivalent downward capacitated allocation.  Adjacent-only, core,
+   two-cut, concatenation, basic-shell, chordal-only, looped-leaf-only,
+   and outside-in-only strengthenings now all have exact
+   countercertificates.  Reflected row convexity remains viable:
+   exhaustive discovery passes 527 connected graphs through nine
+   vertices, and a deterministic scan passes 34,061 connected graphs
+   through 40 vertices and prefix 50.  This is bounded evidence, not
+   the unbounded global-payment proof.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail
