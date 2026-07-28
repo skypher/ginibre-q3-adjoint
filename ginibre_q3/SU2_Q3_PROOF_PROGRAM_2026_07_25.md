@@ -978,7 +978,13 @@ before any further construction.
    `(k,q,j,t,r)=(38,18,25,11,21)` has a negative outside-in
    core-length suffix.  Hence the surviving construction must retain
    the reduced core shape, or the equivalent reflected crossing/shell
-   state.
+   state.  Lemma 5A8H28X separately identifies the exact minimal-label
+   Jacobi leaf: for `q=2`, `Q_(j,t)` is an order-`K` divided difference
+   at the spectrum `1+2cos(r pi/(K+1))`.  Proposition 5A8H28Y rules
+   out both positivity of the `K`-th derivative on `[-1,3]` and a
+   fully two-endpoint LGV kernel.  Thus even this tractable leaf needs
+   a boundary-anchored planar switch or its exact divided-difference
+   equivalent; the stronger scalar/endpoint-free routes are closed.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail

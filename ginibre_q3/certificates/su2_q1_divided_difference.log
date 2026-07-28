@@ -1,0 +1,29 @@
+STATUS
+Bounded exact diagnostics for the minimal-label Jacobi reduction.
+Negative Bernstein and bivariate lines are controls against stronger
+sufficient assertions, not counterexamples to the boundary-anchored
+full-prefix current.
+
+COMMAND
+character_ring_iter/analyze_su2_q1_divided_difference 20 20
+
+OUTPUT
+FIRST_NEGATIVE_BERNSTEIN half_level=3 prefix=4 truncation=0 derivative_order=3 index=0 degree=7 value=-3628800
+FIRST_NEGATIVE_BIVARIATE half_level=3 prefix=5 truncation=4 first_target=0 second_target=3 value=-16500
+FIRST_HARD_NEGATIVE_BERNSTEIN half_level=3 prefix=5 truncation=4 derivative_order=3 index=0 degree=9 value=-1145771827200
+SU2_Q1_DIVIDED_DIFFERENCE maximum_half_level=20 maximum_prefix=20 rows=3672 bernstein_coordinates=72064 negative_bernstein_coordinates=36180 hard_negative_bernstein_coordinates=26796 negative_targets=0 bivariate_coordinates=448392 negative_bivariate_coordinates=198954 result=PASS_Q1_TARGET_DISCOVERY
+
+INTERPRETATION
+For q=2, the even fusion matrix is the looped Jacobi path M_K.
+Lemma 5A8H28X proves the exact determinant and divided-difference
+reductions independently of this cutoff.  The displayed audit finds no
+negative boundary-anchored target through K=20 and j=20, but this is not
+an unbounded proof.  The first hard Bernstein and two-endpoint negatives
+prove that neither global derivative positivity nor an endpoint-free
+LGV kernel can supply that proof.
+
+SOURCE_SHA256
+537771ab7e245651525959f0213242a6619fadfb654a266ce362c3cc4a98c002
+
+EXECUTABLE_SHA256
+95b30820edcf8cb2c1fd0354e60edb9c32d28e9125e344c41b0b23f885e60270

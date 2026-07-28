@@ -12053,6 +12053,128 @@ exact integer arithmetic.  The displayed row is its first negative
 core-length suffix.  This one exact instance disproves the universal
 suffix assertion.  QED.
 
+The minimal half-label has an additional Jacobi structure which is
+absent from the general scalar core calculation.
+
+**Lemma 5A8H28X (minimal-label Jacobi endpoint reduction).**  Put
+`q=2`, `k=2K`, and identify the even labels `0,2,...,2K` with
+`0,1,...,K`.  In these coordinates the fusion matrix is
+
+```text
+M_K=
+ [0 1                         ]
+ [1 1 1                       ]
+ [  1 1 1                     ]
+ [        ...                 ]
+ [                    1 1 1   ]
+ [                      1 0].  (P5A.102CE)
+```
+
+Thus the off-diagonal entries are one, the two boundary diagonal
+entries are zero, and every interior diagonal entry is one.  Define
+
+```text
+Delta_(K+1)(z)=det(I-zM_K)
+```
+
+and let `Theta_K(z)` be the determinant of the trailing principal
+minor on vertices `1,...,K`.  Then
+
+```text
+F(z)=Theta_K(z)/Delta_(K+1)(z),
+G(z)=z^K/Delta_(K+1)(z),
+E(z)=z^K/Theta_K(z),                              (P5A.102CF)
+```
+
+and
+
+```text
+Theta_1=1,
+Theta_2=1-z-z^2,
+Theta_r=(1-z)Theta_(r-1)-z^2Theta_(r-2)  (r>=3).  (P5A.102CG)
+```
+
+Consequently the full-prefix current has the exact scalar endpoint
+form
+
+```text
+Q_(j,t)=[z^(n-K)]P_(n,t)(z)/Delta_(K+1)(z).       (P5A.102CH)
+```
+
+Equivalently, put `m=2j+1` and
+
+```text
+R_(m,t)(x)
+ =sum_(s=0)^t binom(m,2s){
+    f_(2s)x^(m-2s+1)-f_(2s+1)x^(m-2s)}.
+```
+
+If
+
+```text
+lambda_r=1+2cos(r pi/(K+1)),       1<=r<=K+1,
+```
+
+then
+
+```text
+Q_(j,t)=R_(m,t)[lambda_1,...,lambda_(K+1)],       (P5A.102CI)
+```
+
+the order-`K` divided difference at the displayed Jacobi spectrum.
+
+**Proof.**  The fusion interval gives the two forced boundary edges
+and the three moves `i -> i-1,i,i+1` at every interior half-label,
+which is `(P5A.102CE)`.  Cramer's rule at the root gives the first
+identity in `(P5A.102CF)`.  The endpoint cofactor is the unique
+off-diagonal product `z^K`, giving the second; division gives the
+third.  Expanding the trailing determinant at its first row proves
+`(P5A.102CG)`, while Lemma 5A8H26 gives `(P5A.102CH)`.
+
+The ghost boundary conditions for an eigenvector are
+`v_(-1)=-v_0` and `v_(K+1)=-v_K`.  The interior recurrence therefore
+gives the displayed distinct eigenvalues.  For a Jacobi matrix, the
+corner entry of a polynomial is its divided difference at the
+spectrum times the product of the off-diagonal entries.  That product
+is one here.  Substitution of the definition of `R_(m,t)` gives
+`(P5A.102CI)`.  QED.
+
+Two tempting strengthenings of `(P5A.102CI)` are false.
+
+**Proposition 5A8H28Y (minimal-label Jacobi negative controls).**  At
+`(K,j,t)=(3,5,4)`, the degree-nine Bernstein endpoint of the third
+derivative on `[-1,3]` is
+
+```text
+9! R_(11,4)'''(-1)=-1145771827200.                (P5A.102CJ)
+```
+
+Thus positivity of the `K`-th derivative on the spectral interval
+cannot prove the divided difference.  The still stronger two-endpoint
+kernel
+
+```text
+sum_(s=0)^t binom(m,2s){
+ (M_K^(m-2s+1))_(0,a)(M_K^(2s))_(0,b)
+ -(M_K^(m-2s))_(0,a)(M_K^(2s+1))_(0,b)}
+```
+
+equals `-16500` in the same row at `(a,b)=(0,3)`.  Hence an LGV proof
+cannot assert positivity for arbitrary two endpoints; it must retain
+the distinguished return boundary `b=0`.
+
+**Proof.**  Both values follow by direct integer differentiation and
+matrix recurrence.  Either one exact negative value disproves its
+respective universal strengthening.  QED.
+
+The strict C++ analyzer
+`character_ring_iter/analyze_su2_q1_divided_difference.cpp`
+reconstructs the Jacobi powers and both negative controls.  Through
+`K=20` and `j=20`, it checked `3,672` full-prefix rows with no negative
+target.  This remains bounded evidence for the boundary-anchored
+minimal-label current, not a proof of it.  Its transcript is
+`certificates/su2_q1_divided_difference.log`.
+
 The strict C++ analyzer
 `character_ring_iter/analyze_su2_reduced_current_payment.cpp`
 independently divides the endpoint series by the displayed reserve.

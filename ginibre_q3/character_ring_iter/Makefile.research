@@ -276,6 +276,10 @@ analyze_su2_reduced_current_payment: analyze_su2_reduced_current_payment.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+analyze_su2_q1_divided_difference: analyze_su2_q1_divided_difference.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 analyze_su2_central_crossing_current: analyze_su2_central_crossing_current.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
