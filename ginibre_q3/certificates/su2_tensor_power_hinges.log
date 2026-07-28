@@ -1,0 +1,26 @@
+STATUS
+Exact bounded recurrence audit of the unbounded tensor-power hinge
+identity in Lemma 5A8H28N.
+
+COMMAND
+character_ring_iter/verify_su2_tensor_power_hinges 500
+
+OUTPUT
+SU2_TENSOR_POWER_HINGES maximum_label=500 coordinates=565000 active_truncation_terms=187750 maximum_multiplicity=167334 result=PASS_EXACT_HINGE_FORMULA
+
+INTERPRETATION
+The verifier constructs the complete classical Clebsch--Gordan
+decomposition of V_d^(tensor b), 2<=b<=4, by recurrence and compares
+every multiplicity with the alternating truncated-binomial formula
+(P5A.102BP).  The displayed bound is an independent audit; the
+generating-function derivation in Lemma 5A8H28N proves the identity
+unboundedly.
+
+SOURCE_SHA256
+fcaab460101a429052c4f1ab598f07128477cfef6db69b800a955aad409503d7
+
+EXECUTABLE_SHA256
+cb04fb97c6241170f0b0c2ec04b8f092333abbafe3832a091d2edbd8e6a2be4e
+
+RAW_TRANSCRIPT_SHA256
+74764466a693bca2ca4ec90ba36d98b3fdc3a9c63a43d323d5241fded484e93c

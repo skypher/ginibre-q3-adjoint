@@ -882,6 +882,20 @@ before any further construction.
    odd packets.  The exact remaining `t=2` band is now
    `Q>=7`, `2Q+11<=K<10Q`.  The active route is to free `d` in the
    normalized chamber coefficients, not to continue ray-by-ray.
+   The first free-width audit now identifies the required fan: after
+   residue and parity separation, the even-packet chart has a genuine
+   activation hinge `P=3Q`.  Exact boundary values stabilize at
+   `P=3` for `Q=1` and `P=6` for `Q=2`.  Coarse rectangular Newton
+   cones have exact negative coefficients although every packet value
+   remains positive.  Target 5A8H28R5 is therefore to enumerate the
+   affine masks of the fixed classical tensor powers `N_d^b`, `b<=4`,
+   and certify the resulting degree-at-most-ten chambers.  Lemma
+   5A8H28N supplies the symbolic input:
+   the multiplicity of `V_(bd-2r)` in `V_d^(tensor b)` is
+   `sum_j(-1)^j binom(b,j)binom(r-j(d+1)+b-2,b-2)`.
+   Thus the classical fan has only the explicit walls
+   `r=j(d+1)`; adjoining the ordinary and nearest reflected
+   Clebsch--Gordan endpoints gives a finite mask enumeration.
    Arbitrary `t>=3` still requires the general global-payment mechanism
    after that leaf is closed.
 

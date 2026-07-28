@@ -11242,6 +11242,142 @@ single variable-width proof: it remains to prove their Newton
 coefficients nonnegative with `d` free, rather than certifying further
 fixed values of `d`.
 
+The first free-`d` interpolation determines the missing chamber
+geometry.
+
+**Target 5A8H28R5 (variable-width activation chambers).**  Prove the
+normalized packet inequalities in `(P5A.102BM)` with `d` free by
+splitting the classical `N_d^b`, `b<=4`, tensor-power activation
+hinges.  A single residue cone is false even after separating the
+parity of `d`.
+
+More precisely, for the even-packet cone put
+
+```text
+alpha=a+2d,        beta=2d-a,        alpha+beta=4d.
+```
+
+In the residue-zero chart write
+
+```text
+alpha=4p,          beta=4q.
+```
+
+After the necessary parity split, set
+
+```text
+P=(p-2)/2,         Q=q/2
+```
+
+in the even-even chart.  The first normalized boundary sequences show
+the exact hinge
+
+```text
+P=3Q.                                               (P5A.102BO)
+```
+
+For `Q=1`, the stable polynomial begins at `P=3`.  For `Q=2`, the
+exact values as `P=3,4,...` are
+
+```text
+29,957,680; 19,808,998; 6,853,884; 2,839,170;
+3,149,250; 3,459,330; 3,769,410.
+```
+
+The affine regime begins exactly at `P=6=3Q`.  Thus peeling a fixed
+number of rectangular boundary layers cannot prove the free-width
+statement.  The earlier coarse attempts fail with exact Newton
+coefficients `-183,966` before parity separation and `-9,752,874`
+before resolving `(P5A.102BO)`.  All packet values remain positive;
+these are countercertificates only to the coarse polynomial cones, not
+to `(LBK2)`.
+
+The active uniform route is now finite and structural: write the
+fixed powers `N_d^b`, `b<=4`, in truncated classical
+Clebsch--Gordan form, enumerate the resulting affine hinge masks
+(including `(P5A.102BO)` and its reflected companions), and certify
+the degree-at-most-ten packet polynomials on those masks.  This replaces
+the false one-cone interpolation by the actual tensor-power chamber
+fan.
+
+The required truncated form is explicit.
+
+**Lemma 5A8H28N (fixed tensor-power hinge formula).**  Let
+`m_(b,d)(r)` be the multiplicity of
+
+```text
+V_(bd-2r)
+```
+
+in the classical tensor power `V_d^(tensor b)`, with
+`2<=b<=4` and `0<=r<=floor(bd/2)`.  With the convention that a binomial coefficient
+vanishes when its upper argument is below its lower argument,
+
+```text
+m_(b,d)(r)
+ =sum_(j=0)^b (-1)^j binom(b,j)
+    binom(r-j(d+1)+b-2,b-2).                       (P5A.102BP)
+```
+
+The cases `b=0,1` are the trivial one-summand decompositions.
+Consequently, for every fixed `b<=4`, the classical decomposition is
+polynomial on the finite fan cut out by
+
+```text
+r-j(d+1)>=0,                 1<=j<=b.              (P5A.102BQ)
+```
+
+Every coefficient of `(N_d^b)_(s,t)` is obtained by combining
+`(P5A.102BP)` with the single Clebsch--Gordan interval for
+`V_s tensor V_(bd-2r)`.  Passing to `SU(2)_ell` adds only the two
+standard affine Weyl sums.  Because `b<=4`, the classical support is
+bounded by `s+bd<=5ell`; only a bounded number of their translated
+intervals can meet the level alcove.  Hence the variable-width packet
+recurrence with `b<=4` has a finite affine activation fan, uniformly
+in `d,ell,s,t`.
+
+**Proof.**  The weight multiplicity of weight `bd-2r` in
+`V_d^(tensor b)` is
+
+```text
+w_(b,d)(r)=[x^r](1+x+...+x^d)^b.
+```
+
+Highest-weight subtraction gives
+
+```text
+m_(b,d)(r)=w_(b,d)(r)-w_(b,d)(r-1).
+```
+
+Now
+
+```text
+(1+x+...+x^d)^b=(1-x^(d+1))^b(1-x)^(-b).
+```
+
+Expand the first factor and use Pascal's identity on the difference of
+the two coefficients.  This gives `(P5A.102BP)`.  Its only changing
+summation terms are the truncations `(P5A.102BQ)`.  The classical
+Clebsch--Gordan rule is one parity interval, and the level-`ell`
+Kac--Walton formula is its affine antisymmetrization.  The preceding
+uniform support bound leaves only finitely many affine images, and
+therefore only finitely many additional affine linear walls.  QED.
+
+Lemma 5A8H28N turns Target 5A8H28R5 into a finite symbolic task:
+enumerate the feasible sign masks of `(P5A.102BQ)` together with the
+ordinary and reflected Clebsch--Gordan endpoints, substitute
+`(P5A.102BP)` into the packet formula, and certify each resulting
+polynomial on its rational polyhedral chamber.
+
+The strict C++ verifier
+`character_ring_iter/verify_su2_tensor_power_hinges.cpp` independently
+builds the classical tensor powers by Clebsch--Gordan recurrence and
+compares every multiplicity with `(P5A.102BP)`.  Through `d=500` it
+checked `565,000` exact coordinates, including `187,750` coordinates
+with a nontrivial active truncation term.  Its transcript is
+`certificates/su2_tensor_power_hinges.log`.  This bounded computation
+audits the formula; the generating-function proof above is unbounded.
+
 Thus the following is a sufficient strengthening of the missing
 global-payment lemma:
 
