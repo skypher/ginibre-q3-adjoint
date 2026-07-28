@@ -1,0 +1,36 @@
+STATUS
+Bounded exact diagnostics for the reduced first-passage reserve.
+PASS residual lines audit Lemmas 5A8H28T and 5A8H28U; the path
+bijections, not the cutoff, are the unbounded proofs.  Negative current
+lines are controls against scalar sufficient strengthenings and are not
+counterexamples to FBPC.
+
+COMMAND
+character_ring_iter/analyze_su2_reduced_current_payment 60 25
+
+OUTPUT
+FIRST_NEGATIVE_DOUBLED_ABEL level=6 label=2 prefix=5 truncation=4 exponent=2 degree=7 value=-1952
+FIRST_NEGATIVE_FIBONACCI_CURRENT level=6 label=2 prefix=5 truncation=4 exponent=2 degree=7 value=-519
+FIRST_NEGATIVE_SAFE_FIBONACCI_CURRENT level=6 label=2 prefix=6 truncation=4 exponent=2 degree=7 value=-3392
+FIRST_NEGATIVE_QGE2_FIBONACCI_CURRENT level=10 label=4 prefix=5 truncation=4 exponent=2 degree=5 value=-1516
+SU2_REDUCED_CURRENT_PAYMENT maximum_level=60 maximum_prefix=25 parameters=210 rows=48510 identities=48510 negative_targets=0 unresolved_rows=0 reduced_lag_two_coefficients=11130 reduced_lag_two_negatives=0 reduced_second_lag_two_negatives=0 reduced_second_lag_two_nonminimal_negatives=0 milestone_lag_two_coefficients=11130 milestone_lag_two_negatives=0 doubled_abel_coefficients=1924230 doubled_abel_negatives=870042 doubled_abel_nonminimal_negatives=864999 fibonacci_residual_coefficients=11130 fibonacci_residual_negatives=0 fibonacci_current_coefficients=1924230 fibonacci_current_negatives=860821 safe_fibonacci_residual_coefficients=11130 safe_fibonacci_residual_negatives=0 safe_fibonacci_current_coefficients=1924230 safe_fibonacci_current_negatives=862822 qge2_fibonacci_current_negatives=821826 maximum_required_head=44 witness=(10,4,25,4,44) maximum_safe_required_head=44 safe_witness=(10,4,25,4,44) maximum_qge2_safe_required_head=44 qge2_safe_witness=(10,4,25,4,44) result=PASS_REDUCED_PAYMENT_DISCOVERY
+
+INTERPRETATION
+For every Q>=1, Lemma 5A8H28U gives the unbounded factorization
+
+  E(z)=E_F(z)/(1-z-z^2)^L,
+  L=floor((K-1)/Q),
+  E_F>=0 coefficientwise.
+
+The safe-Fibonacci residual has no negative coefficient in the displayed
+audit.  The first Q>=2 transformed-current negative is -1516, so
+coefficientwise positivity after division by the scalar reserve is false;
+the residual factor E_F remains necessary.  Proposition 5A8H28V proves
+that its degree-five obstruction persists for every prefix j>=5 and
+forces scalar-safe head depth at least 2j-6.
+
+SOURCE_SHA256
+685aa83ece5b569992b594cc834d94d4a6f9a8c7af0f8780a0063e27ca54930c
+
+EXECUTABLE_SHA256
+88e51ccf0fc44b8fb527b7805d108a106a1a541c71a09bb876af83fe57b7b41d

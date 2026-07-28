@@ -960,6 +960,20 @@ before any further construction.
    `L=49`.  It still does not close the current: at the nearest wall
    `L=2`, the known second-Abel coefficient is `-252`, so the reduced
    factor `E_0` must remain in the payment.
+   Lemma 5A8H28U strengthens this for every `Q>=1`.  For `Q>=2`, at
+   each of the same `L` marked occurrences a loop and a safe two-edge
+   downward backtrack form a free token word.  For `Q=1`, the `L`
+   ordered last crossings carry a loop and an upward returning
+   backtrack.  The resulting unbounded factorization is
+   `E=E_F/(1-z-z^2)^L`, with `E_F>=0` coefficientwise.  The exact
+   level-60 audit checks 11,130 residual coefficients with no
+   negative value.  This reserve still does not close the current.
+   Proposition 5A8H28V proves the obstruction is unbounded: at
+   `(k,q)=(10,4)`, the degree-five scalar transform is
+   `79+7binom(2j+1,2)-6binom(2j+1,4)<0` for every `j>=5`.  Therefore
+   any finite-head/scalar-safe-tail payment needs depth at least
+   `2j-6`.  The next hard step is a genuinely global allocation using
+   the residual `E_F`.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail

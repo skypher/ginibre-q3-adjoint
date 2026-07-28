@@ -139,8 +139,13 @@ int main(int argc, char** argv) {
         std::uint64_t safe_fibonacci_residual_negatives = 0U;
         std::uint64_t safe_fibonacci_current_coefficients = 0U;
         std::uint64_t safe_fibonacci_current_negatives = 0U;
+        std::uint64_t qge2_fibonacci_current_negatives = 0U;
         int maximum_required_head = -1;
         Witness maximum_witness;
+        int maximum_safe_required_head = -1;
+        Witness maximum_safe_witness;
+        int maximum_qge2_safe_required_head = -1;
+        Witness maximum_qge2_safe_witness;
 
         for (int level = 6; level <= maximum_level; level += 2) {
             for (int label = 2; 2 * label < level; label += 2) {
@@ -188,8 +193,7 @@ int main(int argc, char** argv) {
                 const int half_label = label / 2;
                 const int exponent =
                     (half_level - 1) / half_label;
-                const int safe_fibonacci_exponent =
-                    half_label >= 2 ? exponent : exponent - 1;
+                const int safe_fibonacci_exponent = exponent;
                 const int minimum_first_passage_degree = exponent + 1;
                 std::vector<Integer> reduced(
                     static_cast<std::size_t>(maximum_degree + 1)
@@ -529,6 +533,29 @@ int main(int argc, char** argv) {
                                     static_cast<std::size_t>(degree)
                                 ] < 0) {
                                 ++safe_fibonacci_current_negatives;
+                                if (half_label >= 2) {
+                                    ++qge2_fibonacci_current_negatives;
+                                    if (qge2_fibonacci_current_negatives
+                                        == 1U) {
+                                        std::cout
+                                            << "FIRST_NEGATIVE_QGE2_FIBONACCI_CURRENT"
+                                            << " level=" << level
+                                            << " label=" << label
+                                            << " prefix=" << prefix
+                                            << " truncation="
+                                                << truncation
+                                            << " exponent="
+                                                << safe_fibonacci_exponent
+                                            << " degree=" << degree
+                                            << " value="
+                                                << safe_fibonacci_current[
+                                                    static_cast<
+                                                        std::size_t
+                                                    >(degree)
+                                                ]
+                                            << '\n';
+                                    }
+                                }
                                 if (safe_fibonacci_current_negatives
                                     == 1U) {
                                     std::cout
@@ -689,6 +716,63 @@ int main(int argc, char** argv) {
                                 required_head
                             };
                         }
+                        int safe_required_head =
+                            available < 0 ? 0 : -1;
+                        Integer safe_head_sum = 0;
+                        for (int head = 0;
+                             head <= available;
+                             ++head) {
+                            const int residual_degree =
+                                minimum_first_passage_degree + head;
+                            safe_head_sum += safe_fibonacci_residual[
+                                static_cast<std::size_t>(residual_degree)
+                            ] * safe_fibonacci_current[
+                                static_cast<std::size_t>(
+                                    n - residual_degree
+                                )];
+                            bool safe_tail = true;
+                            const int maximum_tail_degree =
+                                available - head - 1;
+                            for (int degree = 0;
+                                 degree <= maximum_tail_degree;
+                                 ++degree) {
+                                if (safe_fibonacci_current[
+                                        static_cast<std::size_t>(degree)
+                                    ] < 0) {
+                                    safe_tail = false;
+                                    break;
+                                }
+                            }
+                            if (safe_head_sum >= 0 && safe_tail) {
+                                safe_required_head = head;
+                                break;
+                            }
+                        }
+                        if (safe_required_head
+                            > maximum_safe_required_head) {
+                            maximum_safe_required_head =
+                                safe_required_head;
+                            maximum_safe_witness = {
+                                level,
+                                label,
+                                prefix,
+                                truncation,
+                                safe_required_head
+                            };
+                        }
+                        if (half_label >= 2
+                            && safe_required_head
+                                > maximum_qge2_safe_required_head) {
+                            maximum_qge2_safe_required_head =
+                                safe_required_head;
+                            maximum_qge2_safe_witness = {
+                                level,
+                                label,
+                                prefix,
+                                truncation,
+                                safe_required_head
+                            };
+                        }
                         if (level == dump_level
                             && label == dump_label
                             && prefix == dump_prefix
@@ -718,9 +802,19 @@ int main(int argc, char** argv) {
                                             static_cast<std::size_t>(
                                                 reduced_degree
                                             )]
+                                    << " safe_residual="
+                                        << safe_fibonacci_residual[
+                                            static_cast<std::size_t>(
+                                                reduced_degree
+                                            )]
                                     << " abel_degree=" << abel_degree
                                     << " abel="
                                         << abel[
+                                            static_cast<std::size_t>(
+                                                abel_degree
+                                            )]
+                                    << " safe_current="
+                                        << safe_fibonacci_current[
                                             static_cast<std::size_t>(
                                                 abel_degree
                                             )]
@@ -775,6 +869,8 @@ int main(int argc, char** argv) {
                 << safe_fibonacci_current_coefficients
             << " safe_fibonacci_current_negatives="
                 << safe_fibonacci_current_negatives
+            << " qge2_fibonacci_current_negatives="
+                << qge2_fibonacci_current_negatives
             << " maximum_required_head=" << maximum_required_head
             << " witness=("
             << maximum_witness.level << ','
@@ -782,6 +878,22 @@ int main(int argc, char** argv) {
             << maximum_witness.prefix << ','
             << maximum_witness.truncation << ','
             << maximum_witness.head << ')'
+            << " maximum_safe_required_head="
+                << maximum_safe_required_head
+            << " safe_witness=("
+            << maximum_safe_witness.level << ','
+            << maximum_safe_witness.label << ','
+            << maximum_safe_witness.prefix << ','
+            << maximum_safe_witness.truncation << ','
+            << maximum_safe_witness.head << ')'
+            << " maximum_qge2_safe_required_head="
+                << maximum_qge2_safe_required_head
+            << " qge2_safe_witness=("
+            << maximum_qge2_safe_witness.level << ','
+            << maximum_qge2_safe_witness.label << ','
+            << maximum_qge2_safe_witness.prefix << ','
+            << maximum_qge2_safe_witness.truncation << ','
+            << maximum_qge2_safe_witness.head << ')'
             << " result="
             << (
                 negative_targets == 0U

@@ -11866,6 +11866,167 @@ nonnegative; the largest exponent was `L=49`.  This audits the
 formula, while the marked-run bijection proves it for all parameters.
 The transcript is `certificates/su2_return_current_abel.log`.
 
+The marked slots carry a larger free-monoid reserve.  This uses the
+same endpoint-distance exponent `L`, but packages the loop and a safe
+backtrack together.
+
+**Lemma 5A8H28U (Fibonacci reserve).**  Retain
+
+```text
+L=floor((K-1)/Q).
+```
+
+There is a series `E_F(z)` with nonnegative integer coefficients such
+that
+
+```text
+E(z)=E_F(z)/(1-z-z^2)^L.                          (P5A.102CB)
+```
+
+**Proof.**  First suppose `Q>=2`.  Use the `L` marked occurrences from
+Lemma 5A8H28T, but at each one record words in two tokens.  At the
+forced initial vertex `Q`, the tokens are
+
+```text
+Q -> Q,                    Q -> Q-1 -> Q.
+```
+
+The second token does not visit zero because `Q>=2`; both of its edges
+are fusion edges.  At an internal first-hit milestone `X_i`, use
+
+```text
+X_i -> X_i,                X_i -> X_i-1 -> X_i.
+```
+
+Here `X_i-1` is adjacent to `X_i`, since `X_i>=Q+1` and
+
+```text
+2X_i-1+Q<=2(K-Q-1)-1+Q<2K.
+```
+
+Moreover `X_i< c_(i+1)`, so inserting either token cannot change a
+later first-hit milestone.  It also cannot change any earlier first
+hit.  At the forced terminal predecessor `K-Q`, use the same loop and
+downward backtrack, parsed immediately before the final edge to `K`.
+Its lower vertex `K-Q-1` is positive and the two edges are active.
+
+At the initial and internal marked arrivals, remove the maximal
+consecutive word in the two displayed tokens.  At the terminal
+predecessor, remove the maximal such word backwards from the final
+edge.  Tokenization is unique: a loop has length one, while the
+backtrack begins with the distinct lower neighbor and returns in its
+second step.  The marked bands are disjoint, and every backtrack stays
+below the next band, so the `L` removals are independent.  Conversely,
+arbitrary token words inserted at the `L` slots reconstruct a unique
+no-return endpoint walk.
+
+It remains to handle `Q=1`.  The half-label fusion graph is then
+nearest-neighbor: every `1<=i<K` has the loop `i -> i` and the edge
+`i -> i+1`.  For each `i=1,...,K-1`, mark the last crossing
+
+```text
+i -> i+1
+```
+
+of that edge.  These `K-1=L` crossings occur in increasing time
+order.  Immediately before the marked crossing, use the two tokens
+
+```text
+i -> i,                    i -> i+1 -> i.
+```
+
+Every backtrack returns before the marked last crossing, so arbitrary
+token insertions preserve that crossing and the order of all later
+ones.  The token blocks for distinct `i` are disjoint.  Removing the
+maximal token word immediately before each marked crossing, backwards
+from the crossing, is therefore unique and reversible.  This supplies
+the same `L` independent slots when `Q=1`.
+
+One slot therefore has ordinary length series
+
+```text
+1+z+2z^2+3z^3+...=1/(1-z-z^2),
+```
+
+where the coefficient counts compositions into token lengths one and
+two.  Multiplying the `L` independent slot series proves
+`(P5A.102CB)`.  QED.
+
+The new reserve strictly strengthens the scalar loop information, but
+does not by itself close the current.  With
+`H_(n,t)=P_(n,t)F`, coefficientwise nonnegativity of
+
+```text
+H_(n,t)(z)/(1-z-z^2)^L
+```
+
+would be sufficient.  The failure persists for arbitrarily large
+prefixes.
+
+**Proposition 5A8H28V (unbounded residual depth).**  At
+`(k,q)=(10,4)`, for every `j>=5` and `t>=2`,
+
+```text
+[z^5] H_(n,t)(z)/(1-z-z^2)^2
+ =79+7 binom(2j+1,2)-6 binom(2j+1,4)<0.           (P5A.102CC)
+```
+
+Consequently no proof which takes a fixed initial segment of `E_F`
+and requires the remaining scalar transform to be coefficientwise
+nonnegative can establish the current.  At prefix `j`, such a segment
+must reach at least `2j-6` degrees beyond the minimum first-passage
+degree.
+
+**Proof.**  In this fusion graph,
+
+```text
+f_0,...,f_5=1,0,1,1,5,16.
+```
+
+Put `m=2j+1`.  Terms with slice above two have degree at least six, so
+for every `t>=2` the first six coefficients of `H_(n,t)` are
+
+```text
+1, 0, 1+binom(m,2), 1-binom(m,2),
+5+binom(m,2)+5binom(m,4), 16-16binom(m,4).
+```
+
+The first six coefficients of `(1-z-z^2)^(-2)` are
+`1,2,5,10,20,38`.  Their convolution in degree five is exactly the
+polynomial in `(P5A.102CC)`.  At `m=11` it equals `-1516`.  Increasing
+`m` by two changes it by
+
+```text
+7(2m+1)-6{binom(m+1,3)+binom(m,3)}<0
+```
+
+for `m>=11`, proving the strict sign for every `j>=5`.
+
+The minimum endpoint degree is `ceil(K/Q)=3`.  In the convolution
+`E_F H/(1-z-z^2)^2`, the fixed negative degree five meets the
+coefficient of `E_F` in degree `n-5`.  A scalar-safe tail must
+therefore start only after head index
+
+```text
+(n-5)-3=2j-6,
+```
+
+which is unbounded.  QED.
+
+Thus the residual positive factor `E_F`, rather than only its
+Fibonacci reserve, still participates through a genuinely global
+payment.
+
+The strict C++ analyzer
+`character_ring_iter/analyze_su2_reduced_current_payment.cpp`
+independently divides the endpoint series by the displayed reserve.
+Through level `60` and degree `52`, all `11,130` tested safe residual
+coefficients were nonnegative.  It also reproduces `(P5A.102CC)` and
+the earlier Abel negative controls.  This is a bounded audit of the
+series identity and its failed scalar strengthening; the token-word
+bijection proves `(P5A.102CB)` for all `Q>=1`.  The transcript is
+`certificates/su2_reduced_current_payment.log`.
+
 Lemma 5A8H28T does not by itself prove the current.  At the nearest
 level-six wall one has only `L=2`, and the already recorded coefficient
 `[z^7]H_(10,3)/(1-z)^2=-252` is negative.  Thus the reduced positive
