@@ -98,6 +98,16 @@ int main(int argc, char** argv) {
         std::uint64_t odd_boundary_current_coefficients = 0;
         std::uint64_t negative_odd_boundary_current_coefficients = 0;
         std::uint64_t negative_higher_q_odd_boundary_coefficients = 0;
+        std::uint64_t t4_kernel_coordinates = 0;
+        std::uint64_t negative_t4_kernel_coordinates = 0;
+        std::uint64_t negative_higher_q_t4_kernel_coordinates = 0;
+        std::uint64_t full_t4_kernel_coordinates = 0;
+        std::uint64_t negative_full_t4_kernel_coordinates = 0;
+        std::uint64_t t4_induction_coordinates = 0;
+        std::uint64_t negative_t4_induction_coordinates = 0;
+        std::uint64_t t4_base_difference_coordinates = 0;
+        std::uint64_t negative_t4_base_difference_coordinates = 0;
+        std::uint64_t nonzero_t4_ninth_difference_coordinates = 0;
         int last_negative_left_ray_K = -1;
         int last_negative_left_ray_Q = -1;
         int last_negative_left_ray_distance = -1;
@@ -413,6 +423,8 @@ int main(int argc, char** argv) {
                     ++outside_in_core_identities;
                 }
 
+                Series previous_full_t4_kernel;
+                std::vector<Series> full_t4_kernels;
                 for (int j = 5; j <= maximum_prefix; ++j) {
                     const int n = 2 * j + 2;
                     Series p(static_cast<std::size_t>(maximum_degree + 1));
@@ -425,6 +437,219 @@ int main(int argc, char** argv) {
                             * f[static_cast<std::size_t>(2 * t + 1)];
                         if (t < 4) {
                             continue;
+                        }
+                        if (t == 4) {
+                            std::vector<Series> endpoint_powers(
+                                10,
+                                Series(static_cast<std::size_t>(K + 1))
+                            );
+                            endpoint_powers[0][
+                                static_cast<std::size_t>(K)
+                            ] = 1;
+                            for (int power = 1; power <= 9; ++power) {
+                                for (int x = 0; x <= K; ++x) {
+                                    for (const int y :
+                                         graph[
+                                             static_cast<std::size_t>(x)
+                                         ]) {
+                                        endpoint_powers[
+                                            static_cast<std::size_t>(power)
+                                        ][static_cast<std::size_t>(y)] +=
+                                            endpoint_powers[
+                                                static_cast<std::size_t>(
+                                                    power - 1
+                                                )
+                                            ][static_cast<std::size_t>(x)];
+                                    }
+                                }
+                            }
+                            Series t4_kernel(
+                                static_cast<std::size_t>(K + 1)
+                            );
+                            for (int x = 0; x <= K; ++x) {
+                                const std::size_t index =
+                                    static_cast<std::size_t>(x);
+                                t4_kernel[index] =
+                                    endpoint_powers[9][index]
+                                    + binomial(n - 1, 2)
+                                        * (
+                                            f[2] * endpoint_powers[7][index]
+                                            - f[3]
+                                                * endpoint_powers[6][index]
+                                        )
+                                    + binomial(n - 1, 4)
+                                        * (
+                                            f[4] * endpoint_powers[5][index]
+                                            - f[5]
+                                                * endpoint_powers[4][index]
+                                        )
+                                    + binomial(n - 1, 6)
+                                        * (
+                                            f[6] * endpoint_powers[3][index]
+                                            - f[7]
+                                                * endpoint_powers[2][index]
+                                        )
+                                    + binomial(n - 1, 8)
+                                        * (
+                                            f[8] * endpoint_powers[1][index]
+                                            - f[9]
+                                                * endpoint_powers[0][index]
+                                        );
+                            }
+                            for (int step = 0; step < 3; ++step) {
+                                Series next(
+                                    static_cast<std::size_t>(K + 1)
+                                );
+                                for (int x = 0; x <= K; ++x) {
+                                    for (const int y :
+                                         graph[
+                                             static_cast<std::size_t>(x)
+                                         ]) {
+                                        next[static_cast<std::size_t>(y)] +=
+                                            t4_kernel[
+                                                static_cast<std::size_t>(x)
+                                            ];
+                                    }
+                                }
+                                t4_kernel = std::move(next);
+                            }
+                            for (int x = 0; x <= K; ++x) {
+                                ++t4_kernel_coordinates;
+                                if (
+                                    t4_kernel[static_cast<std::size_t>(x)]
+                                    < 0
+                                ) {
+                                    ++negative_t4_kernel_coordinates;
+                                    if (
+                                        negative_t4_kernel_coordinates == 1
+                                    ) {
+                                        std::cout
+                                            << "FIRST_NEGATIVE_T4_KERNEL"
+                                            << " K=" << K
+                                            << " Q=" << Q
+                                            << " j=" << j
+                                            << " x=" << x
+                                            << " value=" << t4_kernel[
+                                                static_cast<std::size_t>(x)
+                                            ]
+                                            << '\n';
+                                    }
+                                    if (Q >= 2) {
+                                        ++negative_higher_q_t4_kernel_coordinates;
+                                        if (
+                                            negative_higher_q_t4_kernel_coordinates
+                                            == 1
+                                        ) {
+                                            std::cout
+                                                << "FIRST_NEGATIVE_HIGHER_Q_T4_KERNEL"
+                                                << " K=" << K
+                                                << " Q=" << Q
+                                                << " j=" << j
+                                                << " x=" << x
+                                                << " value=" << t4_kernel[
+                                                    static_cast<std::size_t>(
+                                                        x
+                                                    )
+                                                ]
+                                                << '\n';
+                                        }
+                                    }
+                                }
+                            }
+                            Series full_t4_kernel = t4_kernel;
+                            for (int step = 3;
+                                 step < n - 9;
+                                 ++step) {
+                                Series next(
+                                    static_cast<std::size_t>(K + 1)
+                                );
+                                for (int x = 0; x <= K; ++x) {
+                                    for (const int y :
+                                         graph[
+                                             static_cast<std::size_t>(x)
+                                         ]) {
+                                        next[static_cast<std::size_t>(y)] +=
+                                            full_t4_kernel[
+                                                static_cast<std::size_t>(x)
+                                            ];
+                                    }
+                                }
+                                full_t4_kernel = std::move(next);
+                            }
+                            for (int x = 0; x <= K; ++x) {
+                                ++full_t4_kernel_coordinates;
+                                if (
+                                    full_t4_kernel[
+                                        static_cast<std::size_t>(x)
+                                    ] < 0
+                                ) {
+                                    ++negative_full_t4_kernel_coordinates;
+                                    if (
+                                        negative_full_t4_kernel_coordinates
+                                        == 1
+                                    ) {
+                                        std::cout
+                                            << "FIRST_NEGATIVE_FULL_T4_KERNEL"
+                                            << " K=" << K
+                                            << " Q=" << Q
+                                            << " j=" << j
+                                            << " x=" << x
+                                            << " value=" << full_t4_kernel[
+                                                static_cast<std::size_t>(x)
+                                            ]
+                                            << '\n';
+                                    }
+                                }
+                            }
+                            if (!previous_full_t4_kernel.empty()) {
+                                Series advanced =
+                                    previous_full_t4_kernel;
+                                for (int step = 0; step < 2; ++step) {
+                                    Series next(
+                                        static_cast<std::size_t>(K + 1)
+                                    );
+                                    for (int x = 0; x <= K; ++x) {
+                                        for (const int y :
+                                             graph[
+                                                 static_cast<std::size_t>(x)
+                                             ]) {
+                                            next[
+                                                static_cast<std::size_t>(y)
+                                            ] += advanced[
+                                                static_cast<std::size_t>(x)
+                                            ];
+                                        }
+                                    }
+                                    advanced = std::move(next);
+                                }
+                                for (int x = 0; x <= K; ++x) {
+                                    ++t4_induction_coordinates;
+                                    const Integer increment =
+                                        full_t4_kernel[
+                                            static_cast<std::size_t>(x)
+                                        ] - advanced[
+                                            static_cast<std::size_t>(x)
+                                        ];
+                                    if (increment < 0) {
+                                        ++negative_t4_induction_coordinates;
+                                        if (
+                                            negative_t4_induction_coordinates
+                                            == 1
+                                        ) {
+                                            std::cout
+                                                << "FIRST_NEGATIVE_T4_INDUCTION"
+                                                << " K=" << K
+                                                << " Q=" << Q
+                                                << " j=" << j
+                                                << " x=" << x
+                                                << " value=" << increment
+                                                << '\n';
+                                        }
+                                    }
+                                }
+                            }
+                            previous_full_t4_kernel = full_t4_kernel;
+                            full_t4_kernels.push_back(full_t4_kernel);
                         }
                         ++rows;
                         const Series renewal_current =
@@ -1108,6 +1333,112 @@ int main(int argc, char** argv) {
                         }
                     }
                 }
+                std::vector<Series> t4_differences = full_t4_kernels;
+                for (int order = 0;
+                     order <= 8 && !t4_differences.empty();
+                     ++order) {
+                    for (int x = 0; x <= K; ++x) {
+                        ++t4_base_difference_coordinates;
+                        const Integer& value = t4_differences[0][
+                            static_cast<std::size_t>(x)
+                        ];
+                        if (value < 0) {
+                            ++negative_t4_base_difference_coordinates;
+                            if (
+                                negative_t4_base_difference_coordinates
+                                == 1
+                            ) {
+                                std::cout
+                                    << "FIRST_NEGATIVE_T4_BASE_DIFFERENCE"
+                                    << " K=" << K
+                                    << " Q=" << Q
+                                    << " order=" << order
+                                    << " x=" << x
+                                    << " value=" << value
+                                    << '\n';
+                            }
+                        }
+                    }
+                    std::vector<Series> next_differences;
+                    for (std::size_t index = 0;
+                         index + 1 < t4_differences.size();
+                         ++index) {
+                        Series advanced = t4_differences[index];
+                        for (int step = 0; step < 2; ++step) {
+                            Series next(
+                                static_cast<std::size_t>(K + 1)
+                            );
+                            for (int x = 0; x <= K; ++x) {
+                                for (const int y :
+                                     graph[static_cast<std::size_t>(x)]) {
+                                    next[static_cast<std::size_t>(y)] +=
+                                        advanced[
+                                            static_cast<std::size_t>(x)
+                                        ];
+                                }
+                            }
+                            advanced = std::move(next);
+                        }
+                        Series difference =
+                            t4_differences[index + 1];
+                        for (int x = 0; x <= K; ++x) {
+                            difference[static_cast<std::size_t>(x)] -=
+                                advanced[static_cast<std::size_t>(x)];
+                        }
+                        next_differences.push_back(
+                            std::move(difference)
+                        );
+                    }
+                    t4_differences = std::move(next_differences);
+                }
+                if (full_t4_kernels.size() >= 10) {
+                    std::vector<Series> ninth = full_t4_kernels;
+                    for (int order = 0; order < 9; ++order) {
+                        std::vector<Series> next_differences;
+                        for (std::size_t index = 0;
+                             index + 1 < ninth.size();
+                             ++index) {
+                            Series advanced = ninth[index];
+                            for (int step = 0; step < 2; ++step) {
+                                Series next(
+                                    static_cast<std::size_t>(K + 1)
+                                );
+                                for (int x = 0; x <= K; ++x) {
+                                    for (const int y :
+                                         graph[
+                                             static_cast<std::size_t>(x)
+                                         ]) {
+                                        next[
+                                            static_cast<std::size_t>(y)
+                                        ] += advanced[
+                                            static_cast<std::size_t>(x)
+                                        ];
+                                    }
+                                }
+                                advanced = std::move(next);
+                            }
+                            Series difference = ninth[index + 1];
+                            for (int x = 0; x <= K; ++x) {
+                                difference[
+                                    static_cast<std::size_t>(x)
+                                ] -= advanced[
+                                    static_cast<std::size_t>(x)
+                                ];
+                            }
+                            next_differences.push_back(
+                                std::move(difference)
+                            );
+                        }
+                        ninth = std::move(next_differences);
+                    }
+                    for (const Series& difference : ninth) {
+                        for (const Integer& value : difference) {
+                            if (value != 0) {
+                                ++nonzero_t4_ninth_difference_coordinates;
+                            }
+                        }
+                    }
+                }
             }
         }
         std::cout
@@ -1184,6 +1515,25 @@ int main(int argc, char** argv) {
             << negative_odd_boundary_current_coefficients
             << " negative_higher_q_odd_boundary_coefficients="
             << negative_higher_q_odd_boundary_coefficients
+            << " t4_kernel_coordinates=" << t4_kernel_coordinates
+            << " negative_t4_kernel_coordinates="
+            << negative_t4_kernel_coordinates
+            << " negative_higher_q_t4_kernel_coordinates="
+            << negative_higher_q_t4_kernel_coordinates
+            << " full_t4_kernel_coordinates="
+            << full_t4_kernel_coordinates
+            << " negative_full_t4_kernel_coordinates="
+            << negative_full_t4_kernel_coordinates
+            << " t4_induction_coordinates="
+            << t4_induction_coordinates
+            << " negative_t4_induction_coordinates="
+            << negative_t4_induction_coordinates
+            << " t4_base_difference_coordinates="
+            << t4_base_difference_coordinates
+            << " negative_t4_base_difference_coordinates="
+            << negative_t4_base_difference_coordinates
+            << " nonzero_t4_ninth_difference_coordinates="
+            << nonzero_t4_ninth_difference_coordinates
             << " minimum_nonspecial=" << minimum_nonspecial
             << " minimum_total=" << minimum_total
             << " result="

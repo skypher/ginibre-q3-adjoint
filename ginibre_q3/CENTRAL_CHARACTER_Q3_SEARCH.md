@@ -12583,6 +12583,89 @@ and `j=25`, all `6,116,187` tested prefixes were nonnegative despite
 `119,127` negative individual channels.  This is bounded discovery
 evidence for `(P5A.102CB8)`, not its proof.
 
+The first unproved truncation row has a separate finite-kernel
+reduction.  Put `N=N_Q`, `m=2j+1`, and, for `0<=s<=4`, define
+
+```text
+A_s(N)=f_(2s)N^(9-2s)-f_(2s+1)N^(8-2s),
+R_m(N)=sum_(s=0)^4 binom(m,2s)A_s(N),
+V_j=N^(2j-7)R_(2j+1)(N)e_K.                      (P5A.102CB8A)
+```
+
+Here `f_0=1,f_1=0`, so the `s=0` term is `N^9`.
+
+**Lemma 5A8H28UG (`t=4` operator-Newton reduction).**  The first
+unproved full-prefix row is
+
+```text
+Q_(j,4)=(V_j)_0.                                  (P5A.102CB8B)
+```
+
+On vector sequences define
+
+```text
+(D_N V)_j=V_(j+1)-N^2V_j.
+```
+
+Then `D_N^9V=0`.  If
+
+```text
+W_r=(D_N^rV)_5>=0 entrywise,              0<=r<=8, (P5A.102CB8C)
+```
+
+then `Q_(j,4)>=0` for every `j>=5`.
+
+**Proof.**  Expanding `(P5A.102CB8A)` gives
+
+```text
+(V_j)_0
+ =sum_(s=0)^4 binom(2j+1,2s){
+    f_(2s)(N^(2j+2-2s))_(0,K)
+     -f_(2s+1)(N^(2j+1-2s))_(0,K)},
+```
+
+which is exactly the `t=4` current, proving `(P5A.102CB8B)`.
+Application of `D_N` cancels the two additional powers of `N` and
+takes the step-two forward difference of each polynomial
+`binom(m,2s)`.  Their maximum degree is eight, hence the ninth
+difference vanishes.  Newton expansion therefore gives, for `h>=0`,
+
+```text
+V_(5+h)=sum_(r=0)^min(8,h)
+          binom(h,r)N^(2(h-r))W_r.                 (P5A.102CB8D)
+```
+
+More explicitly,
+
+```text
+W_r=N^(3+2r) sum_(s=0)^4
+       (Delta_2^r binom(11,2s)) A_s(N)e_K.
+```
+
+Every factor in `(P5A.102CB8D)` is entrywise nonnegative under
+`(P5A.102CB8C)`, proving the last claim.  QED.
+
+**Target 5A8H28R15 (nine fixed `t=4` kernels).**  Prove
+`(P5A.102CB8C)` for every `K>2Q`.  This is a finite-depth graph
+inequality: the dependence on the unbounded prefix `j` has disappeared
+completely.  The fixed three-step strengthening
+`N^3R_(2j+1)(N)e_K>=0` is false, first in the open range at
+
+```text
+(K,Q,j,x)=(5,2,7,3),  value=-7309800.
+```
+
+Thus the growing power retained in `V_j` is necessary; Lemma
+5A8H28UG uses it exactly rather than replacing it by a fixed-width
+kernel.
+
+The exact bounded scan through `K=60` and `j=25` tested all `764,295`
+coordinates of `V_j`, all `727,900` coordinates of `D_NV_j`, and all
+`327,555` coordinates of the nine base vectors `W_r` without finding a
+negative value.  It also verified zero nonzero coordinates in
+`D_N^9V`.  These counts are discovery evidence for
+`(P5A.102CB8C)`, not its proof.
+
 The new reserve strictly strengthens the scalar loop information, but
 does not by itself close the current.  With
 `H_(n,t)=P_(n,t)F`, coefficientwise nonnegativity of
