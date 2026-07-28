@@ -12452,6 +12452,130 @@ t_b^2>=t_(b-1)t_(b+1),                           (P5A.102CV)
 g_b t_(b-1)>=g_(b-1)t_b.                         (P5A.102CW)
 ```
 
+The first inequality is now unconditional.
+
+**Lemma 5A8H28AF (osculating-switch Turan inequality).**  For every
+`K>=1` and every `b` for which the terms are defined,
+
+```text
+t_b^2>=t_(b-1)t_(b+1).                           (P5A.102CV)
+```
+
+**Proof.**  Put `L=K-1`, and let `W_r` be the walks of length `r`
+from `0` to `L` in the fully looped strip `{0,...,L}`.  It is enough
+to inject `W_(b-1) x W_(b+1)` into `W_b x W_b`.
+
+Draw the long walk `Q` at integer times `0,...,b+1` and translate the
+short walk `P` so that its times are `1,...,b`.  A switching contact
+is one of the following, read from left to right:
+
+```text
+(i)  Q and P occupy the same vertex at an integer time;
+(ii) in one unit cell, the two walks use the opposite diagonals X;
+(iii) Q uses the upper horizontal edge and P the lower horizontal
+      edge of the same unit cell H.
+```
+
+In `(ii)` and `(iii)` the two heights are adjacent.  At time `1`,
+`Q>=P`, while at time `b`, `Q<=P`.  Thus either there is a common
+integer vertex or the order changes through an `X` cell; in
+particular every input pair has a switching contact.
+
+At the first contact, exchange the two tails.  At a common vertex this
+is the ordinary tail switch.  In a unit cell, also toggle
+
+```text
+X <--> H.
+```
+
+Both horizontal edges exist because every strip vertex is looped.
+The path retaining the time-zero source now ends at time `b`, and the
+path with the time-one source now ends at time `b+1`; after translating
+the latter, both output walks have length `b`.  The construction stays
+inside the strip.
+
+This map is injective.  Before the selected cell or vertex the two
+walks are unchanged and there is no switching contact.  At the
+selected location, tail switching preserves a common vertex and the
+local toggle interchanges `X` and `H`.  Hence the same location is
+again the first switching contact, and applying the operation a
+second time recovers the input pair.  Therefore
+
+```text
+|W_(b-1)| |W_(b+1)| <= |W_b|^2,
+```
+
+which is `(P5A.102CV)`.  QED.
+
+The second inequality has an exact compound-matrix form which isolates
+why the same switch does not immediately apply at the two unlooped
+endpoints.  Let `C_2(A)` denote the second compound matrix of `A`,
+with rows and columns indexed by ordered two-subsets.
+
+**Lemma 5A8H28AG (residual boundary-compound identity).**  For every
+`b>=1`,
+
+```text
+g_b t_(b-1)-g_(b-1)t_b
+ =g_b^2-g_(b-1)g_(b+1)
+ =det (M_K^(b-1))_[{0,1},{K-1,K}]
+ =(C_2(M_K)^(b-1))_[{0,1},{K-1,K}].              (P5A.102CY)
+```
+
+Moreover, every entry of `C_2(M_K)` is nonnegative except
+
+```text
+(C_2(M_K))_[{0,1},{0,1}]
+=(C_2(M_K))_[{K-1,K},{K-1,K}]=-1.                (P5A.102CZ)
+```
+
+**Proof.**  Identity `(P5A.102CS)` gives
+
+```text
+t_(b-1)=g_(b-1)+g_b,          t_b=g_b+g_(b+1),
+```
+
+so the first equality follows by cancellation.  The unique edges
+`0--1` and `K-1--K` give
+
+```text
+(M_K^(b-1))_[{0,1},{K-1,K}]
+ = [ g_b       g_(b-1) ]
+   [ g_(b+1)   g_b     ].
+```
+
+Taking its determinant and using the compound-power identity proves
+`(P5A.102CY)`.
+
+For completeness, a negative two-by-two minor of the tridiagonal
+matrix `M_K` would require its crossed product to be nonzero.  The row
+and column orders and the bandwidth-one condition then force the same
+adjacent row and column pair `{i,i+1}`.  That principal minor is
+
+```text
+(M_K)_(i,i)(M_K)_(i+1,i+1)-1.
+```
+
+It is zero when both vertices are internal and `-1` precisely for
+`i=0` or `i=K-1`; every other minor has zero crossed product and
+nonnegative direct product.  This proves `(P5A.102CZ)`.  QED.
+
+Thus the unproved part of Target 5A8H28R9 is now exactly the following
+signed boundary-walk statement.
+
+**Target 5A8H28R10 (odd boundary-compound current).**  For every
+`K>=4` and relevant even `b`, prove
+
+```text
+(C_2(M_K)^(b-1))_[{0,1},{K-1,K}]>=0.             (P5A.102DA)
+```
+
+The exponent is odd.  The underlying two-particle transition graph is
+nonnegative away from the two extreme states; the only signs to pay
+are the two endpoint loops in `(P5A.102CZ)`.  This is the precise
+boundary correction missing from the osculating switch, rather than a
+new bulk path inequality.
+
 **Proposition 5A8H28AE (the Turan--incidence pair implies endpoint
 descent).**  Target 5A8H28R9 implies Target 5A8H28R8.
 
@@ -12482,12 +12606,13 @@ Substitution of `(P5A.102CX)` bounds this below by
 where the last sign is `(P5A.102CV)`.  This is precisely Target
 5A8H28R8.  QED.
 
-The first inequality in Target 5A8H28R9 is a Turan determinant for the
-fully looped path; the second compares the endpoint sequences before
-and after deleting the incidence zero mode.  The stronger alternating
-ratio sandwich is false: at `(K,n)=(4,7)` its cross product has the
-opposite sign, with value `4`.  Thus the proof should establish only
-the even-time inequality `(P5A.102CW)`.
+Lemma 5A8H28AF proves the first inequality in Target 5A8H28R9.  By
+Lemma 5A8H28AG, its second inequality compares the endpoint sequences
+before and after deleting the incidence zero mode and is equivalent to
+Target 5A8H28R10.  The stronger alternating ratio sandwich is false:
+at `(K,n)=(4,7)` its cross product has the opposite sign, with value
+`4`.  Thus the proof should establish only the even-time boundary
+current `(P5A.102DA)`.
 
 The exceptional three-edge interval can be closed exactly rather than
 included in the target.
