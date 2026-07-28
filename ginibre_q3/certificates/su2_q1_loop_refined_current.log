@@ -1,0 +1,24 @@
+STATUS
+Exact negative control against grouping the minimal-label current only
+by its number of self-loops or loop-erased skeleton length.  This is not
+a counterexample to the full-prefix current.
+
+COMMAND
+character_ring_iter/analyze_su2_q1_loop_refined_current 30 30
+
+OUTPUT
+FIRST_HARD_NEGATIVE_LOOP_COEFFICIENT half_level=5 prefix=25 truncation=12 loops=3 nonloop_edges=49 value=-8845146303032701916536856
+FIRST_NEGATIVE_LOOP_COEFFICIENT half_level=5 prefix=25 truncation=12 loops=3 nonloop_edges=49 value=-8845146303032701916536856
+SU2_Q1_LOOP_REFINED_CURRENT maximum_half_level=30 maximum_prefix=30 rows=12852 coordinates=567252 negative_coordinates=11 hard_coordinates=455364 hard_negative_coordinates=11 negative_targets=0 result=FAIL_LOOP_REFINED_CURRENT
+
+INTERPRETATION
+Lemma 5A8H28Z identifies each coefficient with the current at fixed
+self-loop count.  Proposition 5A8H28AA records the first exact negative
+coefficient.  All unrefined endpoint targets in the audit remain
+nonnegative, so the failure rules out only the stronger grouping.
+
+SOURCE_SHA256
+feb5d912b07716ff8c57a10cd4694e9d102966469a3e2e1b5b1dd2d4fa543f0a
+
+EXECUTABLE_SHA256
+a0ff269c27d0e49665945efa9e92b8d2c60d4532f57d8be7d69a82a0864c7cc4

@@ -12175,6 +12175,109 @@ target.  This remains bounded evidence for the boundary-anchored
 minimal-label current, not a proof of it.  Its transcript is
 `certificates/su2_q1_divided_difference.log`.
 
+Marking self-loops separates a further natural but still insufficient
+shape statistic.
+
+**Lemma 5A8H28Z (minimal-label loop refinement).**  Let `A_K` be the
+ordinary path adjacency on `0,...,K`, let `D_K` be the diagonal
+projection onto `1,...,K-1`, and put
+
+```text
+M_K(u)=A_K+uD_K.
+```
+
+Write
+
+```text
+f_r(u)=(M_K(u)^r)_(0,0),
+g_r(u)=(M_K(u)^r)_(0,K)
+```
+
+and, for `m=2j+1`,
+
+```text
+Q_(j,t)(u)
+ =sum_(s=0)^t binom(m,2s){
+    g_(m-2s+1)(u)f_(2s)(u)
+    -g_(m-2s)(u)f_(2s+1)(u)}.                    (P5A.102CK)
+```
+
+Then `Q_(j,t)(1)=Q_(j,t)`.  Moreover `[u^L]Q_(j,t)(u)` is the total
+current of the endpoint walks containing exactly `L` self-loop edges,
+or equivalently the total current after grouping all loop-erased
+nearest-neighbor skeletons of nonloop length `n-L`.
+
+**Proof.**  In `(P5A.102CE)`, every nonloop edge comes from `A_K` and
+every self-loop from `D_K`.  Expanding a power of `A_K+uD_K` therefore
+marks each self-loop by one factor of `u`.  Substitution into the
+endpoint-current identity `(P5A.102BU)` proves `(P5A.102CK)` and both
+coefficient interpretations.  QED.
+
+This refinement is not positive.
+
+**Proposition 5A8H28AA (loop-length grouping obstruction).**  At
+
+```text
+(K,j,t,L)=(5,25,12,3)
+```
+
+one has
+
+```text
+[u^3]Q_(25,12)(u)
+ =-8845146303032701916536856.                    (P5A.102CL)
+```
+
+Thus even at the minimal label, grouping only by the number of
+self-loops or by loop-erased skeleton length is insufficient.
+Length-two backtrack tokens, and hence the full Fibonacci core, are
+genuine rather than an artifact of Lemma 5A8H28U.
+
+**Proof.**  Direct polynomial matrix recurrence in `u` gives the
+displayed coefficient.  One negative coefficient disproves universal
+loop-refined positivity.  QED.
+
+The exact scalar statement which survives at the minimal label is now
+isolated.  Put
+
+```text
+D(z)=1-z-z^2.
+```
+
+By Lemmas 5A8H28U and 5A8H28X,
+
+```text
+E_F(z)=z^K D(z)^(K-1)/Theta_K(z) >=0.
+```
+
+Retain `H_(n,t)(z)=P_(n,t)(z)F(z)`.
+
+**Target 5A8H28R7 (minimal-label Fibonacci-core suffix).**  Prove
+
+```text
+sum_(r=R)^n [z^r]E_F(z)
+              [z^(n-r)] H_(n,t)(z)/D(z)^(K-1) >=0
+                                                         (P5A.102CM)
+```
+
+for every `K>=3`, `j>=4`, `0<=t<=j-1`, and `K<=R<=n=2j+2`.
+At `R=K`, the left side is exactly `Q_(j,t)`, so this target proves
+the complete `q=2` global-payment leaf.  Unlike the false statistic in
+`(P5A.102CL)`, it retains both length-one loops and length-two
+backtracks at every mandatory last-crossing slot.
+
+The strict C++ analyzer
+`character_ring_iter/analyze_su2_q1_core_suffix.cpp` verifies the
+factorization, reconstructs the endpoint current independently, and
+checks every suffix.  Through `K=60` and `j=60`, all `5,138,212` hard
+suffix coordinates with `t>=4` were nonnegative.  This is bounded
+evidence for `(P5A.102CM)`, not its proof.  The loop-refined negative
+control is independently reproduced by
+`character_ring_iter/analyze_su2_q1_loop_refined_current.cpp`.
+Their transcripts are
+`certificates/su2_q1_core_suffix.log` and
+`certificates/su2_q1_loop_refined_current.log`.
+
 The strict C++ analyzer
 `character_ring_iter/analyze_su2_reduced_current_payment.cpp`
 independently divides the endpoint series by the displayed reserve.

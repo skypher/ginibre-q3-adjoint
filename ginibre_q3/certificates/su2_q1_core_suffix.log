@@ -1,0 +1,22 @@
+STATUS
+Bounded exact diagnostics for the surviving minimal-label
+Fibonacci-core suffix target.  The factorization is unbounded by Lemma
+5A8H28U; suffix nonnegativity remains a conjectural proof target.
+
+COMMAND
+character_ring_iter/analyze_su2_q1_core_suffix 60 60
+
+OUTPUT
+SU2_Q1_CORE_SUFFIX maximum_half_level=60 maximum_prefix=60 parameters=58 rows=105792 identities=105792 residual_coordinates=7134 residual_negatives=0 suffix_coordinates=5650564 suffix_negatives=0 hard_suffix_coordinates=5138212 hard_suffix_negatives=0 negative_targets=0 result=PASS_Q1_CORE_SUFFIX_DISCOVERY
+
+INTERPRETATION
+For every audited row the program independently reconstructs the
+endpoint current from the Fibonacci residual and transformed current.
+All 5,138,212 hard outside-in suffixes are nonnegative.  This is bounded
+evidence for Target 5A8H28R7, not an unbounded proof.
+
+SOURCE_SHA256
+275d91b0f6ad53a17e74845abf9fca5ca723de2350e2c60c73597247994aa08a
+
+EXECUTABLE_SHA256
+3308f9b9b296fedc01888f98355ba0b4c690ff4ac32bdb10071098c0b3c0bf76

@@ -984,7 +984,15 @@ before any further construction.
    out both positivity of the `K`-th derivative on `[-1,3]` and a
    fully two-endpoint LGV kernel.  Thus even this tractable leaf needs
    a boundary-anchored planar switch or its exact divided-difference
-   equivalent; the stronger scalar/endpoint-free routes are closed.
+   equivalent; the stronger derivative/endpoint-free routes are
+   closed.  Lemma 5A8H28Z refines this leaf by self-loop count, but
+   Proposition 5A8H28AA finds an exact negative coefficient at
+   `(K,j,t,L)=(5,25,12,3)`.  Target 5A8H28R7 is the surviving exact
+   `q=2` statement: every outside-in suffix after the full
+   `(1-z-z^2)^(K-1)` Fibonacci reduction is nonnegative.  Its strict
+   audit passes `5,138,212` hard suffixes through `K=j=60`.  A proof
+   must therefore use the length-two backtrack tokens as well as
+   loops; loop-erased skeleton length alone is false.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail
