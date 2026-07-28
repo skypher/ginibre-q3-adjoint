@@ -12384,6 +12384,111 @@ s_(d+1,d)=h_(d+1)h_d-h_(d+2)h_(d-1),
 which is `(P5A.102CR)`.  The parity condition is exactly
 `b=K+d` even.  QED.
 
+There is an equivalent integral path comparison with no trigonometric
+parameters.  Let `B` be the unsigned vertex--edge incidence matrix of
+the path with vertices `0,...,K`.  Then
+
+```text
+M_K+I=BB^T,                    C_K=B^T B=2I+A_(P_K),
+T_K=C_K-I=I+A_(P_K).
+```
+
+Thus `T_K` is the fully looped path on `K` vertices.  Write
+
+```text
+t_r=(T_K^r)_(0,K-1).
+```
+
+**Lemma 5A8H28AD (incidence deletion of the `-1` mode).**  For every
+`n>=1`,
+
+```text
+g_n+g_(n-1)=t_(n-1).                            (P5A.102CS)
+```
+
+Consequently, for even `b`,
+
+```text
+g_(b+1)g_b-g_(b+2)g_(b-1)
+ =g_(b+1)t_(b-1)-g_(b-1)t_(b+1).                (P5A.102CT)
+```
+
+Target 5A8H28R8 is therefore also equivalent to the purely integral
+two-step comparison
+
+```text
+g_(b+1)/g_(b-1)>=t_(b+1)/t_(b-1)                (P5A.102CU)
+```
+
+whenever the denominators are nonzero.
+
+**Proof.**  Put
+
+```text
+q_n(x)={(x-1)^n-(-1)^n}/x.
+```
+
+The constant term has zero matrix entry between distinct endpoints,
+and polynomial intertwining across the incidence matrix gives
+
+```text
+g_n=(q_n(C_K))_(0,K-1).
+```
+
+But `q_n+q_(n-1)=(x-1)^(n-1)`, which proves `(P5A.102CS)`.
+Substitute `g_b=t_(b-1)-g_(b-1)` and
+`g_(b+2)=t_(b+1)-g_(b+1)` in the left side of
+`(P5A.102CT)`; the cross terms cancel.  Division by the positive
+denominators gives `(P5A.102CU)`.  QED.
+
+The incidence form splits endpoint descent into two smaller integer
+inequalities.
+
+**Target 5A8H28R9 (fully looped Turan--incidence pair).**  For every
+`K>=4` and relevant even `b`, prove
+
+```text
+t_b^2>=t_(b-1)t_(b+1),                           (P5A.102CV)
+g_b t_(b-1)>=g_(b-1)t_b.                         (P5A.102CW)
+```
+
+**Proposition 5A8H28AE (the Turan--incidence pair implies endpoint
+descent).**  Target 5A8H28R9 implies Target 5A8H28R8.
+
+**Proof.**  The fully looped endpoint counts are nondecreasing: insert
+a loop at the initial vertex.  Put `u=g_(b-1)`.  From
+`g_b=t_(b-1)-u`, inequality `(P5A.102CW)` gives
+
+```text
+u<=t_(b-1)^2/{t_(b-1)+t_b}.                      (P5A.102CX)
+```
+
+Using `(P5A.102CT)` and
+`g_(b+1)=t_b-t_(b-1)+u`, its right side is
+
+```text
+t_(b-1){t_b-t_(b-1)}
+  -u{t_(b+1)-t_(b-1)}.
+```
+
+Substitution of `(P5A.102CX)` bounds this below by
+
+```text
+ t_(b-1)
+ ----------- {t_b^2-t_(b-1)t_(b+1)}>=0,
+ t_(b-1)+t_b
+```
+
+where the last sign is `(P5A.102CV)`.  This is precisely Target
+5A8H28R8.  QED.
+
+The first inequality in Target 5A8H28R9 is a Turan determinant for the
+fully looped path; the second compares the endpoint sequences before
+and after deleting the incidence zero mode.  The stronger alternating
+ratio sandwich is false: at `(K,n)=(4,7)` its cross product has the
+opposite sign, with value `4`.  Thus the proof should establish only
+the even-time inequality `(P5A.102CW)`.
+
 The exceptional three-edge interval can be closed exactly rather than
 included in the target.
 
@@ -12459,6 +12564,8 @@ The strict C++ analyzer
 `494,312` cumulative prefixes is nonnegative.  All `7,202` negative
 endpoint-ratio minors occur above `K=3`, in precisely the descent
 direction asserted by Target 5A8H28R8; no reverse minor occurs there.
+The analyzer also verifies `(P5A.102CS)`, `(P5A.102CT)`, and both
+inequalities of Target 5A8H28R9.
 The simple mirror-pair strengthening is false, first at
 `(K,j,s,s')=(3,5,0,4)` with value `-2740`.  These are bounded
 diagnostics for Target 5A8H28R8, whereas Lemma 5A8H28AB is unbounded.

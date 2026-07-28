@@ -53,6 +53,24 @@ std::vector<Integer> multiply_q1(
     return next;
 }
 
+std::vector<Integer> multiply_fully_looped_path(
+    const std::vector<Integer>& state
+) {
+    std::vector<Integer> next(state.size());
+    if (state.size() == 1U) {
+        next[0] = state[0];
+        return next;
+    }
+    next[0] = state[0] + state[1];
+    const std::size_t last = state.size() - 1U;
+    next[last] = state[last - 1U] + state[last];
+    for (std::size_t vertex = 1U; vertex < last; ++vertex) {
+        next[vertex] =
+            state[vertex - 1U] + state[vertex] + state[vertex + 1U];
+    }
+    return next;
+}
+
 Integer power_of_two(int exponent) {
     Integer result = 1;
     for (int index = 0; index < exponent; ++index) {
@@ -109,11 +127,24 @@ int main(int argc, char** argv) {
         std::uint64_t negative_level_three_endpoint_ratio_minors = 0U;
         std::uint64_t level_three_identities = 0U;
         std::uint64_t failed_level_three_identities = 0U;
+        std::uint64_t incidence_identities = 0U;
+        std::uint64_t failed_incidence_identities = 0U;
+        std::uint64_t fully_looped_log_concavity_minors = 0U;
+        std::uint64_t negative_fully_looped_log_concavity_minors = 0U;
+        std::uint64_t incidence_ratio_sandwiches = 0U;
+        std::uint64_t wrong_above_three_incidence_ratio_sandwiches = 0U;
+        std::uint64_t negative_even_above_three_incidence_ratio_sandwiches =
+            0U;
+        std::uint64_t positive_odd_above_three_incidence_ratio_sandwiches =
+            0U;
+        std::uint64_t negative_above_three_incidence_ratio_sandwiches = 0U;
         int maximum_sign_changes = 0;
         bool printed_first_mirror_negative = false;
         bool printed_first_recrossing = false;
         bool printed_first_endpoint_ratio_negative = false;
         bool printed_first_negative_slice = false;
+        bool printed_first_wrong_incidence_ratio_sandwich = false;
+        bool printed_first_negative_incidence_ratio_sandwich = false;
 
         const int maximum_degree = 2 * maximum_prefix + 2;
         for (int half_level = 3;
@@ -148,6 +179,153 @@ int main(int argc, char** argv) {
                     state[
                         static_cast<std::size_t>(half_level - 1)
                     ];
+            }
+            std::vector<Integer> fully_looped_endpoints(
+                static_cast<std::size_t>(maximum_degree + 1)
+            );
+            std::vector<Integer> fully_looped_state(
+                static_cast<std::size_t>(half_level)
+            );
+            fully_looped_state[0] = 1;
+            fully_looped_endpoints[0] =
+                fully_looped_state[
+                    static_cast<std::size_t>(half_level - 1)
+                ];
+            for (int degree = 1;
+                 degree <= maximum_degree;
+                 ++degree) {
+                fully_looped_state =
+                    multiply_fully_looped_path(fully_looped_state);
+                fully_looped_endpoints[
+                    static_cast<std::size_t>(degree)
+                ] = fully_looped_state[
+                    static_cast<std::size_t>(half_level - 1)
+                ];
+            }
+            for (int degree = 1;
+                 degree <= maximum_degree;
+                 ++degree) {
+                ++incidence_identities;
+                if (
+                    endpoints[static_cast<std::size_t>(degree)]
+                        + endpoints[
+                            static_cast<std::size_t>(degree - 1)
+                        ]
+                    != fully_looped_endpoints[
+                        static_cast<std::size_t>(degree - 1)
+                    ]
+                ) {
+                    ++failed_incidence_identities;
+                }
+            }
+            for (int degree = 1;
+                 degree + 1 <= maximum_degree;
+                 ++degree) {
+                if (
+                    fully_looped_endpoints[
+                        static_cast<std::size_t>(degree - 1)
+                    ] == 0
+                ) {
+                    continue;
+                }
+                const Integer minor =
+                    fully_looped_endpoints[
+                        static_cast<std::size_t>(degree)
+                    ] * fully_looped_endpoints[
+                        static_cast<std::size_t>(degree)
+                    ]
+                    - fully_looped_endpoints[
+                        static_cast<std::size_t>(degree - 1)
+                    ] * fully_looped_endpoints[
+                        static_cast<std::size_t>(degree + 1)
+                    ];
+                ++fully_looped_log_concavity_minors;
+                if (minor < 0) {
+                    ++negative_fully_looped_log_concavity_minors;
+                }
+            }
+            for (int degree = 1;
+                 degree <= maximum_degree;
+                 ++degree) {
+                if (
+                    endpoints[static_cast<std::size_t>(degree - 1)] == 0
+                    || fully_looped_endpoints[
+                        static_cast<std::size_t>(degree - 1)
+                    ] == 0
+                ) {
+                    continue;
+                }
+                const Integer minor =
+                    endpoints[static_cast<std::size_t>(degree)]
+                        * fully_looped_endpoints[
+                            static_cast<std::size_t>(degree - 1)
+                        ]
+                    - endpoints[static_cast<std::size_t>(degree - 1)]
+                        * fully_looped_endpoints[
+                            static_cast<std::size_t>(degree)
+                        ];
+                ++incidence_ratio_sandwiches;
+                if (
+                    half_level > 3
+                    && (
+                        (degree % 2 == 0 && minor < 0)
+                        || (degree % 2 != 0 && minor > 0)
+                    )
+                ) {
+                    ++wrong_above_three_incidence_ratio_sandwiches;
+                    if (!printed_first_wrong_incidence_ratio_sandwich) {
+                        printed_first_wrong_incidence_ratio_sandwich = true;
+                        std::cout
+                            << "FIRST_WRONG_INCIDENCE_RATIO_SANDWICH"
+                            << " half_level=" << half_level
+                            << " degree=" << degree
+                            << " value=" << minor << '\n';
+                    }
+                }
+                if (
+                    half_level > 3 && degree % 2 == 0 && minor < 0
+                ) {
+                    ++negative_even_above_three_incidence_ratio_sandwiches;
+                }
+                if (
+                    half_level > 3 && degree % 2 != 0 && minor > 0
+                ) {
+                    ++positive_odd_above_three_incidence_ratio_sandwiches;
+                }
+                if (half_level > 3 && minor < 0) {
+                    ++negative_above_three_incidence_ratio_sandwiches;
+                    if (!printed_first_negative_incidence_ratio_sandwich) {
+                        printed_first_negative_incidence_ratio_sandwich =
+                            true;
+                        std::cout
+                            << "FIRST_NEGATIVE_INCIDENCE_RATIO_SANDWICH"
+                            << " half_level=" << half_level
+                            << " degree=" << degree
+                            << " value=" << minor << '\n';
+                    }
+                }
+            }
+            for (int even = 2;
+                 even + 2 <= maximum_degree;
+                 even += 2) {
+                const Integer original_minor =
+                    endpoints[static_cast<std::size_t>(even + 1)]
+                        * endpoints[static_cast<std::size_t>(even)]
+                    - endpoints[static_cast<std::size_t>(even + 2)]
+                        * endpoints[static_cast<std::size_t>(even - 1)];
+                const Integer reduced_minor =
+                    endpoints[static_cast<std::size_t>(even + 1)]
+                        * fully_looped_endpoints[
+                            static_cast<std::size_t>(even - 1)
+                        ]
+                    - endpoints[static_cast<std::size_t>(even - 1)]
+                        * fully_looped_endpoints[
+                            static_cast<std::size_t>(even + 1)
+                        ];
+                ++incidence_identities;
+                if (original_minor != reduced_minor) {
+                    ++failed_incidence_identities;
+                }
             }
             if (half_level == 3) {
                 for (int ratio_index = 1;
@@ -445,6 +623,23 @@ int main(int argc, char** argv) {
             << " level_three_identities=" << level_three_identities
             << " failed_level_three_identities="
                 << failed_level_three_identities
+            << " incidence_identities=" << incidence_identities
+            << " failed_incidence_identities="
+                << failed_incidence_identities
+            << " fully_looped_log_concavity_minors="
+                << fully_looped_log_concavity_minors
+            << " negative_fully_looped_log_concavity_minors="
+                << negative_fully_looped_log_concavity_minors
+            << " incidence_ratio_sandwiches="
+                << incidence_ratio_sandwiches
+            << " wrong_above_three_incidence_ratio_sandwiches="
+                << wrong_above_three_incidence_ratio_sandwiches
+            << " negative_even_above_three_incidence_ratio_sandwiches="
+                << negative_even_above_three_incidence_ratio_sandwiches
+            << " positive_odd_above_three_incidence_ratio_sandwiches="
+                << positive_odd_above_three_incidence_ratio_sandwiches
+            << " negative_above_three_incidence_ratio_sandwiches="
+                << negative_above_three_incidence_ratio_sandwiches
             << " result="
                 << (
                     sign_recrossings == 0U
@@ -456,6 +651,10 @@ int main(int argc, char** argv) {
                         && positive_above_three_endpoint_ratio_minors == 0U
                         && negative_level_three_endpoint_ratio_minors == 0U
                         && failed_level_three_identities == 0U
+                        && failed_incidence_identities == 0U
+                        && negative_fully_looped_log_concavity_minors == 0U
+                        && negative_even_above_three_incidence_ratio_sandwiches
+                            == 0U
                         ? "PASS_Q1_SLICE_PAIRING_DISCOVERY"
                         : "FAIL_Q1_SLICE_PAIRING"
                 )
@@ -469,6 +668,10 @@ int main(int argc, char** argv) {
                 && positive_above_three_endpoint_ratio_minors == 0U
                 && negative_level_three_endpoint_ratio_minors == 0U
                 && failed_level_three_identities == 0U
+                && failed_incidence_identities == 0U
+                && negative_fully_looped_log_concavity_minors == 0U
+                && negative_even_above_three_incidence_ratio_sandwiches
+                    == 0U
             ? EXIT_SUCCESS
             : EXIT_FAILURE;
     } catch (const std::exception& error) {
