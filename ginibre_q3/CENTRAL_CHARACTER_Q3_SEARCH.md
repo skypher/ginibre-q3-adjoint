@@ -12759,6 +12759,85 @@ the first off-parity failure is `(K,d,j)=(4,1,1)`, with difference
 These results are bounded evidence for Target 5A8H28R12, not its
 proof.
 
+The diagonal branch difference has a one-particle curvature form.
+This removes the compound matrix from the sharpest local comparison.
+
+**Lemma 5A8H28AL (packed minor as Turan curvature).**  Fix `N>=0` and
+write
+
+```text
+c_r=(T_K^N)_(0,r),              c_r=0 outside 0<=r<=K-1,
+E_r=c_r^2-c_(r-1)c_(r+1).                       (P5A.102DM)
+```
+
+For `0<=i<=K-2`,
+
+```text
+det (T_K^N)_[{i,i+1},{K-2,K-1}]
+ =E_(K-2-i)-E_(K-1-i).                          (P5A.102DN)
+```
+
+In particular, for `d=j`, put `N=K+j-3`.  Then the diagonal
+difference in `(P5A.102DK)` is
+
+```text
+A_(j,j)-A_(j,j-1)
+ =E_(K-3)-3E_(K-2)+2E_(K-1).                   (P5A.102DO)
+```
+
+**Proof.**  The path adjacency `T_K=I+N_1` commutes with every
+`SU(2)_(K-1)` fusion matrix.  The top label `K-1` is the simple
+current, while fusion into `K-2` has the two possible source labels.
+Consequently, with `r=K-2-i`,
+
+```text
+(T_K^N)_(i,K-1)=c_(r+1),
+(T_K^N)_(i,K-2)=c_r+c_(r+2),
+(T_K^N)_(i+1,K-1)=c_r,
+(T_K^N)_(i+1,K-2)=c_(r-1)+c_(r+1).
+```
+
+The determinant is
+
+```text
+(c_r+c_(r+2))c_r-c_(r+1)(c_(r-1)+c_(r+1))
+ =E_r-E_(r+1),
+```
+
+which proves `(P5A.102DN)`.  In the diagonal case put
+`H=C_2(T_K)`, `A_0={0,1}`, `A_1={1,2}`, and
+`Z={K-2,K-1}`.  Jacobi--Trudi and the compound-power identity give
+
+```text
+A_(j,j)=(H^(N+1))_(A_0,Z),
+A_(j,j-1)=2(H^N)_(A_0,Z)+(H^N)_[{0,2},Z].
+```
+
+The only one-step transitions out of `A_0` in `H` are the unit
+transitions to `A_1` and `{0,2}`.  Subtraction therefore gives
+
+```text
+A_(j,j)-A_(j,j-1)
+ =det(T_K^N)_[{1,2},{K-2,K-1}]
+  -2det(T_K^N)_[{0,1},{K-2,K-1}].
+```
+
+Apply `(P5A.102DN)` with `i=1` and `i=0` to obtain
+`(P5A.102DO)`.  QED.
+
+Thus the diagonal heart of Target 5A8H28R12 is the boundary curvature
+inequality
+
+```text
+E_(K-3)+2E_(K-1)>=3E_(K-2)                      (P5A.102DP)
+```
+
+at `N=K+j-3` and `K+j` even.  The `E_r` are the ordinary adjacent
+log-concavity defects of the endpoint distribution of
+`(I+N_1)^N`.  This formulation may permit a direct planar
+exit-distribution injection; it is an equivalent restatement of the
+diagonal branch, not yet a proof of `(P5A.102DP)`.
+
 **Proposition 5A8H28AE (the Turan--incidence pair implies endpoint
 descent).**  Target 5A8H28R9 implies Target 5A8H28R8.
 
