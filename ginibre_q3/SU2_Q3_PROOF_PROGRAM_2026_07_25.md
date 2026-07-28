@@ -939,6 +939,17 @@ before any further construction.
    direct weight-polynomial factorization retaining the Ferrers
    crossing, or a canonical loop-erased/reflected realization of the
    endpoint injection.
+   Lemma 5A8H28S additionally makes the time direction scalar: each
+   new shell slice has sign equal to the comparison between one
+   odd/even return ratio and one reversed shell-kernel ratio.  Exact
+   discovery through level 100 and prefix 30 finds all 18,000 return
+   ratios ordered and at most two sign changes in every one of
+   280,800 shell slice profiles.  This is not yet a theorem.  A local
+   payment is false already at `(k,q,j,rho)=(6,2,5,0)`, and the same
+   audit requires a 23-slice lookback at prefix 30.  Hence any ratio
+   proof must retain an unbounded Abel reserve; the observed
+   two-crossing shape does not turn the target into a fixed-width
+   kernel.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail

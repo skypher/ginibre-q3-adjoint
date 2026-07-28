@@ -40,8 +40,27 @@ ordered from the centre outwards, was nonnegative in the displayed exact
 scans.  In the case command the complete sum is 884076032, exactly twice
 the independently computed endpoint current 442038016.
 
-SOURCE_SHA256
+ORIGINAL_SOURCE_SHA256
 c1ef3570fae096aa2446f49297883ee0f284f439f96acd781e0bb1804669f266
 
-EXECUTABLE_SHA256
+ORIGINAL_EXECUTABLE_SHA256
 efd1329437c95dcdb3194089f54e65c3b648f1fce200e680f2a75e85fd8b2e5b
+
+EXTENDED_SHAPE_COMMAND
+character_ring_iter/analyze_su2_central_crossing_current 100 30 --suffix-only
+
+EXTENDED_SHAPE_OUTPUT
+FIRST_NEGATIVE_SHELL_SLICE_PAIR level=6 label=2 prefix=5 shell=0 truncation=4 previous=0 current=-11220 pair=-11220 profile=5740,31680,27720,0,-11220
+FIRST_SHELL_RATIO_TURNING level=12 label=4 shell=0 minor_signs=0++---------------------------
+FIRST_NEGATIVE_TARGET level=16 label=6 prefix=7 truncation=5 target=2 value=-324069258
+FIRST_TARGET_SIGN_RECROSSING level=16 label=6 prefix=7 truncation=5 values=0,2666336994,-324069258,43285175244
+FIRST_NEGATIVE_ADJACENT_TARGET level=20 label=8 prefix=9 truncation=7 target=2 value=-4295342432342
+FIRST_SHELL_SLICE_RECROSSING level=20 label=8 prefix=6 shell=2 increments=2880413450,4209593388,1430479050,161801640,-37209744,105534000
+FIRST_NEGATIVE_INNER_RESERVE level=22 label=8 prefix=10 truncation=8 value=-1655232167182260
+SU2_CENTRAL_CROSSING_CURRENT maximum_level=100 maximum_prefix=30 parameters=600 quotient_entries=200200 crossing_entries=0 component_rows=0 component_negatives=0 minimum=0 witness=(0,0,0,0,0,0) target_rows=4212000 target_negatives=83575 target_sign_recrossings=23686 target_sign_reversals=83575 maximum_target_sign_changes=2 target_minimum=-2401464039033270807348811971191627351941702298565794316251531357431542354845643830399041542 target_witness=(100,42,30,28,16) target_suffix_rows=4212000 target_suffix_negatives=0 shell_slice_profiles=280800 shell_slice_recrossings=7809 negative_shell_slices=102037 negative_shell_slice_predecessor_pairs=76799 maximum_negative_shell_slice_lookback=23 maximum_negative_shell_slice_lookback_witness=(44,18,30,6,28) maximum_shell_slice_sign_changes=2 shell_ratio_profiles=10400 shell_ratio_turning_profiles=1604 maximum_shell_ratio_minor_sign_changes=2 target_suffix_minimum=0 target_suffix_witness=(22,2,4,2,5) adjacent_target_rows=3969000 adjacent_target_negatives=73799 adjacent_target_minimum=-4759339911906770334512289715747089346294803173832249004515369164983236190499562037657199644 adjacent_target_witness=(100,42,30,28,16,17) inner_reserve_rows=243000 inner_reserve_negatives=8851 inner_reserve_minimum=-10979076237601574861733817333883387506410501232533426842665664413960784611457281497823952780 inner_reserve_witness=(100,42,30,28,24) endpoint_identity_rows=243000 return_ratio_rows=18000 return_ratio_negatives=0 result=PASS_TARGET_SUFFIX_DISCOVERY
+
+CURRENT_SOURCE_SHA256
+7710214f2ea0844232f7db11e25b569cc42d0a3b73bce5f49e10c07503837af1
+
+CURRENT_EXECUTABLE_SHA256
+c86bf8ad7534f256410552a83300159eed3135c6e3a376ee2d4e8ea375569c15

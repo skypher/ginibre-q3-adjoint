@@ -11739,6 +11739,68 @@ character `(P5A.102BW)` using its Ferrers crossing construction, or
 to realize the endpoint injection `(P5A.102BV)` by a canonical
 loop-erased/reflected switch.  Either would prove Target 5A8H28R6.
 
+The remaining time-prefix dependence is a scalar ratio comparison.
+Write
+
+```text
+h_rho(d)=[z^d]S_rho(z).
+```
+
+**Lemma 5A8H28S (shell slice-ratio identity).**  Put `m=2j+1` and
+use `T_(rho,-1)=0`.  The
+increment obtained by adjoining slice `s` to shell `rho` is
+
+```text
+T_(rho,s)-T_(rho,s-1)
+ =binom(m,2s){
+    f_(2s)h_rho(m-2s)
+    -f_(2s+1)h_rho(m-2s-1)}.                      (P5A.102BX)
+```
+
+Whenever the two denominators are nonzero, its sign is therefore the
+sign of
+
+```text
+h_rho(m-2s)/h_rho(m-2s-1)
+ -f_(2s+1)/f_(2s).                                (P5A.102BY)
+```
+
+**Proof.**  Subtract the `t=s-1` instance of
+`T_(rho,t)=[z^m]P_(n,t)S_rho` from the `t=s` instance.  Only the two
+new monomials of degrees `2s` and `2s+1` remain, giving
+`(P5A.102BX)`.  Division by the positive factors gives
+`(P5A.102BY)`.  QED.
+
+The exact bounded shape behind `(P5A.102BY)` is unusually rigid.
+Through level `100` and prefix `30`, all `18,000` return-ratio minors
+
+```text
+f_(2s)f_(2s+3)-f_(2s+1)f_(2s+2)
+```
+
+are nonnegative.  Thus the tested ratios
+`f_(2s+1)/f_(2s)` are nondecreasing.  Across `10,400` shell kernels,
+the adjacent odd/even ratio minors change sign at most twice.
+Consequently all `280,800` tested shell slice-increment profiles
+change sign at most twice; `7,809` have the genuine `+,-,+`
+recrossing, but no shell prefix is negative.
+
+This is bounded discovery, not a ratio theorem.  Nor does it reduce
+the payment to a fixed number of neighboring slices.  The first
+failure of adjacent-slice payment is
+
+```text
+(k,q,j,rho)=(6,2,5,0),
+increments=(5740,31680,27720,0,-11220).
+```
+
+There are `76,799` failed predecessor-pair payments in the same audit.
+By prefix `30`, one negative slice requires all `23` preceding slices
+back to its nearest nonnegative subtotal, first witnessed at
+`(k,q,j,rho,s)=(44,18,30,6,28)`.  Thus the two-crossing shape is a
+viable route only if coupled to an unbounded Abel/global reserve; it
+does not replace the global-payment lemma by a fixed-width kernel.
+
 Two still stronger semigroup shortcuts are false.  The exact
 target-column current has `2,970` sign recrossings through level `60`
 and prefix `20` (maximum two sign changes), although all `380,800`

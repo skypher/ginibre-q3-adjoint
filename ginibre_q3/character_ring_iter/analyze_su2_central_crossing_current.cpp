@@ -172,11 +172,30 @@ int main(int argc, char** argv) {
         bool printed_first_target_recrossing = false;
         std::uint64_t target_suffix_rows = 0U;
         std::uint64_t target_suffix_negatives = 0U;
+        std::uint64_t shell_slice_profiles = 0U;
+        std::uint64_t shell_slice_recrossings = 0U;
+        std::uint64_t negative_shell_slices = 0U;
+        std::uint64_t negative_shell_slice_predecessor_pairs = 0U;
+        bool printed_first_negative_shell_slice_pair = false;
+        int maximum_negative_shell_slice_lookback = 0;
+        int maximum_negative_shell_slice_lookback_level = 0;
+        int maximum_negative_shell_slice_lookback_label = 0;
+        int maximum_negative_shell_slice_lookback_prefix = 0;
+        int maximum_negative_shell_slice_lookback_shell = 0;
+        int maximum_negative_shell_slice_lookback_truncation = 0;
+        int maximum_shell_slice_sign_changes = 0;
+        bool printed_first_shell_slice_recrossing = false;
+        std::uint64_t shell_ratio_profiles = 0U;
+        std::uint64_t shell_ratio_turning_profiles = 0U;
+        int maximum_shell_ratio_minor_sign_changes = 0;
+        bool printed_first_shell_ratio_turning = false;
         std::uint64_t adjacent_target_rows = 0U;
         std::uint64_t adjacent_target_negatives = 0U;
         std::uint64_t inner_reserve_rows = 0U;
         std::uint64_t inner_reserve_negatives = 0U;
         std::uint64_t endpoint_identity_rows = 0U;
+        std::uint64_t return_ratio_rows = 0U;
+        std::uint64_t return_ratio_negatives = 0U;
         Witness minimum;
         Witness target_minimum;
         Witness target_suffix_minimum;
@@ -366,6 +385,32 @@ int main(int argc, char** argv) {
                     endpoints[static_cast<std::size_t>(degree)] =
                         difference / 2;
                 }
+                for (int index = 0;
+                     2 * index + 3 <= maximum_degree;
+                     ++index) {
+                    const Integer ratio_minor =
+                        returns[static_cast<std::size_t>(2 * index + 3)]
+                            * returns[
+                                static_cast<std::size_t>(2 * index)
+                            ]
+                        - returns[
+                            static_cast<std::size_t>(2 * index + 2)
+                        ] * returns[
+                            static_cast<std::size_t>(2 * index + 1)
+                        ];
+                    ++return_ratio_rows;
+                    if (ratio_minor < 0) {
+                        ++return_ratio_negatives;
+                        if (return_ratio_negatives == 1U) {
+                            std::cout
+                                << "FIRST_NEGATIVE_RETURN_RATIO_MINOR"
+                                << " level=" << level
+                                << " label=" << label
+                                << " index=" << index
+                                << " value=" << ratio_minor << '\n';
+                        }
+                    }
+                }
 
                 for (int crossing_source = 0;
                      !suffix_only && crossing_source < plus_size;
@@ -505,6 +550,26 @@ int main(int argc, char** argv) {
                             )
                         )
                     );
+                std::vector<std::vector<std::vector<Integer>>>
+                    shell_values(
+                        static_cast<std::size_t>(paired),
+                        std::vector<std::vector<Integer>>(
+                            static_cast<std::size_t>(
+                                maximum_prefix + 1
+                            ),
+                            std::vector<Integer>(
+                                static_cast<std::size_t>(
+                                    maximum_prefix
+                                )
+                            )
+                        )
+                    );
+                std::vector<std::vector<Integer>> target_kernels(
+                    static_cast<std::size_t>(paired),
+                    std::vector<Integer>(
+                        static_cast<std::size_t>(maximum_degree + 1)
+                    )
+                );
                 for (int crossing_target = 0;
                      crossing_target < paired;
                      ++crossing_target) {
@@ -538,6 +603,9 @@ int main(int argc, char** argv) {
                             ][static_cast<std::size_t>(crossing_target)];
                         }
                     }
+                    target_kernels[
+                        static_cast<std::size_t>(crossing_target)
+                    ] = target_kernel;
                     for (int prefix = 4;
                          prefix <= maximum_prefix;
                          ++prefix) {
@@ -562,9 +630,6 @@ int main(int argc, char** argv) {
                             ] -= weight * returns[
                                 static_cast<std::size_t>(odd)
                             ];
-                            if (truncation < 2) {
-                                continue;
-                            }
                             Integer value = 0;
                             for (int degree = 0;
                                  degree <= n - 1;
@@ -577,12 +642,15 @@ int main(int argc, char** argv) {
                                     )
                                 ];
                             }
-                            ++target_rows;
                             target_values[
                                 static_cast<std::size_t>(crossing_target)
                             ][static_cast<std::size_t>(prefix)]
                              [static_cast<std::size_t>(truncation)] =
                                 value;
+                            if (truncation < 2) {
+                                continue;
+                            }
+                            ++target_rows;
                             target_minimum.observe(
                                 value,
                                 level,
@@ -605,6 +673,109 @@ int main(int argc, char** argv) {
                                         << " value=" << value << '\n';
                                 }
                             }
+                        }
+                    }
+                }
+                for (int shell = 0; shell < paired; ++shell) {
+                    ++shell_ratio_profiles;
+                    std::vector<Integer> shell_kernel(
+                        static_cast<std::size_t>(maximum_degree + 1)
+                    );
+                    for (int target = shell;
+                         target < paired;
+                         ++target) {
+                        for (int degree = 0;
+                             degree <= maximum_degree;
+                             ++degree) {
+                            shell_kernel[
+                                static_cast<std::size_t>(degree)
+                            ] += target_kernels[
+                                static_cast<std::size_t>(target)
+                            ][static_cast<std::size_t>(degree)];
+                        }
+                    }
+                    int previous_sign = 0;
+                    int sign_changes = 0;
+                    std::vector<Integer> ratio_minors;
+                    for (int index = 0;
+                         2 * index + 3 <= maximum_degree;
+                         ++index) {
+                        const Integer minor =
+                            shell_kernel[
+                                static_cast<std::size_t>(2 * index + 3)
+                            ] * shell_kernel[
+                                static_cast<std::size_t>(2 * index)
+                            ]
+                            - shell_kernel[
+                                static_cast<std::size_t>(2 * index + 2)
+                            ] * shell_kernel[
+                                static_cast<std::size_t>(2 * index + 1)
+                            ];
+                        ratio_minors.push_back(minor);
+                        const int sign =
+                            minor < 0 ? -1 : (minor > 0 ? 1 : 0);
+                        if (
+                            sign != 0
+                            && previous_sign != 0
+                            && sign != previous_sign
+                        ) {
+                            ++sign_changes;
+                        }
+                        if (sign != 0) {
+                            previous_sign = sign;
+                        }
+                    }
+                    maximum_shell_ratio_minor_sign_changes = std::max(
+                        maximum_shell_ratio_minor_sign_changes,
+                        sign_changes
+                    );
+                    if (sign_changes != 0) {
+                        ++shell_ratio_turning_profiles;
+                        if (!printed_first_shell_ratio_turning) {
+                            printed_first_shell_ratio_turning = true;
+                            std::cout
+                                << "FIRST_SHELL_RATIO_TURNING"
+                                << " level=" << level
+                                << " label=" << label
+                                << " shell=" << shell
+                                << " minor_signs=";
+                            for (std::size_t index = 0U;
+                                 index < ratio_minors.size();
+                                 ++index) {
+                                std::cout
+                                    << (
+                                        ratio_minors[index] < 0
+                                            ? '-'
+                                            : (
+                                                ratio_minors[index] > 0
+                                                    ? '+'
+                                                    : '0'
+                                            )
+                                    );
+                            }
+                            std::cout << '\n';
+                        }
+                    }
+                }
+                for (int prefix = 4;
+                     prefix <= maximum_prefix;
+                     ++prefix) {
+                    for (int truncation = 0;
+                         truncation <= prefix - 1;
+                         ++truncation) {
+                        Integer suffix = 0;
+                        for (int target = paired - 1;
+                             target >= 0;
+                             --target) {
+                            suffix += target_values[
+                                static_cast<std::size_t>(target)
+                            ][static_cast<std::size_t>(prefix)]
+                             [static_cast<std::size_t>(truncation)];
+                            shell_values[
+                                static_cast<std::size_t>(target)
+                            ][static_cast<std::size_t>(prefix)]
+                             [static_cast<std::size_t>(truncation)] =
+                                suffix;
                         }
                     }
                 }
@@ -825,6 +996,161 @@ int main(int argc, char** argv) {
                         }
                     }
                 }
+                for (int prefix = 4;
+                     prefix <= maximum_prefix;
+                     ++prefix) {
+                    for (int shell = 0; shell < paired; ++shell) {
+                        ++shell_slice_profiles;
+                        int previous_sign = 0;
+                        int sign_changes = 0;
+                        std::vector<Integer> increments;
+                        increments.reserve(
+                            static_cast<std::size_t>(prefix)
+                        );
+                        for (int truncation = 0;
+                             truncation <= prefix - 1;
+                             ++truncation) {
+                            Integer increment = shell_values[
+                                static_cast<std::size_t>(shell)
+                            ][static_cast<std::size_t>(prefix)]
+                             [static_cast<std::size_t>(truncation)];
+                            if (truncation != 0) {
+                                increment -= shell_values[
+                                    static_cast<std::size_t>(shell)
+                                ][static_cast<std::size_t>(prefix)]
+                                 [static_cast<std::size_t>(
+                                     truncation - 1
+                                 )];
+                            }
+                            increments.push_back(increment);
+                            const int sign =
+                                increment < 0
+                                    ? -1
+                                    : (increment > 0 ? 1 : 0);
+                            if (
+                                sign != 0
+                                && previous_sign != 0
+                                && sign != previous_sign
+                            ) {
+                                ++sign_changes;
+                            }
+                            if (sign != 0) {
+                                previous_sign = sign;
+                            }
+                        }
+                        maximum_shell_slice_sign_changes = std::max(
+                            maximum_shell_slice_sign_changes,
+                            sign_changes
+                        );
+                        for (std::size_t index = 0U;
+                             index < increments.size();
+                             ++index) {
+                            if (increments[index] >= 0) {
+                                continue;
+                            }
+                            ++negative_shell_slices;
+                            Integer backward_sum = 0;
+                            int lookback = 0;
+                            for (std::size_t offset = 0U;
+                                 offset <= index;
+                                 ++offset) {
+                                backward_sum +=
+                                    increments[index - offset];
+                                lookback = static_cast<int>(offset);
+                                if (backward_sum >= 0) {
+                                    break;
+                                }
+                            }
+                            if (backward_sum < 0) {
+                                throw std::runtime_error(
+                                    "negative shell prefix escaped "
+                                    "all earlier slice reserves"
+                                );
+                            }
+                            if (
+                                lookback
+                                > maximum_negative_shell_slice_lookback
+                            ) {
+                                maximum_negative_shell_slice_lookback =
+                                    lookback;
+                                maximum_negative_shell_slice_lookback_level =
+                                    level;
+                                maximum_negative_shell_slice_lookback_label =
+                                    label;
+                                maximum_negative_shell_slice_lookback_prefix =
+                                    prefix;
+                                maximum_negative_shell_slice_lookback_shell =
+                                    shell;
+                                maximum_negative_shell_slice_lookback_truncation =
+                                    static_cast<int>(index);
+                            }
+                            const Integer predecessor_pair =
+                                increments[index]
+                                + (
+                                    index == 0U
+                                        ? Integer(0)
+                                        : increments[index - 1U]
+                                );
+                            if (predecessor_pair < 0) {
+                                ++negative_shell_slice_predecessor_pairs;
+                                if (
+                                    !printed_first_negative_shell_slice_pair
+                                ) {
+                                    printed_first_negative_shell_slice_pair =
+                                        true;
+                                    std::cout
+                                        << "FIRST_NEGATIVE_SHELL_SLICE_PAIR"
+                                        << " level=" << level
+                                        << " label=" << label
+                                        << " prefix=" << prefix
+                                        << " shell=" << shell
+                                        << " truncation=" << index
+                                        << " previous="
+                                        << (
+                                            index == 0U
+                                                ? Integer(0)
+                                                : increments[index - 1U]
+                                        )
+                                        << " current=" << increments[index]
+                                        << " pair=" << predecessor_pair
+                                        << " profile=";
+                                    for (std::size_t profile = 0U;
+                                         profile < increments.size();
+                                         ++profile) {
+                                        if (profile != 0U) {
+                                            std::cout << ',';
+                                        }
+                                        std::cout << increments[profile];
+                                    }
+                                    std::cout << '\n';
+                                }
+                            }
+                        }
+                        if (sign_changes > 1) {
+                            ++shell_slice_recrossings;
+                            if (!printed_first_shell_slice_recrossing) {
+                                printed_first_shell_slice_recrossing =
+                                    true;
+                                std::cout
+                                    << "FIRST_SHELL_SLICE_RECROSSING"
+                                    << " level=" << level
+                                    << " label=" << label
+                                    << " prefix=" << prefix
+                                    << " shell=" << shell
+                                    << " increments=";
+                                for (std::size_t index = 0U;
+                                     index < increments.size();
+                                     ++index) {
+                                    if (index != 0U) {
+                                        std::cout << ',';
+                                    }
+                                    std::cout << increments[index];
+                                }
+                                std::cout << '\n';
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -874,6 +1200,28 @@ int main(int argc, char** argv) {
             << target_minimum.crossing_target << ')'
             << " target_suffix_rows=" << target_suffix_rows
             << " target_suffix_negatives=" << target_suffix_negatives
+            << " shell_slice_profiles=" << shell_slice_profiles
+            << " shell_slice_recrossings="
+                << shell_slice_recrossings
+            << " negative_shell_slices=" << negative_shell_slices
+            << " negative_shell_slice_predecessor_pairs="
+                << negative_shell_slice_predecessor_pairs
+            << " maximum_negative_shell_slice_lookback="
+                << maximum_negative_shell_slice_lookback
+            << " maximum_negative_shell_slice_lookback_witness=("
+                << maximum_negative_shell_slice_lookback_level << ','
+                << maximum_negative_shell_slice_lookback_label << ','
+                << maximum_negative_shell_slice_lookback_prefix << ','
+                << maximum_negative_shell_slice_lookback_shell << ','
+                << maximum_negative_shell_slice_lookback_truncation
+                << ')'
+            << " maximum_shell_slice_sign_changes="
+                << maximum_shell_slice_sign_changes
+            << " shell_ratio_profiles=" << shell_ratio_profiles
+            << " shell_ratio_turning_profiles="
+                << shell_ratio_turning_profiles
+            << " maximum_shell_ratio_minor_sign_changes="
+                << maximum_shell_ratio_minor_sign_changes
             << " target_suffix_minimum=" << target_suffix_minimum.value
             << " target_suffix_witness=("
             << target_suffix_minimum.level << ','
@@ -903,6 +1251,8 @@ int main(int argc, char** argv) {
             << inner_reserve_minimum.truncation << ','
             << inner_reserve_minimum.crossing_target << ')'
             << " endpoint_identity_rows=" << endpoint_identity_rows
+            << " return_ratio_rows=" << return_ratio_rows
+            << " return_ratio_negatives=" << return_ratio_negatives
             << " result="
             << (
                 target_suffix_negatives == 0U
