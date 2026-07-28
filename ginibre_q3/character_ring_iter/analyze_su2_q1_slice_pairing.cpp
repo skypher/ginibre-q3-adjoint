@@ -133,6 +133,10 @@ int main(int argc, char** argv) {
         std::uint64_t negative_fully_looped_log_concavity_minors = 0U;
         std::uint64_t fully_looped_turan_reserve_steps = 0U;
         std::uint64_t negative_fully_looped_turan_reserve_steps = 0U;
+        std::uint64_t schur_branch_steps = 0U;
+        std::uint64_t negative_schur_branch_steps = 0U;
+        std::uint64_t off_parity_schur_branch_steps = 0U;
+        std::uint64_t negative_off_parity_schur_branch_steps = 0U;
         std::uint64_t incidence_ratio_sandwiches = 0U;
         std::uint64_t wrong_above_three_incidence_ratio_sandwiches = 0U;
         std::uint64_t negative_even_above_three_incidence_ratio_sandwiches =
@@ -147,6 +151,7 @@ int main(int argc, char** argv) {
         bool printed_first_negative_slice = false;
         bool printed_first_wrong_incidence_ratio_sandwich = false;
         bool printed_first_negative_incidence_ratio_sandwich = false;
+        bool printed_first_negative_off_parity_schur_branch = false;
 
         const int maximum_degree = 2 * maximum_prefix + 2;
         for (int half_level = 3;
@@ -277,6 +282,70 @@ int main(int argc, char** argv) {
                 ++fully_looped_turan_reserve_steps;
                 if (reserve_step < 0) {
                     ++negative_fully_looped_turan_reserve_steps;
+                }
+            }
+            const int endpoint_offset = half_level - 1;
+            const int maximum_excess =
+                maximum_degree - endpoint_offset - 1;
+            for (int excess = half_level > 3
+                    ? 0
+                    : maximum_excess + 1;
+                 excess <= maximum_excess;
+                 ++excess) {
+                const Integer first_row =
+                    fully_looped_endpoints[
+                        static_cast<std::size_t>(
+                            endpoint_offset + excess
+                        )
+                    ];
+                const Integer next_first_row =
+                    fully_looped_endpoints[
+                        static_cast<std::size_t>(
+                            endpoint_offset + excess + 1
+                        )
+                    ];
+                Integer previous_branch = first_row;
+                for (int second_row = 1;
+                     second_row <= excess;
+                     ++second_row) {
+                    const Integer branch =
+                        first_row
+                            * fully_looped_endpoints[
+                                static_cast<std::size_t>(
+                                    endpoint_offset + second_row
+                                )
+                            ]
+                        - next_first_row
+                            * fully_looped_endpoints[
+                                static_cast<std::size_t>(
+                                    endpoint_offset + second_row - 1
+                                )
+                            ];
+                    if ((half_level + excess) % 2 == 0) {
+                        ++schur_branch_steps;
+                        if (branch < previous_branch) {
+                            ++negative_schur_branch_steps;
+                        }
+                    } else {
+                        ++off_parity_schur_branch_steps;
+                        if (branch < previous_branch) {
+                            ++negative_off_parity_schur_branch_steps;
+                            if (
+                                !printed_first_negative_off_parity_schur_branch
+                            ) {
+                                printed_first_negative_off_parity_schur_branch =
+                                    true;
+                                std::cout
+                                    << "FIRST_NEGATIVE_OFF_PARITY_SCHUR_BRANCH"
+                                    << " half_level=" << half_level
+                                    << " excess=" << excess
+                                    << " second_row=" << second_row
+                                    << " value="
+                                    << branch - previous_branch << '\n';
+                            }
+                        }
+                    }
+                    previous_branch = branch;
                 }
             }
             for (int degree = 1;
@@ -669,6 +738,13 @@ int main(int argc, char** argv) {
                 << fully_looped_turan_reserve_steps
             << " negative_fully_looped_turan_reserve_steps="
                 << negative_fully_looped_turan_reserve_steps
+            << " schur_branch_steps=" << schur_branch_steps
+            << " negative_schur_branch_steps="
+                << negative_schur_branch_steps
+            << " off_parity_schur_branch_steps="
+                << off_parity_schur_branch_steps
+            << " negative_off_parity_schur_branch_steps="
+                << negative_off_parity_schur_branch_steps
             << " incidence_ratio_sandwiches="
                 << incidence_ratio_sandwiches
             << " wrong_above_three_incidence_ratio_sandwiches="
@@ -693,6 +769,8 @@ int main(int argc, char** argv) {
                         && failed_incidence_identities == 0U
                         && negative_fully_looped_log_concavity_minors == 0U
                         && negative_fully_looped_turan_reserve_steps == 0U
+                        && negative_schur_branch_steps == 0U
+                        && negative_off_parity_schur_branch_steps > 0U
                         && negative_even_above_three_incidence_ratio_sandwiches
                             == 0U
                         ? "PASS_Q1_SLICE_PAIRING_DISCOVERY"
@@ -711,6 +789,8 @@ int main(int argc, char** argv) {
                 && failed_incidence_identities == 0U
                 && negative_fully_looped_log_concavity_minors == 0U
                 && negative_fully_looped_turan_reserve_steps == 0U
+                && negative_schur_branch_steps == 0U
+                && negative_off_parity_schur_branch_steps > 0U
                 && negative_even_above_three_incidence_ratio_sandwiches
                     == 0U
             ? EXIT_SUCCESS

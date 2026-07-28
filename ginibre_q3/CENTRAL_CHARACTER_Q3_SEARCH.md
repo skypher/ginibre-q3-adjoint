@@ -12684,6 +12684,81 @@ The C++ analyzer checks `(P5A.102DF)` directly.  Through `K=100` and
 degree `202`, all `14,453` target steps are nonnegative.  This is
 bounded evidence for Target 5A8H28R11, not its proof.
 
+The isolated `-1` mode also gives a second, shorter route.  Write
+
+```text
+Mu_K={1+2cos(a pi/(K+1)):1<=a<=K},
+Lambda_K=Mu_K union {-1},
+A_(d,j)=s_(d,j)(Mu_K),             0<=j<=d,       (P5A.102DH)
+```
+
+where `s_(d,0)=h_d`.  The endpoint generating function of `T_K`
+gives
+
+```text
+h_r(Mu_K)=t_(K-1+r).                              (P5A.102DI)
+```
+
+**Lemma 5A8H28AJ (one-mode Schur branching).**  Put `b=K+d`.  Then
+
+```text
+W_b=sum_(j=0)^d (-1)^(d-j) A_(d,j).              (P5A.102DJ)
+```
+
+**Proof.**  Lemma 5A8H28AC and `(P5A.102CY)` give
+`W_b=s_(d,d)(Lambda_K)`.  The one-variable Schur branching rule for
+`Lambda_K=Mu_K union {-1}` is
+
+```text
+s_(d,d)(Mu_K,-1)
+ =sum_(j=0)^d (-1)^(d-j)s_(d,j)(Mu_K),
+```
+
+because the partitions interlacing `(d,d)` are exactly `(d,j)`,
+`0<=j<=d`.  This is `(P5A.102DJ)`.  QED.
+
+Thus it is enough to prove monotonicity along this single branching
+chain.
+
+**Target 5A8H28R12 (parity Schur-branch monotonicity).**  For every
+`K>=4`, `d>=0` with `K+d` even, and `1<=j<=d`, prove
+
+```text
+A_(d,j)>=A_(d,j-1).                              (P5A.102DK)
+```
+
+Equivalently, using `(P5A.102DI)`,
+
+```text
+t_(K-1+d){t_(K-1+j)-t_(K-2+j)}
+ >=t_(K+d){t_(K-2+j)-t_(K-3+j)}.                (P5A.102DL)
+```
+
+Terms below the minimum endpoint degree are interpreted as zero.
+
+**Proposition 5A8H28AK (branch monotonicity implies the boundary
+current).**  Target 5A8H28R12 implies Target 5A8H28R10.
+
+**Proof.**  If `d` is odd, pair consecutive terms in
+`(P5A.102DJ)` as
+
+```text
+(A_(d,d)-A_(d,d-1))+...+(A_(d,1)-A_(d,0)).
+```
+
+If `d` is even, the same pairing leaves the additional nonnegative
+term `A_(d,0)=h_d(Mu_K)=t_(K-1+d)`.  Every paired difference is
+nonnegative by `(P5A.102DK)`, so `W_(K+d)>=0`.  Since `K+d` is the
+even index required in Target 5A8H28R10, the result follows.  QED.
+
+The C++ analyzer evaluates `(P5A.102DK)` by exact Jacobi--Trudi
+minors.  Through `K=100` and degree `202`, all `571,924` relevant
+branch steps are nonnegative.  The parity restriction is necessary:
+the first off-parity failure is `(K,d,j)=(4,1,1)`, with difference
+`-1`; there are `99` negative off-parity steps in the same run.
+These results are bounded evidence for Target 5A8H28R12, not its
+proof.
+
 **Proposition 5A8H28AE (the Turan--incidence pair implies endpoint
 descent).**  Target 5A8H28R9 implies Target 5A8H28R8.
 
