@@ -12195,6 +12195,334 @@ is counted by `G_y^B`.  These data reconstruct the no-return endpoint
 walk uniquely, proving `(P5A.102CB5)`.  Coefficient extraction against
 `H_(n,t)` proves `(P5A.102CB6)--(P5A.102CB7)`.  QED.
 
+The killed channels can be removed altogether at the price of one
+two-by-two full-graph Green minor.  Write
+
+```text
+G_a(z)=sum_(r>=0)(N_Q^r)_(0,a)z^r,       F=G_0,  X=K-Q.
+```
+
+**Lemma 5A8H28UD (two-vertex Green-minor reduction).**  For every
+`y in Y`,
+
+```text
+(F-1)G_y^B=(F-1)G_(K-y)-zG_yG_X.                 (P5A.102CB5M)
+```
+
+Equivalently,
+
+```text
+G_QG_y^B=G_QG_(K-y)-G_XG_y.                      (P5A.102CB5N)
+```
+
+Consequently, for any `T subseteq Y`,
+
+```text
+sum_(y in T)J_y
+ =[z^(n-1)]P_(n,t){
+      G_Q sum_(y in T)G_(K-y)-G_X sum_(y in T)G_y}. (P5A.102CB5O)
+```
+
+**Proof.**  Put `R=(I-zN_Q)^(-1)` on the full vertex set and delete
+`S={0,Q}`.  Reflection about `K/2` gives
+`R_(y,K)=G_(K-y)`.  Since `N_Q e_0=e_Q` and
+`RN_Q=(R-I)/z`,
+
+```text
+R_(a,Q)=G_a/z                    (a!=0),
+R_(0,Q)=(F-1)/z,                R_(Q,Q)=(F-1)/z^2.
+```
+
+The last displayed quotient has constant term one.  Hence the inverse
+of the `S x S` block is the formal-series matrix
+
+```text
+[ F       (F-1)/z   ]^(-1)   [ 1   -z              ]
+[ (F-1)/z (F-1)/z^2]       = [-z  z^2F/(F-1)       ].
+```
+
+Moreover `K` is a leaf with unique neighbour `X`, so
+`G_K=zG_X`, while reflection gives `R_(Q,K)=G_X`.
+The principal-deletion identity
+
+```text
+R^B=R_(B,B)-R_(B,S)R_(S,S)^(-1)R_(S,B)
+```
+
+therefore gives
+
+```text
+G_y^B=G_(K-y)-zG_yG_X/(F-1),
+```
+
+which is `(P5A.102CB5M)`.  The leaf identity `F-1=zG_Q` gives
+`(P5A.102CB5N)`.  Multiplying by `P_(n,t)` and extracting degree `n-1`
+proves `(P5A.102CB5O)`.  QED.
+
+For the full channel set, the minor sum collapses exactly:
+
+```text
+G_Q sum_(y in Y)G_(K-y)-G_X sum_(y in Y)G_y=G_X. (P5A.102CB5Q)
+```
+
+Indeed `N_QG=(G-e_0)/z`, while reflection sends the omitted neighbours
+`0,Q` to `K,X`.  Therefore
+
+```text
+sum_(y in Y)G_y=G_Q/z-F-G_Q,
+sum_(y in Y)G_(K-y)=G_X/z-zG_X-G_X.
+```
+
+Substitution and `F-zG_Q=1` prove `(P5A.102CB5Q)`.  Thus the `d=0`
+member of Target 5A8H28R13 reduces back to the original endpoint
+current `[z^(n-1)]P_(n,t)G_X`; the proper outside-in tails are its
+strict partial-minor refinements.
+
+The remaining channel sums can be compressed to a constant number of
+full fusion-resolvent entries.  Return temporarily to the original
+labels at level `2K`, factor `2Q`, and write
+
+```text
+Rtilde_(u,v)(z)
+ =sum_(r>=0)((N_(2Q)^(2K))^r)_(u,v)z^r.
+```
+
+**Lemma 5A8H28UE (interval-resolvent compression).**  For every
+integer interval `0<=a<=b<=K`,
+
+```text
+sum_(y=a)^b G_y=Rtilde_(a+b,b-a).                 (P5A.102CB5S)
+```
+
+If `T_d={y in Y:|y-X|>=d}` and `I_d` is its partition into maximal
+integer intervals, then `|I_d|<=3` and
+
+```text
+sum_(y in T_d)J_y
+ =[z^(n-1)]P_(n,t)
+   sum_([a,b] in I_d){
+     G_Q Rtilde_(2K-a-b,b-a)
+      -G_X Rtilde_(a+b,b-a)}.                    (P5A.102CB5T)
+```
+
+**Proof.**  The ordinary, untruncated Clebsch--Gordan interval gives
+
+```text
+V_(a+b) V_(b-a)=sum_(y=a)^b V_(2y);
+```
+
+there is no affine fold because the largest displayed label is
+`2b<=2K`.  Take the coefficient of the vacuum after multiplication by
+`V_(2Q)^r` and sum over `r` to obtain `(P5A.102CB5S)`.
+Reflection sends `[a,b]` to `[K-b,K-a]`, so the same formula gives
+
+```text
+sum_(y=a)^b G_(K-y)=Rtilde_(2K-a-b,b-a).
+```
+
+Substitution in `(P5A.102CB5O)` proves `(P5A.102CB5T)`.
+Finally `Y=[1,Q-1] union [Q+1,2Q]`, while the condition
+`|y-X|>=d` is the union of two rays.  The lower component of `Y`
+meets only the left ray because `X>Q`; the upper component meets at
+most both rays.  Hence there are at most three maximal intervals.
+QED.
+
+Thus the strict-tail proof gate no longer grows with `Q`: it is a
+signed convolution of at most three paired full-resolvent entries.
+This is an exact reduction, not a sign proof; the two negative-factor
+controls below still require the paired terms to remain coupled.
+
+The three intervals admit one sharper allocation target.  For
+`T_d={y in Y:|y-X|>=d}`, put
+
+```text
+A_d=sum_(y in T_d, y<Q)J_y,
+B_d=sum_(y in T_d, Q<y<=X-d)J_y,
+C_d=sum_(y in T_d, y>X-d)J_y.                    (P5A.102CB5U)
+```
+
+These three sums have disjoint supports and add to the outside-in
+tail.  When `d>=1`, the support of `C_d` is exactly the right ray
+`y>=X+d`.
+
+**Target 5A8H28R14 (strict three-interval deficit reserve).**  For
+every admissible parameter row and every `d>=1`, prove
+
+```text
+A_d>=max(-B_d,0)+max(-C_d,0).                    (P5A.102CB5V)
+```
+
+This target implies every strict (`d>=1`) member of
+`(P5A.102CB8)`, because
+
+```text
+A_d+B_d+C_d
+ >=A_d+min(B_d,0)+min(C_d,0)>=0.
+```
+
+The nonlinear-looking reserve is exactly a four-filter linear cone.
+
+**Lemma 5A8H28UF (four-filter form of the strict reserve).**  Target
+5A8H28R14 is equivalent to the four inequalities
+
+```text
+A_d>=0,                    A_d+B_d>=0,
+A_d+C_d>=0,                A_d+B_d+C_d>=0          (P5A.102CB5W)
+```
+
+for every `d>=1`.
+
+**Proof.**  For arbitrary real `A,B,C`,
+
+```text
+A+min(B,0)+min(C,0)
+ =min{A,A+B,A+C,A+B+C}.
+```
+
+Thus `(P5A.102CB5V)` is exactly the assertion that all four entries in
+the minimum are nonnegative.  QED.
+
+Every filter in `(P5A.102CB5W)` is a union of at most three integer
+intervals, so Lemma 5A8H28UE compresses it to at most three paired
+full-resolvent terms.  More sharply, `A_d`, `A_d+B_d`, and `A_d+C_d`
+use at most two intervals; only the full tail can use three.  Hence the
+strict problem is a four-generator linear resolvent cone, not a
+piecewise or channelwise sign problem.
+
+The outer-flank generator has an exact reflection factorization.  Put
+
+```text
+D_y=G_QG_(K-y)-G_XG_y,
+```
+
+so that its channel current is `[z^(n-1)]P_(n,t)D_y`.  If
+`a=Q-r` and `c=K-a=X+r`, then
+
+```text
+D_a+D_c=(G_Q-G_X)(G_a+G_c).                       (P5A.102CB5X)
+```
+
+This does not separate the sign.  Coefficientwise positivity of the
+odd-boundary scalar factor already fails in the open range at
+
+```text
+(K,Q,j,t,degree)=(5,2,5,4,4),
+[z^4]P_(12,4)(G_Q-G_X)=-55.
+```
+
+Thus the reflection-even endpoint factor `G_a+G_c` remains
+load-bearing in the outer-flank current; `(P5A.102CB5X)` is useful
+structure but not a scalar proof of the corresponding generator in
+`(P5A.102CB5W)`.
+
+It retains genuine three-way payment.  Both upper intervals can be
+negative simultaneously, first in the bounded audit at
+
+```text
+(K,Q,j,t,d)=(27,11,22,19,1),
+A_d=14255742240599587157787968389440066757598074005753885505,
+B_d=-272745502387188586834348530228774700673077730771094741,
+C_d=-199731246039119966467921443826378226460840730451396703.
+```
+
+The resulting total is the positive integer
+
+```text
+13783265492173278604485698415384913830464155544531394061.
+```
+
+Thus no proof which merely excludes simultaneous upper deficits can
+work.  Through `K=60` and `j=25`, all `5,915,217` strict deficit
+reserves in `(P5A.102CB5V)` were nonnegative.  Separately, all
+`5,720,946` tested lower-left currents `A_d` and all equally many
+outer-flank sums `A_d+C_d` were nonnegative.  This is bounded evidence,
+not a proof.
+
+The restriction `d>=1` is necessary for this stronger reserve.  At
+
+```text
+(K,Q,j,t,d)=(5,2,15,14,0)
+```
+
+one has
+
+```text
+A_0+B_0=-290633939856683008,
+C_0=28039061895349235712,
+A_0+B_0+C_0=27748427955492552704.
+```
+
+Thus positive upper-right credit is indispensable in the central
+`d=0` row.  Target 5A8H28R14 would close all strict tails, but the
+central extension from `d=1` to `d=0` remains exactly the original
+full-prefix/global-payment gate.
+
+The strict reserve itself cannot be refined into independent
+radius-by-radius payments.  For `1<=r<Q`, the lower label `Q-r` is the
+natural common partner of the possible upper labels `Q+r` and `X+r`.
+With absent channels set to zero and only channels in `T_d` retained,
+the local reserve
+
+```text
+J_(Q-r)+min(J_(Q+r),0)+min(J_(X+r),0)
+```
+
+first fails at
+
+```text
+(K,Q,j,t,d,r)=(11,5,15,13,1,1),
+J_(Q-r)=-6221826968772337899178425,
+J_(X+r)=-6221826968772337899178425,
+reserve=-12443653937544675798356850.
+```
+
+Nor can the lower labels be exposed monotonically from the opposite
+end.  Assign each negative upper channel to its radius `r`, include the
+corresponding lower current, merge the unpaired boundary radius `Q`
+with radius `Q-1`, and sum radii from `Q` inward.  The first bounded
+negative nested prefix is
+
+```text
+(K,Q,j,t,d,R)=(45,15,16,14,1,14),
+prefix=-1400793113905054146460767362149605985087096.
+```
+
+Thus inner-to-outer order fails by the first local control, while
+outer-to-inner order fails by the second.  Target 5A8H28R14 must be
+proved as a genuinely global allocation across the complete lower
+interval; neither natural one-dimensional Hall filtration is valid.
+
+Thus Target 5A8H28R13 is also a cumulative full-fusion Green-minor
+inequality, with no killed transition matrix left.  If
+`G_a=F E_a` is the last-return decomposition at zero, its brace in
+`(P5A.102CB5O)` is
+
+```text
+F^2 C_T,   C_T=E_Q sum_(y in T)E_(K-y)
+                 -E_X sum_(y in T)E_y.            (P5A.102CB5P)
+```
+
+This factorization does not separate the desired sign:
+coefficientwise positivity of `P_(n,t)F^2` already fails at
+
+```text
+(K,Q,j,t,degree)=(3,1,5,4,3),  value=-53.
+```
+
+The divided core `C_T` is also not positive in complete generality;
+for the full `Q=1,K=3` channel it first fails at degree `16`, with
+value `-4373`.  Nor does restricting to the open range `Q>=2` repair
+it.  The first bounded higher-label failure is the outer channel
+
+```text
+(K,Q,distance,degree)=(5,2,2,48),
+value=-18768537881448797722885.
+```
+
+Thus neither factor in `(P5A.102CB5P)` is coefficientwise positive;
+the proof must preserve their signed convolution in
+`(P5A.102CB5O)`.
+
 Because `0` is a leaf whose unique positive neighbour is `Q`, first
 return at `0` also gives the exact renewal identity
 

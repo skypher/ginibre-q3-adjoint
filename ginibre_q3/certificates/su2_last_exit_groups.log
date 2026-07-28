@@ -4,15 +4,36 @@ compares the last-exit Green channel sum with an independent endpoint
 recurrence.  The outside-in signs are bounded discovery evidence only;
 Lemma 5A8H28UC, not the scan, proves the channel decomposition.  The
 renewal-current signs test and refute the stronger coefficientwise
-shortcut P_(n,t)(F-1)>=0.
+shortcut P_(n,t)(F-1)>=0.  The same run verifies the exact
+two-vertex Green-minor and divided-core identities and refutes both
+independent-factor positivity shortcuts in P5A.102CB5P.  It also
+tests the three interval pieces in P5A.102CB5U and the strict deficit
+reserve P5A.102CB5V.  The local-triple and nested-radius counters are
+negative controls for two stronger one-dimensional allocations.
 
 COMMAND
 character_ring_iter/analyze_su2_last_exit_groups 60 25
 
 OUTPUT
+FIRST_NEGATIVE_OUTSIDE_IN_CORE K=3 Q=1 distance=0 degree=16 value=-4373
+FIRST_NEGATIVE_TWICE_RETURN_CURRENT K=3 Q=1 j=5 t=4 degree=3 value=-53
+FIRST_NEGATIVE_ODD_BOUNDARY_CURRENT K=3 Q=1 j=5 t=4 degree=4 value=-55
 FIRST_NEGATIVE_RENEWAL_CURRENT K=3 Q=1 j=5 t=4 degree=7 value=-790
+FIRST_NEGATIVE_HIGHER_Q_CORE K=5 Q=2 distance=2 degree=48 value=-18768537881448797722885
+FIRST_NEGATIVE_HIGHER_Q_TWICE_RETURN K=5 Q=2 j=5 t=4 degree=3 value=-53
+FIRST_NEGATIVE_HIGHER_Q_ODD_BOUNDARY_CURRENT K=5 Q=2 j=5 t=4 degree=4 value=-55
+FIRST_NEGATIVE_INTERVAL_PIECE piece=UPPER_LEFT K=5 Q=2 j=7 t=6 distance=0 value=-36728800
+FIRST_NEGATIVE_INTERVAL_PIECE piece=LEFT_RAY K=5 Q=2 j=15 t=14 distance=0 value=-290633939856683008
+FIRST_NEGATIVE_INTERVAL_PIECE piece=UPPER_PAIR K=5 Q=2 j=15 t=14 distance=0 value=-290633939856683008
+FIRST_SIMULTANEOUS_NEGATIVE_RAYS K=5 Q=2 j=15 t=14 distance=0 left_ray=-290633939856683008 upper_pair=-290633939856683008
+NEGATIVE_LEFT_RAY_FAMILY K=5 Q=2 j=15 t=14 distance=0 left_ray=-290633939856683008 upper_right=28039061895349235712 total=27748427955492552704
 FIRST_NEGATIVE_NONSPECIAL K=10 Q=4 j=20 t=17 y=7 margin=-584358080265680221571012927691270
-SU2_LAST_EXIT_GROUP_SCAN maximum_K=60 maximum_prefix=25 parameters=870 rows=200970 identities=200970 groups=3952410 negative_groups=119127 nonspecial_negative_groups=101410 special_positive_groups=51583 outside_in_prefixes=6116187 negative_outside_in_prefixes=0 renewal_current_coefficients=7971810 negative_renewal_current_coefficients=3251740 minimum_nonspecial=-13194954125373253335846869713925319087996968314119597658041609098478388621384812 minimum_total=0 result=PASS_OUTSIDE_IN_PREFIXES
+FIRST_NEGATIVE_INTERVAL_PIECE piece=UPPER_RIGHT K=11 Q=4 j=19 t=16 distance=1 value=-212361230047764694445462213037523
+FIRST_NEGATIVE_LOCAL_TRIPLE_RESERVE K=11 Q=5 j=15 t=13 distance=1 radius=1 lower=-6221826968772337899178425 upper_left=0 upper_right=-6221826968772337899178425 reserve=-12443653937544675798356850
+FIRST_SIMULTANEOUS_NEGATIVE_UPPER K=13 Q=5 j=20 t=18 distance=0 lower_left=994481778189409593981383129917640855896 upper_left=-33753419297570430066236289261465414934 upper_right=-7331407914359519993074776588684126290 total=953396950977479643922072064067491314672
+FIRST_STRICT_SIMULTANEOUS_NEGATIVE_UPPER K=27 Q=11 j=22 t=19 distance=1 lower_left=14255742240599587157787968389440066757598074005753885505 upper_left=-272745502387188586834348530228774700673077730771094741 upper_right=-199731246039119966467921443826378226460840730451396703 total=13783265492173278604485698415384913830464155544531394061
+FIRST_NEGATIVE_NESTED_RADIUS_RESERVE K=45 Q=15 j=16 t=14 distance=1 radius=14 value=-1400793113905054146460767362149605985087096
+SU2_LAST_EXIT_GROUP_SCAN maximum_K=60 maximum_prefix=25 parameters=870 rows=200970 identities=200970 groups=3952410 negative_groups=119127 nonspecial_negative_groups=101410 special_positive_groups=51583 outside_in_prefixes=6116187 negative_outside_in_prefixes=0 renewal_current_coefficients=7971810 negative_renewal_current_coefficients=3251740 twice_return_current_coefficients=7971810 negative_twice_return_current_coefficients=3482844 green_minor_identities=17110 outside_in_core_identities=26477 outside_in_core_coefficients=1403281 negative_outside_in_core_coefficients=92 negative_higher_q_core_coefficients=15 negative_higher_q_twice_return_coefficients=3235285 interval_piece_tests=5720946,4052895,721875,6116187,5720946,4466847 negative_interval_piece_tests=0,25674,33945,38,0,3439 simultaneous_negative_upper_pieces=430 simultaneous_negative_ray_pairs=38 strict_simultaneous_negative_upper_pieces=94 strict_negative_left_rays=0 strict_deficit_reserve_tests=5915217 negative_strict_deficit_reserves=0 local_triple_reserve_tests=22713075 negative_local_triple_reserves=62055 nested_radius_reserve_tests=42672630 negative_nested_radius_reserves=404 odd_boundary_current_coefficients=7971810 negative_odd_boundary_current_coefficients=4523080 negative_higher_q_odd_boundary_coefficients=4269923 minimum_nonspecial=-13194954125373253335846869713925319087996968314119597658041609098478388621384812 minimum_total=0 result=PASS_OUTSIDE_IN_PREFIXES
 
 INTERPRETATION
 All 200,970 last-exit channel decompositions reproduce the independent
@@ -23,10 +44,21 @@ channel sums, ordered from largest |y-(K-Q)| inward, is nonnegative.
 This isolates the unproved statement as the outside-in Green payment
 (P5A.102CB8).  The displayed negative renewal coefficient separately
 rules out coefficientwise positivity before convolution with the killed
-Green channels.
+Green channels.  All 17,110 two-vertex Green-minor identities and all
+26,477 divided-core reconstructions hold exactly.  The displayed
+negative twice-return kernel and divided cores show that neither factor
+in P5A.102CB5P is independently nonnegative, including when Q>=2.
+The 4,269,923 higher-Q negative odd-boundary coefficients refute the
+scalar separation of the reflected-pair identity P5A.102CB5X.
+The interval-piece negatives show that neither upper interval is a
+separate positive channel, and 94 strict rows have both upper deficits
+at once.  Nevertheless all 5,915,217 strict lower-reservoir payments
+P5A.102CB5V are nonnegative.  The 62,055 negative local triples and
+404 negative nested-radius prefixes refute both natural
+one-dimensional refinements.  These counts remain bounded evidence.
 
 SOURCE_SHA256
-eb9c3ee621cf996a7ede3f66cd979b0e2daebd71eebf174faa171a4d877aa608
+43c25b89080f79d4a0aef58d434160767fa7fce3bcc5cb17b2df84936ae24bcb
 
 EXECUTABLE_SHA256
-24bf7c282ff37b9d5125b352662cce49f93f23b443278634e96dfb9691741d57
+99ce564aad9701544bb596d1fb85ffc6fa11d3796caf11c6716c38675bb7ada0
