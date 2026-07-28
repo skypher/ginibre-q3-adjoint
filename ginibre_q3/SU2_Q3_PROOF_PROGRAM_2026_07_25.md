@@ -973,7 +973,12 @@ before any further construction.
    `79+7binom(2j+1,2)-6binom(2j+1,4)<0` for every `j>=5`.  Therefore
    any finite-head/scalar-safe-tail payment needs depth at least
    `2j-6`.  The next hard step is a genuinely global allocation using
-   the residual `E_F`.
+   the residual `E_F`.  Proposition 5A8H28W further rules out ordering
+   that allocation only by core length: the exact row
+   `(k,q,j,t,r)=(38,18,25,11,21)` has a negative outside-in
+   core-length suffix.  Hence the surviving construction must retain
+   the reduced core shape, or the equivalent reflected crossing/shell
+   state.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail

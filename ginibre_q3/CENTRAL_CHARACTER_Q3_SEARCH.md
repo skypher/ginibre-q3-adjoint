@@ -12017,14 +12017,51 @@ Thus the residual positive factor `E_F`, rather than only its
 Fibonacci reserve, still participates through a genuinely global
 payment.
 
+Nor can that payment be ordered only by the length of the reduced
+core.
+
+**Proposition 5A8H28W (core-length suffix obstruction).**  Write
+
+```text
+e_r=[z^r]E_F(z),
+b_d=[z^d]H_(n,t)(z)/(1-z-z^2)^L.
+```
+
+At
+
+```text
+(k,q,j,t,n,L)=(38,18,25,11,52,2),
+```
+
+the outside-in core-length suffix is
+
+```text
+sum_(r=21)^52 e_r b_(52-r)
+ =-583720490747745899132205379017928387095266859408472494798.
+                                                               (P5A.102CD)
+```
+
+Thus neither coefficientwise scalar positivity nor every suffix in
+the scalar core length can prove the global current.  A successful
+allocation must retain the shape of the `E_F` core, or an equivalent
+crossing/shell state.
+
+**Proof.**  The strict arbitrary-precision analyzer performs formal
+division by `(1-z-z^2)^L`, independently multiplies the two resulting
+series back to the original current, and evaluates every suffix by
+exact integer arithmetic.  The displayed row is its first negative
+core-length suffix.  This one exact instance disproves the universal
+suffix assertion.  QED.
+
 The strict C++ analyzer
 `character_ring_iter/analyze_su2_reduced_current_payment.cpp`
 independently divides the endpoint series by the displayed reserve.
 Through level `60` and degree `52`, all `11,130` tested safe residual
 coefficients were nonnegative.  It also reproduces `(P5A.102CC)` and
-the earlier Abel negative controls.  This is a bounded audit of the
-series identity and its failed scalar strengthening; the token-word
-bijection proves `(P5A.102CB)` for all `Q>=1`.  The transcript is
+the earlier Abel negative controls, and checks `1,610,175`
+core-length suffixes, including `(P5A.102CD)`.  This is a bounded
+audit of the series identity and its failed scalar strengthenings; the
+token-word bijection proves `(P5A.102CB)` for all `Q>=1`.  The transcript is
 `certificates/su2_reduced_current_payment.log`.
 
 Lemma 5A8H28T does not by itself prove the current.  At the nearest

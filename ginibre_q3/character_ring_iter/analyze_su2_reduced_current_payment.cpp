@@ -140,6 +140,8 @@ int main(int argc, char** argv) {
         std::uint64_t safe_fibonacci_current_coefficients = 0U;
         std::uint64_t safe_fibonacci_current_negatives = 0U;
         std::uint64_t qge2_fibonacci_current_negatives = 0U;
+        std::uint64_t core_suffix_coordinates = 0U;
+        std::uint64_t core_suffix_negatives = 0U;
         int maximum_required_head = -1;
         Witness maximum_witness;
         int maximum_safe_required_head = -1;
@@ -576,6 +578,34 @@ int main(int argc, char** argv) {
                                 }
                             }
                         }
+                        Integer core_suffix = 0;
+                        for (int residual_degree = n;
+                             residual_degree
+                                >= minimum_first_passage_degree;
+                             --residual_degree) {
+                            core_suffix += safe_fibonacci_residual[
+                                static_cast<std::size_t>(residual_degree)
+                            ] * safe_fibonacci_current[
+                                static_cast<std::size_t>(
+                                    n - residual_degree
+                                )];
+                            ++core_suffix_coordinates;
+                            if (core_suffix < 0) {
+                                ++core_suffix_negatives;
+                                if (core_suffix_negatives == 1U) {
+                                    std::cout
+                                        << "FIRST_NEGATIVE_CORE_SUFFIX"
+                                        << " level=" << level
+                                        << " label=" << label
+                                        << " prefix=" << prefix
+                                        << " truncation=" << truncation
+                                        << " residual_degree="
+                                            << residual_degree
+                                        << " value=" << core_suffix
+                                        << '\n';
+                                }
+                            }
+                        }
                         std::vector<Integer> fibonacci_current = h;
                         for (int degree = 1; degree <= n; ++degree) {
                             fibonacci_current[
@@ -871,6 +901,10 @@ int main(int argc, char** argv) {
                 << safe_fibonacci_current_negatives
             << " qge2_fibonacci_current_negatives="
                 << qge2_fibonacci_current_negatives
+            << " core_suffix_coordinates="
+                << core_suffix_coordinates
+            << " core_suffix_negatives="
+                << core_suffix_negatives
             << " maximum_required_head=" << maximum_required_head
             << " witness=("
             << maximum_witness.level << ','
