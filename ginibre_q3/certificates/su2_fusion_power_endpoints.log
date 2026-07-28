@@ -1,0 +1,26 @@
+STATUS
+Exact bounded recurrence audit of the unbounded signed fusion-power
+endpoint formula in Lemma 5A8H28O.
+
+COMMAND
+character_ring_iter/verify_su2_fusion_power_endpoints 40
+
+OUTPUT
+SU2_FUSION_POWER_ENDPOINTS maximum_level=40 parameters=22960 coordinates=2870000 signed_endpoint_runs=2050979 negative_endpoint_runs=608965 maximum_runs=4 maximum_entry=3101 result=PASS_EXACT_ENDPOINT_FORMULA
+
+INTERPRETATION
+The verifier constructs N_d^b, 1<=b<=4, by direct finite-fusion
+recurrence.  Independently, it classically decomposes V_d^(tensor b),
+affine-folds every summand with its sign, groups the retained summands
+into maximal fusion intervals, and evaluates only their telescoped
+weight-multiplicity endpoints.  The recurrence comparison is bounded;
+the affine-fold and telescoping proof in Lemma 5A8H28O is unbounded.
+
+SOURCE_SHA256
+7ccc2c63b67f9d0117d233ec9cfd82497f2e24002bf726f5ff4d945c532ddea4
+
+EXECUTABLE_SHA256
+b2904b2399afaa9942dceb9bd3f4cd9bac195e9ab7e8687d69b3dfb1901aa516
+
+RAW_TRANSCRIPT_SHA256
+dcc79b92afcee5108caf29b733fed46d44abfd4a7d0140d4b46bafdac9dce87c

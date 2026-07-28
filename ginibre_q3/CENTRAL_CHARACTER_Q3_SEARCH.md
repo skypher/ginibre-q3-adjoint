@@ -11378,6 +11378,98 @@ with a nontrivial active truncation term.  Its transcript is
 `certificates/su2_tensor_power_hinges.log`.  This bounded computation
 audits the formula; the generating-function proof above is unbounded.
 
+Affine folding preserves the endpoint structure, but introduces
+essential signs.
+
+**Lemma 5A8H28O (signed fusion-power endpoint formula).**  Put
+
+```text
+h=ell+2.
+```
+
+For a classical label `m>=0`, let `r_m` be the residue of `m+1`
+modulo `2h`, in `{0,...,2h-1}`, and define its level-`ell` affine fold
+by
+
+```text
+Fold_ell(m)=
+  0,                              r_m=0 or h;
+  +V_(r_m-1),                     1<=r_m<h;
+  -V_(2h-r_m-1),                  h<r_m<2h.         (P5A.102BR)
+```
+
+Let
+
+```text
+w_(b,d)(r)=[x^r](1+x+...+x^d)^b.
+```
+
+For `1<=b<=4`, partition the integers
+`0<=r<=floor(bd/2)` into the maximal intervals
+`I_nu=[L_nu,U_nu]` on which
+
+```text
+Fold_ell(bd-2r)=epsilon_nu V_(c_nu(r)),
+epsilon_nu in {+1,-1},
+```
+
+and `t` lies in the level-`ell` fusion interval
+`s star c_nu(r)`.  There are at most four nonempty intervals, and
+
+```text
+(N_d^b)_(s,t)
+ =sum_nu epsilon_nu {
+      w_(b,d)(U_nu)-w_(b,d)(L_nu-1)}.              (P5A.102BS)
+```
+
+**Proof.**  In the classical representation ring,
+
+```text
+V_d^(tensor b)
+ =sum_r {w_(b,d)(r)-w_(b,d)(r-1)}V_(bd-2r).
+```
+
+The level-`ell` fusion ring is its quotient by the affine Weyl
+antisymmetry `(P5A.102BR)`.  Multiplication by the basis element `V_s`
+then retains a folded summand precisely when `t` belongs to its single
+fusion interval.  On an affine-fold branch the folded label is affine
+in `r`; all four fusion inequalities are affine, so the retained
+indices on that branch form one interval.  Since
+
+```text
+0<=bd<=4ell<4h
+```
+
+for `b<=4` and `d<=ell`, the descending labels `bd-2r` meet at most
+four nonzero affine-fold branches.  Finally the multiplicity difference
+telescopes on each retained interval, proving `(P5A.102BS)`.  QED.
+
+The signs in `(P5A.102BS)` cannot be discarded.  The first direct
+unsigned endpoint proposal already fails at
+
+```text
+(ell,d,b,s,t)=(1,1,3,0,1):
+```
+
+classically `V_1^(tensor 3)=V_3+2V_1`, while
+`Fold_1(3)=-V_1`, leaving the correct multiplicity one.
+
+The strict C++ verifier
+`character_ring_iter/verify_su2_fusion_power_endpoints.cpp` constructs
+the fusion powers by direct recurrence and independently evaluates the
+signed interval endpoints.  Through level `40` it checked `2,870,000`
+coordinates, containing `608,965` negative endpoint runs; the maximum
+number of runs was four.  A larger diagnostic replay through level
+`80` checked `43,394,400` coordinates and `9,272,978` negative runs,
+again with no mismatch.  The bound is an audit; Lemma 5A8H28O is
+unbounded.
+
+Combining Lemmas 5A8H28N and 5A8H28O, every entry needed in Target
+5A8H28R5 is an explicit signed sum of at most four truncated-binomial
+endpoint polynomials.  The remaining symbolic task is only to enumerate
+the order masks selecting `L_nu,U_nu` and the active truncations in
+their two weight multiplicities.
+
 Thus the following is a sufficient strengthening of the missing
 global-payment lemma:
 

@@ -895,7 +895,13 @@ before any further construction.
    `sum_j(-1)^j binom(b,j)binom(r-j(d+1)+b-2,b-2)`.
    Thus the classical fan has only the explicit walls
    `r=j(d+1)`; adjoining the ordinary and nearest reflected
-   Clebsch--Gordan endpoints gives a finite mask enumeration.
+   Clebsch--Gordan endpoints gives a finite mask enumeration.  Lemma
+   5A8H28O handles the affine quotient exactly: each finite-fusion
+   power entry is a signed sum of at most four endpoint differences
+   `w(U)-w(L-1)`.  Negative affine branches are essential—the direct
+   level-40 audit encountered 608,965 of them—but the formula closes
+   all path summations and leaves only finitely many endpoint-order
+   masks.
    Arbitrary `t>=3` still requires the general global-payment mechanism
    after that leaf is closed.
 
