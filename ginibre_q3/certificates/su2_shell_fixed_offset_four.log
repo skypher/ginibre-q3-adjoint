@@ -1,0 +1,38 @@
+STATUS
+Exact unbounded Newton certificate for the K=2Q+4 finite-width shell
+payment of Lemma 5A8H28L, together with a bounded independent
+quotient-matrix audit through Q=100.
+
+COMMAND
+character_ring_iter/analyze_su2_shell_fixed_offset 100 4 --certificate
+
+OUTPUT
+FIRST_NEGATIVE_FIXED_OFFSET_ODD Q=3 offset=4 rho=4 target=0 profile=(4,0) value=-12
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=-1 minimum_a=-100 maximum_a=-61 profiles=40 entries=40
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=0 minimum_a=-101 maximum_a=4 profiles=79 entries=119
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=1 minimum_a=-100 maximum_a=-23 profiles=78 entries=226
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=2 minimum_a=-99 maximum_a=-7 profiles=93 entries=292
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=3 minimum_a=-98 maximum_a=2 profiles=101 entries=2576
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=4 minimum_a=-97 maximum_a=1 profiles=99 entries=2491
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=5 minimum_a=-96 maximum_a=1 profiles=98 entries=2430
+FIXED_OFFSET_CERTIFICATE offset=4 boundary_box_entries=3289 boundary_box_minimum=30 ray_certificates=662 ray_minimum_coefficient=0 cone_certificates=32 cone_minimum_coefficient=0 maximum_total_degree=8 result=PASS_NONNEGATIVE_NEWTON_EXPANSIONS
+SU2_SHELL_FIXED_OFFSET maximum_q=100 offset=4 entries=358950 maximum_even_radius=6 maximum_odd_radius=5 negative_even=0 negative_odd=8174 negative_total=0 even_profiles=0 odd_profiles=588 result=PASS_FIXED_OFFSET_DISCOVERY
+
+INTERPRETATION
+At K=2Q+4 the odd quotient is JN_3.  The analyzer certifies every even
+cutoff class, the full odd packet, and combined payment in all nine
+partial odd classes.  The exhaustive stable-boundary partition has
+3,289 finite entries, 662 one-variable Newton rays, and 32
+two-variable Newton cones.  Exact reconstruction and vanishing ninth
+differences certify the unbounded degree-eight polynomial identities;
+Q<=100 is an independent recurrence audit.  The 8,174 negative odd
+packets show that combined payment is essential.
+
+SOURCE_SHA256
+cdc244c13e62e8f4155a718ba777399d1d7651429faabad59e6bd9981a4dd941
+
+EXECUTABLE_SHA256
+80b5de43de96260d646b6b32f8982d937c399388ad86c3a906088b9f89915049
+
+RAW_TRANSCRIPT_SHA256
+eec76000a5ed502aafb0531c7234bd22d9bbca817c92ef261a7de21ac31320ac

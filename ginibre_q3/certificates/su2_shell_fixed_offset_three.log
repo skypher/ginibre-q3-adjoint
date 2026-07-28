@@ -1,0 +1,40 @@
+STATUS
+Exact unbounded Newton certificate for the K=2Q+3 finite-width shell
+payment of Lemma 5A8H28K, together with a bounded independent
+quotient-matrix audit through Q=100.
+
+COMMAND
+character_ring_iter/analyze_su2_shell_fixed_offset 100 3 --certificate
+
+OUTPUT
+FIRST_NEGATIVE_FIXED_OFFSET_ODD Q=2 offset=3 rho=3 target=0 profile=(3,0) value=-2
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=-2 minimum_a=-99 maximum_a=-76 profiles=24 entries=24
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=-1 minimum_a=-100 maximum_a=-35 profiles=66 entries=90
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=0 minimum_a=-101 maximum_a=3 profiles=96 entries=186
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=1 minimum_a=-100 maximum_a=-6 profiles=95 entries=250
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=2 minimum_a=-99 maximum_a=1 profiles=101 entries=2592
+FIXED_OFFSET_NEGATIVE_ODD_BAND b=3 minimum_a=-98 maximum_a=1 profiles=100 entries=2540
+FIXED_OFFSET_CERTIFICATE offset=3 boundary_box_entries=906 boundary_box_minimum=30 ray_certificates=320 ray_minimum_coefficient=0 cone_certificates=22 cone_minimum_coefficient=0 maximum_total_degree=8 result=PASS_NONNEGATIVE_NEWTON_EXPANSIONS
+SU2_SHELL_FIXED_OFFSET maximum_q=100 offset=3 entries=358950 maximum_even_radius=4 maximum_odd_radius=3 negative_even=0 negative_odd=5682 negative_total=0 even_profiles=0 odd_profiles=482 result=PASS_FIXED_OFFSET_DISCOVERY
+
+INTERPRETATION
+At K=2Q+3 the odd quotient is JN_2.  The analyzer constructs both
+quotients directly and separates the shifted terminal row into even
+and odd packets.  It certifies all nine nonempty even cutoff classes,
+the full odd packet, and the combined payment in the six partial odd
+classes.  The exhaustive stable-boundary partition has 906 finite
+entries, 320 one-variable Newton rays, and 22 two-variable Newton
+cones.  Exact reconstruction and vanishing ninth differences certify
+the unbounded degree-eight polynomial identities; Q<=100 is an
+independent recurrence audit.  The negative b=-2 band demonstrates
+why the proof uses combined payment rather than a false standalone
+odd-packet sign claim.
+
+SOURCE_SHA256
+cdc244c13e62e8f4155a718ba777399d1d7651429faabad59e6bd9981a4dd941
+
+EXECUTABLE_SHA256
+80b5de43de96260d646b6b32f8982d937c399388ad86c3a906088b9f89915049
+
+RAW_TRANSCRIPT_SHA256
+1dbff8e9daf2347a153b7f49048b5a27b8f65904d60eed3131f92886dd32137e

@@ -860,9 +860,21 @@ before any further construction.
    `Q=100` leaves only six cutoff profiles for payment.  Proving their
    polynomial signs is Target 5A8H28R4.  Lemma 5A8H28I now closes all
    six payments by positive degree-five Newton expansions.  What remains
-   on this ray is only the sign-classification step: prove the even
-   packet nonnegative everywhere and the odd packet nonnegative outside
-   the six already-paid profiles.
+   on this ray is the sign classification.  Lemma 5A8H28J now closes it
+   by an exhaustive stable-boundary partition: 145 exact finite-box
+   entries, 97 positive Newton rays, eight positive Newton cones, and
+   the explicit outer-odd formula.  Hence Target 5A8H28R4 and the full
+   ray `K=2Q+2` are proved.  The exact remaining `t=2` band is
+   initially `Q>=7`, `2Q+3<=K<10Q`.  Lemma 5A8H28K then closes the
+   next ray `K=2Q+3`.  Here `A_-=JN_2`; the terminal packets have
+   radii four and three.  An exhaustive exact partition into 906
+   boundary entries, 320 Newton rays, and 22 Newton cones pays all six
+   partial odd cutoff classes.  The exact remaining `t=2` band is now
+   initially `Q>=7`, `2Q+4<=K<10Q`.  Lemma 5A8H28L applies the same
+   exact chamber mechanism to `A_-=JN_3` and closes `K=2Q+4`: 3,289
+   boundary entries, 662 Newton rays, and 32 Newton cones pay all nine
+   partial odd classes.  The exact remaining `t=2` band is now
+   `Q>=7`, `2Q+5<=K<10Q`.
    Arbitrary `t>=3` still requires the general global-payment mechanism
    after that leaf is closed.
 

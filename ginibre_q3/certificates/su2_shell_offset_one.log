@@ -1,6 +1,7 @@
 STATUS
-Exact bounded discovery for the offset-one finite-width shell packets.
-This is not an unbounded proof of Target 5A8H28R4.
+Exact unbounded Newton certificate for the offset-one finite-width
+packet classification and deficit payment of Target 5A8H28R4, together
+with a bounded independent quotient-matrix audit through Q=100.
 
 COMMAND
 character_ring_iter/analyze_su2_shell_offset_one 100
@@ -20,6 +21,7 @@ OFFSET_ONE_NEWTON_CERTIFICATE even_cut_offset=0 odd_cut_offset=2 nonzero_terms=6
 OFFSET_ONE_NEWTON_CERTIFICATE even_cut_offset=1 odd_cut_offset=2 nonzero_terms=4 minimum_coefficient=96 maximum_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
 OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=0 nonzero_terms=21 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
 OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=3 nonzero_terms=21 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
+OFFSET_ONE_CLASSIFICATION_CERTIFICATE boundary_box_entries=145 boundary_box_minimum=30 ray_certificates=97 ray_minimum_coefficient=0 cone_certificates=8 cone_minimum_coefficient=0 outer_odd_formula_checks=4935 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSIONS
 OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=1 nonzero_terms=6 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
 OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=2 nonzero_terms=6 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
 OFFSET_ONE_FULL_NEWTON_CERTIFICATE profile=4 nonzero_terms=6 minimum_coefficient=320 maximum_total_degree=5 result=PASS_NONNEGATIVE_NEWTON_EXPANSION
@@ -29,18 +31,21 @@ SU2_SHELL_OFFSET_ONE maximum_label=100 parameters=100 shell_entries=348550 negat
 INTERPRETATION
 At K=2Q+2 the odd quotient is JN_1.  The analyzer separates the
 shifted terminal kernel into its even- and odd-suffix packets for every
-shell and endpoint.  The even packet and their combined total had no
-negative entry through Q=100.  Odd deficits occurred only in the six
-displayed clamped cutoff profiles.  These counts are discovery evidence
-for the packet sign classification, not its proof.  The ten Newton
-records are exact unbounded polynomial certificates for the six
-deficit-payment chambers of Lemma 5A8H28I.
+shell and endpoint.  The ten deficit records are exact unbounded
+polynomial certificates for Lemma 5A8H28I.  The classification record
+exhausts the stable-boundary partition of Lemma 5A8H28J: 145 finite
+boundary-box entries, 97 one-variable Newton rays, eight two-variable
+Newton cones, and 4,935 independent checks of the explicit outer-odd
+formula.  The program reconstructs every sampled value and rejects a
+negative coefficient or nonzero sixth difference.  The finite range
+audits the quotient recurrence; the degree-five Newton identities give
+the unbounded certificate.
 
 SOURCE_SHA256
-910254ede237a4c1d4668eb4f31c57a514457fd3c540917e8224ab24d0e61d13
+b52641ab50980df09b333d0abf0aa70063e21aab3da054e22d8975fc09174997
 
 EXECUTABLE_SHA256
-624e7b5b403b5314517f4806bb62cf147daf85d0e540d1948e1d3314701fae6b
+144804e89aa5082af3ed07feb16d626f99f806b1cc6ce1f947f6fa4981cd17c8
 
 RAW_TRANSCRIPT_SHA256
-06cae52256c2fa2de77abca0ebe29a60de6be715a6b9cf58c89054f71091c5e9
+da90ce4ccd151014e603d1041847b09666261c546a043c978cf14ae7852404b8

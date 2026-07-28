@@ -10928,10 +10928,240 @@ nonzero difference above degree five.  Thus the computation verifies
 polynomial identities of the stated unbounded degree, not a finite
 range extrapolation.  QED.
 
-After Lemma 5A8H28I, Target 5A8H28R4 has only the sign-classification
-part left: prove `E>=0` for every cutoff and prove `O>=0` outside
-`(P5A.102BFR)`.  The payment of every possible deficit in that list is
-now closed.
+The remaining packet classification is also finite after the correct
+stable-boundary partition.
+
+**Lemma 5A8H28J (offset-one packet sign classification).**  Under the
+hypotheses of Lemma 5A8H28H,
+
+```text
+E_(rho,x)>=0
+```
+
+for every cutoff.  Moreover `O_(rho,x)>=0` outside the six profiles in
+`(P5A.102BFR)`.
+
+**Proof.**  Write `y=Q-x`, `a=rho-x`, and `b=rho-y`.  The support
+intervals `(P5A.102BFO)` leave only the following packet classes:
+
+```text
+E:  a<=-2 (full), a=-1,0,1,2, a>=3 (empty);
+O:  b<=-1 (full), b=0,1,2, b>=3 (empty).          (P5A.102BFV)
+```
+
+The full packets in `(P5A.102BFV)` are represented by `a=-2` and
+`b=-1`.  Validity of the cutoff supplies the corresponding boundary
+conditions `x>=2` and `y>=1`.
+
+For each of the five nonempty even classes, and for the full and
+`b=0` odd classes, partition the quadrant `x+y>=7` into
+
+```text
+0<=x,y<=6, x+y>=7;       x=c<=6, y>=7;
+y=c<=6, x>=7;            x,y>=7.                  (P5A.102BFW)
+```
+
+Direct iteration of `(P5A.102BFN)` gives on every ray and cone in
+`(P5A.102BFW)` a Newton polynomial of total degree at most five.  All
+of its coefficients are nonnegative.  The finite box contains 145
+admissible packet/profile entries and their minimum is `30`.
+
+For `b=1`, being outside `(P5A.102BFR)` is exactly
+
+```text
+a=1+y-x>=-2,             s=y+3-x>=0.
+```
+
+The admissible domain splits into the six rays
+
+```text
+x=c, 1<=c<=6,            s>=max(0,10-2c),
+```
+
+and the cone `x>=7,s>=0`.  Their degree-at-most-five Newton
+coefficients are again all nonnegative.
+
+Finally, for `b=2`, `(P5A.102BFQ)` becomes
+
+```text
+O_(rho,x)=4{y^2+y+4-x^2}.                          (P5A.102BFX)
+```
+
+Outside `(P5A.102BFR)` one has `a=2+y-x>=2`, hence `y>=x`, and
+`(P5A.102BFX)` is positive.  The class `b>=3` is empty.  These cases
+are exhaustive.
+
+The strict C++ certificate constructs the packets from the quotient
+matrices, not from interpolated formulas.  It certifies 145 finite-box
+entries, 97 ray polynomials, and eight cone polynomials.  For every
+polynomial it reconstructs all sampled exact values from the Newton
+coefficients, rejects a negative coefficient, and rejects a nonzero
+sixth difference.  It also verifies `(P5A.102BFX)` independently in
+4,935 admissible rows through `Q=100`.  The degree bound follows
+directly by iterating the fixed five-step recurrence on each activation
+chamber, so the seven-point exact finite-difference grids prove the
+unbounded polynomial identities.  QED.
+
+Lemmas 5A8H28I and 5A8H28J prove Target 5A8H28R4.  Consequently the
+entire offset-one ray
+
+```text
+K=2Q+2,                 Q>=7
+```
+
+satisfies the lifted shell kernel `(LBK2)`.  Together with
+Corollary 5A8H28F and Lemmas 5A8H28E--5A8H28G, the exact remaining
+`t=2` band is now
+
+```text
+Q>=7,                  2Q+3<=K<10Q.               (P5A.102BFY)
+```
+
+The next ray has a wider but still fixed packet geometry.
+
+**Lemma 5A8H28K (offset-two finite-width shell payment).**  If
+
+```text
+K=2Q+3,                 Q>=7,
+```
+
+then `(LBK2)` holds for every shell.
+
+**Proof.**  Lemma 5A8H28A now has `d=2`, so
+
+```text
+A_-=J N_2
+```
+
+on the even component of `SU(2)_(2Q+2)`.  In half-label coordinates
+`N_2` has steps `-1,0,1`, with the usual endpoint truncations.  Splitting
+the terminal row as in `(P5A.102BFN)`, its even packet is supported on
+`x-4<=V<=x+4`.  Its odd packet is supported on
+`R-3<=V<=R+3`, where
+
+```text
+R=Q+1-x.
+```
+
+Put
+
+```text
+a=rho-x,                 b=rho-R.
+```
+
+The exhaustive cutoff classes are therefore
+
+```text
+E: a<=-4 (full), -3<=a<=4, a>=5 (empty);
+O: b<=-3 (full), -2<=b<=3, b>=4 (empty).          (P5A.102BFZ)
+```
+
+Direct fixed-width iteration proves `E>=0` in all nine nonempty
+classes and proves the full odd packet nonnegative.  It remains only to
+pay the six partial odd classes `-2<=b<=3`.  Write `y=Q-x`.  For fixed
+`b`, split their domain according to the even cutoff:
+
+```text
+a<=-4:  s=-4-a>=0,       x=y+b+5+s;
+-3<=a<=4:                x=y+b+1-a;
+a>=5:   s=a-5>=0,        y=x+4-b+s.               (P5A.102BG)
+```
+
+In the first and third rows the two free nonnegative variables give a
+cone once both boundary distances are at least nine; fixing a boundary
+distance below nine gives a ray or a finite exception.  The middle row
+is a ray after its finitely many boundary exceptions.  This is an
+exhaustive disjoint partition.
+
+On every stable ray and cone, direct iteration of the fixed
+five-step packet recurrence gives a Newton polynomial of total degree
+at most eight.  Every coefficient is nonnegative.  The exact chamber
+census is
+
+```text
+finite boundary entries: 906,       minimum: 30;
+one-variable rays:        320;
+two-variable cones:        22.
+```
+
+The strict C++ certificate constructs `A_+`, `A_-`, and every suffix
+directly from the fusion inequalities.  It reconstructs every sampled
+value from the Newton coefficients, rejects a negative coefficient,
+and rejects a nonzero ninth difference.  The degree-eight bound follows
+from the fixed five-step recurrence: each term has at most the free
+intermediate vertices of the two return factors and the crossing
+prefix.  Thus the ten-point grids prove the unbounded chamber
+identities.  The certificate also records `5,682` negative odd packets,
+including the eventual `b=-2` deficits missed by shorter scans, while
+the combined total has no negative chamber.  Hence every class in
+`(P5A.102BFZ)` is paid and `(LBK2)` follows.  QED.
+
+The exact remaining `t=2` band is now
+
+```text
+Q>=7,                  2Q+4<=K<10Q.               (P5A.102BH)
+```
+
+The same chamber construction closes one further ray.
+
+**Lemma 5A8H28L (offset-three finite-width shell payment).**  If
+
+```text
+K=2Q+4,                 Q>=7,
+```
+
+then `(LBK2)` holds for every shell.
+
+**Proof.**  Here `d=3`, so Lemma 5A8H28A gives `A_-=JN_3` on the
+appropriate parity component of `SU(2)_(2Q+3)`.  Put
+
+```text
+R=Q+1-x,                 a=rho-x,                 b=rho-R.
+```
+
+Four even powers of `N_3` give radius six around `x`.  After stripping
+the odd simple-current factor, three powers give the asymmetric support
+from `R-4` through `R+5`.  Hence
+
+```text
+E: a<=-6 (full), -5<=a<=6, a>=7 (empty);
+O: b<=-4 (full), -3<=b<=5, b>=6 (empty).          (P5A.102BI)
+```
+
+The even packet is nonnegative in all thirteen nonempty classes, and
+the full odd packet is nonnegative.  For every partial odd class
+`-3<=b<=5`, use the same full/partial/empty-even partition as
+`(P5A.102BG)`, with radius six in place of four:
+
+```text
+a<=-6:  s=-6-a>=0,       x=y+b+7+s;
+-5<=a<=6:                x=y+b+1-a;
+a>=7:   s=a-7>=0,        y=x+6-b+s.               (P5A.102BJ)
+```
+
+Taking boundary distance thirteen separates all finite exceptions from
+the stable chambers.  Exact iteration gives nonnegative
+degree-at-most-eight Newton expansions on every remaining ray and
+cone.  The exhaustive census is
+
+```text
+finite boundary entries: 3,289,     minimum: 30;
+one-variable rays:          662;
+two-variable cones:          32.
+```
+
+As in Lemma 5A8H28K, the strict C++ certificate reconstructs every
+sampled value and rejects a negative coefficient or nonzero ninth
+difference.  It records `8,174` negative odd packets across 588 exact
+cutoff profiles, but no negative even packet and no negative combined
+payment.  The fixed-degree recurrence proves that the Newton identities
+are unbounded.  This exhausts `(P5A.102BI)` and proves `(LBK2)`.  QED.
+
+The exact remaining `t=2` band is now
+
+```text
+Q>=7,                  2Q+5<=K<10Q.               (P5A.102BK)
+```
 
 Thus the following is a sufficient strengthening of the missing
 global-payment lemma:

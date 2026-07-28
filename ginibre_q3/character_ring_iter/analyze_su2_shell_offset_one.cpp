@@ -104,6 +104,7 @@ int main(int argc, char** argv) {
         std::uint64_t negative_odd_packet = 0U;
         std::uint64_t negative_odd_main_band = 0U;
         std::uint64_t negative_odd_main_nonfull_even = 0U;
+        std::uint64_t outer_odd_formula_checks = 0U;
         bool printed_total = false;
         bool printed_even = false;
         bool printed_odd = false;
@@ -115,6 +116,12 @@ int main(int argc, char** argv) {
             full_profile_values;
         std::map<int, std::map<int, Integer>>
             full_profile_univariate_values;
+        std::map<std::string, std::map<int, Integer>>
+            classification_ray_values;
+        std::map<std::string, std::map<std::pair<int, int>, Integer>>
+            classification_cone_values;
+        std::map<std::string, std::pair<std::uint64_t, Integer>>
+            classification_box_values;
 
         for (int label = 1; label <= maximum_label; ++label) {
             ++parameters;
@@ -381,6 +388,118 @@ int main(int argc, char** argv) {
                         const int odd_offset =
                             rho - (label - target);
                         const int reflected_distance = label - target;
+                        const int x = target;
+                        const int y = reflected_distance;
+                        const auto record_box =
+                            [&classification_box_values](
+                                const std::string& key,
+                                const Integer& value
+                            ) {
+                                auto& record =
+                                    classification_box_values[key];
+                                if (
+                                    record.first == 0U
+                                    || value < record.second
+                                ) {
+                                    record.second = value;
+                                }
+                                ++record.first;
+                            };
+                        const auto record_rectangular_packet =
+                            [
+                                &classification_ray_values,
+                                &classification_cone_values,
+                                &record_box,
+                                x,
+                                y
+                            ](
+                                const std::string& key,
+                                const Integer& value
+                            ) {
+                                if (x <= 6 && y <= 6) {
+                                    record_box(key, value);
+                                } else if (x <= 6) {
+                                    classification_ray_values[
+                                        key + "_x" + std::to_string(x)
+                                    ][y - 7] = value;
+                                } else if (y <= 6) {
+                                    classification_ray_values[
+                                        key + "_y" + std::to_string(y)
+                                    ][x - 7] = value;
+                                } else {
+                                    classification_cone_values[key][{
+                                        x - 7,
+                                        y - 7
+                                    }] = value;
+                                }
+                            };
+                        if (
+                            even_offset >= -2
+                            && even_offset <= 2
+                        ) {
+                            record_rectangular_packet(
+                                "E_a" + std::to_string(even_offset),
+                                even_suffix[
+                                    static_cast<std::size_t>(target)
+                                ]
+                            );
+                        }
+                        if (odd_offset == -1 || odd_offset == 0) {
+                            record_rectangular_packet(
+                                "O_b" + std::to_string(odd_offset),
+                                odd_suffix[
+                                    static_cast<std::size_t>(target)
+                                ]
+                            );
+                        }
+                        if (
+                            odd_offset == 1
+                            && even_offset >= -2
+                        ) {
+                            const int diagonal_slack = y + 3 - x;
+                            if (diagonal_slack < 0 || x < 1) {
+                                throw std::runtime_error(
+                                    "invalid b=1 classification domain"
+                                );
+                            }
+                            const std::string key = "O_b1";
+                            if (x <= 6) {
+                                const int base = std::max(
+                                    0,
+                                    10 - 2 * x
+                                );
+                                classification_ray_values[
+                                    key + "_x" + std::to_string(x)
+                                ][diagonal_slack - base] =
+                                    odd_suffix[
+                                        static_cast<std::size_t>(target)
+                                    ];
+                            } else {
+                                classification_cone_values[key][{
+                                    x - 7,
+                                    diagonal_slack
+                                }] = odd_suffix[
+                                    static_cast<std::size_t>(target)
+                                ];
+                            }
+                        }
+                        if (odd_offset == 2) {
+                            const Integer expected =
+                                4 * (
+                                    Integer(y) * y + y + 4
+                                    - Integer(x) * x
+                                );
+                            if (
+                                odd_suffix[
+                                    static_cast<std::size_t>(target)
+                                ] != expected
+                            ) {
+                                throw std::runtime_error(
+                                    "outer odd packet formula mismatch"
+                                );
+                            }
+                            ++outer_odd_formula_checks;
+                        }
                         if (
                             odd_offset == 2
                             && even_offset >= -2
@@ -683,6 +802,218 @@ int main(int argc, char** argv) {
                 << " maximum_total_degree=5"
                 << " result=PASS_NONNEGATIVE_NEWTON_EXPANSION\n";
         }
+        std::size_t classification_ray_certificates = 0U;
+        Integer classification_ray_minimum = 0;
+        bool initialized_classification_ray = false;
+        for (const auto& [key, values] : classification_ray_values) {
+            std::vector<Integer> coefficients;
+            for (int order = 0; order <= 6; ++order) {
+                Integer coefficient = 0;
+                for (int index = 0; index <= order; ++index) {
+                    const auto found = values.find(index);
+                    if (found == values.end()) {
+                        throw std::runtime_error(
+                            "incomplete classification ray grid: "
+                            + key
+                        );
+                    }
+                    Integer term =
+                        binomial_integer(order, index) * found->second;
+                    if ((order - index) % 2 == 0) {
+                        coefficient += term;
+                    } else {
+                        coefficient -= term;
+                    }
+                }
+                if (
+                    (order <= 5 && coefficient < 0)
+                    || (order == 6 && coefficient != 0)
+                ) {
+                    std::cerr
+                        << "FAILED_CLASSIFICATION_RAY"
+                        << " key=" << key
+                        << " order=" << order
+                        << " coefficient=" << coefficient << '\n';
+                    throw std::runtime_error(
+                        "invalid classification ray certificate"
+                    );
+                }
+                if (order <= 5) {
+                    coefficients.push_back(coefficient);
+                }
+                if (
+                    order <= 5
+                    && (
+                        !initialized_classification_ray
+                        || coefficient < classification_ray_minimum
+                    )
+                ) {
+                    classification_ray_minimum = coefficient;
+                    initialized_classification_ray = true;
+                }
+            }
+            for (const auto& [index, value] : values) {
+                Integer reconstructed = 0;
+                for (
+                    std::size_t order = 0U;
+                    order < coefficients.size();
+                    ++order
+                ) {
+                    reconstructed +=
+                        coefficients[order]
+                        * binomial_integer(
+                            index,
+                            static_cast<int>(order)
+                        );
+                }
+                if (reconstructed != value) {
+                    throw std::runtime_error(
+                        "classification ray reconstruction mismatch: "
+                        + key
+                    );
+                }
+            }
+            ++classification_ray_certificates;
+        }
+        std::size_t classification_cone_certificates = 0U;
+        Integer classification_cone_minimum = 0;
+        bool initialized_classification_cone = false;
+        for (const auto& [key, values] : classification_cone_values) {
+            std::map<std::pair<int, int>, Integer> coefficients;
+            for (int first_order = 0;
+                 first_order <= 6;
+                 ++first_order) {
+                for (int second_order = 0;
+                     second_order <= 6 - first_order;
+                     ++second_order) {
+                    Integer coefficient = 0;
+                    for (int first = 0;
+                         first <= first_order;
+                         ++first) {
+                        for (int second = 0;
+                             second <= second_order;
+                             ++second) {
+                            const auto found = values.find({
+                                first,
+                                second
+                            });
+                            if (found == values.end()) {
+                                throw std::runtime_error(
+                                    "incomplete classification cone grid: "
+                                    + key
+                                );
+                            }
+                            Integer term =
+                                binomial_integer(first_order, first)
+                                * binomial_integer(second_order, second)
+                                * found->second;
+                            if (
+                                (
+                                    first_order - first
+                                    + second_order - second
+                                ) % 2 == 0
+                            ) {
+                                coefficient += term;
+                            } else {
+                                coefficient -= term;
+                            }
+                        }
+                    }
+                    const int total_order =
+                        first_order + second_order;
+                    if (
+                        (total_order <= 5 && coefficient < 0)
+                        || (total_order == 6 && coefficient != 0)
+                    ) {
+                        std::cerr
+                            << "FAILED_CLASSIFICATION_CONE"
+                            << " key=" << key
+                            << " first_order=" << first_order
+                            << " second_order=" << second_order
+                            << " coefficient=" << coefficient << '\n';
+                        throw std::runtime_error(
+                            "invalid classification cone certificate"
+                        );
+                    }
+                    if (total_order <= 5) {
+                        coefficients[{
+                            first_order,
+                            second_order
+                        }] = coefficient;
+                    }
+                    if (
+                        total_order <= 5
+                        && (
+                            !initialized_classification_cone
+                            || coefficient
+                                < classification_cone_minimum
+                        )
+                    ) {
+                        classification_cone_minimum = coefficient;
+                        initialized_classification_cone = true;
+                    }
+                }
+            }
+            for (const auto& [index, value] : values) {
+                Integer reconstructed = 0;
+                for (const auto& [order, coefficient] : coefficients) {
+                    reconstructed +=
+                        coefficient
+                        * binomial_integer(index.first, order.first)
+                        * binomial_integer(index.second, order.second);
+                }
+                if (reconstructed != value) {
+                    throw std::runtime_error(
+                        "classification cone reconstruction mismatch: "
+                        + key
+                    );
+                }
+            }
+            ++classification_cone_certificates;
+        }
+        std::uint64_t classification_box_entries = 0U;
+        Integer classification_box_minimum = 0;
+        bool initialized_classification_box = false;
+        for (const auto& [key, record] : classification_box_values) {
+            if (record.second < 0) {
+                throw std::runtime_error(
+                    "negative classification boundary box: " + key
+                );
+            }
+            classification_box_entries += record.first;
+            if (
+                !initialized_classification_box
+                || record.second < classification_box_minimum
+            ) {
+                classification_box_minimum = record.second;
+                initialized_classification_box = true;
+            }
+        }
+        if (
+            classification_box_entries != 145U
+            || classification_ray_certificates != 97U
+            || classification_cone_certificates != 8U
+            || outer_odd_formula_checks != 4935U
+        ) {
+            throw std::runtime_error(
+                "incomplete classification chamber census"
+            );
+        }
+        std::cout
+            << "OFFSET_ONE_CLASSIFICATION_CERTIFICATE"
+            << " boundary_box_entries=" << classification_box_entries
+            << " boundary_box_minimum=" << classification_box_minimum
+            << " ray_certificates=" << classification_ray_certificates
+            << " ray_minimum_coefficient="
+            << classification_ray_minimum
+            << " cone_certificates="
+            << classification_cone_certificates
+            << " cone_minimum_coefficient="
+            << classification_cone_minimum
+            << " outer_odd_formula_checks="
+            << outer_odd_formula_checks
+            << " maximum_total_degree=5"
+            << " result=PASS_NONNEGATIVE_NEWTON_EXPANSIONS\n";
         for (const auto& [profile, indexed_values]
              : full_profile_univariate_values) {
             std::vector<Integer> differences;
