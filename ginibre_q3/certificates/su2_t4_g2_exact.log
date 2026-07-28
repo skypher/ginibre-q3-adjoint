@@ -1,0 +1,35 @@
+SU2 t=4 G2 exact sharded-certificate receipt
+Date: 2026-07-28T23:35:00Z
+
+Scope:
+SU2_T4_GROUP_MASKS target=g2 hinges=91 masks=848 result=PASS_EXACT_CENSUS
+
+Collector command:
+./collect_su2_exact_shards group g2 848 LOCAL_FORWARD_LOG_DIRECTORY LOCAL_REVERSE_LOG_DIRECTORY MACHINE_B_LOG_DIRECTORY
+
+Terminal:
+SU2_T4_GROUP target=g2 attempted=848 certified=848 result=PASS_EXACT_CERTIFICATE
+
+Exact engine source SHA-256:
+24de7ec520121c50f1b48b5a749f080e817c93a88a8be8f8af1344f1fb7e94ac  prove_su2_t4_groups.cpp
+
+Exact engine binary SHA-256:
+1eed295fe899e1a82ff9b807d2ed14174020fb12dcf0781e5a690b6311fc0b41  prove_su2_t4_groups
+
+Fail-closed collector source SHA-256:
+7c159dd66b82c33000f8f56d246edb5afdf46cd1561a490801d5a759ce6b7364  collect_su2_exact_shards.cpp
+
+Fail-closed collector binary SHA-256:
+52c9e29b5e4e6b2dd341103d809921b7904543cdc97e2759f75e359249887479  collect_su2_exact_shards
+
+Deterministically reconstructed full transcript:
+7d2564ff862544dd07f8c3877f3ee38c1bfe772adf75c450a5473a3c1120f9df  su2_t4_g2_exact_collected.log
+lines=1020
+
+Interpretation:
+The collector requires one complete source-engine certificate for every
+position 0,...,847, checks the exact 848-chamber Presburger census in every
+selected child log, rejects every failure, unresolved, incomplete, or error
+marker, removes only repeated census and one-position terminal records, and
+emits the displayed complete-census terminal.  This is an exact unbounded
+chamber certificate; no cutoff in K, Q, or Y is used.

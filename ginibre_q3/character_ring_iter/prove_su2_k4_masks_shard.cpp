@@ -33,19 +33,36 @@ std::size_t parse_size(const char* text, const char* name) {
 }
 
 std::vector<std::uint64_t> read_masks(
-    const std::filesystem::path& path
+    const std::filesystem::path& path,
+    bool subset
 ) {
     std::ifstream input(path);
     if (!input) {
         throw std::runtime_error("cannot open mask list");
     }
     std::string line;
-    if (
-        !std::getline(input, line)
-        || line
-            != "SU2_K4_INTERMEDIATE_MASKS hinges=50 masks=302 "
-               "minimum_active=7 maximum_active=44 "
-               "result=PASS_EXACT_CENSUS"
+    if (!std::getline(input, line)) {
+        throw std::runtime_error("mask list has no header");
+    }
+    std::size_t expected_size = 302U;
+    if (subset) {
+        const std::string subset_prefix =
+            "SU2_K4_INTERMEDIATE_MASK_SUBSET count=";
+        if (!line.starts_with(subset_prefix)) {
+            throw std::runtime_error("mask subset has no subset header");
+        }
+        expected_size = parse_size(
+            line.substr(subset_prefix.size()).c_str(),
+            "mask subset count"
+        );
+        if (expected_size == 0U) {
+            throw std::runtime_error("mask subset must be nonempty");
+        }
+    } else if (
+        line
+        != "SU2_K4_INTERMEDIATE_MASKS hinges=50 masks=302 "
+           "minimum_active=7 maximum_active=44 "
+           "result=PASS_EXACT_CENSUS"
     ) {
         throw std::runtime_error("mask list has no exact census header");
     }
@@ -69,12 +86,12 @@ std::vector<std::uint64_t> read_masks(
     }
     const std::set<std::uint64_t> unique(masks.begin(), masks.end());
     if (
-        masks.size() != 302U
+        masks.size() != expected_size
         || unique.size() != masks.size()
         || !std::is_sorted(masks.begin(), masks.end())
     ) {
         throw std::runtime_error(
-            "mask list does not contain 302 unique sorted masks"
+            "mask list count, uniqueness, or order is invalid"
         );
     }
     return masks;
@@ -134,15 +151,23 @@ int main(int argc, char** argv) {
             argc != 4
             && !(
                 argc == 5
-                && std::string(argv[4]) == "--reverse"
+                && (
+                    std::string(argv[4]) == "--reverse"
+                    || std::string(argv[4]) == "--subset"
+                )
             )
         ) {
             throw std::runtime_error(
-                "usage: MASK_LIST THREADS LOG_DIRECTORY [--reverse]"
+                "usage: MASK_LIST THREADS LOG_DIRECTORY "
+                "[--reverse|--subset]"
             );
         }
-        std::vector<std::uint64_t> masks = read_masks(argv[1]);
-        if (argc == 5) {
+        const bool reverse =
+            argc == 5 && std::string(argv[4]) == "--reverse";
+        const bool subset =
+            argc == 5 && std::string(argv[4]) == "--subset";
+        std::vector<std::uint64_t> masks = read_masks(argv[1], subset);
+        if (reverse) {
             std::reverse(masks.begin(), masks.end());
         }
         const std::size_t requested_threads =

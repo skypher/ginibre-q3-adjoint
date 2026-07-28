@@ -364,10 +364,20 @@ prove_su2_k4_intermediate: prove_su2_k4_intermediate.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
 
+prove_su2_k4_intermediate_method: \
+		prove_su2_k4_intermediate_method.cpp \
+		prove_su2_k4_intermediate.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
 prove_su2_k4_masks_shard: prove_su2_k4_masks_shard.cpp \
 		prove_su2_k4_intermediate
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -pthread -o $@
+
+collect_su2_exact_shards: collect_su2_exact_shards.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
 
 prove_su2_t4_groups: prove_su2_t4_groups.cpp prove_su2_k4_intermediate.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -409,6 +419,12 @@ verify_su2_seven_deep_small_z3: verify_su2_seven_deep_small_z3.cpp
 verify_su2_seven_shallow_z3: verify_su2_seven_shallow_z3.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -pthread -o $@
+
+verify_su2_seven_shallow_tasks_shard: \
+		verify_su2_seven_shallow_tasks_shard.cpp \
+		verify_su2_seven_shallow_z3
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -pthread -o $@
 
 verify_su2_rank_two_chambers_z3: verify_su2_rank_two_chambers_z3.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -474,7 +490,9 @@ RESEARCH_TARGETS = \
 	analyze_su2_k4_intermediate_masks \
 	audit_su2_k4_intermediate_formula \
 	prove_su2_k4_intermediate \
+	prove_su2_k4_intermediate_method \
 	prove_su2_k4_masks_shard \
+	collect_su2_exact_shards \
 	prove_su2_t4_groups \
 	prove_su2_t4_groups_shard \
 	audit_su2_t4_group_formula \
@@ -485,6 +503,7 @@ RESEARCH_TARGETS = \
 	verify_su2_seven_residual_z3 \
 	verify_su2_seven_deep_small_z3 \
 	verify_su2_seven_shallow_z3 \
+	verify_su2_seven_shallow_tasks_shard \
 	verify_su2_four_minus_shallow_z3 \
 	verify_su2_plucker_second_syzygies \
 	verify_su2_v2_presburger \

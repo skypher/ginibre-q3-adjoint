@@ -114,7 +114,12 @@ Integer signed_value(
     return state[0];
 }
 
-Integer grouped_boundary_value(
+struct GroupedBoundaryValues {
+    Integer all_minus;
+    Integer mixed;
+};
+
+GroupedBoundaryValues grouped_boundary_values(
     int level,
     int label,
     int first_count,
@@ -146,7 +151,10 @@ Integer grouped_boundary_value(
     for (int index = 0; index < second_count; ++index) {
         multiply_plus(level, label, mixed);
     }
-    return boundary(all_minus) + boundary(mixed);
+    return {
+        boundary(all_minus),
+        boundary(mixed)
+    };
 }
 
 std::vector<std::vector<Integer>> binomial_table(int maximum) {
@@ -262,9 +270,10 @@ int main(int argc, char** argv) {
             }
             const Integer value =
                 signed_value(level, label, first, second);
-            const Integer grouped = grouped_boundary_value(
-                level, label, first, second
-            );
+            const GroupedBoundaryValues grouped =
+                grouped_boundary_values(
+                    level, label, first, second
+                );
             const Integer paths = alternating_path_value(
                 level, label, first, second
             );
@@ -274,13 +283,18 @@ int main(int argc, char** argv) {
                 << " labels={" << label << ',' << level - label << '}'
                 << " counts={" << first << ',' << second << '}'
                 << " value=" << value
-                << " grouped_boundary=" << grouped
+                << " all_minus_boundary=" << grouped.all_minus
+                << " mixed_boundary=" << grouped.mixed
+                << " grouped_boundary="
+                << grouped.all_minus + grouped.mixed
                 << " alternating_paths=" << paths
                 << " identity="
-                << (value == grouped && value == paths
+                << (value == grouped.all_minus + grouped.mixed
+                        && value == paths
                         ? "PASS" : "FAIL")
                 << '\n';
-            return value == grouped && value == paths
+            return value == grouped.all_minus + grouped.mixed
+                    && value == paths
                 ? EXIT_SUCCESS : EXIT_FAILURE;
         }
         if (argc != 3) {
@@ -317,6 +331,18 @@ int main(int argc, char** argv) {
         int nonbase_label = 0;
         int nonbase_first = 0;
         int nonbase_second = 0;
+        bool all_minus_initialized = false;
+        Integer all_minus_minimum = 0;
+        int all_minus_level = 0;
+        int all_minus_label = 0;
+        int all_minus_first = 0;
+        int all_minus_second = 0;
+        bool mixed_initialized = false;
+        Integer mixed_minimum = 0;
+        int mixed_level = 0;
+        int mixed_label = 0;
+        int mixed_first = 0;
+        int mixed_second = 0;
         std::size_t zeros = 0U;
         std::size_t rows = 0U;
         for (int level = 2; level <= maximum_level; ++level) {
@@ -327,13 +353,16 @@ int main(int argc, char** argv) {
                         const Integer value = signed_value(
                             level, label, first, second
                         );
-                        const Integer grouped = grouped_boundary_value(
-                            level, label, first, second
-                        );
+                        const GroupedBoundaryValues grouped =
+                            grouped_boundary_values(
+                                level, label, first, second
+                            );
                         const Integer paths = alternating_path_value(
                             level, label, first, second
                         );
-                        if (value != grouped || value != paths) {
+                        if (value
+                                != grouped.all_minus + grouped.mixed
+                            || value != paths) {
                             std::cout
                                 << "SU2_SIMPLE_CURRENT_PAIR IDENTITY_FAIL"
                                 << " level=" << level
@@ -342,9 +371,49 @@ int main(int argc, char** argv) {
                                 << " counts={" << first << ','
                                 << second << '}'
                                 << " value=" << value
-                                << " grouped_boundary=" << grouped
+                                << " all_minus_boundary="
+                                << grouped.all_minus
+                                << " mixed_boundary=" << grouped.mixed
+                                << " grouped_boundary="
+                                << grouped.all_minus + grouped.mixed
                                 << " alternating_paths=" << paths << '\n';
                             return EXIT_FAILURE;
+                        }
+                        if (
+                            grouped.all_minus < 0
+                            || grouped.mixed < 0
+                        ) {
+                            std::cout
+                                << "SU2_SIMPLE_CURRENT_PAIR"
+                                << " COMPONENT_COUNTEREXAMPLE"
+                                << " level=" << level
+                                << " labels={" << label << ','
+                                << level - label << '}'
+                                << " counts={" << first << ','
+                                << second << '}'
+                                << " all_minus_boundary="
+                                << grouped.all_minus
+                                << " mixed_boundary=" << grouped.mixed
+                                << '\n';
+                            return EXIT_FAILURE;
+                        }
+                        if (!all_minus_initialized
+                            || grouped.all_minus < all_minus_minimum) {
+                            all_minus_initialized = true;
+                            all_minus_minimum = grouped.all_minus;
+                            all_minus_level = level;
+                            all_minus_label = label;
+                            all_minus_first = first;
+                            all_minus_second = second;
+                        }
+                        if (!mixed_initialized
+                            || grouped.mixed < mixed_minimum) {
+                            mixed_initialized = true;
+                            mixed_minimum = grouped.mixed;
+                            mixed_level = level;
+                            mixed_label = label;
+                            mixed_first = first;
+                            mixed_second = second;
                         }
                         ++rows;
                         if (!initialized || value < minimum) {
@@ -384,7 +453,7 @@ int main(int argc, char** argv) {
                                 << " counts={" << first << ','
                                 << second << '}'
                                 << " value=" << value << '\n';
-                            return EXIT_SUCCESS;
+                            return EXIT_FAILURE;
                         }
                     }
                 }
@@ -415,6 +484,19 @@ int main(int argc, char** argv) {
             << nonbase_level - nonbase_label << '}'
             << " nonbase_witness_counts={" << nonbase_first << ','
             << nonbase_second << '}'
+            << " all_minus_minimum=" << all_minus_minimum
+            << " all_minus_witness_level=" << all_minus_level
+            << " all_minus_witness_labels={"
+            << all_minus_label << ','
+            << all_minus_level - all_minus_label << '}'
+            << " all_minus_witness_counts={" << all_minus_first << ','
+            << all_minus_second << '}'
+            << " mixed_minimum=" << mixed_minimum
+            << " mixed_witness_level=" << mixed_level
+            << " mixed_witness_labels={" << mixed_label << ','
+            << mixed_level - mixed_label << '}'
+            << " mixed_witness_counts={" << mixed_first << ','
+            << mixed_second << '}'
             << " grouped_identity=PASS alternating_path_identity=PASS"
             << " counterexamples=0 result=PASS_DISCOVERY\n";
         return EXIT_SUCCESS;

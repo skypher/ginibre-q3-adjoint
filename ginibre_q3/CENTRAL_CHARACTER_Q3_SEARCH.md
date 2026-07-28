@@ -12863,8 +12863,79 @@ f6b1a7ed827eb3819361cba5e1420ba1fa44421aafa86b50b13824e7cb76a5ce
 Thus the chamber census and every chamber sign are exact and
 unbounded; no cutoff in `K,Q`, or `Y` is used.  QED.
 
+**Lemma 5A8H28UI0A (exact `G_1` block).**  For every `Q>=1`,
+`K>=2Q+1`, the vector `G_1` in `(P5A.102CB8E)` is entrywise
+nonnegative.
+
+**Proof.**  The same exact affine formula and Presburger blocking used
+in Lemma 5A8H28UI0 give the complete `1,065`-chamber `G_1` census in
+`(P5A.102CB8L)`.  Each chamber was run separately through the exact
+rational certificate engine.  The fail-closed C++ collector
+`character_ring_iter/collect_su2_exact_shards.cpp` requires one
+completed source-engine certificate for every position
+`0,...,1064`, checks the exact census in every selected child log,
+rejects every failure, unresolved, incomplete, or error marker, and
+reconstructs the deterministic full transcript.  Its first and last
+lines are
+
+```text
+SU2_T4_GROUP_MASKS target=g1 hinges=112 masks=1065 result=PASS_EXACT_CENSUS
+SU2_T4_GROUP target=g1 attempted=1065 certified=1065 result=PASS_EXACT_CERTIFICATE
+```
+
+The group engine source, engine binary, collector source, collector
+binary, and reconstructed transcript SHA-256 identities are
+
+```text
+24de7ec520121c50f1b48b5a749f080e817c93a88a8be8f8af1344f1fb7e94ac
+1eed295fe899e1a82ff9b807d2ed14174020fb12dcf0781e5a690b6311fc0b41
+7c159dd66b82c33000f8f56d246edb5afdf46cd1561a490801d5a759ce6b7364
+52c9e29b5e4e6b2dd341103d809921b7904543cdc97e2759f75e359249887479
+8e3018e81685914da9a96d6844104a960380df8e9127ba10aceb7533834167b6.
+```
+
+The source-bound receipt is
+`certificates/su2_t4_g1_exact.log`.  Every selected child is an exact
+polynomial, Newton, finite-domain, composition-cone, equal-sum,
+product-partition, or pair-cut identity checked over exact rational
+arithmetic.  The census exhausts the unbounded affine domain, so this
+proves `G_1>=0` without a cutoff in `K,Q`, or `Y`.  QED.
+
+**Lemma 5A8H28UI0B (exact `G_2` block).**  For every `Q>=1`,
+`K>=2Q+1`, the vector `G_2` in `(P5A.102CB8E)` is entrywise
+nonnegative.
+
+**Proof.**  Exact Presburger blocking gives the complete `848`-chamber
+`G_2` census in `(P5A.102CB8L)`.  The same fail-closed collector used
+in Lemma 5A8H28UI0A requires one completed source-engine certificate
+for every position `0,...,847`, checks the exact census in each child,
+and reconstructs the deterministic full transcript.  Its first and
+last lines are
+
+```text
+SU2_T4_GROUP_MASKS target=g2 hinges=91 masks=848 result=PASS_EXACT_CENSUS
+SU2_T4_GROUP target=g2 attempted=848 certified=848 result=PASS_EXACT_CERTIFICATE
+```
+
+The group engine source, engine binary, collector source, collector
+binary, and reconstructed transcript SHA-256 identities are
+
+```text
+24de7ec520121c50f1b48b5a749f080e817c93a88a8be8f8af1344f1fb7e94ac
+1eed295fe899e1a82ff9b807d2ed14174020fb12dcf0781e5a690b6311fc0b41
+7c159dd66b82c33000f8f56d246edb5afdf46cd1561a490801d5a759ce6b7364
+52c9e29b5e4e6b2dd341103d809921b7904543cdc97e2759f75e359249887479
+7d2564ff862544dd07f8c3877f3ee38c1bfe772adf75c450a5473a3c1120f9df.
+```
+
+The source-bound receipt is
+`certificates/su2_t4_g2_exact.log`.  Every chamber certificate is an
+exact rational identity of the same types listed in Lemma
+5A8H28UI0A, and the census exhausts the unbounded affine domain.
+Therefore `G_2>=0` for every admissible `K,Q`, with no cutoff.  QED.
+
 Consequently the still-open part of Target 5A8H28R16 is exactly
-`C_4>=0`, `G_1>=0`, and `G_2>=0`.
+`C_4>=0`.
 
 The operator--Newton reduction is not special to `t=4`.  It removes
 the arbitrary prefix at every truncation depth.
@@ -13132,6 +13203,135 @@ simple current commutes with `N`, so every summand in
 `(P5A.102CB8R)` is entrywise nonnegative.  Taking coordinate zero
 and using `(P5A.102CB8N)` proves `(P5A.102CB8Z)`.  The only
 admissible indices not covered are exactly `(P5A.102CB8ZA)`.  QED.
+
+The lower edge of the residual diagonal band is itself one complete
+simple-current-pair packet.  It splits into two natural currents which
+are stronger targets than their sum.
+
+**Lemma 5A8H28UI4 (terminal-prefix two-current decomposition).**  Put
+`m=2j+1`, retain `X,Y,v,w` from Lemma 5A8H10, and assume `K>2Q`.
+Define
+
+```text
+T^-_j=<w,(X-Y)^(m+1)v>,
+T^+_j=<w,(X-Y)(X+Y)^m v>.                         (P5A.102CB8ZB)
+```
+
+Then
+
+```text
+2Q_(j,j-1)=T^-_j+T^+_j.                           (P5A.102CB8ZC)
+```
+
+Consequently the two uniform inequalities
+
+```text
+T^-_j>=0,                    T^+_j>=0              (P5A.102CB8ZD)
+```
+
+would prove the complete terminal-prefix family
+`Q_(j,j-1)>=0`.  Conditional on the anchored hierarchy, Corollary
+5A8H28UI3 and `(P5A.102CB8ZD)` would shrink the residual scalar band to
+
+```text
+Q_(j,t)>=0,             t+2<=j<=2t-1.             (P5A.102CB8ZE)
+```
+
+**Proof.**  The complete even Pascal sum is
+
+```text
+E_(m,j)={(X+Y)^m+(X-Y)^m}/2.
+```
+
+The only term of `E_(m,j)` absent from `E_(m,j-1)` is a scalar multiple
+of `XY^(2j)`.  After applying `X-Y`, its two endpoint coefficients are
+`g_2f_(2j)` and `g_1f_(2j+1)`.  Both vanish: in the open range
+`K>2Q`, neither one nor two `N_Q` steps can reach label `K` from zero.
+Thus
+
+```text
+Q_(j,j-1)=<w,(X-Y)E_(m,j)v>,
+```
+
+and substitution of the complete even sum gives
+`(P5A.102CB8ZC)`.  The remaining assertions are immediate.  QED.
+
+The two component signs have an exact two-sector moment form.  This
+removes all path notation and shows precisely what a spectral allocation
+must compare.
+
+**Lemma 5A8H28UI5 (terminal even--odd sector reduction).**  Return
+temporarily to the full even level and label `k=2K`, `q=2Q`, and put
+`h=2K+2`.  For `0<=r<=2K`, define
+
+```text
+u_r^2=(2/h)sin^2((r+1)pi/h),
+lambda_r=sin((2Q+1)(r+1)pi/h)/sin((r+1)pi/h),
+sigma_r=(-1)^r.
+```
+
+Then the two currents in `(P5A.102CB8ZB)` are
+
+```text
+T^-_j
+ =sum_(r,s even)u_r^2u_s^2(lambda_r-lambda_s)^(m+1)
+  -sum_(r,s odd)u_r^2u_s^2(lambda_r-lambda_s)^(m+1),
+                                                               (P5A.102CB8ZF)
+
+T^+_j
+ =2sum_(r even,s odd)u_r^2u_s^2
+      (lambda_r-lambda_s)(lambda_r+lambda_s)^m.      (P5A.102CB8ZG)
+```
+
+Thus the componentwise terminal target `(P5A.102CB8ZD)` is exactly:
+the even Verlinde sector dominates the odd sector in the
+`(m+1)`st pair-distance moment, and the displayed cross-sector current
+is nonnegative.
+
+**Proof.**  The Verlinde sine transform diagonalizes `N_(2Q)` with
+cyclic-vector weights `u_r^2`, eigenvalues `lambda_r`, and simple-current
+eigenvalues
+
+```text
+S_(2K,r)/S_(0,r)=sigma_r.
+```
+
+It follows directly from `(P5A.102CB8ZB)` that
+
+```text
+T^-_j=sum_(r,s)u_r^2u_s^2 sigma_r
+                 (lambda_r-lambda_s)^(m+1),
+T^+_j=sum_(r,s)u_r^2u_s^2 sigma_r
+                 (lambda_r-lambda_s)(lambda_r+lambda_s)^m.
+```
+
+Because `m+1` is even, symmetrizing the first sum in `r,s` replaces
+`sigma_r` by `(sigma_r+sigma_s)/2`; opposite-parity terms cancel and
+same-parity terms have the signs in `(P5A.102CB8ZF)`.  Because `m` is
+odd, symmetrizing the second sum replaces `sigma_r` by
+`(sigma_r-sigma_s)/2`; same-parity terms cancel, and orienting every
+remaining pair from even to odd gives `(P5A.102CB8ZG)`.  QED.
+
+The two terms in `(P5A.102CB8ZB)` are exactly the all-minus and mixed
+boundary coefficients in Lemma 5A8H with multiplicities
+`(A,B)=(1,2j+1)`.  The strict C++ analyzer
+`character_ring_iter/analyze_su2_simple_current_pair.cpp` now records
+those components separately while independently checking their sum
+against both the doubled-fusion recurrence and the alternating
+one-particle path formula.  Through level `36` and odd multiplicities
+at most `19`, all `30,600` rows had both components nonnegative.  The
+source, executable, and transcript SHA-256 identities are
+
+```text
+b9b2e84af04befd4f309d98e2e927b8179e91a24e431cd1f88142a9078ca7556
+c9bd0297867595fe007b5f901ebe2928723c283f0a1ffacd47159d11dd626b59
+a20ca7d25725f5a0b22101a83e7714e59fc689d8b4c1e922b76f8d0899b0b5a4.
+```
+
+The transcript is
+`certificates/su2_simple_current_pair_components.log`.  This is bounded
+discovery evidence for the stronger pair `(P5A.102CB8ZD)`, not a proof
+of either inequality.
 
 Consequently the arbitrary-factor global-payment lemma now has a
 two-layer exact kernel target: prove the anchored boundary-minor cone
@@ -14447,7 +14647,7 @@ factorizes the full oriented `(1,2m+1)` tower, but does not by itself prove
 all `m`.
 The source-bound transcript is
 `certificates/su2_simple_current_pair.log`; the verifier source SHA-256 is
-`e1c3c4d8a4e49900ae90dd1c2c12496fc3c4fad8db51c43a677a6a509402a351`.
+`b9b2e84af04befd4f309d98e2e927b8179e91a24e431cd1f88142a9078ca7556`.
 
 Propositions 5A8G1 and 5A8G3 force a structural change in the spectral
 route: a proof must permit cancellation or comparison between packets
