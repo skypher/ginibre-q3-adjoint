@@ -950,6 +950,16 @@ before any further construction.
    proof must retain an unbounded Abel reserve; the observed
    two-crossing shape does not turn the target into a fixed-width
    kernel.
+   Lemma 5A8H28T now supplies such a reserve inside the last-exit
+   factor.  Mark the forced looped vertices `Q,K-Q` and the first
+   crossings of the disjoint half-label bands beginning at
+   `i(Q+1)`.  Removing the canonical loop-runs is bijective and proves
+   `E=E_0/(1-z)^L`, with `E_0>=0` coefficientwise and
+   `L=2+floor((K-2Q)/(Q+1))`.  This is unbounded, and an exact
+   level-100 audit checks 37,800 residual coefficients with maximum
+   `L=26`.  It still does not close the current: at the nearest wall
+   `L=2`, the known second-Abel coefficient is `-252`, so the reduced
+   factor `E_0` must remain in the payment.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail

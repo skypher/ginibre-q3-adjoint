@@ -122,9 +122,13 @@ int main(int argc, char** argv) {
         std::uint64_t second_cumulative_negatives = 0U;
         std::uint64_t first_passage_steps = 0U;
         std::uint64_t first_passage_decreases = 0U;
+        std::uint64_t milestone_residual_coefficients = 0U;
+        std::uint64_t milestone_residual_negatives = 0U;
+        int maximum_milestone_exponent = 0;
         Witness cumulative_minimum;
         Witness second_cumulative_minimum;
         Witness first_passage_minimum;
+        Witness milestone_residual_minimum;
 
         for (int level = 6; level <= maximum_level; level += 2) {
             for (int label = 2; 2 * label < level; label += 2) {
@@ -187,6 +191,56 @@ int main(int argc, char** argv) {
                     );
                     if (difference < 0) {
                         ++first_passage_decreases;
+                    }
+                }
+                const int half_level = level / 2;
+                const int half_label = label / 2;
+                const int milestone_exponent =
+                    2
+                    + (
+                        half_level - 2 * half_label
+                    ) / (half_label + 1);
+                maximum_milestone_exponent = std::max(
+                    maximum_milestone_exponent,
+                    milestone_exponent
+                );
+                for (int degree = 0;
+                     degree <= maximum_degree;
+                     ++degree) {
+                    Integer residual = 0;
+                    for (int difference = 0;
+                         difference <= milestone_exponent
+                            && difference <= degree;
+                         ++difference) {
+                        const Integer term =
+                            binomial(milestone_exponent, difference)
+                            * first_passage[
+                                static_cast<std::size_t>(
+                                    degree - difference
+                                )];
+                        residual +=
+                            (difference & 1) == 0 ? term : -term;
+                    }
+                    ++milestone_residual_coefficients;
+                    milestone_residual_minimum.observe(
+                        residual,
+                        level,
+                        label,
+                        0,
+                        milestone_exponent,
+                        degree
+                    );
+                    if (residual < 0) {
+                        ++milestone_residual_negatives;
+                        if (milestone_residual_negatives == 1U) {
+                            std::cout
+                                << "FIRST_NEGATIVE_MILESTONE_RESIDUAL"
+                                << " level=" << level
+                                << " label=" << label
+                                << " exponent=" << milestone_exponent
+                                << " degree=" << degree
+                                << " value=" << residual << '\n';
+                        }
                     }
                 }
 
@@ -313,19 +367,34 @@ int main(int argc, char** argv) {
             << " first_passage_minimum="
                 << first_passage_minimum.value
             << " first_passage_witness=("
-            << first_passage_minimum.level << ','
-            << first_passage_minimum.label << ','
-            << first_passage_minimum.degree << ')'
+                << first_passage_minimum.level << ','
+                << first_passage_minimum.label << ','
+                << first_passage_minimum.degree << ')'
+            << " milestone_residual_coefficients="
+                << milestone_residual_coefficients
+            << " milestone_residual_negatives="
+                << milestone_residual_negatives
+            << " maximum_milestone_exponent="
+                << maximum_milestone_exponent
+            << " milestone_residual_minimum="
+                << milestone_residual_minimum.value
+            << " milestone_residual_witness=("
+                << milestone_residual_minimum.level << ','
+                << milestone_residual_minimum.label << ','
+                << milestone_residual_minimum.truncation << ','
+                << milestone_residual_minimum.degree << ')'
             << " result="
             << (
                 second_cumulative_negatives == 0U
                     && first_passage_decreases == 0U
+                    && milestone_residual_negatives == 0U
                 ? "PASS_SECOND_ABEL_DISCOVERY"
                 : "FAIL_ABEL_CANDIDATE"
             )
             << '\n';
         return second_cumulative_negatives == 0U
                 && first_passage_decreases == 0U
+                && milestone_residual_negatives == 0U
             ? EXIT_SUCCESS
             : EXIT_FAILURE;
     } catch (const std::exception& error) {

@@ -11801,6 +11801,77 @@ back to its nearest nonnegative subtotal, first witnessed at
 viable route only if coupled to an unbounded Abel/global reserve; it
 does not replace the global-payment lemma by a fixed-width kernel.
 
+The last-exit factor has an unbounded reserve whose order grows with
+the endpoint distance.  This is stronger than the single distinguished
+loop used in Lemma 5A8H28B.  Retain `k=2K`, `q=2Q`, and let
+`E(z)` be the first-passage series in `(P5A.102AV)`.
+
+**Lemma 5A8H28T (mandatory-milestone Abel factor).**  Put
+
+```text
+L=2+floor((K-2Q)/(Q+1)).
+```
+
+There is a series `E_0(z)` with nonnegative integer coefficients such
+that
+
+```text
+E(z)=E_0(z)/(1-z)^L.                              (P5A.102BZ)
+```
+
+**Proof.**  Work in half-label coordinates.  A first-passage fusion
+walk from `0` to `K` starts with the unique edge `0 -> Q` and ends
+with the unique edge `K-Q -> K`.  Both internal vertices have a
+self-loop.  In addition, for
+
+```text
+c_i=i(Q+1),       1<=i<=floor((K-2Q)/(Q+1)),
+```
+
+mark the first vertex `X_i` of the walk with `X_i>=c_i`.  Since one
+fusion step changes a half-label by at most `Q`,
+
+```text
+c_i<=X_i<=c_i+Q-1<=K-Q-1.                         (P5A.102CA)
+```
+
+The intervals in `(P5A.102CA)` are pairwise disjoint, so all marked
+visits are distinct from one another and from the forced vertices
+`Q,K-Q`.  Every selected label lies in `[Q,K-Q]`.  Such a label has
+the self-loop `X -> X`, because
+
+```text
+|X-Q|<=X,                 2X+Q<=2K.
+```
+
+At the initial `Q` and at every first-hit milestone, remove the
+maximal run of self-loops immediately after the marked arrival.  At
+`K-Q`, remove the maximal run immediately before the final edge.
+Removing these runs preserves every marked first hit and the
+first-passage property.  Conversely, arbitrary nonnegative run
+lengths inserted at the `L` marked slots reconstruct a unique walk.
+This is a length-preserving bijection between first-passage walks and
+
+```text
+{reduced first-passage walks} x Z_(>=0)^L.
+```
+
+Taking ordinary length generating functions proves `(P5A.102BZ)`.
+QED.
+
+The extended exact C++ audit computes `E=G/F`, multiplies it by
+`(1-z)^L`, and checks the residual coefficients directly.  Through
+level `100` and degree `62`, all `37,800` residual coefficients were
+nonnegative; the largest exponent was `L=26`.  This audits the
+formula, while the marked-run bijection proves it for all parameters.
+The transcript is `certificates/su2_return_current_abel.log`.
+
+Lemma 5A8H28T does not by itself prove the current.  At the nearest
+level-six wall one has only `L=2`, and the already recorded coefficient
+`[z^7]H_(10,3)/(1-z)^2=-252` is negative.  Thus the reduced positive
+factor `E_0`, not merely the number of mandatory loops, still
+participates in the global payment.
+
 Two still stronger semigroup shortcuts are false.  The exact
 target-column current has `2,970` sign recrossings through level `60`
 and prefix `20` (maximum two sign changes), although all `380,800`
