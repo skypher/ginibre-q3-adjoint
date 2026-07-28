@@ -953,11 +953,11 @@ before any further construction.
    Lemma 5A8H28T now supplies such a reserve inside the last-exit
    factor.  Mark the forced looped vertices `Q,K-Q` and the first
    crossings of the disjoint half-label bands beginning at
-   `i(Q+1)`.  Removing the canonical loop-runs is bijective and proves
+   `iQ+1`.  Removing the canonical loop-runs is bijective and proves
    `E=E_0/(1-z)^L`, with `E_0>=0` coefficientwise and
-   `L=2+floor((K-2Q)/(Q+1))`.  This is unbounded, and an exact
+   `L=floor((K-1)/Q)=ceil(K/Q)-1`.  This is unbounded, and an exact
    level-100 audit checks 37,800 residual coefficients with maximum
-   `L=26`.  It still does not close the current: at the nearest wall
+   `L=49`.  It still does not close the current: at the nearest wall
    `L=2`, the known second-Abel coefficient is `-252`, so the reduced
    factor `E_0` must remain in the payment.
 

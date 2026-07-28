@@ -196,10 +196,7 @@ int main(int argc, char** argv) {
                 const int half_level = level / 2;
                 const int half_label = label / 2;
                 const int milestone_exponent =
-                    2
-                    + (
-                        half_level - 2 * half_label
-                    ) / (half_label + 1);
+                    (half_level - 1) / half_label;
                 maximum_milestone_exponent = std::max(
                     maximum_milestone_exponent,
                     milestone_exponent

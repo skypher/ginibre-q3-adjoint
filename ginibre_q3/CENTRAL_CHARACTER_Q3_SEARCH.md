@@ -11809,7 +11809,7 @@ loop used in Lemma 5A8H28B.  Retain `k=2K`, `q=2Q`, and let
 **Lemma 5A8H28T (mandatory-milestone Abel factor).**  Put
 
 ```text
-L=2+floor((K-2Q)/(Q+1)).
+L=floor((K-1)/Q)=ceil(K/Q)-1.
 ```
 
 There is a series `E_0(z)` with nonnegative integer coefficients such
@@ -11825,7 +11825,7 @@ with the unique edge `K-Q -> K`.  Both internal vertices have a
 self-loop.  In addition, for
 
 ```text
-c_i=i(Q+1),       1<=i<=floor((K-2Q)/(Q+1)),
+c_i=iQ+1,                        1<=i<=L-2,
 ```
 
 mark the first vertex `X_i` of the walk with `X_i>=c_i`.  Since one
@@ -11862,7 +11862,7 @@ QED.
 The extended exact C++ audit computes `E=G/F`, multiplies it by
 `(1-z)^L`, and checks the residual coefficients directly.  Through
 level `100` and degree `62`, all `37,800` residual coefficients were
-nonnegative; the largest exponent was `L=26`.  This audits the
+nonnegative; the largest exponent was `L=49`.  This audits the
 formula, while the marked-run bijection proves it for all parameters.
 The transcript is `certificates/su2_return_current_abel.log`.
 

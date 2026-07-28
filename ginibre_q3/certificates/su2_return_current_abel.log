@@ -8,7 +8,7 @@ character_ring_iter/analyze_su2_return_current_abel 100 30
 OUTPUT
 FIRST_NEGATIVE_CUMULATIVE level=6 label=2 prefix=4 truncation=2 degree=5 value=-330
 FIRST_NEGATIVE_SECOND_CUMULATIVE level=6 label=2 prefix=4 truncation=3 degree=7 value=-252
-SU2_RETURN_CURRENT_ABEL maximum_level=100 maximum_prefix=30 parameters=600 rows=243000 cumulative_coefficients=10956600 cumulative_negatives=4897861 cumulative_minimum=-70209165632505672724446711857222981109353084328466832788935674879243449091267537063585348427 cumulative_witness=(100,48,30,29,61) second_cumulative_negatives=5016933 second_cumulative_minimum=-60070434908680129520935315552009424138584702571448383150641951599404138689392475947909643342 second_cumulative_witness=(100,48,30,29,61) first_passage_steps=37200 first_passage_decreases=0 first_passage_minimum=0 first_passage_witness=(6,2,1) milestone_residual_coefficients=37800 milestone_residual_negatives=0 maximum_milestone_exponent=26 milestone_residual_minimum=0 milestone_residual_witness=(6,2,2,0) result=FAIL_ABEL_CANDIDATE
+SU2_RETURN_CURRENT_ABEL maximum_level=100 maximum_prefix=30 parameters=600 rows=243000 cumulative_coefficients=10956600 cumulative_negatives=4897861 cumulative_minimum=-70209165632505672724446711857222981109353084328466832788935674879243449091267537063585348427 cumulative_witness=(100,48,30,29,61) second_cumulative_negatives=5016933 second_cumulative_minimum=-60070434908680129520935315552009424138584702571448383150641951599404138689392475947909643342 second_cumulative_witness=(100,48,30,29,61) first_passage_steps=37200 first_passage_decreases=0 first_passage_minimum=0 first_passage_witness=(6,2,1) milestone_residual_coefficients=37800 milestone_residual_negatives=0 maximum_milestone_exponent=49 milestone_residual_minimum=0 milestone_residual_witness=(6,2,2,0) result=FAIL_ABEL_CANDIDATE
 
 INTERPRETATION
 Let H_(n,t)(z)=P_(n,t)(z)F(z), with the notation of Lemma 5A8H26.
@@ -20,14 +20,14 @@ consistent with the elementary initial-neighbour loop injection, but
 that scalar monotonicity is insufficient.  The strengthened
 milestone-loop factor removes
 
-  L=2+floor((K-2Q)/(Q+1))
+  L=floor((K-1)/Q)=ceil(K/Q)-1
 
 independent geometric-series factors from E.  Its exact residual had
 no negative coefficient in the displayed audit.  This is an audit of
 Lemma 5A8H28T; the path-bijection proof is unbounded.
 
 SOURCE_SHA256
-0f08fe6cc907b1c3df23b57b249126fcf2c4ce80b3827b6d3fbcffeebb93d9ff
+453f5c64d97583195eaff640c12a94de7827dec0a47dc43c378933bba0305028
 
 EXECUTABLE_SHA256
-d6fc6576603553c0283dd356e18fe02dea914f27b3629083e1f45f3589774c3a
+196dd3a9776e746e2c7f31a4541ad83ebebb6835d5210cdfa3d88156cca6a7af
