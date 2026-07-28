@@ -108,6 +108,12 @@ int main(int argc, char** argv) {
         std::uint64_t t4_base_difference_coordinates = 0;
         std::uint64_t negative_t4_base_difference_coordinates = 0;
         std::uint64_t nonzero_t4_ninth_difference_coordinates = 0;
+        std::uint64_t t4_c4_coordinates = 0;
+        std::uint64_t negative_t4_c4_coordinates = 0;
+        std::uint64_t t4_grouped_block_coordinates = 0;
+        std::uint64_t negative_t4_grouped_block_coordinates = 0;
+        std::uint64_t negative_t4_low_component_coordinates = 0;
+        std::uint64_t negative_t4_weak_group_coordinates = 0;
         int last_negative_left_ray_K = -1;
         int last_negative_left_ray_Q = -1;
         int last_negative_left_ray_distance = -1;
@@ -423,6 +429,127 @@ int main(int argc, char** argv) {
                     ++outside_in_core_identities;
                 }
 
+                std::vector<Series> endpoint_powers(
+                    11,
+                    Series(static_cast<std::size_t>(K + 1))
+                );
+                endpoint_powers[0][static_cast<std::size_t>(K)] = 1;
+                for (int power = 1; power <= 10; ++power) {
+                    for (int x = 0; x <= K; ++x) {
+                        for (const int y :
+                             graph[static_cast<std::size_t>(x)]) {
+                            endpoint_powers[
+                                static_cast<std::size_t>(power)
+                            ][static_cast<std::size_t>(y)] +=
+                                endpoint_powers[
+                                    static_cast<std::size_t>(power - 1)
+                                ][static_cast<std::size_t>(x)];
+                        }
+                    }
+                }
+                for (int x = 0; x <= K; ++x) {
+                    const std::size_t index =
+                        static_cast<std::size_t>(K - x);
+                    const Integer c4 =
+                        f[8] * endpoint_powers[9][index]
+                        - f[9] * endpoint_powers[8][index];
+                    ++t4_c4_coordinates;
+                    if (c4 < 0) {
+                        ++negative_t4_c4_coordinates;
+                        if (negative_t4_c4_coordinates == 1) {
+                            std::cout
+                                << "FIRST_NEGATIVE_T4_C4"
+                                << " K=" << K
+                                << " Q=" << Q
+                                << " x=" << x
+                                << " value=" << c4 << '\n';
+                        }
+                    }
+                    const Integer component_2_r0 =
+                        f[4] * endpoint_powers[8][index]
+                        - f[5] * endpoint_powers[7][index];
+                    const Integer component_3_r0 =
+                        f[6] * endpoint_powers[6][index]
+                        - f[7] * endpoint_powers[5][index];
+                    const Integer component_4_r0 =
+                        f[8] * endpoint_powers[4][index]
+                        - f[9] * endpoint_powers[3][index];
+                    const Integer component_2_r1 =
+                        f[4] * endpoint_powers[10][index]
+                        - f[5] * endpoint_powers[9][index];
+                    const Integer component_3_r1 =
+                        f[6] * endpoint_powers[8][index]
+                        - f[7] * endpoint_powers[7][index];
+                    const Integer component_4_r1 =
+                        f[8] * endpoint_powers[6][index]
+                        - f[9] * endpoint_powers[5][index];
+                    const Integer component_3_r2 =
+                        f[6] * endpoint_powers[10][index]
+                        - f[7] * endpoint_powers[9][index];
+                    const Integer component_4_r2 =
+                        f[8] * endpoint_powers[8][index]
+                        - f[9] * endpoint_powers[7][index];
+                    const Integer grouped_blocks[3] = {
+                        330 * component_2_r0
+                            + 462 * component_3_r0
+                            + 165 * component_4_r0,
+                        385 * component_2_r1
+                            + 1254 * component_3_r1
+                            + 1122 * component_4_r1,
+                        2035 * component_3_r2
+                            + 4026 * component_4_r2
+                    };
+                    for (int order = 0; order <= 2; ++order) {
+                        ++t4_grouped_block_coordinates;
+                        if (grouped_blocks[order] < 0) {
+                            ++negative_t4_grouped_block_coordinates;
+                            if (
+                                negative_t4_grouped_block_coordinates
+                                == 1
+                            ) {
+                                std::cout
+                                    << "FIRST_NEGATIVE_T4_GROUPED_BLOCK"
+                                    << " K=" << K
+                                    << " Q=" << Q
+                                    << " order=" << order
+                                    << " x=" << x
+                                    << " value=" << grouped_blocks[order]
+                                    << '\n';
+                            }
+                        }
+                    }
+                    if (component_4_r0 < 0) {
+                        ++negative_t4_low_component_coordinates;
+                        if (
+                            negative_t4_low_component_coordinates
+                            == 1
+                        ) {
+                            std::cout
+                                << "FIRST_NEGATIVE_T4_LOW_COMPONENT"
+                                << " K=" << K
+                                << " Q=" << Q
+                                << " order=0 s=4"
+                                << " x=" << x
+                                << " value=" << component_4_r0 << '\n';
+                        }
+                    }
+                    const Integer weak_group =
+                        1254 * component_3_r1
+                        + 1122 * component_4_r1;
+                    if (weak_group < 0) {
+                        ++negative_t4_weak_group_coordinates;
+                        if (negative_t4_weak_group_coordinates == 1) {
+                            std::cout
+                                << "FIRST_NEGATIVE_T4_WEAK_GROUP"
+                                << " K=" << K
+                                << " Q=" << Q
+                                << " order=1"
+                                << " x=" << x
+                                << " value=" << weak_group << '\n';
+                        }
+                    }
+                }
+
                 Series previous_full_t4_kernel;
                 std::vector<Series> full_t4_kernels;
                 for (int j = 5; j <= maximum_prefix; ++j) {
@@ -439,30 +566,6 @@ int main(int argc, char** argv) {
                             continue;
                         }
                         if (t == 4) {
-                            std::vector<Series> endpoint_powers(
-                                10,
-                                Series(static_cast<std::size_t>(K + 1))
-                            );
-                            endpoint_powers[0][
-                                static_cast<std::size_t>(K)
-                            ] = 1;
-                            for (int power = 1; power <= 9; ++power) {
-                                for (int x = 0; x <= K; ++x) {
-                                    for (const int y :
-                                         graph[
-                                             static_cast<std::size_t>(x)
-                                         ]) {
-                                        endpoint_powers[
-                                            static_cast<std::size_t>(power)
-                                        ][static_cast<std::size_t>(y)] +=
-                                            endpoint_powers[
-                                                static_cast<std::size_t>(
-                                                    power - 1
-                                                )
-                                            ][static_cast<std::size_t>(x)];
-                                    }
-                                }
-                            }
                             Series t4_kernel(
                                 static_cast<std::size_t>(K + 1)
                             );
@@ -1534,6 +1637,17 @@ int main(int argc, char** argv) {
             << negative_t4_base_difference_coordinates
             << " nonzero_t4_ninth_difference_coordinates="
             << nonzero_t4_ninth_difference_coordinates
+            << " t4_c4_coordinates=" << t4_c4_coordinates
+            << " negative_t4_c4_coordinates="
+            << negative_t4_c4_coordinates
+            << " t4_grouped_block_coordinates="
+            << t4_grouped_block_coordinates
+            << " negative_t4_grouped_block_coordinates="
+            << negative_t4_grouped_block_coordinates
+            << " negative_t4_low_component_coordinates="
+            << negative_t4_low_component_coordinates
+            << " negative_t4_weak_group_coordinates="
+            << negative_t4_weak_group_coordinates
             << " minimum_nonspecial=" << minimum_nonspecial
             << " minimum_total=" << minimum_total
             << " result="

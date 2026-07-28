@@ -12659,12 +12659,94 @@ Thus the growing power retained in `V_j` is necessary; Lemma
 5A8H28UG uses it exactly rather than replacing it by a fixed-width
 kernel.
 
+The nine kernels have only four genuinely new sign blocks.  Put
+
+```text
+C_s=f_(2s)N^(2s+1)e_0-f_(2s+1)N^(2s)e_0,       1<=s<=4,
+
+G_0=N^3(330A_2+462A_3+165A_4)e_0,
+G_1=N^5(385A_2+1254A_3+1122A_4)e_0,
+G_2=N^7(2035A_3+4026A_4)e_0.                    (P5A.102CB8E)
+```
+
+Here `C_1>=0` is the elementary kernel in Corollary 5A8H22A,
+`C_2>=0` is Lemma 5A8H20, and `C_3>=0` is Lemmas 5A8H24 and
+5A8H24A.
+
+**Lemma 5A8H28UH (four-block reduction of the `t=4` Newton
+kernels).**  If
+
+```text
+C_4>=0,                 G_0>=0, G_1>=0, G_2>=0    (P5A.102CB8F)
+```
+
+entrywise for every `K>2Q`, then all nine inequalities
+`(P5A.102CB8C)` hold.
+
+**Proof.**  Let `J` be the simple-current reflection, so
+`Je_0=e_K` and `JN=NJ`.  Entrywise positivity of `W_r` is therefore
+equivalent to that of `JW_r`.  Write
+
+```text
+b_(r,s)=Delta_2^r binom(11,2s).
+```
+
+The ordinary forward-difference identity gives
+
+```text
+b_(r,s)=sum_(a=0)^r binom(r,a)2^(r-a)
+                    binom(11,2s-r-a)>=0.          (P5A.102CB8G)
+```
+
+It also shows `b_(r,s)=0` when `r>2s`.  Whenever
+`11+2r-4s>=0`,
+
+```text
+N^(3+2r)A_s(N)e_0=N^(11+2r-4s)C_s.               (P5A.102CB8H)
+```
+
+For `r>=3`, every nonzero term has `s<=4` and
+`11+2r-4s>=0`.  Thus `(P5A.102CB8G)--(P5A.102CB8H)`,
+the already proved signs of `C_1,C_2,C_3`, and the assumed sign of
+`C_4` prove `JW_r>=0` for `3<=r<=8`.
+
+For the remaining orders, direct step-two differencing gives
+
+```text
+JW_0=N^12e_0+55N^7C_1+G_0,
+JW_1=23N^9C_1+G_1,
+JW_2=4N^11C_1+265N^7C_2+G_2.                    (P5A.102CB8I)
+```
+
+Every displayed summand is nonnegative under `(P5A.102CB8F)`.
+This proves the other three kernels.  QED.
+
+**Target 5A8H28R16 (four fixed `t=4` sign blocks).**  Prove
+`(P5A.102CB8F)` for every `K>2Q`.  Unlike Target 5A8H28R15, this
+target does not repeat any sign already supplied by the proved
+`C_1,C_2,C_3` hierarchy.
+
 The exact bounded scan through `K=60` and `j=25` tested all `764,295`
 coordinates of `V_j`, all `727,900` coordinates of `D_NV_j`, and all
 `327,555` coordinates of the nine base vectors `W_r` without finding a
 negative value.  It also verified zero nonzero coordinates in
 `D_N^9V`.  These counts are discovery evidence for
 `(P5A.102CB8C)`, not its proof.
+
+The same run tested all `36,395` coordinates of `C_4` and all
+`109,185` coordinates of `G_0,G_1,G_2` without a negative value.
+Termwise deletion below the anchored-minor depth is false:
+
+```text
+N^3A_4e_0=-102                    at (K,Q,x)=(3,1,1),
+N^5(1254A_3+1122A_4)e_0=-642840  at (K,Q,x)=(7,2,1).
+```
+
+There are respectively `8,304` and `4,105` negative coordinates of
+these two stronger proposals through `K=60`.  Thus the low-order
+groups and the `385A_2` credit in `G_1` cannot simply be discarded.
+The zero counts for `(P5A.102CB8F)` remain bounded discovery evidence,
+not a proof of Target 5A8H28R16.
 
 The new reserve strictly strengthens the scalar loop information, but
 does not by itself close the current.  With

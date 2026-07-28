@@ -13,12 +13,15 @@ negative controls for two stronger one-dimensional allocations.  The
 t=4 counters test the fixed three-step kernel, the fully smoothed
 vector V_j, its first induction difference, the nine base Newton
 differences W_r, and the exact vanishing of the ninth difference.
+They also test the four reduced sign blocks in P5A.102CB8F and two
+strictly stronger false decompositions.
 
 COMMAND
 character_ring_iter/analyze_su2_last_exit_groups 60 25
 
 OUTPUT
 FIRST_NEGATIVE_OUTSIDE_IN_CORE K=3 Q=1 distance=0 degree=16 value=-4373
+FIRST_NEGATIVE_T4_LOW_COMPONENT K=3 Q=1 order=0 s=4 x=1 value=-102
 FIRST_NEGATIVE_TWICE_RETURN_CURRENT K=3 Q=1 j=5 t=4 degree=3 value=-53
 FIRST_NEGATIVE_ODD_BOUNDARY_CURRENT K=3 Q=1 j=5 t=4 degree=4 value=-55
 FIRST_NEGATIVE_RENEWAL_CURRENT K=3 Q=1 j=5 t=4 degree=7 value=-790
@@ -32,13 +35,14 @@ FIRST_NEGATIVE_INTERVAL_PIECE piece=LEFT_RAY K=5 Q=2 j=15 t=14 distance=0 value=
 FIRST_NEGATIVE_INTERVAL_PIECE piece=UPPER_PAIR K=5 Q=2 j=15 t=14 distance=0 value=-290633939856683008
 FIRST_SIMULTANEOUS_NEGATIVE_RAYS K=5 Q=2 j=15 t=14 distance=0 left_ray=-290633939856683008 upper_pair=-290633939856683008
 NEGATIVE_LEFT_RAY_FAMILY K=5 Q=2 j=15 t=14 distance=0 left_ray=-290633939856683008 upper_right=28039061895349235712 total=27748427955492552704
+FIRST_NEGATIVE_T4_WEAK_GROUP K=7 Q=2 order=1 x=1 value=-642840
 FIRST_NEGATIVE_NONSPECIAL K=10 Q=4 j=20 t=17 y=7 margin=-584358080265680221571012927691270
 FIRST_NEGATIVE_INTERVAL_PIECE piece=UPPER_RIGHT K=11 Q=4 j=19 t=16 distance=1 value=-212361230047764694445462213037523
 FIRST_NEGATIVE_LOCAL_TRIPLE_RESERVE K=11 Q=5 j=15 t=13 distance=1 radius=1 lower=-6221826968772337899178425 upper_left=0 upper_right=-6221826968772337899178425 reserve=-12443653937544675798356850
 FIRST_SIMULTANEOUS_NEGATIVE_UPPER K=13 Q=5 j=20 t=18 distance=0 lower_left=994481778189409593981383129917640855896 upper_left=-33753419297570430066236289261465414934 upper_right=-7331407914359519993074776588684126290 total=953396950977479643922072064067491314672
 FIRST_STRICT_SIMULTANEOUS_NEGATIVE_UPPER K=27 Q=11 j=22 t=19 distance=1 lower_left=14255742240599587157787968389440066757598074005753885505 upper_left=-272745502387188586834348530228774700673077730771094741 upper_right=-199731246039119966467921443826378226460840730451396703 total=13783265492173278604485698415384913830464155544531394061
 FIRST_NEGATIVE_NESTED_RADIUS_RESERVE K=45 Q=15 j=16 t=14 distance=1 radius=14 value=-1400793113905054146460767362149605985087096
-SU2_LAST_EXIT_GROUP_SCAN maximum_K=60 maximum_prefix=25 parameters=870 rows=200970 identities=200970 groups=3952410 negative_groups=119127 nonspecial_negative_groups=101410 special_positive_groups=51583 outside_in_prefixes=6116187 negative_outside_in_prefixes=0 renewal_current_coefficients=7971810 negative_renewal_current_coefficients=3251740 twice_return_current_coefficients=7971810 negative_twice_return_current_coefficients=3482844 green_minor_identities=17110 outside_in_core_identities=26477 outside_in_core_coefficients=1403281 negative_outside_in_core_coefficients=92 negative_higher_q_core_coefficients=15 negative_higher_q_twice_return_coefficients=3235285 interval_piece_tests=5720946,4052895,721875,6116187,5720946,4466847 negative_interval_piece_tests=0,25674,33945,38,0,3439 simultaneous_negative_upper_pieces=430 simultaneous_negative_ray_pairs=38 strict_simultaneous_negative_upper_pieces=94 strict_negative_left_rays=0 strict_deficit_reserve_tests=5915217 negative_strict_deficit_reserves=0 local_triple_reserve_tests=22713075 negative_local_triple_reserves=62055 nested_radius_reserve_tests=42672630 negative_nested_radius_reserves=404 odd_boundary_current_coefficients=7971810 negative_odd_boundary_current_coefficients=4523080 negative_higher_q_odd_boundary_coefficients=4269923 t4_kernel_coordinates=764295 negative_t4_kernel_coordinates=127619 negative_higher_q_t4_kernel_coordinates=126498 full_t4_kernel_coordinates=764295 negative_full_t4_kernel_coordinates=0 t4_induction_coordinates=727900 negative_t4_induction_coordinates=0 t4_base_difference_coordinates=327555 negative_t4_base_difference_coordinates=0 nonzero_t4_ninth_difference_coordinates=0 minimum_nonspecial=-13194954125373253335846869713925319087996968314119597658041609098478388621384812 minimum_total=0 result=PASS_OUTSIDE_IN_PREFIXES
+SU2_LAST_EXIT_GROUP_SCAN maximum_K=60 maximum_prefix=25 parameters=870 rows=200970 identities=200970 groups=3952410 negative_groups=119127 nonspecial_negative_groups=101410 special_positive_groups=51583 outside_in_prefixes=6116187 negative_outside_in_prefixes=0 renewal_current_coefficients=7971810 negative_renewal_current_coefficients=3251740 twice_return_current_coefficients=7971810 negative_twice_return_current_coefficients=3482844 green_minor_identities=17110 outside_in_core_identities=26477 outside_in_core_coefficients=1403281 negative_outside_in_core_coefficients=92 negative_higher_q_core_coefficients=15 negative_higher_q_twice_return_coefficients=3235285 interval_piece_tests=5720946,4052895,721875,6116187,5720946,4466847 negative_interval_piece_tests=0,25674,33945,38,0,3439 simultaneous_negative_upper_pieces=430 simultaneous_negative_ray_pairs=38 strict_simultaneous_negative_upper_pieces=94 strict_negative_left_rays=0 strict_deficit_reserve_tests=5915217 negative_strict_deficit_reserves=0 local_triple_reserve_tests=22713075 negative_local_triple_reserves=62055 nested_radius_reserve_tests=42672630 negative_nested_radius_reserves=404 odd_boundary_current_coefficients=7971810 negative_odd_boundary_current_coefficients=4523080 negative_higher_q_odd_boundary_coefficients=4269923 t4_kernel_coordinates=764295 negative_t4_kernel_coordinates=127619 negative_higher_q_t4_kernel_coordinates=126498 full_t4_kernel_coordinates=764295 negative_full_t4_kernel_coordinates=0 t4_induction_coordinates=727900 negative_t4_induction_coordinates=0 t4_base_difference_coordinates=327555 negative_t4_base_difference_coordinates=0 nonzero_t4_ninth_difference_coordinates=0 t4_c4_coordinates=36395 negative_t4_c4_coordinates=0 t4_grouped_block_coordinates=109185 negative_t4_grouped_block_coordinates=0 negative_t4_low_component_coordinates=8304 negative_t4_weak_group_coordinates=4105 minimum_nonspecial=-13194954125373253335846869713925319087996968314119597658041609098478388621384812 minimum_total=0 result=PASS_OUTSIDE_IN_PREFIXES
 
 INTERPRETATION
 All 200,970 last-exit channel decompositions reproduce the independent
@@ -68,9 +72,15 @@ required growing smoothing, all 764,295 tested V_j coordinates, all
 Newton differences W_r are nonnegative.  The ninth operator difference
 vanishes identically on the tested vectors.  These t=4 sign counts are
 also bounded evidence, not a proof of P5A.102CB8C.
+All 36,395 tested C_4 coordinates and all 109,185 tested coordinates
+of G_0,G_1,G_2 are nonnegative.  In contrast, the isolated low C_4
+component has 8,304 negatives, and the order-one group without its
+C_2 credit has 4,105 negatives.  Thus the four-block reduction keeps
+credits that its two displayed negative controls show are necessary.
+The zero counts remain bounded evidence for P5A.102CB8F.
 
 SOURCE_SHA256
-25b5be38a58e1e5ce9af72677613ba018d903628ec226ddcca6d6e7f9a1a044f
+50ef87de8b1423c63d8cf718bf5b391bac123139ca51ae99eebdaa0b64f31235
 
 EXECUTABLE_SHA256
-b0fec4e4adab5452a5e7ad51ce3a6b098beb2295b22e11556d68278f5c22a552
+9fbe6708487d7424eec2fc0aaf0cbfbd0d5165527d89a29e647ba6aafca819e9
