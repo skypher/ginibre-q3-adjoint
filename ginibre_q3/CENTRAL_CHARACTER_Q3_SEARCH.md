@@ -11470,6 +11470,72 @@ endpoint polynomials.  The remaining symbolic task is only to enumerate
 the order masks selecting `L_nu,U_nu` and the active truncations in
 their two weight multiplicities.
 
+That order fan is finite and now exactly enumerated.
+
+**Lemma 5A8H28P (exact fusion-endpoint mask census).**  In the
+variable-width domain
+
+```text
+ell-d=2Q,                 Q>=7,
+0<=s,t<=ell,
+t=s+bd mod 2,
+```
+
+the signed endpoint formula `(P5A.102BS)` has exactly the following
+numbers of feasible order/truncation masks:
+
+```text
+b=1: 122,        b=2: 237,        b=3: 646,        b=4: 943.
+```
+
+Thus all four powers together have `1,948` feasible masks.
+
+**Proof.**  For each of the four affine-fold branches, use doubled
+endpoint coordinates.  Its retained `r` interval is the intersection
+of exactly three lower candidates
+
+```text
+0,                 affine-branch lower,
+                   fusion-interval lower,
+```
+
+and three upper candidates
+
+```text
+floor(bd/2),       affine-branch upper,
+                   fusion-interval upper.
+```
+
+Record which lower candidates attain the maximum, which upper
+candidates attain the minimum, whether the resulting interval is
+nonempty, and whether `L-1>=0`.  In the half-weight range
+`r<=floor(bd/2)` and for `b<=4`, no truncation beyond `j=1` in
+`(P5A.102BP)` can activate.  For `b=3,4`, also record
+
+```text
+U>=d+1,                 L-1>=d+1.
+```
+
+Finally record the two choices resolving `|s-t|` and
+`min(s+t,2ell-s-t)`, together with the parities of
+`ell,d,s,t`.  These residue bits resolve every endpoint floor and
+ceiling.  The Boolean data therefore determine every endpoint
+polynomial in `(P5A.102BS)`, including all ties.
+
+The strict Z3 enumerator imposes the displayed integer domain and
+blocks each complete Boolean mask after finding it.  Exhaustion returns
+the four counts above.  Since the solver ranges over the unbounded
+integer parameters themselves, this is an exact Presburger census, not
+a bounded parameter scan.  QED.
+
+The source is
+`character_ring_iter/analyze_su2_fusion_endpoint_masks.cpp`, and the
+transcript is `certificates/su2_fusion_endpoint_masks.log`.
+Lemma 5A8H28P reduces the free-width part of Target 5A8H28R5 to
+substituting the endpoint polynomials on these `1,948` masks and proving
+their packet combinations nonnegative.  No further fusion-path or
+affine-wall case discovery remains.
+
 Thus the following is a sufficient strengthening of the missing
 global-payment lemma:
 

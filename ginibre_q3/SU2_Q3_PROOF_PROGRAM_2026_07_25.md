@@ -901,7 +901,11 @@ before any further construction.
    `w(U)-w(L-1)`.  Negative affine branches are essential—the direct
    level-40 audit encountered 608,965 of them—but the formula closes
    all path summations and leaves only finitely many endpoint-order
-   masks.
+   masks.  Lemma 5A8H28P now gives their parity-complete exact Z3
+   census: 122, 237, 646, and 943 masks for `b=1,2,3,4`,
+   respectively, or 1,948 total.  The remaining free-width task is polynomial substitution
+   and sign certification on those masks; no further fusion-path case
+   discovery remains.
    Arbitrary `t>=3` still requires the general global-payment mechanism
    after that leaf is closed.
 

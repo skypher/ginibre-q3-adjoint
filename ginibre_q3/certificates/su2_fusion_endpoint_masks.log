@@ -1,0 +1,30 @@
+STATUS
+Exact unbounded Presburger census of the signed fusion-power endpoint
+order/truncation masks in Lemma 5A8H28P.
+
+COMMAND
+character_ring_iter/analyze_su2_fusion_endpoint_masks
+
+OUTPUT
+SU2_FUSION_ENDPOINT_MASKS power=1 hinges=38 masks=122 result=PASS_EXACT_CENSUS
+SU2_FUSION_ENDPOINT_MASKS power=2 hinges=38 masks=237 result=PASS_EXACT_CENSUS
+SU2_FUSION_ENDPOINT_MASKS power=3 hinges=46 masks=646 result=PASS_EXACT_CENSUS
+SU2_FUSION_ENDPOINT_MASKS power=4 hinges=46 masks=943 result=PASS_EXACT_CENSUS
+SU2_FUSION_ENDPOINT_MASKS_TOTAL powers=4 masks=1948 result=PASS_EXACT_CENSUS
+
+INTERPRETATION
+The Z3 solver ranges over unbounded integers ell,d,s,t with
+ell-d=2Q, Q>=7, the alcove bounds, and the required parity.  A mask
+records the parameter parities, every lower-maximum tie,
+upper-minimum tie, branch activation, and possible j=1 weight
+truncation in the four signed affine-fold branches.  Blocking complete
+masks and exhausting the solver is an exact census, not a bounded scan.
+
+SOURCE_SHA256
+7dd6fed7b500e66c3047b461a7f32fb739181aff24ee8ffc86776f062726dba0
+
+EXECUTABLE_SHA256
+5fd347e3d185dd3b536b6ffc4b6e5f974b304578e250a6b9446965ac0409fa2e
+
+RAW_TRANSCRIPT_SHA256
+49b52660ec6eb87c4edfc6e07d38dc02e5e6821e67e657666dc29de0c9416319

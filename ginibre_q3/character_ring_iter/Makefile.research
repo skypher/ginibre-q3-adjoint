@@ -300,6 +300,10 @@ verify_su2_fusion_power_endpoints: verify_su2_fusion_power_endpoints.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+analyze_su2_fusion_endpoint_masks: analyze_su2_fusion_endpoint_masks.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
 analyze_general_graph_full_prefix_kernel: analyze_general_graph_full_prefix_kernel.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -392,6 +396,7 @@ RESEARCH_TARGETS = \
 	analyze_su2_shell_fixed_offset \
 	verify_su2_tensor_power_hinges \
 	verify_su2_fusion_power_endpoints \
+	analyze_su2_fusion_endpoint_masks \
 	analyze_general_graph_full_prefix_kernel \
 	prove_su2_k3_kernel \
 	analyze_su2_k3_intermediate_masks \
