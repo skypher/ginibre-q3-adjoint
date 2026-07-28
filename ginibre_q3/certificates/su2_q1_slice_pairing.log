@@ -1,7 +1,8 @@
 STATUS
 Bounded exact diagnostics for the minimal-label slice reduction and
-Target 5A8H28R8.  Lemma 5A8H28AB closes K=3 exactly; endpoint-ratio
-descent for every K>=4 remains an unbounded proof target.
+Targets 5A8H28R8 and 5A8H28R11.  Lemma 5A8H28AB closes K=3
+exactly; endpoint-ratio descent for every K>=4 remains an unbounded
+proof target.
 
 COMMAND
 character_ring_iter/analyze_su2_q1_slice_pairing 100 100
@@ -12,7 +13,7 @@ FIRST_NEGATIVE_MIRROR_PAIR half_level=3 prefix=5 lower_slice=0 upper_slice=4 val
 FIRST_NEGATIVE_INCIDENCE_RATIO_SANDWICH half_level=4 degree=5 value=-1
 FIRST_WRONG_INCIDENCE_RATIO_SANDWICH half_level=4 degree=7 value=4
 FIRST_NEGATIVE_ENDPOINT_RATIO_MINOR half_level=4 ratio_index=3 value=-46
-SU2_Q1_SLICE_PAIRING maximum_half_level=100 maximum_prefix=100 profiles=9506 slice_coordinates=494312 negative_slices=2401 negative_even_level_slices=0 negative_odd_level_slices=2401 negative_above_three_slices=0 sign_recrossings=0 maximum_sign_changes=1 prefix_coordinates=494312 negative_prefixes=0 mirror_pairs=244804 negative_mirror_pairs=1163 terminal_negatives=0 return_ratio_minors=9702 negative_return_ratio_minors=0 endpoint_ratio_minors=7301 negative_endpoint_ratio_minors=7202 wrong_parity_endpoint_ratio_minors=3576 positive_above_three_endpoint_ratio_minors=0 negative_level_three_endpoint_ratio_minors=0 level_three_identities=197 failed_level_three_identities=0 incidence_identities=29596 failed_incidence_identities=0 fully_looped_log_concavity_minors=14749 negative_fully_looped_log_concavity_minors=0 incidence_ratio_sandwiches=14749 wrong_above_three_incidence_ratio_sandwiches=7250 negative_even_above_three_incidence_ratio_sandwiches=0 positive_odd_above_three_incidence_ratio_sandwiches=7250 negative_above_three_incidence_ratio_sandwiches=1 result=PASS_Q1_SLICE_PAIRING_DISCOVERY
+SU2_Q1_SLICE_PAIRING maximum_half_level=100 maximum_prefix=100 profiles=9506 slice_coordinates=494312 negative_slices=2401 negative_even_level_slices=0 negative_odd_level_slices=2401 negative_above_three_slices=0 sign_recrossings=0 maximum_sign_changes=1 prefix_coordinates=494312 negative_prefixes=0 mirror_pairs=244804 negative_mirror_pairs=1163 terminal_negatives=0 return_ratio_minors=9702 negative_return_ratio_minors=0 endpoint_ratio_minors=7301 negative_endpoint_ratio_minors=7202 wrong_parity_endpoint_ratio_minors=3576 positive_above_three_endpoint_ratio_minors=0 negative_level_three_endpoint_ratio_minors=0 level_three_identities=197 failed_level_three_identities=0 incidence_identities=29596 failed_incidence_identities=0 fully_looped_log_concavity_minors=14749 negative_fully_looped_log_concavity_minors=0 fully_looped_turan_reserve_steps=14453 negative_fully_looped_turan_reserve_steps=0 incidence_ratio_sandwiches=14749 wrong_above_three_incidence_ratio_sandwiches=7250 negative_even_above_three_incidence_ratio_sandwiches=0 positive_odd_above_three_incidence_ratio_sandwiches=7250 negative_above_three_incidence_ratio_sandwiches=1 result=PASS_Q1_SLICE_PAIRING_DISCOVERY
 
 INTERPRETATION
 Every negative individual slice occurs at K=3, where the exact Pell
@@ -23,13 +24,16 @@ descent direction of Target 5A8H28R8.  The 100-by-100 run is bounded
 evidence for that ratio target, not its proof.  All 29,596 incidence
 identities hold.  The fully looped Turan minors and the even-time
 incidence sandwiches have no negative value, as required by Target
-5A8H28R9.  The negative mirror pair is an exact obstruction to proving
+5A8H28R9.  Lemma 5A8H28AF now proves the fully looped Turan
+inequality unboundedly.  All 14,453 normalized Turan-reserve steps are
+nonnegative; this is bounded evidence for Target 5A8H28R11, not its
+proof.  The negative mirror pair is an exact obstruction to proving
 the terminal prefix by independent symmetric slice pairs, and the
 degree-seven incidence value 4 disproves the stronger alternating
 sandwich.
 
 SOURCE_SHA256
-8e5b21ce3e41ea341a053161b96a6649187e33fa8a12646687805ce9a6656c10
+45ae3e92dcb5e11708e43d506362983db41da04be7a105f17b9b78ec837e49fe
 
 EXECUTABLE_SHA256
-b9ac7a2491ebe8a2f7459a980e3a0f0e917461148e409d80eb97788513c742cc
+46663cc69c70d6d69d230a9e0a55655c6c3b12ea8e97d35b35d3075a4002ead9

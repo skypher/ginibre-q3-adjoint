@@ -131,6 +131,8 @@ int main(int argc, char** argv) {
         std::uint64_t failed_incidence_identities = 0U;
         std::uint64_t fully_looped_log_concavity_minors = 0U;
         std::uint64_t negative_fully_looped_log_concavity_minors = 0U;
+        std::uint64_t fully_looped_turan_reserve_steps = 0U;
+        std::uint64_t negative_fully_looped_turan_reserve_steps = 0U;
         std::uint64_t incidence_ratio_sandwiches = 0U;
         std::uint64_t wrong_above_three_incidence_ratio_sandwiches = 0U;
         std::uint64_t negative_even_above_three_incidence_ratio_sandwiches =
@@ -242,6 +244,39 @@ int main(int argc, char** argv) {
                 ++fully_looped_log_concavity_minors;
                 if (minor < 0) {
                     ++negative_fully_looped_log_concavity_minors;
+                }
+            }
+            for (int degree = half_level > 3
+                    ? half_level
+                    : maximum_degree + 1;
+                 degree + 2 <= maximum_degree;
+                 ++degree) {
+                const Integer previous =
+                    fully_looped_endpoints[
+                        static_cast<std::size_t>(degree - 1)
+                    ];
+                const Integer current =
+                    fully_looped_endpoints[
+                        static_cast<std::size_t>(degree)
+                    ];
+                const Integer next =
+                    fully_looped_endpoints[
+                        static_cast<std::size_t>(degree + 1)
+                    ];
+                const Integer after_next =
+                    fully_looped_endpoints[
+                        static_cast<std::size_t>(degree + 2)
+                    ];
+                const Integer current_turan =
+                    current * current - previous * next;
+                const Integer next_turan =
+                    next * next - current * after_next;
+                const Integer reserve_step =
+                    next * next_turan * (previous + current)
+                    - current * current_turan * (next + after_next);
+                ++fully_looped_turan_reserve_steps;
+                if (reserve_step < 0) {
+                    ++negative_fully_looped_turan_reserve_steps;
                 }
             }
             for (int degree = 1;
@@ -630,6 +665,10 @@ int main(int argc, char** argv) {
                 << fully_looped_log_concavity_minors
             << " negative_fully_looped_log_concavity_minors="
                 << negative_fully_looped_log_concavity_minors
+            << " fully_looped_turan_reserve_steps="
+                << fully_looped_turan_reserve_steps
+            << " negative_fully_looped_turan_reserve_steps="
+                << negative_fully_looped_turan_reserve_steps
             << " incidence_ratio_sandwiches="
                 << incidence_ratio_sandwiches
             << " wrong_above_three_incidence_ratio_sandwiches="
@@ -653,6 +692,7 @@ int main(int argc, char** argv) {
                         && failed_level_three_identities == 0U
                         && failed_incidence_identities == 0U
                         && negative_fully_looped_log_concavity_minors == 0U
+                        && negative_fully_looped_turan_reserve_steps == 0U
                         && negative_even_above_three_incidence_ratio_sandwiches
                             == 0U
                         ? "PASS_Q1_SLICE_PAIRING_DISCOVERY"
@@ -670,6 +710,7 @@ int main(int argc, char** argv) {
                 && failed_level_three_identities == 0U
                 && failed_incidence_identities == 0U
                 && negative_fully_looped_log_concavity_minors == 0U
+                && negative_fully_looped_turan_reserve_steps == 0U
                 && negative_even_above_three_incidence_ratio_sandwiches
                     == 0U
             ? EXIT_SUCCESS

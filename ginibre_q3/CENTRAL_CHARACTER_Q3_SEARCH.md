@@ -12576,6 +12576,114 @@ are the two endpoint loops in `(P5A.102CZ)`.  This is the precise
 boundary correction missing from the osculating switch, rather than a
 new bulk path inequality.
 
+There is also a scalar propagation of this boundary current which
+uses only the already positive fully looped Turan determinants.  Put
+
+```text
+D_n=t_n^2-t_(n-1)t_(n+1),
+W_n=g_n^2-g_(n-1)g_(n+1),
+V_n= t_n D_n/{(t_(n-1)+t_n)(t_n+t_(n+1))}.       (P5A.102DB)
+```
+
+Lemma 5A8H28AF gives `D_n>=0`.
+
+**Lemma 5A8H28AH (Turan-reserve propagation).**  For every index with
+positive denominators,
+
+```text
+W_(n+1)
+ ={t_n D_n-(t_n+t_(n+1))W_n}/{t_(n-1)+t_n}.      (P5A.102DC)
+```
+
+Consequently, if
+
+```text
+0<=W_n<=t_n D_n/(t_n+t_(n+1))                    (P5A.102DD)
+```
+
+and `V_n<=V_(n+1)`, then `(P5A.102DD)` also holds with `n+1`
+in place of `n`.
+
+**Proof.**  From `g_n+g_(n-1)=t_(n-1)`,
+
+```text
+W_n=g_n(t_(n-1)+t_n)-t_(n-1)t_n,
+W_(n+1)=t_n^2-g_n(t_n+t_(n+1)).
+```
+
+Eliminate `g_n` between these two identities to obtain
+`(P5A.102DC)`.  The upper bound in `(P5A.102DD)` makes its numerator
+nonnegative, so `W_(n+1)>=0`.  Discarding the nonnegative `W_n` term
+from the numerator gives
+
+```text
+W_(n+1)<=t_n D_n/(t_(n-1)+t_n)
+         =V_n(t_n+t_(n+1))
+         <=V_(n+1)(t_n+t_(n+1))
+         =t_(n+1)D_(n+1)/(t_(n+1)+t_(n+2)).
+```
+
+This is exactly the upper half of `(P5A.102DD)` at `n+1`.  QED.
+
+Thus the remaining boundary current would follow from a monotonic
+reserve internal to the fully looped strip.
+
+**Target 5A8H28R11 (normalized fully looped Turan reserve).**  For
+every `K>=4` and `n>=K`, prove
+
+```text
+V_n<=V_(n+1),                                    (P5A.102DE)
+```
+
+or, without division,
+
+```text
+t_n D_n(t_(n+1)+t_(n+2))
+ <=t_(n+1)D_(n+1)(t_(n-1)+t_n).                 (P5A.102DF)
+```
+
+**Proposition 5A8H28AI (the normalized reserve implies the boundary
+current).**  Target 5A8H28R11 implies Target 5A8H28R10.
+
+**Proof.**  The initial fully looped counts are
+
+```text
+t_(K-1)=1,  t_K=K,
+t_(K+1)={K^2+3K-2}/2,  D_K={(K-1)(K-2)}/2.
+```
+
+The third formula separates the paths with two inserted loops from
+the `K-1` choices of one inserted backtrack.  Also
+`g_(K-1)=0` and `g_K=1`, so `W_K=1`.  For `K>=5`,
+
+```text
+t_K D_K/(t_K+t_(K+1))
+ =K(K-1)(K-2)/(K^2+5K-2)>=1=W_K.                (P5A.102DG)
+```
+
+The last inequality holds at `K=5`, and the difference between its
+left numerator and denominator increases thereafter.  Lemma
+5A8H28AH and Target 5A8H28R11 now propagate `(P5A.102DD)` for every
+`n>=K`, hence `W_n>=0`.
+
+For `K=4`, direct multiplication gives
+
+```text
+W_4=1,
+(g_5,g_6,g_7)=(3,10,28),
+(t_5,t_6,t_7)=(13,38,106),
+D_6=66,
+W_6=16<=38*66/(38+106)=209/12.
+```
+
+Starting at `n=6` gives every later `W_n>=0`; the only intervening
+value is the harmless odd-index exception `W_5=-1`.  Therefore every
+even `b` in Target 5A8H28R10 has `W_b>=0`.  QED.
+
+The C++ analyzer checks `(P5A.102DF)` directly.  Through `K=100` and
+degree `202`, all `14,453` target steps are nonnegative.  This is
+bounded evidence for Target 5A8H28R11, not its proof.
+
 **Proposition 5A8H28AE (the Turan--incidence pair implies endpoint
 descent).**  Target 5A8H28R9 implies Target 5A8H28R8.
 
