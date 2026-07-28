@@ -11163,6 +11163,85 @@ The exact remaining `t=2` band is now
 Q>=7,                  2Q+5<=K<10Q.               (P5A.102BK)
 ```
 
+The finite-width construction is uniform enough to close the next six
+rays in one normalized certificate.
+
+**Lemma 5A8H28M (normalized fixed-width shell certificate).**  Put
+
+```text
+d=K-1-2Q.
+```
+
+If `4<=d<=9`, then `(LBK2)` holds for every `Q>=7` and every shell.
+
+**Proof.**  Lemma 5A8H28A gives `A_-=JN_d`.  Put
+
+```text
+h=floor(d/2),             R=Q+h-x,
+a=rho-x,                  b=rho-R.
+```
+
+The even packet has radius `2d`.  The odd packet has support offsets
+
+```text
+l_d=-3d/2, u_d=3d/2                    (d even),
+l_d=(1-3d)/2, u_d=(1+3d)/2             (d odd).   (P5A.102BL)
+```
+
+Thus the nonempty cutoff classes are
+
+```text
+E: a<=-2d (full), -2d<a<=2d, a>2d (empty);
+O: b<=l_d (full), l_d<b<=u_d, b>u_d (empty).
+```
+
+The exact recurrence certifies every even class and the full odd
+class directly.  For a partial odd class, split by the even cutoff:
+
+```text
+a<=-2d:
+  s=-2d-a>=0,             x=y+h+b+2d+s;
+-2d<a<=2d:
+                             x=y+h+b-a;
+a>=2d+1:
+  s=a-(2d+1)>=0,          y=x+2d+1-h-b+s.          (P5A.102BM)
+```
+
+At boundary distance `4d+1`, every fixed-length fusion activation has
+stabilized.  The remaining expressions on the rays and cones in
+`(P5A.102BM)` have total degree at most eight.  Exact Newton
+reconstruction gives the following exhaustive censuses:
+
+```text
+d  K-2Q  boundary entries  rays  cones  negative odd  negative total
+4    5          8,032      1,158   42       11,228           0
+5    6         15,336      1,754   52       13,518           0
+6    7         26,745      2,518   62       16,636           0
+7    8         41,584      3,368   72       27,056           0
+8    9         62,498      4,400   82       31,586           0
+9   10         87,509      5,504   92       47,160           0
+```
+
+Every boundary value and every Newton coefficient is nonnegative; the
+minimum boundary values are respectively `30,34,38,46,50,58`.
+The verifier rejects a nonzero ninth difference and reconstructs all
+additional exact audit values.  The degree bound and exhaustive
+parameterizations `(P5A.102BL)--(P5A.102BM)` turn each finite grid into
+an unbounded identity in `Q`.  Consequently the even reserve pays every
+one of the displayed negative odd packets, proving `(LBK2)` on all six
+rays.  QED.
+
+Combining Lemmas 5A8H28G--5A8H28M, the exact remaining `t=2` band is
+
+```text
+Q>=7,                  2Q+11<=K<10Q.              (P5A.102BN)
+```
+
+The normalized variables in `(P5A.102BM)` are the active route to a
+single variable-width proof: it remains to prove their Newton
+coefficients nonnegative with `d` free, rather than certifying further
+fixed values of `d`.
+
 Thus the following is a sufficient strengthening of the missing
 global-payment lemma:
 

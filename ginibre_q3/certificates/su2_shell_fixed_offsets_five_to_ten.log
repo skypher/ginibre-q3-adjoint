@@ -1,0 +1,43 @@
+STATUS
+Aggregate exact unbounded Newton certificate for the six normalized
+finite-width shell rays K=2Q+c, 5<=c<=10, of Lemma 5A8H28M.
+
+COMMANDS
+character_ring_iter/analyze_su2_shell_fixed_offset 100 5 --certificate
+character_ring_iter/analyze_su2_shell_fixed_offset 100 6 --certificate
+character_ring_iter/analyze_su2_shell_fixed_offset 100 7 --certificate
+character_ring_iter/analyze_su2_shell_fixed_offset 120 8 --certificate
+character_ring_iter/analyze_su2_shell_fixed_offset 120 9 --certificate
+character_ring_iter/analyze_su2_shell_fixed_offset 140 10 --certificate
+
+SUMMARY_OUTPUT
+offset=5 maximum_q=100 boundary_box_entries=8032 boundary_box_minimum=30 ray_certificates=1158 cone_certificates=42 negative_even=0 negative_odd=11228 negative_total=0
+offset=6 maximum_q=100 boundary_box_entries=15336 boundary_box_minimum=34 ray_certificates=1754 cone_certificates=52 negative_even=0 negative_odd=13518 negative_total=0
+offset=7 maximum_q=100 boundary_box_entries=26745 boundary_box_minimum=38 ray_certificates=2518 cone_certificates=62 negative_even=0 negative_odd=16636 negative_total=0
+offset=8 maximum_q=120 boundary_box_entries=41584 boundary_box_minimum=46 ray_certificates=3368 cone_certificates=72 negative_even=0 negative_odd=27056 negative_total=0
+offset=9 maximum_q=120 boundary_box_entries=62498 boundary_box_minimum=50 ray_certificates=4400 cone_certificates=82 negative_even=0 negative_odd=31586 negative_total=0
+offset=10 maximum_q=140 boundary_box_entries=87509 boundary_box_minimum=58 ray_certificates=5504 cone_certificates=92 negative_even=0 negative_odd=47160 negative_total=0
+
+INTERPRETATION
+For d=K-1-2Q from four through nine, the analyzer uses the normalized
+full/partial/empty packet partition of Lemma 5A8H28M.  On every
+stable ray and cone it reconstructs the exact degree-at-most-eight
+Newton polynomial, rejects a negative coefficient, and rejects a
+nonzero ninth difference.  The finite boundary entries are exhaustive.
+Thus each command is an unbounded proof in Q for its fixed d, not a
+bounded sign scan.  The increasing number of negative odd packets
+confirms that the even reserve is essential.
+
+SOURCE_SHA256
+65c45c4a6a079beed36b799b00e89a0c895ecae71485b27b999e98cc84f48c18
+
+EXECUTABLE_SHA256
+785bb7b25873f8bf791079786936aa91f3868ee6d53fb2fcd0e76a96dbaa5c8f
+
+RAW_TRANSCRIPT_SHA256
+offset=5 719f14a9d4d6fc34e2827a227d86ba37e36bb6c30d7af479370d00f3d85def7f
+offset=6 9d47e40e9474f91b9ffe988f773f4fa15b82e57b08589296daecb7e534530832
+offset=7 12f6749dc7ad834f770b2f8f4039f2a737a13f0291db8df77449ed239faf4f3f
+offset=8 f7b64c391db200ffe62aa3e92f45f7c532d72ecd37b9e3cd56e7696e2393bdb3
+offset=9 5b41cd7f48295ef7b1270aba84a9d06cf90e022f444a0d1e71a8856eed4b5cb4
+offset=10 1c03791a925e1f73d38347a6b49e65d7dc088c0a5552c3836698d1c709fe20f7

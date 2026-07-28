@@ -874,7 +874,14 @@ before any further construction.
    exact chamber mechanism to `A_-=JN_3` and closes `K=2Q+4`: 3,289
    boundary entries, 662 Newton rays, and 32 Newton cones pay all nine
    partial odd classes.  The exact remaining `t=2` band is now
-   `Q>=7`, `2Q+5<=K<10Q`.
+   initially `Q>=7`, `2Q+5<=K<10Q`.  Lemma 5A8H28M normalizes this
+   construction by `d=K-1-2Q` and closes all six further widths
+   `4<=d<=9`.  Across those unbounded affine rays the exact certificate
+   checks 241,704 boundary entries, 18,702 Newton rays, and 402 Newton
+   cones; all coefficients are nonnegative despite 147,184 negative
+   odd packets.  The exact remaining `t=2` band is now
+   `Q>=7`, `2Q+11<=K<10Q`.  The active route is to free `d` in the
+   normalized chamber coefficients, not to continue ray-by-ray.
    Arbitrary `t>=3` still requires the general global-payment mechanism
    after that leaf is closed.
 

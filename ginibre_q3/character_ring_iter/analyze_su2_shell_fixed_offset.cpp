@@ -109,15 +109,18 @@ int main(int argc, char** argv) {
                 "the only optional flag is --certificate"
             );
         }
+        const int certificate_maximum_q =
+            offset <= 7 ? 100 : (offset <= 9 ? 120 : 140);
         if (
             certificate
             && (
-                maximum_q != 100
-                || (offset != 3 && offset != 4)
+                offset < 3
+                || offset > 10
+                || maximum_q != certificate_maximum_q
             )
         ) {
             throw std::runtime_error(
-                "certificate mode requires MAXIMUM_Q=100 OFFSET=3 or 4"
+                "certificate mode requires the canonical bound for OFFSET"
             );
         }
         if (offset < 1) {
@@ -429,7 +432,7 @@ int main(int argc, char** argv) {
                         rho - reflected
                     };
                     if (
-                        (offset == 3 || offset == 4)
+                        (offset >= 3 && offset <= 10)
                         && q >= 7
                     ) {
                         const int x = target;
@@ -703,7 +706,7 @@ int main(int argc, char** argv) {
                     << " entries=" << band.entries << '\n';
             }
         }
-        if (offset == 3 || offset == 4) {
+        if (offset >= 3 && offset <= 10) {
             std::size_t ray_certificates = 0U;
             Integer ray_minimum = 0;
             bool initialized_ray = false;
@@ -915,9 +918,9 @@ int main(int argc, char** argv) {
                     initialized_box = true;
                 }
             }
-            const bool valid_census =
-                offset == 3
-                    ? (
+            bool valid_census = false;
+            if (offset == 3) {
+                valid_census =
                         box_entries == 906U
                         && ray_certificates == 320U
                         && cone_certificates == 22U
@@ -927,8 +930,9 @@ int main(int argc, char** argv) {
                         && negative_odd == 5682U
                         && negative_total == 0U
                         && negative_odd_profiles.size() == 482U
-                    )
-                    : (
+                        && entries == 358950U;
+            } else if (offset == 4) {
+                valid_census =
                         box_entries == 3289U
                         && ray_certificates == 662U
                         && cone_certificates == 32U
@@ -938,7 +942,80 @@ int main(int argc, char** argv) {
                         && negative_odd == 8174U
                         && negative_total == 0U
                         && negative_odd_profiles.size() == 588U
-                    );
+                        && entries == 358950U;
+            } else if (offset == 5) {
+                valid_census =
+                    box_entries == 8032U
+                    && ray_certificates == 1158U
+                    && cone_certificates == 42U
+                    && maximum_even_radius == 8
+                    && maximum_odd_radius == 6
+                    && negative_even == 0U
+                    && negative_odd == 11228U
+                    && negative_total == 0U
+                    && negative_odd_profiles.size() == 802U
+                    && entries == 369550U;
+            } else if (offset == 6) {
+                valid_census =
+                    box_entries == 15336U
+                    && ray_certificates == 1754U
+                    && cone_certificates == 52U
+                    && maximum_even_radius == 10
+                    && maximum_odd_radius == 8
+                    && negative_even == 0U
+                    && negative_odd == 13518U
+                    && negative_total == 0U
+                    && negative_odd_profiles.size() == 913U
+                    && entries == 369550U;
+            } else if (offset == 7) {
+                valid_census =
+                    box_entries == 26745U
+                    && ray_certificates == 2518U
+                    && cone_certificates == 62U
+                    && maximum_even_radius == 12
+                    && maximum_odd_radius == 9
+                    && negative_even == 0U
+                    && negative_odd == 16636U
+                    && negative_total == 0U
+                    && negative_odd_profiles.size() == 1103U
+                    && entries == 380350U;
+            } else if (offset == 8) {
+                valid_census =
+                    box_entries == 41584U
+                    && ray_certificates == 3368U
+                    && cone_certificates == 72U
+                    && maximum_even_radius == 14
+                    && maximum_odd_radius == 11
+                    && negative_even == 0U
+                    && negative_odd == 27056U
+                    && negative_total == 0U
+                    && negative_odd_profiles.size() == 1503U
+                    && entries == 643220U;
+            } else if (offset == 9) {
+                valid_census =
+                    box_entries == 62498U
+                    && ray_certificates == 4400U
+                    && cone_certificates == 82U
+                    && maximum_even_radius == 16
+                    && maximum_odd_radius == 12
+                    && negative_even == 0U
+                    && negative_odd == 31586U
+                    && negative_total == 0U
+                    && negative_odd_profiles.size() == 1730U
+                    && entries == 658820U;
+            } else if (offset == 10) {
+                valid_census =
+                    box_entries == 87509U
+                    && ray_certificates == 5504U
+                    && cone_certificates == 92U
+                    && maximum_even_radius == 18
+                    && maximum_odd_radius == 14
+                    && negative_even == 0U
+                    && negative_odd == 47160U
+                    && negative_total == 0U
+                    && negative_odd_profiles.size() == 2225U
+                    && entries == 1026690U;
+            }
             if (certificate && !valid_census) {
                 throw std::runtime_error(
                     "incomplete fixed-offset certificate census"
