@@ -1,0 +1,65 @@
+COMMAND
+character_ring_iter/prove_su2_d2_intermediate --patterns
+
+OUTPUT_SUMMARY
+SU2_D2_INTERMEDIATE_PATTERNS feasible_chambers=23 result=PASS_ENUMERATION
+FEASIBLE_MASKS 0 1 5 7 15 32 33 37 39 47 49 53 55 117 295 303 309 311 319 373 375 431 447
+
+COMMAND_SCHEMA
+character_ring_iter/prove_su2_d2_intermediate --chamber MASK
+
+OUTPUT
+SU2_D2_HANDELMAN chamber=0 products=3060 nonzero_coefficients=21 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=1 products=3060 nonzero_coefficients=14 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=5 products=3060 nonzero_coefficients=14 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=7 products=3060 nonzero_coefficients=22 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=15 products=3060 nonzero_coefficients=13 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=32 products=3060 nonzero_coefficients=21 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=33 products=3060 nonzero_coefficients=31 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=37 products=3060 nonzero_coefficients=34 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=39 products=3060 nonzero_coefficients=33 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=47 products=3060 nonzero_coefficients=29 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=49 products=3060 nonzero_coefficients=29 result=PASS_EXACT_IDENTITY
+SU2_D2_DIRECT_CONE name=mask53_a_zero positive_coefficients=15 result=PASS_COEFFICIENTS
+SU2_D2_DIRECT_CONE name=mask53_b_zero positive_coefficients=15 result=PASS_COEFFICIENTS
+SU2_D2_DIRECT_CONE name=mask53_b_above_a positive_coefficients=34 result=PASS_COEFFICIENTS
+SU2_D2_DIRECT_CONE name=mask53_a_above_b positive_coefficients=34 result=PASS_COEFFICIENTS
+SU2_D2_HANDELMAN chamber=53 products=0 nonzero_coefficients=0 result=PASS_EXACT_DIRECT_CONES
+SU2_D2_HANDELMAN chamber=55 products=3060 nonzero_coefficients=33 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=117 products=3060 nonzero_coefficients=30 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=295 products=3060 nonzero_coefficients=34 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=303 products=3060 nonzero_coefficients=28 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=309 products=3060 nonzero_coefficients=35 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=311 products=3060 nonzero_coefficients=35 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=319 products=3060 nonzero_coefficients=34 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=373 products=3060 nonzero_coefficients=23 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=375 products=3060 nonzero_coefficients=30 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=431 products=3060 nonzero_coefficients=21 result=PASS_EXACT_IDENTITY
+SU2_D2_HANDELMAN chamber=447 products=3060 nonzero_coefficients=29 result=PASS_EXACT_IDENTITY
+
+INTERPRETATION
+Write k=2K, q=2Q, and h=K-(2Q+1).  The previously unresolved wall band is
+Q>=1, 0<=h<=3Q-2, and 0<=Y<=2Q+1+h.  Y=0 has zero kernel margin by
+definition.  For Y>=1, the nine truncated-binomial hinges in the
+three-image Kac-Walton formula have exactly the 23 feasible integer
+activation masks listed above.
+
+For 22 masks, the program writes the kernel margin identically as a
+nonnegative rational combination of products, of total degree at most
+four, of the fourteen nonnegative affine chamber generators.  Z3 only
+synthesizes the rational coefficients.  Boost arbitrary-precision rational
+arithmetic independently checks every coefficient is nonnegative and
+reconstructs every polynomial coefficient of the margin exactly.
+
+Mask 53 is handled without solver synthesis.  Put
+a=Y-2Q and b=2Q+a-2h-3.  Its constraints give a,b>=0 and a-b odd.
+The four exhaustive cases a=0, b=0, b>a, and a>b have the four affine
+parity-cone substitutions checked above.  The program verifies that every
+substitution stays inside mask 53 and that every pulled-back margin
+coefficient is nonnegative.
+
+SOURCE_SHA256
+6a37c3a8e3ef3952fb0d7779ed9779c30b6d654cf6fd9a4f00f144c9aec4fb06
+
+EXECUTABLE_SHA256
+6466324ed41e49eefddfcea5185031abc0271e932cbffe6c8abb90b25daf37b6

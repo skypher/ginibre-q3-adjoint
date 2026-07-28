@@ -1,0 +1,3 @@
+SU2_FUSION_EDGE_UNCROSSING first_failure level=6 label=2 sources=(0,2) targets=(0,2) lower_edge=0 upper_edge=1
+SU2_FUSION_EDGE_UNCROSSING first_interior_failure level=14 label=6 sources=(2,4) targets=(2,4) lower_edge=0 upper_edge=1
+SU2_FUSION_EDGE_UNCROSSING maximum_level=100 crossed_pairs=28369380 failures=6098040 endpoint_failures=258800 interior_failures=5839240 lower_wall_failures=3049020 upper_wall_failures=3049020 two_wall_failures=0 unclassified_failures=0 reflection_failures=0 result=PASS_CLASSIFICATION

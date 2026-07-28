@@ -1,0 +1,39 @@
+STATUS
+Bounded exact discovery evidence.  This transcript is not an unbounded
+proof of the coefficientwise full-prefix kernel.
+
+COMMAND
+character_ring_iter/analyze_su2_full_prefix_kernel 100 30
+
+OUTPUT
+SU2_FULL_PREFIX_KERNEL maximum_level=100 maximum_prefix=30 parameter_rows=600 kernel_rows=243000 coordinates=8545500 negative_coordinates=0 negative_endpoint_rows=0 minimum=0 witness=(22,2,4,2,22) endpoint_minimum=0 endpoint_witness=(22,2,4,2) result=PASS_POINTWISE_DISCOVERY
+
+COMMAND
+character_ring_iter/analyze_su2_full_prefix_kernel --case 6 2 4 3
+
+OUTPUT
+SU2_FULL_PREFIX_KERNEL_CASE level=6 label=2 prefix=4 truncation=3 values=0:4267,2:6103,4:9835,6:2592
+
+COMMAND
+character_ring_iter/analyze_su2_full_prefix_kernel --case 20 8 8 7
+
+OUTPUT
+SU2_FULL_PREFIX_KERNEL_CASE level=20 label=8 prefix=8 truncation=7 values=0:20835690809039,2:56860128607840,4:82863987429614,6:97368157672744,8:101872553177990,10:119673534246825,12:123592302032323,14:110685500119205,16:82537265598585,18:51729940258251,20:17614364690105
+
+INTERPRETATION
+For n=2j+2 the exact integer vector tested is
+
+  R_(j,t)(x)
+   =sum_(s=0)^t binom(n-1,2s)
+      {f_(2s)(N_q^(n-2s))_(0,x)
+       -f_(2s+1)(N_q^(n-2s-1))_(0,x)}.
+
+Its x=k coordinate is exactly the full-prefix current Q_(j,t).  The scan
+therefore supports a coefficientwise strengthening of FBPC, but bounded
+nonnegativity is not theorem evidence for arbitrary k,q,j,t.
+
+SOURCE_SHA256
+d0be89fba397e33d8319f36ec0a7a682787485ab06ee0a11b64aa486376d1002
+
+EXECUTABLE_SHA256
+e92cbeedc7cea04e5588d3fe69f1208aee3325609f2fb86af8c285b07a52aa9f

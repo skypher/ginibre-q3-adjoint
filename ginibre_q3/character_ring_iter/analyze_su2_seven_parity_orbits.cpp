@@ -115,7 +115,7 @@ void merge_witness(Witness& target, const Witness& source) {
     }
 }
 
-void merge_stratum(
+[[maybe_unused]] void merge_stratum(
     OrbitStratum& target,
     const OrbitStratum& source
 ) {
@@ -151,7 +151,7 @@ void merge_stratum(
     );
 }
 
-std::array<OrbitStratum, 2> scan_level(
+[[maybe_unused]] std::array<OrbitStratum, 2> scan_level(
     const Orbit& orbit,
     int level
 ) {
@@ -443,7 +443,7 @@ std::array<OrbitStratum, 2> scan_level(
     return strata;
 }
 
-unsigned worker_limit_orbits() {
+[[maybe_unused]] unsigned worker_limit_orbits() {
     const unsigned hardware = std::max(
         1U, std::thread::hardware_concurrency()
     );
@@ -477,6 +477,7 @@ unsigned worker_limit_orbits() {
 
 }  // namespace
 
+#ifndef SU2_SEVEN_PARITY_ORBITS_NO_MAIN
 int main(int argc, char** argv) {
     try {
         if (argc != 2) {
@@ -695,3 +696,4 @@ int main(int argc, char** argv) {
         return 1;
     }
 }
+#endif

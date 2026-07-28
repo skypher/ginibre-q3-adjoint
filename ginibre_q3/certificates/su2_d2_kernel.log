@@ -1,0 +1,50 @@
+COMMAND
+character_ring_iter/prove_su2_d2_kernel
+
+OUTPUT_SUMMARY
+SU2_D2_STABLE_CHAMBER name=Y_le_Q_minus_2 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_D2_STABLE_CHAMBER name=Q_minus_1_le_Y_le_2Q_minus_1_left_edge positive_coefficients=4 result=PASS_COEFFICIENTS
+SU2_D2_STABLE_CHAMBER name=Q_minus_1_le_Y_le_2Q_minus_1_interior positive_coefficients=15 result=PASS_COEFFICIENTS
+SU2_D2_STABLE_CHAMBER name=2Q_le_Y_le_3Q_minus_1 positive_coefficients=15 result=PASS_COEFFICIENTS
+SU2_D2_STABLE_CHAMBER name=3Q_le_Y_le_4Q_left_edge positive_coefficients=5 result=PASS_COEFFICIENTS
+SU2_D2_STABLE_CHAMBER name=3Q_le_Y_le_4Q_interior positive_coefficients=15 result=PASS_COEFFICIENTS
+SU2_D2_NEAREST_WALL_SMALL maximum_Q=6 minimum=0 witness=(1,0) result=PASS_EXACT
+SU2_D2_NEAREST_WALL_CHAMBERS Q_ge_7 chambers=14 negative_coefficients=0 result=PASS_COEFFICIENTS
+SU2_D2_STABLE_KERNEL result=PASS_EXACT
+SU2_D2_NEAREST_WALL_KERNEL result=PASS_EXACT
+
+COMMAND
+character_ring_iter/analyze_su2_d2_kernel 300 8
+
+OUTPUT
+SU2_D2_KERNEL MONOTONICITY_COUNTEREXAMPLE level=24 label=10 reflected_vertex=10 prior=1161 current=1140
+SU2_D2_KERNEL maximum_level=300 maximum_power=8 parameters=5550 coordinates=2825875 formula_checks=1130350 monotonicity_comparisons=554001 monotonicity_failures=24623 result=PASS_DISCOVERY
+FIVE_STEP_WALL_CORRECTION minimum=-72437389 witness=(300,148,300) result=FAIL_POINTWISE
+POWER power=4 minimum=-9048 witness=(300,104,12) result=FAIL_POINTWISE
+POWER power=5 minimum=0 witness=(6,2,6) result=PASS_POINTWISE
+POWER power=6 minimum=0 witness=(14,2,0) result=PASS_POINTWISE
+POWER power=7 minimum=0 witness=(16,2,0) result=PASS_POINTWISE
+POWER power=8 minimum=0 witness=(18,2,0) result=PASS_POINTWISE
+
+INTERPRETATION
+The proof program expands the ordinary stable five-step kernel margin in
+six exhaustive nonnegative-coordinate chambers.  It separately expands
+the nearest affine wall k=2q+2 in fourteen exhaustive chambers for Q>=7
+and checks all 54 values with 1<=Q<=6.  Every emitted rational coefficient
+is nonnegative.  These coefficient checks are unbounded in the chamber
+variables.  The analyzer independently evaluates finite fusion recurrence
+values through level 300 and verifies 1,130,350 evaluations of the
+three-image Kac-Walton formula against that recurrence.  Its scan is a
+bounded formula audit, not the proof of intermediate affine-wall distances.
+
+PROOF_SOURCE_SHA256
+c08c1972cb189d9a05147e14755a70e7af5f4234f7148e5dfecb10466ac7fdf1
+
+PROOF_EXECUTABLE_SHA256
+00e8db6c17829eceb178cf6a98ec652f70076c737f8ab6f2d2d48ec3d4b6ec9e
+
+ANALYZER_SOURCE_SHA256
+132e301b9b84207dc2ac58271abf5b5af15dec9a948c40754c382e25b1e7e372
+
+ANALYZER_EXECUTABLE_SHA256
+f93c3753dabb00459af47b3e9b7209caeda02282452952a92ae312bbd1d99ec1

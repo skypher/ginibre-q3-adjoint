@@ -1,0 +1,23 @@
+COMMAND
+character_ring_iter/analyze_su2_fusion_markov_monotonicity 500 --raw
+
+OUTPUT
+SU2_FUSION_MARKOV_MONOTONICITY counterexample level=6 label=2 source=0 threshold=0 margin=-0.1715728752538099024 result=FAIL
+
+COMMAND
+character_ring_iter/analyze_su2_fusion_markov_monotonicity 500
+
+OUTPUT
+SU2_FUSION_LAZY_MARKOV_MONOTONICITY counterexample level=10 label=4 source=0 threshold=2 margin=-0.13397459621556135321 result=FAIL
+
+INTERPRETATION
+Neither the quantum-dimension-normalized one-step fusion kernel nor its
+one-half lazy version is stochastically monotone on the even component.
+These are exact counterexamples to the proposed monotone-coupling route,
+not to FBPC.
+
+SOURCE_SHA256
+5b8245d78e2a37f9ca6cb2dbc6dcae4cd4434d58172442a8c093b4f6c5490e90
+
+EXECUTABLE_SHA256
+a74bbdcc3fce2379cfbcc8a87dfa4ecfc4f9adc1815533dadb90e9ccd8e20b73

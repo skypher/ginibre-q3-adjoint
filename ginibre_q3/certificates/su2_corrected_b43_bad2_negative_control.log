@@ -1,0 +1,19 @@
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_TASK_Z3 tasks=1 workers=1 start=1
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_TASK_Z3 progress=0/1 assigned=1 failed=0
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_TASK_Z3 progress=0/1 assigned=1 failed=0
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_TASK_Z3 FAIL completed=0 tasks=1 diagnostic=orbit=1 parity=0 selected=2 position=0 kind=2 rank=1 pattern=-1 wall=-1 interval=-1 local=-1 orbit=1 m=4 o=2 r=0 level_parity=0 selected_orbit=2 selected_mask=7 result=sat model=(define-fun l2_half () Int
+  3)
+(define-fun l3_half () Int
+  5)
+(define-fun l1_half () Int
+  2)
+(define-fun k_half () Int
+  5)
+(define-fun l5_half () Int
+  2)
+(define-fun l0_half () Int
+  5)
+(define-fun l4_half () Int
+  2)
+(define-fun l6_half () Int
+  4)

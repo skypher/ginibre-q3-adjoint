@@ -1,3 +1,4 @@
+#include <bit>
 #include <map>
 
 #define main verify_su2_four_minus_shallow_main
@@ -150,6 +151,205 @@ z3::expr residual_rank(
             labels[static_cast<std::size_t>(rest[3])]
         ),
         ctx.int_val(0)
+    );
+}
+
+z3::expr residual_rank_with_top(
+    z3::context& ctx,
+    const z3::expr& k,
+    const std::array<z3::expr, 7>& labels,
+    unsigned int mask,
+    int top_position
+) {
+    const std::array<int, 3> cut = mask_triple(mask);
+    const std::array<int, 4> rest = mask_complement(mask);
+    if (((mask >> top_position) & 1U) != 0U) {
+        std::array<int, 2> other{};
+        int next = 0;
+        for (const int position : cut) {
+            if (position != top_position) {
+                other[static_cast<std::size_t>(next)] =
+                    position;
+                ++next;
+            }
+        }
+        if (next != 2) {
+            throw std::runtime_error(
+                "invalid top-containing triple"
+            );
+        }
+        const z3::expr active =
+            labels[static_cast<std::size_t>(other[0])]
+            + labels[static_cast<std::size_t>(other[1])]
+            == k;
+        return z3::ite(
+            active,
+            interval_rank(
+                ctx,
+                k,
+                labels[static_cast<std::size_t>(rest[0])],
+                labels[static_cast<std::size_t>(rest[1])],
+                labels[static_cast<std::size_t>(rest[2])],
+                labels[static_cast<std::size_t>(rest[3])]
+            ),
+            ctx.int_val(0)
+        );
+    }
+
+    std::array<int, 3> other{};
+    int next = 0;
+    for (const int position : rest) {
+        if (position != top_position) {
+            other[static_cast<std::size_t>(next)] = position;
+            ++next;
+        }
+    }
+    if (next != 3) {
+        throw std::runtime_error(
+            "invalid top-containing complement"
+        );
+    }
+    const z3::expr cut_active = fusion(
+        k,
+        labels[static_cast<std::size_t>(cut[0])],
+        labels[static_cast<std::size_t>(cut[1])],
+        labels[static_cast<std::size_t>(cut[2])]
+    );
+    const z3::expr complement_active = fusion(
+        k,
+        k - labels[static_cast<std::size_t>(other[0])],
+        labels[static_cast<std::size_t>(other[1])],
+        labels[static_cast<std::size_t>(other[2])]
+    );
+    return z3::ite(
+        cut_active && complement_active,
+        ctx.int_val(1),
+        ctx.int_val(0)
+    );
+}
+
+z3::expr residual_rank_with_neighbor(
+    z3::context& ctx,
+    const z3::expr& k,
+    const std::array<z3::expr, 7>& labels,
+    unsigned int mask,
+    int neighbor_position,
+    bool reflected_neighbor
+) {
+    const std::array<int, 3> cut = mask_triple(mask);
+    const std::array<int, 4> rest = mask_complement(mask);
+    if (((mask >> neighbor_position) & 1U) != 0U) {
+        std::array<int, 2> other{};
+        int next = 0;
+        for (const int position : cut) {
+            if (position != neighbor_position) {
+                other[static_cast<std::size_t>(next)] =
+                    position;
+                ++next;
+            }
+        }
+        if (next != 2) {
+            throw std::runtime_error(
+                "invalid neighbor-containing triple"
+            );
+        }
+        const z3::expr& first =
+            labels[static_cast<std::size_t>(other[0])];
+        const z3::expr& second =
+            labels[static_cast<std::size_t>(other[1])];
+        const z3::expr active =
+            reflected_neighbor
+                ? zabs(first + second - k) == 1
+                : zabs(first - second) == 1;
+        return z3::ite(
+            active,
+            interval_rank(
+                ctx,
+                k,
+                labels[static_cast<std::size_t>(rest[0])],
+                labels[static_cast<std::size_t>(rest[1])],
+                labels[static_cast<std::size_t>(rest[2])],
+                labels[static_cast<std::size_t>(rest[3])]
+            ),
+            ctx.int_val(0)
+        );
+    }
+
+    std::array<int, 3> other{};
+    int next = 0;
+    for (const int position : rest) {
+        if (position != neighbor_position) {
+            other[static_cast<std::size_t>(next)] = position;
+            ++next;
+        }
+    }
+    if (next != 3) {
+        throw std::runtime_error(
+            "invalid neighbor-containing complement"
+        );
+    }
+    const z3::expr cut_active = fusion(
+        k,
+        labels[static_cast<std::size_t>(cut[0])],
+        labels[static_cast<std::size_t>(cut[1])],
+        labels[static_cast<std::size_t>(cut[2])]
+    );
+    const z3::expr first = reflected_neighbor
+        ? k - labels[static_cast<std::size_t>(other[0])]
+        : labels[static_cast<std::size_t>(other[0])];
+    const z3::expr complement_rank =
+        z3::ite(
+            first >= 1
+                && fusion(
+                    k,
+                    first - 1,
+                    labels[static_cast<std::size_t>(other[1])],
+                    labels[static_cast<std::size_t>(other[2])]
+                ),
+            ctx.int_val(1),
+            ctx.int_val(0)
+        )
+        + z3::ite(
+            first + 1 <= k
+                && fusion(
+                    k,
+                    first + 1,
+                    labels[static_cast<std::size_t>(other[1])],
+                    labels[static_cast<std::size_t>(other[2])]
+                ),
+            ctx.int_val(1),
+            ctx.int_val(0)
+        );
+    return z3::ite(
+        cut_active,
+        complement_rank,
+        ctx.int_val(0)
+    );
+}
+
+z3::expr residual_rank_with_endpoint(
+    z3::context& ctx,
+    const z3::expr& k,
+    const std::array<z3::expr, 7>& labels,
+    unsigned int mask,
+    int endpoint_position,
+    int endpoint_kind
+) {
+    if (endpoint_position < 0) {
+        return residual_rank(ctx, k, labels, mask);
+    }
+    if (endpoint_kind == 2) {
+        return residual_rank_with_top(
+            ctx, k, labels, mask, endpoint_position
+        );
+    }
+    return residual_rank_with_neighbor(
+        ctx,
+        k,
+        labels,
+        mask,
+        endpoint_position,
+        endpoint_kind == 1
     );
 }
 
@@ -314,13 +514,378 @@ z3::expr residual_selected_local(
     return result;
 }
 
+z3::expr residual_selected_top_local(
+    z3::context& ctx,
+    const z3::expr& k,
+    const std::array<z3::expr, 7>& labels,
+    unsigned int mask,
+    int level_parity,
+    int top_position
+) {
+    const std::array<int, 3> cut = mask_triple(mask);
+    const std::array<int, 4> rest = mask_complement(mask);
+    std::array<int, 2> other{};
+    int next = 0;
+    for (const int position : cut) {
+        if (position != top_position) {
+            other[static_cast<std::size_t>(next)] = position;
+            ++next;
+        }
+    }
+    if (next != 2) {
+        throw std::runtime_error(
+            "invalid selected top triple"
+        );
+    }
+    const z3::expr& first =
+        labels[static_cast<std::size_t>(other[0])];
+    const z3::expr& second =
+        labels[static_cast<std::size_t>(other[1])];
+    z3::expr result = ctx.int_val(0);
+    for (int j = 0; j <= 4; ++j) {
+        const int low = 2 * j;
+        const z3::expr low_fourfold =
+            residual_fourfold_output(
+                ctx, k, labels, rest, low, false
+            );
+        result = result + z3::ite(
+            low <= 2 * first && low <= 2 * second,
+            low_fourfold,
+            ctx.int_val(0)
+        );
+
+        const int reflected_low = level_parity + 2 * j;
+        const z3::expr high = k - reflected_low;
+        const z3::expr high_fourfold =
+            residual_fourfold_output(
+                ctx,
+                k,
+                labels,
+                rest,
+                reflected_low,
+                true
+            );
+        result = result + z3::ite(
+            high > 8
+                && high <= 2 * first
+                && high <= 2 * second,
+            high_fourfold,
+            ctx.int_val(0)
+        );
+    }
+    return result;
+}
+
+z3::expr residual_selected_complement_top_local(
+    z3::context& ctx,
+    const z3::expr& k,
+    const std::array<z3::expr, 7>& labels,
+    const ResidualOrbit& orbit,
+    unsigned int mask,
+    int level_parity,
+    int top_position
+) {
+    const std::array<int, 3> cut = mask_triple(mask);
+    const std::array<int, 4> rest = mask_complement(mask);
+    std::array<int, 3> other{};
+    int next = 0;
+    for (const int position : rest) {
+        if (position != top_position) {
+            other[static_cast<std::size_t>(next)] = position;
+            ++next;
+        }
+    }
+    if (next != 3) {
+        throw std::runtime_error(
+            "invalid selected complementary top"
+        );
+    }
+
+    int common_parity = 0;
+    for (const int index : cut) {
+        common_parity ^= orbit_label_parity(orbit, index);
+    }
+    const int reflected_parity =
+        (level_parity + common_parity) & 1;
+    const int low_maximum = common_parity + 8;
+    const std::array<int, 3> other_cut{
+        other[0], other[1], other[2]
+    };
+    z3::expr result = ctx.int_val(0);
+    for (int j = 0; j <= 4; ++j) {
+        const int low = common_parity + 2 * j;
+        result = result + bounded_product(
+            ctx,
+            residual_triple_output(
+                ctx, k, labels, cut, low, false
+            ),
+            residual_triple_output(
+                ctx, k, labels, other_cut, low, true
+            ),
+            low + 1
+        );
+
+        const int reflected_low = reflected_parity + 2 * j;
+        const z3::expr high = k - reflected_low;
+        const z3::expr reflected_term = bounded_product(
+            ctx,
+            residual_triple_output(
+                ctx,
+                k,
+                labels,
+                cut,
+                reflected_low,
+                true
+            ),
+            residual_triple_output(
+                ctx,
+                k,
+                labels,
+                other_cut,
+                reflected_low,
+                false
+            ),
+            reflected_low + 1
+        );
+        result = result + z3::ite(
+            high > low_maximum,
+            reflected_term,
+            ctx.int_val(0)
+        );
+    }
+    return result;
+}
+
+z3::expr residual_fundamental_output(
+    z3::context& ctx,
+    const z3::expr& k,
+    const z3::expr& first,
+    const z3::expr& second,
+    const z3::expr& output
+) {
+    return z3::ite(
+        first >= 1
+            && fusion(k, first - 1, second, output),
+        ctx.int_val(1),
+        ctx.int_val(0)
+    ) + z3::ite(
+        first + 1 <= k
+            && fusion(k, first + 1, second, output),
+        ctx.int_val(1),
+        ctx.int_val(0)
+    );
+}
+
+z3::expr residual_complement_neighbor_output(
+    z3::context& ctx,
+    const z3::expr& k,
+    const std::array<z3::expr, 7>& labels,
+    const std::array<int, 3>& other,
+    const z3::expr& output,
+    bool reflected_neighbor
+) {
+    const z3::expr first = reflected_neighbor
+        ? k - labels[static_cast<std::size_t>(other[0])]
+        : labels[static_cast<std::size_t>(other[0])];
+    return z3::ite(
+        first >= 1,
+        interval_rank(
+            ctx,
+            k,
+            first - 1,
+            labels[static_cast<std::size_t>(other[1])],
+            labels[static_cast<std::size_t>(other[2])],
+            output
+        ),
+        ctx.int_val(0)
+    ) + z3::ite(
+        first + 1 <= k,
+        interval_rank(
+            ctx,
+            k,
+            first + 1,
+            labels[static_cast<std::size_t>(other[1])],
+            labels[static_cast<std::size_t>(other[2])],
+            output
+        ),
+        ctx.int_val(0)
+    );
+}
+
+z3::expr residual_selected_complement_neighbor_local(
+    z3::context& ctx,
+    const z3::expr& k,
+    const std::array<z3::expr, 7>& labels,
+    const ResidualOrbit& orbit,
+    unsigned int mask,
+    int level_parity,
+    int neighbor_position,
+    bool reflected_neighbor
+) {
+    const std::array<int, 3> cut = mask_triple(mask);
+    const std::array<int, 4> rest = mask_complement(mask);
+    std::array<int, 3> other{};
+    int next = 0;
+    for (const int position : rest) {
+        if (position != neighbor_position) {
+            other[static_cast<std::size_t>(next)] = position;
+            ++next;
+        }
+    }
+    if (next != 3) {
+        throw std::runtime_error(
+            "invalid selected complementary neighbour"
+        );
+    }
+
+    int common_parity = 0;
+    for (const int index : cut) {
+        common_parity ^= orbit_label_parity(orbit, index);
+    }
+    const int reflected_parity =
+        (level_parity + common_parity) & 1;
+    const int low_maximum = common_parity + 8;
+    z3::expr result = ctx.int_val(0);
+    for (int j = 0; j <= 4; ++j) {
+        const int low = common_parity + 2 * j;
+        result = result + bounded_product(
+            ctx,
+            residual_triple_output(
+                ctx, k, labels, cut, low, false
+            ),
+            residual_complement_neighbor_output(
+                ctx,
+                k,
+                labels,
+                other,
+                ctx.int_val(low),
+                reflected_neighbor
+            ),
+            low + 1
+        );
+
+        const int reflected_low = reflected_parity + 2 * j;
+        const z3::expr high = k - reflected_low;
+        const z3::expr reflected_term = bounded_product(
+            ctx,
+            residual_triple_output(
+                ctx,
+                k,
+                labels,
+                cut,
+                reflected_low,
+                true
+            ),
+            residual_complement_neighbor_output(
+                ctx,
+                k,
+                labels,
+                other,
+                ctx.int_val(reflected_low),
+                !reflected_neighbor
+            ),
+            reflected_low + 1
+        );
+        result = result + z3::ite(
+            high > low_maximum,
+            reflected_term,
+            ctx.int_val(0)
+        );
+    }
+    return result;
+}
+
+z3::expr residual_selected_neighbor_local(
+    z3::context& ctx,
+    const z3::expr& k,
+    const std::array<z3::expr, 7>& labels,
+    unsigned int mask,
+    int level_parity,
+    int shallow_position,
+    bool reflected_fundamental
+) {
+    const std::array<int, 3> cut = mask_triple(mask);
+    const std::array<int, 4> rest = mask_complement(mask);
+    std::array<int, 2> other{};
+    int next = 0;
+    for (const int position : cut) {
+        if (position != shallow_position) {
+            other[static_cast<std::size_t>(next)] = position;
+            ++next;
+        }
+    }
+    if (next != 2) {
+        throw std::runtime_error(
+            "invalid selected neighbor triple"
+        );
+    }
+    const z3::expr& first =
+        labels[static_cast<std::size_t>(other[0])];
+    const z3::expr& second =
+        labels[static_cast<std::size_t>(other[1])];
+    z3::expr result = ctx.int_val(0);
+    for (int j = 0; j <= 4; ++j) {
+        const int low = 2 * j;
+        const z3::expr low_output =
+            reflected_fundamental
+                ? k - low
+                : ctx.int_val(low);
+        const z3::expr low_triple =
+            residual_fundamental_output(
+                ctx, k, first, second, low_output
+            );
+        const z3::expr low_fourfold =
+            residual_fourfold_output(
+                ctx, k, labels, rest, low, false
+            );
+        result = result + bounded_product(
+            ctx,
+            low_triple,
+            low_fourfold,
+            2
+        );
+
+        const int reflected_low = level_parity + 2 * j;
+        const z3::expr high = k - reflected_low;
+        const z3::expr high_output =
+            reflected_fundamental
+                ? ctx.int_val(reflected_low)
+                : high;
+        const z3::expr high_triple =
+            residual_fundamental_output(
+                ctx, k, first, second, high_output
+            );
+        const z3::expr high_fourfold =
+            residual_fourfold_output(
+                ctx,
+                k,
+                labels,
+                rest,
+                reflected_low,
+                true
+            );
+        result = result + z3::ite(
+            high > 8,
+            bounded_product(
+                ctx,
+                high_triple,
+                high_fourfold,
+                2
+            ),
+            ctx.int_val(0)
+        );
+    }
+    return result;
+}
+
 z3::expr residual_pair_reservoir(
     z3::context& ctx,
     const z3::expr& k,
     const std::array<z3::expr, 7>& labels,
     const ResidualOrbit& orbit,
     int level_parity,
-    int equality_mask = -1
+    int equality_mask = -1,
+    bool exact_triple_two = false
 ) {
     z3::expr result = ctx.int_val(0);
     int equality_index = 0;
@@ -397,6 +962,46 @@ z3::expr residual_pair_reservoir(
                     ctx.int_val(0)
                 );
             }
+            if (exact_triple_two) {
+                z3::expr enhanced = contribution;
+                for (int third = 6; third >= 0; --third) {
+                    if (
+                        third == first || third == second
+                        || (
+                            (third < orbit.minus_count)
+                            != (first < orbit.minus_count)
+                        )
+                    ) {
+                        continue;
+                    }
+                    std::array<int, 4> other{};
+                    int other_next = 0;
+                    for (int index = 0; index < 7; ++index) {
+                        if (
+                            index != first
+                            && index != second
+                            && index != third
+                        ) {
+                            other[
+                                static_cast<std::size_t>(other_next)
+                            ] = index;
+                            ++other_next;
+                        }
+                    }
+                    const z3::expr full = residual_fourfold_output(
+                        ctx, k, labels, other, 2, false
+                    );
+                    enhanced = z3::ite(
+                        labels[static_cast<std::size_t>(first)] == 2
+                            && labels[
+                                static_cast<std::size_t>(third)
+                            ] == 2,
+                        full,
+                        enhanced
+                    );
+                }
+                contribution = enhanced;
+            }
             if (equality_mask < 0) {
                 result = result + z3::ite(
                     labels[static_cast<std::size_t>(first)]
@@ -429,6 +1034,86 @@ z3::expr residual_positive_reservoir(
     return result;
 }
 
+z3::expr residual_rank_one_bad_switches(
+    z3::context& ctx,
+    const z3::expr& k,
+    const std::array<z3::expr, 7>& labels,
+    const std::vector<unsigned int>& negative_masks,
+    unsigned int selected_mask,
+    int endpoint_position,
+    int endpoint_kind
+) {
+    constexpr unsigned int full_mask = (1U << 7U) - 1U;
+    z3::expr result = ctx.int_val(0);
+    for (const unsigned int mask : negative_masks) {
+        if (mask == selected_mask) {
+            continue;
+        }
+        const z3::expr rank =
+            residual_rank_with_endpoint(
+                ctx,
+                k,
+                labels,
+                mask,
+                endpoint_position,
+                endpoint_kind
+            ).simplify();
+        const unsigned int switched_mask = selected_mask ^ mask;
+        const int switched_size = std::popcount(switched_mask);
+        z3::expr switched_zero = ctx.bool_val(false);
+        if (switched_size == 6) {
+            switched_zero = ctx.bool_val(true);
+        } else if (switched_size == 4) {
+            switched_zero = (
+                (
+                    residual_rank_with_endpoint(
+                        ctx,
+                        k,
+                        labels,
+                        full_mask ^ switched_mask,
+                        endpoint_position,
+                        endpoint_kind
+                    )
+                ).simplify()
+                == 0
+            );
+        } else if (switched_size == 2) {
+            int first = -1;
+            int second = -1;
+            for (int position = 0; position < 7; ++position) {
+                if (((switched_mask >> position) & 1U) == 0U) {
+                    continue;
+                }
+                (first < 0 ? first : second) = position;
+            }
+            if (first < 0 || second < 0) {
+                throw std::runtime_error(
+                    "invalid two-position switched cut"
+                );
+            }
+            // When both triples are active, equality of these two
+            // labels glues their two invariant diagrams and makes the
+            // complementary five-position invariant nonzero.  Hence
+            // the equal-pair switched cut vanishes exactly at
+            // inequality.
+            switched_zero = (
+                labels[static_cast<std::size_t>(first)]
+                != labels[static_cast<std::size_t>(second)]
+            );
+        } else {
+            throw std::runtime_error(
+                "invalid symmetric difference of distinct triples"
+            );
+        }
+        result = result + z3::ite(
+            rank == 1 && switched_zero,
+            ctx.int_val(1),
+            ctx.int_val(0)
+        );
+    }
+    return result;
+}
+
 QueryResult verify_residual_query(
     int orbit_index,
     int level_parity,
@@ -442,7 +1127,9 @@ QueryResult verify_residual_query(
     int shallow_position = -1,
     int shallow_kind = -1,
     bool selected_complement_deep = false,
-    int endpoint_pattern = -1
+    int endpoint_pattern = -1,
+    int selected_local_value = -1,
+    int bad_switch_threshold = -1
 ) {
     const ResidualOrbit& orbit =
         residual_orbits[static_cast<std::size_t>(orbit_index)];
@@ -475,7 +1162,7 @@ QueryResult verify_residual_query(
     solver.add(k >= 1);
     for (const z3::expr& label : labels) {
         solver.add(label >= 1 && label <= k);
-        if (target_mode != 0) {
+        if (target_mode == 1 || target_mode == 2) {
             solver.add(label >= 2 && label <= k - 2);
         }
     }
@@ -488,6 +1175,37 @@ QueryResult verify_residual_query(
             solver.add(shallow == k - 1);
         } else {
             solver.add(shallow == k);
+        }
+        if (
+            ((selected_mask >> shallow_position) & 1U) != 0U
+        ) {
+            const std::array<int, 3> cut =
+                mask_triple(selected_mask);
+            std::array<int, 2> other{};
+            int next = 0;
+            for (const int position : cut) {
+                if (position != shallow_position) {
+                    other[static_cast<std::size_t>(next)] =
+                        position;
+                    ++next;
+                }
+            }
+            if (next != 2) {
+                throw std::runtime_error(
+                    "invalid selected shallow triple"
+                );
+            }
+            const z3::expr& first =
+                labels[static_cast<std::size_t>(other[0])];
+            const z3::expr& second =
+                labels[static_cast<std::size_t>(other[1])];
+            if (shallow_kind == 0) {
+                solver.add(zabs(first - second) == 1);
+            } else if (shallow_kind == 1) {
+                solver.add(zabs(first + second - k) == 1);
+            } else {
+                solver.add(first + second == k);
+            }
         }
     }
     if (selected_complement_deep) {
@@ -629,6 +1347,9 @@ QueryResult verify_residual_query(
                     ((selected_mask >> index) & 1U) != 0U;
                 if (orbit_label_class(orbit, index) == label_class
                     && in_selected == (selected != 0)) {
+                    if (index == shallow_position) {
+                        continue;
+                    }
                     group.push_back(index);
                 }
             }
@@ -643,6 +1364,8 @@ QueryResult verify_residual_query(
 
     const std::vector<unsigned int> negative_masks =
         signed_cut_masks(orbit, true);
+    const int known_endpoint_position =
+        shallow_position >= 0 ? shallow_position : -1;
     const auto rank_for_mask = [&](unsigned int mask) {
         return mask == selected_mask
                 && selected_wall_mask >= 0
@@ -656,13 +1379,24 @@ QueryResult verify_residual_query(
                 selected_wall_mask,
                 selected_interval_mask
             )
-            : residual_rank(ctx, k, labels, mask);
+            : (
+                known_endpoint_position >= 0
+                    ? residual_rank_with_endpoint(
+                        ctx,
+                        k,
+                        labels,
+                        mask,
+                        known_endpoint_position,
+                        shallow_kind
+                    )
+                    : residual_rank(ctx, k, labels, mask)
+            );
     };
     z3::expr selected_rank =
         rank_for_mask(selected_mask).simplify();
     z3::expr demand = ctx.int_val(0);
     std::vector<z3::expr> ranks;
-    if (target_mode == 0) {
+    if (target_mode == 0 || target_mode == 4) {
         ranks.reserve(negative_masks.size());
         for (const unsigned int mask : negative_masks) {
             const z3::expr rank =
@@ -677,25 +1411,248 @@ QueryResult verify_residual_query(
     if (selected_rank_value > 0) {
         solver.add(selected_rank == selected_rank_value);
     }
-    if (target_mode == 0) {
+    if (
+        selected_rank_value == 1
+        && known_endpoint_position >= 0
+        && shallow_kind == 2
+        && (
+            (
+                selected_mask
+                >> static_cast<unsigned int>(
+                    known_endpoint_position
+                )
+            ) & 1U
+        ) == 0U
+    ) {
+        const std::array<int, 3> cut =
+            mask_triple(selected_mask);
+        const std::array<int, 4> rest =
+            mask_complement(selected_mask);
+        std::array<int, 3> other{};
+        int next = 0;
+        for (const int position : rest) {
+            if (position != known_endpoint_position) {
+                other[static_cast<std::size_t>(next)] =
+                    position;
+                ++next;
+            }
+        }
+        if (next != 3) {
+            throw std::runtime_error(
+                "invalid rank-one complementary top"
+            );
+        }
+        solver.add(fusion(
+            k,
+            labels[static_cast<std::size_t>(cut[0])],
+            labels[static_cast<std::size_t>(cut[1])],
+            labels[static_cast<std::size_t>(cut[2])]
+        ));
+        solver.add(fusion(
+            k,
+            k - labels[static_cast<std::size_t>(other[0])],
+            labels[static_cast<std::size_t>(other[1])],
+            labels[static_cast<std::size_t>(other[2])]
+        ));
+    }
+    if (
+        selected_rank_value == 1
+        && known_endpoint_position >= 0
+        && (shallow_kind == 0 || shallow_kind == 1)
+        && (
+            (
+                selected_mask
+                >> static_cast<unsigned int>(
+                    known_endpoint_position
+                )
+            ) & 1U
+        ) == 0U
+    ) {
+        const std::array<int, 3> cut =
+            mask_triple(selected_mask);
+        const std::array<int, 4> rest =
+            mask_complement(selected_mask);
+        std::array<int, 3> other{};
+        int next = 0;
+        for (const int position : rest) {
+            if (position != known_endpoint_position) {
+                other[static_cast<std::size_t>(next)] =
+                    position;
+                ++next;
+            }
+        }
+        if (next != 3) {
+            throw std::runtime_error(
+                "invalid rank-one complementary neighbour"
+            );
+        }
+        solver.add(fusion(
+            k,
+            labels[static_cast<std::size_t>(cut[0])],
+            labels[static_cast<std::size_t>(cut[1])],
+            labels[static_cast<std::size_t>(cut[2])]
+        ));
+        const z3::expr first = shallow_kind == 1
+            ? k - labels[static_cast<std::size_t>(other[0])]
+            : labels[static_cast<std::size_t>(other[0])];
+        const z3::expr lower_branch =
+            first >= 1
+            && fusion(
+                k,
+                first - 1,
+                labels[static_cast<std::size_t>(other[1])],
+                labels[static_cast<std::size_t>(other[2])]
+            );
+        const z3::expr upper_branch =
+            first + 1 <= k
+            && fusion(
+                k,
+                first + 1,
+                labels[static_cast<std::size_t>(other[1])],
+                labels[static_cast<std::size_t>(other[2])]
+            );
+        solver.add(lower_branch != upper_branch);
+    }
+    if (
+        selected_rank_value == 1
+        && known_endpoint_position >= 0
+        && (
+            (
+                selected_mask
+                >> static_cast<unsigned int>(
+                    known_endpoint_position
+                )
+            ) & 1U
+        ) != 0U
+    ) {
+        const std::array<int, 4> rest =
+            mask_complement(selected_mask);
+        const z3::expr& first =
+            labels[static_cast<std::size_t>(rest[0])];
+        const z3::expr& second =
+            labels[static_cast<std::size_t>(rest[1])];
+        const z3::expr& third =
+            labels[static_cast<std::size_t>(rest[2])];
+        const z3::expr& fourth =
+            labels[static_cast<std::size_t>(rest[3])];
+        const z3::expr first_lower = zabs(first - second);
+        const z3::expr second_lower = zabs(third - fourth);
+        const z3::expr first_upper =
+            zmin(first + second, 2 * k - first - second);
+        const z3::expr second_upper =
+            zmin(third + fourth, 2 * k - third - fourth);
+        // The selected endpoint identity above makes its triple
+        // active.  Rank one is therefore exactly a singleton
+        // complementary fusion interval.  State that implied
+        // affine equality explicitly so Z3 need not recover it
+        // through the rank expression's nested min/max/ite terms.
+        solver.add(first_lower % 2 == second_lower % 2);
+        solver.add(
+            zmax(first_lower, second_lower)
+            == zmin(first_upper, second_upper)
+        );
+    }
+    if (target_mode == 0 || target_mode == 4) {
         for (const z3::expr& rank : ranks) {
             solver.add(rank <= selected_rank);
         }
     }
 
-    const z3::expr local = residual_selected_local(
-        ctx,
-        k,
-        labels,
-        orbit,
-        selected_mask,
-        level_parity
+    const bool selected_top =
+        shallow_position >= 0
+        && shallow_kind == 2
+        && (
+            ((selected_mask >> shallow_position) & 1U) != 0U
+        );
+    const bool selected_complement_top =
+        shallow_position >= 0
+        && shallow_kind == 2
+        && (
+            ((selected_mask >> shallow_position) & 1U) == 0U
+        );
+    const bool selected_neighbor =
+        shallow_position >= 0
+        && (shallow_kind == 0 || shallow_kind == 1)
+        && (
+            ((selected_mask >> shallow_position) & 1U) != 0U
+        );
+    const bool selected_complement_neighbor =
+        shallow_position >= 0
+        && (shallow_kind == 0 || shallow_kind == 1)
+        && (
+            ((selected_mask >> shallow_position) & 1U) == 0U
+        );
+    const z3::expr local = (
+        selected_top
+            ? residual_selected_top_local(
+                ctx,
+                k,
+                labels,
+                selected_mask,
+                level_parity,
+                shallow_position
+            )
+            : (selected_complement_top
+            ? residual_selected_complement_top_local(
+                ctx,
+                k,
+                labels,
+                orbit,
+                selected_mask,
+                level_parity,
+                shallow_position
+            )
+            : (selected_neighbor
+            ? residual_selected_neighbor_local(
+                ctx,
+                k,
+                labels,
+                selected_mask,
+                level_parity,
+                shallow_position,
+                shallow_kind == 1
+            )
+            : (selected_complement_neighbor
+            ? residual_selected_complement_neighbor_local(
+                ctx,
+                k,
+                labels,
+                orbit,
+                selected_mask,
+                level_parity,
+                shallow_position,
+                shallow_kind == 1
+            )
+            : residual_selected_local(
+                ctx,
+                k,
+                labels,
+                orbit,
+                selected_mask,
+                level_parity
+            )
+            )
+            )
+            )
     ).simplify();
+    if (selected_local_value >= 0) {
+        solver.add(local == selected_local_value);
+    }
     z3::expr supply = local;
-    if (target_mode == 0 || target_mode == 1) {
+    if (
+        target_mode == 0
+        || target_mode == 1
+        || target_mode == 3
+    ) {
         supply = (
             supply + residual_pair_reservoir(
-            ctx, k, labels, orbit, level_parity, equality_mask
+            ctx,
+            k,
+            labels,
+            orbit,
+            level_parity,
+            equality_mask,
+            target_mode == 3
             )
         ).simplify();
     }
@@ -706,6 +1663,27 @@ QueryResult verify_residual_query(
             )
         ).simplify();
         solver.add(supply < demand);
+    } else if (target_mode == 4) {
+        const z3::expr bad_switches =
+            residual_rank_one_bad_switches(
+                ctx,
+                k,
+                labels,
+                negative_masks,
+                selected_mask,
+                known_endpoint_position,
+                shallow_kind
+            ).simplify();
+        solver.add(selected_rank == 1);
+        solver.add(
+            local
+            <= static_cast<int>(negative_masks.size()) - 1
+        );
+        solver.add(
+            bad_switch_threshold >= 0
+                ? bad_switches >= bad_switch_threshold
+                : bad_switches >= local
+        );
     } else {
         solver.add(
             supply
@@ -819,7 +1797,7 @@ int main(int argc, char** argv) {
             || selected_interval_mask >= (1 << 4)
             || equality_mask < -1
             || equality_mask >= (1 << 15)
-            || target_mode < 0 || target_mode > 2
+            || target_mode < 0 || target_mode > 4
             || selected_rank_value < 0) {
             std::cerr
                 << "usage: verify_su2_seven_residual_z3 "
@@ -829,7 +1807,8 @@ int main(int argc, char** argv) {
                 << "SELECTED_INTERVAL_MASK(0..15) "
                 << "EQUALITY_MASK(0..32767) "
                 << "TARGET_MODE(0=direct,1=deep-pair-ceiling,"
-                << "2=deep-local-ceiling) "
+                << "2=deep-local-ceiling,"
+                << "3=shallow-pair-ceiling) "
                 << "SELECTED_RANK(0=unbounded)]]]]]]\n";
             return EXIT_FAILURE;
         }
@@ -873,7 +1852,8 @@ int main(int argc, char** argv) {
             << "SELECTED_INTERVAL_MASK(0..15) "
             << "EQUALITY_MASK(0..32767) "
             << "TARGET_MODE(0=direct,1=deep-pair-ceiling,"
-            << "2=deep-local-ceiling) "
+            << "2=deep-local-ceiling,"
+            << "3=shallow-pair-ceiling) "
             << "SELECTED_RANK(0=unbounded)]]]]]]\n";
         return EXIT_FAILURE;
     }

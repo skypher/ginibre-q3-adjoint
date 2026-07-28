@@ -1,0 +1,24 @@
+Base source SHA-256:
+af0e904decac2958aabb8f396653d5189c707edcbbf98732d8273cadba572b2e
+  verify_su2_four_minus_shallow_z3.cpp
+
+--- verify_su2_four_minus_shallow_z3.cpp
++++ verify_su2_four_minus_shallow_z3.cpp
+@@ -474,11 +474,15 @@
+             break;
+         }
+     }
+-    constexpr std::uint64_t kib_per_worker = 256U * 1024U;
++    constexpr std::uint64_t reserve_kib = 8U * 1024U * 1024U;
++    constexpr std::uint64_t kib_per_worker = 1536U * 1024U;
++    const std::uint64_t usable_kib = available_kib > reserve_kib
++        ? available_kib - reserve_kib
++        : 0U;
+     const unsigned memory_limit = available_kib == 0
+         ? hardware
+         : static_cast<unsigned>(std::max<std::uint64_t>(
+-            1U, available_kib / kib_per_worker
++            1U, usable_kib / kib_per_worker
+         ));
+     return std::max(1U, std::min(cpu_limit, memory_limit));
+ }

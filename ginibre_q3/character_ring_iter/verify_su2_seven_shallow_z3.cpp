@@ -27,6 +27,7 @@ struct ShallowTask {
     int endpoint_pattern;
     int selected_wall_mask;
     int selected_interval_mask;
+    int selected_local_value = -1;
 };
 
 constexpr int choose_small(int n, int r) {
@@ -673,6 +674,106 @@ std::vector<ShallowTask> shallow_tasks(
                                 ranks.push_back(2);
                             }
                             for (const int rank : ranks) {
+                                if (
+                                    rank == 1
+                                    && orbit_index == 1
+                                    && selected_orbit == 1
+                                    && (
+                                        (
+                                            level_parity == 0
+                                            && (
+                                                (
+                                                    position == 0
+                                                    && kind == 2
+                                                )
+                                                || (
+                                                    position == 1
+                                                    && kind == 2
+                                                )
+                                                || (
+                                                    position == 4
+                                                    && (
+                                                        kind == 0
+                                                        || kind == 1
+                                                    )
+                                                )
+                                                || (
+                                                    position == 6
+                                                    && kind == 2
+                                                )
+                                            )
+                                        )
+                                        || (
+                                            level_parity == 1
+                                            && (
+                                                (
+                                                    position == 0
+                                                    && kind == 1
+                                                )
+                                                || (
+                                                    position == 1
+                                                    && kind == 1
+                                                )
+                                                || (
+                                                    position == 4
+                                                    && (
+                                                        kind == 0
+                                                        || kind == 2
+                                                    )
+                                                )
+                                                || (
+                                                    position == 6
+                                                    && kind == 1
+                                                )
+                                            )
+                                        )
+                                    )
+                                ) {
+                                    continue;
+                                }
+                                if (
+                                    rank == 1
+                                    && orbit_index == 1
+                                    && level_parity == 0
+                                    && selected_orbit == 2
+                                    && (
+                                        position == 0
+                                        || position == 3
+                                    )
+                                    && kind == 2
+                                ) {
+                                    continue;
+                                }
+                                if (rank == 2
+                                    && orbit_index == 6
+                                    && level_parity == 0
+                                    && kind == 2
+                                    && position_is_selected) {
+                                    continue;
+                                }
+                                if (rank == 2
+                                    && orbit_index == 6
+                                    && level_parity == 1
+                                    && kind == 1
+                                    && position_is_selected) {
+                                    continue;
+                                }
+                                if (rank == 2
+                                    && orbit_index == 6
+                                    && level_parity == 1
+                                    && kind == 1
+                                    && !position_is_selected
+                                    && position < orbit.minus_count) {
+                                    continue;
+                                }
+                                if (rank == 2
+                                    && orbit_index == 6
+                                    && level_parity == 1
+                                    && kind == 1
+                                    && !position_is_selected
+                                    && position >= orbit.minus_count) {
+                                    continue;
+                                }
                                 if (rank == 2
                                     && kind == 2
                                     && !position_is_selected) {
@@ -724,7 +825,40 @@ std::string task_name(const ShallowTask& task) {
         + " wall=" + std::to_string(task.selected_wall_mask)
         + " interval=" + std::to_string(
             task.selected_interval_mask
-        );
+        )
+        + " local=" + std::to_string(task.selected_local_value);
+}
+
+std::vector<ShallowTask> rank_one_switch_cover(
+    const std::vector<ShallowTask>& base_tasks
+) {
+    std::vector<ShallowTask> result;
+    for (const ShallowTask& base : base_tasks) {
+        if (base.selected_rank != 1) {
+            continue;
+        }
+        const ResidualOrbit& orbit =
+            residual_orbits[
+                static_cast<std::size_t>(base.orbit_index)
+            ];
+        const int last_local =
+            (orbit.minus_count == 4 ? 16 : 20) - 1;
+        for (int local = 1; local <= last_local; ++local) {
+            if (local >= 5) {
+                ShallowTask task = base;
+                task.selected_local_value = local;
+                result.push_back(task);
+                continue;
+            }
+            for (int wall = 0; wall < 8; ++wall) {
+                ShallowTask task = base;
+                task.selected_wall_mask = wall;
+                task.selected_local_value = local;
+                result.push_back(task);
+            }
+        }
+    }
+    return result;
 }
 
 }  // namespace
@@ -734,6 +868,47 @@ int main(int argc, char** argv) {
         argc == 3 && std::string(argv[1]) == "--show-pattern";
     const bool pattern_chambers =
         argc == 3 && std::string(argv[1]) == "--pattern-chambers";
+    const bool small_task =
+        argc == 3 && std::string(argv[1]) == "--small-task";
+    const bool small_supply_task =
+        argc == 3
+        && std::string(argv[1]) == "--small-supply-task";
+    const bool small_supply_chambers =
+        argc == 3
+        && std::string(argv[1]) == "--small-supply-chambers";
+    const bool small_switch =
+        argc == 2 && std::string(argv[1]) == "--small-switch";
+    const bool small_switch_task =
+        argc == 3
+        && std::string(argv[1]) == "--small-switch-task";
+    const bool small_switch_bad_bound =
+        argc == 4
+        && std::string(argv[1]) == "--small-switch-bad-bound";
+    const bool small_switch_bad_bound_descriptor =
+        argc == 8
+        && std::string(argv[1])
+            == "--small-switch-bad-bound-descriptor";
+    const bool small_switch_cap =
+        argc == 4
+        && std::string(argv[1]) == "--small-switch-cap";
+    const bool small_switch_cell =
+        argc == 6
+        && std::string(argv[1]) == "--small-switch-cell";
+    const bool small_switch_local =
+        argc == 7
+        && std::string(argv[1]) == "--small-switch-local";
+    const bool small_switch_cover =
+        argc == 2
+        && std::string(argv[1]) == "--small-switch-cover";
+    const bool small_switch_cover_task =
+        argc == 3
+        && std::string(argv[1]) == "--small-switch-cover-task";
+    const bool small_switch_cover_range =
+        argc == 4
+        && std::string(argv[1]) == "--small-switch-cover-range";
+    const bool list_switch_cover =
+        argc == 2
+        && std::string(argv[1]) == "--list-small-switch-cover";
     const bool small_rank =
         argc == 2 && std::string(argv[1]) == "--small";
     const bool bounded_rank =
@@ -746,6 +921,8 @@ int main(int argc, char** argv) {
             || std::string(argv[1]) == "--count-small"
             || std::string(argv[1]) == "--count-bounded"
             || std::string(argv[1]) == "--count-patterns"
+            || std::string(argv[1])
+                == "--count-small-switch-cover"
         );
     const bool count_small =
         argc == 2 && std::string(argv[1]) == "--count-small";
@@ -753,6 +930,9 @@ int main(int argc, char** argv) {
         argc == 2 && std::string(argv[1]) == "--count-bounded";
     const bool count_patterns =
         argc == 2 && std::string(argv[1]) == "--count-patterns";
+    const bool count_switch_cover =
+        argc == 2
+        && std::string(argv[1]) == "--count-small-switch-cover";
     const bool list_small =
         argc == 2 && std::string(argv[1]) == "--list-small";
     if (argc != 1
@@ -761,6 +941,20 @@ int main(int argc, char** argv) {
         && !patterns_only
         && !count
         && !list_small
+        && !small_task
+        && !small_supply_task
+        && !small_supply_chambers
+        && !small_switch
+        && !small_switch_task
+        && !small_switch_bad_bound
+        && !small_switch_bad_bound_descriptor
+        && !small_switch_cap
+        && !small_switch_cell
+        && !small_switch_local
+        && !small_switch_cover
+        && !small_switch_cover_task
+        && !small_switch_cover_range
+        && !list_switch_cover
         && !show_pattern
         && !pattern_chambers) {
         std::cerr
@@ -768,6 +962,21 @@ int main(int argc, char** argv) {
             << "[--count|--count-small|--count-bounded"
             << "|--count-patterns|--small|--bounded|--patterns"
             << "|--list-small"
+            << "|--small-task INDEX"
+            << "|--small-supply-task INDEX"
+            << "|--small-supply-chambers INDEX"
+            << "|--small-switch|--small-switch-task INDEX"
+            << "|--small-switch-bad-bound INDEX THRESHOLD"
+            << "|--small-switch-bad-bound-descriptor"
+            << " ORBIT PARITY SELECTED POSITION KIND THRESHOLD"
+            << "|--small-switch-cap INDEX CAP_MASK"
+            << "|--small-switch-cell INDEX CAP_MASK WALL INTERVAL"
+            << "|--small-switch-local INDEX CAP_MASK WALL INTERVAL LOCAL"
+            << "|--small-switch-cover"
+            << "|--count-small-switch-cover"
+            << "|--small-switch-cover-task INDEX"
+            << "|--small-switch-cover-range BEGIN END"
+            << "|--list-small-switch-cover"
             << "|--show-pattern INDEX|--pattern-chambers INDEX]\n";
         return EXIT_FAILURE;
     }
@@ -775,19 +984,144 @@ int main(int argc, char** argv) {
         bounded_rank || count_bounded || patterns_only || count_patterns
             || show_pattern || pattern_chambers
             ? 27
-            : (small_rank || count_small || list_small ? 2 : 0);
+            : (
+                small_rank || count_small || list_small || small_task
+                    || small_supply_task
+                    || small_supply_chambers
+                    || small_switch || small_switch_task
+                    || small_switch_bad_bound
+                    || small_switch_bad_bound_descriptor
+                    || small_switch_cap || small_switch_cell
+                    || small_switch_local
+                    || small_switch_cover
+                    || small_switch_cover_task
+                    || small_switch_cover_range
+                    || list_switch_cover
+                    || count_switch_cover
+                    ? 2
+                    : 0
+            );
     const bool use_patterns_only =
         patterns_only || count_patterns || show_pattern
         || pattern_chambers;
     std::vector<ShallowTask> tasks =
         shallow_tasks(maximum_rank, use_patterns_only);
+    if (
+        small_switch_cover || small_switch_cover_task
+        || small_switch_cover_range || list_switch_cover
+        || count_switch_cover
+    ) {
+        tasks = rank_one_switch_cover(tasks);
+    }
+    int switch_cap_mask = -1;
+    int switch_local_value = -1;
+    int switch_bad_threshold = -1;
+    if (small_switch_bad_bound_descriptor) {
+        std::array<long, 6> values{};
+        for (int index = 0; index < 6; ++index) {
+            char* end = nullptr;
+            values[static_cast<std::size_t>(index)] =
+                std::strtol(argv[index + 2], &end, 10);
+            if (
+                end == argv[index + 2]
+                || *end != '\0'
+            ) {
+                std::cerr << "invalid switch descriptor\n";
+                return EXIT_FAILURE;
+            }
+        }
+        const int orbit_index = static_cast<int>(values[0]);
+        const int level_parity = static_cast<int>(values[1]);
+        const int selected_orbit = static_cast<int>(values[2]);
+        const int shallow_position = static_cast<int>(values[3]);
+        const int shallow_kind = static_cast<int>(values[4]);
+        const int threshold = static_cast<int>(values[5]);
+        if (
+            orbit_index < 0
+            || orbit_index
+                >= static_cast<int>(residual_orbits.size())
+            || level_parity < 0 || level_parity > 1
+            || shallow_position < 0 || shallow_position >= 7
+            || shallow_kind < 0 || shallow_kind > 2
+            || threshold < 1 || threshold > 20
+        ) {
+            std::cerr << "invalid switch descriptor\n";
+            return EXIT_FAILURE;
+        }
+        const ResidualOrbit& orbit =
+            residual_orbits[static_cast<std::size_t>(orbit_index)];
+        const std::vector<unsigned int> representatives =
+            selected_orbit_masks(orbit);
+        if (
+            selected_orbit < 0
+            || selected_orbit
+                >= static_cast<int>(representatives.size())
+            || !selected_cut_can_be_active_shallow(
+                orbit,
+                representatives[
+                    static_cast<std::size_t>(selected_orbit)
+                ]
+            )
+            || shallow_kind_parity(shallow_kind, level_parity)
+                != orbit_label_parity(orbit, shallow_position)
+        ) {
+            std::cerr << "invalid switch descriptor\n";
+            return EXIT_FAILURE;
+        }
+        tasks.assign(1U, ShallowTask{
+            orbit_index,
+            level_parity,
+            selected_orbit,
+            shallow_position,
+            shallow_kind,
+            1,
+            false,
+            -1,
+            -1,
+            -1
+        });
+        switch_bad_threshold = threshold;
+    }
+    if (list_switch_cover) {
+        for (std::size_t index = 0U; index < tasks.size(); ++index) {
+            std::cout << index << ' ' << task_name(tasks[index]) << '\n';
+        }
+        return EXIT_SUCCESS;
+    }
+    if (small_switch_cover_range) {
+        char* begin_end = nullptr;
+        char* finish_end = nullptr;
+        const long begin = std::strtol(argv[2], &begin_end, 10);
+        const long finish = std::strtol(argv[3], &finish_end, 10);
+        if (
+            begin_end == argv[2] || *begin_end != '\0'
+            || finish_end == argv[3] || *finish_end != '\0'
+            || begin < 0 || finish <= begin
+            || static_cast<std::size_t>(finish) > tasks.size()
+        ) {
+            std::cerr << "invalid switch-cover range\n";
+            return EXIT_FAILURE;
+        }
+        tasks = std::vector<ShallowTask>(
+            tasks.begin() + begin,
+            tasks.begin() + finish
+        );
+    }
     if (list_small) {
         for (std::size_t index = 0U; index < tasks.size(); ++index) {
             std::cout << index << ' ' << task_name(tasks[index]) << '\n';
         }
         return EXIT_SUCCESS;
     }
-    if (show_pattern || pattern_chambers) {
+    if (
+        small_task || small_supply_task || small_switch_task
+        || small_switch_bad_bound
+        || small_switch_cap || small_switch_cell
+        || small_switch_local
+        || small_switch_cover_task
+        || small_supply_chambers
+        || show_pattern || pattern_chambers
+    ) {
         char* end = nullptr;
         const long parsed = std::strtol(argv[2], &end, 10);
         if (end == argv[2]
@@ -797,24 +1131,171 @@ int main(int argc, char** argv) {
             std::cerr << "invalid pattern task index\n";
             return EXIT_FAILURE;
         }
-        const ShallowTask base =
+        ShallowTask base =
             tasks[static_cast<std::size_t>(parsed)];
+        if (
+            (
+                small_switch_task || small_switch_bad_bound
+                || small_switch_cap
+                || small_switch_cell || small_switch_local
+                || small_switch_cover_task
+            )
+            && base.selected_rank != 1
+        ) {
+            std::cerr << "switch task must have selected rank one\n";
+            return EXIT_FAILURE;
+        }
+        if (
+            small_switch_cap || small_switch_cell
+            || small_switch_local
+        ) {
+            char* cap_end = nullptr;
+            const long cap_parsed =
+                std::strtol(argv[3], &cap_end, 10);
+            if (
+                cap_end == argv[3]
+                || *cap_end != '\0'
+                || (
+                    small_switch_cap
+                    && cap_parsed < 0
+                )
+                || cap_parsed < -1
+                || cap_parsed >= 128
+            ) {
+                std::cerr << "invalid switch cap mask\n";
+                return EXIT_FAILURE;
+            }
+            switch_cap_mask = static_cast<int>(cap_parsed);
+        }
+        if (small_switch_bad_bound) {
+            char* threshold_end = nullptr;
+            const long threshold_parsed =
+                std::strtol(argv[3], &threshold_end, 10);
+            if (
+                threshold_end == argv[3]
+                || *threshold_end != '\0'
+                || threshold_parsed < 1
+                || threshold_parsed > 20
+            ) {
+                std::cerr << "invalid bad-switch threshold\n";
+                return EXIT_FAILURE;
+            }
+            switch_bad_threshold =
+                static_cast<int>(threshold_parsed);
+        }
+        if (small_switch_cell || small_switch_local) {
+            char* wall_end = nullptr;
+            char* interval_end = nullptr;
+            const long wall_parsed =
+                std::strtol(argv[4], &wall_end, 10);
+            const long interval_parsed =
+                std::strtol(argv[5], &interval_end, 10);
+            if (
+                wall_end == argv[4] || *wall_end != '\0'
+                || (
+                    small_switch_cell
+                    && wall_parsed < 0
+                )
+                || wall_parsed < -1 || wall_parsed >= 8
+                || interval_end == argv[5]
+                || *interval_end != '\0'
+                || (
+                    small_switch_cell
+                    && interval_parsed < 0
+                )
+                || interval_parsed < -1
+                || interval_parsed >= 16
+            ) {
+                std::cerr << "invalid switch wall/interval cell\n";
+                return EXIT_FAILURE;
+            }
+            base.selected_wall_mask =
+                static_cast<int>(wall_parsed);
+            base.selected_interval_mask =
+                static_cast<int>(interval_parsed);
+        }
+        if (small_switch_local) {
+            char* local_end = nullptr;
+            const long local_parsed =
+                std::strtol(argv[6], &local_end, 10);
+            if (
+                local_end == argv[6] || *local_end != '\0'
+                || local_parsed < 1 || local_parsed >= 20
+            ) {
+                std::cerr << "invalid switch local value\n";
+                return EXIT_FAILURE;
+            }
+            switch_local_value = static_cast<int>(local_parsed);
+        }
+        if (
+            small_task || small_supply_task || small_switch_task
+            || small_switch_bad_bound
+            || small_switch_cap || small_switch_cell
+            || small_switch_local
+            || small_switch_cover_task
+        ) {
+            tasks.assign(1U, base);
+        }
         if (show_pattern) {
             std::cout << task_name(base) << '\n';
             return EXIT_SUCCESS;
         }
-        tasks.clear();
-        tasks.reserve(8U * 16U);
-        for (int wall = 0; wall < 8; ++wall) {
-            for (int interval = 0; interval < 16; ++interval) {
-                ShallowTask chamber = base;
-                chamber.selected_wall_mask = wall;
-                chamber.selected_interval_mask = interval;
-                tasks.push_back(chamber);
+        if (pattern_chambers) {
+            tasks.clear();
+            tasks.reserve(8U * 16U);
+            for (int wall = 0; wall < 8; ++wall) {
+                for (int interval = 0; interval < 16; ++interval) {
+                    ShallowTask chamber = base;
+                    chamber.selected_wall_mask = wall;
+                    chamber.selected_interval_mask = interval;
+                    tasks.push_back(chamber);
+                }
+            }
+        }
+        if (small_supply_chambers) {
+            tasks.clear();
+            tasks.reserve(8U * 16U);
+            for (int wall = 0; wall < 8; ++wall) {
+                for (int interval = 0; interval < 16; ++interval) {
+                    ShallowTask chamber = base;
+                    chamber.selected_wall_mask = wall;
+                    chamber.selected_interval_mask = interval;
+                    tasks.push_back(chamber);
+                }
             }
         }
     }
-    const std::string tag = pattern_chambers
+    if (small_switch) {
+        tasks.erase(
+            std::remove_if(
+                tasks.begin(),
+                tasks.end(),
+                [](const ShallowTask& task) {
+                    return task.selected_rank != 1;
+                }
+            ),
+            tasks.end()
+        );
+    }
+    const std::string tag = small_switch_cover
+        || small_switch_cover_task || small_switch_cover_range
+        || count_switch_cover
+        ? "SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3"
+        : (small_switch
+        ? "SU2_SEVEN_SHALLOW_SMALL_SWITCH_Z3"
+        : (
+            small_switch_task || small_switch_bad_bound
+                || small_switch_bad_bound_descriptor
+                || small_switch_cap
+                || small_switch_cell || small_switch_local
+        ? "SU2_SEVEN_SHALLOW_SMALL_SWITCH_TASK_Z3"
+        : (small_supply_chambers
+        ? "SU2_SEVEN_SHALLOW_SMALL_SUPPLY_CHAMBERS_Z3"
+        : (small_supply_task
+        ? "SU2_SEVEN_SHALLOW_SMALL_SUPPLY_TASK_Z3"
+        : (small_task
+        ? "SU2_SEVEN_SHALLOW_SMALL_TASK_Z3"
+        : (pattern_chambers
         ? "SU2_SEVEN_SHALLOW_PATTERN_CHAMBERS_Z3"
         : (use_patterns_only
         ? "SU2_SEVEN_SHALLOW_PATTERNS_Z3"
@@ -822,7 +1303,7 @@ int main(int argc, char** argv) {
             ? "SU2_SEVEN_SHALLOW_BOUNDED_Z3"
         : (maximum_rank == 2
             ? "SU2_SEVEN_SHALLOW_SMALL_Z3"
-            : "SU2_SEVEN_SHALLOW_Z3")));
+            : "SU2_SEVEN_SHALLOW_Z3")))))))));
     if (count) {
         std::cout << tag
                   << " tasks=" << tasks.size() << '\n';
@@ -879,16 +1360,36 @@ int main(int argc, char** argv) {
                     task.orbit_index,
                     task.level_parity,
                     task.selected_orbit,
-                    -1,
+                    switch_cap_mask,
                     task.selected_wall_mask,
                     task.selected_interval_mask,
                     -1,
-                    0,
+                    (
+                        small_supply_task || small_supply_chambers
+                            ? 3
+                            : (
+                                small_switch || small_switch_task
+                                    || small_switch_bad_bound
+                                    || small_switch_bad_bound_descriptor
+                                    || small_switch_cap
+                                    || small_switch_cell
+                                    || small_switch_local
+                                    || small_switch_cover
+                                    || small_switch_cover_task
+                                    || small_switch_cover_range
+                                    ? 4
+                                    : 0
+                            )
+                    ),
                     task.selected_rank,
                     task.shallow_position,
                     task.shallow_kind,
                     task.selected_complement_deep,
-                    task.endpoint_pattern
+                    task.endpoint_pattern,
+                    task.selected_local_value >= 0
+                        ? task.selected_local_value
+                        : switch_local_value,
+                    switch_bad_threshold
                 );
                 if (!result.passed) {
                     {

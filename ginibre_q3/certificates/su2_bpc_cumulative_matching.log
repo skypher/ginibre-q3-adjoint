@@ -1,0 +1,23 @@
+COMMAND
+character_ring_iter/analyze_su2_bpc_suffix_reflection 6 2 4 3 --matching-local
+
+OUTPUT
+SU2_BPC_LOCAL_MATCHING level=6 label=2 prefix=4 truncation=3 negative_paths=17472 positive_paths=22656 positive_nodes=18988 unreachable_positive=3668 splice_edges=9061176 rejected_invalid_path_pairs=0 isolated_negative=0 matched=17028 unmatched=444 hall_left=3300 hall_right=2856 hall_deficit=444 result=FAIL_MATCHING
+SU2_BPC_LOCAL_MATCHING hall_left_by_y=1:0,3:360,5:1764,7:1176 hall_right_by_y=0:24,2:648,4:1512,6:672
+SU2_BPC_LOCAL_MATCHING first_unmatched_moves=YXXXXYXYYY first_unmatched_states=(0,0)(0,2)(2,2)(0,2)(2,2)(4,2)(4,0)(6,0)(6,2)(6,2)(6,0)
+SU2_BPC_LOCAL_MATCHING first_unreachable_positive_moves=XXXXXXXYYX first_unreachable_positive_states=(0,0)(2,0)(0,0)(2,0)(0,0)(2,0)(2,0)(4,0)(4,2)(4,0)(6,0)
+SU2_BPC_LOCAL_MATCHING positive_universe_by_y=0:984,2:6048,4:10584,6:5040
+
+INTERPRETATION
+This is an exact obstruction to the tested local cumulative matching graph.
+Its edges include every valid one-cut tail reconnection into a retained even
+slice, every valid two-cut segment exchange, all positive shuffles of each
+resulting path pair, terminal-loop concatenation and reversal, cyclic
+rotation of the second closed path, and extraction of every retained even
+k-based loop.  It is not a counterexample to FBPC.
+
+SOURCE_SHA256
+33232d0546dffa06a496a77c80e99524c64e831a5f65d8ce0ce01ffc5c9cd2aa
+
+EXECUTABLE_SHA256
+d795914d9f51a121907faec4bb6c231456ca2e13177389cab5b7172d34b97c46

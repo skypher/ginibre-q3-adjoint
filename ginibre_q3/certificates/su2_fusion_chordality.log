@@ -1,0 +1,25 @@
+STATUS
+Bounded exact audit of the outside-in perfect-elimination order.  The
+unbounded statement is proved algebraically in Lemma 5A8H27.
+
+COMMAND
+character_ring_iter/analyze_su2_fusion_chordality 300
+
+OUTPUT
+SU2_FUSION_CHORDALITY maximum_level=300 parameters=5550 eliminated_vertices=565175 clique_tests=155495867 result=PASS_OUTSIDE_IN_PEO_DISCOVERY
+
+INTERPRETATION
+For every even level k and even q with 2q<k, the verifier checks that
+
+  0,k,2,k-2,4,k-4,...
+
+is a perfect-elimination order for the even-label q-fusion graph.  It
+checks every pair of remaining neighbors at every elimination step.
+The pass covers 5,550 graphs, 565,175 eliminated vertices, and
+155,495,867 exact clique tests.
+
+SOURCE_SHA256
+398b6ec2cb252d28004b0a4b002ec27f2afcd705623341d2a01d0b8002c417b5
+
+EXECUTABLE_SHA256
+4c9eaf57582bd705be459e47c856b8fab4aa03b746746ef144efb404c2fdcdb5

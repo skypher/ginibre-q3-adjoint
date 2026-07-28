@@ -1,0 +1,29 @@
+STATUS
+Exact bounded negative controls for proposed reflected-slice reductions.
+Neither failure is a counterexample to FBPC or CFBPC.
+
+COMMAND
+character_ring_iter/analyze_su2_reflected_prefix_pairs 60 20
+
+OUTPUT
+FIRST_NEGATIVE_POST_THREE level=6 label=2 prefix=5 truncation=4 vertex=2 tail=-16830
+FIRST_NEGATIVE_PAIR level=6 label=2 prefix=11 lower=1 upper=10 vertex=2 lower_slice=27304196 upper_slice=-4116312 pair=-4529964
+FIRST_NEGATIVE_CUMULATIVE level=6 label=2 prefix=12 last_lower=1 last_upper=11 vertex=2 cumulative=-18510136
+SU2_REFLECTED_PREFIX_PAIRS maximum_level=60 maximum_prefix=20 parameters=210 pairs=18690 coordinates=408065 negative_pairs=28463 negative_cumulative=22897 negative_lower=0 negative_post_three=21553 positive_upper=232507 negative_upper=135828 pair_minimum=-315796356229455579172221629043031144151069903 pair_witness=(60,20,20,3,17,12) cumulative_minimum=-380073560983669524904135153217981491426571507 cumulative_witness=(60,20,20,3,17,10) post_three_minimum=-1211942977932712950651984394261169776759724451688 post_three_witness=(60,18,20,18,0) lower_minimum=0 lower_witness=(18,2,4,1,3,18) result=FAIL_POINTWISE
+
+INTERPRETATION
+For r=j-s, the exact binomial ratio is
+
+  binom(2j+1,2s) / binom(2j+1,2r) = (2s+1)/(2r+1).
+
+The corresponding one-to-one reflected pair can be negative.  Its
+cumulative reflected tail can also be negative, and the tail after the
+proved t=3 prefix can be negative.  Therefore none of these three
+reductions proves the full prefix.  The lower-half slices tested in the
+same scan remain nonnegative, consistently with the K_s conjecture.
+
+SOURCE_SHA256
+129aec7ff1c826dc0a2177eb55c895d561b09ce93512b2f6a84ae478bb55adbd
+
+EXECUTABLE_SHA256
+93c5e2a5a2d78dcec8376900863bf0ad2a4392185c8ee4e92acb744e714ea202

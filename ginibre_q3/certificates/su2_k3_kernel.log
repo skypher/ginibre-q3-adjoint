@@ -1,0 +1,66 @@
+STATUS
+Exact unbounded chamber certificate for the seven-step kernel at the
+nearest affine wall K=2Q+1 and in the stable band K>=7Q.
+
+COMMAND
+character_ring_iter/prove_su2_k3_kernel
+
+OUTPUT
+SU2_K3_STABLE_SMALL maximum_Q=2 result=PASS_EXACT
+SU2_K3_CHAMBER name=0_le_Y_le_Q_minus_3 positive_coefficients=33 result=PASS_COEFFICIENTS
+SU2_K3_SUM_CONE name=Q_minus_2_le_Y_le_2Q_minus_2 minimum_sum=3 x_threshold=0 y_threshold=2 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=2Q_minus_1_le_Y_le_3Q_minus_2 positive_coefficients=45 result=PASS_COEFFICIENTS
+SU2_K3_SUM_CONE name=3Q_minus_1_le_Y_le_4Q_minus_1 minimum_sum=3 x_threshold=0 y_threshold=1 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=4Q_le_Y_le_5Q_minus_1 positive_coefficients=45 result=PASS_COEFFICIENTS
+SU2_K3_SUM_CONE name=5Q_le_Y_le_6Q minimum_sum=3 x_threshold=0 y_threshold=0 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=6Q_plus_1_le_Y_le_7Q positive_coefficients=30 result=PASS_COEFFICIENTS
+SU2_K3_STABLE_KERNEL result=PASS_EXACT
+SU2_K3_NEAREST_SMALL maximum_Q=10 result=PASS_EXACT
+SU2_K3_CHAMBER name=nearest_Y_0 positive_coefficients=0 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_1 positive_coefficients=6 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_2 positive_coefficients=6 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_3 positive_coefficients=6 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_4_le_Y_le_Q_minus_5 positive_coefficients=39 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_-4 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_-3 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_plus_-2 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_plus_-1 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_plus_0 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_plus_1 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_plus_2 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_plus_3 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_plus_4 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_plus_5 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_Q_plus_6 positive_coefficients=9 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Q_plus_7_le_Y_le_2Q_minus_4 positive_coefficients=39 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_2Q_-3 positive_coefficients=6 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_2Q_-2 positive_coefficients=6 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_2Q_plus_-1 positive_coefficients=6 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_2Q_plus_0 positive_coefficients=6 result=PASS_COEFFICIENTS
+SU2_K3_CHAMBER name=nearest_Y_eq_2Q_plus_1 positive_coefficients=5 result=PASS_COEFFICIENTS
+SU2_K3_NEAREST_KERNEL result=PASS_EXACT
+SU2_K3_FORMULA_AUDIT maximum_Q=40 comparisons=15000 result=PASS_EXACT
+
+INTERPRETATION
+All polynomial arithmetic uses boost::rational<cpp_int>.  The stable
+calculation exhausts the seven activation intervals of the ordinary
+sixth- and seventh-power multiplicities.  Q=1,2 are checked directly;
+the remaining regions have nonnegative monomial coefficients after the
+displayed exact cone substitutions and boundary-strip refinements.
+
+At K=2Q+1 the Kac--Walton formula has the first reflected image pair and,
+for the seventh power near the upper endpoint, one further negative image.
+Q=1,...,10 are checked directly.  For Q>=11 the listed fixed-width and
+two-slack regions exhaust 0<=Y<=2Q+1, and every pulled-back margin has
+nonnegative rational coefficients.  An independent finite-fusion
+recurrence checks 15,000 sixth- and seventh-power formula coordinates
+through Q=40 in the nearest and stable bands.
+
+The result proves only K=2Q+1 and K>=7Q.  The intermediate affine band
+2Q+2<=K<7Q remains outside this certificate.
+
+SOURCE_SHA256
+5676889b69f636dfb624a8beabf37a642c42df2e4310edecc85d3760a52bbb98
+
+EXECUTABLE_SHA256
+f6babef4af13c13d048d6ebe1114d9e3a35db1058c4b2363dc7da5af7a16d80d

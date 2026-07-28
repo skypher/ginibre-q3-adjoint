@@ -1,0 +1,50 @@
+STATUS
+Exact finite falsification and discovery evidence.  None of the passing
+finite enumerations below proves an unbounded graph theorem.
+
+COMMAND
+character_ring_iter/analyze_general_graph_full_prefix_kernel 4 12
+
+OUTPUT
+GENERAL_GRAPH_FULL_PREFIX_KERNEL counterexample vertices=2 mask=3 prefix=4 truncation=3 vertex=1 value=-123 adjacency=[11][10] result=FAIL_UNIVERSAL
+
+COMMAND
+character_ring_iter/analyze_general_graph_full_prefix_kernel 5 15 --root-leaf
+
+OUTPUT
+GENERAL_GRAPH_FULL_PREFIX_KERNEL counterexample vertices=4 mask=228 prefix=4 truncation=3 vertex=3 value=-576 adjacency=[0010][0011][1110][0100] result=FAIL_UNIVERSAL
+
+COMMAND
+character_ring_iter/analyze_general_graph_full_prefix_kernel 6 12 --reflected-roots
+
+OUTPUT
+GENERAL_GRAPH_FULL_PREFIX_KERNEL counterexample vertices=6 mask=102 prefix=6 truncation=5 vertex=5 value=-32381 adjacency=[011001][110000][100000][000001][000011][100110] result=FAIL_UNIVERSAL
+
+COMMAND
+character_ring_iter/analyze_general_graph_full_prefix_kernel 8 12 --reflected-leaves
+
+OUTPUT
+GENERAL_GRAPH_FULL_PREFIX_KERNEL counterexample vertices=8 mask=57858 prefix=6 truncation=5 vertex=7 value=-23692 adjacency=[01000000][10100010][01110000][00100000][00000100][00001110][01000101][00000010] result=FAIL_UNIVERSAL
+
+COMMAND
+character_ring_iter/analyze_general_graph_full_prefix_kernel 9 50 --reflected-convex-leaves
+
+OUTPUT
+GENERAL_GRAPH_FULL_PREFIX_KERNEL maximum_vertices=9 maximum_prefix=50 root_leaf=0 reflected_leaves=0 reflected_roots=0 reflected_convex_leaves=1 graphs=34673238 connected_graphs=527 coordinates=5131225 result=PASS_EXHAUSTIVE_DISCOVERY
+
+INTERPRETATION
+The full-prefix kernel is not a theorem for arbitrary undirected graphs,
+for rooted graphs whose root is a leaf, for graphs with reflected roots,
+or even for graphs with a reflection exchanging two leaves.  Thus a proof
+cannot use only symmetry, nonnegative adjacency, and the unique boundary
+edge.  No counterexample occurred among the 527 connected reflected,
+row-convex, endpoint-leaf graphs of order at most nine encountered in the
+34,673,238-mask exhaustive enumeration, through prefix 50.  Row-convexity
+is the additional structure present in the SU(2) fusion intervals, but the
+bounded pass is only route-selection evidence.
+
+SOURCE_SHA256
+4887628afb1ec00e404632f0129a2ec3a32c16dc207eb287b677f1c93e65a0e1
+
+EXECUTABLE_SHA256
+cb84c729d2db2716c3933fac0c8d05d6aef934c3e600054d484402cdb0d5d401

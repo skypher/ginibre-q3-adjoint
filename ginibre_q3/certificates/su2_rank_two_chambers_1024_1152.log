@@ -1,0 +1,2 @@
+SU2_RANK_TWO_CHAMBERS_Z3 begin=1024 end=1152 workers=1 start=1
+SU2_RANK_TWO_CHAMBERS_Z3 begin=1024 end=1152 counterexamples=UNSAT result=PASS

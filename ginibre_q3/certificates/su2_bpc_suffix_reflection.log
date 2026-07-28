@@ -1,0 +1,16 @@
+COMMAND
+character_ring_iter/analyze_su2_bpc_suffix_reflection 6 2 4 3
+
+OUTPUT
+SU2_BPC_SUFFIX_REFLECTION first_uncovered model=0 y_moves=3 moves=XXXXXYYXXY states=(0,0)(2,0)(0,0)(2,0)(0,0)(2,0)(2,2)(2,2)(4,2)(6,2)(6,0)
+SU2_BPC_SUFFIX_REFLECTION level=6 label=2 prefix=4 truncation=3 negative_paths=17472 covered_paths=11182 uncovered_paths=6290 invalid_images=0 collisions=0 result=FAIL_INJECTION
+
+INTERPRETATION
+This is an exact obstruction to the displayed one-cut suffix-reflection
+algorithm.  It is not a counterexample to the full-prefix inequality.
+
+SOURCE_SHA256
+33232d0546dffa06a496a77c80e99524c64e831a5f65d8ce0ce01ffc5c9cd2aa
+
+EXECUTABLE_SHA256
+d795914d9f51a121907faec4bb6c231456ca2e13177389cab5b7172d34b97c46

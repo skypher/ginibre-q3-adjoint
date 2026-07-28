@@ -1,0 +1,20 @@
+SU2 seven-factor odd all-even complementary-minus neighbour supply
+Date: 2026-07-27 UTC
+
+Command:
+  verify_su2_seven_shallow_z3 --small-supply-task 298
+
+Source snapshot:
+  75cf71e788fa72476faab4e9f55aa59a99366682c5f97e2669ea38cfc68026eb  verify_su2_seven_shallow_z3.cpp
+  ef27e39054a215863052c4485c6f62f4b05a3c59ed9d1528a5cbcc8b94f776ab  verify_su2_seven_residual_z3.cpp
+  6f019b8a0a39b1349d7b830ca4b2cfdef897b660353a8bdbf018667af610f1fb  verify_su2_seven_shallow_z3
+
+Task:
+  orbit=6 parity=1 selected=0 position=3 kind=1 rank=2
+
+Target:
+  Negation of L(C)+R>=20*2, with no level cutoff and without U.
+
+Output:
+  SU2_SEVEN_SHALLOW_SMALL_SUPPLY_TASK_Z3 tasks=1 workers=1 start=1
+  SU2_SEVEN_SHALLOW_SMALL_SUPPLY_TASK_Z3 tasks=1 counterexamples=UNSAT result=PASS

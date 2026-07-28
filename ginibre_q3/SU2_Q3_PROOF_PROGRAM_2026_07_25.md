@@ -111,6 +111,54 @@ lanes the repository's own record supports:
   Lemma 5A7B15 removes every rank-two task whose designated simple
   current lies in the four-label side, because a fourfold invariant
   containing `V_k` has rank at most one.
+  Lemma 5A7B16 closes the rank-two single-`k`/deep-complement
+  subfamilies in all four graph packets of Lemmas 5A7B7--5A7B10:
+  the selected and complementary profiles give `L(C)>=14`, and the
+  exact graph/equality ceilings are at most fourteen.
+  Lemma 5A7B17 closes the double-`k-1` rank-two/deep-complement
+  subfamily.  Its exact decomposition `T=2N+2W+R`, the bound
+  `W<=b_2`, and the forced `b_4>=8` in the sole `N=3` tail give
+  `T<=L(C)`.
+  Lemma 5A7B18 closes the corresponding three-copy `k-1` packet:
+  after stratifying by the number `N` of indexed copies of label two,
+  its exact bound is `T<=6N+3e+1`; the rank-two endpoint payment
+  `L(C)>=17` closes `N=1`, while explicit indexed equal-pair channels
+  close `N=2,3`.
+  Lemma 5A7B19 closes the sole-`k-1` rank-two row when that label is
+  selected: the weighted path gives `T<=P_eq+30`, while the all-even
+  rank-two rectangle sharpens the local payment to `L(C)>=33`.
+  Lemma 5A7B20 closes the split two-copy row directly.  Its
+  four-vertex graph gives the sharp `N`-stratified ceilings
+  `28,22,24,22,12`; the endpoint rectangle gives `L(C)>=25`, upgraded
+  to `28` in the sole `N=0` row.  Lemma 5A7B21 proves that these and
+  Lemmas 5A7B17--18
+  exhaust every positive selected-copy count; only the sole
+  complementary copy remains in this odd all-even packet.
+  Lemma 5A7B22 closes its complementary-minus placement by an exact
+  cutoff-free supply certificate `L(C)+R>=40>=T`.  At that stage only
+  the unique-plus placement remained.  Its analogous raw supply bound is
+  false at `k=27`, where `(L,R,U,T)=(39,0,6,8)`; the actual direct
+  inequality has margin `37`, so this row requires exact demand or
+  positive-cut allocation rather than the ceiling `T<=40`.
+  A specialized exact C++ scan through `k=27` found the same margin
+  on all twelve low-supply selected cuts, all in multisets
+  `{2,2,2,a,a+2,k-3; plus k-1}`.  This is a bounded rigidity audit,
+  not yet the unbounded closure.
+  Lemma 5A7B23 now restores the exact missing equality supply in that
+  packet: after deleting an indexed pair from three same-sign copies
+  of label two, its full `P_eq` term is the QF-LIA fourfold coefficient
+  `m_2(Q)`.  Lemma 5A7B24 closes the complete selected
+  `{2,2,2}` subcase without a solver: rank two forces
+  `m_2(B)>=5` and `m_4(B)>=4`, hence `L>=25`, while the three
+  indexed equal pairs give `P_eq>=15`.  Lemma 5A7B25 proves that
+  whenever the word has three negative copies of label two, some
+  triple of them is itself maximal rank two.  Thus that entire branch
+  is closed.  Lemma 5A7B26 closes the complementary branch with at
+  most two copies: its six exact endpoint rows have local minima
+  `56,49,41,49,43,43`, all above `T<=40`.  Corollary 5A7B27 therefore
+  closes the complete unique-plus rank-two cell.  The older
+  strengthened uniform query remains in flight as an overcomplete
+  check.
   The reduced
   strict verifier has 3,468 exact QF-LIA cells:
   568 rank-one/two endpoint cells and 2,900 selected-triple cells at
@@ -118,16 +166,131 @@ lanes the repository's own record supports:
   machine B with 48 load/RAM-selected workers.  An older overcomplete
   7,668-cell replay remains in flight on machine C with 32 workers.
   Neither partial transcript is theorem evidence until every cell is
-  `UNSAT`.  The current-source disjoint endpoint-pattern refinement now
-  has only 324 cells, all at ranks one and two, after quotienting the
+  `UNSAT`.  The disjoint endpoint-pattern refinement initially had
+  only 320 cells, all at ranks one and two, after quotienting the
   designated shallow position by the selected-cut stabilizer and
-  applying Lemma 5A7B15.  The selected-pattern subcover is empty.  A
+  applying Lemmas 5A7B15--5A7B27.  Lemma 5A7B16 removes the all-even
+  rank-two top cell outright, and Lemma 5A7B21 removes the odd
+  all-even selected-neighbour cell.  Lemma 5A7B22 removes its
+  complementary-minus companion by a cutoff-free supply certificate,
+  and Corollary 5A7B27 removes the unique-plus companion.
+  The cover remains overcomplete by its
+  three mixed single-top/deep-complement subfamilies because the current
+  task schema does not separate them from cells with additional
+  shallow positions.  The selected-pattern subcover is empty.  A
   previous 159-cell
   overcomplete `--patterns`
   subcover remains in flight locally and is bound to its displayed source
   snapshot.  A focused
   exact C++ diagnostic found minimum margin six through `k=14`,
   validating the symbolic deep case split.
+  That 320-cell census splits exactly into 180 rank-one and 140
+  rank-two cells.  Lemmas 5A7B28--29 reduce every rank-one cell to
+  the bad-switch count `|B_C|<=L(C)-1` and give exact QF-LIA
+  predicates for all three triple-intersection types.  Lemmas
+  5A7B30--32 linearize the three selected endpoints and every cut
+  containing a designated endpoint; selected rank one also forces
+  the complementary fourfold fusion interval to be a singleton.  The resulting
+  original cutoff-free switch cover has 7,812 cells: it fixes the local value
+  in its forced range and partitions only the four smallest local
+  values by the selected affine-wall chamber.  This is a
+  sharper rank-one target than the direct 320-cell inequality.
+  Corollary 5A7B33 now closes the first selected-simple-current
+  rank-one task by two overlapping source-bound `UNSAT` shards.
+  Corollary 5A7B34 closes its first complementary-simple-current
+  companion by a complete 43-cell `UNSAT` shard.  Corollary 5A7B35
+  closes the first selected-fundamental companion by another complete
+  43-cell `UNSAT` shard.  Corollary 5A7B36 closes its
+  reflected-fundamental companion by a third complete 43-cell
+  `UNSAT` shard.  Corollary 5A7B37 uses the exact simple-current
+  output profile to close the first complementary-simple-current
+  output cell by a fourth complete 43-cell `UNSAT` shard.  Corollary
+  5A7B38 closes the first odd-level selected-reflected-fundamental
+  cell by a fifth complete 43-cell `UNSAT` shard.  Corollary 5A7B39
+  closes its first complementary-reflected-neighbour companion by a
+  sixth complete 43-cell `UNSAT` shard.  Corollary 5A7B40 closes the
+  first odd-level selected-fundamental cell by a seventh complete
+  43-cell `UNSAT` shard.  Corollary 5A7B41 closes the first odd-level
+  selected-simple-current cell by an eighth complete 43-cell `UNSAT`
+  shard.  Corollary 5A7B42 uses the channelwise neighbour profile to
+  close the first odd-level complementary-reflected-neighbour output
+  cell by a ninth complete 43-cell `UNSAT` shard.  Corollary 5A7B43
+  closes the first three-minus selected-simple-current cell by a tenth
+  complete 43-cell `UNSAT` shard.  The current exact censuses are
+  therefore 169 rank-one plus 140 rank-two cells, for 309 total, and
+  7,339 remaining switch cells.  Lemma 5A7B32A then proves the
+  sharp three-minus complementary-top floor `L(C)>=4`.  Lemma
+  5A7B32B classifies the equality case into three endpoint families
+  and proves `|B_C|<=2`, closing local value four as well.  These
+  lemmas remove all thirty-two local-value-one-through-four wall cells
+  from the next task and reduce the exact switch cover to 7,307 cells.
+  Corollary 5A7B44 then uses one exact unbounded cardinality query:
+  under the automatic residual bound `L(C)<=15`, four bad switches
+  are `UNSAT`, while the adjacent threshold-three negative control is
+  `SAT`.  Together with `L(C)>=4`, this closes the complete
+  three-minus complementary-simple-current cell.  The current exact
+  censuses are 168 rank-one plus 140 rank-two cells, for 308 total,
+  and 7,296 remaining switch cells.
+  Audit correction 5A7B45 subsequently found that the endpoint
+  stabilizer fixed the designated position and also sorted it with its
+  orbit-mates.  That is exact for a singleton class and for a
+  fundamental label in the first sorted position, but overconstrains a
+  multi-position upper endpoint.  Corollaries 5A7B34, 5A7B36,
+  5A7B39, 5A7B41, and 5A7B43 are therefore withdrawn pending corrected
+  replay; the other seven promoted cells are unaffected.  The
+  corrected exact censuses are 173 rank-one plus 140 rank-two cells,
+  for 313 total, and 7,511 switch cells.  Both remote bounded replays
+  use the superseded ordering and are now diagnostic subcell audits,
+  not exhaustive theorem certificates.
+  Corollary 5A7B46 replays the first affected cell against the
+  corrected quotient.  A channel argument gives the sharp floor
+  `L(C)>=3`; equality forces `{k,1,k-1}` and has no bad switches.
+  In the residual region `4<=L(C)<=15`, one exact cardinality query
+  proves that four bad switches are `UNSAT`, with a `SAT`
+  threshold-three negative control.  This reinstates the complete
+  complementary-simple-current cell.  The current corrected censuses
+  are 172 rank-one plus 140 rank-two cells, for 312 total, and 7,468
+  switch cells.
+  Corollary 5A7B47 replays the corrected selected-reflected-
+  fundamental cell.  Binary-interval geometry gives `L(C)>=3`.
+  Exact unpartitioned queries close local values three and four, and
+  a cardinality query excludes five bad switches throughout the
+  residual range; its threshold-four negative control is `SAT`.
+  This reinstates the full cell and leaves 171 rank-one plus 140
+  rank-two cells, for 311 total, and 7,425 switch cells.
+  Corollary 5A7B48 replays the corrected odd complementary-reflected-
+  neighbour cell.  Its fundamental two-point interval and the
+  non-singleton complementary interval force three output-two paths,
+  hence `L(C)>=4`.  One exact cardinality query excludes four bad
+  switches, with a `SAT` threshold-three control.  The corrected
+  census is now 170 rank-one plus 140 rank-two cells, for 310 total,
+  and 7,382 switch cells.
+  Corollary 5A7B49 replays the corrected odd selected-simple-current
+  cell.  Its complementary singleton intersection consists of two
+  non-singleton even fusion intervals, forcing `L(C)>=4`.  The exact
+  cardinality query gives the sharp bound `|B_C|<=1`: threshold two
+  is `UNSAT` and threshold one is `SAT`.  Corollary 5A7B50 then
+  replays the corrected three-minus selected-simple-current cell.
+  Its complementary odd-pair interval is non-singleton; whether the
+  even cross-sign interval is singleton or not, it forces
+  `L(C)>=3`.  The sharp exact bound is `|B_C|<=2`, with threshold
+  three `UNSAT` and threshold two `SAT`.  All five cells withdrawn
+  by Audit correction 5A7B45 are now reinstated against the corrected
+  quotient.  The restored census is 168 rank-one plus 140 rank-two
+  cells, for 308 total, and 7,296 switch cells.
+  A complete corrected-source replay of all 308 residual cells is now
+  in flight locally, with concurrency chosen from live RAM and machine
+  load.  Its first cell has independently returned `UNSAT`; completion
+  of every cell remains required before the shallow leaf is a theorem.
+  A hash-checked machine-C package is staged at
+  `/root/q3_su2_corrected_308_20260727`.  Its watcher preserves the
+  currently running bounded replay and launches no corrected work until
+  that process exits.  At launch it computes the largest safe worker
+  count from live runnable threads and `MemAvailable`; the watcher
+  source SHA-256 is
+  `8c2b14198ef0d0b0da779fd895d624bb61af7772ca8d4467e465d77c335521b6`,
+  and the staged `libz3.so.4` SHA-256 is
+  `730694c87a99a1e512562bd36d005c121610531c146e4317be0e1a8d53882b18`.
   The exact equality-partition replay for this residual is in flight and is an
   overcomplete check because it also includes the analytically closed
   larger ranks.  The 768-cell deep rank-at-most-two two-minus replay has
@@ -522,8 +685,104 @@ before any further construction.
    of first-coordinate over second-coordinate last-step currents across
    the even allocation slices.  Stripping the forced final edge gives a
    mixed-time `2 by 2` path minor.  Its individual sign is not fixed, so
-   ordinary termwise total positivity is ruled out; the remaining target
-   is a cumulative slice-preserving path switch.
+   ordinary termwise total positivity is ruled out.  Lemma 5A8H10A
+   strengthens the usable reduction to the full-prefix criterion
+   `(FBPC_j)`, allowing the first two positive boundary slices to pay
+   later defects.  Lemmas 5A8H11--5A8H13 localize every failed aligned
+   switch to one of two simple-current-reflected fusion walls.  Proposition
+   5A8H14 gives an exact Hall deficit `444` for the exhaustive local
+   multi-cut graph in the first hard case, so a purely local switch is
+   insufficient.  Lemma 5A8H16 proves, for arbitrary parameters, the
+   validity and length bookkeeping of the required nonlocal operations:
+   simple-current boundary relocation, upper/lower boundary-shell
+   transfer, self-loop transfer, and boundary-loop extraction.  Exact
+   enlarged-graph matchings close four representative hard rows, with
+   every generated projected path independently validated, but remain
+   bounded evidence.  Lemma 5A8H17 removes all shuffle-word expansion:
+   the remaining `(FBPC_j)` theorem is exactly the capacitated Hall
+   inequality `(P5A.102R)` on projected path types, with demand
+   `binom(2j+1,B-1)` and capacity `binom(2j+1,b)`.  The exact
+   capacity-flow implementation reproduces the concrete local Hall
+   deficit `444`, closes representative prefixes through `B=6`, and
+   shows that all tested hard rows admit downward allocation.  Restricting
+   payment to the adjacent slice `b=B-1` is false: the first hard row has
+   deficit `840`, entirely in source slice `B=7`.  Thus cross-slice
+   downward payment is essential.
+   Lemmas 5A8H18--5A8H21 independently close the first nontrivial
+   determinant slice: a five-step pointwise kernel, proved by exact
+   Kac--Walton chambers at every affine-wall distance, gives
+   `D_(j,2)>=0` for every `j>=4`.  The former intermediate band
+   `2Q+2<=K<5Q` is no longer open.  Its certificate has twenty-three
+   activation masks: twenty-two exact nonnegative Handelman identities
+   and one four-cone parity decomposition, with 1,130,350 independent
+   recurrence/formula checks through level 300.  This removes the
+   `D_(j,2)` leaf but does not prove the full cumulative Hall inequality.
+   The next lower-slice hierarchy now has a precise boundary-minor form:
+   `f_(2s)N_q^(2s+1)-f_(2s+1)N_q^(2s)` is the minor of rows `0,q`
+   and columns `0,x` of `(N_q^2)^s`.  Exact discovery through level 300
+   and `s=20` finds no negative coordinate.  Proving this first-two-row
+   minor cone would make every `D_(j,s)` in the lower half nonnegative.
+   The reflected upper-half analogue is decisively false, so the remaining
+   upper slices still require cumulative cross-slice payment.
+   Lemma 5A8H22 gives a stronger endpoint-free target: the full-prefix
+   current `Q_(j,t)` is the `x=k` coefficient of the fusion-ring vector
+   `R_(j,t)` in `(P5A.102AG)`.  Exact recurrence through level 100 and
+   `j=30` checked 8,545,500 coefficients of `R_(j,t)` without a negative
+   value.  Corollary 5A8H22A closes the first row `t=2` coefficientwise
+   and uniformly: it factors `R_(j,2)` into the nonnegative initial term,
+   the semiring inclusion `N_q^3e_0-N_q^2e_0>=0`, and the proved
+   five-step kernel of Lemma 5A8H20.  Lemmas 5A8H24 and 5A8H24A now
+   prove the next seven-step kernel
+   `f_6N_q^7e_0-f_7N_q^6e_0>=0` at every affine-wall distance.  The
+   extreme-wall certificate has seven stable activation intervals and
+   eight nearest-wall regions, with finite exact checks only for
+   `Q<=2` and `Q<=10`, respectively, plus 15,000 independent
+   recurrence/formula comparisons through `Q=40`.  The intermediate
+   band `2Q+2<=K<7Q` has exactly 102 feasible activation masks: 46
+   direct monomial/Newton identities, 22 Farkas-bounded finite
+   chambers, 14 exact integer two-branch partitions, and 20 weighted
+   constant-sum lower-dimensional partitions.  The single aggregate
+   replay certifies all 102 masks, while an independent audit checks
+   15,210,000 generic Kac--Walton coordinates through `Q=100` and
+   55,350 finite-fusion recurrence coordinates through `Q=15`.
+   Corollary 5A8H25 therefore closes the full-prefix row `t=3` for every
+   admissible level, label, and `j`.  The remaining percent-moving
+   target is the arbitrary-prefix cumulative-current/global-payment
+   lemma, not another `t=3` wall case.  This phenomenon is not
+   graph-universal.  Proposition 5A8H23
+   supplies an exact eight-vertex counterexample even for a symmetric
+   graph with endpoint-exchanging reflection and boundary leaves.  The
+   counterexample has noninterval neighborhoods.  An exhaustive
+   34,673,238-mask check found no failure among the 527 connected
+   reflected row-convex boundary-leaf graphs through nine vertices and
+   `j=50`.  Thus the current percent-moving target is to prove
+   `(CFBPC)` from the ordered fusion intervals and their two reflected
+   affine walls.  This would close `(P5A.102R)` at once; if the
+   coefficientwise route fails, the fallback remains a uniform
+   capacity-respecting downward allocation.
+
+   Lemma 5A8H26 now gives an exact one-dimensional endpoint form:
+   `Q_(j,t)` is the total binomially weighted even-minus-odd zero-visit
+   count over all length-`2j+2` fusion walks from zero to the simple
+   current.  This removes the product-graph shuffle words, but does not
+   make the sign objectwise: the walk
+   `(0,2,2,0,2,2,4,4,4,4,6)` has weight `-35` at
+   `(k,q,j,t)=(6,2,4,2)`.  Exact negative controls also rule out
+   one-to-one reflected-slice pairing, cumulative reflected tails,
+   positivity of the tail after `t=3`, and coefficientwise positivity
+   after scalar last-exit factorization.  The active proof target is
+   therefore the genuine cross-walk allocation in `(P5A.102AS)`, or
+   equivalently the projected capacitated-Hall inequality
+   `(P5A.102R)`.  Lemma 5A8H27 proves a new uniform structural input:
+   the outside-in order `0,k,2,k-2,...` is a perfect-elimination order
+   for every admissible fusion graph.  Hence every odd marked loop has
+   a one-edge triangle shortcut.  The exact remaining issue is to carry
+   the deleted triangle data through that shortcut without exceeding
+   any positive marked-walk capacity.
+
+   Diagonal signing of
+   `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail
+   Abel criteria have now been falsified and are not active routes.
    Exact discovery through level 300 and
    `m=39` finds no failure of the ascending order over 4,329,025 tested
    prefixes.  The descending endpoint-prefix proposal has a robust

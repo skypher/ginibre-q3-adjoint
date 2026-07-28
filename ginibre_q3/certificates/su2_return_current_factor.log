@@ -1,0 +1,31 @@
+STATUS
+Exact bounded negative controls for coefficientwise scalar
+return-series factorizations.  These failures are not counterexamples
+to FBPC or CFBPC.
+
+COMMAND
+character_ring_iter/analyze_su2_return_current_factor 30 12
+
+OUTPUT
+FIRST_NEGATIVE level=6 label=2 prefix=4 truncation=2 degree=3 value=-34
+FIRST_NEGATIVE_LAST_EXIT level=6 label=2 prefix=4 truncation=2 degree=3 value=-35
+SU2_RETURN_CURRENT_FACTOR maximum_level=30 maximum_prefix=12 parameters=49 rows=2646 coefficients=56154 negatives=18982 last_exit_negatives=19695 minimum=-877150853588508608701996 witness=(30,14,12,11,25) last_exit_minimum=-591668264510872390407724 last_exit_witness=(30,14,12,11,25) result=FAIL_COEFFICIENTWISE
+
+INTERPRETATION
+Let F(z)=sum_r f_r z^r and, for fixed n,t, let
+
+  P_(n,t)(z)
+   =sum_(s=0)^t binom(n-1,2s)
+      {f_(2s)z^(2s)-f_(2s+1)z^(2s+1)}.
+
+The coefficientwise proposals F(z)P_(n,t)(z)>=0 and
+F(z)^2P_(n,t)(z)>=0 are both false.  The first would have combined
+with the nonnegative last-exit factor in G(z)=F(z)E(z) to prove the
+endpoint current.  Thus the valid last-exit decomposition does not
+remove the necessary cross-degree payment.
+
+SOURCE_SHA256
+cb27b15dda12c2484b9c2d26a2557d287bf6e261b231809d15ae3409f739ee20
+
+EXECUTABLE_SHA256
+2251070786ddb651b4a3698e7c936be83a92ca05f48aeef52b7b486873c1a975

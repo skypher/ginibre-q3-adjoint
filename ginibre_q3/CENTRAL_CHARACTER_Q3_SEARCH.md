@@ -1092,6 +1092,19 @@ integer stabilizes at the displayed finite level.  Uniform closure of the
 nonnegative character cone is then handled separately by continuity of each
 fixed signed-product integral in the sup norm.
 
+More explicitly, this last passage introduces no additional positivity
+assumption.  If each tested factor is a finite nonnegative linear combination
+of irreducible real characters, expand every factor
+`f(g)-f(h)` or `f(g)+f(h)` separately.  Multilinearity writes the resulting
+Q3 integral as a finite nonnegative linear combination of the irreducible-list
+integrals.  If the factors are uniform limits of such finite sums, the
+corresponding integrands converge uniformly on `SU(2) x SU(2)`: a telescoping
+product bound using the uniform norms of the finitely many factors proves
+this directly.  Haar integration is continuous for uniform convergence.
+Thus the finite-level theorem, once proved for every irreducible list,
+transfers exactly to the uniform closure of the nonnegative real-character
+cone.
+
 The stabilization claim was also checked independently by
 `character_ring_iter/verify_su2_fusion_stabilization.cpp`.  A strict C++ build
 tested all 60,087 separately sorted signed lists with labels at most six and
@@ -4046,6 +4059,2212 @@ k star_k x={k-x},
 the fourfold invariant would have multiplicity at most one.  This
 contradicts selected rank two.  QED.
 
+**Lemma 5A7B16 (single-top rank-two graph closure).**  Retain the
+rank-two alternative `d=2` of Corollary 5A7B1.  Suppose that the
+selected active triple contains the sole shallow label `k`, that its
+other two labels and its four-label complement are deep, and that the
+signed/parity placement is one of the four single-top packets in
+Lemmas 5A7B7--5A7B10.  Then
+
+```text
+T<=L(C)+P_eq.                                      (P5A.25Z30zg)
+```
+
+**Proof.**  Write the selected triple as
+
+```text
+A={k,q,k-q}.
+```
+
+The two non-top labels are deep, so `min(q,k-q)>=2`.  Cancelling the
+simple current gives
+
+```text
+V_k star_k V_q star_k V_(k-q)
+ =V_q star_k V_q,
+```
+
+and hence the selected multiplicities at outputs `0,2,4` are at least
+`(1,1,1)`.  The complementary block is deep and has rank two.
+The rank-two line `(P5A.25S)` of Lemma 5A7A3 gives its output profile
+at least `(2,6,6)`.  Therefore
+
+```text
+L(C)>=2+6+6=14.                                    (P5A.25Z30zh)
+```
+
+It remains to revisit the four graph ceilings; their derivations do not
+use `d>=3`.
+
+In the odd-level `(4,4,1)` packet of Lemma 5A7B7,
+`T<=ed+4`.  If the two plus values in its bipartite graph are distinct,
+then `e<=3`, and `T<=10`.  If they coincide, the indexed equal-plus
+pair contributes at least `d` to `P_eq`.  Writing `m` for the number of
+the three minus vertices having the complementary value gives `e=2m`.
+For `m<=2`, `T<=12<=L(C)`; for `m=3`,
+
+```text
+T<=6d+4=16<=L(C)+d<=L(C)+P_eq.
+```
+
+In the even-level all-minus `(4,4,1)` packet of Lemma 5A7B8,
+`T<=d+gd+6`.  Here `g<=2`: if `g=3`, all three plus labels equal
+`k/2`, and the complementary rank is
+
+```text
+d=|a star_k (k/2)|=cap_k(a)=2,
+```
+
+forcing the remaining complementary label `a` to have cap two,
+contrary to depth.  Thus `T<=12<=L(C)`.
+
+In the `(6,2,1)` packet of Lemma 5A7B9, the complementary-value graph
+has `e<=4` unless all four vertices are fixed.  The first case gives
+`T<=4d+4=12`.  In the fixed case the selected equal-minus pair
+contributes `d` to `P_eq`, so
+
+```text
+T<=6d+4=16<=L(C)+P_eq.
+```
+
+Finally, in the all-even six-minus packet of Lemma 5A7B10, the
+componentwise equality allocation `(P5A.25Z30m)--(P5A.25Z30n)` is
+valid at every positive maximal rank and gives
+
+```text
+T<=P_eq+2d+10=P_eq+14.
+```
+
+This is paid by `(P5A.25Z30zh)`.  The four cases exhaust the stated
+single-top packets and prove `(P5A.25Z30zg)`.  QED.
+
+**Lemma 5A7B17 (double-neighbour rank-two closure).**  Let `k` be odd.
+In the all-even six-minus orbit, suppose the selected triple is
+
+```text
+A={2,k-1,k-1},
+```
+
+its four-label complement `B` is deep, and `m_0(B)=2`.  If the selected
+cut is maximal, then
+
+```text
+T<=L(C).                                           (P5A.25Z30zi)
+```
+
+**Proof.**  Use the notation `h,Q,N,W,R` of Lemma 5A7B13.  The same
+fusion identities and indexed-cut partition now give
+
+```text
+T=2N+2W+R,                         R<=4.            (P5A.25Z30zj)
+```
+
+The coefficient `2` replaces `3` because every cut containing both
+copies of `h` has the same rank-two complement as the selected cut.
+The proof of `R<=4` is unchanged: a cut containing neither copy has
+complement `{h,h,q,p}` and weight `N_(q,p)^2<=1`.
+
+Write `b_j=m_j(B)`.  Since `B` is deep and has rank two, Lemma 5A7A3
+gives
+
+```text
+b_2>=6,                              b_4>=6.        (P5A.25Z30zk)
+```
+
+We first show
+
+```text
+W<=b_2.                                            (P5A.25Z30zl)
+```
+
+For `N=1`, the four-vertex blow-up path argument in Lemma 5A7B13 gives
+at most three edges, apart from
+`Q={2,4,k-3,k-3}`; in both cases its proof gives `W<=6`.
+For `N=2`, write `Q={2,2,r,s}`.  Unless the graph has four edges,
+again `W<=6`.  Four edges can occur in two ways.  If
+`r=s=k-3`, all four cross-edge weights equal
+
+```text
+m_0(h,2,k-3,p).
+```
+
+This multiplicity is at most one.  If it were two, the interval
+`(k-3) star_k p` would contain both `k-3` and `k-1`; depth and the two
+affine walls force `p in {2,4}`.  The first value violates support
+disjointness, while `p=4` makes
+
+```text
+|(2 star_k 4) intersection ((k-3) star_k (k-3))|=3,
+```
+
+contrary to rank two.  Thus `W<=4`.  Apart from the already excluded
+levels `k=3,5`, where copies of `2` themselves are adjacent, the other
+four-edge pattern is
+
+```text
+k=9,                         Q={2,2,4,6};
+```
+
+but then no even deep plus label is disjoint from the three displayed
+minus values, so it cannot occur.  For `N=3`, write
+`Q={2,2,2,r}`.  At `k=3,5`, adjacency among the copies of `2` is
+possible, but no deep support-disjoint complement exists.  At the
+remaining levels, a fourth edge would require simultaneously
+`r=k-3` and `2r in {k-1,k+1}`, hence `k=5` or `7`; the latter again
+has no deep support-disjoint complement.  Thus there are at most three
+edges and `W<=6`.  Finally, for `N=4`, the four vertices all have label
+two.  Their graph has no edge at any admissible level, so `W=0`.
+Together with `(P5A.25Z30zk)`, these cases prove `(P5A.25Z30zl)`.
+
+For `N<=2`, equations `(P5A.25Z30zj)--(P5A.25Z30zl)` and
+`b_4>=6` give
+
+```text
+T<=2N+2b_2+4<=2+2b_2+b_4=L(C).                    (P5A.25Z30zm)
+```
+
+Now let `N=3`.  Then
+
+```text
+B={2,2,r,p}.
+```
+
+Pairing the two copies of `2` gives `I={0,2,4}`.  Support
+disjointness excludes zero from `J=r star_k p`, while rank two forces
+
+```text
+I intersection J={2,4}.
+```
+
+Both inputs of `J` are deep, so `J` has at least three entries.  It
+cannot equal `{2,4,6}`.  If its upper endpoint six were the ordinary
+wall, then `{r,p}={2,4}`, contradicting either `N=3` or support
+disjointness.  If it were the affine wall, then
+`{r,p}={k-4,k-2}`, two odd labels, contrary to the all-even orbit.
+Thus `J` also contains `8`.  The eight pairs
+
+```text
+(0,4);
+(2,2),(2,4),(2,6);
+(4,2),(4,4),(4,6),(4,8)
+```
+
+all fuse to output four.  Therefore `b_4>=8`, and
+`(P5A.25Z30zm)` remains valid with `N=3`.
+
+If `N=4`, then `W=0`, so `(P5A.25Z30zj)` gives `T<=12`, whereas
+`(P5A.25Z30zk)` gives
+
+```text
+L(C)=2+2b_2+b_4>=20.
+```
+
+This exhausts `N=1,2,3,4` and proves `(P5A.25Z30zi)`.  QED.
+
+**Lemma 5A7B18 (triple-neighbour rank-two closure).**  Let `k` be odd.
+In the all-even six-minus orbit, suppose exactly three indexed minus
+positions have label `h=k-1`, the selected triple is
+
+```text
+A={2,h,h},
+```
+
+and its complement has rank two.  Then
+
+```text
+T<=L(C)+P_eq.                                      (P5A.25Z30zn)
+```
+
+**Proof.**  Write the three minus positions different from `h` as the
+indexed block
+
+```text
+Q={2,x,y}
+```
+
+and write the unique plus label as `p`.  Support disjointness gives
+`p notin {2,h,x,y}`.  Let `N` be the number of indexed copies of `2`
+in `Q`, and join two positions of `Q` when their labels sum to `k-1`
+or `k+1`; denote the number of indexed edges by `e`.
+
+A cut containing two copies of `h` is active precisely when its third
+label is `2`, because
+
+```text
+h star_k h={0,2}.
+```
+
+For each of the three indexed pairs of `h` and each of the `N` copies
+of `2`, its complement is the same rank-two label multiset as the
+selected complement.  These cuts therefore contribute `6N`.
+
+A cut containing exactly one copy of `h` is active precisely when its
+other two positions form one of the `e` edges.  Each edge occurs with
+three choices of the copy of `h`, and its four-label complement has
+the form `{h,h,q,p}`.  Its weight is
+
+```text
+m_0(h,h,q,p)=N_(q,p)^2<=1.
+```
+
+Finally, there is only one cut containing no copy of `h`, namely `Q`.
+Since
+
+```text
+h^3=V_(k-3)+2V_h
+```
+
+and `p!=h`, its weight is at most one.  Consequently
+
+```text
+T<=6N+3e+1.                                        (P5A.25Z30zo)
+```
+
+We now split according to `N`.  If `N=1`, then `e<=3`, so
+`T<=6+9+1=16`.
+
+If `N=2`, write `Q={2,2,r}`.  The two copies of `2` are not adjacent.
+Indeed, their adjacency would force `k=3` or `5`; the first makes
+`2=h`, while at level five no even plus label is support-disjoint from
+the displayed minus support.  The only possible edges are therefore
+the two edges from `2` to `r`, and they require `r=k-3`.  Put
+
+```text
+w=m_0(h,h,2,p)=N_(2,p)^2 in {0,1}.
+```
+
+The exact demand is at most `12+6w+1`.  If `w=1`, support
+disjointness forces `p=4`.  The indexed equal pair of the two copies
+of `2` then contributes
+
+```text
+m_0(h,h,h,k-3,4)
+ =m_0(k-3,k-3,4)+2m_0(h,k-3,4)>=2
+```
+
+to `P_eq`, because `h star_k (k-3)={2,4}`.  Thus in this case
+`T<=19` and `P_eq>=2`; when `w=0`, `T<=13`.
+
+If `N=3`, then `Q={2,2,2}`.  Its indexed graph has no edge by the same
+small-level exclusion, and hence `T<=19`.  The rank-two complement is
+`B={h,2,2,p}`.  Since
+
+```text
+h star_k 2={k-3,h},
+```
+
+rank two forces both `k-3` and `h` to lie in `2 star_k p`.  Deleting
+any indexed equal pair of copies of `2` therefore contributes
+
+```text
+m_0(h,h,h,2,p)
+ =m_0(k-3,2,p)+2m_0(h,2,p)=3
+```
+
+to `P_eq`; there are three such pairs, so `P_eq>=9`.
+
+In all three cases the selected complement contains `h` and three deep
+labels.  Pair `h` with one of the deep minus labels and pair the other
+minus label with `p`.
+The first fusion interval has length two, the second has length at
+least three, and their rank-two intersection excludes zero.
+The endpoint variant `(P23.11z5zy7z1a)` therefore gives
+
+```text
+(b_0,b_2,b_4)>=(2,5,5).
+```
+
+Since `V_2 h^2=V_0+2V_2+V_4`,
+
+```text
+L(C)=b_0+2b_2+b_4>=2+10+5=17.
+```
+
+For `N=1`, this pays `T<=16`.  For `N=2`, it pays the `w=0` row and,
+together with the two equality units above, pays the `w=1` row.  For
+`N=3`, it and the nine equality units pay `T<=19`.  These cases exhaust
+`Q` and prove `(P5A.25Z30zn)`.  QED.
+
+**Lemma 5A7B19 (sole-neighbour rank-two closure).**  Let `k` be odd.
+In the all-even six-minus orbit, suppose there is exactly one indexed
+position with label `h=k-1`, the selected maximal triple contains that
+position, and its complement has rank two.  Then
+
+```text
+T<=L(C)+P_eq.                                      (P5A.25Z30zp)
+```
+
+**Proof.**  The weighted blow-up path argument `(P5A.25Z30p)` does not
+use `d>=4`: at rank two it bounds all cuts containing `h` by
+`P_eq+10`.  The ten cuts omitting `h` have a four-label complement
+containing the cap-two label `h`, and therefore contribute at most
+twenty.  Hence
+
+```text
+T<=P_eq+30.                                       (P5A.25Z30zq)
+```
+
+It remains to sharpen the local payment.  Write the deep rank-two
+complement as `B={x,y,z,p}`, with `p` the plus label.  Pair one minus
+label with `p` and pair the other two minus labels.  Both fusion
+intervals have length at least three, their intersection excludes zero,
+and equality of the two intervals is excluded exactly as in Lemma
+5A7B14 by support disjointness and odd-level parity.  Their rank-two
+intersection is therefore
+
+```text
+K={s,s+2},                    s even, s>=2,
+```
+
+and, after exchanging the intervals, the two rectangles contain
+
+```text
+{s-2,s,s+2} x {s,s+2,s+4}.
+```
+
+Counting fusion paths in this `3 x 3` rectangle gives
+
+```text
+(b_0,b_2,b_4,b_6)>=(2,6,7,5).                    (P5A.25Z30zr)
+```
+
+For output two the six pairs on or below the shifted diagonal all
+survive.  For output four only `(s-2,s+4)` misses by its difference,
+and the lower wall can remove at most `(s-2,s)` when `s=2`, leaving
+seven.  For output six the lower wall removes at most three pairs,
+the affine upper wall at most one, and in the simultaneous level-seven
+corner these four pairs are distinct, leaving five.
+
+The selected profile in `(P5A.25Z30zf)` is at least `(1,2,2,1)`.
+Consequently
+
+```text
+L(C)>=2+2(6)+2(7)+5=33>30.
+```
+
+Together with `(P5A.25Z30zq)` this proves
+`(P5A.25Z30zp)`.  QED.
+
+**Lemma 5A7B20 (split-neighbour rank-two closure).**  Let `k` be odd.
+In the all-even six-minus orbit, suppose exactly two indexed minus
+positions have label `h=k-1`, the selected maximal triple contains
+exactly one of them, and its complement has rank two.  Then
+
+```text
+T<=L(C).                                           (P5A.25Z30zs)
+```
+
+**Proof.**  Let `Q` be the four indexed minus positions different from
+`h`, let `N` be the number of copies of `2` in `Q`, and join two
+positions of `Q` when their labels sum to `k-1` or `k+1`.  Write `e`
+for the number of indexed edges.
+
+A cut containing both copies of `h` is active only when its third
+label is `2`, and maximality bounds each such cut by two.  A cut
+containing one copy of `h` corresponds to an edge of `Q`; it occurs
+with two choices of the indexed copy of `h`, and its weight is at most
+two.  Each of the four cuts containing neither copy has complement
+`{h,q,p}` and hence weight at most one.  Therefore
+
+```text
+T<=2N+4e+4.                                        (P5A.25Z30zt)
+```
+
+The four-vertex blow-up path gives
+
+```text
+N=0: e<=6;   N=1: e<=4;   N=2: e<=4;
+N=3: e<=3;   N=4: e=0.                            (P5A.25Z30zu)
+```
+
+For `N=1`, five or six edges in a four-vertex blow-up path require
+either three copies of a loop value with `2` as their neighbour or two
+copies each of a loop value and its neighbour.  The latter has
+`N=0` or `N=2`.  In the former, the loop and adjacency equations force
+`k=7` and the multiset `{2,4,4,4}` (the level-five alternative does not
+have `N=1`).  At level seven no even plus label is support-disjoint from
+the minus support `{2,4,6}`.  Thus `e<=4`.  For `N=2`, five edges would
+require two copies of `2` and two copies of an adjacent loop value.
+The only admissible-looking row is the same excluded level-seven
+support `{2,4,6}`, so again `e<=4`.  For `N=3`, mutual edges among
+copies of `2` are excluded at the same small levels, leaving at most
+their three edges to the fourth vertex; the `N=4` line follows
+identically.
+
+Substitution in `(P5A.25Z30zt)` gives, for `N=0,1,2,3,4`,
+
+```text
+T<=28,22,24,22,12.                                 (P5A.25Z30zv)
+```
+
+Write the selected complement as `B={h,x,y,p}`.  The three labels
+other than `h` are deep.  Pairing `h` with `x` gives a length-two
+interval; pairing `y` with `p` gives one of length at least three.
+Their rank-two intersection excludes zero.  In the all-even chamber
+the endpoint rectangle contains, at one of the two walls,
+
+```text
+{s,s+2} x {s-2,s,s+2}
+```
+
+or its affine reflection.  The level-five chamber is empty by support
+disjointness.  At every remaining level its low profile satisfies
+
+```text
+(b_0,b_2,b_4,b_6)>=(2,5,5,3).                     (P5A.25Z30zw)
+```
+
+The five output-two paths survive.  At most one of the six
+output-four paths and at most three of the six output-six paths are
+lost at the adjacent wall; affine reflection gives the other
+orientation.
+
+The selected single-neighbour profile is at least `(1,2,2,1)`, so
+`L(C)>=25`.  This already pays the four rows `N=1,2,3,4` of
+`(P5A.25Z30zv)`.  If `N=0`, the exceptional selected profile
+`(1,2,2,1)` is impossible because its first row in
+`(P5A.25Z30zf)` contains the label `2`.  The selected profile is then
+at least `(1,2,2,2)`, and
+
+```text
+L(C)>=2+2(5)+2(5)+2(3)=28.
+```
+
+This and `(P5A.25Z30zv)` prove `(P5A.25Z30zs)`.  QED.
+
+**Lemma 5A7B21 (odd all-even rank-two neighbour classification).**
+Let `k` be odd in the all-even six-minus orbit, and choose a maximal
+negative cut of rank two.  If `r` is the total number of indexed
+positions labelled `h=k-1` and `s` is the number of them in the
+selected triple, then the only possibilities with `r>0` are
+
+```text
+(r,s)=(1,0),(1,1),(2,1),(2,2),(3,2).              (P5A.25Z30zx)
+```
+
+The last four are closed by Lemmas 5A7B19, 5A7B20, 5A7B17, and
+5A7B18, respectively.
+
+**Proof.**  A selected active triple contains at most two copies of
+`h`; the only exceptional identity contribution from `h^3` is at
+`k=3`, where the all-even support-disjoint chamber is empty.  If it
+contains two copies, its third label must be `2`, since
+`h star_k h={0,2}`.  Thus `s<=2`.
+
+The rank-two complementary block contains at most one copy of `h`.
+Indeed, two copies would give a block `{h,h,q,p}` of rank
+
+```text
+m_0(h,h,q,p)=N_(q,p)^2<=1
+```
+
+by support disjointness, and three copies would give
+`m_0(h,h,h,p)<=1` because `h^3=V_(k-3)+2V_h` and `p!=h`.
+Consequently `r-s<=1`.  Combining `s<=2`, `r-s<=1`, and `r>0`
+gives exactly `(P5A.25Z30zx)`.  The cited lemmas close the four rows
+with `s>0`.  QED.
+
+**Lemma 5A7B22 (sole complementary-minus rank-two certificate).**
+Let `k` be odd in the all-even six-minus orbit.  Suppose the sole copy
+of `h=k-1` is a minus position in the complementary block of a selected
+maximal rank-two cut.  Then
+
+```text
+T<=L(C)+P_eq.                                      (P5A.25Z30zy)
+```
+
+**Proof.**  There are twenty negative indexed triples, and maximality
+gives `T<=20*2=40`.  The exact uniform supply query for task `298` in
+the 322-cell census asserts the strict opposite of
+
+```text
+L(C)+R>=40,
+```
+
+where `R` is the retained first-and-last-five-channel equal-pair
+reservoir of Lemma 5A7.  Its QF-LIA formula fixes odd `k`, all-even
+positive labels, disjoint sign support, the complementary-minus label
+`k-1`, and selected rank two.  It does not impose a finite level
+cutoff or use the positive-cut reservoir.  The strict C++ command
+
+```text
+verify_su2_seven_shallow_z3 --small-supply-task 298
+```
+
+returned
+
+```text
+tasks=1 counterexamples=UNSAT result=PASS.
+```
+
+The source-bound transcript is
+`certificates/su2_seven_neighbor_complement_minus_supply_z3.log`.
+The source snapshot is
+
+```text
+75cf71e788fa72476faab4e9f55aa59a99366682c5f97e2669ea38cfc68026eb
+  verify_su2_seven_shallow_z3.cpp
+ef27e39054a215863052c4485c6f62f4b05a3c59ed9d1528a5cbcc8b94f776ab
+  verify_su2_seven_residual_z3.cpp
+6f019b8a0a39b1349d7b830ca4b2cfdef897b660353a8bdbf018667af610f1fb
+  verify_su2_seven_shallow_z3.
+```
+
+Thus `L(C)+R>=40>=T`; since `R<=P_eq` by `(P5A.23)`, this proves
+`(P5A.25Z30zy)`.  QED.
+
+**Lemma 5A7B23 (exact triple-two equality completion).**  Suppose
+three indexed positions of the same sign have label `2`.  For any
+indexed equal pair `E` among those positions, let `Q_E` be the
+four-label block left after also removing a deterministically chosen
+third copy of `2`.  Then the complete equal-pair summand is
+
+```text
+m(E^c)=m_2(Q_E).                                   (P5A.25Z30zz)
+```
+
+Consequently the retained reservoir in Lemma 5A7 may replace `R(E)` by
+the exact QF-LIA fourfold output `m_2(Q_E)` for every such pair, while
+still remaining at most `P_eq`.
+
+**Proof.**  The five-label complement of `E` is `{2} union Q_E`.
+Frobenius reciprocity and self-duality give
+
+```text
+m({2} union Q_E)=<V_2,product_(q in Q_E)V_q>
+                 =m_2(Q_E).
+```
+
+This is the actual indexed summand of `P_eq`, not an additional copy.
+Replacing its truncated channel sum `R(E)<=m(E^c)` by the displayed
+equality preserves the term-by-term bound by `P_eq`.  If more than one
+third copy is available, associativity makes every deterministic choice
+equal to the same fivefold invariant.  QED.
+
+**Lemma 5A7B24 (unique-plus triple-two closure).**  Let `k` be odd in
+the all-even six-minus orbit.  Suppose the unique plus label is
+`h=k-1`, a selected maximal rank-two cut is
+
+```text
+A={2,2,2},
+```
+
+and write its four-label complement as `B={h,x,y,z}`.  Then
+
+```text
+L(A)+P_eq>=40>=T.                                  (P5A.25Z30zz1)
+```
+
+**Proof.**  Disjoint support excludes `k=3`, so `k>=5`.  The three
+minus labels `x,y,z` are deep.  Pair `h` with `z` and put
+
+```text
+h star_k z={s,s+2}=I.
+```
+
+Pairing `x` with `y` gives a fusion interval `J` of length at least
+three.  Since `m_0(B)=2`, both points of `I` lie in `J`; hence `J`
+extends `I` at one or both ends.
+
+All four ordered pairs in `I x I` fuse to output two.  A lower
+extension supplies the additional pair `(s,s-2)`, while an upper
+extension supplies `(s+2,s+4)`.  The ordinary and affine triangle
+inequalities hold in either orientation, so
+
+```text
+m_2(B)>=5.                                         (P5A.25Z30zz2)
+```
+
+For output four, all four pairs in `I x I` survive unless
+`s=k-3`, when only the top diagonal meets the affine wall.  In that
+case an upper extension is impossible and the lower extension supplies
+the pair `(s+2,s-2)`.  Thus in every case
+
+```text
+m_4(B)>=4.                                         (P5A.25Z30zz3)
+```
+
+The low-channel profile of `V_2^3` is `(1,3,2)` at outputs
+`0,2,4`, also at the smallest level `k=5`.  These channels belong to
+the retained set, and therefore
+
+```text
+L(A)>=2+3(5)+2(4)=25.                              (P5A.25Z30zz4)
+```
+
+There are three indexed equal pairs inside `A`.  Deleting any one of
+them leaves `{2} union B`, whose invariant multiplicity is
+`m_2(B)>=5` by Frobenius reciprocity.  Consequently
+`P_eq>=15`, proving the first inequality in
+`(P5A.25Z30zz1)`.  The second follows from maximality: there are
+twenty negative triples and each has weight at most two.  QED.
+
+**Lemma 5A7B25 (triple-two maximality in the unique-plus packet).**
+Retain the unique-plus rank-two hypotheses of Lemma 5A7B24, except
+that the chosen maximal cut is arbitrary.  If at least three indexed
+minus positions have label `2`, then some cut `{2,2,2}` also has
+weight two.  Consequently Lemma 5A7B24 closes the whole subfamily.
+
+**Proof.**  Choose a maximal cut `D`.  A threefold invariant has
+multiplicity at most one, so `w(D)=2` says that `D` is active and its
+four-label complement has invariant rank two.  Let `n` be the number
+of copies of label two in `D`.
+
+If `n=3`, there is nothing to prove.  Suppose `n=2`, so
+`D={2,2,q}`.  Activity and
+
+```text
+2 star_k 2={0,2,4}
+```
+
+give `q=2` or `q=4`.  The first case is done.  In the second, the
+rank-two complement can be paired as
+
+```text
+{2,u} | {v,h},                 h=k-1,
+```
+
+using a third indexed copy of two.  The two points in the intersection
+of `2 star_k u` and `v star_k h` are still present after replacing
+the displayed `2` by `4`: for every deep even `u`, the interval
+`4 star_k u` contains every positive point of `2 star_k u`.
+The other interval has lower endpoint at least two.  Hence the
+complement of the cut obtained by replacing `q=4` with that third
+copy of two still has rank two.  This new cut is `{2,2,2}`.
+
+Now suppose `n=1`, say `D={2,q,r}`.  If the complement contains
+exactly two further copies of two, write it as `{2,2,t,h}`.
+Its rank-two condition is
+
+```text
+|{0,2,4} intersection (t star_k h)|=2.
+```
+
+Since `t` is deep and `t star_k h` has two positive entries, it must
+equal `{2,4}`, forcing `t=k-3`.  Activity of `D` says that
+`q star_k r` contains output two.  This interval has length at least
+three, so it also contains output four.  Therefore
+
+```text
+m_0(q,r,k-3,h)>=2,
+```
+
+and replacing `D` by the three copies of two again gives a rank-two
+cut.  If its complement instead contains three copies of two, rank
+two would require `m_h(2,2,2)=2`.  The only possible label is
+`h=2` at level three or `h=4` at level five.  The former violates
+disjoint sign support, while at level five the only deep positive
+even minus label is `2`, contradicting `n=1`.
+
+Finally, if `n=0`, the complement is exactly `{2,2,2,h}`.  The
+coefficient of `V_h` in `V_2^3` can equal two only in the same
+level-three or level-five cases.  The first violates disjoint support,
+and the second leaves no three non-two deep even labels for `D`.
+Thus this case is impossible.  The four values of `n` are exhausted,
+and a maximal triple-two cut always exists.  QED.
+
+**Lemma 5A7B26 (unique-plus no-triple local payment).**  Retain the
+unique-plus rank-two hypotheses, and suppose at most two indexed minus
+positions have label `2`.  Then
+
+```text
+L(C)>=41>40>=T.                                    (P5A.25Z30zz5)
+```
+
+**Proof.**  Write the selected triple as `A` and its complement as
+`B={x,y,z,h}`, where `h=k-1`.  Put
+
+```text
+a_t=m_t(A),                 b_t=m_t(B).
+```
+
+Only the five low even channels are needed.  If `I` is the binary
+fusion interval of two labels in `A` and `c` is the third, then
+
+```text
+a_(2q)=# {r in I:
+ |r-c|<=2q<=r+c, r+c+2q<=2k}.                     (P5A.25Z30zz6)
+```
+
+Pairing `h` with `z` gives a two-point interval
+`I_B={s,s+2}`.  If `J_B=x star_k y`, then rank two says
+`I_B subset J_B`, and
+
+```text
+b_(2q)=# {(r,t) in I_B x J_B:
+ |r-t|<=2q<=r+t, r+t+2q<=2k}.                     (P5A.25Z30zz7)
+```
+
+Let `alpha` and `beta` be the numbers of copies of label two in
+`A` and in `B`, respectively.  Thus `alpha+beta<=2`.  Formulas
+`(P5A.25Z30zz6)--(P5A.25Z30zz7)` give the following exact endpoint
+table:
+
+```text
+(alpha,beta)  lower bound for sum_(q=0)^4 a_(2q)b_(2q)
+    (0,0)                         56
+    (0,1)                         49
+    (0,2)                         41
+    (1,0)                         49
+    (1,1)                         43
+    (2,0)                         43.              (P5A.25Z30zz8)
+```
+
+Here is the complete reduction behind the table.  If a block contains
+no label two, each of its binary intervals has at least four entries;
+discard all but four consecutive entries containing the required
+intersection.  With one label two, pair it first, leaving a
+three-entry interval.  With two selected copies, activity forces
+`A={2,2,4}`.  With two complementary copies, pair them together:
+rank two then forces
+
+```text
+B={2,2,k-3,h}.
+```
+
+Consequently the relative position of the active point in the selected
+interval has respectively four, three, or one possibilities, while the
+two-point interval `I_B` has three, two, or one positions in the
+retained complementary interval.  In
+`(P5A.25Z30zz6)--(P5A.25Z30zz7)`, every output is at most eight.
+Distances of an interval endpoint from either fusion wall may therefore
+be replaced by their minimum with four.  Substitution in these
+`4 x 3`, `3 x 2`, and singleton endpoint tables gives
+`(P5A.25Z30zz8)`.  The minimizing low profiles, which also provide a
+direct check of every row, are
+
+```text
+(alpha,beta)       (a_0,a_2,a_4,a_6,a_8)
+                   (b_0,b_2,b_4,b_6,b_8)
+
+(0,0)              (1,3,4,2,0), (2,6,7,4,0)
+(0,1)              (1,3,4,2,0), (2,5,6,4,0)
+(0,2)              (1,2,3,4,2), (2,5,5,3,1)
+(1,0)              (1,3,3,2,0), (2,6,7,4,0)
+(1,1)              (1,3,3,2,0), (2,5,6,4,0)
+(2,0)              (1,2,3,2,0), (2,6,7,4,0).
+                                                        (P5A.25Z30zz9)
+```
+
+For completeness, the only sharp row `(alpha,beta)=(0,2)` can be
+read without the combined table.  For `k>=9`, its complementary
+profile is at least `(2,5,5,3,1)`.  Pair two selected labels and
+write the four retained consecutive intermediate labels as
+
+```text
+c-2ell,...,c+2r,                 ell+r=3.
+```
+
+Writing `c=2u` and `k-c=2v+1`, the indicator in
+`(P5A.25Z30zz6)` is
+
+```text
+-ell<=j<=r, |j|<=q,
+q-2u<=j<=2v+1-q.                                (P5A.25Z30zz10)
+```
+
+Increasing `u` or `v` only adds paths, so take
+`u=max(2,ell)` and `v=max(1,r)`.  The four rows are
+
+```text
+(ell,r)       (a_0,a_2,a_4,a_6,a_8)    weighted value
+ (0,3)             (1,2,3,4,4)               43
+ (1,2)             (1,3,4,4,2)               51
+ (2,1)             (1,3,4,2,0)               43
+ (3,0)             (1,2,3,4,2)               41,
+```
+
+where the weight is `(2,5,5,3,1)`.  At `k=7`, the only non-two
+deep even selected label is four, and direct substitution gives
+`43`.  This verifies the sharp row and also illustrates the identical
+endpoint calculation in the other five rows.
+
+All five low channels belong to `L(C)`, so `(P5A.25Z30zz8)` gives
+`L(C)>=41`.  Maximality and rank two give `T<=20(2)=40`.
+This proves `(P5A.25Z30zz5)`.  QED.
+
+**Corollary 5A7B27 (complete unique-plus rank-two closure).**  The
+odd all-even six-minus rank-two cell whose unique plus label is
+`k-1` satisfies
+
+```text
+T<=L(C)+P_eq.
+```
+
+**Proof.**  If at least three negative positions have label two,
+Lemmas 5A7B25 and 5A7B24 apply.  Otherwise Lemma 5A7B26 gives the
+stronger inequality `T<L(C)`.  QED.
+
+**Lemma 5A7B28 (rank-one bad-switch reduction).**  In the
+seven-factor disjoint-support chamber, let `C` be a maximal negative
+indexed triple of rank one and put
+
+```text
+B_C={negative indexed triples D!=C:
+       w(D)=1 and w(C triangle D)=0}.                 (P5A.25Z30zz11)
+```
+
+Here a symmetric difference of size two is its indexed equal-pair cut,
+a symmetric difference of size four is represented by its
+three-position complement, and a symmetric difference of size six has
+zero weight because its complement is a positive-label singleton.
+Then
+
+```text
+T-P_eq-U<=1+|B_C|.                                   (P5A.25Z30zz12)
+```
+
+Consequently the rank-one cell satisfies `(P5A.24)` as soon as
+
+```text
+|B_C|<=L(C)-1.                                       (P5A.25Z30zz13)
+```
+
+**Proof.**  Symmetric difference with the negative cut `C` is an
+involution from the negative nontrivial cuts other than `C` to the
+positive nontrivial cuts.  In the disjoint-support chamber a negative
+two-position cut cannot be an equal pair, and all one-position cuts
+vanish.  Thus the nonzero negative cuts are exactly the indexed
+triples counted by `T`, while the positive image is counted exactly by
+`P_eq+U`.  Reindexing gives
+
+```text
+T-P_eq-U
+ =w(C)+sum_(negative triples D!=C)
+          [w(D)-w(C triangle D)].                    (P5A.25Z30zz14)
+```
+
+Maximal rank one gives `w(C)=1` and `0<=w(D)<=1`.
+Every summand in `(P5A.25Z30zz14)` is therefore nonpositive unless
+`w(D)=1` and `w(C triangle D)=0`, in which case it is one.  This proves
+`(P5A.25Z30zz12)`.  Under `(P5A.25Z30zz13)` it gives
+`T<=P_eq+U+L(C)`, which is `(P5A.24)`.  QED.
+
+**Lemma 5A7B29 (exact bad-switch predicates).**  Let `C,D` be
+distinct active indexed triples in the chamber of Lemma 5A7B28 and put
+`j=|C intersection D|`.
+
+```text
+j=0:  w(C triangle D)=0;
+j=1:  w(C triangle D)=w((C triangle D)^c);
+j=2:  w(C triangle D)>0
+      iff the two labels in C triangle D are equal.  (P5A.25Z30zz15)
+```
+
+In the middle line the complement is an indexed triple, so its weight
+is the ordinary three-against-four rank formula.  Thus membership in
+`B_C` is an exact QF-LIA predicate after the usual finite fusion
+interval expansion.
+
+**Proof.**  For `j=0`, the symmetric difference has six positions and
+its complement is a positive-label singleton, whose invariant
+vanishes.  For `j=1`, take the complementary representative of the
+four-position symmetric difference.
+
+For `j=2`, write
+
+```text
+C=X union {y},       D=X union {z},       |X|=2,
+W=(C union D)^c.
+```
+
+The switched two-position cut vanishes when `y!=z`.  If their common
+label is `p`, activity of `C` and `D` gives
+
+```text
+m_p(X)>0,                 m_p(W)>0.
+```
+
+Frobenius reciprocity then gives
+
+```text
+m(X union W)>=m_p(X)m_p(W)>0,
+```
+
+while `m(p,p)=1`.  Hence the switched equal-pair cut is nonzero.
+This proves all three predicates.  QED.
+
+**Lemma 5A7B30 (selected-endpoint linearization).**  Let
+`C={e,a,b}` be an active selected triple.
+
+```text
+e=1:       |a-b|=1;
+e=k-1:     |a+b-k|=1;
+e=k:       a+b=k.                                   (P5A.25Z30zz15a)
+```
+
+In the last case,
+
+```text
+m_t(C)=1  iff  t is even and 0<=t<=2min(a,b).       (P5A.25Z30zz15b)
+```
+
+If
+
+```text
+F_t(a,b)=N_(a-1,b)^t+N_(a+1,b)^t,
+```
+
+with out-of-range labels omitted, then the other two exact profiles are
+
+```text
+m_t(1,a,b)=F_t(a,b),
+m_t(k-1,a,b)=F_(k-t)(a,b).                          (P5A.25Z30zz15b1)
+```
+
+If the selected cut has rank one and its complement is
+`Q={q_1,q_2,q_3,q_4}`, put
+
+```text
+ell=max(|q_1-q_2|,|q_3-q_4|),
+u=min(q_1+q_2,2k-q_1-q_2,
+      q_3+q_4,2k-q_3-q_4).
+```
+
+Then its complementary fusion interval is a singleton:
+
+```text
+ell=u.                                               (P5A.25Z30zz15b2)
+```
+
+**Proof.**  The first line is the fundamental Clebsch--Gordan rule.
+Since `V_(k-1)=V_k tensor V_1`, simple-current reflection gives the
+second line and `(P5A.25Z30zz15b1)`.  Finally
+`V_k tensor V_a=V_(k-a)`, so activity in the
+last line is equivalent to `b=k-a`; the remaining product
+`V_b tensor V_b` is the multiplicity-free interval
+`{0,2,...,2min(b,k-b)}`.  For the last assertion, the endpoint
+identities make the selected triple active, so selected rank one is
+equivalent to `m(Q)=1`.  The standard fourfold interval formula has
+the common-parity outputs from `ell` through `u` in steps of two.
+It has one output exactly when `ell=u`.  QED.
+
+**Lemma 5A7B31 (simple-current cut-rank reduction).**  Suppose a
+seven-factor word has a designated position of label `k`.  For an
+indexed triple `D`:
+
+```text
+k in D, D={k,x,y}:
+  w(D)=indicator_(x+y=k)m(D^c);
+
+k in D^c, D^c={k,u,v,w}:
+  w(D)=m(D)m(k-u,v,w).                              (P5A.25Z30zz15c)
+```
+
+More generally, for every output channel `t`,
+
+```text
+m_t(k,u,v,w)=m_(k-t)(u,v,w)=m_t(k-u,v,w).           (P5A.25Z30zz15c1)
+```
+
+In particular the second product is a product of two Boolean triple
+fusion predicates.
+
+**Proof.**  The first identity uses
+`V_k tensor V_x=V_(k-x)`.  For the second, move the simple current
+through the invariant.  Moving it instead through an output `V_t`
+gives the first equality in `(P5A.25Z30zz15c1)`, and moving it once
+more through `V_u` gives the second:
+
+```text
+m(k,u,v,w)=m(k-u,v,w).
+```
+
+Binary `SU(2)_k` fusion is multiplicity-free, so each three-label
+invariant is Boolean.  QED.
+
+**Lemma 5A7B32 (neighbour cut-rank reduction).**  Suppose a designated
+position has label `e` equal to `1` or `k-1`.  If a triple containing
+that position is `{e,x,y}`, its invariant predicate is respectively
+
+```text
+|x-y|=1                 or                 |x+y-k|=1.
+                                                               (P5A.25Z30zz15d)
+```
+
+If the complementary four-position block is `{e,u,v,w}`, put
+`u'=u` for `e=1` and `u'=k-u` for `e=k-1`.  Then
+
+```text
+m(e,u,v,w)
+ =m(u'-1,v,w)+m(u'+1,v,w),                         (P5A.25Z30zz15e)
+```
+
+where out-of-range labels are omitted.  Thus every such fourfold rank
+is a sum of at most two Boolean triple predicates.  If the neighbour
+lies in the complement of a selected rank-one cut, the selected
+triple is active and exactly one of these two Boolean predicates
+equals one.
+
+**Proof.**  For `e=1`, fuse the fundamental factor first:
+`V_1 tensor V_u=V_(u-1)+V_(u+1)`, with the usual endpoint omissions.
+For `e=k-1`, first move the simple current to `u`, replacing it by
+`k-u`, and apply the same identity.  The triple predicates are the
+first two cases of Lemma 5A7B30.  In the complementary placement,
+selected rank one is the product of the selected-triple predicate
+with the displayed sum.  Both factors are nonnegative integers and
+the two summands are Boolean, proving the last assertion.  QED.
+
+**Lemma 5A7B32A (three-minus complementary-top local floor).**
+Consider orbit `1`, even level parity, selected orbit `2`, and put a
+designated complementary minus label equal to `k`.  If the selected
+cut `C` has rank one, then
+
+```text
+L(C)>=4.                                             (P5A.25Z30zz15f)
+```
+
+**Proof.**  Write
+
+```text
+C={a,b,c},                 C^c={k,p,q,r},
+```
+
+where `a,b,c,r` are positive even labels and `p,q` are odd.  The
+disjoint-support hypothesis gives `r!=k`, hence
+
+```text
+2<=r<=k-2.
+```
+
+By Lemma 5A7B31 the complementary invariant is the invariant of
+`C'={k-p,q,r}`.  Selected rank one is the product of the two
+nonnegative integral invariants, so both `C` and `C'` are active.
+
+If an active triple `{x,y,z}` has `2<=z<=k-2`, then the summand with
+intermediate label `z` shows
+
+```text
+m_0(x,y,z)>=1,   m_2(x,y,z)>=1,   m_4(x,y,z)>=1,    (P5A.25Z30zz15g)
+```
+
+because `V_z star_k V_z` contains `V_0,V_2,V_4`.  Apply this first to
+`C'`, using its label `r`.  For `C`, if none of its labels is `k`,
+any one lies between `2` and `k-2`.  If one is `k`, activity forces
+the other two positive even labels to sum to `k`, so either of those
+lies between `2` and `k-2`.  Thus `(P5A.25Z30zz15g)` applies to both
+triples.  The channelwise identity `(P5A.25Z30zz15c1)` identifies
+their products with the `0,2,4` summands of `L(C)`.
+
+There is one further unit in the output-two product.  The two odd
+labels `k-p` and `q` lie strictly between `0` and `k`; hence their
+binary fusion interval has at least two entries.  It contains `r`
+because `C'` is active, so it also contains one adjacent entry
+`r-2` or `r+2`.  Both entries fuse with `r` to output `2`, including
+the endpoint cases `r=2` and `r=k-2`.  Consequently
+
+```text
+m_2(C')>=2.
+```
+
+The three channel products are therefore at least `1,2,1`, proving
+`(P5A.25Z30zz15f)`.  The bound is sharp: at `k=10`, take
+
+```text
+C={4,6,10},                 C^c={10,1,9,2}.
+```
+
+Both blocks have invariant one, their relevant profiles are
+`(1,1,1,1,1)` and `(1,2,1,0,0)`, and hence `L(C)=4`.  QED.
+
+**Lemma 5A7B32B (sharp local-four closure).**  In the cell of Lemma
+5A7B32A, if `L(C)=4`, then
+
+```text
+|B_C|<=2<L(C)-1.                                    (P5A.25Z30zz15h)
+```
+
+**Proof.**  Equality in the three lower channel contributions from
+Lemma 5A7B32A forces
+
+```text
+m_2(C)=1,   m_2(C')=2,   m_4(C)=m_4(C')=1.          (P5A.25Z30zz15i)
+```
+
+Choose an interior even label of `C` as the third label.  If the
+binary fusion interval of the other two labels had a second entry,
+that adjacent entry would also contribute to `m_2(C)`.  Thus the
+interval is a singleton.  A positive-label binary fusion interval is
+a singleton only when one factor is `k`; activity then gives
+
+```text
+C={a,k-a,k},                 2<=a<=k-a.             (P5A.25Z30zz15j)
+```
+
+For `C'={k-p,q,r}`, let `I=(k-p) star_k q`.  The proof of Lemma
+5A7B32A shows that `I` contains `r` and an adjacent entry.  If
+`4<=r<=k-4`, that adjacent entry contributes to `m_4(C')`, contrary
+to `(P5A.25Z30zz15i)`.  Therefore `r=2` or `r=k-2`.  When `r=2`,
+equality in `(P5A.25Z30zz15i)` forces `I={0,2}`; when `r=k-2`, it
+forces `I={k-2,k}`.  Solving these two endpoint intervals and using
+the canonical order `p<=q` leaves exactly
+
+```text
+(p,q,r)=(1,k-1,2), (1,1,k-2), (k-1,k-1,k-2).
+                                                               (P5A.25Z30zz15k)
+```
+
+Disjoint support excludes `a=2` in all three rows.
+
+It remains to count possible bad switches.  A negative triple has
+either three minus positions or one minus and two plus positions.
+Among the three-minus triples, the selected `C` is omitted; replacing
+its copy of `k` by the complementary copy switches an equal pair and
+therefore is not bad by Lemma 5A7B29; either remaining triple contains
+both copies of `k` and is inactive.
+
+For a one-minus triple, parity forces its two plus labels to be the
+odd pair `p,q`.  In the last two rows of `(P5A.25Z30zz15k)`, their
+fusion interval is `{0,2}`, but no minus label equals `2`, so no such
+triple is active.  In the first row their interval is `{k-2,k}`.
+Neither `a` nor `k-a` equals `k-2`, since that would force the
+opposite selected label to equal the positive label `r=2`.
+Consequently only the two minus positions labelled `k` can give an
+active candidate.  Hence at most two bad switches exist, proving
+`(P5A.25Z30zz15h)`.  QED.
+
+The current-source rank-one switch cover makes
+`(P5A.25Z30zz13)` finite without imposing a level cutoff.  The
+320-cell endpoint census consists of
+
+```text
+180 rank-one cells + 140 rank-two cells.             (P5A.25Z30zz16)
+```
+
+There are sixteen negative indexed triples in a four-minus orbit and
+twenty in a six-minus orbit.  A counterexample to
+`|B_C|<=L(C)-1` therefore has, respectively,
+
+```text
+1<=L(C)<=15                 or                 1<=L(C)<=19.
+                                                               (P5A.25Z30zz17)
+```
+
+The verifier imposes the three exact endpoint consequences in
+Lemma 5A7B30 before expanding the rank formulas, uses
+`(P5A.25Z30zz15b)` directly for a selected simple current, and applies
+Lemmas 5A7B31--32 to every cut whenever a designated endpoint is
+present.
+For `L(C)>=5`, the switch cover fixes this exact integer and leaves the
+selected fusion chamber unsplit.  For `L(C)<=4`, it additionally
+partitions the selected fourfold rank formula by its eight affine-wall
+choices.  These alternatives are exhaustive and disjoint.  Lemma
+5A7B29 makes every bad-switch
+indicator QF-LIA, so the resulting negation cells are exact.  The
+strict C++ generator
+
+```text
+character_ring_iter/verify_su2_seven_shallow_z3.cpp
+  --count-small-switch-cover
+```
+
+reports
+
+```text
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7812.
+                                                               (P5A.25Z30zz18)
+```
+
+This is an exact uniform cover, not yet an `UNSAT` theorem.  Its
+`--small-switch-cover-task INDEX` mode runs one source-indexed cell,
+and `--small-switch-cover-range BEGIN END` runs a half-open
+source-indexed shard.
+A complete source-bound replay with all 7,812 cells `UNSAT` would,
+by Lemmas 5A7B28--29, remove all 180 rank-one cells from
+`(P5A.25Z32)`.
+
+**Corollary 5A7B33 (first selected-simple-current rank-one cell).**
+The rank-one endpoint cell
+
+```text
+orbit=1 parity=0 selected=1 position=0 kind=2 rank=1
+                                                               (P5A.25Z30zz19)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  In the original 94,212-cell switch cover, this task is
+exactly the half-open interval `[0,523)`.  Two one-worker,
+source-bound exact shards certify
+
+```text
+[0,38)       and       [35,523).
+```
+
+The first transcript reached `progress=38/523 assigned=39 failed=0`;
+with one worker, completion is in increasing index order.  The second
+terminated with
+
+```text
+tasks=488 counterexamples=UNSAT result=PASS.
+```
+
+Their union is `[0,523)`.  The complete commands, source and executable
+SHA-256 identities, and terminal transcript lines are recorded in
+`certificates/su2_seven_rank_one_switch_task0_cover.md`.
+Lemmas 5A7B28--30 convert these `UNSAT` results into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes this proved task.  Its remaining exact
+censuses are
+
+```text
+179 rank-one cells + 140 rank-two cells = 319,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7769.  (P5A.25Z30zz20)
+```
+
+**Corollary 5A7B34 (first complementary-simple-current rank-one
+cell).**  The rank-one endpoint cell
+
+```text
+orbit=1 parity=0 selected=1 position=1 kind=2 rank=1
+                                                               (P5A.25Z30zz21)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  After Corollary 5A7B33 this is the first 43-cell block of
+the reduced switch cover.  The exact one-worker command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-cover-range 0 43
+```
+
+terminated with
+
+```text
+tasks=43 counterexamples=UNSAT result=PASS.
+```
+
+The source, executable, and transcript SHA-256 identities are
+
+```text
+04869820843c9ecc8fc4b6a0da39291add6f5bc83b4da5eb95c4362b13721622
+  verify_su2_seven_shallow_z3.cpp
+42ead492a4fbd3257c0b0af5b0d49ee85a940b15508851b9b2ebf00a6c01a3b8
+  verify_su2_seven_residual_z3.cpp
+5878dcb641d847b2c0d0f1735f9055102a2b926335f880da5992b0d525c9a6e7
+  verify_su2_seven_shallow_z3
+a75a34b976a48b70a91eca70dd7abd2092163ac8ace9bad07475a5ce073f5dcf
+  certificates/su2_rank_one_switch_cover_7769_task0.log.
+```
+
+Lemmas 5A7B28--32 convert the `UNSAT` cover into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes both proved cells.  Its remaining exact
+censuses are
+
+```text
+178 rank-one cells + 140 rank-two cells = 318,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7726.  (P5A.25Z30zz22)
+```
+
+**Corollary 5A7B35 (first selected-fundamental rank-one cell).**
+The rank-one endpoint cell
+
+```text
+orbit=1 parity=0 selected=1 position=4 kind=0 rank=1
+                                                               (P5A.25Z30zz23)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  After Corollaries 5A7B33--34 this is the first 43-cell
+block of the reduced switch cover.  The exact one-worker command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-cover-range 0 43
+```
+
+terminated with
+
+```text
+tasks=43 counterexamples=UNSAT result=PASS.
+```
+
+The source, executable, and transcript SHA-256 identities are
+
+```text
+7f3ac8c6d3e6b55a751ebe72651bd1026e6a10a0b1fd0504fc3d7e73642b97ab
+  verify_su2_seven_shallow_z3.cpp
+42ead492a4fbd3257c0b0af5b0d49ee85a940b15508851b9b2ebf00a6c01a3b8
+  verify_su2_seven_residual_z3.cpp
+8dee816e9df54b016370cbda090c53270ed255a9e6c72d68a7a5ae30ca03bb0d
+  verify_su2_seven_shallow_z3
+1eaa67eb97e8c3e4f68a8f25bdf1658f0a36510bba84c6dc61bf753e3c2cad79
+  certificates/su2_rank_one_switch_cover_7726_task0.log.
+```
+
+Lemmas 5A7B28--32 convert the `UNSAT` cover into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes all three proved cells.  Its remaining
+exact censuses are
+
+```text
+177 rank-one cells + 140 rank-two cells = 317,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7683.  (P5A.25Z30zz24)
+```
+
+**Corollary 5A7B36 (first selected-reflected-fundamental rank-one
+cell).**  The rank-one endpoint cell
+
+```text
+orbit=1 parity=0 selected=1 position=4 kind=1 rank=1
+                                                               (P5A.25Z30zz25)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  After Corollary 5A7B35 this is the first 43-cell block of
+the reduced switch cover.  The exact one-worker command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-cover-range 0 43
+```
+
+terminated with
+
+```text
+tasks=43 counterexamples=UNSAT result=PASS.
+```
+
+The source, executable, and transcript SHA-256 identities are
+
+```text
+ea76be60eed9409f5cdfc8d084f62b886c6555e0bb00550ad3885b674b0d7bda
+  verify_su2_seven_shallow_z3.cpp
+efa11071828b29b7a90b46b18e2727df82aa1093d884cf85c7c1a3ce985b14c1
+  verify_su2_seven_residual_z3.cpp
+3faeafaacf16b451b8a1a6334ef097ffafdf3b153ad36939afb2f4f49feddf30
+  verify_su2_seven_shallow_z3
+57af71068c9f9debd48ad60b1bc748140f6e71c2ff6421839fceea32db0c0d23
+  certificates/su2_rank_one_switch_cover_7683_task0.log.
+```
+
+Lemmas 5A7B28--32 convert the `UNSAT` cover into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes all four proved cells.  Its remaining
+exact censuses are
+
+```text
+176 rank-one cells + 140 rank-two cells = 316,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7640.  (P5A.25Z30zz26)
+```
+
+**Corollary 5A7B37 (first complementary-simple-current output
+cell).**  The rank-one endpoint cell
+
+```text
+orbit=1 parity=0 selected=1 position=6 kind=2 rank=1
+                                                               (P5A.25Z30zz27)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  After Corollary 5A7B36 this is the first 43-cell block of
+the reduced switch cover.  The verifier uses the exact
+simple-current output identity `(P5A.25Z30zz15c1)` for the selected
+complement.  The exact one-worker command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-cover-range 0 43
+```
+
+terminated with
+
+```text
+tasks=43 counterexamples=UNSAT result=PASS.
+```
+
+The source, executable, and transcript SHA-256 identities are
+
+```text
+87e311e933b48f05529ad5d17e2f85bb299366d2803ed111196fcc1c1bedf146
+  verify_su2_seven_shallow_z3.cpp
+5e113d92ea7795eb386776af8fce6f7135d8ef4c81bcd743ae2a3765cd548528
+  verify_su2_seven_residual_z3.cpp
+440276f3ef10548cf8f7803abe6c2990c3db1a8557c3ae009a6fa1f3afc00967
+  verify_su2_seven_shallow_z3
+6f0c1b7e571149c2524e19718131d129334bd95f0bb9bf388c1eb375c709cf8b
+  certificates/su2_rank_one_switch_cover_7640_task0_optimized.log.
+```
+
+Lemmas 5A7B28--32 convert the `UNSAT` cover into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes all five proved cells.  Its remaining
+exact censuses are
+
+```text
+175 rank-one cells + 140 rank-two cells = 315,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7597.  (P5A.25Z30zz28)
+```
+
+**Corollary 5A7B38 (first odd-level selected-reflected-fundamental
+cell).**  The rank-one endpoint cell
+
+```text
+orbit=1 parity=1 selected=1 position=0 kind=1 rank=1
+                                                               (P5A.25Z30zz29)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  After Corollary 5A7B37 this is the first 43-cell block of
+the reduced switch cover.  The exact one-worker command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-cover-range 0 43
+```
+
+terminated with
+
+```text
+tasks=43 counterexamples=UNSAT result=PASS.
+```
+
+The source, executable, and transcript SHA-256 identities are
+
+```text
+293b648bb59c5a95a8b10fec64a6a8391c8872a235df483e9dd7b5636d549356
+  verify_su2_seven_shallow_z3.cpp
+5e113d92ea7795eb386776af8fce6f7135d8ef4c81bcd743ae2a3765cd548528
+  verify_su2_seven_residual_z3.cpp
+f7608ea46597cac3901b3e74ec062a7f826be7a811c2f05d9043da610f5b8d3a
+  verify_su2_seven_shallow_z3
+bd57b684eb701296fbbcc619da0733021e68d2e1dc96f75f6c4b08ff331c9a81
+  certificates/su2_rank_one_switch_cover_7597_task0.log.
+```
+
+Lemmas 5A7B28--32 convert the `UNSAT` cover into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes all six proved cells.  Its remaining
+exact censuses are
+
+```text
+174 rank-one cells + 140 rank-two cells = 314,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7554.  (P5A.25Z30zz30)
+```
+
+**Corollary 5A7B39 (first odd-level complementary-reflected-neighbour
+cell).**  The rank-one endpoint cell
+
+```text
+orbit=1 parity=1 selected=1 position=1 kind=1 rank=1
+                                                               (P5A.25Z30zz31)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  After Corollary 5A7B38 this is the first 43-cell block of
+the reduced switch cover.  The exact one-worker command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-cover-range 0 43
+```
+
+terminated with
+
+```text
+tasks=43 counterexamples=UNSAT result=PASS.
+```
+
+The source, executable, and transcript SHA-256 identities are
+
+```text
+15070aac3115bc57d605764e98a25308e0d0b84c95238e630899dae0cbfd5d8b
+  verify_su2_seven_shallow_z3.cpp
+5e113d92ea7795eb386776af8fce6f7135d8ef4c81bcd743ae2a3765cd548528
+  verify_su2_seven_residual_z3.cpp
+3b4c07a17b5d1480b73c58ce786634e62e5c60ff401547a9fee6c1dded193b04
+  verify_su2_seven_shallow_z3
+b0d19ee88ca6ac07228f14218db37235836b30d766f5f5725e9b9b2d766803d3
+  certificates/su2_rank_one_switch_cover_7554_task0.log.
+```
+
+Lemmas 5A7B28--32 convert the `UNSAT` cover into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes all seven proved cells.  Its remaining
+exact censuses are
+
+```text
+173 rank-one cells + 140 rank-two cells = 313,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7511.  (P5A.25Z30zz32)
+```
+
+**Corollary 5A7B40 (first odd-level selected-fundamental cell).**
+The rank-one endpoint cell
+
+```text
+orbit=1 parity=1 selected=1 position=4 kind=0 rank=1
+                                                               (P5A.25Z30zz33)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  After Corollary 5A7B39 this is the first 43-cell block of
+the reduced switch cover.  The exact one-worker command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-cover-range 0 43
+```
+
+terminated with
+
+```text
+tasks=43 counterexamples=UNSAT result=PASS.
+```
+
+The source, executable, and transcript SHA-256 identities are
+
+```text
+56fd6aff132522084f64f2b2feee4f7c9f863fe3ad440e69757aecda7432d616
+  verify_su2_seven_shallow_z3.cpp
+5e113d92ea7795eb386776af8fce6f7135d8ef4c81bcd743ae2a3765cd548528
+  verify_su2_seven_residual_z3.cpp
+72ccee539f0689e7c0ba936f906b3a0f3340d7aefec0a6db55c98fbeebb6cfc4
+  verify_su2_seven_shallow_z3
+7361ac91230c642e091d64dbcf03411a1af5fc55ac2173e8ba917072960b2b49
+  certificates/su2_rank_one_switch_cover_7511_task0.log.
+```
+
+Lemmas 5A7B28--32 convert the `UNSAT` cover into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes all eight proved cells.  Its remaining
+exact censuses are
+
+```text
+172 rank-one cells + 140 rank-two cells = 312,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7468.  (P5A.25Z30zz34)
+```
+
+**Corollary 5A7B41 (first odd-level selected-simple-current cell).**
+The rank-one endpoint cell
+
+```text
+orbit=1 parity=1 selected=1 position=4 kind=2 rank=1
+                                                               (P5A.25Z30zz35)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  After Corollary 5A7B40 this is the first 43-cell block of
+the reduced switch cover.  The exact one-worker command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-cover-range 0 43
+```
+
+terminated with
+
+```text
+tasks=43 counterexamples=UNSAT result=PASS.
+```
+
+The source, executable, and transcript SHA-256 identities are
+
+```text
+fa1d8ab85bcb93624ce27865e8e2f943ce03377cff5d3114da38bd128d09431c
+  verify_su2_seven_shallow_z3.cpp
+5e113d92ea7795eb386776af8fce6f7135d8ef4c81bcd743ae2a3765cd548528
+  verify_su2_seven_residual_z3.cpp
+f458e1e33c1ca12fb86a49966d8a421f4adea9f9b09767e1449129f671eba8b7
+  verify_su2_seven_shallow_z3
+26f9ac6ff5922bf948a7f25cf5e1814e3b5a23b96fc77ef210b57ccdd54b083c
+  certificates/su2_rank_one_switch_cover_7468_task0.log.
+```
+
+Lemmas 5A7B28--32 convert the `UNSAT` cover into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes all nine proved cells.  Its remaining
+exact censuses are
+
+```text
+171 rank-one cells + 140 rank-two cells = 311,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7425.  (P5A.25Z30zz36)
+```
+
+**Corollary 5A7B42 (first odd-level complementary-reflected-neighbour
+output cell).**  The rank-one endpoint cell
+
+```text
+orbit=1 parity=1 selected=1 position=6 kind=1 rank=1
+                                                               (P5A.25Z30zz37)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  After Corollary 5A7B41 this is the first 43-cell block of
+the reduced switch cover.  The verifier uses the channelwise
+neighbour identity of Lemma 5A7B32 for every retained low and
+reflected-high output.  The exact one-worker command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-cover-range 0 43
+```
+
+terminated with
+
+```text
+tasks=43 counterexamples=UNSAT result=PASS.
+```
+
+The source, executable, and transcript SHA-256 identities are
+
+```text
+567a3109c30fc381617f37ae8d2eed1c5b18e36e099b83008e5d23b1f2313406
+  verify_su2_seven_shallow_z3.cpp
+8ca7178fc6d1eeefb668706e51ef7be205d95ec42b126705a4dabd87bbdac282
+  verify_su2_seven_residual_z3.cpp
+f25e4ad8114b99cac44d03073ebd33a7c264fd6d401ead635f776fe8851a8e7b
+  verify_su2_seven_shallow_z3
+e3ca5f17ba36c7c798df526ab9d54b7b31fd414aa291565f086ca622b5ac8028
+  certificates/su2_rank_one_switch_cover_7425_task0_optimized.log.
+```
+
+Lemmas 5A7B28--32 convert the `UNSAT` cover into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes all ten proved cells.  Its remaining
+exact censuses are
+
+```text
+170 rank-one cells + 140 rank-two cells = 310,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7382.  (P5A.25Z30zz38)
+```
+
+**Corollary 5A7B43 (first three-minus selected-simple-current cell).**
+The rank-one endpoint cell
+
+```text
+orbit=1 parity=0 selected=2 position=0 kind=2 rank=1
+                                                               (P5A.25Z30zz39)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  After Corollary 5A7B42 this is the first 43-cell block of
+the reduced switch cover.  The exact one-worker command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-cover-range 0 43
+```
+
+terminated with
+
+```text
+tasks=43 counterexamples=UNSAT result=PASS.
+```
+
+The source, executable, and transcript SHA-256 identities are
+
+```text
+328891464f6af4ba458df93f5671c97ed231e8ee8815a1846507c86bd348913f
+  verify_su2_seven_shallow_z3.cpp
+8ca7178fc6d1eeefb668706e51ef7be205d95ec42b126705a4dabd87bbdac282
+  verify_su2_seven_residual_z3.cpp
+8b23850fd4fc2b3081efd6e98fa0f0ca859ef5ef3b4c1f8aabdddffe2476f591
+  verify_su2_seven_shallow_z3
+d40e9a552be641d313218573e92b66fc9b2efc9087cd651c774f1299d7094bac
+  certificates/su2_rank_one_switch_cover_7382_task0.log.
+```
+
+Lemmas 5A7B28--32 convert the `UNSAT` cover into
+`|B_C|<=L(C)-1`, hence `(P5A.24)`.  QED.
+
+The current generator removes all eleven proved cells.  Its remaining
+exact censuses are
+
+```text
+169 rank-one cells + 140 rank-two cells = 309,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7339.  (P5A.25Z30zz40)
+```
+
+Applying Lemmas 5A7B32A--B to the first remaining cell removes all
+thirty-two local-value-one-through-four wall chambers: the first
+twenty-four are impossible and the last eight satisfy `(P5A.24)`
+directly.  The current switch cover therefore has
+
+```text
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7307. (P5A.25Z30zz40a)
+```
+
+**Corollary 5A7B44 (complete three-minus complementary-simple-current
+rank-one cell).**  The endpoint cell
+
+```text
+orbit=1 parity=0 selected=2 position=3 kind=2 rank=1
+                                                               (P5A.25Z30zz41)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  Lemma 5A7B32A gives `L(C)>=4`.  If `L(C)>=16`, the
+sixteen-negative-triple census gives
+`|B_C|<=15<=L(C)-1` immediately.  In the residual region `L(C)<=15`,
+the exact command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-bad-bound 9 4
+```
+
+asks whether the displayed maximal rank-one cell can have at least
+four bad switches.  It terminated with
+
+```text
+tasks=1 counterexamples=UNSAT result=PASS.
+```
+
+Thus `|B_C|<=3<=L(C)-1` throughout the residual region, and Lemma
+5A7B28 proves `(P5A.24)`.  The adjacent threshold-three negative
+control is `SAT`; its model has `k=8` and labels
+`(4,4,4,8;7,7,6)`, so the cardinality query is nonvacuous.
+
+The source, executable, proof transcript, and negative-control
+SHA-256 identities are
+
+```text
+ac21b674ae02c342e05c0bac122c842bed450554218c91a14b04a0a57b4b322a
+  verify_su2_seven_shallow_z3.cpp
+fd186aa028a817d96f7e833b4acfae17f661888ce2508c9720776df8f9696513
+  verify_su2_seven_residual_z3.cpp
+22d6147ea449431caada7bfed3641fd79d26dc8580eb860431bec00d8ed300a7
+  verify_su2_seven_shallow_z3
+451bae41a85d1b70fe4c381d8e0dc46a0e6615f198fb4c210fba983ab43be383
+  certificates/su2_three_minus_complement_top_bad4_z3.log
+7cb221bbad35ebfa96121a0b442deb728153c274f0707f55af78c804c14c8e16
+  certificates/su2_three_minus_complement_top_bad3_negative_control.log.
+```
+
+QED.
+
+The current generator removes all twelve proved rank-one cells.  Its
+remaining exact censuses are
+
+```text
+168 rank-one cells + 140 rank-two cells = 308,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7296.  (P5A.25Z30zz42)
+```
+
+**Audit correction 5A7B45 (endpoint-stabilizer quotient).**  When a
+designated shallow position represents an orbit of interchangeable
+positions, that position must be fixed first and only the remaining
+orbit-mates may be sorted.  Indeed, any assignment containing the
+designated endpoint can first permute one such copy to the
+representative position and then sort the other copies.  Sorting the
+representative together with its orbit-mates is stronger and is not an
+exact quotient for an upper endpoint.
+
+The earlier verifier did impose that extra ordering.  It is harmless
+when the designated orbit class is a singleton, and for a fundamental
+label `1` placed at the first sorted position.  It overconstrains the
+multi-position upper-endpoint cells.  Consequently Corollaries
+5A7B34, 5A7B36, 5A7B39, 5A7B41, and 5A7B43 are withdrawn pending
+replay with the corrected quotient.  Their transcripts remain valid
+only for the narrower ordered subcells.  Corollaries 5A7B33, 5A7B35,
+5A7B37, 5A7B38, 5A7B40, 5A7B42, and 5A7B44 are unaffected.
+
+The corrected generator omits the designated position from its
+within-orbit ordering and restores the five affected cells.  Its exact
+censuses are therefore
+
+```text
+173 rank-one cells + 140 rank-two cells = 313,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7511.  (P5A.25Z30zz43)
+```
+
+**Corollary 5A7B46 (corrected complementary-simple-current
+rank-one cell).**  With the corrected quotient, the cell
+
+```text
+orbit=1 parity=0 selected=1 position=1 kind=2 rank=1
+                                                               (P5A.25Z30zz44)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  Write the selected block and its complement as
+
+```text
+C={a,p,q},                 C^c={k,b,c,r},
+```
+
+where `a,b,c,r` are even and `p,q` are odd.  By Lemma 5A7B31 the
+second invariant is that of `C'={k-b,c,r}`.  Both triples are active.
+Every active positive triple has output-two multiplicity at least one.
+Moreover `k-b` and `c` lie strictly between `0` and `k`: either
+endpoint would make activity force the positive even label `r` equal
+to a minus label.  Their binary fusion interval therefore has at
+least two entries around its active entry `r`, so
+
+```text
+m_2(C)>=1,       m_2(C')>=2,       L(C)>=3.          (P5A.25Z30zz45)
+```
+
+Suppose equality holds.  Then `m_2(C)=1`.  Since `p,q` are nonboundary
+odd labels, their binary interval has at least two entries; hence its
+active even entry can have only one output-two contribution if
+`a=k`.  Activity gives `p+q=k`.  Also `m_4(C')>=1`, because
+`2<=r<=k-2`; equality in `(P5A.25Z30zz45)` therefore forces
+`m_4(C)=0`.  Thus, after the canonical order,
+
+```text
+C={k,1,k-1}.                                      (P5A.25Z30zz46)
+```
+
+Now count bad switches.  Parity forces every one-minus candidate to
+use the odd pair `{1,k-1}`.  The candidate using the complementary
+copy of `k` switches an equal pair and is not bad.  A candidate using
+`b` or `c` has complementary block `{k,k,c,r}` or `{k,k,b,r}`;
+its rank is zero by disjoint support.  Among three-minus candidates,
+those containing both copies of `k` are inactive.  A remaining
+`{k,b,c}` candidate can have weight one only if `b+c=k` and `r=2`.
+Then `C'={c,c,2}` up to order, and disjoint support gives `c>=4`;
+the intermediate labels `0,2,4` yield `m_2(C')>=3`, contradicting
+equality in `(P5A.25Z30zz45)`.  Hence `B_C` is empty when `L(C)=3`.
+
+For `4<=L(C)<=15`, the exact corrected-source command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-bad-bound 1 4
+```
+
+terminated with
+
+```text
+tasks=1 counterexamples=UNSAT result=PASS.
+```
+
+Thus `|B_C|<=3<=L(C)-1`.  The region `L(C)>=16` is automatic.
+The adjacent threshold-three query is `SAT`, confirming that the
+cardinality ceiling is sharp away from the local-three equality case.
+The source, executable, proof transcript, and negative-control hashes
+are
+
+```text
+815ae5f0d5504549e17958a516d8004497d85a96ccf06cad4d5f82fe05f5b390
+  verify_su2_seven_shallow_z3.cpp
+d71e4634955def0fed2a1a8078cdae3544cb3d5b18c8cb68b3eabbc99889660c
+  verify_su2_seven_residual_z3.cpp
+93e05c73bfd03d6ed6025ba1b122d287e679111606418843809c571c86bcca36
+  verify_su2_seven_shallow_z3
+9d367820914ffc4ed32a89094c368e4af94c66424e6d88bf2ec842670002bf08
+  certificates/su2_corrected_b34_bad4_z3.log
+784a15824306d060cac3c4755dde45d442c9e643e959235bcba51f87bb988b18
+  certificates/su2_corrected_b34_bad3_negative_control.log.
+```
+
+This reinstates the conclusion formerly labelled Corollary 5A7B34,
+now for the full stabilizer-corrected cell.  QED.
+
+The corrected generator now removes eight proved rank-one cells.  Its
+remaining exact censuses are
+
+```text
+172 rank-one cells + 140 rank-two cells = 312,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7468.  (P5A.25Z30zz47)
+```
+
+**Corollary 5A7B47 (corrected selected-reflected-fundamental
+rank-one cell).**  With the corrected quotient, the cell
+
+```text
+orbit=1 parity=0 selected=1 position=4 kind=1 rank=1
+                                                               (P5A.25Z30zz48)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  Write the selected block as `C={a,k-1,q}` and its
+all-even complement as `Q={b,c,d,r}`, where `r` is the positive
+label.  Put `q'=k-q`.  Two simple currents cancel, giving
+
+```text
+m_t(a,k-1,q)=m_t(a,1,q').
+```
+
+Activity forces `q'=a-1` or `a+1`; fusing the fundamental factor
+first shows `m_2(C)>=1`.
+
+Pair the fourfold block `Q` into its two binary fusion intervals.
+Rank one says that the intervals meet at one label `s`.  They cannot
+both be singleton intervals: that would require a top label in each
+pair and would force the positive even label `r` equal to a minus
+label.  If `0<s<k`, the pair `(s,s)` and an adjacent pair contribute
+to output two.  The case `s=0` is excluded by the same disjointness
+argument.  If `s=k`, both intervals also contain `k-2`, and the two
+crossed adjacent pairs contribute.  Hence
+
+```text
+m_2(Q)>=2,                  L(C)>=1+1*2=3.          (P5A.25Z30zz49)
+```
+
+Three exact corrected-source queries now cover the nonautomatic local
+range:
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-local 2 -1 -1 -1 3
+verify_su2_seven_shallow_z3 --small-switch-local 2 -1 -1 -1 4
+verify_su2_seven_shallow_z3 --small-switch-bad-bound 2 5
+```
+
+All three terminated with
+
+```text
+tasks=1 counterexamples=UNSAT result=PASS.
+```
+
+They prove respectively `|B_C|<=2` at `L=3`, `|B_C|<=3` at `L=4`,
+and `|B_C|<=4` throughout `L<=15`.  Thus
+`|B_C|<=L(C)-1` in every case; `L>=16` is automatic.  The adjacent
+threshold-four query is `SAT`, with a `k=6` model, so the global
+ceiling five is nonvacuous.
+
+The source, executable, three proof transcripts, and negative-control
+SHA-256 identities are
+
+```text
+214ff348157ffaf627933eae6359a8bc60ffaff2590c22c537aa6e93d5228720
+  verify_su2_seven_shallow_z3.cpp
+d71e4634955def0fed2a1a8078cdae3544cb3d5b18c8cb68b3eabbc99889660c
+  verify_su2_seven_residual_z3.cpp
+2f2790c61afd905bf86c17620b3b6f9c8fe0f464e7c5eea887df00fdfe3648e2
+  verify_su2_seven_shallow_z3
+21ea63a24af5f8d3e8f34a861e601aa25fd74c4e78cc88c23ba777b8aad81f5a
+  certificates/su2_corrected_b36_local3_z3.log
+f8d4ed885e4c247605b4fc236b79db0bfe45986bfae2a682db957bcd8934cfa4
+  certificates/su2_corrected_b36_local4_z3.log
+e4186105f942e01cbcced1dc7ce2c31d3d12792f3be2e94c7f4ab3c1f719abb7
+  certificates/su2_corrected_b36_bad5_z3.log
+5a5140dd190316926a7a41d642742860e7e72d125a47a169c07d8120e151fee4
+  certificates/su2_corrected_b36_bad4_negative_control.log.
+```
+
+This reinstates the conclusion formerly labelled Corollary 5A7B36,
+now for the full stabilizer-corrected cell.  QED.
+
+The corrected generator now removes nine proved rank-one cells.  Its
+remaining exact censuses are
+
+```text
+171 rank-one cells + 140 rank-two cells = 311,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7425.  (P5A.25Z30zz50)
+```
+
+**Corollary 5A7B48 (corrected complementary-reflected-neighbour
+rank-one cell).**  With the corrected quotient, the cell
+
+```text
+orbit=1 parity=1 selected=1 position=1 kind=1 rank=1
+                                                               (P5A.25Z30zz51)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  The selected triple is active and has
+`m_0=1,m_2>=1`.  Write the complementary block as
+`Q={k-1,b,c,r}`, with `r` the positive even label, and put `x=k-b`.
+Moving the simple current gives
+
+```text
+Q equivalent to {1,x,c,r}.
+```
+
+The fundamental binary interval is the two-point set
+`{x-1,x+1}`, with endpoint omissions.  The interval
+`J=c star_k r` is not a singleton: both labels are positive and an
+endpoint singleton would force `c=r`, contrary to disjoint support.
+Rank one says that these intervals meet in exactly one label `s`.
+
+There are three output-two paths.  One is the active pair `(s,s)`.
+The unused fundamental neighbour is distance two from `s`, while
+`J`, being non-singleton and unable to contain that neighbour, extends
+by two on the other side.  These give the two crossed adjacent pairs.
+At the lower endpoint the pairs are `(0,2),(2,2),(2,4)`; the upper
+endpoint is identical after reflection.  Consequently
+
+```text
+m_2(Q)>=3,                  L(C)>=1+1*3=4.          (P5A.25Z30zz52)
+```
+
+The exact corrected-source command
+
+```text
+verify_su2_seven_shallow_z3 --small-switch-bad-bound 4 4
+```
+
+terminated with
+
+```text
+tasks=1 counterexamples=UNSAT result=PASS.
+```
+
+Thus `|B_C|<=3<=L(C)-1` throughout `L<=15`; larger local values are
+automatic.  The adjacent threshold-three query is `SAT`, so the
+cardinality bound is sharp.  The source, executable, proof transcript,
+and negative-control hashes are
+
+```text
+a719760659ace260d9e380ec472f314aee3454725cf2ea4306bfa9b7b6e673b4
+  verify_su2_seven_shallow_z3.cpp
+d71e4634955def0fed2a1a8078cdae3544cb3d5b18c8cb68b3eabbc99889660c
+  verify_su2_seven_residual_z3.cpp
+27e68e5268cfda58e48a3a74399ce8dd38664aa4f526bdf16c238e402729b21d
+  verify_su2_seven_shallow_z3
+e4186105f942e01cbcced1dc7ce2c31d3d12792f3be2e94c7f4ab3c1f719abb7
+  certificates/su2_corrected_b39_bad4_z3.log
+aff0148de8cf67e7316b9494898b88fef78da1b24a11296eeae68e1fd9d3e9df
+  certificates/su2_corrected_b39_bad3_negative_control.log.
+```
+
+This reinstates the conclusion formerly labelled Corollary 5A7B39,
+now for the full stabilizer-corrected cell.  QED.
+
+The corrected generator now removes ten proved rank-one cells.  Its
+remaining exact censuses are
+
+```text
+170 rank-one cells + 140 rank-two cells = 310,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7382.  (P5A.25Z30zz53)
+```
+
+**Corollary 5A7B49 (corrected odd selected-simple-current rank-one
+cell).**  With the corrected quotient, the cell
+
+```text
+orbit=1 parity=1 selected=1 position=4 kind=2 rank=1
+                                                               (P5A.25Z30zz54)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  Write the selected block as `C={a,k,k-a}`.  Its output
+profile is that of `a star_k a`, so it contains the zero and two
+channels, each with multiplicity one.  Pair the complementary
+four-label block `Q` into its two binary fusion intervals `I,J`.
+All four complementary labels are positive and even, whereas `k` is
+odd.  Hence every label lies in `[2,k-1]`, and both `I` and `J`
+contain at least two consecutive parity-compatible points.
+
+Selected rank one says
+
+```text
+m_0(Q)=|I intersect J|=1.
+```
+
+Thus the intervals meet in a singleton `s` at opposing endpoints.
+They contain `s-2` and `s+2` on the two opposite sides.  The pairs
+`(s-2,s)`, `(s,s)`, and `(s,s+2)` all fuse to output two.  Therefore
+
+```text
+m_2(Q)>=3,                  L(C)>=m_0(Q)+m_2(Q)>=4.
+                                                               (P5A.25Z30zz55)
+```
+
+The exact corrected-source command
+
+```text
+verify_su2_seven_shallow_z3 \
+  --small-switch-bad-bound-descriptor 1 1 1 4 2 2
+```
+
+returned `UNSAT`.  Consequently `|B_C|<=1<=L(C)-1` throughout
+`L<=15`; larger local values are automatic.  The adjacent
+threshold-one query is `SAT` at `k=9`, proving that the cardinality
+bound is sharp.  The proof and negative-control transcript hashes are
+
+```text
+5c4f65cd45ca6d5237f43d0641b97cf288edc6a2f251405f605e9b2325ed86aa
+  verify_su2_seven_shallow_z3.cpp
+d71e4634955def0fed2a1a8078cdae3544cb3d5b18c8cb68b3eabbc99889660c
+  verify_su2_seven_residual_z3.cpp
+efb0b72fb59940e56466fd33eef7a020700f05c138dc08fe49197de7ab6e1e1c
+  verify_su2_seven_shallow_z3
+c03462eca84a1536066ca175cb36119518d9448fc4a549e8bd97c02f670995f8
+  certificates/su2_corrected_b41_bad2_z3.log
+ba426ea806ea9a1cb240363a13b6f2b58748f5c2bd4ab845f609f2c900712290
+  certificates/su2_corrected_b41_bad1_negative_control.log.
+```
+
+This reinstates the conclusion formerly labelled Corollary 5A7B41
+for the full stabilizer-corrected cell.  QED.
+
+**Corollary 5A7B50 (corrected three-minus selected-simple-current
+rank-one cell).**  With the corrected quotient, the cell
+
+```text
+orbit=1 parity=0 selected=2 position=0 kind=2 rank=1
+                                                               (P5A.25Z30zz56)
+```
+
+satisfies `(P5A.24)` uniformly at every level.
+
+**Proof.**  Again the selected block is `C={k,a,k-a}`, and its
+profile contains the zero and two channels once each.  Write the
+complement as `Q={d,p,q,r}`, where `d,r` are even, `p,q` are odd,
+and disjoint support gives `d!=r`.  Put
+
+```text
+I=d star_k r,                 J=p star_k q.
+```
+
+The odd-pair interval `J` is non-singleton.  Rank one says
+`|I intersect J|=1`, with singleton intersection `s`.  If `I` is
+also non-singleton, the opposing-endpoint argument from Corollary
+5A7B49 gives at least three output-two paths.  If `I` is singleton,
+one of `d,r` is `k`; the other is a positive even label, so
+`2<=s<=k-2`.  The interval `J` then contains `s` and at least one of
+`s-2,s+2`.  The pair `(s,s)` and the corresponding adjacent pair
+both fuse to two.  In either case,
+
+```text
+m_2(Q)>=2,                  L(C)>=m_0(Q)+m_2(Q)>=3.
+                                                               (P5A.25Z30zz57)
+```
+
+The exact command
+
+```text
+verify_su2_seven_shallow_z3 \
+  --small-switch-bad-bound-descriptor 1 0 2 0 2 3
+```
+
+returned `UNSAT`, while threshold two is `SAT` at `k=10`.
+Thus the sharp bound is `|B_C|<=2<=L(C)-1`.  The transcript hashes
+are
+
+```text
+5c4f65cd45ca6d5237f43d0641b97cf288edc6a2f251405f605e9b2325ed86aa
+  verify_su2_seven_shallow_z3.cpp
+d71e4634955def0fed2a1a8078cdae3544cb3d5b18c8cb68b3eabbc99889660c
+  verify_su2_seven_residual_z3.cpp
+efb0b72fb59940e56466fd33eef7a020700f05c138dc08fe49197de7ab6e1e1c
+  verify_su2_seven_shallow_z3
+c03462eca84a1536066ca175cb36119518d9448fc4a549e8bd97c02f670995f8
+  certificates/su2_corrected_b43_bad3_z3.log
+ad843c6785de7a79d0b80258f0f071d62af976a6efd7af95d699dfc168209e90
+  certificates/su2_corrected_b43_bad2_negative_control.log.
+```
+
+This reinstates the conclusion formerly labelled Corollary 5A7B43.
+All five cells withdrawn by Audit correction 5A7B45 have now been
+reproved against the corrected quotient.  The generator removes all
+twelve proved rank-one cells, and its restored exact censuses are
+
+```text
+168 rank-one cells + 140 rank-two cells = 308,
+SU2_SEVEN_SHALLOW_SMALL_SWITCH_COVER_Z3 tasks=7296.  (P5A.25Z30zz58)
+```
+
+QED.
+
 The strict C++ verifier
 
 ```text
@@ -4099,11 +6318,16 @@ applies the parity/cap ceiling `(P5A.25Z30b)`, the
 rank-three/four payments `(P5A.25Z30e)`, and the graph packets of
 Lemmas 5A7B5, 5A7B13, 5A7B14, and 5A7B15.  The last lemma removes
 the 36 rank-two cells which put the designated simple current in the
-four-label side.  No selected pattern remains.  It leaves
+four-label side.  No selected pattern remains.  Before
+Corollary 5A7B33 it left
 
 ```text
-324 rank-one/two cells + 0 selected-pattern cells = 324.     (P5A.25Z32)
+320 rank-one/two cells + 0 selected-pattern cells = 320.     (P5A.25Z32)
 ```
+
+After Audit correction 5A7B45 and corrected Corollaries 5A7B46--50,
+the current source removes twelve proved rank-one tasks and therefore
+has `308+0=308`.
 
 The `--patterns` mode confirms that the selected-pattern subcover is
 empty, while `--list-small` prints the complete indexed census of the
@@ -4111,22 +6335,137 @@ remaining rank-one/two cover.
 Its current source SHA-256 identities are
 
 ```text
-15193ace1a0d32df6c61bb02a189cb45b5a39eae4f8a7fce894619f471576453
+5c4f65cd45ca6d5237f43d0641b97cf288edc6a2f251405f605e9b2325ed86aa
   verify_su2_seven_shallow_z3.cpp
-22a53eaa083c50e648d2fd5ffa3f3afa84d123387765015c9ed71a587ff20457
-  verify_su2_seven_residual_z3.cpp.
+d71e4634955def0fed2a1a8078cdae3544cb3d5b18c8cb68b3eabbc99889660c
+  verify_su2_seven_residual_z3.cpp
+efb0b72fb59940e56466fd33eef7a020700f05c138dc08fe49197de7ab6e1e1c
+  verify_su2_seven_shallow_z3.
 ```
 
-The 3,468-cell machine-B replay remains a valid overcomplete cover bound
-to its displayed older source snapshot.  The locally in-flight
+The 3,468-cell machine-B replay uses the superseded endpoint ordering
+and therefore remains only a narrower-subcell audit, not an exhaustive
+cover.  The locally in-flight
 159-pattern replay likewise remains a valid overcomplete cover bound to
 source SHA-256
 `00c16bb5a9dd747a632006205bf0da5d5f47036c8e29d0b20296be20ef4d7006`.
-The 324-cell refinement is the current exact cover.  This paragraph
+The 308-cell refinement is the current exact cover.  This paragraph
 records the exact reduction, not an `UNSAT` theorem: the shallow leaf
-closes only after all 324 rank-one/two cells have returned `UNSAT` in
-a source-bound complete replay, or an older source-bound overcomplete
-cover has done so.
+closes only after all 308 rank-one/two cells have returned `UNSAT` in
+a corrected-source complete replay.  That complete replay is now in
+flight locally against the three current source/executable hashes
+displayed above, with its worker count selected from current RAM and
+machine load.  A separate current-source replay of cell zero has
+already returned `UNSAT`; its transcript
+`certificates/su2_corrected_308_task0_z3.log` has SHA-256
+`62f3ad6d724e28ce5a4fdd5a3bdee8610348763e40527b442396e6bf89eab794`.
+
+Machine B now runs an independent complete replay of the same 308-cell
+cover.  Its previous 48-worker bounded job ended with status 137 after
+using approximately 44 GiB, so the corrected replay uses a
+scheduling-only build with an 8 GiB reserve and a 1.5 GiB-per-worker
+envelope.  At launch, the intersection of the RAM and current-load limits
+selected 25 workers; no fixed thread count is built into the rule.  The
+query sources retain the two current hashes above.  The imported worker
+limiter source and resulting executable have SHA-256 identities
+
+```text
+006ad340cdeef8bd190ba28fb0b90eab78f77b6306b2654af43a81bb6f76eda7
+  verify_su2_four_minus_shallow_z3.cpp
+aaf138de0b4a7defb7c4640d145555745c47b5944619699368d1c39ac4a3e1a3
+  verify_su2_seven_shallow_z3.
+```
+
+The complete scheduling delta from the pinned base source is archived as
+`certificates/su2_corrected_308_machine_b_scheduler.patch`, SHA-256
+`82e4a5cf99f5360c6bde009050ea2bd9b74df822a463dc38db2b5f28cedcce01`.
+
+The first attempted machine-B launch used the unmodified 256 MiB
+worker-memory estimate, reported 47 workers, and was terminated after
+three cells before it could repeat the earlier OOM.  Its partial log is
+rejected and is not certificate evidence.  The accepted machine-B replay
+is the source-bound 25-worker run whose runtime header reports
+`tasks=308 workers=25 start=1`; this paragraph records an active
+computation, not an `UNSAT` theorem.
+
+Lemma 5A7B16 removes the
+all-even rank-two
+single-top cell outright: parity and Lemma 5A7B15 make its complement
+automatically deep.  Its other three single-top/deep-complement
+subfamilies remain mixed inside cells which also allow additional
+shallow positions, so the cover is still overcomplete there.
+Lemma 5A7B21 and its four closure lemmas additionally remove the odd
+all-even rank-two cell whose designated `k-1` position lies in the
+selected triple.  Lemma 5A7B22 removes the complementary-minus cell by
+the stronger exact supply certificate `L(C)+R>=40`.  Corollary
+5A7B27 removes the last designated `k-1` cell, whose copy lies in the
+unique plus class.  The `--small-task INDEX`,
+`--small-supply-task INDEX`, and `--small-supply-chambers INDEX` modes
+run a complete exact cell, its stronger supply-only query, or its
+`8 x 16` wall/interval partition, respectively.  Task indices are
+meaningful only together with the source hash above.
+
+The fifth corrected residual task (zero-based index four) is the
+rank-two descriptor
+`orbit=1, parity=1, selected=1, position=1, kind=1`.  Its designated
+rank-two formula has an exact disjoint refinement by the `2^7` cap
+masks, `2^3` fusion-wall masks, and `2^4` interval masks: 16,384
+QF-LIA chambers in total.  The strict C++ runner
+`character_ring_iter/verify_su2_rank_two_chambers_z3.cpp` fixes this
+descriptor and enumerates the flattened index
+`cap*128 + wall*16 + interval`.  More directly, its query arguments are
+
+```text
+verify_residual_query(1,1,1,cap,wall,interval,-1,0,2,1,1,false,-1,-1,-1).
+```
+
+The first nine disjoint shards, indices `[0,128)`, `[128,256)`,
+`[256,384)`, `[384,512)`, `[512,640)`, `[640,768)`, `[768,896)`,
+`[896,1024)`, and `[1024,1152)`, have returned `UNSAT` with one worker
+each; their transcripts are
+`certificates/su2_rank_two_chambers_0_128.log` and
+`certificates/su2_rank_two_chambers_128_256.log`, and
+`certificates/su2_rank_two_chambers_256_384.log`, and
+`certificates/su2_rank_two_chambers_384_512.log`, and
+`certificates/su2_rank_two_chambers_512_640.log`, and
+`certificates/su2_rank_two_chambers_640_768.log`, and
+`certificates/su2_rank_two_chambers_768_896.log`, and
+`certificates/su2_rank_two_chambers_896_1024.log`, and
+`certificates/su2_rank_two_chambers_1024_1152.log`.  The complementary
+range `[1152,16384)` has also returned `UNSAT`; its transcript is
+`certificates/su2_rank_two_chambers_1152_16384.log`, with SHA-256
+
+```text
+482a92c408de6ee2aa3a3a06a938de2c7d4466b4e8b9b5a1bbd2fc369c110f82.
+```
+
+The runner, residual source, and executable SHA-256 identities are
+respectively
+
+```text
+aa56e5a3a992a78c12e44ded3623fcc28e1016c17fc8f83bb903ac88b0926c34
+d71e4634955def0fed2a1a8078cdae3544cb3d5b18c8cb68b3eabbc99889660c
+f987f4088de43a5685df06d64ed8f798f9700bba62b74dd8ec33dc0aff446544.
+```
+
+Together the ten disjoint transcripts establish all 16,384 chambers of
+this one hard residual task.  This closes only task index four: the other
+307 residual tasks are still required for a finite seven-factor theorem.
+
+The raw, unqualified supply-only claim for the unique-plus placement is
+false and must not be used.  The exact solver found the uniform model
+
+```text
+k=27,
+minus labels={2,2,2,14,16,24},       plus label=26=k-1,
+selected triple={2,2,2},
+(L,R,U,T)=(39,0,6,8).
+```
+
+Thus `L+R<40`, although the required direct inequality has margin
+`L+R+U-T=37`.  Corollary 5A7B27 closes this cell by separating the
+triple-two equality branch from the no-triple local-payment branch;
+it does not use the false unqualified raw ceiling.
 
 The strict C++ diagnostic
 `character_ring_iter/analyze_su2_six_minus_d3.cpp` evaluates the exact
@@ -4147,6 +6486,61 @@ For the double-neighbour row its minimum exact value of `L(C)-T` was
 local value was `48`, matching Lemma 5A7B14, and its minimum diagnostic
 value of `L(C)+P_eq-60` was `4`.  These bounded data audit the two
 unbounded interval arguments but are not their proofs.
+
+The strict focused diagnostic
+`character_ring_iter/analyze_su2_seven_shallow_d12.cpp` independently
+audits Lemma 5A7B16 with exact finite fusion arithmetic.  Through level
+`14` it covered `1,720` maximal-cut realizations of the four packets;
+the stronger truncated-reservoir margin `L(C)+R-T` had minimum `5`.
+Through level `12` it also checked every double-neighbour rank-two
+realization: the minimum direct margin `L(C)-T` was `9`, and the
+separate inequalities `W<=b_2` and the `N<=3` tail payment had minima
+`2` and `3`.  The corrected triple-neighbour inequality
+`L(C)+P_eq-T>=0` had minimum `18`; its stronger pre-correction form
+`L(C)-T>=0` is false, with `L(C)-T=-2` already at level seven.
+The sole-neighbour and split-neighbour rank-two rows of Lemmas
+5A7B19--5A7B20 had minimum direct margins `18` and `4`, respectively.
+This bounded audit checks the channel allocations in
+Lemmas 5A7B16--5A7B20 but is not any of their unbounded graph proofs.
+
+Its specialized `--plus-neighbor` mode avoids the seven-orbit
+enumeration and scans only the unique-plus rank-two packet.  Through
+level `27` it checked `187,525` maximal selected realizations.  The
+minimum direct margin was `37`.  The raw supply `L+R` first fell below
+forty at level `25`; all twelve indexed realizations through level
+`27` had
+
+```text
+(L,R,U,T)=(39,0,6,8)
+```
+
+and came from the sparse label multisets
+
+```text
+{2,2,2,a,a+2,k-3; plus k-1}.
+```
+
+With the exact triple-two replacement of Lemma 5A7B23, the same scan
+has no supply value below forty and has minimum completed supply `44`.
+Of the twelve raw low-supply selected cuts, three select
+`{2,2,2}` and nine select another maximal triple in the same words.
+Thus any symbolic partition must test for three indexed same-sign
+copies of label two in the whole word, rather than only in the chosen
+maximal cut.
+
+After excluding three copies of label two, the six placements
+`(alpha,beta)=(0,0),(0,1),(0,2),(1,0),(1,1),(2,0)` had minimum
+local values
+
+```text
+56,49,41,49,43,43,
+```
+
+through level `27`, exactly matching Lemma 5A7B26.  The diagnostic
+`--no-two-profile` mode separately evaluates the endpoint indicators
+in `(P5A.25Z30zz6)--(P5A.25Z30zz10)`; through level `101` its
+factorized minima are the same six values.  These are bounded audits;
+the unbounded proof is the endpoint reduction in Lemma 5A7B26.
 
 The seven-factor direct payment has an exact arbitrary-factor
 formulation.  Unlike the feature-shell proposals below, it aggregates
@@ -5919,6 +8313,1681 @@ last move is instead forced into the second coordinate, choose its
 other `l` moves among the first `n-1` positions; the projected lengths
 are `n-l-1` and `l+1`.  These are precisely the two terms in
 `c_(j,s)D_(j,s)`.  QED.
+
+The flux family also has a closed two-state Pascal evolution.  This
+isolates the invariant cone which a switching proof would have to
+construct.
+
+**Lemma 5A8H10 (truncated Pascal-state form).**  On
+`Gamma_q square Gamma_q` put
+
+```text
+X=N_q tensor I,             Y=I tensor N_q,
+v=e_0 tensor e_0,           w=e_k tensor e_0,
+```
+
+and, with out-of-range binomial coefficients omitted, define
+
+```text
+E_(m,t)=sum_(s=0)^t binom(m,2s)X^(m-2s)Y^(2s),
+O_(m,t)=sum_(s=0)^t binom(m,2s+1)X^(m-2s-1)Y^(2s+1).
+                                                               (P5A.102A)
+```
+
+Use `O_(m,-1)=0`.  Then
+
+```text
+E_(m+1,t)=X E_(m,t)+Y O_(m,t-1),
+O_(m+1,t)=X O_(m,t)+Y E_(m,t).                    (P5A.102B)
+```
+
+For `m=2j+1`, every binomial partial core is exactly
+
+```text
+P_(j,t)=<w,(X-Y){E_(m,t)-E_(m,1)}v>,
+                                      2<=t<=j-1.   (P5A.102C)
+```
+
+Thus `(BPC_j)` asks for nonnegativity of one boundary flux on the
+truncated even Pascal states.  The evolution `(P5A.102B)` uses only the
+entrywise-nonnegative commuting operators `X,Y`; the remaining issue is
+to find a cone for the pair `(E,O)` on which the boundary functional
+`<w,(X-Y)(.)v>` has the required sign.  Entrywise positivity alone does
+not give that sign.
+
+**Proof.**  Since `X` and `Y` commute, Pascal's identity separates the
+even and odd powers:
+
+```text
+binom(m+1,2s)=binom(m,2s)+binom(m,2s-1),
+binom(m+1,2s+1)=binom(m,2s+1)+binom(m,2s).
+```
+
+This is `(P5A.102B)`.  Expanding the right side of `(P5A.102C)`, its
+degree-`2s` summand is
+
+```text
+binom(2j+1,2s)
+ {X^(2j+2-2s)Y^(2s)-X^(2j+1-2s)Y^(2s+1)}.
+```
+
+Its coefficient from `v` to `w` is
+`c_(j,s)D_(j,s)`.  Subtracting `E_(m,1)` removes precisely the
+degrees zero and two, leaving `s=2,...,t`.  This proves
+`(P5A.102C)`.  QED.
+
+The subtraction of the first two slices is convenient but unnecessarily
+strong.  Retaining them gives a weaker sufficient criterion which is
+better adapted to reflection.
+
+**Lemma 5A8H10A (full-prefix Abel criterion).**  Put
+
+```text
+c_(j,0)=1,                    A_(j,0)=g_(2j+2),
+c_(j,1)=binom(2j+1,2),        A_(j,1)=g_(2j)-g_(2j-1),
+c_(j,s)=binom(2j+1,2s),       A_(j,s)=D_(j,s),     s>=2,
+
+Q_(j,t)=sum_(s=0)^t c_(j,s)A_(j,s).                (P5A.102C1)
+```
+
+If
+
+```text
+Q_(j,t)>=0,                         0<=t<=j-1,      (FBPC_j)
+```
+
+then the first `j` ascending quadratic transfers are nonnegative in
+every eventual packet `(1,2m+1)`, `m>=j`.  Moreover
+
+```text
+Q_(j,t)=<w,(X-Y)E_(2j+1,t)v>.                       (P5A.102C2)
+```
+
+For `t>=2`,
+
+```text
+Q_(j,t)=Q_(j,1)+P_(j,t),
+```
+
+so `(FBPC_j)` is weaker than demanding all the partial cores
+`(BPC_j)` separately.  It permits the degree-zero and degree-two
+boundary credits to pay later wall defects.
+
+**Proof.**  Let `e_s` be the elementary symmetric functions of the
+first `j` slopes in the eventual packet, with `e_0=1`, and put
+`v_s=e_s/c_(j,s)`.  At the smallest packet, Lemma 5A8H4 gives
+`e_s=c_(j,s)` also for `s=0,1`.  In every later packet all slopes
+decrease.  Hence `v_0=1>=v_1`, and the ratio monotonicity from
+Lemma 5A8H6 gives
+
+```text
+v_0>=v_1>=...>=v_(j-1)>=0.
+```
+
+Summation by parts now yields
+
+```text
+sum_(s=0)^(j-1)e_sA_(j,s)
+ =sum_(t=0)^(j-2)(v_t-v_(t+1))Q_(j,t)
+   +v_(j-1)Q_(j,j-1).                              (P5A.102C3)
+```
+
+The left side is exactly the boundary value `(P5A.97)`, including its
+first two easy terms.  Thus `(FBPC_j)` proves every eventual packet.
+
+Finally `f_0=1,f_1=0`, while `f_2=f_3=1` for even `q` with `2q<k`:
+the fusion interval `q star_k q` contains both `0` and `q`, each once,
+and a product with `q` contains `0` only from its `q` summand.
+Expanding `(X-Y)E_(2j+1,t)` therefore gives `A_(j,0)` at `s=0`,
+`A_(j,1)` at `s=1`, and `D_(j,s)` thereafter.  This proves
+`(P5A.102C2)`.  QED.
+
+The local edge switch underlying such a cone is valid away from two
+explicit fusion walls.
+
+**Lemma 5A8H11 (crossed-edge wall localization).**  Let `k,q` be even
+with `2q<k`, and let
+
+```text
+0<=a<b<=k,              0<=c<d<=k
+```
+
+be even labels.  Suppose the crossed edges are active:
+
+```text
+d in a star_k q,        c in b star_k q.            (P5A.102D)
+```
+
+Then the uncrossed edge `a -> c` is active unless
+
+```text
+c<|a-q|,                                          (lower wall)
+```
+
+and the uncrossed edge `b -> d` is active unless
+
+```text
+d>2k-b-q.                                         (affine wall)
+```
+
+The two exceptional inequalities cannot hold simultaneously.  Hence
+every crossed pair either uncrosses completely or has exactly one
+wall-defective edge.  A cumulative switching proof of `(BPC_j)` therefore
+needs global payment only for these two reflected wall families; there is
+no interior third obstruction.
+
+**Proof.**  The fusion neighbors of `x` form the parity interval
+
+```text
+x star_k q
+ ={|x-q|,|x-q|+2,...,min(x+q,2k-x-q)}.             (P5A.102E)
+```
+
+Since `c<d` and `d in a star_k q`, the upper bound for `a -> c`
+is automatic.  Thus this edge fails exactly when `c<|a-q|`.
+Similarly, `d>c` and `c in b star_k q` make the lower bound for
+`b -> d` automatic.  Moreover
+
+```text
+d<=a+q<b+q,
+```
+
+so only its affine upper bound can fail, exactly when
+`d>2k-b-q`.
+
+If both failures occurred, then
+
+```text
+|b-q|<=c<|a-q|.
+```
+
+For `a<b` this forces `a+b<2q`.  On the other hand the affine failure
+and `d<=a+q` give `a+b+2q>2k`.  Combining them yields
+`4q>2k`, contrary to `2q<k`.  QED.
+
+The two wall families have an exact pathwise symmetry once the return
+loop is allowed at either boundary.
+
+**Lemma 5A8H12 (two-boundary reflected doubling).**  Let
+`J=N_k`, `R=J tensor J`, and retain `X,Y` from Lemma 5A8H10.  Put
+
+```text
+v_0=e_0 tensor e_0,       w_0=e_k tensor e_0,
+v_1=e_0 tensor e_k,       w_1=e_k tensor e_k.       (P5A.102F)
+```
+
+For every polynomial `K(X,Y)`,
+
+```text
+<w_0,Kv_0>=<w_1,Kv_1>.                              (P5A.102G)
+```
+
+In particular, with
+
+```text
+K_(j,t)=(X-Y){E_(2j+1,t)-E_(2j+1,1)},
+```
+
+one has the exact doubled representation
+
+```text
+2P_(j,t)
+ =<w_0,K_(j,t)v_0>+<w_1,K_(j,t)v_1>.               (P5A.102H)
+```
+
+Reflection of every vertex followed by time reversal is a
+slice-preserving bijection between the two path models in
+`(P5A.102H)`.  On a crossed local pair it acts by
+
+```text
+(a,b,c,d) -> (k-d,k-c,k-b,k-a).                    (P5A.102I)
+```
+
+This involution exchanges the lower-wall and affine-wall defects of
+Lemma 5A8H11.  Thus the doubled model has exactly paired wall capacity.
+What remains for `(BPC_j)` is an injective splice compatible with this
+involution and with the truncated slice range; equality of the two wall
+reservoirs alone is not yet that splice.
+
+**Proof.**  The simple current is an involutive graph automorphism:
+
+```text
+J^2=I,                  JN_q=N_qJ.
+```
+
+Hence `R` commutes with `X,Y` and every `K(X,Y)`.  Also `X,Y`, and
+therefore `K`, are symmetric, while
+
+```text
+Rw_0=v_1,              Rv_0=w_1.
+```
+
+Consequently
+
+```text
+<w_0,Kv_0>=<Rw_0,KRv_0>=<v_1,Kw_1>=<w_1,Kv_1>,
+```
+
+proving `(P5A.102G)` and `(P5A.102H)`.  On paths this calculation
+reflects both coordinates and reverses the move word, preserving its
+numbers of `X`- and `Y`-moves.
+
+The map `(P5A.102I)` preserves both crossed fusion edges by graph
+automorphism and symmetry of `N_q`.  Its transformed affine-wall
+inequality is
+
+```text
+k-a>2k-(k-c)-q,
+```
+
+which is exactly `c<q-a`, the lower-wall inequality (the latter already
+forces `a<q`).  Applying the involution again proves the reverse
+implication and exchanges the two wall families.  QED.
+
+The slice weights determine the correct synchronization of the two
+projected paths.  This removes the accidental requirement that an
+asynchronous shuffle visit a fixed line.
+
+**Lemma 5A8H13 (same-slice aligned-crossing reduction).**  Fix a nonempty
+negative slice `1<=s<=t` in `(FBPC_j)`, and write
+
+```text
+A=2j+1-2s,                 B=2s+1.
+```
+
+After applying `J` to the second projected path in model zero, a negative
+object consists of paths
+
+```text
+P:0 -> k of length A,      Z:k -> k of length B,
+```
+
+together with a word of length `A+B` containing `A` letters `X` and `B`
+letters `Y`, the last letter being `Y`.  There are indices `i,h` with
+
+```text
+i-h=A-B+1,                 0<=i<A, 0<=h<B,
+P_i<=Z_h,                  Z_(h+1)<=P_(i+1).        (P5A.102J)
+```
+
+If both uncrossed edges
+
+```text
+P_i -> Z_(h+1),            Z_h -> P_(i+1)           (P5A.102K)
+```
+
+are active, switching the two tails across `(P5A.102K)` produces paths
+of lengths exactly `A+1` and `B-1`.  Replacing the last letter `Y` by
+`X` preserves the first `A+B-1` letters and is a bijection between the
+shuffle sets on the two sides.  If an edge in `(P5A.102K)` is inactive,
+both inequalities in `(P5A.102J)` are strict and exactly one of the
+lower-wall and affine-wall defects of Lemma 5A8H11 occurs.
+
+Thus the remaining combinatorial content of `(FBPC_j)` is to choose the
+aligned crossings globally injectively and pay the two wall-defective
+families.  Every valid local splice stays in the same binomial slice;
+transfer between slices would be needed only if the global collision or
+wall payment requires it.
+
+**Proof.**  Put
+
+```text
+h_0=max(0,B-A-1),          i(h)=A-B+1+h.
+```
+
+At `h=h_0`, either `h_0=0` and `Z_0=k>=P_(i(0))`, or
+`i(h_0)=0` and `P_0=0<=Z_(h_0)`.  At `h=B-1`,
+
+```text
+i(B-1)=A,                 P_A=k>=Z_(B-1).
+```
+
+Hence the finite sequence `P_(i(h))-Z_h` has two consecutive entries
+with the first nonpositive and the second nonnegative.  Their indices
+give `(P5A.102J)`.
+
+If either comparison is an equality, both edges in `(P5A.102K)` are
+original active edges with one endpoint renamed.  If both are strict,
+Lemma 5A8H11 says that either both uncrossed edges are active or exactly
+one displayed wall defect occurs.
+
+In the active case, retain `P` through `P_i`, take the first edge in
+`(P5A.102K)`, and append the tail of `Z` after `Z_(h+1)`.  The new length
+is
+
+```text
+i+1+(B-h-1)=i+B-h=A+1.
+```
+
+The complementary splice has length
+
+```text
+h+1+(A-i-1)=h+A-i=B-1.
+```
+
+Both endpoints and both initial points are unchanged.  A negative shuffle
+is uniquely `U Y`, where `U` contains `A` letters `X` and `B-1` letters
+`Y`; the corresponding positive shuffle is `U X`.  This proves the
+weight-preserving assertion and the reduction.  QED.
+
+The strict C++ analyzer
+`character_ring_iter/analyze_su2_fusion_edge_uncrossing.cpp` enumerates
+the actual even component, verifies every crossed and uncrossed fusion
+edge directly, checks the two wall predicates above, and applies
+`(P5A.102I)` to every defect.  Through level one hundred it classified
+`28,369,380` crossed pairs.  All
+`6,098,040` failures lay on exactly one wall, split equally between the
+two reflected families; there were no two-wall, unclassified, or
+reflection failures.
+Its transcript is
+`certificates/su2_fusion_edge_uncrossing.log`.  This bounded run audits
+the formulas; the interval proof above is unbounded.  The source,
+executable, and transcript SHA-256 identities are respectively
+
+```text
+2e2f7d161016dbd775832324974bbb96f6645ad0b13a9f8994be44fb3dc75448
+a53ec4f252bda0482825e3db91707dc2743a42395a32a5bb35bf42c53643077a
+d8d43aad1a17cb15a3dfd500d028518a0aa0431cd453e238509520f98041f280.
+```
+
+The easiest reflection compatible with `(FBPC_j)` is not sufficient.
+Given a negative path in either model of Lemma 5A8H12, scan backward for
+a visited point on the appropriate fixed line (`x+y=k` in model zero,
+`x=y` in model one), and reflect the whole remaining suffix, interchanging
+its `X`- and `Y`-moves.  At `(k,q,j,t)=(6,2,4,3)`, the negative model-zero
+path
+
+```text
+moves=XXXXXYYXXY
+states=(0,0)(2,0)(0,0)(2,0)(0,0)(2,0)
+       (2,2)(2,2)(4,2)(6,2)(6,0)
+```
+
+has no such cut that decreases its odd `Y`-count into the retained even
+range.  The only late fixed-line suffix has one `X`- and one `Y`-move.
+The strict C++ enumerator
+`character_ring_iter/analyze_su2_bpc_suffix_reflection.cpp` checks all
+negative paths in this case.  It finds `17,472` negative paths; the
+one-cut rule gives valid distinct positive images for `11,182` and has
+no eligible cut for `6,290`.  There are no invalid images or collisions
+among the covered paths.  Thus a proof of `(FBPC_j)` must use a local
+crossed-edge splice, more than one cut, or pooled payment; equality of a
+single visited fixed-line state is too restrictive.  The exact transcript
+is `certificates/su2_bpc_suffix_reflection.log`.  The source, executable,
+and transcript SHA-256 identities are respectively
+
+```text
+33232d0546dffa06a496a77c80e99524c64e831a5f65d8ce0ce01ffc5c9cd2aa
+d795914d9f51a121907faec4bb6c231456ca2e13177389cab5b7172d34b97c46
+c1c03f89770ada73958d462efbee908439c7737fa512a4fcc4e9be6c69e90764.
+```
+
+The failure is not repaired by exhausting the corresponding local
+multi-cut graph.
+
+**Proposition 5A8H14 (local cumulative-splice obstruction).**  In the
+first hard case `(k,q,j,t)=(6,2,4,3)`, form a bipartite graph whose left
+vertices are all negative path objects in the doubled `(FBPC_j)` model and
+whose right vertices are retained positive path objects.  Join a negative
+object to every positive object obtainable by any of the following:
+
+```text
+all valid one-cut tail reconnections into a retained even slice;
+all valid two-cut segment exchanges;
+all positive shuffles of every resulting projected path pair;
+concatenation, reversal, and cyclic rotation of the terminal k-loop;
+extraction of every retained even k-based loop.
+```
+
+This graph has `17,472` left vertices, `18,988` reached right vertices,
+and `9,061,176` edges, but its maximum matching has size only `17,028`.
+An alternating Hall set has `3,300` left and `2,856` right vertices, hence
+deficit `444`.  By slice its two sides are
+
+```text
+left:  y=3:360, y=5:1764, y=7:1176,
+right: y=0:24,  y=2:648,  y=4:1512, y=6:672.
+```
+
+Thus no injection built solely from the displayed local operations proves
+`(FBPC_j)`, even though the full-prefix value itself is positive.  The
+remaining payment must change the projected recoupling data more globally.
+
+**Proof.**  The strict C++ mode
+
+```text
+character_ring_iter/analyze_su2_bpc_suffix_reflection 6 2 4 3 --matching-local
+```
+
+enumerates the two fusion path models, deduplicates all displayed path-pair
+operations, expands every available positive shuffle, and computes a
+maximum bipartite matching by augmenting paths.  It then extracts the
+alternating Hall set from the unmatched left vertices.  Its exact
+source-bound transcript is
+`certificates/su2_bpc_cumulative_matching.log`.  The source, executable,
+and transcript SHA-256 identities are respectively
+
+```text
+33232d0546dffa06a496a77c80e99524c64e831a5f65d8ce0ce01ffc5c9cd2aa
+d795914d9f51a121907faec4bb6c231456ca2e13177389cab5b7172d34b97c46
+4210ead70583c6661d571c8094ccc4d0f571170edd079b54ea6b036534e6ae47.
+```
+
+QED.
+
+A stochastic-order pooling of the wall defects also fails before any
+iteration.
+
+**Proposition 5A8H15 (monotone fusion-kernel obstruction).**  Put
+
+```text
+P_q(x,y)=N_(q,x)^y d_y/(d_q d_x),
+```
+
+where `d_x` is the quantum dimension.  Neither `P_q` nor its lazy version
+`(I+P_q)/2` is stochastically increasing on the even component.
+
+**Proof.**  For `(k,q,x)=(6,2,0)`, at threshold zero,
+
+```text
+P_2(0,{0})=0,
+P_2(2,{0})=3-2sqrt(2)>0.
+```
+
+Thus the required cumulative-distribution order already reverses.  Laziness
+does not repair the general label case.  For `(k,q,x)=(10,4,0)`, at
+threshold two,
+
+```text
+((I+P_4)/2)(0,{0,2})=1/2,
+((I+P_4)/2)(2,{0,2})
+ =1/2+(2-sqrt(3))/2>1/2.
+```
+
+The C++ analyzer
+`character_ring_iter/analyze_su2_fusion_markov_monotonicity.cpp`
+independently evaluates the quantum dimensions and finds these as the
+first failures.  Its source-bound transcript is
+`certificates/su2_fusion_markov_monotonicity.log`; the source, executable,
+and transcript SHA-256 identities are
+
+```text
+5b8245d78e2a37f9ca6cb2dbc6dcae4cd4434d58172442a8c093b4f6c5490e90
+a74bbdcc3fce2379cfbcc8a87dfa4ecfc4f9adc1815533dadb90e9ccd8e20b73
+12ffce79dca1313de86ae74e5f7486ba1bc0929517f60565bb7625cf748e43d7.
+```
+
+QED.
+
+The successful enlarged matching graph uses several operations which move
+return current through a boundary.  Their path validity and slice bookkeeping
+are uniform; injective allocation of the resulting choices is a separate
+question.
+
+**Lemma 5A8H16 (nonlocal boundary-current moves).**  Let `Gamma_q` be the
+even fusion graph for even `k,q` with `2q<k`, and put `Jx=k-x`.  Suppose
+
+```text
+P=(p_0,...,p_A):0 -> k,       Z=(z_0,...,z_B):k -> k
+```
+
+are `q`-paths, where `A>=2`, `B` is odd, and `B<=2t+1`.  Then `B>=3`,
+
+```text
+p_1=q,       p_(A-1)=k-q,       z_1=z_(B-1)=k-q.   (P5A.102L)
+```
+
+The following constructions are valid projected positive path pairs:
+
+```text
+R=(Jz_0,...,Jz_B,p_1,...,p_A),       (R,(k));
+                                                               (P5A.102M)
+
+P^up=(p_0,...,p_(A-1),z_2,...,z_B),
+P^down=(p_0,p_1,Jz_2,...,Jz_(B-1),p_2,...,p_A),
+Z^sh=(k,k-q,k),                       (P^up,Z^sh),
+                                          (P^down,Z^sh).       (P5A.102N)
+```
+
+Their respective length pairs are
+
+```text
+(A+B,0),             (A+B-2,2).                    (P5A.102O)
+```
+
+If `z_h=z_(h+1)` and `p_i` supports a self-loop, deleting the second
+copy of `z_h` from `Z` and inserting a second copy of `p_i` after
+`p_i` in `P` gives a valid pair of lengths
+
+```text
+(A+1,B-1).                                           (P5A.102P)
+```
+
+Finally, if a `q`-path `W:0 -> k` of length `A+B` contains a subpath
+`W_[u,v]` which is a loop at `k` of even length `d=v-u<=2t`, deleting
+that loop from `W` and using it as the second path gives lengths
+`(A+B-d,d)`.  The same assertion holds for a loop at zero after applying
+`J` to the extracted loop.  Every displayed second length is even and
+lies in `[0,2t]`.  Consequently every shuffle of a displayed pair with
+last move `X` is a retained positive object in the doubled `(FBPC_j)`
+model.
+
+**Proof.**  The fusion interval `(P5A.102E)` gives
+
+```text
+0 star_k q={q},             k star_k q={k-q}.       (P5A.102Q)
+```
+
+This proves `(P5A.102L)`.  It also rules out a length-one loop at `k`;
+since `B` is odd, `B>=3`.  The map `J` is a graph automorphism, so
+`(Jz_0,...,Jz_B)` is a loop from zero to zero.  Concatenating it with
+`P` at zero proves `(P5A.102M)`.
+
+For the upper shell, `p_(A-1)=z_1=k-q`; hence the new junction
+`p_(A-1) -> z_2` is the old edge `z_1 -> z_2`.  All other edges of
+`P^up` are inherited from `P` or `Z`.  For the lower shell,
+
+```text
+p_1=Jz_1=Jz_(B-1)=q.
+```
+
+Thus its first new junction is the reflected old edge
+`Jz_1 -> Jz_2`, and its second is the old edge `p_1 -> p_2`.
+The path `Z^sh` is valid by `(P5A.102Q)` and symmetry of the graph.
+Counting edges gives `(P5A.102O)`.
+
+In the self-loop move, deleting one of two equal consecutive vertices
+reuses the following old edge, while inserting a duplicate of `p_i`
+uses the assumed self-loop and then the old following edge.  Endpoints
+are unchanged, and the two lengths change by `+1` and `-1`, proving
+`(P5A.102P)`.
+
+For extraction, the two endpoints of the removed segment agree.  The
+complement therefore remains a path with the same endpoints, and the
+segment is a based loop.  Reflection by `J` turns a zero-based loop into
+a `k`-based loop without changing its length.  The bounds on all second
+lengths follow from `B<=2t+1`; the shell length is two and `t>=1`.
+Independent shuffling of two valid projected paths preserves every
+fusion edge, and forcing the last move to be `X` gives exactly a
+retained positive object.  QED.
+
+The C++ mode `--matching` includes the operations of Lemma 5A8H16,
+the valid one- and two-cut recouplings of Lemma 5A8H13 and Proposition
+5A8H14, and all positive shuffles of every resulting pair.  It also
+independently validates every generated projected path before admitting
+it as a matching edge.  At
+
+```text
+(k,q,j,t)=(6,2,4,3),(8,2,4,3),(10,4,4,3),(12,4,4,3)
+```
+
+the enlarged graphs have exact matchings of all
+`17,472`, `6,552`, `118,512`, and `121,320` negative objects,
+respectively, and reject zero invalid projected pairs.  This bounded
+evidence does not prove the required arbitrary-parameter allocation.
+Its transcript is `certificates/su2_bpc_nonlocal_matching.log`.  The
+source, executable, and transcript SHA-256 identities are
+
+```text
+33232d0546dffa06a496a77c80e99524c64e831a5f65d8ce0ce01ffc5c9cd2aa
+d795914d9f51a121907faec4bb6c231456ca2e13177389cab5b7172d34b97c46
+21d7e909bbe06fc830c177511473b7ced23df6b158b4fd4403ce91f7b001d116.
+```
+
+The shuffle multiplicities can be removed from the graph without losing
+any information.  This gives the precise weighted statement which remains.
+
+**Lemma 5A8H17 (projected capacitated-Hall equivalence).**  Fix
+`n=2j+2`.  Let `L` be any collection of negative projected path types
+`lambda=(model,P,Z)` and `R` any collection of retained positive projected
+path types.  If the second path of `lambda` has odd length `B_lambda`, put
+
+```text
+d_lambda=binom(n-1,B_lambda-1).
+```
+
+If the second path of `rho in R` has even length `b_rho`, put
+
+```text
+c_rho=binom(n-1,b_rho).
+```
+
+Join a concrete negative object of type `lambda` to all positive shuffles
+of every projected type `rho` reachable from `lambda`.  Then this concrete
+bipartite graph has a matching saturating every negative object if and only
+if, for every subset `S` of `L`,
+
+```text
+sum_(lambda in S)d_lambda
+ <=sum_(rho in N(S))c_rho.                          (P5A.102R)
+```
+
+In particular, the `(FBPC_j)` global-payment step is reduced exactly to
+`(P5A.102R)` for the projected operation graph; the exponentially many
+shuffle words introduce no further obstruction.
+
+**Proof.**  A negative word ends in `Y`.  Its first `n-1` positions contain
+`B_lambda-1` letters `Y`, so a fixed negative projected pair has exactly
+`d_lambda` shuffles.  A positive word ends in `X`; its first `n-1`
+positions contain all `b_rho` letters `Y`, giving exactly `c_rho`
+shuffles.  Thus the concrete graph is obtained by replacing each left
+vertex `lambda` by `d_lambda` clones, each right vertex `rho` by
+`c_rho` clones, and every projected edge by a complete bipartite graph
+between the corresponding clone sets.
+
+If the concrete graph has a saturating matching, apply ordinary Hall to
+the union of all left clones belonging to `S`; this gives `(P5A.102R)`.
+Conversely, take any set `U` of concrete left clones and let `S` be the
+projected types represented in `U`.  All clones of one type have the same
+neighborhood, whence
+
+```text
+|U|<=sum_(lambda in S)d_lambda
+    <=sum_(rho in N(S))c_rho=|N(U)|.
+```
+
+Ordinary Hall now supplies a matching saturating every concrete negative
+object.  QED.
+
+The first nontrivial adjacent slice admits a separate semigroup proof in
+the two extreme affine bands.  This removes it from the global payment
+problem there for every prefix length at once.
+
+**Lemma 5A8H18 (five-step kernel at the nearest and stable walls).**  Write
+
+```text
+k=2K,                    q=2Q,
+u_r(Y)=(N_q^r)_(0,2Y),   f_r=u_r(0).
+```
+
+If either
+
+```text
+K=2Q+1                                      (nearest wall)
+```
+
+or
+
+```text
+K>=5Q                                      (stable five-step band),
+```
+
+then, for every `0<=Y<=K`,
+
+```text
+f_4 u_5(Y)-f_5 u_4(Y)>=0.                       (P5A.102S)
+```
+
+**Proof.**  First consider the ordinary representation ring.  Put
+`B_d(a)=binom(a,d)` for `a>=d` and zero otherwise.  The multiplicity
+`m_r(Y)` of `V_(2Y)` in `V_(2Q)^r` satisfies
+
+```text
+m_r(Y)=[z^(rQ-Y)](1-z)(1+z+...+z^(2Q))^r.
+```
+
+Expanding `(1-z^(2Q+1))^r/(1-z)^(r-1)` gives
+
+```text
+m_4(Y)=B_2(4Q-Y+2)-4B_2(2Q-Y+1),
+
+m_5(Y)=B_3(5Q-Y+3)-5B_3(3Q-Y+2)
+        +10B_3(Q-Y+1),                           (P5A.102T)
+
+m_4(0)=2Q+1,
+m_5(0)=(5Q^2+5Q+2)/2.
+```
+
+For `Y>4Q`, the fourfold multiplicity vanishes, so the desired ordinary
+margin is immediate.  On `0<=Y<=4Q`, the activation walls in
+`(P5A.102T)` give four intervals.  The two intervals touching a wall are
+split once, producing the following six exhaustive nonnegative-coordinate
+substitutions:
+
+```text
+0<=Y<=Q-2:                  Y=x,       Q=x+y+2;
+Y=Q-1:                      Y=x,       Q=x+1;
+Q<=Y<=2Q-1:                 Y=2x+y+1, Q=x+y+1;
+2Q<=Y<=3Q-1:                Y=3x+2y+2,Q=x+y+1;
+Y=3Q:                       Y=3x+3,   Q=x+1;
+3Q+1<=Y<=4Q:                Y=4x+3y+4,Q=x+y+1.
+                                                               (P5A.102U)
+```
+
+Here `x,y>=0`.  Substitution into
+
+```text
+(2Q+1)m_5(Y)-{(5Q^2+5Q+2)/2}m_4(Y)
+```
+
+gives respectively `9,4,15,15,5,15` nonzero rational coefficients,
+all positive.  Hence `(P5A.102S)` holds in the ordinary ring.
+If `K>=5Q`, no path of length at most five reaches the affine wall, so
+`u_r(Y)=m_r(Y)` for `r=4,5`, proving the stable-band assertion.
+
+At the nearest wall `K=2Q+1`, Kac--Walton has no images beyond the first
+reflected pair.  Substituting `(P5A.102T)` into
+
+```text
+u_r(Y)=m_r(Y)-m_r(4Q+3-Y)+m_r(4Q+4+Y)
+```
+
+gives
+
+```text
+u_4(Y)=B_2(4Q-Y+2)-4B_2(2Q-Y+1)-B_2(Y-1),
+
+u_5(Y)=B_3(5Q-Y+3)-5B_3(3Q-Y+2)
+       +10B_3(Q-Y+1)-B_3(Q+Y)
+       +5B_3(Y-Q-1)+B_3(Q-Y-1),                  (P5A.102V)
+
+f_4=2Q+1,
+f_5=(5Q^2+5Q+2)/2-B_2(Q-1).
+```
+
+For `Q>=7`, the hinge walls in `(P5A.102V)` are ordered as
+
+```text
+0, 3, Q-4, Q-2, Q-1, Q+3, Q+4, 2Q-1, 2Q+1.
+```
+
+Splitting the two constant-width pieces into their individual values
+leaves fourteen exhaustive affine cones.  On substituting their lower
+and upper slacks, every nonzero coefficient of
+`f_4u_5(Y)-f_5u_4(Y)` is positive.  The remaining `1<=Q<=6` range has
+exactly `54` values `0<=Y<=2Q+1`; direct evaluation of `(P5A.102V)`
+has minimum zero.  Thus `(P5A.102S)` also holds at the nearest wall.
+
+The exact rational expansions are performed by
+`character_ring_iter/prove_su2_d2_kernel.cpp`.  Its independent finite
+fusion recurrence audit through level `200` is
+`character_ring_iter/analyze_su2_d2_kernel.cpp`.  The source,
+executable, and certificate identities for the proof program are
+
+```text
+c08c1972cb189d9a05147e14755a70e7af5f4234f7148e5dfecb10466ac7fdf1
+00e8db6c17829eceb178cf6a98ec652f70076c737f8ab6f2d2d48ec3d4b6ec9e
+bbbd08aec21682124ae7e86bb474d2678bfc75f63c29eba104f51305582261df.
+```
+
+The complete transcript and analyzer identities are recorded in
+`certificates/su2_d2_kernel.log`.  QED.
+
+**Corollary 5A8H19 (uniform second determinant in the two extreme
+bands).**  Under either hypothesis of Lemma 5A8H18, for every `j>=4`,
+
+```text
+D_(j,2)=g_(2j-2)f_4-g_(2j-3)f_5>=0.               (P5A.102W)
+```
+
+**Proof.**  Put `r=2j-2>=6`.  Symmetry of `N_q` and the simple-current
+automorphism turn `(P5A.102S)` into the pointwise kernel inequality
+
+```text
+f_4(N_q^5)_(x,k)-f_5(N_q^4)_(x,k)>=0
+```
+
+for every vertex `x`.  The semigroup identity gives
+
+```text
+f_4g_r-f_5g_(r-1)
+ =sum_x (N_q^(r-5))_(0,x)
+   {f_4(N_q^5)_(x,k)-f_5(N_q^4)_(x,k)}.
+```
+
+Every factor is nonnegative, proving `(P5A.102W)`.  QED.
+
+The analogous four-step pointwise kernel is false, first in the scan at
+`(k,q,x)=(12,4,0)` with margin `-1`.  The five-step margin is not
+monotone as the wall recedes either: at `(k,q,Y)=(24,10,10)` it decreases
+from `1161` to `1140`.  Consequently neither shortening the kernel nor
+interpolation between the two extreme bands is valid.  The intermediate
+band nevertheless admits a complete direct chamber certificate.
+
+**Lemma 5A8H20 (five-step kernel at every affine wall).**  With the
+notation of Lemma 5A8H18, for every
+
+```text
+Q>=1,                 K>=2Q+1,                 0<=Y<=K,
+```
+
+one has
+
+```text
+f_4 u_5(Y)-f_5 u_4(Y)>=0.                         (P5A.102X)
+```
+
+**Proof.**  Lemma 5A8H18 handles `K=2Q+1` and `K>=5Q`.  It remains to
+consider
+
+```text
+2Q+2<=K<5Q.
+```
+
+Put `h=K-(2Q+1)`, so `1<=h<=3Q-2`.  In fact the calculation below also
+includes `h=0`.  The affine period in half-label coordinates is
+`2K+2=4Q+4+2h`.  Since the ordinary supports of the fourth and fifth
+powers end at `4Q` and `5Q`, respectively, Kac--Walton has exactly the
+three possible images
+
+```text
+u_r(Y)=m_r(Y)-m_r(2K+1-Y)+m_r(2K+2+Y).
+```
+
+Using the convention for `B_d` in Lemma 5A8H18 and formula
+`(P5A.102T)`, this becomes
+
+```text
+u_4(Y)=m_4(Y)-B_2(Y-2h-1),
+
+u_5(Y)=m_5(Y)-B_3(Q+Y-2h)
+       +5B_3(Y-Q-2h-1)+B_3(Q-2h-Y-1),
+
+f_4=2Q+1,
+
+f_5=(5Q^2+5Q+2)/2-B_2(Q-2h-1).                  (P5A.102Y)
+```
+
+The first ordinary fifth-power binomial is always active on
+`0<=h<=3Q-2`, `0<=Y<=2Q+1+h`.  The remaining terms in
+`(P5A.102Y)` have nine binary activation hinges.  For `Y>=1`, exact
+QF-LIA enumeration leaves the following twenty-three feasible masks:
+
+```text
+0,1,5,7,15,32,33,37,39,47,49,53,55,117,
+295,303,309,311,319,373,375,431,447.             (P5A.102Z)
+```
+
+For every mask except `53`, expand the margin in `(P5A.102X)` as a
+degree-at-most-four polynomial in `(Q,h,Y)`.  The exact certificate writes
+this polynomial as
+
+```text
+sum_alpha c_alpha product_i L_i^(alpha_i),        (P5A.102AA)
+```
+
+where the fourteen `L_i` are the nonnegative affine domain and activation
+slacks, `sum_i alpha_i<=4`, and every `c_alpha` is a nonnegative rational.
+There are `3060` candidate products.  The twenty-two identities use
+between `13` and `35` nonzero coefficients.  Z3 synthesizes the rational
+coefficients only; independent `boost::rational<cpp_int>` arithmetic checks
+their signs and reconstructs every coefficient of the target polynomial
+exactly.
+
+Mask `53` has a shorter solver-free certificate.  Set
+
+```text
+a=Y-2Q,                 b=2Q+a-2h-3.
+```
+
+Its activation inequalities give `a,b>=0`, while integrality of `h`
+gives `a-b` odd.  Hence exactly one of `a=0`, `b=0`, `b>a`, or `a>b`
+holds.  Writing all free quantities as nonnegative integers gives the
+four exhaustive substitutions
+
+```text
+a=0:       b=2x+1,       Q=2x+v+2;
+b=0:       a=2x+1,       Q=2x+z+2;
+b>a:       a=x+1,        b=x+2v+2, Q=x+2v+z+2;
+a>b:       b=x+1,        a=x+2v+2, Q=x+2v+z+3.
+```
+
+After recovering `h=(2Q+a-b-3)/2` and `Y=2Q+a`, the four pulled-back
+margins have respectively `15,15,34,34` nonzero coefficients, all
+positive.  The program also checks coefficientwise that every pulled-back
+activation slack is nonnegative.  Finally, `Y=0` gives zero in
+`(P5A.102X)` by the definitions of `f_4,f_5`.
+
+The exact source and executable identities are
+
+```text
+6a37c3a8e3ef3952fb0d7779ed9779c30b6d654cf6fd9a4f00f144c9aec4fb06
+6466324ed41e49eefddfcea5185031abc0271e932cbffe6c8abb90b25daf37b6.
+```
+
+The complete command/output record has SHA-256 identity
+
+```text
+1a6f25c347022a92c783f2b813353bf99befc2f382f4bfb27ab3c5fb7ed472b4
+```
+
+and is `certificates/su2_d2_intermediate.log`.  Independently, the finite
+fusion recurrence agrees with `(P5A.102Y)` in all `1,130,350` fourth- and
+fifth-power coordinates through level `300`.  This is a bounded formula
+audit; `(P5A.102AA)` and the four direct cones are the unbounded sign
+certificate.  QED.
+
+**Corollary 5A8H21 (uniform second determinant at every wall).**  For
+every `Q>=1`, `K>=2Q+1`, and `j>=4`,
+
+```text
+D_(j,2)=g_(2j-2)f_4-g_(2j-3)f_5>=0.              (P5A.102AB)
+```
+
+**Proof.**  Apply the semigroup argument of Corollary 5A8H19 to Lemma
+5A8H20.  QED.
+
+There is a plausible scalable extension of Lemma 5A8H20, but it is not
+yet a theorem.  Define
+
+```text
+K_s(x)=f_(2s)(N_q^(2s+1))_(0,x)
+       -f_(2s+1)(N_q^(2s))_(0,x),                 s>=2. (P5A.102AC)
+```
+
+The unique edge `0 -> q` gives the exact boundary-minor identity
+
+```text
+K_s(x)=det [
+  (N_q^(2s))_(0,0)  (N_q^(2s))_(0,x)
+  (N_q^(2s))_(q,0)  (N_q^(2s))_(q,x)
+].                                                   (P5A.102AD)
+```
+
+Thus `K_s>=0` is a first-two-row minor cone for the powers of
+`M=N_q^2`, rather than an unexplained consecutive-time inequality.  If
+`(P5A.102AC)` is nonnegative for every `s`, then reflection by the simple
+current and the semigroup identity give
+
+```text
+D_(j,s)>=0 whenever 2s+1<=2j+2-2s.                (P5A.102AE)
+```
+
+This would remove the lower half of every remaining cumulative prefix.
+Exact finite-fusion discovery through level `300`, for every `2<=s<=20`,
+checks `10,738,325` coordinates of `(P5A.102AC)` without a negative
+value.  This is bounded evidence only.
+
+The apparent upper-half mirror is false.  For every tested `p`, the
+candidate
+
+```text
+g_(2p)(N_q^(2p))_(0,x)
+ -g_(2p-1)(N_q^(2p+1))_(0,x)>=0                  (P5A.102AF)
+```
+
+has exact negative values; already `p=2` fails, and for `p>=9` the
+level-six label-two graph supplies failures at `x=2`.  Hence even a proof
+of `(P5A.102AC)` would still leave the upper slices to cumulative
+cross-slice payment.  The diagnostic source, executable, and transcript
+identities are
+
+```text
+3dd5a1504606f9ebde75bf02dcd917faeb95e2bb9a5eaac6b434b01c0b1c60ec
+2c579dd0f2aaeff5c487bdbda90249b677b2ce0da0f1cebc6c3121c0fc766b88
+4b3d834710eed76aa5e95f91002e7f193cfb5c9e7c742afb4009707b2729a5fb.
+```
+
+The transcript is `certificates/su2_higher_kernels.log`.
+
+The cumulative current itself has a stronger coefficientwise formulation.
+Unlike the individual boundary-minor hierarchy, this formulation retains
+the cross-slice cancellation.
+
+**Lemma 5A8H22 (coefficientwise full-prefix reduction).**  Put
+
+```text
+n=2j+2,
+
+R_(j,t)(x)
+ =sum_(s=0)^t binom(n-1,2s)
+   {f_(2s)(N_q^(n-2s))_(0,x)
+    -f_(2s+1)(N_q^(n-2s-1))_(0,x)},              (P5A.102AG)
+```
+
+where `j>=4` and `2<=t<=j-1`.  Then
+
+```text
+R_(j,t)(k)=Q_(j,t).                               (P5A.102AH)
+```
+
+Consequently the coefficientwise assertion
+
+```text
+R_(j,t)(x)>=0 for every even x                    (CFBPC)
+```
+
+implies `(FBPC_j)` and hence, by Lemma 5A8H10A, every eventual
+ascending quadratic transfer.
+
+**Proof.**  At `x=k`, the summand with `s=0` is `g_n`, because
+`f_0=1` and `f_1=0`.  The summand with `s=1` is
+
+```text
+binom(n-1,2){g_(n-2)-g_(n-3)},
+```
+
+because `f_2=f_3=1`.  For `s>=2` the summand is precisely
+`c_(j,s)D_(j,s)`.  Their sum is the definition `(P5A.102C1)` of
+`Q_(j,t)`, proving `(P5A.102AH)`.  The implication is immediate.  QED.
+
+The first row of `(CFBPC)` is already an unbounded consequence of the
+five-step kernel.
+
+**Corollary 5A8H22A (uniform coefficientwise prefix two).**  For every
+even `k,q` with `2q<k`, every `j>=4`, and every even `0<=x<=k`,
+
+```text
+R_(j,2)(x)>=0.                                    (P5A.102AI)
+```
+
+**Proof.**  Write `A=N_q`, `e=e_0`, and
+
+```text
+K_1=A^3e-A^2e,
+K_2=f_4A^5e-f_5A^4e.
+```
+
+Because `q` is even and `2q<k`, the unfurled fusion interval gives
+
+```text
+e_q^2=e_0+e_2+...+e_(2q).
+```
+
+In particular `e_q^2=e_q+H` for a fusion-ring element `H>=0`.
+Multiplying by `e_q` gives
+
+```text
+e_q^3-e_q^2=e_qH>=0.
+```
+
+Thus `K_1>=0` coefficientwise.  Lemma 5A8H20 says exactly that
+`K_2>=0` coefficientwise.  With `n=2j+2`, direct expansion of
+`(P5A.102AG)` gives the identity
+
+```text
+R_(j,2)
+ =A^n e
+  +binom(n-1,2)A^(n-5)K_1
+  +binom(n-1,4)A^(n-9)K_2.                        (P5A.102AJ)
+```
+
+Here `n>=10`, so both displayed powers of `A` have nonnegative integer
+exponents.  Every matrix and vector on the right of `(P5A.102AJ)` is
+entrywise nonnegative.  This proves `(P5A.102AI)`.  QED.
+
+The strict arbitrary-precision C++ recurrence
+`character_ring_iter/analyze_su2_full_prefix_kernel.cpp` checked
+`8,545,500` coordinates of `(P5A.102AG)` through level `100` and
+`j=30`; it found no negative coordinate.  Its source, executable, and
+transcript SHA-256 identities are
+
+```text
+d0be89fba397e33d8319f36ec0a7a682787485ab06ee0a11b64aa486376d1002
+e92cbeedc7cea04e5588d3fe69f1208aee3325609f2fb86af8c285b07a52aa9f
+2d8834ddbc19c46ac9000c8785e713292adb37d18533515a93edf62ba6536f58.
+```
+
+The transcript is `certificates/su2_full_prefix_kernel.log`.  This is
+bounded discovery evidence for `(CFBPC)`, not an unbounded proof.
+
+Neither nonnegative adjacency nor reflected boundary leaves explain this
+coefficientwise phenomenon.
+
+**Proposition 5A8H23 (reflected-leaf graph obstruction).**  There is a
+symmetric zero-one adjacency matrix `A` with a reversal automorphism
+`i -> 7-i`, whose vertices `0` and `7` are leaves exchanged by that
+automorphism, for which the analogue of `(P5A.102AG)` is negative.
+
+**Proof.**  Take the matrix with rows
+
+```text
+01000000
+10100010
+01110000
+00100000
+00000100
+00001110
+01000101
+00000010.
+```
+
+It is symmetric, is fixed by simultaneous reversal of rows and columns,
+and has the asserted boundary leaves.  Define
+`f_r=(A^r)_(0,0)` and replace `N_q` by `A` in `(P5A.102AG)`.  Exact
+integer multiplication at
+
+```text
+j=6,                 t=5,                 x=7
+```
+
+gives
+
+```text
+R_(6,5)(7)=-23692.
+```
+
+The exhaustive C++ verifier independently checks this matrix and value.
+Its source, executable, and transcript SHA-256 identities are
+
+```text
+4887628afb1ec00e404632f0129a2ec3a32c16dc207eb287b677f1c93e65a0e1
+cb84c729d2db2716c3933fac0c8d05d6aef934c3e600054d484402cdb0d5d401
+022becb0b8a70f79ac0ba64892fc6b462f2be1d190f1239be7d558cc20194fd2.
+```
+
+Thus endpoint reflection, symmetry, and the unique boundary edges do not
+prove `(CFBPC)`.  QED.
+
+The counterexample in Proposition 5A8H23 has noninterval neighborhoods.
+In contrast, the SU(2) fusion rule `(P5A.102E)` is row-convex in the
+ordered even labels.  The same exact verifier enumerated `34,673,238`
+reflection-orbit masks through nine vertices.  Among them were `527`
+connected reflected row-convex graphs with boundary leaves; all
+`5,131,225` tested full-prefix coordinates through `j=50` were
+nonnegative.  This bounded pass identifies row-convex affine-wall
+structure as the remaining candidate mechanism, but it is not a proof
+for arbitrary graph size and does not replace `(CFBPC)`.
+
+Two simpler proofs of the individual boundary-minor hierarchy are ruled
+out.  For `M=N_q^2`, the reachable component of `C_2(M)` is not
+diagonally signable to an entrywise-nonnegative matrix; the exact first
+failure is `(k,q)=(6,2)`.  Numerically, grouped spectral residues, their
+unweighted tails, and their tails shifted by the proved `K_2` seed also
+take negative values.  The exact compound-sign and numerical spectral
+transcripts, with their exactness distinction stated explicitly, are in
+`certificates/su2_boundary_minor_routes.log`, whose SHA-256 identity is
+
+```text
+a21b59982a49e028ef6a231329dd29285ce284005046c18812dc593160f6c9e6.
+```
+
+The next pointwise kernel can also be proved at both extreme affine-wall
+distances.
+
+**Lemma 5A8H24 (seven-step kernel at the nearest and stable walls).**
+Retain the half-label notation
+
+```text
+k=2K,                 q=2Q,
+u_r(Y)=(N_q^r)_(0,2Y),                 f_r=u_r(0).
+```
+
+If either
+
+```text
+K=2Q+1                                      (nearest wall)
+```
+
+or
+
+```text
+K>=7Q                                      (stable seven-step band),
+```
+
+then for every `0<=Y<=K`,
+
+```text
+f_6u_7(Y)-f_7u_6(Y)>=0.                       (P5A.102AK)
+```
+
+**Proof.**  In the ordinary representation ring, with the convention
+`B_d(a)=binom(a,d)` for `a>=d` and zero otherwise, coefficient extraction
+gives
+
+```text
+m_6(Y)=B_4(6Q-Y+4)-6B_4(4Q-Y+3)
+                    +15B_4(2Q-Y+2),
+
+m_7(Y)=B_5(7Q-Y+5)-7B_5(5Q-Y+4)
+       +21B_5(3Q-Y+3)-35B_5(Q-Y+2).       (P5A.102AL)
+```
+
+If `K>=7Q`, the first Kac--Walton reflected label is at least
+`K+1>7Q`, so `u_r(Y)=m_r(Y)` for `r=6,7`.  For `Q>=3`, the activation
+walls in `(P5A.102AL)` give the seven exhaustive intervals
+
+```text
+0<=Y<=Q-3,
+Q-2<=Y<=2Q-2,
+2Q-1<=Y<=3Q-2,
+3Q-1<=Y<=4Q-1,
+4Q<=Y<=5Q-1,
+5Q<=Y<=6Q,
+6Q+1<=Y<=7Q.                              (P5A.102AM)
+```
+
+For `Y>7Q`, both multiplicities vanish.
+On each interval, substitute its lower and upper integer slacks.  Five
+pulled-back margins have nonnegative rational coefficients directly.
+For the second and fourth intervals, split off respectively the last two
+and the last one upper-slack values; the remaining translated orthants
+and those boundary rays also have only nonnegative rational
+coefficients.  The sixth interval is already coefficientwise
+nonnegative without a boundary split.  The cases `Q=1,2` contain `23`
+values in total and direct exact evaluation has minimum zero.  This proves
+the stable assertion.
+
+At `K=2Q+1`, the first reflected image pair meets both supports in
+`(P5A.102AL)`.  At the upper end of the seventh-power support, the next
+negative image can also occur.  Direct substitution gives
+
+```text
+u_6(Y)=m_6(Y)-B_4(2Q+Y+1)+6B_4(Y)+B_4(2Q-Y),
+
+u_7(Y)=m_7(Y)-B_5(3Q+Y+2)+7B_5(Q+Y+1)
+       -21B_5(Y-Q)+B_5(3Q-Y+1)-7B_5(Q-Y)
+       -B_5(Y-Q-2).
+                                                        (P5A.102AN)
+```
+
+For `Q>=11`, the activation walls are ordered and give the exhaustive
+regions
+
+```text
+Y=0,1,2,3,
+4<=Y<=Q-5,
+Y=Q-4,Q-3,
+Q-2<=Y<=Q+4,
+Y=Q+5,Q+6,
+Q+7<=Y<=2Q-4,
+Y=2Q-3,2Q-2,
+Y=2Q-1,2Q,2Q+1.                         (P5A.102AO)
+```
+
+Substitution of the free lower/upper slacks, or of the displayed
+constant offsets, makes every nonzero coefficient of
+`f_6u_7-f_7u_6` positive.  Direct exact evaluation of all `130` values
+with `1<=Q<=10` has minimum zero.
+
+The exact rational polynomial arithmetic, every cone substitution, and
+the small cases are checked by
+`character_ring_iter/prove_su2_k3_kernel.cpp`.  Its source, executable,
+and transcript SHA-256 identities are
+
+```text
+5676889b69f636dfb624a8beabf37a642c42df2e4310edecc85d3760a52bbb98
+f6babef4af13c13d048d6ebe1114d9e3a35db1058c4b2363dc7da5af7a16d80d
+cf2644be579f12402ef2dd5f8d48be2256a78f0d6531f01511fbbd13cb323137.
+```
+
+An independent finite-fusion recurrence agrees with `(P5A.102AL)` and
+`(P5A.102AN)` in all `15,000` sixth- and seventh-power coordinates
+through `Q=40` in the nearest and stable bands.  This is a bounded
+formula audit; the coefficient identities above are the unbounded sign
+certificate.  The transcript is `certificates/su2_k3_kernel.log`.  QED.
+
+**Lemma 5A8H24A (seven-step kernel at every intermediate wall).**
+Suppose
+
+```text
+2Q+2<=K<7Q.
+```
+
+Then `(P5A.102AK)` holds for every `0<=Y<=K`.
+
+**Proof.**  Put
+
+```text
+h=K-(2Q+1),                 1<=h<=5Q-2,
+L=2K+2=4Q+4+2h.
+```
+
+The Kac--Walton affine images that can meet the sixth- or seventh-power
+ordinary support are
+
+```text
+u_r(Y)=m_r(Y)-m_r(L-1-Y)+m_r(L+Y)-m_r(2L-1-Y).
+                                                        (P5A.102AO1)
+```
+
+The last term vanishes for `r=6`.  Expanding `(P5A.102AO1)` with
+`(P5A.102AL)` gives
+
+```text
+u_6(Y)=m_6(Y)-B_4(2Q-2h+Y+1)+6B_4(Y-2h)
+                      +B_4(2Q-2h-Y),
+
+u_7(Y)=m_7(Y)-B_5(3Q-2h+Y+2)+7B_5(Q-2h+Y+1)
+       -21B_5(Y-Q-2h)+B_5(3Q-2h-Y+1)
+       -7B_5(Q-2h-Y)-B_5(Y-Q-4h-2).
+                                                        (P5A.102AO2)
+```
+
+The same formulas at `Y=0` give `f_6,f_7`.  The domain is the integer
+polyhedron
+
+```text
+Q-1>=0,  h-1>=0,  5Q-2-h>=0,
+Y>=0,    2Q+1+h-Y>=0.                     (P5A.102AO3)
+```
+
+All positive-part choices in `(P5A.102AO2)` and in `f_6,f_7` are
+determined by the following twenty-two integral affine slacks:
+
+```text
+6Q-Y, 4Q-Y-1, 2Q-Y-2,
+2Q-2h+Y-3, Y-2h-4, 2Q-2h-Y-4,
+
+7Q-Y, 5Q-Y-1, 3Q-Y-2, Q-Y-3,
+3Q-2h+Y-3, Q-2h+Y-4, Y-Q-2h-5,
+3Q-2h-Y-4, Q-2h-Y-5, Y-Q-4h-7,
+
+2Q-2h-3, 3Q-2h-3, Q-2h-4,
+3Q-2h-4, Q-2h-5, Q-3.                    (P5A.102AO4)
+```
+
+Exact Presburger blocking enumerates `102` and only `102` feasible
+activation masks on the unbounded domain `(P5A.102AO3)`.  After
+integer-redundant inequalities are removed, every mask has from three
+through seven retained facets.  On a fixed mask,
+
+```text
+P(Q,h,Y)=f_6u_7(Y)-f_7u_6(Y)
+```
+
+is one rational polynomial.  The `102` masks have the following
+exhaustive exact certificates.
+
+1.  On `43` masks, an invertible choice of three nonnegative integral
+    facet slacks `g_1,g_2,g_3` gives
+
+    ```text
+    P=sum_alpha c_alpha g_1^alpha_1
+                         g_2^alpha_2 g_3^alpha_3,       c_alpha>=0.
+    ```
+
+    On three further masks the same pullback has a nonnegative Newton
+    expansion
+
+    ```text
+    P=sum_alpha c_alpha B_(alpha_1)(g_1)
+                         B_(alpha_2)(g_2)
+                         B_(alpha_3)(g_3),              c_alpha>=0.
+                                                        (P5A.102AO5)
+    ```
+
+    Since the `g_i` are nonnegative integers, every factor in
+    `(P5A.102AO5)` is nonnegative.
+
+2.  On `22` masks an exact nonnegative Farkas identity
+
+    ```text
+    B-Q=sum_i lambda_i g_i,                 lambda_i>=0,
+    ```
+
+    bounds `Q`.  The resulting `101` integer points in total are
+    evaluated exactly and all have `P>=0`.
+
+3.  On `14` masks, for two integral slacks `g_i,g_j`, use the exhaustive
+    integer dichotomy
+
+    ```text
+    g_i-g_j>=0     or     g_j-g_i-1>=0.     (P5A.102AO6)
+    ```
+
+    Both branches have a nonnegative monomial or Newton expansion.
+
+4.  On the remaining `20` masks, retained slacks satisfy an exact
+    weighted identity
+
+    ```text
+    sum_i w_i g_i=C,          w_i in {1,2},  0<=C<=2.
+                                                        (P5A.102AO7)
+    ```
+
+    Enumerating the `37` compatible weighted compositions in total
+    reduces each mask to lower-dimensional slices.  Each nonempty slice
+    has a nonnegative monomial or Newton expansion; exact Presburger
+    infeasibility closes the empty slices.
+
+Thus all `102=46+22+14+20` feasible masks have `P>=0`, proving the
+lemma.  The exact rational polynomial arithmetic, Newton conversion,
+Farkas replay, integer partitions, activation census, and finite checks
+are executed by
+`character_ring_iter/prove_su2_k3_intermediate.cpp`.  Its source,
+executable, and transcript SHA-256 identities are
+
+```text
+ca6fd8140f301ca1cb0ef06d3a7657dff3369673ea4dbd06d26b90b0aad14f87
+69d53944f329eecc32eb9ea0f56dd83602ec58aed28d9e28733dd5e30f889dbe
+d30d1054c44a7a5784c1bf5c7909c756b58592adc99ef7336bf0b8b8278729d1.
+```
+
+The aggregate transcript
+`certificates/su2_k3_intermediate.log` ends with
+
+```text
+feasible_chambers=102 attempted_chambers=102
+certified_chambers=102 result=PASS_EXACT_CERTIFICATE.
+```
+
+An independent implementation compares `(P5A.102AO2)` with the generic
+Kac--Walton image sum in `15,210,000` exact coordinates through `Q=100`
+and with the finite-fusion recurrence in `55,350` exact coordinates
+through `Q=15`.  The source, executable, and transcript identities are
+
+```text
+3400f2477df499d5064fad433293086dc53f31f6ca4616076d6bfbe7f9c71336
+f6995e1c0ebacf3d04c5fd52f9fa01d7fcb6a67595deb9513842db06038f6285
+c45002736b51f0b4bb83d6e0195691e068c7403c4a239147150d52ab4938eff5.
+```
+
+The audit transcript is
+`certificates/su2_k3_intermediate_formula_audit.log`; it is an
+independent bounded formula check, whereas the `102` symbolic chamber
+certificates above are unbounded.  QED.
+
+**Corollary 5A8H25 (full-prefix row three at every affine-wall
+distance).**  For every admissible `K>=2Q+1`,
+
+```text
+Q_(j,3)>=0                                      (P5A.102AP)
+```
+
+for every `j>=4`.
+
+**Proof.**  The cases `j=4,5` are the two already proved rows of the
+binomial partial-core criterion, as recorded after Lemma 5A8H8.  Let
+`j>=6`, put `n=2j+2`, and write
+
+```text
+K_3=f_6N_q^7e_0-f_7N_q^6e_0.
+```
+
+By Corollary 5A8H22A and Lemmas 5A8H24 and 5A8H24A,
+`R_(j,2)>=0` and `K_3>=0` coefficientwise.  The definition
+`(P5A.102AG)` gives
+
+```text
+R_(j,3)
+ =R_(j,2)+binom(n-1,6)N_q^(n-13)K_3.             (P5A.102AQ)
+```
+
+Since `n-13>=1`, the right side is coefficientwise nonnegative.
+Taking its `x=k` coefficient and using `(P5A.102AH)` proves
+`(P5A.102AP)`.  QED.
+
+The endpoint current has a smaller marked-return model than the product
+graph.  It retains the necessary global allocation, but removes the
+shuffle words altogether.
+
+**Lemma 5A8H26 (marked-return form of the full-prefix current).**  Let
+`W_n` be the set of all `q`-fusion walks
+
+```text
+W=(w_0,w_1,...,w_n),            w_0=0, w_n=k,
+```
+
+and put
+
+```text
+Phi_(n,t)(W)
+ =sum_(s=0)^t binom(n-1,2s)
+    {1_(w_(2s)=0)-1_(w_(2s+1)=0)}.                (P5A.102AR)
+```
+
+Then
+
+```text
+Q_(j,t)=sum_(W in W_n) Phi_(n,t)(W),       n=2j+2. (P5A.102AS)
+```
+
+Equivalently, if
+
+```text
+F(z)=sum_(r>=0)f_r z^r,       G(z)=sum_(r>=0)g_r z^r,
+
+P_(n,t)(z)
+ =sum_(s=0)^t binom(n-1,2s)
+    {f_(2s)z^(2s)-f_(2s+1)z^(2s+1)},              (P5A.102AT)
+```
+
+then
+
+```text
+Q_(j,t)=[z^n]P_(n,t)(z)G(z).                       (P5A.102AU)
+```
+
+If `E(z)` counts paths from zero to `k` having no return to zero after
+time zero, last-exit decomposition gives the coefficientwise-positive
+factorization
+
+```text
+G(z)=F(z)E(z).                                     (P5A.102AV)
+```
+
+**Proof.**  Concatenation identifies a pair consisting of a zero-based
+loop of length `r` and a path from zero to `k` of length `n-r` with a
+walk in `W_n` marked by the visit `w_r=0`.  Hence the numbers of marked
+walks at times `2s` and `2s+1` are respectively
+
+```text
+f_(2s)g_(n-2s),        f_(2s+1)g_(n-2s-1).
+```
+
+Weighted summation is `(P5A.102AS)`, and coefficient extraction is
+`(P5A.102AU)`.  Every endpoint walk has a unique last visit to zero.
+Its prefix is an arbitrary zero-based loop and its suffix is counted by
+`E`, proving `(P5A.102AV)`.  QED.
+
+The summands in `(P5A.102AS)` are not objectwise nonnegative.  At
+`(k,q,j,t)=(6,2,4,2)`, the valid walk
+
+```text
+(0,2,2,0,2,2,4,4,4,4,6)
+```
+
+visits zero at times `0,3` only, and therefore has weight
+
+```text
+1-binom(9,2)=-35.
+```
+
+Nor does the last-exit factorization prove the theorem
+coefficientwise: already in the same case,
+
+```text
+[z^3]F(z)P_(10,2)(z)=-35.
+```
+
+Thus `(P5A.102AS)` reduces the missing lemma to a one-dimensional
+weighted allocation between marked endpoint walks, but it does not
+turn it into an objectwise or coefficientwise sign assertion.
+
+Three natural reflected-slice reductions are also false.  For
+`r=j-s`, the exact binomial ratio
+
+```text
+binom(2j+1,2s)/binom(2j+1,2r)=(2s+1)/(2r+1)       (P5A.102AW)
+```
+
+suggests pairing the upper slice `s` with its lower reflection `r`.
+Exact recurrence finds a negative paired value first at
+
+```text
+(k,q,j,r,s,x)=(6,2,11,1,10,2).
+```
+
+The cumulative reflected tail first fails at `(6,2,12,1,11,2)`, and
+the tail after the proved `t=3` prefix first fails at
+`(6,2,5,4,2)`.  The strict C++ negative controls are
+`character_ring_iter/analyze_su2_reflected_prefix_pairs.cpp` and
+`character_ring_iter/analyze_su2_return_current_factor.cpp`; their
+transcripts are `certificates/su2_reflected_prefix_pairs.log` and
+`certificates/su2_return_current_factor.log`.  These are obstructions
+only to the stated stronger reductions, not to `(FBPC_j)` or
+`(CFBPC)`.
+
+The ordered fusion intervals nevertheless give a new uniform graph
+property which is absent from the general reflected-leaf obstruction.
+
+**Lemma 5A8H27 (outside-in chordality and odd-loop shortcut).**  On the
+even labels, the `q`-fusion graph has the perfect-elimination order
+
+```text
+0,k,2,k-2,4,k-4,... .                              (P5A.102AX)
+```
+
+Consequently it is chordal.  Every closed odd fusion walk admits a
+closed walk with the same basepoint and length shorter by exactly one.
+
+**Proof.**  Use half-label coordinates
+
+```text
+k=2K, q=2Q, x=2X, y=2Y.
+```
+
+The fusion rule is
+
+```text
+|X-Q|<=Y<=X+Q,             X+Y+Q<=2K,              (P5A.102AY)
+```
+
+and the hypothesis `2q<k` is `K>2Q`.  Just before eliminating the
+lower vertex `a` in `(P5A.102AX)`, the remaining vertices form the
+integer interval `[a,K-a]`.  Let `a<Y<Z` be two remaining neighbors of
+`a`.  First, `Z<=a+Q<Y+Q`.  If `Y>=Q`, then
+`|Y-Q|<Z`.  If `Y<Q`, adjacency of `a` and `Y` gives
+`Y>=Q-a`, hence `a>=Q-Y` and again `Z>|Y-Q|`.  Finally,
+
+```text
+Y+Z+Q <= (a+Q)+(K-a)+Q = K+2Q < 2K.
+```
+
+Thus `(P5A.102AY)` makes `Y` and `Z` adjacent, so `a` is simplicial.
+Reflection `X -> K-X` gives the same statement for the upper vertex
+eliminated next.  Induction proves that `(P5A.102AX)` is a
+perfect-elimination order.
+
+For the last assertion, split a closed walk at repeated vertices until
+it is a concatenation of simple cycles and two-edge backtracks.  If its
+length is odd, either it contains a self-loop, which can be deleted
+directly, or one of the simple cycles is odd.  The subgraph induced by
+that cycle has a simplicial vertex, so its two cycle neighbors are
+adjacent.  Replacing the corresponding two-edge arc by this chord
+shortens the original closed walk by one without changing its
+basepoint.  QED.
+
+The strict C++ audit
+`character_ring_iter/analyze_su2_fusion_chordality.cpp` verifies
+`(P5A.102AX)` through level `300`: `5,550` fusion graphs, `565,175`
+eliminated vertices, and `155,495,867` exact remaining-neighbor clique
+tests.  Its transcript is
+`certificates/su2_fusion_chordality.log`.  The source, executable, and
+transcript SHA-256 identities are
+
+```text
+398b6ec2cb252d28004b0a4b002ec27f2afcd705623341d2a01d0b8002c417b5
+4c9eaf57582bd705be459e47c856b8fab4aa03b746746ef144efb404c2fdcdb5
+07e9d78a4945cf4279986569841738efad524bdc2b95dd4cfaf4f38c3f4ec832.
+```
+
+The shortcut supplies a canonical local reduction candidate for the
+odd marked loops in `(P5A.102AS)`.  It is not yet the required
+capacity-preserving allocation: the false individual upper-slice signs
+show that arbitrary shortcut choices cannot be injective.  The
+remaining task is to retain the eliminated triangle data while routing
+it into the positive marked-walk capacities.
+
+Thus the `D_(j,2)` and full-prefix `t=3` affine-wall gaps are closed.
+The remaining combinatorial statement is the arbitrary-prefix
+cumulative current, equivalently the full cross-slice allocation.  It
+is narrower than validity of the candidate moves and narrower than
+objectwise matching: prove `(P5A.102R)` for every admissible
+`k,q,j,t`, construct a canonical projected allocation respecting the
+displayed capacities, or prove the equivalent total marked-return
+inequality `(P5A.102AS)`.
 
 The final edge is unique in both currents:
 `N_(q,k-q)^k=N_(q,q)^0=1`.  Stripping it rewrites the unweighted

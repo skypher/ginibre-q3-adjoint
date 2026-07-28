@@ -1,0 +1,40 @@
+COMMAND
+character_ring_iter/analyze_su2_higher_kernels 300 20
+
+OUTPUT_SUMMARY
+SU2_HIGHER_KERNELS maximum_level=300 maximum_s=20 parameters=5550 coordinates=21476650 result=PASS_DISCOVERY
+KERNEL s=2..20 minimum=0 result=PASS_POINTWISE
+DUAL_KERNEL p=2..20 result=FAIL_POINTWISE
+DUAL_FIRST_WITNESSES
+p=2  witness=(300,100,142) margin=-214364
+p=3  witness=(300,114,234) margin=-467320493808
+p=4  witness=(300,118,242) margin=-1472036486058447491
+p=5  witness=(300,120,254) margin=-3450568545959121160080783
+p=6  witness=(298,120,268) margin=-3820283257700285808232821547046
+p=7  witness=(40,16,40) margin=-25981784439641120
+p=8  witness=(20,8,20) margin=-11473040648939
+p=9  witness=(6,2,2) margin=-803760
+
+INTERPRETATION
+For each even level k, even label q with 2q<k, and 2<=s<=20, the exact
+finite-fusion scan tests every coordinate of
+
+f_(2s)(N_q^(2s+1))_(0,x)-f_(2s+1)(N_q^(2s))_(0,x).
+
+No negative value occurs through level 300.  If this hierarchy were proved
+for arbitrary s,k,q, the semigroup identity would give D_(j,s)>=0 whenever
+2s+1<=2j+2-2s, removing the lower half of every cumulative prefix.
+This is bounded discovery, not that proof.
+
+The complementary upper-half proposal
+
+g_(2p)(N_q^(2p))_(0,x)-g_(2p-1)(N_q^(2p+1))_(0,x)>=0
+
+is false for every tested p.  Therefore the lower hierarchy cannot be
+mirrored to prove the remaining upper slices determinant by determinant.
+
+SOURCE_SHA256
+3dd5a1504606f9ebde75bf02dcd917faeb95e2bb9a5eaac6b434b01c0b1c60ec
+
+EXECUTABLE_SHA256
+2c579dd0f2aaeff5c487bdbda90249b677b2ce0da0f1cebc6c3121c0fc766b88

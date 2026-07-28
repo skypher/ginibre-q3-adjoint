@@ -1,0 +1,248 @@
+SU2_K3_INTERMEDIATE_CHAMBER mask=65 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=65 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=5 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=193 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=193 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=6 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=195 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=195 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=15 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=451 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=451 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=13 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=455 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=455 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=22 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=1088 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=1088 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=126 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=1089 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=1089 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=4 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=1097 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=1097 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=3 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=1217 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=1217 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=3 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=1219 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=1219 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=4 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=1225 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=1225 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=4 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=1227 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=1227 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=6 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=1475 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=1475 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=2 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=1479 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=1479 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=2 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=1483 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=1483 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=2 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=3273 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=3273 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=1 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=3275 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=3275 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=2 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=656843 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=656843 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=1 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=656847 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=656847 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=2 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=658635 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=658635 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=1 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=658651 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=658651 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=1 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=658891 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=658891 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=1 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=665031 result=FEASIBLE
+SU2_K3_INTERMEDIATE_BOUNDED mask=665031 rational_Q_bound=2/1 integer_Q_maximum=2 nonzero_multipliers=1 points=1 result=PASS_EXACT_FINITE
+SU2_K3_INTERMEDIATE_CHAMBER mask=2097216 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2097216 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=130 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2097217 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2097217 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=44 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2097345 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2097345 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=45 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2097347 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2097347 facets=(0,1,2) fixed_coordinates=0 basis=newton positive_coefficients=44 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2097603 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2097603 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=45 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2097607 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2097607 facets=(0,1,2) fixed_coordinates=0 basis=newton positive_coefficients=41 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098119 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098119 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=33 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098240 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098240 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=126 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098241 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098241 facets=(1,2,5) fixed_coordinates=0 basis=monomial positive_coefficients=163 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098241 facets=(0,3,5) fixed_coordinates=0 basis=monomial positive_coefficients=164 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2098241 pair=(0,1) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098249 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098249 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=156 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098369 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098369 facets=(1,2,5) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098369 facets=(0,3,5) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2098369 pair=(0,1) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098371 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098371 facets=(1,2,5) fixed_coordinates=0 basis=newton positive_coefficients=164 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098371 facets=(0,3,5) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2098371 pair=(0,1) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098377 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098377 facets=(1,2,5) fixed_coordinates=0 basis=monomial positive_coefficients=164 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098377 facets=(0,3,5) fixed_coordinates=0 basis=monomial positive_coefficients=164 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2098377 pair=(0,1) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098379 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098379 facets=(1,2,5) fixed_coordinates=0 basis=newton positive_coefficients=163 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098379 facets=(0,3,5) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2098379 pair=(0,1) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098627 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098627 facets=(1,2,5) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098627 facets=(0,3,5) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2098627 pair=(0,1) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098631 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098631 facets=(2,4,6) fixed_coordinates=0 basis=newton positive_coefficients=158 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098631 facets=(0,3,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2098631 pair=(0,4) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098635 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098635 facets=(1,2,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2098639 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2098639 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2099143 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2099143 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=155 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2100425 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2100425 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=156 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2100427 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2100427 facets=(3,4,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2100427 facets=(3,4,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2100427 facets=(0,1,6) fixed_coordinates=0 basis=monomial positive_coefficients=164 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2100427 pair=(0,3) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2100443 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2100443 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=156 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2100683 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2100683 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2229703 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2229703 subset_size=3 maximum_weight=1 total=1 slices=3 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2229707 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2229707 subset_size=3 maximum_weight=1 total=1 slices=3 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2229711 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2229711 subset_size=2 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2230215 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2230215 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=163 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2231499 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2231499 subset_size=3 maximum_weight=1 total=1 slices=3 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2231515 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2231515 facets=(1,2,4) fixed_coordinates=0 basis=monomial positive_coefficients=178 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2231515 facets=(0,2,4) fixed_coordinates=0 basis=monomial positive_coefficients=170 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2231515 subset_size=2 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2231755 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2231755 subset_size=2 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2753991 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2753991 facets=(2,3,4) fixed_coordinates=0 basis=newton positive_coefficients=142 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2753991 facets=(0,3,4) fixed_coordinates=0 basis=newton positive_coefficients=149 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2753991 subset_size=3 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2753995 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2753995 subset_size=3 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2753999 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2753999 facets=(1,4,7) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2753999 facets=(0,3,7) fixed_coordinates=0 basis=newton positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2753999 pair=(0,1) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2754503 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2754503 facets=(0,2,3) fixed_coordinates=0 basis=monomial positive_coefficients=155 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2754511 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2754511 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2755787 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2755787 subset_size=3 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2755803 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2755803 facets=(0,1,2) fixed_coordinates=0 basis=newton positive_coefficients=156 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2756043 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2756043 facets=(2,3,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2756047 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2756047 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2756059 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2756059 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=164 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2762191 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2762191 subset_size=3 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2762695 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2762695 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=98 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2762703 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2762703 facets=(0,1,3) fixed_coordinates=0 basis=monomial positive_coefficients=155 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2821339 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2821339 subset_size=3 maximum_weight=2 total=1 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2821579 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2821579 subset_size=3 maximum_weight=1 total=1 slices=3 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2821583 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2821583 facets=(0,2,3) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2821595 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2821595 facets=(2,3,7) fixed_coordinates=0 basis=newton positive_coefficients=164 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2821595 facets=(4,5,7) fixed_coordinates=0 basis=monomial positive_coefficients=164 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2821595 pair=(1,2) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2821599 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2821599 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2825691 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2825691 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=156 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2827727 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=2827727 subset_size=3 maximum_weight=1 total=2 slices=6 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=2828239 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2828239 facets=(0,1,3) fixed_coordinates=0 basis=monomial positive_coefficients=149 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2828271 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2828271 facets=(1,2,3) fixed_coordinates=0 basis=monomial positive_coefficients=98 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2829775 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2829775 facets=(2,4,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2829775 facets=(1,5,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2829775 pair=(1,2) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2829787 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2829787 facets=(1,2,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2829787 facets=(0,2,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=2829787 pair=(0,1) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2829791 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2829791 facets=(1,2,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2829807 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2829807 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2830287 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2830287 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=2830319 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=2830319 facets=(0,2,3) fixed_coordinates=0 basis=monomial positive_coefficients=155 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=3087835 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=3087835 subset_size=2 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=3091931 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=3091931 subset_size=3 maximum_weight=1 total=1 slices=3 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=3091935 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=3091935 subset_size=2 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=3091951 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=3091951 facets=(1,2,5) fixed_coordinates=0 basis=newton positive_coefficients=205 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=3091951 subset_size=3 maximum_weight=1 total=1 slices=3 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=3091967 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=3091967 subset_size=3 maximum_weight=2 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=3092463 result=FEASIBLE
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=3092463 subset_size=2 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=4136411 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4136411 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=156 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4140507 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140507 facets=(1,3,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140507 facets=(2,3,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140507 facets=(0,3,4) fixed_coordinates=0 basis=monomial positive_coefficients=155 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=4140507 pair=(0,2) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4140511 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140511 facets=(2,3,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4140527 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140527 facets=(1,3,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140527 facets=(2,3,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CONSTANT_SUM mask=4140527 subset_size=3 maximum_weight=1 total=0 slices=1 result=PASS_EXACT_INTEGER_PARTITION
+SU2_K3_INTERMEDIATE_CHAMBER mask=4140543 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140543 facets=(3,5,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140543 facets=(4,5,6) fixed_coordinates=0 basis=monomial positive_coefficients=164 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140543 facets=(2,3,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140543 facets=(2,4,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140543 facets=(1,2,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140543 facets=(0,3,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140543 facets=(0,1,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4140543 facets=(2,4,6) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_PAIR_CUT mask=4140543 pair=(2,5) result=PASS_EXACT_INTEGER_DICHOTOMY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4141039 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4141039 facets=(1,3,4) fixed_coordinates=0 basis=monomial positive_coefficients=155 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4141055 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4141055 facets=(1,2,3) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4144603 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4144603 facets=(2,3,4) fixed_coordinates=0 basis=monomial positive_coefficients=164 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4144607 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4144607 facets=(1,3,4) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4144639 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4144639 facets=(1,2,3) fixed_coordinates=0 basis=monomial positive_coefficients=165 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4157423 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4157423 facets=(0,1,3) fixed_coordinates=0 basis=monomial positive_coefficients=98 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4157439 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4157439 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=155 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4177371 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4177371 facets=(0,1,3) fixed_coordinates=0 basis=monomial positive_coefficients=142 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4177375 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4177375 facets=(0,1,3) fixed_coordinates=0 basis=monomial positive_coefficients=155 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE_CHAMBER mask=4177407 result=FEASIBLE
+SU2_K3_INTERMEDIATE_DIRECT_BASIS mask=4177407 facets=(0,1,2) fixed_coordinates=0 basis=monomial positive_coefficients=155 result=PASS_EXACT_IDENTITY
+SU2_K3_INTERMEDIATE feasible_chambers=102 attempted_chambers=102 certified_chambers=102 degree=9 result=PASS_EXACT_CERTIFICATE

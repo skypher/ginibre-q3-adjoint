@@ -1,0 +1,40 @@
+COMMANDS
+character_ring_iter/analyze_su2_bpc_suffix_reflection 6 2 4 3 --matching
+character_ring_iter/analyze_su2_bpc_suffix_reflection 8 2 4 3 --matching
+character_ring_iter/analyze_su2_bpc_suffix_reflection 10 4 4 3 --matching
+character_ring_iter/analyze_su2_bpc_suffix_reflection 12 4 4 3 --matching
+
+OUTPUT
+SU2_BPC_CUMULATIVE_MATCHING level=6 label=2 prefix=4 truncation=3 negative_paths=17472 positive_paths=22656 positive_nodes=22212 unreachable_positive=444 splice_edges=20159184 rejected_invalid_path_pairs=0 isolated_negative=0 matched=17472 unmatched=0 hall_left=0 hall_right=0 hall_deficit=0 result=PASS_MATCHING
+SU2_BPC_CUMULATIVE_MATCHING hall_left_by_y=1:0,3:0,5:0,7:0 hall_right_by_y=0:0,2:0,4:0,6:0
+SU2_BPC_CUMULATIVE_MATCHING positive_universe_by_y=0:984,2:6048,4:10584,6:5040
+
+SU2_BPC_CUMULATIVE_MATCHING level=8 label=2 prefix=4 truncation=3 negative_paths=6552 positive_paths=16818 positive_nodes=14312 unreachable_positive=2506 splice_edges=5181516 rejected_invalid_path_pairs=0 isolated_negative=0 matched=6552 unmatched=0 hall_left=0 hall_right=0 hall_deficit=0 result=PASS_MATCHING
+SU2_BPC_CUMULATIVE_MATCHING hall_left_by_y=1:0,3:0,5:0,7:0 hall_right_by_y=0:0,2:0,4:0,6:0
+SU2_BPC_CUMULATIVE_MATCHING first_unreachable_positive_moves=XXXXXXXYYX first_unreachable_positive_states=(0,0)(2,0)(0,0)(2,0)(0,0)(2,0)(4,0)(6,0)(6,2)(6,0)(8,0)
+SU2_BPC_CUMULATIVE_MATCHING positive_universe_by_y=0:1122,2:5616,4:7560,6:2520
+
+SU2_BPC_CUMULATIVE_MATCHING level=10 label=4 prefix=4 truncation=3 negative_paths=118512 positive_paths=200480 positive_nodes=175572 unreachable_positive=24908 splice_edges=168013776 rejected_invalid_path_pairs=0 isolated_negative=0 matched=118512 unmatched=0 hall_left=0 hall_right=0 hall_deficit=0 result=PASS_MATCHING
+SU2_BPC_CUMULATIVE_MATCHING hall_left_by_y=1:0,3:0,5:0,7:0 hall_right_by_y=0:0,2:0,4:0,6:0
+SU2_BPC_CUMULATIVE_MATCHING first_unreachable_positive_moves=XXXXXXXYYX first_unreachable_positive_states=(0,0)(4,0)(0,0)(4,0)(0,0)(4,0)(2,0)(6,0)(6,4)(6,0)(10,0)
+SU2_BPC_CUMULATIVE_MATCHING positive_universe_by_y=0:23408,2:60480,4:75600,6:40992
+
+SU2_BPC_CUMULATIVE_MATCHING level=12 label=4 prefix=4 truncation=3 negative_paths=121320 positive_paths=214902 positive_nodes=181186 unreachable_positive=33716 splice_edges=141897912 rejected_invalid_path_pairs=0 isolated_negative=0 matched=121320 unmatched=0 hall_left=0 hall_right=0 hall_deficit=0 result=PASS_MATCHING
+SU2_BPC_CUMULATIVE_MATCHING hall_left_by_y=1:0,3:0,5:0,7:0 hall_right_by_y=0:0,2:0,4:0,6:0
+SU2_BPC_CUMULATIVE_MATCHING first_unreachable_positive_moves=XXXXXXXYYX first_unreachable_positive_states=(0,0)(4,0)(0,0)(4,0)(0,0)(4,0)(6,0)(8,0)(8,4)(8,0)(12,0)
+SU2_BPC_CUMULATIVE_MATCHING positive_universe_by_y=0:33462,2:73080,4:75600,6:32760
+
+INTERPRETATION
+These are bounded exact matching checks for the enlarged graph containing
+the local cumulative-splice operations, simple-current boundary relocation,
+boundary-shell transfer, reflected lower-loop extraction and recoupling,
+and self-loop transfer.  Every generated projected pair is independently
+validated before it enters the graph; all four runs rejected zero invalid
+pairs.  The successful finite matchings do not prove FBPC for arbitrary
+level, label, prefix, or truncation.
+
+SOURCE_SHA256
+33232d0546dffa06a496a77c80e99524c64e831a5f65d8ce0ce01ffc5c9cd2aa
+
+EXECUTABLE_SHA256
+d795914d9f51a121907faec4bb6c231456ca2e13177389cab5b7172d34b97c46

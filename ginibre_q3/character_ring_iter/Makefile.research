@@ -216,6 +216,78 @@ analyze_su2_simple_current_hierarchy: analyze_su2_simple_current_hierarchy.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+analyze_su2_fusion_edge_uncrossing: analyze_su2_fusion_edge_uncrossing.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_bpc_suffix_reflection: analyze_su2_bpc_suffix_reflection.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_fusion_markov_monotonicity: analyze_su2_fusion_markov_monotonicity.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_fusion_chordality: analyze_su2_fusion_chordality.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_d2_kernel: analyze_su2_d2_kernel.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+prove_su2_d2_kernel: prove_su2_d2_kernel.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+prove_su2_d2_intermediate: prove_su2_d2_intermediate.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+analyze_su2_higher_kernels: analyze_su2_higher_kernels.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_m2_compound_sign: analyze_su2_m2_compound_sign.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_kernel_spectral_residues: analyze_su2_kernel_spectral_residues.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_full_prefix_kernel: analyze_su2_full_prefix_kernel.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_reflected_prefix_pairs: analyze_su2_reflected_prefix_pairs.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_return_current_factor: analyze_su2_return_current_factor.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_general_graph_full_prefix_kernel: analyze_general_graph_full_prefix_kernel.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+prove_su2_k3_kernel: prove_su2_k3_kernel.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_k3_intermediate_masks: analyze_su2_k3_intermediate_masks.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+prove_su2_k3_intermediate: prove_su2_k3_intermediate.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+audit_su2_k3_intermediate_formula: audit_su2_k3_intermediate_formula.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 prove_su2_simple_current_dp9: prove_su2_simple_current_dp9.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -233,6 +305,10 @@ verify_su2_seven_deep_small_z3: verify_su2_seven_deep_small_z3.cpp
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -pthread -o $@
 
 verify_su2_seven_shallow_z3: verify_su2_seven_shallow_z3.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -pthread -o $@
+
+verify_su2_rank_two_chambers_z3: verify_su2_rank_two_chambers_z3.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -pthread -o $@
 
@@ -263,6 +339,24 @@ RESEARCH_TARGETS = \
 	analyze_su2_simple_current_moments \
 	analyze_su2_simple_current_transfer \
 	analyze_su2_simple_current_hierarchy \
+	analyze_su2_fusion_edge_uncrossing \
+	analyze_su2_bpc_suffix_reflection \
+	analyze_su2_fusion_markov_monotonicity \
+	analyze_su2_fusion_chordality \
+	analyze_su2_d2_kernel \
+	prove_su2_d2_kernel \
+	prove_su2_d2_intermediate \
+	analyze_su2_higher_kernels \
+	analyze_su2_m2_compound_sign \
+	analyze_su2_kernel_spectral_residues \
+	analyze_su2_full_prefix_kernel \
+	analyze_su2_reflected_prefix_pairs \
+	analyze_su2_return_current_factor \
+	analyze_general_graph_full_prefix_kernel \
+	prove_su2_k3_kernel \
+	analyze_su2_k3_intermediate_masks \
+	prove_su2_k3_intermediate \
+	audit_su2_k3_intermediate_formula \
 	prove_su2_simple_current_dp9 \
 	verify_su2_global_cut_payment_small \
 	verify_su2_seven_residual_z3 \
