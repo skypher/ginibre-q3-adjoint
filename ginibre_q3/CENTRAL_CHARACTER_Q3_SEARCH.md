@@ -12748,6 +12748,203 @@ groups and the `385A_2` credit in `G_1` cannot simply be discarded.
 The zero counts for `(P5A.102CB8F)` remain bounded discovery evidence,
 not a proof of Target 5A8H28R16.
 
+The three grouped blocks also admit a uniform finite-depth affine
+reduction.  This reduction is exact for every wall, not a cutoff in
+`K` or `Q`.  Put `L=2K+2` and
+
+```text
+B_d(a)=binom(a,d) for a>=d, and B_d(a)=0 otherwise.
+```
+
+The ordinary multiplicity of half-label `Y` in the `n`th power is
+
+```text
+m_n(Y)=sum_(r>=0)(-1)^r binom(n,r)
+          B_(n-2)((n-2r)Q-Y+n-2-r),              (P5A.102CB8J)
+```
+
+and Kac--Walton antisymmetrization gives
+
+```text
+u_n(Y)=sum_(a>=0){
+          m_n(aL+Y)-m_n((a+1)L-1-Y)}.             (P5A.102CB8K)
+```
+
+For `3<=n<=10`, support of `m_n` truncates `(P5A.102CB8K)` after
+branch `floor((n-1)/2)`.  Indeed, the omitted next direct or reflected
+image is already strictly above `nQ` on
+
+```text
+Q>=1, h=K-(2Q+1)>=0, 0<=Y<=2Q+1+h.
+```
+
+Every surviving summand is one polynomial times the indicator that
+the integral affine slack
+
+```text
+(n-2r)Q-image-r
+```
+
+is nonnegative.  Substitution into `(P5A.102CB8E)` therefore makes
+each coordinate of `G_0,G_1,G_2` one rational polynomial on each
+activation chamber.
+
+Exact Presburger blocking gives the following complete unbounded
+chamber censuses:
+
+```text
+target     activation hinges     feasible chambers
+G_0                 88                    541
+G_1                112                  1,065
+G_2                 91                    848.      (P5A.102CB8L)
+```
+
+The enumerator and symbolic sign engine are
+`character_ring_iter/prove_su2_t4_groups.cpp`.  An independent
+finite-fusion implementation checks `(P5A.102CB8J)--(P5A.102CB8K)`
+for every power `3,...,10` and reconstructs each grouped vector by
+forming the signed `A_s` first and only then propagating by `N`.
+Through `Q=15` and `0<=h<=8Q`, it agrees in `497,520`
+multiplicity coordinates and `186,570` grouped-vector coordinates.
+Its source and transcript are
+`character_ring_iter/audit_su2_t4_group_formula.cpp` and
+`certificates/su2_t4_group_formula_audit.log`.  This last replay is a
+bounded independent formula audit.  The Presburger counts in
+`(P5A.102CB8L)` are exact unbounded chamber classifications, but a
+classification alone is not a sign proof; Target 5A8H28R16 closes
+only when every listed chamber has an exact nonnegative polynomial,
+Newton, finite, or integer-cone certificate.
+
+The operator--Newton reduction is not special to `t=4`.  It removes
+the arbitrary prefix at every truncation depth.
+
+**Lemma 5A8H28UI (arbitrary-depth operator--Newton hierarchy).**
+For `t>=1` and `0<=s<=t`, define
+
+```text
+A^(t)_s(N)
+ =f_(2s)N^(2t+1-2s)-f_(2s+1)N^(2t-2s),
+
+R^(t)_m(N)
+ =sum_(s=0)^t binom(m,2s)A^(t)_s(N),
+
+V^(t)_j
+ =N^(2j-2t+1)R^(t)_(2j+1)(N)e_K.                (P5A.102CB8M)
+```
+
+Then
+
+```text
+Q_(j,t)=(V^(t)_j)_0,                    j>=t+1.   (P5A.102CB8N)
+```
+
+With the same operator
+
+```text
+(D_NV)_j=V_(j+1)-N^2V_j,
+```
+
+one has `D_N^(2t+1)V^(t)=0`.  Put
+
+```text
+W^(t)_r=(D_N^rV^(t))_(t+1),       0<=r<=2t.
+```
+
+If every `W^(t)_r` is entrywise nonnegative, then
+`Q_(j,t)>=0` for every admissible `j>=t+1`.
+
+Moreover, put
+
+```text
+b^(t)_(r,s)=Delta_2^r binom(2t+3,2s).
+```
+
+For every `r>=t-1`, entrywise nonnegativity of
+`W^(t)_r` follows from that of the anchored kernels
+
+```text
+C_s=f_(2s)N^(2s+1)e_0-f_(2s+1)N^(2s)e_0,
+                                             1<=s<=t. (P5A.102CB8O)
+```
+
+Thus, conditional on the full anchored hierarchy `C_s>=0`, the only
+new kernels at depth `t` are the `t-1` low groups
+
+```text
+L_(t,r)
+ =N^(3+2r)sum_(s=0)^t b^(t)_(r,s)A^(t)_s(N)e_0
+ >=0,                              0<=r<=t-2.    (P5A.102CB8P)
+```
+
+**Proof.**  Expanding `(P5A.102CB8M)` gives
+
+```text
+(V^(t)_j)_0
+ =sum_(s=0)^t binom(2j+1,2s){
+    f_(2s)(N^(2j+2-2s))_(0,K)
+   -f_(2s+1)(N^(2j+1-2s))_(0,K)},
+```
+
+which is the full-prefix current, proving `(P5A.102CB8N)`.
+Each application of `D_N` removes the common two additional powers
+of `N` and takes one step-two forward difference of the binomial
+coefficient.  Since `binom(m,2s)` has degree `2s<=2t`,
+the `(2t+1)`st difference vanishes.  At the base index `t+1`,
+
+```text
+W^(t)_r
+ =N^(3+2r)sum_(s=0)^t
+      b^(t)_(r,s)A^(t)_s(N)e_K.                  (P5A.102CB8Q)
+```
+
+Operator Newton expansion now gives, for `h>=0`,
+
+```text
+V^(t)_(t+1+h)
+ =sum_(r=0)^min(2t,h) binom(h,r)
+      N^(2(h-r))W^(t)_r.                         (P5A.102CB8R)
+```
+
+Every coefficient and matrix on the right is nonnegative if the base
+kernels are, proving the first implication.
+
+For the last assertion, the forward-difference identity used in
+Lemma 5A8H28UH gives
+
+```text
+b^(t)_(r,s)
+ =sum_(a=0)^r binom(r,a)2^(r-a)
+      binom(2t+3,2s-r-a)>=0,
+```
+
+and `b^(t)_(r,s)=0` for `r>2s`.  Reflection by the simple current
+changes `e_K` in `(P5A.102CB8Q)` to `e_0`.  Whenever `s>=1`,
+
+```text
+N^(3+2r)A^(t)_s(N)e_0
+ =N^(2t+3+2r-4s)C_s.                             (P5A.102CB8S)
+```
+
+If `r>=t-1` and `b^(t)_(r,s)` is nonzero, then
+
+```text
+2t+3+2r-4s>=2t+3+2(t-1)-4t=1.
+```
+
+Hence every `s>=1` summand is nonnegative under
+`(P5A.102CB8O)`.  The only possible `s=0` contribution has `r=0`
+and is a positive power of `N` applied to `e_0`.  This proves every
+order `r>=t-1`; the complementary orders are exactly
+`(P5A.102CB8P)`.  QED.
+
+Consequently the arbitrary-factor global-payment lemma now has a
+two-layer exact kernel target: prove the anchored boundary-minor cone
+`C_s>=0` for every `s`, and prove the low groups `(P5A.102CB8P)`.
+For `t=4`, after separating the already nonnegative `C_1,C_2`
+summands, the genuinely new parts of these low groups are precisely
+`G_0,G_1,G_2` in Lemma 5A8H28UH.  This hierarchy is a reduction of
+the unbounded problem, not yet its sign proof.
+
 The new reserve strictly strengthens the scalar loop information, but
 does not by itself close the current.  With
 `H_(n,t)=P_(n,t)F`, coefficientwise nonnegativity of

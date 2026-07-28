@@ -1019,6 +1019,14 @@ bool direct_branch_certificate(
     const Chamber& chamber,
     const std::vector<Polynomial>& constraints
 ) {
+    // Most partition leaves already expose a useful integral facet
+    // coordinate system.  Try that exact identity before asking Z3 to
+    // remove redundant inequalities and detect forced zero facets.
+    // The slower path below is still required for empty and
+    // lower-dimensional leaves.
+    if (direct_facet_certificate(chamber, constraints)) {
+        return true;
+    }
     if (!integer_feasible(constraints)) {
         return true;
     }
@@ -1034,6 +1042,304 @@ bool direct_branch_certificate(
         reduced,
         forced_zero_constraints(reduced)
     );
+}
+
+bool constant_three_sum_certificate(
+    const Chamber& chamber,
+    const std::vector<Polynomial>& constraints
+) {
+    for (std::size_t first = 0; first < constraints.size(); ++first) {
+        for (std::size_t second = first + 1U;
+             second < constraints.size();
+             ++second) {
+            for (std::size_t third = second + 1U;
+                 third < constraints.size();
+                 ++third) {
+                const Polynomial sum =
+                    constraints[first]
+                    + constraints[second]
+                    + constraints[third];
+                int total = -1;
+                if (sum.terms().empty()) {
+                    total = 0;
+                } else if (
+                    sum.terms().size() == 1U
+                    && sum.terms().begin()->first
+                        == Exponent{0, 0, 0}
+                    && sum.terms().begin()->second.denominator() == 1
+                ) {
+                    const Integer numerator =
+                        sum.terms().begin()->second.numerator();
+                    if (numerator >= 0 && numerator <= 10) {
+                        total = numerator.convert_to<int>();
+                    }
+                }
+                if (total < 0) {
+                    continue;
+                }
+
+                bool passed = true;
+                std::size_t pieces = 0U;
+                for (int first_value = 0;
+                     first_value <= total && passed;
+                     ++first_value) {
+                    for (int second_value = 0;
+                         first_value + second_value <= total;
+                         ++second_value) {
+                        ++pieces;
+                        std::vector<Polynomial> branch = constraints;
+                        branch.push_back(
+                            constraints[first]
+                                - constant(first_value)
+                        );
+                        branch.push_back(
+                            constant(first_value)
+                                - constraints[first]
+                        );
+                        branch.push_back(
+                            constraints[second]
+                                - constant(second_value)
+                        );
+                        branch.push_back(
+                            constant(second_value)
+                                - constraints[second]
+                        );
+                        if (
+                            !direct_branch_certificate(
+                                chamber,
+                                branch
+                            )
+                        ) {
+                            passed = false;
+                            break;
+                        }
+                    }
+                }
+                if (!passed) {
+                    continue;
+                }
+                std::cout
+                    << "SU2_K4_INTERMEDIATE_CONSTANT_SUM"
+                    << " mask=" << chamber.mask
+                    << " facets=(" << first
+                    << ',' << second
+                    << ',' << third << ')'
+                    << " total=" << total
+                    << " pieces=" << pieces
+                    << " result=PASS_EXACT_COMPOSITIONS"
+                    << std::endl;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool translated_orthant_certificate(
+    const Polynomial& margin,
+    const std::array<Polynomial, 3>& facets,
+    int minimum_sum,
+    int minimum_first_two = 0
+) {
+    if (
+        minimum_sum < 0
+        || minimum_first_two < 0
+        || minimum_first_two > minimum_sum
+    ) {
+        return false;
+    }
+    std::array<Polynomial, 3> inverse;
+    try {
+        inverse = inverse_facet_map(facets);
+    } catch (const std::runtime_error&) {
+        return false;
+    }
+    const Polynomial pulled = substitute(margin, inverse);
+    const Polynomial x = Polynomial::variable(0);
+    const Polynomial y = Polynomial::variable(1);
+    const Polynomial z = Polynomial::variable(2);
+    for (int first = 0; first <= minimum_sum; ++first) {
+        for (int second = 0;
+             first + second <= minimum_sum;
+             ++second) {
+            if (first + second < minimum_first_two) {
+                continue;
+            }
+            const int third = minimum_sum - first - second;
+            if (
+                !nonnegative_basis(
+                    substitute(
+                        pulled,
+                        std::array<Polynomial, 3>{
+                            x + constant(first),
+                            y + constant(second),
+                            z + constant(third)
+                        }
+                    )
+                )
+            ) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool equal_sum_square_cone_certificate(
+    const Chamber& chamber,
+    const std::vector<Polynomial>& constraints
+) {
+    struct Pair {
+        std::size_t first;
+        std::size_t second;
+        int minimum;
+    };
+    std::vector<Pair> pairs;
+    for (std::size_t first = 0; first < constraints.size(); ++first) {
+        for (std::size_t second = first + 1U;
+             second < constraints.size();
+             ++second) {
+            int minimum = 0;
+            for (int candidate = 1; candidate <= 20; ++candidate) {
+                if (
+                    constraints_imply_sum(
+                        constraints,
+                        constraints[first],
+                        constraints[second],
+                        candidate
+                    )
+                ) {
+                    minimum = candidate;
+                } else {
+                    break;
+                }
+            }
+            if (minimum > 0) {
+                pairs.push_back(Pair{first, second, minimum});
+            }
+        }
+    }
+    for (std::size_t left = 0; left < pairs.size(); ++left) {
+        for (std::size_t right = left + 1U;
+             right < pairs.size();
+             ++right) {
+            const Pair& left_pair = pairs[left];
+            const Pair& right_pair = pairs[right];
+            if (
+                left_pair.first == right_pair.first
+                || left_pair.first == right_pair.second
+                || left_pair.second == right_pair.first
+                || left_pair.second == right_pair.second
+            ) {
+                continue;
+            }
+            const Polynomial offset_polynomial =
+                constraints[right_pair.first]
+                + constraints[right_pair.second]
+                - constraints[left_pair.first]
+                - constraints[left_pair.second];
+            int offset = 0;
+            if (offset_polynomial.terms().empty()) {
+                offset = 0;
+            } else if (
+                offset_polynomial.terms().size() == 1U
+                && offset_polynomial.terms().begin()->first
+                    == Exponent{0, 0, 0}
+                && offset_polynomial.terms().begin()
+                    ->second.denominator() == 1
+            ) {
+                const Integer numerator =
+                    offset_polynomial.terms().begin()
+                        ->second.numerator();
+                if (numerator < -1 || numerator > 1) {
+                    continue;
+                }
+                offset = numerator.convert_to<int>();
+            } else {
+                continue;
+            }
+            if (
+                right_pair.minimum
+                    != left_pair.minimum + offset
+            ) {
+                continue;
+            }
+            const std::array<std::size_t, 2> left_indices{
+                left_pair.first,
+                left_pair.second
+            };
+            const std::array<std::size_t, 2> right_indices{
+                right_pair.first,
+                right_pair.second
+            };
+            for (std::size_t left_choice = 0;
+                 left_choice < 2U;
+                 ++left_choice) {
+                for (std::size_t right_choice = 0;
+                     right_choice < 2U;
+                     ++right_choice) {
+                    const Polynomial& a =
+                        constraints[left_indices[left_choice]];
+                    const Polynomial& b =
+                        constraints[left_indices[1U - left_choice]];
+                    const Polynomial& c =
+                        constraints[right_indices[right_choice]];
+                    const Polynomial& d =
+                        constraints[right_indices[1U - right_choice]];
+
+                    // On a>=c use coordinates
+                    // (b,a-c,c), whose sum is the common total.
+                    const bool first_branch =
+                        translated_orthant_certificate(
+                            chamber.margin,
+                            std::array<Polynomial, 3>{
+                                b,
+                                a - c,
+                                c
+                            },
+                            left_pair.minimum,
+                            offset == -1 ? 1 : 0
+                        );
+                    if (!first_branch) {
+                        continue;
+                    }
+
+                    // The complementary integer branch is c>=a+1.
+                    // Coordinates (d,c-a-1,a) have sum total-1.
+                    const bool second_branch =
+                        translated_orthant_certificate(
+                            chamber.margin,
+                            std::array<Polynomial, 3>{
+                                d,
+                                c - a - constant(1),
+                                a
+                            },
+                            left_pair.minimum + offset - 1
+                        );
+                    if (!second_branch) {
+                        continue;
+                    }
+                    std::cout
+                        << "SU2_K4_INTERMEDIATE_EQUAL_SUM_CONE"
+                        << " mask=" << chamber.mask
+                        << " pairs=("
+                        << left_pair.first << ','
+                        << left_pair.second << ';'
+                        << right_pair.first << ','
+                        << right_pair.second << ')'
+                        << " orientations=("
+                        << left_choice << ','
+                        << right_choice << ')'
+                        << " minimum=" << left_pair.minimum
+                        << " offset=" << offset
+                        << " result=PASS_EXACT_SQUARE_TRIANGULATION"
+                        << std::endl;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 bool pair_cut_certificate(
@@ -1319,17 +1625,21 @@ int main(int argc, char** argv) {
         }
         const Formula formula = make_formula();
         const std::vector<std::uint64_t> masks =
-            feasible_masks(formula);
+            selected_mask.has_value()
+                ? std::vector<std::uint64_t>{*selected_mask}
+                : feasible_masks(formula);
         std::size_t certified = 0U;
         for (std::size_t position = 0; position < masks.size(); ++position) {
-            if (
-                selected_mask.has_value()
-                && masks[position] != *selected_mask
-            ) {
-                continue;
-            }
             const Chamber chamber =
                 make_chamber(formula, masks[position]);
+            if (
+                selected_mask.has_value()
+                && !integer_feasible(chamber.constraints)
+            ) {
+                throw std::runtime_error(
+                    "selected activation mask is infeasible"
+                );
+            }
             const std::vector<Polynomial> domain_constraints(
                 chamber.constraints.begin(),
                 chamber.constraints.begin() + 4
@@ -1367,6 +1677,12 @@ int main(int argc, char** argv) {
                     forced_zero
                 );
                 if (!passed) {
+                    passed = constant_three_sum_certificate(
+                        chamber,
+                        constraints
+                    );
+                }
+                if (!passed) {
                     passed = bounded_integer_certificate(
                         chamber,
                         formula,
@@ -1375,6 +1691,12 @@ int main(int argc, char** argv) {
                 }
                 if (!passed) {
                     passed = sum_cone_certificate(
+                        chamber,
+                        constraints
+                    );
+                }
+                if (!passed) {
+                    passed = equal_sum_square_cone_certificate(
                         chamber,
                         constraints
                     );
