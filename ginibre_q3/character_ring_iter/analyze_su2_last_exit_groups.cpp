@@ -73,6 +73,8 @@ int main(int argc, char** argv) {
         std::uint64_t special_positive_groups = 0;
         std::uint64_t outside_in_prefixes = 0;
         std::uint64_t negative_outside_in_prefixes = 0;
+        std::uint64_t renewal_current_coefficients = 0;
+        std::uint64_t negative_renewal_current_coefficients = 0;
         Integer minimum_nonspecial = 0;
         bool initialized_nonspecial = false;
         Integer minimum_total = 0;
@@ -174,6 +176,34 @@ int main(int argc, char** argv) {
                             continue;
                         }
                         ++rows;
+                        Series nonempty_returns = f;
+                        nonempty_returns[0] = 0;
+                        const Series renewal_current =
+                            product(p, nonempty_returns);
+                        for (int degree = 0; degree <= n; ++degree) {
+                            ++renewal_current_coefficients;
+                            if (renewal_current[
+                                    static_cast<std::size_t>(degree)
+                                ] < 0) {
+                                ++negative_renewal_current_coefficients;
+                                if (
+                                    negative_renewal_current_coefficients
+                                    == 1
+                                ) {
+                                    std::cout
+                                        << "FIRST_NEGATIVE_RENEWAL_CURRENT"
+                                        << " K=" << K
+                                        << " Q=" << Q
+                                        << " j=" << j
+                                        << " t=" << t
+                                        << " degree=" << degree
+                                        << " value=" << renewal_current[
+                                            static_cast<std::size_t>(degree)
+                                        ]
+                                        << '\n';
+                                }
+                            }
+                        }
                         const Series common =
                             product(product(p, f), positive_return);
                         Integer total = 0;
@@ -298,6 +328,10 @@ int main(int argc, char** argv) {
             << " outside_in_prefixes=" << outside_in_prefixes
             << " negative_outside_in_prefixes="
             << negative_outside_in_prefixes
+            << " renewal_current_coefficients="
+            << renewal_current_coefficients
+            << " negative_renewal_current_coefficients="
+            << negative_renewal_current_coefficients
             << " minimum_nonspecial=" << minimum_nonspecial
             << " minimum_total=" << minimum_total
             << " result="

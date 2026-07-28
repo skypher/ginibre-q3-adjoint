@@ -12195,6 +12195,32 @@ is counted by `G_y^B`.  These data reconstruct the no-return endpoint
 walk uniquely, proving `(P5A.102CB5)`.  Coefficient extraction against
 `H_(n,t)` proves `(P5A.102CB6)--(P5A.102CB7)`.  QED.
 
+Because `0` is a leaf whose unique positive neighbour is `Q`, first
+return at `0` also gives the exact renewal identity
+
+```text
+F(z)=1/(1-z^2 L_Q(z)).
+```
+
+Thus `(P5A.102CB6)` has the equivalent form
+
+```text
+J_y(j,t)=[z^n]P_(n,t)(z)(F(z)-1)G_y^B(z).        (P5A.102CB6R)
+```
+
+This removes the unrestricted `Q`-return series from the channel
+formula, but it does not make the remaining scalar factor positive.
+The exact scan finds the first negative coefficient at
+
+```text
+(K,Q,j,t,degree)=(3,1,5,4,7),
+[z^7]P_(12,4)(z)(F(z)-1)=-790.
+```
+
+Hence coefficientwise positivity of the renewal current is a false
+shortcut; the killed Green factors and their outside-in order remain
+essential.
+
 The individual channels in `(P5A.102CB6)` are not all positive.  The
 first bounded failure of the provisional “only `y=K-Q` can be negative”
 rule occurs at
