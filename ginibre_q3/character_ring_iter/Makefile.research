@@ -274,7 +274,19 @@ analyze_su2_return_current_abel: analyze_su2_return_current_abel.cpp
 
 analyze_su2_reduced_current_payment: analyze_su2_reduced_current_payment.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
-		-Wsign-conversion -Wshadow -Werror $< -o $@
+	-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_loop_erased_current: analyze_su2_loop_erased_current.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+	-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_last_exit_groups: analyze_su2_last_exit_groups.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+	-Wsign-conversion -Wshadow -Werror $< -o $@
+
+prove_su2_shell_stable_width: prove_su2_shell_stable_width.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+	-Wsign-conversion -Wshadow -Werror $< -o $@
 
 analyze_su2_q1_divided_difference: analyze_su2_q1_divided_difference.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -413,6 +425,10 @@ RESEARCH_TARGETS = \
 	analyze_su2_reflected_prefix_pairs \
 	analyze_su2_return_current_factor \
 	analyze_su2_return_current_abel \
+	analyze_su2_reduced_current_payment \
+	analyze_su2_loop_erased_current \
+	analyze_su2_last_exit_groups \
+	prove_su2_shell_stable_width \
 	verify_su2_schur_branch_cone \
 	analyze_su2_central_crossing_current \
 	analyze_su2_shell_block_kernel \

@@ -1,0 +1,33 @@
+STATUS
+Exact audit of the chronological loop-erased Green expansion.  The
+identity checks are exact integer equalities.  Skeletonwise signs are
+route-selection diagnostics; Lemma 5A8H28UB proves the expansion
+independently for all admissible parameters.
+
+COMMAND
+character_ring_iter/analyze_su2_loop_erased_current 5 2 5 4
+
+OUTPUT
+LOOP_ERASED_CURRENT K=5 Q=2 j=5 t=4 skeletons=3 negative=0 minimum=151736 minimum_skeleton=2,3,5, negative_first_edge_groups=0 minimum_first_edge_group=151736 total=897600 direct=897600 result=PASS_EXACT_DECOMPOSITION_SKELETONWISE
+
+COMMAND
+character_ring_iter/analyze_su2_loop_erased_current 7 3 6 5
+
+OUTPUT
+FIRST_NEGATIVE skeleton=3,1,2,4,7, margin=-5239928
+LOOP_ERASED_CURRENT K=7 Q=3 j=6 t=5 skeletons=17 negative=5 minimum=-7344000 minimum_skeleton=3,4,7, negative_first_edge_groups=1 minimum_first_edge_group=-7344000 total=346984768 direct=346984768 result=PASS_EXACT_DECOMPOSITION_WITH_SKELETON_NEGATIVES
+
+INTERPRETATION
+In both cases, the sum of all loop-erased skeleton contributions equals
+the independently computed full-prefix current.  The first case is
+skeletonwise nonnegative.  The second has five negative skeletons,
+including minimum -7344000 at skeleton 3,4,7, while their total remains
+346984768.  Thus chronological loop erasure reduces the infinite walk
+sum exactly, but the resulting self-avoiding skeletons still require
+global crossing payment.
+
+SOURCE_SHA256
+74cd39513ddb37bd1cc6a826ff1c0149297a1ad2b9b949094501ed2db41bbb28
+
+EXECUTABLE_SHA256
+c8bea5de8401ea8d9cf186800b5e80c54794b3002b94a79a332e7b8812464af7

@@ -53,6 +53,45 @@ std::vector<Integer> multiply(
     return next;
 }
 
+std::vector<Integer> restricted_returns(
+    int level,
+    int label,
+    int base,
+    int minimum_vertex,
+    int maximum_vertex,
+    int maximum_degree
+) {
+    std::vector<Integer> returns(
+        static_cast<std::size_t>(maximum_degree + 1)
+    );
+    std::vector<Integer> state(static_cast<std::size_t>(level + 1));
+    state[static_cast<std::size_t>(base)] = 1;
+    returns[0] = 1;
+    for (int degree = 1; degree <= maximum_degree; ++degree) {
+        std::vector<Integer> next(static_cast<std::size_t>(level + 1));
+        for (int source = minimum_vertex;
+             source <= maximum_vertex;
+             ++source) {
+            const Integer& coefficient =
+                state[static_cast<std::size_t>(source)];
+            if (coefficient == 0) {
+                continue;
+            }
+            for (int target = minimum_vertex;
+                 target <= maximum_vertex;
+                 ++target) {
+                if (fuses(level, label, source, target)) {
+                    next[static_cast<std::size_t>(target)] += coefficient;
+                }
+            }
+        }
+        state = std::move(next);
+        returns[static_cast<std::size_t>(degree)] =
+            state[static_cast<std::size_t>(base)];
+    }
+    return returns;
+}
+
 std::vector<Integer> multiply_series(
     const std::vector<Integer>& left,
     const std::vector<Integer>& right
@@ -140,6 +179,13 @@ int main(int argc, char** argv) {
         std::uint64_t safe_fibonacci_current_coefficients = 0U;
         std::uint64_t safe_fibonacci_current_negatives = 0U;
         std::uint64_t qge2_fibonacci_current_negatives = 0U;
+        std::uint64_t multibacktrack_current_coefficients = 0U;
+        std::uint64_t multibacktrack_current_negatives = 0U;
+        std::uint64_t endpoint_green_current_coefficients = 0U;
+        std::uint64_t endpoint_green_current_negatives = 0U;
+        std::uint64_t qge2_endpoint_green_current_negatives = 0U;
+        std::uint64_t endpoint_green_residual_coefficients = 0U;
+        std::uint64_t endpoint_green_residual_negatives = 0U;
         std::uint64_t core_suffix_coordinates = 0U;
         std::uint64_t core_suffix_negatives = 0U;
         int maximum_required_head = -1;
@@ -197,6 +243,57 @@ int main(int argc, char** argv) {
                     (half_level - 1) / half_label;
                 const int safe_fibonacci_exponent = exponent;
                 const int minimum_first_passage_degree = exponent + 1;
+                const std::vector<Integer> initial_green =
+                    restricted_returns(
+                        level,
+                        label,
+                        label,
+                        2,
+                        label,
+                        maximum_degree
+                    );
+                const std::vector<Integer> terminal_green =
+                    restricted_returns(
+                        level,
+                        label,
+                        level - label,
+                        2,
+                        level,
+                        maximum_degree
+                    );
+                const std::vector<Integer> endpoint_green =
+                    multiply_series(initial_green, terminal_green);
+                std::vector<Integer> endpoint_green_residual(
+                    static_cast<std::size_t>(maximum_degree + 1)
+                );
+                for (int degree = 0;
+                     degree <= maximum_degree;
+                     ++degree) {
+                    Integer value =
+                        first_passage[static_cast<std::size_t>(degree)];
+                    for (int index = 1; index <= degree; ++index) {
+                        value -= endpoint_green[
+                            static_cast<std::size_t>(index)
+                        ] * endpoint_green_residual[
+                            static_cast<std::size_t>(degree - index)
+                        ];
+                    }
+                    endpoint_green_residual[
+                        static_cast<std::size_t>(degree)
+                    ] = value;
+                    ++endpoint_green_residual_coefficients;
+                    if (value < 0) {
+                        ++endpoint_green_residual_negatives;
+                        if (endpoint_green_residual_negatives == 1U) {
+                            std::cout
+                                << "FIRST_NEGATIVE_ENDPOINT_GREEN_RESIDUAL"
+                                << " level=" << level
+                                << " label=" << label
+                                << " degree=" << degree
+                                << " value=" << value << '\n';
+                        }
+                    }
+                }
                 std::vector<Integer> reduced(
                     static_cast<std::size_t>(maximum_degree + 1)
                 );
@@ -578,6 +675,127 @@ int main(int argc, char** argv) {
                                 }
                             }
                         }
+                        if (half_label >= 2) {
+                            std::vector<Integer> multibacktrack_current = h;
+                            std::vector<int> backtrack_counts{
+                                half_label - 1
+                            };
+                            for (int slot = 1; slot < exponent - 1; ++slot) {
+                                backtrack_counts.push_back(half_label);
+                            }
+                            backtrack_counts.push_back(2 * half_label - 1);
+                            if (
+                                static_cast<int>(backtrack_counts.size())
+                                != exponent
+                            ) {
+                                throw std::runtime_error(
+                                    "incorrect multibacktrack slot count"
+                                );
+                            }
+                            for (const int backtracks : backtrack_counts) {
+                                std::vector<Integer> quotient(
+                                    static_cast<std::size_t>(n + 1)
+                                );
+                                for (int degree = 0; degree <= n; ++degree) {
+                                    quotient[
+                                        static_cast<std::size_t>(degree)
+                                    ] = multibacktrack_current[
+                                        static_cast<std::size_t>(degree)
+                                    ];
+                                    if (degree >= 1) {
+                                        quotient[
+                                            static_cast<std::size_t>(degree)
+                                        ] += quotient[
+                                            static_cast<std::size_t>(
+                                                degree - 1
+                                            )];
+                                    }
+                                    if (degree >= 2) {
+                                        quotient[
+                                            static_cast<std::size_t>(degree)
+                                        ] += backtracks * quotient[
+                                            static_cast<std::size_t>(
+                                                degree - 2
+                                            )];
+                                    }
+                                }
+                                multibacktrack_current = std::move(quotient);
+                            }
+                            for (int degree = 0; degree <= n; ++degree) {
+                                ++multibacktrack_current_coefficients;
+                                if (multibacktrack_current[
+                                        static_cast<std::size_t>(degree)
+                                    ] < 0) {
+                                    ++multibacktrack_current_negatives;
+                                    if (
+                                        multibacktrack_current_negatives
+                                        == 1U
+                                    ) {
+                                        std::cout
+                                            << "FIRST_NEGATIVE_MULTIBACKTRACK_CURRENT"
+                                            << " level=" << level
+                                            << " label=" << label
+                                            << " prefix=" << prefix
+                                            << " truncation=" << truncation
+                                            << " exponent=" << exponent
+                                            << " degree=" << degree
+                                            << " value="
+                                            << multibacktrack_current[
+                                                static_cast<std::size_t>(
+                                                    degree
+                                                )]
+                                            << '\n';
+                                    }
+                                }
+                            }
+                        }
+                        const std::vector<Integer> endpoint_green_current =
+                            multiply_series(h, endpoint_green);
+                        for (int degree = 0; degree <= n; ++degree) {
+                            ++endpoint_green_current_coefficients;
+                            if (endpoint_green_current[
+                                    static_cast<std::size_t>(degree)
+                                ] < 0) {
+                                ++endpoint_green_current_negatives;
+                                if (half_label >= 2) {
+                                    ++qge2_endpoint_green_current_negatives;
+                                    if (
+                                        qge2_endpoint_green_current_negatives
+                                        == 1U
+                                    ) {
+                                        std::cout
+                                            << "FIRST_NEGATIVE_QGE2_ENDPOINT_GREEN_CURRENT"
+                                            << " level=" << level
+                                            << " label=" << label
+                                            << " prefix=" << prefix
+                                            << " truncation=" << truncation
+                                            << " degree=" << degree
+                                            << " value="
+                                            << endpoint_green_current[
+                                                static_cast<std::size_t>(
+                                                    degree
+                                                )]
+                                            << '\n';
+                                    }
+                                }
+                                if (
+                                    endpoint_green_current_negatives == 1U
+                                ) {
+                                    std::cout
+                                        << "FIRST_NEGATIVE_ENDPOINT_GREEN_CURRENT"
+                                        << " level=" << level
+                                        << " label=" << label
+                                        << " prefix=" << prefix
+                                        << " truncation=" << truncation
+                                        << " degree=" << degree
+                                        << " value="
+                                        << endpoint_green_current[
+                                            static_cast<std::size_t>(degree)
+                                        ]
+                                        << '\n';
+                                }
+                            }
+                        }
                         Integer core_suffix = 0;
                         for (int residual_degree = n;
                              residual_degree
@@ -818,6 +1036,28 @@ int main(int argc, char** argv) {
                                     << minimum_first_passage_degree
                                 << " required_head=" << required_head
                                 << " target=" << direct_target << '\n';
+                            for (int degree = 0; degree <= n; ++degree) {
+                                std::cout
+                                    << "ENDPOINT_GREEN_FACTOR"
+                                    << " degree=" << degree
+                                    << " initial="
+                                        << initial_green[
+                                            static_cast<std::size_t>(degree)
+                                        ]
+                                    << " terminal="
+                                        << terminal_green[
+                                            static_cast<std::size_t>(degree)
+                                        ]
+                                    << " combined="
+                                        << endpoint_green[
+                                            static_cast<std::size_t>(degree)
+                                        ]
+                                    << " core="
+                                        << endpoint_green_residual[
+                                            static_cast<std::size_t>(degree)
+                                        ]
+                                    << '\n';
+                            }
                             for (int head = 0;
                                  head <= available;
                                  ++head) {
@@ -901,6 +1141,20 @@ int main(int argc, char** argv) {
                 << safe_fibonacci_current_negatives
             << " qge2_fibonacci_current_negatives="
                 << qge2_fibonacci_current_negatives
+            << " multibacktrack_current_coefficients="
+                << multibacktrack_current_coefficients
+            << " multibacktrack_current_negatives="
+                << multibacktrack_current_negatives
+            << " endpoint_green_current_coefficients="
+                << endpoint_green_current_coefficients
+            << " endpoint_green_current_negatives="
+                << endpoint_green_current_negatives
+            << " qge2_endpoint_green_current_negatives="
+                << qge2_endpoint_green_current_negatives
+            << " endpoint_green_residual_coefficients="
+                << endpoint_green_residual_coefficients
+            << " endpoint_green_residual_negatives="
+                << endpoint_green_residual_negatives
             << " core_suffix_coordinates="
                 << core_suffix_coordinates
             << " core_suffix_negatives="

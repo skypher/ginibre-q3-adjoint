@@ -11375,6 +11375,17 @@ the degree-at-most-ten packet polynomials on those masks.  This replaces
 the false one-cone interpolation by the actual tensor-power chamber
 fan.
 
+The tracked exploratory program
+`character_ring_iter/prove_su2_shell_stable_width.cpp` does not close
+this target.  It interpolates input records only for `2<=d<=26`, assumes
+the residual degree bound when taking finite differences, and peels only
+rectangular boundary layers; it neither derives continuation beyond the
+sampled widths nor separates the diagonal hinge `(P5A.102BO)`.  Moreover,
+no tracked producer or transcript supplies its expected
+`FIXED_OFFSET_CONE_COEFFICIENT` records.  Its terminal status is therefore
+labelled `PASS_FINITE_SAMPLE_INTERPOLATION_ONLY`.  It is route-selection
+diagnostics, not an unbounded certificate.
+
 The required truncated form is explicit.
 
 **Lemma 5A8H28N (fixed tensor-power hinge formula).**  Let
@@ -12026,6 +12037,197 @@ One slot therefore has ordinary length series
 where the coefficient counts compositions into token lengths one and
 two.  Multiplying the `L` independent slot series proves
 `(P5A.102CB)`.  QED.
+
+The first-passage series has two larger canonical factors which retain
+full endpoint-loop shape.  Work in half-label coordinates and, for an
+induced vertex set `D`, let
+
+```text
+F_D(x;z)=sum_(r>=0)(A_D^r)_(x,x)z^r.
+```
+
+**Lemma 5A8H28UA (two-Green core factorization).**  Put
+
+```text
+D_-={1,...,Q},             D_+={1,...,K},
+F_-(z)=F_(D_-)(Q;z),       F_+(z)=F_(D_+)(K-Q;z).
+```
+
+There is a series `C_(K,Q)(z)` with nonnegative integer coefficients
+such that
+
+```text
+E(z)=F_-(z) C_(K,Q)(z) F_+(z).                    (P5A.102CB1)
+```
+
+**Proof.**  A no-return endpoint walk starts with the forced edge `0 -> Q`.
+Let `tau` be its first exit from `D_-`, and let `sigma<tau` be its last
+visit to `Q`.  The segment from the initial `Q` through `sigma` is an
+arbitrary closed walk at `Q` in `D_-`; after its removal, the remaining
+prefix exits `D_-` before returning to `Q`.
+
+The other boundary predecessor is `X=K-Q>Q`.  In the remaining walk,
+let `rho` be the first visit to `X`.  The segment from `rho` through the
+forced penultimate `X` is an arbitrary closed walk at `X` in `D_+`.
+Here `E` is the no-return-to-zero endpoint series from `(P5A.102AV)`,
+so this loop may visit `K` before its final return to `X`; only vertex
+`0` is excluded.
+Remove that segment as well.  The two removed time intervals are
+disjoint since `X>Q` and `rho>=tau`.
+
+Conversely, inserting arbitrary closed `D_-` and `D_+` walks at the two
+marked positions preserves `tau,sigma,rho` and the no-return property.
+The residual marked cores are counted by a nonnegative
+integer series `C_(K,Q)`, giving the bijection `(P5A.102CB1)`.  QED.
+
+This exact factorization still does not make the scalar current
+coefficientwise positive.  At
+
+```text
+(k,q,j,t,d)=(10,4,5,4,5),
+```
+
+exact arithmetic gives
+
+```text
+[z^5]H_(12,4)(z)F_-(z)F_+(z)=-411.               (P5A.102CB2)
+```
+
+The stricter free-monoid subreserve obtained by allowing respectively
+`Q-1,Q,...,Q,2Q-1` safe two-step backtracks at the mandatory milestones
+also fails there, with coefficient `-1228`.  Thus even the two canonical
+endpoint Green blocks leave the positive crossing core `C_(K,Q)`
+load-bearing.  The extended exact C++ analyzer
+`character_ring_iter/analyze_su2_reduced_current_payment.cpp` formally
+divides `E` by `F_-F_+`, checks the residual coefficients, and records
+both negative controls.  The path decomposition above, rather than the
+bounded replay, proves `(P5A.102CB1)` for all `K,Q`.
+
+The entire no-return series has a canonical finite-shape expansion.
+Let `Gamma^+` be the half-label fusion graph induced by
+`{1,...,K}`.  For a self-avoiding path
+
+```text
+gamma=(v_0=Q,v_1,...,v_r=K)
+```
+
+in `Gamma^+`, put
+
+```text
+D_i={1,...,K}\{v_0,...,v_(i-1)}.
+```
+
+**Lemma 5A8H28UB (chronological loop-erased Green expansion).**
+
+```text
+E(z)=z sum_(gamma:Q->K self-avoiding)
+          z^r prod_(i=0)^r F_(D_i)(v_i;z).         (P5A.102CB3)
+```
+
+Consequently, with `n=2j+2`,
+
+```text
+Q_(j,t)=sum_gamma [z^(n-r-1)]
+ H_(n,t)(z) prod_(i=0)^r F_(D_i)(v_i;z).          (P5A.102CB4)
+```
+
+**Proof.**  Delete the forced initial edge `0 -> Q` from a walk counted
+by `E`; the remainder is a walk from `Q` to `K` in `Gamma^+`.
+Chronologically loop-erase it.  If its self-avoiding skeleton is
+`gamma`, the last-exit segment at `v_i` before the edge to `v_(i+1)` is
+an arbitrary closed walk at `v_i` after the earlier skeleton vertices
+have been deleted, hence has series `F_(D_i)(v_i;z)`.  At `v_r=K`, the
+remaining terminal segment is the corresponding arbitrary closed walk
+in `D_r`.  These last-exit blocks and the skeleton reconstruct one
+another uniquely.  Multiplying their series, the `r` skeleton edges,
+and the forced initial edge proves `(P5A.102CB3)`.  Now use
+`Q_(j,t)=[z^n]H_(n,t)E` to obtain `(P5A.102CB4)`.  QED.
+
+The terms in `(P5A.102CB4)` are not individually nonnegative.  At
+
+```text
+(K,Q,j,t)=(7,3,6,5),
+```
+
+there are `17` self-avoiding skeletons.  Five have negative
+contributions; the direct skeleton `(3,4,7)` contributes `-7,344,000`,
+while the sum of all seventeen is `346,984,768`.  Thus loop erasure
+removes arbitrary walk length exactly, but Target 5A8H28R6 still needs
+payment between finitely shaped crossing skeletons.  The exact C++
+analyzer `character_ring_iter/analyze_su2_loop_erased_current.cpp`
+independently reconstructs every Green product and the direct current;
+its transcript is `certificates/su2_loop_erased_current.log`.
+
+Grouping the loop-erased expansion by its first skeleton edge removes
+the exponentially many skeletons.  Put
+
+```text
+D={1,...,K},                  B=D\{Q},
+L_Q(z)=F_D(Q;z),
+G_y^B(z)=sum_(r>=0)(A_B^r)_(y,K)z^r,
+Y={y in B:y adjacent to Q}.
+```
+
+**Lemma 5A8H28UC (last-exit Green channels).**
+
+```text
+E(z)=z^2 L_Q(z) sum_(y in Y)G_y^B(z).             (P5A.102CB5)
+```
+
+Consequently, if
+
+```text
+J_y(j,t)=[z^(n-2)]H_(n,t)(z)L_Q(z)G_y^B(z),
+                                                        (P5A.102CB6)
+```
+
+then
+
+```text
+Q_(j,t)=sum_(y in Y)J_y(j,t).                     (P5A.102CB7)
+```
+
+**Proof.**  After the forced edge `0 -> Q`, take the last visit to `Q`.
+The preceding segment is an arbitrary closed walk at `Q` in the positive
+graph `D`, giving `L_Q`.  The next edge leaves `Q` for one uniquely
+determined `y in Y`; the remaining walk avoids `Q` and ends at `K`, so it
+is counted by `G_y^B`.  These data reconstruct the no-return endpoint
+walk uniquely, proving `(P5A.102CB5)`.  Coefficient extraction against
+`H_(n,t)` proves `(P5A.102CB6)--(P5A.102CB7)`.  QED.
+
+The individual channels in `(P5A.102CB6)` are not all positive.  The
+first bounded failure of the provisional “only `y=K-Q` can be negative”
+rule occurs at
+
+```text
+(K,Q,j,t,y)=(10,4,20,17,7),
+J_y=-584358080265680221571012927691270.
+```
+
+The outside-in cumulative order nevertheless survives.
+
+**Target 5A8H28R13 (last-exit outside-in Green payment).**  Put
+`X=K-Q`.  For every admissible `K,Q,j,t` and every integer `d>=0`,
+prove
+
+```text
+sum_(y in Y, |y-X|>=d) J_y(j,t)>=0.               (P5A.102CB8)
+```
+
+The case `d=0` is exactly `(FBPC_j)` by `(P5A.102CB7)`.  Unlike the
+failed scalar reserves, `(P5A.102CB8)` has absorbed arbitrary walk
+length while retaining the outside-in crossing order.  Unlike the
+full skeleton expansion, it has only `|Y|<=2Q-1` channels.  Thus Target
+5A8H28R13 is a sufficient, finite-channel form of the remaining
+`SU(2)` global-payment lemma.
+
+The exact C++ recurrence
+`character_ring_iter/analyze_su2_last_exit_groups.cpp` constructs all
+channel Green series, verifies `(P5A.102CB7)` against the independent
+endpoint current, and checks every outside-in prefix.  Through `K=60`
+and `j=25`, all `6,116,187` tested prefixes were nonnegative despite
+`119,127` negative individual channels.  This is bounded discovery
+evidence for `(P5A.102CB8)`, not its proof.
 
 The new reserve strictly strengthens the scalar loop information, but
 does not by itself close the current.  With

@@ -12,9 +12,12 @@ OUTPUT
 FIRST_NEGATIVE_DOUBLED_ABEL level=6 label=2 prefix=5 truncation=4 exponent=2 degree=7 value=-1952
 FIRST_NEGATIVE_FIBONACCI_CURRENT level=6 label=2 prefix=5 truncation=4 exponent=2 degree=7 value=-519
 FIRST_NEGATIVE_SAFE_FIBONACCI_CURRENT level=6 label=2 prefix=6 truncation=4 exponent=2 degree=7 value=-3392
+FIRST_NEGATIVE_ENDPOINT_GREEN_CURRENT level=6 label=2 prefix=7 truncation=4 degree=7 value=-11198
 FIRST_NEGATIVE_QGE2_FIBONACCI_CURRENT level=10 label=4 prefix=5 truncation=4 exponent=2 degree=5 value=-1516
+FIRST_NEGATIVE_MULTIBACKTRACK_CURRENT level=10 label=4 prefix=5 truncation=4 exponent=2 degree=5 value=-1228
+FIRST_NEGATIVE_QGE2_ENDPOINT_GREEN_CURRENT level=10 label=4 prefix=5 truncation=4 degree=5 value=-411
 FIRST_NEGATIVE_CORE_SUFFIX level=38 label=18 prefix=25 truncation=11 residual_degree=21 value=-583720490747745899132205379017928387095266859408472494798
-SU2_REDUCED_CURRENT_PAYMENT maximum_level=60 maximum_prefix=25 parameters=210 rows=48510 identities=48510 negative_targets=0 unresolved_rows=0 reduced_lag_two_coefficients=11130 reduced_lag_two_negatives=0 reduced_second_lag_two_negatives=0 reduced_second_lag_two_nonminimal_negatives=0 milestone_lag_two_coefficients=11130 milestone_lag_two_negatives=0 doubled_abel_coefficients=1924230 doubled_abel_negatives=870042 doubled_abel_nonminimal_negatives=864999 fibonacci_residual_coefficients=11130 fibonacci_residual_negatives=0 fibonacci_current_coefficients=1924230 fibonacci_current_negatives=860821 safe_fibonacci_residual_coefficients=11130 safe_fibonacci_residual_negatives=0 safe_fibonacci_current_coefficients=1924230 safe_fibonacci_current_negatives=862822 qge2_fibonacci_current_negatives=821826 core_suffix_coordinates=1610175 core_suffix_negatives=118 maximum_required_head=44 witness=(10,4,25,4,44) maximum_safe_required_head=44 safe_witness=(10,4,25,4,44) maximum_qge2_safe_required_head=44 qge2_safe_witness=(10,4,25,4,44) result=PASS_REDUCED_PAYMENT_DISCOVERY
+SU2_REDUCED_CURRENT_PAYMENT maximum_level=60 maximum_prefix=25 parameters=210 rows=48510 identities=48510 negative_targets=0 unresolved_rows=0 reduced_lag_two_coefficients=11130 reduced_lag_two_negatives=0 reduced_second_lag_two_negatives=0 reduced_second_lag_two_nonminimal_negatives=0 milestone_lag_two_coefficients=11130 milestone_lag_two_negatives=0 doubled_abel_coefficients=1924230 doubled_abel_negatives=870042 doubled_abel_nonminimal_negatives=864999 fibonacci_residual_coefficients=11130 fibonacci_residual_negatives=0 fibonacci_current_coefficients=1924230 fibonacci_current_negatives=860821 safe_fibonacci_residual_coefficients=11130 safe_fibonacci_residual_negatives=0 safe_fibonacci_current_coefficients=1924230 safe_fibonacci_current_negatives=862822 qge2_fibonacci_current_negatives=821826 multibacktrack_current_coefficients=1667666 multibacktrack_current_negatives=888259 endpoint_green_current_coefficients=1924230 endpoint_green_current_negatives=916515 qge2_endpoint_green_current_negatives=814621 endpoint_green_residual_coefficients=11130 endpoint_green_residual_negatives=0 core_suffix_coordinates=1610175 core_suffix_negatives=118 maximum_required_head=44 witness=(10,4,25,4,44) maximum_safe_required_head=44 safe_witness=(10,4,25,4,44) maximum_qge2_safe_required_head=44 qge2_safe_witness=(10,4,25,4,44) result=PASS_REDUCED_PAYMENT_DISCOVERY
 
 INTERPRETATION
 For every Q>=1, Lemma 5A8H28U gives the unbounded factorization
@@ -30,6 +33,19 @@ the residual factor E_F remains necessary.  Proposition 5A8H28V proves
 that its degree-five obstruction persists for every prefix j>=5 and
 forces scalar-safe head depth at least 2j-6.
 
+Lemma 5A8H28UA gives the unbounded two-Green factorization
+
+  E(z)=F_-(z) C_(K,Q)(z) F_+(z),
+  C_(K,Q)>=0 coefficientwise.
+
+The audit formally divides E by F_-F_+ and finds no negative residual
+among 11,130 exact coefficients.  This bounded line checks the
+implementation; the marked-loop bijection proves the factorization.
+The transformed current is nevertheless negative at the exact Q>=2
+witness above, with value -411.  The stronger common multibacktrack
+reserve also fails there, with value -1228.  Hence the residual crossing
+core C_(K,Q) remains load-bearing.
+
 The core-length suffix audit checks 1,610,175 exact coordinates and finds
 118 negatives.  Its first negative is the Proposition 5A8H28W witness
 at (k,q,j,t,r)=(38,18,25,11,21).  Thus scalar outside-in ordering by
@@ -37,7 +53,7 @@ E_F core length is also false: a global allocation must retain core
 shape or an equivalent reflected shell/crossing state.
 
 SOURCE_SHA256
-ddf9c495836188f99ef7761f761082ad8139c24cda0c73da2ba9bfdab02066bf
+6c7cb615a7651f8586f82f1b7740f4ba8284cd9ca583c06d42bb8a92ceef3a1b
 
 EXECUTABLE_SHA256
-77c0a8f597e892e068798a14646c307939ebf7caccd5bb87d8d6e1cc9424037b
+b78a9c96bb5d741d94a338245c7244b60edc904e559bf6086011de4dcbc0958b

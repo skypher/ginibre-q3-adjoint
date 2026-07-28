@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <map>
+#include <set>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -10,6 +11,19 @@
 #include <vector>
 
 #include <boost/multiprecision/cpp_int.hpp>
+
+/*
+ * Referee note.
+ *
+ * This program only interpolates the supplied records at widths
+ * 2 <= d <= 26.  The vanishing finite differences checked below do not
+ * prove that the same polynomial formulas continue at larger widths:
+ * that requires an independent activation-fan theorem.  In particular,
+ * the rectangular boundary peeling below does not resolve the diagonal
+ * P = 3Q hinge recorded in Target 5A8H28R5.  Accordingly, its terminal
+ * status is deliberately labelled as a finite-sample diagnostic, not as
+ * a uniform certificate.
+ */
 
 namespace {
 
@@ -93,6 +107,7 @@ int main() {
         std::map<DatasetKey, std::map<Pair, Integer>> cones;
         std::map<DatasetKey, std::map<int, Integer>> rays;
         std::uint64_t input_coefficients = 0U;
+        std::set<int> observed_widths;
         std::string line;
         while (std::getline(std::cin, line)) {
             if (
@@ -134,6 +149,7 @@ int main() {
             if (d < 2 || d > 26) {
                 throw std::runtime_error("unexpected width");
             }
+            observed_widths.insert(d);
             const DatasetKey base{
                 "",
                 first_order,
@@ -277,6 +293,16 @@ int main() {
                 throw std::runtime_error("unknown cone family");
             }
             ++input_coefficients;
+        }
+        if (
+            input_coefficients == 0U
+            || observed_widths.size() != 25U
+            || *observed_widths.begin() != 2
+            || *observed_widths.rbegin() != 26
+        ) {
+            throw std::runtime_error(
+                "finite diagnostic requires every sampled width 2..26"
+            );
         }
 
         std::uint64_t finite_width_coefficients = 0U;
@@ -548,7 +574,9 @@ int main() {
             << " proved_newton_coefficients=" << proved_coefficients
             << " minimum_coefficient=" << minimum_coefficient
             << " maximum_total_degree=10"
-            << " result=PASS_UNIFORM_NONNEGATIVE_NEWTON_EXPANSIONS\n";
+            << " sampled_width_minimum=2"
+            << " sampled_width_maximum=26"
+            << " result=PASS_FINITE_SAMPLE_INTERPOLATION_ONLY\n";
         return EXIT_SUCCESS;
     } catch (const std::exception& error) {
         std::cerr << "error: " << error.what() << '\n';

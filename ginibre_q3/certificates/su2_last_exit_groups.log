@@ -1,0 +1,27 @@
+STATUS
+Exact bounded diagnostics for Target 5A8H28R13.  The identity count
+compares the last-exit Green channel sum with an independent endpoint
+recurrence.  The outside-in signs are bounded discovery evidence only;
+Lemma 5A8H28UC, not the scan, proves the channel decomposition.
+
+COMMAND
+character_ring_iter/analyze_su2_last_exit_groups 60 25
+
+OUTPUT
+FIRST_NEGATIVE_NONSPECIAL K=10 Q=4 j=20 t=17 y=7 margin=-584358080265680221571012927691270
+SU2_LAST_EXIT_GROUP_SCAN maximum_K=60 maximum_prefix=25 parameters=870 rows=200970 identities=200970 groups=3952410 negative_groups=119127 nonspecial_negative_groups=101410 special_positive_groups=51583 outside_in_prefixes=6116187 negative_outside_in_prefixes=0 minimum_nonspecial=-13194954125373253335846869713925319087996968314119597658041609098478388621384812 minimum_total=0 result=PASS_OUTSIDE_IN_PREFIXES
+
+INTERPRETATION
+All 200,970 last-exit channel decompositions reproduce the independent
+full-prefix current exactly.  Individual-channel localization is false,
+as shown by the displayed nonspecial negative and 119,127 negative
+channels overall.  Nevertheless every one of the 6,116,187 cumulative
+channel sums, ordered from largest |y-(K-Q)| inward, is nonnegative.
+This isolates the unproved statement as the outside-in Green payment
+(P5A.102CB8).
+
+SOURCE_SHA256
+60886d69edd24e6d3c39364a7bf6d74e3177644175365246ab03a1f0d609001e
+
+EXECUTABLE_SHA256
+9b73b4606c9b095b57f8de7d5145180bc2268c02d0274cb97d68419fdae80866
