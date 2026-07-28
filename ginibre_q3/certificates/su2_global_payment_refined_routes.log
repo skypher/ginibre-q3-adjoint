@@ -63,21 +63,31 @@ remains nonnegative:
 
 SU2_CENTRAL_CROSSING_CURRENT maximum_level=60 maximum_prefix=20 target_rows=380800 target_negatives=6881 target_sign_recrossings=2970 target_sign_reversals=6881 maximum_target_sign_changes=2 target_suffix_rows=380800 target_suffix_negatives=0 result=PASS_TARGET_SUFFIX_DISCOVERY
 
-The full suffix cone is not invariant under the parity-twisted
-lower-half fusion matrix:
+The first exact two-reversal target profile is:
 
-SU2_SUFFIX_CONE_INVARIANCE counterexample level=5 label=1 rho=2 target=2 previous=1 current=0 difference=-1 result=FAIL_INVARIANCE
+FIRST_TARGET_SIGN_RECROSSING level=16 label=6 prefix=7 truncation=5 values=0,2666336994,-324069258,43285175244
+
+The full suffix cone is not invariant under the parity-twisted
+lower-half fusion matrix, and no fixed positive power through six
+repairs it:
+
+SU2_SUFFIX_CONE_INVARIANCE counterexample level=5 label=1 operator_power=1 rho=2 target=2 previous=1 current=0 difference=-1 result=FAIL_INVARIANCE
+SU2_SUFFIX_CONE_INVARIANCE counterexample level=5 label=1 operator_power=2 rho=1 target=2 previous=4 current=2 difference=-2 result=FAIL_INVARIANCE
+SU2_SUFFIX_CONE_INVARIANCE counterexample level=5 label=1 operator_power=3 rho=2 target=2 previous=3 current=1 difference=-2 result=FAIL_INVARIANCE
+SU2_SUFFIX_CONE_INVARIANCE counterexample level=5 label=1 operator_power=4 rho=2 target=2 previous=5 current=3 difference=-2 result=FAIL_INVARIANCE
+SU2_SUFFIX_CONE_INVARIANCE counterexample level=5 label=1 operator_power=5 rho=2 target=2 previous=11 current=5 difference=-6 result=FAIL_INVARIANCE
+SU2_SUFFIX_CONE_INVARIANCE counterexample level=5 label=1 operator_power=6 rho=2 target=2 previous=21 current=11 difference=-10 result=FAIL_INVARIANCE
 
 SOURCE_SHA256
 analyze_su2_bpc_suffix_reflection.cpp 77ea80102fc73b5c051e8e1396bc34c5269dd62b48b9d09f3e7dcab11be41387
-analyze_su2_central_crossing_current.cpp b3adcc717df28c7a556b6a25fabf94369da017c34b23ac520b174721568a34b2
-analyze_su2_suffix_cone_invariance.cpp 5f215e1b120d34f43badf7294b61ee6a1d707cb4617579a2d0f82d7cedb74cd8
+analyze_su2_central_crossing_current.cpp e7398cdf9cb362f186e542533036c4cacf9ea89a1632af351c1970c1d1862dc5
+analyze_su2_suffix_cone_invariance.cpp b3898cb8195cf2f89a03404bb5a2b878355327d2cab9e053619a5e68a69793da
 analyze_general_graph_full_prefix_kernel.cpp 4fa8c7db58d67361b1a5a60f515f005d3c3ab7c17cbfa23e4e4d63b4633a56c7
 analyze_reflected_loop_leaf_random.cpp 661ec6784beba56dbd8a2f75bf2a5b556ceb65bdf3898fb69337736b246a068a
 
 EXECUTABLE_SHA256
 analyze_su2_bpc_suffix_reflection eca31e96fe75d857fc0b85e8f6781a36985fef369c658f6d66dab3b280368c2a
-analyze_su2_central_crossing_current cbd4da924ef043fa1206b097e4531c39357e913655e9240465410069082227b1
-analyze_su2_suffix_cone_invariance ccc13c59b01893038ed367417ab5b77465a84c99a4bebdd9d201962d6ce8f5d1
+analyze_su2_central_crossing_current c86db13db1690c41600726be34abdd7feac17427f570c0f8260bb91339ce6979
+analyze_su2_suffix_cone_invariance 68e4e268f8f9dff1d9ced3ca2ca3fee751e41a9b1bdd5987714530f6123fefd7
 analyze_general_graph_full_prefix_kernel eefbb576c0e134ba69e1f7b910f7d6c61e336468bce520873dd4889edf2b5fe0
 analyze_reflected_loop_leaf_random cac32f140d73a57b26d22f0772fe19b4d9fb824320e5c2a4f8f59607fb1007df

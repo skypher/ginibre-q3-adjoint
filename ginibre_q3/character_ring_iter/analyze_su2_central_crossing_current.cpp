@@ -169,6 +169,7 @@ int main(int argc, char** argv) {
         std::uint64_t target_sign_recrossings = 0U;
         std::uint64_t target_sign_reversals = 0U;
         int maximum_target_sign_changes = 0;
+        bool printed_first_target_recrossing = false;
         std::uint64_t target_suffix_rows = 0U;
         std::uint64_t target_suffix_negatives = 0U;
         std::uint64_t adjacent_target_rows = 0U;
@@ -648,6 +649,30 @@ int main(int argc, char** argv) {
                         );
                         if (target_sign_changes > 1) {
                             ++target_sign_recrossings;
+                            if (!printed_first_target_recrossing) {
+                                printed_first_target_recrossing = true;
+                                std::cout
+                                    << "FIRST_TARGET_SIGN_RECROSSING"
+                                    << " level=" << level
+                                    << " label=" << label
+                                    << " prefix=" << prefix
+                                    << " truncation=" << truncation
+                                    << " values=";
+                                for (int target = 0;
+                                     target < paired;
+                                     ++target) {
+                                    if (target != 0) {
+                                        std::cout << ',';
+                                    }
+                                    std::cout << target_values[
+                                        static_cast<std::size_t>(target)
+                                    ][static_cast<std::size_t>(prefix)]
+                                     [static_cast<std::size_t>(
+                                         truncation
+                                     )];
+                                }
+                                std::cout << '\n';
+                            }
                         }
                         Integer inner_reserve = target_values[
                             static_cast<std::size_t>(paired - 1)

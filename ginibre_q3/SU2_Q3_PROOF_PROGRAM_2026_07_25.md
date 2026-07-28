@@ -921,6 +921,24 @@ before any further construction.
    vertices, and a deterministic scan passes 34,061 connected graphs
    through 40 vertices and prefix 50.  This is bounded evidence, not
    the unbounded global-payment proof.
+   Lemma 5A8H28Q now removes the remaining shuffle bookkeeping
+   exactly: `Q_(j,t)` is the difference between the numbers of
+   truncated product walks from `(0,0)` to `(k-q,0)` and to `(k,q)`.
+   Thus the missing theorem is equivalent to a prefix-preserving
+   injection between these two finite path sets.  Lemma 5A8H28R gives
+   a second exact formulation.  If `tau_V` denotes the individual
+   central-crossing target contribution, then the shell suffix
+   `sum_(V>=rho)tau_V` is precisely the torus-weight-`2rho`
+   multiplicity of the virtual lower-level character
+   `sum_V tau_V V_(2V)`.  Hence the shell target is ordinary Laurent
+   weight positivity for this special virtual character.  The ambient
+   weight-positive cone is not fusion-invariant after affine folding:
+   powers one through six of the lower quotient already have exact
+   failures at half-level `K=5` (lower fusion level four).  The viable
+   routes are therefore a
+   direct weight-polynomial factorization retaining the Ferrers
+   crossing, or a canonical loop-erased/reflected realization of the
+   endpoint injection.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail

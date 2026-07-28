@@ -11646,13 +11646,110 @@ satisfies every hypothesis by `(P5A.102E)`, `(P5A.102Q)`, and Lemma
 5A8H27, so this target implies every `(FBPC_j)` and hence the
 arbitrary-factor global-payment lemma.
 
+The same target has two exact forms which remove inessential
+bookkeeping.  The first removes both projected-path pairs and their
+shuffle capacities.  For `m=2j+1`, let
+`P_(m,t)(a,b)` be the set of length-`m` walks in
+`Gamma_q square Gamma_q` from `(0,0)` to `(a,b)` which use exactly
+`2s` second-coordinate moves for some `0<=s<=t`.
+
+**Lemma 5A8H28Q (truncated product-walk endpoint form).**  For every
+admissible `k,q,j,t`,
+
+```text
+Q_(j,t)
+ =|P_(2j+1,t)(k-q,0)|-|P_(2j+1,t)(k,q)|.          (P5A.102BU)
+```
+
+Consequently the `SU(2)` instance needed from Target 5A8H28R6 is
+equivalent to an injection
+
+```text
+P_(2j+1,t)(k,q) -> P_(2j+1,t)(k-q,0)              (P5A.102BV)
+```
+
+for every prefix.  Such an injection may change the number `2s` of
+second-coordinate moves, but must keep it in `{0,2,...,2t}`.
+
+**Proof.**  A path counted at `(k-q,0)` with `2s` second moves has
+multiplicity
+
+```text
+binom(2j+1,2s)
+ (N_q^(2j+1-2s))_(0,k-q)(N_q^(2s))_(0,0).
+```
+
+The fusion edge `k-q -> k` is unique, so this is the positive
+`s`-summand in `(P5A.102C1)`.  At `(k,q)` the analogous multiplicity
+is
+
+```text
+binom(2j+1,2s)
+ (N_q^(2j+1-2s))_(0,k)(N_q^(2s))_(0,q).
+```
+
+The edge `q -> 0` is unique, so this is the negative `s`-summand.
+Summing from `s=0` through `t` proves `(P5A.102BU)`.  The two sets are
+finite, hence their cardinality inequality is equivalent to the
+existence of `(P5A.102BV)`.  QED.
+
+There is also a representation-theoretic description of the exact
+shell cone.  Retain the lower fusion level
+
+```text
+ell=K-1,                    M=floor(ell/2)
+```
+
+from Lemma 5A8H28A.  For fixed `j,t`, let `tau_V` be the individual
+crossing-target contribution, so that
+
+```text
+T_(rho,t)=sum_(V=rho)^M tau_V.
+```
+
+Form the virtual lower-level character
+
+```text
+C_(j,t)=sum_(V=0)^M tau_V V_(2V)^(ell).           (P5A.102BW)
+```
+
+**Lemma 5A8H28R (shell suffixes are weight multiplicities).**  The
+multiplicity of the ordinary torus weight `2rho` in `C_(j,t)` is
+exactly `T_(rho,t)`.  Therefore `(CCS)` for all `rho` is equivalent
+to coefficientwise nonnegativity of the Laurent weight polynomial of
+`C_(j,t)`.
+
+**Proof.**  The weights of `V_(2V)` are
+
+```text
+-2V,-2V+2,...,2V,
+```
+
+each with multiplicity one.  Hence weight `2rho` occurs precisely in
+the summands with `V>=rho`, and its signed multiplicity is
+`sum_(V>=rho)tau_V=T_(rho,t)`.  QED.
+
+Lemma 5A8H28R identifies the smaller cone which the proof actually
+needs: weight-positive virtual `SU(2)` characters on the lower
+alcove.  It does not prove that cone invariant under fusion.  Indeed
+the exact counterexample below shows that the whole weight-positive
+cone is not invariant after affine folding.  The remaining route is
+therefore to prove weight positivity for the special virtual
+character `(P5A.102BW)` using its Ferrers crossing construction, or
+to realize the endpoint injection `(P5A.102BV)` by a canonical
+loop-erased/reflected switch.  Either would prove Target 5A8H28R6.
+
 Two still stronger semigroup shortcuts are false.  The exact
 target-column current has `2,970` sign recrossings through level `60`
 and prefix `20` (maximum two sign changes), although all `380,800`
 outside-in suffixes are nonnegative.  Moreover the full suffix-sum cone
 is not invariant under the parity-twisted lower-half fusion matrix:
-the first failure is already `(ell,Q,rho,target)=(5,1,2,2)`, with
-successive column counts `1,0`.  A proof of Target 5A8H28R6 must
+the first failure is already `(K,Q,rho,target)=(5,1,2,2)` (lower
+fusion level `ell=4`), with
+successive column counts `1,0`.  Passing to any fixed positive power
+does not repair this: powers `2,3,4,5,6` already fail at the same
+level, the square first with successive counts `4,2`.  A proof of
+Target 5A8H28R6 must
 therefore retain a smaller row-convex current cone or the explicit
 downward allocation; neither single-crossing nor invariance of the
 ambient suffix cone is valid.
