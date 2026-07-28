@@ -1,8 +1,9 @@
 STATUS
 Bounded exact diagnostics for the minimal-label slice reduction and
 Targets 5A8H28R8, 5A8H28R11, and 5A8H28R12.  Lemma 5A8H28AB
-closes K=3 exactly; endpoint-ratio descent for every K>=4 remains an
-unbounded proof target.
+closes K=3 exactly.  Lemma 5A8H28AM now proves endpoint-ratio descent
+for every K>=4; this older broad scan remains an independent bounded
+audit, not the proof.
 
 COMMAND
 character_ring_iter/analyze_su2_q1_slice_pairing 100 100
@@ -29,8 +30,9 @@ incidence sandwiches have no negative value, as required by Target
 inequality unboundedly.  All 14,453 normalized Turan-reserve steps are
 nonnegative; this is bounded evidence for Target 5A8H28R11, not its
 proof.  All 571,924 parity-compatible Schur branch steps are
-nonnegative; this is bounded evidence for Target 5A8H28R12, not its
-proof.  The 99 off-parity failures, beginning with value -1 at
+nonnegative; Lemma 5A8H28AM supplies the separate unbounded proof of
+Target 5A8H28R12 from a fixed five-step cone and the exact K=4
+recurrence.  The 99 off-parity failures, beginning with value -1 at
 (K,d,j)=(4,1,1), certify that the parity restriction is genuine.  The
 negative mirror pair is an exact obstruction to proving the terminal
 prefix by independent symmetric slice pairs, and the degree-seven

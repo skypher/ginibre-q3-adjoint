@@ -12838,6 +12838,196 @@ log-concavity defects of the endpoint distribution of
 exit-distribution injection; it is an equivalent restatement of the
 diagonal branch, not yet a proof of `(P5A.102DP)`.
 
+The curvature inequality has a finite-power invariant-cone proof.  Its
+only exceptional level is small enough to diagonalize exactly.
+
+**Lemma 5A8H28AM (five-step Schur-branch cone).**  Target
+5A8H28R12 holds.  In fact, every branch comparison
+`A_(d,j)>=A_(d,j-1)` holds for `K>=5`, without the parity
+restriction.  At `K=4` it holds whenever `K+d` is even, which is
+exactly the required range.
+
+**Proof.**  Put
+
+```text
+a_r=t_(K-1+r),       a_(-1)=a_(-2)=0,
+delta_r=a_r-a_(r-1).                              (P5A.102DQ)
+```
+
+Then
+
+```text
+A_(d,j)-A_(d,j-1)
+ =a_d delta_j-a_(d+1)delta_(j-1).                 (P5A.102DR)
+```
+
+First prove the diagonal comparison.  Let `H=C_2(T_K)`,
+`A_0={0,1}`, `A_1={1,2}`, `Z={K-2,K-1}`, and
+
+```text
+v=e_(A_1)-2e_(A_0).
+```
+
+Every two-by-two minor of `T_K` is nonnegative.  Indeed, a nonzero
+crossed product forces an adjacent principal minor, and that minor is
+`det [[1,1],[1,1]]=0`; all remaining direct products are
+nonnegative.  Hence `H` is entrywise nonnegative.  Lemma 5A8H28AL
+gives
+
+```text
+A_(j,j)-A_(j,j-1)=(H^(K+j-3)v)_Z.                 (P5A.102DS)
+```
+
+For `K>=5`, direct multiplication through five steps gives the
+following coefficient arrays for `H^5v`.  Row `i` lists the
+coefficients at `{i,i+1},{i,i+2},...`; omitted coordinates are zero.
+
+```text
+K=5:
+  0: 38  82 150 112
+  1: 70 192 154
+  2: 138 126
+  3: 42
+
+K=6:
+  0: 38  82 180 195 145
+  1: 70 238 280 216
+  2: 182 245 199
+  3: 105 115
+  4: 40
+
+K=7:
+  0: 38  82 180 195 175  83
+  1: 70 238 280 262 126
+  2: 182 245 243 119
+  3: 105 145  77
+  4: 55  35
+  5: 8
+
+K>=8:
+  0: 38  82 180 195 175  83 30
+  1: 70 238 280 262 126  46
+  2: 182 245 243 119  44
+  3: 105 145  77  30
+  4: 55  35  15
+  5: 8    5
+  6: 1.                                                   (P5A.102DT)
+```
+
+The last table is stable because a five-step walk from `A_0` or
+`A_1` cannot reach label eight.  Thus `H^5v>=0`, and entrywise
+nonnegativity of `H` gives
+
+```text
+H^N v>=0                         for every K>=5 and N>=5. (P5A.102DU)
+```
+
+The only diagonal exponents below five are
+
+```text
+(H^3v)_Z=1       at K=5,
+(H^4v)_Z=14      at K=5,
+(H^4v)_Z=4       at K=6.                          (P5A.102DV)
+```
+
+Equations `(P5A.102DS)--(P5A.102DV)` prove every diagonal comparison
+for `K>=5`.
+
+It remains to treat `K=4`.  In the state order
+
+```text
+01,02,03,12,13,23
+```
+
+the compound matrix is
+
+```text
+H=[0 1 0 1 0 0
+   1 1 1 1 1 0
+   0 1 1 1 1 0
+   1 1 1 0 1 1
+   0 1 1 1 1 1
+   0 0 0 1 1 0].
+```
+
+Put `q_n=(H^n v)_23`.  Exact multiplication gives
+
+```text
+(H^4-3H^2+I)Hv=e_02-e_13=:w,       H^2w=w,       w_23=0,
+q_1=1,                              q_3=3.       (P5A.102DW)
+```
+
+Therefore
+
+```text
+q_(2m+5)=3q_(2m+3)-q_(2m+1).
+```
+
+The odd subsequence is positive and strictly increasing by induction.
+Since the relevant diagonal indices at `K=4` have even `j`, and hence
+odd exponent `K+j-3`, this proves their diagonal comparisons.
+
+For odd `j=2m+1`, the relevant `d` is even and therefore starts at
+`d=j+1`.  The endpoint generating function factors as
+
+```text
+sum_(r>=0) a_r z^r
+ =1/{(1-3z+z^2)(1-z-z^2)}.                        (P5A.102DX)
+```
+
+If `F_n,L_n` are the Fibonacci and Lucas numbers, partial fractions
+give
+
+```text
+a_r={5F_(2r+2)-2F_(2r)-3F_(r+1)-2F_r}/2.
+```
+
+Substitution, followed by the standard Fibonacci addition identities,
+gives the exact shifted difference
+
+```text
+B_m
+ :=a_(2m+2)(a_(2m+1)-a_(2m))
+   -a_(2m+3)(a_(2m)-a_(2m-1))
+
+ =19L_(6m)/10+17F_(6m)/4
+   -12L_(2m)/5-5F_(2m)+2.                         (P5A.102DY)
+```
+
+Here `B_0=1`.  For `m>=1`, the identities
+
+```text
+L_(6m)=L_(2m)^3-3L_(2m)>=6L_(2m),
+F_(6m)=F_(2m){L_(2m)^2-1}>=8F_(2m)
+```
+
+show separately that both positive pairs in `(P5A.102DY)` dominate
+their negative terms.  Hence `B_m>0`.
+
+Finally, the endpoint counts are nondecreasing, so `delta_j>=0`, and
+Lemma 5A8H28AF says that the ratios `a_(r+1)/a_r` are nonincreasing.
+For `K>=5`, `(P5A.102DS)--(P5A.102DV)` therefore give, for `d>=j`,
+
+```text
+delta_j/delta_(j-1)
+ >=a_(j+1)/a_j>=a_(d+1)/a_d,
+```
+
+with the zero-denominator cases read after cross multiplication.
+This is `(P5A.102DR)`.  At `K=4`, use the same argument from `d=j`
+when `j` is even, and from `d=j+1` using `B_m>0` when `j` is odd.
+Every relevant `d` is even, so these are all cases of Target
+5A8H28R12.  QED.
+
+The exact C++ verifier
+`character_ring_iter/verify_su2_schur_branch_cone.cpp` reconstructs
+`C_2(T_K)`, checks every entry of the four arrays in
+`(P5A.102DT)`, verifies their stable support, the three small powers
+in `(P5A.102DV)`, both identities in `(P5A.102DW)`, and the
+Fibonacci--Lucas formula `(P5A.102DY)`.  These are finite local
+identities inside the proof; no bounded scan over `K,d,j` is used to
+infer the theorem.
+
 **Proposition 5A8H28AE (the Turan--incidence pair implies endpoint
 descent).**  Target 5A8H28R9 implies Target 5A8H28R8.
 
@@ -12871,7 +13061,13 @@ where the last sign is `(P5A.102CV)`.  This is precisely Target
 Lemma 5A8H28AF proves the first inequality in Target 5A8H28R9.  By
 Lemma 5A8H28AG, its second inequality compares the endpoint sequences
 before and after deleting the incidence zero mode and is equivalent to
-Target 5A8H28R10.  The stronger alternating ratio sandwich is false:
+Target 5A8H28R10.  Lemma 5A8H28AM and Proposition 5A8H28AK prove that
+target, so Proposition 5A8H28AE proves Target 5A8H28R8 for every
+`K>=4`.  Together with Lemma 5A8H28AB at `K=3`, this closes the
+minimal-label full-prefix current, and hence the complete `q=2`
+global-payment leaf, uniformly in the level.
+
+The stronger alternating ratio sandwich is false:
 at `(K,n)=(4,7)` its cross product has the opposite sign, with value
 `4`.  Thus the proof should establish only the even-time boundary
 current `(P5A.102DA)`.

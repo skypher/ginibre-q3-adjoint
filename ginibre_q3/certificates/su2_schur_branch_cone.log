@@ -1,0 +1,32 @@
+STATUS
+Exact finite-local replay for Lemma 5A8H28AM.  The lemma is an
+unbounded proof of Target 5A8H28R12: the replay checks only the fixed
+five-step cone identity, its finitely many affine-wall truncations,
+and the exact K=4 recurrence/formula used in that proof.  It is not a
+bounded scan used to infer the theorem.
+
+COMMAND
+character_ring_iter/verify_su2_schur_branch_cone
+
+OUTPUT
+SU2_SCHUR_BRANCH_CONE local_levels=5,6,7,stable_8 k4_formula_checks=65 result=PASS_UNBOUNDED_LOCAL_IDENTITIES
+
+INTERPRETATION
+For K>=5, C_2(T_K) is entrywise nonnegative and the checked
+coefficient tables prove
+
+  C_2(T_K)^5(e_{1,2}-2e_{0,1})>=0.
+
+The table is stable from K=8 onward because its five-step support
+cannot reach label eight.  Nonnegative propagation therefore proves
+all powers N>=5 at every level, while the replay checks the only three
+smaller powers used in the proof.  At K=4 it verifies the exact
+odd-time recurrence residual and the shifted Fibonacci--Lucas
+identity.  The document derives the recurrence and closed formula
+symbolically and proves their signs for every index.
+
+SOURCE_SHA256
+2e670bc91a9ddfff2178fdf1aae63c5ea1f171f9045b3309a404c88f81ad569f
+
+EXECUTABLE_SHA256
+da59989db3eab67613266447e78df6b929a002f7ed99c047d1bc65bb198db901

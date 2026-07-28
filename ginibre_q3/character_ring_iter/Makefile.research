@@ -292,6 +292,10 @@ analyze_su2_q1_slice_pairing: analyze_su2_q1_slice_pairing.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+verify_su2_schur_branch_cone: verify_su2_schur_branch_cone.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 analyze_su2_central_crossing_current: analyze_su2_central_crossing_current.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -409,6 +413,7 @@ RESEARCH_TARGETS = \
 	analyze_su2_reflected_prefix_pairs \
 	analyze_su2_return_current_factor \
 	analyze_su2_return_current_abel \
+	verify_su2_schur_branch_cone \
 	analyze_su2_central_crossing_current \
 	analyze_su2_shell_block_kernel \
 	analyze_su2_shell_nearest_formula \
