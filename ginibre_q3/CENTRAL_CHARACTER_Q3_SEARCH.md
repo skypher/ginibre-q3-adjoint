@@ -12278,6 +12278,31 @@ Their transcripts are
 `certificates/su2_q1_core_suffix.log` and
 `certificates/su2_q1_loop_refined_current.log`.
 
+A direct renewal shortcut does not prove `(P5A.102CM)`.  If
+
+```text
+Theta_K(z)/D(z)^(K-1)=1-W_K(z),
+```
+
+then the first negative coefficient found in `W_K` is
+
+```text
+[z^25]W_5(z)=-252388.
+```
+
+Nor can the remaining factor simply be required coefficientwise
+nonnegative: for `(K,j,t,d)=(3,7,3,7)`,
+
+```text
+[z^d] P_(2j+2,t)(z)/Delta_(K+1)(z)=-11198.
+```
+
+The core-suffix analyzer reproduces both exact countercontrols while
+continuing to audit the surviving outside-in suffix target.  Thus a
+proof of Target 5A8H28R7 must retain cancellation between the renewal
+remainder and the shifted current rather than proving either factor
+positive separately.
+
 The strict C++ analyzer
 `character_ring_iter/analyze_su2_reduced_current_payment.cpp`
 independently divides the endpoint series by the displayed reserve.

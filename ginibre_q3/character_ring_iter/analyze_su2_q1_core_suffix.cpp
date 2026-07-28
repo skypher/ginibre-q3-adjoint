@@ -96,6 +96,10 @@ int main(int argc, char** argv) {
         std::uint64_t identities = 0U;
         std::uint64_t residual_coordinates = 0U;
         std::uint64_t residual_negatives = 0U;
+        std::uint64_t renewal_coordinates = 0U;
+        std::uint64_t renewal_negatives = 0U;
+        std::uint64_t shifted_current_coordinates = 0U;
+        std::uint64_t shifted_current_negatives = 0U;
         std::uint64_t suffix_coordinates = 0U;
         std::uint64_t suffix_negatives = 0U;
         std::uint64_t hard_suffix_coordinates = 0U;
@@ -103,6 +107,8 @@ int main(int argc, char** argv) {
         std::uint64_t negative_targets = 0U;
         bool printed_first_suffix_negative = false;
         bool printed_first_hard_suffix_negative = false;
+        bool printed_first_renewal_negative = false;
+        bool printed_first_shifted_current_negative = false;
 
         const int maximum_degree = 2 * maximum_prefix + 2;
         for (int half_level = 3;
@@ -200,6 +206,39 @@ int main(int argc, char** argv) {
                     "incorrect minimal residual coefficient"
                 );
             }
+            std::vector<Integer> renewal(
+                static_cast<std::size_t>(
+                    maximum_degree - half_level + 1
+                )
+            );
+            for (int degree = 1;
+                 half_level + degree <= maximum_degree;
+                 ++degree) {
+                Integer value = residual[
+                    static_cast<std::size_t>(half_level + degree)
+                ];
+                for (int first = 1; first < degree; ++first) {
+                    value -= renewal[static_cast<std::size_t>(first)]
+                        * residual[
+                            static_cast<std::size_t>(
+                                half_level + degree - first
+                            )
+                        ];
+                }
+                renewal[static_cast<std::size_t>(degree)] = value;
+                ++renewal_coordinates;
+                if (value < 0) {
+                    ++renewal_negatives;
+                    if (!printed_first_renewal_negative) {
+                        printed_first_renewal_negative = true;
+                        std::cout
+                            << "FIRST_NEGATIVE_RENEWAL"
+                            << " half_level=" << half_level
+                            << " degree=" << degree
+                            << " value=" << value << '\n';
+                    }
+                }
+            }
 
             for (int prefix = 4;
                  prefix <= maximum_prefix;
@@ -248,6 +287,43 @@ int main(int argc, char** argv) {
                          copy < half_level - 1;
                          ++copy) {
                         h = divide_by_fibonacci(h);
+                    }
+
+                    for (int shifted_degree = 0;
+                         half_level + shifted_degree <= n;
+                         ++shifted_degree) {
+                        Integer shifted_current = 0;
+                        for (int index = 0;
+                             index <= shifted_degree;
+                             ++index) {
+                            shifted_current += current[
+                                static_cast<std::size_t>(index)
+                            ] * endpoints[
+                                static_cast<std::size_t>(
+                                    half_level
+                                    + shifted_degree
+                                    - index
+                                )
+                            ];
+                        }
+                        ++shifted_current_coordinates;
+                        if (shifted_current < 0) {
+                            ++shifted_current_negatives;
+                            if (
+                                !printed_first_shifted_current_negative
+                            ) {
+                                printed_first_shifted_current_negative = true;
+                                std::cout
+                                    << "FIRST_NEGATIVE_SHIFTED_CURRENT"
+                                    << " half_level=" << half_level
+                                    << " prefix=" << prefix
+                                    << " truncation=" << truncation
+                                    << " shifted_degree="
+                                        << shifted_degree
+                                    << " value=" << shifted_current
+                                    << '\n';
+                            }
+                        }
                     }
 
                     Integer suffix = 0;
@@ -320,6 +396,12 @@ int main(int argc, char** argv) {
             << " identities=" << identities
             << " residual_coordinates=" << residual_coordinates
             << " residual_negatives=" << residual_negatives
+            << " renewal_coordinates=" << renewal_coordinates
+            << " renewal_negatives=" << renewal_negatives
+            << " shifted_current_coordinates="
+                << shifted_current_coordinates
+            << " shifted_current_negatives="
+                << shifted_current_negatives
             << " suffix_coordinates=" << suffix_coordinates
             << " suffix_negatives=" << suffix_negatives
             << " hard_suffix_coordinates=" << hard_suffix_coordinates
@@ -328,13 +410,19 @@ int main(int argc, char** argv) {
             << " result="
                 << (
                     residual_negatives == 0U
+                        && renewal_negatives > 0U
+                        && shifted_current_negatives > 0U
+                        && suffix_negatives == 0U
                         && hard_suffix_negatives == 0U
                         && negative_targets == 0U
-                        ? "PASS_Q1_CORE_SUFFIX_DISCOVERY"
+                        ? "PASS_Q1_CORE_SUFFIX_WITH_NEGATIVE_CONTROLS"
                         : "FAIL_Q1_CORE_SUFFIX"
                 )
             << '\n';
         return residual_negatives == 0U
+                && renewal_negatives > 0U
+                && shifted_current_negatives > 0U
+                && suffix_negatives == 0U
                 && hard_suffix_negatives == 0U
                 && negative_targets == 0U
             ? EXIT_SUCCESS
