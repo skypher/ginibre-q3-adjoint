@@ -38,8 +38,13 @@ bool model_boolean(
 
 }  // namespace
 
-int main() {
+int main(int argc, char** argv) {
     try {
+        const bool list_masks =
+            argc == 2 && std::string(argv[1]) == "--list";
+        if (argc != 1 && !list_masks) {
+            throw std::runtime_error("usage: [--list]");
+        }
         z3::context context;
         z3::solver solver(context);
         const z3::expr q = context.int_const("Q");
@@ -146,6 +151,27 @@ int main() {
             << " minimum_active=" << minimum_active
             << " maximum_active=" << maximum_active
             << " result=PASS_EXACT_CENSUS\n";
+        if (list_masks) {
+            std::vector<std::uint64_t> numeric_masks;
+            numeric_masks.reserve(masks.size());
+            for (const std::string& mask : masks) {
+                std::uint64_t numeric = 0U;
+                for (std::size_t index = 0U;
+                     index < mask.size();
+                     ++index) {
+                    if (mask[index] == '1') {
+                        numeric |= std::uint64_t{1} << index;
+                    }
+                }
+                numeric_masks.push_back(numeric);
+            }
+            std::sort(numeric_masks.begin(), numeric_masks.end());
+            for (const std::uint64_t mask : numeric_masks) {
+                std::cout
+                    << "SU2_K4_INTERMEDIATE_MASK value="
+                    << mask << '\n';
+            }
+        }
         return EXIT_SUCCESS;
     } catch (const std::exception& error) {
         std::cerr

@@ -364,9 +364,19 @@ prove_su2_k4_intermediate: prove_su2_k4_intermediate.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
 
+prove_su2_k4_masks_shard: prove_su2_k4_masks_shard.cpp \
+		prove_su2_k4_intermediate
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -pthread -o $@
+
 prove_su2_t4_groups: prove_su2_t4_groups.cpp prove_su2_k4_intermediate.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+prove_su2_t4_groups_shard: prove_su2_t4_groups_shard.cpp \
+		prove_su2_t4_groups
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -pthread -o $@
 
 audit_su2_t4_group_formula: audit_su2_t4_group_formula.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -464,7 +474,9 @@ RESEARCH_TARGETS = \
 	analyze_su2_k4_intermediate_masks \
 	audit_su2_k4_intermediate_formula \
 	prove_su2_k4_intermediate \
+	prove_su2_k4_masks_shard \
 	prove_su2_t4_groups \
+	prove_su2_t4_groups_shard \
 	audit_su2_t4_group_formula \
 	prove_su2_k3_intermediate \
 	audit_su2_k3_intermediate_formula \

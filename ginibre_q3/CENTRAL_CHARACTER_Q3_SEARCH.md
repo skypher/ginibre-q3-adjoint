@@ -12815,6 +12815,57 @@ classification alone is not a sign proof; Target 5A8H28R16 closes
 only when every listed chamber has an exact nonnegative polynomial,
 Newton, finite, or integer-cone certificate.
 
+**Lemma 5A8H28UI0 (exact `G_0` block).**  For every `Q>=1`,
+`K>=2Q+1`, the vector `G_0` in `(P5A.102CB8E)` is entrywise
+nonnegative.
+
+**Proof.**  Formula `(P5A.102CB8J)--(P5A.102CB8K)` and exact
+Presburger blocking partition the complete unbounded domain
+
+```text
+Q>=1,                 h=K-(2Q+1)>=0,
+0<=Y<=2Q+1+h
+```
+
+into the `541` feasible `G_0` activation chambers in
+`(P5A.102CB8L)`.  On each chamber the coordinate of `G_0` is one
+rational polynomial.  Exact rational reconstruction certifies its
+sign by a nonnegative monomial or Newton identity, a constant-sum
+composition cone, an equal-sum cone, a product partition, or a
+pair-cut identity.  Every identity is re-expanded coefficientwise
+with `boost::rational<cpp_int>` arithmetic; the Presburger solver is
+used only to establish exhaustive chamber feasibility and exact
+linear implications.
+
+The source-bound transcript
+`certificates/su2_t4_g0_exact.log` begins with
+
+```text
+SU2_T4_GROUP_MASKS target=g0 hinges=88 masks=541 result=PASS_EXACT_CENSUS
+```
+
+and ends with
+
+```text
+SU2_T4_GROUP target=g0 attempted=541 certified=541 result=PASS_EXACT_CERTIFICATE
+```
+
+The included certificate engine, group driver, executable, and
+transcript SHA-256 identities are respectively
+
+```text
+f6b1a7ed827eb3819361cba5e1420ba1fa44421aafa86b50b13824e7cb76a5ce
+24de7ec520121c50f1b48b5a749f080e817c93a88a8be8f8af1344f1fb7e94ac
+1eed295fe899e1a82ff9b807d2ed14174020fb12dcf0781e5a690b6311fc0b41
+7d6679a53678369106fdd653d63317c2c3eed5477b47747666f79ac4b3826ee0.
+```
+
+Thus the chamber census and every chamber sign are exact and
+unbounded; no cutoff in `K,Q`, or `Y` is used.  QED.
+
+Consequently the still-open part of Target 5A8H28R16 is exactly
+`C_4>=0`, `G_1>=0`, and `G_2>=0`.
+
 The operator--Newton reduction is not special to `t=4`.  It removes
 the arbitrary prefix at every truncation depth.
 
@@ -12937,6 +12988,151 @@ and is a positive power of `N` applied to `e_0`.  This proves every
 order `r>=t-1`; the complementary orders are exactly
 `(P5A.102CB8P)`.  QED.
 
+The hierarchy also has an exact recursion in the truncation depth.
+This exposes the amount of inherited credit available to pay the one
+new boundary defect introduced at each depth.
+
+**Lemma 5A8H28UI1 (cross-depth Pascal payment recursion).**  Extend
+the notation in `(P5A.102CB8P)` to every `r>=0` by putting
+
+```text
+mathcalL_(t,r)
+ =N^(3+2r) sum_(s=0)^t
+      b^(t)_(r,s)A^(t)_s(N)e_0.                  (P5A.102CB8T)
+```
+
+Thus `mathcalL_(t,r)=JW^(t)_r` for `0<=r<=2t`.  Put
+
+```text
+B_t=f_(2t)N-f_(2t+1)I.
+```
+
+For every `t>=2` and `r>=0`,
+
+```text
+mathcalL_(t,r)
+ =N^2 mathcalL_(t-1,r)+mathcalL_(t-1,r+1)
+  +b^(t)_(r,t)N^(3+2r)B_t e_0.                  (P5A.102CB8U)
+```
+
+Here `mathcalL_(t-1,r)=0` once its forward difference order exceeds
+`2t-2`.  In particular, if all depth-`t-1` Newton kernels are
+nonnegative, the only signed term newly requiring payment at depth
+`t` is the last summand in `(P5A.102CB8U)`.  For `r>=t-1` that
+summand is
+
+```text
+b^(t)_(r,t)N^(3+2r-2t)C_t>=0,                   (P5A.102CB8V)
+```
+
+under the anchored inequality `C_t>=0`.  For `0<=r<=t-2`, the exact
+remaining payment inequality is
+
+```text
+N^2 mathcalL_(t-1,r)+mathcalL_(t-1,r+1)
+ >=-b^(t)_(r,t)N^(3+2r)B_t e_0.                 (P5A.102CB8W)
+```
+
+**Proof.**  For `s<=t-1`,
+
+```text
+A^(t)_s=N^2A^(t-1)_s.
+```
+
+Moreover, with `Delta_2F(m)=F(m+2)-F(m)`,
+
+```text
+b^(t)_(r,s)
+ =Delta_2^r binom(2t+3,2s)
+ =b^(t-1)_(r,s)+b^(t-1)_(r+1,s).                (P5A.102CB8X)
+```
+
+Indeed the second summand in `(P5A.102CB8X)` is the `r`th
+step-two difference of
+`binom(2t+3,2s)-binom(2t+1,2s)`.  Substitute these two identities
+into `(P5A.102CB8T)`.  The first coefficient block is
+`N^2mathcalL_(t-1,r)`, the second is
+`mathcalL_(t-1,r+1)`, and the omitted `s=t` term is exactly the last
+summand in `(P5A.102CB8U)`.  Finally
+
+```text
+N^(3+2r)B_t e_0=N^(3+2r-2t)C_t
+```
+
+whenever `r>=t-1`, proving `(P5A.102CB8V)`;
+rearrangement gives `(P5A.102CB8W)`.  QED.
+
+Thus the arbitrary-depth problem is now also a triangular quantitative
+induction: the two complete reserves inherited from depth `t-1` must
+pay the insufficiently smoothed new defect `B_t` in precisely the
+`t-1` rows `(P5A.102CB8W)`.  This recursion does not assert those
+payments; it rules out treating the low groups at different depths as
+unrelated chamber problems.
+
+**Corollary 5A8H28UI2 (exact smoothing distance).**  Assume the
+anchored hierarchy `C_s>=0`.  For every `t>=2` and
+`0<=r<=t-2`,
+
+```text
+N^(2t-3-2r)mathcalL_(t,r)
+ =1_(r=0)N^(4t+1)e_0
+  +sum_(s=1)^t b^(t)_(r,s)N^(4(t-s))C_s
+ >=0.                                             (P5A.102CB8Y)
+```
+
+Thus the final low row `r=t-2` is already nonnegative after one
+additional fusion step; the preceding rows require respectively
+three, five, and further odd smoothing steps.  The missing
+global-payment lemma is exactly the removal of these smoothing
+powers, not positivity after arbitrary propagation.
+
+**Proof.**  Multiply `(P5A.102CB8T)` by
+`N^(2t-3-2r)`.  For `s>=1`, identity
+`(P5A.102CB8S)` becomes
+
+```text
+N^(2t-3-2r)N^(3+2r)A^(t)_s e_0
+ =N^(4(t-s))C_s.
+```
+
+For `s=0`, the forward-difference coefficient is one at `r=0` and
+zero for `r>=1`, leaving `N^(4t+1)e_0`.  Every coefficient and
+matrix power in `(P5A.102CB8Y)` is nonnegative.  QED.
+
+**Corollary 5A8H28UI3 (anchored half-plane propagation).**  Assume
+`C_s>=0` for every `1<=s<=t`.  Then
+
+```text
+Q_(j,t)>=0                         for every j>=2t. (P5A.102CB8Z)
+```
+
+Consequently, conditional on the anchored hierarchy, the complete
+full-prefix/global-payment problem reduces to the scalar diagonal
+band
+
+```text
+Q_(j,t)>=0,             t+1<=j<=2t-1.             (P5A.102CB8ZA)
+```
+
+This is strictly weaker than proving every low vector
+`mathcalL_(t,r)` entrywise nonnegative.
+
+**Proof.**  Write `j=t+1+h`, so `h>=t-1`.  In the operator Newton
+expansion `(P5A.102CB8R)`, orders `r>=t-1` are entrywise
+nonnegative by `(P5A.102CB8O)--(P5A.102CB8S)`.  For
+`0<=r<=t-2`, put `d=2t-3-2r`.  Corollary 5A8H28UI2 gives
+`N^d mathcalL_(t,r)>=0`, while
+
+```text
+2(h-r)-d=2h-2t+3>=1.
+```
+
+Hence `N^(2(h-r))mathcalL_(t,r)>=0` as well.  Reflection by the
+simple current commutes with `N`, so every summand in
+`(P5A.102CB8R)` is entrywise nonnegative.  Taking coordinate zero
+and using `(P5A.102CB8N)` proves `(P5A.102CB8Z)`.  The only
+admissible indices not covered are exactly `(P5A.102CB8ZA)`.  QED.
+
 Consequently the arbitrary-factor global-payment lemma now has a
 two-layer exact kernel target: prove the anchored boundary-minor cone
 `C_s>=0` for every `s`, and prove the low groups `(P5A.102CB8P)`.
@@ -12944,6 +13140,12 @@ For `t=4`, after separating the already nonnegative `C_1,C_2`
 summands, the genuinely new parts of these low groups are precisely
 `G_0,G_1,G_2` in Lemma 5A8H28UH.  This hierarchy is a reduction of
 the unbounded problem, not yet its sign proof.
+
+For the endpoint theorem alone, Corollary 5A8H28UI3 supplies the
+weaker alternative target: prove the same anchored cone and only the
+scalar band `(P5A.102CB8ZA)`.  Thus future work need not establish
+the stronger coefficientwise low groups at every depth unless that
+extra cone is itself useful for the allocation.
 
 The new reserve strictly strengthens the scalar loop information, but
 does not by itself close the current.  With
