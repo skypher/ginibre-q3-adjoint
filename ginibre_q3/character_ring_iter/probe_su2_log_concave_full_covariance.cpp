@@ -121,8 +121,12 @@ int main(int argc, char** argv) {
         std::atomic<int> next_sample{0};
         std::atomic<unsigned long long> determinants{0};
         std::atomic<unsigned long long> counterexamples{0};
+        std::atomic<unsigned long long> negative_mixed_differences{0};
+        std::atomic<unsigned long long> square_log_concavity_failures{0};
+        std::atomic<unsigned long long> normalized_decrease_failures{0};
         std::mutex failure_mutex;
         Failure failure;
+        Failure mixed_failure;
         auto worker = [&]() {
             while (true) {
                 const int sample =
@@ -139,39 +143,42 @@ int main(int argc, char** argv) {
                 );
                 const int length =
                     2 + static_cast<int>(generator() % 19ULL);
-                const int denominator =
-                    2 + static_cast<int>(generator() % 127ULL);
+                const int denominator = 1024;
+                const int shift =
+                    static_cast<int>(generator() % 11ULL);
                 std::vector<int> numerators(
                     static_cast<std::size_t>(length - 1)
                 );
                 for (int& numerator : numerators) {
-                    numerator =
-                        1
-                        + static_cast<int>(
-                            generator()
-                            % static_cast<unsigned long long>(
-                                3 * denominator
-                            )
-                        );
+                    const int exponent =
+                        static_cast<int>(generator() % 21ULL);
+                    const int mantissa =
+                        1 + static_cast<int>(generator() % 3ULL);
+                    numerator = mantissa * (1 << exponent);
                 }
                 std::sort(
                     numerators.begin(),
                     numerators.end(),
                     std::greater<int>()
                 );
-                std::vector<Integer> profile(
+                std::vector<Integer> core(
                     static_cast<std::size_t>(length)
                 );
-                profile[0] = 1;
+                core[0] = 1;
                 for (int power = 1; power < length; ++power) {
-                    profile[0] *= denominator;
+                    core[0] *= denominator;
                 }
                 for (int index = 1; index < length; ++index) {
-                    profile[static_cast<std::size_t>(index)] =
-                        profile[static_cast<std::size_t>(index - 1)]
+                    core[static_cast<std::size_t>(index)] =
+                        core[static_cast<std::size_t>(index - 1)]
                         * numerators[static_cast<std::size_t>(index - 1)]
                         / denominator;
                 }
+                std::vector<Integer> profile(
+                    static_cast<std::size_t>(shift),
+                    Integer{0}
+                );
+                profile.insert(profile.end(), core.begin(), core.end());
 
                 std::vector<std::vector<Integer>> transforms(
                     static_cast<std::size_t>(maximum_label + 1)
@@ -184,6 +191,7 @@ int main(int argc, char** argv) {
                 std::vector<Integer> anchored(
                     static_cast<std::size_t>(maximum_label + 1)
                 );
+                anchored[0] = norm;
                 for (int label = 1; label <= maximum_label; ++label) {
                     anchored[static_cast<std::size_t>(label)] =
                         inner(
@@ -191,6 +199,38 @@ int main(int argc, char** argv) {
                             transforms[static_cast<std::size_t>(label)]
                         );
                 }
+                for (int label = 1; label < maximum_label; ++label) {
+                    if (
+                        anchored[static_cast<std::size_t>(label)]
+                            * anchored[static_cast<std::size_t>(label)]
+                        < anchored[static_cast<std::size_t>(label - 1)]
+                            * anchored[static_cast<std::size_t>(label + 1)]
+                    ) {
+                        square_log_concavity_failures.fetch_add(
+                            1,
+                            std::memory_order_relaxed
+                        );
+                    }
+                }
+                for (int label = 1; label <= maximum_label; ++label) {
+                    if (
+                        (2 * label - 1)
+                            * anchored[static_cast<std::size_t>(label)]
+                        > (2 * label + 1)
+                            * anchored[static_cast<std::size_t>(label - 1)]
+                    ) {
+                        normalized_decrease_failures.fetch_add(
+                            1,
+                            std::memory_order_relaxed
+                        );
+                    }
+                }
+                std::vector<std::vector<Integer>> determinant_matrix(
+                    static_cast<std::size_t>(maximum_label + 1),
+                    std::vector<Integer>(
+                        static_cast<std::size_t>(maximum_label + 1)
+                    )
+                );
                 for (int q = 1; q <= maximum_label; ++q) {
                     for (int a = 1; a <= maximum_label; ++a) {
                         const Integer determinant =
@@ -201,6 +241,8 @@ int main(int argc, char** argv) {
                             )
                             - anchored[static_cast<std::size_t>(q)]
                                 * anchored[static_cast<std::size_t>(a)];
+                        determinant_matrix[static_cast<std::size_t>(q)]
+                            [static_cast<std::size_t>(a)] = determinant;
                         determinants.fetch_add(
                             1,
                             std::memory_order_relaxed
@@ -228,6 +270,43 @@ int main(int argc, char** argv) {
                         }
                     }
                 }
+                for (int q = 1; q <= maximum_label; ++q) {
+                    for (int a = 1; a <= maximum_label; ++a) {
+                        const Integer mixed =
+                            determinant_matrix[static_cast<std::size_t>(q)]
+                                [static_cast<std::size_t>(a)]
+                            - determinant_matrix[
+                                static_cast<std::size_t>(q - 1)
+                            ][static_cast<std::size_t>(a)]
+                            - determinant_matrix[
+                                static_cast<std::size_t>(q)
+                            ][static_cast<std::size_t>(a - 1)]
+                            + determinant_matrix[
+                                static_cast<std::size_t>(q - 1)
+                            ][static_cast<std::size_t>(a - 1)];
+                        if (mixed < 0) {
+                            negative_mixed_differences.fetch_add(
+                                1,
+                                std::memory_order_relaxed
+                            );
+                            std::lock_guard<std::mutex> lock(
+                                failure_mutex
+                            );
+                            if (
+                                mixed_failure.sample < 0
+                                || sample < mixed_failure.sample
+                            ) {
+                                mixed_failure = {
+                                    sample,
+                                    q,
+                                    a,
+                                    mixed,
+                                    profile
+                                };
+                            }
+                        }
+                    }
+                }
             }
         };
 
@@ -246,6 +325,12 @@ int main(int argc, char** argv) {
             << " maximum_label=" << maximum_label
             << " determinants=" << determinants.load()
             << " counterexamples=" << counterexamples.load()
+            << " negative_mixed_differences="
+            << negative_mixed_differences.load()
+            << " square_log_concavity_failures="
+            << square_log_concavity_failures.load()
+            << " normalized_decrease_failures="
+            << normalized_decrease_failures.load()
             << " threads=" << threads;
         if (failure.sample >= 0) {
             std::cout
@@ -254,6 +339,15 @@ int main(int argc, char** argv) {
                 << ",a=" << failure.a
                 << ",determinant=" << failure.determinant
                 << ",profile=" << show(failure.profile)
+                << "}";
+        }
+        if (mixed_failure.sample >= 0) {
+            std::cout
+                << " first_mixed={sample=" << mixed_failure.sample
+                << ",q=" << mixed_failure.q
+                << ",a=" << mixed_failure.a
+                << ",value=" << mixed_failure.determinant
+                << ",profile=" << show(mixed_failure.profile)
                 << "}";
         }
         std::cout

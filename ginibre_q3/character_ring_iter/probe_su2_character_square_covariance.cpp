@@ -78,7 +78,8 @@ int main(int argc, char** argv) {
             );
         }
 
-        unsigned long long profiles = 0;
+        unsigned long long square_log_concave_profiles = 0;
+        unsigned long long root_log_concave_profiles = 0;
         unsigned long long determinants = 0;
         Integer minimum = 0;
         std::string witness;
@@ -109,7 +110,7 @@ int main(int argc, char** argv) {
             if (root.empty()) {
                 continue;
             }
-            bool log_concave = true;
+            bool root_log_concave = true;
             for (std::size_t index = 1U;
                  index + 1U < root.size();
                  ++index) {
@@ -117,19 +118,33 @@ int main(int argc, char** argv) {
                     root[index] * root[index]
                     < root[index - 1U] * root[index + 1U]
                 ) {
-                    log_concave = false;
+                    root_log_concave = false;
                     break;
                 }
             }
-            if (
-                !log_concave
-                || std::find(root.begin(), root.end(), Integer{0})
-                    != root.end()
-            ) {
+            const bool root_has_internal_zero =
+                std::find(root.begin(), root.end(), Integer{0})
+                != root.end();
+            if (root_log_concave && !root_has_internal_zero) {
+                ++root_log_concave_profiles;
+            }
+            const std::vector<Integer> square = multiply(root, root);
+            bool square_log_concave = true;
+            for (std::size_t index = 1U;
+                 index + 1U < square.size();
+                 ++index) {
+                if (
+                    square[index] * square[index]
+                    < square[index - 1U] * square[index + 1U]
+                ) {
+                    square_log_concave = false;
+                    break;
+                }
+            }
+            if (!square_log_concave) {
                 continue;
             }
-            ++profiles;
-            const std::vector<Integer> square = multiply(root, root);
+            ++square_log_concave_profiles;
             for (int q = 1; q < static_cast<int>(square.size()); ++q) {
                 std::vector<Integer> character(
                     static_cast<std::size_t>(q + 1)
@@ -160,7 +175,9 @@ int main(int argc, char** argv) {
             << "SU2_CHARACTER_SQUARE_COVARIANCE"
             << " maximum_support=" << maximum_support
             << " maximum_coefficient=" << maximum_coefficient
-            << " profiles=" << profiles
+            << " root_log_concave_profiles=" << root_log_concave_profiles
+            << " square_log_concave_profiles="
+            << square_log_concave_profiles
             << " determinants=" << determinants
             << " minimum=" << minimum
             << " witness=" << (witness.empty() ? "{}" : witness)
