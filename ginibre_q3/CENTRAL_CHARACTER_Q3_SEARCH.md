@@ -15347,17 +15347,15 @@ This is bounded discovery evidence for
 semigroup reduction in Lemma 5A8H28UIA2RLC10E is independent of
 those runs.
 
-An exact unbounded certificate now closes the first four of the six
-finite powers.  The remaining two certificate jobs are still running,
-so the following status deliberately does not yet claim Target
-5A8H28UIA2RLC10F in full.
+The exact unbounded certificate closes all six finite powers.
 
-**Exact compact-Bernstein certification, powers six through nine.**
+**Theorem 5A8H28UIA2RLC10G (exact compact-Bernstein finite
+certification).**
 For every `Q>=1`, all adjacent minors in
 `(P5A.102CB8S3Z26ZF)` are nonnegative when
 
 ```text
- m=6,7,8,9.                                      (P5A.102CB8S3Z26ZJ)
+ m=6,7,8,9,10,11.                                (P5A.102CB8S3Z26ZJ)
 ```
 
 Here is the exact reduction used by the certificate.  On a chamber
@@ -15417,11 +15415,14 @@ Together with `0<=r<=1`, `xi>=r`, `alpha>=0`, and
 bijection with the original real chamber for `r>0`.
 
 The strict C++ verifier enumerates every vertex by exact Cramer
-determinants.  In affine dimension at most two, all independent vertex
-simplices cover the polytope by Caratheodory.  In dimension three, the
-average of all vertices is interior; coning it to all vertex triangles
-on every active facet covers the polytope.  Hence the resulting
-rational simplices are an exact cover, not a sample.
+determinants.  In affine dimension one it takes the two extreme
+vertices.  In dimension two it chooses an exact injective coordinate
+projection, orders the vertices cyclically about their average, replays
+the orientation of every consecutive triple, and uses the resulting
+triangle fan.  In dimension three, the average of all vertices is
+interior; every active facet is triangulated by the same exact
+two-dimensional construction and coned to that average.  Hence the
+resulting rational simplices form an exact triangulation, not a sample.
 
 If `t_1,...,t_d` are standard-simplex coordinates and
 
@@ -15437,20 +15438,27 @@ its degree-`D` Bernstein coefficient at `lambda` is
    c_beta prod_j (lambda_j)_(beta_j)/(D)_(|beta|). (P5A.102CB8S3Z26ZM)
 ```
 
-The verifier computes these rationals exactly and independently
-replays its separable binomial transform against the direct formula.
-Every accepted real chamber has all `B_lambda>=0`; since the Bernstein
-basis is nonnegative on the simplex, this proves `P^h>=0` there.
-No subdivision is needed in the completed powers.
+The verifier first regards the pullback as a homogeneous polynomial in
+all barycentric coordinates.  It clears one positive common
+denominator for the simplex and one for `P^h`, expands over exact GMP
+integers, and restores each rational Bernstein coefficient by the
+positive multinomial factor.  In dimensions zero through three it
+independently replays this homogeneous transform against both the
+separable binomial transform and the direct formula above.  Every
+accepted real chamber has all `B_lambda>=0`; since the Bernstein basis
+is nonnegative on the simplex, this proves `P^h>=0` there.  No
+subdivision is needed in any of the six powers.
 
 The exact counts are
 
 ```text
       interior real chambers / simplices    wall chambers / simplices
- m=6              89 / 192                         15 / 18
- m=7             116 / 353                         29 / 38
- m=8             161 / 427                         27 / 36
- m=9             199 / 606                         45 / 60.          (P5A.102CB8S3Z26ZN)
+ m=6              89 / 138                         15 / 16
+ m=7             116 / 219                         29 / 32
+ m=8             161 / 287                         27 / 30
+ m=9             199 / 371                         45 / 50
+ m=10            266 / 459                         44 / 48
+ m=11            310 / 591                         66 / 75.          (P5A.102CB8S3Z26ZN)
 ```
 
 At `m=8`, `160` interior chambers pass over the complete real
@@ -15469,11 +15477,40 @@ exhausts every lattice point below the exact rational `Q` bound before
 accepting such a finite chamber.  No cap or bounded scan of an
 unbounded chamber is accepted.
 
+At `m=10`, `265` interior chambers pass over their complete real
+polytopes.  The sole remaining chamber is
+
+```text
+ (7,7,7;7,10,10).
+```
+
+Its support and `y+1` zero category force `y=10Q`.  The category-seven
+upper wall then gives `Q<=7/4`, hence `Q=1`.  The category of `x-1`
+requires `x>=12`, whereas support of `x+1` requires `x<=9`, a
+contradiction.
+
+At `m=11`, `309` interior chambers pass over their complete real
+polytopes.  The sole remaining chamber is
+
+```text
+ (7,7,7;7,11,11).
+```
+
+Again support and the `y+1` zero category force `y=11Q`.  The
+category-seven upper wall gives `Q<=7/6`, hence `Q=1`.  The category
+of `x-1` requires `x>=11`, while support of `x+1` requires `x<=10`,
+again impossible.  These two emptiness arguments are independently
+replayed by the same exact finite-lattice exhaustion used at `m=8`.
+
 The source is
 `character_ring_iter/prove_su2_power_tp2_compact_bernstein.cpp`.
-Powers ten and eleven remain pending at this point.  Once both return
-the same exact terminal certificate, `(P5A.102CB8S3Z26ZJ)` extends
-to all six powers and Lemma 5A8H28UIA2RLC10E closes every `m>=6`.
+The terminal summaries, build flags, and source and binary hashes are
+recorded in
+`certificates/su2_power_tp2_compact_bernstein.log`.
+Thus Target 5A8H28UIA2RLC10F is proved.  Lemma
+5A8H28UIA2RLC10E now proves `N_Q^m` is `TP2` for every `m>=6`, and
+Target 5A8H28UIA2RLC10S is termwise nonnegative for every `s>=6`.
+QED.
 
 The fixed-gap target has an exact unfolded-minus-image form.  It
 retains more structure than the generic curvature expansion in Lemma
@@ -15673,8 +15710,65 @@ Taking its quadratic form against `p` proves
 The initial delta is log concave with interval support, and repeated
 application of Lemma 5A8H28UIA2RLC1 proves the last assertion.  QED.
 
-Thus the complete ordinary anchored target follows from the following
-rank-one coefficient theorem.
+For the structured orbit, Theorem 5A8H28UIA2RLC10G supplies the needed
+rank-one inequality directly; the three formerly exceptional
+half-powers require no separate fixed-gap theorem.
+
+**Corollary 5A8H28UIA2RLC11A (complete structured ordinary
+closure).**  Target 5A8H28UIA2C holds for
+
+```text
+ p=N_Q^s e_0
+```
+
+for every `Q,s>=1`.
+
+**Proof.**  Put `A=N_Q` and `M=A^(2s)`.  In Lemma
+5A8H28UIA2RLC11 take `q=Q`.  Since the zeroth column of `A` is
+`e_Q`,
+
+```text
+ c_h=M_(h,0),
+
+ sum_(h=|Q-a|)^(Q+a)c_h
+   =(Ac)_a=(A^(2s+1))_(a,0)=M_(a,Q).
+```
+
+Consequently the right side of `(P5A.102CB8S3Z26B)` is exactly
+
+```text
+ c_0 sum_(h=|Q-a|)^(Q+a)c_h-c_Qc_a
+
+ =det M_[{0,a},{0,Q}].                           (P5A.102CB8S3Z26ZA2)
+```
+
+When `s>=3`, one has `2s>=6`, so Theorem
+5A8H28UIA2RLC10G and Lemma 5A8H28UIA2RLC10E make `M` `TP2`; the
+displayed minor is nonnegative.  The cases `s=1,2` follow from the
+stronger fixed-gap Lemma 5A8H28UIA2RLC10B and Theorem
+5A8H28UIA2RLC10D.  QED.
+
+Equivalently, this proves the complete ordinary boundary-compound
+Target 5A8H28UIA2B, `(P5A.102CB8S4)`, for every even power.  This is
+the stable anchored input to the operator--Newton hierarchy.  It does
+not identify the ordinary matrix with the finite fusion matrix after
+an affine wall is reached: the remaining finite anchored kernels
+`C_s` in `(P5A.102CB8O)` still contain their Kac--Walton image
+payment.  Thus the finite arbitrary-factor gate has exactly two
+layers:
+
+```text
+ finite affine anchored boundary minors C_s>=0 for every s,
+ finite low Newton groups mathcalL_(t,r)>=0 (or the weaker diagonal band).
+                                                        (P5A.102CB8S3Z26ZA3)
+```
+
+Theorem 5A8H28UIA2RLC10G removes the stable part of the first line;
+it does not remove either affine payment in this display.
+
+The following rank-one coefficient theorem remains a stronger abstract
+statement, but Corollary 5A8H28UIA2RLC11A shows that it is no longer
+needed for the structured ordinary application.
 
 **Target 5A8H28UIA2RLC12 (character-positive log-concave
 super-eigenvector theorem).**  Let `c=(c_0,c_1,...)` be finite,
@@ -15702,7 +15796,8 @@ coordinatewise.  Lemma 5A8H28UIA2RLC11 applies this target with
 `g=f^2` and `q=Q`, proving Target 5A8H28UIA2C.
 
 The complete pointwise-positive target is stronger than the ordinary
-application requires.  The exact live subtarget is the following.
+application requires.  Before Corollary 5A8H28UIA2RLC11A, its exact
+structured subtarget was the following.
 
 **Target 5A8H28UIA2RLC12S (square-character log-concave
 super-eigenvector theorem).**  Let `f` be a finite real linear
@@ -15714,7 +15809,7 @@ combination of the characters and suppose
 
 where `c` is nonnegative and log concave with interval support.  Prove
 `(P5A.102CB8S3Z26D)`.  This is a strict special case of Target
-5A8H28UIA2RLC12.  It is sufficient for the ordinary anchored theorem:
+5A8H28UIA2RLC12.  It would also imply the ordinary anchored theorem:
 take `f=chi_(2Q)^s`, use Lemma 5A8H28UIA2RLC1 for log concavity of
 its square coefficients, and set `q=Q`.
 

@@ -1,0 +1,42 @@
+SU(2) power-TP2 exact compact-Bernstein certificate
+
+commands:
+  make -f Makefile.research prove_su2_power_tp2_compact_bernstein
+  for m in 6 7 8 9 10 11; do
+    ./prove_su2_power_tp2_compact_bernstein "$m" 0
+    ./prove_su2_power_tp2_compact_bernstein "$m" 0 -1 wall
+  done
+
+compiler flags:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror -pthread \
+    prove_su2_power_tp2_compact_bernstein.cpp -lgmp \
+    -o prove_su2_power_tp2_compact_bernstein
+
+The worker count is selected at process start from the online processor
+count, the one-minute machine load, and free RAM.  It is not fixed.
+The following summaries were produced by a byte-identical copy of the
+hash-bound binary while the machine was under load.
+
+output:
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=6 domain=interior maximum_depth=0 worker_threads=3 patterns=1147 feasible_patterns=89 analyzed_patterns=89 certified_patterns=89 integer_empty_patterns=0 compact_vertices=235 covering_simplices=138 nodes=138 leaves=138 splits=0 negative_leaves=0 maximum_reached_depth=0 minimum_bernstein_coefficient=0/1 first_failed_pattern={} result=PASS_REAL_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=6 domain=wall maximum_depth=0 worker_threads=3 patterns=629 feasible_patterns=15 analyzed_patterns=15 certified_patterns=15 integer_empty_patterns=0 compact_vertices=32 covering_simplices=16 nodes=16 leaves=16 splits=0 negative_leaves=0 maximum_reached_depth=0 minimum_bernstein_coefficient=0/1 first_failed_pattern={} result=PASS_REAL_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=7 domain=interior maximum_depth=0 worker_threads=3 patterns=1628 feasible_patterns=116 analyzed_patterns=116 certified_patterns=116 integer_empty_patterns=0 compact_vertices=321 covering_simplices=219 nodes=219 leaves=219 splits=0 negative_leaves=0 maximum_reached_depth=0 minimum_bernstein_coefficient=0/1 first_failed_pattern={} result=PASS_REAL_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=7 domain=wall maximum_depth=0 worker_threads=3 patterns=880 feasible_patterns=29 analyzed_patterns=29 certified_patterns=29 integer_empty_patterns=0 compact_vertices=51 covering_simplices=32 nodes=32 leaves=32 splits=0 negative_leaves=0 maximum_reached_depth=0 minimum_bernstein_coefficient=0/1 first_failed_pattern={} result=PASS_REAL_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=8 domain=interior maximum_depth=0 worker_threads=3 patterns=2193 feasible_patterns=161 analyzed_patterns=161 certified_patterns=161 integer_empty_patterns=1 compact_vertices=452 covering_simplices=287 nodes=287 leaves=286 splits=0 negative_leaves=1 maximum_reached_depth=0 minimum_bernstein_coefficient=-688026091520/872001093663 first_failed_pattern={} result=PASS_INTEGER_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=8 domain=wall maximum_depth=0 worker_threads=3 patterns=1173 feasible_patterns=27 analyzed_patterns=27 certified_patterns=27 integer_empty_patterns=0 compact_vertices=51 covering_simplices=30 nodes=30 leaves=30 splits=0 negative_leaves=0 maximum_reached_depth=0 minimum_bernstein_coefficient=0/1 first_failed_pattern={} result=PASS_REAL_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=9 domain=interior maximum_depth=0 worker_threads=3 patterns=2842 feasible_patterns=199 analyzed_patterns=199 certified_patterns=199 integer_empty_patterns=0 compact_vertices=557 covering_simplices=371 nodes=371 leaves=371 splits=0 negative_leaves=0 maximum_reached_depth=0 minimum_bernstein_coefficient=0/1 first_failed_pattern={} result=PASS_REAL_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=9 domain=wall maximum_depth=0 worker_threads=3 patterns=1508 feasible_patterns=45 analyzed_patterns=45 certified_patterns=45 integer_empty_patterns=0 compact_vertices=89 covering_simplices=50 nodes=50 leaves=50 splits=0 negative_leaves=0 maximum_reached_depth=0 minimum_bernstein_coefficient=0/1 first_failed_pattern={} result=PASS_REAL_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=10 domain=interior maximum_depth=0 worker_threads=4 patterns=3575 feasible_patterns=266 analyzed_patterns=266 certified_patterns=266 integer_empty_patterns=1 compact_vertices=713 covering_simplices=459 nodes=459 leaves=458 splits=0 negative_leaves=1 maximum_reached_depth=0 minimum_bernstein_coefficient=-2100570335432026336/2150718915261760255503 first_failed_pattern={} result=PASS_INTEGER_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=10 domain=wall maximum_depth=0 worker_threads=3 patterns=1885 feasible_patterns=44 analyzed_patterns=44 certified_patterns=44 integer_empty_patterns=0 compact_vertices=77 covering_simplices=48 nodes=48 leaves=48 splits=0 negative_leaves=0 maximum_reached_depth=0 minimum_bernstein_coefficient=0/1 first_failed_pattern={} result=PASS_REAL_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=11 domain=interior maximum_depth=0 worker_threads=2 patterns=4392 feasible_patterns=310 analyzed_patterns=310 certified_patterns=310 integer_empty_patterns=1 compact_vertices=895 covering_simplices=591 nodes=591 leaves=590 splits=0 negative_leaves=1 maximum_reached_depth=0 minimum_bernstein_coefficient=-129321786862998794240/12157665459056928801 first_failed_pattern={} result=PASS_INTEGER_COMPACT_CERTIFICATE
+SU2_POWER_TP2_COMPACT_BERNSTEIN_SUMMARY power=11 domain=wall maximum_depth=0 worker_threads=3 patterns=2304 feasible_patterns=66 analyzed_patterns=66 certified_patterns=66 integer_empty_patterns=0 compact_vertices=128 covering_simplices=75 nodes=75 leaves=75 splits=0 negative_leaves=0 maximum_reached_depth=0 minimum_bernstein_coefficient=0/1 first_failed_pattern={} result=PASS_REAL_COMPACT_CERTIFICATE
+
+integer-empty chamber records:
+SU2_POWER_TP2_COMPACT_BERNSTEIN power=8 domain=interior feasible_pattern_index=115 pattern=(5,5,5;5,8,8) dimension=2 vertices=3 simplices=1 nodes=1 negative_leaves=1 result=PASS_INTEGER_EMPTY_CHAMBER
+SU2_POWER_TP2_COMPACT_BERNSTEIN power=10 domain=interior feasible_pattern_index=220 pattern=(7,7,7;7,10,10) dimension=2 vertices=3 simplices=1 nodes=1 negative_leaves=1 result=PASS_INTEGER_EMPTY_CHAMBER
+SU2_POWER_TP2_COMPACT_BERNSTEIN power=11 domain=interior feasible_pattern_index=213 pattern=(7,7,7;7,11,11) dimension=2 vertices=3 simplices=1 nodes=1 negative_leaves=1 result=PASS_INTEGER_EMPTY_CHAMBER
+
+SHA-256:
+020e68912a2fae8b57834b4f71c4d6e0de872ac2aeb295244ba85269c638dc06  prove_su2_power_tp2_compact_bernstein.cpp
+d8e1749021f21ee100956319633d2a73c58b8a0c30101cf18184d38e5f0f186e  prove_su2_power_tp2_compact_bernstein

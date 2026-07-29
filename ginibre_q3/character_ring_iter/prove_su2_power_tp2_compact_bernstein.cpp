@@ -1,16 +1,22 @@
-#include <boost/multiprecision/cpp_int.hpp>
+#include <boost/multiprecision/gmp.hpp>
 #include <boost/rational.hpp>
 
 #include <algorithm>
 #include <array>
+#include <atomic>
 #include <cstddef>
 #include <cstdlib>
+#include <exception>
 #include <iostream>
 #include <limits>
 #include <map>
+#include <mutex>
 #include <set>
 #include <stdexcept>
 #include <string>
+#include <sys/sysinfo.h>
+#include <thread>
+#include <unistd.h>
 #include <utility>
 #include <vector>
 
@@ -25,25 +31,39 @@
  * turns the chamber into a compact rational polytope and P into its
  * degree-2(m-1) homogenization.  The code enumerates every real chamber
  * having r>0, covers its closure by rational simplices, and computes all
- * simplex Bernstein coefficients exactly over cpp_int rationals.
+ * simplex Bernstein coefficients exactly.  Each simplex clears one
+ * positive common denominator, expands the homogeneous pullback over
+ * GMP integers, and reconstructs the exact rational Bernstein values.
  * Nonnegative coefficients prove the polynomial nonnegative on the whole
  * real chamber, hence on every required integer/parity point.
  *
  * A requested subdivision depth is only an exact refinement mechanism.
  * Reaching the depth with a negative coefficient returns failure; no cap,
  * timeout, sample, or numerical approximation is accepted as proof.
+ * Full runs use as many chamber workers as current CPU load and free RAM
+ * permit; a selected single chamber always uses one worker.
  */
 
 namespace {
 
-using Integer = boost::multiprecision::cpp_int;
+using Integer = boost::multiprecision::mpz_int;
 using Rational = boost::rational<Integer>;
 using Exponent = std::array<int, 3>;
+using BaryExponent = std::array<int, 4>;
 using Point = std::array<Rational, 3>;
 using Pattern = std::array<int, 6>;
 
 struct Polynomial {
     std::map<Exponent, Rational> coefficients;
+};
+
+struct IntegerBaryTerm {
+    BaryExponent exponent{};
+    Integer coefficient = 0;
+};
+
+struct IntegerBaryPolynomial {
+    std::vector<IntegerBaryTerm> terms;
 };
 
 using ValueTable = std::array<std::vector<Polynomial>, 6>;
@@ -73,6 +93,71 @@ struct SimplexResult {
     Rational minimum_coefficient = 0;
     bool minimum_initialized = false;
 };
+
+struct ChamberTask {
+    int pattern_index = -1;
+    Pattern pattern{};
+    std::vector<Constraint> chamber_constraints;
+    std::vector<CompactConstraint> compact_constraints;
+    std::vector<Point> points;
+};
+
+struct ChamberAnalysis {
+    int dimension = 0;
+    std::size_t vertices = 0;
+    std::size_t simplices = 0;
+    SimplexResult simplex_result;
+    bool integer_empty = false;
+    std::string error;
+};
+
+std::size_t automatic_worker_count(std::size_t task_count) {
+    if (task_count == 0U) {
+        return 1U;
+    }
+
+    const long online = ::sysconf(_SC_NPROCESSORS_ONLN);
+    const std::size_t processors =
+        online > 0
+            ? static_cast<std::size_t>(online)
+            : std::max(
+                1U,
+                std::thread::hardware_concurrency()
+            );
+    double load_average = 0.0;
+    const int load_count = ::getloadavg(&load_average, 1);
+    const std::size_t busy_processors =
+        load_count == 1 && load_average > 0.0
+            ? static_cast<std::size_t>(load_average + 0.999999)
+            : 0U;
+    const std::size_t cpu_limit =
+        busy_processors < processors
+            ? processors - busy_processors
+            : 1U;
+
+    std::size_t memory_limit = processors;
+    struct sysinfo information {};
+    if (::sysinfo(&information) == 0) {
+        constexpr unsigned long long bytes_per_worker =
+            1024ULL * 1024ULL * 1024ULL;
+        const unsigned long long free_bytes =
+            static_cast<unsigned long long>(information.freeram)
+            * static_cast<unsigned long long>(information.mem_unit);
+        memory_limit = std::max<std::size_t>(
+            1U,
+            static_cast<std::size_t>(
+                free_bytes / bytes_per_worker
+            )
+        );
+    }
+    return std::max<std::size_t>(
+        1U,
+        std::min(
+            task_count,
+            std::min(cpu_limit, memory_limit)
+        )
+    );
+}
 
 int parse_bounded_integer(
     const char* text,
@@ -182,6 +267,104 @@ Polynomial scale(
 ) {
     Polynomial result;
     add_to(result, polynomial, factor);
+    return result;
+}
+
+Integer absolute_integer(const Integer& value) {
+    return value < 0 ? -value : value;
+}
+
+Integer integer_gcd(Integer left, Integer right) {
+    left = absolute_integer(left);
+    right = absolute_integer(right);
+    while (right != 0) {
+        const Integer remainder = left % right;
+        left = right;
+        right = remainder;
+    }
+    return left;
+}
+
+Integer integer_lcm(const Integer& left, const Integer& right) {
+    if (left == 0 || right == 0) {
+        return 0;
+    }
+    return absolute_integer(
+        (left / integer_gcd(left, right)) * right
+    );
+}
+
+IntegerBaryPolynomial integer_bary_constant(
+    const Integer& value
+) {
+    IntegerBaryPolynomial result;
+    if (value != 0) {
+        result.terms.push_back(
+            IntegerBaryTerm{{0, 0, 0, 0}, value}
+        );
+    }
+    return result;
+}
+
+std::size_t bary_index(
+    const BaryExponent& exponent,
+    int width
+) {
+    return static_cast<std::size_t>(
+        (
+            exponent[0] * width
+            + exponent[1]
+        ) * width
+        + exponent[2]
+    );
+}
+
+IntegerBaryPolynomial integer_bary_multiply_linear(
+    const IntegerBaryPolynomial& polynomial,
+    const std::array<Integer, 4>& linear_form,
+    int width,
+    std::vector<int>& positions,
+    std::vector<std::size_t>& touched
+) {
+    IntegerBaryPolynomial result;
+    touched.clear();
+    for (const IntegerBaryTerm& term : polynomial.terms) {
+        if (term.coefficient == 0) {
+            continue;
+        }
+        for (int variable = 0; variable < 4; ++variable) {
+            const Integer& linear_coefficient =
+                linear_form[static_cast<std::size_t>(variable)];
+            if (linear_coefficient == 0) {
+                continue;
+            }
+            BaryExponent product_exponent = term.exponent;
+            ++product_exponent[
+                static_cast<std::size_t>(variable)
+            ];
+            const std::size_t index =
+                bary_index(product_exponent, width);
+            int& position = positions[index];
+            if (position < 0) {
+                position = static_cast<int>(result.terms.size());
+                touched.push_back(index);
+                result.terms.push_back(
+                    IntegerBaryTerm{
+                        product_exponent,
+                        term.coefficient * linear_coefficient
+                    }
+                );
+            } else {
+                result.terms[
+                    static_cast<std::size_t>(position)
+                ].coefficient +=
+                    term.coefficient * linear_coefficient;
+            }
+        }
+    }
+    for (const std::size_t index : touched) {
+        positions[index] = -1;
+    }
     return result;
 }
 
@@ -950,6 +1133,175 @@ std::vector<Rational> bernstein_coefficients(
     return result;
 }
 
+std::vector<Rational> homogeneous_bernstein_coefficients(
+    const Polynomial& polynomial,
+    const std::vector<Point>& simplex,
+    int degree
+) {
+    const int dimension =
+        static_cast<int>(simplex.size()) - 1;
+    if (dimension < 0 || dimension > 3) {
+        throw std::runtime_error(
+            "simplex dimension lies outside [0,3]"
+        );
+    }
+
+    Integer coordinate_denominator = 1;
+    for (const Point& point : simplex) {
+        for (const Rational& coordinate : point) {
+            coordinate_denominator = integer_lcm(
+                coordinate_denominator,
+                coordinate.denominator()
+            );
+        }
+    }
+    Integer coefficient_denominator = 1;
+    for (const auto& [exponent, coefficient] :
+         polynomial.coefficients) {
+        (void)exponent;
+        coefficient_denominator = integer_lcm(
+            coefficient_denominator,
+            coefficient.denominator()
+        );
+    }
+
+    std::array<std::array<Integer, 4>, 4> linear_forms{};
+    for (int vertex = 0; vertex <= dimension; ++vertex) {
+        linear_forms[0][static_cast<std::size_t>(vertex)] =
+            coordinate_denominator;
+        for (int coordinate = 0; coordinate < 3; ++coordinate) {
+            const Rational& value =
+                simplex[static_cast<std::size_t>(vertex)]
+                    [static_cast<std::size_t>(coordinate)];
+            linear_forms[
+                static_cast<std::size_t>(coordinate + 1)
+            ][static_cast<std::size_t>(vertex)] =
+                value.numerator()
+                * (
+                    coordinate_denominator
+                    / value.denominator()
+                );
+        }
+    }
+
+    std::array<int, 4> form_order{0, 1, 2, 3};
+    std::sort(
+        form_order.begin(),
+        form_order.end(),
+        [&linear_forms](int left, int right) {
+            const auto nonzero_count =
+                [&linear_forms](int form) {
+                    int count = 0;
+                    for (const Integer& coefficient :
+                         linear_forms[
+                             static_cast<std::size_t>(form)
+                         ]) {
+                        count += coefficient != 0 ? 1 : 0;
+                    }
+                    return count;
+                };
+            return nonzero_count(left) < nonzero_count(right);
+        }
+    );
+
+    const int width = degree + 1;
+    const std::size_t cube_size =
+        static_cast<std::size_t>(width)
+        * static_cast<std::size_t>(width)
+        * static_cast<std::size_t>(width);
+    std::vector<Integer> expanded(cube_size);
+    std::vector<int> positions(cube_size, -1);
+    std::vector<std::size_t> touched;
+    for (const auto& [exponent, coefficient] : polynomial.coefficients) {
+        const int compact_degree =
+            exponent[0] + exponent[1] + exponent[2];
+        if (compact_degree > degree) {
+            throw std::runtime_error(
+                "compact polynomial degree overflow"
+            );
+        }
+        const std::array<int, 4> form_exponents{
+            degree - compact_degree,
+            exponent[0],
+            exponent[1],
+            exponent[2]
+        };
+        const Integer scaled_coefficient =
+            coefficient.numerator()
+            * (
+                coefficient_denominator
+                / coefficient.denominator()
+            );
+        IntegerBaryPolynomial term =
+            integer_bary_constant(scaled_coefficient);
+        for (const int form : form_order) {
+            for (
+                int factor = 0;
+                factor
+                    < form_exponents[
+                        static_cast<std::size_t>(form)
+                    ];
+                ++factor
+            ) {
+                term = integer_bary_multiply_linear(
+                    term,
+                    linear_forms[static_cast<std::size_t>(form)],
+                    width,
+                    positions,
+                    touched
+                );
+            }
+        }
+        for (const IntegerBaryTerm& bary_term : term.terms) {
+            expanded[
+                bary_index(bary_term.exponent, width)
+            ] += bary_term.coefficient;
+        }
+    }
+
+    const Integer degree_factorial = factorial(degree);
+    Integer coordinate_power = 1;
+    for (int factor = 0; factor < degree; ++factor) {
+        coordinate_power *= coordinate_denominator;
+    }
+    const Integer common_denominator =
+        coefficient_denominator * coordinate_power;
+    std::vector<Rational> result;
+    const int first_limit = dimension >= 1 ? degree : 0;
+    for (int first = 0; first <= first_limit; ++first) {
+        const int second_limit =
+            dimension >= 2 ? degree - first : 0;
+        for (int second = 0; second <= second_limit; ++second) {
+            const int third_limit =
+                dimension >= 3
+                    ? degree - first - second
+                    : 0;
+            for (int third = 0; third <= third_limit; ++third) {
+                const BaryExponent exponent{
+                    degree - first - second - third,
+                    first,
+                    second,
+                    third
+                };
+                const Integer raw_coefficient =
+                    expanded[bary_index(exponent, width)];
+                Integer exponent_factorials = 1;
+                for (int variable = 0; variable <= dimension;
+                     ++variable) {
+                    exponent_factorials *= factorial(
+                        exponent[static_cast<std::size_t>(variable)]
+                    );
+                }
+                result.emplace_back(
+                    raw_coefficient * exponent_factorials,
+                    common_denominator * degree_factorial
+                );
+            }
+        }
+    }
+    return result;
+}
+
 std::vector<Rational> reference_bernstein_coefficients(
     const Polynomial& polynomial,
     int dimension,
@@ -1063,6 +1415,49 @@ void verify_bernstein_transform() {
             );
         }
     }
+
+    Polynomial compact_test;
+    for (int first = 0; first <= degree; ++first) {
+        for (int second = 0; second <= degree - first; ++second) {
+            for (
+                int third = 0;
+                third <= degree - first - second;
+                ++third
+            ) {
+                compact_test.coefficients[{first, second, third}] =
+                    1 + 2 * first + 3 * second + 5 * third;
+            }
+        }
+    }
+    const std::vector<Point> test_vertices{
+        Point{Rational{1, 2}, Rational{1, 3}, Rational{1, 5}},
+        Point{Rational{2, 3}, Rational{1, 4}, Rational{2, 5}},
+        Point{Rational{3, 4}, Rational{2, 5}, Rational{1, 6}},
+        Point{Rational{4, 5}, Rational{3, 7}, Rational{2, 9}}
+    };
+    for (int dimension = 0; dimension <= 3; ++dimension) {
+        const std::vector<Point> simplex(
+            test_vertices.begin(),
+            test_vertices.begin() + dimension + 1
+        );
+        const std::vector<Rational> reference =
+            bernstein_coefficients(
+                compose_on_simplex(compact_test, simplex),
+                dimension,
+                degree
+            );
+        if (
+            homogeneous_bernstein_coefficients(
+                compact_test,
+                simplex,
+                degree
+            ) != reference
+        ) {
+            throw std::runtime_error(
+                "homogeneous Bernstein transform replay failed"
+            );
+        }
+    }
 }
 
 Rational squared_distance(
@@ -1113,10 +1508,12 @@ void certify_simplex_recursive(
     result.maximum_depth = std::max(result.maximum_depth, depth);
     const int dimension =
         static_cast<int>(simplex.size()) - 1;
-    const Polynomial composed =
-        compose_on_simplex(polynomial, simplex);
     const std::vector<Rational> coefficients =
-        bernstein_coefficients(composed, dimension, degree);
+        homogeneous_bernstein_coefficients(
+            polynomial,
+            simplex,
+            degree
+        );
     bool nonnegative = true;
     for (const Rational& coefficient : coefficients) {
         if (
@@ -1174,6 +1571,174 @@ bool affinely_independent(const std::vector<Point>& simplex) {
         == static_cast<int>(simplex.size()) - 1;
 }
 
+std::vector<std::vector<Point>> triangulate_polygon(
+    const std::vector<Point>& points
+) {
+    if (point_rank(points) != 2) {
+        throw std::runtime_error(
+            "polygon triangulation requires affine dimension two"
+        );
+    }
+    std::array<int, 2> projection{-1, -1};
+    for (int first = 0; first < 3 && projection[0] < 0; ++first) {
+        for (int second = first + 1;
+             second < 3 && projection[0] < 0;
+             ++second) {
+            for (std::size_t left = 1; left < points.size();
+                 ++left) {
+                for (std::size_t right = left + 1;
+                     right < points.size();
+                     ++right) {
+                    const Rational determinant =
+                        (
+                            points[left][
+                                static_cast<std::size_t>(first)
+                            ]
+                            - points[0][
+                                static_cast<std::size_t>(first)
+                            ]
+                        )
+                        * (
+                            points[right][
+                                static_cast<std::size_t>(second)
+                            ]
+                            - points[0][
+                                static_cast<std::size_t>(second)
+                            ]
+                        )
+                        - (
+                            points[left][
+                                static_cast<std::size_t>(second)
+                            ]
+                            - points[0][
+                                static_cast<std::size_t>(second)
+                            ]
+                        )
+                        * (
+                            points[right][
+                                static_cast<std::size_t>(first)
+                            ]
+                            - points[0][
+                                static_cast<std::size_t>(first)
+                            ]
+                        );
+                    if (determinant != 0) {
+                        projection = {first, second};
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    if (projection[0] < 0) {
+        throw std::runtime_error(
+            "failed to find an injective polygon projection"
+        );
+    }
+
+    Point center{};
+    for (const Point& point : points) {
+        for (int coordinate = 0; coordinate < 3; ++coordinate) {
+            center[static_cast<std::size_t>(coordinate)] +=
+                point[static_cast<std::size_t>(coordinate)];
+        }
+    }
+    for (Rational& coordinate : center) {
+        coordinate /= static_cast<int>(points.size());
+    }
+
+    std::vector<Point> ordered = points;
+    const auto half_plane = [](const Rational& x, const Rational& y) {
+        return y > 0 || (y == 0 && x >= 0) ? 0 : 1;
+    };
+    std::sort(
+        ordered.begin(),
+        ordered.end(),
+        [&center, projection, &half_plane](
+            const Point& left,
+            const Point& right
+        ) {
+            const Rational left_x =
+                left[static_cast<std::size_t>(projection[0])]
+                - center[static_cast<std::size_t>(projection[0])];
+            const Rational left_y =
+                left[static_cast<std::size_t>(projection[1])]
+                - center[static_cast<std::size_t>(projection[1])];
+            const Rational right_x =
+                right[static_cast<std::size_t>(projection[0])]
+                - center[static_cast<std::size_t>(projection[0])];
+            const Rational right_y =
+                right[static_cast<std::size_t>(projection[1])]
+                - center[static_cast<std::size_t>(projection[1])];
+            const int left_half = half_plane(left_x, left_y);
+            const int right_half = half_plane(right_x, right_y);
+            if (left_half != right_half) {
+                return left_half < right_half;
+            }
+            const Rational cross =
+                left_x * right_y - left_y * right_x;
+            if (cross != 0) {
+                return cross > 0;
+            }
+            return
+                left_x * left_x + left_y * left_y
+                < right_x * right_x + right_y * right_y;
+        }
+    );
+
+    int orientation = 0;
+    for (std::size_t index = 0; index < ordered.size(); ++index) {
+        const Point& first = ordered[index];
+        const Point& second =
+            ordered[(index + 1U) % ordered.size()];
+        const Point& third =
+            ordered[(index + 2U) % ordered.size()];
+        const Rational first_x =
+            second[static_cast<std::size_t>(projection[0])]
+            - first[static_cast<std::size_t>(projection[0])];
+        const Rational first_y =
+            second[static_cast<std::size_t>(projection[1])]
+            - first[static_cast<std::size_t>(projection[1])];
+        const Rational second_x =
+            third[static_cast<std::size_t>(projection[0])]
+            - second[static_cast<std::size_t>(projection[0])];
+        const Rational second_y =
+            third[static_cast<std::size_t>(projection[1])]
+            - second[static_cast<std::size_t>(projection[1])];
+        const Rational cross =
+            first_x * second_y - first_y * second_x;
+        if (cross == 0) {
+            throw std::runtime_error(
+                "polygon vertex list contains a collinear triple"
+            );
+        }
+        const int current_orientation = cross > 0 ? 1 : -1;
+        if (orientation == 0) {
+            orientation = current_orientation;
+        } else if (orientation != current_orientation) {
+            throw std::runtime_error(
+                "cyclic polygon order failed convexity replay"
+            );
+        }
+    }
+
+    std::vector<std::vector<Point>> result;
+    for (std::size_t index = 1; index + 1 < ordered.size(); ++index) {
+        std::vector<Point> simplex{
+            ordered[0],
+            ordered[index],
+            ordered[index + 1]
+        };
+        if (!affinely_independent(simplex)) {
+            throw std::runtime_error(
+                "cyclic polygon order produced a degenerate triangle"
+            );
+        }
+        result.push_back(std::move(simplex));
+    }
+    return result;
+}
+
 std::vector<std::vector<Point>> covering_simplices(
     const std::vector<Point>& points,
     const std::vector<CompactConstraint>& constraints
@@ -1184,40 +1749,43 @@ std::vector<std::vector<Point>> covering_simplices(
         result.push_back({points.front()});
         return result;
     }
-    if (dimension <= 2) {
-        for (std::size_t first = 0; first < points.size(); ++first) {
-            for (
-                std::size_t second = first + 1;
-                second < points.size();
-                ++second
-            ) {
-                if (dimension == 1) {
-                    std::vector<Point> simplex{
-                        points[first],
-                        points[second]
-                    };
-                    if (affinely_independent(simplex)) {
-                        result.push_back(std::move(simplex));
-                    }
-                    continue;
+    if (dimension == 1) {
+        int coordinate = 0;
+        while (
+            coordinate < 3
+            && std::all_of(
+                points.begin(),
+                points.end(),
+                [&points, coordinate](const Point& point) {
+                    return
+                        point[static_cast<std::size_t>(coordinate)]
+                        == points.front()[
+                            static_cast<std::size_t>(coordinate)
+                        ];
                 }
-                for (
-                    std::size_t third = second + 1;
-                    third < points.size();
-                    ++third
-                ) {
-                    std::vector<Point> simplex{
-                        points[first],
-                        points[second],
-                        points[third]
-                    };
-                    if (affinely_independent(simplex)) {
-                        result.push_back(std::move(simplex));
-                    }
-                }
-            }
+            )
+        ) {
+            ++coordinate;
         }
+        if (coordinate == 3) {
+            throw std::runtime_error(
+                "failed to find a varying segment coordinate"
+            );
+        }
+        const auto endpoints = std::minmax_element(
+            points.begin(),
+            points.end(),
+            [coordinate](const Point& left, const Point& right) {
+                return
+                    left[static_cast<std::size_t>(coordinate)]
+                    < right[static_cast<std::size_t>(coordinate)];
+            }
+        );
+        result.push_back({*endpoints.first, *endpoints.second});
         return result;
+    }
+    if (dimension == 2) {
+        return triangulate_polygon(points);
     }
 
     Point center{};
@@ -1247,38 +1815,25 @@ std::vector<std::vector<Point>> covering_simplices(
                 active.push_back(point);
             }
         }
-        for (std::size_t first = 0; first < active.size(); ++first) {
-            for (
-                std::size_t second = first + 1;
-                second < active.size();
-                ++second
-            ) {
-                for (
-                    std::size_t third = second + 1;
-                    third < active.size();
-                    ++third
-                ) {
-                    std::vector<Point> simplex{
-                        center,
-                        active[first],
-                        active[second],
-                        active[third]
-                    };
-                    if (!affinely_independent(simplex)) {
-                        continue;
-                    }
-                    std::array<std::string, 3> keys{
-                        point_key(active[first]),
-                        point_key(active[second]),
-                        point_key(active[third])
-                    };
-                    std::sort(keys.begin(), keys.end());
-                    const std::string key =
-                        keys[0] + "|" + keys[1] + "|" + keys[2];
-                    if (seen.insert(key).second) {
-                        result.push_back(std::move(simplex));
-                    }
-                }
+        if (point_rank(active) != 2) {
+            continue;
+        }
+        for (std::vector<Point> facet_simplex :
+             triangulate_polygon(active)) {
+            std::array<std::string, 3> keys{
+                point_key(facet_simplex[0]),
+                point_key(facet_simplex[1]),
+                point_key(facet_simplex[2])
+            };
+            std::sort(keys.begin(), keys.end());
+            const std::string key =
+                keys[0] + "|" + keys[1] + "|" + keys[2];
+            if (seen.insert(key).second) {
+                facet_simplex.insert(
+                    facet_simplex.begin(),
+                    center
+                );
+                result.push_back(std::move(facet_simplex));
             }
         }
     }
@@ -1347,13 +1902,7 @@ int main(int argc, char** argv) {
 
         std::size_t patterns = 0;
         std::size_t feasible_patterns = 0;
-        std::size_t analyzed_patterns = 0;
-        std::size_t certified_patterns = 0;
-        std::size_t integer_empty_patterns = 0;
-        std::size_t compact_vertices = 0;
-        std::size_t covering_simplex_count = 0;
-        SimplexResult total;
-        std::string first_failed_pattern;
+        std::vector<ChamberTask> tasks;
 
         for (int x_minus = 0; x_minus < power_value; ++x_minus) {
             for (
@@ -1425,137 +1974,218 @@ int main(int argc, char** argv) {
                                 ) {
                                     continue;
                                 }
-                                ++analyzed_patterns;
-
-                                if (
-                                    !feasible_point(
-                                        compact,
-                                        points.front()
-                                    )
-                                ) {
-                                    throw std::runtime_error(
-                                        "vertex feasibility replay failed"
-                                    );
-                                }
-                                compact_vertices += points.size();
-                                const std::vector<std::vector<Point>>
-                                    simplices =
-                                        covering_simplices(
-                                            points,
-                                            compact
-                                        );
-                                if (simplices.empty()) {
-                                    throw std::runtime_error(
-                                        "compact chamber has no cover"
-                                    );
-                                }
-                                covering_simplex_count +=
-                                    simplices.size();
-
-                                const Polynomial determinant =
-                                    determinant_polynomial(
-                                        value_table,
+                                tasks.push_back(
+                                    ChamberTask{
+                                        pattern_index,
                                         pattern,
-                                        wall_case
-                                    );
-                                const Polynomial homogeneous =
-                                    homogenize(determinant, degree);
-                                SimplexResult chamber_result;
-                                for (
-                                    const std::vector<Point>& simplex :
-                                    simplices
-                                ) {
-                                    certify_simplex_recursive(
-                                        homogeneous,
-                                        simplex,
-                                        degree,
-                                        0,
-                                        maximum_depth,
-                                        chamber_result
-                                    );
-                                }
-                                const bool integer_empty =
-                                    chamber_result.negative_leaves != 0
-                                    && certify_finite_integer_empty(
                                         chamber_constraints,
-                                        points,
-                                        power_value,
-                                        wall_case
-                                    );
-                                chamber_result.certified =
-                                    chamber_result.negative_leaves == 0
-                                    || integer_empty;
-                                if (integer_empty) {
-                                    ++integer_empty_patterns;
-                                }
-                                if (chamber_result.certified) {
-                                    ++certified_patterns;
-                                } else if (first_failed_pattern.empty()) {
-                                    first_failed_pattern =
-                                        show_pattern(pattern);
-                                }
-                                total.nodes += chamber_result.nodes;
-                                total.leaves += chamber_result.leaves;
-                                total.splits += chamber_result.splits;
-                                total.negative_leaves +=
-                                    chamber_result.negative_leaves;
-                                total.maximum_depth = std::max(
-                                    total.maximum_depth,
-                                    chamber_result.maximum_depth
+                                        compact,
+                                        points
+                                    }
                                 );
-                                if (
-                                    chamber_result.minimum_initialized
-                                    && (
-                                        !total.minimum_initialized
-                                        || chamber_result
-                                                .minimum_coefficient
-                                            < total.minimum_coefficient
-                                    )
-                                ) {
-                                    total.minimum_coefficient =
-                                        chamber_result
-                                            .minimum_coefficient;
-                                    total.minimum_initialized = true;
-                                }
-
-                                std::cout
-                                    << "SU2_POWER_TP2_COMPACT_BERNSTEIN"
-                                    << " power=" << power_value
-                                    << " domain="
-                                    << (
-                                        wall_case
-                                            ? "wall"
-                                            : "interior"
-                                    )
-                                    << " feasible_pattern_index="
-                                    << pattern_index
-                                    << " pattern="
-                                    << show_pattern(pattern)
-                                    << " dimension="
-                                    << point_rank(points)
-                                    << " vertices=" << points.size()
-                                    << " simplices="
-                                    << simplices.size()
-                                    << " nodes="
-                                    << chamber_result.nodes
-                                    << " negative_leaves="
-                                    << chamber_result.negative_leaves
-                                    << " result="
-                                    << (
-                                        chamber_result.certified
-                                            ? (
-                                                integer_empty
-                                                    ? "PASS_INTEGER_EMPTY_CHAMBER"
-                                                    : "PASS_REAL_CHAMBER"
-                                            )
-                                            : "PARTIAL"
-                                    )
-                                    << '\n';
                             }
                         }
                     }
                 }
             }
+        }
+
+        const std::size_t worker_count =
+            automatic_worker_count(tasks.size());
+        std::vector<ChamberAnalysis> analyses(tasks.size());
+        std::atomic<std::size_t> next_task{0U};
+        std::atomic<std::size_t> completed_tasks{0U};
+        std::mutex progress_mutex;
+        const std::size_t progress_stride =
+            std::max<std::size_t>(1U, tasks.size() / 20U);
+        const auto worker = [&]() {
+            while (true) {
+                const std::size_t task_index =
+                    next_task.fetch_add(1U);
+                if (task_index >= tasks.size()) {
+                    return;
+                }
+                const ChamberTask& task = tasks[task_index];
+                ChamberAnalysis& analysis = analyses[task_index];
+                try {
+                    if (
+                        task.points.empty()
+                        || !feasible_point(
+                            task.compact_constraints,
+                            task.points.front()
+                        )
+                    ) {
+                        throw std::runtime_error(
+                            "vertex feasibility replay failed"
+                        );
+                    }
+                    analysis.dimension = point_rank(task.points);
+                    analysis.vertices = task.points.size();
+                    const std::vector<std::vector<Point>> simplices =
+                        covering_simplices(
+                            task.points,
+                            task.compact_constraints
+                        );
+                    if (simplices.empty()) {
+                        throw std::runtime_error(
+                            "compact chamber has no cover"
+                        );
+                    }
+                    analysis.simplices = simplices.size();
+
+                    const Polynomial determinant =
+                        determinant_polynomial(
+                            value_table,
+                            task.pattern,
+                            wall_case
+                        );
+                    const Polynomial homogeneous =
+                        homogenize(determinant, degree);
+                    for (
+                        const std::vector<Point>& simplex :
+                        simplices
+                    ) {
+                        certify_simplex_recursive(
+                            homogeneous,
+                            simplex,
+                            degree,
+                            0,
+                            maximum_depth,
+                            analysis.simplex_result
+                        );
+                    }
+                    analysis.integer_empty =
+                        analysis.simplex_result.negative_leaves != 0
+                        && certify_finite_integer_empty(
+                            task.chamber_constraints,
+                            task.points,
+                            power_value,
+                            wall_case
+                        );
+                    analysis.simplex_result.certified =
+                        analysis.simplex_result.negative_leaves == 0
+                        || analysis.integer_empty;
+                } catch (const std::exception& exception) {
+                    analysis.error = exception.what();
+                }
+
+                const std::size_t completed =
+                    completed_tasks.fetch_add(1U) + 1U;
+                if (
+                    completed == tasks.size()
+                    || completed % progress_stride == 0U
+                ) {
+                    const std::lock_guard<std::mutex> lock(
+                        progress_mutex
+                    );
+                    std::cerr
+                        << "SU2_POWER_TP2_COMPACT_BERNSTEIN_PROGRESS"
+                        << " power=" << power_value
+                        << " domain="
+                        << (wall_case ? "wall" : "interior")
+                        << " completed=" << completed
+                        << " total=" << tasks.size()
+                        << " worker_threads=" << worker_count
+                        << '\n';
+                }
+            }
+        };
+
+        std::cerr
+            << "SU2_POWER_TP2_COMPACT_BERNSTEIN_START"
+            << " power=" << power_value
+            << " domain=" << (wall_case ? "wall" : "interior")
+            << " tasks=" << tasks.size()
+            << " worker_threads=" << worker_count
+            << '\n';
+        if (worker_count == 1U) {
+            worker();
+        } else {
+            std::vector<std::thread> workers;
+            workers.reserve(worker_count);
+            for (std::size_t index = 0; index < worker_count; ++index) {
+                workers.emplace_back(worker);
+            }
+            for (std::thread& thread : workers) {
+                thread.join();
+            }
+        }
+
+        const std::size_t analyzed_patterns = tasks.size();
+        std::size_t certified_patterns = 0;
+        std::size_t integer_empty_patterns = 0;
+        std::size_t compact_vertices = 0;
+        std::size_t covering_simplex_count = 0;
+        SimplexResult total;
+        std::string first_failed_pattern;
+        for (std::size_t index = 0; index < tasks.size(); ++index) {
+            const ChamberTask& task = tasks[index];
+            const ChamberAnalysis& analysis = analyses[index];
+            if (!analysis.error.empty()) {
+                throw std::runtime_error(
+                    "feasible_pattern_index="
+                    + std::to_string(task.pattern_index)
+                    + ": " + analysis.error
+                );
+            }
+            const SimplexResult& chamber_result =
+                analysis.simplex_result;
+            compact_vertices += analysis.vertices;
+            covering_simplex_count += analysis.simplices;
+            if (analysis.integer_empty) {
+                ++integer_empty_patterns;
+            }
+            if (chamber_result.certified) {
+                ++certified_patterns;
+            } else if (first_failed_pattern.empty()) {
+                first_failed_pattern = show_pattern(task.pattern);
+            }
+            total.nodes += chamber_result.nodes;
+            total.leaves += chamber_result.leaves;
+            total.splits += chamber_result.splits;
+            total.negative_leaves += chamber_result.negative_leaves;
+            total.maximum_depth = std::max(
+                total.maximum_depth,
+                chamber_result.maximum_depth
+            );
+            if (
+                chamber_result.minimum_initialized
+                && (
+                    !total.minimum_initialized
+                    || chamber_result.minimum_coefficient
+                        < total.minimum_coefficient
+                )
+            ) {
+                total.minimum_coefficient =
+                    chamber_result.minimum_coefficient;
+                total.minimum_initialized = true;
+            }
+
+            std::cout
+                << "SU2_POWER_TP2_COMPACT_BERNSTEIN"
+                << " power=" << power_value
+                << " domain="
+                << (wall_case ? "wall" : "interior")
+                << " feasible_pattern_index="
+                << task.pattern_index
+                << " pattern=" << show_pattern(task.pattern)
+                << " dimension=" << analysis.dimension
+                << " vertices=" << analysis.vertices
+                << " simplices=" << analysis.simplices
+                << " nodes=" << chamber_result.nodes
+                << " negative_leaves="
+                << chamber_result.negative_leaves
+                << " result="
+                << (
+                    chamber_result.certified
+                        ? (
+                            analysis.integer_empty
+                                ? "PASS_INTEGER_EMPTY_CHAMBER"
+                                : "PASS_REAL_CHAMBER"
+                        )
+                        : "PARTIAL"
+                )
+                << '\n';
         }
 
         const bool all_selected =
@@ -1570,6 +2200,7 @@ int main(int argc, char** argv) {
             << " domain="
             << (wall_case ? "wall" : "interior")
             << " maximum_depth=" << maximum_depth
+            << " worker_threads=" << worker_count
             << " patterns=" << patterns
             << " feasible_patterns=" << feasible_patterns
             << " analyzed_patterns=" << analyzed_patterns

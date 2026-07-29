@@ -256,6 +256,11 @@ probe_su2_ordinary_anchored_kernel: probe_su2_ordinary_anchored_kernel.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+probe_su2_finite_anchored_spectral_tails: \
+		probe_su2_finite_anchored_spectral_tails.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 probe_su2_ordinary_half_power_wedge: \
 		probe_su2_ordinary_half_power_wedge.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -293,7 +298,7 @@ analyze_su2_power_tp2_chamber_geometry: \
 prove_su2_power_tp2_compact_bernstein: \
 		prove_su2_power_tp2_compact_bernstein.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
-		-Wsign-conversion -Wshadow -Werror $< -o $@
+		-Wsign-conversion -Wshadow -Werror -pthread $< -lgmp -o $@
 
 prove_su2_power6_tp2_wall_boundary: \
 		prove_su2_power6_tp2_wall_boundary.cpp
@@ -649,6 +654,7 @@ RESEARCH_TARGETS = \
 	probe_su2_anchored_lobe_all_powers \
 	prove_su2_anchored_lobe_first_block_powers \
 	probe_su2_ordinary_anchored_kernel \
+	probe_su2_finite_anchored_spectral_tails \
 	probe_su2_ordinary_half_power_wedge \
 	probe_su2_distinguished_current_sign \
 	probe_su2_structured_wedge_orthant \
