@@ -14992,6 +14992,186 @@ of `C` is automatic from `(P5A.102CB8S3Z26J)`; abstract
 log-concavity without this autocorrelation constraint is excluded by
 `(P5A.102CB8S3Z26F)`.
 
+Ordinary convolution preservation does not directly prove this
+statement.  The obstruction can be isolated exactly at the folded
+wall.
+
+**Lemma 5A8H28UIA2RLC15 (signed first-difference wall defect).**  Let
+`w=(w_r)_(r in Z)` be finite and symmetric, and suppose
+
+```text
+ d_h=w_h-w_(h+1)>=0,                         h>=0.
+```
+
+Extend `d` antisymmetrically and by zero, respectively, as
+
+```text
+ dbar_r=d_r                 (r>=0),
+ dbar_r=-d_(-r-1)           (r<0),
+
+ dplus_r=d_r                (r>=0),
+ dplus_r=0                  (r<0).
+```
+
+Let `u_Q` be the indicator of `[-Q,Q]`, put `w'=w*u_Q`, and write
+`d'_S=w'_S-w'_(S+1)`.  Then, for every `S>=0`,
+
+```text
+ d'_S=(dbar*u_Q)_S
+     =sum_(h=|S-Q|)^(S+Q)d_h,                 (P5A.102CB8S3Z26M)
+```
+
+whereas
+
+```text
+ (dplus*u_Q)_S-d'_S
+   =E_Q(S)
+   =sum_(h=0)^(Q-S-1)d_h       (0<=S<Q),
+   =0                           (S>=Q).        (P5A.102CB8S3Z26N)
+```
+
+Consequently the anchored fusion determinant is exactly
+
+```text
+ d_0 d'_S-d'_0 d_S
+
+ ={d_0(dplus*u_Q)_S-(dplus*u_Q)_0d_S}
+   +E_Q(0)d_S-d_0E_Q(S).                     (P5A.102CB8S3Z26O)
+```
+
+Thus replacing the antisymmetric first difference by its nonnegative
+half-line truncation leaves a signed lower-wall payment.  In
+particular, even a proof of the brace in `(P5A.102CB8S3Z26O)` would
+still have to pay
+
+```text
+ d_0E_Q(S)<=E_Q(0)d_S,                         0<=S<Q,       (P5A.102CB8S3Z26P)
+```
+
+or exploit reserve in the brace.
+
+**Proof.**  First difference commutes with convolution.  Symmetry of
+`w` gives
+
+```text
+ w_r-w_(r+1)=-d_(-r-1),                        r<0,
+```
+
+so the full first-difference sequence is `dbar`.  Hence
+
+```text
+ d'_S=sum_(r=S-Q)^(S+Q)dbar_r.
+```
+
+If `S>=Q`, all indices are nonnegative and this is the interval in
+`(P5A.102CB8S3Z26M)`.  If `S<Q`, the negative indices contribute
+
+```text
+ -sum_(h=0)^(Q-S-1)d_h,
+```
+
+which cancels the same initial part of
+`sum_(h=0)^(S+Q)d_h` and leaves
+`sum_(h=Q-S)^(Q+S)d_h`.  This proves
+`(P5A.102CB8S3Z26M)`.  Omitting the negative indices instead gives
+`(P5A.102CB8S3Z26N)`, and substitution at `S` and zero gives
+`(P5A.102CB8S3Z26O)`.  QED.
+
+This identity also fixes the scope of two nearby convolution
+theorems.  Gross--Mansour--Tucker--Wang, Corollary 2.16 of
+<https://arxiv.org/abs/1407.6325>, assumes three nonnegative
+log-concave sequences without internal zeros and preserves their
+ratio-dominance under ordinary convolution.  Hu--Wang--Zhao--Zhao,
+Theorem 3.7 of <https://arxiv.org/abs/1507.08430>, has the same
+nonnegativity requirement for preservation of partial synchronicity.
+The sequence `dbar` in `(P5A.102CB8S3Z26M)` is antisymmetric and has
+negative entries unless `d=0`, so neither theorem applies to it.
+Applying an ordinary-convolution theorem to `dplus` instead changes
+the operator by the exact defect `(P5A.102CB8S3Z26N)`.  Therefore
+those theorems can supply at most the brace in
+`(P5A.102CB8S3Z26O)`; they do not supply the missing wall payment
+`(P5A.102CB8S3Z26P)`.
+
+For the genuine tensor-power orbit, the correction in
+`(P5A.102CB8S3Z26O)` has the favorable sign.  It cannot, however, be
+discarded: it pays an already negative ordinary-convolution brace in
+the smallest nontrivial example.
+
+**Lemma 5A8H28UIA2RLC16 (structured wall reserve and sharp
+control).**  Take
+
+```text
+ d_h=[chi_(2h)]chi_(2Q)^(2s),                   Q,s>=1.
+```
+
+Then
+
+```text
+ d_Q>=d_0,                    d_S>=d_0  (0<=S<=Q),           (P5A.102CB8S3Z26Q)
+```
+
+and hence
+
+```text
+ E_Q(0)d_S-d_0E_Q(S)>=0,                       S>=0.         (P5A.102CB8S3Z26R)
+```
+
+Nevertheless, the brace in `(P5A.102CB8S3Z26O)` can be negative on
+this same structured class.  At `(Q,s)=(1,2)`,
+
+```text
+ d=(3,6,6,3,1).
+```
+
+For `S=1`,
+
+```text
+ (dplus*u_1)_0=9,              (dplus*u_1)_1=15,
+
+ d_0(dplus*u_1)_1-(dplus*u_1)_0d_1=-9,          (P5A.102CB8S3Z26S)
+
+ E_1(0)d_1-d_0E_1(1)=18,
+
+ d_0d'_1-d'_0d_1=9.                            (P5A.102CB8S3Z26T)
+```
+
+Thus no argument proving only nonnegativity of the ordinary
+half-line convolution brace can establish the fusion determinant:
+that brace is false on the live orbit, and the folded reserve is
+load-bearing.
+
+**Proof.**  Let `V=V_(2Q)`.  Clebsch--Gordan contains one copy of
+`V` in `V tensor V`, so choose an injective equivariant map
+
+```text
+ V -> V tensor V.
+```
+
+Tensoring it with the identity on `V^(tensor(2s-1))` and restricting
+to invariant vectors gives an injection
+
+```text
+ Inv(V^(tensor 2s)) -> Inv(V^(tensor(2s+1))).
+```
+
+The two dimensions are `d_0` and `d_Q`, respectively, proving the
+first inequality in `(P5A.102CB8S3Z26Q)`.  Lemmas
+5A8H28UIA2RLC1 and 5A8H28UIA2RLC11 show that `d` is nonnegative and
+log concave with interval support.  Such a sequence is unimodal, so
+every entry between `d_0` and `d_Q` is at least their minimum.  This
+proves the second inequality.
+
+For `0<=S<Q`, one has `E_Q(S)<=E_Q(0)`.  Together with
+`d_S>=d_0`, this proves `(P5A.102CB8S3Z26R)` in the folded range.
+For `S>=Q`, the same assertion follows from `E_Q(S)=0`.  Finally
+
+```text
+ chi_2^4=3chi_0+6chi_2+6chi_4+3chi_6+chi_8,
+```
+
+and direct substitution in Lemma 5A8H28UIA2RLC15 gives
+`(P5A.102CB8S3Z26S)--(P5A.102CB8S3Z26T)`.  QED.
+
 The first three nontrivial supports are completely positive.
 
 **Lemma 5A8H28UIA2RLC13 (character-positive support-three theorem).**
