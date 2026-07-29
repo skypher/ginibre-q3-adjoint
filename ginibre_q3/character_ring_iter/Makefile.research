@@ -290,6 +290,11 @@ analyze_su2_power_tp2_chamber_geometry: \
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
 
+prove_su2_power_tp2_compact_bernstein: \
+		prove_su2_power_tp2_compact_bernstein.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 prove_su2_power6_tp2_wall_boundary: \
 		prove_su2_power6_tp2_wall_boundary.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -651,6 +656,7 @@ RESEARCH_TARGETS = \
 	analyze_su2_power_tp2_nlsat \
 	analyze_su2_power_tp2_newton_chambers \
 	analyze_su2_power_tp2_chamber_geometry \
+	prove_su2_power_tp2_compact_bernstein \
 	prove_su2_power6_tp2_wall_boundary \
 	probe_su2_log_concave_wedge_tail \
 	probe_su2_log_concave_ratio_stress \

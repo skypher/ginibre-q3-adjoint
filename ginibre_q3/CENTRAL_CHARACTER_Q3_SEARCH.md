@@ -15347,6 +15347,134 @@ This is bounded discovery evidence for
 semigroup reduction in Lemma 5A8H28UIA2RLC10E is independent of
 those runs.
 
+An exact unbounded certificate now closes the first four of the six
+finite powers.  The remaining two certificate jobs are still running,
+so the following status deliberately does not yet claim Target
+5A8H28UIA2RLC10F in full.
+
+**Exact compact-Bernstein certification, powers six through nine.**
+For every `Q>=1`, all adjacent minors in
+`(P5A.102CB8S3Z26ZF)` are nonnegative when
+
+```text
+ m=6,7,8,9.                                      (P5A.102CB8S3Z26ZJ)
+```
+
+Here is the exact reduction used by the certificate.  On a chamber
+where
+
+```text
+ c=floor((mQ+t)/(2Q+1)),             0<=t<=mQ,
+```
+
+bounded-composition inclusion-exclusion gives
+
+```text
+ v_t=sum_(j=0)^c (-1)^j binom(m,j)
+     binom(mQ+t-j(2Q+1)+m-1,m-1).                (P5A.102CB8S3Z26ZK)
+```
+
+Thus the minor in `(P5A.102CB8S3Z26ZI)` is one rational
+polynomial `P(Q,x,a)` of degree at most `D=2(m-1)` after writing
+
+```text
+ y=x+2a+1.
+```
+
+The joint categories of `x-1,x,x+1,y,y+1,y+2`, with a separate
+zero category beyond `mQ`, define the complete finite chamber fan.
+Successive coordinates can remain in the same category, enter the next
+category, or cross support; these three alternatives enumerate the fan
+exhaustively.
+
+Put
+
+```text
+ r=1/Q,                  xi=x/Q,          alpha=a/Q
+```
+
+and homogenize:
+
+```text
+ P^h(r,xi,alpha)
+   =r^D P(1/r,xi/r,alpha/r).                     (P5A.102CB8S3Z26ZL)
+```
+
+Every chamber inequality
+
+```text
+ n_0 Q+n_1 x+n_2 a>=b
+```
+
+becomes
+
+```text
+ n_0+n_1 xi+n_2 alpha-br>=0.
+```
+
+Together with `0<=r<=1`, `xi>=r`, `alpha>=0`, and
+`xi+2alpha+r<=m`, this is a compact rational polytope.  It is in
+bijection with the original real chamber for `r>0`.
+
+The strict C++ verifier enumerates every vertex by exact Cramer
+determinants.  In affine dimension at most two, all independent vertex
+simplices cover the polytope by Caratheodory.  In dimension three, the
+average of all vertices is interior; coning it to all vertex triangles
+on every active facet covers the polytope.  Hence the resulting
+rational simplices are an exact cover, not a sample.
+
+If `t_1,...,t_d` are standard-simplex coordinates and
+
+```text
+ P^h=sum_beta c_beta t^beta,
+```
+
+its degree-`D` Bernstein coefficient at `lambda` is
+
+```text
+ B_lambda
+ =sum_(beta<=lambda)
+   c_beta prod_j (lambda_j)_(beta_j)/(D)_(|beta|). (P5A.102CB8S3Z26ZM)
+```
+
+The verifier computes these rationals exactly and independently
+replays its separable binomial transform against the direct formula.
+Every accepted real chamber has all `B_lambda>=0`; since the Bernstein
+basis is nonnegative on the simplex, this proves `P^h>=0` there.
+No subdivision is needed in the completed powers.
+
+The exact counts are
+
+```text
+      interior real chambers / simplices    wall chambers / simplices
+ m=6              89 / 192                         15 / 18
+ m=7             116 / 353                         29 / 38
+ m=8             161 / 427                         27 / 36
+ m=9             199 / 606                         45 / 60.          (P5A.102CB8S3Z26ZN)
+```
+
+At `m=8`, `160` interior chambers pass over the complete real
+polytope.  The only negative Bernstein coefficient belongs to
+
+```text
+ (5,5,5;5,8,8).
+```
+
+That chamber is exactly empty on the required integer lattice:
+the support and `y+1` zero category force `y=8Q`, while the category
+five upper wall gives `Q<=5/4`.  Thus integer `Q>=1` forces `Q=1`.
+The three `x` categories then require `x>=8`, whereas support of
+`x+1` requires `x<=7`, a contradiction.  The verifier independently
+exhausts every lattice point below the exact rational `Q` bound before
+accepting such a finite chamber.  No cap or bounded scan of an
+unbounded chamber is accepted.
+
+The source is
+`character_ring_iter/prove_su2_power_tp2_compact_bernstein.cpp`.
+Powers ten and eleven remain pending at this point.  Once both return
+the same exact terminal certificate, `(P5A.102CB8S3Z26ZJ)` extends
+to all six powers and Lemma 5A8H28UIA2RLC10E closes every `m>=6`.
+
 The fixed-gap target has an exact unfolded-minus-image form.  It
 retains more structure than the generic curvature expansion in Lemma
 5A8H28UIA2RLC4.
