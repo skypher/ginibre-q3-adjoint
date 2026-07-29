@@ -1,0 +1,16 @@
+SU2 distinguished-current sign and fixed-gap monotonicity probe
+
+command:
+  make -f Makefile.research probe_su2_distinguished_current_sign
+  ./probe_su2_distinguished_current_sign 10 15
+
+compiler flags:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror
+
+output:
+SU2_DISTINGUISHED_CURRENT_SIGN maximum_half_label=10 maximum_power=15 profiles=150 adjacent_minors=6545 negative_minors=147 positive_to_negative=10 negative_to_positive=20 maximum_sign_changes=1 maximum_negative_blocks=1 current_comparisons=523600 current_decreases=244084 first_negative={q=1 power=2 index=2 value=-1} first_current_decrease={q=1 power=2 gap=1 left=1 previous=2 value=-1} negative_profiles_by_power={2:10,3:10,5:10} current_decrease_profiles_by_power={1:9,2:10,3:10,4:10,5:10,6:10,7:10,8:10,9:10,10:10,11:10,12:10,13:10,14:10,15:10}
+
+SHA-256:
+b0e72211223fcab4a402636e928e5b1af138b597bee77ef193472f6b419b77a0  probe_su2_distinguished_current_sign.cpp
+7ede5fa156c018f7b2bb0d7630f82a754e1c38da8870d7233d311ad4889f6955  probe_su2_distinguished_current_sign

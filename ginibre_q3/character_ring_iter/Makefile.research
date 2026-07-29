@@ -261,6 +261,21 @@ probe_su2_ordinary_half_power_wedge: \
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+probe_su2_distinguished_current_sign: \
+		probe_su2_distinguished_current_sign.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_structured_wedge_orthant: \
+		probe_su2_structured_wedge_orthant.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_s2_fixed_gap_payment: \
+		analyze_su2_s2_fixed_gap_payment.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 probe_su2_log_concave_wedge_tail: \
 		probe_su2_log_concave_wedge_tail.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -611,6 +626,9 @@ RESEARCH_TARGETS = \
 	prove_su2_anchored_lobe_first_block_powers \
 	probe_su2_ordinary_anchored_kernel \
 	probe_su2_ordinary_half_power_wedge \
+	probe_su2_distinguished_current_sign \
+	probe_su2_structured_wedge_orthant \
+	analyze_su2_s2_fixed_gap_payment \
 	probe_su2_log_concave_wedge_tail \
 	probe_su2_log_concave_ratio_stress \
 	probe_su2_kostka_crossing_switch \

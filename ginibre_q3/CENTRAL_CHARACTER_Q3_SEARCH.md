@@ -14848,6 +14848,527 @@ problem is Target 5A8H28UIA2RT on
 bounded-composition kernel `U_Q^s`; this linkage is absent from the
 counterexample.
 
+The most direct attempt to combine that linkage with Theorem
+5A8H28UIA2RLC9 is already false on the smallest genuine orbit.  Take
+
+```text
+ Q=1,                  s=2,
+ p=N_1^2e_0=(1,1,1),   N_1p=(1,3,2,1).
+```
+
+Then the distinguished current has
+
+```text
+ W_1(0,1)=1*3-1*1=2,
+ W_1(1,2)=1*2-1*3=-1.                           (P5A.102CB8S3Z26U)
+```
+
+Thus `i -> W_Q(i,i+d)` need not be nonnegative or nondecreasing.
+This is exactly the condition that would place the distinguished
+current in the elementary dual of the fixed-gap suffix cone from
+Theorem 5A8H28UIA2RLC9: Abel formula
+`(P5A.102CB8S3Z26)` has nonnegative coefficients for every
+suffix-positive test current only when the initial value and successive
+increments of the distinguished current are nonnegative.  Hence the
+one-coordinate dual-cone argument is rigorously unavailable; no
+asymptotic stabilization can repair the missing base powers.
+
+The strict `cpp_int` diagnostic
+`character_ring_iter/probe_su2_distinguished_current_sign.cpp`
+independently reproduces `(P5A.102CB8S3Z26U)`.  Through
+
+```text
+ 1<=Q<=10,                         1<=s<=15,
+```
+
+it checks `523,600` successive fixed-gap current comparisons and finds
+`244,084` decreases.  The first is the exact identity above.  Its
+adjacent likelihood-ratio scan has negative profiles only at powers
+`2,3,5` in this bounded range, but that stabilization pattern is
+discovery evidence only and is not used as a theorem.  The transcript
+is `certificates/su2_distinguished_current_sign.log`.
+
+The structured orbit nevertheless survives a sharper fixed-gap
+coupled suffix.  This is the smallest cumulative strengthening now
+supported by the exact data.
+
+**Target 5A8H28UIA2RLC10S (structured fixed-gap coupled
+payment).**  Put
+
+```text
+ p=N_Q^s e_0,
+ W_a(i,j)=p_i(N_ap)_j-p_j(N_ap)_i.
+```
+
+Prove, for every `Q,s>=1`, `S>=1`, `rho>=0`, and `d>=1`,
+
+```text
+ H^str_(rho,d)
+  =sum_(i>=rho)W_Q(i,i+d)W_S(i,i+d)>=0.         (P5A.102CB8S3Z26V)
+```
+
+Summing `(P5A.102CB8S3Z26V)` over `d>=delta` gives the structured
+two-dimensional orthants
+
+```text
+ G^str_(rho,delta)
+  =sum_(i>=rho,d>=delta)
+    W_Q(i,i+d)W_S(i,i+d)>=0.                    (P5A.102CB8S3Z26W)
+```
+
+and the member `delta=1` is Target 5A8H28UIA2RT.  Hence
+`(P5A.102CB8S3Z26V)` proves the complete ordinary anchored hierarchy.
+Unlike the fixed-gap assertion disproved at
+`(P5A.102CB8S3ZA1)`, this statement is restricted to the common
+tensor-power orbit and therefore retains precisely the linkage missing
+from the abstract counterexample.  Equation
+`(P5A.102CB8S3Z26U)` shows that it still cannot follow by treating
+`W_Q` as a nondecreasing test sequence against Theorem
+5A8H28UIA2RLC9; the two structured currents must be paid together.
+
+The complete base half-power is termwise positive.
+
+**Lemma 5A8H28UIA2RLC10B (structured base fixed-gap
+payment).**  Target 5A8H28UIA2RLC10S holds at `s=1`.  More strongly,
+
+```text
+ W_Q(i,j)W_S(i,j)>=0                         (P5A.102CB8S3Z26VB)
+```
+
+for every `S>=0` and `0<=i<j`.
+
+**Proof.**  At `s=1`,
+
+```text
+ p=N_Qe_0=e_Q.
+```
+
+The ordinary fusion rule makes `N_ap` the indicator of
+
+```text
+ I_a={|Q-a|,...,Q+a}.
+```
+
+Consequently `W_a(i,j)` vanishes unless exactly one of `i,j` is
+`Q`.  If `i<Q=j`, then
+
+```text
+ W_a(i,Q)=-1_(i in I_a),
+```
+
+whereas if `i=Q<j`, then
+
+```text
+ W_a(Q,j)=1_(j in I_a).
+```
+
+For `a=Q`, the interval is `I_Q={0,...,2Q}`.  Hence every nonzero
+product with `W_Q` is respectively
+
+```text
+ 1_(i in I_S)                 or
+ 1_(j in I_S),
+```
+
+which proves `(P5A.102CB8S3Z26VB)`.  Summing any fixed-gap suffix or
+two-dimensional orthant proves the claim.  QED.
+
+Two target rows are also automatic at every half-power.
+
+**Lemma 5A8H28UIA2RLC10C (diagonal target rows).**  Target
+5A8H28UIA2RLC10S holds for every `s>=1` when `S=0` or `S=Q`.
+
+**Proof.**  Since `N_0p=p`, one has `W_0=0`.  When `S=Q`, every
+summand in `(P5A.102CB8S3Z26V)` is the square
+
+```text
+ W_Q(i,i+d)^2.
+```
+
+Both cases are termwise nonnegative.  QED.
+
+The next half-power admits a complete Ferrers-layer payment.
+
+**Theorem 5A8H28UIA2RLC10D (structured second-power fixed-gap
+payment).**  Target 5A8H28UIA2RLC10S holds at `s=2`, for every
+`Q,S,rho,d`.
+
+**Proof.**  Put `L=2Q`.  Clebsch--Gordan gives
+
+```text
+ p=N_Q^2e_0=1_[0,L].
+```
+
+For `a,x>=0`, write
+
+```text
+ f_a(x)=(N_ap)_x
+       ={min(L,x+a)-|x-a|+1}_+,                 (P5A.102CB8S3Z26VC)
+```
+
+where `{m}_+=max(m,0)`.  For a fixed gap `d`, set
+`u_a(i)=W_a(i,i+d)`.  If `d>L`, every nonzero distinguished current
+has exactly one endpoint in `[0,L]`, so both currents are nonnegative
+and the conclusion is immediate.  Assume `1<=d<=L`.  Then
+
+```text
+ u_a(i)=f_a(i+d)-f_a(i),          0<=i<=L-d,
+ u_a(i)=f_a(i+d),                 L-d<i<=L.     (P5A.102CB8S3Z26VD)
+```
+
+The second range is the positive boundary reserve.  Index it by
+`i=L-d+r`, `1<=r<=d`, and put
+
+```text
+ b_a(r)=f_a(L+r).
+```
+
+Its total coupled mass is
+
+```text
+ R=sum_(r=1)^d b_Q(r)b_S(r)>=0.                 (P5A.102CB8S3Z26VE)
+```
+
+It remains to pay the negative products in the first range.  Let
+
+```text
+ sigma_a(t)=f_a(t+1)-f_a(t),        0<=t<L.
+```
+
+With `c^m` denoting `m` consecutive copies of `c`, direct subtraction
+in `(P5A.102CB8S3Z26VC)` gives the exhaustive slope table
+
+```text
+ 0<=a<=Q:
+ sigma_a=(2^a,0^(L-2a),(-1)^a),
+
+ Q<=a<=L:
+ sigma_a=(2^(L-a),1^(2a-L),(-1)^(L-a)),
+
+ L<a<=2L:
+ sigma_a=(0^(a-L-1),1^(2L-a+1)),
+
+ a>2L:
+ sigma_a=0.                                      (P5A.102CB8S3Z26VF)
+```
+
+Empty blocks are omitted.  In the interior,
+
+```text
+ u_a(i)=sum_(t=i)^(i+d-1)sigma_a(t).             (P5A.102CB8S3Z26VG)
+```
+
+For `a<=L` these sliding sums are nonincreasing in `i`; for `a>L`
+they are nonnegative.  Hence the negative entries of each interior
+current form a terminal interval.  The product `u_Q(i)u_S(i)` has at
+most one negative block, on which one current has a fixed negative
+orientation and the other a fixed positive orientation.
+
+For `r>=1`, define the loss-level set
+
+```text
+ E_a(r)={0<=i<=L-d:u_a(i)<=-r}.
+```
+
+The slope table gives the following three layer bounds:
+
+```text
+ |E_a(r)|<=b_a(r),                               (P5A.102CB8S3Z26VH)
+
+ i in E_Q(r), u_S(i)>0  =>  u_S(i)<=b_S(r),      (P5A.102CB8S3Z26VI)
+
+ i in E_S(r), u_Q(i)>0  =>  u_Q(i)<=b_Q(r).      (P5A.102CB8S3Z26VJ)
+```
+
+Here is the endpoint verification.  If `a<=L`, the `-1` block in
+`sigma_a` has length `c_a=min(a,L-a)` and begins at
+`L-c_a`.  A length-`d` window with sum at most `-r` contains at least
+`r` entries of that block.  Its right endpoint is therefore at least
+`L-c_a+r`, leaving at most `c_a-r+1` possible windows.  Since
+
+```text
+ b_a(r)=(a-r+1)_+,                 a<=L,
+```
+
+and `c_a<=a`, this proves `(P5A.102CB8S3Z26VH)`; for `a>L` the loss
+set is empty.
+
+For the two cross bounds, the distinguished slope string is
+
+```text
+ sigma_Q=(2^Q,(-1)^Q).
+```
+
+If its window sum is at most `-r`, the window contains at least
+
+```text
+ ceil((2d+r)/3)
+```
+
+entries from the final `-1` block.  Insert this right-endpoint bound
+in each of the three target rows in `(P5A.102CB8S3Z26VF)`.  Summing
+the remaining constant blocks gives respectively
+
+```text
+ (u_S(i))_+ <=
+  (S-r+1)_+                         (S<=L),
+  {L-|L+r-S|+1}_+                  (L<S<=2L),
+  0                                (S>2L),
+```
+
+which is exactly `b_S(r)` and proves
+`(P5A.102CB8S3Z26VI)`.  Conversely, if the target window loses at
+least `r`, its right endpoint is at least
+
+```text
+ L-S+r                 (S<=Q),
+ S+r                   (Q<=S<=L).
+```
+
+Substitution in `(2^Q,(-1)^Q)` gives
+
+```text
+ (u_Q(i))_+<=(Q-r+1)_+=b_Q(r),
+```
+
+proving `(P5A.102CB8S3Z26VJ)`.  These are exhaustive because target
+rows above `L` have no negative slopes.
+
+Suppose first that `Q` is the losing orientation on the unique
+negative block.  Expanding its integer loss into Ferrers layers and
+using `(P5A.102CB8S3Z26VH)--(P5A.102CB8S3Z26VI)` gives
+
+```text
+ sum_(i:u_Q(i)u_S(i)<0)(-u_Q(i))u_S(i)
+
+ =sum_(r=1)^d sum_(i in E_Q(r),u_S(i)>0)u_S(i)
+
+ <=sum_(r=1)^d b_Q(r)b_S(r)=R.                  (P5A.102CB8S3Z26VK)
+```
+
+If `S` is the losing orientation, the same calculation uses
+`(P5A.102CB8S3Z26VH)` and `(P5A.102CB8S3Z26VJ)` with the two rows
+exchanged and gives the identical bound.  Thus the positive boundary
+reserve pays the complete negative block.  A suffix beginning inside
+that block contains only a subset of its negative mass and all of
+`R`; a suffix beginning earlier adds positive terms, while one
+beginning later is already nonnegative term by term.  Hence every
+fixed-gap suffix is nonnegative.  QED.
+
+The strict exact C++ audit
+`character_ring_iter/analyze_su2_s2_fixed_gap_payment.cpp`
+independently evaluates `(P5A.102CB8S3Z26VC)`, every current, every
+loss layer, and every suffix.  Through `Q=100` it checks
+`5,090,400` parameter rows, `772,195,500` suffixes, and
+`45,369,314` negative individual products.  Every product sequence
+has at most one negative block, and there are zero Ferrers-layer or
+boundary-reserve failures.  The transcript is
+`certificates/su2_s2_fixed_gap_payment.log`.  This is a cross-check of
+the unbounded slope-table proof above.
+
+The layer expansion is load-bearing.  Pairing each negative entry
+with one reflected boundary entry fails `31,289,915` times in the
+same run, beginning at `(Q,S,d,i)=(2,4,1,3)`.  Even the stronger
+pointwise demand that the absolute values of both currents fit in one
+common boundary depth fails `16,009,206` times, beginning at
+`(2,3,1,2)`.  The Ferrers proof succeeds because a current of loss
+`m` uses the first `m` unit layers and each layer has its own full
+boundary capacity; it does not assign a whole negative product to one
+boundary coordinate.
+
+The strict exact probe
+`character_ring_iter/probe_su2_structured_wedge_orthant.cpp`
+constructs the bounded-composition profile, both reflected rows, and
+every Wronskian over `cpp_int`, then forms all two-dimensional suffixes
+by exact inclusion-exclusion.  Through
+
+```text
+ 1<=Q<=6,                   1<=s<=10,
+ 1<=S<=2Qs,
+```
+
+it checks `12,111,330` orthants in `2,310` structured cases without a
+negative value.  Every fixed-gap boundary difference
+`H^str_(rho,d)` is also nonnegative.  Independently, every fixed-base
+gap suffix
+
+```text
+ sum_(d>=delta)W_Q(i,i+d)W_S(i,i+d)
+```
+
+is nonnegative in the same run.  The transcript is
+`certificates/su2_structured_wedge_orthant.log`.  This is bounded
+evidence for `(P5A.102CB8S3Z26V)`, not its unbounded proof.  The
+ordinary hard leaf is now either that structured fixed-gap coupled
+payment or the equivalent two-block Hall allocation
+5A8H28UIA2RKC3; the false fixed-gap shortcut is closed.
+
+The same probe rules out a direct extension of the second-power
+Ferrers payment.  In the displayed range every individual current and
+every product sequence has at most one negative block, and the two
+current intervals are always nested.  Nevertheless the losing-current
+magnitudes decrease `272` times, the boundary reserve fails `420`
+times, and the stronger all-cutoff/all-threshold layer-majorization
+test fails five times.  Its first failure is
+
+```text
+(Q,s,S,d,rho)=(5,4,1,1,7),   threshold=15,
+demand=3111,                 capacity=3025,
+H^str_(rho,d)=675070.
+```
+
+Thus the coupled suffix remains strongly positive there, but its
+positive mass cannot be allocated by that rowwise Ferrers-capacity
+condition.  The theorem for `s=2` is unaffected; for `s>=3` a proof
+must exploit cancellation across current layers or a less restrictive
+global allocation.
+
+The fixed-gap target has an exact unfolded-minus-image form.  It
+retains more structure than the generic curvature expansion in Lemma
+5A8H28UIA2RLC4.
+
+**Lemma 5A8H28UIA2RLC10T (Toeplitz-image current
+decomposition).**  Let `v` be finite and symmetric on `Z`, and put
+
+```text
+ psi_a(i)=v(i-a)-v(i+a+1),
+
+ D_a(i,j)=v(i)v(j-a)-v(j)v(i-a),       a>=0, i<j. (P5A.102CB8S3Z26X)
+```
+
+Then
+
+```text
+ W_a(i,j)=psi_0(i)psi_a(j)-psi_0(j)psi_a(i)
+
+ =D_a(i,j)-D_(a+1)(i+1,j+1)
+  +D_(a+1)(-j,-i)-D_a(-j-1,-i-1).               (P5A.102CB8S3Z26Y)
+```
+
+For a fixed gap `d>=1`, define
+
+```text
+F_a(i,d)=D_a(i,i+d)-D_(a+1)(i+1,i+d+1),
+R_d(i)=-i-d-1.
+```
+
+Writing `p_i=v(i)-v(i+1)`, the adjacent-row difference simplifies to
+
+```text
+ F_a(i,d)=p_i v(i+d-a)-p_(i+d)v(i-a).            (P5A.102CB8S3Z26Z)
+```
+
+Then `R_d` is an involution and
+
+```text
+ W_a(i,i+d)=F_a(i,d)-F_a(R_d(i),d).             (P5A.102CB8S3Z26ZA)
+```
+
+If `v` is nonnegative and log concave with interval support, every
+`D_a(i,j)` is nonnegative.  In particular this applies to
+`v=[x^.]U_Q(x)^s` in Target 5A8H28UIA2RLC10S.
+
+**Proof.**  Let `T_r(i)=v(i-r)`.  Thus
+
+```text
+ psi_0=T_0-T_(-1),              psi_a=T_a-T_(-a-1).
+```
+
+Expand their two-by-two determinant.  The four terms are
+
+```text
+ det(T_0,T_a)=D_a(i,j),
+ det(T_(-1),T_a)=D_(a+1)(i+1,j+1),
+
+ det(T_0,T_(-a-1))=-D_(a+1)(-j,-i),
+ det(T_(-1),T_(-a-1))=-D_a(-j-1,-i-1).
+```
+
+Their expansion signs give `(P5A.102CB8S3Z26Y)`.  Substitute
+`j=i+d`.  The two terms in the definition of `F_a` have the common
+factors `v(i+d-a)` and `v(i-a)`, respectively; taking their
+differences proves `(P5A.102CB8S3Z26Z)`.  The last two terms of
+`(P5A.102CB8S3Z26Y)` are
+`-F_a(-i-d-1,d)`, proving `(P5A.102CB8S3Z26ZA)`.
+Finally `D_a(i,j)` is the Toeplitz minor with rows `{0,a}` and
+columns `{i,j}`.  Log concavity with interval support is exactly
+Toeplitz `TP2`, so this minor is nonnegative.  QED.
+
+Consequently the hard fixed-gap suffix is the reflected cross-energy
+
+```text
+ H^str_(rho,d)
+ =sum_(i>=rho)
+  {F_Q(i,d)-F_Q(R_d(i),d)}
+  {F_S(i,d)-F_S(R_d(i),d)}.                     (P5A.102CB8S3Z26ZB)
+```
+
+Every raw Toeplitz minor entering `F` is nonnegative, but `F` is an
+adjacent-row difference and can have either sign.  Thus Lemma
+5A8H28UIA2RLC10T does not prove Target 5A8H28UIA2RLC10S.  It removes
+the fusion matrices from the remaining sign and identifies the exact
+new estimate: the two adjacent-row defects produced by the common
+bounded-composition kernel must have nonnegative reflected
+cross-energy on every outer suffix.
+
+Neither half of that cross-energy has a usable separate sign.  Write
+
+```text
+ Dir=sum_(i>=rho)
+  {F_Q(i,d)F_S(i,d)+F_Q(R_di,d)F_S(R_di,d)},
+
+ Cross=sum_(i>=rho)
+  {F_Q(i,d)F_S(R_di,d)+F_Q(R_di,d)F_S(i,d)}.
+```
+
+Then `(P5A.102CB8S3Z26ZB)` is `H^str=Dir-Cross`.  For
+
+```text
+ (Q,s,S,rho,d)=(1,5,3,1,1),
+ v=(51,45,30,15,5,1),
+```
+
+direct substitution in `(P5A.102CB8S3Z26Z)` gives
+
+```text
+ Dir=-10230,            Cross=-44409,
+ H^str=34179.                                  (P5A.102CB8S3Z26ZC)
+```
+
+Thus positivity of the direct unfolded energy is false on the genuine
+orbit.  Conversely, at
+
+```text
+ (Q,s,S,rho,d)=(1,3,1,0,1),
+ v=(7,6,3,1),
+```
+
+one gets
+
+```text
+ Dir=206,               Cross=160,
+ H^str=46.                                     (P5A.102CB8S3Z26ZD)
+```
+
+so the reflected cross term is not always nonpositive.  The exact
+probe checks `H^str=Dir-Cross` at every scanned suffix and reproduces
+both displayed identities.  Hence a proof must compare the two
+energies before taking signs; discarding either the direct or image
+part is another false shortcut.
+
+Nor is the remaining positivity monotone in the target label.  In the
+base orbit `Q=s=1`, at `rho=0,d=1`, direct substitution gives
+
+```text
+ H^str_(0,1)(S=1)=2,             H^str_(0,1)(S=2)=1.
+                                                        (P5A.102CB8S3Z26ZE)
+```
+
+The exact run finds `1,007,902` such target-label decreases, beginning
+with this identity.  Therefore Lemma 5A8H28UIA2RLC10B cannot be
+propagated by nonnegative increments in `S`; arbitrary `S` must remain
+inside the coupled payment.
+
 There is a second exact way to retain the linkage.  It replaces the
 half-power profile by the character coefficients of its pointwise
 square and exposes one additional hypothesis which the false abstract

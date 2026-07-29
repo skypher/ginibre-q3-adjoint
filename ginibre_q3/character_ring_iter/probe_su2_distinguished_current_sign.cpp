@@ -87,6 +87,12 @@ int main(int argc, char** argv) {
         );
         std::size_t current_comparisons = 0;
         std::size_t current_decreases = 0;
+        int first_current_decrease_q = 0;
+        int first_current_decrease_power = 0;
+        int first_current_decrease_gap = 0;
+        int first_current_decrease_left = 0;
+        Integer first_current_decrease_previous = 0;
+        Integer first_current_decrease_value = 0;
 
         for (int q = 1; q <= maximum_q; ++q) {
             std::vector<Integer> profile{Integer(1)};
@@ -178,6 +184,15 @@ int main(int argc, char** argv) {
                             if (current < previous) {
                                 ++current_decreases;
                                 profile_has_current_decrease = true;
+                                if (first_current_decrease_q == 0) {
+                                    first_current_decrease_q = q;
+                                    first_current_decrease_power = power;
+                                    first_current_decrease_gap = gap;
+                                    first_current_decrease_left = left;
+                                    first_current_decrease_previous =
+                                        previous;
+                                    first_current_decrease_value = current;
+                                }
                             }
                         }
                         previous = current;
@@ -209,7 +224,14 @@ int main(int argc, char** argv) {
             << " first_negative={q=" << first_negative_q
             << " power=" << first_negative_power
             << " index=" << first_negative_index
-            << " value=" << first_negative_value << "}";
+            << " value=" << first_negative_value << "}"
+            << " first_current_decrease={q="
+            << first_current_decrease_q
+            << " power=" << first_current_decrease_power
+            << " gap=" << first_current_decrease_gap
+            << " left=" << first_current_decrease_left
+            << " previous=" << first_current_decrease_previous
+            << " value=" << first_current_decrease_value << "}";
         std::cout << " negative_profiles_by_power={";
         bool first = true;
         for (int power = 1; power <= maximum_power; ++power) {

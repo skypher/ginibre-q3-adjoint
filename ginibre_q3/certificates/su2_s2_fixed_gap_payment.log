@@ -1,0 +1,16 @@
+SU2 second-half-power fixed-gap Ferrers-payment audit
+
+command:
+  make -f Makefile.research analyze_su2_s2_fixed_gap_payment
+  ./analyze_su2_s2_fixed_gap_payment 100
+
+compiler flags:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror
+
+output:
+SU2_S2_FIXED_GAP_PAYMENT maximum_q=100 cases=5090400 suffixes=772195500 negative_entries=45369314 maximum_negative_blocks=1 maximum_sign_changes=2 reflection_failures=31289915 boundary_reserve_failures=0 pointwise_boundary_failures=16009206 ferrers_layer_failures=0 first_negative_entry={q=1 target=2 gap=1 left=1 value=-1} first_reflection_failure={q=2 target=4 gap=1 left=3 reflected=3 value=-1} first_boundary_reserve_failure={} first_pointwise_boundary_failure={q=2 target=3 gap=1 left=2 depth=2 currents=(-1,1) boundaries=(1,2)} first_ferrers_layer_failure={} minimum_margin_case={q=1 target=2 gap=1 negative_mass=1 boundary_reserve=2 margin=1} first_reverse_orientation={q=3 target=1 gap=5 left=1 distinguished=1 target=-1} result=NO_NEGATIVE_SUFFIX
+
+SHA-256:
+90509194c19ebc42e9887742638830e910a9fe02aade75a93a0dfe18777691a6  analyze_su2_s2_fixed_gap_payment.cpp
+70f92ab3463c451925096ec4edc70a8a4c170e911748bfeb56c191ddf7615cda  analyze_su2_s2_fixed_gap_payment
