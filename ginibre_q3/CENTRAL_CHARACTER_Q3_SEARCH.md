@@ -14848,6 +14848,265 @@ problem is Target 5A8H28UIA2RT on
 bounded-composition kernel `U_Q^s`; this linkage is absent from the
 counterexample.
 
+There is a second exact way to retain the linkage.  It replaces the
+half-power profile by the character coefficients of its pointwise
+square and exposes one additional hypothesis which the false abstract
+tail theorem discarded.
+
+**Lemma 5A8H28UIA2RLC11 (character-positive square reduction).**  Let
+`p` be any finite real coefficient profile and put
+
+```text
+ c_h=<p,T_h p>,                         h>=0,
+ f=sum_(i>=0)p_i chi_(2i).
+```
+
+Then
+
+```text
+ f^2=sum_(h>=0)c_h chi_(2h),             f^2>=0,             (P5A.102CB8S3Z26A)
+```
+
+and, for all `q,a>=0`,
+
+```text
+ <p,p><T_qp,T_ap>-<p,T_qp><p,T_ap>
+
+ =c_0 sum_(h=|q-a|)^(q+a)c_h-c_qc_a.                 (P5A.102CB8S3Z26B)
+```
+
+For the structured half-power profile `p=N_Q^s e_0`, the sequence
+`c=N_Q^(2s)e_0` is nonnegative and log concave with interval support.
+
+**Proof.**  Character orthogonality gives
+
+```text
+ [chi_(2h)]f^2=<p,T_h p>=c_h,
+```
+
+which proves `(P5A.102CB8S3Z26A)`.  The ordinary fusion rule gives
+
+```text
+ T_qT_a=sum_(h=|q-a|)^(q+a)T_h.
+```
+
+Taking its quadratic form against `p` proves
+`(P5A.102CB8S3Z26B)`.  Finally
+
+```text
+ c=N_Q^(2s)e_0.
+```
+
+The initial delta is log concave with interval support, and repeated
+application of Lemma 5A8H28UIA2RLC1 proves the last assertion.  QED.
+
+Thus the complete ordinary anchored target follows from the following
+rank-one coefficient theorem.
+
+**Target 5A8H28UIA2RLC12 (character-positive log-concave
+super-eigenvector theorem).**  Let `c=(c_0,c_1,...)` be finite,
+nonnegative, and log concave with interval support, with `c_0>0`.
+Assume that
+
+```text
+ g(theta)=sum_(h>=0)c_h chi_(2h)(theta)>=0
+                                                        (P5A.102CB8S3Z26C)
+```
+
+for every `theta`.  Prove, for all `q,a>=0`,
+
+```text
+ c_0 sum_(h=|q-a|)^(q+a)c_h>=c_qc_a.             (P5A.102CB8S3Z26D)
+```
+
+Equivalently,
+
+```text
+ T_qc>=(c_q/c_0)c                              (P5A.102CB8S3Z26E)
+```
+
+coordinatewise.  Lemma 5A8H28UIA2RLC11 applies this target with
+`g=f^2` and `q=Q`, proving Target 5A8H28UIA2C.
+
+The complete pointwise-positive target is stronger than the ordinary
+application requires.  The exact live subtarget is the following.
+
+**Target 5A8H28UIA2RLC12S (square-character log-concave
+super-eigenvector theorem).**  Let `f` be a finite real linear
+combination of the characters and suppose
+
+```text
+ f^2=sum_(h>=0)c_h chi_(2h),
+```
+
+where `c` is nonnegative and log concave with interval support.  Prove
+`(P5A.102CB8S3Z26D)`.  This is a strict special case of Target
+5A8H28UIA2RLC12.  It is sufficient for the ordinary anchored theorem:
+take `f=chi_(2Q)^s`, use Lemma 5A8H28UIA2RLC1 for log concavity of
+its square coefficients, and set `q=Q`.
+
+The square subtarget has a scalar autocorrelation form.  This removes
+all tableau choices from the remaining ordinary sign.
+
+**Lemma 5A8H28UIA2RLC14 (torus-autocorrelation normal form).**  Write
+
+```text
+ f=sum_(i>=0)p_i chi_(2i)
+  =sum_(r in Z)P_r exp(2ir theta),
+
+ P_r=sum_(i>=|r|)p_i,                 P_(-r)=P_r,
+
+ C_r=sum_(z in Z)P_zP_(z-r).                         (P5A.102CB8S3Z26J)
+```
+
+If `f^2=sum_h c_h chi_(2h)`, then, for `r,h>=0`,
+
+```text
+ C_r=sum_(h>=r)c_h,                  c_h=C_h-C_(h+1). (P5A.102CB8S3Z26K)
+```
+
+Consequently, for `a>=q`,
+`(P5A.102CB8S3Z26D)` is exactly
+
+```text
+ (C_0-C_1)(C_(a-q)-C_(a+q+1))
+
+ >=(C_q-C_(q+1))(C_a-C_(a+1)).                  (P5A.102CB8S3Z26L)
+```
+
+**Proof.**  The weights of `chi_(2i)` are the unit coefficients at
+`-i,-i+1,...,i`, which gives the first two identities in
+`(P5A.102CB8S3Z26J)`.  Since `P` is real and symmetric, the Fourier
+coefficient of `f^2` at frequency `r` is the displayed
+autocorrelation `C_r`.  On the other hand, the same Fourier
+coefficient in `sum_hc_hchi_(2h)` is `sum_(h>=r)c_h`.  Taking one
+forward difference proves `(P5A.102CB8S3Z26K)`.  Telescoping the
+fusion interval from `a-q` through `a+q` proves
+`(P5A.102CB8S3Z26L)`.  QED.
+
+Thus Target 5A8H28UIA2RLC12S is equivalently the assertion that
+log-concavity of the nonnegative increments
+`C_h-C_(h+1)` forces `(P5A.102CB8S3Z26L)` for every autocorrelation
+`C` of a finite real symmetric sequence `P`.  Positive definiteness
+of `C` is automatic from `(P5A.102CB8S3Z26J)`; abstract
+log-concavity without this autocorrelation constraint is excluded by
+`(P5A.102CB8S3Z26F)`.
+
+The first three nontrivial supports are completely positive.
+
+**Lemma 5A8H28UIA2RLC13 (character-positive support-three theorem).**
+Target 5A8H28UIA2RLC12 holds whenever `c_h=0` for `h>3`.  Log
+concavity is not needed in this range.
+
+**Proof.**  If `q=a`, equation `(P5A.102CB8S3Z26D)` is the
+Cauchy--Schwarz inequality in the positive measure
+`g(theta)dmu_Haar(theta)`.  If either `q` or `a` exceeds three and `q!=a`,
+the subtracted product vanishes.  Normalize `c_0=1` and write
+
+```text
+ r=c_1,                    s=c_2,                    t=c_3.
+```
+
+At `theta=pi/2,pi/3,pi/4`, respectively, the first four even
+characters have values
+
+```text
+ (1,-1, 1,-1),             (1,0,-1, 1),
+ (1, 1,-1,-1).
+```
+
+Pointwise nonnegativity therefore gives
+
+```text
+ 1-r+s-t>=0,                 1-s+t>=0,
+ 1+r-s-t>=0.                                  (P5A.102CB8S3Z26H)
+```
+
+The first two inequalities imply `r<=2`.  The three mixed
+determinants, divided by `c_0^2`, are
+
+```text
+ D_12=r+s+t-rs,            D_13=s+t-rt,
+ D_23=r+s+t-st.                                  (P5A.102CB8S3Z26I)
+```
+
+If `r<=1`, then `D_12>=0`.  If `1<r<=2`, the second inequality in
+`(P5A.102CB8S3Z26H)` gives `t>=s-1`, and hence
+
+```text
+ D_12>=r-1+s(2-r)>=0.
+```
+
+Similarly `D_13>=0` when `r<=1`.  When `1<r<=2`, the first inequality
+gives `t<=1-r+s<s`, so
+
+```text
+ D_13=s-(r-1)t>=s-t>0.
+```
+
+Finally, if `t<=1`, then
+
+```text
+ D_23=r+t+s(1-t)>=0.
+```
+
+If `t>1`, the first inequality in `(P5A.102CB8S3Z26H)` would give
+`s>r`, while the third would give `r>s`, a contradiction.  Thus
+`t<=1`, and all mixed cases are nonnegative.  QED.
+
+Both hypotheses in Target 5A8H28UIA2RLC12 are load-bearing.  Log
+concavity alone fails for
+
+```text
+ c=(1,3,1),                   q=a=1,
+ c_0(c_0+c_1+c_2)-c_1^2=-4.                    (P5A.102CB8S3Z26F)
+```
+
+Here `g(pi/2)=1-3+1=-1`.  Pointwise character positivity alone also
+fails.  Take
+
+```text
+ p=(1,3,3,3,3,0,3),
+ c=(46,105,159,186,186,171,141,108,72,45,27,9,9).
+```
+
+Then `g=f^2>=0`, but
+
+```text
+ c_0(c_11+c_12+c_13)-c_1c_12=-117              (P5A.102CB8S3Z26G)
+```
+
+at `(q,a)=(1,12)`.  The coefficient profile is not log concave:
+`c_11^2=81<243=c_10c_12`.
+
+The strict exact enumerator
+`character_ring_iter/probe_su2_character_square_covariance.cpp`
+checks the second hypothesis automatically by constructing `g=f^2`.
+Through root support six and root coefficients at most three, all
+`349,960` anchored determinants belonging to the `2,899`
+log-concave square profiles are nonnegative.  Without the
+log-concavity filter it checks `2,133,552` determinants and reproduces
+the exact negative value `(P5A.102CB8S3Z26G)`.
+In signed-factor mode, through root support five and root coefficients
+in `[-2,2]`, it retains all squares having nonnegative character
+coefficients.  Every one of the `40,264` determinants on the `534`
+log-concave square profiles is nonnegative; the unfiltered class again
+has negative determinants.  Thus the bounded evidence is not an
+artifact of requiring the spectral factor itself to have nonnegative
+character coefficients.
+
+The independent ratio sampler
+`character_ring_iter/probe_su2_positive_density_covariance.cpp`
+generates exact log-concave profiles.  In its standard `200,000`
+profile run, `189,427` profiles have a negative exact anchored
+determinant; every one of those profiles also has a negative sampled
+value of `g` on the `4,096`-mesh of `[0,1]` in the even torus
+coordinate.  This last test is only a sampled necessary-condition
+diagnostic, not a certificate of pointwise positivity and not a proof
+of Target 5A8H28UIA2RLC12.  The exact identities
+`(P5A.102CB8S3Z26A)--(P5A.102CB8S3Z26G)` are the unbounded reduction
+and its countercontrols.
+
 There is an exact path/tableau form which retains precisely that
 linkage.  It also localizes why the usual first-crossing injection
 fails only at the folded wall.

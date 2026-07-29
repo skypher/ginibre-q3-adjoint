@@ -63,6 +63,7 @@ int main(int argc, char** argv) {
     try {
         int maximum_support = 7;
         int maximum_coefficient = 3;
+        bool signed_roots = false;
         if (argc >= 2) {
             maximum_support =
                 parse_positive(argv[1], "maximum_support");
@@ -71,38 +72,55 @@ int main(int argc, char** argv) {
             maximum_coefficient =
                 parse_positive(argv[2], "maximum_coefficient");
         }
-        if (argc > 3 || maximum_coefficient > 9) {
+        if (argc >= 4) {
+            signed_roots = std::string{argv[3]} == "signed";
+            if (!signed_roots) {
+                throw std::invalid_argument(
+                    "third argument must be signed"
+                );
+            }
+        }
+        if (argc > 4 || maximum_coefficient > 9) {
             throw std::invalid_argument(
                 "usage: probe_su2_character_square_covariance"
                 " [maximum_support] [maximum_coefficient_at_most_9]"
+                " [signed]"
             );
         }
 
         unsigned long long square_log_concave_profiles = 0;
+        unsigned long long square_log_concave_sign_definite_roots = 0;
+        unsigned long long square_log_concave_log_concave_roots = 0;
         unsigned long long root_log_concave_profiles = 0;
         unsigned long long determinants = 0;
+        unsigned long long unrestricted_determinants = 0;
         Integer minimum = 0;
+        Integer unrestricted_minimum = 0;
         std::string witness;
+        std::string unrestricted_witness;
         unsigned long long profile_count = 1;
+        const unsigned long long radix =
+            static_cast<unsigned long long>(
+                signed_roots
+                ? 2 * maximum_coefficient + 1
+                : maximum_coefficient + 1
+            );
         for (int index = 0; index <= maximum_support; ++index) {
-            profile_count *=
-                static_cast<unsigned long long>(maximum_coefficient + 1);
+            profile_count *= radix;
         }
-        for (unsigned long long code = 1; code < profile_count; ++code) {
+        for (unsigned long long code = 0; code < profile_count; ++code) {
             unsigned long long remaining = code;
             std::vector<Integer> root(
                 static_cast<std::size_t>(maximum_support + 1)
             );
             for (Integer& coefficient : root) {
+                const long long digit =
+                    static_cast<long long>(remaining % radix);
                 coefficient =
-                    remaining
-                    % static_cast<unsigned long long>(
-                        maximum_coefficient + 1
-                    );
-                remaining /=
-                    static_cast<unsigned long long>(
-                        maximum_coefficient + 1
-                    );
+                    signed_roots
+                    ? digit - maximum_coefficient
+                    : digit;
+                remaining /= radix;
             }
             while (!root.empty() && root.back() == 0) {
                 root.pop_back();
@@ -111,6 +129,22 @@ int main(int argc, char** argv) {
                 continue;
             }
             bool root_log_concave = true;
+            const bool root_nonnegative =
+                std::find_if(
+                    root.begin(),
+                    root.end(),
+                    [](const Integer& coefficient) {
+                        return coefficient < 0;
+                    }
+                ) == root.end();
+            const bool root_nonpositive =
+                std::find_if(
+                    root.begin(),
+                    root.end(),
+                    [](const Integer& coefficient) {
+                        return coefficient > 0;
+                    }
+                ) == root.end();
             for (std::size_t index = 1U;
                  index + 1U < root.size();
                  ++index) {
@@ -125,10 +159,25 @@ int main(int argc, char** argv) {
             const bool root_has_internal_zero =
                 std::find(root.begin(), root.end(), Integer{0})
                 != root.end();
-            if (root_log_concave && !root_has_internal_zero) {
+            if (
+                root_nonnegative
+                && root_log_concave
+                && !root_has_internal_zero
+            ) {
                 ++root_log_concave_profiles;
             }
             const std::vector<Integer> square = multiply(root, root);
+            if (
+                std::find_if(
+                    square.begin(),
+                    square.end(),
+                    [](const Integer& coefficient) {
+                        return coefficient < 0;
+                    }
+                ) != square.end()
+            ) {
+                continue;
+            }
             bool square_log_concave = true;
             for (std::size_t index = 1U;
                  index + 1U < square.size();
@@ -141,10 +190,15 @@ int main(int argc, char** argv) {
                     break;
                 }
             }
-            if (!square_log_concave) {
-                continue;
+            if (square_log_concave) {
+                ++square_log_concave_profiles;
+                if (root_nonnegative || root_nonpositive) {
+                    ++square_log_concave_sign_definite_roots;
+                    if (root_log_concave) {
+                        ++square_log_concave_log_concave_roots;
+                    }
+                }
             }
-            ++square_log_concave_profiles;
             for (int q = 1; q < static_cast<int>(square.size()); ++q) {
                 std::vector<Integer> character(
                     static_cast<std::size_t>(q + 1)
@@ -158,14 +212,25 @@ int main(int argc, char** argv) {
                     const Integer determinant =
                         at(square, 0) * at(updated, target)
                         - at(updated, 0) * at(square, target);
-                    ++determinants;
-                    if (determinant < minimum) {
-                        minimum = determinant;
-                        witness =
+                    ++unrestricted_determinants;
+                    if (determinant < unrestricted_minimum) {
+                        unrestricted_minimum = determinant;
+                        unrestricted_witness =
                             "root=" + show(root)
                             + " q=" + std::to_string(q)
                             + " target=" + std::to_string(target)
                             + " square=" + show(square);
+                    }
+                    if (square_log_concave) {
+                        ++determinants;
+                        if (determinant < minimum) {
+                            minimum = determinant;
+                            witness =
+                                "root=" + show(root)
+                                + " q=" + std::to_string(q)
+                                + " target=" + std::to_string(target)
+                                + " square=" + show(square);
+                        }
                     }
                 }
             }
@@ -175,12 +240,26 @@ int main(int argc, char** argv) {
             << "SU2_CHARACTER_SQUARE_COVARIANCE"
             << " maximum_support=" << maximum_support
             << " maximum_coefficient=" << maximum_coefficient
+            << " signed_roots=" << (signed_roots ? 1 : 0)
             << " root_log_concave_profiles=" << root_log_concave_profiles
             << " square_log_concave_profiles="
             << square_log_concave_profiles
+            << " square_log_concave_sign_definite_roots="
+            << square_log_concave_sign_definite_roots
+            << " square_log_concave_log_concave_roots="
+            << square_log_concave_log_concave_roots
             << " determinants=" << determinants
             << " minimum=" << minimum
             << " witness=" << (witness.empty() ? "{}" : witness)
+            << " unrestricted_determinants="
+            << unrestricted_determinants
+            << " unrestricted_minimum=" << unrestricted_minimum
+            << " unrestricted_witness="
+            << (
+                unrestricted_witness.empty()
+                ? "{}"
+                : unrestricted_witness
+            )
             << " result="
             << (
                 minimum >= 0
