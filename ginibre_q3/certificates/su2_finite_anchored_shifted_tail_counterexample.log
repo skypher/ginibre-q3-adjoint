@@ -1,0 +1,72 @@
+SU(2) finite anchored shifted-tail exact countercertificate
+
+COMMAND
+make -f Makefile.research \
+  verify_su2_finite_anchored_shifted_tail_counterexample
+./verify_su2_finite_anchored_shifted_tail_counterexample
+
+OUTPUT
+SU2_FINITE_ANCHORED_SHIFTED_TAIL_COUNTEREXAMPLE level=38 factor=2 target=17 shift=5 field_degree=16 pairs=190 exact_groups=131 cutoff_pair=(1,2) cutoff_approx=320.01129451931307138 determinant=25181925 total_scale=6400 tail_sign=-1 result=PASS_EXACT_COUNTEREXAMPLE cutoff=[2,0,56,0,-374,0,856,0,-846,0,404,0,-92,0,8] negative_tail=[2639940480,0,-128514218240,0,819619742720,0,-1583053969408,0,1376315949568,0,-601074241792,0,128543322752,0,-10685373952]
+SU2_FINITE_ANCHORED_POWER_CONVEX_CASE level=38 factor=2 target=17 shift=4 exact_groups=131 negative_calls=0 zero_calls=1 result=PASS_EXACT_CASE
+SU2_FINITE_ANCHORED_POWER_CONVEX_CASE level=38 factor=9 target=19 shift=4 exact_groups=51 determinant=5312076 negative_calls=0 zero_calls=5 result=PASS_EXACT_CASE
+SU2_FINITE_ANCHORED_POWER_CONVEX_COUNTEREXAMPLE level=40 factor=1 target=18 shift=10 field_degree=12 exact_groups=173 cutoff_pair=(0,4) cutoff_approx=53.922917396202073942 determinant=13227930891 total_scale=7056 negative_calls=4 zero_calls=1 call_sign=-1 result=PASS_EXACT_COUNTEREXAMPLE cutoff=[-2,0,35,0,-69,0,52,0,-17,0,2] negative_call=[-2308168481181516,0,4914736069931624,0,11868889177560816,0,-23922095463237768,0,12366672155018916,0,-1891147013103020]
+
+METHOD
+The verifier works in the exact real cyclotomic field
+  Q(zeta), zeta=2*cos(pi/40).
+It reconstructs the degree-16 minimal polynomial of zeta from Phi_80,
+isolates zeta as the unique root in (199/100,2) by an exact rational
+Sturm sequence, and decides every nonzero field-element sign by exact
+rational interval refinement.
+
+For all 190 unordered pairs of the 20 even-sector modes, it constructs
+exactly:
+  mu_(i,j)=(lambda_i*lambda_j)^2,
+  the scaled exterior-square residue for rows {0,2} and columns {0,17}.
+It groups equal bases in the cyclotomic field, proves the strict order
+of all 131 distinct bases by exact Sturm signs, and forms every upper
+tail after multiplication by mu^5.  The displayed tail is strictly
+negative.
+
+As an independent normalization and orientation replay, the verifier
+constructs the 20-by-20 integer fusion matrix N_2^(19), computes its
+tenth power, and checks the exact identity
+  sum_groups scaled_residue*mu^5
+    = 16*(19+1)^2
+      * det((N_2^(19))^10)_[{0,2},{0,17}]
+    = 6400*25181925.
+Thus the negative upper tail coexists with a strictly positive complete
+anchored determinant.
+
+The verifier also evaluates, in the same exact field, every algebraic
+power-convex call
+  sum_(mu>=c) scaled_residue*mu^4*(mu-c)
+for the interior counterexample parameters and for the numerical
+near-zero wall case (K,Q,S)=(19,9,19).  Every call is nonnegative.
+The latter computation proves that the small negative floating-point
+values at the simple-current target are grouping/cancellation artifacts,
+not counterexamples to the algebraic power-convex criterion.
+
+The same exact procedure at (K,Q,S,r)=(20,1,18,10) disproves the
+uniform power-convex criterion.  Here r=floor(K/(2Q)) is the last
+ordinary/stable power before the affine wall.  The verifier groups 210
+mode pairs into 173 exact bases, proves their order in
+Q(2*cos(pi/42)), checks the complete spectral sum against the positive
+integer determinant 13227930891, and finds four strictly negative
+power-convex calls.  Thus the two positive cases above validate the
+implementation but do not extend to a uniform call theorem.
+
+The isolating interval contains zeta itself because
+  2*cos(pi/40) > 2-pi^2/1600 > 199/100
+from cos(x)>1-x^2/2 and pi^2<10, while zeta<2.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  verify_su2_finite_anchored_shifted_tail_counterexample.cpp \
+  -lgmpxx -lgmp \
+  -o verify_su2_finite_anchored_shifted_tail_counterexample
+
+SHA-256
+baa7ebb86463256ca2773131ffb6704ba9dd5fc8ab6b7203982c03195352b79c  verify_su2_finite_anchored_shifted_tail_counterexample.cpp
+a774829cf5012f1e31d1f73fab63a4276ceebd725e887650b93d9431ad8b91ba  verify_su2_finite_anchored_shifted_tail_counterexample

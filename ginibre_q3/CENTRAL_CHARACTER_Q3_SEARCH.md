@@ -9479,6 +9479,226 @@ Thus monotone spectral-tail Abel summation is a false strengthening of
 the anchored covariance.  Any proof of `(P5A.102AC)` must permit
 payment between distinct `lambda_q` levels.
 
+The obstruction survives the natural attempt to start Abel summation
+after the already proved finite seeds.
+
+**Proposition 5A8H28UIA2ST (exact shifted spectral-tail
+obstruction).**  In the even sector at
+
+```text
+k=38,                 q=4,                 x=34,
+```
+
+write the reduced modes as
+
+```text
+theta_m=(m+1)pi/40,                         0<=m<=19,
+mu_(i,j)={lambda_q(i)lambda_q(j)}^2,
+```
+
+and group the exterior-square residues by equal `mu`.  There is a
+cutoff `mu_*` for which
+
+```text
+sum_(mu>=mu_*) R_mu mu^5<0,                 (P5A.102AD5AA)
+```
+
+although the complete anchored determinant is
+
+```text
+det (N_4^10)_[{0,4},{0,34}]=25181925>0.
+                                                        (P5A.102AD5AB)
+```
+
+Consequently upper-tail Abel summation cannot be started at the fourth
+power using the proved seeds `C_1,...,C_4`.
+
+**Proof.**  Work in half-labels, so
+`(K,Q,S)=(19,2,17)`, and put
+`zeta=2cos(pi/40)`.  The cutoff in `(P5A.102AD5AA)` is the exact base
+belonging to the zero-based mode pair `(1,2)`:
+
+```text
+mu_*
+ =2+56zeta^2-374zeta^4+856zeta^6-846zeta^8
+    +404zeta^10-92zeta^12+8zeta^14.
+```
+
+With every residue multiplied by the common positive normalization
+`16(K+1)^2=6400`, the upper tail is
+
+```text
+2639940480-128514218240zeta^2+819619742720zeta^4
+-1583053969408zeta^6+1376315949568zeta^8
+-601074241792zeta^10+128543322752zeta^12
+-10685373952zeta^14<0.                         (P5A.102AD5AC)
+```
+
+The exact verifier
+`character_ring_iter/verify_su2_finite_anchored_shifted_tail_counterexample.cpp`
+reconstructs the degree-sixteen minimal polynomial of `zeta` from
+`Phi_80`, isolates `zeta` as the unique root in `(199/100,2)` by a
+rational Sturm sequence, groups all `190` mode pairs into `131` exact
+base classes, and proves their strict order and the sign in
+`(P5A.102AD5AC)` by rational interval refinement.  The interval contains
+the intended root because
+
+```text
+2cos(pi/40)>2-pi^2/1600>199/100,             2cos(pi/40)<2.
+```
+
+As an independent normalization replay, it constructs the integer
+finite-fusion matrix and verifies
+
+```text
+sum_mu 6400 R_mu mu^5
+ =6400 det (N_2^(19))^10_[{0,2},{0,17}]
+ =6400*25181925.
+```
+
+The source-bound transcript is
+`certificates/su2_finite_anchored_shifted_tail_counterexample.log`.
+The source, executable, and transcript SHA-256 identities are,
+respectively,
+
+```text
+baa7ebb86463256ca2773131ffb6704ba9dd5fc8ab6b7203982c03195352b79c
+a774829cf5012f1e31d1f73fab63a4276ceebd725e887650b93d9431ad8b91ba
+5f064c38f67e5ca88296cfbfc495dc84fc63f529df4c11614432cd267bc08b10.
+```
+
+Finally, if every upper tail of `R_mu mu^4` were nonnegative, Abel
+summation against the increasing bases `mu` would make every upper
+tail of `R_mu mu^5` nonnegative.  Equation `(P5A.102AD5AC)` contradicts
+this.  Hence the fourth-power shifted criterion needed after the four
+proved seeds is false.  QED.
+
+The failed tail order has a strictly broader algebraic replacement.
+
+**Lemma 5A8H28UIA2PC (power-convex spectral closure).**  Fix
+`K,Q,S` and `r>=0`, group the finite exterior-square spectrum by its
+distinct nonnegative bases, and write
+
+```text
+D_s(S)=sum_mu R_mu mu^s.                         (P5A.102AD5AD)
+```
+
+Suppose
+
+```text
+D_r(S)>=0
+```
+
+and, at every spectral cutoff `c`,
+
+```text
+L_c=sum_(mu>=c)R_mu mu^r(mu-c)>=0.               (P5A.102AD5AE)
+```
+
+Then `D_s(S)>=0` for every integer `s>=r`.
+
+**Proof.**  Put `w_mu=R_mu mu^r` and let `a` be the smallest spectral
+base.  The function
+
+```text
+L(c)=sum_mu w_mu(mu-c)_+
+```
+
+is affine between consecutive spectral bases.  Hence
+`(P5A.102AD5AE)` makes it nonnegative on the complete interval from
+`a` to the largest base.  For `s=r+t`, `t>=1`, apply the exact convex
+representation
+
+```text
+x^t
+ =a^t+t a^(t-1)(x-a)
+   +integral_a^x t(t-1)c^(t-2)(x-c) dc,
+                                                        (P5A.102AD5AF)
+```
+
+with the integral term omitted when `t=1`.  Multiplication by
+`w_mu`, summation over `mu`, and interchange of the finite sum with
+the integral give
+
+```text
+D_(r+t)(S)
+ =a^tD_r(S)+t a^(t-1)L(a)
+   +integral_a^infinity t(t-1)c^(t-2)L(c) dc>=0.
+```
+
+The case `s=r` is the stated seed.  QED.
+
+The natural attempt to apply this lemma at the last already proved
+power is false.  Define
+
+```text
+r_*(K,Q)=max(4,floor(K/(2Q))).                   (P5A.102AD5AG)
+```
+
+If `r_*=4`, the exact finite `C_4` theorem supplies the seed.  If
+`r_*>4`, then `2r_*Q<=K`, so ordinary stabilization and the ordinary
+`TP2` theorem supply it.  Thus nonnegativity of all calls at `r_*`
+would imply the complete finite anchored hierarchy.  It does not hold.
+
+**Proposition 5A8H28UIA2PC2 (exact power-convex call
+obstruction).**  At
+
+```text
+(K,Q,S,r)=(20,1,18,10)=
+           (20,1,18,r_*(20,1)),
+```
+
+one has `D_10(18)=13227930891>0`, but four calls in
+`(P5A.102AD5AE)` are strictly negative.
+
+**Proof.**  Put `zeta=2cos(pi/42)`.  One negative call begins at the
+exact base
+
+```text
+c=-2+35zeta^2-69zeta^4+52zeta^6-17zeta^8+2zeta^10
+```
+
+and, after multiplication by the common positive normalization
+`16(K+1)^2=7056`, equals
+
+```text
+-2308168481181516
++4914736069931624zeta^2
++11868889177560816zeta^4
+-23922095463237768zeta^6
++12366672155018916zeta^8
+-1891147013103020zeta^10<0.                    (P5A.102AD5AH)
+```
+
+The exact verifier cited in Proposition 5A8H28UIA2ST reconstructs the
+degree-twelve real cyclotomic field from `Phi_84`, isolates `zeta`,
+groups the `210` unordered mode pairs into `173` exact base classes,
+proves their strict order, and proves the sign in
+`(P5A.102AD5AH)` by rational Sturm refinement.  It independently
+constructs the integer fusion matrix and verifies
+
+```text
+sum_mu 7056R_mu mu^10
+ =7056D_10(18)
+ =7056*13227930891.
+```
+
+Thus the seed determinant is positive and stable
+(`2rQ=K`), while the proposed call payment is negative.  QED.
+
+Unlike ordinary upper tails, every call in `(P5A.102AD5AE)` is an
+algebraic element of the finite real cyclotomic field.  The exact
+verifier checks all `131` calls at
+`(K,Q,S,s)=(19,2,17,4)` and all `51` calls at the simple-current
+target `(19,9,19,4)`; none is negative.  In the latter case the
+anchored determinant is `5312076`, and five calls vanish exactly.
+This exact replay shows that the small negative long-double values at
+that wall are cancellation artifacts.  Proposition
+5A8H28UIA2PC2 proves that these positive cases do not extend to a
+uniform cone.  A spectral proof of the anchored hierarchy must
+therefore retain moment-specific or multi-time payment; neither
+ordinary tails nor their one-moment power-convex relaxation suffices.
+
 The Dirichlet-lobe decomposition used later for the odd first-wall
 payment does not localize this covariance either.  In the ordinary ring
 put

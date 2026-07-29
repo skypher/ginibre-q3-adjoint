@@ -261,6 +261,11 @@ probe_su2_finite_anchored_spectral_tails: \
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+verify_su2_finite_anchored_shifted_tail_counterexample: \
+		verify_su2_finite_anchored_shifted_tail_counterexample.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lgmpxx -lgmp -o $@
+
 probe_su2_ordinary_half_power_wedge: \
 		probe_su2_ordinary_half_power_wedge.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -655,6 +660,7 @@ RESEARCH_TARGETS = \
 	prove_su2_anchored_lobe_first_block_powers \
 	probe_su2_ordinary_anchored_kernel \
 	probe_su2_finite_anchored_spectral_tails \
+	verify_su2_finite_anchored_shifted_tail_counterexample \
 	probe_su2_ordinary_half_power_wedge \
 	probe_su2_distinguished_current_sign \
 	probe_su2_structured_wedge_orthant \
