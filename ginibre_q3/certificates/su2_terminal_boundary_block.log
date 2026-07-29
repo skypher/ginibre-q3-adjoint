@@ -1,0 +1,2 @@
+SU2_TERMINAL_BOUNDARY_BLOCK maximum_level=50 maximum_pair_power=20 parameter_rows=144 matrix_rows=100880 coefficient_rows=1950000 negative_coefficients=0 result=PASS_DISCOVERY
+SU2_TERMINAL_BOUNDARY_BLOCK maximum_level=30 maximum_pair_power=200 parameter_rows=49 matrix_rows=212800 coefficient_rows=2520000 negative_coefficients=0 result=PASS_DISCOVERY

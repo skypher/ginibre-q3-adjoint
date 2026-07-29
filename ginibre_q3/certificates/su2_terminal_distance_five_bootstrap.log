@@ -1,0 +1,1 @@
+SU2_TERMINAL_DISTANCE_FIVE_BOOTSTRAP maximum_q_half=2 cases=6 coefficient_rows=69 negative_coefficients=36 first_negative={q_half=1 distance_half=1 output_half=4 coefficient=-3} result=COUNTEREXAMPLE

@@ -1,0 +1,60 @@
+SU2 t=4 C4 exact sharded-certificate receipt
+Date: 2026-07-29T00:12:11Z
+
+Scope:
+SU2_K4_INTERMEDIATE_MASKS hinges=50 masks=302 minimum_active=7 maximum_active=44 result=PASS_EXACT_CENSUS
+
+Collector command:
+./collect_su2_exact_shards k4 MASK_LIST LOCAL_FORWARD_LOG_DIRECTORY LOCAL_REVERSE_LOG_DIRECTORY MACHINE_B_LOG_DIRECTORY EXCEPTION_LOG_DIRECTORY
+
+Terminal:
+SU2_K4_INTERMEDIATE hinges=50 feasible_chambers=302 certified_chambers=302 result=PASS_EXACT_CERTIFICATE
+
+Exact standard engine source SHA-256:
+f6b1a7ed827eb3819361cba5e1420ba1fa44421aafa86b50b13824e7cb76a5ce  prove_su2_k4_intermediate.cpp
+
+Exact standard engine binary SHA-256:
+2782c0fb588a0fbe350bdf80cb7baad7c2748cd977a6ce6758ba3277a5da92d4  prove_su2_k4_intermediate
+
+Mask 57155248700535 exact tree-pair engine source SHA-256:
+dfcdeef86c2c611c6592a670e23f45e7d3719185fcd49fd1415c6a4402929b1f  prove_su2_k4_intermediate_method.cpp
+
+Mask 57155248700535 exact tree-pair engine binary SHA-256:
+29a89c9ff822425ed9580dc8339252d022111ce994ef64573fb3aacc2acb8f02  prove_su2_k4_intermediate_method
+
+Mask 57155248700535 child transcript SHA-256:
+df3da978a3689202ddea223c3edade707ebc180cfe3bb3114c9ac1a3500a6ca8  k4_mask_57155248700535.log
+
+Mask 57155248700663 exact lattice-cone engine source SHA-256:
+d8ab89c716c35d57ee3a46a0d1424a355493f4f51aca1e437ed9718d4a8a5c57  prove_su2_k4_mask_57155248700663.cpp
+
+Mask 57155248700663 exact lattice-cone engine binary SHA-256:
+c3120bb775e7ca9b422ff0635cc36844ec76c84bd055384ca1b0dd0966d12e66  prove_su2_k4_mask_57155248700663
+
+Mask 57155248700663 child transcript SHA-256:
+50f5319d19bd893fe08f3d87b286ef8f125e65382bc807ad804e7fd59d4f7cbc  k4_mask_57155248700663.log
+
+Exact mask-list SHA-256:
+7a20b924e34a11290d50bdc0c7105f6689bc654cb4f080e087ca7bb6c2dda586  su2_k4_exact_masks.list
+
+Fail-closed collector source SHA-256:
+7c159dd66b82c33000f8f56d246edb5afdf46cd1561a490801d5a759ce6b7364  collect_su2_exact_shards.cpp
+
+Fail-closed collector binary SHA-256:
+52c9e29b5e4e6b2dd341103d809921b7904543cdc97e2759f75e359249887479  collect_su2_exact_shards
+
+Deterministically reconstructed full transcript:
+f76b88bbadb6cbfe1aa0ee675fb87839cd0d653ab6afdf425ae749fd2633e5a0  su2_k4_exact_collected.log
+lines=571
+
+Interpretation:
+The collector requires one completed exact certificate for every one of
+the 302 Presburger activation masks, rejects every failure, unresolved,
+incomplete, or error marker, removes only child terminal records, and
+emits the displayed complete-census terminal.  Three hundred masks use
+the standard exact rational engine.  Mask 57155248700535 uses an exact
+integer pair-tree whose leaves are standard rational identities.  Mask
+57155248700663 is partitioned into 59 exhaustive level-lattice cones;
+every cone pulls the chamber margin back to a polynomial with
+nonnegative rational monomial coefficients.  The census and all sign
+certificates are unbounded in K, Q, and Y.

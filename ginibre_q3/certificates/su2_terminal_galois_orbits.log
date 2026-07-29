@@ -1,0 +1,2 @@
+SU2_TERMINAL_GALOIS_ORBITS result=FAIL_NUMERICAL level=10 label=2 pair_power=4 exponent=9 orbit_size=4 seed_pair=(1,2) contribution=-546.75 normalized=-0.998174
+SU2_TERMINAL_GALOIS_ORBITS result=FAIL_NUMERICAL level=12 label=4 pair_power=4 exponent=9 orbit_size=3 seed_pair=(1,6) contribution=-65 normalized=-0.967506

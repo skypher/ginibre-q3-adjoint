@@ -1,0 +1,1 @@
+SU2_TERMINAL_GALOIS_WITNESS level=12 label=4 pair_power=4 exponent=9 seed_pair=(1,6) orbit_size=3 normalization_denominator=784 scaled_contribution=-50960 contribution=-65 result=PASS_EXACT_NEGATIVE_CONTROL

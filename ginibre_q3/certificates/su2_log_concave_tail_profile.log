@@ -1,0 +1,14 @@
+command:
+make -f Makefile.research analyze_su2_log_concave_tail_profile
+./analyze_su2_log_concave_tail_profile 1,100,9900,9900 6
+
+strict flags:
+-std=c++20 -O2 -Wall -Wextra -Wpedantic -Wconversion
+-Wsign-conversion -Wshadow -Werror
+
+output:
+SU2_LOG_CONCAVE_TAIL_PROFILE minimum=0 q=1 a=1 cutoff=4 result=NO_COUNTEREXAMPLE full_minimum=-159939695431880000 full_minor=1,2;3,4 full_cutoff=0 full_result=COUNTEREXAMPLE
+
+SHA-256:
+a8dc2266c36070cf0e47a8621d2a49eed8b9f41882978975354fb9bea63d29b9  analyze_su2_log_concave_tail_profile.cpp
+5d92a0c820051977a7fc931ee0a1359864dec79e069094c400b53d0f7fbafcfb  analyze_su2_log_concave_tail_profile

@@ -1,0 +1,17 @@
+SU2 ordinary half-power cumulative-wedge probe
+
+command:
+  make -f Makefile.research probe_su2_ordinary_half_power_wedge
+  ./probe_su2_ordinary_half_power_wedge 8 10
+
+compiler flags:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror
+
+output:
+SU2_ORDINARY_HALF_POWER_WEDGE negative_prefix q_half=1 half_power=3 target=4 cutoff=1 value=-3
+SU2_ORDINARY_HALF_POWER_WEDGE cases=3960 tails=320940 prefixes=309790 max_q_half=8 max_half_power=10 prefix_counterexample=1 result=NO_NEGATIVE_WEDGE_TAIL
+
+SHA-256:
+b408fbbacf003d73ab4c1bdd8796e3e06cbd92bf08c8f40b7a8d086f3b7d4d17  probe_su2_ordinary_half_power_wedge.cpp
+af3f5410210a3cb64cf0922efd3deb6e52944bfffba4501d4a3941a70ae90dd1  probe_su2_ordinary_half_power_wedge

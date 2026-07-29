@@ -1,0 +1,10 @@
+SU2_KOSTKA_CROSSING_SWITCH witness q=1 length=4 first={0,1,2,1,1,0};{0,1,2,1,1} second={0,1,2,2,1,0};{0,1,1,1,1} image=0,1,1,1,0,|0,1,2,2,1,1,
+SU2_KOSTKA_CROSSING_SWITCH no_candidate q=1 length=4 input={0,1,0,1,1,0};{0,1,2,2,1}
+SU2_KOSTKA_CROSSING_SWITCH capacity_no_window q=1 length=4 input={0,1,0,1,1,0};{0,1,2,3,2}
+SU2_KOSTKA_CROSSING_SWITCH witness q=2 length=4 first={0,2,3,1,2,0};{0,2,2,2,1} second={0,2,3,2,2,0};{0,2,1,2,1} image=0,2,1,2,0,|0,2,3,2,2,1,
+SU2_KOSTKA_CROSSING_SWITCH no_candidate q=2 length=4 input={0,2,0,2,2,0};{0,2,1,1,1}
+SU2_KOSTKA_CROSSING_SWITCH capacity_no_window q=2 length=4 input={0,2,0,2,2,0};{0,2,3,5,3}
+SU2_KOSTKA_CROSSING_SWITCH witness q=3 length=4 first={0,3,4,1,3,0};{0,3,2,3,1} second={0,3,4,2,3,0};{0,3,1,3,1} image=0,3,1,3,0,|0,3,4,2,3,1,
+SU2_KOSTKA_CROSSING_SWITCH no_candidate q=3 length=4 input={0,3,0,3,3,0};{0,3,1,2,1}
+SU2_KOSTKA_CROSSING_SWITCH capacity_no_window q=3 length=4 input={0,3,0,3,3,0};{0,3,4,7,4}
+SU2_KOSTKA_CROSSING_SWITCH tasks=6 pairs=8332 good=5629 bad=2703 collisions=921 all_switch_candidates=8254 all_switch_no_candidate=1439 all_switch_matching=6104 all_switch_unmatched=2228 bridge_candidates=298064 bridge_no_candidate=0 bridge_matching=8332 bridge_unmatched=0 bridge_components=36 bridge_deficient_components=0 bridge_complete_components=12 capacity_no_window=280 max_q=3 max_length=4 threads=5 result=TWO_BLOCK_MATCHING

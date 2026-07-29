@@ -1,0 +1,23 @@
+SU2 anchored-lobe first-block exact Newton-certificate replay
+
+command:
+  make -f Makefile.research prove_su2_anchored_lobe_first_block_powers
+  ./prove_su2_anchored_lobe_first_block_powers
+
+compiler output:
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+	-Wsign-conversion -Wshadow -Werror prove_su2_anchored_lobe_first_block_powers.cpp -o prove_su2_anchored_lobe_first_block_powers
+
+verifier output:
+SU2_ANCHORED_LOBE_FIRST_BLOCK_POWERS chamber=low power=2 denominator_power=0 z_degrees=3 nonzero_binomial_coefficients=180 max_x_order=10 max_y_order=7 max_total_order=10 degree_bound_violations=0 negative_binomial_coefficients=0 nonzero_monomial_coefficients=180 negative_monomial_coefficients=0
+SU2_ANCHORED_LOBE_FIRST_BLOCK_POWERS chamber=high power=2 denominator_power=1 z_degrees=4 nonzero_binomial_coefficients=250 max_x_order=10 max_y_order=10 max_total_order=10 degree_bound_violations=0 negative_binomial_coefficients=0 nonzero_monomial_coefficients=250 negative_monomial_coefficients=0
+SU2_ANCHORED_LOBE_FIRST_BLOCK_POWERS chamber=low power=3 denominator_power=0 z_degrees=4 nonzero_binomial_coefficients=456 max_x_order=14 max_y_order=11 max_total_order=14 degree_bound_violations=0 negative_binomial_coefficients=0 nonzero_monomial_coefficients=456 negative_monomial_coefficients=0
+SU2_ANCHORED_LOBE_FIRST_BLOCK_POWERS chamber=high power=3 denominator_power=1 z_degrees=5 nonzero_binomial_coefficients=582 max_x_order=14 max_y_order=14 max_total_order=14 degree_bound_violations=0 negative_binomial_coefficients=0 nonzero_monomial_coefficients=582 negative_monomial_coefficients=0
+SU2_ANCHORED_LOBE_FIRST_BLOCK_POWERS chamber=low power=4 denominator_power=0 z_degrees=5 nonzero_binomial_coefficients=920 max_x_order=18 max_y_order=15 max_total_order=18 degree_bound_violations=0 negative_binomial_coefficients=0 nonzero_monomial_coefficients=920 negative_monomial_coefficients=0
+SU2_ANCHORED_LOBE_FIRST_BLOCK_POWERS chamber=high power=4 denominator_power=1 z_degrees=6 nonzero_binomial_coefficients=1118 max_x_order=18 max_y_order=18 max_total_order=18 degree_bound_violations=0 negative_binomial_coefficients=0 nonzero_monomial_coefficients=1118 negative_monomial_coefficients=0
+SU2_ANCHORED_LOBE_FIRST_BLOCK_POWERS result=PASS_EXACT_BINOMIAL_CERTIFICATE
+
+SHA-256:
+3dffec0274d8393cac09a593d008aa79a72fdc4c91e0593a8b9478099d97c08e  probe_su2_anchored_lobe_all_powers.cpp
+0edde78e0213a1a16f7cd3d84d7c85167f8ebbe1bf0c5cfc76907a45a2aa15a8  prove_su2_anchored_lobe_first_block_powers.cpp
+9a289c8f03148944dfee1fcf5407fa318b2370d13db1678cac26b44d990d0b7e  prove_su2_anchored_lobe_first_block_powers

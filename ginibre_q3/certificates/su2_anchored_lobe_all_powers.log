@@ -1,0 +1,16 @@
+SU2 anchored-lobe all-power recurrence probe
+
+command:
+  make -B -f Makefile.research probe_su2_anchored_lobe_all_powers
+  ./probe_su2_anchored_lobe_all_powers 12 10
+
+compiler output:
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+	-Wsign-conversion -Wshadow -Werror probe_su2_anchored_lobe_all_powers.cpp -o probe_su2_anchored_lobe_all_powers
+
+probe output:
+SU2_ANCHORED_LOBE_ALL_POWERS cases=1680 max_q_half=12 max_power=10 negative_coefficients=0 result=NO_NEGATIVE_Z_COEFFICIENT
+
+SHA-256:
+3dffec0274d8393cac09a593d008aa79a72fdc4c91e0593a8b9478099d97c08e  probe_su2_anchored_lobe_all_powers.cpp
+8fde8e71e16ddc0539b4efae7ba563032c25d8cf1e2c16dab09b90496cf9e553  probe_su2_anchored_lobe_all_powers

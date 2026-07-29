@@ -1,0 +1,1 @@
+SU2_TERMINAL_WEDGE_SQUARE maximum_level=80 maximum_pair_steps=40 parameter_rows=380 state_rows=15580 coefficient_rows=26618430 negative_boundary_coefficients=0 negative_interior_coefficients=340327 first_negative_interior={level=10,label=4,pair_step=1,power=3,wedge=(4,2),coefficient=-6} boundary_result=PASS_DISCOVERY full_oriented_cone=FAIL

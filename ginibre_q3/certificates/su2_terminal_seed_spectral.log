@@ -1,0 +1,1 @@
+SU2_TERMINAL_SEED_SPECTRAL suffix_result=FAIL_NUMERICAL level=10 label=2 cutoff_eigenvalue=9 suffix=-0.0704416 negative_group_residues=5 first_negative_residue={level=6,label=2,eigenvalue=0.343146,residue=-0.176777}

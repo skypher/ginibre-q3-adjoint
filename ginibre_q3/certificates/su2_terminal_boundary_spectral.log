@@ -1,0 +1,1 @@
+SU2_TERMINAL_BOUNDARY_SPECTRAL suffix_result=FAIL_NUMERICAL level=6 label=2 cutoff_eigenvalue=2 source=4 target=6 suffix=-0.125

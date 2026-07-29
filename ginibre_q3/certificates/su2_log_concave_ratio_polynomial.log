@@ -1,0 +1,14 @@
+command:
+make -f Makefile.research probe_su2_log_concave_ratio_polynomial
+./probe_su2_log_concave_ratio_polynomial 5 3 3
+
+strict flags:
+-std=c++20 -O2 -Wall -Wextra -Wpedantic -Wconversion
+-Wsign-conversion -Wshadow -Werror
+
+output:
+SU2_LOG_CONCAVE_RATIO_POLYNOMIAL negative_coefficient length=2 shift=0 q=1 a=1 cutoff=0 coefficient=-2 exponent={3}
+
+SHA-256:
+9f4d6a07da337113860e3191e68ca316bbad1379f7e07acd88ca10145927073d  probe_su2_log_concave_ratio_polynomial.cpp
+37795cd9222c1c01153b4984b3e0f27c85a4a2f9d79b7b1ce47d4b6780eed8aa  probe_su2_log_concave_ratio_polynomial

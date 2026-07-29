@@ -1,0 +1,1 @@
+SU2_ODD_TWISTED_ENDPOINT_EXACT maximum_odd_lobes=41 maximum_power=80 polynomial_rows=1600 shape_rows=63200 induction_rows=64800 endpoint_rows=64800 failures=0 result=PASS_EXACT_INTEGER_DIAGNOSTIC
