@@ -15223,6 +15223,130 @@ condition.  The theorem for `s=2` is unaffected; for `s>=3` a proof
 must exploit cancellation across current layers or a less restrictive
 global allocation.
 
+There is a different finite reduction which removes every sufficiently
+smoothed half-power from the payment problem.  It uses the full
+second compound, rather than a layer allocation inside one current.
+
+**Lemma 5A8H28UIA2RLC10E (six-power compound semigroup
+reduction).**  Fix `Q>=1` and put `A=N_Q`.  Suppose that
+
+```text
+ det (A^m)_[{a,a+1},{i,i+1}]>=0                  (P5A.102CB8S3Z26ZF)
+```
+
+for all `a,i>=0` and each of the six exponents
+
+```text
+ m=6,7,8,9,10,11.
+```
+
+Then `A^m` is `TP2` for every `m>=6`.  Consequently Target
+5A8H28UIA2RLC10S is termwise nonnegative for every half-power
+`s>=6`.
+
+**Proof.**  For every `m>=2`, the support of `A^m` is exactly
+
+```text
+ (A^m)_(a,b)>0  iff  |a-b|<=mQ.                 (P5A.102CB8S3Z26ZG)
+```
+
+The case `m=2` is `(P5A.102CB8S3Z39)`.  If the support of row `a`
+at time `m` is
+
+```text
+ [max(0,a-mQ),a+mQ],
+```
+
+the union of the one-step fusion intervals
+`[|x-Q|,x+Q]` over that row is
+`[max(0,a-(m+1)Q),a+(m+1)Q]`; consecutive intervals overlap.
+This proves `(P5A.102CB8S3Z26ZG)` by induction.
+
+For a nonnegative matrix with the band support
+`|a-b|<=mQ`, nonnegativity of all adjacent minors implies
+nonnegativity of every two-by-two minor.  Indeed, if a crossed
+product vanishes, the determinant is already nonnegative.  If both
+crossed entries are positive, the whole intervening row-column
+rectangle lies inside the band.  Division by its positive entries
+and telescoping the adjacent ratio inequalities proves the arbitrary
+minor.  Thus `(P5A.102CB8S3Z26ZF)` says that `A^m` is `TP2` for
+the six displayed powers.
+
+Put `C=C_2(A)`.  The compound-power identity gives
+
+```text
+ C_2(A^m)=C^m.                                   (P5A.102CB8S3Z26ZH)
+```
+
+Hence `C^m` is entrywise nonnegative for `6<=m<=11`.  Inductively,
+if `m>=12`, then
+
+```text
+ C^m=C^6 C^(m-6)>=0.
+```
+
+This proves `TP2` for every `m>=6`.  Finally
+`W_a(i,j)` is the minor of `A^s` with rows `{0,a}` and columns
+`{i,j}`.  Both factors in Target 5A8H28UIA2RLC10S are therefore
+nonnegative when `s>=6`, proving the last assertion.  QED.
+
+The six finite powers have an exact three-parameter form.  This is
+the corrected finite certification target exposed by the preceding
+lemma.
+
+**Target 5A8H28UIA2RLC10F (six bounded-composition adjacent
+families).**  For `6<=m<=11`, put
+
+```text
+ v_r=[z^r](z^(-Q)+...+z^Q)^m,       v_(-r)=v_r,
+```
+
+and set `v_r=0` outside `|r|<=mQ`.  Prove, for every `Q>=1`,
+`x>=0`, and `y>x` with `y-x` odd,
+
+```text
+ (v_x-v_y)(v_x-v_(y+2))
+
+ -(v_(x+1)-v_(y+1))
+   (v_(|x-1|)-v_(y+1)) >=0.                    (P5A.102CB8S3Z26ZI)
+```
+
+Indeed, by symmetry take `i>=a`, put
+
+```text
+ x=i-a,                         y=i+a+1,
+```
+
+and use `(P5A.102CB8S3R)` to identify
+`(P5A.102CB8S3Z26ZI)` with the adjacent minor
+`(P5A.102CB8S3Z26ZF)`.  Thus this target and Lemma
+5A8H28UIA2RLC10E reduce the complete structured fixed-gap theorem to
+the three exceptional half-powers `s=3,4,5` and six fixed-degree
+polynomial families.  No bounded scan proves those families.
+
+The strict C++ `tp2-range` mode of
+`character_ring_iter/probe_su2_structured_wedge_orthant.cpp`
+checks the adjacent formulation directly.  For all
+
+```text
+ 1<=Q<=30,                       6<=m<=11,
+```
+
+it checks `180` complete kernels and finds no negative adjacent
+minor.  The least active minor is `9`, at
+`(Q,m,a,i)=(1,6,0,5)`.  Isolated exact runs at `Q=100` for every
+`6<=m<=11` and at `(Q,m)=(200,6)` have the same sign; at `Q=100`
+the least active values are respectively
+
+```text
+ 9,14,20,27,35,44.
+```
+
+This is bounded discovery evidence for
+`(P5A.102CB8S3Z26ZI)`, not its unbounded certificate.  The exact
+semigroup reduction in Lemma 5A8H28UIA2RLC10E is independent of
+those runs.
+
 The fixed-gap target has an exact unfolded-minus-image form.  It
 retains more structure than the generic curvature expansion in Lemma
 5A8H28UIA2RLC4.

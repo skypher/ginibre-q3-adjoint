@@ -276,6 +276,25 @@ analyze_su2_s2_fixed_gap_payment: \
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+analyze_su2_power_tp2_nlsat: analyze_su2_power_tp2_nlsat.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+analyze_su2_power_tp2_newton_chambers: \
+		analyze_su2_power_tp2_newton_chambers.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+analyze_su2_power_tp2_chamber_geometry: \
+		analyze_su2_power_tp2_chamber_geometry.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+prove_su2_power6_tp2_wall_boundary: \
+		prove_su2_power6_tp2_wall_boundary.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 probe_su2_log_concave_wedge_tail: \
 		probe_su2_log_concave_wedge_tail.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -629,6 +648,10 @@ RESEARCH_TARGETS = \
 	probe_su2_distinguished_current_sign \
 	probe_su2_structured_wedge_orthant \
 	analyze_su2_s2_fixed_gap_payment \
+	analyze_su2_power_tp2_nlsat \
+	analyze_su2_power_tp2_newton_chambers \
+	analyze_su2_power_tp2_chamber_geometry \
+	prove_su2_power6_tp2_wall_boundary \
 	probe_su2_log_concave_wedge_tail \
 	probe_su2_log_concave_ratio_stress \
 	probe_su2_kostka_crossing_switch \

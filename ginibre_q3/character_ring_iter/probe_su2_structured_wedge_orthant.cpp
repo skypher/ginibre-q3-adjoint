@@ -116,18 +116,38 @@ Integer absolute_value(const Integer& value) {
 
 int main(int argc, char** argv) {
     try {
-        if (argc != 3) {
+        const std::string mode = argc >= 4 ? argv[3] : "";
+        const bool single_case = mode == "single" || mode == "tp2";
+        const bool tp2_range = mode == "tp2-range" && argc == 5;
+        const bool tp2_only =
+            mode == "tp2" || mode == "tp2-all" || tp2_range;
+        if (
+            argc != 3
+            && !(argc == 4 && (single_case || tp2_only))
+            && !tp2_range
+        ) {
             throw std::runtime_error(
                 "usage: probe_su2_structured_wedge_orthant "
-                "maximum_half_label maximum_half_power"
+                "maximum_half_label maximum_half_power "
+                "[single|tp2|tp2-all|tp2-range minimum_half_power]"
             );
         }
         const int maximum_q =
             parse_positive(argv[1], "maximum_half_label");
         const int maximum_power =
             parse_positive(argv[2], "maximum_half_power");
+        const int minimum_power =
+            tp2_range
+            ? parse_positive(argv[4], "minimum_half_power")
+            : 1;
+        if (minimum_power > maximum_power) {
+            throw std::runtime_error(
+                "minimum_half_power exceeds maximum_half_power"
+            );
+        }
 
         std::size_t cases = 0;
+        std::size_t kernel_profiles = 0;
         std::size_t orthants = 0;
         std::size_t negative_fixed_gap_suffixes = 0;
         std::size_t negative_fixed_base_suffixes = 0;
@@ -142,6 +162,12 @@ int main(int argc, char** argv) {
         std::size_t layer_payment_failures = 0;
         std::size_t negative_orientation_failures = 0;
         std::size_t loss_magnitude_decreases = 0;
+        std::size_t post_block_payment_failures = 0;
+        std::size_t first_post_payment_failures = 0;
+        std::size_t negative_full_adjacent_minors = 0;
+        int maximum_post_terms_needed = 0;
+        bool have_minimum_active_adjacent_minor = false;
+        Integer minimum_active_adjacent_minor = 0;
         bool have_first_fixed_gap_negative = false;
         bool have_first_fixed_base_negative = false;
         bool have_first_direct_negative = false;
@@ -155,8 +181,19 @@ int main(int argc, char** argv) {
         std::string first_target_label_decrease;
         std::string first_boundary_reserve_failure;
         std::string first_layer_payment_failure;
-        for (int q = 1; q <= maximum_q; ++q) {
-            for (int power = 1; power <= maximum_power; ++power) {
+        std::string first_post_block_payment_failure;
+        std::string first_first_post_payment_failure;
+        std::string maximum_post_terms_case;
+        std::string first_negative_full_adjacent_minor;
+        std::string minimum_active_adjacent_minor_case;
+        for (int q = single_case ? maximum_q : 1;
+             q <= maximum_q;
+             ++q) {
+            for (
+                int power =
+                    single_case ? maximum_power : minimum_power;
+                 power <= maximum_power;
+                 ++power) {
                 const SymmetricProfile profile(q, power);
                 const int maximum_target = 2 * q * power;
                 const int maximum_index =
@@ -173,6 +210,73 @@ int main(int argc, char** argv) {
                         psi(profile, 0, index);
                     distinguished[static_cast<std::size_t>(index)] =
                         psi(profile, q, index);
+                }
+                for (int row = 0; row < maximum_target; ++row) {
+                    for (int column = 0;
+                         column < maximum_index;
+                         ++column) {
+                        const Integer minor =
+                            psi(profile, row, column)
+                                * psi(
+                                    profile,
+                                    row + 1,
+                                    column + 1
+                                )
+                            - psi(profile, row, column + 1)
+                                * psi(profile, row + 1, column);
+                        const bool active =
+                            psi(profile, row, column) > 0
+                            && psi(profile, row, column + 1) > 0
+                            && psi(profile, row + 1, column) > 0
+                            && psi(
+                                profile,
+                                row + 1,
+                                column + 1
+                            ) > 0;
+                        if (
+                            active
+                            && (
+                                !have_minimum_active_adjacent_minor
+                                || minor
+                                    < minimum_active_adjacent_minor
+                            )
+                        ) {
+                            have_minimum_active_adjacent_minor = true;
+                            minimum_active_adjacent_minor = minor;
+                            minimum_active_adjacent_minor_case =
+                                "{q=" + std::to_string(q)
+                                + " half_power="
+                                + std::to_string(power)
+                                + " row="
+                                + std::to_string(row)
+                                + " column="
+                                + std::to_string(column)
+                                + " value=" + minor.str()
+                                + "}";
+                        }
+                        if (minor < 0) {
+                            ++negative_full_adjacent_minors;
+                            if (
+                                first_negative_full_adjacent_minor
+                                    .empty()
+                            ) {
+                                first_negative_full_adjacent_minor =
+                                    "{q=" + std::to_string(q)
+                                    + " half_power="
+                                    + std::to_string(power)
+                                    + " row="
+                                    + std::to_string(row)
+                                    + " column="
+                                    + std::to_string(column)
+                                    + " value=" + minor.str()
+                                    + "}";
+                            }
+                        }
+                    }
+                }
+                ++kernel_profiles;
+                if (tp2_only) {
+                    continue;
                 }
                 std::vector<std::vector<Integer>>
                     previous_fixed_gap_suffix(
@@ -485,6 +589,100 @@ int main(int argc, char** argv) {
                             }
                         }
                         if (negative_inner >= 0) {
+                            Integer post_block_reserve = 0;
+                            Integer first_post_reserve = 0;
+                            Integer accumulated_post_reserve = 0;
+                            int post_terms_needed = 0;
+                            bool reached_negative_mass = false;
+                            for (int left = negative_outer + 1;
+                                 left + gap <= maximum_index;
+                                 ++left) {
+                                const Integer& product =
+                                    products[
+                                        static_cast<std::size_t>(left)
+                                    ];
+                                if (product <= 0) {
+                                    continue;
+                                }
+                                post_block_reserve += product;
+                                if (first_post_reserve == 0) {
+                                    first_post_reserve = product;
+                                }
+                                if (!reached_negative_mass) {
+                                    accumulated_post_reserve += product;
+                                    ++post_terms_needed;
+                                    if (
+                                        accumulated_post_reserve
+                                            >= negative_mass
+                                    ) {
+                                        reached_negative_mass = true;
+                                    }
+                                }
+                            }
+                            if (
+                                post_terms_needed
+                                    > maximum_post_terms_needed
+                            ) {
+                                maximum_post_terms_needed =
+                                    post_terms_needed;
+                                maximum_post_terms_case =
+                                    "{q=" + std::to_string(q)
+                                    + " half_power="
+                                    + std::to_string(power)
+                                    + " target="
+                                    + std::to_string(target)
+                                    + " gap="
+                                    + std::to_string(gap)
+                                    + " negative_mass="
+                                    + negative_mass.str()
+                                    + "}";
+                            }
+                            if (post_block_reserve < negative_mass) {
+                                ++post_block_payment_failures;
+                                if (
+                                    first_post_block_payment_failure
+                                        .empty()
+                                ) {
+                                    first_post_block_payment_failure =
+                                        "{q=" + std::to_string(q)
+                                        + " half_power="
+                                        + std::to_string(power)
+                                        + " target="
+                                        + std::to_string(target)
+                                        + " gap="
+                                        + std::to_string(gap)
+                                        + " negative_mass="
+                                        + negative_mass.str()
+                                        + " reserve="
+                                        + post_block_reserve.str()
+                                        + "}";
+                                }
+                            }
+                            if (first_post_reserve < negative_mass) {
+                                ++first_post_payment_failures;
+                                if (
+                                    first_first_post_payment_failure
+                                        .empty()
+                                ) {
+                                    first_first_post_payment_failure =
+                                        "{q=" + std::to_string(q)
+                                        + " half_power="
+                                        + std::to_string(power)
+                                        + " target="
+                                        + std::to_string(target)
+                                        + " gap="
+                                        + std::to_string(gap)
+                                        + " negative_mass="
+                                        + negative_mass.str()
+                                        + " first_reserve="
+                                        + first_post_reserve.str()
+                                        + " terms_needed="
+                                        + std::to_string(
+                                            post_terms_needed
+                                        )
+                                        + "}";
+                                }
+                            }
                             Integer previous_loss = 0;
                             for (int left = negative_inner;
                                  left <= negative_outer;
@@ -650,23 +848,104 @@ int main(int argc, char** argv) {
                                     }
                                     if (capacity < demand) {
                                         ++layer_payment_failures;
-                                        if (
-                                            first_layer_payment_failure
-                                                .empty()
+                                        Integer fixed_gap_suffix = 0;
+                                        Integer post_block_positive = 0;
+                                        for (
+                                            int left = cutoff;
+                                            left + gap <= maximum_index;
+                                            ++left
                                         ) {
-                                            Integer fixed_gap_suffix = 0;
-                                            for (
-                                                int left = cutoff;
-                                                left + gap
-                                                    <= maximum_index;
-                                                ++left
+                                            fixed_gap_suffix +=
+                                                products[
+                                                    static_cast<std::size_t>(
+                                                        left
+                                                    )
+                                                ];
+                                            if (
+                                                left > negative_outer
+                                                && products[
+                                                    static_cast<std::size_t>(
+                                                        left
+                                                    )
+                                                ] > 0
                                             ) {
-                                                fixed_gap_suffix +=
+                                                post_block_positive +=
                                                     products[
                                                         static_cast<
                                                             std::size_t
                                                         >(left)
                                                     ];
+                                            }
+                                        }
+                                        std::cout
+                                            << "SU2_LAYER_PAYMENT_FAILURE"
+                                            << " q=" << q
+                                            << " half_power=" << power
+                                            << " target=" << target
+                                            << " gap=" << gap
+                                            << " cutoff=" << cutoff
+                                            << " negative_inner="
+                                            << negative_inner
+                                            << " negative_outer="
+                                            << negative_outer
+                                            << " losing_row=" << losing_row
+                                            << " threshold=" << threshold
+                                            << " demand=" << demand
+                                            << " capacity=" << capacity
+                                            << " negative_mass="
+                                            << negative_mass
+                                            << " post_block_positive="
+                                            << post_block_positive
+                                            << " boundary_reserve="
+                                            << boundary_reserve
+                                            << " coupled_suffix="
+                                            << fixed_gap_suffix
+                                            << '\n';
+                                        if (
+                                            first_layer_payment_failure
+                                                .empty()
+                                        ) {
+                                            for (
+                                                int left = 0;
+                                                left + gap <= maximum_index;
+                                                ++left
+                                            ) {
+                                                if (
+                                                    distinguished_currents[
+                                                        static_cast<
+                                                            std::size_t
+                                                        >(left)
+                                                    ] == 0
+                                                    && target_currents[
+                                                        static_cast<
+                                                            std::size_t
+                                                        >(left)
+                                                    ] == 0
+                                                ) {
+                                                    continue;
+                                                }
+                                                std::cout
+                                                    << "SU2_LAYER_PROFILE"
+                                                    << " left=" << left
+                                                    << " distinguished="
+                                                    << distinguished_currents[
+                                                        static_cast<
+                                                            std::size_t
+                                                        >(left)
+                                                    ]
+                                                    << " target="
+                                                    << target_currents[
+                                                        static_cast<
+                                                            std::size_t
+                                                        >(left)
+                                                    ]
+                                                    << " product="
+                                                    << products[
+                                                        static_cast<
+                                                            std::size_t
+                                                        >(left)
+                                                    ]
+                                                    << '\n';
                                             }
                                             first_layer_payment_failure =
                                                 "{q=" + std::to_string(q)
@@ -864,6 +1143,10 @@ int main(int argc, char** argv) {
             << "SU2_STRUCTURED_WEDGE_ORTHANT"
             << " maximum_half_label=" << maximum_q
             << " maximum_half_power=" << maximum_power
+            << " minimum_half_power=" << minimum_power
+            << " single_case=" << (single_case ? 1 : 0)
+            << " tp2_only=" << (tp2_only ? 1 : 0)
+            << " kernel_profiles=" << kernel_profiles
             << " cases=" << cases
             << " orthants=" << orthants
             << " negative_fixed_gap_suffixes="
@@ -890,6 +1173,32 @@ int main(int argc, char** argv) {
             << loss_magnitude_decreases
             << " layer_payment_failures="
             << layer_payment_failures
+            << " post_block_payment_failures="
+            << post_block_payment_failures
+            << " first_post_payment_failures="
+            << first_post_payment_failures
+            << " negative_full_adjacent_minors="
+            << negative_full_adjacent_minors
+            << " minimum_active_adjacent_minor="
+            << (
+                have_minimum_active_adjacent_minor
+                    ? minimum_active_adjacent_minor.str()
+                    : "{}"
+            )
+            << " minimum_active_adjacent_minor_case="
+            << (
+                minimum_active_adjacent_minor_case.empty()
+                    ? "{}"
+                    : minimum_active_adjacent_minor_case
+            )
+            << " maximum_post_terms_needed="
+            << maximum_post_terms_needed
+            << " maximum_post_terms_case="
+            << (
+                maximum_post_terms_case.empty()
+                    ? "{}"
+                    : maximum_post_terms_case
+            )
             << " boundary_reserve_failures="
             << boundary_reserve_failures
             << " first_fixed_gap_negative="
@@ -933,6 +1242,24 @@ int main(int argc, char** argv) {
                 first_layer_payment_failure.empty()
                     ? "{}"
                     : first_layer_payment_failure
+            )
+            << " first_post_block_payment_failure="
+            << (
+                first_post_block_payment_failure.empty()
+                    ? "{}"
+                    : first_post_block_payment_failure
+            )
+            << " first_first_post_payment_failure="
+            << (
+                first_first_post_payment_failure.empty()
+                    ? "{}"
+                    : first_first_post_payment_failure
+            )
+            << " first_negative_full_adjacent_minor="
+            << (
+                first_negative_full_adjacent_minor.empty()
+                    ? "{}"
+                    : first_negative_full_adjacent_minor
             )
             << " result=NO_NEGATIVE_ORTHANT"
             << '\n';

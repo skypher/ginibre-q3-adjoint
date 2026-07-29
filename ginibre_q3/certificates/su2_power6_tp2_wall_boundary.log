@@ -1,0 +1,16 @@
+SU2 sixth-power TP2 wall-boundary Newton certificate
+
+command:
+  make -f Makefile.research prove_su2_power6_tp2_wall_boundary
+  ./prove_su2_power6_tp2_wall_boundary
+
+compiler flags:
+  g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+    -Wsign-conversion -Wshadow -Werror
+
+output:
+SU2_POWER6_TP2_WALL_BOUNDARY minimum_q=2 newton_coefficients={117375,1096575,4799606,11896972,18105256,17352640,10266240,3440640,501760,0,0} nonnegative=1 degree_verified=1 result=PASS_EXACT_NEWTON_CERTIFICATE
+
+SHA-256:
+c5007d308ca58a3b27a719885ebd2d8a71e4c74f3249d6d2572e2e63c48f897c  prove_su2_power6_tp2_wall_boundary.cpp
+46b84de0e83b3b2e3eaf9e6366ae340a1a4ab275679055326540abf33654634c  prove_su2_power6_tp2_wall_boundary
