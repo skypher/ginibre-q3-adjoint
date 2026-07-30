@@ -365,6 +365,21 @@ verify_su2_aim_three_box_monotonicity_z3: \
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
 
+verify_su2_aim_three_box_boundary_cells_z3: \
+		verify_su2_aim_three_box_boundary_cells_z3.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -lz3 -o $@
+
+verify_su2_aim_three_box_boundary_all: \
+		verify_su2_aim_three_box_boundary_all.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wshadow -Werror $< -pthread -o $@
+
+probe_su2_ordinary_nested_four_layers: \
+		probe_su2_ordinary_nested_four_layers.cpp
+	$(CXX) -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
+		-Wconversion -Wshadow -Werror $< -o $@
+
 probe_su2_aim_q1_asymptotic: probe_su2_aim_q1_asymptotic.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -823,6 +838,9 @@ RESEARCH_TARGETS = \
 	analyze_su2_aim1_payment_weights \
 	analyze_su2_aim_trapezoid_stable_formula \
 	verify_su2_aim_three_box_monotonicity_z3 \
+	verify_su2_aim_three_box_boundary_cells_z3 \
+	verify_su2_aim_three_box_boundary_all \
+	probe_su2_ordinary_nested_four_layers \
 	analyze_su2_normalized_dimension_invariance \
 	verify_su2_finite_anchored_shifted_tail_counterexample \
 	probe_su2_ordinary_half_power_wedge \

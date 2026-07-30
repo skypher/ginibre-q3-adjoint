@@ -10680,6 +10680,165 @@ unbounded affine tail, whose current cone follows for free from
 monotonicity, from one central image payment against the complete
 outer reserve `D_1`.
 
+The decreasing-cone proof can be polarized exactly.  This exposes
+which part of the proper suffix is available to pay the central
+shell.  For `0<=j<=K`, put
+
+```text
+c^(j)=1_[0,j].
+```
+
+For fixed `R,S`, let
+
+```text
+I_(R,S)=R star_K S=[ell_(R,S),u_(R,S)],
+n_j(R,S)=|I_(R,S) intersect [0,j]|.
+```
+
+**Lemma 5A8H28UIA2CGLPCIPR (nested-prefix current
+polarization).**  For every `i,j,R,S`,
+
+```text
+A(c^(j))_(R,S)
+ =n_j-1_(R<=j)1_(S<=j)>=0,                       (P5A.102AD5ALX1ZZB0)
+
+Cross(c^(i),c^(j))_(R,S)
+ =n_i+n_j
+  -1_(R<=i)1_(S<=j)
+  -1_(R<=j)1_(S<=i)>=0.                          (P5A.102AD5ALX1ZZB1)
+```
+
+Consequently, if `a_0>=...>=a_K>=0` and
+
+```text
+u_j=a_j-a_(j+1),                    j<K,
+u_K=a_K,
+```
+
+then
+
+```text
+A(a)
+ =sum_j u_j^2 A(c^(j))
+  +sum_(i<j)u_i u_j Cross(c^(i),c^(j)),          (P5A.102AD5ALX1ZZB2)
+```
+
+and every displayed scalar coefficient is nonnegative.
+
+**Proof.**  Multiplication by `c^(j)` sums the coefficients in the
+fusion interval, hence
+
+```text
+(N_(c^(j)))_(R,S)=n_j.
+```
+
+This gives the two identities.  For their signs, assume by symmetry
+that `R<=S` and, in the cross term, `i<=j`.  If `i<R`, both
+subtracted indicators vanish.  If `R<=i<S`, only the first can be
+one; when it is one, `j>=S` and the fusion interval begins at
+`S-R<=S`, so `n_j>=1`.  If `i>=S`, both may be one, while
+`n_i,n_j>=1`.  Thus the cross term is nonnegative.  The same argument
+with one ray proves `(P5A.102AD5ALX1ZZB0)`.  Finally
+`a=sum_j u_jc^(j)` and quadratic polarization of `A` give
+`(P5A.102AD5ALX1ZZB2)`.  QED.
+
+Apply this lemma to
+
+```text
+a=D_1,                         b=sigma_0,
+u=Ba.
+```
+
+Since
+
+```text
+Cross(c^(j),b)_(R,S)
+ =sum_(t in I_(R,S))b_t+b_0n_j
+  -1_(R<=j)b_S-1_(S<=j)b_R,                     (P5A.102AD5ALX1ZZB3)
+```
+
+the remaining central assembly is the scalar quadratic payment
+
+```text
+A(b)_(R,S)
+ +sum_j u_j Cross(c^(j),b)_(R,S)
+ +sum_j u_j^2 A(c^(j))_(R,S)
+ +sum_(i<j)u_i u_j Cross(c^(i),c^(j))_(R,S)
+ >=0.                                           (CSP)
+```
+
+Here `u>=0` is already proved by Corollary
+5A8H28UIA2CGLCPAIMGPC, and every coefficient in the last two sums is
+nonnegative by Lemma 5A8H28UIA2CGLPCIPR.  Thus `(CSP)` is the
+remaining central-shell payment with the finite fusion matrices
+removed: only the linear central load and the explicit nonnegative
+quadratic slope reserve remain.  Identity
+`(P5A.102AD5ALX1ZZB2)` shows that `(CSP)` is exactly `(CIP)`, not a
+stronger unproved replacement.
+
+The wall-free member is already a nontrivial necessary subproblem.
+Let
+
+```text
+W_hat(t)=[z^t]product_j tau_(q_j)(z),
+c_t=W_hat(t)-W_hat(t+1),                    t>=0.
+```
+
+If the level is beyond the support of the doubled word, then
+`D_1=0`, `sigma_0=D_0=c`, and `(CSP)` becomes
+
+```text
+c_0 sum_(t=|R-S|)^(R+S)c_t>=c_Rc_S,
+                                      R,S>=0.   (OCSP)
+```
+
+Thus `(OCSP)` is the ordinary arbitrary-factor cumulative-current
+gate.  It is strictly smaller than `(CSP)` because it has no affine
+images or finite-level parameters, but it remains necessary for every
+uniform finite proof: any fixed factor word enters this chamber when
+`K` is large enough.  After `(OCSP)`, the remaining finite task is to
+pay the first reflected shell against the already positive proper
+suffix.
+
+The full quadratic slope reserve is load-bearing.  Replacing `A(a)`
+by the single endpoint term used in the proof of Lemma
+5A8H28UIA2CGLCPDEC would require
+
+```text
+a_0a_(|R-S|)-a_Ra_S
+ +Cross(a,b)_(R,S)+A(b)_(R,S)>=0.                (P5A.102AD5ALX1ZZB4)
+```
+
+This is false.  At `K=7`, for the factor word
+
+```text
+[3,1,3,3,2,4],
+```
+
+the exact profiles
+
+```text
+a=(1008693,659329,412087,245442,
+   138564,73183,34293,9902),
+
+b=(-436758,969402,2025478,2629858,
+   2736734,2364376,1594432,562030)
+```
+
+give, at `(R,S)=(1,1)`,
+
+```text
+left side of (P5A.102AD5ALX1ZZB4)
+ =-1080727842664.
+```
+
+The strict C++ analyzer
+`character_ring_iter/probe_su2_affine_image_shells.cpp` constructs
+these profiles directly from the triangular line convolution and
+checks this integer.  Hence any proof of `(CSP)` must retain
+coupling across the complete fusion interval; endpoint-only payment
+is unavailable.
+
 Proper-tail monotonicity has an exact reduction to paired slopes of
 the ordinary fusion square.  Let `p` be the unperiodized half-profile
 and write
@@ -11069,6 +11228,53 @@ for `r<2q`, and none for `r>=2q`.  This is the calculation in Lemma
 5A8H28UIA2CGLCPAIMGEN translated from `L` to `nL`; no outer boundary
 term remains because `m` has finite support.  This proves
 `(P5A.102AD5ALX1ZZX)`.  QED.
+
+The central shell has a complementary recurrence with the same wall
+block and the opposite sign.
+
+**Lemma 5A8H28UIA2CGLPCIPGEN (coupled central-reserve
+recurrence).**  Put
+
+```text
+a(m)=D_1(m),                  b(m)=sigma_0(m),
+u(m)=Ba(m),
+```
+
+and let `m'=m chi_q^2`.  Then
+
+```text
+u(m')=T_qu(m)+rho_q(m),                         (P5A.102AD5ALX1ZZX0)
+
+b(m')=F_qb(m)-C rho_q(m).                       (P5A.102AD5ALX1ZZX1)
+```
+
+In particular, the positive consecutive wall block inserted into the
+proper-suffix slopes is removed, cumulatively, from the central
+shell.
+
+**Proof.**  The first identity is Lemma
+5A8H28UIA2CGLCPAIMGEN.  Since `a=Cu`, `T_q=BF_qC`, and `CB=I`,
+
+```text
+a(m')=Cu(m')=F_qa(m)+C rho_q(m).
+```
+
+Affine folding is a ring homomorphism, so, with
+`d=a+b=Pi_K(m)`,
+
+```text
+a(m')+b(m')=Pi_K(m')=F_qPi_K(m)=F_q{a(m)+b(m)}.
+```
+
+Subtract the formula for `a(m')` to obtain
+`(P5A.102AD5ALX1ZZX1)`.  QED.
+
+Lemma 5A8H28UIA2CGLPCIPGEN makes the remaining arbitrary-factor
+mechanism explicit.  The already proved payment `(AIMGP)` keeps the
+first component of `(P5A.102AD5ALX1ZZX0)--(P5A.102AD5ALX1ZZX1)`
+inside `u>=0`; the unresolved step is to show that the complete
+quadratic reserve in `(CSP)` pays the simultaneous subtraction
+`C rho_q(m)` from the central shell.
 
 The matrix `T_q` is not nonnegative.  At `K=2,q=1`,
 
@@ -12001,11 +12207,131 @@ D_1^g(s)<=g_(L-s-1),                              (AIMTBFH2+)
 
 and symmetry/unimodality makes `(AIMTBFH2+)` imply
 `(AIMTBFH2)`, because the center lies strictly to the right of `L`.
-The direct all-parameter nonlinear SMT encoding of
-`(AIMTBFH2+)` times out with `unknown`; it is not used as evidence
-of proof.  The remaining task is therefore an analytic or
-independently checkable piecewise-quadratic certificate for this
-single stronger inequality.
+
+**Proposition 5A8H28UIA2CGLCPAIMTBFB
+(uniform three-box first-wall boundary).**  Inequality
+`(AIMTBFH2+)` holds throughout the center-straddling range
+`(AIMTBFH)`.
+
+**Proof.**  Sort the three box lengths as `x<=y<=v`.  For
+`1<=h<d`, put
+
+```text
+h_tilde=min(h,d-h),                  N=h_tilde-1,
+Q(t)=(t+1)(t+2)1_(t>=0).
+```
+
+Reflection to the first half of the symmetric coefficient profile
+and inclusion--exclusion give
+
+```text
+2g_h
+ =Q(N)-Q(N-x)-Q(N-y)-Q(N-v)+Q(N-x-y).            (P5A.102AD5ALX1ZZO0T)
+```
+
+Indeed, on the reflected half one has
+`N<min(x+v,y+v,x+y+v)`, so the other two pair terms and the triple
+term vanish.  Since `d<=4L-6`, the desired margin is the finite
+seven-term expression
+
+```text
+M
+ =g_(L-s-1)-D_1^g(s)
+ =g_(L-s-1)-g_(L+s)
+   +g_(2L-s-1)-g_(2L+s)
+   +g_(3L-s-1)-g_(3L+s)
+   +g_(4L-s-1).                                  (P5A.102AD5ALX1ZZO0U)
+```
+
+The exact verifier
+`character_ring_iter/verify_su2_aim_three_box_boundary_cells_z3.cpp`
+substitutes `(P5A.102AD5ALX1ZZO0T)` into
+`(P5A.102AD5ALX1ZZO0U)`.  Its outer case split consists of
+
+```text
+d<=3L or d>3L;
+w<=l<=z, l<w<=z, or l<=z<w;
+z<L or z>=L;
+v<=x+y or v>x+y;
+K even or K odd.
+```
+
+These `2*3*2*2*2=48` cases exhaust the hypotheses.  Inside a case,
+the seven coefficient evaluations have `42` support, reflection,
+and positive-part guards.  Complete `QF_LIA` enumeration of their
+feasible truth patterns produces `1,064` unbounded polyhedral
+cells.  On every cell, `2M` is a quadratic polynomial in the five
+integer variables after writing `K=2m+p`, `p in {0,1}`.
+
+For `968` cells the verifier obtains the exact identity
+
+```text
+2M=c_0+sum_i c_i lambda_i
+       +sum_(i<=j)c_(i,j)lambda_i lambda_j,       (P5A.102AD5ALX1ZZO0V)
+```
+
+where the `lambda_i` are the nonnegative affine cell slacks and all
+coefficients are nonnegative rationals.  Both sides have degree at
+most two.  The verifier determines the identity on the `21`
+unisolvent degree-two points in five variables, extracts the exact
+rational model, checks every coefficient sign, and re-evaluates all
+`21` identities exactly.
+
+For the remaining `96` cells it makes the affine unimodular integer
+coordinate change
+
+```text
+v=w-2A,             u=l-w,
+a=s+w-4m-2p-1,
+
+w=2A+v,             l=2A+v+u,
+s=4m+2p+1+a-2A-v.                              (P5A.102AD5ALX1ZZO0W)
+```
+
+On the real relaxation of each transformed cell, complete `QF_NRA`
+checking returns `unsat` for `2M<=-2`.  Since `2M` is even at every
+integer point, an integer counterexample `M<0` would satisfy that
+query.  Thus no integer counterexample exists.  All `96` real
+certificates close at scale one; no residue subdivision is used.
+
+The canonical C++ driver
+`character_ring_iter/verify_su2_aim_three_box_boundary_all.cpp`
+runs all `48` cases with concurrency selected from current load and
+available RAM.  Its exact transcript
+`certificates/su2_aim_three_box_boundary_all.log` records
+
+```text
+cells=1064 handelman_cells=968 real_cells=96
+nia_cells=0 residue_queries=96 maximum_scale=1 result=PASS.
+```
+
+In particular, no incomplete nonlinear-integer fallback contributes
+to the result.  The two certificate classes above prove `M>=0` on
+every cell, hence `(AIMTBFH2+)`.  QED.
+
+**Corollary 5A8H28UIA2CGLCPAIMGPC
+(proper affine-suffix global payment).**  Targets `(AIMTBF)`,
+`(AIMPTF)`, `(AIMPT)`, `(AIMNIA)`, `(AIMNIS)`, `(AIMNI)`,
+`(AIMSRP)`, and `(AIMGP)` hold.  Consequently every proper affine
+suffix is decreasing and nonnegative, namely `(AIM)` holds.
+
+**Proof.**  Proposition 5A8H28UIA2CGLCPAIMTBFM proves
+`(AIMTBF1)`.  Lemma 5A8H28UIA2CGLCPAIMTBFT proves `(AIMTBF2)`
+outside `(AIMTBFH)`, while Proposition
+5A8H28UIA2CGLCPAIMTBFB proves its remaining two-site bound.
+Therefore `(AIMTBF)` holds.  The exact crossing reduction
+`(P5A.102AD5ALX1ZZO0G)--(P5A.102AD5ALX1ZZO0M)` gives
+`(AIMPTF)`, and the period-block reductions give `(AIMPT)`.
+Identity `(P5A.102AD5ALX1ZZO0F)` gives `(AIMNIA)`; interval
+splitting gives `(AIMNIS)` and then `(AIMNI)`.  Lemma
+5A8H28UIA2CGLCPAIMLC gives `(AIMSRP)`, hence `(AIMGP)` for every
+doubled factor word.  Finally the factor induction following
+`(AIMGP)` and Lemma 5A8H28UIA2CGLCPAIMGENA proves `u_n>=0` for
+every `n>=1`, which is exactly `(AIM)`.  QED.
+
+This closes the proper affine-suffix/global-payment half of `(SRP)`.
+The remaining arbitrary-factor anchored-current gate is the central
+assembly `(CIP)`.
 
 Consequently `(AIMNI)` is exactly nonnegativity of every rectangle
 sum of this kernel whose row and column intervals are nested.  The
@@ -12013,9 +12339,9 @@ strict C++ analyzer
 `character_ring_iter/analyze_su2_aim_nested_intervals.cpp` minimizes
 the rectangle sum over every containing outer interval for each inner
 interval.  Through half-level `30`, wall `4`, and endpoint `120`, all
-`142,896,160` optimized minima are nonnegative.  This is bounded
-evidence for `(AIMNI)`, not its proof.  The same run has zero failures
-in `174,162,560` point--period interactions and in more than
+`142,896,160` optimized minima are nonnegative.  This is an
+independent bounded audit of the uniform proof above.  The same run
+has zero failures in `174,162,560` point--period interactions and in more than
 `4.29` billion derived separated-block and width-period increments,
 independently auditing Corollary 5A8H28UIA2CGLCPAIMPB and the period
 stripping reduction.
@@ -13463,6 +13789,19 @@ executable, and transcript SHA-256 identities are
 865888472ab311c3bcb4bffe0ce87c587c008bebe819aeedcb4888448ad815ad
 d5583c6849d46c7deaa8b8f76a5a47296759abdad28bf47d002e53a5ca4d353e
 a586cdc4bff4babc821d50f19d1b3ccea5d5ed3cb49ff5a5ab0163a91306f3de.
+```
+
+The unbounded three-box first-wall boundary transcript is
+`certificates/su2_aim_three_box_boundary_all.log`; its cell-verifier
+source, canonical-driver source, cell-verifier executable,
+canonical-driver executable, and transcript SHA-256 identities are
+
+```text
+11c9ee423f0ee0e69b829682aa339ee44e8acec6b754e350eb0c7e1673d3971f
+b1918ac96e95b662959a9453e910be1d8be03dad12a48dd865a5a3f69557b194
+6ee867b8124596477cbe6234e719a88ba1a095c9abd0ed59a33519086a451a8e
+3b41e571cfee02235c22d68f22afef06d1a0e8e7be8f946b3ded6783a935bc58
+9d9e2e1efd81f10bed25e85bad1212cb052ff72d5f2b7220a9307a054f55e450.
 ```
 
 The long all-`Q=1` proper-tail transcript is

@@ -1,6 +1,7 @@
 #include <boost/multiprecision/cpp_int.hpp>
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
@@ -215,6 +216,12 @@ int main(int argc, char** argv) {
         std::uint64_t suffix_current_failures = 0U;
         std::uint64_t suffix_increment_checks = 0U;
         std::uint64_t suffix_increment_failures = 0U;
+        std::uint64_t central_lower_bound_checks = 0U;
+        std::uint64_t central_lower_bound_failures = 0U;
+        std::array<std::uint64_t, 4> central_prefix_failures{};
+        int maximum_central_prefix_terms = 0;
+        std::uint64_t central_diagonal_ray_checks = 0U;
+        std::uint64_t central_diagonal_ray_failures = 0U;
         std::uint64_t suffix_spectral_checks = 0U;
         std::uint64_t suffix_spectral_failures = 0U;
         std::uint64_t proper_suffix_monotonicity_checks = 0U;
@@ -236,6 +243,8 @@ int main(int argc, char** argv) {
         Failure first_suffix_coordinate;
         Failure first_suffix_current;
         Failure first_suffix_increment;
+        Failure first_central_lower_bound;
+        Failure first_central_diagonal_ray;
 
         for (std::uint64_t sample = 0U; sample < samples; ++sample) {
             std::uint64_t state
@@ -416,6 +425,11 @@ int main(int argc, char** argv) {
                 static_cast<std::size_t>(level + 1),
                 Vector(static_cast<std::size_t>(level + 1), 0));
             for (std::size_t shell = shells.size(); shell-- > 0U;) {
+                const Vector proper_suffix = suffix;
+                const Matrix proper_matrix
+                    = shell == 0U
+                        ? multiplication_matrix(proper_suffix)
+                        : Matrix{};
                 for (int radius = 0; radius <= level; ++radius) {
                     suffix[static_cast<std::size_t>(radius)]
                         += shells[shell][static_cast<std::size_t>(radius)];
@@ -541,6 +555,176 @@ int main(int argc, char** argv) {
                                 suffix,
                                 shells[shell]);
                         }
+                        if (shell == 0U) {
+                            const Vector& central = shells[0];
+                            const Matrix& central_matrix
+                                = shell_matrices[0];
+                            const int separation
+                                = std::abs(radius - target);
+                            const cpp_int proper_lower_bound
+                                = proper_suffix[0]
+                                    * proper_suffix[
+                                        static_cast<std::size_t>(
+                                            separation)]
+                                  - proper_suffix[
+                                        static_cast<std::size_t>(radius)]
+                                    * proper_suffix[
+                                        static_cast<std::size_t>(target)];
+                            const cpp_int cross
+                                = proper_suffix[0]
+                                    * central_matrix[
+                                        static_cast<std::size_t>(radius)]
+                                        [static_cast<std::size_t>(target)]
+                                  + central[0]
+                                    * proper_matrix[
+                                        static_cast<std::size_t>(radius)]
+                                        [static_cast<std::size_t>(target)]
+                                  - proper_suffix[
+                                        static_cast<std::size_t>(radius)]
+                                    * central[
+                                        static_cast<std::size_t>(target)]
+                                  - central[
+                                        static_cast<std::size_t>(radius)]
+                                    * proper_suffix[
+                                        static_cast<std::size_t>(target)];
+                            const cpp_int central_current
+                                = central[0]
+                                    * central_matrix[
+                                        static_cast<std::size_t>(radius)]
+                                        [static_cast<std::size_t>(target)]
+                                  - central[
+                                        static_cast<std::size_t>(radius)]
+                                    * central[
+                                        static_cast<std::size_t>(target)];
+                            const cpp_int central_lower_bound
+                                = proper_lower_bound
+                                  + cross
+                                  + central_current;
+                            ++central_lower_bound_checks;
+                            if (central_lower_bound < 0) {
+                                ++central_lower_bound_failures;
+                                record(
+                                    first_central_lower_bound,
+                                    level,
+                                    0,
+                                    static_cast<int>(
+                                        shells.size() - 1U),
+                                    radius,
+                                    target,
+                                    central_lower_bound,
+                                    word,
+                                    proper_suffix,
+                                    central);
+                            }
+                            const int upper = std::min(
+                                radius + target,
+                                2 * level - radius - target);
+                            cpp_int prefix_current
+                                = -proper_suffix[
+                                      static_cast<std::size_t>(radius)]
+                                    * proper_suffix[
+                                      static_cast<std::size_t>(target)]
+                                  + cross
+                                  + central_current;
+                            int required_terms = 0;
+                            for (int label = separation;
+                                 label <= upper;
+                                 ++label) {
+                                prefix_current += proper_suffix[0]
+                                    * proper_suffix[
+                                        static_cast<std::size_t>(label)];
+                                ++required_terms;
+                                if (prefix_current >= 0) {
+                                    break;
+                                }
+                            }
+                            maximum_central_prefix_terms = std::max(
+                                maximum_central_prefix_terms,
+                                required_terms);
+                            for (std::size_t cap = 0;
+                                 cap < central_prefix_failures.size();
+                                 ++cap) {
+                                cpp_int capped
+                                    = -proper_suffix[
+                                          static_cast<std::size_t>(radius)]
+                                        * proper_suffix[
+                                          static_cast<std::size_t>(target)]
+                                      + cross
+                                      + central_current;
+                                const int last = std::min(
+                                    upper,
+                                    separation
+                                        + static_cast<int>(cap));
+                                for (int label = separation;
+                                     label <= last;
+                                     ++label) {
+                                    capped += proper_suffix[0]
+                                        * proper_suffix[
+                                            static_cast<std::size_t>(label)];
+                                }
+                                if (capped < 0) {
+                                    ++central_prefix_failures[cap];
+                                }
+                            }
+                            cpp_int diagonal_ray_payment
+                                = central_current;
+                            for (int cutoff = 0;
+                                 cutoff <= level;
+                                 ++cutoff) {
+                                const cpp_int slope
+                                    = proper_suffix[
+                                          static_cast<std::size_t>(cutoff)]
+                                      - (cutoff < level
+                                             ? proper_suffix[
+                                                   static_cast<std::size_t>(
+                                                       cutoff + 1)]
+                                             : cpp_int(0));
+                                const int count = cutoff < separation
+                                    ? 0
+                                    : std::min(cutoff, upper)
+                                          - separation + 1;
+                                const cpp_int ray_cross
+                                    = central_matrix[
+                                          static_cast<std::size_t>(radius)]
+                                          [static_cast<std::size_t>(target)]
+                                      + central[0] * count
+                                      - (radius <= cutoff
+                                             ? central[
+                                                   static_cast<std::size_t>(
+                                                       target)]
+                                             : cpp_int(0))
+                                      - (target <= cutoff
+                                             ? central[
+                                                   static_cast<std::size_t>(
+                                                       radius)]
+                                             : cpp_int(0));
+                                const int ray_current
+                                    = count
+                                      - ((radius <= cutoff
+                                          && target <= cutoff)
+                                             ? 1
+                                             : 0);
+                                diagonal_ray_payment
+                                    += slope * ray_cross
+                                       + slope * slope * ray_current;
+                            }
+                            ++central_diagonal_ray_checks;
+                            if (diagonal_ray_payment < 0) {
+                                ++central_diagonal_ray_failures;
+                                record(
+                                    first_central_diagonal_ray,
+                                    level,
+                                    0,
+                                    static_cast<int>(
+                                        shells.size() - 1U),
+                                    radius,
+                                    target,
+                                    diagonal_ray_payment,
+                                    word,
+                                    proper_suffix,
+                                    central);
+                            }
+                        }
                     }
                 }
                 outer_current = std::move(current_matrix);
@@ -570,6 +754,24 @@ int main(int argc, char** argv) {
             << " suffix_increment_checks=" << suffix_increment_checks
             << " suffix_increment_failures="
             << suffix_increment_failures
+            << " central_lower_bound_checks="
+            << central_lower_bound_checks
+            << " central_lower_bound_failures="
+            << central_lower_bound_failures
+            << " central_prefix1_failures="
+            << central_prefix_failures[0]
+            << " central_prefix2_failures="
+            << central_prefix_failures[1]
+            << " central_prefix3_failures="
+            << central_prefix_failures[2]
+            << " central_prefix4_failures="
+            << central_prefix_failures[3]
+            << " maximum_central_prefix_terms="
+            << maximum_central_prefix_terms
+            << " central_diagonal_ray_checks="
+            << central_diagonal_ray_checks
+            << " central_diagonal_ray_failures="
+            << central_diagonal_ray_failures
             << " suffix_spectral_checks=" << suffix_spectral_checks
             << " suffix_spectral_failures=" << suffix_spectral_failures
             << " proper_suffix_monotonicity_checks="
@@ -597,6 +799,10 @@ int main(int argc, char** argv) {
             << render_failure(first_suffix_current) << '\n'
             << "FIRST_SUFFIX_INCREMENT_FAILURE "
             << render_failure(first_suffix_increment) << '\n'
+            << "FIRST_CENTRAL_LOWER_BOUND_FAILURE "
+            << render_failure(first_central_lower_bound) << '\n'
+            << "FIRST_CENTRAL_DIAGONAL_RAY_FAILURE "
+            << render_failure(first_central_diagonal_ray) << '\n'
             << "FIRST_SUFFIX_SPECTRAL_FAILURE"
             << " level="
             << (first_negative_eigenvalue_level < 0
