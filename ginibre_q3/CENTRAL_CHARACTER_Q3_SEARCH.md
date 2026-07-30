@@ -11326,6 +11326,363 @@ words.  It is the strict off-diagonal radial part of the earlier
 square-character Target 5A8H28UIA2RLC12S, but
 `(P5A.102AD5ALX1ZZB3S1)` is a smaller two-shell formulation.
 
+The full square-character cone in that target is still larger than
+the ordinary application.  If
+
+```text
+P=product_j beta_(q_j)=sum_(i>=0)p_i beta_i,
+```
+
+then `p` itself is nonnegative and log concave with interval support,
+by ordinary fusion preservation of log concavity.  This gives the
+strictly smaller sufficient target.
+
+**Target 5A8H28UIA2CGLPCIPOCB2RADLCR
+(log-concave-root radial growth).**  Let `p` be finite, nonnegative,
+and log concave with interval support, and put
+
+```text
+P=sum_(i>=0)p_i beta_i,             P^2=sum_(h>=0)c_h beta_h.
+```
+
+Prove `(OCRD)` for every `0<=2L<A`.
+
+Target 5A8H28UIA2CGLPCIPOCB2RADLCR is sufficient for every ordinary
+factor word and is not asserted for an arbitrary nonnegative
+character root.  Proposition 5A8H28UIA2CGLPCIPOCB2ARB below shows
+that the latter enlargement is false.
+
+There is an equivalent weighted-covariance formulation of the same
+root cone.  Put
+
+```text
+I={i:p_i>0},                    M=sum_(i in I)p_i^2=c_0,
+mu_i=p_i^2/M,
+
+F_R(i)=(N_Rp)_i/p_i,                          i in I.
+```
+
+Associativity and symmetry of the ordinary fusion matrices give
+
+```text
+c_R=<p,N_Rp>,
+(N_c)_(R,S)=<N_Rp,N_Sp>.
+```
+
+Consequently
+
+```text
+J(R,S)
+ =M^2 Cov_mu(F_R,F_S)
+  +M sum_(i notin I)(N_Rp)_i(N_Sp)_i.           (P5A.102AD5ALX1ZZB3S3)
+```
+
+The second term is nonnegative.  Thus the following target also
+suffices for `(OCSP)`.
+
+**Target 5A8H28UIA2CGLPCIPOCOVLCR
+(complete-wall log-concave-root covariance).**  Under the hypotheses
+of Target 5A8H28UIA2CGLPCIPOCB2RADLCR, prove
+
+```text
+Cov_mu(F_R,F_S)>=0,                         R,S>=0. (OCLRC)
+```
+
+**Proof of `(P5A.102AD5ALX1ZZB3S3)`.**  Split
+`<N_Rp,N_Sp>` over `I` and its complement.  On `I`, substitute
+`(N_Rp)_i=p_iF_R(i)` and the analogous identity for `S`.  Expanding
+the covariance gives the three terms in `J`; outside `I` the two
+subtracted moments vanish.  QED.
+
+This is the `rho=0` member of Lemma 5A8H28UIA2RLC3.  The exact
+counterexample `(P5A.102CB8S3ZA0)` to the all-cutoff abstraction has
+`rho=1`, so it does not disprove `(OCLRC)`.  Conversely the
+nonmonotone likelihood-ratio example following that lemma already
+rules out a direct Chebyshev proof of `(OCLRC)`.  The benefit of
+`(P5A.102AD5ALX1ZZB3S3)` is therefore a genuine cone reduction, not
+a hidden monotonicity claim.
+
+The complete wall also singles out a tempting stronger exterior
+payment.  Put
+
+```text
+W_R(i,j)=p_i(N_Rp)_j-p_j(N_Rp)_i,
+
+E_d(R,S)=sum_(i>=0)W_R(i,i+d)W_S(i,i+d),       d>=1.
+```
+
+Lagrange's identity, grouped by `d=j-i`, gives
+
+```text
+J(R,S)=sum_(d>=1)E_d(R,S).                       (P5A.102AD5ALX1ZZB3S3A)
+```
+
+**Disproved target 5A8H28UIA2CGLPCIPOCFGLCR
+(complete-wall fixed-gap root payment).**  The proposed strengthening
+under the hypotheses of Target 5A8H28UIA2CGLPCIPOCB2RADLCR was
+
+```text
+E_d(R,S)>=0,                         d>=1, R,S>=0. (OCFG)
+```
+
+It would imply `(OCLRC)` after summing over `d`, but it is false even
+at the complete wall.  An exact positive log-concave witness is
+
+```text
+p=(17080198121677824,
+   34160396243355648,
+   66694106951313408,
+   128624349120390144,
+   220498884206383104,
+   341248273176545280,
+   519997368649973760,
+   693329824866631680,
+   742853383785676800,
+   353739706564608000,
+   126335609487360000).
+```
+
+Indeed its successive ratios have common denominator `42` and
+nonincreasing positive numerators
+
+```text
+84,82,81,72,65,64,56,45,20,15,
+```
+
+so log-concavity is immediate.  At `(R,S,d)=(1,7,9)` one obtains
+
+```text
+E_9(1,7)
+=-204839305586958588388030857811270968817700301343897173126550860595200,
+                                                               (P5A.102AD5ALX1ZZB3S3A0)
+```
+
+whereas the complete current remains positive:
+
+```text
+J(1,7)
+=2943060361665841378980816615817878511514771508655754812817654026598350848.
+                                                               (P5A.102AD5ALX1ZZB3S3A1)
+```
+
+Thus compensation across different separations `d` is load-bearing;
+the surviving targets are the scalar radial increment `(OCRD)` and
+the complete global covariance `(OCLRC)`, not termwise fixed-gap
+positivity.
+
+There is a second, smaller warning showing that deleting the wall can
+also destroy a positive fixed-gap payment.  For
+
+```text
+p=(4,2,1),                    (R,S,d)=(1,2,1),
+```
+
+the fixed-gap products beginning at `i=0,1,2` are
+
+```text
+240,-11,3.
+```
+
+Hence the complete-wall payment is `232`, while deleting the wall
+term gives the exact negative suffix
+
+```text
+sum_(i>=1)W_1(i,i+1)W_2(i,i+1)=-8.              (P5A.102AD5ALX1ZZB3S3B)
+```
+
+This is the counterexample `(P5A.102CB8S3ZA1)`: the positive folded
+wall term is load-bearing.  The extended strict C++ diagnostic
+`probe_su2_log_concave_wedge_tail.cpp` counts small `rho=0`
+fixed-gap payments separately.  Its
+`max_length=5, maximum_entry=5, max_label=4` run checks `280,650`
+such payments without a failure, while independently reproducing the
+negative value `-8` after cutoff one.  The larger ratio stress found
+the complete-wall counterexample above after `126` deterministic
+samples: it checked `89,768` fixed-gap energies, of which two were
+negative.  These counts are bounded evidence only.  The strict C++
+mode
+`probe_su2_log_concave_ratio_stress --replay-complete-wall-gap`
+reconstructs the displayed witness directly, checks the ratio
+recurrences, reproduces `(P5A.102AD5ALX1ZZB3S3A0)--(P5A.102AD5ALX1ZZB3S3A1)`,
+and verifies that the sum of all gap energies equals the positive
+complete current.
+
+The first nontrivial root-support class can be closed directly.
+
+**Lemma 5A8H28UIA2CGLPCIPOCOVLCR2
+(adjacent two-term root current theorem).**  Inequality `(OCSP)`
+holds whenever
+
+```text
+P=a beta_M+b beta_(M+1),                   a,b>=0.
+```
+
+**Proof.**  Put `N=2M+2` and
+
+```text
+u=a^2+b^2,             v=(a+b)^2,
+x=2ab+b^2,             y=b^2.
+```
+
+Ordinary Clebsch--Gordan multiplication gives
+
+```text
+c_0=u,
+c_h=v,                         1<=h<=N-2,
+c_(N-1)=x,                    c_N=y,             (P5A.102AD5ALX1ZZB3S3B0)
+```
+
+with an empty middle plateau when `M=0`.  It is enough to take
+`1<=R<=S<=N`; the cases `R=0`, `R=S`, or `S>N` are respectively an
+identity, a Gram square, or immediate.
+
+If `S<=N-2`, the fusion interval contains at least two plateau
+labels.  Therefore
+
+```text
+c_0 sum_(t=S-R)^(S+R)c_t>=2uv>=v^2=c_Rc_S,
+```
+
+where `2u-v=(a-b)^2`.
+
+Let `S=N-1` and `R<=N-2`.  The interval contains the last plateau
+label and both tail labels, so it remains to prove
+`u(v+x+y)>=vx`.  If `b=0` this is immediate.  Otherwise put
+`t=a/b`; after division by `b^4` the margin is
+
+```text
+t^4+2t^3-t^2+2
+ =(t^2+t-1)^2+2t+1>0.                           (P5A.102AD5ALX1ZZB3S3B1)
+```
+
+Let `S=N` and `R<=N-2`.  The interval contains `x,y`, and
+
+```text
+u(x+y)-vy
+ =b^4(t+1)(2t^2-t+1)>=0,                        (P5A.102AD5ALX1ZZB3S3B2)
+```
+
+again with the zero-`b` case immediate; the quadratic has negative
+discriminant.  Finally, at `(R,S)=(N-1,N)`, the interval contains
+`x,y`, and `u(x+y)>=xy` follows from `u>=y`.  These cases exhaust all
+off-diagonal pairs and prove `(OCSP)`.  Equation
+`(P5A.102AD5ALX1ZZB3S3)` identifies the possibly stronger covariance
+statement but is not needed here.  QED.
+
+Nor is the already positive radial/diagonal cone invariant under a
+new squared factor.  This rules out the most direct factor induction.
+Write
+
+```text
+X=N_1c,                  w=c wedge X,
+w_(i,j)=d_(j-1,i),                         0<=i<j,
+
+C_L=K_(2L,L).
+```
+
+The diagonal current is the cumulative central-column sum
+
+```text
+J(T,T)=sum_(L=0)^(T-1)C_L.                       (P5A.102AD5ALX1ZZB3S3C)
+```
+
+Indeed, group the `B_2` triangle for `m=n=T-1` by its contraction
+depth.  If `H=N_q^2` and `c'=Hc`, then `H` commutes with `N_1`, so
+
+```text
+w'=c' wedge N_1c'=C_2(H)w.                      (P5A.102AD5ALX1ZZB3S3D)
+```
+
+**Proposition 5A8H28UIA2CGLPCIPOCB2RADCONEF
+(radial-cone insertion obstruction).**  For insertion of the
+radius-one square `H=N_1^2`, the first output radial increment is
+
+```text
+K'_(1,0)
+ =2K_(1,0)+K_(2,0)-K_(3,0)+2K_(3,1)
+  -K_(4,0)-K_(4,1)-K_(5,1)+K_(5,2)
+  +2J(3,3)-J(2,2).                              (P5A.102AD5ALX1ZZB3S3E)
+```
+
+Consequently the cone defined only by
+
+```text
+K_(A,L)>=0,                    0<=2L<A,
+J(T,T)>=0,                     T>=1,
+```
+
+is not invariant under squared-factor insertion.
+
+**Proof.**  In the ordered coordinates
+
+```text
+{w_(r,B-r+1):0<=r<=floor(B/2)},
+```
+
+the functional `K'_(1,0)` has the following nonzero coefficient
+rows:
+
+```text
+B=0: [1],       B=1: [2],       B=2: [2,1],
+B=3: [1,2],     B=4: [0,1,2],   B=5: [0,0,1].
+```
+
+These are the corresponding row sums of `C_2(N_1^2)`, obtained
+directly from the ordinary fusion intervals.  Replacing each
+antidiagonal coordinate by its prefix sums `K_(B,L)` and then using
+`(P5A.102AD5ALX1ZZB3S3C)` gives
+`(P5A.102AD5ALX1ZZB3S3E)`.
+
+For a literal cone witness set
+
+```text
+d_(3,0)=1,                  d_(2,1)=-1,
+```
+
+and every other `d_(a,b)` to zero.  Then
+
+```text
+K_(3,0)=1,                  K_(3,1)=0,
+```
+
+all other strict prefixes and all diagonal currents vanish, but the
+right side of `(P5A.102AD5ALX1ZZB3S3E)` is `-1`.  Thus the displayed
+cone is not invariant.  QED.
+
+This is not a factor-word counterexample: the artificial wedge need
+not be decomposable as `c wedge N_1c`.  It proves that an induction
+must retain an additional square/decomposability relation, rather
+than propagating only the signs already sought.  The strict C++
+analyzer `analyze_su2_b2_radial_cone_transport.cpp` constructs the
+compound action and its dual prefix coefficients.  Through
+`q<=8,A<=32` it checks `981,137` dual coefficients and finds the
+first negative strict-prefix coefficient `-1` in exactly the
+`(q,A,L,B,r)=(1,1,0,3,0)` position above.  The displayed calculation
+is the exact obstruction; the larger scan is a route audit only.
+
+For later sign allocation it is useful to isolate the only hard ratio
+chamber.  On the positive support write `r_i=c_i/c_(i-1)`.
+Log concavity makes the `r_i` nonincreasing.  Formula
+`(P5A.102AD5ALX1ZZB3S1)` is automatic unless
+
+```text
+c_(L+1)c_(A-L+1)>c_Lc_(A-L),
+```
+
+or equivalently
+
+```text
+r_(L+1)r_(A-L+1)>1.                             (P5A.102AD5ALX1ZZB3S4)
+```
+
+Indeed outside this chamber the last two terms in
+`(P5A.102AD5ALX1ZZB3S1)` are already nonnegative.  Since
+`L+1<A-L+1`, condition `(P5A.102AD5ALX1ZZB3S4)` also forces
+`r_(L+1)>1`, and hence strict increase from `c_0` through
+`c_(L+1)`.  Thus only a rising-side/off-diagonal product can require
+the two top-shell terms.  This elementary reduction uses no spectral
+hypothesis.
+
 The strict off-diagonal condition cannot simply be closed to equality.
 For the square root
 
@@ -11353,6 +11710,55 @@ square profiles in its `maximum_length=6, maximum_coefficient=4`
 box, again without a failure.  It also reproduces the exact diagonal
 value `-6`.  These counts are bounded evidence only; the telescoping
 identities and displayed diagonal obstruction are exact.
+
+Two further shortcuts fail before the live root cone is reached.
+First, the single central spectral inequality is insufficient.  The
+profile
+
+```text
+c=(1,2,3)
+```
+
+is positive and log concave and satisfies
+
+```text
+sum_h (-1)^h c_h=2>=0,
+```
+
+but at `(A,L)=(1,0)` one has
+
+```text
+K_(1,0)=1*(2+3)-2*3=-1.                         (P5A.102AD5ALX1ZZB3S5)
+```
+
+In fact
+
+```text
+sum_h c_h beta_h(x)=3x^2-x-2=(3x+2)(x-1),
+```
+
+which is negative for `-2/3<x<1`.  Hence the complete spectral-square
+linkage cannot be replaced by its value at the central torus point.
+
+Second, one cannot prove the squared current by first giving the
+unsquared factor-word operator a positive star cone.  For the genuine
+three-factor word
+
+```text
+P=beta_1^3=beta_0+3beta_1+2beta_2+beta_3,
+```
+
+the root profile `p=(1,3,2,1)` is log concave, but
+
+```text
+p_0 sum_(t=0)^2 p_t-p_1^2=1*(1+3+2)-9=-3.       (P5A.102AD5ALX1ZZB3S6)
+```
+
+Thus even the anchored diagonal minor of `N_p` is negative.  The
+square and its complete exterior/Cauchy--Binet aggregation are
+load-bearing.  The extended variable-word C++ diagnostic reproduces
+this value and finds both root adjacent-minor and root star-minor
+failures; those bounded counts are route evidence only.
 
 That last distinction is necessary.
 

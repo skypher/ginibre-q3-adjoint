@@ -49,6 +49,9 @@ std::string render(const std::vector<int>& profile) {
 
 struct Counters {
   std::uint64_t log_concave_profiles = 0;
+  std::uint64_t central_nonnegative_profiles = 0;
+  std::uint64_t central_nonnegative_radial_increments = 0;
+  std::uint64_t central_nonnegative_radial_failures = 0;
   std::uint64_t diagonal_admissible_profiles = 0;
   std::uint64_t off_diagonal_currents = 0;
   std::uint64_t failures = 0;
@@ -63,6 +66,10 @@ struct Counters {
   int first_radius = -1;
   int first_target = -1;
   std::int64_t first_value = 0;
+  std::vector<int> first_central_nonnegative_radial_profile;
+  int first_central_nonnegative_radial_a = -1;
+  int first_central_nonnegative_radial_l = -1;
+  std::int64_t first_central_nonnegative_radial_value = 0;
   std::vector<int> first_schur_escape_profile;
   int first_schur_escape_radius = -1;
   int first_schur_escape_target = -1;
@@ -85,6 +92,33 @@ void inspect_core(const std::vector<int>& core, const int maximum_shift,
     profile.insert(profile.end(), core.begin(), core.end());
     ++counters.log_concave_profiles;
     const int support = static_cast<int>(profile.size()) - 1;
+    std::int64_t central_value = 0;
+    for (int index = 0; index <= support; ++index) {
+      central_value += index % 2 == 0 ? value(profile, index)
+                                     : -value(profile, index);
+    }
+    if (profile.front() > 0 && central_value >= 0) {
+      ++counters.central_nonnegative_profiles;
+      for (int a = 1; a <= 2 * support; ++a) {
+        for (int l = 0; 2 * l < a; ++l) {
+          const std::int64_t radial =
+              value(profile, 0) *
+                  (value(profile, a + 1) + value(profile, a + 2)) +
+              value(profile, l) * value(profile, a - l) -
+              value(profile, l + 1) * value(profile, a - l + 1);
+          ++counters.central_nonnegative_radial_increments;
+          if (radial < 0) {
+            ++counters.central_nonnegative_radial_failures;
+            if (counters.first_central_nonnegative_radial_profile.empty()) {
+              counters.first_central_nonnegative_radial_profile = profile;
+              counters.first_central_nonnegative_radial_a = a;
+              counters.first_central_nonnegative_radial_l = l;
+              counters.first_central_nonnegative_radial_value = radial;
+            }
+          }
+        }
+      }
+    }
     bool diagonal_admissible = true;
     for (int radius = 1; radius <= support; ++radius) {
       if (current(profile, radius, radius) < 0) {
@@ -241,6 +275,12 @@ int main(int argc, char** argv) {
               << " maximum_coefficient=" << maximum_coefficient
               << " maximum_shift=" << maximum_shift
               << " log_concave_profiles=" << counters.log_concave_profiles
+              << " central_nonnegative_profiles="
+              << counters.central_nonnegative_profiles
+              << " central_nonnegative_radial_increments="
+              << counters.central_nonnegative_radial_increments
+              << " central_nonnegative_radial_failures="
+              << counters.central_nonnegative_radial_failures
               << " diagonal_admissible_profiles="
               << counters.diagonal_admissible_profiles
               << " off_diagonal_currents=" << counters.off_diagonal_currents
@@ -259,6 +299,16 @@ int main(int argc, char** argv) {
               << counters.schur_boundary_currents
               << " schur_boundary_failures="
               << counters.schur_boundary_failures << '\n';
+    if (!counters.first_central_nonnegative_radial_profile.empty()) {
+      std::cout << "first_central_nonnegative_radial_profile="
+                << render(counters.first_central_nonnegative_radial_profile)
+                << " first_central_nonnegative_radial_a="
+                << counters.first_central_nonnegative_radial_a
+                << " first_central_nonnegative_radial_l="
+                << counters.first_central_nonnegative_radial_l
+                << " first_central_nonnegative_radial_value="
+                << counters.first_central_nonnegative_radial_value << '\n';
+    }
     if (!counters.first_profile.empty()) {
       std::cout << "first_profile=" << render(counters.first_profile)
                 << " first_radius=" << counters.first_radius

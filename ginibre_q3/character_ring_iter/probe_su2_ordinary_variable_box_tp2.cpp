@@ -105,6 +105,10 @@ cpp_int b2_coefficient(const std::vector<cpp_int>& profile, const int first,
 struct Counters {
   std::uint64_t words = 0;
   std::uint64_t adjacent_minors = 0;
+  std::uint64_t root_adjacent_minors = 0;
+  std::uint64_t root_adjacent_failures = 0;
+  std::uint64_t root_star_minors = 0;
+  std::uint64_t root_star_failures = 0;
   std::uint64_t boundary_minors = 0;
   std::uint64_t adjacent_failures = 0;
   std::uint64_t strictly_balanced_adjacent_failures = 0;
@@ -124,6 +128,8 @@ struct Counters {
   std::uint64_t b2_triangle_columns = 0;
   std::uint64_t b2_triangle_column_failures = 0;
   std::vector<int> first_adjacent_word;
+  std::vector<int> first_root_adjacent_word;
+  std::vector<int> first_root_star_word;
   std::vector<int> first_strictly_balanced_adjacent_word;
   std::vector<int> first_boundary_word;
   std::vector<int> first_multiturn_word;
@@ -142,6 +148,12 @@ struct Counters {
   cpp_int first_adjacent_southwest = 0;
   cpp_int first_adjacent_southeast = 0;
   cpp_int first_adjacent_value = 0;
+  int first_root_adjacent_a = -1;
+  int first_root_adjacent_b = -1;
+  cpp_int first_root_adjacent_value = 0;
+  int first_root_star_a = -1;
+  int first_root_star_b = -1;
+  cpp_int first_root_star_value = 0;
   cpp_int first_strictly_balanced_adjacent_value = 0;
   cpp_int first_boundary_value = 0;
   int first_multiturn_radius = -1;
@@ -188,6 +200,42 @@ void inspect_word(const std::vector<int>& word, const bool tp2_only,
   const bool strictly_balanced =
       word.back() < sum_before_maximum;
   const int endpoint = support + 2;
+  const int root_support = static_cast<int>(root.size()) - 1;
+  const int root_endpoint = root_support + 2;
+  for (int a = 0; a < root_endpoint; ++a) {
+    for (int b = 0; b < root_endpoint; ++b) {
+      const cpp_int adjacent =
+          kernel_entry(root, a, b) * kernel_entry(root, a + 1, b + 1) -
+          kernel_entry(root, a, b + 1) * kernel_entry(root, a + 1, b);
+      ++counters.root_adjacent_minors;
+      if (adjacent < 0) {
+        ++counters.root_adjacent_failures;
+        if (counters.first_root_adjacent_word.empty()) {
+          counters.first_root_adjacent_word = word;
+          counters.first_root_adjacent_a = a;
+          counters.first_root_adjacent_b = b;
+          counters.first_root_adjacent_value = adjacent;
+        }
+      }
+    }
+  }
+  for (int a = 1; a <= root_endpoint; ++a) {
+    for (int b = 1; b <= root_endpoint; ++b) {
+      const cpp_int star =
+          kernel_entry(root, 0, 0) * kernel_entry(root, a, b) -
+          kernel_entry(root, 0, b) * kernel_entry(root, a, 0);
+      ++counters.root_star_minors;
+      if (star < 0) {
+        ++counters.root_star_failures;
+        if (counters.first_root_star_word.empty()) {
+          counters.first_root_star_word = word;
+          counters.first_root_star_a = a;
+          counters.first_root_star_b = b;
+          counters.first_root_star_value = star;
+        }
+      }
+    }
+  }
   for (int a = 0; a <= endpoint; ++a) {
     for (int b = 0; b <= endpoint; ++b) {
       const cpp_int value =
@@ -466,6 +514,11 @@ int main(int argc, char** argv) {
             << " maximum_q=" << maximum_q << " length=" << length
             << " tp2_only=" << (tp2_only ? 1 : 0)
             << " words=" << counters.words
+            << " root_adjacent_minors=" << counters.root_adjacent_minors
+            << " root_adjacent_failures="
+            << counters.root_adjacent_failures
+            << " root_star_minors=" << counters.root_star_minors
+            << " root_star_failures=" << counters.root_star_failures
             << " adjacent_minors=" << counters.adjacent_minors
             << " adjacent_failures=" << counters.adjacent_failures
             << " strictly_balanced_adjacent_failures="
@@ -496,6 +549,22 @@ int main(int argc, char** argv) {
             << " b2_triangle_column_failures="
             << counters.b2_triangle_column_failures
             << '\n';
+  if (!counters.first_root_adjacent_word.empty()) {
+    std::cout << "first_root_adjacent_word=";
+    print_word(counters.first_root_adjacent_word);
+    std::cout << " first_root_adjacent_a=" << counters.first_root_adjacent_a
+              << " first_root_adjacent_b=" << counters.first_root_adjacent_b
+              << " first_root_adjacent_value="
+              << counters.first_root_adjacent_value << '\n';
+  }
+  if (!counters.first_root_star_word.empty()) {
+    std::cout << "first_root_star_word=";
+    print_word(counters.first_root_star_word);
+    std::cout << " first_root_star_a=" << counters.first_root_star_a
+              << " first_root_star_b=" << counters.first_root_star_b
+              << " first_root_star_value=" << counters.first_root_star_value
+              << '\n';
+  }
   if (!counters.first_adjacent_word.empty()) {
     std::cout << "first_adjacent_word=";
     print_word(counters.first_adjacent_word);

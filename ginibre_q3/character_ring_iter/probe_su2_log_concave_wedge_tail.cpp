@@ -84,6 +84,8 @@ bool check_profile(
     std::size_t& transforms,
     std::size_t& gap_tails,
     bool& gap_counterexample,
+    std::size_t& complete_wall_gap_tails,
+    bool& complete_wall_gap_counterexample,
     std::size_t& gap_suffix_tails,
     bool& gap_suffix_counterexample,
     std::size_t& one_wedge_tails,
@@ -264,6 +266,34 @@ bool check_profile(
                             << " value=" << gap_determinant
                             << '\n';
                     }
+                    if (cutoff == 0) {
+                        ++complete_wall_gap_tails;
+                        if (
+                            gap_determinant < 0
+                            && !complete_wall_gap_counterexample
+                        ) {
+                            complete_wall_gap_counterexample = true;
+                            std::cout
+                                << "SU2_LOG_CONCAVE_WEDGE_TAIL"
+                                << " complete_wall_gap_counterexample"
+                                << " profile={";
+                            for (std::size_t index = 0;
+                                 index < profile.size();
+                                 ++index) {
+                                if (index != 0) {
+                                    std::cout << ',';
+                                }
+                                std::cout << profile[index];
+                            }
+                            std::cout
+                                << "}"
+                                << " q_half=" << q_half
+                                << " target=" << target
+                                << " gap=" << gap
+                                << " value=" << gap_determinant
+                                << '\n';
+                        }
+                    }
                 }
                 Integer gap_suffix = 0;
                 for (int gap = max_cutoff - 1; gap >= 1; --gap) {
@@ -346,6 +376,8 @@ bool enumerate_profiles(
     std::size_t& transforms,
     std::size_t& gap_tails,
     bool& gap_counterexample,
+    std::size_t& complete_wall_gap_tails,
+    bool& complete_wall_gap_counterexample,
     std::size_t& gap_suffix_tails,
     bool& gap_suffix_counterexample,
     std::size_t& one_wedge_tails,
@@ -377,6 +409,8 @@ bool enumerate_profiles(
                         transforms,
                         gap_tails,
                         gap_counterexample,
+                        complete_wall_gap_tails,
+                        complete_wall_gap_counterexample,
                         gap_suffix_tails,
                         gap_suffix_counterexample,
                         one_wedge_tails,
@@ -438,6 +472,8 @@ int main(int argc, char** argv) {
     std::size_t transforms = 0;
     std::size_t gap_tails = 0;
     bool gap_counterexample = false;
+    std::size_t complete_wall_gap_tails = 0;
+    bool complete_wall_gap_counterexample = false;
     std::size_t gap_suffix_tails = 0;
     bool gap_suffix_counterexample = false;
     std::size_t one_wedge_tails = 0;
@@ -454,6 +490,8 @@ int main(int argc, char** argv) {
                 transforms,
                 gap_tails,
                 gap_counterexample,
+                complete_wall_gap_tails,
+                complete_wall_gap_counterexample,
                 gap_suffix_tails,
                 gap_suffix_counterexample,
                 one_wedge_tails,
@@ -471,6 +509,9 @@ int main(int argc, char** argv) {
         << " tails=" << tails
         << " gap_tails=" << gap_tails
         << " gap_counterexample=" << (gap_counterexample ? 1 : 0)
+        << " complete_wall_gap_tails=" << complete_wall_gap_tails
+        << " complete_wall_gap_counterexample="
+        << (complete_wall_gap_counterexample ? 1 : 0)
         << " gap_suffix_tails=" << gap_suffix_tails
         << " gap_suffix_counterexample="
         << (gap_suffix_counterexample ? 1 : 0)

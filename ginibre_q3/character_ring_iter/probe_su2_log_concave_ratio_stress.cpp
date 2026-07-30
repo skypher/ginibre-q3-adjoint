@@ -81,9 +81,129 @@ struct Failure {
     std::vector<Integer> profile;
 };
 
+struct GapFailure {
+    int sample = -1;
+    int q = 0;
+    int a = 0;
+    int gap = 0;
+    int denominator = 0;
+    std::vector<int> numerators;
+    Integer value = 0;
+    Integer current = 0;
+    std::vector<Integer> profile;
+    std::vector<Integer> energies;
+};
+
+int replay_complete_wall_gap() {
+    const std::vector<int> numerators{
+        84, 82, 81, 72, 65, 64, 56, 45, 20, 15
+    };
+    const int denominator = 42;
+    const std::vector<Integer> profile{
+        Integer{"17080198121677824"},
+        Integer{"34160396243355648"},
+        Integer{"66694106951313408"},
+        Integer{"128624349120390144"},
+        Integer{"220498884206383104"},
+        Integer{"341248273176545280"},
+        Integer{"519997368649973760"},
+        Integer{"693329824866631680"},
+        Integer{"742853383785676800"},
+        Integer{"353739706564608000"},
+        Integer{"126335609487360000"}
+    };
+    for (std::size_t i = 1; i < profile.size(); ++i) {
+        if (
+            profile[i] * denominator
+            != profile[i - 1] * numerators[i - 1]
+        ) {
+            std::cerr << "fixed witness ratio mismatch\n";
+            return EXIT_FAILURE;
+        }
+    }
+
+    const int q = 1;
+    const int a = 7;
+    const auto q_transform = transform(profile, q);
+    const auto a_transform = transform(profile, a);
+    const int size = std::max({
+        static_cast<int>(profile.size()),
+        static_cast<int>(q_transform.size()),
+        static_cast<int>(a_transform.size())
+    });
+    const auto pp = suffix_products(profile, profile, size);
+    const auto pq = suffix_products(profile, q_transform, size);
+    const auto pa = suffix_products(profile, a_transform, size);
+    const auto qa = suffix_products(q_transform, a_transform, size);
+    const Integer current =
+        pp.front() * qa.front() - pq.front() * pa.front();
+    std::vector<Integer> energies(static_cast<std::size_t>(size));
+    for (int gap = 1; gap < size; ++gap) {
+        for (int left = 0; left + gap < size; ++left) {
+            const int right = left + gap;
+            const Integer q_wedge =
+                at(profile, left) * at(q_transform, right)
+                - at(profile, right) * at(q_transform, left);
+            const Integer a_wedge =
+                at(profile, left) * at(a_transform, right)
+                - at(profile, right) * at(a_transform, left);
+            energies[static_cast<std::size_t>(gap)] += q_wedge * a_wedge;
+        }
+    }
+    const Integer expected_gap{
+        "-204839305586958588388030857811270968817700301343897173126550860595200"
+    };
+    const Integer expected_current{
+        "2943060361665841378980816615817878511514771508655754812817654026598350848"
+    };
+    Integer energy_sum = 0;
+    for (const Integer& energy : energies) {
+        energy_sum += energy;
+    }
+    const bool pass =
+        energies[9] == expected_gap
+        && current == expected_current
+        && energy_sum == current;
+
+    std::cout
+        << "SU2_LOG_CONCAVE_RATIO_STRESS replay_complete_wall_gap"
+        << " q=" << q
+        << " a=" << a
+        << " gap=9"
+        << " denominator=" << denominator
+        << " ratio_numerators={";
+    for (std::size_t i = 0; i < numerators.size(); ++i) {
+        if (i != 0) {
+            std::cout << ',';
+        }
+        std::cout << numerators[i];
+    }
+    std::cout
+        << "} value=" << energies[9]
+        << " current=" << current
+        << " energy_sum=" << energy_sum
+        << " gap_energies={";
+    for (std::size_t gap = 1; gap < energies.size(); ++gap) {
+        if (gap != 1U) {
+            std::cout << ',';
+        }
+        std::cout << energies[gap];
+    }
+    std::cout
+        << "} result=" << (pass ? "PASS" : "FAIL")
+        << '\n';
+    return pass ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
+    if (
+        argc == 2
+        && std::string{argv[1]} == "--replay-complete-wall-gap"
+    ) {
+        return replay_complete_wall_gap();
+    }
     int samples = 20000;
     int max_label = 7;
     try {
@@ -95,7 +215,8 @@ int main(int argc, char** argv) {
         }
         if (argc > 3) {
             throw std::invalid_argument(
-                "usage: probe_su2_log_concave_ratio_stress [samples] [max_label]"
+                "usage: probe_su2_log_concave_ratio_stress "
+                "[samples] [max_label] | --replay-complete-wall-gap"
             );
         }
     } catch (const std::exception& error) {
@@ -107,8 +228,11 @@ int main(int argc, char** argv) {
     std::atomic<int> next_sample{0};
     std::atomic<unsigned long long> determinants{0};
     std::atomic<unsigned long long> counterexamples{0};
+    std::atomic<unsigned long long> complete_wall_gap_energies{0};
+    std::atomic<unsigned long long> complete_wall_gap_failures{0};
     std::mutex failure_mutex;
     Failure failure;
+    GapFailure gap_failure;
 
     auto worker = [&]() {
         while (true) {
@@ -195,6 +319,86 @@ int main(int argc, char** argv) {
                         transforms[static_cast<std::size_t>(a)],
                         size
                     );
+                    std::vector<Integer> gap_energy(
+                        static_cast<std::size_t>(size)
+                    );
+                    int first_negative_gap = -1;
+                    Integer first_negative_gap_value = 0;
+                    for (int gap = 1; gap < size; ++gap) {
+                        Integer energy = 0;
+                        for (int left = 0; left + gap < size; ++left) {
+                            const int right = left + gap;
+                            const Integer q_wedge =
+                                at(profile, left)
+                                    * at(
+                                        transforms[
+                                            static_cast<std::size_t>(q)
+                                        ],
+                                        right
+                                    )
+                                - at(profile, right)
+                                    * at(
+                                        transforms[
+                                            static_cast<std::size_t>(q)
+                                        ],
+                                        left
+                                    );
+                            const Integer a_wedge =
+                                at(profile, left)
+                                    * at(
+                                        transforms[
+                                            static_cast<std::size_t>(a)
+                                        ],
+                                        right
+                                    )
+                                - at(profile, right)
+                                    * at(
+                                        transforms[
+                                            static_cast<std::size_t>(a)
+                                        ],
+                                        left
+                                    );
+                            energy += q_wedge * a_wedge;
+                        }
+                        gap_energy[static_cast<std::size_t>(gap)] = energy;
+                        complete_wall_gap_energies.fetch_add(
+                            1,
+                            std::memory_order_relaxed
+                        );
+                        if (energy < 0) {
+                            complete_wall_gap_failures.fetch_add(
+                                1,
+                                std::memory_order_relaxed
+                            );
+                            if (first_negative_gap < 0) {
+                                first_negative_gap = gap;
+                                first_negative_gap_value = energy;
+                            }
+                        }
+                    }
+                    if (first_negative_gap >= 0) {
+                        const Integer complete_current =
+                            pp.front() * qa.front() -
+                            pq.front() * pa.front();
+                        std::lock_guard<std::mutex> lock(failure_mutex);
+                        if (
+                            gap_failure.sample < 0
+                            || sample < gap_failure.sample
+                        ) {
+                            gap_failure = {
+                                sample,
+                                q,
+                                a,
+                                first_negative_gap,
+                                denominator,
+                                numerators,
+                                first_negative_gap_value,
+                                complete_current,
+                                profile,
+                                gap_energy
+                            };
+                        }
+                    }
                     for (int cutoff = 0; cutoff <= size; ++cutoff) {
                         const Integer determinant =
                             pp[static_cast<std::size_t>(cutoff)]
@@ -267,6 +471,10 @@ int main(int argc, char** argv) {
         std::cout
             << "} determinants=" << determinants.load()
             << " counterexamples=" << counterexamples.load()
+            << " complete_wall_gap_energies="
+            << complete_wall_gap_energies.load()
+            << " complete_wall_gap_failures="
+            << complete_wall_gap_failures.load()
             << " threads=" << threads
             << " result=COUNTEREXAMPLE\n";
         return EXIT_SUCCESS;
@@ -276,7 +484,51 @@ int main(int argc, char** argv) {
         << " samples=" << samples
         << " determinants=" << determinants.load()
         << " max_label=" << max_label
+        << " complete_wall_gap_energies="
+        << complete_wall_gap_energies.load()
+        << " complete_wall_gap_failures="
+        << complete_wall_gap_failures.load();
+    if (gap_failure.sample >= 0) {
+        std::cout
+            << " first_complete_wall_gap={sample=" << gap_failure.sample
+            << ",q=" << gap_failure.q
+            << ",a=" << gap_failure.a
+            << ",gap=" << gap_failure.gap
+            << ",denominator=" << gap_failure.denominator
+            << ",ratio_numerators={";
+        for (std::size_t i = 0; i < gap_failure.numerators.size(); ++i) {
+            if (i != 0) {
+                std::cout << ',';
+            }
+            std::cout << gap_failure.numerators[i];
+        }
+        std::cout
+            << "},value=" << gap_failure.value
+            << ",current=" << gap_failure.current
+            << ",profile={";
+        for (std::size_t i = 0; i < gap_failure.profile.size(); ++i) {
+            if (i != 0) {
+                std::cout << ',';
+            }
+            std::cout << gap_failure.profile[i];
+        }
+        std::cout << "},gap_energies={";
+        for (std::size_t gap = 1; gap < gap_failure.energies.size(); ++gap) {
+            if (gap != 1U) {
+                std::cout << ',';
+            }
+            std::cout << gap_failure.energies[gap];
+        }
+        std::cout << "}}";
+    }
+    std::cout
         << " threads=" << threads
-        << " result=NO_COUNTEREXAMPLE\n";
+        << " result="
+        << (
+            gap_failure.sample < 0
+            ? "NO_COUNTEREXAMPLE"
+            : "COMPLETE_WALL_GAP_COUNTEREXAMPLE"
+        )
+        << '\n';
     return EXIT_SUCCESS;
 }
