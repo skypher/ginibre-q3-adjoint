@@ -9686,6 +9686,4092 @@ sum_mu 7056R_mu mu^10
 Thus the seed determinant is positive and stable
 (`2rQ=K`), while the proposed call payment is negative.  QED.
 
+The affine images have a simpler exact realization when they are kept
+together rather than ordered spectrally.
+
+**Lemma 5A8H28UIA2CG (finite cyclic-gradient realization).**  Work in
+half-labels at even level `k=2K`, put
+
+```text
+L=2K+2,
+R_K=Z[z,z^(-1)]/(z^L-1),
+beta_Q(z)=sum_(t=-Q)^Q z^t,
+A_S(z)=z^S-z^(-S-1),                    0<=S<=K. (P5A.102AD5AI)
+```
+
+Then the `A_S` form a basis of the affine-antisymmetric submodule of
+`R_K`, and multiplication by `beta_Q` is exactly finite fusion:
+
+```text
+beta_Q A_S
+ =sum_(T=|S-Q|)^(min(S+Q,2K-S-Q)) A_T.           (P5A.102AD5AJ)
+```
+
+Let `W_n(r)` be the coefficient of `z^r` in `beta_Q^n`, with the
+exponent read modulo `L`.  If
+
+```text
+M_n=(N_Q^(K))^n,
+```
+
+then, for every `n>=0` and `0<=R,S<=K`,
+
+```text
+(M_n)_(S,R)
+ =W_n(S-R)-W_n(S+R+1),                           (P5A.102AD5AK)
+
+d_n(S):=(M_n)_(S,0)
+ =W_n(S)-W_n(S+1).                               (P5A.102AD5AL)
+```
+
+In particular `(P5A.102AD5AK)` is the complete Kac--Walton image sum,
+already periodized; no affine branch is discarded.
+
+**Proof.**  The support pairs
+
+```text
+{S,-S-1},                         0<=S<=K,
+```
+
+partition the `L` cyclic exponents, so the `A_S` are independent and
+span precisely the vectors whose coefficients satisfy
+
+```text
+c_(-S-1)=-c_S.
+```
+
+Before affine folding, the telescoping interval product gives
+
+```text
+beta_Q A_S=sum_(T=|S-Q|)^(S+Q) A_T.
+```
+
+In `R_K`,
+
+```text
+A_(K+1+h)=-A_(K-h).
+```
+
+Thus, when `S+Q>K`, the terms above the affine wall cancel the terms
+from `2K-S-Q+1` through `K`; when `S+Q<=K` there is no cancellation.
+This proves `(P5A.102AD5AJ)`, including both the lower and affine
+walls.
+
+Iterating `(P5A.102AD5AJ)` gives
+
+```text
+beta_Q^n A_R=sum_(S=0)^K (M_n)_(S,R)A_S.
+```
+
+The coefficient of `z^S`, `0<=S<=K`, on the right is
+`(M_n)_(S,R)`.  On the left it is
+
+```text
+W_n(S-R)-W_n(S+R+1),
+```
+
+which proves `(P5A.102AD5AK)`; put `R=0` for
+`(P5A.102AD5AL)`.  QED.
+
+The finite interval transform retains one useful shape invariant.
+
+**Lemma 5A8H28UIA2CGLC (finite fusion preserves log concavity).**
+Let `p=(p_0,...,p_K)` be nonnegative and log concave with interval
+support.  For `0<=Q<=K`, put
+
+```text
+(F_Qp)_i
+ =sum_(h=|i-Q|)^(min(i+Q,2K-i-Q))p_h.            (P5A.102AD5ALS)
+```
+
+Then `F_Qp` is log concave with interval support.  Consequently every
+finite tensor-power profile
+
+```text
+(N_Q^(K))^n e_0
+```
+
+is log concave with interval support.
+
+**Proof.**  Use the discrete midpoint-summation inequality already
+stated in the proof of Lemma 5A8H28UIA2RLC1.  The fiber in
+`(P5A.102AD5ALS)` is the integer interval
+
+```text
+C_i=[L_i,U_i],
+L_i=|i-Q|,                  U_i=min(i+Q,2K-i-Q).
+```
+
+The function `L_i` is convex and `U_i` is concave.  Therefore, if
+`x in C_(i-1)` and `y in C_(i+1)`, both integer midpoints
+
+```text
+floor((x+y)/2),                  ceil((x+y)/2)
+```
+
+belong to `C_i`.  Log concavity of `p` supplies the pointwise midpoint
+inequality, and discrete midpoint summation gives
+
+```text
+(F_Qp)_(i-1)(F_Qp)_(i+1)<=(F_Qp)_i^2.
+```
+
+If the support of `p` is `[A,B]`, the transformed coordinate is
+positive precisely when
+
+```text
+|i-Q|<=B,             i+Q>=A,             2K-i-Q>=A.
+```
+
+These conditions cut out one integer interval in `i`.  Starting from
+`e_0` and iterating proves the last assertion.  QED.
+
+This invariant is not itself the missing payment.  Even adding endpoint
+dominance does not make an abstract log-concave profile sufficient:
+
+```text
+d=(100,10000,900,81)
+```
+
+is positive and log concave, with `d_0>=d_3`, but
+
+```text
+d_0d_2-d_1d_3=-720000<0.                         (P5A.102AD5ALT)
+```
+
+Thus a proof must retain the square/fusion origin of the profile, not
+only its one-dimensional shape.
+
+In fact even the square/fusion origin and log concavity together are
+insufficient once the genuine tensor-power word is discarded.
+
+**Proposition 5A8H28UIA2CGLCF (finite square-profile
+counterexample).**  In the level-`K=4` half-label fusion ring, put
+
+```text
+p=(3,3,1,0,2).
+```
+
+Then `p` is character-positive and
+
+```text
+d=p^2=(23,34,26,19,13)
+```
+
+is positive and log concave, but
+
+```text
+d_0(N_1d)_4-d_1d_4
+ =23*19-34*13=-5.                                (P5A.102AD5ALU)
+```
+
+**Proof.**  Direct use of the finite fusion intervals gives the
+displayed square.  Its adjacent log-concavity margins are
+
+```text
+34^2-23*26=558,
+26^2-34*19=30,
+19^2-26*13=23,
+```
+
+and the affine fusion rule gives `(N_1d)_4=d_3=19`.  Substitution is
+`(P5A.102AD5ALU)`.  QED.
+
+The counterexample fails only at the affine wall.  Exhaustion exposes
+a substantially smaller condition which, if proved, would retain
+exactly the missing wall information.  For a finite fusion square
+
+```text
+d=p^2
+```
+
+write
+
+```text
+B_R(d)=d_0d_(K-R)-d_Rd_K.                        (P5A.102AD5ALV)
+```
+
+Since the top object is a simple current,
+
+```text
+(N_Rd)_K=d_(K-R),
+```
+
+so `B_R(d)` is precisely the target current at `S=K`.
+
+**Target 5A8H28UIA2CGLCB (finite square boundary reduction).**
+Let `p` be character-positive, log concave, and have interval support
+in the half-label `SU(2)_(2K)` fusion ring.  Suppose `d=p^2` is log
+concave with interval support and
+
+```text
+B_R(d)>=0,                         0<=R<=K.       (P5A.102AD5ALW)
+```
+
+Prove
+
+```text
+d_0(N_Rd)_S-d_Rd_S>=0,             0<=R,S<=K.    (P5A.102AD5ALX)
+```
+
+The square root can be removed from the statement at the cost of
+retaining its exact spectral consequence.
+
+**Target 5A8H28UIA2CGLCP (positive-semidefinite boundary
+reduction).**  Let `d` be nonnegative and log concave with interval
+support.  Assume that its finite multiplication matrix
+
+```text
+C=N_d
+```
+
+is positive semidefinite and that every boundary current
+`B_R(d)` is nonnegative.  Prove
+
+```text
+d_0C_(R,S)-d_Rd_S>=0,               0<=R,S<=K.   (P5A.102AD5ALX1)
+```
+
+This target implies Target 5A8H28UIA2CGLCB, because for `d=p^2`,
+
+```text
+N_d=N_p^2>=0
+```
+
+as an operator: every finite fusion matrix is real symmetric.
+
+The PSD target has an exact folded-Verlinde probability form.  This
+also identifies precisely what square-factor insertion does to the
+boundary order.
+
+**Lemma 5A8H28UIA2CGLCS (folded spectral covariance).**  Put
+
+```text
+h=2K+2,                  theta_m=m*pi/h,       1<=m<=K+1,
+beta_R(m)=sin((2R+1)theta_m)/sin(theta_m),
+epsilon_m=beta_K(m)=(-1)^(m+1),
+rho_m={2sin^2(theta_m)/(K+1),  m<=K,
+       1/(K+1),                m=K+1}.
+```
+
+For `C=N_d>=0`, let
+
+```text
+lambda_m=sum_(R=0)^K d_R beta_R(m),
+mu_m=rho_m lambda_m/d_0.
+```
+
+Then `mu` is a probability measure and
+
+```text
+d_R/d_0=E_mu beta_R,
+C_(R,S)/d_0=E_mu(beta_R beta_S),                 (P5A.102AD5ALX1U)
+A_(R,S)/d_0^2=Cov_mu(beta_R,beta_S).              (P5A.102AD5ALX1V)
+```
+
+In particular the boundary hypotheses are exactly
+
+```text
+Cov_mu(beta_R,epsilon)>=0,                0<=R<=K. (P5A.102AD5ALX1W)
+```
+
+If `d'=N_Q^2d`, its spectral probability is
+
+```text
+mu'_m
+ =mu_m beta_Q(m)^2/E_mu(beta_Q^2).                 (P5A.102AD5ALX1X)
+```
+
+Consequently direct square-boundary insertion is the preservation of
+`(P5A.102AD5ALX1W)` under the displayed irreducible-square reweighting,
+with `mu` restricted to a character-square orbit.
+
+**Proof.**  The folded sine transform diagonalizes every finite even
+fusion matrix.  Pairing the full-level modes `r` and `2K-r` gives the
+weights `rho_m`; the central mode is unpaired.  Orthogonality gives
+
+```text
+sum_m rho_m beta_R(m)beta_S(m)=delta_(R,S).
+```
+
+Thus `lambda_m` are the eigenvalues of `N_d`, so they are nonnegative,
+and inverse transformation gives `(P5A.102AD5ALX1U)`.  Its `R=S=0`
+case says `sum_m rho_m lambda_m=d_0`, proving that `mu` is a
+probability measure.  Subtracting the product of the two first moments
+gives `(P5A.102AD5ALX1V)`.  At the simple current,
+
+```text
+beta_K(m)=sin(m*pi-theta_m)/sin(theta_m)=(-1)^(m+1),
+```
+
+which proves `(P5A.102AD5ALX1W)`.  Finally the eigenvalue of `N_Q^2`
+at mode `m` is `beta_Q(m)^2`; renormalizing its new spectral weight
+proves `(P5A.102AD5ALX1X)`.  QED.
+
+If `mu_+` and `mu_-` denote the conditional measures on
+`epsilon=+1` and `epsilon=-1`, respectively, then
+
+```text
+Cov_mu(f,epsilon)
+ =2mu(epsilon=+1)mu(epsilon=-1)
+    {E_(mu_+)f-E_(mu_-)f}.                         (P5A.102AD5ALX1Y)
+```
+
+Hence the boundary cone is a complete character-moment dominance of
+one interlacing parity grid over the other.  The remaining insertion
+problem is to show that this dominance persists under
+`beta_Q^2` reweighting along the actual product-square orbit.  The
+generic counterexample below proves that discarding the PSD
+character-square origin and retaining only the incoming coefficient
+cone does not preserve this closure.
+
+The spectral form suggests the correct companion to PSD boundary
+reduction.
+
+**Target 5A8H28UIA2CGLCPI (positive-semidefinite boundary
+insertion).**  Under the hypotheses of Target 5A8H28UIA2CGLCP, put
+
+```text
+d'=N_Q^2d.
+```
+
+Prove
+
+```text
+B_R(d')>=0,                              0<=R<=K. (P5A.102AD5ALX1Z)
+```
+
+Equivalently, under `(P5A.102AD5ALX1U)--(P5A.102AD5ALX1Y)`, prove that
+the complete parity-grid character-moment dominance is preserved by
+the normalized `beta_Q^2` reweighting.  The PSD class itself is
+preserved, because
+
+```text
+N_(d')=N_Q^2N_d>=0:
+```
+
+the two real symmetric PSD factors commute.  Log concavity is
+preserved by Lemma 5A8H28UIA2CGLC.  Thus Targets
+5A8H28UIA2CGLCP and 5A8H28UIA2CGLCPI alternate from `d=e_0` and close
+the arbitrary-factor anchored cone without passing through the false
+generic transport target below.
+
+The PSD insertion target has a direct cumulative-current form.  It
+removes the conditional spectral measures and exposes the exact
+global payment which remains.
+
+**Lemma 5A8H28UIA2CGLCPIR (PSD insertion row payment).**  Put
+
+```text
+A_(R,S)=d_0(N_d)_(R,S)-d_Rd_S,
+m=2min(Q,K-Q),
+P=sum_(t=0)^m d_t,                 T=sum_(t=0)^m d_(K-t).
+```
+
+Then
+
+```text
+d_0 B_R(N_Q^2d)
+ =P sum_(u=K-m)^K A_(u,R)
+   -T sum_(t=0)^m A_(t,R).                         (P5A.102AD5ALX1ZA)
+```
+
+Consequently Target 5A8H28UIA2CGLCPI is equivalent to the cumulative
+row-payment family
+
+```text
+P sum_(u=K-m)^K A_(u,R)
+ >=T sum_(t=0)^m A_(t,R),               0<=R<=K. (P5A.102AD5ALX1ZB)
+```
+
+on the PSD, log-concave, boundary-admissible cone.
+
+Equivalently, let `h_m` be the indicator of `{0,...,m}` and put
+
+```text
+z^(m)=P Jh_m-T h_m.                               (P5A.102AD5ALX1ZC)
+```
+
+Then
+
+```text
+<d,z^(m)>=PT-TP=0,
+B_R(N_Q^2d)=(N_dz^(m))_R.                         (P5A.102AD5ALX1ZD)
+```
+
+Thus Target 5A8H28UIA2CGLCPI is also equivalent to the single
+two-block image statement
+
+```text
+N_dz^(m)>=0,              m=2min(Q,K-Q).          (P5A.102AD5ALX1ZE)
+```
+
+**Proof.**  The irreducible square is
+
+```text
+e_Q^2=sum_(t=0)^m e_t.
+```
+
+Writing `C=N_d` and using simple-current reflection gives
+
+```text
+(N_Q^2d)_0=P,                 (N_Q^2d)_K=T,
+(N_Q^2d)_R=sum_(t=0)^m C_(t,R),
+(N_Q^2d)_(K-R)=sum_(t=0)^m C_(K-t,R).
+```
+
+Moreover
+
+```text
+sum_(u=K-m)^K A_(u,R)
+ =d_0(N_Q^2d)_(K-R)-Td_R,
+sum_(t=0)^m A_(t,R)
+ =d_0(N_Q^2d)_R-Pd_R.
+```
+
+Multiply the first identity by `P`, the second by `T`, and subtract.
+The two `PTd_R` terms cancel, leaving
+`(P5A.102AD5ALX1ZA)`.  The definition `(P5A.102AD5ALX1ZC)` gives
+`<d,z^(m)>=0`.  Therefore
+
+```text
+A z^(m)={d_0N_d-dd^T}z^(m)=d_0N_dz^(m).
+```
+
+Comparing with `(P5A.102AD5ALX1ZA)` proves
+`(P5A.102AD5ALX1ZD)--(P5A.102AD5ALX1ZE)`.  QED.
+
+If Target 5A8H28UIA2CGLCP is available, every summand in
+`(P5A.102AD5ALX1ZB)` is nonnegative.  What remains is not entrywise
+positivity but the displayed comparison of the two complete
+cumulative blocks.  This is the finite arbitrary-factor
+cumulative-current/global-payment lemma in its smallest current form.
+In operator language, it is a variation-diminishing assertion for the
+PSD log-concave fusion kernel `N_d` on the distinguished centered
+two-block step vectors `(P5A.102AD5ALX1ZC)`.
+
+There is a second exact formulation which can replace the alternating
+boundary-reduction and boundary-insertion targets by one invariant-cone
+step.  It has a stronger incoming hypothesis, but that hypothesis is
+available at every stage of the desired induction.
+
+**Target 5A8H28UIA2CGLCPT (PSD full-cone insertion).**  Let `d` be
+nonnegative and log concave with interval support, let
+
+```text
+C=N_d>=0,                 A=d_0C-dd^T,
+```
+
+and suppose that `A` is entrywise nonnegative.  For
+
+```text
+H=N_Q^2,                  d'=Hd,
+```
+
+prove that
+
+```text
+A'=d'_0N_(d')-d'(d')^T
+```
+
+is entrywise nonnegative.
+
+The target is sufficient by itself for the arbitrary-factor induction.
+Indeed `d=e_0` has the complete anchored cone; positive
+semidefiniteness is preserved because `N_(d')=HN_d>=0`, and log
+concavity is preserved by Lemma 5A8H28UIA2CGLC.
+
+**Lemma 5A8H28UIA2CGLCPTR (residual-column transport).**  In the
+notation of Target 5A8H28UIA2CGLCPT, put
+
+```text
+D=d_0,                    P=d'_0,
+x^(S)=Ae_S.
+```
+
+Then `x^(S)_0=0` and
+
+```text
+D A'_(R,S)
+ =P(Hx^(S))_R-d'_R(Hx^(S))_0.                  (P5A.102AD5ALX1ZF)
+```
+
+Consequently Target 5A8H28UIA2CGLCPT is exactly the family of
+likelihood-ratio comparisons
+
+```text
+P(Hx^(S))_R>=d'_R(Hx^(S))_0,       0<=R,S<=K, (P5A.102AD5ALX1ZG)
+```
+
+for the special nonnegative residual columns of the incoming PSD
+anchored-current matrix.  At `S=K`, the column is the boundary-current
+vector and `(P5A.102AD5ALX1ZG)` specializes to the insertion/global-
+payment problem above.
+
+**Proof.**  Since `C'=N_(d')=HC` and `d'=Hd`,
+
+```text
+D A'
+ =P H(DC)-D d'(d')^T
+ =P H(A+dd^T)-D d'(d')^T
+ =P HA-d'(Dd'-Pd)^T.
+```
+
+Moreover
+
+```text
+(HA)_(0,S)=D d'_S-Pd_S.
+```
+
+Taking the `(R,S)` entry gives `(P5A.102AD5ALX1ZF)`.  The zeroth row
+of `A` vanishes, so `x^(S)_0=0`.  QED.
+
+Thus there are now two logically sufficient routes.  Targets
+5A8H28UIA2CGLCP and 5A8H28UIA2CGLCPI alternate a boundary cone with
+the full cone.  Target 5A8H28UIA2CGLCPT instead transports the full
+cone directly.  The latter packages the missing arbitrary-factor
+payment as one two-vector ratio inequality, while retaining the
+positive-semidefinite residual-column linkage which the generic
+counterexamples lack.
+
+The residual ratio itself need not be unimodal, so
+`(P5A.102AD5ALX1ZG)` is not a direct one-crossing consequence of
+log concavity.  At `K=3`, put
+
+```text
+d=(2,3,3,1).
+```
+
+Its multiplication matrix has simple-current blocks
+
+```text
+[[3,6],[6,15]],                    [[1,0],[0,1]],
+```
+
+and hence is positive semidefinite.  The profile is log concave, its
+boundary currents are `(0,3,3,3)`, and its full anchored-current
+matrix is entrywise nonnegative.  Nevertheless the `S=1` residual
+column is
+
+```text
+x^(1)=(0,7,5,3),
+```
+
+so on the positive support of `d` the ratios are
+
+```text
+(0,7/3,5/3,3).
+```
+
+They decrease and then increase.  The exact PSD audit finds `4,191`
+such failures among `23,690` residual columns.  Therefore a proof of
+the direct full-cone transport target must aggregate the complete
+kernel payment in `(P5A.102AD5ALX1ZG)`; ordinary residual-ratio
+unimodality is false.
+
+Nor does positive semidefiniteness and entrywise positivity force the
+natural triangular Gram payment to be nonnegative.  For the exact PSD
+profile `d=(2,3,4,1)` used below, the nonzero anchored principal block
+is
+
+```text
+[[9,4,5],
+ [4,2,2],
+ [5,2,3]].
+```
+
+Its natural exact `LDL^T` factorization begins with
+
+```text
+D_1=9,             L_(2,1)=4/9,       L_(3,1)=5/9,
+D_2=2/9,           L_(3,2)=-1,        D_3=0.
+```
+
+Thus the anchored matrix may still be completely positive through
+some other factorization, but the canonical Cholesky/`LDL^T` order
+does not supply it.  The audit finds `385` such failures among the
+`3,320` PSD profiles.  A proof cannot assign the global payment by
+successive natural-index orthogonalization.
+
+There is an exact exterior-square expansion on the actual
+character-positive square orbit.  It gives a useful Gram
+representation of every anchored current, but its individual
+Pluecker coordinates do not have a common sign.
+
+**Lemma 5A8H28UIA2CGLCPP (half-profile Pluecker expansion).**  Let
+`p` be any real coefficient vector, put
+
+```text
+P=N_p,                 d=p^2,                 A=d_0N_d-dd^T,
+Delta_R(i,j)=p_iP_(R,j)-p_jP_(R,i).
+```
+
+Then
+
+```text
+A_(R,S)=sum_(0<=i<j<=K) Delta_R(i,j)Delta_S(i,j).
+                                                        (P5A.102AD5ALX1ZJ)
+```
+
+**Proof.**  The fusion matrices are real symmetric, so
+
+```text
+d_0=sum_i p_i^2,
+d_R=sum_i p_iP_(R,i),
+(N_d)_(R,S)=(P^2)_(R,S)=sum_i P_(R,i)P_(S,i).
+```
+
+The standard two-vector Lagrange identity now gives
+`(P5A.102AD5ALX1ZJ)`.  QED.
+
+Thus a common sign of `Delta_R(i,j)` over `R`, for each fixed column
+pair `(i,j)`, would prove the complete anchored cone term by term.
+That sign-regularity already fails for a two-factor word.  At `K=3`,
+take
+
+```text
+p=e_1^2=(1,1,1,0).
+```
+
+For the column pair `(i,j)=(1,2)`,
+
+```text
+Delta_1(1,2)=1*2-1*3=-1,
+Delta_2(1,2)=1*3-1*2=+1.                       (P5A.102AD5ALX1ZK)
+```
+
+Hence this single Pluecker coordinate contributes `-1` to
+`A_(1,2)`.  The complete sum `(P5A.102AD5ALX1ZJ)` is nonnegative, so
+other column pairs compensate it.  A proof on the actual factor-word
+orbit must therefore group several exterior coordinates; it cannot
+use coordinatewise sign regularity.
+
+Even the most natural cyclic-distance grouping remains too local.  Put
+
+```text
+delta(i,j)=min(j-i,K+1-(j-i)),              0<=i<j<=K.
+```
+
+At `K=18`, the three-factor word
+
+```text
+p=N_1N_14N_6e_0
+ =(0,0,0,0,0,0,0,1,2,3,3,3,3,3,3,3,2,1,0)
+```
+
+has, at `(R,S)=(2,18)`, the exact proper-prefix payment
+
+```text
+sum_(delta(i,j)<=2) Delta_R(i,j)Delta_S(i,j)=-2.
+                                                        (P5A.102AD5ALX1ZL)
+```
+
+The complete Pluecker sum is nonnegative, as required, but later
+cyclic distances are load-bearing.  Thus coordinate signs, fixed
+distances, ordinary distance groups, and proper cyclic-distance
+prefixes all fail; only a grouping allowed to aggregate the complete
+exterior payment can prove `(P5A.102AD5ALX1ZJ)`.
+
+For an actual factor word the complete payment is one boundary block
+of a commuting exterior-square semigroup.  This packages every
+Pluecker cancellation before any sign is estimated.
+
+**Lemma 5A8H28UIA2CGLCPES (factor-word exterior semigroup).**  Let
+
+```text
+p=N_(Q_1)...N_(Q_m)e_0,             P=N_p,
+E_R=e_0 wedge e_R,                  1<=R<=K,
+G_Q=C_2(N_Q)^2=C_2(N_Q^2),
+```
+
+where `C_2` denotes the second compound in the ordered wedge basis.
+Then
+
+```text
+p wedge N_Rp=C_2(P)E_R,                         (P5A.102AD5ALX1ZM)
+
+A_(R,S)
+ =<C_2(P)E_R,C_2(P)E_S>
+ =[E_R,E_S] product_(j=1)^m G_(Q_j).             (P5A.102AD5ALX1ZN)
+```
+
+In particular, the arbitrary-factor anchored-current theorem is
+equivalent to entrywise nonnegativity of the star boundary block
+
+```text
+[E_R,E_S] product_j G_(Q_j)>=0,             1<=R,S<=K, (CSES)
+```
+
+for every finite word of irreducible factors.
+
+**Proof.**  Multiplication matrices form the regular representation,
+so
+
+```text
+P=N_(Q_1)...N_(Q_m),                 p=Pe_0.
+```
+
+All fusion matrices are symmetric and commute.  Hence
+
+```text
+N_Rp=PN_Re_0=Pe_R.
+```
+
+The `(i,j)` coordinate of `C_2(P)E_R` is therefore
+
+```text
+P_(i,0)P_(j,R)-P_(j,0)P_(i,R)
+ =p_iP_(R,j)-p_jP_(R,i)
+ =Delta_R(i,j).
+```
+
+This proves `(P5A.102AD5ALX1ZM)`.  Lemma
+5A8H28UIA2CGLCPP and the standard wedge inner product give
+
+```text
+A_(R,S)
+ =E_R^T C_2(P)^T C_2(P)E_S
+ =E_R^T C_2(P)^2E_S.
+```
+
+The compound functor is multiplicative.  Since the factors are
+symmetric and commute,
+
+```text
+C_2(P)^2=C_2(P^2)
+ =product_j C_2(N_(Q_j)^2)
+ =product_j G_(Q_j),
+```
+
+which proves `(P5A.102AD5ALX1ZN)` and `(CSES)`.  Conversely every
+anchored current of a factor word is the displayed boundary
+coefficient, so the two assertions are equivalent.  QED.
+
+The same semigroup has a scalar cyclic realization in which every
+generator is a triangular convolution kernel.  This retains the
+complete global payment while removing all interior wedge
+coordinates.
+
+**Lemma 5A8H28UIA2CGLCPCT (factor-word cyclic triangular
+reduction).**  In the notation of Lemma
+5A8H28UIA2CGLCPES, put
+
+```text
+L=2K+2,                         q_j=min(Q_j,K-Q_j),
+beta_q(z)=sum_(a=-q)^q z^a,
+tau_q(z)=beta_q(z)^2
+ =sum_(a=-2q)^(2q)(2q+1-|a|)z^a.                (P5A.102AD5ALX1ZS)
+```
+
+Let `W(r)` be the coefficient of `z^r`, with `r` read modulo `L`,
+in
+
+```text
+Phi(z)=product_(j=1)^m tau_(q_j)(z)
+       in Z[z,z^(-1)]/(z^L-1),
+```
+
+and put
+
+```text
+delta(r)=W(r)-W(r+1).
+```
+
+Then, for `0<=R,S<=K`,
+
+```text
+(P^2)_(S,R)=W(S-R)-W(S+R+1),                    (P5A.102AD5ALX1ZT)
+d_S=delta(S),                                    (P5A.102AD5ALX1ZU)
+
+A_(R,S)
+ =delta(0) sum_(a=-R)^R delta(S+a)
+    -delta(R)delta(S).                            (P5A.102AD5ALX1ZV)
+```
+
+Consequently `(CSES)` is equivalent to the scalar cyclic-triangular
+inequality
+
+```text
+delta(0) sum_(a=-R)^R delta(S+a)
+ >=delta(R)delta(S),                0<=R,S<=K,   (CTCP)
+```
+
+for every finite product of the kernels in
+`(P5A.102AD5ALX1ZS)`.
+
+**Proof.**  The cyclic-gradient realization in Lemma
+5A8H28UIA2CG identifies multiplication by `N_q` on the
+affine-antisymmetric submodule with multiplication by `beta_q`.
+Simple-current reflection gives
+
+```text
+N_(K-Q)=N_KN_Q,                 N_(K-Q)^2=N_Q^2,
+```
+
+so every square factor may be replaced by `q=min(Q,K-Q)`.
+Therefore `P^2=product_j N_(q_j)^2` is multiplication by `Phi`.
+Applying it to
+
+```text
+A_R(z)=z^R-z^(-R-1)
+```
+
+and taking the coefficient of `z^S` gives
+`(P5A.102AD5ALX1ZT)`.  Setting `R=0` gives
+`(P5A.102AD5ALX1ZU)`.
+
+Finally the cyclic telescoping identity
+
+```text
+W(S-R)-W(S+R+1)=sum_(a=-R)^R delta(S+a)
+```
+
+and `A_(R,S)=d_0(P^2)_(R,S)-d_Rd_S` give
+`(P5A.102AD5ALX1ZV)`.  The equivalence with `(CTCP)` is immediate.
+QED.
+
+Each individual triangular kernel has support radius
+`2q_j<=K<L/2`, so no generator wraps around the cyclic cover.
+All affine cancellation is concentrated in the periodization of
+their complete product.  Thus `(CTCP)` is precisely a global
+wrap-payment theorem for sums of independent symmetric interval
+steps.  Ordinary log concavity of `delta` is insufficient, as
+`(P5A.102AD5ALT)` already shows; a proof must exploit the full
+triangular-convolution origin.
+
+The periodization has a canonical outside-in image filtration.  It is
+strictly stronger than `(CTCP)`, but unlike the failed wedge cuts it
+survives exact testing.
+
+**Lemma 5A8H28UIA2CGLCPAIF (affine-image suffix
+filtration).**  Let
+
+```text
+W_hat(t)=[z^t] product_j tau_(q_j)(z)
+```
+
+be the unperiodized line coefficient and put
+
+```text
+delta_hat(t)=W_hat(t)-W_hat(t+1).
+```
+
+For `n>=0` and `0<=r<=K`, define
+
+```text
+sigma_n(r)
+ =delta_hat(nL+r)-delta_hat((n+1)L-r-1),         (P5A.102AD5ALX1ZW)
+
+D_n(r)=sum_(j>=n)sigma_j(r).                     (P5A.102AD5ALX1ZX)
+```
+
+All sums are finite.  Then
+
+```text
+d=sum_(n>=0)sigma_n=D_0.                         (P5A.102AD5ALX1ZY)
+```
+
+Equivalently, if
+
+```text
+V_n(r)=sum_(j>=n){
+          W_hat(jL+r)+W_hat((j+1)L-r)},
+```
+
+then
+
+```text
+D_n(r)=V_n(r)-V_n(r+1).                          (P5A.102AD5ALX1ZZ)
+```
+
+**Proof.**  Periodization gives
+
+```text
+delta(r)=sum_(a in Z)delta_hat(r+aL).
+```
+
+Pair the image `a=j>=0` with `a=-(j+1)`.  Symmetry of `W_hat`
+gives
+
+```text
+delta_hat(-t-1)=-delta_hat(t),
+```
+
+so the paired contribution is exactly `sigma_j(r)`.  Summing proves
+`(P5A.102AD5ALX1ZY)`.  Finally,
+
+```text
+{W_hat(jL+r)-W_hat(jL+r+1)}
+ +{W_hat((j+1)L-r)-W_hat((j+1)L-r-1)}
+ =sigma_j(r).
+```
+
+Summing over `j>=n` proves `(P5A.102AD5ALX1ZZ)`.  QED.
+
+**Target 5A8H28UIA2CGLCPAIS (outside-in affine-image suffix
+cone).**  Prove, for every triangular factor word and every `n>=0`,
+
+```text
+D_n(r)>=0,                                      0<=r<=K,
+
+D_n(0)(N_(D_n))_(R,S)
+ >=D_n(R)D_n(S),                         0<=R,S<=K. (AIS)
+```
+
+The zero suffix is interpreted as satisfying the inequalities.
+Taking `n=0` and using `(P5A.102AD5ALX1ZY)` gives the complete
+anchored cone for `d`, hence `(CTCP)` and `(CSES)`.  Thus `(AIS)` is
+an exact sufficient formulation of the arbitrary-factor global
+payment.
+
+Every proper image suffix appears to lie in a much simpler cone.
+
+**Lemma 5A8H28UIA2CGLCPDEC (decreasing profiles have the full
+anchored cone).**  If
+
+```text
+v_0>=v_1>=...>=v_K>=0,
+```
+
+then
+
+```text
+v_0(N_v)_(R,S)>=v_Rv_S,                 0<=R,S<=K. (P5A.102AD5ALX1ZZB)
+```
+
+**Proof.**  The finite fusion interval `R star_K S` always contains
+`|R-S|`, so
+
+```text
+(N_v)_(R,S)>=v_(|R-S|).
+```
+
+If `R<=S`, monotonicity gives
+
+```text
+v_0>=v_R,                 v_(S-R)>=v_S.
+```
+
+Their product proves the result.  The case `S<=R` is symmetric.  QED.
+
+Consequently the proper-suffix part of `(AIS)` reduces to the scalar
+shape assertion
+
+```text
+D_n(0)>=D_n(1)>=...>=D_n(K)>=0,             n>=1. (AIM)
+```
+
+The only remaining current payment is the central assembly
+
+```text
+A(D_0)
+ =A(D_1)+Cross(D_1,sigma_0)+A(sigma_0)>=0,        (CIP)
+```
+
+where
+
+```text
+Cross(a,b)
+ =a_0N_b+b_0N_a-ab^T-ba^T.
+```
+
+Thus `(AIM)` and `(CIP)` together prove `(AIS)`.  This separates the
+unbounded affine tail, whose current cone follows for free from
+monotonicity, from one central image payment against the complete
+outer reserve `D_1`.
+
+Proper-tail monotonicity has an exact reduction to paired slopes of
+the ordinary fusion square.  Let `p` be the unperiodized half-profile
+and write
+
+```text
+m_t=[e_t]p^2,                       b_t=m_t-m_(t+1),
+```
+
+with zero continuation beyond the support.
+
+**Lemma 5A8H28UIA2CGLCPAIMR (paired-slope reduction).**  For
+`n>=1` and `0<=r<K`,
+
+```text
+D_n(r)-D_n(r+1)
+ =sum_(j>=n){b_(jL+r)+b_((j+1)L-r-2)}.           (P5A.102AD5ALX1ZZC)
+```
+
+**Proof.**  Substitute `(P5A.102AD5ALX1ZW)` into
+`D_n(r)-D_n(r+1)`.  The first affine image contributes
+
+```text
+m_(jL+r)-m_(jL+r+1)=b_(jL+r),
+```
+
+and the reflected image contributes
+
+```text
+m_((j+1)L-r-2)-m_((j+1)L-r-1)
+ =b_((j+1)L-r-2).
+```
+
+Summing over `j>=n` proves the identity.  QED.
+
+One might try to prove `(AIM)` term by term through the following
+statement.
+
+**False target 5A8H28UIA2CGLCPAIMPS (log-concave paired
+slopes).**  If `p` is nonnegative and log concave with interval
+support, require
+
+```text
+b_(jL+r)+b_((j+1)L-r-2)>=0
+```
+
+for every `K>=1`, `L=2K+2`, `j>=1`, and `0<=r<K`.
+Lemma 5A8H28UIA2CGLC proves that every actual factor-word root has the
+stated shape, and this target would make Lemma
+5A8H28UIA2CGLCPAIMR prove `(AIM)` term by term.  It is false even on
+the actual factor-word orbit.
+
+At `K=2`, take the all-`Q=1` word of length `57`.  Thus
+
+```text
+W_hat=tau_1^57,                    L=6.
+```
+
+For `j=1,r=0`, its two slopes are
+
+```text
+b_6
+ =-387157488198605014960015208861841826244865307824488,
+
+b_10
+ = 385237793190685710001147375059495530565751049234010,
+```
+
+and hence
+
+```text
+b_6+b_10
+ =-1919695007919304958867833802346295679114258590478<0.
+                                                        (P5A.102AD5ALX1ZZF)
+```
+
+The complete outer suffix nevertheless remains strictly decreasing:
+
+```text
+D_1=(5906262631195424856966887753223081407698325515285798,
+     3625239505720587253076167891860940451512652054151306,
+     1222222698526192310662733239404483715806940170858000).
+                                                        (P5A.102AD5ALX1ZZG)
+```
+
+Therefore the summation over all affine images in
+`(P5A.102AD5ALX1ZZC)` is load-bearing.  The surviving target is the
+global inequality
+
+```text
+sum_(j>=n){b_(jL+r)+b_((j+1)L-r-2)}>=0,          n>=1, 0<=r<K,
+                                                        (AIMGS)
+```
+
+not nonnegativity of its individual summands.
+
+The global sum has an exact two-particle boundary form.  This exposes
+both the positive credit and the negative load without affine-image
+bookkeeping.
+
+**Lemma 5A8H28UIA2CGLCPAIMST (sum--separation transport
+reduction).**  Let
+
+```text
+p=sum_(a>=0)p_a e_a,                  m=p^2,
+b_t=m_t-m_(t+1),
+
+S_(n,r)={jL+r,(j+1)L-r-2:j>=n}.
+```
+
+Then
+
+```text
+b_t
+ =sum_(a+b=t)p_ap_b
+   -sum_(|a-b|=t+1)p_ap_b,                         (P5A.102AD5ALX1ZZH)
+
+D_n(r)-D_n(r+1)
+ =sum_(a,b>=0)p_ap_b{
+      1_(a+b in S_(n,r))
+      -1_(|a-b|-1 in S_(n,r))}.                    (P5A.102AD5ALX1ZZI)
+```
+
+Consequently `(AIMGS)` is exactly the assertion that the
+sum-boundary credit in `(P5A.102AD5ALX1ZZI)` pays the
+separation-boundary load.
+
+**Proof.**  The ordinary `SU(2)` product `e_ae_b` contains `e_t`
+exactly when
+
+```text
+|a-b|<=t<=a+b.
+```
+
+Taking the difference of the indicators at `t` and `t+1` gives a
+positive boundary at `t=a+b` and a negative boundary at
+`t=|a-b|-1`.  Summing with weight `p_ap_b` proves
+`(P5A.102AD5ALX1ZZH)`.  Sum this identity over the two residue rays
+in `S_(n,r)` and use Lemma 5A8H28UIA2CGLCPAIMR to obtain
+`(P5A.102AD5ALX1ZZI)`.  QED.
+
+This also closes every suffix beyond the separation width.
+
+**Corollary 5A8H28UIA2CGLCPAIMFT (far-tail
+monotonicity).**  If the interval support of `p` is `[A,B]` and
+
+```text
+nL+r>=B-A,
+```
+
+then
+
+```text
+D_n(r)>=D_n(r+1)>=0.
+```
+
+In particular, if `nL>=B-A`, the entire suffix `D_n` is nonnegative
+and decreasing.
+
+**Proof.**  The negative boundary in
+`(P5A.102AD5ALX1ZZH)` has
+
+```text
+|a-b|-1<=B-A-1.
+```
+
+Thus `b_t>=0` for every `t>=B-A`, so the ordinary square profile `m`
+is nonincreasing from that index onward.  Both indices in every
+summand
+
+```text
+m_(jL+r)-m_((j+1)L-r-1)
+```
+
+lie in this decreasing tail, proving `D_n(r)>=0`.  Equation
+`(P5A.102AD5ALX1ZZC)` or `(P5A.102AD5ALX1ZZI)` proves the adjacent
+monotonicity.  QED.
+
+In fact the entire proper-tail hierarchy reduces to its first member.
+The reduction uses log concavity only to order the signs; it does not
+assert the false termwise positivity in
+`(P5A.102AD5ALX1ZZF)`.
+
+**Lemma 5A8H28UIA2CGLCPAIM1 (single-reserve
+reduction).**  Suppose the ordinary square profile `m=p^2` is
+nonnegative and log concave with interval support.  If
+
+```text
+D_1(0)>=D_1(1)>=...>=D_1(K)>=0,                 (AIM1)
+```
+
+then
+
+```text
+D_n(0)>=D_n(1)>=...>=D_n(K)>=0
+```
+
+for every `n>=1`.
+
+**Proof.**  Fix `r`.  The `j`th coordinate contribution is
+
+```text
+c_j(r)
+ =m_(jL+r)-m_(jL+L-r-1),                        (P5A.102AD5ALX1ZZJ)
+```
+
+where the two arguments have fixed positive separation
+`L-2r-1`.  For a log-concave interval sequence, the ratio
+
+```text
+m_t/m_(t+h)
+```
+
+is nondecreasing in `t` for every fixed `h>0`.  Hence the nonzero
+sequence `c_j(r)` has at most one sign change, from negative to
+positive.  Since `D_n(r)=sum_(j>=n)c_j(r)`, nonnegativity of
+`D_1(r)` implies nonnegativity of every later suffix: deleting an
+initial negative term increases the suffix, and after the sign change
+only nonnegative terms remain.
+
+For adjacent monotonicity, put `b_t=m_t-m_(t+1)`.  Log concavity makes
+the ratios `m_(t+1)/m_t` nonincreasing, so the nonzero sequence `b_t`
+also has at most one sign change, from negative to positive.  For
+`r<K`, its arguments in
+
+```text
+D_n(r)-D_n(r+1)
+ =sum_(j>=n){b_(jL+r)+b_(jL+L-r-2)}
+```
+
+occur in the strict order
+
+```text
+jL+r < jL+L-r-2 < (j+1)L+r.
+```
+
+Thus the displayed individual `b` terms are negative first and
+positive later.  Grouping each consecutive pair preserves at most one
+negative-to-positive sign change, even though the unique mixed pair
+may have either sign.  Nonnegativity of the complete `n=1` sum,
+which is exactly the adjacent margin in `(AIM1)`, therefore implies
+nonnegativity of every later grouped suffix.  QED.
+
+For an actual factor word, `m=p^2` is the ordinary profile of the
+doubled word.  The wall-free version of Lemma
+5A8H28UIA2CGLC therefore supplies the log-concavity hypothesis in
+Lemma 5A8H28UIA2CGLCPAIM1.  Consequently all of `(AIM)` is reduced
+to the one central outer reserve `(AIM1)`.  Together with `(CIP)`,
+the remaining arbitrary-factor theorem is now the two-part
+single-reserve payment
+
+```text
+D_1 decreasing and nonnegative,
+A(D_1)+Cross(D_1,sigma_0)+A(sigma_0)>=0.         (SRP)
+```
+
+The first half of `(SRP)` has a closed one-factor recurrence.  It
+shows exactly where a squared factor obtains the reserve that repairs
+the non-invariance of the decreasing cone.
+
+For a profile `v=(v_0,...,v_K)`, put
+
+```text
+(Bv)_r=v_r-v_(r+1),                 0<=r<K,
+(Bv)_K=v_K,
+
+(Cu)_r=sum_(s=r)^K u_s.
+```
+
+Thus `B=C^(-1)`, and `v` is decreasing and nonnegative exactly when
+`Bv` is coefficientwise nonnegative.  For a reduced factor
+`0<=q<=floor(K/2)`, put
+
+```text
+F_q=(N_q^(K))^2,                    T_q=BF_qC.
+```
+
+For an ordinary profile `m`, write `D_1(m)` for its first outer
+affine suffix and
+
+```text
+u(m)=BD_1(m).
+```
+
+**Lemma 5A8H28UIA2CGLCPAIMGEN (single-reserve generator
+identity).**  Let `m'=chi_q^2m`.  Then
+
+```text
+u_r(m')
+ =sum_(s=0)^K (T_q)_(r,s)u_s(m)+rho_(q,r)(m),    (P5A.102AD5ALX1ZZK)
+```
+
+where
+
+```text
+rho_(q,r)(m)
+ =sum_(t=L-2q+r)^(L+2q-r-1)m_t,        0<=r<2q,
+
+rho_(q,r)(m)=0,                        2q<=r<=K. (P5A.102AD5ALX1ZZL)
+```
+
+In particular, the correction is an ordinary consecutive first-wall
+block with positive unit coefficients.
+
+**Proof.**  Let `Pi_K` denote affine folding from the ordinary
+character ring to the level-`K` fusion ring.  It is a ring
+homomorphism, so
+
+```text
+Pi_K(m')=F_qPi_K(m).
+```
+
+The central affine shell is
+
+```text
+sigma_0(m)_r=m_r-m_(L-r-1),
+```
+
+and Lemma 5A8H28UIA2CGLCPAIF gives
+
+```text
+D_1(m)=Pi_K(m)-sigma_0(m).
+```
+
+Consequently
+
+```text
+D_1(m')
+ =F_qD_1(m)+F_qsigma_0(m)-sigma_0(m').           (P5A.102AD5ALX1ZZM)
+```
+
+Apply `B` to the first term.  For the remaining bracket, expand
+
+```text
+chi_q^2=sum_(a=0)^(2q)chi_a
+```
+
+and use the ordinary and finite Clebsch--Gordan intervals.  Adjacent
+rows cancel every interior label.  Since `2q<=K`, the two wall
+windows do not overlap, and the uncancelled labels are exactly
+
+```text
+L-2q+r,...,L+2q-r-1
+```
+
+when `r<2q`; there is no uncancelled label when `r>=2q`.  Hence
+
+```text
+B{F_qsigma_0(m)-sigma_0(m')}=rho_q(m).
+```
+
+Substitution in `(P5A.102AD5ALX1ZZM)` proves
+`(P5A.102AD5ALX1ZZK)--(P5A.102AD5ALX1ZZL)`.  QED.
+
+The recurrence holds at every affine wall, not only the first.  Put
+
+```text
+u_n(m)=BD_n(m),
+
+rho_(n;q,r)(m)
+ =sum_(t=nL-2q+r)^(nL+2q-r-1)m_t,       r<2q,
+
+rho_(n;q,r)(m)=0,                       r>=2q.    (P5A.102AD5ALX1ZZW)
+```
+
+**Lemma 5A8H28UIA2CGLCPAIMGENA (all-wall generator
+identity).**  For every `n>=1`,
+
+```text
+u_(n,r)(m chi_q^2)
+ =sum_(s=0)^K(T_q)_(r,s)u_(n,s)(m)
+   +rho_(n;q,r)(m).                              (P5A.102AD5ALX1ZZX)
+```
+
+**Proof.**  Insert the affine-image definition of `D_n` from
+`(P5A.102AD5ALX1ZX)` and expand
+`chi_q^2=sum_(a=0)^(2q)chi_a`.  The ordinary Clebsch--Gordan intervals
+translate each image by at most `2q<=K`.  Contributions strictly
+outside the cutoff `nL` regroup into `F_qD_n(m)`.  Adjacent rows of
+`B` cancel every translated interior label.  At the cutoff, the
+uncancelled labels are exactly
+
+```text
+nL-2q+r,...,nL+2q-r-1
+```
+
+for `r<2q`, and none for `r>=2q`.  This is the calculation in Lemma
+5A8H28UIA2CGLCPAIMGEN translated from `L` to `nL`; no outer boundary
+term remains because `m` has finite support.  This proves
+`(P5A.102AD5ALX1ZZX)`.  QED.
+
+The matrix `T_q` is not nonnegative.  At `K=2,q=1`,
+
+```text
+(T_1)_(0,*)=(0,-2,-2),
+
+u_0(m chi_1^2)
+ =m_4+m_5+m_6+m_7-2u_1(m)-2u_2(m).              (P5A.102AD5ALX1ZZN)
+```
+
+Thus the consecutive wall block is load-bearing.  The exact
+arbitrary-factor shape target is now the following payment.
+
+**Target 5A8H28UIA2CGLCPAIMGP (all-wall global
+payment).**  For every doubled factor-word ordinary profile `m`,
+every reduced next factor `q`, every `n>=1`, and every `0<=r<=K`,
+prove
+
+```text
+rho_(n;q,r)(m)
+ >=sum_(s=0)^K max(-(T_q)_(r,s),0)u_(n,s)(m).    (AIMGP)
+```
+
+Assuming `(AIMGP)`, factor induction from `m=e_0` proves
+`u_n(m)>=0` simultaneously for every `n`: discard the nonnegative
+entries of `T_q` in `(P5A.102AD5ALX1ZZX)` and use the target for its
+negative entries.  Thus every `D_n` is decreasing and nonnegative,
+which proves `(AIM)` directly.  The `n=1` specialization is the
+single-reserve target above; Lemma 5A8H28UIA2CGLCPAIM1 shows that this
+specialization would already suffice, but the all-wall family has the
+closed generator recurrence.  Each local wall block pays the complete
+outer suffix beyond that wall, rather than one affine image.
+
+The exact C++ analyzer
+`character_ring_iter/analyze_su2_aim1_generator.cpp` checks the
+functional decomposition through half-level `30`.  All `1,388,680`
+residual coefficients agree with the nonnegative interval in
+`(P5A.102AD5ALX1ZZL)`, while `30,872` entries of `T_q` are negative.
+Its transcript is `certificates/su2_aim1_generator.log`.
+The independent arbitrary-word audit
+`character_ring_iter/probe_su2_aim1_generator_payment.cpp` verifies
+`1,238,541` all-wall instances of `(P5A.102AD5ALX1ZZX)` exactly and
+finds no failure of `(AIMGP)` after all positive `T_q` entries are
+discarded.  A separate length-`100` stress adds `199,616` identities
+and payments without a failure.  Its transcript is
+`certificates/su2_aim1_generator_payment.log`.  These zero failures
+are bounded evidence for `(AIMGP)`, not its proof.
+
+There is an exact cumulative line form of the same target.  It removes
+the finite fusion matrices from the word dependence and leaves only
+the commuting triangular-convolution semigroup.
+
+For fixed `q,r`, define the coefficient of the payment functional on
+ordinary square profiles by
+
+```text
+eta_(q,r)(t)
+ =1_(L-2q+r<=t<=L+2q-r-1)
+  +sum_(s=0)^K min((T_q)_(r,s),0){
+       1_(t in S_(1,s))-1_(t-1 in S_(1,s))},     (P5A.102AD5ALX1ZZP)
+```
+
+where the first indicator is zero when `r>=2q`, and for `s=K`,
+
+```text
+S_(1,K)={jL+K:j>=1}.
+```
+
+Thus `(AIMGP)` is
+
+```text
+sum_(t>=0)eta_(q,r)(t)m_t>=0.                    (P5A.102AD5ALX1ZZQ)
+```
+
+These definitions display the `n=1` member.  The all-wall member is
+obtained by replacing `L` with `nL` in the finite indicator and
+`S_(1,s)` with `S_(n,s)`; the following calculation is unchanged.
+
+Define the symmetric line functional
+
+```text
+kappa_(q,r)(0)=2eta_(q,r)(0),
+
+kappa_(q,r)(x)
+ =eta_(q,r)(|x|)-eta_(q,r)(|x|-1),       x!=0.  (P5A.102AD5ALX1ZZR)
+```
+
+**Lemma 5A8H28UIA2CGLCPAIMCL (cumulative line
+reduction).**  If `W_hat` is symmetric and
+
+```text
+m_t=W_hat(t)-W_hat(t+1),                 t>=0,
+```
+
+then
+
+```text
+2sum_(t>=0)eta_(q,r)(t)m_t
+ =sum_(x in Z)kappa_(q,r)(x)W_hat(x)
+ =(kappa_(q,r)*W_hat)(0).                        (P5A.102AD5ALX1ZZS)
+```
+
+Consequently `(AIMGP)` for an arbitrary factor word is exactly
+
+```text
+(kappa_(q,r)*product_j tau_(q_j))(0)>=0          (AIMCL)
+```
+
+for every finite multiset `q_j in {1,...,floor(K/2)}` and every
+admissible proposed next factor `q` and row `r`.
+
+**Proof.**  Substitute `m_t=W_hat(t)-W_hat(t+1)` in
+`(P5A.102AD5ALX1ZZQ)` and shift the second sum by one.  The coefficient
+of `W_hat(0)` is `eta_(q,r)(0)`, while that of `W_hat(x)` for `x>0`
+is
+
+```text
+eta_(q,r)(x)-eta_(q,r)(x-1).
+```
+
+Symmetry of `W_hat` splits this coefficient equally between `x` and
+`-x`, giving `(P5A.102AD5ALX1ZZR)--(P5A.102AD5ALX1ZZS)`.
+Finally insert `W_hat=product_j tau_(q_j)`.  QED.
+
+The functional `kappa_(q,r)` is an eventually `L`-periodic symmetric
+integer sequence with one finite first-wall defect.  Thus `(AIMCL)`
+is a pure cumulative random-walk statement: the complete convolution
+product must pay the defect at the origin.  It no longer asks for
+positivity of any individual affine image or individual factor.
+
+This statement has a finite spectral/local split.  Let
+`bar_kappa_(q,r)` be the unique `L`-periodic sequence which agrees
+with `kappa_(q,r)` outside its finite first-wall transient, and put
+
+```text
+e_(q,r)=kappa_(q,r)-bar_kappa_(q,r).
+```
+
+The sequence `e_(q,r)` has finite support.  For
+`zeta_l=exp(2pi i l/L)`, use the cyclic Fourier transform
+
+```text
+hat_kappa_(q,r)(l)
+ =sum_(a=0)^(L-1)bar_kappa_(q,r)(a)zeta_l^(-a).
+```
+
+**Lemma 5A8H28UIA2CGLCPAIMSL (spectral/local reserve
+split).**  For `W_hat=product_j tau_(q_j)`,
+
+```text
+2sum_(t>=0)eta_(q,r)(t)m_t
+ =1/L sum_(l=0)^(L-1) hat_kappa_(q,r)(l)
+       product_j beta_(q_j)(zeta_l)^2
+  +sum_(x in Z)e_(q,r)(x)W_hat(x).                (P5A.102AD5ALX1ZZT)
+```
+
+Every word-dependent factor in the finite spectral sum is
+nonnegative.
+
+**Proof.**  Split `kappa=bar_kappa+e` in
+`(P5A.102AD5ALX1ZZS)`.  Pairing the periodic part with the finite
+sequence `W_hat` is the same as pairing `bar_kappa` with the cyclic
+periodization of `W_hat`.  Fourier inversion on `Z/LZ` gives the
+first term in `(P5A.102AD5ALX1ZZT)`.  Since
+
+```text
+hat_W(l)=product_j tau_(q_j)(zeta_l)
+        =product_j beta_(q_j)(zeta_l)^2,
+```
+
+these factors are real and nonnegative.  The finite defect gives the
+last term.  QED.
+
+Neither term in `(P5A.102AD5ALX1ZZT)` is separately nonnegative.  At
+`K=2,q=1,r=0`, the periodic line functional and the spectrum of
+`tau_1` are respectively
+
+```text
+bar_kappa=(0,-2,2,0,2,-2),
+
+hat_bar_kappa=(0,-4,0,8,0,-4),
+hat_tau_1=(9,4,0,1,0,4).                         (P5A.102AD5ALX1ZZU)
+```
+
+Thus on an all-`Q=1` word of length `N`, the periodic term is
+
+```text
+{8-8*4^N}/6<0,                         N>=1.     (P5A.102AD5ALX1ZZV)
+```
+
+The finite defect term is therefore load-bearing for every
+nontrivial length.  Formula `(P5A.102AD5ALX1ZZT)` isolates the live
+uniform problem sharply: prove that the local coefficients of the
+triangular product pay the explicitly negative cyclic modes for every
+multiset of factors.
+
+The factor-word hypothesis in `(AIMGP)` cannot be replaced by log
+concavity plus an already nonnegative reserve.  At `K=3,q=1,r=0`,
+put
+
+```text
+m=(32,64,128,256,384,576,864,1296,
+   1944,1944,1944,972,486,243).
+```
+
+Its successive ratios are
+
+```text
+2,2,2,3/2,3/2,3/2,3/2,3/2,1,1,1/2,1/2,1/2,
+```
+
+so `m` is positive and log concave.  Direct evaluation gives
+
+```text
+u(m)=(0,243,1215,486),              (T_1)_(0,*)=(0,-2,-3,-4),
+
+rho_(1,0)(m)=m_6+m_7+m_8+m_9=6048,
+
+2u_1+3u_2+4u_3=6075.                             (P5A.102AD5ALX1ZZO)
+```
+
+Thus the abstract payment margin is `-27`, despite `u(m)>=0`.
+The strict adaptive-thread C++ reproducer
+`character_ring_iter/probe_su2_aim1_abstract_payment.cpp` finds this
+exact witness and records it in
+`certificates/su2_aim1_abstract_payment.log`.  Consequently a proof
+of `(AIMGP)` must use the triangular-convolution factor-word origin,
+not only the two scalar shape hypotheses.
+
+Normalized-dimension monotonicity and the old reserve are likewise
+insufficient without log concavity.  At `K=5,q=1,r=0`, put
+
+```text
+m=(19,54,85,119,153,176,195,210,221,228,
+   252,276,300,297,290,279,132,105,74).
+```
+
+Then
+
+```text
+m_t/(2t+1)
+ =(19,18,17,17,17,16,15,14,13,12,
+   12,12,12,11,10,9,4,3,2)
+```
+
+is decreasing, and direct evaluation gives
+
+```text
+u(m)=(3,7,11,147,101,31),
+(T_1)_(0,*)=(0,-2,-3,-4,-4,-4).
+```
+
+The consecutive wall block is `1125`, while the negative transform
+load is `1163`, so the payment margin is `-38`.  This profile is not
+log concave.  Together with `(P5A.102AD5ALX1ZZO)`, this isolates the
+following strictly sharper abstract route.
+
+**False target 5A8H28UIA2CGLCPAIM3 (three-condition wall
+payment).**  Let `m` be a nonnegative finite interval profile such
+that
+
+```text
+m_t^2>=m_(t-1)m_(t+1),
+(2t+3)m_t>=(2t+1)m_(t+1),                       (AIM3S)
+```
+
+at every applicable index.  If `u_n(m)>=0` coordinatewise at an
+affine wall `nL`, prove, for every reduced `q` and every row `r`,
+
+```text
+rho_(n;q,r)(m)
+ >=sum_s max(-(T_q)_(r,s),0)u_(n,s)(m).          (AIM3)
+```
+
+The implication is false, even uniformly in the level.
+
+**Proposition 5A8H28UIA2CGLCPAIM3X (three-condition
+obstruction).**  For every `K>=3`, put `L=2K+2` and
+
+```text
+m_t=min(t+1,L),              0<=t<=L+K,
+m_t=0,                       t>L+K.              (P5A.102AD5ALX1ZZO0)
+```
+
+Then `m` is log concave and normalized-dimension decreasing, and
+
+```text
+u_1(m)=(0,...,0,L).
+```
+
+Nevertheless, for `q=1,r=0`, the payment margin in `(AIM3)` is
+exactly `-1`.
+
+**Proof.**  Before the plateau, the successive ratios are
+`2,3/2,4/3,...,L/(L-1)`; they then equal `1` until the terminal
+zero.  Hence they are nonincreasing and `m` is log concave.  For
+`t<L`,
+
+```text
+(2t+3)(t+1)-(2t+1)(t+2)=1,
+```
+
+while normalized-dimension monotonicity is immediate on the plateau
+and at the terminal zero.
+
+Write `b_t=m_t-m_(t+1)`.  Every slope selected by `u_(1,s)` vanishes
+except
+
+```text
+b_(L+K)=L,
+```
+
+which belongs to the middle coordinate `s=K`.  Thus the displayed
+reserve vector follows.  Lemma 5A8H28UIA2CGLCPAIMW gives
+
+```text
+max(-(T_1)_(0,K),0)=4,                    K>=3.
+```
+
+The first-wall block is
+
+```text
+rho_(1;1,0)=m_(L-2)+m_(L-1)+m_L+m_(L+1)=4L-1.
+```
+
+Therefore its payment margin is `(4L-1)-4L=-1`.  QED.
+
+The earlier random-ratio audit found no failure in `29,315,849`
+three-condition payments because its bounded generator did not reach
+this plateau-and-cutoff family.  The exhaustive strict C++ analyzer
+`character_ring_iter/analyze_su2_aim3_exhaustive.cpp` independently
+finds the first `K=3` instance
+
+```text
+m=(1,2,3,4,5,6,7,8,8,8,8,8),
+u=(0,0,0,8),
+rho=31,                                  payment=31-4(8)=-1.
+```
+
+It records `1,108` exact payment failures in its bounded box.
+Consequently log concavity, normalized-dimension monotonicity, and an
+already nonnegative reserve do not close `(AIMGP)`.  Any proof must
+retain a stronger invariant of the triangular-convolution
+factor-word origin.
+
+The smallest surviving strengthening is to retain the ordinary
+character square itself.
+
+**Target 5A8H28UIA2CGLCPAIMSRP (log-concave-square-root
+payment).**  Let `p` be a nonnegative finite log-concave interval
+profile, put `m=p^2` in the ordinary `SU(2)` character ring, and
+assume `u_n(m)>=0`.  Prove, for every reduced next factor `q` and
+every row `r`,
+
+```text
+rho_(n;q,r)(m)
+ >=sum_s max(-(T_q)_(r,s),0)u_(n,s)(m).          (AIMSRP)
+```
+
+This target retains exactly the structure discarded by the
+counterexample `(P5A.102AD5ALX1ZZO0)`.  Every ordinary half-profile
+of a factor word is log concave by Lemma 5A8H28UIA2CGLC, and its
+doubled profile is its ordinary character square.  Hence `(AIMSRP)`
+would imply `(AIMGP)` and close the all-wall reserve induction.
+
+The exhaustive log-concave-root analyzer
+`character_ring_iter/probe_su2_aim_log_concave_roots.cpp` checks
+`2,541,825` exact instances of `(AIMSRP)` for all roots through index
+eight with coefficients at most six and all half-levels through ten,
+without a failure.  The independent structured-family stress
+`character_ring_iter/probe_su2_aim_square_root_families.cpp` extends
+constant intervals, linear ramps, tents, trapezoids, binomial rows,
+and powers through support length `120` and half-level `60`.  Every
+one of its `1,185,555` proper suffixes has nonnegative reserve, and
+all `332,416,738` exact payments pass.  These are complementary
+bounded data for the square-root target, not its proof.
+
+There is now a sharper exact reduction of `(AIMSRP)`.  For fixed
+`K,n,q,r`, let `Lambda_(n;q,r)` denote its payment functional:
+
+```text
+Lambda_(n;q,r)(m)
+ =rho_(n;q,r)(m)
+  -sum_s max(-(T_q)_(r,s),0)u_(n,s)(m).
+```
+
+For two ordinary profiles `p,z`, define the symmetric bilinear form
+
+```text
+mathcal B_(n;q,r)(p,z)
+ =Lambda_(n;q,r)(pz).                            (P5A.102AD5ALX1ZZO0A)
+```
+
+Here `pz` is ordinary `SU(2)` character multiplication.
+
+**Lemma 5A8H28UIA2CGLCPAIMLC (nested-layer
+reduction).**  Suppose
+
+```text
+mathcal B_(n;q,r)(1_I,1_J)>=0                    (AIMNI)
+```
+
+for every pair of finite integer intervals `I,J` such that `I`
+contains `J` or `J` contains `I`.  Then
+
+```text
+Lambda_(n;q,r)(p^2)>=0
+```
+
+for every nonnegative finite unimodal profile `p`.  In particular,
+`(AIMNI)` implies `(AIMSRP)`.
+
+**Proof.**  The nonempty superlevel sets of a finite unimodal profile
+are finite nested intervals.  Ordering its distinct positive levels
+gives an exact finite decomposition
+
+```text
+p=sum_i c_i 1_(I_i),                c_i>0,
+I_1 subseteq I_2 subseteq ... .
+```
+
+By bilinearity,
+
+```text
+Lambda(p^2)
+ =sum_(i,j)c_ic_j mathcal B(1_(I_i),1_(I_j))>=0.
+```
+
+Every log-concave interval profile is unimodal, proving the final
+claim.  QED.
+
+Thus the live analytic statement is the interval inequality
+`(AIMNI)`, not a nonlinear inequality on arbitrary roots.  It has an
+explicit two-dimensional kernel.  Put
+
+```text
+E_(n;q,r)(v)=sum_(t=0)^v eta_(n;q,r)(t),
+```
+
+with `E(v)=0` for `v<0`, where `eta_(n;q,r)` is the all-wall version
+of `(P5A.102AD5ALX1ZZP)`.  The ordinary Clebsch--Gordan interval gives
+
+```text
+mathcal B_(n;q,r)(e_a,e_b)
+ =E_(n;q,r)(a+b)-E_(n;q,r)(|a-b|-1).             (P5A.102AD5ALX1ZZO0B)
+```
+
+The period potential has a uniform one-dimensional positivity
+structure.  Put
+
+```text
+P(x)=sum_(v=x)^(x+L-1)E(v),             E(v)=0 for v<0.
+```
+
+**Lemma 5A8H28UIA2CGLCPAIMPP (period-potential
+positivity).**  For every `K,n,q,r`,
+
+```text
+E(v)>=0,                                             (AIMPP1)
+E(v+L)>=E(v),                                        (AIMPP2)
+
+sum_(v=0)^(x-1)E(v)+sum_(v=0)^(L-x-2)E(v)
+ <=P(0),                                  0<=x<L.   (AIMPP3)
+```
+
+Empty sums are zero.  Hence `P` is nondecreasing.
+
+**Proof.**  The result is trivial for `r>=2q`; assume `r<2q` and put
+`a=2q-r`.  Use Lemma 5A8H28UIA2CGLCPAIMW to write the payment as
+
+```text
+Lambda(m)=rho(m)-sum_s b_sD_n(s).
+```
+
+Therefore its coefficient sequence is
+
+```text
+eta(t)
+ =1_(nL-a<=t<=nL+a-1)
+  -sum_s b_s sum_(j>=n){
+       1_(t=jL+s)-1_(t=(j+1)L-s-1)}.              (P5A.102AD5ALX1ZZO0C)
+```
+
+Let `B(y)=sum_(s<=y)b_s`.  The explicit stable weights in
+`(P5A.102AD5ALX1ZZO2)` give
+
+```text
+B(y)<=a+y+1,                         0<=y<a,
+B(y)<=2a,                            y>=0.         (P5A.102AD5ALX1ZZO0D)
+```
+
+Indeed, when `r<q`, the only nonzero prefix below `a` is
+`B(y)<=2(y-r)`, and the first displayed bound follows from
+`y<=2q+r+1`.  When `q<=r<2q`, the stable support starts at
+`3r-2q+2>a`, so that prefix is zero.  The total stable weight is
+`2a` in both cases, and `0<=b<=bar b`.
+
+Now sum `(P5A.102AD5ALX1ZZO0C)`.  Before the wall, `E` is zero and
+then rises by one across the left half of the boundary block.  On the
+right half it is respectively
+
+```text
+a+y+1-B(y),                         0<=y<a,
+2a-B(y),                            a<=y<=K,
+2a-B(L-y-2),                        K<y<L,
+```
+
+where `y` is the residue after the wall.  Later periods repeat the
+last two forms, with baseline `2a`.  Bounds
+`(P5A.102AD5ALX1ZZO0D)` prove `(AIMPP1)`.  Comparing one period apart
+leaves either zero, a boundary ramp, `a-y-1` for `0<=y<a`, or
+
+```text
+2a-B(a-k-2)-(k+1)>=0
+```
+
+on the reflected left ramp; the first bound in
+`(P5A.102AD5ALX1ZZO0D)` proves the last inequality.  This gives
+`(AIMPP2)`.
+
+For `n>=2`, `E` vanishes throughout the first period, so `(AIMPP3)`
+is immediate.  For `n=1`, its first-period values are zero through
+`L-a-1` and then `1,2,...,a`.  Since `a<=K<(L-1)/2`, at most one of
+the two prefixes in `(AIMPP3)` reaches that terminal ramp, and that
+prefix is bounded by its complete sum `P(0)`.  QED.
+
+**Corollary 5A8H28UIA2CGLCPAIMPB (positive period
+blocks).**  If `J` is any interval of exactly `L` consecutive
+indices, then
+
+```text
+mathcal B_(n;q,r)(e_a,1_J)>=0
+```
+
+for every `a>=0`.
+
+**Proof.**  Write `J=[c,c+L-1]`.  If `a<c`, summing
+`(P5A.102AD5ALX1ZZO0B)` gives
+
+```text
+P(a+c)-P(c-a-1)>=0.
+```
+
+If `a>c+L-1`, it gives
+
+```text
+P(a+c)-P(a-c-L)>=0.
+```
+
+Both follow from monotonicity of `P`.  If `a=c+x` lies in `J`, the
+separation term is
+
+```text
+sum_(v=0)^(x-1)E(v)+sum_(v=0)^(L-x-2)E(v),
+```
+
+whereas the sum term is `P(a+c)>=P(0)`.  Apply `(AIMPP3)`.  QED.
+
+By bilinearity, every full period block can therefore be removed from
+either interval in `(AIMNI)` at nonnegative cost.  In a nested pair,
+one may reduce the inner width below `L` and both outer extensions
+below `L`.  Together with eventual period translation of `E`, this
+reduces the remaining proof of `(AIMNI)` to short nested rectangles
+near the first active wall.  The reduction is exact; the still-open
+step is a uniform proof of those short rectangles as `K,q,r` vary.
+
+The short nested rectangle separates without cancellation.  If
+`J subseteq I`, write
+
+```text
+I=I_- disjoint_union J disjoint_union I_+,
+```
+
+where `I_-` and `I_+` may be empty and are contiguous with `J`.
+Then
+
+```text
+mathcal B(1_I,1_J)
+ =mathcal B(1_J,1_J)
+  +mathcal B(1_(I_-),1_J)
+  +mathcal B(1_(I_+),1_J).                       (P5A.102AD5ALX1ZZO0E)
+```
+
+Thus `(AIMNI)` follows from the two sharper statements
+
+```text
+mathcal B(1_J,1_J)>=0,                           (AIMNIS)
+
+mathcal B(1_U,1_V)>=0                            (AIMNIA)
+```
+
+whenever `U,V` are adjacent disjoint intervals (so `U union V` is an
+interval).  Symmetry handles
+the two possible orders in `(AIMNIA)`.  The optimized audit finds no
+negative interval core, no negative best left or right contiguous
+extension, and no negative one-sided sum.  Hence the remaining
+uniform problem is interval self-payment `(AIMNIS)` and contiguous
+interval payment `(AIMNIA)`; neither is yet proved for unbounded
+`K,q,r`.
+
+In fact `(AIMNIA)` implies `(AIMNIS)`.  Split a nonsingleton interval
+`J=J_1 disjoint_union J_2` into adjacent nonempty intervals.  Then
+
+```text
+mathcal B(1_J,1_J)
+ =mathcal B(1_(J_1),1_(J_1))
+  +mathcal B(1_(J_2),1_(J_2))
+  +2mathcal B(1_(J_1),1_(J_2)).
+```
+
+Induction on the width and the singleton identity
+
+```text
+mathcal B(e_a,e_a)=E(2a)>=0
+```
+
+prove `(AIMNIS)`.  Thus adjacent intervals are the only live case.
+
+They have a one-dimensional form.  Put
+
+```text
+S_l(x)=sum_(v=x)^(x+l-1)E(v),
+Theta_(l,w)(z)=sum_(x=0)^(w-1)S_l(z+x).
+```
+
+For adjacent intervals
+
+```text
+U=[A,C-1],              V=[C,C+w-1],
+l=C-A,                  z=A+C=2A+l,
+```
+
+direct summation of `(P5A.102AD5ALX1ZZO0B)` gives
+
+```text
+mathcal B(1_U,1_V)
+ =Theta_(l,w)(z)-Theta_(l,w)(0).                 (P5A.102AD5ALX1ZZO0F)
+```
+
+Consequently the remaining global-payment statement is
+
+```text
+Theta_(l,w)(z)>=Theta_(l,w)(0),
+l,w>=1, z>=l, z=l (mod 2).                       (AIMPT)
+```
+
+Corollary 5A8H28UIA2CGLCPAIMPB removes full `L`-blocks from either
+adjacent interval at nonnegative cost, so it is enough to take
+`1<=l,w<L`.  Inequality `(AIMPP2)` then reduces `z` to
+`l<=z<l+L` with the same parity.  Finally, when `n>=3`, every
+potential value entering `Theta_(l,w)(0)` is before the active wall
+and hence zero.  Since `E>=0`, `(AIMPT)` is automatic.  The sole
+remaining analytic range is therefore
+
+```text
+n in {1,2}, 1<=l,w<L, l<=z<l+L, z=l (mod 2).     (AIMPTF)
+```
+
+This is finite at each level but still requires a uniform
+piecewise proof as `K,q,r` grow.
+
+There is a stronger reduction which removes `q,r` from the analytic
+part altogether.  Put
+
+```text
+I_d(X)=1+X+...+X^(d-1)
+```
+
+and, for an `(AIMPTF)` row, define the three-box profile
+
+```text
+g_h=[X^(h-1)]I_l(X)I_w(X)I_z(X),        g_h=0 outside its support.
+                                                        (P5A.102AD5ALX1ZZO0G)
+```
+
+Indeed, if
+
+```text
+tau(t)=[X^t]I_l(X)I_w(X),
+```
+
+then
+
+```text
+E(z+t)-E(t)=sum_(h=t+1)^(t+z)eta(h).
+```
+
+Multiplying by `tau(t)` and summing gives the exact crossing
+identity
+
+```text
+Theta_(l,w)(z)-Theta_(l,w)(0)
+ =sum_(h>=0)eta(h)g_h
+ =Lambda_(n;q,r)(g).                         (P5A.102AD5ALX1ZZO0H)
+```
+
+Thus the trapezoidal shift is the original payment functional
+evaluated on the coefficient sequence of three interval
+polynomials.  The parity condition has become the central nesting
+
+```text
+z=l+2A,                         0<=A<=K.          (P5A.102AD5ALX1ZZO0I)
+```
+
+For any finite profile `g`, put
+
+```text
+D_n^g(s)
+ =sum_(j>=n){g_(jL+s)-g_((j+1)L-s-1)}.           (P5A.102AD5ALX1ZZO0J)
+```
+
+The surviving three-box statement is the following pair of
+labelwise inequalities.
+
+**Target 5A8H28UIA2CGLCPAIMTBF (three-box affine
+folding).**  Let `L=2K+2`, `n in {1,2}`, `1<=l,w<L`, and
+`z=l+2A` with `0<=A<=K`.  For the profile in
+`(P5A.102AD5ALX1ZZO0G)`, prove
+
+```text
+D_n^g(0)>=D_n^g(1)>=...>=D_n^g(K)>=0,            (AIMTBF1)
+
+D_n^g(s)<=g_(nL-s),
+D_n^g(s)<=g_(nL+s-1),
+                         1<=s<=2floor(K/2).      (AIMTBF2)
+```
+
+This target implies all of `(AIMPTF)`.  To see this, assume
+`r<2q`, put `a=2q-r`, and extend the stable weights
+`bar b_s` in `(P5A.102AD5ALX1ZZO2)` over their complete finite
+support on `s>=0`.  Their prefix satisfies the sharper bound
+
+```text
+bar B(y)=sum_(s<=y)bar b_s
+ <=2min(y,a),                              y>=0, (P5A.102AD5ALX1ZZO0K)
+```
+
+and their total is `2a`.  For `r<q`, the prefix below `a` is
+`2max(y-r,0)<=2y`; for `q<=r<2q`, the stable support begins strictly
+after `a`.  Above `a`, the total-weight bound gives the assertion.
+
+Extend `D_n^g(s)` by zero for `s>K`.  Since the exact weights obey
+`0<=b_s<=bar b_s`, `(AIMTBF1)` and Abel summation give
+
+```text
+sum_s b_sD_n^g(s)
+ <=sum_s bar b_sD_n^g(s)
+ <=2sum_(s=1)^aD_n^g(s).                         (P5A.102AD5ALX1ZZO0L)
+```
+
+On the other hand, summing the two inequalities in `(AIMTBF2)` for
+`1<=s<=a` gives
+
+```text
+2sum_(s=1)^aD_n^g(s)
+ <=sum_(h=nL-a)^(nL+a-1)g_h.                     (P5A.102AD5ALX1ZZO0M)
+```
+
+The right side is exactly the wall block in
+`Lambda_(n;q,r)(g)`.  Equations
+`(P5A.102AD5ALX1ZZO0L)--(P5A.102AD5ALX1ZZO0M)`
+therefore prove `(AIMPTF)`.  The case `r>=2q` has no load and is
+immediate.
+
+This is a genuine reduction, not yet a proof of `(AIMTBF1)` or
+`(AIMTBF2)`.  It is substantially sharper than a direct piecewise
+proof of `(AIMPTF)`: the factor row `q,r` is gone, and every reserve
+label is paid separately by the two matching sites on opposite
+sides of the wall.  The strict C++ coefficient audit
+`character_ring_iter/analyze_su2_aim_trapezoid_stable_formula.cpp`
+checks the three-box coefficient formula through half-level `25`.
+Across `468,332` shapes it finds zero negative values among
+`19,911,688` adjacent reserve differences, zero failures of either
+inequality in `(AIMTBF2)`, and zero failures in `18,470,920`
+derived stable-envelope payments.  These are bounded data for the
+displayed uniform target, not its proof.
+
+More than half of `(AIMTBF)` has a short uniform proof.  Write
+
+```text
+d=l+w+z-1.
+```
+
+The three-box profile is supported on `[1,d-1]`, is symmetric about
+`d/2`, and is unimodal.  Symmetry is immediate from
+`X^(e-1)I_e(X^(-1))=I_e(X)`, and convolution preserves unimodality
+for nonnegative symmetric unimodal sequences.  Moreover,
+
+```text
+d<=4L-6,                                  (P5A.102AD5ALX1ZZO0N)
+```
+
+because `l,w<=L-1` and `z=l+2A<=2L-3`.
+
+**Lemma 5A8H28UIA2CGLCPAIMTBFT
+(decreasing-tail three-box folding).**  Target `(AIMTBF)` holds
+for every `n=2`.  It also holds for `n=1` whenever `d<=2L`.
+
+**Proof.**  Put `W=nL`.  In both stated ranges the symmetry center
+satisfies `d/2<=W`.  Hence `g` is nonincreasing from `W` onward.
+For `1<=s<=K`, set
+
+```text
+x_j=jL+s,                 y_j=(j+1)L-s-1.
+```
+
+Then
+
+```text
+x_j<y_j<x_(j+1).
+```
+
+Every point is on the decreasing tail, so every
+`g_(x_j)-g_(y_j)` is nonnegative.  Also
+`g_(y_j)>=g_(x_(j+1))`; consequently the finite sum telescopes to
+
+```text
+0<=D_n^g(s)
+  =sum_(j>=n){g_(x_j)-g_(y_j)}
+ <=g_(x_n)=g_(W+s).                              (P5A.102AD5ALX1ZZO0O)
+```
+
+Both `W-s` and `W+s-1` are at least as close to the symmetry center
+as `W+s`.  Symmetry and unimodality therefore give
+
+```text
+g_(W-s)>=g_(W+s),             g_(W+s-1)>=g_(W+s),
+```
+
+which proves `(AIMTBF2)`.
+
+Finally, for `0<=s<K`,
+
+```text
+D_n^g(s)-D_n^g(s+1)
+ =sum_(j>=n){
+    g_(jL+s)-g_(jL+s+1)
+   +g_((j+1)L-s-2)-g_((j+1)L-s-1)}.
+```
+
+Every bracket is a decreasing-tail difference and is nonnegative.
+Together with `D_n^g(K)>=0`, this proves `(AIMTBF1)`.  For `n=2`,
+the required center bound follows from
+`d/2<=2L-3<2L`; for `n=1` it is the stated hypothesis.  QED.
+
+The sole surviving part of `(AIMTBF)`, and hence of `(AIMPTF)`, is
+now
+
+```text
+n=1,                   2L<d=l+w+z-1<=4L-6.      (AIMTBFH)
+```
+
+Here the first affine pair can straddle the symmetry center, so the
+decreasing-tail telescoping argument cannot simply be reused.  The
+two-site inequalities still hold throughout the exact audit; a
+uniform proof must pay that single center-straddling pair from the
+later decreasing tail and the two matching first-wall coefficients.
+
+The monotonic half nevertheless has a uniform finite symbolic
+certificate.  Put
+
+```text
+tau(t)=[X^t]I_l(X)I_w(X),              tau(t)=0 outside its support.
+```
+
+Cancelling the two adjacent sums over the third box gives
+
+```text
+g_h-g_(h+1)=tau(h-z)-tau(h).                    (P5A.102AD5ALX1ZZO0P)
+```
+
+For `s<K`, substitution in the adjacent reserve difference gives
+
+```text
+D_n^g(s)-D_n^g(s+1)
+ =sum_(j>=n){
+    tau(jL+s-z)-tau(jL+s)
+   +tau((j+1)L-s-2-z)-tau((j+1)L-s-2)}.          (P5A.102AD5ALX1ZZO0Q)
+```
+
+At the middle label, the two affine sites are adjacent because
+`L=2K+2`, so
+
+```text
+D_n^g(K)
+ =sum_(j>=n){tau(jL+K-z)-tau(jL+K)}.             (P5A.102AD5ALX1ZZO0R)
+```
+
+Only `j<=3` can contribute: `tau` is supported through
+`l+w-2<=2L-4`, whereas `z<=2L-3`.
+
+**Proposition 5A8H28UIA2CGLCPAIMTBFM
+(uniform three-box reserve monotonicity).**  Inequality
+`(AIMTBF1)` holds for all of the parameters in Target
+5A8H28UIA2CGLCPAIMTBF.
+
+**Proof.**  The triangular coefficient has the linear-arithmetic
+formula
+
+```text
+tau(t)
+ =max(0,min(l-1,t)-max(0,t-w+1)+1).              (P5A.102AD5ALX1ZZO0S)
+```
+
+Insert this expression in
+`(P5A.102AD5ALX1ZZO0Q)--(P5A.102AD5ALX1ZZO0R)`.
+The negation of each desired inequality is then a quantifier-free
+linear-integer formula in `K,l,w,A,s`.  The exact verifier
+`character_ring_iter/verify_su2_aim_three_box_monotonicity_z3.cpp`
+asks four unbounded queries: adjacent and middle labels for
+`n=1,2`.  Z3 returns `unsat` for all four in `QF_LIA`.  This
+decision procedure is complete for the displayed formulas, and the
+source constructs them directly from `(P5A.102AD5ALX1ZZO0Q)` and
+`(P5A.102AD5ALX1ZZO0R)`.  Hence every adjacent difference and the
+terminal coordinate are nonnegative, proving `(AIMTBF1)`.  QED.
+
+Thus the only unproved part of `(AIMTBFH)` is the two-site bound
+
+```text
+D_1^g(s)<=min(g_(L-s),g_(L+s-1)),
+                         1<=s<=2floor(K/2),       (AIMTBFH2)
+```
+
+in the center-straddling range `2L<d<=4L-6`.  The audit in fact
+supports the stronger inequality
+
+```text
+D_1^g(s)<=g_(L-s-1),                              (AIMTBFH2+)
+```
+
+and symmetry/unimodality makes `(AIMTBFH2+)` imply
+`(AIMTBFH2)`, because the center lies strictly to the right of `L`.
+The direct all-parameter nonlinear SMT encoding of
+`(AIMTBFH2+)` times out with `unknown`; it is not used as evidence
+of proof.  The remaining task is therefore an analytic or
+independently checkable piecewise-quadratic certificate for this
+single stronger inequality.
+
+Consequently `(AIMNI)` is exactly nonnegativity of every rectangle
+sum of this kernel whose row and column intervals are nested.  The
+strict C++ analyzer
+`character_ring_iter/analyze_su2_aim_nested_intervals.cpp` minimizes
+the rectangle sum over every containing outer interval for each inner
+interval.  Through half-level `30`, wall `4`, and endpoint `120`, all
+`142,896,160` optimized minima are nonnegative.  This is bounded
+evidence for `(AIMNI)`, not its proof.  The same run has zero failures
+in `174,162,560` point--period interactions and in more than
+`4.29` billion derived separated-block and width-period increments,
+independently auditing Corollary 5A8H28UIA2CGLCPAIMPB and the period
+stripping reduction.
+
+The tempting fixed-total shortcut does not work.  Grouping
+`p_ap_b` at fixed `a+b` and using only their log-concavity order gives
+negative suffix coefficients already at `K=2,q=1,r=0`.  An exact
+linear feasibility check remains unsatisfiable even after allowing
+arbitrary nonnegative multiples of all reserve coordinates.  Hence a
+proof must use the nested superlevel intervals collectively; it
+cannot certify each fixed total independently.
+
+The negative transform load has a further exact simplification.  Put
+
+```text
+a_(q,r,s)=max(-(T_q)_(r,s),0),
+b_(q,r,0)=a_(q,r,0),
+b_(q,r,s)=a_(q,r,s)-a_(q,r,s-1),       s>=1.    (P5A.102AD5ALX1ZZO1)
+```
+
+**Lemma 5A8H28UIA2CGLCPAIMW (suffix-weight form).**
+Every `b_(q,r,s)` is nonnegative, and all of them vanish when
+`r>=2q`.  More precisely, they are bounded by the following stable
+weights:
+
+```text
+bar b_(q,r,s)=
+  2, r<q and r+1<=s<=2q-r-1,
+  1, r<q and 2q-r<=s<=2q+r+1,
+  1, q<=r<2q and 3r-2q+2<=s<=2q+r+1,
+  0, otherwise,                                      (P5A.102AD5ALX1ZZO2)
+```
+
+where `0<=s<=K`; thus `0<=b_(q,r,s)<=bar b_(q,r,s)`.
+If
+
+```text
+D_n(s)=sum_(j>=n){
+  m_(jL+s)-m_((j+1)L-s-1)},
+```
+
+with the usual single middle-image convention at `s=K`, then
+
+```text
+sum_s a_(q,r,s)u_(n,s)
+ =sum_s b_(q,r,s)D_n(s).                         (P5A.102AD5ALX1ZZO3)
+```
+
+**Proof.**  Since `F_q=(N_q^(K))^2` is multiplication by
+`sum_(a=0)^(2q)chi_a`, its matrix entries are
+
+```text
+(F_q)_(x,y)
+ =[2q-|x-y|+1]_+
+  -[2q-x-y]_+
+  -[2q-2K+x+y]_+.                                (P5A.102AD5ALX1ZZO4)
+```
+
+The last two positive parts cannot be simultaneously nonzero because
+`2q<=K`.  Insert `(P5A.102AD5ALX1ZZO4)` in
+
+```text
+(T_q)_(r,s)
+ =sum_(y=0)^s{(F_q)_(r,y)-(F_q)_(r+1,y)}.
+```
+
+Taking the first difference in `s`, and splitting at
+`s=r+1,2q-r,2q+r+2,3r-2q+2`, gives respectively the three nonzero
+lines of `(P5A.102AD5ALX1ZZO2)`.  The upper-wall positive part can
+only delete a terminal entry from those lines; it never changes a
+`1` to a negative value or a `2` to a value above `2`.  Hence
+`0<=b<=bar b`, and no negative row remains for `r>=2q`.
+
+Finally `u_(n,s)=D_n(s)-D_n(s+1)` for `s<K` and
+`u_(n,K)=D_n(K)`.  Abel summation gives
+`(P5A.102AD5ALX1ZZO3)`.  QED.
+
+Thus the right side of `(AIM3)` is not an opaque signed matrix
+expression: it is a short nonnegative weighted sum of decreasing
+suffix values.  The exact C++ analyzer
+`character_ring_iter/analyze_su2_aim1_payment_weights.cpp` checks the
+entry calculation through half-level `100`; all `170,425` rows have
+zero monotonicity, support, and stable-dominance failures.  This is a
+bounded audit of the displayed exact calculation, not the proof.
+
+The suffix-weight form exposes a finite three-image route.  Define
+
+```text
+p_(n,s)
+ =m_(nL+s)-m_((n+1)L-s-1)+m_((n+1)L+s).          (P5A.102AD5ALX1ZZO4A)
+```
+
+**Failed route 5A8H28UIA2CGLCPAIM3T (three-image
+decomposition).**  The proposed inequalities were
+
+```text
+D_n(s)<=p_(n,s),                                  (AIM3TC)
+
+rho_(n;q,r)(m)
+ >=sum_s b_(q,r,s)p_(n,s).                        (AIM3TB)
+```
+
+Together with `(P5A.102AD5ALX1ZZO3)`, these two inequalities would
+imply `(AIM3)`.  The cap `(AIM3TC)` says that the alternating affine tail
+is bounded by its first three image terms; the finite bound
+`(AIM3TB)` contains only the three consecutive wall blocks at
+`nL` and `(n+1)L`.  Thus it removes every unbounded tail from the
+remaining analytic inequality.
+
+The attempted finite half admitted a stronger formulation which
+removes the level-dependent transform.  Extend `bar b` by zero outside
+`0<=s<=K`.
+
+**False target 5A8H28UIA2CGLCPAIM3TS (stable finite
+three-image bound).**  Under the hypotheses of `(AIM3)`, the proposed
+inequality was
+
+```text
+rho_(n;q,r)(m)
+ >=sum_(s=0)^K bar b_(q,r,s)p_(n,s).              (AIM3TS)
+```
+
+Inequalities `(AIM3TC)` and `(AIM3TS)` would imply `(AIM3TB)`: the cap and
+`D_n>=0` give `p_(n,s)>=0`, while Lemma
+5A8H28UIA2CGLCPAIMW gives `0<=b<=bar b`; hence
+
+```text
+sum_s b_sD_n(s)<=sum_s b_sp_(n,s)
+                 <=sum_s bar b_sp_(n,s)<=rho.
+```
+
+The stable target is a finite interval-sum inequality.  Put
+
+```text
+S_d(x)=sum_(t=x)^(x+d-1)m_t,
+
+Pi_A(u,v)
+ =S_d(A+u)-S_d(A+L-v-1)+S_d(A+L+u),
+ d=v-u+1,                                         (P5A.102AD5ALX1ZZO4B)
+```
+
+and interpret `Pi_A(u,v)=0` when `v<u`.  Direct summation gives
+
+```text
+sum_(s=u)^v p_(n,s)=Pi_(nL)(u,v).                 (P5A.102AD5ALX1ZZO4C)
+```
+
+For `a=2q-r`, `(AIM3TS)` is therefore exactly
+
+```text
+S_(2a)(nL-a)
+ >=Pi_(nL)(r+1,min(K,2q+r+1))
+   +Pi_(nL)(r+1,min(K,2q-r-1)),          r<q,
+
+S_(2a)(nL-a)
+ >=Pi_(nL)(3r-2q+2,min(K,2q+r+1)),       q<=r<2q.
+                                                        (AIM3TSB)
+```
+
+For `r>=2q` both sides of the original payment vanish.  Thus the
+finite half of the global-payment problem is reduced to the two
+displayed block inequalities; it no longer contains a fusion matrix,
+an affine tail, or an arbitrary factor word.
+
+The random abstract C++ audit checks the `n=1` cap in `10,629,331`
+three-condition instances and the resulting finite bound in
+`15,923,316` instances without a failure.  Removing log concavity
+produces exact failures of both subtargets.  These are bounded data
+for `(AIM3TC)--(AIM3TB)`, not their proof.  The exhaustive obstruction
+`(P5A.102AD5ALX1ZZO0)` has `p_s=L` for every `0<=s<=K`; at
+`q=1,r=0` its stable load is `4L`, so `(AIM3TS)` and the exact
+finite bound both fail by `-1`.  Thus the zero random count was a
+sampling artifact.  The cap itself survives this obstruction (with
+equality), but it no longer supplies a route to global payment.
+
+The reserve hypothesis in `(AIM3TS)` cannot be dropped.  At `K=3`,
+`L=8`, `n=1`, `q=1`, and `r=0`, take
+
+```text
+m_t=2t+1, 0<=t<=19,                 m_t=0, t>=20.
+```
+
+This profile is log concave, is normalized-dimension decreasing with
+equality through its support, and has
+
+```text
+(p_0,p_1,p_2,p_3)=(19,25,31,37).
+```
+
+Nevertheless its reserve is `u_1=(-6,-6,-6,37)`, its boundary block
+is `64`, and the stable margin is
+
+```text
+64-2p_1-p_2-p_3=-54.
+```
+
+Thus even nonnegative three-image caps do not imply `(AIM3TS)`
+without `u_n>=0`; the reserve is a load-bearing hypothesis.
+
+Normalized-dimension monotonicity also has a closed linear-cone
+reduction.  Put `d_t=2t+1` and
+
+```text
+h_t=d_(t+1)m_t-d_t m_(t+1).                      (P5A.102AD5ALX1ZZO5)
+```
+
+For a finite profile,
+
+```text
+m_x=d_x sum_(s>=x) h_s/(d_s d_(s+1)).            (P5A.102AD5ALX1ZZO6)
+```
+
+Consequently the extreme rays of the cone `h>=0` are
+
+```text
+v_x^(s)=d_x 1_(x<=s).
+```
+
+Let
+
+```text
+Y_(q;s)(t)
+ =sum_(a=0)^(2q)
+   sum_(x=|t-a|)^min(s,t+a) d_x,
+
+H_(q;s,t)
+ =d_(t+1)Y_(q;s)(t)-d_tY_(q;s)(t+1),             (P5A.102AD5ALX1ZZO7)
+```
+
+with an empty inner sum interpreted as zero.
+
+**Lemma 5A8H28UIA2CGLCPAIMND (normalized-cone
+reduction).**  Ordinary multiplication by `chi_q^2` preserves
+normalized-dimension monotonicity if and only if
+
+```text
+H_(q;s,t)>=0                                      (AIMND)
+```
+
+for every `q,s,t>=0`.
+
+**Proof.**  Formula `(P5A.102AD5ALX1ZZO6)` decomposes every input
+with `h>=0` into the rays `v^(s)` with coefficients
+`h_s/(d_s d_(s+1))`.  Ordinary Clebsch--Gordan multiplication gives
+`Y_(q;s)(t)` as the coefficient of `chi_t` in
+`v^(s)chi_q^2`.  Applying `(P5A.102AD5ALX1ZZO5)` to that output gives
+`H_(q;s,t)`.  Linearity proves sufficiency, and applying the map to
+one extreme ray proves necessity.  QED.
+
+Although normalized-dimension monotonicity is insufficient for the
+false target `(AIM3)`, it remains an independent exact invariant of
+factor words.  The preceding reduction turns it into the explicit
+three-integer inequality `(AIMND)`; no arbitrary factor word remains
+in that subproblem.
+
+**Proposition 5A8H28UIA2CGLCPAIMNDP (normalized-dimension
+invariance).**  Inequality `(AIMND)` holds for every `q,s,t>=0`.
+Consequently every doubled factor-word ordinary profile satisfies
+
+```text
+(2t+3)m_t>=(2t+1)m_(t+1).                       (P5A.102AD5ALX1ZZO8)
+```
+
+**Proof.**  Put
+
+```text
+c=2q+1,                 n=2q,
+tau(z)=[c-|z|]_+.
+```
+
+The ordinary fusion-square kernel is
+
+```text
+(F_q)_(t,x)=tau(t-x)-tau(t+x+1).
+```
+
+Using `d_(-x-1)=-d_x`, formula `(P5A.102AD5ALX1ZZO7)` becomes
+
+```text
+Y_(q;s)(t)
+ =sum_(x=-s-1)^s d_x tau(t-x).                  (P5A.102AD5ALX1ZZO9)
+```
+
+Write `h=t-s` and `g=t+s+1`.  If `g<n`, no triangular edge is
+clipped.  Directly,
+
+```text
+(F_q)_(t,x)=d_min(t,x),                 0<=x<=s,
+```
+
+and therefore
+
+```text
+H_(q;s,t)=2sum_(x=0)^min(s,t)d_x^2>0.            (P5A.102AD5ALX1ZZOA)
+```
+
+It remains to take `g>=n`.  If `h<-n`, the complete triangular
+kernel occurs at both consecutive rows and `H=0`.  For
+`-n<=h<=n`, set
+
+```text
+B_k=sum_(z=k)^n z(c-z)
+   =(c-k)(c-k+1)(c+2k-1)/6.
+```
+
+Shifting `z=t-x` in `(P5A.102AD5ALX1ZZO9)` and deleting the first
+term when `t` is raised by one gives
+
+```text
+H_(q;s,t)
+ =tau(h)d_(t+1)d_s-4B_(h+1),             h>=0,
+
+H_(q;s,t)
+ =tau(h)d_(t+1)d_s-4B_(-h),              h<0.   (P5A.102AD5ALX1ZZOB)
+```
+
+For fixed `h` the first product increases with `t`.  The saturation
+condition `g>=n` gives
+
+```text
+t>=floor((n+h)/2),       s>=floor((n-h)/2),
+```
+
+so it is enough to use equality.  If `h>=0`, put `M=n-h`; if
+`h<0`, put `M=c+h`.  Substitution in
+`(P5A.102AD5ALX1ZZOB)` leaves the following four positive
+remainders:
+
+```text
+                         M=2m
+h>=0:  3H=(M+1)(6c+3+4m^2+4m),
+h< 0:  3H=M(2m+1)(2m-1);
+
+                         M=2m+1
+h>=0:  3H=M(M+1)(2m+3),
+h< 0:  3H=M(6c+4m^2+4m+3).                     (P5A.102AD5ALX1ZZOC)
+```
+
+In the second line `M=2m>=2`.  Hence every transition value is
+positive, while the two constant regions give zero.  This proves
+`(AIMND)`.  Lemma 5A8H28UIA2CGLCPAIMND proves invariance, and the
+initial profile `e_0` satisfies `(P5A.102AD5ALX1ZZO8)`.  Induction
+over the factors proves the final assertion.  QED.
+
+The exact C++ analyzer
+`character_ring_iter/analyze_su2_normalized_dimension_invariance.cpp`
+checks `1,527,600` coefficients for `q<=50,s<=200` and finds no
+failure.  This is a bounded audit of the unbounded calculation above,
+not the proof.
+
+Nor can that origin be used by peeling one arbitrary existing factor
+and requiring coefficientwise positivity.  Already for
+`K=2`, with existing factor `1`, proposed next factor `1`, and row
+`r=0`, the dual character functional has coefficient
+
+```text
+-2
+```
+
+at character label `12`.  After rewriting the same payment against
+the symmetric unperiodized line coefficient `W`, convolution of its
+dual by `tau_1` has coefficient `-2` at line index `6`.  Conversion
+to the normalized-margin extreme rays from
+`(P5A.102AD5ALX1ZZO6)` does not repair the peel: its weighted-prefix
+numerator is `-6` at extreme-ray index `32`.  Thus none of the
+ordinary-character, line-kernel, or normalized-margin bases makes a
+single-factor peel positive.  The exact analyzer
+`character_ring_iter/analyze_su2_aim1_payment_peeling.cpp` reproduces
+all three values; its transcript is
+`certificates/su2_aim1_payment_peeling.log`.  The surviving proof must
+retain a cumulative product reserve, not merely one factor.
+
+The square-root hypothesis is essential.  The abstract sequence
+
+```text
+m_t=2t+1,                         0<=t<=10,
+```
+
+is positive and log concave, and
+
+```text
+m_t/(2t+1)=1
+```
+
+is constant.  Nevertheless at `K=2,L=6,n=1`,
+
+```text
+D_1(0)=m_6-m_11=13,
+D_1(1)=m_7-m_10=-6.                             (P5A.102AD5ALX1ZZD)
+```
+
+Hence log concavity plus normalized-dimension monotonicity of `m`
+does not prove `(AIM)`; one must retain `m=p^2`.
+
+Nor should `(AIM)` be strengthened to log concavity of every proper
+suffix.  At `K=2`, the log-concave interval root
+
+```text
+p=(0,0,0,0,1,2,4)
+```
+
+has ordinary square
+
+```text
+m=(21,41,49,49,49,49,49,49,49,48,44,32,16)
+```
+
+and proper suffix
+
+```text
+D_1=(33,5,1),                  5^2-33*1=-8.      (P5A.102AD5ALX1ZZE)
+```
+
+Thus decreasing nonnegativity is the sharp surviving shape target.
+The exhaustive short-root C++ audit
+`character_ring_iter/probe_su2_aim_log_concave_roots.cpp` checks all
+`40,353,606` profiles with indices through eight and coefficients at
+most six, retaining all `11,297` log-concave interval roots.  Across
+their `146,861` proper suffixes it finds no negative coordinate, no
+decreasing-order failure, and no negative paired-slope term in
+`881,166` exact checks, while reproducing
+`(P5A.102AD5ALX1ZZE)`.  Its transcript is
+`certificates/su2_aim_log_concave_roots.log`.  These are bounded
+results in its bounded range; they do not survive as a termwise
+theorem at longer support.  The same exhaustive run checks
+`2,541,825` all-wall payments under the square-root hypotheses of
+`(AIMSRP)` without a failure.  The independent exact C++ audit
+`character_ring_iter/probe_su2_aim_q1_asymptotic.cpp` scans every
+all-`Q=1` length through `1000` at `K=2`.  It finds `6,181` negative
+paired-slope summands, beginning with
+`(P5A.102AD5ALX1ZZF)`, but no negative coordinate or decreasing-order
+failure in `166,500` proper suffixes.  It also checks `(AIMGP)` at
+every one of the `1000` lengths and finds no failure.  Its transcript is
+`certificates/su2_aim_q1_asymptotic.log`.  The zero suffix failures
+and zero generator-payment failures are bounded evidence, not proofs.
+
+The outside-in summation is load-bearing.  At `K=7`, the factor word
+
+```text
+[3,1,3,3,2,4]
+```
+
+has inward shell
+
+```text
+sigma_0=(-436758,969402,2025478,2629858,
+         2736734,2364376,1594432,562030).
+```
+
+Thus `sigma_0(0)<0`, and its anchored `(R,S)=(1,1)` current is
+
+```text
+-2057020486080.
+```
+
+The cross-current of `sigma_0` with `sigma_1` is also negative, at
+`(R,S)=(7,7)`:
+
+```text
+-892239916708.
+```
+
+Nevertheless both outside-in suffixes `D_1` and `D_0` are
+coefficientwise and current-positive.  Therefore neither individual
+image shells nor pairwise-positive shell assembly proves `(AIS)`;
+the complete outer tail must pay the next inward image before it is
+tested.
+
+Even the suffix currents are not monotone as images are added.  For
+the same word, the completed suffix is
+
+```text
+D_0=(571935,1628731,2437565,2875300,
+     2875298,2437559,1628725,571932),
+```
+
+and
+
+```text
+A_(D_0)(1,1)-A_(D_1)(1,1)=-1663474680672.
+                                                        (P5A.102AD5ALX1ZZA)
+```
+
+Both currents on the left are nonnegative; only their increment is
+negative.  Thus `(AIS)` cannot be proved by monotone inward growth of
+the anchored-current matrix.  It requires direct control of each
+complete remaining suffix.
+
+The strict C++ audit
+`character_ring_iter/probe_su2_affine_image_shells.cpp` independently
+constructs the line convolution, checks
+`(P5A.102AD5ALX1ZW)--(P5A.102AD5ALX1ZY)`, and tests every image
+shell, shell cross-current, and outside-in suffix.  In one million
+deterministic words through half-level eight and length six, all
+`7,930,793` suffix coordinates and all `53,243,733` suffix-current
+coordinates are nonnegative.  Individual shells have `20,852`
+negative coordinates and `7,715,872` negative currents; shell pairs
+have `72,857` negative cross-currents, and `3,421,416` successive
+suffix-current increments are negative.  The transcript is
+`certificates/su2_affine_image_shells.log`.  The suffix scan is
+bounded discovery evidence for `(AIS)`; the displayed shell values
+are exact counterexamples to the stronger local decompositions.
+The same audit checks `(AIM)` exactly on `1,623,824` adjacent
+proper-tail coordinates and finds no failure; all `1,314,136`
+proper-tail log-concavity margins also pass.  Its numerical spectral
+diagnostic finds no negative suffix eigenvalue.  These additional
+checks locate the surviving shape cone but do not prove `(AIM)`.
+For the unperiodized ordinary tensor-square multiplicities `m_t`, all
+`8,577,872` exact checks of
+
+```text
+(2t+3)m_t>=(2t+1)m_(t+1)
+```
+
+also pass.  This normalized-dimension tail bias is a candidate input
+for `(AIM)` and is now proved unboundedly in Proposition
+5A8H28UIA2CGLCPAIMNDP; the displayed count is an independent bounded
+cross-check.  It does not by itself prove `(AIM)`.
+
+This is a global-payment reduction, not yet its positivity proof.
+The matrices `G_Q` can have negative interior entries, and the
+counterexamples `(P5A.102AD5ALX1ZK)--(P5A.102AD5ALX1ZL)` show that
+neither individual wedge coordinates nor proper distance prefixes
+form an invariant positive cone.  A surviving cone must contain all
+star seeds `E_R`, be invariant under every commuting `G_Q`, and have
+nonnegative projection onto every star target `E_S`; it may aggregate
+the complete interior excursion between those two boundary visits.
+
+A diagonal sign gauge cannot supply such a cone.  Already at
+half-level `K=3`, for the factor `Q=1`, the square compound
+
+```text
+G_1=C_2(N_1^2)
+```
+
+has the exact signed triangle
+
+```text
+{0,2} --(+1)-- {0,1} --(-1)-- {1,2} --(+1)-- {0,2}.
+                                                        (P5A.102AD5ALX1ZO)
+```
+
+The product of its three edge signs is `-1`.  It is invariant under
+every diagonal conjugation by signs, so no choice of wedge
+orientations makes `G_1` entrywise nonnegative.  The exact C++
+reproducer `character_ring_iter/probe_su2_compound_gauge.cpp`
+reconstructs this cycle and audits all factors through half-level
+twelve.  Its transcript is
+`certificates/su2_compound_gauge.log`.  Thus `(CSES)` requires a
+genuinely cumulative cone, not a hidden orthant.
+
+Two natural cumulative enlargements of that orthant also fail on the
+actual factor-word orbit.  For
+
+```text
+W_R(i,j)
+ =[e_i wedge e_j] product_l G_(Q_l) E_R
+ =d_i(N_d)_(j,R)-d_j(N_d)_(i,R),
+```
+
+consider the order-cut flux
+
+```text
+F_t(W_R)=sum_(i<=t<j)W_R(i,j).                    (P5A.102AD5ALX1ZP)
+```
+
+At `K=2`, the factor word `[1,2,2,1,1]` has
+
+```text
+p=(1,3,1),                    d=p^2=(11,21,11).
+```
+
+For `R=1`,
+
+```text
+W_1(0,2)=0,                  W_1(1,2)=-32,
+F_1(W_1)=-32.                                      (P5A.102AD5ALX1ZQ)
+```
+
+Hence the cone of nonnegative unweighted cut fluxes is not even
+satisfied by all semigroup orbit vectors.
+
+Reflected central-window sums fail independently.  At `K=3`, the word
+`[2,3,1,1,2]` has
+
+```text
+p=(2,6,6,3),                 d=(85,204,204,84).
+```
+
+For `R=1`, the depth-one window contains the single interior wedge
+coordinate
+
+```text
+sum_(1<=i<j<=2)W_1(i,j)=W_1(1,2)=-204.           (P5A.102AD5ALX1ZR)
+```
+
+The exact C++ audit
+`character_ring_iter/probe_su2_factor_word_wedge_cuts.cpp` reproduces
+both examples.  In one million deterministic words through
+half-level eight and length six it finds `3,302,824` negative cut
+fluxes and `531,055` negative central-window sums, while all
+`28,993,748` star coordinates remain nonnegative.  Its transcript is
+`certificates/su2_factor_word_wedge_cuts.log`.  These data are bounded
+evidence only for the star target, while
+`(P5A.102AD5ALX1ZQ)--(P5A.102AD5ALX1ZR)` are exact route
+counterexamples.  Thus the missing cone must distinguish the star
+boundary from bulk cuts and permit negative complete interior
+windows.
+
+The affine-wall part of boundary reduction also has an exact reflected
+decomposition.  It shows why the no-wall and boundary payments cannot
+be separated.
+
+**Lemma 5A8H28UIA2CGLCPWR (wall reflection).**  Put
+
+```text
+B_u=A_(u,K).
+```
+
+If
+
+```text
+0<=h<=min(R,K-R),
+```
+
+then
+
+```text
+d_0 A_(R,K-h)
+ =d_0 sum_(u=R-h)^(R+h) B_u
+   -d_RB_h+d_KA_(R,h).                          (P5A.102AD5ALX1ZH)
+```
+
+**Proof.**  The hypotheses give `R+h<=K`, so the two fusion intervals
+are
+
+```text
+C_(R,h)=sum_(u=R-h)^(R+h)d_u,
+C_(R,K-h)=sum_(u=R-h)^(R+h)d_(K-u).
+```
+
+Substitute `B_u=d_0d_(K-u)-d_ud_K` in the first two terms on the
+right of `(P5A.102AD5ALX1ZH)`, then substitute
+`A_(R,h)=d_0C_(R,h)-d_Rd_h`.  The two copies of
+`d_KC_(R,h)` and the two copies of `d_Rd_hd_K` cancel, leaving
+`d_0{d_0C_(R,K-h)-d_Rd_(K-h)}`.  QED.
+
+The first two terms in `(P5A.102AD5ALX1ZH)` need not be nonnegative,
+even under every hypothesis of the PSD target.  At `K=3`, take
+
+```text
+d=(2,3,4,1).
+```
+
+It is log concave, its boundary-current vector is
+
+```text
+B=(0,5,2,3),
+```
+
+and
+
+```text
+N_d=
+[[2,3,4,1],
+ [3,9,8,4],
+ [4,8,9,3],
+ [1,4,3,2]]>=0.
+```
+
+Indeed its simple-current even and odd blocks are respectively
+
+```text
+[[3,7],[7,17]],                 [[1,-1],[-1,1]],
+```
+
+both positive semidefinite.  Nevertheless, at `R=h=1`,
+
+```text
+d_0(B_0+B_1+B_2)-d_1B_1=2*7-3*5=-1.            (P5A.102AD5ALX1ZI)
+```
+
+The compensating term is load-bearing:
+
+```text
+d_KA_(1,1)=9,
+d_0A_(1,2)=-1+9=8.
+```
+
+Thus wall reduction cannot prove the mixed boundary block and the
+no-wall current separately.  It must retain precisely their coupled
+sum in `(P5A.102AD5ALX1ZH)`.
+
+The payment cannot be made shell by shell.  At `K=2`, take
+
+```text
+d=e_0,                    Q=1,                 R=2.
+```
+
+Then `m=2`, `P=T=1`, and `A=diag(0,1,1)`.  The three individual
+summands
+
+```text
+P A_(K-t,R)-T A_(t,R),                 t=0,1,2,
+```
+
+are
+
+```text
+(1,0,-1).
+```
+
+Their complete cumulative payment is zero, as required, but the last
+shell is negative.  The exact PSD audit through coefficients `6` and
+`K=8` finds `99,354` negative local summands among `683,748` checks,
+while all `20,370` complete insertion payments are nonnegative.
+Therefore a proof of `(P5A.102AD5ALX1ZB)` must retain the entire
+prefix--suffix block; pointwise shell positivity is false.
+
+Nor can the shells be accumulated in their displayed outside-in order.
+At `K=4`, with
+
+```text
+d=e_0,                    Q=2,                 R=1,
+```
+
+the five local payments have running sums
+
+```text
+(0,-1,-1,0,0).
+```
+
+The same exact audit finds `48,112` negative running sums among the
+`683,748` partial checks.  Thus neither the individual shells nor
+their proper initial prefixes are nonnegative; only the complete
+paired block in `(P5A.102AD5ALX1ZB)` is the surviving statement.
+
+Pairing shell `t` with its mirror `m-t` is also false.  At `K=3`,
+
+```text
+d=(1,1,1,0),              Q=1,                 R=1,
+```
+
+the self-mirror shell `t=1` has payment `-1`.  The audit finds
+`25,598` negative mirror-pair payments among `419,389` checks.
+Therefore the complete block cannot be replaced by this fixed
+involution either.
+
+It is tempting to retain only the order-two part of the spectral
+hypothesis.  Write
+
+```text
+C_(R,S)=(N_d)_(R,S),
+A_(R,S)=d_0C_(R,S)-d_Rd_S.
+```
+
+**Disproved target 5A8H28UIA2CGLCP2 (diagonal-first principal
+obstruction).**
+Under the shape and boundary hypotheses of Target
+5A8H28UIA2CGLCP, assume every anchored diagonal is nonnegative:
+
+```text
+A_(R,R)>=0,                              0<=R<=K.
+```
+
+If some off-diagonal `A_(R,S)` is negative, choose the smallest radius
+`R` occurring in such a pair.  Prove
+
+```text
+C_(1,1)C_(R,R)-C_(1,R)^2<0.                      (P5A.102AD5ALX1R)
+```
+
+Had it held, this target would have proved 5A8H28UIA2CGLCP using only
+the `2 by 2` principal minors of `C`.  Positive semidefiniteness first
+gives
+
+```text
+A_(R,R)=C_(0,0)C_(R,R)-C_(0,R)^2>=0
+```
+
+and then forbids `(P5A.102AD5ALX1R)`.  It supplies a concrete
+radius-induction order rather than asking directly for entrywise
+positivity of the complete Schur complement.
+
+The proposed order-two reduction is false.
+
+**Proposition 5A8H28UIA2CGLCP2F (order-three obstruction).**  At
+`K=5`, put
+
+```text
+d=(2,5,6,5,4,0).
+```
+
+Then `d` is nonnegative and log concave with interval support, every
+boundary current and every anchored diagonal is nonnegative, and all
+principal minors of `C=N_d` of order at most two are nonnegative.
+Nevertheless
+
+```text
+A_(1,4)=2*9-5*4=-2,                              (P5A.102AD5ALX1S)
+det C_[{0,1,3},{0,1,3}]=-3.                      (P5A.102AD5ALX1T)
+```
+
+**Proof.**  The positive-support log-concavity margins are `13`, `11`,
+and `1`; the terminal margin is `16`.  Since `d_5=0`, every boundary
+current is nonnegative.  Direct finite interval summation gives
+
+```text
+C_(1,4)=9,
+C_[{0,1,3},{0,1,3}]
+ =[[2,5,5],
+   [5,13,15],
+   [5,15,22]].
+```
+
+The anchored diagonal values at radii zero through five are
+
+```text
+(0,1,8,19,10,4).
+```
+
+Exact enumeration of the fifteen principal minors of order two gives
+minimum zero.  The two displayed calculations are `-2` and `-3`.
+QED.
+
+Thus the full PSD hypothesis in Target 5A8H28UIA2CGLCP cannot be
+replaced by anchored diagonals or by every principal minor of order
+two.  A valid proof must use higher Schur-complement constraints.
+
+Positive semidefiniteness cannot be replaced by its diagonal
+Cauchy--Schwarz consequences.  At `K=5`,
+
+```text
+d=(1,2,3,3,0,0)
+```
+
+is log concave, has every diagonal and every simple-current boundary
+current nonnegative, but
+
+```text
+d_0(N_2d)_3-d_2d_3=-1.                         (P5A.102AD5ALX2)
+```
+
+Thus the full spectral square condition, rather than only the diagonal
+principal minors, is load-bearing in the boundary reduction.
+
+The complementary statement must retain the incoming boundary cone.
+
+**Target 5A8H28UIA2CGLCI (square boundary insertion).**  Under the
+hypotheses of Target 5A8H28UIA2CGLCB, put
+
+```text
+p'=N_Qp,                  d'=(p')^2=N_Q^2d.
+```
+
+Prove
+
+```text
+B_R(d')>=0,                         0<=R<=K.       (P5A.102AD5ALY)
+```
+
+The square origin is preserved tautologically, and Lemma
+5A8H28UIA2CGLC preserves log concavity under both applications of
+`N_Q`.  Starting with `p=e_0`, Targets 5A8H28UIA2CGLCI and
+5A8H28UIA2CGLCB therefore prove the all-radius current cone after an
+arbitrary sequence of squared irreducible factors.  This is exactly
+the factor-insertion form needed by the finite global-payment step;
+neither target is asserted here without proof.
+
+Target 5A8H28UIA2CGLCPI implies this insertion target directly, since
+`d=p^2` gives `N_d=N_p^2>=0`.  The direct square formulation remains
+useful if the stronger PSD insertion statement is proved only on the
+actual nonnegative square-root orbit.
+
+There is a tempting sufficient replacement for the insertion target
+which removes the half-profile from the transport step.  It is useful
+for exposing the residual algebra, but is false.
+
+**False target 5A8H28UIA2CGLCT (log-concave full-to-boundary
+transport).**
+Let `d` be nonnegative and log concave with interval support.  Assume
+its complete anchored cone
+
+```text
+d_0(N_Rd)_S-d_Rd_S>=0,             0<=R,S<=K.    (P5A.102AD5ALY2)
+```
+
+For `d'=N_Q^2d`, prove
+
+```text
+B_R(d')>=0,                         0<=R<=K.       (P5A.102AD5ALY3)
+```
+
+Were this statement true, it and Target 5A8H28UIA2CGLCB would imply
+Target 5A8H28UIA2CGLCI on the factor-word orbit.  The boundary reduction
+would give the full cone before an insertion, the transport statement
+would give the new boundary cone, and Lemma 5A8H28UIA2CGLC would give
+the new log-concavity.  The following exact counterexample rules out
+this shortcut.
+
+**Proposition 5A8H28UIA2CGLCTF (generic transport counterexample).**
+At `K=4`, put
+
+```text
+d=(2,3,4,4,1).
+```
+
+Then `d` is positive and log concave and has the complete anchored
+cone, but
+
+```text
+N_1^2d=(9,23,29,24,9),
+B_3(N_1^2d)=9*23-24*9=-9.                       (P5A.102AD5ALY3F)
+```
+
+**Proof.**  The three internal log-concavity margins are `1`, `4`, and
+`12`.  Direct finite interval summation gives
+
+```text
+d_0N_d-dd^T
+ =[[0, 0, 0, 0, 0],
+   [0, 9,10, 6, 5],
+   [0,10,12, 6, 4],
+   [0, 6, 6, 2, 2],
+   [0, 5, 4, 2, 3]],
+```
+
+so every incoming anchored current is nonnegative.  Two applications
+of the radius-one interval transform give the displayed output, whose
+radius-three boundary current is `-9`.  QED.
+
+This profile is not a counterexample to Target 5A8H28UIA2CGLCPI.  At
+the folded mode `theta=pi/5`, its multiplication eigenvalue is
+
+```text
+2+3phi-4phi-1=1-phi=(1-sqrt(5))/2<0,
+```
+
+where `phi=(1+sqrt(5))/2`.  Hence `N_d` is not positive semidefinite.
+
+Thus at least the PSD spectral consequence of the
+half-profile/square-orbit hypothesis is load-bearing even when the
+incoming full current cone and log concavity are both retained.  The
+induction must use Target 5A8H28UIA2CGLCPI or prove
+5A8H28UIA2CGLCI directly; it cannot pass through
+5A8H28UIA2CGLCT.
+
+For comparison, dropping log concavity from the already false generic
+transport statement gives a smaller counterexample.  At `K=4`,
+
+```text
+d=(1,0,0,1,0)
+```
+
+has the complete anchored cone: for `R!=3` this is immediate from
+nonnegativity, while for `R=3` the current row is
+
+```text
+(0,1,1,0,0).
+```
+
+But
+
+```text
+N_1^2d=(1,2,3,3,1),
+B_3(N_1^2d)=1*2-3*1=-1.                         (P5A.102AD5ALY4)
+```
+
+Thus full-cone-to-boundary transport is not a purely order-theoretic
+property either.
+
+The false transport statement nevertheless has an exact
+positive-residual reduction, which identifies the information lost by
+discarding the square root.  Let
+`J=N_K` be simple-current reflection and put
+
+```text
+H=N_Q^2,                 d'=Hd,
+v=d_0Jd-d_Kd,            w=Hv.                   (P5A.102AD5ALY5)
+```
+
+**Lemma 5A8H28UIA2CGLCTR (boundary residual transport).**  If `d`
+has the complete anchored cone, then `v>=0` and `w>=0`.  Moreover,
+
+```text
+d_0 B_R(d')=d'_0w_R-d'_Rw_0,          0<=R<=K.   (P5A.102AD5ALY6)
+```
+
+Consequently the false statement 5A8H28UIA2CGLCT is equivalent to the single
+likelihood-ratio family
+
+```text
+w_R/d'_R>=w_0/d'_0
+```
+
+where zero denominators are interpreted by cross multiplication.
+
+**Proof.**  The vector `v` is exactly the `R=K` row of the anchored
+current cone of `d`, hence is nonnegative.  The matrix `H` is
+nonnegative, so `w=Hv>=0`.  Since `H` commutes with `J`,
+
+```text
+w_R=d_0d'_(K-R)-d_Kd'_R,
+w_0=d_0d'_K-d_Kd'_0.
+```
+
+Therefore
+
+```text
+d'_0w_R-d'_Rw_0
+ =d_0{d'_0d'_(K-R)-d'_Kd'_R},
+```
+
+which is `(P5A.102AD5ALY6)`.  QED.
+
+The residual comparison can be made independent of `d'`.  If
+`d_0=d_K`, the two boundary orientations in the full cone force
+`d=Jd`, hence `d'=Jd'` and every new boundary current vanishes.  If
+`d_0>d_K`, put `lambda=d_K/d_0`.  From `(P5A.102AD5ALY5)`,
+
+```text
+Jv+lambda v=d_0(1-lambda^2)d.
+```
+
+Applying `H` and substituting in `(P5A.102AD5ALY6)` gives
+
+```text
+d'_0w_R-d'_Rw_0>=0
+ iff
+w_Kw_R-w_0w_(K-R)>=0.                           (P5A.102AD5ALY7)
+```
+
+Thus the false transport target is a reverse simple-current boundary
+inequality for the smoothed residual `w=Hv`.
+
+Neither nonnegativity nor connected support of the residual suffices
+for `(P5A.102AD5ALY7)`.  At `K=3`,
+
+```text
+v=(0,1,0,0),                 N_1^2v=(1,3,2,1),
+1*2-1*3=-1.                                      (P5A.102AD5ALY8)
+```
+
+Therefore the proof must retain the algebraic linkage
+`v=d_0Jd-d_Kd` to a log-concave full-cone profile; it cannot replace
+that linkage by an abstract zero-anchored interval-support vector.
+
+This lemma removes the half-profile and every compound coordinate from
+the insertion step.  What remains is to prove that one finite
+fusion-square transform preserves the displayed anchored ratio order
+for the special residual `v`; arbitrary pairs of nonnegative vectors
+are not asserted to have this property.
+
+The incoming boundary hypothesis cannot be replaced by log concavity
+of both the half-profile and its square.
+
+**Proposition 5A8H28UIA2CGLCJF (log-concave square-reflection
+counterexample).**  At half-level `K=20`, put
+
+```text
+p=(0,0,0,0,0,0,0,0,0,47,250,68,13,1,0,0,0,0,0,0,0).
+```
+
+Then `p` is log concave with interval support, its finite fusion square
+is
+
+```text
+d=(69503,128797,141825,143547,143641,143641,143641,
+   143641,143641,143641,143641,143641,143641,143641,
+   143641,143640,143614,143309,141041,127614,68892),
+```
+
+and `d` is log concave, but
+
+```text
+B_1(d)=69503*127614-128797*68892=-3527082<0.
+                                                        (P5A.102AD5ALY0)
+```
+
+**Proof.**  On the positive support of `p`, its three internal
+log-concavity margins are `59304`, `1374`, and `101`.  Direct finite
+fusion interval summation gives the displayed `d`; its minimum
+adjacent log-concavity margin is zero.  The final displayed integer
+calculation is the radius-one boundary current.  QED.
+
+The strict exhaustive C++ reproducer
+`character_ring_iter/probe_su2_finite_square_profile_cone.cpp` checks
+every nonzero profile with coefficients in `{0,1,2,3}` through `K=6`.
+It finds `304` negative currents among `336,267` currents whose fusion
+square is log concave.  However it finds no negative current among
+`138,650` log-concave no-affine-wall coordinates, and no negative
+current among the `330,945` coordinates of the `10,368` log-concave
+squares satisfying every boundary inequality `(P5A.102AD5ALW)`.
+The independent coefficient range `{0,1,2}` through `K=9` adds
+`808,700` no-wall coordinates and `1,812,218` boundary-admissible
+coordinates, again without a negative value.  These are bounded
+discovery results for Target 5A8H28UIA2CGLCB, not its proof.
+
+The companion exact audit
+`character_ring_iter/probe_su2_current_cone_invariance.cpp` first
+shows why the square hypothesis cannot be omitted:
+
+```text
+d=(2,3,0),                 N_1^2d=(5,11,5),
+5*(5+11+5)-11^2=-16.                              (P5A.102AD5ALZ)
+```
+
+Thus even log concavity plus the complete incoming current cone is not
+stable under square-factor insertion for abstract profiles.  In
+contrast, the square-profile audit finds no negative full current among
+the `330,945` boundary-admissible coordinates already recorded above.
+Even the abstract boundary cone alone is not invariant.  At `K=3`,
+
+```text
+d=(1,3,0,0),                 N_1^2d=(4,10,7,3),
+4*7-10*3=-2.                                      (P5A.102AD5ALZ0)
+```
+
+The input is log concave and boundary-admissible.  Hence the
+character-square origin in Target 5A8H28UIA2CGLCI is load-bearing; the
+target is not a generic invariant-cone statement for nonnegative
+profiles.
+
+The boundary payment is not local in the reflected coefficient ratios.
+At `K=3`,
+
+```text
+p=(1,2,3,0),                 p^2=(14,29,31,12)
+```
+
+and `p` is log concave, but the middle adjacent reflection margin is
+
+```text
+d_1^2-d_2^2=29^2-31^2=-120.                    (P5A.102AD5ALY1)
+```
+
+The required cumulative radius-two boundary current is nevertheless
+
+```text
+d_0d_1-d_2d_3=14*29-31*12=34.
+```
+
+Thus even inside the positive part of the now-disproved broad
+reflection claim, multiplying nonnegative adjacent ratio margins is a
+false shortcut.  Nor is the cumulative boundary sequence unimodal:
+for this same profile its values at radii zero through three are
+
+```text
+(0,86,34,52),
+```
+
+whose increments `(86,-52,18)` recross from negative to positive.
+
+Among `58,069` insertion tests on the `10,368`
+boundary-admissible log-concave squares through `K=6`, the audit finds
+neither a new negative boundary current nor a negative full current.
+The `{0,1,2}` audit through `K=9` adds `213,330` such insertions, again
+without a failure.  This is bounded evidence for Target
+5A8H28UIA2CGLCI together with Target 5A8H28UIA2CGLCB, not an
+induction proof.
+
+After Proposition 5A8H28UIA2CGLCTF exposed coefficient `4` as the first
+missed generic-transport obstruction, the independent parallel C++
+audit
+`character_ring_iter/probe_su2_square_boundary_insertion_extended.cpp`
+exhausted all `2,441,392` nonzero character-positive half-profiles with
+coefficients in `{0,1,2,3,4}` through `K=8`.  It retained `926,559`
+log-concave boundary-admissible fusion squares and checked all
+`7,138,109` nontrivial irreducible-factor insertions.  None produced a
+negative boundary current.  Thus the actual square-orbit target
+survives exactly where the generic replacement first fails; this is
+still bounded evidence for Target 5A8H28UIA2CGLCI, not its proof.
+
+The deterministic exact stress audit
+`character_ring_iter/probe_su2_log_concave_square_boundary.cpp`
+constructs `1,000,000` log-concave integer half-profiles through
+`K=30`.  All their fusion squares are log concave.  It finds `262`
+negative boundary currents, including Proposition
+5A8H28UIA2CGLCJF, so the broad reflection failure is not isolated.
+After retaining only the `999,748` boundary-admissible inputs and
+inserting one independently selected nontrivial irreducible factor in
+each, it finds no negative output boundary current.  This is bounded
+evidence for Target 5A8H28UIA2CGLCI, not its proof.
+Every one of those `999,748` boundary-admissible fusion squares also
+satisfies the complete anchored cone, giving the same large-rank
+bounded evidence for Target 5A8H28UIA2CGLCB.
+Independently, `26,258` generated profiles satisfy both log concavity
+and the full anchored cone; none produces a negative boundary after
+its selected square-factor insertion.  The smaller exhaustive range
+through `K=6` likewise has no failure.  Proposition
+5A8H28UIA2CGLCTF shows that this bounded evidence was misleading:
+coefficient `4` at half-level `K=4` already disproves the generic
+transport statement.  That counterprofile is not PSD, so it does not
+test Target 5A8H28UIA2CGLCPI.
+
+The exact arbitrary-profile audit
+`character_ring_iter/probe_su2_psd_boundary_reduction.cpp` exhausts
+coefficients in `{0,1,2,3}` through `K=6`.  Among `318`
+log-concave boundary-admissible profiles, `66` fail the complete
+anchored cone, but none of those `66` has a positive-semidefinite
+multiplication matrix.  The independent range `{0,1,2}` through `K=9`
+finds eight further shape-and-boundary failures and again no
+positive-semidefinite failure.  Every PSD decision uses all principal
+minors and exact fraction-free integer elimination.  These are bounded
+results for Target 5A8H28UIA2CGLCP, not its proof.
+
+The sharper exact audit
+`character_ring_iter/probe_su2_psd_boundary_obstruction.cpp` extends
+the range to coefficients in `{0,1,2,3,4,5,6}` through `K=8`.  It
+finds `3,666` boundary-admissible log-concave profiles with a negative
+anchored current.  Of these, `3,630` have a negative principal minor
+of order two, while the remaining `36` first fail at order three,
+including Proposition 5A8H28UIA2CGLCP2F.  None has a
+positive-semidefinite multiplication matrix.  The same audit retains
+`3,320` PSD boundary-admissible profiles and checks their `20,370`
+irreducible-square insertions, with no output boundary failure.  These
+insertions also give `1,222,078` output anchored-current coordinates,
+with no failure of the stronger full-cone insertion Target
+5A8H28UIA2CGLCPT.  The audit checks the wall-reflection identity
+`(P5A.102AD5ALX1ZH)` at `56,997` coordinates with no mismatch.  Its
+four negative mixed-boundary subpayments, beginning with
+`(P5A.102AD5ALX1ZI)`, independently confirm that the compensating
+no-wall term cannot be discarded.  It also checks `23,690` residual
+columns and finds `4,191` failures of the discarded ratio-unimodality
+shortcut, while `385` profiles fail the discarded natural
+nonnegative-`LDL^T` shortcut.  These are bounded results for
+Targets 5A8H28UIA2CGLCP, 5A8H28UIA2CGLCPI, and
+5A8H28UIA2CGLCPT, and exact evidence that the full PSD hypothesis and
+the coupled wall payment are load-bearing, not proofs.
+
+The independent deterministic signed-root audit
+`character_ring_iter/probe_su2_signed_square_boundary_stress.cpp`
+tests the PSD hypothesis directly rather than recognizing it through
+principal-minor elimination.  It generates `10,000,000` signed
+integer profiles `q` through `K=24`, forms `d=q^2`, and uses
+
+```text
+N_d=N_q^2>=0.
+```
+
+Among them, `552,952` squares are coefficientwise nonnegative,
+log-concave, and boundary-admissible.  None has a negative anchored
+current.  Their `3,789,146` irreducible-square insertions also produce
+no negative boundary current and no negative anchored current.  This
+substantially larger bounded test is evidence for Targets
+5A8H28UIA2CGLCP, 5A8H28UIA2CGLCPI, and the direct full-cone transport
+Target 5A8H28UIA2CGLCPT, not their proof.
+
+The deterministic exact factor-word audit
+`character_ring_iter/probe_su2_factor_word_plucker.cpp` constructs
+`5,000` arbitrary irreducible-factor words through `K=24`.  It checks
+`1,214,136` complete anchored currents and their independent
+Pluecker expansions, with no current failure and no identity mismatch.
+On the first `1,000` words it also constructs the complete
+one-particle word matrix by successive irreducible fusion, checks all
+`245,401` entries against `N_p`, and checks the same number of star
+boundary coefficients in `(P5A.102AD5ALX1ZN)`, with no mismatch.
+The independently accumulated cyclic triangular products check all
+`14,267` gradient coordinates and all `245,401` kernel and current
+coordinates in `(P5A.102AD5ALX1ZT)--(P5A.102AD5ALX1ZV)`, again
+with no mismatch.
+In the same profiles it finds `48,525` column-pair sign conflicts,
+`108,884` negative ordinary-gap groups, `1,296` negative cyclic-gap
+groups, and two negative proper cyclic-gap prefixes.  These are
+bounded evidence for the complete payment and exact counterevidence
+to the discarded termwise and proper-prefix routes, not an unbounded
+proof.
+
+Nor can the no-wall part be reduced to diagonal Cauchy--Schwarz
+currents alone.  The abstract log-concave profile
+
+```text
+c=(1,2,3,0)
+```
+
+has positive diagonal current at radius one, but at `(R,S)=(1,2)`
+
+```text
+c_0(c_1+c_2+c_3)-c_1c_2=5-6=-1.                 (P5A.102AD5ALZ1)
+```
+
+Thus the positive-definite square origin remains load-bearing even
+before the affine wall.
+
+The source-bound square-profile transcript is
+`certificates/su2_finite_square_profile_cone.log`.  These bounded
+counts locate the obstruction; the displayed integer calculation is
+the exact counterexample.  Therefore the surviving theorem must retain
+the structured profile
+
+```text
+p=N_(Q_1)...N_(Q_m)e_0
+```
+
+or an equally strong word-specific invariant.
+The source, executable, and transcript SHA-256 identities are
+
+```text
+2c28ebc49b83a91c7619480035e4f4a5d59aed6ac648a070c607cf4fee83653c
+f1a026133a941eae4b6726ef91ebce6b05d5359200b0eab92033311753fa3622
+8ad229301aa4df91929617b8966fb658342839420785c30b119e2714c7d018fd.
+```
+
+The insertion audit transcript is
+`certificates/su2_current_cone_invariance.log`; its source, executable,
+and transcript SHA-256 identities are
+
+```text
+56bc93f2eee0ee83466a2bccbb725d51844896711c937482fe978d227c7ba90d
+6d5df806665d235d9f6ef78799a0e4b96549f516e308d3f7a01b08220fb8d3dd
+4c9b0522f641e4a0c3d7129b0fe7b6019208f5cd04d5bbdf6d99f5b67a2f997c.
+```
+
+The large boundary stress transcript is
+`certificates/su2_log_concave_square_boundary.log`; its source,
+executable, and transcript SHA-256 identities are
+
+```text
+6a002b41190918febf08df03ad6bdb612a601b0b9bf8dfe53212f6e3a74fb108
+3dcc74b4df3ec6443dcfd03f86f5bdf41552c06addea8ff000f0eda9d53d570c
+e82cf13ea7276348aabef0adaac128976511b95fd77e295e285dc2db43841aee.
+```
+
+The PSD boundary-reduction transcript is
+`certificates/su2_psd_boundary_reduction.log`; its source, executable,
+and transcript SHA-256 identities are
+
+```text
+a124509302cde626516c813ba090a0c49430778cbc1fba3c9897e6b1524432eb
+2da186ba2f6e9d77dc62e9ce822f414f53402c79f0fddcf66d987ad66ea9d361
+90ee7f235f390463ce207b60d2a8b5a7b4090b1341b3428341a18da3c3efb8d6.
+```
+
+The expanded PSD obstruction and insertion transcript is
+`certificates/su2_psd_boundary_obstruction.log`; its source,
+executable, and transcript SHA-256 identities are
+
+```text
+d1388db5bf674fde2419e906f77237c28b7930b168f6d0c00c756e921af8068e
+5cb94cd62179940e12c8435c6ce158abfde26ad384bbe7ff46e96744d357de6f
+3027c47a47340da2442f0a6bef90dbb20e19a961f1572591e9ad98a4adb25169.
+```
+
+The factor-word Pluecker transcript is
+`certificates/su2_factor_word_plucker.log`; its source, executable,
+and transcript SHA-256 identities are
+
+```text
+e72d899a4ff6769246f09bfa964988bf15d34d0a1e940db0f85cdedb8dd520b0
+a100e531c694043846d3598284c7b931cceae6072a10a3f169133f3b0478ba13
+eec6e6242a29da117c542db0c1bde307ba3b996509be95bf9d1941c9672448f7.
+```
+
+The compound-square sign-gauge transcript is
+`certificates/su2_compound_gauge.log`; its source, executable, and
+transcript SHA-256 identities are
+
+```text
+2e292dc6c66e4af3e0d4cf61da476fbe43ce283f2f06f08ed21ada7ae5ebdf4c
+9e9644f0b33e0a620e57cbba2386e07aefbde57a149987d668be87ac3f16ff44
+d9a183fa9cdc6fa2f4ca1073894ce9c1783a5afdaeb02a9d6c3c12de8bf20ad3.
+```
+
+The factor-word wedge-cut transcript is
+`certificates/su2_factor_word_wedge_cuts.log`; its source,
+executable, and transcript SHA-256 identities are
+
+```text
+6fa65091220b3c0953565b48400b70f73a5f4cdea77507169fbb7d0d1bdfbc57
+90c7db626600a7769bb5f7b9824bdb38ef2deb58d853b2de224dfdf081151cfb
+a77b3884b77d9114fd26e0734e35cd5e415f2c59ac33d320369b4d81a0c41181.
+```
+
+The affine-image suffix transcript is
+`certificates/su2_affine_image_shells.log`; its source, executable,
+and transcript SHA-256 identities are
+
+```text
+d3edc8150fb5b4c3cb8abea9899696f2d061b8d1e380a1d0cfa67a0d8b754eb1
+20705d6362dbe949a682940a975db623030cbda9020da9b31f23985f9b4e0951
+c6291b168d5c13c9cca6501b56c4f28db2f338a8292de9349c3e233385b3142d.
+```
+
+The log-concave-root proper-tail transcript is
+`certificates/su2_aim_log_concave_roots.log`; its source, executable,
+and transcript SHA-256 identities are
+
+```text
+4e6a78cd80fdf09e083cd238805e01e515f8c8ae7862048e5687277b4ce817e1
+7c59df8fe6ab48e02a55448353b3a2ebd242ca1b6cdff005fd1044ce4f5bc55c
+0918041c82cb0081fd9d92979a6588d6fc94cf69def95768bb15ebe53e365b0f.
+```
+
+The structured square-root payment transcript is
+`certificates/su2_aim_square_root_families.log`; its source,
+executable, and transcript SHA-256 identities are
+
+```text
+c47faf3c30c25087b846f03b4137f1722cfbb9ab07f19264b9e1e25f22b0b9da
+f1e214059d54f9c9a07e9b68bfe51af0d4b0f513ca91e0bda9203953ba4fa853
+e78a8d6ce7b9bca05a32334b2fb6eca3b297d3ec1fc259300df60a2e83e5973d.
+```
+
+The nested-interval payment transcript is
+`certificates/su2_aim_nested_intervals.log`; its primary source,
+included coefficient source, executable, and transcript SHA-256
+identities are
+
+```text
+dc70798a7a6cf1a8c2aec61669eb39aa8eb199c5244b02cde380be0f64e3825e
+f5da8f80f37efeff719a11365c023b056f512c0a61c9070ad7aa8410680f8693
+b5da29b720f6731ed9467cf84b738e1c699df66948300d15963512d37256c91e
+6e6cc9abf56fbf4f4a63b9f9cc3f9b1bd9374902e4832e582b98507d8be18da4.
+```
+
+The period-potential transcript is
+`certificates/su2_aim_period_potential.log`; its primary source,
+included coefficient source, executable, and transcript SHA-256
+identities are
+
+```text
+845209121101f59d8679f985f85882adcee48e965dda0778fe98fbc978f59cb2
+f5da8f80f37efeff719a11365c023b056f512c0a61c9070ad7aa8410680f8693
+3675b9aa032e3711aeb4cf605dbbff474acfce11fd52b09a5710dbadd407ff20
+36020306e0321671373f9ca3d5a1d0380731cb2d941f6979336125a97a3af57f.
+```
+
+The three-box folding transcript is
+`certificates/su2_aim_trapezoid_stable_formula.log`; its primary
+source, included coefficient source, executable, and transcript
+SHA-256 identities are
+
+```text
+ec7fd9617e920e11678733f504e8d43a0ffa9a6d620b1fb7948b1a6f84aa5cd1
+cd9568d52657f05b4966d5022abf4a42453021593653470ac24f4ee6a470ca21
+6223ed89177d7dacc4e0194912ea6b702156a592c61bce3a41d4f0ea33ab3479
+1b2e07be37803abd715645438dcebffd296a332939b4569865688986df81abbf.
+```
+
+The unbounded three-box monotonicity transcript is
+`certificates/su2_aim_three_box_monotonicity_z3.log`; its source,
+executable, and transcript SHA-256 identities are
+
+```text
+865888472ab311c3bcb4bffe0ce87c587c008bebe819aeedcb4888448ad815ad
+d5583c6849d46c7deaa8b8f76a5a47296759abdad28bf47d002e53a5ca4d353e
+a586cdc4bff4babc821d50f19d1b3ccea5d5ed3cb49ff5a5ab0163a91306f3de.
+```
+
+The long all-`Q=1` proper-tail transcript is
+`certificates/su2_aim_q1_asymptotic.log`; its source, executable, and
+transcript SHA-256 identities are
+
+```text
+743f3d642326a8468160efc59428e0d5b6c06987051645e18a48efead1c923a2
+9d07e48b7313293a441b2f90a138b52cf3cb8f66cb4c4ae971510839e3612001
+15bacae96e8cbe0dd17c3b6b15f8eac7dfe739a29f0acadcb4fd61a2970eeec1.
+```
+
+The single-reserve generator-decomposition transcript is
+`certificates/su2_aim1_generator.log`; its source, executable, and
+transcript SHA-256 identities are
+
+```text
+81d96ce810d3bda4fc986fc920818ab4b9e97d86570ccd5061acb0226024af12
+6a340b7da3f578a218897e8958d0a3e92354776fe961b880e6b00638f851b3ba
+b88619af6d54e33283eb263f5d2efb14b84dd4ccf0b8036b04f163a127eae997.
+```
+
+The corresponding all-wall-payment transcript is
+`certificates/su2_aim1_generator_payment.log`; its source,
+executable, and transcript SHA-256 identities are
+
+```text
+5fe8f0bcf65a7ee4ef6c2013f34cd03555b749bb188daad630cefbbdc5138115
+5d32b3050a49999b4a3dbc16a939a5c57eed6d9fe1ee1ffcc8eeabbc638b9b6e
+5f5a5e16e595ac35f164749dadd5b94d57a6b2bae4940b6c37c41119a11f44d0.
+```
+
+The abstract first-wall-payment obstruction transcript is
+`certificates/su2_aim1_abstract_payment.log`; its source, executable,
+and transcript SHA-256 identities are
+
+```text
+2889c2e6e17aba62092bbfb21b2b688a50fcc329e69fe34d00ac5b6c7523b608
+1519b65b948697a701ef1c3b229285a9c0ae995f2860194070da05cc7d717b88
+4df02409eda1d69de437cdf0b4a200f3d31534a2fe803c997d8dee01067b131b.
+```
+
+The exhaustive three-condition obstruction transcript is
+`certificates/su2_aim3_exhaustive.log`; its source, executable, and
+transcript SHA-256 identities are
+
+```text
+b267379a8bcf05f5162494054039677bfe104409e43d6c8547b1e1c70cf59dc4
+abf717afff3c7e549d552329cbfadfff5c819870556f28dec9cb74beb47cc8be
+0d9421a06490fb5435cd804a0e6c47b36a3cccc2a5b0f2299e46452d2d248bb6.
+```
+
+The suffix-weight transform transcript is
+`certificates/su2_aim1_payment_weights.log`; its source, executable,
+and transcript SHA-256 identities are
+
+```text
+96c72ccbdc6c9dfd098f49e832f310c686320dd46f25e8c011c2c272f021f054
+10049f09f96c43d6a51c24d5ef58001e80c665747e3aa3ed5333dd7ca49d65e0
+efbccad95f42bc9ec6ec40b0ea8fc4d464ca19908e8c592b3575b9340ff4b3ba.
+```
+
+The normalized-dimension cone transcript is
+`certificates/su2_normalized_dimension_invariance.log`; its source,
+executable, and transcript SHA-256 identities are
+
+```text
+3d63dc83b42105bcf4a88e53c8f179d6c795207ff701f845c29a204225ea9a78
+baab5c9b7fb13e0bbaa1b1aa390e6df98433badbe81232f893d60405e837d586
+1e4b13ea1780f51556455ca99378222da14a948030288eb563e1e966be2f7825.
+```
+
+The one-factor payment-peeling obstruction transcript is
+`certificates/su2_aim1_payment_peeling.log`; its source, executable,
+and transcript SHA-256 identities are
+
+```text
+0d025f183f906961f213999d2303f12cc5f3b2786f0f0bfe5cdf7ff9a00c5cde
+b163a394bb8b207cb46a0953556599a4bcae636b9dbd79235ae13002ed31cb1c
+89ca5161eee0fe889d87fa8f6dba2fe84824431b54b4214c5d49b9a85d99988d.
+```
+
+The generic-transport counterexample transcript is
+`certificates/su2_generic_transport_counterexample.log`; its source,
+executable, and transcript SHA-256 identities are
+
+```text
+fd4e33813e418c676c33f1af9800da158c229337c7a9d9ed37ebb6aab1548418
+cdfd09568d87887af1e2b4a0cbc87c2d1da45397a12fa89b730dd42135a78bf8
+c67f49d739ec981f10cb2ee4729e286eac7ecc7c983e057e4143834e68d50646.
+```
+
+The extended square-insertion transcript is
+`certificates/su2_square_boundary_insertion_extended.log`; its source,
+executable, and transcript SHA-256 identities are
+
+```text
+da144b2f5cc755b6bf01bae7f8c92f432173583b9128566f5843349dc96b0473
+88a4709fbdaae5fb9f7effaba2535c880b60237d14151b54de04b97a09aa18aa
+c59c3a44d0d23709ebf274e1e99a0f535423de9f26bf14ed3d42d0564d52f551.
+```
+
+The signed-square PSD transcript is
+`certificates/su2_signed_square_boundary_stress.log`; its source,
+executable, and transcript SHA-256 identities are
+
+```text
+aa977e4621bf2c1ec1a745448feba36a2e87d635b0b8bdaeab41e89060931406
+c9ef6e6a290eced1235263e7efd7b2f47b2284890135d5d70e7ca6b1748e870c
+3296a12b8e72cf4db5526a8d9739514fc8eec11e34e57397e6cd0c6507ba4e75.
+```
+
+This realization turns every anchored minor into one literal prefix
+current.
+
+**Lemma 5A8H28UIA2CGC (cyclic shell and prefix-current identity).**
+Fix `s>=1`, put
+
+```text
+M=(N_Q^(K))^(2s),                  d=M e_0,
+delta(j)=W_(2s)(j)-W_(2s)(j+1),    j in Z/LZ.    (P5A.102AD5AM)
+```
+
+Thus `delta(S)=d_S` for `0<=S<=K` and
+
+```text
+delta(-j-1)=-delta(j).                            (P5A.102AD5AN)
+```
+
+For every `1<=R,S<=K`, define
+
+```text
+J_R(S)
+ =det M_[{0,S},{0,R}]
+ =d_0 sum_(u=-R)^R delta(S+u)-d_R d_S.           (P5A.102AD5AO)
+```
+
+Extend the formula algebraically by `J_0(S)=J_R(0)=0`.  Its radius
+increments are the exact shells
+
+```text
+J_r(S)-J_(r-1)(S)
+ =d_0{delta(S-r)+delta(S+r)}
+    +(d_(r-1)-d_r)d_S,                 1<=r<=K.  (P5A.102AD5AP)
+```
+
+In particular the finite anchored target is
+
+```text
+D_s(S)=J_Q(S).                                   (P5A.102AD5AQ)
+```
+
+**Proof.**  Lemma 5A8H28UIA2CG and commutativity of the fusion ring
+give
+
+```text
+(N_Rd)_S=(Me_R)_S=M_(S,R),                 d_R=M_(0,R).
+```
+
+On the cyclic side, multiplication by `beta_R` gives
+
+```text
+(N_Rd)_S=sum_(u=-R)^R delta(S+u).
+```
+
+Substitution in the anchored determinant proves
+`(P5A.102AD5AO)`.  Subtract consecutive radii.  The two new translated
+terms give the first brace in `(P5A.102AD5AP)`, and the anchor changes
+from `d_(r-1)` to `d_r`, giving its last term.  Finally take `R=Q`;
+then `N_Qd=N_Q^(2s+1)e_0`, so `(P5A.102AD5AO)` is exactly the
+finite determinant `D_s(S)`.  QED.
+
+The exact sufficient cone exposed by this identity is
+
+```text
+J_R(S)>=0
+ for every K>=1, 1<=Q<=K, s>=1,
+ and 0<=R,S<=K.                                  (P5A.102AD5AR)
+```
+
+Call `(P5A.102AD5AR)` the **finite all-radius prefix-current target**.
+Its `R=Q` slice proves the complete finite anchored hierarchy.  The
+full family is also the anchored-minor cone needed when a second
+irreducible factor is varied, so it is a useful target for the later
+real-character transfer; it is not asserted here without proof.
+
+The strict arbitrary-precision C++ audit
+`character_ring_iter/probe_su2_finite_cyclic_gradient_currents.cpp`
+independently constructs the cyclic interval powers and the integer
+finite-fusion recurrence.  Through `K=30` and `s=20`, it verifies the
+basis product `(P5A.102AD5AJ)`, every power identity
+`(P5A.102AD5AK)--(P5A.102AD5AL)`, antisymmetry
+`(P5A.102AD5AN)`, and every shell telescoping identity
+`(P5A.102AD5AP)`.  Among `4,712,000` exact all-radius anchored
+minors it finds no negative value.  This is bounded discovery evidence
+for `(P5A.102AD5AR)`, not its proof.
+
+The source-bound transcript is
+`certificates/su2_finite_cyclic_gradient_currents.log`.
+The source, executable, and transcript SHA-256 identities are,
+respectively,
+
+```text
+1928d292254e923581cdae976cd77286966e36c587faee353836df892221b2a8
+6ba11c17c3aeafad956b98af6528f6789093fad55ddd44764dbcb8895a7e7008
+7fabaabe9e4bb36bec0d0df1e90f2e6fd06e5c11b1a2125bdc329e25c43a180e.
+```
+
+The same audit closes two stronger local routes.  It finds `268,005`
+negative individual shells and `472,164` negative terminal shell
+suffixes.  The first failure of both occurs at
+
+```text
+(K,Q,s,S)=(2,2,1,1)
+```
+
+and has value `-1` in the last radius-two shell.  Therefore a valid
+proof of `(P5A.102AD5AR)` must preserve the complete inside-out prefix
+payment in `(P5A.102AD5AO)`; neither shellwise positivity nor
+outside-in suffix payment is true.
+
+Nor do the shells have a single positive-to-negative crossing.  At
+
+```text
+(K,Q,s,S)=(6,2,2,1)
+```
+
+their radius sequence and its cumulative current are, respectively,
+
+```text
+(21,12,3,-11,2,-18),
+(21,33,36,25,27,9).                              (P5A.102AD5AR1)
+```
+
+Thus the current remains positive but has three strict shell-sign
+changes.  Pairing all negative shells with one terminal block, or
+proving concavity in the radius, is false.
+
+Full `TP2` does not emerge at high powers either.
+
+**Proposition 5A8H28UIA2CGTP (persistent finite nonanchored
+obstruction).**  At `(K,Q)=(2,1)`, for every `s>=1`,
+
+```text
+det (N_1^(2))^(2s)_[{0,1},{1,2}]
+ =-2^(2s-1)<0.                                   (P5A.102AD5AR2)
+```
+
+**Proof.**  Here
+
+```text
+N_1^(2)=[0 1 0; 1 1 1; 0 1 0].
+```
+
+Its nonzero eigenvalues are `2` and `-1`, with orthogonal eigenvectors
+`(1,2,1)` and `(1,-1,1)`.  Put `a=4^s`.  Spectral projection gives
+
+```text
+M_(0,0)=(a+2)/6,
+M_(0,1)=(a-1)/3,
+M_(1,1)=(2a+1)/3,
+M_(0,2)=M_(0,0),                 M_(1,2)=M_(0,1).
+```
+
+The displayed minor is
+
+```text
+M_(0,1)^2-M_(0,0)M_(1,1)=-a/2,
+```
+
+which is `(P5A.102AD5AR2)`.  QED.
+
+Hence neither the proved ordinary `TP2` theorem nor eventual smoothing
+can replace the distinguished vacuum anchor in the finite problem.
+
+The natural half-power wedge truncations are also false.  Let
+`A=(N_Q^(K))^s`, and for a radius `R` put
+
+```text
+X_R(i,j)=A_(i,0)A_(j,R)-A_(j,0)A_(i,R).
+```
+
+At `(K,Q,s,R,S,rho)=(3,1,2,1,2,1)`, the reflected-window sum is
+
+```text
+sum_(rho<=i<j<=K-rho)X_R(i,j)X_S(i,j)=-1.        (P5A.102AD5AR3)
+```
+
+At `(K,Q,s,R,S,rho)=(4,1,4,1,2,3)`, the one-sided lower tail is
+
+```text
+sum_(rho<=i<j<=K)X_R(i,j)X_S(i,j)=-3.            (P5A.102AD5AR4)
+```
+
+The strict exact reproducer is
+`character_ring_iter/probe_su2_finite_half_power_wedge_windows.cpp`.
+Thus the successful ordinary half-power tail cannot be transferred by
+either a fixed reflected window or a fixed one-sided cutoff.  The
+finite allocation must couple contributions across the cutoff.
+Its source-bound transcript is
+`certificates/su2_finite_half_power_wedge_windows.log`; the source,
+executable, and transcript SHA-256 identities are
+
+```text
+ebadff95cba839f1598538e3dc4f371060b772a5337c313879ad339d022deeda
+80dcab26349bc3d0e4372dbe3ea269d28992debb82de78492f7c7cca34a666d0
+0cd93221c61a00f7801ea935df4f851eba2c50c4d071f67c0b4039c8fc5edda6.
+```
+
 Unlike ordinary upper tails, every call in `(P5A.102AD5AE)` is an
 algebraic element of the finite real cyclotomic field.  The exact
 verifier checks all `131` calls at

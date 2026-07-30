@@ -1,0 +1,44 @@
+SU(2) signed-square PSD boundary-reduction stress audit
+
+COMMAND
+make -f Makefile.research probe_su2_signed_square_boundary_stress
+OMP_NUM_THREADS=26 OMP_DYNAMIC=false \
+  ./probe_su2_signed_square_boundary_stress 10000000 24 8
+
+OUTPUT
+SU2_SIGNED_SQUARE_BOUNDARY_STRESS samples=10000000 maximum_level=48 maximum_coefficient=8 threads=26 nonnegative_squares=2975212 log_concave_squares=555751 boundary_squares=552952 current_failures=0 insertion_checks=3789146 insertion_failures=0 full_insertion_failures=0 first_failure=(-1,-1,-1,0) first_root=[] first_square=[] first_insertion=(-1,-1,-1,0) first_insertion_root=[] first_insertion_input=[] first_full_insertion=(-1,-1,-1,-1,0) first_full_insertion_root=[] first_full_insertion_input=[] result=NO_PSD_CURRENT_OR_INSERTION_FAILURE
+
+METHOD
+The deterministic audit generates 10,000,000 signed integer profiles q
+through half-level K=24 using four independent sign-pattern families.
+It forms the exact finite fusion square d=q^2.  Because every finite
+fusion matrix is real symmetric,
+
+  N_d=N_q^2
+
+is positive semidefinite even though q need not be character-positive.
+The audit retains only squares d that are coefficientwise nonnegative,
+log concave with interval support, and satisfy every simple-current
+boundary.  It then evaluates every anchored current exactly with
+signed 64-bit integers.  For every retained profile satisfying the
+complete anchored cone, it also applies every nontrivial
+irreducible-square transform and checks both the output boundary and
+the complete output anchored cone.  The
+configured coefficient and level bounds keep every intermediate far
+below the signed 64-bit limit.
+
+The thread count is a runtime choice made from contemporaneous CPU load
+and available RAM; it is not a mathematical bound or a source-level
+limit.  The zero failure counts are bounded evidence for PSD boundary
+reduction, PSD boundary insertion, and direct PSD full-cone insertion,
+not unbounded proofs.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror -fopenmp \
+  probe_su2_signed_square_boundary_stress.cpp \
+  -o probe_su2_signed_square_boundary_stress
+
+SHA-256
+aa977e4621bf2c1ec1a745448feba36a2e87d635b0b8bdaeab41e89060931406  probe_su2_signed_square_boundary_stress.cpp
+c9ef6e6a290eced1235263e7efd7b2f47b2284890135d5d70e7ca6b1748e870c  probe_su2_signed_square_boundary_stress

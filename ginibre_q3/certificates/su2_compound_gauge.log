@@ -1,0 +1,38 @@
+SU(2) compound-square sign-gauge audit
+
+COMMAND
+make -f Makefile.research probe_su2_compound_gauge
+./probe_su2_compound_gauge 12
+
+OUTPUT
+SU2_COMPOUND_GAUGE maximum_level=24 cases=78 balanced_cases=18 boundary_compatible_cases=18 first_unbalanced_level=6 first_unbalanced_factor=2 first_boundary_conflict_level=-1 first_boundary_conflict_factor=-1 first_conflict_edge=(1,3) first_unbalanced_cycle=(0,2)-[1]-(0,1)-[-1]-(1,2)-[1]-(0,2);sign_product=-1 result=FAIL_NONNEGATIVE_BOUNDARY_GAUGE
+
+METHOD
+For every half-level 1<=K<=12 and every nontrivial half-label
+1<=Q<=K, the audit constructs the exact fusion matrix N_Q and the
+second compound
+
+  G_Q=C_2(N_Q^2)=C_2(N_Q)^2.
+
+It solves the signed-graph consistency equations for a diagonal
+gauge with signs in {+1,-1}.  A consistent gauge would make every
+nonzero entry of G_Q nonnegative.  When consistency fails, the audit
+reconstructs an exact signed cycle.
+
+The first failure is at K=3,Q=1.  In the wedge basis it is the triangle
+
+  (0,2) --[+1]-- (0,1) --[-1]-- (1,2) --[+1]-- (0,2).
+
+Its edge-sign product is -1, which proves that no diagonal sign gauge
+can make this G_Q entrywise nonnegative.  The bounded sweep is a route
+audit; the displayed triangle is the exact obstruction.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_compound_gauge.cpp \
+  -o probe_su2_compound_gauge
+
+SHA-256
+2e292dc6c66e4af3e0d4cf61da476fbe43ce283f2f06f08ed21ada7ae5ebdf4c  probe_su2_compound_gauge.cpp
+9e9644f0b33e0a620e57cbba2386e07aefbde57a149987d668be87ac3f16ff44  probe_su2_compound_gauge

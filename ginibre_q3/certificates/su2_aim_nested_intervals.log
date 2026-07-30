@@ -1,0 +1,69 @@
+SU(2) global-payment nested-interval bilinear reduction audit
+
+COMMAND
+make -f Makefile.research analyze_su2_aim_nested_intervals
+./analyze_su2_aim_nested_intervals 30 4 120
+
+OUTPUT
+SU2_AIM_NESTED_INTERVALS maximum_level=60 maximum_shell=4 maximum_index=120 payments=19360 optimized_nested_interval_pairs=142896160 failures=0 separated_period_blocks=2863623296 separated_period_block_failures=0 width_period_increments=1431811648 width_period_increment_failures=0 point_period_interactions=174162560 point_period_interaction_failures=0 negative_cores=0 negative_left_extensions=0 negative_right_extensions=0 negative_left_one_sided=0 negative_right_one_sided=0
+FIRST_FAILURE level=-1 shell=-1 factor=-1 radius=-1 outer=[-1,-1] inner=[-1,-1] value=0
+FIRST_SEPARATED_PERIOD_BLOCK_FAILURE level=-1 shell=-1 factor=-1 radius=-1 outer=[-1,-1] inner=[-1,-1] value=0
+FIRST_WIDTH_PERIOD_INCREMENT_FAILURE level=-1 shell=-1 factor=-1 radius=-1 outer=[-1,-1] inner=[-1,-1] value=0
+FIRST_POINT_PERIOD_INTERACTION_FAILURE level=-1 shell=-1 factor=-1 radius=-1 outer=[-1,-1] inner=[-1,-1] value=0
+
+METHOD
+For each half-level K through 30, affine wall n through 4, reduced
+next factor q, and row r, the analyzer constructs the exact linear
+global-payment functional Lambda on ordinary SU(2) profiles.
+
+For intervals I=[A,B] and J=[C,D], let 1_I and 1_J denote their
+ordinary-character coefficient vectors.  The checked bilinear value
+is
+
+  B(I,J)=Lambda(1_I 1_J).
+
+For every inner interval J contained in indices 0 through 120, the
+analyzer minimizes B(I,J) over every containing outer interval I.
+For fixed J, extending I to the left and right contributes independent
+row sums of the exact pair kernel, so the minimum is the core square
+J x J plus the independently minimal left and right extensions.
+Consequently one optimized check covers every I containing J, rather
+than sampling one outer interval.
+
+All 142,896,160 optimized minima are nonnegative.  Since the payment
+bilinear form is symmetric, this covers both possible orders of every
+nested interval pair in the bounded box.  The result is bounded
+evidence for the uniform nested-interval inequality, not its proof.
+
+The same run checks three exact period reductions.  It verifies every
+separated full-period outer block, every full-period inner-width
+increment after minimizing the left extension, and every interaction
+between one point and one interval of length L.  Their respective
+counts are 2,863,623,296, 1,431,811,648, and 174,162,560, all without
+a failure.  Lemma AIMPP and Corollary AIMPB prove the point-period
+statement unboundedly; the larger block counts independently audit
+its bilinear consequences.
+
+The optimizer also records separately whether the inner square, its
+best contiguous left extension, or its best contiguous right extension
+is negative.  Every one of those five diagnostic counts is zero:
+the full nested inequality does not rely on cancellation between a
+negative core and positive outer extensions in the bounded box.
+
+The implementation forms the pair kernel exactly from
+
+  sum_(t=|a-b|)^(a+b) eta_(n;q,r)(t),
+
+and uses signed 64-bit integer arithmetic.  In the displayed bounds,
+kernel entries and rectangle sums are far below the signed limit.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  analyze_su2_aim_nested_intervals.cpp \
+  -o analyze_su2_aim_nested_intervals
+
+SHA-256
+dc70798a7a6cf1a8c2aec61669eb39aa8eb199c5244b02cde380be0f64e3825e  analyze_su2_aim_nested_intervals.cpp
+f5da8f80f37efeff719a11365c023b056f512c0a61c9070ad7aa8410680f8693  analyze_su2_aim_square_root_diagonals.cpp
+b5da29b720f6731ed9467cf84b738e1c699df66948300d15963512d37256c91e  analyze_su2_aim_nested_intervals

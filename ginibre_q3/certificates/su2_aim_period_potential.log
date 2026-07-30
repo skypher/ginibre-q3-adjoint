@@ -1,0 +1,44 @@
+SU(2) global-payment period-potential exact audit
+
+COMMAND
+make -f Makefile.research analyze_su2_aim_period_potential
+./analyze_su2_aim_period_potential 30 4
+
+OUTPUT
+SU2_AIM_PERIOD_POTENTIAL maximum_level=60 maximum_shell=4 payments=19360 potential_checks=6938560 potential_failures=0 period_monotonicity_checks=6016000 period_monotonicity_failures=0 initial_split_checks=922560 initial_split_failures=0 maximum_last_period_defect=28
+FIRST_POTENTIAL_FAILURE level=-1 shell=-1 factor=-1 radius=-1 index=-1 value=0 potential=[]
+FIRST_PERIOD_MONOTONICITY_FAILURE level=-1 shell=-1 factor=-1 radius=-1 index=-1 value=0 potential=[]
+FIRST_INITIAL_SPLIT_FAILURE level=-1 shell=-1 factor=-1 radius=-1 index=-1 value=0 potential=[]
+
+METHOD
+For every half-level K through 30, wall n through 4, reduced factor q,
+and row r, the analyzer constructs the exact payment coefficient
+sequence eta and its cumulative potential
+
+  E(v)=sum_(t=0)^v eta(t).
+
+It checks coefficientwise E(v)>=0 through five full periods after the
+active wall, the period monotonicity E(v+L)>=E(v), and the initial
+split inequality
+
+  sum_(v=0)^(x-1)E(v)+sum_(v=0)^(L-x-2)E(v)
+    <=sum_(v=0)^(L-1)E(v)
+
+for every 0<=x<L.  All checks are exact signed-integer calculations.
+The maximum last nonzero period increment occurs 28 indices after the
+active wall, consistent with the exact proof that the potential is
+eventually L-periodic.
+
+These zero failures audit Lemma AIMPP; the manuscript proof uses the
+explicit stable suffix weights and does not rely on the bounded run.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  analyze_su2_aim_period_potential.cpp \
+  -o analyze_su2_aim_period_potential
+
+SHA-256
+845209121101f59d8679f985f85882adcee48e965dda0778fe98fbc978f59cb2  analyze_su2_aim_period_potential.cpp
+f5da8f80f37efeff719a11365c023b056f512c0a61c9070ad7aa8410680f8693  analyze_su2_aim_square_root_diagonals.cpp
+3675b9aa032e3711aeb4cf605dbbff474acfce11fd52b09a5710dbadd407ff20  analyze_su2_aim_period_potential

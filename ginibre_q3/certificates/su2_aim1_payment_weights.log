@@ -1,0 +1,39 @@
+SU(2) all-wall payment suffix-weight audit
+
+COMMAND
+make -f Makefile.research analyze_su2_aim1_payment_weights
+./analyze_su2_aim1_payment_weights 100 2
+
+OUTPUT
+DETAIL half_level=2 factor=1 row=0 transform=[0,-2,-2] margin_load=[0,2,2] suffix_weights=[0,2,0]
+SU2_AIM1_PAYMENT_WEIGHTS maximum_half_level=100 rows=170425 negative_rows=63750 monotonicity_failures=0 support_failures=0 stable_dominance_failures=0
+
+METHOD
+For every half-level K through 100 and every reduced factor q, the
+analyzer constructs the finite fusion square F_q=(N_q^(K))^2 and the
+margin-coordinate transform T_q=BF_qC.  In each row it puts
+
+  a_s=max(-(T_q)_(r,s),0),
+  b_0=a_0,  b_s=a_s-a_(s-1).
+
+It checks that every b_s is nonnegative, that negative rows occur only
+for r<2q, and that b is coefficientwise bounded by the stable weights
+
+  2 on r+1<=s<=2q-r-1, and
+  1 on 2q-r<=s<=2q+r+1,             when r<q;
+
+  1 on 3r-2q+2<=s<=2q+r+1,          when q<=r<2q.
+
+All checks use exact integer arithmetic.  The zero failures are a
+bounded audit of the separate interval-count proof, not an unbounded
+proof by computation.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  analyze_su2_aim1_payment_weights.cpp \
+  -o analyze_su2_aim1_payment_weights
+
+SHA-256
+96c72ccbdc6c9dfd098f49e832f310c686320dd46f25e8c011c2c272f021f054  analyze_su2_aim1_payment_weights.cpp
+10049f09f96c43d6a51c24d5ef58001e80c665747e3aa3ed5333dd7ca49d65e0  analyze_su2_aim1_payment_weights

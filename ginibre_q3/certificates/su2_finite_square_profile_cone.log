@@ -1,0 +1,51 @@
+SU(2) finite square-profile anchored-cone exact counteraudit
+
+COMMAND
+make -f Makefile.research probe_su2_finite_square_profile_cone
+./probe_su2_finite_square_profile_cone 6 3
+
+OUTPUT
+SU2_FINITE_SQUARE_PROFILE_CONE maximum_level=12 maximum_coefficient=3 profiles=21834 log_concave_squares=10520 current_checks=711093 negative_currents=4232 open_checks=293661 negative_open_currents=8 log_concave_current_checks=336267 negative_log_concave_currents=304 open_log_concave_checks=138650 negative_open_log_concave_currents=0 boundary_admissible_squares=10368 boundary_admissible_checks=330945 negative_boundary_admissible_currents=0 doubly_log_concave_profiles=920 doubly_log_concave_checks=22812 negative_doubly_log_concave_currents=0 profile_log_concave_boundary_checks=4430 negative_profile_log_concave_boundary_currents=0 profile_log_concave_reflection_checks=4430 negative_profile_log_concave_reflection_margins=22 profile_log_concave_boundary_sequences=920 profile_log_concave_boundary_recrossings=6 first_failure_level=6 first_failure_left=2 first_failure_right=6 first_failure_value=-2 first_failure_profile=[2,1,0,1] first_failure_square=[6,5,3,4] first_open_failure_level=10 first_open_failure_left=2 first_open_failure_right=8 first_open_failure_value=-2 first_open_failure_profile=[1,3,0,0,0,1] first_open_failure_square=[11,15,9,0,6,2] first_log_concave_failure_level=8 first_log_concave_failure_left=2 first_log_concave_failure_right=8 first_log_concave_failure_value=-5 first_log_concave_failure_profile=[3,3,1,0,2] first_log_concave_failure_square=[23,34,26,19,13] first_profile_log_concave_reflection_failure_level=6 first_profile_log_concave_reflection_failure_left=4 first_profile_log_concave_reflection_failure_right=4 first_profile_log_concave_reflection_failure_value=-120 first_profile_log_concave_reflection_failure_profile=[1,2,3,0] first_profile_log_concave_reflection_failure_square=[14,29,31,12] first_profile_log_concave_boundary_recrossing_level=6 first_profile_log_concave_boundary_recrossing_left=6 first_profile_log_concave_boundary_recrossing_right=6 first_profile_log_concave_boundary_recrossing_value=18 first_profile_log_concave_boundary_recrossing_profile=[1,2,3,0] first_profile_log_concave_boundary_recrossing_square=[14,29,31,12] result=NEGATIVE_SQUARE_PROFILE_CURRENT
+
+METHOD
+For every half-level 1<=K<=6, the audit exhausts every nonzero
+character-positive profile p whose K+1 coefficients lie in {0,1,2,3}.
+It constructs the exact finite fusion square d=p*p, tests whether d is
+log-concave with interval support, and evaluates every all-radius
+anchored current.  It separately counts the no-affine-wall coordinates
+R+S<=K and the profiles satisfying every simple-current boundary
+inequality
+
+  d_0 d_(K-R)-d_R d_K >= 0.
+
+For each such boundary-admissible profile it then checks every current
+
+  d_0 (N_R d)_S-d_R d_S,             1<=R,S<=K.
+
+It also tests the two structured shape classes singled out by the
+factor-word reduction: log-concave p at the simple-current boundary,
+and profiles for which both p and p*p are log-concave at every current.
+For the former class it also checks every adjacent reflected-ratio
+margin, locating the exact negative value -120 which shows that only
+the cumulative boundary order survives.  It then checks the increments
+of that cumulative order and locates the exact positive recrossing 18,
+so unimodality of the boundary current is false as well.
+
+All arithmetic is integer arithmetic in boost::multiprecision::cpp_int.
+The displayed negative log-concave case is therefore an exact
+counterexample to the finite abstraction "character-positive square
+plus log-concavity implies the anchored cone."  The exhaustive counts
+are bounded diagnostics.  In particular, the absence of a negative
+log-concave no-wall current and of a negative boundary-admissible
+current is discovery evidence, not a proof of either unbounded claim.
+The single displayed negative integer identity is the counterexample.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_finite_square_profile_cone.cpp \
+  -o probe_su2_finite_square_profile_cone
+
+SHA-256
+2c28ebc49b83a91c7619480035e4f4a5d59aed6ac648a070c607cf4fee83653c  probe_su2_finite_square_profile_cone.cpp
+f1a026133a941eae4b6726ef91ebce6b05d5359200b0eab92033311753fa3622  probe_su2_finite_square_profile_cone

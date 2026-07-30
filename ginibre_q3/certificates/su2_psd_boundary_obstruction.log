@@ -1,0 +1,68 @@
+SU(2) PSD boundary-reduction and insertion obstruction audit
+
+COMMAND
+make -f Makefile.research probe_su2_psd_boundary_obstruction
+./probe_su2_psd_boundary_obstruction 8 6
+
+OUTPUT
+SU2_PSD_BOUNDARY_OBSTRUCTION maximum_level=16 maximum_coefficient=6 negative_current_profiles=3666 psd_profiles=3320 psd_tp2_failures=2671 psd_insertion_checks=20370 psd_insertion_failures=0 psd_full_insertion_coordinates=1222078 psd_full_insertion_failures=0 psd_row_identity_checks=155030 psd_row_identity_failures=0 psd_wall_reflection_checks=56997 psd_wall_reflection_failures=0 psd_mixed_boundary_checks=56997 psd_mixed_boundary_failures=4 psd_residual_columns=23690 psd_residual_unimodality_failures=4191 psd_nonnegative_ldl_failures=385 psd_local_payment_checks=683748 psd_local_payment_failures=99354 psd_cumulative_payment_checks=683748 psd_cumulative_payment_failures=48112 psd_paired_payment_checks=419389 psd_paired_payment_failures=25598 canonical_pair_obstructions=3594 canonical_pair_misses=72 negative_current_coordinates=37348 canonical_coordinate_obstructions=26756 canonical_coordinate_misses=10592 row_one_first_defects=669 row_one_predecessor_obstructions=649 row_one_predecessor_misses=20 row_one_balanced_obstructions=659 row_one_balanced_misses=10 diagonal_admissible_negative_profiles=95 obstruction_orders=[0,0,3630,36,0,0,0,0,0,0] diagonal_obstruction_orders=[0,0,59,36,0,0,0,0,0,0] first_profile=[1,2,0] first_current=-1 first_order=2 first_minor=-1 first_minor_indices=[0,1] first_diagonal_profile=[2,5,6,5,0] first_diagonal_current=-3 first_diagonal_minor=-22 first_diagonal_minor_indices=[1,2]
+FIRST_PSD_TP2_FAILURE profile=[1,1,1] indices=[0,1,1,2] minor=-2
+FIRST_PSD_INSERTION_FAILURE factor=-1 radius=-1 value=0 input=[] output=[]
+FIRST_PSD_FULL_INSERTION_FAILURE factor=-1 radius=-1 target=-1 value=0 input=[] output=[]
+FIRST_PSD_LOCAL_PAYMENT_FAILURE factor=1 shell=2 radius=2 value=-1 input=[1,0,0]
+FIRST_PSD_CUMULATIVE_PAYMENT_FAILURE factor=2 shell=1 radius=1 value=-1 input=[1,0,0,0,0]
+FIRST_PSD_PAIRED_PAYMENT_FAILURE factor=1 shell=1 radius=1 value=-1 input=[1,1,1,0]
+FIRST_PSD_MIXED_BOUNDARY_FAILURE radius=1 depth=1 value=-1 input=[2,3,4,1]
+FIRST_PSD_RESIDUAL_UNIMODALITY_FAILURE target=1 input=[2,3,3,1] residual=[0,7,5,3]
+FIRST_PSD_NONNEGATIVE_LDL_FAILURE input=[2,3,4,1]
+FIRST_CANONICAL_PAIR_MISS profile=[2,5,6,5,4,0] current_indices=[1,4] canonical_indices=[1,3]
+FIRST_DEFECT_CATEGORIES rows=[diagonal,equal_rotation,inner_rotation,outer_rotation] columns=[below_wall,on_wall,beyond_wall] counts=[[2533,48,41],[581,19,7],[146,25,70],[109,71,16]]
+FIRST_ROW_ONE_PREDECESSOR_MISS profile=[2,5,6,5,4,3,0]
+FIRST_ROW_ONE_BALANCED_MISS profile=[2,5,6,6,5,4,3,0]
+
+METHOD
+For every half-level 1<=K<=8, the audit exhausts every nonzero integer
+profile with coefficients in {0,1,2,3,4,5,6}.  It retains profiles
+with positive vacuum coefficient, log-concavity with interval support,
+and every nonnegative simple-current boundary.  It constructs the full
+finite multiplication matrix and finds the least order of a negative
+principal minor by exact fraction-free integer elimination.
+
+Among the profiles with a negative anchored current, 3,630 first fail
+PSD at order two and 36 first fail at order three.  No negative-current
+profile is PSD.  The audit separately retains all 3,320 PSD profiles
+and checks every irreducible-square insertion; none has a negative
+output boundary.  All 1,222,078 output anchored-current coordinates
+are also nonnegative.  It independently checks the exact identity
+`B_R(N_Q^2d)=(N_dz^(m))_R` at all 155,030 profile-factor-radius
+coordinates and finds no mismatch.
+
+The audit checks the exact wall-reflection identity at 56,997
+coordinates.  It finds no identity mismatch and four negative values
+of the tempting separated mixed-boundary subpayment.  The first is the
+exact PSD profile `(2,3,4,1)` recorded above; its no-wall compensation
+makes the complete wall current positive.
+
+It also tests ordinary unimodality of every residual-column ratio.
+There are 4,191 failures among 23,690 columns; the first exact profile
+and residual are recorded above.  Thus neither the wall split nor
+one-crossing residual ratios replace the complete transport payment.
+Natural-order exact `LDL^T` factorization likewise has a negative
+off-diagonal multiplier for 385 PSD anchored matrices.
+
+For the exact row-payment identity, the audit checks individual shells,
+ordinary initial cumulative sums, mirror shell pairs, and the complete
+block.  The first three local strengthenings all have exact failures;
+the complete insertion block has none.  These are bounded results for
+PSD boundary reduction and PSD boundary insertion, not unbounded
+proofs.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_psd_boundary_obstruction.cpp \
+  -o probe_su2_psd_boundary_obstruction
+
+SHA-256
+d1388db5bf674fde2419e906f77237c28b7930b168f6d0c00c756e921af8068e  probe_su2_psd_boundary_obstruction.cpp
+5cb94cd62179940e12c8435c6ce158abfde26ad384bbe7ff46e96744d357de6f  probe_su2_psd_boundary_obstruction

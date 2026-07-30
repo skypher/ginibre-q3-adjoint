@@ -261,6 +261,146 @@ probe_su2_finite_anchored_spectral_tails: \
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+probe_su2_finite_cyclic_gradient_currents: \
+		probe_su2_finite_cyclic_gradient_currents.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_finite_half_power_wedge_windows: \
+		probe_su2_finite_half_power_wedge_windows.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_finite_square_profile_cone: \
+		probe_su2_finite_square_profile_cone.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_compound_gauge: probe_su2_compound_gauge.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_current_cone_invariance: probe_su2_current_cone_invariance.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_log_concave_square_boundary: \
+		probe_su2_log_concave_square_boundary.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror -fopenmp $< -o $@
+
+probe_su2_psd_boundary_reduction: probe_su2_psd_boundary_reduction.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_psd_boundary_obstruction: \
+		probe_su2_psd_boundary_obstruction.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_residual_transport_structure: \
+		probe_su2_residual_transport_structure.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_square_boundary_insertion_extended: \
+		probe_su2_square_boundary_insertion_extended.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror -fopenmp $< -o $@
+
+probe_su2_signed_square_boundary_stress: \
+		probe_su2_signed_square_boundary_stress.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror -fopenmp $< -o $@
+
+probe_su2_factor_word_plucker: probe_su2_factor_word_plucker.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_factor_word_wedge_cuts: probe_su2_factor_word_wedge_cuts.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_affine_image_shells: probe_su2_affine_image_shells.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_aim_log_concave_roots: probe_su2_aim_log_concave_roots.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_aim_square_root_families: \
+		probe_su2_aim_square_root_families.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror -pthread $< -o $@
+
+analyze_su2_aim_square_root_diagonals: \
+		analyze_su2_aim_square_root_diagonals.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_aim_square_root_diagonal_lp: \
+		analyze_su2_aim_square_root_diagonal_lp.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+analyze_su2_aim_nested_intervals: \
+		analyze_su2_aim_nested_intervals.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_aim_period_potential: \
+		analyze_su2_aim_period_potential.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_aim_trapezoid_stable_formula: \
+		analyze_su2_aim_trapezoid_stable_formula.cpp \
+		analyze_su2_aim_trapezoid_coefficients.cpp
+	$(CXX) -O3 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+verify_su2_aim_three_box_monotonicity_z3: \
+		verify_su2_aim_three_box_monotonicity_z3.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+probe_su2_aim_q1_asymptotic: probe_su2_aim_q1_asymptotic.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_aim1_generator: analyze_su2_aim1_generator.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_aim1_generator_payment: \
+		probe_su2_aim1_generator_payment.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_aim1_abstract_payment: probe_su2_aim1_abstract_payment.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror -pthread $< -o $@
+
+analyze_su2_aim3_exhaustive: analyze_su2_aim3_exhaustive.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror -pthread $< -o $@
+
+analyze_su2_aim1_payment_peeling: \
+		analyze_su2_aim1_payment_peeling.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_aim1_payment_weights: \
+		analyze_su2_aim1_payment_weights.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_normalized_dimension_invariance: \
+		analyze_su2_normalized_dimension_invariance.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 verify_su2_finite_anchored_shifted_tail_counterexample: \
 		verify_su2_finite_anchored_shifted_tail_counterexample.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -660,6 +800,30 @@ RESEARCH_TARGETS = \
 	prove_su2_anchored_lobe_first_block_powers \
 	probe_su2_ordinary_anchored_kernel \
 	probe_su2_finite_anchored_spectral_tails \
+	probe_su2_finite_cyclic_gradient_currents \
+	probe_su2_finite_half_power_wedge_windows \
+	probe_su2_finite_square_profile_cone \
+	probe_su2_compound_gauge \
+	probe_su2_current_cone_invariance \
+	probe_su2_log_concave_square_boundary \
+	probe_su2_psd_boundary_reduction \
+	probe_su2_psd_boundary_obstruction \
+	probe_su2_residual_transport_structure \
+	probe_su2_square_boundary_insertion_extended \
+	probe_su2_signed_square_boundary_stress \
+	probe_su2_factor_word_plucker \
+	probe_su2_factor_word_wedge_cuts \
+	probe_su2_affine_image_shells \
+	probe_su2_aim_log_concave_roots \
+	probe_su2_aim_q1_asymptotic \
+	analyze_su2_aim1_generator \
+	probe_su2_aim1_generator_payment \
+	probe_su2_aim1_abstract_payment \
+	analyze_su2_aim1_payment_peeling \
+	analyze_su2_aim1_payment_weights \
+	analyze_su2_aim_trapezoid_stable_formula \
+	verify_su2_aim_three_box_monotonicity_z3 \
+	analyze_su2_normalized_dimension_invariance \
 	verify_su2_finite_anchored_shifted_tail_counterexample \
 	probe_su2_ordinary_half_power_wedge \
 	probe_su2_distinguished_current_sign \

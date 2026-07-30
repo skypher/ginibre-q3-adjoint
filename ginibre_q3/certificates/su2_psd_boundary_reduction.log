@@ -1,0 +1,42 @@
+SU(2) positive-semidefinite boundary-reduction exact audit
+
+COMMAND
+make -f Makefile.research probe_su2_psd_boundary_reduction
+./probe_su2_psd_boundary_reduction 6 3
+
+OUTPUT
+SU2_PSD_BOUNDARY_REDUCTION maximum_level=12 maximum_coefficient=3 profiles=21834 shape_boundary_profiles=318 negative_current_profiles=66 psd_negative_current_profiles=0 diagonal_boundary_profiles=254 diagonal_boundary_failures=2 first_failure=(-1,-1,-1,0) first_profile=[] first_diagonal_failure=(10,4,6,-1) first_diagonal_profile=[1,2,3,3,0,0] result=NO_PSD_BOUNDARY_REDUCTION_FAILURE
+
+METHOD
+For every half-level 1<=K<=6, the audit exhausts every nonzero integer
+profile with coefficients in {0,1,2,3}.  It retains profiles with
+positive vacuum coefficient, log-concavity with interval support, and
+every nonnegative simple-current boundary current.  It constructs the
+complete finite multiplication matrix
+
+  C_(R,S)=sum_(h=|R-S|)^min(R+S,2K-R-S) d_h
+
+and locates every profile with a negative anchored entry
+
+  d_0 C_(R,S)-d_R d_S.
+
+For each such failure, it tests positive semidefiniteness of C by
+computing every principal minor with fraction-free exact integer
+elimination.  No target failure has a positive-semidefinite
+multiplication matrix.  The zero count is bounded evidence for
+positive-semidefinite boundary reduction, not an unbounded proof.
+
+Separately, the audit retains only the diagonal anchored inequalities.
+The displayed profile [1,2,3,3,0,0] has all diagonal and boundary
+currents nonnegative but the exact off-diagonal current -1.  Hence
+diagonal positive semidefiniteness is insufficient.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_psd_boundary_reduction.cpp \
+  -o probe_su2_psd_boundary_reduction
+
+SHA-256
+a124509302cde626516c813ba090a0c49430778cbc1fba3c9897e6b1524432eb  probe_su2_psd_boundary_reduction.cpp
+2da186ba2f6e9d77dc62e9ce822f414f53402c79f0fddcf66d987ad66ea9d361  probe_su2_psd_boundary_reduction

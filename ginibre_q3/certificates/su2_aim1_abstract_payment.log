@@ -1,0 +1,147 @@
+SU(2) abstract single-reserve first-wall payment obstruction
+
+COMMAND
+make -f Makefile.research probe_su2_aim1_abstract_payment
+./probe_su2_aim1_abstract_payment 500000 8 16 7
+
+WIDE COMMAND
+./probe_su2_aim1_abstract_payment 200000 10 40 64
+
+NORMALIZED-ONLY COMMAND
+./probe_su2_aim1_abstract_payment 1000000 10 30 20 normalized
+
+OUTPUT
+SU2_AIM1_ABSTRACT_PAYMENT samples=500000 maximum_level=16 maximum_length=16 maximum_denominator=7 mode=log_concave threads=35 admissible_profiles=3422242 payment_checks=54719551 payment_failures=6210 normalized_profiles=1383904 normalized_payment_checks=21747190 normalized_payment_failures=0 all_three_term_cap_checks=20737048 all_three_term_cap_failures=0 three_term_cap_checks=8303454 three_term_cap_failures=0 three_term_bound_checks=11862100 three_term_bound_failures=0 stable_bound_checks=11862100 stable_bound_failures=0
+FIRST_PAYMENT_FAILURE sample=118 level=6 factor=1 label=0 value=-27 boundary=6048 profile=[32,64,128,256,384,576,864,1296,1944,1944,1944,972,486,243] reserve=[0,243,1215,486] transform_row=[0,-2,-3,-4]
+FIRST_NORMALIZED_PAYMENT_FAILURE sample=-1 level=-1 factor=-1 label=-1 value=0 boundary=0 profile=[] reserve=[] transform_row=[]
+FIRST_ALL_THREE_TERM_CAP_FAILURE sample=-1 level=-1 factor=-1 label=-1 value=0 boundary=0 profile=[] reserve=[] transform_row=[]
+FIRST_THREE_TERM_CAP_FAILURE sample=-1 level=-1 factor=-1 label=-1 value=0 boundary=0 profile=[] reserve=[] transform_row=[]
+FIRST_THREE_TERM_BOUND_FAILURE sample=-1 level=-1 factor=-1 label=-1 value=0 boundary=0 profile=[] reserve=[] transform_row=[]
+FIRST_STABLE_BOUND_FAILURE sample=-1 level=-1 factor=-1 label=-1 value=0 boundary=0 profile=[] reserve=[] transform_row=[]
+STABLE_WITHOUT_RESERVE_COUNTEREXAMPLE level=6 factor=1 label=0 value=-54 boundary=64 profile=[1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39] reserve=[-6,-6,-6,37] caps=[19,25,31,37]
+
+WIDE OUTPUT
+SU2_AIM1_ABSTRACT_PAYMENT samples=200000 maximum_level=20 maximum_length=40 maximum_denominator=64 mode=log_concave threads=32 admissible_profiles=1390174 payment_checks=36058300 payment_failures=45975 normalized_profiles=332242 normalized_payment_checks=7568659 normalized_payment_failures=0 all_three_term_cap_checks=10426025 all_three_term_cap_failures=821 three_term_cap_checks=2325877 three_term_cap_failures=0 three_term_bound_checks=4061216 three_term_bound_failures=0 stable_bound_checks=4061216 stable_bound_failures=0
+FIRST_PAYMENT_FAILURE sample=4 level=12 factor=1 label=0 value=-24764325226574972843303345645568000 boundary=17527987662345329652635501400403968000 profile=[33600614943460448322716069311260139,61895869632690299541845390836531835,110761029869024746548565436233793810,198203948186675862244801306944683660,354680749386683121911749707164170760,541354828011253186075828500408471160,797786062332373116322273579549325920,1175684723437181434580192643546375040,1670709870147573617561326388197480320,2198302460720491602054376826575632000,2776803108278515707858160201990272000,3507540768351809315189254991987712000,4061362994933673943903347885459456000,4488874889137218569577384504981504000,4488874889137218569577384504981504000,4488874889137218569577384504981504000,4488874889137218569577384504981504000,4252618316024733381704890583666688000,3804974282758971973104375785385984000,2603403456624559771071415011053568000,1781276049269435632838336586510336000,1031265081155989050590615918505984000,597048204879783134552461847556096000,282812307574634116366955612000256000,104194008053812569187825751789568000,38387266125088841279725276975104000,12122294565817528825176403255296000,3828093020784482786897811554304000,1007392900206442838657318830080000,159062036874701500840629288960000,16743372302600157983224135680000] reserve=[9142532408364787376095281242112000,26407290223843413797406278873088000,302080058413511515938577620264960000,626262332786582955779644658491392000,1515806723439561220218467009888256000,1256344283631330054271232495493120000,750010968113446582247720668004352000] transform_row=[0,-2,-3,-4,-4,-4,-4]
+FIRST_NORMALIZED_PAYMENT_FAILURE sample=-1 level=-1 factor=-1 label=-1 value=0 boundary=0 profile=[] reserve=[] transform_row=[]
+FIRST_ALL_THREE_TERM_CAP_FAILURE sample=734 level=4 factor=-1 label=0 value=-1581820330815675925358519479129202751355241873573437440 boundary=8717103981610356449292632879063142255558013916015625000 profile=[26648893799419456508149153004097752273082733154296875,52705589958851813982783880385882221162319183349609375,101897473920446840366715502079372294247150421142578125,194737394603520628256389626196133717894554138183593750,367837300917761186706513738370474800467491149902343750,686629628379820881852158978291552960872650146484375000,1266450203456114070971759893293308794498443603515625000,2167037014802684076996122484079661715030670166015625000,3659884736111199774482340195334539785385131835937500000,5774484805864337421961025641527829439163208007812500000,9110853804808176821316284901077242004013061523437500000,13969975834039204459351636848318437739486694335937500000,21420629612193446837672509834088271200546264648437500000,31416923431217055361919681089996131094134521484375000000,43983692803703877506687553525994583531788330078125000000,56690092946996108786397291211281907663193847656250000000,70547671222928490934183295729595262869752343750000000000,83089479440338000433593659414856642935486093750000000000,97860942451953644955121421088608935012905843750000000000,91336879621823401958113326349368339345378787500000000000,83218045877661321784058808451646709181345117500000000000,73971596335698952696941163068130408161195660000000000000,65752530076176846841725478282782585032173920000000000000,55524358730993781777457070549905294027169088000000000000,45653361623261553905909146896588797311227916800000000000,35508170151425653037929336475124620130955046400000000000,26039324777712145561148180081758054762700367360000000000,17938201513535033608790968500766659947638030848000000000,11161547608421798689914380400477032856308108083200000000,6448894173754817020839419786942285650311351336960000000,3152792707169021654632605229171784095707771764736000000,1541365323504855031153718112039538891234910640537600000,719303817635599014538401785618451482576291632250880000,287721527054239605815360714247380593030516652900352000,108694799109379406641358492049010446255972957762355200,28985279762501175104362264546402785668259455403294720,6441173280555816689858281010311730148502101200732160,715685920061757409984253445590192238722455688970240,15904131556927942444094521013115383082721237532672] reserve=[5009130595177013844909781400119596846444003457371722400,2331622929441990080789451959153582105512194369629279368,2958170787807028448951918998919166054957057962588060672] transform_row=[]
+FIRST_THREE_TERM_CAP_FAILURE sample=-1 level=-1 factor=-1 label=-1 value=0 boundary=0 profile=[] reserve=[] transform_row=[]
+FIRST_THREE_TERM_BOUND_FAILURE sample=-1 level=-1 factor=-1 label=-1 value=0 boundary=0 profile=[] reserve=[] transform_row=[]
+FIRST_STABLE_BOUND_FAILURE sample=-1 level=-1 factor=-1 label=-1 value=0 boundary=0 profile=[] reserve=[] transform_row=[]
+STABLE_WITHOUT_RESERVE_COUNTEREXAMPLE level=6 factor=1 label=0 value=-54 boundary=64 profile=[1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39] reserve=[-6,-6,-6,37] caps=[19,25,31,37]
+
+NORMALIZED-ONLY OUTPUT
+SU2_AIM1_ABSTRACT_PAYMENT samples=1000000 maximum_level=20 maximum_length=30 maximum_denominator=20 mode=normalized threads=30 admissible_profiles=5547700 payment_checks=138046503 payment_failures=660 normalized_profiles=5547700 normalized_payment_checks=138046503 normalized_payment_failures=660 all_three_term_cap_checks=40444494 all_three_term_cap_failures=103400 three_term_cap_checks=40444494 three_term_cap_failures=103400 three_term_bound_checks=73981862 three_term_bound_failures=54697 stable_bound_checks=73981862 stable_bound_failures=112780
+FIRST_PAYMENT_FAILURE sample=403 level=10 factor=1 label=0 value=-38 boundary=1125 profile=[19,54,85,119,153,176,195,210,221,228,252,276,300,297,290,279,132,105,74] reserve=[3,7,11,147,101,31] transform_row=[0,-2,-3,-4,-4,-4]
+FIRST_NORMALIZED_PAYMENT_FAILURE sample=403 level=10 factor=1 label=0 value=-38 boundary=1125 profile=[19,54,85,119,153,176,195,210,221,228,252,276,300,297,290,279,132,105,74] reserve=[3,7,11,147,101,31] transform_row=[0,-2,-3,-4,-4,-4]
+FIRST_ALL_THREE_TERM_CAP_FAILURE sample=6 level=6 factor=-1 label=0 value=-2 boundary=221 profile=[18,51,80,112,135,154,182,210,238,247,231,253,250,270,261,248,231,210,185,195,164,86,45,47,49] reserve=[72,91,26,34] transform_row=[]
+FIRST_THREE_TERM_CAP_FAILURE sample=6 level=6 factor=-1 label=0 value=-2 boundary=221 profile=[18,51,80,112,135,154,182,210,238,247,231,253,250,270,261,248,231,210,185,195,164,86,45,47,49] reserve=[72,91,26,34] transform_row=[]
+FIRST_THREE_TERM_BOUND_FAILURE sample=20 level=6 factor=1 label=0 value=-144 boundary=1024 profile=[19,54,85,119,153,176,208,240,272,304,315,322,300,297,319,310,330,315,333,195,164,172,90] reserve=[82,31,126,53] transform_row=[0,-2,-3,-4]
+FIRST_STABLE_BOUND_FAILURE sample=20 level=6 factor=1 label=0 value=-144 boundary=1024 profile=[19,54,85,119,153,176,208,240,272,304,315,322,300,297,319,310,330,315,333,195,164,172,90] reserve=[82,31,126,53] transform_row=[0,-2,-3,-4]
+STABLE_WITHOUT_RESERVE_COUNTEREXAMPLE level=6 factor=1 label=0 value=-54 boundary=64 profile=[1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39] reserve=[-6,-6,-6,37] caps=[19,25,31,37]
+
+METHOD
+In log-concave mode, the deterministic ratio generator constructs
+positive integer log-concave interval profiles by choosing
+nonincreasing successive rational ratios, then divides out their
+common divisor.  In normalized mode, it instead chooses a decreasing
+positive integer sequence a_t and puts m_t=(2t+1)a_t.  At each
+half-level it retains only profiles whose old single-reserve margin
+vector u is coefficientwise nonnegative.  It then tests the first-wall
+payment for every admissible reduced next factor, using exact
+arbitrary-precision integers.  Independently, it records whether
+
+  (2t+3)m_t >= (2t+1)m_(t+1)
+
+holds at every adjacent pair.
+
+The first counterexample has K=3, q=1, r=0,
+
+  m=(32,64,128,256,384,576,864,1296,
+     1944,1944,1944,972,486,243),
+  u=(0,243,1215,486),
+  (T_1)_(0,*)=(0,-2,-3,-4).
+
+Its consecutive first-wall block is
+
+  m_6+m_7+m_8+m_9=6048,
+
+whereas the negative transform load is
+
+  2u_1+3u_2+4u_3=6075.
+
+Thus the payment margin is exactly -27.  The successive ratios of m
+are
+
+  2,2,2,3/2,3/2,3/2,3/2,3/2,1,1,1/2,1/2,1/2,
+
+so log concavity is immediate, and u is displayed nonnegative.
+Therefore log concavity plus the old decreasing reserve does not
+imply the first-wall payment.
+
+Normalized-dimension monotonicity plus the old reserve also does not
+imply payment.  The normalized-only run gives, at K=5, q=1, r=0,
+
+  m=(19,54,85,119,153,176,195,210,221,228,
+     252,276,300,297,290,279,132,105,74),
+  u=(3,7,11,147,101,31),
+  (T_1)_(0,*)=(0,-2,-3,-4,-4,-4).
+
+Here m_t/(2t+1) is the decreasing integer sequence
+
+  (19,18,17,17,17,16,15,14,13,12,12,12,12,11,10,9,4,3,2),
+
+but the wall block is 1125 and the negative transform load is 1163,
+so the payment margin is exactly -38.  This profile is not log
+concave.
+
+The conjunction of log concavity, normalized-dimension monotonicity,
+and u>=0 has no failure in 21,747,190 standard checks and 7,568,659
+wide checks, for 29,315,849 exact payments in total.  This is bounded
+coverage of this random-ratio generator, not evidence that the
+three-condition implication is true.  The separate exhaustive
+analyzer records the exact counterexample
+
+  m=(1,2,3,4,5,6,7,8,8,8,8,8),
+  u=(0,0,0,8),
+  K=3, q=1, r=0, payment=31-4(8)=-1.
+
+Thus the random generator misses a decisive plateau-and-cutoff family.
+For the same three-condition profiles, the analyzer also puts
+
+  p_s=m_(L+s)-m_(2L-s-1)+m_(2L+s)
+
+and checks both D_1(s)<=p_s and the stronger finite payment obtained
+by replacing every D_1(s) in the nonnegative suffix-weight form by
+p_s.  There are no cap failures in 10,629,331 checks and no finite
+bound failures in 15,923,316 checks.  Replacing the exact
+level-dependent suffix weights by their larger stable weights also
+has no failure in those 15,923,316 cases.
+
+The displayed deterministic witness shows why the stable audit must
+retain u>=0.  At K=3, q=1, and r=0, the profile m_t=2t+1 on
+0<=t<=19 is log concave and normalized-dimension decreasing, and its
+three-image caps (19,25,31,37) are nonnegative.  But its reserve is
+(-6,-6,-6,37), outside the admissible cone, and its stable margin is
+64-2(25)-31-37=-54.  Thus the reserve is a necessary hypothesis for
+the current stable target.  Log concavity without normalized-
+dimension monotonicity has an exact cap failure in the wide run.
+Normalized-dimension monotonicity without log concavity fails the
+cap, the exact finite bound, and the stable bound, as the normalized-
+only witnesses show.  These are bounded diagnostics for a three-term
+decomposition, not proofs of either sublemma.  Since the exhaustive
+witness satisfies all three scalar conditions, a proof must retain a
+stronger invariant of the triangular-convolution factor-word origin.
+The adaptive thread count reflects RAM limits and machine load and can
+differ on replay; deterministic profiles and exact counts do not
+depend on scheduling.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror -pthread \
+  probe_su2_aim1_abstract_payment.cpp \
+  -o probe_su2_aim1_abstract_payment
+
+SHA-256
+2889c2e6e17aba62092bbfb21b2b688a50fcc329e69fe34d00ac5b6c7523b608  probe_su2_aim1_abstract_payment.cpp
+1519b65b948697a701ef1c3b229285a9c0ae995f2860194070da05cc7d717b88  probe_su2_aim1_abstract_payment

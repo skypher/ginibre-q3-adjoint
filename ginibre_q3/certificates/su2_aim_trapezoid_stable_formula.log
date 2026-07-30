@@ -1,0 +1,13 @@
+SU2_AIM_TRAPEZOID_STABLE_FORMULA maximum_half_level=25 shapes=468332 reserve_differences=19911688 negative_reserve_differences=0 payments=18470920 failures=0 positive_only_failures=4256623 maximum_reserve_bound_failures=3191777 double_prefix_bound_failures=0 pairwise_reserve_failures=0 left_reserve_failures=0 right_reserve_failures=0 rising_arc_checks=38801984 rising_arc_failures=0 crossing_arc_checks=1702896 crossing_arc_failures=0 minimum_margin=0 minimum_positive_margin=1 minimum_nontrivial_pair_margin=0
+FIRST_RESERVE_FAILURE half_level=-1 shell=-1 reach=-1 width=-1 height=-1 padding=-1 value=0
+FIRST_PAYMENT_FAILURE half_level=-1 shell=-1 reach=-1 width=-1 height=-1 padding=-1 value=0
+FIRST_POSITIVE_ONLY_FAILURE half_level=2 shell=1 reach=2 width=4 height=4 padding=2 value=-1
+FIRST_MAXIMUM_RESERVE_BOUND_FAILURE half_level=4 shell=1 reach=4 width=2 height=3 padding=4 value=-1
+FIRST_DOUBLE_PREFIX_BOUND_FAILURE half_level=-1 shell=-1 reach=-1 width=-1 height=-1 padding=-1 value=0
+FIRST_PAIRWISE_RESERVE_FAILURE half_level=-1 shell=-1 reach=-1 width=-1 height=-1 padding=-1 value=0
+FIRST_LEFT_RESERVE_FAILURE half_level=-1 shell=-1 reach=-1 width=-1 height=-1 padding=-1 value=0
+FIRST_RIGHT_RESERVE_FAILURE half_level=-1 shell=-1 reach=-1 width=-1 height=-1 padding=-1 value=0
+FIRST_RISING_ARC_FAILURE half_level=-1 shell=-1 reach=-1 width=-1 height=-1 padding=-1 value=0
+FIRST_CROSSING_ARC_FAILURE half_level=-1 shell=-1 reach=-1 width=-1 height=-1 padding=-1 value=0
+MINIMUM_POSITIVE half_level=2 shell=1 reach=1 width=1 height=1 padding=2 value=1
+MINIMUM_NONTRIVIAL_PAIR half_level=2 shell=1 reach=1 width=3 height=1 padding=2 value=0

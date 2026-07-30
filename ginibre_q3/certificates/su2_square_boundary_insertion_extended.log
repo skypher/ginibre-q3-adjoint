@@ -1,0 +1,33 @@
+SU(2) extended finite square-boundary insertion exact audit
+
+COMMAND
+make -f Makefile.research probe_su2_square_boundary_insertion_extended
+OMP_NUM_THREADS=26 OMP_DYNAMIC=false \
+  ./probe_su2_square_boundary_insertion_extended 8 4
+
+OUTPUT
+SU2_SQUARE_BOUNDARY_INSERTION_EXTENDED maximum_level=16 maximum_coefficient=4 threads=26 profiles=2441392 admissible_squares=926559 insertion_checks=7138109 boundary_failures=0 first_failure=(-1,-1,-1,0) first_profile=[] first_square=[] first_output=[] result=NO_SQUARE_BOUNDARY_INSERTION_FAILURE
+
+METHOD
+For every half-level 1<=K<=8, the audit exhausts every nonzero
+character-positive profile p with coefficients in {0,1,2,3,4}.  It
+forms the exact finite fusion square d=p^2, retains precisely the
+log-concave squares satisfying every simple-current boundary current,
+and applies N_Q twice for every nontrivial irreducible factor
+1<=Q<=K.  Every resulting boundary current is evaluated with exact
+arbitrary-precision integers.
+
+The thread count is a runtime choice made from contemporaneous CPU load
+and available RAM; it is not a mathematical bound or a source-level
+limit.  The zero failure count is bounded evidence for direct
+square-boundary insertion, not an unbounded proof.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror -fopenmp \
+  probe_su2_square_boundary_insertion_extended.cpp \
+  -o probe_su2_square_boundary_insertion_extended
+
+SHA-256
+da144b2f5cc755b6bf01bae7f8c92f432173583b9128566f5843349dc96b0473  probe_su2_square_boundary_insertion_extended.cpp
+88a4709fbdaae5fb9f7effaba2535c880b60237d14151b54de04b97a09aa18aa  probe_su2_square_boundary_insertion_extended

@@ -1,0 +1,55 @@
+SU(2) finite square-boundary insertion exact audit
+
+COMMAND
+make -f Makefile.research probe_su2_current_cone_invariance
+./probe_su2_current_cone_invariance 6 3
+
+OUTPUT
+SU2_CURRENT_CONE_INVARIANCE maximum_level=12 maximum_coefficient=3 profiles=21840 cone_profiles=4081 transforms=22782 failures=3476 log_concave_cone_profiles=252 log_concave_transforms=1131 log_concave_failures=49 square_log_concave_boundary_profiles=10368 square_log_concave_boundary_transforms=58069 square_log_concave_boundary_failures=0 square_log_concave_full_failures=0 diagonal_admissible_profiles=284 diagonal_admissible_open_checks=2463 diagonal_admissible_open_failures=6 boundary_profiles=5545 boundary_transforms=31141 boundary_failures=4924 cone_to_boundary_transforms=22782 cone_to_boundary_failures=2268 log_concave_cone_to_boundary_transforms=1131 log_concave_cone_to_boundary_failures=0 zero_anchor_interval_transforms=13350 zero_anchor_interval_failures=8836 first_failure=(4,2,2,2,-16) first_input=[2,3,0] first_output=[5,11,5] first_log_concave_failure=(4,2,2,2,-16) first_log_concave_input=[2,3,0] first_log_concave_output=[5,11,5] first_square_failure=(-1,-1,-1,-1,0) first_square_input=[] first_square_output=[] first_diagonal_failure=(6,2,4,-1) first_diagonal_input=[1,2,3,0] first_boundary_failure=(6,2,2,-2) first_boundary_input=[1,3,0,0] first_boundary_output=[4,10,7,3] first_cone_to_boundary_failure=(8,2,6,-1) first_cone_to_boundary_input=[1,0,0,1,0] first_cone_to_boundary_output=[1,2,3,3,1] first_log_concave_cone_to_boundary_failure=(-1,-1,-1,0) first_log_concave_cone_to_boundary_input=[] first_log_concave_cone_to_boundary_output=[] first_zero_anchor_interval_failure=(6,2,4,-1) first_zero_anchor_interval_input=[0,1,0,0] first_zero_anchor_interval_output=[1,3,2,1] result=NO_SQUARE_BOUNDARY_OR_FULL_FAILURE
+
+METHOD
+For every half-level 1<=K<=6, the audit exhausts every profile whose
+K+1 coefficients lie in {0,1,2,3}.  It first tests the abstract
+all-radius anchored-current cone and its log-concave subcone under
+d -> N_Q^2 d for every 1<=Q<=K.  The displayed input [2,3,0] proves
+that even the abstract log-concave current cone is not invariant.
+It separately tests the weaker abstract simple-current boundary cone;
+the displayed input [1,3,0,0] proves that this cone is not invariant
+either.
+It also tests whether the complete anchored cone transports to the
+simple-current boundary.  The disconnected-support input [1,0,0,1,0]
+shows this is false in general, while no failure occurs after imposing
+log concavity.
+Finally, it checks whether a zero-anchored nonnegative vector with
+connected support is sufficient for the reverse residual boundary
+inequality.  The displayed input [0,1,0,0] proves that it is not.
+
+Independently, the audit constructs every finite character square
+d=p*p.  When d is log-concave and satisfies all simple-current boundary
+inequalities
+
+  d_0 d_(K-R)-d_R d_K >= 0,             0<=R<=K,
+
+it applies every N_Q^2 and checks both the same boundary inequalities
+and the complete all-radius current cone of the output.  The zero
+failure counts are bounded evidence for square-boundary insertion and
+finite square boundary reduction, not proofs of either universal
+statement.
+
+Finally it checks whether abstract log-concavity plus every available
+no-wall diagonal current forces the off-diagonal no-wall currents.  It
+does not: the displayed first diagonal-admissible input [1,2,3,0] has
+the exact off-diagonal current -1.
+
+All fusion products and currents use exact integer arithmetic in
+boost::multiprecision::cpp_int.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_current_cone_invariance.cpp \
+  -o probe_su2_current_cone_invariance
+
+SHA-256
+56bc93f2eee0ee83466a2bccbb725d51844896711c937482fe978d227c7ba90d  probe_su2_current_cone_invariance.cpp
+6d5df806665d235d9f6ef78799a0e4b96549f516e308d3f7a01b08220fb8d3dd  probe_su2_current_cone_invariance

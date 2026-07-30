@@ -1,0 +1,53 @@
+SU(2) all-wall suffix generator payment audit
+
+COMMAND
+make -f Makefile.research probe_su2_aim1_generator_payment
+./probe_su2_aim1_generator_payment 10000 12 30
+
+STRESS COMMAND
+./probe_su2_aim1_generator_payment 1000 8 100
+
+OUTPUT
+SU2_AIM1_GENERATOR_PAYMENT samples=10000 maximum_level=24 maximum_word_length=30 identity_checks=1238541 identity_failures=0 payment_checks=1238541 payment_failures=0
+FIRST_IDENTITY_FAILURE level=-1 factor=-1 shell=-1 label=-1 value=0 boundary=0 word=[] reserve=[] transform_row=[]
+FIRST_PAYMENT_FAILURE level=-1 factor=-1 shell=-1 label=-1 value=0 boundary=0 word=[] reserve=[] transform_row=[]
+
+STRESS OUTPUT
+SU2_AIM1_GENERATOR_PAYMENT samples=1000 maximum_level=16 maximum_word_length=100 identity_checks=199616 identity_failures=0 payment_checks=199616 payment_failures=0
+FIRST_IDENTITY_FAILURE level=-1 factor=-1 shell=-1 label=-1 value=0 boundary=0 word=[] reserve=[] transform_row=[]
+FIRST_PAYMENT_FAILURE level=-1 factor=-1 shell=-1 label=-1 value=0 boundary=0 word=[] reserve=[] transform_row=[]
+
+METHOD
+For each deterministic arbitrary reduced-factor word, the audit
+constructs the exact unperiodized triangular convolution and its
+ordinary square profile m.  At every active affine wall nL it computes
+the K+1 margin coordinates of the complete suffix D_n, then tries
+every admissible next reduced factor q.
+
+For every output row r it independently convolves the line profile
+by tau_q and verifies the exact generator identity
+
+  u_(n,r)(m chi_q^2)
+   =sum_s T_(r,s)u_(n,s)(m)
+     +sum_(t=nL-2q+r)^(nL+2q-r-1)m_t,
+
+where the last sum is present only for r<2q and
+T=B(N_q^(K))^2C is the finite transform in margin coordinates.
+It also discards every positive T coefficient and checks that the
+remaining consecutive wall block pays all negative T entries.
+
+All 1,238,541 identities agree exactly, and all 1,238,541 stronger
+payments are nonnegative.  These zero failures are bounded evidence
+for the all-wall global-payment target, not an unbounded proof.
+The separate length-100 stress adds 199,616 exact identities and
+payments without a failure.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_aim1_generator_payment.cpp \
+  -o probe_su2_aim1_generator_payment
+
+SHA-256
+5fe8f0bcf65a7ee4ef6c2013f34cd03555b749bb188daad630cefbbdc5138115  probe_su2_aim1_generator_payment.cpp
+5d32b3050a49999b4a3dbc16a939a5c57eed6d9fe1ee1ffcc8eeabbc638b9b6e  probe_su2_aim1_generator_payment

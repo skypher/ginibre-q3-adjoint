@@ -1,0 +1,53 @@
+SU(2) log-concave square-boundary exact stress audit
+
+COMMAND
+make -f Makefile.research probe_su2_log_concave_square_boundary
+OMP_NUM_THREADS=<chosen from current RAM and machine load> \
+  nice -n 10 ./probe_su2_log_concave_square_boundary 1000000 30
+
+OUTPUT
+SU2_LOG_CONCAVE_SQUARE_BOUNDARY samples=1000000 maximum_level=60 checked_currents=17015970 negative_currents=262 log_concave_square_profiles=1000000 log_concave_square_currents=17015970 negative_log_concave_square_currents=262 admissible_insertions=999748 negative_insertions=0 log_concave_cone_insertions=26258 negative_log_concave_cone_boundaries=0 boundary_reduction_failures=0 first_sample=7415 first_radius=2 first_value=-3527082 first_profile_minimum_log_concavity_margin=101 first_square_minimum_log_concavity_margin=0 first_square_log_concave=yes first_profile=[0,0,0,0,0,0,0,0,0,47,250,68,13,1,0,0,0,0,0,0,0] first_square=[69503,128797,141825,143547,143641,143641,143641,143641,143641,143641,143641,143641,143641,143641,143641,143640,143614,143309,141041,127614,68892] first_insertion_sample=-1 first_insertion_factor=-1 first_insertion_radius=-1 first_insertion_input=[] first_insertion_output=[] first_cone_boundary_sample=-1 first_cone_boundary_factor=-1 first_cone_boundary_radius=-1 first_cone_boundary_input=[] first_cone_boundary_output=[] first_boundary_reduction_sample=-1 first_boundary_reduction_radius=-1 first_boundary_reduction_target=-1 first_boundary_reduction_value=0 first_boundary_reduction_square=[] result=NO_BOUNDARY_INSERTION_FAILURE
+
+METHOD
+For each deterministic sample, the audit constructs a nonnegative
+integer profile p with interval support by choosing each successive
+coefficient within the exact upper bound imposed by log concavity.  It
+forms d=p*p by exact finite fusion interval summation and checks every
+simple-current boundary
+
+  d_0 d_(K-R)-d_R d_K.
+
+The first displayed failure has minimum internal log-concavity margins
+101 for p and 0 for d, so it is an exact counterexample even when both
+profiles are log-concave.  This disproves abstract log-concave square
+reflection.
+
+For every boundary-admissible input, the audit independently selects a
+nontrivial factor Q from the sample identifier, forms p'=N_Q p and
+d'=(p')*(p'), and checks every output boundary.  The zero insertion
+failure count is bounded evidence for preservation of the
+boundary-admissible square cone, not an unbounded proof.
+
+The audit separately filters the generated log-concave profiles by the
+complete anchored-current cone, applies the selected N_Q^2, and checks
+the output boundary.  Its zero failure count is bounded evidence for
+log-concave full-cone-to-boundary transport, not a proof.
+
+For every boundary-admissible log-concave fusion square, the audit also
+checks the complete anchored-current cone.  Its zero failure count is
+bounded evidence for finite square boundary reduction, not a proof.
+
+All profiles, fusion squares, margins, and currents use exact integer
+arithmetic in boost::multiprecision::cpp_int.  OpenMP only partitions
+deterministic sample identifiers; the result is independent of the
+thread count.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror -fopenmp \
+  probe_su2_log_concave_square_boundary.cpp \
+  -o probe_su2_log_concave_square_boundary
+
+SHA-256
+6a002b41190918febf08df03ad6bdb612a601b0b9bf8dfe53212f6e3a74fb108  probe_su2_log_concave_square_boundary.cpp
+3dcc74b4df3ec6443dcfd03f86f5bdf41552c06addea8ff000f0eda9d53d570c  probe_su2_log_concave_square_boundary

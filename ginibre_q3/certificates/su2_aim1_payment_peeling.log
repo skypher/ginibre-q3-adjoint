@@ -1,0 +1,49 @@
+SU(2) single-factor first-wall payment peeling obstruction
+
+COMMAND
+make -f Makefile.research analyze_su2_aim1_payment_peeling
+./analyze_su2_aim1_payment_peeling 30
+
+OUTPUT
+SU2_AIM1_PAYMENT_PEELING maximum_level=60 payments=54120 coefficient_checks=16555272 coefficient_failures=2207520 line_checks=16555272 line_failures=2326206 normalized_checks=16555272 normalized_failures=1516034
+FIRST_COEFFICIENT_FAILURE level=4 old_factor=1 next_factor=1 label=0 index=12 value=-2 transform_row=[0,-2,-2]
+FIRST_LINE_FAILURE level=4 old_factor=1 next_factor=1 label=0 index=6 value=-2 transform_row=[0,-2,-2]
+FIRST_NORMALIZED_FAILURE level=4 old_factor=1 next_factor=1 label=0 index=32 value=-6 transform_row=[0,-2,-2]
+
+METHOD
+For every half-level through 30, every existing reduced factor,
+every proposed next factor, and every first-wall payment row, the
+analyzer forms the exact dual payment functional.
+
+First it multiplies that functional by the square of one existing
+ordinary character and checks all character-basis coefficients.
+Then it rewrites the same functional against the symmetric
+unperiodized line coefficient W, convolves its dual by the existing
+triangular kernel tau_q, and checks every line coefficient.
+Finally it converts the character functional to the normalized-margin
+dual by checking the weighted prefix
+
+  sum_(x=0)^s (2x+1) eta_x.
+
+These prefixes are the numerators of the functional on the extreme
+rays m_x=(2x+1)1_(x<=s) of the normalized-dimension cone.
+
+Both proposed one-factor peelings are false already at K=2 with old
+factor q=1, next factor q=1, and payment row r=0.  The character-basis
+product has coefficient -2 at label 12, and the line-kernel product
+has coefficient -2 at index 6.  The normalized-margin dual is also
+negative, with exact numerator -6 at extreme-ray index 32.  Thus
+AIMGP cannot be proved by peeling one arbitrary existing factor and
+demanding coefficientwise positivity in the character, line-kernel,
+or normalized-margin basis.  The exact first failures, not the
+bounded census, establish these obstructions.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  analyze_su2_aim1_payment_peeling.cpp \
+  -o analyze_su2_aim1_payment_peeling
+
+SHA-256
+0d025f183f906961f213999d2303f12cc5f3b2786f0f0bfe5cdf7ff9a00c5cde  analyze_su2_aim1_payment_peeling.cpp
+b163a394bb8b207cb46a0953556599a4bcae636b9dbd79235ae13002ed31cb1c  analyze_su2_aim1_payment_peeling

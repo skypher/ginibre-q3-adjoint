@@ -1,0 +1,40 @@
+SU(2) generic full-cone transport counterexample audit
+
+COMMAND
+make -f Makefile.research probe_su2_residual_transport_structure
+./probe_su2_residual_transport_structure 8 4
+
+OUTPUT
+SU2_RESIDUAL_TRANSPORT_STRUCTURE maximum_level=16 maximum_coefficient=4 log_concave_full_profiles=1220 nonmonotone_reflected_ratios=12 sign_change_counts=[1208,0,12,0,0,0,0,0,0] transforms=7403 boundary_failures=18 first_nonmonotone=[2,3,4,0] first_nonmonotone_changes=2 first_failure_factor=1 first_failure_input=[2,3,4,4,1] first_failure_output=[9,23,29,24,9]
+
+METHOD
+For every half-level 1<=K<=8, the audit exhausts every nonzero integer
+profile with coefficients in {0,1,2,3,4}.  It retains exactly the
+profiles that are log concave with interval support and satisfy every
+anchored current.  For every nontrivial irreducible factor Q, it applies
+the exact finite fusion matrix N_Q twice and checks every output
+simple-current boundary.
+
+The first failure is the exact profile
+
+  d=(2,3,4,4,1),
+  N_1^2 d=(9,23,29,24,9).
+
+Its radius-three output boundary current is
+
+  9*23-24*9=-9.
+
+Thus generic log-concave full-cone-to-boundary transport is false.
+This does not test or disprove square-boundary insertion: the input is
+an abstract profile and the square-root/orbit hypothesis is deliberately
+absent.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_residual_transport_structure.cpp \
+  -o probe_su2_residual_transport_structure
+
+SHA-256
+fd4e33813e418c676c33f1af9800da158c229337c7a9d9ed37ebb6aab1548418  probe_su2_residual_transport_structure.cpp
+cdfd09568d87887af1e2b4a0cbc87c2d1da45397a12fa89b730dd42135a78bf8  probe_su2_residual_transport_structure

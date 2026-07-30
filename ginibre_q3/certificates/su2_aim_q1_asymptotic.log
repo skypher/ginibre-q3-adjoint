@@ -1,0 +1,58 @@
+SU(2) proper affine-image tails for long all-Q=1 words
+
+COMMAND
+make -f Makefile.research probe_su2_aim_q1_asymptotic
+./probe_su2_aim_q1_asymptotic 1000 2
+
+OUTPUT
+SU2_AIM_Q1_ASYMPTOTIC maximum_length=1000 maximum_level=4 lengths=1000 pair_checks=333666 pair_failures=6181 suffix_profiles=166500 coordinate_checks=499500 coordinate_failures=0 monotonicity_checks=333000 monotonicity_failures=0 generator_payment_checks=166833 generator_payment_failures=0
+FIRST_PAIR_FAILURE length=57 level=4 shell=1 label=0 value=-1919695007919304958867833802346295679114258590478 left=-387157488198605014960015208861841826244865307824488 right=385237793190685710001147375059495530565751049234010 suffix=[5906262631195424856966887753223081407698325515285798,3625239505720587253076167891860940451512652054151306,1222222698526192310662733239404483715806940170858000]
+FIRST_COORDINATE_FAILURE length=-1 level=-1 shell=-1 label=-1 value=0 left=0 right=0 suffix=[]
+FIRST_MONOTONICITY_FAILURE length=-1 level=-1 shell=-1 label=-1 value=0 left=0 right=0 suffix=[]
+FIRST_GENERATOR_PAYMENT_FAILURE length=-1 level=-1 shell=-1 label=-1 value=0 left=0 right=0 suffix=[]
+
+METHOD
+For each length from one through 1000, the audit constructs the exact
+unperiodized line kernel
+
+  W_hat=tau_1^length,
+  tau_1(z)=z^(-2)+2z^(-1)+3+2z+z^2,
+
+using arbitrary-precision integers.  At half-level K=2 and period L=6
+it checks every individual paired-slope summand
+
+  b_(jL+r)+b_((j+1)L-r-2),
+  b_t=delta_hat(t)-delta_hat(t+1),
+  delta_hat(t)=W_hat(t)-W_hat(t+1),
+
+and every coordinate and adjacent monotonicity margin of every proper
+outside-in suffix D_n.
+
+The first negative paired-slope summand occurs exactly at length 57,
+image j=1, and label r=0.  Hence termwise paired-slope positivity is
+false even for an actual all-Q=1 factor word.  Its complete D_1 suffix,
+printed on the same line, is nevertheless positive and strictly
+decreasing.  The scan finds 6,181 negative individual summands but no
+negative suffix coordinate and no suffix-monotonicity failure through
+length 1000.  The latter zero counts are bounded evidence for the
+global suffix inequality, not an unbounded proof.
+
+At K=2 the audit also evaluates at every active affine wall nL the
+exact generator payment
+
+  m_4+m_5+m_6+m_7-2u_1-2u_2
+
+with all indices translated by nL-L.  All 166,833 values are
+nonnegative.  Thus the all-wall AIMGP hierarchy
+survives the same long-word regime which disproves termwise
+paired-slope positivity.  This is bounded evidence, not a proof.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_aim_q1_asymptotic.cpp \
+  -o probe_su2_aim_q1_asymptotic
+
+SHA-256
+743f3d642326a8468160efc59428e0d5b6c06987051645e18a48efead1c923a2  probe_su2_aim_q1_asymptotic.cpp
+9d07e48b7313293a441b2f90a138b52cf3cb8f66cb4c4ae971510839e3612001  probe_su2_aim_q1_asymptotic

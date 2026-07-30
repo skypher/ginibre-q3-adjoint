@@ -1,0 +1,49 @@
+SU(2) proper affine-image tails from log-concave roots
+
+COMMAND
+make -f Makefile.research probe_su2_aim_log_concave_roots
+./probe_su2_aim_log_concave_roots 8 6 10
+
+OUTPUT
+SU2_AIM_LOG_CONCAVE_ROOTS maximum_index=8 maximum_coefficient=6 maximum_level=20 profiles=40353606 log_concave_roots=11297 suffix_profiles=146861 coordinate_checks=881166 coordinate_failures=0 monotonicity_checks=734305 monotonicity_failures=0 log_concavity_checks=587444 log_concavity_failures=10 image_pair_margin_checks=881166 image_pair_margin_failures=0 payment_checks=2541825 payment_failures=0
+FIRST_COORDINATE_FAILURE level=-1 shell=-1 radius=-1 value=0 root=[] square=[] suffix=[]
+FIRST_MONOTONICITY_FAILURE level=-1 shell=-1 radius=-1 value=0 root=[] square=[] suffix=[]
+FIRST_LOG_CONCAVITY_FAILURE level=4 shell=1 radius=1 value=-8 root=[0,0,0,0,1,2,4,0,0] square=[21,41,49,49,49,49,49,49,49,48,44,32,16,0,0,0,0] suffix=[33,5,1]
+FIRST_IMAGE_PAIR_MARGIN_FAILURE level=-1 shell=-1 radius=-1 value=0 root=[] square=[] suffix=[]
+FIRST_PAYMENT_FAILURE level=-1 shell=-1 factor=-1 radius=-1 value=0 boundary=0 root=[] square=[] reserve=[]
+
+METHOD
+The audit exhausts every nonzero coefficient vector p on indices zero
+through eight with entries in {0,...,6}.  It retains exactly the
+log-concave interval-support roots, forms their ordinary SU(2) fusion
+square m=p^2, and constructs every proper affine-image suffix D_n
+through half-level ten.
+
+It checks coefficientwise nonnegativity, monotonicity, log concavity,
+and the individual paired-slope summands
+
+  (m_x-m_(x+1))+(m_y-m_(y+1)),
+  x=jL+r, y=(j+1)L-r-2.
+
+Whenever a suffix reserve is coefficientwise nonnegative, it also
+checks every exact all-wall global payment for every reduced next
+factor and every row, using the exact transform T_q=BF_qC and the
+consecutive boundary block rho_(n;q,r).
+
+All 881,166 coordinates, 734,305 monotonicity margins, and 881,166
+individual image-pair margins are nonnegative.  Proper-tail log
+concavity is false; the first exact counterexample is recorded above.
+All 2,541,825 square-root global payments are also nonnegative.  The
+zero failures are bounded discovery evidence for proper-tail
+monotonicity and for a log-concave-square-root payment lemma, not
+unbounded proofs.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_aim_log_concave_roots.cpp \
+  -o probe_su2_aim_log_concave_roots
+
+SHA-256
+4e6a78cd80fdf09e083cd238805e01e515f8c8ae7862048e5687277b4ce817e1  probe_su2_aim_log_concave_roots.cpp
+7c59df8fe6ab48e02a55448353b3a2ebd242ca1b6cdff005fd1044ce4f5bc55c  probe_su2_aim_log_concave_roots

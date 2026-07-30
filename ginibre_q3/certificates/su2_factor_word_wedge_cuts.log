@@ -1,0 +1,50 @@
+SU(2) factor-word wedge cumulative-cut audit
+
+COMMAND
+make -f Makefile.research probe_su2_factor_word_wedge_cuts
+./probe_su2_factor_word_wedge_cuts 1000000 8 6
+
+OUTPUT
+SU2_FACTOR_WORD_WEDGE_CUTS samples=1000000 maximum_level=16 maximum_word_length=6 wedge_states=4999628 star_checks=28993748 star_failures=0 cut_flux_checks=28993748 cut_flux_failures=3302824 central_window_checks=15568816 central_window_failures=531055 star_prefix_checks=28993748 star_prefix_failures=0 star_suffix_checks=28993748 star_suffix_failures=0
+FIRST_STAR_FAILURE level=-1 radius=-1 cut=-1 value=0 word=[] profile=[] square=[]
+FIRST_CUT_FLUX_FAILURE level=4 radius=1 cut=1 value=-32 word=[1,2,2,1,1] profile=[1,3,1] square=[11,21,11]
+FIRST_CENTRAL_WINDOW_FAILURE level=6 radius=1 cut=1 value=-204 word=[2,3,1,1,2] profile=[2,6,6,3] square=[85,204,204,84]
+FIRST_STAR_PREFIX_FAILURE level=-1 radius=-1 cut=-1 value=0 word=[] profile=[] square=[]
+FIRST_STAR_SUFFIX_FAILURE level=-1 radius=-1 cut=-1 value=0 word=[] profile=[] square=[]
+
+METHOD
+For each deterministic arbitrary-factor word, the audit constructs its
+half-profile p, fusion square d=p^2, and multiplication kernel C=N_d.
+For every source radius R it constructs the exact propagated wedge
+
+  W_R(i,j)=d_i C_(j,R)-d_j C_(i,R).
+
+The star coordinates W_R(0,S) are the anchored currents.  The audit
+also checks the unweighted cut fluxes
+
+  sum_(i<=t<j) W_R(i,j)
+
+and the sums over every reflected central wedge window.  It uses
+arbitrary-precision integers throughout.
+
+The first cut-flux failure is an exact actual-orbit example at K=2:
+p=(1,3,1), d=(11,21,11), and R=1.  The cut t=1 consists of
+W_1(0,2)+W_1(1,2)=0-32=-32.
+
+The first reflected-window failure is at K=3:
+p=(2,6,6,3), d=(85,204,204,84), and R=1.  The depth-one window
+contains only W_1(1,2)=-204.
+
+Thus neither unweighted order-cut fluxes nor reflected central-window
+sums define the missing cumulative invariant cone.  The zero star
+failures are bounded evidence for the target, not its proof.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_factor_word_wedge_cuts.cpp \
+  -o probe_su2_factor_word_wedge_cuts
+
+SHA-256
+6fa65091220b3c0953565b48400b70f73a5f4cdea77507169fbb7d0d1bdfbc57  probe_su2_factor_word_wedge_cuts.cpp
+90c7db626600a7769bb5f7b9824bdb38ef2deb58d853b2de224dfdf081151cfb  probe_su2_factor_word_wedge_cuts

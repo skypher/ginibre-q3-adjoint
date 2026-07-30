@@ -1,0 +1,66 @@
+SU(2) three-condition wall-payment exhaustive obstruction
+
+COMMAND
+make -f Makefile.research analyze_su2_aim3_exhaustive
+./analyze_su2_aim3_exhaustive 4 12 24
+
+OUTPUT
+SU2_AIM3_EXHAUSTIVE maximum_level=8 maximum_coefficient=12 maximum_length=24 threads=36 profiles=1252318 admissible_profiles=3736066 cap_checks=14956978 cap_failures=0 payment_checks=12477664 payment_failures=1108 stable_checks=12477664 stable_failures=17030
+FIRST_CAP_FAILURE level=-1 factor=-1 label=-1 value=0 boundary=0 profile=[] reserve=[] caps=[]
+FIRST_PAYMENT_FAILURE level=6 factor=1 label=0 value=-1 boundary=31 profile=[1,2,3,4,5,6,7,8,8,8,8,8] reserve=[0,0,0,8] caps=[8,8,8,8]
+FIRST_STABLE_FAILURE level=6 factor=1 label=0 value=-1 boundary=31 profile=[1,2,3,4,5,6,7,8,8,8,8,8] reserve=[0,0,0,8] caps=[8,8,8,8]
+
+METHOD
+The analyzer recursively exhausts every positive integer profile of
+length 2 through 24, with every coefficient at most 12, whose
+successive choices satisfy both exact log concavity and
+
+  (2t+3)m_t >= (2t+1)m_(t+1).
+
+It interprets the end of every enumerated prefix as a terminal zero.
+For every half-level 2<=K<=4, it retains exactly those profiles whose
+first-wall reserve u_1 is coefficientwise nonnegative.  It then
+checks the three-image cap, the exact T_q payment for every reduced
+factor and active row, and the larger stable-weight payment.  All
+arithmetic is signed 64-bit integer arithmetic; the stated coefficient
+and length bounds keep every intermediate far below the type limit.
+
+The first exact payment failure is at K=3, q=1, r=0:
+
+  m=(1,2,3,4,5,6,7,8,8,8,8,8),
+  u_1=(0,0,0,8),
+  (T_1)_(0,*)=(0,-2,-3,-4),
+  rho=m_6+m_7+m_8+m_9=31.
+
+Thus rho-4u_(1,3)=31-32=-1.  Its ratios
+
+  2,3/2,4/3,5/4,6/5,7/6,8/7,1,1,1,1
+
+are nonincreasing, so the profile is log concave.  The normalized-
+dimension inequalities also hold exactly.  This single witness
+disproves the proposed three-condition wall-payment lemma; the census
+is only a bounded audit of the implementation.
+
+The witness is the K=3 member of the exact family
+
+  L=2K+2,
+  m_t=min(t+1,L) for 0<=t<=L+K,
+  m_t=0 afterwards,
+
+which has u_1=(0,...,0,L) and q=1,r=0 payment margin
+(4L-1)-4L=-1 for every K>=3.  Hence the obstruction is uniform and
+does not depend on the bounded enumeration.
+
+The adaptive thread count reflects current machine load and can
+differ on replay; enumeration and exact counts are scheduling
+independent.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror -pthread \
+  analyze_su2_aim3_exhaustive.cpp \
+  -o analyze_su2_aim3_exhaustive
+
+SHA-256
+b267379a8bcf05f5162494054039677bfe104409e43d6c8547b1e1c70cf59dc4  analyze_su2_aim3_exhaustive.cpp
+abf717afff3c7e549d552329cbfadfff5c819870556f28dec9cb74beb47cc8be  analyze_su2_aim3_exhaustive

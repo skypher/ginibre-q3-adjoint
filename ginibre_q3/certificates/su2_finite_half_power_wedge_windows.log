@@ -1,0 +1,35 @@
+SU(2) finite half-power wedge-window exact counteraudit
+
+COMMAND
+make -f Makefile.research probe_su2_finite_half_power_wedge_windows
+./probe_su2_finite_half_power_wedge_windows 8 6
+
+OUTPUT
+SU2_FINITE_HALF_POWER_WEDGE_WINDOWS maximum_level=16 maximum_half_power=6 cases=7776 window_checks=32604 negative_windows=396 anchored_window_checks=4860 negative_anchored_windows=65 lower_tail_checks=52632 negative_lower_tails=506 anchored_lower_tail_checks=7776 negative_anchored_lower_tails=67 full_gram_checks=7776 negative_full_gram=0 first_negative_window_level=6 first_negative_window_factor=2 first_negative_window_half_power=2 first_negative_window_left_radius=2 first_negative_window_right_radius=4 first_negative_window_cutoff=1 first_negative_window_value=-1 first_negative_anchored_window_level=6 first_negative_anchored_window_factor=2 first_negative_anchored_window_half_power=2 first_negative_anchored_window_left_radius=2 first_negative_anchored_window_right_radius=4 first_negative_anchored_window_cutoff=1 first_negative_anchored_window_value=-1 first_negative_lower_tail_level=8 first_negative_lower_tail_factor=2 first_negative_lower_tail_half_power=4 first_negative_lower_tail_left_radius=2 first_negative_lower_tail_right_radius=4 first_negative_lower_tail_cutoff=3 first_negative_lower_tail_value=-3 first_negative_anchored_lower_tail_level=8 first_negative_anchored_lower_tail_factor=2 first_negative_anchored_lower_tail_half_power=4 first_negative_anchored_lower_tail_left_radius=2 first_negative_anchored_lower_tail_right_radius=4 first_negative_anchored_lower_tail_cutoff=3 first_negative_anchored_lower_tail_value=-3 full_result=NO_NEGATIVE_FULL_GRAM window_result=NEGATIVE_REFLECTED_WINDOW lower_tail_result=NEGATIVE_LOWER_TAIL
+
+METHOD
+For every half-level 1<=K<=8, half-factor 1<=Q<=K, and half-power
+1<=s<=6, the audit constructs the exact integer finite fusion matrix
+power A=(N_Q^(K))^s.  For every pair of radii R,S it forms the
+half-power wedge coordinates
+
+  X_R(i,j)=A_(i,0)A_(j,R)-A_(j,0)A_(i,R)
+
+and sums X_R(i,j)X_S(i,j) over the full row-pair set, every reflected
+window rho<=i<j<=K-rho, and every one-sided lower tail
+rho<=i<j<=K.
+
+The full sum is the anchored Gram determinant by Cauchy--Binet and has
+no negative value in the audit.  The displayed exact negative values
+disprove both fixed truncation cones; the scan is not a proof of the
+unbounded full determinant.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_finite_half_power_wedge_windows.cpp \
+  -o probe_su2_finite_half_power_wedge_windows
+
+SHA-256
+ebadff95cba839f1598538e3dc4f371060b772a5337c313879ad339d022deeda  probe_su2_finite_half_power_wedge_windows.cpp
+80dcab26349bc3d0e4372dbe3ea269d28992debb82de78492f7c7cca34a666d0  probe_su2_finite_half_power_wedge_windows

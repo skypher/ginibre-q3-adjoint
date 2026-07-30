@@ -1,0 +1,52 @@
+SU(2) finite cyclic-gradient and cumulative-current exact audit
+
+COMMAND
+make -f Makefile.research probe_su2_finite_cyclic_gradient_currents
+./probe_su2_finite_cyclic_gradient_currents 30 20
+
+OUTPUT
+SU2_FINITE_CYCLIC_GRADIENT_CURRENTS maximum_level=60 maximum_half_power=20 fusion_product_checks=10416 gradient_checks=20832 antisymmetry_checks=874944 anchor_checks=9300 determinant_checks=198400 shell_identity_checks=2356000 current_checks=2356000 negative_currents=0 zero_currents=343506 all_radius_checks=4712000 negative_all_radius=0 zero_all_radius=700812 adjacent_tp2_checks=4324500 negative_adjacent_tp2=388580 negative_adjacent_tp2_after_seeds=345908 log_concavity_checks=179800 negative_log_concavity=0 shell_sign_sequences=198400 shell_sign_changes=189992 shell_negative_to_positive_changes=1106 shell_multiple_changes=1106 reduced_shell_negative_to_positive_changes=553 reduced_shell_multiple_changes=553 chord_checks=4712000 negative_chord_margins=197058 reduced_chord_checks=2306400 negative_reduced_chord_margins=94179 maximum_shell_sign_changes=3 negative_shells=268005 negative_suffixes=472164 first_negative_adjacent_tp2_level=4 first_negative_adjacent_tp2_factor=2 first_negative_adjacent_tp2_half_power=1 first_negative_adjacent_tp2_target=0 first_negative_adjacent_tp2_radius=2 first_negative_adjacent_tp2_value=-2 first_negative_adjacent_tp2_after_seeds_level=4 first_negative_adjacent_tp2_after_seeds_factor=2 first_negative_adjacent_tp2_after_seeds_half_power=3 first_negative_adjacent_tp2_after_seeds_target=0 first_negative_adjacent_tp2_after_seeds_radius=2 first_negative_adjacent_tp2_after_seeds_value=-32 first_shell_negative_to_positive_level=12 first_shell_negative_to_positive_factor=4 first_shell_negative_to_positive_half_power=2 first_shell_negative_to_positive_target=2 first_shell_negative_to_positive_radius=10 first_shell_negative_to_positive_value=2 first_reduced_shell_negative_to_positive_level=12 first_reduced_shell_negative_to_positive_factor=4 first_reduced_shell_negative_to_positive_half_power=2 first_reduced_shell_negative_to_positive_target=2 first_reduced_shell_negative_to_positive_radius=10 first_reduced_shell_negative_to_positive_value=2 first_reduced_shell_negative_to_positive_shells=[21,12,3,-11,2,-18] first_reduced_shell_negative_to_positive_prefixes=[21,33,36,25,27,9] first_negative_chord_margin_level=4 first_negative_chord_margin_factor=4 first_negative_chord_margin_half_power=1 first_negative_chord_margin_target=4 first_negative_chord_margin_radius=2 first_negative_chord_margin_value=-1 first_negative_reduced_chord_margin_level=8 first_negative_reduced_chord_margin_factor=2 first_negative_reduced_chord_margin_half_power=1 first_negative_reduced_chord_margin_target=8 first_negative_reduced_chord_margin_radius=2 first_negative_reduced_chord_margin_value=-1 first_negative_shell_level=4 first_negative_shell_factor=4 first_negative_shell_half_power=1 first_negative_shell_target=2 first_negative_shell_radius=4 first_negative_shell_value=-1 first_negative_suffix_level=4 first_negative_suffix_factor=4 first_negative_suffix_half_power=1 first_negative_suffix_target=2 first_negative_suffix_radius=4 first_negative_suffix_value=-1 model_result=PASS_EXACT_IDENTITIES current_result=NO_NEGATIVE_CUMULATIVE_CURRENT all_radius_result=NO_NEGATIVE_ANCHORED_MINOR tp2_result=NEGATIVE_ADJACENT_MINOR
+
+METHOD
+For every half-level 0<=K<=30 and every half-label 0<=Q,S<=K,
+the audit works in the exact integer group ring of the cyclic group
+of order L=2K+2.  It constructs
+
+  beta_Q=sum_(t=-Q)^Q z^t,
+  A_S=z^S-z^(-S-1),
+
+and compares beta_Q A_S with an independently constructed finite
+SU(2) fusion product.  It then compares every cyclic-gradient power
+
+  [z^S] beta_Q^n A_0
+
+with the integer finite-fusion recurrence through n=41, checking the
+affine antisymmetry at every cyclic coordinate.
+
+For every even power n=2s, 1<=s<=20, it verifies exactly that the
+anchored determinant at radius R is both the cyclic prefix
+
+  d_0 sum_(u=-R)^R delta(S+u)-d_R d_S
+
+and the telescoping sum of its radius shells.  It checks every radius
+0<=R<=K.  The restricted counter current count uses 1<=R<=Q; the
+all-radius count uses every 0<=R<=K.
+
+The absence of a negative cumulative current is a bounded diagnostic,
+not a proof for unbounded K or s.  The exact negative shell and suffix
+counts disprove the corresponding termwise and outside-in
+strengthenings.  The exact adjacent-minor, shell-recrossing, and chord
+counts likewise disprove eventual TP2, a one-crossing shell proof, and
+linear interpolation from the simple-current endpoint.  The
+log-concavity checks audit the separate unbounded midpoint proof in the
+manuscript.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  probe_su2_finite_cyclic_gradient_currents.cpp \
+  -o probe_su2_finite_cyclic_gradient_currents
+
+SHA-256
+1928d292254e923581cdae976cd77286966e36c587faee353836df892221b2a8  probe_su2_finite_cyclic_gradient_currents.cpp
+6ba11c17c3aeafad956b98af6528f6789093fad55ddd44764dbcb8895a7e7008  probe_su2_finite_cyclic_gradient_currents

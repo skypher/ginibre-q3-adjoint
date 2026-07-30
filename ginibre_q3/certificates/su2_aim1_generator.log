@@ -1,0 +1,42 @@
+SU(2) single-reserve squared-factor generator decomposition
+
+COMMAND
+make -f Makefile.research analyze_su2_aim1_generator
+./analyze_su2_aim1_generator 30
+
+OUTPUT
+SU2_AIM1_GENERATOR maximum_level=60 decompositions=4840 tail_checks=115320 tail_failures=30872 residual_checks=1388680 residual_failures=0
+FIRST_TAIL_FAILURE level=4 factor=1 label=0 index=1 value=-2 tail_coefficients=[0,-2,-2] residual=[0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+FIRST_RESIDUAL_FAILURE level=-1 factor=-1 label=-1 index=-1 value=0 tail_coefficients=[] residual=[]
+
+METHOD
+For each half-level K through 30, each reduced factor
+1<=q<=floor(K/2), and each single-reserve coordinate 0<=r<=K, the
+analyzer constructs the ordinary character functional Q_r defining
+the adjacent margins of D_1 (and its terminal coordinate at r=K).
+It multiplies that functional by chi_q^2, determines its eventual
+affine-periodic coefficients, and decomposes it into the K+1 original
+reserve functionals plus its finite first-wall residual.
+
+All 1,388,680 residual coefficients are nonnegative.  In fact the
+residual in row r is the indicator of the consecutive interval
+
+  [L-2q+r,L+2q-r-1]  if r<2q,
+
+and is zero otherwise.  The eventual reserve transform is not
+nonnegative: 30,872 coefficients are negative.  The first exact case
+is K=2,q=1,r=0, with transform row [0,-2,-2] and residual
+m_4+m_5+m_6+m_7.  Hence the first-wall block must pay negative outer
+reserve coordinates; generator invariance cannot discard that block.
+The bounded scan corroborates the exact algebraic decomposition but
+is not its unbounded proof.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror \
+  analyze_su2_aim1_generator.cpp \
+  -o analyze_su2_aim1_generator
+
+SHA-256
+81d96ce810d3bda4fc986fc920818ab4b9e97d86570ccd5061acb0226024af12  analyze_su2_aim1_generator.cpp
+6a340b7da3f578a218897e8958d0a3e92354776fe961b880e6b00638f851b3ba  analyze_su2_aim1_generator

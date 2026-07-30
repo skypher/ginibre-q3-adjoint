@@ -1,0 +1,51 @@
+SU(2) log-concave-square-root global-payment family stress
+
+COMMAND
+make -f Makefile.research probe_su2_aim_square_root_families
+./probe_su2_aim_square_root_families 120 60
+
+OUTPUT
+SU2_AIM_SQUARE_ROOT_FAMILIES maximum_length=120 maximum_level=120 threads=36 roots=5966 suffixes=1185555 reserve_admissible_suffixes=1185555 payment_checks=332416738 payment_failures=0
+FIRST_PAYMENT_FAILURE level=-1 shell=-1 factor=-1 radius=-1 value=0 boundary=0 root=[] square=[] reserve=[]
+
+METHOD
+For every support length through 120, the audit constructs exact
+log-concave roots from the following deliberately different boundary
+regimes:
+
+  constant intervals;
+  rising and falling linear ramps;
+  symmetric tents and trapezoids;
+  binomial rows;
+  increasing and decreasing powers of 2 and 3.
+
+It also shifts each family through the first three admissible leading
+zeros.  Duplicate roots are removed, leaving 5,966 exact roots.  For
+each root p it forms the ordinary SU(2) character square m=p^2.  At
+every half-level through 60 it constructs every nonempty proper
+affine-image suffix D_n and its reserve u_n=BD_n.
+
+All 1,185,555 suffixes have coefficientwise nonnegative reserve.  For
+each reserve-admissible suffix, every reduced proposed factor q and
+every row r is checked against the exact payment
+
+  rho_(n;q,r)(m)
+    - sum_s max(-(T_q)_(r,s),0)u_(n,s)(m).
+
+All 332,416,738 exact payments are nonnegative.  This is a structured
+bounded stress of the log-concave-square-root target AIMSRP, not its
+proof.
+
+The thread count is chosen from hardware concurrency, current machine
+load, and available RAM, using a conservative 64 MiB allowance per
+worker.  The exact roots and counts are independent of scheduling.
+
+COMPILER FLAGS
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+  -Wsign-conversion -Wshadow -Werror -pthread \
+  probe_su2_aim_square_root_families.cpp \
+  -o probe_su2_aim_square_root_families
+
+SHA-256
+c47faf3c30c25087b846f03b4137f1722cfbb9ab07f19264b9e1e25f22b0b9da  probe_su2_aim_square_root_families.cpp
+f1e214059d54f9c9a07e9b68bfe51af0d4b0f513ca91e0bda9203953ba4fa853  probe_su2_aim_square_root_families
