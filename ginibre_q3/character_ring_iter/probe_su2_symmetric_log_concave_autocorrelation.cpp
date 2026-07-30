@@ -110,6 +110,8 @@ struct Counters {
   std::uint64_t gap_suffix_failures = 0;
   std::uint64_t cauchy_binet_coefficients = 0;
   std::uint64_t cauchy_binet_coefficient_failures = 0;
+  std::uint64_t cauchy_binet_gap_suffixes = 0;
+  std::uint64_t cauchy_binet_gap_suffix_failures = 0;
   std::uint64_t reflected_cauchy_binet_pairs = 0;
   std::uint64_t reflected_cauchy_binet_failures = 0;
   std::uint64_t cauchy_binet_identity_checks = 0;
@@ -129,6 +131,7 @@ struct Counters {
   int first_gap_suffix_target = -1;
   int first_gap_suffix = -1;
   Integer first_gap_suffix_value = 0;
+  std::vector<Integer> first_gap_suffix_energies;
   std::vector<int> first_cauchy_binet_half;
   int first_cauchy_binet_radius = -1;
   int first_cauchy_binet_target = -1;
@@ -136,6 +139,11 @@ struct Counters {
   int first_cauchy_binet_j = 0;
   Integer first_cauchy_binet_outer = 0;
   Integer first_cauchy_binet_inner = 0;
+  std::vector<int> first_cauchy_binet_gap_suffix_half;
+  int first_cauchy_binet_gap_suffix_radius = -1;
+  int first_cauchy_binet_gap_suffix_target = -1;
+  int first_cauchy_binet_gap_suffix = -1;
+  Integer first_cauchy_binet_gap_suffix_value = 0;
   std::vector<int> first_reflected_cauchy_binet_half;
   int first_reflected_cauchy_binet_radius = -1;
   int first_reflected_cauchy_binet_target = -1;
@@ -228,6 +236,7 @@ void inspect(const std::vector<int>& half, Counters& counters) {
             counters.first_gap_suffix_target = target;
             counters.first_gap_suffix = gap;
             counters.first_gap_suffix_value = suffix;
+            counters.first_gap_suffix_energies = gap_energies;
           }
         }
       }
@@ -235,6 +244,8 @@ void inspect(const std::vector<int>& half, Counters& counters) {
       const int half_radius = static_cast<int>(half.size()) - 1;
       const int last = radius + target + 1;
       Integer cauchy_binet_total = 0;
+      std::vector<Integer> cauchy_binet_gap_contributions(
+          static_cast<std::size_t>(radius + 2 * half_radius + 1));
       for (int first = -half_radius; first <= radius + half_radius; ++first) {
         for (int second = first + 1; second <= radius + half_radius;
              ++second) {
@@ -249,6 +260,8 @@ void inspect(const std::vector<int>& half, Counters& counters) {
               toeplitz_minor(half, first, second, radius, last) -
               toeplitz_minor(half, first, second, radius + 1, last);
           cauchy_binet_total += outer * inner;
+          cauchy_binet_gap_contributions[static_cast<std::size_t>(
+              second - first)] += outer * inner;
           ++counters.cauchy_binet_coefficients;
           if (inner < 0) {
             ++counters.cauchy_binet_coefficient_failures;
@@ -295,6 +308,23 @@ void inspect(const std::vector<int>& half, Counters& counters) {
               counters.first_reflected_cauchy_binet_j = second;
               counters.first_reflected_cauchy_binet_value = paired_inner;
             }
+          }
+        }
+      }
+      Integer cauchy_binet_gap_suffix = 0;
+      for (int gap = radius + 2 * half_radius; gap >= 1; --gap) {
+        cauchy_binet_gap_suffix +=
+            cauchy_binet_gap_contributions[static_cast<std::size_t>(gap)];
+        ++counters.cauchy_binet_gap_suffixes;
+        if (cauchy_binet_gap_suffix < 0) {
+          ++counters.cauchy_binet_gap_suffix_failures;
+          if (counters.first_cauchy_binet_gap_suffix_half.empty()) {
+            counters.first_cauchy_binet_gap_suffix_half = half;
+            counters.first_cauchy_binet_gap_suffix_radius = radius;
+            counters.first_cauchy_binet_gap_suffix_target = target;
+            counters.first_cauchy_binet_gap_suffix = gap;
+            counters.first_cauchy_binet_gap_suffix_value =
+                cauchy_binet_gap_suffix;
           }
         }
       }
@@ -365,6 +395,10 @@ int main(int argc, char** argv) {
               << counters.cauchy_binet_coefficients
               << " cauchy_binet_coefficient_failures="
               << counters.cauchy_binet_coefficient_failures
+              << " cauchy_binet_gap_suffixes="
+              << counters.cauchy_binet_gap_suffixes
+              << " cauchy_binet_gap_suffix_failures="
+              << counters.cauchy_binet_gap_suffix_failures
               << " reflected_cauchy_binet_pairs="
               << counters.reflected_cauchy_binet_pairs
               << " reflected_cauchy_binet_failures="
@@ -409,7 +443,22 @@ int main(int argc, char** argv) {
                 << counters.first_gap_suffix_target
                 << " first_gap_suffix=" << counters.first_gap_suffix
                 << " first_gap_suffix_value="
-                << counters.first_gap_suffix_value << '\n';
+                << counters.first_gap_suffix_value
+                << " first_gap_suffix_nonzero_energies=[";
+      bool printed = false;
+      for (std::size_t gap = 1;
+           gap < counters.first_gap_suffix_energies.size(); ++gap) {
+        if (counters.first_gap_suffix_energies[gap] == 0) {
+          continue;
+        }
+        if (printed) {
+          std::cout << ',';
+        }
+        std::cout << gap << ':'
+                  << counters.first_gap_suffix_energies[gap];
+        printed = true;
+      }
+      std::cout << "]\n";
     }
     if (!counters.first_cauchy_binet_half.empty()) {
       std::cout << "first_cauchy_binet_half="
@@ -426,6 +475,18 @@ int main(int argc, char** argv) {
                 << counters.first_cauchy_binet_outer
                 << " first_cauchy_binet_inner="
                 << counters.first_cauchy_binet_inner << '\n';
+    }
+    if (!counters.first_cauchy_binet_gap_suffix_half.empty()) {
+      std::cout << "first_cauchy_binet_gap_suffix_half="
+                << render(counters.first_cauchy_binet_gap_suffix_half)
+                << " first_cauchy_binet_gap_suffix_radius="
+                << counters.first_cauchy_binet_gap_suffix_radius
+                << " first_cauchy_binet_gap_suffix_target="
+                << counters.first_cauchy_binet_gap_suffix_target
+                << " first_cauchy_binet_gap_suffix="
+                << counters.first_cauchy_binet_gap_suffix
+                << " first_cauchy_binet_gap_suffix_value="
+                << counters.first_cauchy_binet_gap_suffix_value << '\n';
     }
     if (!counters.first_reflected_cauchy_binet_half.empty()) {
       std::cout << "first_reflected_cauchy_binet_half="

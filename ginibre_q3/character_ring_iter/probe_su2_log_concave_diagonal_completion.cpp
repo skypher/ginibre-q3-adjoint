@@ -296,6 +296,44 @@ int main(int argc, char** argv) {
                 << counters.first_schur_boundary_target
                 << " first_schur_boundary_value="
                 << counters.first_schur_boundary_value << '\n';
+      const std::vector<int>& profile =
+          counters.first_schur_boundary_profile;
+      const int support = static_cast<int>(profile.size()) - 1;
+      std::int64_t minimum_diagonal = current(profile, 1, 1);
+      std::int64_t minimum_boundary = current(profile, 1, support);
+      std::int64_t minimum_schur_determinant =
+          current(profile, 1, 1) * current(profile, 2, 2) -
+          current(profile, 1, 2) * current(profile, 1, 2);
+      for (int radius = 1; radius <= support; ++radius) {
+        minimum_diagonal =
+            std::min(minimum_diagonal, current(profile, radius, radius));
+        if (radius < support) {
+          minimum_boundary =
+              std::min(minimum_boundary,
+                       current(profile, radius, support));
+        }
+        for (int target = radius + 1; target <= support; ++target) {
+          const std::int64_t cross = current(profile, radius, target);
+          minimum_schur_determinant =
+              std::min(minimum_schur_determinant,
+                       current(profile, radius, radius) *
+                               current(profile, target, target) -
+                           cross * cross);
+        }
+      }
+      std::int64_t pi_over_two_value = 0;
+      for (int label = 0; label <= support; ++label) {
+        pi_over_two_value +=
+            (label % 2 == 0 ? 1 : -1) * value(profile, label);
+      }
+      std::cout << "first_schur_boundary_minimum_diagonal="
+                << minimum_diagonal
+                << " first_schur_boundary_minimum_boundary="
+                << minimum_boundary
+                << " first_schur_boundary_minimum_schur_determinant="
+                << minimum_schur_determinant
+                << " first_schur_boundary_character_at_pi_over_two="
+                << pi_over_two_value << '\n';
     }
     return EXIT_SUCCESS;
   } catch (const std::exception& error) {

@@ -11062,6 +11062,313 @@ Its bounded zero-failure star-current scans are discovery evidence
 only; the identity and displayed integer calculations are the exact
 statements used here.
 
+There is a second exact reduction in which the complete star current
+becomes a rank-two Weyl-character triangle.  This retains the global
+sum which the two failed intermediate-pair allocations split apart.
+
+Let `mu` be normalized `SO(3)` Haar measure on the ordinary half-label
+class variable
+
+```text
+x=beta_1.
+```
+
+Thus the `beta_r` are orthonormal and
+
+```text
+x beta_0=beta_1,
+x beta_r=beta_(r-1)+beta_r+beta_(r+1),       r>=1.  (P5A.102AD5ALX1ZZB3J)
+```
+
+On two copies of this variable put
+
+```text
+dnu(x,y)=1/2 (x-y)^2 dmu(x)dmu(y).            (P5A.102AD5ALX1ZZB3K)
+```
+
+Since `integral x dmu=0` and `integral x^2 dmu=1`, this is a
+probability measure.  It is exactly the rank-two `B_2` Weyl measure,
+or normalized `SO(5)` Haar measure.  For `a>=b>=0` define
+
+```text
+Psi_(a,b)(x,y)
+ ={beta_(a+1)(x)beta_b(y)-beta_b(x)beta_(a+1)(y)}
+   /(x-y),                                      (P5A.102AD5ALX1ZZB3L)
+
+Phi_m=Psi_(m,0)
+      ={beta_(m+1)(x)-beta_(m+1)(y)}/(x-y).
+```
+
+These are the irreducible `B_2` characters of highest weight `(a,b)`;
+in particular `Phi_m` is the one-row character.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2
+(rank-two Weyl transfer).**  Let
+
+```text
+P=sum_(t>=0)p_t beta_t,          C=P^2=sum_(t>=0)c_t beta_t,
+```
+
+where `p_t>=0` and both sums are finite.  For `1<=R<=S`, put
+`m=R-1`, `n=S-1`.  Then
+
+```text
+c_0 sum_(t=S-R)^(S+R)c_t-c_Rc_S
+ =integral C(x)C(y)Phi_m(x,y)Phi_n(x,y)dnu(x,y).  (P5A.102AD5ALX1ZZB3M)
+```
+
+If
+
+```text
+d_(a,b)=integral C(x)C(y)Psi_(a,b)(x,y)dnu(x,y),
+```
+
+then
+
+```text
+d_(a,0)
+ =c_0(c_a+c_(a+1)+c_(a+2))-c_1c_(a+1),         (P5A.102AD5ALX1ZZB3N)
+
+d_(a,b)
+ =c_b(c_a+c_(a+2))
+   -c_(a+1)(c_(b-1)+c_(b+1)),             1<=b<=a, (P5A.102AD5ALX1ZZB3O)
+```
+
+with zero continuation.  Finally the multiplicity-free `B_2` product
+rule gives
+
+```text
+Phi_m Phi_n
+ =sum_(i=0)^m sum_(j=0)^(m-i)
+    Psi_(m+n-i-2j,i),                         m<=n, (P5A.102AD5ALX1ZZB3P)
+```
+
+and consequently the ordinary current is exactly
+
+```text
+sum_(i=0)^m sum_(j=0)^(m-i)
+ d_(m+n-i-2j,i).                              (P5A.102AD5ALX1ZZB3Q)
+```
+
+**Proof.**  The covariance identity for the probability density
+`P^2/c_0` is
+
+```text
+c_0 integral C beta_R beta_S
+ -(integral C beta_R)(integral C beta_S)
+
+ =1/2 integral integral C(x)C(y)
+       {beta_R(x)-beta_R(y)}
+       {beta_S(x)-beta_S(y)}dmu(x)dmu(y).
+```
+
+The ordinary Clebsch--Gordan rule identifies the left side with the
+star current.  Substitute `(P5A.102AD5ALX1ZZB3K)` and the definition
+of `Phi` to obtain `(P5A.102AD5ALX1ZZB3M)`.
+
+Formula `(P5A.102AD5ALX1ZZB3L)` is the two-by-two `B_2` Weyl
+determinant.  Multiplying it by the extra `x-y` in the measure and
+using orthonormality gives
+
+```text
+d_(a,b)=X_(a+1)c_b-c_(a+1)X_b,
+
+X_0=c_1,                    X_r=c_(r-1)+c_r+c_(r+1), r>=1.
+```
+
+This is `(P5A.102AD5ALX1ZZB3N)--(P5A.102AD5ALX1ZZB3O)`.
+The same two-row determinant, multiplied by the one-row determinant
+and telescoped first in `j` and then in `i`, gives
+`(P5A.102AD5ALX1ZZB3P)`; its index set is the triangular
+`B_2` Pieri region.  Taking the inner product with `C(x)C(y)` proves
+`(P5A.102AD5ALX1ZZB3Q)`.  QED.
+
+For the actual factor orbit the rank-two virtual character has an
+especially rigid form.  The recurrence in
+`(P5A.102AD5ALX1ZZB3J)` gives
+
+```text
+beta_q(x)beta_q(y)
+ =Psi_(q,q)-Psi_(q-1,q-1),                    (P5A.102AD5ALX1ZZB3R)
+```
+
+where `Psi_(-1,-1)=0`.  Hence
+
+```text
+P(x)P(y)
+ =product_j {Psi_(q_j,q_j)-Psi_(q_j-1,q_j-1)}. (P5A.102AD5ALX1ZZB3S)
+```
+
+The arbitrary number of ordinary factors is now confined to a product
+of adjacent rectangular `B_2` Weyl differences.
+
+**Target 5A8H28UIA2CGLPCIPOCB2GP
+(rank-two triangular global payment).**  If
+
+```text
+P=product_j beta_(q_j),                  C=P^2,
+```
+
+prove for every `0<=m<=n`
+
+```text
+sum_(i=0)^m sum_(j=0)^(m-i)
+ d_(m+n-i-2j,i)>=0.                           (B2GP)
+```
+
+By Lemma 5A8H28UIA2CGLPCIPOCB2 this is equivalent to `(OCSP)`.
+Unlike coefficientwise positivity of the `d_(a,b)`, which is false,
+`(B2GP)` retains exactly the complete multiplicity-free tensor
+triangle.  Identity `(P5A.102AD5ALX1ZZB3S)` also retains exactly the
+interval-convolution factor orbit, rather than enlarging it to every
+character-positive `P`.
+
+That last distinction is necessary.
+
+**Proposition 5A8H28UIA2CGLPCIPOCB2ARB
+(arbitrary-root obstruction).**  Put
+
+```text
+P=beta_0+2beta_1+2beta_2+beta_4.
+```
+
+Then
+
+```text
+P^2=sum_(t=0)^8 c_t beta_t,
+c=(10,21,25,21,15,9,5,1,1),
+```
+
+and at `(R,S)=(1,8)`,
+
+```text
+c_0(c_7+c_8)-c_1c_8=10(1+1)-21=-1.             (P5A.102AD5ALX1ZZB3T)
+```
+
+Thus `(OCSP)` is false for a general nonnegative ordinary character.
+The torus half-profile of this `P` is
+
+```text
+h=(6,5,3,1,1),
+```
+
+which fails log concavity at `h_3^2<h_2h_4`.  Therefore this is not a
+factor-word counterexample: the interval-convolution/log-concavity
+constraint is load-bearing.
+
+**Proof.**  Ordinary Clebsch--Gordan multiplication gives the displayed
+square.  Its fusion interval for `(1,8)` is `[7,9]`, with zero
+continuation at label nine, so the displayed current is exact.  QED.
+
+The strict `cpp_int` diagnostic
+`character_ring_iter/probe_su2_ordinary_arbitrary_root_current.cpp`
+constructs arbitrary nonnegative `P`, its exact square, the coefficients
+`(P5A.102AD5ALX1ZZB3N)--(P5A.102AD5ALX1ZZB3O)`, and the complete
+triangle `(P5A.102AD5ALX1ZZB3Q)`.  In its
+`maximum_length=6, maximum_coefficient=4` replay, all `953,124`
+rank-two identities agree exactly; `197,835` individual `d_(a,b)` are
+negative, and the first complete-current obstruction is
+`(P5A.102AD5ALX1ZZB3T)`.  The identity and displayed obstruction are
+exact; the bounded counts are cross-checks only.
+
+Nor can the global sum in either exact decomposition be replaced by an
+outside-in separation suffix on the full log-concave cone.  In the
+Cauchy--Binet decomposition of Lemma 5A8H28UIA2CGLPCIPOCB, take
+
+```text
+h_0=2,                  h_(-1)=h_1=1,
+R=1,                    S=2.
+```
+
+The suffix over intermediate pairs with `j-i>=3` consists of the pair
+`(-1,2)` and equals `-2`.
+
+For the exterior Gram decomposition put
+
+```text
+p_t=h_t-h_(t+1),              x^(R)=N_Rp,
+Omega_R(i,j)=p_i x^(R)_j-p_j x^(R)_i.
+```
+
+Lagrange's identity gives
+
+```text
+c_0(N_c)_(R,S)-c_Rc_S
+ =sum_(0<=i<j)Omega_R(i,j)Omega_S(i,j).          (P5A.102AD5ALX1ZZB3U)
+```
+
+The symmetric log-concave half-profile
+
+```text
+h=(12,11,10,3),                 p=(1,1,7,3)
+```
+
+has, at `(R,S)=(1,2)`, the exact fixed-separation energies
+
+```text
+gap 1: 5199,       gap 2: 1696,
+gap 3:  -40,       gap 4:   30.                 (P5A.102AD5ALX1ZZB3V)
+```
+
+Thus the suffix with gap at least three is `-10`, although the complete
+current is `6885`.  Both exact representations require a genuinely
+global allocation; sorting their summands only by intermediate
+separation is insufficient.
+
+The same strict analyzer
+`character_ring_iter/probe_su2_symmetric_log_concave_autocorrelation.cpp`
+reproduces `(P5A.102AD5ALX1ZZB3U)--(P5A.102AD5ALX1ZZB3V)`.
+Its enlarged `maximum_length=10, maximum_coefficient=12` scan found
+zero complete-current failures in `574,647` cases, but found `60`
+exterior gap-suffix failures and `5,595,358` Cauchy--Binet gap-suffix
+failures.  The displayed integers are exact counterexamples; the zero
+count for the unsplit current is evidence only.
+
+One more wall-free countercontrol shows why the square origin may not be
+replaced by scalar current tests.
+
+**Proposition 5A8H28UIA2CGLPCIPOCB2PSD
+(spectral-square obstruction).**  The log-concave profile
+
+```text
+c=(4,10,12,11,10,9,8,7,2)
+```
+
+has all diagonal currents at least `4`, all far-support boundary currents
+at least `16`, and every anchored two-by-two Schur determinant
+
+```text
+A(c)_(R,R)A(c)_(S,S)-A(c)_(R,S)^2
+```
+
+at least `32`.  Nevertheless
+
+```text
+A(c)_(1,7)=-2.                                  (P5A.102AD5ALX1ZZB3W)
+```
+
+Moreover its half-label character polynomial is negative at the central
+torus point:
+
+```text
+sum_(h=0)^8 (-1)^h c_h=-1.                      (P5A.102AD5ALX1ZZB3X)
+```
+
+Hence `c` cannot be a character square `P^2`.  Log concavity, every
+diagonal current, the far boundary, and every anchored Schur bound still
+do not replace pointwise spectral positivity.
+
+**Proof.**  Direct interval summation gives the three stated minima and
+`(P5A.102AD5ALX1ZZB3W)`.  At the torus point `theta=pi/2`,
+`chi_(2h)(theta)=(-1)^h`, which gives
+`(P5A.102AD5ALX1ZZB3X)`.  A character square is pointwise nonnegative,
+so this profile is outside the square orbit.  QED.
+
+The strict C++ reproducer
+`character_ring_iter/probe_su2_log_concave_diagonal_completion.cpp`
+checks every displayed integer.  Its bounded search is not used as a
+proof of any positive assertion.
+
 The full quadratic slope reserve is load-bearing.  Replacing `A(a)`
 by the single endpoint term used in the proof of Lemma
 5A8H28UIA2CGLCPDEC would require

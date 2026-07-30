@@ -30,6 +30,48 @@ std::vector<cpp_int> multiply_by_square(const std::vector<cpp_int>& profile,
   return result;
 }
 
+std::vector<cpp_int> multiply_by_irrep(const std::vector<cpp_int>& profile,
+                                       const int q) {
+  const int old_support = static_cast<int>(profile.size()) - 1;
+  std::vector<cpp_int> result(
+      static_cast<std::size_t>(old_support + q + 1));
+  for (int source = 0; source <= old_support; ++source) {
+    for (int target = std::abs(source - q); target <= source + q;
+         ++target) {
+      result[static_cast<std::size_t>(target)] +=
+          profile[static_cast<std::size_t>(source)];
+    }
+  }
+  return result;
+}
+
+cpp_int profile_value(const std::vector<cpp_int>& profile, const int index) {
+  return index >= 0 && index < static_cast<int>(profile.size())
+             ? profile[static_cast<std::size_t>(index)]
+             : cpp_int(0);
+}
+
+std::vector<cpp_int> transform(const std::vector<cpp_int>& profile,
+                               const int label) {
+  std::vector<cpp_int> result(profile.size() +
+                              static_cast<std::size_t>(label));
+  for (int target = 0; target < static_cast<int>(result.size()); ++target) {
+    for (int source = std::abs(target - label);
+         source <= target + label; ++source) {
+      result[static_cast<std::size_t>(target)] +=
+          profile_value(profile, source);
+    }
+  }
+  return result;
+}
+
+cpp_int wedge(const std::vector<cpp_int>& root,
+              const std::vector<cpp_int>& image, const int first,
+              const int second) {
+  return profile_value(root, first) * profile_value(image, second) -
+         profile_value(root, second) * profile_value(image, first);
+}
+
 cpp_int kernel_entry(const std::vector<cpp_int>& profile, const int a,
                      const int b) {
   const int low = std::abs(a - b);
@@ -53,11 +95,17 @@ struct Counters {
   std::uint64_t far_endpoint_failures = 0;
   std::uint64_t current_curvatures = 0;
   std::uint64_t current_curvature_failures = 0;
+  std::uint64_t exterior_gap_suffixes = 0;
+  std::uint64_t exterior_gap_suffix_failures = 0;
+  std::uint64_t exterior_pair_products = 0;
+  std::uint64_t exterior_pair_product_failures = 0;
   std::vector<int> first_adjacent_word;
   std::vector<int> first_boundary_word;
   std::vector<int> first_multiturn_word;
   std::vector<int> first_far_endpoint_word;
   std::vector<int> first_current_curvature_word;
+  std::vector<int> first_exterior_gap_suffix_word;
+  std::vector<int> first_exterior_pair_product_word;
   int first_adjacent_a = -1;
   int first_adjacent_b = -1;
   int first_boundary_a = -1;
@@ -75,12 +123,23 @@ struct Counters {
   int first_current_curvature_radius = -1;
   int first_current_curvature_target = -1;
   cpp_int first_current_curvature_value = 0;
+  int first_exterior_gap_suffix_radius = -1;
+  int first_exterior_gap_suffix_target = -1;
+  int first_exterior_gap_suffix_gap = -1;
+  cpp_int first_exterior_gap_suffix_value = 0;
+  int first_exterior_pair_product_radius = -1;
+  int first_exterior_pair_product_target = -1;
+  int first_exterior_pair_product_first = -1;
+  int first_exterior_pair_product_second = -1;
+  cpp_int first_exterior_pair_product_value = 0;
 };
 
 void inspect_word(const std::vector<int>& word, Counters& counters) {
   std::vector<cpp_int> profile{cpp_int(1)};
+  std::vector<cpp_int> root{cpp_int(1)};
   for (const int q : word) {
     profile = multiply_by_square(profile, q);
+    root = multiply_by_irrep(root, q);
   }
   ++counters.words;
 
@@ -198,6 +257,58 @@ void inspect_word(const std::vector<int>& word, Counters& counters) {
       }
     }
   }
+
+  std::vector<std::vector<cpp_int>> images(
+      static_cast<std::size_t>(support + 1));
+  for (int label = 1; label <= support; ++label) {
+    images[static_cast<std::size_t>(label)] = transform(root, label);
+  }
+  for (int radius = 1; radius <= support; ++radius) {
+    for (int target = radius + 1; target <= support; ++target) {
+      const int exterior_endpoint =
+          static_cast<int>(root.size()) - 1 + target;
+      std::vector<cpp_int> gap_contributions(
+          static_cast<std::size_t>(exterior_endpoint + 1));
+      for (int first = 0; first <= exterior_endpoint; ++first) {
+        for (int second = first + 1; second <= exterior_endpoint; ++second) {
+          const cpp_int product =
+              wedge(root, images[static_cast<std::size_t>(radius)], first,
+                    second) *
+              wedge(root, images[static_cast<std::size_t>(target)], first,
+                    second);
+          gap_contributions[static_cast<std::size_t>(second - first)] +=
+              product;
+          ++counters.exterior_pair_products;
+          if (product < 0) {
+            ++counters.exterior_pair_product_failures;
+            if (counters.first_exterior_pair_product_word.empty()) {
+              counters.first_exterior_pair_product_word = word;
+              counters.first_exterior_pair_product_radius = radius;
+              counters.first_exterior_pair_product_target = target;
+              counters.first_exterior_pair_product_first = first;
+              counters.first_exterior_pair_product_second = second;
+              counters.first_exterior_pair_product_value = product;
+            }
+          }
+        }
+      }
+      cpp_int suffix = 0;
+      for (int gap = exterior_endpoint; gap >= 1; --gap) {
+        suffix += gap_contributions[static_cast<std::size_t>(gap)];
+        ++counters.exterior_gap_suffixes;
+        if (suffix < 0) {
+          ++counters.exterior_gap_suffix_failures;
+          if (counters.first_exterior_gap_suffix_word.empty()) {
+            counters.first_exterior_gap_suffix_word = word;
+            counters.first_exterior_gap_suffix_radius = radius;
+            counters.first_exterior_gap_suffix_target = target;
+            counters.first_exterior_gap_suffix_gap = gap;
+            counters.first_exterior_gap_suffix_value = suffix;
+          }
+        }
+      }
+    }
+  }
 }
 
 void enumerate_words(const int maximum_q, const int length, const int depth,
@@ -252,6 +363,14 @@ int main(int argc, char** argv) {
             << " current_curvatures=" << counters.current_curvatures
             << " current_curvature_failures="
             << counters.current_curvature_failures
+            << " exterior_gap_suffixes="
+            << counters.exterior_gap_suffixes
+            << " exterior_gap_suffix_failures="
+            << counters.exterior_gap_suffix_failures
+            << " exterior_pair_products="
+            << counters.exterior_pair_products
+            << " exterior_pair_product_failures="
+            << counters.exterior_pair_product_failures
             << '\n';
   if (!counters.first_adjacent_word.empty()) {
     std::cout << "first_adjacent_word=";
@@ -299,6 +418,32 @@ int main(int argc, char** argv) {
               << counters.first_current_curvature_target
               << " first_current_curvature_value="
               << counters.first_current_curvature_value << '\n';
+  }
+  if (!counters.first_exterior_gap_suffix_word.empty()) {
+    std::cout << "first_exterior_gap_suffix_word=";
+    print_word(counters.first_exterior_gap_suffix_word);
+    std::cout << " first_exterior_gap_suffix_radius="
+              << counters.first_exterior_gap_suffix_radius
+              << " first_exterior_gap_suffix_target="
+              << counters.first_exterior_gap_suffix_target
+              << " first_exterior_gap_suffix_gap="
+              << counters.first_exterior_gap_suffix_gap
+              << " first_exterior_gap_suffix_value="
+              << counters.first_exterior_gap_suffix_value << '\n';
+  }
+  if (!counters.first_exterior_pair_product_word.empty()) {
+    std::cout << "first_exterior_pair_product_word=";
+    print_word(counters.first_exterior_pair_product_word);
+    std::cout << " first_exterior_pair_product_radius="
+              << counters.first_exterior_pair_product_radius
+              << " first_exterior_pair_product_target="
+              << counters.first_exterior_pair_product_target
+              << " first_exterior_pair_product_first="
+              << counters.first_exterior_pair_product_first
+              << " first_exterior_pair_product_second="
+              << counters.first_exterior_pair_product_second
+              << " first_exterior_pair_product_value="
+              << counters.first_exterior_pair_product_value << '\n';
   }
   return counters.boundary_failures == 0U ? 0 : 1;
 }
