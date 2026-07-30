@@ -112,10 +112,17 @@ int main(int argc, char** argv) {
         std::uint64_t chains = 0U;
         std::uint64_t current_checks = 0U;
         std::uint64_t current_failures = 0U;
+        std::uint64_t off_diagonal_checks = 0U;
+        std::uint64_t off_diagonal_failures = 0U;
         std::array<int, 8> first_endpoints{};
+        std::array<int, 8> first_off_diagonal_endpoints{};
         int first_radius = -1;
         int first_target = -1;
+        int first_off_diagonal_radius = -1;
+        int first_off_diagonal_target = -1;
         Integer first_value = 0;
+        Integer first_off_diagonal_value = 0;
+        std::array<Integer, 3> first_off_diagonal_pairings{};
 
         for (int left_1 = 0; left_1 <= maximum; ++left_1) {
             for (int left_2 = left_1; left_2 <= maximum; ++left_2) {
@@ -197,6 +204,9 @@ int main(int argc, char** argv) {
                                                           radius,
                                                           target);
                                                 ++current_checks;
+                                                if (radius != target) {
+                                                    ++off_diagonal_checks;
+                                                }
                                                 if (polarized < 0) {
                                                     ++current_failures;
                                                     if (first_radius < 0) {
@@ -206,6 +216,37 @@ int main(int argc, char** argv) {
                                                         first_target = target;
                                                         first_value
                                                             = polarized;
+                                                    }
+                                                    if (radius != target) {
+                                                        ++off_diagonal_failures;
+                                                        if (first_off_diagonal_radius
+                                                            < 0) {
+                                                            first_off_diagonal_endpoints
+                                                                = endpoints;
+                                                            first_off_diagonal_radius
+                                                                = radius;
+                                                            first_off_diagonal_target
+                                                                = target;
+                                                            first_off_diagonal_value
+                                                                = polarized;
+                                                            first_off_diagonal_pairings
+                                                                = {
+                                                                    cross_current(
+                                                                        product_12,
+                                                                        product_34,
+                                                                        radius,
+                                                                        target),
+                                                                    cross_current(
+                                                                        product_13,
+                                                                        product_24,
+                                                                        radius,
+                                                                        target),
+                                                                    cross_current(
+                                                                        product_14,
+                                                                        product_23,
+                                                                        radius,
+                                                                        target)};
+                                                        }
                                                     }
                                                 }
                                             }
@@ -225,10 +266,24 @@ int main(int argc, char** argv) {
             << " chains=" << chains
             << " current_checks=" << current_checks
             << " current_failures=" << current_failures
+            << " off_diagonal_checks=" << off_diagonal_checks
+            << " off_diagonal_failures=" << off_diagonal_failures
             << " first_endpoints=" << render(first_endpoints)
             << " first_radius=" << first_radius
             << " first_target=" << first_target
             << " first_value=" << first_value
+            << " first_off_diagonal_endpoints="
+            << render(first_off_diagonal_endpoints)
+            << " first_off_diagonal_radius="
+            << first_off_diagonal_radius
+            << " first_off_diagonal_target="
+            << first_off_diagonal_target
+            << " first_off_diagonal_value="
+            << first_off_diagonal_value
+            << " first_off_diagonal_pairings=["
+            << first_off_diagonal_pairings[0] << ','
+            << first_off_diagonal_pairings[1] << ','
+            << first_off_diagonal_pairings[2] << ']'
             << '\n';
         return EXIT_SUCCESS;
     } catch (const std::exception& error) {

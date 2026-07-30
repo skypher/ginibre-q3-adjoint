@@ -10800,6 +10800,268 @@ uniform finite proof: any fixed factor word enters this chamber when
 pay the first reflected shell against the already positive proper
 suffix.
 
+**Lemma 5A8H28UIA2CGLPCIPOBASE
+(ordinary zero--one-factor base).**  Inequality `(OCSP)` holds for
+the empty factor word and for every word consisting of one squared
+irreducible factor.
+
+**Proof.**  The empty word has `c=e_0`, so the assertion is
+immediate.  For one factor `chi_q^2`, ordinary Clebsch--Gordan gives
+
+```text
+c=1_[0,2q],                         c_0=1.
+```
+
+If either `c_R` or `c_S` vanishes, the right side of `(OCSP)` is
+zero.  Otherwise `R,S<=2q`, and the ordinary fusion interval
+
+```text
+[|R-S|,R+S]
+```
+
+contains its left endpoint `|R-S|<=2q`.  Hence its intersection with
+the support of `c` contains at least one label, so
+
+```text
+c_0 sum_(t=|R-S|)^(R+S)c_t>=1=c_Rc_S.
+```
+
+This proves the claim.  QED.
+
+Two natural strengthenings of `(OCSP)` are false.  The first would
+replace the star-boundary minors by all adjacent minors.  For an
+ordinary factor word put
+
+```text
+M=product_j N_(q_j)^2.
+```
+
+**Proposition 5A8H28UIA2CGLPCIPOTP
+(ordinary full-TP2 obstruction).**  For the three-factor word
+
+```text
+(q_1,q_2,q_3)=(1,1,4),
+```
+
+the adjacent submatrix on rows `{0,1}` and columns `{4,5}` is
+
+```text
+[[81, 80],
+ [240,237]],
+```
+
+and hence its determinant is
+
+```text
+81*237-80*240=-3.                                (P5A.102AD5ALX1ZZB3A)
+```
+
+Thus `M` need not be `TP2`, even for three squared factors.  This is
+not a counterexample to `(OCSP)`, which uses columns `{0,S}` rather
+than consecutive columns.
+
+**Proof.**  Starting from `e_0`, multiply successively by
+
+```text
+chi_1^2=sum_(t=0)^2 chi_t,
+chi_1^2=sum_(t=0)^2 chi_t,
+chi_4^2=sum_(t=0)^8 chi_t.
+```
+
+Ordinary Clebsch--Gordan interval summation gives the four displayed
+entries, and the determinant calculation is immediate.  The strict
+`cpp_int` reproducer
+`character_ring_iter/probe_su2_ordinary_variable_box_tp2.cpp`
+performs the same multiplication and checks every adjacent and
+star-boundary minor.  QED.
+
+The second strengthening would polarize a log-concave root into
+nested superlevel intervals and demand every four-layer coefficient
+to be nonnegative.  For profiles `x,y`, write
+
+```text
+Cross(x,y)_(R,S)
+ =x_0(N_y)_(R,S)+y_0(N_x)_(R,S)
+  -x_Ry_S-y_Rx_S.
+```
+
+For four interval layers define the fully polarized quartic current
+
+```text
+P(I_1,I_2,I_3,I_4)_(R,S)
+ =Cross(1_(I_1)1_(I_2),1_(I_3)1_(I_4))_(R,S)
+  +Cross(1_(I_1)1_(I_3),1_(I_2)1_(I_4))_(R,S)
+  +Cross(1_(I_1)1_(I_4),1_(I_2)1_(I_3))_(R,S).
+                                                        (P5A.102AD5ALX1ZZB3B)
+```
+
+**Proposition 5A8H28UIA2CGLPCIPONL
+(nested-layer polarization obstruction).**  The chain
+
+```text
+I_1=I_2=[0,7],             I_3=[0,3],
+I_4=[1,1]
+```
+
+has, at `(R,S)=(1,6)`, the three pair contributions
+
+```text
+(-3,1,1),
+```
+
+so
+
+```text
+P(I_1,I_2,I_3,I_4)_(1,6)=-1.                   (P5A.102AD5ALX1ZZB3C)
+```
+
+Consequently nested-superlevel expansion cannot prove `(OCSP)`
+coefficient by coefficient, even away from the automatic diagonal
+Gram squares.
+
+**Proof.**  Multiply each of the six interval pairs by the ordinary
+Clebsch--Gordan rule and substitute the resulting profiles in
+`(P5A.102AD5ALX1ZZB3B)`.  The three exact cross currents are the
+displayed integers.  The strict C++ reproducer
+`character_ring_iter/probe_su2_ordinary_nested_four_layers.cpp`
+enumerates nested chains and independently obtains the same values.
+QED.
+
+These obstructions leave the exact star-boundary aggregate in
+`(OCSP)` intact.  In particular, neither local adjacent-minor
+positivity nor termwise four-layer positivity may be used in its
+proof; the payment must retain the complete boundary anchor and the
+coupling among layer monomials imposed by an actual factor word.
+
+The ordinary star current has a two-particle Cauchy--Binet form in
+which every word-dependent outer weight is nonnegative.  This removes
+the factor count from the remaining sign.
+
+Let `h=(h_t)_(t in Z)` be finite, symmetric, nonnegative, and log
+concave, and put
+
+```text
+W_t=sum_(u in Z)h_u h_(u+t),             W_(-t)=W_t,
+c_t=W_t-W_(t+1),                         t>=0.
+```
+
+For row indices `a<b` and column indices `x<y`, define the Toeplitz
+minor
+
+```text
+Delta_h(a,b;x,y)
+ =h_(x-a)h_(y-b)-h_(y-a)h_(x-b).          (P5A.102AD5ALX1ZZB3D)
+```
+
+Log concavity of `h` is exactly Toeplitz `TP2`, so every displayed
+minor is nonnegative.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB
+(ordinary star Cauchy--Binet reduction).**  Assume `1<=R<S` and put
+
+```text
+B=R+S+1,
+
+Gamma_(R,S)(i,j)
+ =Delta_h(i,j;0,S)-Delta_h(i,j;-1,S)
+  +Delta_h(i,j;R,B)-Delta_h(i,j;R+1,B).
+                                                        (P5A.102AD5ALX1ZZB3E)
+```
+
+Then
+
+```text
+c_0 sum_(t=S-R)^(S+R)c_t-c_Rc_S
+ =sum_(i<j)Delta_h(0,R;i,j)Gamma_(R,S)(i,j).    (P5A.102AD5ALX1ZZB3F)
+```
+
+All sums are finite, and every outer coefficient
+`Delta_h(0,R;i,j)` is nonnegative.
+
+**Proof.**  Let `T_W=(W_(y-x))_(x,y in Z)` and, for fixed row pair
+`{0,R}`, write
+
+```text
+M(x,y)=det (T_W)_[{0,R},{x,y}].
+```
+
+Expanding `c_t=W_t-W_(t+1)` and telescoping the fusion interval gives
+
+```text
+c_0{W_(S-R)-W_(S+R+1)}-c_Rc_S
+
+ =M(0,S)+M(R,B)-M(-1,S)-M(R+1,B).               (P5A.102AD5ALX1ZZB3G)
+```
+
+Symmetry of `h` gives `T_W=T_h^2`.  Apply two-by-two Cauchy--Binet
+to each of the four minors in `(P5A.102AD5ALX1ZZB3G)`:
+
+```text
+M(x,y)
+ =sum_(i<j)Delta_h(0,R;i,j)Delta_h(i,j;x,y).
+```
+
+The common outer factor and the four signed inner factors give
+`(P5A.102AD5ALX1ZZB3E)--(P5A.102AD5ALX1ZZB3F)`.  Toeplitz `TP2`
+gives the last assertion.  QED.
+
+For an ordinary factor word, `h` is the torus-weight profile
+
+```text
+h=[z^.]product_j beta_(q_j)(z).
+```
+
+It is symmetric and log concave because each `beta_q` is an interval
+indicator and convolution preserves log concavity.  Its
+autocorrelation is exactly the doubled-word profile `W_hat`.
+Consequently the following weighted payment implies `(OCSP)` for
+every factor word.
+
+**Target 5A8H28UIA2CGLPCIPOCBGP
+(ordinary Cauchy--Binet global payment).**  For every finite
+symmetric nonnegative log-concave `h` and all `1<=R<S`, prove
+
+```text
+sum_(i<j)Delta_h(0,R;i,j)Gamma_(R,S)(i,j)>=0.    (OCBGP)
+```
+
+The outer `TP2` weights are essential, but they cannot be used
+coefficientwise.  For
+
+```text
+h_0=2,                    h_(-1)=h_1=1,
+```
+
+at `(R,S,i,j)=(1,2,-1,1)` one has
+
+```text
+Delta_h(0,R;i,j)=2,             Gamma_(R,S)(i,j)=-1.
+                                                        (P5A.102AD5ALX1ZZB3H)
+```
+
+Nor does reflection of the intermediate pair about the source
+midpoint suffice.  The involution
+
+```text
+(i,j) -> (R-j,R-i)
+```
+
+fixes `(i,j)=(-1,2)` in the same example, where
+
+```text
+Gamma_(1,2)(-1,2)=-2.                         (P5A.102AD5ALX1ZZB3I)
+```
+
+Thus `(OCBGP)` is a genuine global allocation over intermediate
+pairs, not a termwise or two-point reflection inequality.  The strict
+C++ analyzer
+`character_ring_iter/probe_su2_symmetric_log_concave_autocorrelation.cpp`
+constructs `h`, its autocorrelation, both sides of
+`(P5A.102AD5ALX1ZZB3F)`, and the two exact countercontrols above.
+Its bounded zero-failure star-current scans are discovery evidence
+only; the identity and displayed integer calculations are the exact
+statements used here.
+
 The full quadratic slope reserve is load-bearing.  Replacing `A(a)`
 by the single endpoint term used in the proof of Lemma
 5A8H28UIA2CGLCPDEC would require
