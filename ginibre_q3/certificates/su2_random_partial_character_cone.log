@@ -1,0 +1,1 @@
+SU2_RANDOM_PARTIAL_CHARACTER_CONE samples=100000 maximum_level=64 maximum_factors=96 threads=12 sign_supports=disjoint regimes=uniform,top,mid,low result=PASS_NO_COUNTEREXAMPLE

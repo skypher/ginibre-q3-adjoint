@@ -34551,6 +34551,19 @@ factors at levels `1<=k<=6`.  It passed 235,514 cases in total, including
 finite-level scalar checks, but it remains bounded evidence rather than a
 uniform proof of `(PCP_k)`.
 
+The strict exact randomized falsifier
+`character_ring_iter/probe_su2_random_partial_character_cone.cpp`
+tests the same complete target coefficient vector with arbitrary-precision
+integers.  Its deterministic hard-sector replay tested `100,000`
+support-disjoint signed words through level `64` and length `96`.  Half of
+the samples lie in the upper half of the length range, and the four label
+regimes are uniform, within eight labels of the affine wall, within six
+labels of the middle, and at most eight.  Whenever two label classes occur,
+both signs occur.  It found no negative coefficient.  This is broad
+counterexample search only; it supplies no unbounded step toward
+`(PCP_k)`.  The replay is
+`certificates/su2_random_partial_character_cone.log`.
+
 There is a uniform standard-monomial reduction of the kernel which a
 positive complex must resolve.  Work first in the ordinary category and put
 `V_i=Sym^(q_i)(C^2)`.  For a target `p` and a subset `T` of the signed
@@ -57161,6 +57174,16 @@ arguments `1 4` and `2 4` reproduce respectively `(P23.14)` and
 stronger proof in which generic Jacobi-hypergroup positivity is applied
 after the half-product split.  Any successful use of `(P23.10)` or
 `(P23.13)` must retain cancellations between several orthogonal types.
+This failure is not only an artefact of splitting the divided differences
+into two rows.  Since `D_1=1`, the support-disjoint complete product
+
+```text
+D_1 D_1 S_2=S_2
+```
+
+already has the coefficient `-1` at `Psi_(1,1)` in `(P23.14)`.  Thus even
+the full two-minus quotient need not belong to the spherical positive cone;
+only its scalar coefficient is constrained by `Q3`.
 
 Thus all label dependence has moved into an explicitly positive quotient;
 all cancellation is carried by the single fundamental factor `Delta^m`.

@@ -58,6 +58,10 @@ search_su2_level_partial_character_cone: search_su2_level_partial_character_cone
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wshadow -Werror $< -o $@
 
+probe_su2_random_partial_character_cone: probe_su2_random_partial_character_cone.cpp
+	$(CXX) -O3 -DNDEBUG -std=c++20 -fopenmp -Wall -Wextra -Wpedantic \
+		-Wconversion -Wsign-conversion -Wshadow -Werror $< -o $@
+
 search_su2_odd_orbit_gks: search_su2_odd_orbit_gks.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -972,6 +976,7 @@ RESEARCH_TARGETS = \
 	analyze_su2_additive_compound_sign \
 	search_su2_fundamental_transfer \
 	search_su2_level_partial_character_cone \
+	probe_su2_random_partial_character_cone \
 	search_su2_odd_orbit_gks \
 	analyze_su2_odd_orbit_rank3_cone \
 	verify_su2_odd_orbit_rank4_transport \
