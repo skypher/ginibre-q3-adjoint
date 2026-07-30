@@ -101,18 +101,91 @@ struct Counters {
   std::uint64_t roots = 0;
   std::uint64_t currents = 0;
   std::uint64_t failures = 0;
+  std::uint64_t log_concave_roots = 0;
+  std::uint64_t log_concave_currents = 0;
+  std::uint64_t log_concave_failures = 0;
+  std::uint64_t interval_support_roots = 0;
+  std::uint64_t interval_support_currents = 0;
+  std::uint64_t interval_support_failures = 0;
   std::uint64_t b2_identity_failures = 0;
   std::uint64_t negative_b2_coefficients = 0;
+  std::uint64_t square_log_concave_roots = 0;
+  std::uint64_t square_log_concave_b2_columns = 0;
+  std::uint64_t square_log_concave_b2_column_failures = 0;
   std::vector<int> first_root;
   std::vector<Integer> first_square;
   int first_radius = -1;
   int first_target = -1;
   Integer first_value = 0;
+  std::vector<int> first_log_concave_root;
+  int first_log_concave_radius = -1;
+  int first_log_concave_target = -1;
+  Integer first_log_concave_value = 0;
+  std::vector<int> first_interval_support_root;
+  int first_interval_support_radius = -1;
+  int first_interval_support_target = -1;
+  Integer first_interval_support_value = 0;
+  std::vector<int> first_square_log_concave_b2_column_root;
+  std::vector<Integer> first_square_log_concave_b2_column_square;
+  int first_square_log_concave_b2_column_radius = -1;
+  int first_square_log_concave_b2_column_target = -1;
+  int first_square_log_concave_b2_column = -1;
+  Integer first_square_log_concave_b2_column_value = 0;
 };
 
 void inspect(const std::vector<int>& root, Counters& counters) {
   const std::vector<Integer> square = square_character(root);
   ++counters.roots;
+  bool log_concave = true;
+  bool interval_support = true;
+  bool saw_positive = false;
+  bool saw_zero_after_positive = false;
+  for (int index = 0; index < static_cast<int>(root.size()); ++index) {
+    const int coefficient = root[static_cast<std::size_t>(index)];
+    if (coefficient > 0) {
+      if (saw_zero_after_positive) {
+        log_concave = false;
+        interval_support = false;
+      }
+      saw_positive = true;
+    } else if (saw_positive) {
+      saw_zero_after_positive = true;
+    }
+    if (index >= 1 && index + 1 < static_cast<int>(root.size())) {
+      const std::int64_t middle = coefficient;
+      if (middle * middle <
+          static_cast<std::int64_t>(
+              root[static_cast<std::size_t>(index - 1)]) *
+              root[static_cast<std::size_t>(index + 1)]) {
+        log_concave = false;
+      }
+    }
+  }
+  if (log_concave) {
+    ++counters.log_concave_roots;
+  }
+  if (interval_support) {
+    ++counters.interval_support_roots;
+  }
+  bool square_log_concave = true;
+  bool square_saw_zero = false;
+  for (int index = 0; index < static_cast<int>(square.size()); ++index) {
+    if (square[static_cast<std::size_t>(index)] == 0) {
+      square_saw_zero = true;
+    } else if (square_saw_zero) {
+      square_log_concave = false;
+    }
+    if (index >= 1 && index + 1 < static_cast<int>(square.size()) &&
+        square[static_cast<std::size_t>(index)] *
+                square[static_cast<std::size_t>(index)] <
+            square[static_cast<std::size_t>(index - 1)] *
+                square[static_cast<std::size_t>(index + 1)]) {
+      square_log_concave = false;
+    }
+  }
+  if (square_log_concave) {
+    ++counters.square_log_concave_roots;
+  }
   const int support = static_cast<int>(square.size()) - 1;
   for (int first = 0; first <= support; ++first) {
     for (int second = 0; second <= first; ++second) {
@@ -125,9 +198,57 @@ void inspect(const std::vector<int>& root, Counters& counters) {
     for (int target = radius; target <= support; ++target) {
       const Integer margin = current(square, radius, target);
       ++counters.currents;
+      if (log_concave) {
+        ++counters.log_concave_currents;
+        if (margin < 0) {
+          ++counters.log_concave_failures;
+          if (counters.first_log_concave_root.empty()) {
+            counters.first_log_concave_root = root;
+            counters.first_log_concave_radius = radius;
+            counters.first_log_concave_target = target;
+            counters.first_log_concave_value = margin;
+          }
+        }
+      }
+      if (interval_support) {
+        ++counters.interval_support_currents;
+        if (margin < 0) {
+          ++counters.interval_support_failures;
+          if (counters.first_interval_support_root.empty()) {
+            counters.first_interval_support_root = root;
+            counters.first_interval_support_radius = radius;
+            counters.first_interval_support_target = target;
+            counters.first_interval_support_value = margin;
+          }
+        }
+      }
       if (radius >= 1 &&
           b2_triangle(square, radius, target) != margin) {
         ++counters.b2_identity_failures;
+      }
+      if (square_log_concave && radius >= 1 && target > radius) {
+        const int smaller = radius - 1;
+        const int larger = target - 1;
+        for (int contraction = 0; contraction <= smaller; ++contraction) {
+          Integer column_sum = 0;
+          for (int row = 0; row <= smaller - contraction; ++row) {
+            column_sum += b2_coefficient(
+                square,
+                smaller + larger - row - 2 * contraction, row);
+          }
+          ++counters.square_log_concave_b2_columns;
+          if (column_sum < 0) {
+            ++counters.square_log_concave_b2_column_failures;
+            if (counters.first_square_log_concave_b2_column_root.empty()) {
+              counters.first_square_log_concave_b2_column_root = root;
+              counters.first_square_log_concave_b2_column_square = square;
+              counters.first_square_log_concave_b2_column_radius = radius;
+              counters.first_square_log_concave_b2_column_target = target;
+              counters.first_square_log_concave_b2_column = contraction;
+              counters.first_square_log_concave_b2_column_value = column_sum;
+            }
+          }
+        }
       }
       if (margin < 0) {
         ++counters.failures;
@@ -159,6 +280,56 @@ void enumerate(const int length, const int maximum_coefficient,
   }
 }
 
+void enumerate_log_concave(const int length, const int maximum_coefficient,
+                           const int maximum_shift, const int index,
+                           std::vector<int>& core, Counters& counters) {
+  if (index == length) {
+    for (int shift = 0; shift <= maximum_shift; ++shift) {
+      std::vector<int> root(static_cast<std::size_t>(shift), 0);
+      root.insert(root.end(), core.begin(), core.end());
+      inspect(root, counters);
+    }
+    return;
+  }
+  for (int coefficient = 1; coefficient <= maximum_coefficient;
+       ++coefficient) {
+    if (index >= 2) {
+      const std::int64_t previous =
+          core[static_cast<std::size_t>(index - 2)];
+      const std::int64_t middle =
+          core[static_cast<std::size_t>(index - 1)];
+      if (middle * middle <
+          previous * static_cast<std::int64_t>(coefficient)) {
+        continue;
+      }
+    }
+    core[static_cast<std::size_t>(index)] = coefficient;
+    enumerate_log_concave(length, maximum_coefficient, maximum_shift,
+                          index + 1, core, counters);
+  }
+}
+
+void enumerate_interval_support(const int length,
+                                const int maximum_coefficient,
+                                const int maximum_shift, const int index,
+                                std::vector<int>& core,
+                                Counters& counters) {
+  if (index == length) {
+    for (int shift = 0; shift <= maximum_shift; ++shift) {
+      std::vector<int> root(static_cast<std::size_t>(shift), 0);
+      root.insert(root.end(), core.begin(), core.end());
+      inspect(root, counters);
+    }
+    return;
+  }
+  for (int coefficient = 1; coefficient <= maximum_coefficient;
+       ++coefficient) {
+    core[static_cast<std::size_t>(index)] = coefficient;
+    enumerate_interval_support(length, maximum_coefficient, maximum_shift,
+                               index + 1, core, counters);
+  }
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -167,26 +338,78 @@ int main(int argc, char** argv) {
         argc >= 2 ? parse_positive(argv[1], "maximum_length") : 6;
     const int maximum_coefficient =
         argc >= 3 ? parse_positive(argv[2], "maximum_coefficient") : 5;
-    if (argc > 3) {
+    const std::string mode =
+        argc >= 4 ? std::string(argv[3]) : std::string("--all");
+    const bool log_concave_only = mode == "--log-concave-only";
+    const bool interval_support_only = mode == "--interval-support-only";
+    const bool scaled_gap_family = mode == "--scaled-gap-family";
+    if (mode != "--all" && !log_concave_only &&
+        !interval_support_only && !scaled_gap_family) {
+      throw std::invalid_argument(
+          "third argument must be --log-concave-only or "
+          "--interval-support-only or --scaled-gap-family");
+    }
+    const int maximum_shift =
+        argc >= 5 ? parse_positive(argv[4], "maximum_shift") : 5;
+    if (argc > 5) {
       throw std::invalid_argument(
           "usage: probe_su2_ordinary_arbitrary_root_current "
-          "[maximum_length] [maximum_coefficient]");
+          "[maximum_length] [maximum_coefficient] "
+          "[(--log-concave-only|--interval-support-only|"
+          "--scaled-gap-family) "
+          "[maximum_shift]]");
     }
 
     Counters counters;
-    for (int length = 1; length <= maximum_length; ++length) {
-      std::vector<int> root(static_cast<std::size_t>(length));
-      enumerate(length, maximum_coefficient, 0, root, counters);
+    if (scaled_gap_family) {
+      for (int scale = 1; scale <= maximum_coefficient; ++scale) {
+        inspect({scale, 2 * scale, 2 * scale, 1, scale}, counters);
+      }
+    } else {
+      for (int length = 1; length <= maximum_length; ++length) {
+        std::vector<int> root(static_cast<std::size_t>(length));
+        if (log_concave_only) {
+          enumerate_log_concave(length, maximum_coefficient, maximum_shift,
+                                0, root, counters);
+        } else if (interval_support_only) {
+          enumerate_interval_support(length, maximum_coefficient,
+                                     maximum_shift, 0, root, counters);
+        } else {
+          enumerate(length, maximum_coefficient, 0, root, counters);
+        }
+      }
     }
 
     std::cout << "SU2_ORDINARY_ARBITRARY_ROOT_CURRENT"
               << " maximum_length=" << maximum_length
               << " maximum_coefficient=" << maximum_coefficient
+              << " log_concave_only=" << (log_concave_only ? 1 : 0)
+              << " interval_support_only="
+              << (interval_support_only ? 1 : 0)
+              << " scaled_gap_family=" << (scaled_gap_family ? 1 : 0)
+              << " maximum_shift=" << maximum_shift
               << " roots=" << counters.roots
               << " currents=" << counters.currents
               << " failures=" << counters.failures
+              << " log_concave_roots=" << counters.log_concave_roots
+              << " log_concave_currents="
+              << counters.log_concave_currents
+              << " log_concave_failures="
+              << counters.log_concave_failures
+              << " interval_support_roots="
+              << counters.interval_support_roots
+              << " interval_support_currents="
+              << counters.interval_support_currents
+              << " interval_support_failures="
+              << counters.interval_support_failures
               << " negative_b2_coefficients="
               << counters.negative_b2_coefficients
+              << " square_log_concave_roots="
+              << counters.square_log_concave_roots
+              << " square_log_concave_b2_columns="
+              << counters.square_log_concave_b2_columns
+              << " square_log_concave_b2_column_failures="
+              << counters.square_log_concave_b2_column_failures
               << " b2_identity_failures="
               << counters.b2_identity_failures << '\n';
     if (!counters.first_root.empty()) {
@@ -202,6 +425,50 @@ int main(int argc, char** argv) {
       std::cout << "] first_radius=" << counters.first_radius
                 << " first_target=" << counters.first_target
                 << " first_value=" << counters.first_value << '\n';
+    }
+    if (!counters.first_log_concave_root.empty()) {
+      std::cout << "first_log_concave_root="
+                << render(counters.first_log_concave_root)
+                << " first_log_concave_radius="
+                << counters.first_log_concave_radius
+                << " first_log_concave_target="
+                << counters.first_log_concave_target
+                << " first_log_concave_value="
+                << counters.first_log_concave_value << '\n';
+    }
+    if (!counters.first_interval_support_root.empty()) {
+      std::cout << "first_interval_support_root="
+                << render(counters.first_interval_support_root)
+                << " first_interval_support_radius="
+                << counters.first_interval_support_radius
+                << " first_interval_support_target="
+                << counters.first_interval_support_target
+                << " first_interval_support_value="
+                << counters.first_interval_support_value << '\n';
+    }
+    if (!counters.first_square_log_concave_b2_column_root.empty()) {
+      std::cout << "first_square_log_concave_b2_column_root="
+                << render(counters.first_square_log_concave_b2_column_root)
+                << " first_square_log_concave_b2_column_square=[";
+      for (std::size_t index = 0;
+           index < counters.first_square_log_concave_b2_column_square.size();
+           ++index) {
+        if (index != 0U) {
+          std::cout << ',';
+        }
+        std::cout
+            << counters.first_square_log_concave_b2_column_square[index];
+      }
+      std::cout << ']'
+                << " first_square_log_concave_b2_column_radius="
+                << counters.first_square_log_concave_b2_column_radius
+                << " first_square_log_concave_b2_column_target="
+                << counters.first_square_log_concave_b2_column_target
+                << " first_square_log_concave_b2_column="
+                << counters.first_square_log_concave_b2_column
+                << " first_square_log_concave_b2_column_value="
+                << counters.first_square_log_concave_b2_column_value
+                << '\n';
     }
     return counters.b2_identity_failures == 0U ? EXIT_SUCCESS : EXIT_FAILURE;
   } catch (const std::exception& error) {

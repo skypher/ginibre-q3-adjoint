@@ -84,11 +84,31 @@ cpp_int kernel_entry(const std::vector<cpp_int>& profile, const int a,
   return value;
 }
 
+cpp_int b2_coefficient(const std::vector<cpp_int>& profile, const int first,
+                       const int second) {
+  if (second == 0) {
+    return profile_value(profile, 0) *
+               (profile_value(profile, first) +
+                profile_value(profile, first + 1) +
+                profile_value(profile, first + 2)) -
+           profile_value(profile, first + 1) *
+               profile_value(profile, 1);
+  }
+  return profile_value(profile, second) *
+             (profile_value(profile, first) +
+              profile_value(profile, first + 2)) -
+         profile_value(profile, first + 1) *
+             (profile_value(profile, second - 1) +
+              profile_value(profile, second + 1));
+}
+
 struct Counters {
   std::uint64_t words = 0;
   std::uint64_t adjacent_minors = 0;
   std::uint64_t boundary_minors = 0;
   std::uint64_t adjacent_failures = 0;
+  std::uint64_t strictly_balanced_adjacent_failures = 0;
+  int maximum_adjacent_failure_balance_slack = -1;
   std::uint64_t boundary_failures = 0;
   std::uint64_t ratio_rows = 0;
   std::uint64_t ratio_multiturn_failures = 0;
@@ -99,13 +119,20 @@ struct Counters {
   std::uint64_t exterior_gap_suffix_failures = 0;
   std::uint64_t exterior_pair_products = 0;
   std::uint64_t exterior_pair_product_failures = 0;
+  std::uint64_t b2_triangle_rows = 0;
+  std::uint64_t b2_triangle_row_failures = 0;
+  std::uint64_t b2_triangle_columns = 0;
+  std::uint64_t b2_triangle_column_failures = 0;
   std::vector<int> first_adjacent_word;
+  std::vector<int> first_strictly_balanced_adjacent_word;
   std::vector<int> first_boundary_word;
   std::vector<int> first_multiturn_word;
   std::vector<int> first_far_endpoint_word;
   std::vector<int> first_current_curvature_word;
   std::vector<int> first_exterior_gap_suffix_word;
   std::vector<int> first_exterior_pair_product_word;
+  std::vector<int> first_b2_triangle_row_word;
+  std::vector<int> first_b2_triangle_column_word;
   int first_adjacent_a = -1;
   int first_adjacent_b = -1;
   int first_boundary_a = -1;
@@ -115,6 +142,7 @@ struct Counters {
   cpp_int first_adjacent_southwest = 0;
   cpp_int first_adjacent_southeast = 0;
   cpp_int first_adjacent_value = 0;
+  cpp_int first_strictly_balanced_adjacent_value = 0;
   cpp_int first_boundary_value = 0;
   int first_multiturn_radius = -1;
   int first_multiturn_target = -1;
@@ -132,9 +160,18 @@ struct Counters {
   int first_exterior_pair_product_first = -1;
   int first_exterior_pair_product_second = -1;
   cpp_int first_exterior_pair_product_value = 0;
+  int first_b2_triangle_row_radius = -1;
+  int first_b2_triangle_row_target = -1;
+  int first_b2_triangle_row = -1;
+  cpp_int first_b2_triangle_row_value = 0;
+  int first_b2_triangle_column_radius = -1;
+  int first_b2_triangle_column_target = -1;
+  int first_b2_triangle_column = -1;
+  cpp_int first_b2_triangle_column_value = 0;
 };
 
-void inspect_word(const std::vector<int>& word, Counters& counters) {
+void inspect_word(const std::vector<int>& word, const bool tp2_only,
+                  Counters& counters) {
   std::vector<cpp_int> profile{cpp_int(1)};
   std::vector<cpp_int> root{cpp_int(1)};
   for (const int q : word) {
@@ -144,6 +181,12 @@ void inspect_word(const std::vector<int>& word, Counters& counters) {
   ++counters.words;
 
   const int support = static_cast<int>(profile.size()) - 1;
+  int sum_before_maximum = 0;
+  for (std::size_t index = 0; index + 1U < word.size(); ++index) {
+    sum_before_maximum += word[index];
+  }
+  const bool strictly_balanced =
+      word.back() < sum_before_maximum;
   const int endpoint = support + 2;
   for (int a = 0; a <= endpoint; ++a) {
     for (int b = 0; b <= endpoint; ++b) {
@@ -153,6 +196,16 @@ void inspect_word(const std::vector<int>& word, Counters& counters) {
       ++counters.adjacent_minors;
       if (value < 0) {
         ++counters.adjacent_failures;
+        counters.maximum_adjacent_failure_balance_slack =
+            std::max(counters.maximum_adjacent_failure_balance_slack,
+                     sum_before_maximum - word.back());
+        if (strictly_balanced) {
+          ++counters.strictly_balanced_adjacent_failures;
+          if (counters.first_strictly_balanced_adjacent_word.empty()) {
+            counters.first_strictly_balanced_adjacent_word = word;
+            counters.first_strictly_balanced_adjacent_value = value;
+          }
+        }
         if (counters.first_adjacent_word.empty()) {
           counters.first_adjacent_word = word;
           counters.first_adjacent_a = a;
@@ -189,6 +242,10 @@ void inspect_word(const std::vector<int>& word, Counters& counters) {
         }
       }
     }
+  }
+
+  if (tp2_only) {
+    return;
   }
 
   for (int radius = 0; radius <= support; ++radius) {
@@ -258,6 +315,50 @@ void inspect_word(const std::vector<int>& word, Counters& counters) {
     }
   }
 
+  for (int radius = 1; radius <= support; ++radius) {
+    for (int target = radius; target <= support; ++target) {
+      const int smaller = radius - 1;
+      const int larger = target - 1;
+      for (int row = 0; row <= smaller; ++row) {
+        cpp_int row_sum = 0;
+        for (int contraction = 0;
+             contraction <= smaller - row; ++contraction) {
+          row_sum += b2_coefficient(
+              profile, smaller + larger - row - 2 * contraction, row);
+        }
+        ++counters.b2_triangle_rows;
+        if (row_sum < 0) {
+          ++counters.b2_triangle_row_failures;
+          if (counters.first_b2_triangle_row_word.empty()) {
+            counters.first_b2_triangle_row_word = word;
+            counters.first_b2_triangle_row_radius = radius;
+            counters.first_b2_triangle_row_target = target;
+            counters.first_b2_triangle_row = row;
+            counters.first_b2_triangle_row_value = row_sum;
+          }
+        }
+      }
+      for (int contraction = 0; contraction <= smaller; ++contraction) {
+        cpp_int column_sum = 0;
+        for (int row = 0; row <= smaller - contraction; ++row) {
+          column_sum += b2_coefficient(
+              profile, smaller + larger - row - 2 * contraction, row);
+        }
+        ++counters.b2_triangle_columns;
+        if (column_sum < 0) {
+          ++counters.b2_triangle_column_failures;
+          if (counters.first_b2_triangle_column_word.empty()) {
+            counters.first_b2_triangle_column_word = word;
+            counters.first_b2_triangle_column_radius = radius;
+            counters.first_b2_triangle_column_target = target;
+            counters.first_b2_triangle_column = contraction;
+            counters.first_b2_triangle_column_value = column_sum;
+          }
+        }
+      }
+    }
+  }
+
   std::vector<std::vector<cpp_int>> images(
       static_cast<std::size_t>(support + 1));
   for (int label = 1; label <= support; ++label) {
@@ -313,14 +414,15 @@ void inspect_word(const std::vector<int>& word, Counters& counters) {
 
 void enumerate_words(const int maximum_q, const int length, const int depth,
                      const int minimum_q, std::vector<int>& word,
-                     Counters& counters) {
+                     const bool tp2_only, Counters& counters) {
   if (depth == length) {
-    inspect_word(word, counters);
+    inspect_word(word, tp2_only, counters);
     return;
   }
   for (int q = minimum_q; q <= maximum_q; ++q) {
     word[static_cast<std::size_t>(depth)] = q;
-    enumerate_words(maximum_q, length, depth + 1, q, word, counters);
+    enumerate_words(maximum_q, length, depth + 1, q, word, tp2_only,
+                    counters);
   }
 }
 
@@ -340,6 +442,17 @@ void print_word(const std::vector<int>& word) {
 int main(int argc, char** argv) {
   const int maximum_q = argc >= 2 ? std::stoi(argv[1]) : 8;
   const int length = argc >= 3 ? std::stoi(argv[2]) : 3;
+  const bool tp2_only =
+      argc >= 4 && std::string(argv[3]) == "--tp2-only";
+  if (argc >= 4 && !tp2_only) {
+    std::cerr << "third argument must be --tp2-only\n";
+    return 2;
+  }
+  if (argc > 4) {
+    std::cerr << "usage: " << argv[0]
+              << " [maximum_q>=1] [length>=1] [--tp2-only]\n";
+    return 2;
+  }
   if (maximum_q < 1 || length < 1) {
     std::cerr << "usage: " << argv[0] << " [maximum_q>=1] [length>=1]\n";
     return 2;
@@ -347,13 +460,18 @@ int main(int argc, char** argv) {
 
   Counters counters;
   std::vector<int> word(static_cast<std::size_t>(length));
-  enumerate_words(maximum_q, length, 0, 1, word, counters);
+  enumerate_words(maximum_q, length, 0, 1, word, tp2_only, counters);
 
   std::cout << "SU2_ORDINARY_VARIABLE_BOX_TP2"
             << " maximum_q=" << maximum_q << " length=" << length
+            << " tp2_only=" << (tp2_only ? 1 : 0)
             << " words=" << counters.words
             << " adjacent_minors=" << counters.adjacent_minors
             << " adjacent_failures=" << counters.adjacent_failures
+            << " strictly_balanced_adjacent_failures="
+            << counters.strictly_balanced_adjacent_failures
+            << " maximum_adjacent_failure_balance_slack="
+            << counters.maximum_adjacent_failure_balance_slack
             << " boundary_minors=" << counters.boundary_minors
             << " boundary_failures=" << counters.boundary_failures
             << " ratio_rows=" << counters.ratio_rows
@@ -371,6 +489,12 @@ int main(int argc, char** argv) {
             << counters.exterior_pair_products
             << " exterior_pair_product_failures="
             << counters.exterior_pair_product_failures
+            << " b2_triangle_rows=" << counters.b2_triangle_rows
+            << " b2_triangle_row_failures="
+            << counters.b2_triangle_row_failures
+            << " b2_triangle_columns=" << counters.b2_triangle_columns
+            << " b2_triangle_column_failures="
+            << counters.b2_triangle_column_failures
             << '\n';
   if (!counters.first_adjacent_word.empty()) {
     std::cout << "first_adjacent_word=";
@@ -384,6 +508,12 @@ int main(int argc, char** argv) {
               << counters.first_adjacent_southeast << ']'
               << " first_adjacent_value=" << counters.first_adjacent_value
               << '\n';
+  }
+  if (!counters.first_strictly_balanced_adjacent_word.empty()) {
+    std::cout << "first_strictly_balanced_adjacent_word=";
+    print_word(counters.first_strictly_balanced_adjacent_word);
+    std::cout << " first_strictly_balanced_adjacent_value="
+              << counters.first_strictly_balanced_adjacent_value << '\n';
   }
   if (!counters.first_boundary_word.empty()) {
     std::cout << "first_boundary_word=";
@@ -444,6 +574,30 @@ int main(int argc, char** argv) {
               << counters.first_exterior_pair_product_second
               << " first_exterior_pair_product_value="
               << counters.first_exterior_pair_product_value << '\n';
+  }
+  if (!counters.first_b2_triangle_row_word.empty()) {
+    std::cout << "first_b2_triangle_row_word=";
+    print_word(counters.first_b2_triangle_row_word);
+    std::cout << " first_b2_triangle_row_radius="
+              << counters.first_b2_triangle_row_radius
+              << " first_b2_triangle_row_target="
+              << counters.first_b2_triangle_row_target
+              << " first_b2_triangle_row="
+              << counters.first_b2_triangle_row
+              << " first_b2_triangle_row_value="
+              << counters.first_b2_triangle_row_value << '\n';
+  }
+  if (!counters.first_b2_triangle_column_word.empty()) {
+    std::cout << "first_b2_triangle_column_word=";
+    print_word(counters.first_b2_triangle_column_word);
+    std::cout << " first_b2_triangle_column_radius="
+              << counters.first_b2_triangle_column_radius
+              << " first_b2_triangle_column_target="
+              << counters.first_b2_triangle_column_target
+              << " first_b2_triangle_column="
+              << counters.first_b2_triangle_column
+              << " first_b2_triangle_column_value="
+              << counters.first_b2_triangle_column_value << '\n';
   }
   return counters.boundary_failures == 0U ? 0 : 1;
 }

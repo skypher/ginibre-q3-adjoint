@@ -104,6 +104,8 @@ struct Counters {
   std::uint64_t profiles = 0;
   std::uint64_t currents = 0;
   std::uint64_t failures = 0;
+  std::uint64_t inward_minor_payments = 0;
+  std::uint64_t inward_minor_payment_failures = 0;
   std::uint64_t fixed_gap_energies = 0;
   std::uint64_t fixed_gap_failures = 0;
   std::uint64_t gap_suffixes = 0;
@@ -121,6 +123,11 @@ struct Counters {
   int first_radius = -1;
   int first_target = -1;
   Integer first_value = 0;
+  std::vector<int> first_inward_minor_half;
+  int first_inward_minor_radius = -1;
+  int first_inward_minor_target = -1;
+  int first_inward_minor_side = -1;
+  Integer first_inward_minor_value = 0;
   std::vector<int> first_fixed_gap_half;
   int first_fixed_gap_radius = -1;
   int first_fixed_gap_target = -1;
@@ -186,6 +193,33 @@ void inspect(const std::vector<int>& half, Counters& counters) {
           counters.first_radius = radius;
           counters.first_target = target;
           counters.first_value = value;
+        }
+      }
+      if (radius >= 1 && target > radius) {
+        const Integer left_payment =
+            character.front() *
+                profile_value(weights, target - radius) -
+            profile_value(character, radius) *
+                profile_value(weights, target);
+        const Integer right_payment =
+            profile_value(character, radius) *
+                profile_value(weights, target + 1) -
+            character.front() *
+                profile_value(weights, radius + target + 1);
+        for (int side = 0; side < 2; ++side) {
+          const Integer payment =
+              side == 0 ? left_payment : right_payment;
+          ++counters.inward_minor_payments;
+          if (payment < 0) {
+            ++counters.inward_minor_payment_failures;
+            if (counters.first_inward_minor_half.empty()) {
+              counters.first_inward_minor_half = half;
+              counters.first_inward_minor_radius = radius;
+              counters.first_inward_minor_target = target;
+              counters.first_inward_minor_side = side;
+              counters.first_inward_minor_value = payment;
+            }
+          }
         }
       }
     }
@@ -387,6 +421,10 @@ int main(int argc, char** argv) {
               << " profiles=" << counters.profiles
               << " currents=" << counters.currents
               << " failures=" << counters.failures
+              << " inward_minor_payments="
+              << counters.inward_minor_payments
+              << " inward_minor_payment_failures="
+              << counters.inward_minor_payment_failures
               << " fixed_gap_energies=" << counters.fixed_gap_energies
               << " fixed_gap_failures=" << counters.fixed_gap_failures
               << " gap_suffixes=" << counters.gap_suffixes
@@ -422,6 +460,18 @@ int main(int argc, char** argv) {
         std::cout << counters.first_character[index];
       }
       std::cout << "]\n";
+    }
+    if (!counters.first_inward_minor_half.empty()) {
+      std::cout << "first_inward_minor_half="
+                << render(counters.first_inward_minor_half)
+                << " first_inward_minor_radius="
+                << counters.first_inward_minor_radius
+                << " first_inward_minor_target="
+                << counters.first_inward_minor_target
+                << " first_inward_minor_side="
+                << counters.first_inward_minor_side
+                << " first_inward_minor_value="
+                << counters.first_inward_minor_value << '\n';
     }
     if (!counters.first_fixed_gap_half.empty()) {
       std::cout << "first_fixed_gap_half="

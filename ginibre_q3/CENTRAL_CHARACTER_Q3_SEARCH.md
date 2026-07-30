@@ -11223,6 +11223,137 @@ triangle.  Identity `(P5A.102AD5ALX1ZZB3S)` also retains exactly the
 interval-convolution factor orbit, rather than enlarging it to every
 character-positive `P`.
 
+The correct grouping of the `B_2` triangle is transverse to its rows.
+For `A>=2L` put
+
+```text
+K_(A,L)=sum_(i=0)^L d_(A-i,i).                  (P5A.102AD5ALX1ZZB3S0)
+```
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RAD
+(fixed-contraction radial telescoping).**  One has
+
+```text
+K_(A,L)
+ =c_0(c_(A+1)+c_(A+2))
+   +c_Lc_(A-L)-c_(L+1)c_(A-L+1).                (P5A.102AD5ALX1ZZB3S1)
+```
+
+If
+
+```text
+J(R,S)=c_0 sum_(t=|R-S|)^(R+S)c_t-c_Rc_S,
+```
+
+then, for `1<=R<=S`,
+
+```text
+J(R,S)-J(R-1,S-1)
+ =c_0(c_(R+S-1)+c_(R+S))
+   +c_(R-1)c_(S-1)-c_Rc_S                       (P5A.102AD5ALX1ZZB3S2)
+
+ =K_(R+S-2,R-1).
+```
+
+Consequently, if
+
+```text
+K_(A,L)>=0                         whenever 0<=2L<A, (OCRD)
+```
+
+then `(OCSP)` holds.  The strict inequality `2L<A` is exactly the
+off-diagonal condition `R<S`; the diagonal `J(R,R)` is already a
+Gram square.
+
+**Proof.**  Substitute
+`(P5A.102AD5ALX1ZZB3N)--(P5A.102AD5ALX1ZZB3O)` in
+`(P5A.102AD5ALX1ZZB3S0)`.  The four sums telescope:
+
+```text
+sum_(i=1)^L c_i c_(A-i)
+ -sum_(i=1)^L c_(i-1)c_(A-i+1)
+   =c_Lc_(A-L)-c_0c_A,
+
+sum_(i=1)^L c_i c_(A-i+2)
+ -sum_(i=1)^L c_(i+1)c_(A-i+1)
+   =c_1c_(A+1)-c_(L+1)c_(A-L+1).
+```
+
+The two terms on the right cancel the corresponding terms in
+`d_(A,0)`, leaving `(P5A.102AD5ALX1ZZB3S1)`.
+The fusion interval for `(R,S)` differs from that for
+`(R-1,S-1)` by exactly the two top labels `R+S-1,R+S`, which proves
+`(P5A.102AD5ALX1ZZB3S2)`.
+
+For `R<S`, sum `(P5A.102AD5ALX1ZZB3S2)` along the radial diagonal:
+
+```text
+J(R,S)=sum_(u=1)^R {J(u,S-R+u)-J(u-1,S-R+u-1)}.
+```
+
+The terminal base is `J(0,S-R)=0`, so `(OCRD)` makes every summand
+nonnegative.  When `R=S`, character positivity makes `N_c`
+positive semidefinite and `J(R,R)` is its anchored principal
+two-by-two determinant, hence nonnegative.  QED.
+
+Thus the live ordinary theorem has been reduced further from the
+whole `B_2` triangle to the scalar radial increment
+`(P5A.102AD5ALX1ZZB3S1)`.  Equivalently, the fixed contraction depth
+`j` in `(P5A.102AD5ALX1ZZB3P)` is the column
+
+```text
+A=m+n-2j,                  L=m-j,
+```
+
+and its complete contribution is `K_(A,L)`.  Summing the columns is
+exactly the radial telescoping above.
+
+**Target 5A8H28UIA2CGLPCIPOCB2RADGP
+(square-character radial growth).**  Suppose
+
+```text
+f^2=sum_(h>=0)c_h beta_h,
+```
+
+where `c` is nonnegative and log concave with interval support.  Prove
+`(OCRD)` for every `0<=2L<A`.
+
+Every ordinary factor word satisfies these hypotheses: take
+`f=product_j beta_(q_j)`, and use ordinary fusion preservation of log
+concavity for its doubled coefficient profile.  Therefore Target
+5A8H28UIA2CGLPCIPOCB2RADGP implies `(OCSP)` for arbitrary factor
+words.  It is the strict off-diagonal radial part of the earlier
+square-character Target 5A8H28UIA2RLC12S, but
+`(P5A.102AD5ALX1ZZB3S1)` is a smaller two-shell formulation.
+
+The strict off-diagonal condition cannot simply be closed to equality.
+For the square root
+
+```text
+p=(0,4,2,3),
+```
+
+its square coefficient profile is log concave, but the diagonal
+column `(A,L)=(2,1)` has `K_(2,1)=-6`.  This does not contradict
+`(OCSP)`: the other `B_2` column pays it inside the positive diagonal
+Gram determinant.
+
+The extended strict C++ diagnostics independently check the two
+forms of the reduction.  Across variable factor words in the boxes
+
+```text
+(maximum_q,length)=(8,3),(6,4),(5,5),(4,6),
+```
+
+all `2,451,120` fixed-contraction columns are nonnegative, although
+`1,596` fixed-row sums and hundreds of thousands of individual
+exterior products are negative.  The arbitrary-root diagnostic
+checks `598,947` off-diagonal columns among `4,355` log-concave
+square profiles in its `maximum_length=6, maximum_coefficient=4`
+box, again without a failure.  It also reproduces the exact diagonal
+value `-6`.  These counts are bounded evidence only; the telescoping
+identities and displayed diagonal obstruction are exact.
+
 That last distinction is necessary.
 
 **Proposition 5A8H28UIA2CGLPCIPOCB2ARB
