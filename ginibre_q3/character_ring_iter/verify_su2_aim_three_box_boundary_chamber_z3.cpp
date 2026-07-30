@@ -26,20 +26,27 @@ z3::expr twice_quadratic_spline(const z3::expr& degree) {
 }
 
 z3::expr twice_three_box_coefficient(
-    const z3::expr& left,
-    const z3::expr& width,
-    const z3::expr& shift,
+    const z3::expr& shortest,
+    const z3::expr& middle,
+    const z3::expr& longest,
+    const z3::expr& support_end,
     const z3::expr& index) {
-    const z3::expr degree = index - 1;
-    return twice_quadratic_spline(degree)
-        - twice_quadratic_spline(degree - left)
-        - twice_quadratic_spline(degree - width)
-        - twice_quadratic_spline(degree - shift)
-        + twice_quadratic_spline(degree - left - width)
-        + twice_quadratic_spline(degree - left - shift)
-        + twice_quadratic_spline(degree - width - shift)
-        - twice_quadratic_spline(
-              degree - left - width - shift);
+    const z3::expr reflected = z3::ite(
+        2 * index <= support_end,
+        index,
+        support_end - index);
+    const z3::expr degree = reflected - 1;
+    const z3::expr half_coefficient
+        = (degree + 1) * (degree + 2)
+          - twice_quadratic_spline(degree - shortest)
+          - twice_quadratic_spline(degree - middle)
+          - twice_quadratic_spline(degree - longest)
+          + twice_quadratic_spline(
+                degree - shortest - middle);
+    return z3::ite(
+        index >= 1 && index < support_end,
+        half_coefficient,
+        index.ctx().int_val(0));
 }
 
 const char* render(const z3::check_result& result) {
@@ -56,10 +63,10 @@ const char* render(const z3::check_result& result) {
 
 int main(int argc, char** argv) {
     try {
-        if (argc != 4) {
+        if (argc != 6) {
             throw std::invalid_argument(
                 "usage: verify_su2_aim_three_box_boundary_chamber_z3 "
-                "support_band width_order shift_band");
+                "support_band width_order shift_band pair_order parity");
         }
         const int support_band
             = parse_case(argv[1], "support_band", 2);
@@ -67,6 +74,10 @@ int main(int argc, char** argv) {
             = parse_case(argv[2], "width_order", 3);
         const int shift_band
             = parse_case(argv[3], "shift_band", 2);
+        const int pair_order
+            = parse_case(argv[4], "pair_order", 2);
+        const int parity_case
+            = parse_case(argv[5], "parity", 2);
 
         z3::context context;
         z3::solver solver(context, "QF_NIA");
@@ -87,9 +98,12 @@ int main(int argc, char** argv) {
         const z3::expr maximum_label = half_level - parity;
         const z3::expr support_end
             = left + width + shift - 1;
+        z3::expr shortest = left;
+        z3::expr middle = width;
+        z3::expr longest = shift;
 
         solver.add(half_quotient >= 1);
-        solver.add(parity >= 0 && parity <= 1);
+        solver.add(parity == parity_case);
         solver.add(half_level >= 2);
         solver.add(left >= 1 && left < period);
         solver.add(width >= 1 && width < period);
@@ -103,33 +117,50 @@ int main(int argc, char** argv) {
         }
         if (width_order == 0) {
             solver.add(width <= left);
+            shortest = width;
+            middle = left;
+            longest = shift;
         } else if (width_order == 1) {
             solver.add(width > left && width <= shift);
+            shortest = left;
+            middle = width;
+            longest = shift;
         } else {
             solver.add(width > shift);
+            shortest = left;
+            middle = shift;
+            longest = width;
         }
         if (shift_band == 0) {
             solver.add(shift < period);
         } else {
             solver.add(shift >= period);
         }
+        if (pair_order == 0) {
+            solver.add(longest <= shortest + middle);
+        } else {
+            solver.add(longest > shortest + middle);
+        }
 
         z3::expr twice_margin = twice_three_box_coefficient(
-            left,
-            width,
-            shift,
+            shortest,
+            middle,
+            longest,
+            support_end,
             period - label - 1);
         for (int wall = 1; wall <= 3; ++wall) {
             twice_margin = twice_margin
                 - twice_three_box_coefficient(
-                      left,
-                      width,
-                      shift,
+                      shortest,
+                      middle,
+                      longest,
+                      support_end,
                       wall * period + label)
                 + twice_three_box_coefficient(
-                      left,
-                      width,
-                      shift,
+                      shortest,
+                      middle,
+                      longest,
+                      support_end,
                       (wall + 1) * period - label - 1);
         }
         solver.add(twice_margin < 0);
@@ -140,6 +171,8 @@ int main(int argc, char** argv) {
                   << " support_band=" << support_band
                   << " width_order=" << width_order
                   << " shift_band=" << shift_band
+                  << " pair_order=" << pair_order
+                  << " parity=" << parity_case
                   << " result=" << render(result)
                   << '\n';
         if (result == z3::sat) {
