@@ -1,0 +1,21 @@
+ratio_cube_subdivision support=5 antidiagonal=1 depth=0 coefficients=208845 nodes=25 leaves=13 unresolved=0 maximum_depth=9
+ratio_cube_subdivision support=5 antidiagonal=2 depth=0 coefficients=208845 nodes=17 leaves=9 unresolved=0 maximum_depth=7
+ratio_cube_subdivision support=5 antidiagonal=3 depth=0 coefficients=208845 nodes=11 leaves=6 unresolved=0 maximum_depth=5
+ratio_cube_subdivision support=5 antidiagonal=3 depth=1 coefficients=208845 nodes=9 leaves=5 unresolved=0 maximum_depth=4
+ratio_cube_subdivision support=5 antidiagonal=4 depth=0 coefficients=208845 nodes=11 leaves=6 unresolved=0 maximum_depth=5
+ratio_cube_subdivision support=5 antidiagonal=4 depth=1 coefficients=208845 nodes=9 leaves=5 unresolved=0 maximum_depth=4
+ratio_cube_subdivision support=5 antidiagonal=5 depth=0 coefficients=208845 nodes=11 leaves=6 unresolved=0 maximum_depth=5
+ratio_cube_subdivision support=5 antidiagonal=5 depth=1 coefficients=208845 nodes=9 leaves=5 unresolved=0 maximum_depth=4
+ratio_cube_subdivision support=5 antidiagonal=5 depth=2 coefficients=208845 nodes=11 leaves=6 unresolved=0 maximum_depth=5
+ratio_cube_subdivision support=5 antidiagonal=6 depth=0 coefficients=208845 nodes=11 leaves=6 unresolved=0 maximum_depth=5
+ratio_cube_subdivision support=5 antidiagonal=6 depth=1 coefficients=208845 nodes=9 leaves=5 unresolved=0 maximum_depth=4
+ratio_cube_subdivision support=5 antidiagonal=6 depth=2 coefficients=208845 nodes=7 leaves=4 unresolved=0 maximum_depth=3
+ratio_cube_subdivision support=5 antidiagonal=7 depth=0 coefficients=208845 nodes=11 leaves=6 unresolved=0 maximum_depth=5
+ratio_cube_subdivision support=5 antidiagonal=7 depth=1 coefficients=208845 nodes=9 leaves=5 unresolved=0 maximum_depth=4
+ratio_cube_subdivision support=5 antidiagonal=7 depth=2 coefficients=208845 nodes=7 leaves=4 unresolved=0 maximum_depth=3
+ratio_cube_subdivision support=5 antidiagonal=7 depth=3 coefficients=208845 nodes=13 leaves=7 unresolved=0 maximum_depth=6
+ratio_cube_subdivision support=5 antidiagonal=8 depth=0 coefficients=208845 nodes=11 leaves=6 unresolved=0 maximum_depth=5
+ratio_cube_subdivision support=5 antidiagonal=8 depth=1 coefficients=208845 nodes=9 leaves=5 unresolved=0 maximum_depth=4
+ratio_cube_subdivision support=5 antidiagonal=8 depth=2 coefficients=208845 nodes=7 leaves=4 unresolved=0 maximum_depth=3
+ratio_cube_subdivision support=5 antidiagonal=8 depth=3 coefficients=208845 nodes=5 leaves=3 unresolved=0 maximum_depth=2
+SU2_AUTOCORRELATION_RATIO_CUBE_BERNSTEIN support=5 cases=20 coefficients=4176900 initial_negative=3413 nodes=212 leaves=116 unresolved=0 maximum_depth=9 result=PASS

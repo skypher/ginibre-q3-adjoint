@@ -879,8 +879,8 @@ int dump_support_three_hard() {
 }
 
 int analyze_ratio_cube_bernstein(const int support,
-                                 const int depth_limit) {
-  const int maximum_antidiagonal = 4 * support - 1;
+                                 const int depth_limit,
+                                 const int maximum_antidiagonal) {
   std::size_t cases = 0U;
   std::size_t coefficients = 0U;
   std::size_t initial_negative = 0U;
@@ -1040,13 +1040,19 @@ int main(int argc, char** argv) {
         argc == 2
         && std::string{argv[1]} == "--support-four-bernstein"
     ) {
-      return analyze_ratio_cube_bernstein(4, 16);
+      return analyze_ratio_cube_bernstein(4, 16, 15);
     }
     if (
         argc == 2
         && std::string{argv[1]} == "--support-five-bernstein"
     ) {
-      return analyze_ratio_cube_bernstein(5, 20);
+      return analyze_ratio_cube_bernstein(5, 20, 19);
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]} == "--support-five-lower-bernstein"
+    ) {
+      return analyze_ratio_cube_bernstein(5, 20, 8);
     }
     const int maximum_support =
         argc >= 2 ? parse_positive(argv[1], "maximum_support") : 5;

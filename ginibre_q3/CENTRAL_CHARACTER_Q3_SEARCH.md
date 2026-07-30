@@ -12169,6 +12169,174 @@ sum_(A=1)^(2n-2)ceil(A/2)=n(n-1)
 columns.  This is a support-uniform reduction of the arbitrary-factor
 target, not another bounded certificate.
 
+The reduction closes one more complete finite chamber.  It is important
+here to retain both shape hypotheses: the lower certificate uses the
+root, while the uniform upper argument uses the square.
+
+**Theorem 5A8H28UIA2CGLPCIPOCOVLCR6
+(six-coordinate shaped-square radial theorem).**  Put
+
+```text
+P=sum_(i=0)^5 p_i beta_i,              P^2=sum_(h=0)^10 c_h beta_h.
+```
+
+Suppose that `p` and `c` are nonnegative and log concave with interval
+support.  Then every strict radial increment `(OCRD)` is nonnegative,
+and hence `(OCSP)` holds for `P`.  In particular this applies to every
+ordinary factor word whose root support is at most five.
+
+**Proof.**  The torus tail profile
+
+```text
+H_i=sum_(j=i)^5 p_j
+```
+
+is log concave by the tail argument preceding Lemma
+5A8H28UIA2CGLPCIPOCOVLCRRC.  The compact tail-ratio cube therefore
+parameterizes every such root, including all zero-support boundary
+faces.  For `n=5`, the lower-wall band
+`(P5A.102AD5ALX1ZZB3S3BP)` consists of exactly the `20` columns
+
+```text
+1<=A<=8,                         0<=2L<A.
+```
+
+The strict `--support-five-lower-bernstein` mode of
+`analyze_su2_autocorrelation_lc_certificate.cpp` constructs their
+`4,176,900` exact tensor Bernstein coefficients.  Initially `3,413`
+are negative.  Exact de Casteljau subdivision produces `212` nodes and
+`116` terminal subcubes, with maximum depth nine; every terminal
+coefficient is nonnegative and there is no unresolved subcube.
+Consequently all `20` lower-wall polynomials are nonnegative on the
+whole five-dimensional cube.  The exact transcript is
+`certificates/su2_autocorrelation_support_five_lower_bernstein.log`.
+
+Corollary 5A8H28UIA2CGLPCIPOCB2REFUP uses log concavity of `c` to
+prove every remaining column `A>=9`.  These two ranges exhaust
+`(OCRD)`, and Lemma 5A8H28UIA2CGLPCIPOCB2RAD proves `(OCSP)`.  An
+ordinary factor word and its doubled word are obtained by successive
+ordinary interval transforms, so both coefficient profiles have the
+required shape.  QED.
+
+Neither of the two abstract ratio properties used in the upper proof
+can replace the square origin in the lower band.  The exact profile
+
+```text
+c=(1,3,3,3,1)
+```
+
+is log concave and satisfies reflected-ratio descent with equality at
+both depths, but
+
+```text
+K_(2,0)=1(3+1)+1*3-3*3=-2.
+```
+
+Even adjoining the single central spectral inequality is insufficient.
+The log-concave profile
+
+```text
+c=(1,3,4,3,1)
+```
+
+again satisfies reflected-ratio descent with equality, has alternating
+sum zero, and satisfies
+
+```text
+K_(1,0)=1(4+3)+1*3-3*4=-2.
+```
+
+Writing `x=chi_1`, its character polynomial is
+
+```text
+x^2(x^2-1)(x^4-3x^2+1),
+```
+
+which equals `-15/256` at `x=1/2`.  Thus full pointwise
+character-square positivity, not its value at one torus point, remains
+the plausible extra invariant in the unbounded lower-wall problem.
+
+Even a much larger scalar boundary package does not recover that
+invariant.  Put
+
+```text
+c=(8388608,16777216,25165824,25165824,1179648,9216,27).
+```
+
+This profile is strictly log concave wherever the support inequality
+is active, satisfies every reflected-ratio inequality, every
+off-diagonal first-row current
+
+```text
+J(1,S)>=0,
+```
+
+and every diagonal Gram inequality `J(R,R)>=0`.  Direct exact
+evaluation gives the respective minimum margins
+
+```text
+shape:                  53084160,
+reflected ratio:     76856426496,
+first row:           77082918912,
+diagonal:          9895604649984.
+```
+
+Nevertheless,
+
+```text
+J(2,3)=-60395830116352.                         (P5A.102AD5ALX1ZZB3S3BQ)
+```
+
+Its central spectral value is
+
+```text
+sum_h(-1)^h c_h=-7218149<0,
+```
+
+so it cannot be a character square.  Thus log concavity, reflected
+descent, the whole rank-one boundary row, and all diagonal Gram
+reserves still do not propagate the complete current cone.  Any
+uniform cumulative proof must retain a genuinely non-diagonal
+consequence of pointwise PSD or the factor-word root itself.
+
+Adjoining the central spectral value to that whole package is still
+insufficient.  The primitive integer profile
+
+```text
+c=(10485760,20971520,31457280,34611200,
+   16777216,10240,5)
+```
+
+has exact minimum margins
+
+```text
+shape:                    20971520,
+reflected ratio:       107269324800,
+central value:              3127301,
+first row:             107321753600,
+diagonal:              725834792960,
+```
+
+but
+
+```text
+J(2,3)=-64424509440.                            (P5A.102AD5ALX1ZZB3S3BR)
+```
+
+At the noncentral torus point `theta=pi/4`, the even characters have
+the repeating values `(1,1,-1,-1)`, and the same profile gives
+
+```text
+sum_h c_h chi_(2h)(pi/4)=-17823749<0.
+```
+
+Thus the central square value cannot replace pointwise PSD even after
+all diagonal, rank-one, shape, and reflected-ratio conditions have
+been imposed.  A successful scalar reduction would need a genuinely
+noncentral spectral family, not one distinguished torus mode.
+The strict `cpp_int` reproducer is
+`character_ring_iter/probe_su2_scalar_boundary_spectral_obstruction.cpp`.
+
 Nor is the already positive radial/diagonal cone invariant under a
 new squared factor.  This rules out the most direct factor induction.
 Write
