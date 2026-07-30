@@ -1107,17 +1107,26 @@ cone.
 
 The stabilization claim was also checked independently by
 `character_ring_iter/verify_su2_fusion_stabilization.cpp`.  A strict C++ build
-tested all 60,087 separately sorted signed lists with labels at most six and
-at most eight factors, both at the displayed threshold and one level above;
-every fusion integer equalled the ordinary integer:
+tested all `125,970` separately sorted signed lists with labels at most six
+and at most eight factors.  The complete signed coefficient state agreed at
+levels `T,T+1`, while the scalar corner agreed at the displayed sharp
+threshold and one level above:
 
 ```sh
 g++ -O3 -DNDEBUG -std=c++20 -fopenmp \
-  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror \
+  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion \
+  -Wshadow -Werror \
   character_ring_iter/verify_su2_fusion_stabilization.cpp \
   -o /tmp/verify_su2_fusion_stabilization
-THREADS="${THREADS:-$(nproc)}"
 OMP_NUM_THREADS="$THREADS" /tmp/verify_su2_fusion_stabilization 6 8
+```
+
+Here `THREADS` is chosen to maximize useful parallelism subject to available
+RAM and current machine load.  The exact terminal line is
+
+```text
+SU2_FUSION_STABILIZATION maximum_label=6 maximum_factors=8
+cases=125970 full_state_failures=0 corner_failures=0 PASS.
 ```
 
 ## Boundary domination for the two-minus sector
@@ -12336,6 +12345,38 @@ been imposed.  A successful scalar reduction would need a genuinely
 noncentral spectral family, not one distinguished torus mode.
 The strict `cpp_int` reproducer is
 `character_ring_iter/probe_su2_scalar_boundary_spectral_obstruction.cpp`.
+
+Nor can pointwise positivity be replaced by its values at all integer
+points of the spectral interval.  The integer profile
+
+```text
+c=(8,36,40,40,36,8,1)
+```
+
+is strictly log concave, with minimum shape margin `28`, and its
+character polynomial has the exact values
+
+```text
+g(-1)=1,       g(0)=1,       g(1)=7,
+g(2)=1,        g(3)=1021.
+```
+
+Nevertheless,
+
+```text
+J(2,3)=-320.
+```
+
+This is not a counterexample to the character-positive target:
+
+```text
+g(5/3)=-18431/729<0.
+```
+
+It proves instead that even the complete integer spectral grid
+`{-1,0,1,2,3}` cannot replace nonnegativity on the continuum
+`[-1,3]`.  The strict exact reproducer is
+`character_ring_iter/probe_su2_integer_spectral_grid_obstruction.cpp`.
 
 Nor is the already positive radial/diagonal cone invariant under a
 new squared factor.  This rules out the most direct factor induction.

@@ -14,6 +14,8 @@ using boost::multiprecision::cpp_int;
 
 namespace {
 
+using State = std::unordered_map<std::uint64_t, cpp_int>;
+
 std::uint64_t pair_key(int left, int right) {
     return (static_cast<std::uint64_t>(static_cast<std::uint32_t>(left)) << 32U)
         | static_cast<std::uint32_t>(right);
@@ -40,16 +42,16 @@ void for_each_output(int level, int left, int right, Function function) {
     }
 }
 
-cpp_int q3_dynamic(
+State signed_product(
     int level,
     const std::vector<int>& minus,
     const std::vector<int>& plus
 ) {
-    std::unordered_map<std::uint64_t, cpp_int> states;
+    State states;
     states.emplace(pair_key(0, 0), 1);
 
     auto apply = [&states, level](int label, int sign) {
-        std::unordered_map<std::uint64_t, cpp_int> next;
+        State next;
         for (const auto& [key, coefficient] : states) {
             const auto [left, right] = decode_pair(key);
             for_each_output(level, left, label, [&](int output) {
@@ -59,6 +61,9 @@ cpp_int q3_dynamic(
                 next[pair_key(left, output)] += sign * coefficient;
             });
         }
+        std::erase_if(next, [](const auto& entry) {
+            return entry.second == 0;
+        });
         states = std::move(next);
     };
 
@@ -68,8 +73,12 @@ cpp_int q3_dynamic(
     for (int label : plus) {
         apply(label, 1);
     }
-    const auto found = states.find(pair_key(0, 0));
-    return found == states.end() ? cpp_int(0) : found->second;
+    return states;
+}
+
+cpp_int corner(const State& state) {
+    const auto found = state.find(pair_key(0, 0));
+    return found == state.end() ? cpp_int(0) : found->second;
 }
 
 void combinations_rec(
@@ -104,8 +113,8 @@ struct Case {
 
 std::vector<Case> make_cases(int maximum_label, int maximum_factors) {
     std::vector<Case> cases;
-    for (int factors = 2; factors <= maximum_factors; ++factors) {
-        for (int minus_count = 2; minus_count <= factors; minus_count += 2) {
+    for (int factors = 0; factors <= maximum_factors; ++factors) {
+        for (int minus_count = 0; minus_count <= factors; ++minus_count) {
             const auto minus_lists = combinations(maximum_label, minus_count);
             const auto plus_lists = combinations(maximum_label, factors - minus_count);
             for (const auto& minus : minus_lists) {
@@ -118,18 +127,26 @@ std::vector<Case> make_cases(int maximum_label, int maximum_factors) {
     return cases;
 }
 
-int stabilization_level(const Case& test_case) {
+int total_label(const Case& test_case) {
     int total = 0;
-    int maximum = 0;
     for (int label : test_case.minus) {
         total += label;
-        maximum = std::max(maximum, label);
     }
     for (int label : test_case.plus) {
         total += label;
+    }
+    return total;
+}
+
+int scalar_stabilization_level(const Case& test_case) {
+    int maximum = 0;
+    for (int label : test_case.minus) {
         maximum = std::max(maximum, label);
     }
-    return std::max(maximum, (total + 1) / 2);
+    for (int label : test_case.plus) {
+        maximum = std::max(maximum, label);
+    }
+    return std::max(maximum, (total_label(test_case) + 1) / 2);
 }
 
 }  // namespace
@@ -143,20 +160,36 @@ int main(int argc, char** argv) {
         }
 
         const std::vector<Case> cases = make_cases(maximum_label, maximum_factors);
-        std::int64_t failures = 0;
+        std::int64_t full_state_failures = 0;
+        std::int64_t corner_failures = 0;
         std::int64_t checked = 0;
 
-        #pragma omp parallel for schedule(dynamic) reduction(+:failures,checked)
+        #pragma omp parallel for schedule(dynamic) \
+            reduction(+:full_state_failures,corner_failures,checked)
         for (std::int64_t raw_index = 0;
              raw_index < static_cast<std::int64_t>(cases.size());
              ++raw_index) {
             const auto& test_case = cases[static_cast<std::size_t>(raw_index)];
-            const int level = stabilization_level(test_case);
-            const cpp_int ordinary = q3_dynamic(-1, test_case.minus, test_case.plus);
-            const cpp_int fusion = q3_dynamic(level, test_case.minus, test_case.plus);
-            const cpp_int next_level = q3_dynamic(level + 1, test_case.minus, test_case.plus);
-            if (ordinary != fusion || ordinary != next_level) {
-                ++failures;
+            const int full_level = std::max(1, total_label(test_case));
+            const int scalar_level =
+                std::max(1, scalar_stabilization_level(test_case));
+            const State ordinary =
+                signed_product(-1, test_case.minus, test_case.plus);
+            const State fusion_full =
+                signed_product(full_level, test_case.minus, test_case.plus);
+            const State fusion_full_next =
+                signed_product(full_level + 1, test_case.minus, test_case.plus);
+            if (ordinary != fusion_full || ordinary != fusion_full_next) {
+                ++full_state_failures;
+            }
+            const State fusion_scalar =
+                signed_product(scalar_level, test_case.minus, test_case.plus);
+            const State fusion_scalar_next =
+                signed_product(
+                    scalar_level + 1, test_case.minus, test_case.plus);
+            if (corner(ordinary) != corner(fusion_scalar) ||
+                corner(ordinary) != corner(fusion_scalar_next)) {
+                ++corner_failures;
             }
             ++checked;
         }
@@ -165,9 +198,12 @@ int main(int argc, char** argv) {
                   << " maximum_label=" << maximum_label
                   << " maximum_factors=" << maximum_factors
                   << " cases=" << checked
-                  << " failures=" << failures
-                  << (failures == 0 ? " PASS\n" : " FAIL\n");
-        return failures == 0 ? 0 : 1;
+                  << " full_state_failures=" << full_state_failures
+                  << " corner_failures=" << corner_failures
+                  << (full_state_failures == 0 && corner_failures == 0
+                          ? " PASS\n"
+                          : " FAIL\n");
+        return full_state_failures == 0 && corner_failures == 0 ? 0 : 1;
     } catch (const std::exception& error) {
         std::cerr << "error: " << error.what() << '\n';
         return 2;
