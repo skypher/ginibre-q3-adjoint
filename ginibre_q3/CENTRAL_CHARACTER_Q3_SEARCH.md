@@ -13744,16 +13744,256 @@ Corollaries 5A8H28UIA2CGLPCIPOCB2RADTHIRDFUND,
 5A8H28UIA2CGLPCIPOCB2RADTHIRDDOM, and
 5A8H28UIA2CGLPCIPOCB2RADTHIRDSMALL, together with Corollary
 5A8H28UIA2CGLPCIPOCB2RADTHIRDZERO1ARB, close the `K_(3,0)`
-column throughout the complete one-arbitrary-factor strand.  For
-`K_(3,1)`, only the diagonal strip
+column throughout the complete one-arbitrary-factor strand.  The
+second column has a universal mean-payment threshold.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADTHIRDONETHR
+(third one-contraction mean-payment threshold).**  Suppose
+
+```text
+C=sum_(h>=0)c_h beta_h>=0                    on [-1,3],
+c_0>0,                            lambda=c_1/c_0.
+```
+
+Put
+
+```text
+alpha=(2+2sqrt(10))/3.
+```
+
+If `lambda>=alpha`, then
+
+```text
+K_(3,1)=c_0(c_4+c_5)+c_1c_2-c_2c_3>=0.
+                                                        (P5A.102AD5ALX1ZZB3S4N34)
+```
+
+**Proof.**  Under normalized `SO(3)` Haar measure put
+
+```text
+dnu=C(x)dmu/c_0.
+```
+
+Let
+
+```text
+g(x)=beta_2(x)=x^2-x-1,
+
+h(x)=beta_3(x)-beta_1(x)=x^3-2x^2-2x+1.
+```
+
+Ordinary character multiplication gives
+
+```text
+beta_2(beta_3-beta_1)=beta_4+beta_5.
+```
+
+Consequently
+
+```text
+K_(3,1)/c_0^2=Cov_nu(g,h)
+ ={1\over2}int int F(x,y)dnu(x)dnu(y),          (P5A.102AD5ALX1ZZB3S4N35)
+
+F(x,y)
+ =(g(x)-g(y))(h(x)-h(y))
+
+ =(x-y)^2(x+y-1)
+   (x^2+xy+y^2-2x-2y-2).                       (P5A.102AD5ALX1ZZB3S4N36)
+```
+
+The following two pointwise payments hold:
+
+```text
+F(x,y)+16(alpha-x)(alpha-y)>=0,
+                         -1<=x,y<=alpha,        (P5A.102AD5ALX1ZZB3S4N37)
+
+F(x,z)-8(alpha-x)(z-alpha)>=0,
+                         -1<=x<=alpha<=z<=3.    (P5A.102AD5ALX1ZZB3S4N38)
+```
+
+Here is a finite exact certificate for these degree-five polynomial
+inequalities.  Put
+
+```text
+xi=(2-sqrt(10))/3.
+```
+
+For `(P5A.102AD5ALX1ZZB3S4N37)`, partition the lower square into
+
+```text
+[-1,2]^2,
+[-1,xi] x [2,alpha],
+[xi,2] x [2,alpha],
+```
+
+their transposes, and `[2,alpha]^2`.  For
+`(P5A.102AD5ALX1ZZB3S4N38)`, partition at `xi` and `2` in the first
+coordinate.  After the affine map of each nontrivial rectangle to
+the unit square, the exact bidegree-`(5,5)` Bernstein data are
+
+```text
+form / rectangle                   root (+,0,-)   leaves / depth
+
+(N37) [-1,2]^2                       (36,0,0)          1 / 0
+(N37) [-1,xi] x [2,alpha]            (34,2,0)          1 / 0
+(N37) [xi,2] x [2,alpha]             (33,2,1)          4 / 3
+(N38) [-1,xi] x [alpha,3]            (34,2,0)          1 / 0
+(N38) [xi,2] x [alpha,3]             (34,2,0)          1 / 0.
+                                                        (P5A.102AD5ALX1ZZB3S4N39)
+```
+
+The one negative root coefficient in the third row becomes
+nonnegative after three alternating midpoint de Casteljau
+subdivisions; all four resulting leaves are nonnegative.  Every
+entry lies in `Q(sqrt(10))`, and its sign is decided exactly by
+squaring rational integers after separating the rational and
+radical parts.  Thus `(P5A.102AD5ALX1ZZB3S4N39)` is an exact
+finite polynomial certificate, not a sample of either rectangle.
+
+For completeness, the omitted top rectangles are elementary.  If
+`2<=x,y<=3`, then
+
+```text
+x+y-1>=3,
+
+x^2+xy+y^2-2x-2y-2>=2.
+```
+
+The second inequality follows because both partial derivatives are
+positive there and the value at `(2,2)` is two.  Hence `F>=0` on
+the top square.  If `2<=x<=alpha<=z<=3`, then, writing
+`a=alpha-x,s=z-alpha`,
+
+```text
+F(x,z)>=6(z-x)^2=6(a+s)^2>=24as>=8as,
+```
+
+which proves the omitted part of `(P5A.102AD5ALX1ZZB3S4N38)`.
+This completes the pointwise certificate.
+
+It remains to make the global payment.  Split the spectral interval
+at `alpha` and put
+
+```text
+D=int_(x<alpha)(alpha-x)dnu(x),
+
+S=int_(x>=alpha)(x-alpha)dnu(x).
+```
+
+The mean hypothesis gives
+
+```text
+S-D=lambda-alpha>=0.                           (P5A.102AD5ALX1ZZB3S4N40)
+```
+
+On the upper square, both factors after `(x-y)^2` in
+`(P5A.102AD5ALX1ZZB3S4N36)` are nonnegative: the second one is
+increasing in each variable there and at `(alpha,alpha)` equals
+
+```text
+3alpha^2-4alpha-2=10.
+```
+
+Thus the upper--upper load is nonnegative.  The lower--lower part
+of one half the double integral in `(P5A.102AD5ALX1ZZB3S4N35)` is
+at least `-8D^2` by `(P5A.102AD5ALX1ZZB3S4N37)`.  Both orientations
+of the cross part contribute at least `8DS` by
+`(P5A.102AD5ALX1ZZB3S4N38)`.  Therefore
+
+```text
+Cov_nu(g,h)>=-8D^2+8DS=8D(S-D)>=0.              (P5A.102AD5ALX1ZZB3S4N41)
+```
+
+Together with `(P5A.102AD5ALX1ZZB3S4N35)`, this proves the lemma.
+QED.
+
+**Corollary 5A8H28UIA2CGLPCIPOCB2RADTHIRDONE1ARB
+(uniform one-arbitrary-factor third one-contraction payment).**
+For every `m>=0` and every `b>=1`, if
+
+```text
+P=chi_1^m chi_b,
+```
+
+then `K_(3,1)>=0`.
+
+**Proof.**  The all-fundamental case, the fixed labels `2<=b<=15`,
+and the dominant chamber `b>=m+5` are Corollaries
+5A8H28UIA2CGLPCIPOCB2RADTHIRDFUND,
+5A8H28UIA2CGLPCIPOCB2RADTHIRDSMALL, and
+5A8H28UIA2CGLPCIPOCB2RADTHIRDDOM.  It remains to take the diagonal
+strip
 
 ```text
 16<=b<=m+4.                                    (P5A.102AD5ALX1ZZB3S4N33)
 ```
 
-Formula `(P5A.102AD5ALX1ZZB3S4N28)` applies throughout that strip
-and reduces each low coefficient to the central binomial prefix and
-the `2r+1` boundary binomials around `b`.
+In particular `m>=12`.  Continue the notation
+
+```text
+S_b=sum_(t=0)^b d_t,
+D_b=2d_0+d_b-d_(b+1),
+lambda=c_1/c_0=3-D_b/S_b.
+```
+
+If `12<=m<=15`, then `b>m`, so
+
+```text
+S_b=(m+1)d_0,                 D_b=2d_0,
+lambda=3-2/(m+1)>=37/13.
+```
+
+Now suppose `m>=16`.  The ballot ratios in
+`(P5A.102AD5ALX1ZZB3S4N33H)` are nondecreasing in `m`.  At `m=16`
+the complete telescoping sum is `17d_0`; hence
+
+```text
+S_b>=S_16>=17d_0.
+```
+
+Lemma 5A8H28UIA2CGLPCIPOCB2RADSECONDSQDROP gives `D_b<=3d_0`,
+and therefore
+
+```text
+lambda>=3-3/17=48/17.                          (P5A.102AD5ALX1ZZB3S4N42)
+```
+
+Also `37/13>48/17`, while
+
+```text
+48/17>alpha
+```
+
+because `110>34sqrt(10)`, equivalently
+`110^2-10(34)^2=540>0`.  Thus every member of the remaining strip
+satisfies the hypothesis of Lemma
+5A8H28UIA2CGLPCIPOCB2RADTHIRDONETHR; here `C=P^2` is pointwise
+nonnegative.  The lemma proves `K_(3,1)>=0`.  This exhausts all
+`m,b`.  QED.
+
+Corollaries 5A8H28UIA2CGLPCIPOCB2RADTHIRDZERO1ARB and
+5A8H28UIA2CGLPCIPOCB2RADTHIRDONE1ARB therefore close both strict
+`A=3` columns throughout the complete one-arbitrary-factor strand.
+
+The strict exact verifier
+`character_ring_iter/verify_su2_third_one_contraction_mean_payment.cpp`
+constructs the kernel and all five nontrivial rectangles in
+`Q(sqrt(10))`, converts them to Bernstein form, performs the one
+required three-level subdivision tree, and reproduces every count in
+`(P5A.102AD5ALX1ZZB3S4N39)`.  It also reconstructs the eight
+successive `chi_2^2` insertions in the countercontrol below.
+
+The mean threshold is not by itself an arbitrary-factor theorem.  For
+the genuine word `P=chi_2^8`, direct ordinary fusion gives
+
+```text
+(c_0,c_1)=(227475,625992),
+
+(3c_1-2c_0)^2-40c_0^2=-44792028324<0.           (P5A.102AD5ALX1ZZB3S4N43)
+```
+
+Thus `c_1/c_0<alpha`; the later arbitrary-factor argument must still
+use the cumulative current outside the mean chamber.
 
 For a factor word of root support `n>=2`, Theorem
 5A8H28UIA2CGLPCIPOCB2RADSECONDALL and Lemma
