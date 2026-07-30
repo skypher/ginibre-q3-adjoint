@@ -53,10 +53,69 @@ Integer second_radial(const std::vector<Integer>& profile) {
          at(profile, 1) * at(profile, 3);
 }
 
+Integer radial(const std::vector<Integer>& profile, const int antidiagonal,
+               const int contraction) {
+  return at(profile, 0) *
+             (at(profile, antidiagonal + 1) +
+              at(profile, antidiagonal + 2)) +
+         at(profile, contraction) *
+             at(profile, antidiagonal - contraction) -
+         at(profile, contraction + 1) *
+             at(profile, antidiagonal - contraction + 1);
+}
+
 bool mean_threshold(const std::vector<Integer>& profile) {
   const Integer zero = at(profile, 0);
   const Integer one = at(profile, 1);
   return 3 * one * one >= 4 * zero * one + 8 * zero * zero;
+}
+
+struct DeletionPrefixInspection {
+  bool applicable = false;
+  bool certified = false;
+  Integer best_prefix = 0;
+  Integer best_zero = 1;
+};
+
+bool deletion_prefix_exception(const std::vector<int>& word) {
+  return word == std::vector<int>({1, 1, 2, 2});
+}
+
+DeletionPrefixInspection deletion_prefix_inspection(
+    const std::vector<int>& word) {
+  DeletionPrefixInspection result;
+  const int nonfundamental = static_cast<int>(std::count_if(
+      word.begin(), word.end(),
+      [](const int label) { return label >= 2; }));
+  if (word.size() < 4U || nonfundamental < 2) {
+    return result;
+  }
+  result.applicable = true;
+  for (std::size_t deleted = 0; deleted < word.size(); ++deleted) {
+    const int label = word[deleted];
+    if (label < 2) {
+      continue;
+    }
+    std::vector<Integer> profile{Integer(1)};
+    for (std::size_t index = 0; index < word.size(); ++index) {
+      if (index != deleted) {
+        profile = multiply_by_square(profile, word[index]);
+      }
+    }
+    Integer prefix = 0;
+    for (int shell = 0; shell <= label; ++shell) {
+      prefix += at(profile, shell);
+    }
+    const Integer zero = at(profile, 0);
+    if (result.best_prefix * zero < prefix * result.best_zero) {
+      result.best_prefix = prefix;
+      result.best_zero = zero;
+    }
+    if (19 * prefix >= 102 * zero) {
+      result.certified = true;
+    }
+  }
+  return result;
 }
 
 Integer one_factor_expected(const int label) {
@@ -165,13 +224,22 @@ struct Inspection {
   std::uint64_t insertions = 0U;
   std::uint64_t below_threshold = 0U;
   std::uint64_t second_radial_failures = 0U;
+  std::uint64_t third_radial_zero_failures = 0U;
+  std::uint64_t third_radial_one_failures = 0U;
   std::uint64_t formula_checks = 0U;
   std::uint64_t formula_failures = 0U;
   std::uint64_t adjacent_drop_checks = 0U;
   std::uint64_t adjacent_drop_failures = 0U;
+  std::uint64_t deletion_prefix_candidates = 0U;
+  std::uint64_t deletion_prefix_uncovered = 0U;
+  std::uint64_t deletion_prefix_unexpected = 0U;
+  Integer deletion_prefix_best = 0;
+  Integer deletion_prefix_zero = 1;
   Integer final_zero = 0;
   Integer final_one = 0;
   Integer final_second_radial = 0;
+  Integer final_third_radial_zero = 0;
+  Integer final_third_radial_one = 0;
 };
 
 Inspection inspect_word(const std::vector<int>& word) {
@@ -185,11 +253,19 @@ Inspection inspect_word(const std::vector<int>& word) {
   result.final_zero = at(profile, 0);
   result.final_one = at(profile, 1);
   result.final_second_radial = second_radial(profile);
+  result.final_third_radial_zero = radial(profile, 3, 0);
+  result.final_third_radial_one = radial(profile, 3, 1);
   if (!mean_threshold(profile)) {
     ++result.below_threshold;
   }
   if (result.final_second_radial < 0) {
     ++result.second_radial_failures;
+  }
+  if (result.final_third_radial_zero < 0) {
+    ++result.third_radial_zero_failures;
+  }
+  if (result.final_third_radial_one < 0) {
+    ++result.third_radial_one_failures;
   }
   const int support = static_cast<int>(profile.size()) - 1;
   for (int label = 0; label <= support; ++label) {
@@ -197,6 +273,19 @@ Inspection inspect_word(const std::vector<int>& word) {
     if (at(profile, label) - at(profile, label + 1) >
         at(profile, 0)) {
       ++result.adjacent_drop_failures;
+    }
+  }
+  const DeletionPrefixInspection deletion =
+      deletion_prefix_inspection(word);
+  if (deletion.applicable) {
+    ++result.deletion_prefix_candidates;
+    result.deletion_prefix_best = deletion.best_prefix;
+    result.deletion_prefix_zero = deletion.best_zero;
+    if (!deletion.certified) {
+      ++result.deletion_prefix_uncovered;
+      if (!deletion_prefix_exception(word)) {
+        ++result.deletion_prefix_unexpected;
+      }
     }
   }
   if (word.size() == 1U) {
@@ -245,6 +334,42 @@ Inspection inspect_word(const std::vector<int>& word) {
         result.final_zero * result.final_zero * numerator) {
       ++result.formula_failures;
     }
+    const Integer third_denominator =
+        (count + 2) * (count + 3) * (count + 4) *
+        (count + 5) * (count + 6);
+    const Integer third_zero_polynomial =
+        (((((2 * count + 37) * count + 256) * count + 803) *
+               count +
+           1062) *
+              count +
+          360);
+    const Integer third_zero_numerator =
+        360 * count * (count - 1) * (count - 2) *
+        third_zero_polynomial;
+    ++result.formula_checks;
+    if (result.final_third_radial_zero *
+            third_denominator * third_denominator !=
+        result.final_zero * result.final_zero *
+            third_zero_numerator) {
+      ++result.formula_failures;
+    }
+    const Integer third_one_polynomial =
+        ((((((26 * count + 513) * count + 3836) * count + 13233) *
+                  count +
+              19808) *
+                 count +
+             8484) *
+                count +
+            720);
+    const Integer third_one_numerator =
+        60 * count * (count - 1) * third_one_polynomial;
+    ++result.formula_checks;
+    if (result.final_third_radial_one *
+            third_denominator * third_denominator !=
+        result.final_zero * result.final_zero *
+            third_one_numerator) {
+      ++result.formula_failures;
+    }
   }
   if (word.size() >= 4U && word.size() <= 6U &&
       word.back() == 2 &&
@@ -255,6 +380,64 @@ Inspection inspect_word(const std::vector<int>& word) {
     ++result.formula_checks;
     if (result.final_second_radial !=
         expected[word.size() - 4U]) {
+      ++result.formula_failures;
+    }
+  }
+  const int fundamental_prefix =
+      static_cast<int>(word.size()) - 1;
+  if (!word.empty() &&
+      std::all_of(
+          word.begin(), word.end() - 1,
+          [](const int label) { return label == 1; }) &&
+      word.back() >= fundamental_prefix + 5) {
+    const Integer count = fundamental_prefix;
+    const Integer central_binomial =
+        binomial(2 * fundamental_prefix, fundamental_prefix);
+    const Integer denominator =
+        (count + 1) * (count + 2) * (count + 3) *
+        (count + 4) * (count + 5);
+    const Integer zero_polynomial =
+        ((((((((240 * count + 3768) * count + 23808) * count +
+                     81648) *
+                        count +
+                    179952) *
+                       count +
+                   281400) *
+                      count +
+                  287904) *
+                     count +
+                 149280) *
+                    count +
+                28800);
+    ++result.formula_checks;
+    if (result.final_third_radial_zero *
+            denominator * denominator !=
+        central_binomial * central_binomial * zero_polynomial) {
+      ++result.formula_failures;
+    }
+    const Integer one_polynomial =
+        ((((((((520 * count + 9172) * count + 65144) * count +
+                     240520) *
+                        count +
+                    501224) *
+                       count +
+                   610276) *
+                      count +
+                  442264) *
+                     count +
+                 175680) *
+                    count +
+                28800);
+    ++result.formula_checks;
+    if (result.final_third_radial_one *
+            denominator * denominator !=
+        central_binomial * central_binomial * one_polynomial) {
+      ++result.formula_failures;
+    }
+  }
+  if (deletion_prefix_exception(word)) {
+    ++result.formula_checks;
+    if (result.final_second_radial != 816) {
       ++result.formula_failures;
     }
   }
@@ -292,15 +475,32 @@ int main(int argc, char** argv) {
     std::atomic<std::uint64_t> insertions{0U};
     std::atomic<std::uint64_t> below_threshold{0U};
     std::atomic<std::uint64_t> second_radial_failures{0U};
+    std::atomic<std::uint64_t> third_radial_zero_failures{0U};
+    std::atomic<std::uint64_t> third_radial_one_failures{0U};
     std::atomic<std::uint64_t> formula_checks{0U};
     std::atomic<std::uint64_t> formula_failures{0U};
     std::atomic<std::uint64_t> adjacent_drop_checks{0U};
     std::atomic<std::uint64_t> adjacent_drop_failures{0U};
+    std::atomic<std::uint64_t> deletion_prefix_candidates{0U};
+    std::atomic<std::uint64_t> deletion_prefix_uncovered{0U};
+    std::atomic<std::uint64_t> deletion_prefix_unexpected{0U};
+    std::vector<int> first_deletion_prefix_uncovered;
+    Integer minimum_deletion_prefix = 0;
+    Integer minimum_deletion_zero = 1;
+    std::vector<int> minimum_deletion_prefix_word;
     std::vector<Integer> minimum_numerator(
         static_cast<std::size_t>(maximum_factors + 1));
     std::vector<Integer> minimum_denominator(
         static_cast<std::size_t>(maximum_factors + 1));
     std::vector<std::vector<int>> minimum_word(
+        static_cast<std::size_t>(maximum_factors + 1));
+    std::vector<Integer> minimum_third_zero(
+        static_cast<std::size_t>(maximum_factors + 1));
+    std::vector<Integer> minimum_third_one(
+        static_cast<std::size_t>(maximum_factors + 1));
+    std::vector<std::vector<int>> minimum_third_zero_word(
+        static_cast<std::size_t>(maximum_factors + 1));
+    std::vector<std::vector<int>> minimum_third_one_word(
         static_cast<std::size_t>(maximum_factors + 1));
 
 #pragma omp parallel for schedule(dynamic)
@@ -312,6 +512,12 @@ int main(int argc, char** argv) {
           inspection.below_threshold, std::memory_order_relaxed);
       second_radial_failures.fetch_add(
           inspection.second_radial_failures, std::memory_order_relaxed);
+      third_radial_zero_failures.fetch_add(
+          inspection.third_radial_zero_failures,
+          std::memory_order_relaxed);
+      third_radial_one_failures.fetch_add(
+          inspection.third_radial_one_failures,
+          std::memory_order_relaxed);
       formula_checks.fetch_add(
           inspection.formula_checks, std::memory_order_relaxed);
       formula_failures.fetch_add(
@@ -320,9 +526,34 @@ int main(int argc, char** argv) {
           inspection.adjacent_drop_checks, std::memory_order_relaxed);
       adjacent_drop_failures.fetch_add(
           inspection.adjacent_drop_failures, std::memory_order_relaxed);
+      deletion_prefix_candidates.fetch_add(
+          inspection.deletion_prefix_candidates,
+          std::memory_order_relaxed);
+      deletion_prefix_uncovered.fetch_add(
+          inspection.deletion_prefix_uncovered,
+          std::memory_order_relaxed);
+      deletion_prefix_unexpected.fetch_add(
+          inspection.deletion_prefix_unexpected,
+          std::memory_order_relaxed);
       const std::size_t length = words[index].size();
 #pragma omp critical
       {
+        if (inspection.deletion_prefix_uncovered != 0U &&
+            (first_deletion_prefix_uncovered.empty() ||
+             words[index] < first_deletion_prefix_uncovered)) {
+          first_deletion_prefix_uncovered = words[index];
+        }
+        if (inspection.deletion_prefix_candidates != 0U &&
+            !deletion_prefix_exception(words[index]) &&
+            (minimum_deletion_prefix_word.empty() ||
+             inspection.deletion_prefix_best *
+                     minimum_deletion_zero <
+                 minimum_deletion_prefix *
+                     inspection.deletion_prefix_zero)) {
+          minimum_deletion_prefix = inspection.deletion_prefix_best;
+          minimum_deletion_zero = inspection.deletion_prefix_zero;
+          minimum_deletion_prefix_word = words[index];
+        }
         const Integer candidate_cross =
             inspection.final_one * minimum_denominator[length];
         const Integer incumbent_cross =
@@ -335,13 +566,36 @@ int main(int argc, char** argv) {
           minimum_denominator[length] = inspection.final_zero;
           minimum_word[length] = words[index];
         }
+        if (minimum_third_zero_word[length].empty() ||
+            inspection.final_third_radial_zero <
+                minimum_third_zero[length] ||
+            (inspection.final_third_radial_zero ==
+                 minimum_third_zero[length] &&
+             words[index] < minimum_third_zero_word[length])) {
+          minimum_third_zero[length] =
+              inspection.final_third_radial_zero;
+          minimum_third_zero_word[length] = words[index];
+        }
+        if (minimum_third_one_word[length].empty() ||
+            inspection.final_third_radial_one <
+                minimum_third_one[length] ||
+            (inspection.final_third_radial_one ==
+                 minimum_third_one[length] &&
+             words[index] < minimum_third_one_word[length])) {
+          minimum_third_one[length] =
+              inspection.final_third_radial_one;
+          minimum_third_one_word[length] = words[index];
+        }
       }
     }
 
     const bool pass =
         second_radial_failures.load() == 0U &&
+        third_radial_zero_failures.load() == 0U &&
+        third_radial_one_failures.load() == 0U &&
         formula_failures.load() == 0U &&
         adjacent_drop_failures.load() == 0U &&
+        deletion_prefix_unexpected.load() == 0U &&
         insertion_countercontrol == -3;
     std::cout
         << "SU2_SECOND_LOWER_RADIAL_THRESHOLD"
@@ -351,11 +605,26 @@ int main(int argc, char** argv) {
         << " insertions=" << insertions.load()
         << " below_threshold=" << below_threshold.load()
         << " second_radial_failures=" << second_radial_failures.load()
+        << " third_radial_zero_failures="
+        << third_radial_zero_failures.load()
+        << " third_radial_one_failures="
+        << third_radial_one_failures.load()
         << " formula_checks=" << formula_checks.load()
         << " formula_failures=" << formula_failures.load()
         << " adjacent_drop_checks=" << adjacent_drop_checks.load()
         << " adjacent_drop_failures="
         << adjacent_drop_failures.load()
+        << " deletion_prefix_candidates="
+        << deletion_prefix_candidates.load()
+        << " deletion_prefix_uncovered="
+        << deletion_prefix_uncovered.load()
+        << " deletion_prefix_unexpected="
+        << deletion_prefix_unexpected.load()
+        << " first_deletion_prefix_uncovered="
+        << render(first_deletion_prefix_uncovered)
+        << " minimum_deletion_prefix_ratio="
+        << minimum_deletion_prefix << '/' << minimum_deletion_zero
+        << '@' << render(minimum_deletion_prefix_word)
         << " insertion_countercontrol=" << insertion_countercontrol
         << " minimum_means={";
     for (int length = 1; length <= maximum_factors; ++length) {
@@ -367,6 +636,25 @@ int main(int argc, char** argv) {
           << length << ':' << minimum_numerator[index]
           << '/' << minimum_denominator[index] << '@'
           << render(minimum_word[index]);
+    }
+    std::cout
+        << "} minimum_third_zero={";
+    for (int length = 1; length <= maximum_factors; ++length) {
+      if (length != 1) {
+        std::cout << ';';
+      }
+      const std::size_t index = static_cast<std::size_t>(length);
+      std::cout << length << ':' << minimum_third_zero[index]
+                << '@' << render(minimum_third_zero_word[index]);
+    }
+    std::cout << "} minimum_third_one={";
+    for (int length = 1; length <= maximum_factors; ++length) {
+      if (length != 1) {
+        std::cout << ';';
+      }
+      const std::size_t index = static_cast<std::size_t>(length);
+      std::cout << length << ':' << minimum_third_one[index]
+                << '@' << render(minimum_third_one_word[index]);
     }
     std::cout
         << "} result=" << (pass ? "PASS" : "FAIL")

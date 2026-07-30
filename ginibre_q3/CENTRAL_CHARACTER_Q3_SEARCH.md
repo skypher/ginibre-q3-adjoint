@@ -12918,8 +12918,64 @@ K_(2,0)
 
 This proves the claim for every factor count without a cutoff.  QED.
 
-The all-fundamental ballot profile has a uniform adjacent-drop bound.
-This supplies enough control to admit one arbitrary additional label.
+The adjacent-drop estimate used below is not special to ballot numbers.
+It is an exact consequence of being the square of a parity-pure
+nonnegative character.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADSECONDSQDROP
+(parity-square adjacent-drop bound).**  Let
+
+```text
+P=sum_(i>=0)p_i chi_(epsilon+2i),       p_i>=0,
+epsilon in {0,1},
+P^2=sum_(r>=0)c_r beta_r,
+```
+
+with finite support and zero continuation.  Then, for every `r>=0`,
+
+```text
+c_r-c_(r+1)
+ =sum_(i+j=r-epsilon)p_ip_j
+   -2sum_(i>=0)p_ip_(i+r+1)
+ <=c_0.                                      (P5A.102AD5ALX1ZZB3S4N2A)
+```
+
+In particular the estimate holds for the doubled profile of every
+ordinary factor word.
+
+**Proof.**  Clebsch--Gordan gives the exact coefficient formula
+
+```text
+c_r=sum_(i,j>=0)p_ip_j
+  1_(|i-j|<=r<=i+j+epsilon).                  (P5A.102AD5ALX1ZZB3S4N2B)
+```
+
+At `r=0`, only `i=j` contributes, so
+
+```text
+c_0=sum_i p_i^2.                              (P5A.102AD5ALX1ZZB3S4N2C)
+```
+
+On subtracting the formula at `r+1`, a positive term occurs exactly
+at the upper boundary `i+j+epsilon=r`, and a negative term occurs
+exactly at the lower boundary `|i-j|=r+1`.  The latter boundary has
+two orientations, proving the identity in
+`(P5A.102AD5ALX1ZZB3S4N2A)`.  If `n=r-epsilon>=0`, Cauchy--Schwarz
+gives
+
+```text
+sum_(i=0)^n p_ip_(n-i)
+ <=sqrt{sum_(i=0)^n p_i^2 sum_(i=0)^n p_(n-i)^2}
+ =sum_(i=0)^n p_i^2
+ <=c_0.                                       (P5A.102AD5ALX1ZZB3S4N2D)
+```
+
+For `n<0` the sum is empty.  Dropping the nonpositive
+off-diagonal term proves the result.  A product of irreducible
+characters has fixed parity and nonnegative Clebsch--Gordan
+coefficients, so the final assertion follows.  QED.
+
+The ballot estimate is therefore an immediate special case.
 
 **Lemma 5A8H28UIA2CGLPCIPOCB2RADSECONDBALDROP
 (ballot adjacent-drop bound).**  Let
@@ -12935,97 +12991,17 @@ d_b-d_(b+1)<=d_0,                       0<=b<=m. (P5A.102AD5ALX1ZZB3S4N2)
 ```
 
 **Proof.**  The case `b=0` is immediate from `d_1>=0`.
-Put `s=m-b`.  Direct cancellation in the ballot formula
-shows that a positive drop can occur only when
+Apply Lemma 5A8H28UIA2CGLPCIPOCB2RADSECONDSQDROP to
+`P=chi_1^m`; its squared coefficients are exactly the displayed
+ballot numbers.  QED.
 
-```text
-s<C_b:=2b^2+3b+1,
-```
-
-and in that range `(P5A.102AD5ALX1ZZB3S4N2)` is equivalent to
-
-```text
-R_b(s):=
- {s!(s+2b+2)!}/{(s+b)!(s+b+1)!}
- >=2(C_b-s).                                     (P5A.102AD5ALX1ZZB3S4N3)
-```
-
-For `F_b(s)=R_b(s)/(C_b-s)`, exact division gives
-
-```text
-F_b(s+1)>=F_b(s)
- iff
- s>=(2b^2+b-3)/3=:T_b.                           (P5A.102AD5ALX1ZZB3S4N4)
-```
-
-Indeed, after clearing the positive denominators, the difference is
-
-```text
-(b+1)^2{3s-(2b^2+b-3)}.
-```
-
-Thus the minimum over integer `s` occurs at
-`s_0=ceil(T_b)`.
-
-For `b>=9`, use `T_b<=s_0<=T_b+1` in the product
-
-```text
-R_b(s_0)
- =(s_0+2b+2)
-   product_(i=1)^b {1+(b+1)/(s_0+i)}.
-```
-
-It gives
-
-```text
-R_b(s_0)
- >=(2b^2+7b+3)/3
-   {1+3(b+1)/(2b(b+2))}^b.                      (P5A.102AD5ALX1ZZB3S4N5)
-```
-
-Also
-
-```text
-2(C_b-s_0)<=4(2b^2+4b+3)/3.
-```
-
-Expand the power in `(P5A.102AD5ALX1ZZB3S4N5)` through order four.
-After multiplication by the common positive denominator, the
-difference from the last upper bound is the degree-ten polynomial
-whose coefficient vector in powers of `b` is
-
-```text
-(0,-1458,-3969,-1809,-47115,-119997,
- -123669,-62379,-13329,171,306).
-```
-
-After setting `b=x+9`, its coefficient vector is
-
-```text
-(187959108096,461793156480,333436764384,
- 122962258224,27553753584,4037701896,
- 397797498,26245449,1115892,27711,306).         (P5A.102AD5ALX1ZZB3S4N6)
-```
-
-Every entry is positive, proving `(P5A.102AD5ALX1ZZB3S4N3)` for
-`b>=9`.
-
-For `1<=b<=8`, positivity of the drop restricts
-
-```text
-b<=m<=2b^2+4b.
-```
-
-This is exactly `524` integer pairs.  Direct substitution of the
-displayed ballot formula verifies `(P5A.102AD5ALX1ZZB3S4N2)` in
-every pair.  The strict `cpp_int` verifier
-`character_ring_iter/verify_su2_ballot_drop_bound.cpp`
-constructs the degree-ten numerator, translates it by nine, checks
-every coefficient in `(P5A.102AD5ALX1ZZB3S4N6)`, and performs the
-`524` exhaustive exact divisions with zero failures.  The finite
-check is exhaustive because the preceding sign condition proves the
-drop nonpositive outside its stated range.  This completes the proof.
-QED.
+The strict `cpp_int` verifier
+`character_ring_iter/verify_su2_ballot_drop_bound.cpp` is an
+independent arithmetic cross-check.  It reduces the positive-drop
+range to `524` integer pairs, checks them exactly, and verifies the
+positive shifted degree-ten polynomial for the complementary
+unbounded range.  The proof no longer depends on that finite
+separation.
 
 **Corollary 5A8H28UIA2CGLPCIPOCB2RADSECOND1ARB
 (fundamentals plus one arbitrary factor).**  For every `m>=0` and
@@ -13130,19 +13106,496 @@ respective exact margins
 
 They are positive, completing the arbitrary-`m,b` proof.  QED.
 
+The square-drop identity also supplies the missing uniform prefix
+reserve once at least two nonfundamental factors are present.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADSECONDLOWRES
+(two-factor-root low-shell reserve).**  Let `R` be an ordinary
+factor word with at least two factors, and write
+
+```text
+R^2=sum_(t>=0)e_t beta_t.
+```
+
+Unless `R=chi_1^2`,
+
+```text
+L(e):=-45e_0+12e_1+12e_2+57e_3+19e_4>=0.
+                                                        (P5A.102AD5ALX1ZZB3S4N12)
+```
+
+**Proof.**  First suppose `R=chi_1^m` with `m>=3`.  Substitution of
+the ballot ratios in `(P5A.102AD5ALX1ZZB3S4N0)` gives
+
+```text
+L(e)/e_0
+ ={(m-3)(621m^3+1917m^2+1602m+1800)}
+   /{(m+2)(m+3)(m+4)(m+5)}>=0.                 (P5A.102AD5ALX1ZZB3S4N13)
+```
+
+Now suppose that `R=T chi_q`, where `T` is nonempty and `q>=2`.
+Put `T^2=sum_t f_t beta_t`, and let
+
+```text
+ell=(-45,12,12,57,19).
+```
+
+Ordinary fusion gives
+
+```text
+L(f A_q)=sum_(t>=0)h_q(t)f_t,
+
+h_q(t)=sum_(r=0)^4 ell_r
+ max(0,min(q,t+r)-|t-r|+1).                    (P5A.102AD5ALX1ZZB3S4N14)
+```
+
+For `q=2`, the complete nonzero dual row is
+
+```text
+(h_2(0),...,h_2(6))
+ =(-21,72,148,245,183,95,19).                  (P5A.102AD5ALX1ZZB3S4N15)
+```
+
+Formula `(P5A.102AD5ALX1ZZB3S4C)` gives `f_1>=f_0` for every
+nonempty factor word.  Hence
+
+```text
+L(f A_2)>=-21f_0+72f_1>=51f_0>0.
+```
+
+For `q>=3`, every dual coefficient in
+`(P5A.102AD5ALX1ZZB3S4N14)` is nonnegative.  Here is the complete
+unbounded check.  For `t=0,1,2,3`, increasing `q` beyond three adds
+only positive `ell_r`, and the respective values at `q=3` are
+
+```text
+36,160,248,300.
+```
+
+For `t>=4` and `q<t`, the sole negative weight `ell_0` is absent.
+For `q>=t`, put `k=min(q-t,4)`.  Counting the truncated intervals
+in `(P5A.102AD5ALX1ZZB3S4N14)` gives, for `k=0,1,2,3,4`,
+
+```text
+h_q(t)=338,438,526,602,621.                     (P5A.102AD5ALX1ZZB3S4N16)
+```
+
+Thus `h_q(t)>=0` in every case, and `h_q(0)>0`.  Since `f_0>0`,
+this proves `L(f A_q)>0` for `q>=3`.  The all-fundamental and
+nonfundamental alternatives exhaust `R`, proving the lemma.  QED.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADSECONDPREFIX
+(second-radial deletion prefix).**  Let `R` be a factor word with
+at least two factors, let `2<=a<=b`, and put
+
+```text
+Q=R chi_a,
+Q^2=sum_(t>=0)d_t beta_t,
+S_b=sum_(t=0)^b d_t.
+```
+
+Then either
+
+```text
+(R,a,b)=(chi_1^2,2,2),                          (P5A.102AD5ALX1ZZB3S4N17)
+```
+
+or
+
+```text
+19S_b>=102d_0.                                  (P5A.102AD5ALX1ZZB3S4N18)
+```
+
+**Proof.**  Write `R^2=sum_t e_t beta_t`, so
+`Q^2=(sum_t e_t beta_t)A_a`.  The contribution of source `e_t` to
+the prefix through `a` is
+
+```text
+N_a(t)=
+ a+1+t(4a+1-3t)/2,                 0<=t<=a,
+
+N_a(t)=(2a-t+1)(2a-t+2)/2,         a<t<=2a,
+                                                        (P5A.102AD5ALX1ZZB3S4N19)
+```
+
+and is zero later.  Indeed, for `t,s<=a` the fusion interval
+contributes
+
+```text
+2min(t,s)+1-max(0,t+s-a)
+```
+
+targets through `a`; summing over `0<=s<=a` gives the first line.
+For `t>a`, the contributing counts are
+`1,2,...,2a-t+1`, giving the second line.  Also
+
+```text
+d_0=sum_(t=0)^a e_t.                            (P5A.102AD5ALX1ZZB3S4N20)
+```
+
+Suppose `a>=3`.  Formula `(P5A.102AD5ALX1ZZB3S4N19)` gives
+
+```text
+N_a(0)=a+1,             N_a(t)>=3a,  1<=t<=a.
+```
+
+The second inequality follows because the first line of
+`(P5A.102AD5ALX1ZZB3S4N19)` is concave in `t`, equals `3a` at
+`t=1`, and is at least `3a` at `t=a`.  Put
+`E=sum_(t=1)^a e_t`.  Since `R` is nonempty,
+`e_1>=e_0` by `(P5A.102AD5ALX1ZZB3S4C)`, so `E>=e_0`.  Therefore
+
+```text
+S_b>=S_a
+ >=(a+1)e_0+3aE
+ >={(4a+1)/2}(e_0+E)
+ >=(13/2)d_0.                                  (P5A.102AD5ALX1ZZB3S4N21)
+```
+
+This is stronger than `(P5A.102AD5ALX1ZZB3S4N18)`.
+
+It remains to take `a=2`.  Directly from
+`(P5A.102AD5ALX1ZZB3S4N19)`,
+
+```text
+d_0=e_0+e_1+e_2,
+S_2=3e_0+6e_1+6e_2+3e_3+e_4.
+```
+
+Consequently
+
+```text
+19S_2-102d_0=L(e).                              (P5A.102AD5ALX1ZZB3S4N22)
+```
+
+Lemma 5A8H28UIA2CGLPCIPOCB2RADSECONDLOWRES proves the desired
+inequality unless `R=chi_1^2`.  In that exceptional root,
+
+```text
+Q^2=(6,13,11,5,1).
+```
+
+If `b>=3`, then `S_b>=35` and `d_0=6`, so
+`19S_b>=665>612=102d_0`.  Only `b=2` remains, which is precisely
+`(P5A.102AD5ALX1ZZB3S4N17)`.  QED.
+
+**Theorem 5A8H28UIA2CGLPCIPOCB2RADSECONDALL
+(uniform second lower-radial payment).**  For every factor word
+
+```text
+P=product_(j=1)^m chi_(a_j),              a_j>=1,
+P^2=sum_(h>=0)c_h beta_h,
+```
+
+one has
+
+```text
+K_(2,0)=c_0(c_2+c_3+c_4)-c_1c_3>=0.       (P5A.102AD5ALX1ZZB3S4N23)
+```
+
+Thus the `A=2,L=0` member of `(OCRD)` is closed for arbitrary factor
+count and arbitrary labels.
+
+**Proof.**  The cases with at most three factors are Corollaries
+5A8H28UIA2CGLPCIPOCB2RADSECOND2F and
+5A8H28UIA2CGLPCIPOCB2RADSECOND3F.  Words with at most one
+nonfundamental factor are covered by Corollary
+5A8H28UIA2CGLPCIPOCB2RADSECOND1ARB.
+
+It remains to take `m>=4` and at least two nonfundamental factors.
+Sort the labels, let `b` be the largest nonfundamental label and `a`
+the second largest, and write
+
+```text
+P=Q chi_b,                   Q=R chi_a.
+```
+
+The word `R` has `m-2>=2` factors.  Under the notation of Lemma
+5A8H28UIA2CGLPCIPOCB2RADSECONDPREFIX, insertion of the last factor
+gives
+
+```text
+c_0=S_b,
+c_1=3S_b-(2d_0+d_b-d_(b+1)).                  (P5A.102AD5ALX1ZZB3S4N24)
+```
+
+Lemma 5A8H28UIA2CGLPCIPOCB2RADSECONDSQDROP gives
+
+```text
+d_b-d_(b+1)<=d_0.
+```
+
+Outside `(R,a,b)=(chi_1^2,2,2)`, the deletion-prefix lemma therefore
+yields
+
+```text
+c_1/c_0
+ >=3-3d_0/S_b
+ >=3-3(19/102)
+ =83/34.                                       (P5A.102AD5ALX1ZZB3S4N25)
+```
+
+The exact threshold margin is
+
+```text
+3(83/34)^2-4(83/34)-8=131/1156>0.
+```
+
+Lemma 5A8H28UIA2CGLPCIPOCB2RADSECONDTHR now proves
+`K_(2,0)>=0`.  The exceptional word is `[1,1,2,2]`; direct ordinary
+fusion gives
+
+```text
+(c_0,c_1,c_2,c_3,c_4)=(30,72,76,52,24),
+K_(2,0)=816>0.                                 (P5A.102AD5ALX1ZZB3S4N26)
+```
+
+This exhausts all factor words and proves the theorem.  QED.
+
+The next antidiagonal also has a complete unbounded fundamental
+strand.
+
+**Corollary 5A8H28UIA2CGLPCIPOCB2RADTHIRDFUND
+(all-fundamental third radial payment).**  For every `m>=0`, let
+
+```text
+P=chi_1^m,                    P^2=sum_h c_h beta_h,
+D_m=(m+2)(m+3)(m+4)(m+5)(m+6).
+```
+
+Then both strict `A=3` columns are nonnegative.  More precisely,
+
+```text
+K_(3,0)
+ =c_0^2 {360m(m-1)(m-2)}/D_m^2
+  {2m^5+37m^4+256m^3+803m^2+1062m+360},
+
+K_(3,1)
+ =c_0^2 {60m(m-1)}/D_m^2
+  {26m^6+513m^5+3836m^4+13233m^3
+    +19808m^2+8484m+720}.                      (P5A.102AD5ALX1ZZB3S4N27)
+```
+
+**Proof.**  Use the ballot ratios
+
+```text
+c_h/c_0
+ =(2h+1)m(m-1)...(m-h+1)/
+   {(m+2)(m+3)...(m+h+1)},             0<=h<=5,
+```
+
+with the falling product interpreted as zero when `h>m`.
+Substitution in
+
+```text
+K_(3,0)=c_0(c_3+c_4+c_5)-c_1c_4,
+
+K_(3,1)=c_0(c_4+c_5)+c_1c_2-c_2c_3
+```
+
+and clearing `D_m^2` gives the two factorizations in
+`(P5A.102AD5ALX1ZZB3S4N27)`.  Every remaining polynomial
+coefficient is positive, while the displayed falling factors cover
+the zero small-`m` cases.  QED.
+
+The same ballot structure closes an unbounded dominant-label chamber
+with one arbitrary factor.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADTHIRDBIN
+(ballot--boundary insertion formula).**  Put
+
+```text
+d_t=[beta_t]chi_1^(2m),
+B_t=binom(2m,m-t),                         B_t=0 for t>m,
+c_r=[beta_r](chi_1^(2m)chi_b^2).
+```
+
+Then `d_t=B_t-B_(t+1)`.  For every `r>=0` with `b>=2r`,
+
+```text
+c_r=B_0+2sum_(t=1)^r B_t
+       -sum_(t=b-r+1)^(b+r+1)B_t.              (P5A.102AD5ALX1ZZB3S4N28)
+```
+
+**Proof.**  The coefficient of `d_t` after multiplication by
+`A_b=chi_b^2` is
+
+```text
+n_(b,r)(t)
+ =max(0,min(b,t+r)-|t-r|+1).
+```
+
+When `b>=2r`, its successive differences are
+
+```text
+n_(b,r)(0)=1,
+n_(b,r)(t)-n_(b,r)(t-1)=
+  2,     1<=t<=r,
+  0,     r<t<=b-r,
+ -1,     b-r<t<=b+r+1,
+  0,     t>b+r+1.                              (P5A.102AD5ALX1ZZB3S4N29)
+```
+
+Here `n_(b,r)(b+r+1)=0`, so the final `-1` is included.
+Summation by parts in
+
+```text
+c_r=sum_(t>=0)(B_t-B_(t+1))n_(b,r)(t)
+```
+
+gives `(P5A.102AD5ALX1ZZB3S4N28)`.  QED.
+
+**Corollary 5A8H28UIA2CGLPCIPOCB2RADTHIRDDOM
+(dominant one-arbitrary-factor third radial payment).**  Let
+
+```text
+P=chi_1^m chi_b,                         b>=m+5,
+E_m=(m+1)(m+2)(m+3)(m+4)(m+5),
+B_0=binom(2m,m).
+```
+
+Then both `A=3` columns are positive.  Explicitly,
+
+```text
+K_(3,0)
+ ={B_0^2/E_m^2}
+  {240m^8+3768m^7+23808m^6+81648m^5
+   +179952m^4+281400m^3+287904m^2
+   +149280m+28800},
+
+K_(3,1)
+ ={B_0^2/E_m^2}
+  {520m^8+9172m^7+65144m^6+240520m^5
+   +501224m^4+610276m^3+442264m^2
+   +175680m+28800}.                            (P5A.102AD5ALX1ZZB3S4N30)
+```
+
+**Proof.**  For `0<=r<=5`, the hypothesis `b>=m+5` makes every
+term in the final sum of `(P5A.102AD5ALX1ZZB3S4N28)` vanish.  Hence
+
+```text
+c_r=B_0+2sum_(t=1)^r B_t,
+
+B_t/B_0=
+ {m(m-1)...(m-t+1)}/{(m+1)(m+2)...(m+t)}.
+```
+
+Substitute these six coefficients in the two formulas preceding
+`(P5A.102AD5ALX1ZZB3S4N27)` and clear `E_m^2`.  Exact expansion
+gives `(P5A.102AD5ALX1ZZB3S4N30)`.  Every coefficient in both
+numerators is positive.  QED.
+
+The complementary fixed small labels admit an exact symbolic
+certificate.
+
+**Corollary 5A8H28UIA2CGLPCIPOCB2RADTHIRDSMALL
+(small one-arbitrary-factor third radial payment).**  For every
+`m>=0` and every `2<=b<=9`, both `A=3` columns of
+
+```text
+P=chi_1^m chi_b
+```
+
+are nonnegative.
+
+**Proof.**  Fix `b`, put `H=b+5`, and clear the common positive
+denominator
+
+```text
+D_(m,b)=product_(j=2)^(H+1)(m+j)
+```
+
+from the ballot ratios through shell `H`.  The numerator representing
+shell `t` is exactly
+
+```text
+(2t+1) product_(j=0)^(t-1)(m-j)
+ product_(j=t+2)^(H+1)(m+j).                    (P5A.102AD5ALX1ZZB3S4N31)
+```
+
+For `0<=r<=5`, multiply these numerators by the exact fusion count
+
+```text
+max(0,min(b,t+r)-|t-r|+1),             0<=t<=b+r.
+```
+
+Substitution in the two `A=3` formulas produces an integer
+polynomial over `D_(m,b)^2`.  The only nonnegative integer roots
+which must be removed are one factor `m` from `(b,L)=(2,0)` and one
+factor `m` from `(b,L)=(3,1)`.  The quotient data are
+
+```text
+b     degree K_(3,0) / least coefficient
+      degree K_(3,1) / least coefficient
+
+2       11 /    58320       12 /    126360
+3       14 /   184320       13 /    399360
+4       16 /   450000       16 /    975000
+5       18 /   933120       18 /   2021760
+6       20 /  1728720       20 /   3745560
+7       22 /  2949120       22 /   6389760
+8       24 /  4723920       24 /  10235160
+9       26 /  7200000       26 /  15600000.     (P5A.102AD5ALX1ZZB3S4N32)
+```
+
+Every one of the `318` quotient coefficients is strictly positive.
+The strict `cpp_int` certificate
+`character_ring_iter/verify_su2_fundamental_one_arbitrary_third.cpp`
+constructs `(P5A.102AD5ALX1ZZB3S4N31)` symbolically, performs the
+fusion sums and the two determinant expansions, checks every
+synthetic-division remainder, and verifies all `318` coefficient
+signs.  Thus this is a finite exact polynomial certificate for all
+integer `m>=0`, not a bounded evaluation in `m`.  QED.
+
+Corollaries 5A8H28UIA2CGLPCIPOCB2RADTHIRDFUND,
+5A8H28UIA2CGLPCIPOCB2RADTHIRDDOM, and
+5A8H28UIA2CGLPCIPOCB2RADTHIRDSMALL leave, within the complete
+one-arbitrary-factor strand, only the diagonal strip
+
+```text
+10<=b<=m+4.                                    (P5A.102AD5ALX1ZZB3S4N33)
+```
+
+Formula `(P5A.102AD5ALX1ZZB3S4N28)` applies throughout that strip
+and reduces each low coefficient to the central binomial prefix and
+the `2r+1` boundary binomials around `b`.
+
+For a factor word of root support `n>=2`, Theorem
+5A8H28UIA2CGLPCIPOCB2RADSECONDALL and Lemma
+5A8H28UIA2CGLPCIPOCB2RADFIRST remove the first two lower-wall
+columns from `(P5A.102AD5ALX1ZZB3S3BP)`.  The unresolved ordinary
+band therefore has
+
+```text
+n(n-1)-2
+```
+
+columns, with no label or factor-count cutoff.
+
 The strict `cpp_int` probe
 `character_ring_iter/probe_su2_second_lower_radial_threshold.cpp`
 independently constructs all profiles and checks the stated finite-factor
 formulas.  Through labels twelve and eight factors it checks `125,969`
 nondecreasing words and `930,240` insertion profiles.  All second
 radial margins are nonnegative in that box; the spectral threshold
-leaves `60` words uncovered, and all `505` one--three-factor,
+leaves `60` words uncovered, and all `594` one--three-factor,
 exceptional one-arbitrary-factor, and
-all-fundamental formula checks pass.  These counts are bounded
-evidence only.  The unbounded claims are the centered identity
-`(P5A.102AD5ALX1ZZB3S4K)`, the exact fusion count
-`(P5A.102AD5ALX1ZZB3S4L)`, and the ballot identity
-`(P5A.102AD5ALX1ZZB3S4N0)`.
+all-fundamental formula checks pass.  Both `A=3` columns also have
+zero failures, and the exact all-fundamental factorizations
+`(P5A.102AD5ALX1ZZB3S4N27)` are replayed through eight factors.
+The `36` dominant-label words in the standard box independently
+replay both factorizations in `(P5A.102AD5ALX1ZZB3S4N30)`.
+The probe also checks the
+parity-square adjacent-drop consequence after every word and the
+deletion-prefix certificate used above.  Among `125,455` applicable
+words its sole uncovered deletion word is `[1,1,2,2]`, and the
+minimum covered ratio is `102/19`, at `[1,1,1,2,2]`.  These counts
+are bounded cross-checks only.  The unbounded proof is the centered
+identity `(P5A.102AD5ALX1ZZB3S4K)`, the parity-square boundary
+identity `(P5A.102AD5ALX1ZZB3S4N2A)`, the dual low-shell calculation
+`(P5A.102AD5ALX1ZZB3S4N12)--(P5A.102AD5ALX1ZZB3S4N16)`, and the
+exact prefix count
+`(P5A.102AD5ALX1ZZB3S4N19)--(P5A.102AD5ALX1ZZB3S4N25)`.
 
 The second radial cone is not preserved by blind squared-factor
 insertion.  Indeed the arbitrary nonnegative profile
