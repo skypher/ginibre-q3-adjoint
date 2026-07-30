@@ -260,6 +260,11 @@ probe_su2_ordinary_anchored_kernel: probe_su2_ordinary_anchored_kernel.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+verify_su2_anchored_interval_root_radial: \
+		verify_su2_anchored_interval_root_radial.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 probe_su2_finite_anchored_spectral_tails: \
 		probe_su2_finite_anchored_spectral_tails.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -853,6 +858,7 @@ RESEARCH_TARGETS = \
 	probe_su2_anchored_lobe_all_powers \
 	prove_su2_anchored_lobe_first_block_powers \
 	probe_su2_ordinary_anchored_kernel \
+	verify_su2_anchored_interval_root_radial \
 	probe_su2_finite_anchored_spectral_tails \
 	probe_su2_finite_cyclic_gradient_currents \
 	probe_su2_finite_half_power_wedge_windows \

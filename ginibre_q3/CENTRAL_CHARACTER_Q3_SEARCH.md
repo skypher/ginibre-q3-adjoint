@@ -12296,6 +12296,166 @@ ordinary factor word and its doubled word are obtained by successive
 ordinary interval transforms, so both coefficient profiles have the
 required shape.  QED.
 
+The same radial reduction closes an unbounded support family which is
+not contained in any fixed-coordinate certificate.
+
+**Theorem 5A8H28UIA2CGLPCIPOCB2RADINT
+(anchored interval-root radial theorem).**  Let
+
+```text
+P=sum_(i=0)^n beta_i,                    n>=0,
+P^2=sum_(t=0)^(2n)c_t beta_t.
+```
+
+Then every strict radial increment `(OCRD)` is nonnegative, and hence
+`(OCSP)` holds for `P`.  In particular this proves the complete ordinary
+anchored-current inequality for the repeated two-factor root
+`P=chi_n^2`, uniformly in the irreducible label `n`.
+
+**Proof.**  Ordinary Clebsch--Gordan multiplication gives
+
+```text
+c_t=# {(i,j) in {0,...,n}^2:
+          |i-j|<=t<=i+j}.                         (P5A.102AD5ALX1ZZB3S3BPA)
+```
+
+For `0<=t<=n`, start with the band `|i-j|<=t`.  It contains
+
+```text
+(n+1)(2t+1)-t(t+1)
+```
+
+ordered pairs.  The excluded lower triangle `i+j<t` contains
+`t(t+1)/2` pairs.  For `n<=t<=2n`, reflect by
+`(i,j)->(n-i,n-j)`; the remaining triangle has side
+`2n-t`.  Thus, with zero continuation,
+
+```text
+c_t=
+ (n+1)(2t+1)-3t(t+1)/2,          0<=t<=n,
+
+ (2n-t+1)(2n-t+2)/2,             n<=t<=2n.
+                                                        (P5A.102AD5ALX1ZZB3S3BPB)
+```
+
+The two formulas agree at `t=n`.  The root is an interval profile and
+is log concave.  The case `n=0` is immediate, so take `n>=1`.
+The first branch of `c` is a nonnegative concave
+quadratic, with constant second difference `-3`, and is therefore log
+concave.  On the second branch, writing
+
+```text
+T_m=m(m+1)/2,                    c_t=T_(2n-t+1),
+```
+
+gives
+
+```text
+T_m^2-T_(m-1)T_(m+1)=T_m>=0.
+```
+
+The joining margin is
+
+```text
+c_n^2-c_(n-1)c_(n+1)=(n+1)(5n+2)/2>=0.
+```
+
+Thus `c` also is log concave with interval support.  Corollary
+5A8H28UIA2CGLPCIPOCB2REFUP therefore proves `(OCRD)` whenever
+`A>=2n-1`.
+
+It remains to take
+
+```text
+1<=A<=2n-2,                    0<=2L<A.
+```
+
+Put `M=A-L` and `C_t=2c_t`.  Formula
+`(P5A.102AD5ALX1ZZB3S1)` becomes
+
+```text
+4K_(A,L)
+ =C_0(C_(A+1)+C_(A+2))
+   +C_LC_M-C_(L+1)C_(M+1).                    (P5A.102AD5ALX1ZZB3BPC)
+```
+
+The seven mutually exclusive locations of `A` and `M` relative to
+`n` have the following affine parameterizations, with
+`x,y,z>=0`:
+
+```text
+A+2<=n:
+ (n,A,L)=(2x+y+z+3, 2x+y+1,       x),
+
+A+1=n:
+ (n,A,L)=(2x+y+2,   2x+y+1,       x),
+
+A=n, L=0:
+ (n,A,L)=(y+1,      y+1,           0),
+
+A=n, L>0:
+ (n,A,L)=(2x+y+3,   2x+y+3,       x+1),
+
+A>n, M<n:
+ (n,A,L)=(2x+y+z+4, 2x+y+2z+5,    x+z+2),
+
+A>n, M=n:
+ (n,A,L)=(x+y+3,    2x+y+4,       x+1),
+
+A>n, M>n:
+ (n,A,L)=(x+y+z+3,  2x+y+2z+4,    x).
+                                                        (P5A.102AD5ALX1ZZB3BPD)
+```
+
+Conversely, the nonnegative slacks are recovered respectively from
+
+```text
+(L,A-2L-1,n-A-2),
+(L,A-2L-1,0),
+(0,n-1,0),
+(L-1,n-2L-1,0),
+(L-A+n-1,2n-A-2(L-A+n-1)-3,A-n-1),
+(L-1,n-L-2,0),
+(L,n-L-(M-n-1)-3,M-n-1).
+```
+
+Hence `(P5A.102AD5ALX1ZZB3BPD)` exhausts the lower band without a
+bounded parameter.
+
+Substitute `(P5A.102AD5ALX1ZZB3S3BPB)` and the seven affine maps into
+`(P5A.102AD5ALX1ZZB3BPC)`.  In the monomial basis
+`x^i y^j z^k`, the seven resulting integer polynomials have,
+respectively,
+
+```text
+14, 9, 3, 9, 19, 9, 12
+```
+
+nonzero coefficients.  Every coefficient is nonnegative; the
+respective least coefficients are
+
+```text
+6, 6, 6, 6, 4, 4, 4.                         (P5A.102AD5ALX1ZZB3BPE)
+```
+
+The fail-closed exact symbolic verifier
+
+```text
+character_ring_iter/verify_su2_anchored_interval_root_radial
+```
+
+constructs both pieces of `(P5A.102AD5ALX1ZZB3S3BPB)`, performs all
+seven substitutions, expands the `75` integer coefficients, and
+checks `(P5A.102AD5ALX1ZZB3BPE)`.  As an independent indexing audit,
+it reconstructs `(P5A.102AD5ALX1ZZB3S3BPA)` directly on `4,225`
+coefficient instances and checks the inverse chamber maps on `87,360`
+lower-band triples.  Its transcript is
+`certificates/su2_anchored_interval_root_radial.log`.
+
+Thus every lower-band `K_(A,L)` is nonnegative.  Together with the
+uniform upper range this proves `(OCRD)`, and Lemma
+5A8H28UIA2CGLPCIPOCB2RAD proves `(OCSP)`.  QED.
+
 Neither of the two abstract ratio properties used in the upper proof
 can replace the square origin in the lower band.  The exact profile
 

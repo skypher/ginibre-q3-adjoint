@@ -1,0 +1,8 @@
+chamber=A_plus_2_le_n terms=14 minimum_coefficient=6 result=PASS
+chamber=A_plus_1_eq_n terms=9 minimum_coefficient=6 result=PASS
+chamber=A_eq_n_L_zero terms=3 minimum_coefficient=6 result=PASS
+chamber=A_eq_n_L_positive terms=9 minimum_coefficient=6 result=PASS
+chamber=A_gt_n_middle_le_n terms=19 minimum_coefficient=4 result=PASS
+chamber=A_gt_n_middle_eq_n terms=9 minimum_coefficient=4 result=PASS
+chamber=A_gt_n_middle_gt_n terms=12 minimum_coefficient=4 result=PASS
+SU2_ANCHORED_INTERVAL_ROOT_RADIAL chambers=7 terms=75 coefficient_formula_checks=4225 chamber_coverage_checks=87360 result=PASS_EXACT
