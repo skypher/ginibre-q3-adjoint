@@ -11946,6 +11946,229 @@ one.  Thus this run is an incomplete certificate, not a negative
 value or a counterexample.  No six-coordinate theorem is inferred
 from it.
 
+The finite-support ladder is not needed on the upper half of the
+radial triangle.  There is a uniform injection there which uses log
+concavity of the root rather than log concavity of its torus tail.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2REF
+(fusion-square reflected-ratio descent).**  Let
+
+```text
+P=sum_(i=0)^n p_i beta_i,                    p_n>0,
+P^2=sum_(t=0)^(2n)c_t beta_t,
+```
+
+where `p` is nonnegative and log concave with interval support.  Then
+for every `0<=t<n`,
+
+```text
+c_t c_(2n-t-1)>=c_(t+1)c_(2n-t).               (P5A.102AD5ALX1ZZB3S3BH)
+```
+
+**Proof.**  Reverse the root by putting
+
+```text
+q_a=p_(n-a),                         0<=a<=n,
+```
+
+and extend it by zero.  The sequence `q` is again log concave with
+interval support.  For `0<=t<=n`, define subsets of
+`{0,...,n}^2` by
+
+```text
+mathcal C_t={(a,b): |a-b|<=t, a+b<=2n-t},
+mathcal D_t={(a,b): a+b<=t}.                    (P5A.102AD5ALX1ZZB3S3BI)
+```
+
+The ordinary Clebsch--Gordan rule and the change of variables
+`a=n-i,b=n-j` give
+
+```text
+c_t=sum_((a,b) in mathcal C_t)q_aq_b,
+c_(2n-t)=sum_((a,b) in mathcal D_t)q_aq_b.      (P5A.102AD5ALX1ZZB3S3BJ)
+```
+
+For the second identity, `a+b<=t` is the transformed upper-triangle
+condition, while `|a-b|<=2n-t` is automatic because `t<=n`.
+
+Fix `t<n`.  The new side and the new lower triangle layer are
+
+```text
+mathcal N_t=mathcal C_(t+1)\mathcal C_t
+ ={(a,b): |a-b|=t+1, a+b<=2n-t-1},
+
+mathcal B_t=mathcal D_(t+1)\mathcal D_t
+ ={(a,b): a+b=t+1}.                             (P5A.102AD5ALX1ZZB3S3BK)
+```
+
+There is a weight-nondecreasing injection
+
+```text
+mathcal N_t x mathcal D_t
+       ->mathcal C_t x mathcal B_t.              (P5A.102AD5ALX1ZZB3S3BL)
+```
+
+To define it, take
+
+```text
+x=(a,b) in mathcal N_t,          y=(u,v) in mathcal D_t,
+k=t+1-u-v.
+```
+
+Thus `1<=k<=t+1`.  If `b=a+t+1`, put
+
+```text
+x'=(a,b-k),                       y'=(u,v+k).
+```
+
+Then
+
+```text
+|(b-k)-a|=u+v<=t,
+a+b-k<=2n-t,
+u+v+k=t+1,
+```
+
+so `x' in mathcal C_t` and `y' in mathcal B_t`.  Moreover
+
+```text
+k<=b-v,                         b-v-k=a+u>=0.
+```
+
+Log concavity says that, at fixed sum, moving two indices toward
+one another cannot decrease their product.  Hence
+
+```text
+q_bq_v<=q_(b-k)q_(v+k).                         (P5A.102AD5ALX1ZZB3S3BM)
+```
+
+The other orientation `a=b+t+1` is handled symmetrically:
+
+```text
+x'=(a-k,b),                       y'=(u+k,v),
+q_aq_u<=q_(a-k)q_(u+k).
+```
+
+The map is injective.  If `x'` is not diagonal, the orientation of
+`x'` identifies the branch and
+
+```text
+k=t+1-|x'_1-x'_2|;
+```
+
+the two original pairs are then recovered uniquely.  If `x'` is
+diagonal, then `k=t+1` and `y=(0,0)`; the two branches have distinct
+images `y'=(0,t+1)` and `y'=(t+1,0)`.  This proves both injectivity
+and the weight comparison in `(P5A.102AD5ALX1ZZB3S3BL)`.
+
+Write `w(E)=sum_((a,b) in E)q_aq_b`.  Summing the injection gives
+
+```text
+w(mathcal N_t)w(mathcal D_t)
+ <=w(mathcal C_t)w(mathcal B_t).                 (P5A.102AD5ALX1ZZB3S3BN)
+```
+
+Although `mathcal C_(t+1)` loses its upper layer, this only helps:
+
+```text
+w(mathcal C_(t+1))
+ <=w(mathcal C_t)+w(mathcal N_t),
+
+w(mathcal D_(t+1))
+ =w(mathcal D_t)+w(mathcal B_t).
+```
+
+Multiplying the first inequality by `w(mathcal D_t)` and applying
+`(P5A.102AD5ALX1ZZB3S3BN)` yields
+
+```text
+w(mathcal C_(t+1))w(mathcal D_t)
+ <=w(mathcal C_t)w(mathcal D_(t+1)).
+```
+
+Substitution from `(P5A.102AD5ALX1ZZB3S3BJ)` is exactly
+`(P5A.102AD5ALX1ZZB3S3BH)`.  QED.
+
+**Corollary 5A8H28UIA2CGLPCIPOCB2REFUP
+(uniform upper radial closure).**  In the preceding lemma, suppose
+also that `c` is log concave with interval support.  Then
+
+```text
+K_(A,L)>=0
+```
+
+for every `0<=2L<A` with `A>=2n-1`.
+
+Every ordinary factor word satisfies the extra hypothesis: its root
+profile and its doubled profile are obtained from `e_0` by successive
+ordinary interval transforms, so Lemma 5A8H28UIA2RLC1 applies at
+each factor.
+
+**Proof.**  On the positive support put
+
+```text
+r_j=c_j/c_(j-1).
+```
+
+Log concavity makes `r_j` nonincreasing.  If `L<n`, equation
+`(P5A.102AD5ALX1ZZB3S3BH)` gives
+
+```text
+c_L/c_(L+1)
+ >=c_(2n-L)/c_(2n-L-1).
+```
+
+For `M=A-L>=2n-L-1`, ratio monotonicity therefore gives
+
+```text
+c_(M+1)/c_M
+ <=c_(2n-L)/c_(2n-L-1)
+ <=c_L/c_(L+1),
+```
+
+with zero continuation understood.  Hence
+
+```text
+c_Lc_M-c_(L+1)c_(M+1)>=0.                       (P5A.102AD5ALX1ZZB3S3BO)
+```
+
+At `t=n-1`, reflected-ratio descent says
+
+```text
+r_n r_(n+1)<=1.
+```
+
+Since `r_(n+1)<=r_n`, this forces `r_(n+1)<=1`; all later ratios are
+also at most one.  Thus if `L>=n`, both factors in
+`(P5A.102AD5ALX1ZZB3S3BO)` are separately nonincreasing, and the
+same conclusion follows.
+
+Finally formula `(P5A.102AD5ALX1ZZB3S1)` adds the nonnegative term
+
+```text
+c_0(c_(A+1)+c_(A+2))
+```
+
+to `(P5A.102AD5ALX1ZZB3S3BO)`.  This proves the corollary.  QED.
+
+For root support `n`, the compact cube reduction originally leaves
+`4n^2` potentially nonzero strict columns.  The uniform corollary
+closes every antidiagonal `A>=2n-1`.  The unresolved lower-wall band
+is now exactly
+
+```text
+1<=A<=2n-2,                    0<=2L<A,          (P5A.102AD5ALX1ZZB3S3BP)
+```
+
+which contains
+
+```text
+sum_(A=1)^(2n-2)ceil(A/2)=n(n-1)
+```
+
+columns.  This is a support-uniform reduction of the arbitrary-factor
+target, not another bounded certificate.
+
 Nor is the already positive radial/diagonal cone invariant under a
 new squared factor.  This rules out the most direct factor induction.
 Write
