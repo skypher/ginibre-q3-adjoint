@@ -395,10 +395,80 @@ void enumerate(const int length, const int maximum_coefficient,
   }
 }
 
+int replay_upper_orthant_obstruction() {
+  const std::vector<int> half{5, 4, 3, 2, 1};
+  const int radius = 1;
+  const int target = 2;
+  const int cutoff_first = 2;
+  const int cutoff_second = 3;
+  const int last = radius + target + 1;
+  const int half_radius = static_cast<int>(half.size()) - 1;
+  Integer value = 0;
+  std::string terms = "[";
+  bool first_term = true;
+  for (int first = cutoff_first;
+       first <= radius + half_radius;
+       ++first) {
+    for (int second = std::max(first + 1, cutoff_second);
+         second <= radius + half_radius;
+         ++second) {
+      const Integer outer =
+          toeplitz_minor(half, 0, radius, first, second);
+      if (outer == 0) {
+        continue;
+      }
+      const Integer inner =
+          toeplitz_minor(half, first, second, 0, target) -
+          toeplitz_minor(half, first, second, -1, target) +
+          toeplitz_minor(half, first, second, radius, last) -
+          toeplitz_minor(half, first, second, radius + 1, last);
+      const Integer contribution = outer * inner;
+      value += contribution;
+      if (!first_term) {
+        terms += ',';
+      }
+      terms += "(" + std::to_string(first) + ","
+               + std::to_string(second) + "):"
+               + contribution.convert_to<std::string>();
+      first_term = false;
+    }
+  }
+  terms += ']';
+  Integer minimum_log_concavity_margin = 0;
+  for (std::size_t index = 1U; index + 1U < half.size(); ++index) {
+    const Integer margin =
+        Integer(half[index]) * half[index] -
+        Integer(half[index - 1U]) * half[index + 1U];
+    if (index == 1U || margin < minimum_log_concavity_margin) {
+      minimum_log_concavity_margin = margin;
+    }
+  }
+  const bool passed =
+      value == -2 && minimum_log_concavity_margin == 1;
+  std::cout
+      << "SU2_CAUCHY_BINET_UPPER_ORTHANT_OBSTRUCTION"
+      << " half=" << render(half)
+      << " radius=" << radius
+      << " target=" << target
+      << " cutoff_i=" << cutoff_first
+      << " cutoff_j=" << cutoff_second
+      << " minimum_log_concavity_margin="
+      << minimum_log_concavity_margin
+      << " terms=" << terms
+      << " orthant_value=" << value
+      << " result=" << (passed ? "PASS_EXACT" : "FAIL")
+      << '\n';
+  return passed ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
   try {
+    if (argc == 2 &&
+        std::string(argv[1]) == "--replay-upper-orthant") {
+      return replay_upper_orthant_obstruction();
+    }
     const int maximum_length =
         argc >= 2 ? parse_positive(argv[1], "maximum_length") : 7;
     const int maximum_coefficient =
@@ -406,7 +476,9 @@ int main(int argc, char** argv) {
     if (argc > 3) {
       throw std::invalid_argument(
           "usage: probe_su2_symmetric_log_concave_autocorrelation "
-          "[maximum_length] [maximum_coefficient]");
+          "[maximum_length] [maximum_coefficient]\n"
+          "       probe_su2_symmetric_log_concave_autocorrelation "
+          "--replay-upper-orthant");
     }
 
     Counters counters;

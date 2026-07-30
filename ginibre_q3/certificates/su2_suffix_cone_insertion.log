@@ -1,0 +1,3 @@
+make -f Makefile.research probe_su2_suffix_cone_insertion
+./probe_su2_suffix_cone_insertion 20 10
+SU2_SUFFIX_CONE_INSERTION input_maximum=2 factor=1 cases=11 bilinear_entries=12 left_cutoff=0 left_gap=1 left_ray=+e_(0,1) left_minimum_suffix=0 right_cutoff=1 right_gap=1 right_ray=+e_(1,2)-e_(0,1) right_minimum_suffix=0 bilinear_value=-3 result=COUNTEREXAMPLE_EXACT

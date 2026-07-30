@@ -1,0 +1,9 @@
+./verify_su2_anchored_interval_root_radial --separated-transition-band
+transition_chamber=B_le_L terms=19 minimum_coefficient=4 result=PASS
+transition_chamber=B_eq_L_plus_1_below_n terms=9 minimum_coefficient=4 result=PASS
+transition_chamber=B_eq_L_plus_1_eq_n terms=4 minimum_coefficient=4 result=PASS
+transition_chamber=two_le_gap_B_below_n terms=16 minimum_coefficient=4 result=PASS
+transition_chamber=two_le_gap_B_above_n_positive_excess terms=19 minimum_coefficient=4 result=PASS
+transition_chamber=two_le_gap_B_eq_n terms=9 minimum_coefficient=4 result=PASS
+transition_chamber=gap_above_n terms=12 minimum_coefficient=4 result=PASS
+SU2_SEPARATED_INTERVAL_TRANSITION_RADIAL chambers=7 terms=88 chamber_coverage_checks=178880 result=PASS_EXACT

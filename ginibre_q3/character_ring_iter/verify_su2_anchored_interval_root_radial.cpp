@@ -158,6 +158,19 @@ Polynomial high_twice(
     return (distance + Polynomial(1)) * (distance + Polynomial(2));
 }
 
+Polynomial separated_low_twice(
+    const Polynomial& support,
+    const Polynomial& label) {
+    return Integer(2) * (support + Polynomial(1))
+               * (Integer(2) * label + Polynomial(1))
+           - Integer(2) * label * (label + Polynomial(1));
+}
+
+Polynomial separated_high_twice(const Polynomial& support) {
+    return Integer(2) * (support + Polynomial(1))
+           * (support + Polynomial(1));
+}
+
 struct Chamber {
     std::string name;
     Polynomial support;
@@ -204,6 +217,36 @@ Polynomial scaled_radial(const Chamber& chamber) {
            + c_l * c_middle - c_l_next * c_middle_next;
 }
 
+Polynomial scaled_separated_radial(const Chamber& chamber) {
+    const Polynomial middle
+        = chamber.antidiagonal - chamber.contraction;
+    const auto coefficient = [&chamber](
+                                 const Polynomial& label,
+                                 const bool high) {
+        return high
+            ? separated_high_twice(chamber.support)
+            : separated_low_twice(chamber.support, label);
+    };
+    const Polynomial c_zero
+        = separated_low_twice(chamber.support, Polynomial(0));
+    const Polynomial c_l = separated_low_twice(
+        chamber.support, chamber.contraction);
+    const Polynomial c_l_next = separated_low_twice(
+        chamber.support, chamber.contraction + Polynomial(1));
+    const Polynomial c_middle = coefficient(
+        middle, chamber.middle_high);
+    const Polynomial c_middle_next = coefficient(
+        middle + Polynomial(1), chamber.middle_next_high);
+    const Polynomial c_top_one = coefficient(
+        chamber.antidiagonal + Polynomial(1),
+        chamber.top_one_high);
+    const Polynomial c_top_two = coefficient(
+        chamber.antidiagonal + Polynomial(2),
+        chamber.top_two_high);
+    return c_zero * (c_top_one + c_top_two)
+           + c_l * c_middle - c_l_next * c_middle_next;
+}
+
 void print_negative_terms(const Polynomial& polynomial) {
     for (const auto& [exponent, coefficient] : polynomial.terms()) {
         if (coefficient < 0) {
@@ -239,13 +282,310 @@ Integer direct_coefficient(const int support, const int label) {
     return result;
 }
 
+Integer separated_coefficient(const int support, const int label) {
+    if (label < 0 || label > 2 * support) {
+        return 0;
+    }
+    if (label <= support) {
+        return (support + 1) * (2 * label + 1)
+               - label * (label + 1);
+    }
+    return Integer(support + 1) * (support + 1);
+}
+
+enum class TransitionBranch {
+    Plateau,
+    FirstDecline,
+    Tail,
+};
+
+struct TransitionChamber {
+    std::string name;
+    Polynomial support;
+    Polynomial offset;
+    Polynomial contraction;
+    TransitionBranch middle = TransitionBranch::Plateau;
+    TransitionBranch middle_next = TransitionBranch::Plateau;
+    TransitionBranch top = TransitionBranch::FirstDecline;
+    TransitionBranch top_next = TransitionBranch::FirstDecline;
+};
+
+Polynomial transition_twice(
+    const Polynomial& support,
+    const Polynomial& offset,
+    const TransitionBranch branch) {
+    const Polynomial size = support + Polynomial(1);
+    if (branch == TransitionBranch::Plateau) {
+        return Integer(2) * size * size;
+    }
+    if (branch == TransitionBranch::FirstDecline) {
+        return Integer(2) * size * size
+               - offset * (offset + Polynomial(1));
+    }
+    const Polynomial distance = Integer(2) * support - offset;
+    return (distance + Polynomial(1)) * (distance + Polynomial(2));
+}
+
+Polynomial scaled_transition_radial(const TransitionChamber& chamber) {
+    const Polynomial difference
+        = chamber.offset - chamber.contraction;
+    const Polynomial c_zero
+        = Integer(2) * (chamber.support + Polynomial(1));
+    const Polynomial c_l = separated_low_twice(
+        chamber.support, chamber.contraction);
+    const Polynomial c_l_next = separated_low_twice(
+        chamber.support, chamber.contraction + Polynomial(1));
+    const Polynomial c_middle = transition_twice(
+        chamber.support,
+        difference - Polynomial(1),
+        chamber.middle);
+    const Polynomial c_middle_next = transition_twice(
+        chamber.support, difference, chamber.middle_next);
+    const Polynomial c_top = transition_twice(
+        chamber.support, chamber.offset, chamber.top);
+    const Polynomial c_top_next = transition_twice(
+        chamber.support,
+        chamber.offset + Polynomial(1),
+        chamber.top_next);
+    return c_zero * (c_top + c_top_next)
+           + c_l * c_middle - c_l_next * c_middle_next;
+}
+
+Integer transition_coefficient(const int support, const int offset) {
+    const Integer size = support + 1;
+    if (offset <= 0) {
+        return size * size;
+    }
+    if (offset <= support) {
+        return size * size - offset * (offset + 1) / 2;
+    }
+    if (offset <= 2 * support) {
+        const int distance = 2 * support - offset;
+        return Integer(distance + 1) * (distance + 2) / 2;
+    }
+    return 0;
+}
+
 }  // namespace
 
-int main() {
+int main(int argc, char** argv) {
     try {
+        const bool separated_mode
+            = argc == 2
+              && std::string(argv[1]) == "--separated-lower-band";
+        const bool transition_mode
+            = argc == 2
+              && std::string(argv[1]) == "--separated-transition-band";
+        if (argc > 2
+            || (argc == 2 && !separated_mode && !transition_mode)) {
+            throw std::runtime_error(
+                "usage: verify_su2_anchored_interval_root_radial "
+                "[--separated-lower-band|--separated-transition-band]");
+        }
         const Polynomial x = Polynomial::variable(0);
         const Polynomial y = Polynomial::variable(1);
         const Polynomial z = Polynomial::variable(2);
+
+        if (transition_mode) {
+            const std::array<TransitionChamber, 7> transition_chambers{{
+                {
+                    "B_le_L",
+                    x + y + z + Polynomial(1),
+                    x,
+                    x + y,
+                    TransitionBranch::Plateau,
+                    TransitionBranch::Plateau,
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::FirstDecline,
+                },
+                {
+                    "B_eq_L_plus_1_below_n",
+                    x + y + Polynomial(2),
+                    x + Polynomial(1),
+                    x,
+                    TransitionBranch::Plateau,
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::FirstDecline,
+                },
+                {
+                    "B_eq_L_plus_1_eq_n",
+                    x + Polynomial(1),
+                    x + Polynomial(1),
+                    x,
+                    TransitionBranch::Plateau,
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::Tail,
+                    TransitionBranch::Tail,
+                },
+                {
+                    "two_le_gap_B_below_n",
+                    x + y + z + Polynomial(3),
+                    x + y + Polynomial(2),
+                    x,
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::FirstDecline,
+                },
+                {
+                    "two_le_gap_B_above_n_positive_excess",
+                    x + y + z + Polynomial(2),
+                    Integer(2) * x + y + z + Polynomial(3),
+                    x + y + Polynomial(1),
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::Tail,
+                    TransitionBranch::Tail,
+                },
+                {
+                    "two_le_gap_B_eq_n",
+                    x + y + Polynomial(2),
+                    x + y + Polynomial(2),
+                    y,
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::FirstDecline,
+                    TransitionBranch::Tail,
+                    TransitionBranch::Tail,
+                },
+                {
+                    "gap_above_n",
+                    x + y + z + Polynomial(2),
+                    Integer(2) * x + Integer(2) * y + z
+                        + Polynomial(3),
+                    x,
+                    TransitionBranch::Tail,
+                    TransitionBranch::Tail,
+                    TransitionBranch::Tail,
+                    TransitionBranch::Tail,
+                },
+            }};
+
+            bool passed = true;
+            std::size_t total_terms = 0U;
+            std::array<Polynomial, 7> transition_polynomials{};
+            for (std::size_t index = 0U;
+                 index < transition_chambers.size();
+                 ++index) {
+                const Polynomial radial = scaled_transition_radial(
+                    transition_chambers[index]);
+                transition_polynomials[index] = radial;
+                const bool nonnegative = radial.nonnegative_coefficients();
+                passed = passed && nonnegative;
+                total_terms += radial.term_count();
+                std::cout
+                    << "transition_chamber="
+                    << transition_chambers[index].name
+                    << " terms=" << radial.term_count()
+                    << " minimum_coefficient="
+                    << radial.minimum_coefficient()
+                    << " result=" << (nonnegative ? "PASS" : "FAIL");
+                if (!nonnegative) {
+                    print_negative_terms(radial);
+                }
+                std::cout << '\n';
+            }
+
+            std::size_t coverage_checks = 0U;
+            for (int support = 1; support <= 64; ++support) {
+                for (int offset = 0;
+                     offset <= 2 * support - 1;
+                     ++offset) {
+                    for (int contraction = 0;
+                         contraction <= support - 1;
+                         ++contraction) {
+                        const int difference = offset - contraction;
+                        std::size_t selected = 0U;
+                        std::array<Integer, 3> slacks{0, 0, 0};
+                        if (difference <= 0) {
+                            selected = 0U;
+                            slacks = {
+                                offset,
+                                contraction - offset,
+                                support - contraction - 1};
+                        } else if (
+                            difference == 1
+                            && contraction <= support - 2) {
+                            selected = 1U;
+                            slacks = {
+                                contraction,
+                                support - contraction - 2,
+                                0};
+                        } else if (difference == 1) {
+                            selected = 2U;
+                            slacks = {contraction, 0, 0};
+                        } else if (offset <= support - 1) {
+                            selected = 3U;
+                            slacks = {
+                                contraction,
+                                difference - 2,
+                                support - offset - 1};
+                        } else if (difference <= support) {
+                            if (offset > support) {
+                                selected = 4U;
+                                slacks = {
+                                    offset - support - 1,
+                                    support - difference,
+                                    difference - offset + support - 1};
+                            } else {
+                                selected = 5U;
+                                slacks = {
+                                    difference - 2,
+                                    support - difference,
+                                    0};
+                            }
+                        } else {
+                            selected = 6U;
+                            slacks = {
+                                contraction,
+                                difference - support - 1,
+                                2 * support - contraction
+                                    - difference - 1};
+                        }
+                        for (const Integer& slack : slacks) {
+                            if (slack < 0) {
+                                throw std::runtime_error(
+                                    "negative transition chamber slack");
+                            }
+                        }
+                        const Integer c_zero = support + 1;
+                        const Integer c_l = separated_coefficient(
+                            support, contraction);
+                        const Integer c_l_next = separated_coefficient(
+                            support, contraction + 1);
+                        const Integer c_middle = transition_coefficient(
+                            support, difference - 1);
+                        const Integer c_middle_next
+                            = transition_coefficient(
+                                support, difference);
+                        const Integer c_top = transition_coefficient(
+                            support, offset);
+                        const Integer c_top_next
+                            = transition_coefficient(
+                                support, offset + 1);
+                        const Integer exact = Integer(4) * (
+                            c_zero * (c_top + c_top_next)
+                            + c_l * c_middle
+                            - c_l_next * c_middle_next);
+                        if (transition_polynomials[selected].evaluate(
+                                slacks)
+                            != exact) {
+                            throw std::runtime_error(
+                                "transition chamber coverage mismatch");
+                        }
+                        ++coverage_checks;
+                    }
+                }
+            }
+            std::cout
+                << "SU2_SEPARATED_INTERVAL_TRANSITION_RADIAL"
+                << " chambers=" << transition_chambers.size()
+                << " terms=" << total_terms
+                << " chamber_coverage_checks=" << coverage_checks
+                << " result=" << (passed ? "PASS_EXACT" : "FAIL")
+                << '\n';
+            return passed ? 0 : 1;
+        }
 
         // x, y, z are nonnegative integer slacks.  The initial chambers
         // separate the locations where the explicit coefficient formula
@@ -331,13 +671,17 @@ int main() {
         std::array<Polynomial, 7> radial_polynomials{};
         std::size_t chamber_index = 0U;
         for (const Chamber& chamber : chambers) {
-            const Polynomial radial = scaled_radial(chamber);
+            const Polynomial radial = separated_mode
+                ? scaled_separated_radial(chamber)
+                : scaled_radial(chamber);
             radial_polynomials[chamber_index] = radial;
             ++chamber_index;
             const bool nonnegative = radial.nonnegative_coefficients();
             passed = passed && nonnegative;
             total_terms += radial.term_count();
-            std::cout << "chamber=" << chamber.name
+            std::cout
+                      << (separated_mode ? "separated_" : "")
+                      << "chamber=" << chamber.name
                       << " terms=" << radial.term_count()
                       << " minimum_coefficient="
                       << radial.minimum_coefficient()
@@ -422,23 +766,25 @@ int main() {
                                 "negative chamber slack");
                         }
                     }
-                    const Integer exact
-                        = Integer(4)
-                          * (
-                              coefficient(support, 0)
-                                    * (
-                                        coefficient(
-                                            support,
-                                            antidiagonal + 1)
-                                        + coefficient(
-                                            support,
-                                            antidiagonal + 2))
-                              + coefficient(support, contraction)
-                                    * coefficient(support, middle)
-                              - coefficient(
-                                    support, contraction + 1)
-                                    * coefficient(
-                                        support, middle + 1));
+                    const auto current_coefficient =
+                        [separated_mode](const int n, const int label) {
+                            return separated_mode
+                                ? separated_coefficient(n, label)
+                                : coefficient(n, label);
+                        };
+                    const Integer exact = Integer(4) * (
+                        current_coefficient(support, 0)
+                            * (
+                                current_coefficient(
+                                    support, antidiagonal + 1)
+                                + current_coefficient(
+                                    support, antidiagonal + 2))
+                        + current_coefficient(support, contraction)
+                            * current_coefficient(support, middle)
+                        - current_coefficient(
+                            support, contraction + 1)
+                            * current_coefficient(
+                                support, middle + 1));
                     if (radial_polynomials[selected].evaluate(slacks)
                         != exact) {
                         throw std::runtime_error(
@@ -449,7 +795,9 @@ int main() {
             }
         }
         std::cout
-            << "SU2_ANCHORED_INTERVAL_ROOT_RADIAL"
+            << (separated_mode
+                    ? "SU2_SEPARATED_INTERVAL_LOWER_RADIAL"
+                    : "SU2_ANCHORED_INTERVAL_ROOT_RADIAL")
             << " chambers=" << chambers.size()
             << " terms=" << total_terms
             << " coefficient_formula_checks=" << coefficient_checks

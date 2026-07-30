@@ -1,0 +1,2 @@
+./probe_su2_symmetric_log_concave_autocorrelation --replay-upper-orthant
+SU2_CAUCHY_BINET_UPPER_ORTHANT_OBSTRUCTION half=[5,4,3,2,1] radius=1 target=2 cutoff_i=2 cutoff_j=3 minimum_log_concavity_margin=1 terms=[(2,3):-2,(2,4):-8,(2,5):3,(3,4):-2,(3,5):4,(4,5):3] orthant_value=-2 result=PASS_EXACT

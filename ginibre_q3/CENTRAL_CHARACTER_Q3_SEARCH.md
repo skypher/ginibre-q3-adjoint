@@ -11061,12 +11061,53 @@ fixes `(i,j)=(-1,2)` in the same example, where
 Gamma_(1,2)(-1,2)=-2.                         (P5A.102AD5ALX1ZZB3I)
 ```
 
+Even a complete coordinatewise upper orthant of weighted intermediate
+pairs can be negative.
+
+**Proposition 5A8H28UIA2CGLPCIPOCBGPORT
+(factor-orbit Cauchy--Binet orthant obstruction).**  Take the genuine
+two-factor torus profile
+
+```text
+h=[z^.]beta_2(z)^2,
+
+(h_0,h_1,h_2,h_3,h_4)=(5,4,3,2,1),
+```
+
+and `(R,S)=(1,2)`.  Then
+
+```text
+ sum_(i>=2,j>=3,i<j)
+   Delta_h(0,R;i,j)Gamma_(R,S)(i,j)=-2.         (P5A.102AD5ALX1ZZB3I0)
+```
+
+Thus coordinatewise upper-orthant summation does not provide the
+global allocation in `(OCBGP)`, even on the actual irreducible-factor
+orbit.
+
+**Proof.**  Direct substitution gives the following complete list of
+nonzero weighted contributions in the displayed orthant:
+
+```text
+(i,j)       (2,3) (2,4) (2,5) (3,4) (3,5) (4,5)
+contribution  -2    -8     3    -2     4     3.
+```
+
+Their sum is `-2`, proving `(P5A.102AD5ALX1ZZB3I0)`.  The profile is
+the convolution of two interval indicators on `[-2,2]`, so it is
+exactly the torus profile of `beta_2^2`.  Its three log-concavity
+margins are all one.  QED.
+
 Thus `(OCBGP)` is a genuine global allocation over intermediate
-pairs, not a termwise or two-point reflection inequality.  The strict
+pairs, not a termwise, two-point reflection, or coordinatewise-orthant
+inequality.  The strict
 C++ analyzer
 `character_ring_iter/probe_su2_symmetric_log_concave_autocorrelation.cpp`
 constructs `h`, its autocorrelation, both sides of
-`(P5A.102AD5ALX1ZZB3F)`, and the two exact countercontrols above.
+`(P5A.102AD5ALX1ZZB3F)`, and the exact countercontrols above.  Its
+`--replay-upper-orthant` mode checks
+`(P5A.102AD5ALX1ZZB3I0)` fail-closed; the transcript is
+`certificates/su2_cauchy_binet_upper_orthant_obstruction.log`.
 Its bounded zero-failure star-current scans are discovery evidence
 only; the identity and displayed integer calculations are the exact
 statements used here.
@@ -12455,6 +12496,280 @@ lower-band triples.  Its transcript is
 Thus every lower-band `K_(A,L)` is nonnegative.  Together with the
 uniform upper range this proves `(OCRD)`, and Lemma
 5A8H28UIA2CGLPCIPOCB2RAD proves `(OCSP)`.  QED.
+
+The same chamber fan closes a support-uniform lower band for every
+two-factor root whose irreducible labels are separated by a factor of
+at least three.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADINTSEPLOW
+(separated two-factor lower-radial theorem).**  Let `0<=a<=b`, suppose
+`b>=3a`, and put
+
+```text
+P=beta_a beta_b,                    P^2=sum_(t>=0)c_t beta_t.
+```
+
+Then
+
+```text
+K_(A,L)>=0,              1<=A<=4a-2, 0<=2L<A, (P5A.102AD5ALX1ZZB3BPF0)
+```
+
+uniformly in `a,b`.
+
+**Proof.**  Clebsch--Gordan gives
+
+```text
+P=sum_(i=u)^(u+n)beta_i,
+u=b-a,                              n=2a.
+```
+
+The hypothesis is exactly `u>=n`.  For `0<=t<=2n`, the minimum sum of
+two root labels is `2u>=2n`, so the constraint `t<=i+j` is automatic.
+Counting the band `|i-j|<=t` in the square
+`{u,...,u+n}^2` therefore gives
+
+```text
+c_t=
+ (n+1)(2t+1)-t(t+1),                0<=t<=n,
+
+ (n+1)^2,                            n<=t<=2n.
+                                                        (P5A.102AD5ALX1ZZB3BPF)
+```
+
+In the band `1<=A<=2n-2`, every coefficient used in
+`K_(A,L)` has index at most `A+2<=2n`, so
+`(P5A.102AD5ALX1ZZB3BPF)` applies.  Use the same seven exhaustive
+slack parameterizations `(P5A.102AD5ALX1ZZB3BPD)`.  After setting
+`C_t=2c_t` and substituting in `(P5A.102AD5ALX1ZZB3BPC)`, the seven
+integer polynomials have respectively
+
+```text
+14, 9, 3, 9, 19, 9, 16
+```
+
+nonzero monomials, and every coefficient is nonnegative.  The least
+coefficient is eight in every chamber.
+
+The fail-closed mode
+
+```text
+character_ring_iter/verify_su2_anchored_interval_root_radial \
+  --separated-lower-band
+```
+
+constructs `(P5A.102AD5ALX1ZZB3BPF)`, expands all `79` monomials,
+and checks their signs exactly.  It also checks the seven inverse
+slack maps on all `87,360` lower-band triples through `n=64`; this
+last bounded loop audits only the indexing, while the polynomial
+identities prove the unbounded signs.  Its transcript is
+`certificates/su2_separated_interval_lower_radial.log`.
+
+Since `n=2a`, this is exactly `(P5A.102AD5ALX1ZZB3BPF0)`.  QED.
+
+The long constant plateau between the difference wall and the delayed
+sum wall closes the next range directly.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADINTSEPPLAT
+(separated interval plateau payment).**  Let
+
+```text
+P=sum_(i=u)^(u+n)beta_i,                 u>=n,
+P^2=sum_t c_t beta_t,                    N=n+1.
+```
+
+Then
+
+```text
+K_(A,L)>=0,
+2n-1<=A<=2u-2,                  0<=2L<A.       (P5A.102AD5ALX1ZZB3BPF2)
+```
+
+The assertion is vacuous when the displayed interval is empty.
+
+**Proof.**  Formula `(P5A.102AD5ALX1ZZB3BPF)` gives
+
+```text
+c_t=N^2,                              n<=t<=2u.
+```
+
+For an admissible `(A,L)`, put `M=A-L`.  The lower bound on `A` and
+`2L<A` give `M>=n`, while `A<=2u-2` gives
+
+```text
+M+1<=A+1<=2u-1,              A+2<=2u.
+```
+
+Hence
+
+```text
+c_M=c_(M+1)=c_(A+1)=c_(A+2)=N^2.
+```
+
+If `L>=n`, then also `c_L=c_(L+1)=N^2`, and the determinant part of
+`K_(A,L)` vanishes.  If `L<n`, the rising branch in
+`(P5A.102AD5ALX1ZZB3BPF)` gives
+
+```text
+c_(L+1)-c_L=2(N-L-1).
+```
+
+Therefore
+
+```text
+K_(A,L)
+ =2N^3-N^2{c_(L+1)-c_L}
+ =2N^2(L+1)>0.                              (P5A.102AD5ALX1ZZB3BPF3)
+```
+
+This proves every case.  QED.
+
+Only a fixed-width strip crosses the delayed sum wall.  Its dependence
+on the absolute shift cancels.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADINTSEPTRANS
+(separated interval transition payment).**  Under the hypotheses of
+Lemma 5A8H28UIA2CGLPCIPOCB2RADINTSEPPLAT,
+
+```text
+K_(A,L)>=0,
+2u-1<=A<=2u+2n-2,                  0<=2L<A.     (P5A.102AD5ALX1ZZB3BPF4)
+```
+
+**Proof.**  Write
+
+```text
+A=2u-1+B,                         0<=B<=2n-1,
+d=B-L.
+```
+
+For offsets from the delayed wall put
+
+```text
+F_n(r)=
+ (n+1)^2,                                  r<=0,
+
+ (n+1)^2-r(r+1)/2,                         0<=r<=n,
+
+ (2n-r+1)(2n-r+2)/2,                       n<=r<=2n.
+                                                        (P5A.102AD5ALX1ZZB3BPF5)
+```
+
+The formulas agree at both joins.  Directly from the band-minus-
+triangle count,
+
+```text
+c_(A+1)=F_n(B),                  c_(A+2)=F_n(B+1),
+c_M=F_n(d-1),                    c_(M+1)=F_n(d).          (P5A.102AD5ALX1ZZB3BPF6)
+```
+
+If `L>=n`, then `c_L=c_(L+1)=(n+1)^2`.  Since `F_n` is
+nonincreasing, the determinant part of `K_(A,L)` is nonnegative, and
+there is nothing to prove.
+
+It remains to take `0<=L<=n-1`.  The locations of `B`, `d-1`, and
+`d` in the three branches of `(P5A.102AD5ALX1ZZB3BPF5)` split into
+the following seven exhaustive affine chambers, with `x,y,z>=0`:
+
+```text
+B<=L:
+ (n,B,L)=(x+y+z+1, x,                 x+y),
+
+B=L+1<n:
+ (n,B,L)=(x+y+2,   x+1,               x),
+
+B=L+1=n:
+ (n,B,L)=(x+1,     x+1,               x),
+
+2<=d, B<n:
+ (n,B,L)=(x+y+z+3, x+y+2,             x),
+
+2<=d<=n, B>n:
+ (n,B,L)=(x+y+z+2, 2x+y+z+3,          x+y+1),
+
+2<=d<=n, B=n:
+ (n,B,L)=(x+y+2,   x+y+2,             y),
+
+d>=n+1:
+ (n,B,L)=(x+y+z+2, 2x+2y+z+3,         x).
+                                                        (P5A.102AD5ALX1ZZB3BPF7)
+```
+
+These are precisely the cases `d<=0`, `d=1`, `2<=d<=n`, and
+`d>=n+1`, split only when `B` crosses `n`; hence they are exhaustive
+and mutually exclusive up to joins where the coefficient formulas
+agree.
+
+Set `C_t=2c_t` and substitute
+`(P5A.102AD5ALX1ZZB3BPF5)--(P5A.102AD5ALX1ZZB3BPF7)` in
+`(P5A.102AD5ALX1ZZB3BPC)`.  The seven resulting integer polynomials
+have respectively
+
+```text
+19, 9, 4, 16, 19, 9, 12
+```
+
+nonzero monomials.  Every coefficient is nonnegative, and the least
+coefficient is four in every chamber.
+
+The fail-closed mode
+
+```text
+character_ring_iter/verify_su2_anchored_interval_root_radial \
+  --separated-transition-band
+```
+
+constructs the three pieces of `(P5A.102AD5ALX1ZZB3BPF5)`, expands
+all `88` monomials, and checks their signs with `cpp_int` arithmetic.
+It independently reconstructs the inverse chamber slacks on `178,880`
+triples through `n=64`.  The polynomial identities prove the
+unbounded signs; the bounded loop audits only the indexing.  Its
+transcript is
+`certificates/su2_separated_interval_transition_radial.log`.
+This proves `(P5A.102AD5ALX1ZZB3BPF4)`.  QED.
+
+The top root label here is `u+n=a+b`, not the interval width `n`.
+Corollary 5A8H28UIA2CGLPCIPOCB2REFUP separately closes
+`A>=2(a+b)-1`.  Lemma
+5A8H28UIA2CGLPCIPOCB2RADINTSEPPLAT closes the plateau between the
+lower certificate and the delayed sum wall, and Lemma
+5A8H28UIA2CGLPCIPOCB2RADINTSEPTRANS closes the transition band
+
+```text
+2(b-a)-1<=A<=2(a+b)-2.                          (P5A.102AD5ALX1ZZB3BPF1)
+```
+
+It contains exactly `4a` antidiagonals, independently of `b`.
+
+**Corollary 5A8H28UIA2CGLPCIPOCB2RADINTSEPFULL
+(full separated two-factor ordinary theorem).**  If
+
+```text
+P=beta_a beta_b,                  0<=a<=b,       b>=3a,
+```
+
+then every strict radial increment `(OCRD)` is nonnegative, and
+`(OCSP)` holds for `P`.
+
+**Proof.**  Put `u=b-a` and `n=2a`.  Lemma
+5A8H28UIA2CGLPCIPOCB2RADINTSEPLOW proves `A<=2n-2`; Lemma
+5A8H28UIA2CGLPCIPOCB2RADINTSEPPLAT proves
+`2n-1<=A<=2u-2`; Lemma
+5A8H28UIA2CGLPCIPOCB2RADINTSEPTRANS proves
+`2u-1<=A<=2u+2n-2`; and Corollary
+5A8H28UIA2CGLPCIPOCB2REFUP proves `A>=2u+2n-1`.  Empty intervals
+are harmless.  The last citation applies because the root is the
+interval profile `1_[u,u+n]`, while its square is obtained from
+`beta_0` by the four ordinary irreducible interval transforms
+`beta_a,beta_b,beta_a,beta_b`; Lemma 5A8H28UIA2RLC1 therefore gives
+both required log-concavity statements.  The four ranges exhaust every
+`A>=1`.  Thus
+`(OCRD)` holds.  Lemma 5A8H28UIA2CGLPCIPOCB2RAD proves `(OCSP)`.
+QED.
+
+Together with Theorem 5A8H28UIA2CGLPCIPOCB2RADINT, this closes every
+two-factor word with either `b=a` or `b>=3a`.  The intermediate ratio
+range `a<b<3a` remains part of the arbitrary-factor gate.
 
 Neither of the two abstract ratio properties used in the upper proof
 can replace the square origin in the lower band.  The exact profile
@@ -23269,6 +23584,74 @@ Wronskians in `(P5A.102CB8S3Z8)` to obtain
 `(P5A.102CB8S3Z25)`.  Abel summation of the first difference on the
 `q` factor gives `(P5A.102CB8S3Z26)`; all sequences have finite
 support, so there is no terminal term.  QED.
+
+The full product of the fixed-gap suffix cones is not made acute by
+one irreducible-square insertion.  Thus those cones cannot be the
+state space for a factor induction.
+
+**Proposition 5A8H28UIA2RLC10I (exact suffix-cone insertion
+obstruction).**  Let `mathcal S` be the cone of finitely supported
+wedge vectors `w` satisfying
+
+```text
+ sum_(i>=rho) w_(i,i+d)>=0
+```
+
+for every `rho>=0` and `d>=1`.  Then there are `x,y in mathcal S`
+such that
+
+```text
+ <C_2(N_1)x,C_2(N_1)y>=-3.                     (P5A.102CB8S3Z26I)
+```
+
+Equivalently, if `D` is the block difference map from nonnegative
+fixed-gap suffix potentials to wedge coordinates, then
+
+```text
+ D^T C_2(N_1)^T C_2(N_1)D
+```
+
+has a negative entry.
+
+**Proof.**  In the ordered ordinary wedge basis put
+
+```text
+ x=e_0 wedge e_1,
+ y=e_1 wedge e_2-e_0 wedge e_1.
+```
+
+The only nonzero fixed-gap coordinates have gap one.  Their successive
+suffixes are `(1,0)` for `x` and `(0,1)` for `y`; every other suffix is
+zero.  Hence `x,y in mathcal S`.  Ordinary `SU(2)` fusion gives
+
+```text
+ N_1e_0=e_1,
+ N_1e_1=e_0+e_1+e_2,
+ N_1e_2=e_1+e_2+e_3.
+```
+
+Writing `e_(ij)=e_i wedge e_j`, exterior multiplication therefore
+gives
+
+```text
+ C_2(N_1)x=-e_(01)+e_(12),
+
+ C_2(N_1)y
+ =2e_(01)+e_(02)+e_(03)-e_(12)+e_(13)+e_(23).
+```
+
+Their inner product is `-2-1=-3`, proving
+`(P5A.102CB8S3Z26I)`.  The two vectors are precisely the suffix-potential
+extreme rays at `(rho,d)=(0,1)` and `(1,1)`, so the matrix formulation
+is equivalent.  QED.
+
+The strict `cpp_int` replay
+`character_ring_iter/probe_su2_suffix_cone_insertion.cpp` constructs
+the full ordinary rectangular operator from input support
+`{0,...,M}` to output support `{0,...,M+Q}`.  It independently finds
+the displayed counterexample at `M=2,Q=1`; hence no artificial upper
+wall enters.  Its transcript is
+`certificates/su2_suffix_cone_insertion.log`.
 
 Thus the failed universal theorem is the nonnegativity of a cross
 Dirichlet energy of two explicit nonnegative payment potentials.
