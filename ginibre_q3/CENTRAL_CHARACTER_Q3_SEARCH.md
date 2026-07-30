@@ -13490,7 +13490,7 @@ certificate.
 
 **Corollary 5A8H28UIA2CGLPCIPOCB2RADTHIRDSMALL
 (small one-arbitrary-factor third radial payment).**  For every
-`m>=0` and every `2<=b<=9`, both `A=3` columns of
+`m>=0` and every `2<=b<=15`, both `A=3` columns of
 
 ```text
 P=chi_1^m chi_b
@@ -13535,25 +13535,220 @@ b     degree K_(3,0) / least coefficient
 6       20 /  1728720       20 /   3745560
 7       22 /  2949120       22 /   6389760
 8       24 /  4723920       24 /  10235160
-9       26 /  7200000       26 /  15600000.     (P5A.102AD5ALX1ZZB3S4N32)
+9       26 /  7200000       26 /  15600000
+10      28 / 10541520       28 /  22839960
+11      30 / 14929920       30 /  32348160
+12      32 / 20563920       32 /  44555160
+13      34 / 27659520       34 /  59928960
+14      36 / 36450000       36 /  78975000
+15      38 / 47185920       38 / 102236160.      (P5A.102AD5ALX1ZZB3S4N32)
 ```
 
-Every one of the `318` quotient coefficients is strictly positive.
+Every one of the `726` quotient coefficients is strictly positive.
 The strict `cpp_int` certificate
 `character_ring_iter/verify_su2_fundamental_one_arbitrary_third.cpp`
 constructs `(P5A.102AD5ALX1ZZB3S4N31)` symbolically, performs the
 fusion sums and the two determinant expansions, checks every
-synthetic-division remainder, and verifies all `318` coefficient
+synthetic-division remainder, and verifies all `726` coefficient
 signs.  Thus this is a finite exact polynomial certificate for all
 integer `m>=0`, not a bounded evaluation in `m`.  QED.
 
-Corollaries 5A8H28UIA2CGLPCIPOCB2RADTHIRDFUND,
-5A8H28UIA2CGLPCIPOCB2RADTHIRDDOM, and
-5A8H28UIA2CGLPCIPOCB2RADTHIRDSMALL leave, within the complete
-one-arbitrary-factor strand, only the diagonal strip
+The zero-contraction column in the remaining diagonal strip follows
+from a spectral endpoint threshold.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADTHIRDZEROTHR
+(third zero-contraction spectral threshold).**  Suppose
 
 ```text
-10<=b<=m+4.                                    (P5A.102AD5ALX1ZZB3S4N33)
+C=sum_(h>=0)c_h beta_h>=0                 on [-1,3],
+c_0>0,                         lambda=c_1/c_0.
+```
+
+If
+
+```text
+lambda>=19/7,
+```
+
+then
+
+```text
+K_(3,0)=c_0(c_3+c_4+c_5)-c_1c_4>=0.
+                                                        (P5A.102AD5ALX1ZZB3S4N33A)
+```
+
+**Proof.**  Under normalized `SO(3)` Haar measure put
+
+```text
+dnu=C(x)dmu/c_0.
+```
+
+This is a probability measure on `[-1,3]` and
+`int x dnu=lambda`, so necessarily `lambda<=3`.  The character
+recurrence gives
+
+```text
+beta_4(x)=x^4-3x^3+3x.
+```
+
+Consequently
+
+```text
+K_(3,0)/c_0^2
+ =Cov_nu(x,beta_4(x))
+ =int (x-lambda)^2 q_lambda(x)dnu,
+
+q_lambda(x)
+ ={beta_4(x)-beta_4(lambda)}/{x-lambda}
+
+ =x^3+(lambda-3)x^2+(lambda^2-3lambda)x
+   +lambda^3-3lambda^2+3.                       (P5A.102AD5ALX1ZZB3S4N33B)
+```
+
+The quotient is interpreted by continuity at `x=lambda`.  Put
+`lambda_0=19/7`.  Then
+
+```text
+343q_(lambda_0)(x)
+ =343x^3-98x^2-266x+307.                        (P5A.102AD5ALX1ZZB3S4N33C)
+```
+
+On `[-1,0]`, after the change `u=x+1`, three times the four
+degree-three Bernstein coefficients of the polynomial in
+`(P5A.102AD5ALX1ZZB3S4N33C)` are
+
+```text
+396,1355,1187,921.
+```
+
+On `[0,1]` they are
+
+```text
+921,655,291,858.
+```
+
+They are all positive.  On `[1,3]` its derivative is
+
+```text
+1029x^2-196x-266;
+```
+
+this is positive at one, and its derivative is positive thereafter.
+The value at one is `286`, so `q_(lambda_0)>0` on the complete
+spectral interval.
+
+It remains to compare larger means.  If
+`v=lambda-lambda_0>=0`, direct subtraction gives
+
+```text
+q_lambda(x)-q_(lambda_0)(x)
+ =v R_lambda(x),
+
+R_lambda(x)
+ =x^2+(lambda+lambda_0-3)x
+  +lambda^2+lambda lambda_0+lambda_0^2
+  -3lambda-3lambda_0.                           (P5A.102AD5ALX1ZZB3S4N33D)
+```
+
+At the left spectral endpoint,
+
+```text
+R_lambda(-1)=(215+203v+49v^2)/49>0,
+
+partial_x R_lambda(-1)=(3+7v)/7>0.              (P5A.102AD5ALX1ZZB3S4N33E)
+```
+
+Since `R_lambda` is convex in `x`, its derivative stays positive
+for `x>=-1`.  Thus `R_lambda>0` on `[-1,3]`, and
+`q_lambda>=q_(lambda_0)>0`.  The integrand in
+`(P5A.102AD5ALX1ZZB3S4N33B)` is nonnegative, proving the lemma.
+QED.
+
+**Corollary 5A8H28UIA2CGLPCIPOCB2RADTHIRDZERO1ARB
+(uniform one-arbitrary-factor third zero-contraction payment).**
+For every `m>=0` and every `b>=1`, if
+
+```text
+P=chi_1^m chi_b,
+```
+
+then `K_(3,0)>=0`.
+
+**Proof.**  The all-fundamental case `b=1`, the fixed labels
+`2<=b<=15`, and the dominant chamber `b>=m+5` are Corollaries
+5A8H28UIA2CGLPCIPOCB2RADTHIRDFUND,
+5A8H28UIA2CGLPCIPOCB2RADTHIRDSMALL, and
+5A8H28UIA2CGLPCIPOCB2RADTHIRDDOM.  It remains to take
+`16<=b<=m+4`.  The following mean argument proves the larger strip
+
+```text
+10<=b<=m+4.
+```
+
+In particular `m>=6`.  Under the notation of
+`(P5A.102AD5ALX1ZZB3S4N7)`, put
+
+```text
+D_b=2d_0+d_b-d_(b+1).
+```
+
+Then
+
+```text
+lambda=c_1/c_0=3-D_b/S_b.                       (P5A.102AD5ALX1ZZB3S4N33F)
+```
+
+If `6<=m<=9`, then `b>m`, so the boundary ballot numbers vanish and
+the telescoping sum gives
+
+```text
+S_b=sum_(t=0)^m d_t=binom(2m,m)=(m+1)d_0,
+D_b=2d_0.
+```
+
+Therefore
+
+```text
+lambda=3-2/(m+1)>=19/7.                         (P5A.102AD5ALX1ZZB3S4N33G)
+```
+
+Now let `m>=10`.  For fixed `0<=t<=10`, the ballot ratio is
+
+```text
+d_t/d_0
+ =(2t+1) product_(j=0)^(t-1)
+        {(m-j)/(m+j+2)}.                        (P5A.102AD5ALX1ZZB3S4N33H)
+```
+
+Every factor on the right is nondecreasing in `m`.  At `m=10`,
+the sum through shell ten is the complete telescoping sum and equals
+`11d_0`.  Hence
+
+```text
+S_b>=S_10>=11d_0.
+```
+
+Lemma 5A8H28UIA2CGLPCIPOCB2RADSECONDSQDROP gives
+`d_b-d_(b+1)<=d_0`, and therefore `D_b<=3d_0`.  Substitution in
+`(P5A.102AD5ALX1ZZB3S4N33F)` yields
+
+```text
+lambda>=3-3/11=30/11>19/7.                      (P5A.102AD5ALX1ZZB3S4N33I)
+```
+
+Lemma 5A8H28UIA2CGLPCIPOCB2RADTHIRDZEROTHR now proves
+`K_(3,0)>=0` in the remaining strip.  This exhausts all `m,b`.
+QED.
+
+Corollaries 5A8H28UIA2CGLPCIPOCB2RADTHIRDFUND,
+5A8H28UIA2CGLPCIPOCB2RADTHIRDDOM, and
+5A8H28UIA2CGLPCIPOCB2RADTHIRDSMALL, together with Corollary
+5A8H28UIA2CGLPCIPOCB2RADTHIRDZERO1ARB, close the `K_(3,0)`
+column throughout the complete one-arbitrary-factor strand.  For
+`K_(3,1)`, only the diagonal strip
+
+```text
+16<=b<=m+4.                                    (P5A.102AD5ALX1ZZB3S4N33)
 ```
 
 Formula `(P5A.102AD5ALX1ZZB3S4N28)` applies throughout that strip
@@ -13596,6 +13791,11 @@ identity `(P5A.102AD5ALX1ZZB3S4N2A)`, the dual low-shell calculation
 `(P5A.102AD5ALX1ZZB3S4N12)--(P5A.102AD5ALX1ZZB3S4N16)`, and the
 exact prefix count
 `(P5A.102AD5ALX1ZZB3S4N19)--(P5A.102AD5ALX1ZZB3S4N25)`.
+The separate strict symbolic verifier
+`character_ring_iter/verify_su2_fundamental_one_arbitrary_third.cpp`
+also checks the `19` exact Bernstein, comparison, and mean-threshold
+constants in
+`(P5A.102AD5ALX1ZZB3S4N33C)--(P5A.102AD5ALX1ZZB3S4N33I)`.
 
 The second radial cone is not preserved by blind squared-factor
 insertion.  Indeed the arbitrary nonnegative profile

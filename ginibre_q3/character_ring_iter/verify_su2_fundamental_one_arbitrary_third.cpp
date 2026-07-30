@@ -47,6 +47,53 @@ Polynomial linear(const int constant) {
   return {Integer(constant), Integer(1)};
 }
 
+Integer binomial_coefficient(const int n, const int k) {
+  if (k < 0 || k > n) {
+    return 0;
+  }
+  Integer result = 1;
+  const int order = std::min(k, n - k);
+  for (int index = 1; index <= order; ++index) {
+    result *= n - order + index;
+    result /= index;
+  }
+  return result;
+}
+
+Polynomial translate(const Polynomial& polynomial, const int offset) {
+  Polynomial result(polynomial.size());
+  for (std::size_t exponent = 0; exponent < polynomial.size();
+       ++exponent) {
+    Integer offset_power = 1;
+    Integer coefficient = 1;
+    for (std::size_t target = exponent + 1U; target > 0U; --target) {
+      const std::size_t degree = target - 1U;
+      result[degree] +=
+          polynomial[exponent] * coefficient * offset_power;
+      offset_power *= offset;
+      if (degree > 0U) {
+        coefficient =
+            coefficient * degree / (exponent - degree + 1U);
+      }
+    }
+  }
+  trim(result);
+  return result;
+}
+
+std::vector<Integer> cubic_bernstein_times_three(
+    const Polynomial& polynomial) {
+  if (polynomial.size() != 4U) {
+    throw std::runtime_error("Bernstein conversion requires a cubic");
+  }
+  return {
+      3 * polynomial[0],
+      3 * polynomial[0] + polynomial[1],
+      3 * polynomial[0] + 2 * polynomial[1] + polynomial[2],
+      3 * (polynomial[0] + polynomial[1] +
+           polynomial[2] + polynomial[3])};
+}
+
 Integer evaluate(const Polynomial& polynomial, const Integer& value) {
   Integer result = 0;
   for (std::size_t index = polynomial.size(); index > 0U; --index) {
@@ -105,7 +152,9 @@ int main() {
     std::uint64_t denominator_failures = 0U;
     std::uint64_t coefficient_checks = 0U;
     std::uint64_t coefficient_failures = 0U;
-    for (int factor = 2; factor <= 9; ++factor) {
+    std::uint64_t threshold_checks = 0U;
+    std::uint64_t threshold_failures = 0U;
+    for (int factor = 2; factor <= 15; ++factor) {
       const int maximum_label = factor + 5;
       Polynomial denominator{Integer(1)};
       for (int index = 2; index <= maximum_label + 1; ++index) {
@@ -167,12 +216,75 @@ int main() {
       }
     }
 
+    const Polynomial threshold_cubic{
+        Integer(307), Integer(-266), Integer(-98), Integer(343)};
+    const std::vector<Integer> right_bernstein =
+        cubic_bernstein_times_three(threshold_cubic);
+    const std::vector<Integer> left_bernstein =
+        cubic_bernstein_times_three(
+            translate(threshold_cubic, -1));
+    for (const Integer& coefficient : left_bernstein) {
+      ++threshold_checks;
+      if (coefficient <= 0) {
+        ++threshold_failures;
+      }
+    }
+    for (const Integer& coefficient : right_bernstein) {
+      ++threshold_checks;
+      if (coefficient <= 0) {
+        ++threshold_failures;
+      }
+    }
+    const std::vector<Integer> comparison_vertex_coefficients{
+        Integer(215), Integer(203), Integer(49)};
+    const std::vector<Integer> comparison_slope_coefficients{
+        Integer(3), Integer(7)};
+    for (const Integer& coefficient : comparison_vertex_coefficients) {
+      ++threshold_checks;
+      if (coefficient <= 0) {
+        ++threshold_failures;
+      }
+    }
+    for (const Integer& coefficient : comparison_slope_coefficients) {
+      ++threshold_checks;
+      if (coefficient <= 0) {
+        ++threshold_failures;
+      }
+    }
+    for (int count = 6; count <= 9; ++count) {
+      ++threshold_checks;
+      if (7 * (3 * (count + 1) - 2) <
+          19 * (count + 1)) {
+        ++threshold_failures;
+      }
+    }
+    Integer ballot_sum = 0;
+    const int count = 10;
+    for (int shell = 0; shell <= count; ++shell) {
+      ballot_sum +=
+          binomial_coefficient(2 * count, count - shell) -
+          binomial_coefficient(2 * count, count - shell - 1);
+    }
+    const Integer ballot_zero =
+        binomial_coefficient(2 * count, count) -
+        binomial_coefficient(2 * count, count - 1);
+    ++threshold_checks;
+    if (ballot_sum != 11 * ballot_zero) {
+      ++threshold_failures;
+    }
+    ++threshold_checks;
+    if (7 * 30 < 19 * 11) {
+      ++threshold_failures;
+    }
+
     const bool pass =
-        checks.size() == 16U &&
-        denominator_checks == 8U &&
+        checks.size() == 28U &&
+        denominator_checks == 14U &&
         denominator_failures == 0U &&
-        coefficient_checks == 318U &&
-        coefficient_failures == 0U;
+        coefficient_checks == 726U &&
+        coefficient_failures == 0U &&
+        threshold_checks == 19U &&
+        threshold_failures == 0U;
     std::cout
         << "SU2_FUNDAMENTAL_ONE_ARBITRARY_THIRD"
         << " polynomial_checks=" << checks.size()
@@ -180,6 +292,8 @@ int main() {
         << " denominator_failures=" << denominator_failures
         << " coefficient_checks=" << coefficient_checks
         << " coefficient_failures=" << coefficient_failures
+        << " threshold_checks=" << threshold_checks
+        << " threshold_failures=" << threshold_failures
         << " summaries={";
     for (std::size_t index = 0; index < checks.size(); ++index) {
       if (index != 0U) {
