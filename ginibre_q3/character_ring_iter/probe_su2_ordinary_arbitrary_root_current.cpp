@@ -97,6 +97,41 @@ std::string render(const std::vector<int>& profile) {
   return result + "]";
 }
 
+void replay_square_log_concave_radial_obstruction() {
+  const std::vector<int> root{3, 1, 5, 3, 5, 2, 2};
+  const std::vector<Integer> expected{
+      77, 172, 284, 313, 339, 294, 254,
+      179, 125, 68, 36, 12, 4};
+  const std::vector<Integer> square = square_character(root);
+  if (square != expected) {
+    throw std::runtime_error("square-profile replay mismatch");
+  }
+  Integer minimum_margin =
+      square[1] * square[1] - square[0] * square[2];
+  for (std::size_t index = 1; index + 1U < square.size(); ++index) {
+    const Integer margin =
+        square[index] * square[index] -
+        square[index - 1U] * square[index + 1U];
+    minimum_margin = std::min(minimum_margin, margin);
+  }
+  if (minimum_margin < 0) {
+    throw std::runtime_error("square profile is not log concave");
+  }
+  const Integer radial =
+      square[0] * (square[5] + square[6]) +
+      square[1] * square[3] - square[2] * square[4];
+  if (radial != -244) {
+    throw std::runtime_error("radial-column replay mismatch");
+  }
+  std::cout
+      << "SU2_ORDINARY_SQUARE_LC_RADIAL_OBSTRUCTION"
+      << " root=" << render(root)
+      << " square=[77,172,284,313,339,294,254,179,125,68,36,12,4]"
+      << " minimum_log_concavity_margin=" << minimum_margin
+      << " A=4 L=1 value=" << radial
+      << " result=PASS_EXACT\n";
+}
+
 struct Counters {
   std::uint64_t roots = 0;
   std::uint64_t currents = 0;
@@ -343,11 +378,15 @@ int main(int argc, char** argv) {
     const bool log_concave_only = mode == "--log-concave-only";
     const bool interval_support_only = mode == "--interval-support-only";
     const bool scaled_gap_family = mode == "--scaled-gap-family";
+    const bool replay_square_lc_radial =
+        mode == "--replay-square-log-concave-radial";
     if (mode != "--all" && !log_concave_only &&
-        !interval_support_only && !scaled_gap_family) {
+        !interval_support_only && !scaled_gap_family &&
+        !replay_square_lc_radial) {
       throw std::invalid_argument(
           "third argument must be --log-concave-only or "
-          "--interval-support-only or --scaled-gap-family");
+          "--interval-support-only or --scaled-gap-family or "
+          "--replay-square-log-concave-radial");
     }
     const int maximum_shift =
         argc >= 5 ? parse_positive(argv[4], "maximum_shift") : 5;
@@ -356,8 +395,14 @@ int main(int argc, char** argv) {
           "usage: probe_su2_ordinary_arbitrary_root_current "
           "[maximum_length] [maximum_coefficient] "
           "[(--log-concave-only|--interval-support-only|"
-          "--scaled-gap-family) "
+          "--scaled-gap-family|"
+          "--replay-square-log-concave-radial) "
           "[maximum_shift]]");
+    }
+
+    if (replay_square_lc_radial) {
+      replay_square_log_concave_radial_obstruction();
+      return EXIT_SUCCESS;
     }
 
     Counters counters;

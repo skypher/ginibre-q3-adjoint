@@ -11317,7 +11317,7 @@ A=m+n-2j,                  L=m-j,
 and its complete contribution is `K_(A,L)`.  Summing the columns is
 exactly the radial telescoping above.
 
-**Target 5A8H28UIA2CGLPCIPOCB2RADGP
+**Disproved target 5A8H28UIA2CGLPCIPOCB2RADGP
 (square-character radial growth).**  Suppose
 
 ```text
@@ -11327,11 +11327,13 @@ f^2=sum_(h>=0)c_h beta_h,
 where `c` is nonnegative and log concave with interval support.  Prove
 `(OCRD)` for every `0<=2L<A`.
 
-Every ordinary factor word satisfies these hypotheses: take
+Every ordinary factor word satisfies these hypotheses.  Thus this target
+would have closed `(OCSP)`: take
 `f=product_j beta_(q_j)`, and use ordinary fusion preservation of log
-concavity for its doubled coefficient profile.  Therefore Target
-5A8H28UIA2CGLPCIPOCB2RADGP implies `(OCSP)` for arbitrary factor
-words.  It is the strict off-diagonal radial part of the earlier
+concavity for its doubled coefficient profile.  Proposition
+5A8H28UIA2CGLPCIPOCB2RADSQLC below disproves the enlargement to an
+arbitrary square root.  The statement is the strict off-diagonal radial
+part of the earlier
 square-character Target 5A8H28UIA2RLC12S, but
 `(P5A.102AD5ALX1ZZB3S1)` is a smaller two-shell formulation.
 
@@ -11360,6 +11362,73 @@ Target 5A8H28UIA2CGLPCIPOCB2RADLCR is sufficient for every ordinary
 factor word and is not asserted for an arbitrary nonnegative
 character root.  Proposition 5A8H28UIA2CGLPCIPOCB2ARB below shows
 that the latter enlargement is false.
+
+The log-concavity hypothesis on the root also cannot be replaced by
+log concavity of its square.
+
+**Proposition 5A8H28UIA2CGLPCIPOCB2RADSQLC
+(square-log-concavity obstruction).**  Put
+
+```text
+P=3 beta_0+beta_1+5 beta_2+3 beta_3
+    +5 beta_4+2 beta_5+2 beta_6.
+```
+
+Then
+
+```text
+P^2=sum_(t=0)^12 c_t beta_t,
+
+c=(77,172,284,313,339,294,254,
+   179,125,68,36,12,4).                         (P5A.102AD5ALX1ZZB3S2A)
+```
+
+The profile `c` is nonnegative and log concave with interval support,
+and its multiplication matrix is positive semidefinite.  Nevertheless,
+
+```text
+K_(4,1)
+ =c_0(c_5+c_6)+c_1c_3-c_2c_4
+ =-244.                                          (P5A.102AD5ALX1ZZB3S2B)
+```
+
+Consequently Target
+5A8H28UIA2CGLPCIPOCB2RADGP is false, even for a nonnegative
+character root and a PSD log-concave square.  The surviving Target
+5A8H28UIA2CGLPCIPOCB2RADLCR must retain log concavity of the root.
+
+**Proof.**  Ordinary Clebsch--Gordan multiplication gives
+`(P5A.102AD5ALX1ZZB3S2A)`.  The consecutive log-concavity margins
+of `c` are
+
+```text
+(7716,26820,1693,22899,330,11890,
+ 291,3453,124,480,0),
+```
+
+so every one is nonnegative.  Since `c` is the coefficient profile
+of `P^2`, its multiplication matrix is
+
+```text
+N_c=N_P^2,
+```
+
+which is positive semidefinite because `N_P` is real symmetric.
+Finally direct substitution gives
+
+```text
+77(294+254)+172*313-284*339=-244.
+```
+
+The fail-closed exact replay is
+
+```text
+character_ring_iter/probe_su2_ordinary_arbitrary_root_current \
+  1 1 --replay-square-log-concave-radial
+```
+
+and its transcript is
+`certificates/su2_ordinary_square_lc_radial_obstruction.log`.  QED.
 
 There is an equivalent weighted-covariance formulation of the same
 root cone.  Put
@@ -14323,6 +14392,84 @@ these profiles directly from the triangular line convolution and
 checks this integer.  Hence any proof of `(CSP)` must retain
 coupling across the complete fusion interval; endpoint-only payment
 is unavailable.
+
+Coupling between distinct prefix rays is also load-bearing.  In the
+notation of `(CSP)`, define the diagonal-ray truncation
+
+```text
+DR_(R,S)
+ =A(b)_(R,S)
+  +sum_j u_j Cross(c^(j),b)_(R,S)
+  +sum_j u_j^2 A(c^(j))_(R,S).                  (P5A.102AD5ALX1ZZB4A)
+```
+
+Thus `DR` retains every individual ray square but discards the
+nonnegative cross-ray reserve
+
+```text
+sum_(i<j)u_i u_j Cross(c^(i),c^(j))_(R,S).
+```
+
+**Proposition 5A8H28UIA2CGLPCIPDR
+(central cross-ray obstruction).**  In the half-label even sector of
+`SU(2)_22`, take the factor word
+
+```text
+[4,10,2,1,5,5,7,8].
+```
+
+Its proper affine suffix and central shell are respectively
+
+```text
+a=(3250512040,2443186446,1800486614,1299924647,
+   918631973,634673142,427952066,280733011,
+   177820677,106456002,55988374,17383006),
+
+b=(-1841854677,1686786533,4769347253,7262041559,
+   9051977637,10065095739,10271803391,9689839908,
+   8384095372,6463327665,4073947829,1391260890).
+                                                        (P5A.102AD5ALX1ZZB4B)
+```
+
+The profile `a` is decreasing and nonnegative.  Nevertheless, at the
+strictly off-diagonal target `(R,S)=(1,2)`,
+
+```text
+DR_(1,2)=-12336084827213641714.                 (P5A.102AD5ALX1ZZB4C)
+```
+
+The omitted cross-ray reserve is
+
+```text
+12336086914119343797,
+```
+
+and the complete current is therefore
+
+```text
+A(a+b)_(1,2)=2086905702083>0.                   (P5A.102AD5ALX1ZZB4D)
+```
+
+Hence `(CSP)` cannot be reduced to independent payments on its
+prefix rays, even away from the automatic diagonal Gram sector; the
+full positive polarization between distinct rays must be retained.
+
+**Proof.**  The exact triangular line convolution and outside-in
+affine decomposition give `(P5A.102AD5ALX1ZZB4B)`.  Taking
+`u_j=a_j-a_(j+1)`, with zero continuation, and substituting in
+`(P5A.102AD5ALX1ZZB4A)` gives
+`(P5A.102AD5ALX1ZZB4C)`.  Adding the omitted polarization gives
+`(P5A.102AD5ALX1ZZB4D)`.  The fail-closed replay
+
+```text
+character_ring_iter/probe_su2_affine_image_shells \
+  --replay-central-cross-ray
+```
+
+reconstructs both profiles from the factor word, verifies the
+monotonicity of `a`, and checks all three displayed integers.  Its
+transcript is
+`certificates/su2_central_cross_ray_obstruction.log`.  QED.
 
 Proper-tail monotonicity has an exact reduction to paired slopes of
 the ordinary fusion square.  Let `p` be the unperiodized half-profile

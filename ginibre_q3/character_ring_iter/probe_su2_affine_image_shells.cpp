@@ -181,10 +181,140 @@ std::string render_failure(const Failure& failure) {
         + " shell_b=" + render(failure.shell_b);
 }
 
+void replay_central_cross_ray_obstruction() {
+    constexpr int level = 11;
+    const std::vector<int> word{4, 10, 2, 1, 5, 5, 7, 8};
+    Vector profile(static_cast<std::size_t>(level + 1), 0);
+    profile[0] = 1;
+    Vector line{cpp_int(1)};
+    int line_radius = 0;
+    for (const int factor : word) {
+        profile = fusion_step(profile, level, factor);
+        const int reduced = std::min(factor, level - factor);
+        line = line_triangular_step(line, line_radius, reduced);
+        line_radius += 2 * reduced;
+    }
+
+    const int period = 2 * level + 2;
+    const int shell_count = line_radius / period + 1;
+    std::vector<Vector> shells;
+    for (int shell = 0; shell < shell_count; ++shell) {
+        Vector values(static_cast<std::size_t>(level + 1), 0);
+        for (int radius = 0; radius <= level; ++radius) {
+            values[static_cast<std::size_t>(radius)]
+                = line_gradient(
+                    line, line_radius, shell * period + radius)
+                  - line_gradient(
+                        line,
+                        line_radius,
+                        (shell + 1) * period - radius - 1);
+        }
+        shells.push_back(std::move(values));
+    }
+    if (shells.size() != 3U) {
+        throw std::runtime_error("central replay shell-count mismatch");
+    }
+
+    const Vector expected_proper{
+        3250512040, 2443186446, 1800486614, 1299924647,
+        918631973, 634673142, 427952066, 280733011,
+        177820677, 106456002, 55988374, 17383006};
+    const Vector expected_central{
+        -1841854677, 1686786533, 4769347253, 7262041559,
+        9051977637, 10065095739, 10271803391, 9689839908,
+        8384095372, 6463327665, 4073947829, 1391260890};
+
+    Vector proper(static_cast<std::size_t>(level + 1), 0);
+    for (std::size_t shell = 1U; shell < shells.size(); ++shell) {
+        for (int radius = 0; radius <= level; ++radius) {
+            proper[static_cast<std::size_t>(radius)]
+                += shells[shell][static_cast<std::size_t>(radius)];
+        }
+    }
+    const Vector& central = shells[0];
+    if (proper != expected_proper || central != expected_central) {
+        throw std::runtime_error("central replay profile mismatch");
+    }
+    for (int radius = 0; radius < level; ++radius) {
+        if (proper[static_cast<std::size_t>(radius)]
+            < proper[static_cast<std::size_t>(radius + 1)]) {
+            throw std::runtime_error(
+                "central replay proper suffix is not decreasing");
+        }
+    }
+
+    constexpr int radius = 1;
+    constexpr int target = 2;
+    const Matrix proper_matrix = multiplication_matrix(proper);
+    const Matrix central_matrix = multiplication_matrix(central);
+    const cpp_int central_current
+        = central[0] * central_matrix[radius][target]
+          - central[radius] * central[target];
+    cpp_int diagonal_ray = central_current;
+    const int separation = 1;
+    const int upper = 3;
+    for (int cutoff = 0; cutoff <= level; ++cutoff) {
+        const cpp_int slope
+            = proper[static_cast<std::size_t>(cutoff)]
+              - (cutoff < level
+                     ? proper[static_cast<std::size_t>(cutoff + 1)]
+                     : cpp_int(0));
+        const int count = cutoff < separation
+            ? 0
+            : std::min(cutoff, upper) - separation + 1;
+        const cpp_int ray_cross
+            = central_matrix[radius][target] + central[0] * count
+              - (radius <= cutoff ? central[target] : cpp_int(0))
+              - (target <= cutoff ? central[radius] : cpp_int(0));
+        const int ray_current
+            = count - ((radius <= cutoff && target <= cutoff) ? 1 : 0);
+        diagonal_ray
+            += slope * ray_cross + slope * slope * ray_current;
+    }
+    const cpp_int expected_diagonal(
+        "-12336084827213641714");
+    if (diagonal_ray != expected_diagonal) {
+        throw std::runtime_error(
+            "central replay diagonal-ray mismatch");
+    }
+
+    Vector complete = proper;
+    for (int index = 0; index <= level; ++index) {
+        complete[static_cast<std::size_t>(index)]
+            += central[static_cast<std::size_t>(index)];
+    }
+    const Matrix complete_matrix = multiplication_matrix(complete);
+    const cpp_int full_current
+        = complete[0] * complete_matrix[radius][target]
+          - complete[radius] * complete[target];
+    const cpp_int cross_ray_reserve = full_current - diagonal_ray;
+    if (full_current < 0 || cross_ray_reserve <= 0) {
+        throw std::runtime_error(
+            "central replay cross-ray payment mismatch");
+    }
+
+    std::cout
+        << "SU2_CENTRAL_CROSS_RAY_OBSTRUCTION"
+        << " level=22"
+        << " word=[4,10,2,1,5,5,7,8]"
+        << " R=1 S=2"
+        << " diagonal_ray=" << diagonal_ray
+        << " cross_ray_reserve=" << cross_ray_reserve
+        << " full_current=" << full_current
+        << " result=PASS_EXACT\n";
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
     try {
+        if (
+            argc == 2
+            && std::string(argv[1]) == "--replay-central-cross-ray"
+        ) {
+            replay_central_cross_ray_obstruction();
+            return EXIT_SUCCESS;
+        }
         const std::uint64_t samples = argc >= 2
             ? positive_argument(argv[1], "samples")
             : UINT64_C(10000);
@@ -222,6 +352,8 @@ int main(int argc, char** argv) {
         int maximum_central_prefix_terms = 0;
         std::uint64_t central_diagonal_ray_checks = 0U;
         std::uint64_t central_diagonal_ray_failures = 0U;
+        std::uint64_t central_diagonal_ray_offdiagonal_checks = 0U;
+        std::uint64_t central_diagonal_ray_offdiagonal_failures = 0U;
         std::uint64_t suffix_spectral_checks = 0U;
         std::uint64_t suffix_spectral_failures = 0U;
         std::uint64_t proper_suffix_monotonicity_checks = 0U;
@@ -245,6 +377,7 @@ int main(int argc, char** argv) {
         Failure first_suffix_increment;
         Failure first_central_lower_bound;
         Failure first_central_diagonal_ray;
+        Failure first_central_diagonal_ray_offdiagonal;
 
         for (std::uint64_t sample = 0U; sample < samples; ++sample) {
             std::uint64_t state
@@ -724,6 +857,24 @@ int main(int argc, char** argv) {
                                     proper_suffix,
                                     central);
                             }
+                            if (radius != target) {
+                                ++central_diagonal_ray_offdiagonal_checks;
+                                if (diagonal_ray_payment < 0) {
+                                    ++central_diagonal_ray_offdiagonal_failures;
+                                    record(
+                                        first_central_diagonal_ray_offdiagonal,
+                                        level,
+                                        0,
+                                        static_cast<int>(
+                                            shells.size() - 1U),
+                                        radius,
+                                        target,
+                                        diagonal_ray_payment,
+                                        word,
+                                        proper_suffix,
+                                        central);
+                                }
+                            }
                         }
                     }
                 }
@@ -772,6 +923,10 @@ int main(int argc, char** argv) {
             << central_diagonal_ray_checks
             << " central_diagonal_ray_failures="
             << central_diagonal_ray_failures
+            << " central_diagonal_ray_offdiagonal_checks="
+            << central_diagonal_ray_offdiagonal_checks
+            << " central_diagonal_ray_offdiagonal_failures="
+            << central_diagonal_ray_offdiagonal_failures
             << " suffix_spectral_checks=" << suffix_spectral_checks
             << " suffix_spectral_failures=" << suffix_spectral_failures
             << " proper_suffix_monotonicity_checks="
@@ -803,6 +958,9 @@ int main(int argc, char** argv) {
             << render_failure(first_central_lower_bound) << '\n'
             << "FIRST_CENTRAL_DIAGONAL_RAY_FAILURE "
             << render_failure(first_central_diagonal_ray) << '\n'
+            << "FIRST_CENTRAL_DIAGONAL_RAY_OFFDIAGONAL_FAILURE "
+            << render_failure(first_central_diagonal_ray_offdiagonal)
+            << '\n'
             << "FIRST_SUFFIX_SPECTRAL_FAILURE"
             << " level="
             << (first_negative_eigenvalue_level < 0
