@@ -12492,6 +12492,147 @@ Indeed outside this chamber the last two terms in
 the two top-shell terms.  This elementary reduction uses no spectral
 hypothesis.
 
+The first lower antidiagonal has a support-uniform payment which uses
+the actual factor orbit rather than the larger shaped-root cone.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADFIRST
+(uniform first lower-radial payment).**  Let
+
+```text
+P=product_(j=1)^m chi_(a_j),              a_j>=1,
+beta_h=chi_(2h),
+P^2=sum_(h>=0)c_h beta_h.
+```
+
+Then
+
+```text
+K_(1,0)=c_0(c_1+c_2+c_3)-c_1c_2>=0.       (P5A.102AD5ALX1ZZB3S4A)
+```
+
+Thus the `A=1` member of `(OCRD)` is closed for an arbitrary number
+of factors and arbitrary labels.
+
+**Proof.**  First record the boundary effect of one squared factor.
+If
+
+```text
+D=sum_(t>=0)d_t beta_t,                    d_t>=0,
+E=D chi_a^2=sum_(t>=0)e_t beta_t,
+```
+
+then `chi_a^2=sum_(s=0)^a beta_s` and the ordinary fusion rule give
+
+```text
+e_0=sum_(t=0)^a d_t,
+
+e_1=d_0+3sum_(t=1)^(a-1)d_t
+       +2d_a+d_(a+1).                       (P5A.102AD5ALX1ZZB3S4B)
+```
+
+Indeed label zero requires `s=t`, while label one requires
+`s in {t-1,t,t+1}`, truncated to `0<=s<=a`.  Consequently
+
+```text
+e_1-e_0
+ =2sum_(t=1)^(a-1)d_t+d_a+d_(a+1)>=0,            (P5A.102AD5ALX1ZZB3S4C)
+
+e_1-2e_0
+ =-d_0+sum_(t=1)^(a-1)d_t+d_(a+1).               (P5A.102AD5ALX1ZZB3S4D)
+```
+
+After the first factor the coefficient profile is
+`1_[0,a_1]`, so its first two entries are equal.  Formula
+`(P5A.102AD5ALX1ZZB3S4C)` preserves `d_1>=d_0`.  If `m>=2`
+and some `a_j>=2`, commute such a factor to the last position.
+Formula `(P5A.102AD5ALX1ZZB3S4D)` then contains `d_1` in its
+displayed sum and gives
+
+```text
+c_1>=2c_0.                                      (P5A.102AD5ALX1ZZB3S4E)
+```
+
+There is one remaining family before using this bound.  If every
+`a_j=1`, then
+
+```text
+P^2=chi_1^(2m)=(x+1)^m,                 x=beta_1,
+```
+
+and the semicircle moments give
+
+```text
+c_0=Cat_m,
+c_1=Cat_(m+1)-Cat_m,
+c_1/c_0=3m/(m+2).                              (P5A.102AD5ALX1ZZB3S4E0)
+```
+
+Here `Cat_m=binom(2m,m)/(m+1)` and the last identity follows from
+`Cat_(m+1)/Cat_m=2(2m+1)/(m+2)`.  Hence
+`c_1>=2c_0` also holds for every all-fundamental word with `m>=4`.
+
+In either of these cases, under normalized `SO(3)` Haar measure let
+
+```text
+x=beta_1 in [-1,3],              dnu=P(x)^2 dmu/c_0,
+lambda=integral x dnu=c_1/c_0>=2.
+```
+
+This is a probability measure because `c_0=integral P^2 dmu`.
+The recurrence for the ordinary characters gives
+
+```text
+beta_2(x)=x^2-x-1.
+```
+
+The fusion rule `beta_1 beta_2=beta_1+beta_2+beta_3` therefore gives
+
+```text
+K_(1,0)
+ =c_0^2 Cov_nu(x,beta_2(x)).                     (P5A.102AD5ALX1ZZB3S4F)
+```
+
+Writing `y=x-lambda` and using `integral y dnu=0` gives the exact
+payment
+
+```text
+Cov_nu(x,beta_2(x))
+ =integral y^2(x+1)dnu
+    +(lambda-2)integral y^2 dnu>=0.              (P5A.102AD5ALX1ZZB3S4G)
+```
+
+Both terms are nonnegative because `x>=-1` and `lambda>=2`.
+For `m=1`, the profile is `1_[0,a_1]`; direct substitution in
+`(P5A.102AD5ALX1ZZB3S4A)` gives `1` when `a_1<=2` and `2` when
+`a_1>=3`.  The exceptional all-fundamental profiles at `m=2,3` are
+
+```text
+(2,3,1),                         (5,9,5,1),
+```
+
+and their respective margins are `5` and `30`.  The empty word gives
+zero.  This exhausts all cases and proves the lemma.  QED.
+
+The strict `cpp_int` verifier
+`character_ring_iter/verify_su2_first_lower_radial_payment.cpp`
+independently reconstructs `(P5A.102AD5ALX1ZZB3S4B)`, checks the two
+boundary-ratio implications after every insertion, checks all eight
+Catalan identities in the stated box, and evaluates
+`(P5A.102AD5ALX1ZZB3S4A)`.  Through highest-weight labels eight and
+eight factors it passes `12,869` nondecreasing words and `91,520`
+insertion profiles with zero failures.  These bounded counts replay
+the identities; the support-uniform proof is the displayed fusion and
+spectral argument.
+For a factor word of root support `n>=2`, the uniform upper-radial
+corollary and this lemma reduce the unresolved lower band from
+`n(n-1)` columns to
+
+```text
+n(n-1)-1,
+```
+
+namely `(P5A.102AD5ALX1ZZB3S3BP)` with `(A,L)=(1,0)` removed.
+
 The strict off-diagonal condition cannot simply be closed to equality.
 For the square root
 
