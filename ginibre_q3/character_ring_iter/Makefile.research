@@ -410,6 +410,11 @@ analyze_su2_b2_radial_cone_transport: \
 	$(CXX) -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
 		-Wconversion -Wshadow -Werror $< -o $@
 
+analyze_su2_autocorrelation_lc_certificate: \
+		analyze_su2_autocorrelation_lc_certificate.cpp
+	$(CXX) -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
+		-Wconversion -Wshadow -Werror $< -lz3 -o $@
+
 probe_su2_aim_q1_asymptotic: probe_su2_aim_q1_asymptotic.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -877,6 +882,7 @@ RESEARCH_TARGETS = \
 	probe_su2_log_concave_diagonal_completion \
 	probe_su2_ordinary_arbitrary_root_current \
 	analyze_su2_b2_radial_cone_transport \
+	analyze_su2_autocorrelation_lc_certificate \
 	analyze_su2_normalized_dimension_invariance \
 	verify_su2_finite_anchored_shifted_tail_counterexample \
 	probe_su2_ordinary_half_power_wedge \
