@@ -1190,7 +1190,32 @@ int replay_wall_121_current_normal_form() {
             big_multiply(
                 p[static_cast<std::size_t>(index - 2)],
                 p[static_cast<std::size_t>(index + 1)]),
-            -1);
+          -1);
+      }
+    }
+    for (int index = 1; index <= support; ++index) {
+      BigPolynomial identity = big_multiply(
+          p[static_cast<std::size_t>(index)],
+          h[static_cast<std::size_t>(index)]);
+      big_add_scaled(
+          identity,
+          big_multiply(
+              p[static_cast<std::size_t>(index - 1)],
+              g[static_cast<std::size_t>(index)]),
+          -1);
+      big_add_scaled(
+          identity,
+          big_multiply(
+              p[static_cast<std::size_t>(index + 1)],
+              g[static_cast<std::size_t>(index - 1)]),
+          -1);
+      if (std::any_of(
+              identity.begin(), identity.end(),
+              [](const auto& term) { return term.second != 0; })) {
+        throw std::runtime_error(
+            "wall (1,2,1) feasible-Jacobi identity mismatch at support "
+            + std::to_string(support)
+            + " and index " + std::to_string(index));
       }
     }
     std::vector<BigPolynomial> k(
@@ -1273,6 +1298,170 @@ int replay_wall_121_current_normal_form() {
     throw std::runtime_error(
         "wall (1,2,1) norm-contraction obstruction mismatch");
   }
+  const std::array<Integer, 8> cutoff_profile{
+      0, 8, 8, 8, 6, 4, 2, 1};
+  constexpr int cutoff_support = 7;
+  std::array<Integer, 9> cutoff_g{};
+  std::array<Integer, 10> cutoff_h{};
+  std::array<Integer, 9> cutoff_k{};
+  for (int index = 1; index <= cutoff_support; ++index) {
+    const Integer next =
+        index < cutoff_support
+            ? cutoff_profile[static_cast<std::size_t>(index + 1)]
+            : Integer{0};
+    cutoff_g[static_cast<std::size_t>(index)] =
+        cutoff_profile[static_cast<std::size_t>(index)]
+            * cutoff_profile[static_cast<std::size_t>(index)]
+        - cutoff_profile[static_cast<std::size_t>(index - 1)] * next;
+  }
+  for (int index = 1; index <= cutoff_support + 1; ++index) {
+    const Integer current =
+        index <= cutoff_support
+            ? cutoff_profile[static_cast<std::size_t>(index)]
+            : Integer{0};
+    const Integer previous =
+        cutoff_profile[static_cast<std::size_t>(index - 1)];
+    const Integer left_two =
+        index >= 2
+            ? cutoff_profile[static_cast<std::size_t>(index - 2)]
+            : Integer{0};
+    const Integer next =
+        index < cutoff_support
+            ? cutoff_profile[static_cast<std::size_t>(index + 1)]
+            : Integer{0};
+    cutoff_h[static_cast<std::size_t>(index)] =
+        current * previous - left_two * next;
+  }
+  for (int index = 1; index <= cutoff_support; ++index) {
+    cutoff_k[static_cast<std::size_t>(index)] =
+        cutoff_g[static_cast<std::size_t>(index)]
+        + cutoff_h[static_cast<std::size_t>(index)]
+        + cutoff_h[static_cast<std::size_t>(index + 1)];
+  }
+  Integer cutoff_full = 0;
+  Integer cutoff_suffix = 0;
+  for (int index = 1; index <= cutoff_support; ++index) {
+    const Integer product =
+        (cutoff_g[static_cast<std::size_t>(index)]
+         - cutoff_g[static_cast<std::size_t>(index + 1)])
+        * (cutoff_k[static_cast<std::size_t>(index)]
+           - cutoff_k[static_cast<std::size_t>(index + 1)]);
+    cutoff_full += product;
+    if (index >= 2) {
+      cutoff_suffix += product;
+    }
+  }
+  if (
+      cutoff_g
+          != std::array<Integer, 9>{0, 64, 0, 16, 4, 4, 0, 1, 0}
+      || cutoff_k
+          != std::array<Integer, 9>{
+              0, 128, 80, 48, 28, 14, 4, 3, 0}
+      || cutoff_suffix != -230
+      || cutoff_full != 2842
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) cutoff-current obstruction mismatch");
+  }
+  const auto potential_increment_coefficients = [](
+      const std::array<Integer, 5>& profile,
+      const int cutoff) {
+    constexpr int support = 4;
+    std::array<Integer, 6> g{};
+    std::array<Integer, 7> h{};
+    std::array<Integer, 6> k{};
+    for (int index = 1; index <= support; ++index) {
+      const Integer next =
+          index < support
+              ? profile[static_cast<std::size_t>(index + 1)]
+              : Integer{0};
+      g[static_cast<std::size_t>(index)] =
+          profile[static_cast<std::size_t>(index)]
+              * profile[static_cast<std::size_t>(index)]
+          - profile[static_cast<std::size_t>(index - 1)] * next;
+    }
+    for (int index = 1; index <= support + 1; ++index) {
+      const Integer current =
+          index <= support
+              ? profile[static_cast<std::size_t>(index)]
+              : Integer{0};
+      const Integer previous =
+          profile[static_cast<std::size_t>(index - 1)];
+      const Integer left_two =
+          index >= 2
+              ? profile[static_cast<std::size_t>(index - 2)]
+              : Integer{0};
+      const Integer next =
+          index < support
+              ? profile[static_cast<std::size_t>(index + 1)]
+              : Integer{0};
+      h[static_cast<std::size_t>(index)] =
+          current * previous - left_two * next;
+    }
+    for (int index = 1; index <= support; ++index) {
+      k[static_cast<std::size_t>(index)] =
+          g[static_cast<std::size_t>(index)]
+          + h[static_cast<std::size_t>(index)]
+          + h[static_cast<std::size_t>(index + 1)];
+    }
+    const Integer base =
+        (g[static_cast<std::size_t>(cutoff)]
+         - g[static_cast<std::size_t>(cutoff + 1)])
+        * (k[static_cast<std::size_t>(cutoff)]
+           - k[static_cast<std::size_t>(cutoff + 1)]);
+    const Integer coefficient_a =
+        g[static_cast<std::size_t>(cutoff)]
+              * k[static_cast<std::size_t>(cutoff + 1)]
+        - g[static_cast<std::size_t>(cutoff - 1)]
+              * k[static_cast<std::size_t>(cutoff)];
+    const Integer coefficient_b =
+        g[static_cast<std::size_t>(cutoff + 1)]
+              * k[static_cast<std::size_t>(cutoff)]
+        - g[static_cast<std::size_t>(cutoff)]
+              * k[static_cast<std::size_t>(cutoff - 1)];
+    const Integer coefficient_c =
+        g[static_cast<std::size_t>(cutoff + 1)]
+              * k[static_cast<std::size_t>(cutoff + 1)]
+        - g[static_cast<std::size_t>(cutoff)]
+              * k[static_cast<std::size_t>(cutoff)];
+    return std::array<Integer, 4>{
+        base, coefficient_a, coefficient_b, coefficient_c};
+  };
+  const std::array<std::array<Integer, 5>, 4> potential_profiles{
+      std::array<Integer, 5>{0, 2, 3, 3, 2},
+      std::array<Integer, 5>{0, 3, 3, 2, 1},
+      std::array<Integer, 5>{0, 3, 3, 3, 1},
+      std::array<Integer, 5>{0, 3, 3, 3, 2}};
+  const std::array<int, 4> potential_cutoffs{3, 3, 2, 3};
+  const std::array<std::array<Integer, 4>, 4> potential_expected{
+      std::array<Integer, 4>{-4, -12, 14, -2},
+      std::array<Integer, 4>{0, -15, -9, -3},
+      std::array<Integer, 4>{0, -135, 90, 90},
+      std::array<Integer, 4>{-2, 30, 12, 4}};
+  std::array<std::array<Integer, 4>, 4> potential_actual{};
+  for (std::size_t index = 0; index < potential_profiles.size();
+       ++index) {
+    potential_actual[index] = potential_increment_coefficients(
+        potential_profiles[index], potential_cutoffs[index]);
+  }
+  const std::array<Integer, 4> farkas_weights{90, 1044, 10, 603};
+  std::array<Integer, 4> farkas_sum{};
+  for (std::size_t inequality = 0;
+       inequality < potential_actual.size(); ++inequality) {
+    for (std::size_t coefficient = 0;
+         coefficient < farkas_sum.size(); ++coefficient) {
+      farkas_sum[coefficient] +=
+          farkas_weights[inequality]
+          * potential_actual[inequality][coefficient];
+    }
+  }
+  if (
+      potential_actual != potential_expected
+      || farkas_sum != std::array<Integer, 4>{-1566, 0, 0, 0}
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) constant-potential obstruction mismatch");
+  }
   std::cout
       << "SU2_WALL_121_CURRENT_NORMAL_FORM"
       << " supports=2..12"
@@ -1281,8 +1470,14 @@ int replay_wall_121_current_normal_form() {
       << " C3_terms=3"
       << " C0_boundary=p_1^3*p_2"
       << " current_suffixes=(g_i,k_i)"
+      << " jacobi_identity_supports=2..12"
       << " norm_contraction_profile=(0,4,3)"
       << " norm_u=130 norm_w=144 current_pairing=238"
+      << " cutoff_profile=(0,8,8,8,6,4,2,1)"
+      << " cutoff=2 cutoff_suffix=-230 cutoff_full=2842"
+      << " constant_potential_core=4"
+      << " farkas_weights=(90,1044,10,603)"
+      << " farkas_sum=(-1566,0,0,0)"
       << " result=PASS_EXACT"
       << '\n';
   return EXIT_SUCCESS;

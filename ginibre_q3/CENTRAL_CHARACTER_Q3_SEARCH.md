@@ -12486,6 +12486,110 @@ and collecting the first three powers of the insertion coordinate
 gives `(P5A.102AD5ALX1ZZB3BGW)`.  This also follows directly from
 `(P5A.102AD5ALX1ZZB3BGI)--(P5A.102AD5ALX1ZZB3BGJ)`.  QED.
 
+The feasible currents have an additional tridiagonal relation which
+is absent for two arbitrary nonnegative suffix-current sequences.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121JAC
+(feasible-current Jacobi form).**  On a positive tail, for every
+`i>=1` with `p_i>0`,
+
+```text
+h_i=(p_(i-1)/p_i)g_i+(p_(i+1)/p_i)g_(i-1).     (P5A.102AD5ALX1ZZB3BGZ1)
+```
+
+Consequently, whenever also `p_(i+1)>0`,
+
+```text
+k_i=(p_(i+1)/p_i)g_(i-1)
+    +(1+p_(i-1)/p_i+p_(i+2)/p_(i+1))g_i
+    +(p_i/p_(i+1))g_(i+1).                     (P5A.102AD5ALX1ZZB3BGZ2)
+```
+
+Fix `N` with `p_1,...,p_(N+2)>0`.  Let `M_N` be the principal
+coefficient block on indices `1,...,N` in the tridiagonal relation
+`(P5A.102AD5ALX1ZZB3BGZ2)`, and put
+
+```text
+d_i=sqrt(p_ip_(i+1)),       D_N=diag(d_1,...,d_N).
+```
+
+Then `D_N^(-1)M_ND_N` is symmetric.  Its off-diagonal entries are
+
+```text
+(D_N^(-1)M_ND_N)_(i,i+1)
+ =sqrt(p_ip_(i+2))/p_(i+1)<=1.                 (P5A.102AD5ALX1ZZB3BGZ3)
+```
+
+The inequality is exactly log concavity at `i+1`.  Moreover
+every such positive interior principal block is positive
+semidefinite.  This statement does not include the singular terminal
+zero-continuation row; the denominator-free identity below does.
+
+**Proof.**  Direct expansion gives the denominator-free identity
+
+```text
+p_i h_i=p_(i-1)g_i+p_(i+1)g_(i-1).             (P5A.102AD5ALX1ZZB3BGZ4)
+```
+
+Indeed both sides equal
+
+```text
+p_i^2p_(i-1)-p_ip_(i-2)p_(i+1).
+```
+
+Dividing by `p_i` proves `(P5A.102AD5ALX1ZZB3BGZ1)`.  Apply it to
+`h_i` and `h_(i+1)` in `k_i=g_i+h_i+h_(i+1)` to obtain
+`(P5A.102AD5ALX1ZZB3BGZ2)`.
+
+The two opposite off-diagonal entries of the interior coefficient
+matrix are
+
+```text
+M_(i,i+1)=p_i/p_(i+1),
+M_(i+1,i)=p_(i+2)/p_(i+1).
+```
+
+Since `d_(i+1)/d_i=sqrt(p_(i+2)/p_i)`, conjugation by `D_N` makes
+both entries equal to the expression in
+`(P5A.102AD5ALX1ZZB3BGZ3)`.  This proves symmetry and the asserted
+bound.
+
+It remains to check positivity.  Put
+
+```text
+r_i=p_i/p_(i-1),
+xi=sqrt(r_(i+1)/r_i),       eta=sqrt(r_(i+2)/r_(i+1)).
+```
+
+The two off-diagonal entries in interior row `i` are `xi,eta`, while
+
+```text
+(D_N^(-1)M_ND_N)_(i,i)=1+1/r_i+r_(i+2)
+ >=1+2xi eta
+ >=xi+eta.                                      (P5A.102AD5ALX1ZZB3BGZ5)
+```
+
+The first inequality is arithmetic--geometric mean, because
+`xi eta=sqrt(r_(i+2)/r_i)`.  The second follows from
+
+```text
+1+2xi eta-xi-eta=(1-xi)(1-eta)+xi eta>=0,
+```
+
+using `0<=xi,eta<=1`.  At either endpoint of the principal block the
+missing off-diagonal term is omitted, so the same dominance holds.
+If `S=D_N^(-1)M_ND_N`, then for every real vector `z`,
+
+```text
+z^T S z
+ >=sum_i {S_(i,i)-sum_(j!=i)|S_(i,j)|}z_i^2>=0,
+```
+
+where `2z_iz_j>=-z_i^2-z_j^2` is applied to each off-diagonal pair.
+Thus `S` is positive semidefinite.  The exact C++ replay checks
+`(P5A.102AD5ALX1ZZB3BGZ4)` symbolically for supports `2` through
+`12`.  QED.
+
 The two suffix currents cannot be made acute by an unweighted
 contraction estimate.
 
@@ -12561,6 +12665,55 @@ requires a circuit, subdivision, or cumulative allocation; expansion
 in nonnegative ratio-slack monomials is not coefficientwise positive.
 QED.
 
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121CUTOFFOBS
+(wall-current cutoff obstruction).**  Although the two individual
+currents have nonnegative suffix sums in
+`(P5A.102AD5ALX1ZZB3BGZ)`, their paired products do not have
+nonnegative suffix sums.  In particular, an induction which asks for
+
+```text
+sum_(j>=i)(g_j-g_(j+1))(k_j-k_(j+1))>=0
+```
+
+at every cutoff `i` is false.
+
+**Proof.**  Take the positive log-concave tail
+
+```text
+p=(0,8,8,8,6,4,2,1).
+```
+
+Its nontrivial log-concavity comparisons are
+
+```text
+8^2>=8*8,   8^2>=8*6,   6^2>=8*4,
+4^2>=6*2,   2^2>=4*1.
+```
+
+The currents from `(P5A.102AD5ALX1ZZB3BGX)` are
+
+```text
+g=(64,0,16,4,4,0,1,0),
+k=(128,80,48,28,14,4,3,0).
+```
+
+Consequently the consecutive paired products are
+
+```text
+(3072,-512,240,0,40,-1,3).
+```
+
+The full sum is `2842`, but the suffix beginning at cutoff two is
+
+```text
+-512+240+0+40-1+3=-230.                (P5A.102AD5ALX1ZZB3BH0D)
+```
+
+The exact values are reconstructed from the displayed profile by
+`--replay-wall-121-current-normal-form`.  Thus reserve from the wall
+side must be allowed to cross a cutoff; the payment cannot be proved
+by independent nonnegative product suffixes.  QED.
+
 **Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121CRIT
 (`(1,2,1)` critical-current criterion).**  Suppose `C_1<0`, put
 `B=-C_1`, and let `tau>0` be the unique solution of
@@ -12618,9 +12771,176 @@ tail satisfying the branch hypotheses of Corollary
 5A8H28UIA2CGLPCIPOCGAPWALL121CRIT; equivalently, prove the exact
 saturated-face margin `(P5A.102AD5ALX1ZZB3BH4)`.
 
-This target contains every arbitrary-depth variable only through the
-paired current differences in `(P5A.102AD5ALX1ZZB3BGY)`.  The exact
-C++ replay
+The cutoff obstruction identifies the missing Bellman state.  It is
+not a bare product suffix, but a cross-coupled terminal current.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121BELREC
+(`(1,2,1)` cross-current Bellman recurrence).**  For `m>=1` put
+
+```text
+Q_m=a^3b+sum_(i=1)^m(g_i-g_(i+1))(k_i-k_(i+1))
+       +g_mk_(m+1)+g_(m+1)k_m.                 (P5A.102AD5ALX1ZZB3BH5)
+```
+
+Then
+
+```text
+Q_1=a^3b+g_1k_1+g_2k_2,                        (P5A.102AD5ALX1ZZB3BH6)
+
+Q_m-Q_(m-1)
+ =g_mk_m+g_(m+1)k_(m+1)
+   -g_(m-1)k_m-g_mk_(m-1),          m>=2.      (P5A.102AD5ALX1ZZB3BH7)
+```
+
+If the tail ends at `n`, then
+
+```text
+Q_n=a^3b+sum_(i>=1)(g_i-g_(i+1))(k_i-k_(i+1))=C_0.
+                                                        (P5A.102AD5ALX1ZZB3BH8)
+```
+
+**Proof.**  For `(P5A.102AD5ALX1ZZB3BH6)`, expand the first product
+in `(P5A.102AD5ALX1ZZB3BH5)`; the two mixed terms cancel the terminal
+cross coupling.  For `m>=2`, subtract the two consecutive definitions.
+Writing
+
+```text
+(x,y,z)=(g_(m-1),g_m,g_(m+1)),
+(A,B,C)=(k_(m-1),k_m,k_(m+1)),
+```
+
+the difference is
+
+```text
+(y-z)(B-C)+yC+zB-xB-yA=yB+zC-xB-yA,
+```
+
+which is `(P5A.102AD5ALX1ZZB3BH7)`.  At the terminal cutoff,
+`g_(n+1)=k_(n+1)=0`; now
+`(P5A.102AD5ALX1ZZB3BH8)` follows from
+`(P5A.102AD5ALX1ZZB3BGY)`.  QED.
+
+The cross coupling also eliminates the first coordinate outside a
+cutoff exactly.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121BELEND
+(outer Bellman saturation).**  The state in
+`(P5A.102AD5ALX1ZZB3BH5)` has the equivalent form
+
+```text
+Q_m=a^3b+sum_(i=1)^(m-1)(g_i-g_(i+1))(k_i-k_(i+1))
+       +g_mk_m+g_(m+1)k_(m+1).                 (P5A.102AD5ALX1ZZB3BH8A)
+```
+
+Fix `p_0,...,p_(m+2)` with `p_(m+1)>0`, and write
+`x=p_(m+3)`.  On its complete log-concavity interval,
+
+```text
+0<=x<=p_(m+2)^2/p_(m+1),
+
+Q_m(x)=Q_m(0)-p_mg_(m+1)x.                     (P5A.102AD5ALX1ZZB3BH8B)
+```
+
+Consequently `Q_m` is minimized at the saturated outer face
+
+```text
+p_(m+1)p_(m+3)=p_(m+2)^2.                     (P5A.102AD5ALX1ZZB3BH8C)
+```
+
+Thus it is enough to prove the Bellman payment
+`(P5A.102AD5ALX1ZZB3BH9)` on this face at every cutoff.
+
+**Proof.**  In the last summand of
+`(P5A.102AD5ALX1ZZB3BH5)`, expand
+
+```text
+(g_m-g_(m+1))(k_m-k_(m+1))
+ +g_mk_(m+1)+g_(m+1)k_m
+ =g_mk_m+g_(m+1)k_(m+1).
+```
+
+This proves `(P5A.102AD5ALX1ZZB3BH8A)`.  Only `k_(m+1)` in that
+formula depends on `x`, and its sole dependent term is
+
+```text
+h_(m+2)=p_(m+2)p_(m+1)-p_mx.
+```
+
+Therefore the coefficient of `x` is `-p_mg_(m+1)<=0`, proving
+`(P5A.102AD5ALX1ZZB3BH8B)`.  The upper endpoint of the admissible
+interval is `(P5A.102AD5ALX1ZZB3BH8C)`.  If `p_(m+1)=0`, interval
+support makes the remaining coordinates zero and the assertion
+follows directly; equivalently it follows by continuity from the
+positive case.  QED.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121BELCONSTOBS
+(constant Bellman-potential obstruction).**  No constants `A,B,C`
+make every append monotone after adding a terminal potential of the
+form
+
+```text
+F_m=A g_mk_(m+1)+B g_(m+1)k_m+C g_(m+1)k_(m+1). (P5A.102AD5ALX1ZZB3BH8D)
+```
+
+Thus the payment cannot be reduced to a fixed three-parameter
+terminal correction.
+
+**Proof.**  Put
+
+```text
+S_m=a^3b+sum_(i=1)^m(g_i-g_(i+1))(k_i-k_(i+1))+F_m.
+```
+
+Exact substitution in `S_m-S_(m-1)>=0` for the following four
+positive log-concave profiles and cutoffs gives, respectively,
+
+```text
+p=(0,2,3,3,2), m=3:  -4-12A+14B-2C>=0,
+p=(0,3,3,2,1), m=3:     -15A-9B-3C>=0,
+p=(0,3,3,3,1), m=2:   -135A+90B+90C>=0,
+p=(0,3,3,3,2), m=3:   -2+30A+12B+4C>=0.       (P5A.102AD5ALX1ZZB3BH8E)
+```
+
+Their log-concavity checks are, in order,
+
+```text
+3^2>=2*3, 3^2>=3*2;       3^2>=3*2, 2^2>=3*1;
+3^2>=3*3, 3^2>=3*1;       3^2>=3*3, 3^2>=3*2.
+```
+
+Multiply the four inequalities in `(P5A.102AD5ALX1ZZB3BH8E)` by
+
+```text
+90, 1044, 10, 603,
+```
+
+respectively.  The coefficients of `A,B,C` all cancel, while the
+constant terms sum to `-1566`.  The resulting inequality
+`-1566>=0` is impossible.  The exact C++ replay reconstructs all four
+increment rows and this integer Farkas combination in
+`--replay-wall-121-current-normal-form`.  QED.
+
+**Target 5A8H28UIA2CGLPCIPOCGAPWALL121BEL
+(`(1,2,1)` cross-current Bellman payment).**  Under the branch
+hypotheses of Corollary
+5A8H28UIA2CGLPCIPOCGAPWALL121CRIT, prove at every cutoff `m`
+
+```text
+Q_m>=C_2tau^2+2C_3tau^3.                       (P5A.102AD5ALX1ZZB3BH9)
+```
+
+At the terminal cutoff, Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121BELREC identifies `Q_n` with `C_0`.
+Thus `(P5A.102AD5ALX1ZZB3BH9)` implies Target
+5A8H28UIA2CGLPCIPOCGAPWALL121PAY without discarding reserve across a
+cutoff.  The recurrence `(P5A.102AD5ALX1ZZB3BH7)` is the exact
+one-step state to be preserved; Proposition
+5A8H28UIA2CGLPCIPOCGAPWALL121CUTOFFOBS shows why the uncoupled
+suffix state cannot replace it.
+
+Target 5A8H28UIA2CGLPCIPOCGAPWALL121PAY contains every
+arbitrary-depth variable only through the paired current differences
+in `(P5A.102AD5ALX1ZZB3BGY)`.  The exact C++ replay
 
 ```text
 analyze_su2_autocorrelation_lc_certificate \
