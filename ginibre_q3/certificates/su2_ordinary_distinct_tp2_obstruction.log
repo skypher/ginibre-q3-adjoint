@@ -1,0 +1,3 @@
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror probe_su2_ordinary_variable_box_tp2.cpp -o probe_su2_ordinary_variable_box_tp2
+./probe_su2_ordinary_variable_box_tp2 1 1 --replay-distinct-tp2-obstruction
+SU2_ORDINARY_DISTINCT_TP2_OBSTRUCTION word=[1,2,5] rows=[0,1] columns=[6,7] matrix=[220,210;652,622] determinant=-80 result=PASS_EXACT

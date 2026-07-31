@@ -10884,6 +10884,59 @@ entries, and the determinant calculation is immediate.  The strict
 performs the same multiplication and checks every adjacent and
 star-boundary minor.  QED.
 
+The obstruction does not come only from repeating a small factor.
+Even a squarefree three-factor block can fail full total positivity.
+
+**Proposition 5A8H28UIA2CGLPCIPOTPDIST
+(distinct-factor full-TP2 obstruction).**  For the three distinct
+factor labels
+
+```text
+(q_1,q_2,q_3)=(1,2,5),
+```
+
+put
+
+```text
+M=N_1^2N_2^2N_5^2.
+```
+
+The adjacent submatrix on rows `{0,1}` and columns `{6,7}` is
+
+```text
+[[220,210],
+ [652,622]],
+```
+
+and therefore
+
+```text
+det M_[{0,1},{6,7}]
+ =220*622-210*652=-80.                         (P5A.102AD5ALX1ZZB3A0)
+```
+
+Consequently arbitrary mixed words cannot be partitioned into
+three-distinct-factor `TP2` blocks.  Any factor-insertion proof must
+retain the star boundary anchor, or an equivalent coupled current,
+even on squarefree factor words.
+
+**Proof.**  Ordinary Clebsch--Gordan interval multiplication by
+
+```text
+chi_1^2,                 chi_2^2,                 chi_5^2
+```
+
+gives the four displayed entries.  Their determinant is the displayed
+integer.  The fail-closed mode
+
+```text
+character_ring_iter/probe_su2_ordinary_variable_box_tp2 \
+  1 1 --replay-distinct-tp2-obstruction
+```
+
+reconstructs the three-factor product with arbitrary-precision
+integers and checks all four entries and the determinant.  QED.
+
 The second strengthening would polarize a log-concave root into
 nested superlevel intervals and demand every four-layer coefficient
 to be nonnegative.  For profiles `x,y`, write

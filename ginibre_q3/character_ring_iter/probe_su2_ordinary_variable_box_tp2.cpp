@@ -462,15 +462,16 @@ void inspect_word(const std::vector<int>& word, const bool tp2_only,
 
 void enumerate_words(const int maximum_q, const int length, const int depth,
                      const int minimum_q, std::vector<int>& word,
-                     const bool tp2_only, Counters& counters) {
+                     const bool tp2_only, const bool distinct,
+                     Counters& counters) {
   if (depth == length) {
     inspect_word(word, tp2_only, counters);
     return;
   }
   for (int q = minimum_q; q <= maximum_q; ++q) {
     word[static_cast<std::size_t>(depth)] = q;
-    enumerate_words(maximum_q, length, depth + 1, q, word, tp2_only,
-                    counters);
+    enumerate_words(maximum_q, length, depth + 1, distinct ? q + 1 : q,
+                    word, tp2_only, distinct, counters);
   }
 }
 
@@ -485,34 +486,75 @@ void print_word(const std::vector<int>& word) {
   std::cout << ']';
 }
 
+void replay_distinct_tp2_obstruction() {
+  std::vector<cpp_int> profile{cpp_int(1)};
+  for (const int q : {1, 2, 5}) {
+    profile = multiply_by_square(profile, q);
+  }
+  const cpp_int northwest = kernel_entry(profile, 0, 6);
+  const cpp_int northeast = kernel_entry(profile, 0, 7);
+  const cpp_int southwest = kernel_entry(profile, 1, 6);
+  const cpp_int southeast = kernel_entry(profile, 1, 7);
+  const cpp_int determinant =
+      northwest * southeast - northeast * southwest;
+  if (northwest != 220 || northeast != 210 || southwest != 652 ||
+      southeast != 622 || determinant != -80) {
+    throw std::runtime_error("distinct TP2 obstruction replay mismatch");
+  }
+  std::cout
+      << "SU2_ORDINARY_DISTINCT_TP2_OBSTRUCTION"
+      << " word=[1,2,5]"
+      << " rows=[0,1]"
+      << " columns=[6,7]"
+      << " matrix=[220,210;652,622]"
+      << " determinant=-80"
+      << " result=PASS_EXACT\n";
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
+  const std::string mode =
+      argc >= 4 ? std::string(argv[3]) : std::string{};
+  const bool replay_distinct_tp2 =
+      mode == "--replay-distinct-tp2-obstruction";
   const int maximum_q = argc >= 2 ? std::stoi(argv[1]) : 8;
   const int length = argc >= 3 ? std::stoi(argv[2]) : 3;
   const bool tp2_only =
-      argc >= 4 && std::string(argv[3]) == "--tp2-only";
-  if (argc >= 4 && !tp2_only) {
-    std::cerr << "third argument must be --tp2-only\n";
+      mode == "--tp2-only" || mode == "--distinct-tp2";
+  const bool distinct =
+      mode == "--distinct-tp2";
+  if (argc >= 4 && !tp2_only && !replay_distinct_tp2) {
+    std::cerr
+        << "third argument must be --tp2-only, --distinct-tp2, or "
+           "--replay-distinct-tp2-obstruction\n";
     return 2;
   }
   if (argc > 4) {
     std::cerr << "usage: " << argv[0]
-              << " [maximum_q>=1] [length>=1] [--tp2-only]\n";
+              << " [maximum_q>=1] [length>=1] "
+                 "[(--tp2-only|--distinct-tp2|"
+                 "--replay-distinct-tp2-obstruction)]\n";
     return 2;
   }
   if (maximum_q < 1 || length < 1) {
     std::cerr << "usage: " << argv[0] << " [maximum_q>=1] [length>=1]\n";
     return 2;
   }
+  if (replay_distinct_tp2) {
+    replay_distinct_tp2_obstruction();
+    return 0;
+  }
 
   Counters counters;
   std::vector<int> word(static_cast<std::size_t>(length));
-  enumerate_words(maximum_q, length, 0, 1, word, tp2_only, counters);
+  enumerate_words(maximum_q, length, 0, 1, word, tp2_only, distinct,
+                  counters);
 
   std::cout << "SU2_ORDINARY_VARIABLE_BOX_TP2"
             << " maximum_q=" << maximum_q << " length=" << length
             << " tp2_only=" << (tp2_only ? 1 : 0)
+            << " distinct=" << (distinct ? 1 : 0)
             << " words=" << counters.words
             << " root_adjacent_minors=" << counters.root_adjacent_minors
             << " root_adjacent_failures="
