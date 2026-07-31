@@ -12311,6 +12311,108 @@ C_0+yC_1+y^2C_2+y^3C_3>=0,
 when the first two positive tail coordinates exist.  The inherited
 `C_0` and both higher terms are all load-bearing.
 
+The insertion variable can nevertheless be eliminated exactly.  This
+separates the saturated log-concavity face from the sole interior
+inequality.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALLCRIT
+(exact lower-wall cubic criterion).**  Let
+
+```text
+Phi(y)=C_0+C_1y+C_2y^2+C_3y^3,
+C_0,C_2,C_3>=0,                         0<=y<=Y,
+```
+
+and define
+
+```text
+Disc(Phi)
+ =18C_3C_2C_1C_0-4C_2^3C_0+C_2^2C_1^2
+   -4C_3C_1^3-27C_3^2C_0^2.                    (P5A.102AD5ALX1ZZB3BGJ1)
+```
+
+Then `Phi>=0` on `[0,Y]` if and only if one of the following
+disjoint alternatives holds:
+
+```text
+C_1>=0;                                        (P5A.102AD5ALX1ZZB3BGJ2)
+
+C_1<0,  Phi'(Y)<=0,  Phi(Y)>=0;                (P5A.102AD5ALX1ZZB3BGJ3)
+
+C_1<0,  Phi'(Y)>0,   Disc(Phi)<=0.             (P5A.102AD5ALX1ZZB3BGJ4)
+```
+
+**Proof.**  The first alternative is immediate.  Suppose `C_1<0`.
+Since
+
+```text
+Phi''(y)=2C_2+6C_3y>=0,
+```
+
+the derivative is nondecreasing on the half-line.  If
+`Phi'(Y)<=0`, then `Phi` is nonincreasing on `[0,Y]`, so its minimum
+is `Phi(Y)`.  This proves the second equivalence.
+
+Now suppose `Phi'(Y)>0`.  At least one of `C_2,C_3` is positive, and
+the derivative has a unique positive zero `tau`, with
+`0<tau<Y`; this is the unique half-line minimum.  If `C_3=0`, then
+`C_2>0` and
+
+```text
+Disc(Phi)=C_2^2(C_1^2-4C_0C_2).
+```
+
+The usual quadratic vertex calculation says exactly that
+`Phi(tau)>=0` if and only if this expression is nonpositive.
+
+It remains to take `C_3>0`.  The two roots of `Phi'` have opposite
+sign because their product is `C_1/(3C_3)<0`.  The negative one is a
+local maximum and the positive one `tau` is the local minimum.
+Moreover the local maximum is at least `Phi(0)=C_0>=0`.  If
+`Phi(tau)<0`, the cubic has three distinct real roots, two of them
+positive, so its discriminant is positive.  If `Phi(tau)=0`, the
+positive root is double and the discriminant is zero.  If
+`Phi(tau)>0`, only the root to the left of the negative critical
+point is real, so the discriminant is negative.  Formula
+`(P5A.102AD5ALX1ZZB3BGJ1)` is the standard cubic discriminant.
+This proves the third equivalence and the lemma.  QED.
+
+Apply the lemma to `(GAPWALLRES)` with
+
+```text
+Y=p_1^2/p_2.
+```
+
+The face `y=0` is the zero-coordinate support face, while `y=Y` is
+exactly the saturated ratio face
+
+```text
+p_1/y=p_2/p_1.
+```
+
+Thus an induction over support faces and ratio-equality faces supplies
+`C_0=Phi(0)>=0` and `Phi(Y)>=0`.  The entire open insertion interval
+is then reduced to the following single inequality.
+
+**Target 5A8H28UIA2CGLPCIPOCGAPWALLDISC
+(lower-wall interior discriminant).**  Under the hypotheses and
+notation of Lemma 5A8H28UIA2CGLPCIPOCGAPWALL, whenever
+
+```text
+C_1<0,                         Phi'(p_1^2/p_2)>0,
+```
+
+prove
+
+```text
+Disc(Phi)<=0.                                  (GAPWALLDISC)
+```
+
+This is an exact elimination of `y`, not a sufficient strengthening:
+Lemma 5A8H28UIA2CGLPCIPOCGAPWALLCRIT proves that the two boundary
+faces together with `(GAPWALLDISC)` are equivalent to
+`(GAPWALLRES)`.
+
 **Proposition 5A8H28UIA2CGLPCIPOCGAPWALLOBS
 (lower-wall cubic-reserve obstruction).**  At
 `(R,S,D)=(1,2,1)`, the wall expansion at
@@ -12378,6 +12480,77 @@ analyze_su2_autocorrelation_lc_certificate \
 ```
 
 and is recorded in
+`certificates/su2_complete_wall_gap_prefix.log`.  QED.
+
+The first support-four chamber singled out by this cubic obstruction
+also closes exactly.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPIN4E
+(support-four exceptional inside-out payment).**  Let `p` be
+nonnegative and log concave with interval support contained in
+`{0,1,2,3,4}`.  Then
+
+```text
+P_1^p(1,2)>=0.                                  (P5A.102AD5ALX1ZZB3BGN)
+```
+
+**Proof.**  First suppose that every coordinate is positive.
+Normalize `p_0=1`, put
+
+```text
+r_i=p_i/p_(i-1),                         1<=i<=4,
+```
+
+and introduce the exact ratio slacks
+
+```text
+r_1=x_0+x_1+x_2+x_3,       r_2=x_1+x_2+x_3,
+r_3=x_2+x_3,               r_4=x_3,             x_j>=0.
+                                                        (P5A.102AD5ALX1ZZB3BGO)
+```
+
+Thus `(P5A.102AD5ALX1ZZB3BGO)` parameterizes the complete positive
+support-four log-concavity chamber by
+
+```text
+p=(1,r_1,r_1r_2,r_1r_2r_3,r_1r_2r_3r_4).
+```
+
+Construct `P_1^p(1,2)` directly from the fusion rule.  In each slack
+coordinate substitute
+
+```text
+x_j=t_j/(1-t_j),                         0<=t_j<=1,
+```
+
+clear the exact coordinate degree in `1-t_j`, and remove the largest
+common coordinate monomial.  On the open cube these operations
+preserve the sign.  Their closed-cube extension records every
+homogenized unbounded-ratio face, while removal of a nonnegative
+common monomial gives a valid stronger certificate.
+
+The resulting exact four-dimensional Bernstein grid contains `9,945`
+rational coefficients, of which `766` are initially negative.
+Exact cyclic de Casteljau bisection at `1/2` produces `55` nodes and
+`28` terminal boxes, reaches depth seven, and leaves zero unresolved
+boxes.  Every Bernstein coefficient on every terminal box is
+nonnegative.  Since the Bernstein basis is nonnegative and the
+subdivision is an exact partition identity, the compactified
+polynomial is nonnegative on the whole cube.  This proves
+`(P5A.102AD5ALX1ZZB3BGN)` for positive profiles.
+
+Vanishing coordinates follow by the same positive log-concave
+approximation and coefficientwise continuity used in Theorems
+5A8H28UIA2CGLPCIPOCGAPIN2--3.  The strict fail-closed C++ mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --support-four-exceptional-gap-prefix-certificate
+```
+
+constructs the fusion polynomial, performs every exact rational
+Bernstein transformation, asserts all displayed counts, and is
+recorded in
 `certificates/su2_complete_wall_gap_prefix.log`.  QED.
 
 Exact deterministic ratio runs provide route evidence beyond this

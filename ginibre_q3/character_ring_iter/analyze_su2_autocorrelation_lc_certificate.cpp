@@ -437,6 +437,48 @@ BigPolynomial nd_power(BigPolynomial base, int exponent) {
   return result;
 }
 
+BigPolynomial ordered_ratio_difference_parameterization(
+    const Polynomial& target, const int support) {
+  if (support <= 0) {
+    throw std::invalid_argument(
+        "ordered-ratio parameterization needs positive support");
+  }
+  const int variables = support;
+  const BigPolynomial one = nd_constant(variables, 1);
+  std::vector<BigPolynomial> ratio(
+      static_cast<std::size_t>(support),
+      nd_constant(variables, 0));
+  for (int index = 0; index < support; ++index) {
+    for (int slack = index; slack < support; ++slack) {
+      big_add_scaled(
+          ratio[static_cast<std::size_t>(index)],
+          nd_variable(variables, slack),
+          1);
+    }
+  }
+  std::vector<BigPolynomial> root(
+      static_cast<std::size_t>(support + 1), one);
+  for (int index = 1; index <= support; ++index) {
+    root[static_cast<std::size_t>(index)] =
+        big_multiply(
+            root[static_cast<std::size_t>(index - 1)],
+            ratio[static_cast<std::size_t>(index - 1)]);
+  }
+
+  BigPolynomial result;
+  for (const auto& [exponent, coefficient] : target) {
+    BigPolynomial expanded = nd_constant(variables, coefficient);
+    for (std::size_t variable = 0; variable < exponent.size();
+         ++variable) {
+      expanded = big_multiply(
+          expanded,
+          nd_power(root[variable], exponent[variable]));
+    }
+    big_add_scaled(result, expanded, 1);
+  }
+  return result;
+}
+
 BigPolynomial ratio_cube_parameterization(const Polynomial& target,
                                           const int support) {
   const int variables = support;
@@ -1532,6 +1574,53 @@ int analyze_support_three_gap_prefix_certificate_part(
   return EXIT_SUCCESS;
 }
 
+int analyze_support_four_exceptional_gap_prefix_certificate() {
+  constexpr int support = 4;
+  constexpr int subdivision_depth = 32;
+  const Polynomial target = direct_polynomial(
+      gap_prefix_polynomial(support, 1, 2, 1), support);
+  BigPolynomial parameterized =
+      ordered_ratio_difference_parameterization(target, support);
+  for (std::size_t variable = 0; variable < 4U; ++variable) {
+    parameterized =
+        compactify_positive_variable(parameterized, variable);
+  }
+  const BigPolynomial quotient =
+      remove_common_monomial_factor(parameterized);
+  const NDBernsteinGrid grid =
+      nd_bernstein_grid(quotient, support);
+  NDSubdivisionResult subdivision;
+  nd_certify_subdivision(
+      grid, 0, subdivision_depth, subdivision);
+  const std::size_t initial_negative =
+      static_cast<std::size_t>(std::count_if(
+          grid.values.begin(), grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+  if (
+      grid.values.size() != 9945U
+      || initial_negative != 766U
+      || subdivision.nodes != 55U
+      || subdivision.leaves != 28U
+      || subdivision.unresolved != 0U
+      || subdivision.maximum_depth != 7
+  ) {
+    throw std::runtime_error(
+        "support-four exceptional gap-prefix count mismatch");
+  }
+  std::cout
+      << "SU2_SUPPORT_FOUR_EXCEPTIONAL_GAP_PREFIX_CERTIFICATE"
+      << " labels=(1,2,1)"
+      << " coefficients=" << grid.values.size()
+      << " initial_negative=" << initial_negative
+      << " subdivision_nodes=" << subdivision.nodes
+      << " subdivision_leaves=" << subdivision.leaves
+      << " subdivision_unresolved=" << subdivision.unresolved
+      << " maximum_depth=" << subdivision.maximum_depth
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
 struct BernsteinResult {
   std::size_t coefficients = 0U;
   std::size_t negative = 0U;
@@ -2018,6 +2107,13 @@ int main(int argc, char** argv) {
     ) {
       return analyze_support_three_gap_prefix_certificate_part(
           parse_positive(argv[2], "first_label"));
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--support-four-exceptional-gap-prefix-certificate"
+    ) {
+      return analyze_support_four_exceptional_gap_prefix_certificate();
     }
     if (
         argc == 2
