@@ -1237,6 +1237,7 @@ int replay_wall_121_current_normal_form() {
         expected[0],
         big_multiply(polynomial_power(a, 3), b),
         1);
+    BigPolynomial paired_current;
     for (int index = 1; index <= support; ++index) {
       BigPolynomial delta_g =
           g[static_cast<std::size_t>(index)];
@@ -1251,9 +1252,85 @@ int replay_wall_121_current_normal_form() {
           k[static_cast<std::size_t>(index + 1)],
           -1);
       big_add_scaled(
-          expected[0],
-          big_multiply(delta_g, delta_k),
+          paired_current, big_multiply(delta_g, delta_k), 1);
+    }
+    big_add_scaled(expected[0], paired_current, 1);
+
+    const auto laurent_ratio = [variables, support](
+        const int ratio_index, const bool reciprocal) {
+      if (ratio_index < 2 || ratio_index > support) {
+        return nd_constant(variables, 0);
+      }
+      Exponent exponent(static_cast<std::size_t>(variables), 0);
+      const int numerator =
+          reciprocal ? ratio_index - 1 : ratio_index;
+      const int denominator =
+          reciprocal ? ratio_index : ratio_index - 1;
+      ++exponent[static_cast<std::size_t>(numerator)];
+      --exponent[static_cast<std::size_t>(denominator)];
+      return BigPolynomial{{std::move(exponent), 1}};
+    };
+    BigPolynomial band_form =
+        big_multiply(g[1], g[1]);
+    for (int index = 2; index <= support; ++index) {
+      BigPolynomial diagonal = nd_constant(variables, 2);
+      big_add_scaled(
+          diagonal, laurent_ratio(index, true), 1);
+      big_add_scaled(
+          diagonal, laurent_ratio(index + 2, false), 1);
+      big_add_scaled(
+          band_form,
+          big_multiply(
+              diagonal,
+              big_multiply(
+                  g[static_cast<std::size_t>(index)],
+                  g[static_cast<std::size_t>(index)])),
           1);
+    }
+    if (support >= 2) {
+      BigPolynomial adjacent = nd_constant(variables, -2);
+      big_add_scaled(adjacent, laurent_ratio(3, false), 1);
+      big_add_scaled(adjacent, laurent_ratio(4, false), -1);
+      big_add_scaled(
+          band_form,
+          big_multiply(
+              adjacent, big_multiply(g[1], g[2])),
+          1);
+    }
+    for (int index = 2; index < support; ++index) {
+      BigPolynomial adjacent = nd_constant(variables, -2);
+      big_add_scaled(
+          adjacent, laurent_ratio(index + 1, true), 1);
+      big_add_scaled(
+          adjacent, laurent_ratio(index, true), -1);
+      big_add_scaled(
+          adjacent, laurent_ratio(index + 2, false), 1);
+      big_add_scaled(
+          adjacent, laurent_ratio(index + 3, false), -1);
+      big_add_scaled(
+          band_form,
+          big_multiply(
+              adjacent,
+              big_multiply(
+                  g[static_cast<std::size_t>(index)],
+                  g[static_cast<std::size_t>(index + 1)])),
+          1);
+    }
+    for (int index = 1; index + 2 <= support; ++index) {
+      BigPolynomial second_neighbor =
+          laurent_ratio(index + 2, false);
+      big_add_scaled(
+          second_neighbor,
+          laurent_ratio(index + 2, true),
+          1);
+      big_add_scaled(
+          band_form,
+          big_multiply(
+              second_neighbor,
+              big_multiply(
+                  g[static_cast<std::size_t>(index)],
+                  g[static_cast<std::size_t>(index + 2)])),
+          -1);
     }
 
     const auto canonicalize = [](
@@ -1277,6 +1354,11 @@ int replay_wall_121_current_normal_form() {
             + " and power " + std::to_string(power));
       }
     }
+    if (canonicalize(band_form) != canonicalize(paired_current)) {
+      throw std::runtime_error(
+          "wall (1,2,1) ratio-band identity mismatch at support "
+          + std::to_string(support));
+    }
   }
   const std::array<Integer, 2> obstruction_u{7, 9};
   const std::array<Integer, 2> obstruction_w{0, 12};
@@ -1297,6 +1379,18 @@ int replay_wall_121_current_normal_form() {
   ) {
     throw std::runtime_error(
         "wall (1,2,1) norm-contraction obstruction mismatch");
+  }
+  const std::array<Integer, 3> remainder_u{1, -1, 1};
+  const std::array<Integer, 3> remainder_w{-1, 1, 1};
+  Integer remainder_square = 0;
+  Integer remainder_cross = 0;
+  for (std::size_t index = 0; index < remainder_u.size(); ++index) {
+    remainder_square += remainder_u[index] * remainder_u[index];
+    remainder_cross += remainder_u[index] * remainder_w[index];
+  }
+  if (remainder_square != 3 || remainder_cross != -1) {
+    throw std::runtime_error(
+        "wall (1,2,1) signed-Jacobi remainder mismatch");
   }
   const std::array<Integer, 8> cutoff_profile{
       0, 8, 8, 8, 6, 4, 2, 1};
@@ -1471,8 +1565,11 @@ int replay_wall_121_current_normal_form() {
       << " C0_boundary=p_1^3*p_2"
       << " current_suffixes=(g_i,k_i)"
       << " jacobi_identity_supports=2..12"
+      << " ratio_band_supports=2..12"
       << " norm_contraction_profile=(0,4,3)"
       << " norm_u=130 norm_w=144 current_pairing=238"
+      << " remainder_profile=(0,1,1,1)"
+      << " remainder_square=3 remainder_cross=-1"
       << " cutoff_profile=(0,8,8,8,6,4,2,1)"
       << " cutoff=2 cutoff_suffix=-230 cutoff_full=2842"
       << " constant_potential_core=4"

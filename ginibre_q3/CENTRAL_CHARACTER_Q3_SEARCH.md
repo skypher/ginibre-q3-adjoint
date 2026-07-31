@@ -12590,6 +12590,165 @@ Thus `S` is positive semidefinite.  The exact C++ replay checks
 `(P5A.102AD5ALX1ZZB3BGZ4)` symbolically for supports `2` through
 `12`.  QED.
 
+The terminal current has a second exact normal form.  Unlike the
+positive-semidefinite interior Jacobi blocks, it keeps the difference
+operator and the singular zero-continuation row.  Its coefficients
+show explicitly where feasibility of `g` must enter.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121BAND
+(terminal ratio-band form).**  Suppose the positive tail is
+
+```text
+p_1,...,p_n>0,                  p_(n+1)=p_(n+2)=p_(n+3)=0,
+```
+
+with `n>=2`, and put
+
+```text
+r_i=p_i/p_(i-1),                         2<=i<=n,
+r_(n+1)=r_(n+2)=r_(n+3)=0.
+```
+
+Then the terminal paired current
+
+```text
+E_n=sum_(i=1)^n(g_i-g_(i+1))(k_i-k_(i+1))
+```
+
+has the exact pentadiagonal form
+
+```text
+E_n
+ =g_1^2
+  +sum_(i=2)^n(2+1/r_i+r_(i+2))g_i^2
+  +(r_3-r_4-2)g_1g_2
+
+  +sum_(i=2)^(n-1)
+    {(1/r_(i+1)-1/r_i)+(r_(i+2)-r_(i+3))-2}g_ig_(i+1)
+
+  -sum_(i=1)^(n-2)
+    (r_(i+2)+1/r_(i+2))g_ig_(i+2).       (P5A.102AD5ALX1ZZB3BGZ6)
+```
+
+Empty sums are omitted.  In particular, Target
+5A8H28UIA2CGLPCIPOCGAPWALL121PAY is equivalently the ratio-band
+inequality
+
+```text
+E_n>=C_2tau^2+2C_3tau^3-a^3b.             (P5A.102AD5ALX1ZZB3BGZ7)
+```
+
+under its branch hypotheses.
+
+**Proof.**  Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121JAC gives the boundary rows
+
+```text
+k_1=(1+r_3)g_1+(1/r_2)g_2,
+k_n=(1+1/r_n)g_n,
+```
+
+and, for `2<=i<=n-1`, the interior row
+
+```text
+k_i=r_(i+1)g_(i-1)
+    +(1+1/r_i+r_(i+2))g_i
+    +(1/r_(i+1))g_(i+1).                  (P5A.102AD5ALX1ZZB3BGZ8)
+```
+
+Here a term with an index beyond `n` is zero.  Summation by parts
+without changing the terminal row gives
+
+```text
+E_n
+ =g_1k_1+2sum_(i=2)^n g_ik_i
+  -sum_(i=1)^(n-1){g_ik_(i+1)+g_(i+1)k_i}. (P5A.102AD5ALX1ZZB3BGZ9)
+```
+
+Substitute the three displayed Jacobi rows.  The coefficient of
+`g_1^2` is
+
+```text
+1+r_3-r_3=1.
+```
+
+For `i>=2`, the coefficient of `g_i^2` is
+
+```text
+2(1+1/r_i+r_(i+2))-1/r_i-r_(i+2)
+ =2+1/r_i+r_(i+2).
+```
+
+The coefficient of `g_1g_2` is
+
+```text
+1/r_2+2r_3-(1+r_3)-(1+1/r_2+r_4)
+ =r_3-r_4-2.
+```
+
+For `2<=i<=n-1`, the coefficient of `g_ig_(i+1)` is
+
+```text
+2/r_(i+1)+2r_(i+2)
+ -(1+1/r_i+r_(i+2))
+ -(1+1/r_(i+1)+r_(i+3)),
+```
+
+which is the middle coefficient in
+`(P5A.102AD5ALX1ZZB3BGZ6)`.  Finally, the two edges incident to the
+intermediate row `i+1` give the coefficient
+
+```text
+-1/r_(i+2)-r_(i+2)
+```
+
+of `g_ig_(i+2)`.  There are no interactions at greater separation.
+This proves `(P5A.102AD5ALX1ZZB3BGZ6)`.  Equation
+`(P5A.102AD5ALX1ZZB3BGZ7)` is Corollary
+5A8H28UIA2CGLPCIPOCGAPWALL121CRIT with
+`C_0=a^3b+E_n`.  The exact C++ replay expands both sides as Laurent
+polynomials and verifies their identity symbolically for supports
+`2` through `12`.  QED.
+
+The square part of the current cannot be separated from the signed
+Jacobi remainder, even on the smallest plateau with three positive
+coordinates.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121REMOBS
+(signed Jacobi-remainder obstruction).**  The strengthening
+
+```text
+sum_i(g_i-g_(i+1))(h_i-h_(i+2))>=0             (P5A.102AD5ALX1ZZB3BGZ10)
+```
+
+is false for a positive log-concave tail.
+
+**Proof.**  Take
+
+```text
+p=(0,1,1,1).
+```
+
+Then
+
+```text
+g=(1,0,1,0),             h=(0,1,1,0,0),
+u_i=g_i-g_(i+1)=(1,-1,1),
+w_i=h_i-h_(i+2)=(-1,1,1).
+```
+
+Consequently
+
+```text
+sum_i u_iw_i=-1,               sum_i u_i^2=3,
+sum_i u_i(u_i+w_i)=2.                         (P5A.102AD5ALX1ZZB3BGZ11)
+```
+
+Thus the desired paired current is positive here, but only after the
+square reserve and the signed remainder are combined.  The exact
+values are reconstructed by
+`--replay-wall-121-current-normal-form`.  QED.
+
 The two suffix currents cannot be made acute by an unweighted
 contraction estimate.
 
