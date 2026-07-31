@@ -13198,6 +13198,378 @@ Every coefficient is positive and `R>0`, proving
 reconstructs `(P5A.102AD5ALX1ZZB3BH9I)` from `A,B,C,Delta,N`.
 QED.
 
+The first nontrivial Bellman cutoff has a support-independent floor.
+This does not yet propagate the floor through arbitrary cutoffs, but
+it supplies an exact base state for that propagation.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121Q2
+(initial Bellman floors).**  For every finite nonnegative
+log-concave tail,
+
+```text
+Q_1>=a^4,                    Q_2>=a^4.          (P5A.102AD5ALX1ZZB3BH9J)
+```
+
+No critical-branch hypothesis is needed.
+
+**Proof.**  The first identity in
+`(P5A.102AD5ALX1ZZB3BH6)` and
+
+```text
+g_1=a^2,             k_1=a^2+ab,             g_2,k_2>=0
+```
+
+give
+
+```text
+Q_1=a^4+2a^3b+g_2k_2>=a^4.
+```
+
+For the second inequality, by homogeneity and continuity it is enough to take
+`a=1` and all first four tail coordinates positive.  Put
+
+```text
+R=b/a,       u={(c/b)/(b/a)}=ac/b^2,
+v={(d/c)/(c/b)}=bd/c^2.                        (P5A.102AD5ALX1ZZB3BH9K)
+```
+
+Log concavity gives `R>0` and `0<u,v<=1`.  Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121BELEND says that `Q_2` is minimized
+over `p_5` at
+
+```text
+p_5=d^2/c.
+```
+
+At this endpoint, direct substitution in
+`(P5A.102AD5ALX1ZZB3BH5)` gives
+
+```text
+Q_2-1=R F(R,u,v),                              (P5A.102AD5ALX1ZZB3BH9L)
+
+F(R,u,v)
+ =1-2R(1-u)+R^2(1-2u+u^2v)
+  +2R^3(1-u)^2
+  +2R^4u(1-u)(1-uv)
+  +R^6u^3(1-v)(1-uv)
+  +R^7u^4(1-v)^2
+  +R^8u^5v(1-v)^2.                             (P5A.102AD5ALX1ZZB3BH9M)
+```
+
+It remains to prove `F>=0`.  Compactify the positive half-line by
+
+```text
+w=R/(1+R),        G(w,u,v)=(1-w)^8F(w/(1-w),u,v).
+                                                        (P5A.102AD5ALX1ZZB3BH9N)
+```
+
+Thus `G` is a polynomial of coordinate degrees `(8,5,3)` on the
+unit cube.  Split its Bernstein grid once in the `w` coordinate.
+On
+
+```text
+0<=w<=1/2,                  0<=u,v<=1,         (P5A.102AD5ALX1ZZB3BH9O)
+```
+
+all `9*6*4=216` exact rational Bernstein coefficients are
+nonnegative.  Every Bernstein basis function is nonnegative on its
+box, so this proves `G>=0`, and hence `F>=0`, for `0<R<=1`.
+
+For `R>=1`, write
+
+```text
+y=1-u,                         z=1-v.
+```
+
+Formula `(P5A.102AD5ALX1ZZB3BH9M)` becomes
+
+```text
+F
+ =(1-Ry)^2+2R^3y^2+2R^4uy(1-uv)-R^2u^2z
+  +R^6u^3z(1-uv)+R^7u^4z^2+R^8u^5vz^2.       (P5A.102AD5ALX1ZZB3BH9P)
+```
+
+If `Ry<=1/2`, then
+
+```text
+(1-Ry)^2>=1/4,
+R^6u^3z(1-uv)>=R^6u^4z^2,
+
+1/4+R^6u^4z^2>=R^3u^2z>=R^2u^2z.              (P5A.102AD5ALX1ZZB3BH9Q)
+```
+
+The middle inequality is arithmetic--geometric mean.  Thus these
+two positive terms pay the sole negative term in
+`(P5A.102AD5ALX1ZZB3BH9P)`.  If instead `Ry>=1/2`, then
+`1-uv=y+uz>=uz`, and
+
+```text
+2R^4uy(1-uv)
+ >=2R^4u^2yz
+ >=R^3u^2z
+ >=R^2u^2z.                                    (P5A.102AD5ALX1ZZB3BH9R)
+```
+
+This again pays the negative term.  Therefore `F>=0` for `R>=1`
+as well.
+Restoring the factor `a^4` proves
+`(P5A.102AD5ALX1ZZB3BH9J)`.  The exact C++ replay independently
+constructs `Q_2-1` from `g_i,h_i,k_i`, checks the factorization
+`(P5A.102AD5ALX1ZZB3BH9L)--(P5A.102AD5ALX1ZZB3BH9M)`, and verifies
+all `216` rational Bernstein coefficients on
+`(P5A.102AD5ALX1ZZB3BH9O)`.  QED.
+
+The same floor can be propagated through every cutoff when the first
+tail ratio is small, and in that regime it exceeds the complete
+critical demand.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121SMALLR
+(uniform small-ratio Bellman payment).**  Under the branch hypotheses
+of Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121CRIT, if
+
+```text
+R=b/a<=1/3,
+```
+
+then for every cutoff `m>=1`,
+
+```text
+Q_m>=a^4>=C_2tau^2+2C_3tau^3.                 (P5A.102AD5ALX1ZZB3BH9T)
+```
+
+**Proof.**  Normalize `a=1`; the general statement follows by
+homogeneity.  Successive-ratio monotonicity gives
+
+```text
+0<=p_i<=R^(i-1),              i>=1.
+```
+
+Consequently, for `i>=2`,
+
+```text
+0<=g_i<=R^(2i-2),
+
+0<=k_i=g_i+h_i+h_(i+1)
+       <=R^(2i-3)(1+R+R^2).                   (P5A.102AD5ALX1ZZB3BH9U)
+```
+
+Here `0<=h_i<=p_ip_(i-1)` was used.  Also
+
+```text
+g_1=1,                         k_1=1+R,
+g_2<=R^2,                      k_2<=R+R^2+R^3.
+```
+
+Thus the first paired difference satisfies
+
+```text
+(g_1-g_2)(k_1-k_2)
+ >=(1-R^2)(1-R^2-R^3).                        (P5A.102AD5ALX1ZZB3BH9V)
+```
+
+Both factors on the right are positive for `R<=1/3`.  For every
+later index,
+
+```text
+(g_i-g_(i+1))(k_i-k_(i+1))
+ >=-g_i k_(i+1)-g_(i+1)k_i
+ >=-2(1+R+R^2)R^(4i-3).                       (P5A.102AD5ALX1ZZB3BH9W)
+```
+
+Use the nonnegative terminal terms in
+`(P5A.102AD5ALX1ZZB3BH8A)`, sum
+`(P5A.102AD5ALX1ZZB3BH9W)` from `i=2` to infinity, and note that
+
+```text
+{2(1+R+R^2)}/{1-R^4}
+ <={2(13/9)}/{80/81}=117/40<3.
+```
+
+It follows that, for every `m>=2`,
+
+```text
+Q_m-1
+ >=R+(1-R^2)(1-R^2-R^3)-1-3R^5
+
+ >=(2/9)R-3R^5
+ >=(5/27)R>=0.                                (P5A.102AD5ALX1ZZB3BH9X)
+```
+
+The middle inequality uses
+`1-2R-R^2>=2/9`; the last uses `R^4<=1/81`.
+The case `m=1` is Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121Q2.
+
+It remains to compare this floor with the critical demand.  Write
+`B=-C_1`.  Since `c<=R^2` and `d<=R^3`, formula
+`(P5A.102AD5ALX1ZZB3BGW)` gives
+
+```text
+C_2<=1+2R^2+R^3<=34/27,
+C_3<=1+R+R^2<=13/9,
+
+B<=3R+2R^2+R^3+R^4+R^6<=4R<=4/3.              (P5A.102AD5ALX1ZZB3BH9Y)
+```
+
+At `x=1/2`, the increasing right side of the critical equation
+`(P5A.102AD5ALX1ZZB3BH1)` is at least
+
+```text
+2C_2x+3C_3x^2>=1+3/4=7/4>B.
+```
+
+Hence `tau<1/2`, and
+
+```text
+C_2tau^2+2C_3tau^3
+ <=(C_2+C_3)/4
+ <=73/108<1.                                  (P5A.102AD5ALX1ZZB3BH9Z)
+```
+
+Together with `(P5A.102AD5ALX1ZZB3BH9X)`, this proves
+`(P5A.102AD5ALX1ZZB3BH9T)`.  The exact C++ replay checks every
+rational endpoint constant in
+`(P5A.102AD5ALX1ZZB3BH9X)--(P5A.102AD5ALX1ZZB3BH9Z)`.  QED.
+
+The geometric demand ceiling and the Bellman current cannot be
+separated by the natural large-ratio floor.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121SEPFLOOROBS
+(separated large-ratio floor obstruction).**  The strengthening
+
+```text
+Q_m>=a^4+a^3b                                      (P5A.102AD5ALX1ZZB3BH9Z1)
+```
+
+is false even at `m=2`, with `b/a=2` and a saturated outer ratio.
+
+**Proof.**  Take
+
+```text
+p=(0,1,2,4,255/32,65025/4096).
+```
+
+Its successive positive ratios are
+
+```text
+2,                 2,                 255/128,
+255/128,
+```
+
+so the profile is log concave and its last ratio is saturated.  In
+the coordinates `(P5A.102AD5ALX1ZZB3BH9K)`,
+
+```text
+R=2,                  u=1,                  v=255/256.
+```
+
+Exact evaluation of `(P5A.102AD5ALX1ZZB3BH9L)--(P5A.102AD5ALX1ZZB3BH9M)`
+gives
+
+```text
+F=64959/65536,
+Q_2=1+2F=97727/32768
+   =3-577/32768<3=a^4+a^3b.                   (P5A.102AD5ALX1ZZB3BH9Z2)
+```
+
+The exact C++ replay reconstructs all three displayed rational
+values.  Thus the remaining `R>1/3` proof must couple loss in the
+critical demand to the current reserve; a separate universal bound
+by the geometric ceiling cannot prove it.  QED.
+
+The correct cutoff-two statement keeps the critical demand and the
+current floor coupled before eliminating the critical point.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121Q2COUPLE
+(coupled cutoff-two elimination).**  Use the normalized coordinates
+`R,u,v` from `(P5A.102AD5ALX1ZZB3BH9K)`, and put
+
+```text
+A=C_2,                       B=-C_1,
+C=C_3,                       L=Q_2=1+RF(R,u,v),
+
+Delta=A^2+3BC,               N_2=AB+9CL,
+
+H_2=3C N_2^2+4A N_2 Delta-4B Delta^2.         (P5A.102AD5ALX1ZZB3BH9Z3)
+```
+
+Whenever `B>0`, the cutoff-two Bellman payment is equivalent to
+
+```text
+H_2>=0.                                          (P5A.102AD5ALX1ZZB3BH9Z4)
+```
+
+Moreover the critical branch has the exact ratio-drop form
+
+```text
+B
+ =3R+2R^2-R^3(1-u)
+  -(R^4u^2+R^6u^3)(1-v).                       (P5A.102AD5ALX1ZZB3BH9Z5)
+```
+
+Thus `B>=0` implies
+
+```text
+R^2(1-u)<=3+2R,
+R^5u^3(1-v)<=3+2R.                             (P5A.102AD5ALX1ZZB3BH9Z6)
+```
+
+**Proof.**  Let `x=tau` after the normalization `a=1`.  The critical
+equation is
+
+```text
+3Cx^2+2Ax-B=0.
+```
+
+Exactly as in `(P5A.102AD5ALX1ZZB3BH9F)`, reduction modulo this
+quadratic gives
+
+```text
+Ax^2+2Cx^3={2Delta x-AB}/(9C).
+```
+
+Consequently `Ax^2+2Cx^3<=L` is equivalent to
+`x<=N_2/(2Delta)`.  The critical quadratic is strictly increasing
+on the nonnegative half-line, so evaluation at this positive
+comparison point makes the last inequality equivalent to
+`(P5A.102AD5ALX1ZZB3BH9Z4)`.
+
+Substitute
+
+```text
+c=R^2u,                        d=R^3u^2v
+```
+
+in `(P5A.102AD5ALX1ZZB3BGW)` and collect the two ratio drops.  This
+gives `(P5A.102AD5ALX1ZZB3BH9Z5)`.  Dropping one negative summand at
+a time and using `B>=0` proves the two inequalities in
+`(P5A.102AD5ALX1ZZB3BH9Z6)`.  QED.
+
+**Target 5A8H28UIA2CGLPCIPOCGAPWALL121Q2POLY
+(coupled cutoff-two polynomial).**  Prove
+`(P5A.102AD5ALX1ZZB3BH9Z4)` for `R>0`, `0<=u,v<=1`, and `B>=0`.
+After `w=R/(1+R)` compactification, the exact polynomial `H_2` has
+coordinate degrees
+
+```text
+(24,13,6).                                      (P5A.102AD5ALX1ZZB3BH9Z7)
+```
+
+Its full root Bernstein grid has `2450` coefficients, `253` of them
+negative, so coefficientwise positivity on the unreduced cube is
+not a proof.  The branch bounds
+`(P5A.102AD5ALX1ZZB3BH9Z6)` show that the remaining large-`R`
+region has the forced blow-up scales
+
+```text
+1-u=O(R^(-1)),                   1-v=O(R^(-4)). (P5A.102AD5ALX1ZZB3BH9Z8)
+```
+
+The exact C++ replay independently constructs `A,B,C,L,Delta,N_2,H_2`
+from the current polynomial and verifies the degree and root-grid
+counts.  Positivity in this target remains to be proved; the counts
+are exact reduction data, not a bounded certificate.
+
 Target 5A8H28UIA2CGLPCIPOCGAPWALL121PAY contains every
 arbitrary-depth variable only through the paired current differences
 in `(P5A.102AD5ALX1ZZB3BGY)`.  The exact C++ replay

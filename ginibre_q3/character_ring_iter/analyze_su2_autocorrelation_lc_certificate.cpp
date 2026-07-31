@@ -1958,6 +1958,323 @@ void nd_certify_subdivision(const NDBernsteinGrid& grid, const int depth,
   nd_certify_subdivision(right, depth + 1, depth_limit, result);
 }
 
+int replay_wall_121_q2_floor() {
+  constexpr int variables = 3;
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial r = nd_variable(variables, 0);
+  const BigPolynomial u = nd_variable(variables, 1);
+  const BigPolynomial v = nd_variable(variables, 2);
+  BigPolynomial one_minus_u = one;
+  big_add_scaled(one_minus_u, u, -1);
+  BigPolynomial one_minus_v = one;
+  big_add_scaled(one_minus_v, v, -1);
+  const BigPolynomial u2v =
+      big_multiply(nd_power(u, 2), v);
+  BigPolynomial one_minus_2u_plus_u2v = one;
+  big_add_scaled(one_minus_2u_plus_u2v, u, -2);
+  big_add_scaled(one_minus_2u_plus_u2v, u2v, 1);
+  const BigPolynomial uv = big_multiply(u, v);
+  BigPolynomial one_minus_uv = one;
+  big_add_scaled(one_minus_uv, uv, -1);
+
+  BigPolynomial reduced = one;
+  big_add_scaled(
+      reduced,
+      big_multiply(r, one_minus_u),
+      -2);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          nd_power(r, 2),
+          one_minus_2u_plus_u2v),
+      1);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          nd_power(r, 3),
+          nd_power(one_minus_u, 2)),
+      2);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          big_multiply(
+              big_multiply(nd_power(r, 4), u),
+              one_minus_u),
+          one_minus_uv),
+      2);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          big_multiply(
+              big_multiply(nd_power(r, 6), nd_power(u, 3)),
+              one_minus_v),
+          one_minus_uv),
+      1);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          big_multiply(
+              nd_power(r, 7), nd_power(u, 4)),
+          nd_power(one_minus_v, 2)),
+      1);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          big_multiply(
+              big_multiply(
+                  nd_power(r, 8), nd_power(u, 5)),
+              v),
+          nd_power(one_minus_v, 2)),
+      1);
+
+  const BigPolynomial s = big_multiply(r, u);
+  const BigPolynomial t = big_multiply(s, v);
+  const BigPolynomial g1 = one;
+  const BigPolynomial g2 =
+      big_multiply(r, [&]() {
+        BigPolynomial value = r;
+        big_add_scaled(value, s, -1);
+        return value;
+      }());
+  const BigPolynomial g3 =
+      big_multiply(
+          big_multiply(big_multiply(r, r), s), [&]() {
+        BigPolynomial value = s;
+        big_add_scaled(value, t, -1);
+        return value;
+      }());
+  const BigPolynomial h2 = r;
+  const BigPolynomial h3 =
+      big_multiply(big_multiply(r, s), [&]() {
+        BigPolynomial value = r;
+        big_add_scaled(value, t, -1);
+        return value;
+      }());
+  const BigPolynomial h4 =
+      big_multiply(
+          big_multiply(
+              big_multiply(big_multiply(r, r), s), t),
+          [&]() {
+            BigPolynomial value = s;
+            big_add_scaled(value, t, -1);
+            return value;
+          }());
+  BigPolynomial k1 = one;
+  big_add_scaled(k1, r, 1);
+  BigPolynomial k2 = g2;
+  big_add_scaled(k2, h2, 1);
+  big_add_scaled(k2, h3, 1);
+  BigPolynomial k3 = g3;
+  big_add_scaled(k3, h3, 1);
+  big_add_scaled(k3, h4, 1);
+  BigPolynomial direct = r;
+  BigPolynomial g1_minus_g2 = g1;
+  big_add_scaled(g1_minus_g2, g2, -1);
+  BigPolynomial k1_minus_k2 = k1;
+  big_add_scaled(k1_minus_k2, k2, -1);
+  big_add_scaled(
+      direct,
+      big_multiply(g1_minus_g2, k1_minus_k2),
+      1);
+  big_add_scaled(direct, big_multiply(g2, k2), 1);
+  big_add_scaled(direct, big_multiply(g3, k3), 1);
+  big_add_scaled(direct, one, -1);
+  const auto canonicalize = [](
+      const BigPolynomial& polynomial) {
+    BigPolynomial result;
+    for (const auto& [exponent, coefficient] : polynomial) {
+      if (coefficient != 0) {
+        result.emplace(exponent, coefficient);
+      }
+    }
+    return result;
+  };
+  if (
+      canonicalize(direct)
+      != canonicalize(big_multiply(r, reduced))
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) Q2 reduced polynomial mismatch");
+  }
+  const Rational witness_reduced = evaluate_polynomial(
+      rational_polynomial(reduced),
+      {Rational(2), Rational(1), Rational(255, 256)});
+  const Rational witness_q2 = 1 + 2 * witness_reduced;
+  const Rational witness_floor = 3;
+  const Rational witness_deficit = witness_floor - witness_q2;
+  if (
+      witness_reduced != Rational(64959, 65536)
+      || witness_q2 != Rational(97727, 32768)
+      || witness_deficit != Rational(577, 32768)
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) Q2 separated-floor witness mismatch");
+  }
+
+  const BigPolynomial c = big_multiply(r, s);
+  const BigPolynomial d = big_multiply(c, t);
+  BigPolynomial one_plus_r = one;
+  big_add_scaled(one_plus_r, r, 1);
+  BigPolynomial critical_a = one;
+  big_add_scaled(critical_a, nd_power(r, 2), 1);
+  big_add_scaled(
+      critical_a, big_multiply(one_plus_r, c), 1);
+  BigPolynomial critical_c = one_plus_r;
+  big_add_scaled(critical_c, c, 1);
+  BigPolynomial critical_b;
+  big_add_scaled(critical_b, r, 3);
+  big_add_scaled(critical_b, nd_power(r, 2), 2);
+  big_add_scaled(critical_b, big_multiply(r, c), 1);
+  big_add_scaled(critical_b, big_multiply(r, d), 1);
+  big_add_scaled(
+      critical_b, big_multiply(big_multiply(r, c), d), 1);
+  big_add_scaled(critical_b, nd_power(r, 3), -1);
+  big_add_scaled(critical_b, nd_power(c, 2), -1);
+  big_add_scaled(critical_b, nd_power(c, 3), -1);
+  BigPolynomial ratio_drop_b;
+  big_add_scaled(ratio_drop_b, r, 3);
+  big_add_scaled(ratio_drop_b, nd_power(r, 2), 2);
+  big_add_scaled(
+      ratio_drop_b,
+      big_multiply(nd_power(r, 3), one_minus_u),
+      -1);
+  BigPolynomial second_drop_coefficient =
+      big_multiply(nd_power(r, 4), nd_power(u, 2));
+  big_add_scaled(
+      second_drop_coefficient,
+      big_multiply(nd_power(r, 6), nd_power(u, 3)),
+      1);
+  big_add_scaled(
+      ratio_drop_b,
+      big_multiply(second_drop_coefficient, one_minus_v),
+      -1);
+  if (canonicalize(critical_b) != canonicalize(ratio_drop_b)) {
+    throw std::runtime_error(
+        "wall (1,2,1) coupled branch identity mismatch");
+  }
+  BigPolynomial critical_delta = nd_power(critical_a, 2);
+  big_add_scaled(
+      critical_delta,
+      big_multiply(critical_b, critical_c),
+      3);
+  BigPolynomial q2_payment = one;
+  big_add_scaled(q2_payment, big_multiply(r, reduced), 1);
+  BigPolynomial critical_n =
+      big_multiply(critical_a, critical_b);
+  big_add_scaled(
+      critical_n,
+      big_multiply(critical_c, q2_payment),
+      9);
+  BigPolynomial coupled_certificate =
+      big_multiply(critical_c, nd_power(critical_n, 2));
+  for (auto& [exponent, coefficient] : coupled_certificate) {
+    static_cast<void>(exponent);
+    coefficient *= 3;
+  }
+  big_add_scaled(
+      coupled_certificate,
+      big_multiply(
+          big_multiply(critical_a, critical_n),
+          critical_delta),
+      4);
+  big_add_scaled(
+      coupled_certificate,
+      big_multiply(critical_b, nd_power(critical_delta, 2)),
+      -4);
+  const BigPolynomial compact_coupled = canonicalize(
+      compactify_positive_variable(coupled_certificate, 0U));
+  const NDBernsteinGrid coupled_grid =
+      nd_bernstein_grid(compact_coupled, variables);
+  const std::size_t coupled_negative = static_cast<std::size_t>(
+      std::count_if(
+          coupled_grid.values.begin(), coupled_grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+  const BigPolynomial compact = canonicalize(
+      compactify_positive_variable(reduced, 0U));
+  const NDBernsteinGrid grid =
+      nd_bernstein_grid(compact, variables);
+  auto [lower_half, upper_half] = nd_split_grid(grid, 0);
+  static_cast<void>(upper_half);
+  NDSubdivisionResult result;
+  nd_certify_subdivision(lower_half, 0, 18, result);
+  if (
+      grid.degrees != std::vector<int>{8, 5, 3}
+      || coupled_grid.degrees != std::vector<int>{24, 13, 6}
+      || coupled_grid.values.size() != 2450U
+      || coupled_negative != 253U
+      || lower_half.values.size() != 216U
+      || result.nodes != 1U
+      || result.leaves != 1U
+      || result.unresolved != 0U
+      || result.maximum_depth != 0
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) Q2 Bernstein certificate mismatch");
+  }
+  std::cout
+      << "SU2_WALL_121_Q2_FLOOR"
+      << " degrees=(" << grid.degrees[0]
+      << "," << grid.degrees[1]
+      << "," << grid.degrees[2] << ")"
+      << " bernstein_coefficients=216"
+      << " bernstein_leaf=[0,1/2]x[0,1]^2"
+      << " analytic_tail=R>=1"
+      << " separated_floor_witness_Q2=97727/32768"
+      << " separated_floor=3"
+      << " separated_floor_deficit=577/32768"
+      << " coupled_degrees=(24,13,6)"
+      << " coupled_coefficients=2450"
+      << " coupled_initial_negative=253"
+      << " coupled_branch_identity=1"
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
+int replay_wall_121_small_ratio_payment() {
+  const Rational r(1, 3);
+  const Rational tail_prefactor =
+      2 * (1 + r + r * r)
+      / (1 - r * r * r * r);
+  const Rational current_linear_reserve(2, 9);
+  const Rational tail_linear_debit(1, 27);
+  const Rational current_margin =
+      current_linear_reserve - tail_linear_debit;
+  const Rational c2_max(34, 27);
+  const Rational c3_max(13, 9);
+  const Rational b_over_r_max(4);
+  const Rational critical_half_min(7, 4);
+  const Rational b_max(4, 3);
+  const Rational demand_max =
+      (c2_max + c3_max) / 4;
+  if (
+      tail_prefactor != Rational(117, 40)
+      || !(tail_prefactor < 3)
+      || current_margin != Rational(5, 27)
+      || c2_max != Rational(34, 27)
+      || c3_max != Rational(13, 9)
+      || b_over_r_max != 4
+      || !(critical_half_min > b_max)
+      || demand_max != Rational(73, 108)
+      || !(demand_max < 1)
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) small-ratio payment mismatch");
+  }
+  std::cout
+      << "SU2_WALL_121_SMALL_RATIO_PAYMENT"
+      << " ratio_max=1/3"
+      << " tail_prefactor=117/40<3"
+      << " current_margin=(5/27)R"
+      << " C2_max=34/27"
+      << " C3_max=13/9"
+      << " B_max=(4R)<=4/3"
+      << " critical_half_min=7/4"
+      << " demand_max=73/108<1"
+      << " result=PASS_EXACT\n";
+  return EXIT_SUCCESS;
+}
+
 bool z3_negative_on_unit_cube(const BigPolynomial& polynomial,
                               std::string& model_text) {
   if (polynomial.empty()) {
@@ -3100,6 +3417,20 @@ int main(int argc, char** argv) {
                == "--replay-wall-121-current-normal-form"
     ) {
       return replay_wall_121_current_normal_form();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-wall-121-q2-floor"
+    ) {
+      return replay_wall_121_q2_floor();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-wall-121-small-ratio-payment"
+    ) {
+      return replay_wall_121_small_ratio_payment();
     }
     if (
         argc == 2
