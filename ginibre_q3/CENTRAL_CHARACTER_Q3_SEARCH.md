@@ -12767,9 +12767,251 @@ both required log-concavity statements.  The four ranges exhaust every
 `(OCRD)` holds.  Lemma 5A8H28UIA2CGLPCIPOCB2RAD proves `(OCSP)`.
 QED.
 
-Together with Theorem 5A8H28UIA2CGLPCIPOCB2RADINT, this closes every
-two-factor word with either `b=a` or `b>=3a`.  The intermediate ratio
-range `a<b<3a` remains part of the arbitrary-factor gate.
+The finite lattice fans used below are all instances of one elementary
+transport decomposition.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADINTTRANSPORT
+(integer two-row transport fan).**  Fix integers `c>=0` and `m>=1`.
+The nonnegative integer solutions of
+
+```text
+r+s=c+x_1+...+x_m                                      (P5A.102AD5ALX1ZZB3BPF2)
+```
+
+are covered by `(c+1)m` affine orthants.  More precisely, choose
+`h in {0,...,c}` and `k in {1,...,m}`.  Put `r=h+R`,
+`s=c-h+S`, split `x_k=p+q`, and impose
+
+```text
+R=x_1+...+x_(k-1)+p,
+S=q+x_(k+1)+...+x_m.                                  (P5A.102AD5ALX1ZZB3BPF3)
+```
+
+All variables on the right are independent and nonnegative.  The
+union of these orthants is exactly the integer solution set of
+`(P5A.102AD5ALX1ZZB3BPF2)`.
+
+**Proof.**  Every displayed orthant satisfies
+`(P5A.102AD5ALX1ZZB3BPF2)`.  Conversely, for a solution choose an
+integer
+
+```text
+max(0,c-s)<=h<=min(c,r).
+```
+
+This interval is nonempty because `r+s>=c`.  Put
+`R=r-h` and `S=s-(c-h)`.  Then
+`R+S=sum_i x_i`.  Choose the first `k` for which
+`R<=x_1+...+x_k`, and split
+
+```text
+p=R-(x_1+...+x_(k-1)),             q=x_k-p.
+```
+
+These quantities are nonnegative and give
+`(P5A.102AD5ALX1ZZB3BPF3)`.  QED.
+
+**Theorem 5A8H28UIA2CGLPCIPOCB2RADINTMID
+(intermediate two-factor ordinary theorem).**  Let
+
+```text
+P=beta_a beta_b,               1<=a<b<3a,
+P^2=sum_(t>=0)c_t beta_t.
+```
+
+Then every strict radial increment `(OCRD)` is nonnegative, and
+`(OCSP)` holds for `P`.
+
+**Proof.**  Put
+
+```text
+u=b-a,                n=2a,                d=2u,
+N=n+1,                C_t=2c_t.
+```
+
+Thus
+
+```text
+1<=u<=2a-1,             P=sum_(i=u)^(u+n)beta_i.       (P5A.102AD5ALX1ZZB3BPF4)
+```
+
+For a label `t`, set
+
+```text
+B_t=2N(2t+1)-2t(t+1),       w=t-d,
+D=d+2n-t.
+```
+
+Counting the band `|i-j|<=t` and subtracting the delayed lower
+triangle `i+j<t` gives the following exact formulas.  In the
+early-wall regime `d<=n-2`,
+
+```text
+C_t=
+ B_t,                       0<=t<=d,
+ B_t-w(w+1),                d+1<=t<=n,
+ 2N^2-w(w+1),               n+1<=t<=d+n,
+ (D+1)(D+2),                d+n+1<=t<=d+2n.           (P5A.102AD5ALX1ZZB3BPF5)
+```
+
+In the late-wall regime `n<=d`,
+
+```text
+C_t=
+ B_t,                       0<=t<=n,
+ 2N^2,                      n+1<=t<=d,
+ 2N^2-w(w+1),               d+1<=t<=d+n,
+ (D+1)(D+2),                d+n+1<=t<=d+2n.           (P5A.102AD5ALX1ZZB3BPF6)
+```
+
+The hypotheses in `(P5A.102AD5ALX1ZZB3BPF4)` put every integer pair
+`(n,d)` into exactly one of these regimes: `n,d` are even, so the
+missing real strip `n-2<d<n` contains no admissible pair.
+
+Write
+
+```text
+A=2L+g+1,                         g>=0.
+```
+
+For `1<=A<=d+2n-2`, the six ordered labels needed in the radial
+formula are
+
+```text
+L, L+1, A-L, A-L+1, A+1, A+2.                  (P5A.102AD5ALX1ZZB3BPF7)
+```
+
+Each label lies in one of the four branches of
+`(P5A.102AD5ALX1ZZB3BPF5)` or
+`(P5A.102AD5ALX1ZZB3BPF6)`.  Hence its branch data is a weakly
+increasing word of length six on `{0,1,2,3}`.  There are
+
+```text
+binom(6+4-1,4-1)=84
+```
+
+such words in each regime.  This gives a finite branch fan without
+bounding `a,b,A`, or `L`.
+
+For each branch word, the exact verifier constructs its rational
+polyhedron in the four variables `(n,d,L,g)`, including
+
+```text
+n>=2, d>=2, d<=2n-2, L>=0, g>=0,
+A<=d+2n-2,                                      (P5A.102AD5ALX1ZZB3BPF8)
+```
+
+the regime inequality, and the branch-endpoint inequalities from
+`(P5A.102AD5ALX1ZZB3BPF7)`.  Exact linear arithmetic finds `98`
+empty real cells and `70` feasible cells.
+
+On a full-dimensional simplicial cell, four branch slacks give an
+affine inverse
+
+```text
+(n,d,L,g)=v_0+x_1v_1+...+x_4v_4,       x_i>=0.         (P5A.102AD5ALX1ZZB3BPF9)
+```
+
+The verifier checks, coefficient by coefficient, that every defining
+slack is nonnegative after this substitution.  Lower-dimensional
+cells are handled by first extracting their exact affine hull.  If a
+coordinate is absent from the radial polynomial, constraints involving
+that coordinate may be discarded: this enlarges the active-variable
+domain and therefore is a valid positivity reduction.
+
+The remaining nonsimplicial integer cells are partitioned only by the
+exhaustive lattice alternatives
+
+```text
+q=0 or q>=1,             q_1-q_2>=0 or q_1-q_2<=-1.   (P5A.102AD5ALX1ZZB3BPFA)
+```
+
+The maximum partition depth is two.  Five recurrent transport cells
+are written directly in the fan of Lemma
+5A8H28UIA2CGLPCIPOCB2RADINTTRANSPORT.  Their equations and numbers of
+orthants are
+
+```text
+x+w=y+q+2                    6,
+p+s=y+L+r+1                  6,
+r+s=x+w+z                    3,
+r+s=x+y                      2,
+p+s=y+w                      2.                 (P5A.102AD5ALX1ZZB3BPFB)
+```
+
+The remaining two-cone lower-boundary cell is the partition according
+to which of `r+2` and `y+3` is the larger lower bound for `n`.
+Lemma 5A8H28UIA2CGLPCIPOCB2RADINTTRANSPORT proves that these displayed
+maps cover every integer point; the verifier independently checks
+that every map stays inside its claimed branch polyhedron.
+
+Finally it substitutes `(P5A.102AD5ALX1ZZB3BPF5)` or
+`(P5A.102AD5ALX1ZZB3BPF6)` into
+
+```text
+4K_(A,L)
+ =C_0(C_(A+1)+C_(A+2))
+   +C_LC_(A-L)-C_(L+1)C_(A-L+1).                (P5A.102AD5ALX1ZZB3BPFC)
+```
+
+Across the `70` feasible cells, the final fan has `99` orthant leaves.
+The expanded leaf polynomials contain `1,959` nonzero monomials.
+Every coefficient is nonnegative, and the least nonzero coefficient
+is `4`.  Thus `(OCRD)` holds for every
+`A<=d+2n-2`.
+
+The root in `(P5A.102AD5ALX1ZZB3BPF4)` is an interval profile, while
+its square is obtained from `beta_0` by the four ordinary irreducible
+interval transforms `beta_a,beta_b,beta_a,beta_b`.  Lemma
+5A8H28UIA2RLC1 gives the two log-concavity hypotheses of Corollary
+5A8H28UIA2CGLPCIPOCB2REFUP.  Since the root support is
+`u+n`, that corollary proves `(OCRD)` for
+
+```text
+A>=2(u+n)-1=d+2n-1.
+```
+
+The two ranges exhaust all strict antidiagonals.  Lemma
+5A8H28UIA2CGLPCIPOCB2RAD now proves `(OCSP)`.  QED.
+
+The fail-closed C++ verifier is
+
+```text
+character_ring_iter/verify_su2_two_factor_intermediate_radial_slacks
+```
+
+and its transcript is
+
+```text
+certificates/su2_two_factor_intermediate_radial_slacks.log.
+```
+
+It uses arbitrary-precision integers and rationals for every
+polynomial and affine map.  Z3 is used only for exact linear-real
+feasibility and affine-hull questions; no nonlinear solver, floating
+point, or bounded parameter scan enters the certificate.
+
+**Corollary 5A8H28UIA2CGLPCIPOCB2RADINT2FULL
+(complete two-factor ordinary theorem).**  For every
+
+```text
+P=beta_a beta_b,                         0<=a<=b,
+```
+
+every strict radial increment `(OCRD)` is nonnegative, and `(OCSP)`
+holds for `P`.
+
+**Proof.**  If `a=0`, this is the one-factor base Lemma
+5A8H28UIA2CGLPCIPOBASE.  If `a=b`, use Theorem
+5A8H28UIA2CGLPCIPOCB2RADINT.  If `a<b<3a`, use Theorem
+5A8H28UIA2CGLPCIPOCB2RADINTMID.  Finally, if `b>=3a`, use Corollary
+5A8H28UIA2CGLPCIPOCB2RADINTSEPFULL.  These cases are exhaustive.
+QED.
+
+Thus the ordinary arbitrary-factor gate is now known for every word
+of length at most two.  The remaining step is factor insertion for
+actual ordinary factor orbits; the false abstract cones above show
+that this step must retain decomposability and the coupled current.
 
 Neither of the two abstract ratio properties used in the upper proof
 can replace the square origin in the lower band.  The exact profile
