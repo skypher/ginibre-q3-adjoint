@@ -11829,6 +11829,96 @@ which proves all remaining cases.  The source-bound transcript,
 including the outside-in obstruction replay, is
 `certificates/su2_complete_wall_gap_prefix.log`.  QED.
 
+The next support chamber is also exact, but it requires a different
+compactification.  The direct chart
+`p=(1,b,b^2u,b^3u^2v)` collapses the transition
+`b->infinity, v->0` to one corner.  Resolving the successive ratios
+before compactification blows up that corner.
+
+**Theorem 5A8H28UIA2CGLPCIPOCGAPIN3
+(support-three inside-out gap payment).**  Let `p` be nonnegative
+and log concave with interval support contained in `{0,1,2,3}`.
+Then `(OCGIP)` holds for every `D,R,S`.
+
+**Proof.**  As in Theorem 5A8H28UIA2CGLPCIPOCGAPIN2, equal rows are
+sums of squares, a row with label zero vanishes, and a label greater
+than `6` has all its nonzero wedges beyond the root support with the
+common nonnegative sign.  For the remaining distinct labels
+`1<=R,S<=6`, no new term occurs after
+
+```text
+D=3+min(R,S).
+```
+
+There are therefore exactly `160` ordered cases.
+
+Boundary roots with a zero coordinate reduce to the preceding support
+theorem or follow by positive log-concave approximation and
+continuity.  It remains to take all four coordinates positive.
+Normalize `p_0=1` and put
+
+```text
+r_1=p_1/p_0,       r_2=p_2/p_1,       r_3=p_3/p_2.
+```
+
+Log concavity is exactly
+
+```text
+r_1>=r_2>=r_3>=0.
+```
+
+Introduce the independent nonnegative ratio slacks
+
+```text
+x_0=r_1-r_2,        x_1=r_2-r_3,        x_2=r_3.       (P5A.102AD5ALX1ZZB3S3BG4A)
+```
+
+Then
+
+```text
+p=(1,r_1,r_1r_2,r_1r_2r_3)
+```
+
+is a polynomial parameterization of the complete positive
+support-three log-concavity chamber.  For each case, let `B_j` be the
+degree in `x_j`, substitute
+
+```text
+x_j=t_j/(1-t_j),                  0<=t_j<=1,
+```
+
+and multiply by
+
+```text
+product_(j=0)^2 (1-t_j)^(B_j).                   (P5A.102AD5ALX1ZZB3S3BG4B)
+```
+
+On the open cube this preserves the sign and converts the gap prefix
+to an integer polynomial; the closed cube supplies its homogenized
+boundary limits.  Before forming its Bernstein grid, remove the
+largest common coordinate monomial.  That monomial is nonnegative on
+the cube, so nonnegativity of the quotient is a valid stronger
+certificate for the original polynomial.
+
+The strict exact C++ mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --support-three-gap-prefix-certificate-part R
+```
+
+with `R=1,...,6` constructs the `160` polynomials directly from the
+fusion rule and checks the six exhaustive first-label partitions.
+Together their initial Bernstein grids contain `92,880`
+coefficients, of which `2,408` are negative.  Exact dyadic Bernstein
+subdivision produces `852` nodes and `506` certified leaves.  There
+are no unresolved cells and no nonlinear-solver calls.  Each
+partition asserts its exact case, coefficient, node, and leaf counts
+and fails closed on any mismatch or negative residual.  Hence every
+polynomial in `(P5A.102AD5ALX1ZZB3S3BG4B)` is nonnegative on the
+compact cube, proving all remaining cases.  The six-part transcript
+is in `certificates/su2_complete_wall_gap_prefix.log`.  QED.
+
 The most direct attempt to extend this certificate one support
 coordinate at a time fails coefficientwise, even after arbitrary
 fixed Bernstein degree elevation.
@@ -11896,13 +11986,226 @@ coefficientwise fixed-degree append induction.  Any support induction
 must instead retain inherited prefix or endpoint reserve and pair the
 Bernstein cells globally.
 
+The append step itself has a support-uniform edge-space expansion.
+It isolates exactly which parts of that reserve have an automatic
+sign.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPAPP
+(append-coordinate edge expansion).**  Let `p` be supported in
+`{0,...,n-1}`, put `e=e_n`, and write
+
+```text
+p(x)=p+xe,                                      x>=0.
+```
+
+For the Euclidean space with coordinates
+
+```text
+E_D={(i,j):0<=i<j, j-i<=D},
+```
+
+let `pi_D` denote coordinate restriction and put
+
+```text
+(f wedge g)_(i,j)=f_i g_j-f_j g_i,
+q_R=N_Rp,                         g_R=N_Re,
+
+omega_R=pi_D(p wedge q_R),
+alpha_R=pi_D(p wedge g_R+e wedge q_R),
+gamma_R=pi_D(e wedge g_R).                     (P5A.102AD5ALX1ZZB3S3BG8)
+```
+
+Then
+
+```text
+pi_D(p(x) wedge N_Rp(x))
+ =omega_R+x alpha_R+x^2 gamma_R,                (P5A.102AD5ALX1ZZB3S3BG9)
+```
+
+and hence
+
+```text
+P_D^(p(x))(R,S)
+ =C_0+xC_1+x^2C_2+x^3C_3+x^4C_4,               (P5A.102AD5ALX1ZZB3S3BGA)
+
+C_0=<omega_R,omega_S>,
+C_1=<omega_R,alpha_S>+<alpha_R,omega_S>,
+C_2=<alpha_R,alpha_S>
+    +<omega_R,gamma_S>+<gamma_R,omega_S>,
+C_3=<alpha_R,gamma_S>+<gamma_R,alpha_S>,
+C_4=<gamma_R,gamma_S>.                          (P5A.102AD5ALX1ZZB3S3BGB)
+```
+
+For distinct `1<=R,S<=2n` and every nonnegative `p`,
+
+```text
+C_3>=0,                         C_4>=0.           (P5A.102AD5ALX1ZZB3S3BGC)
+```
+
+**Proof.**  Bilinearity of the wedge gives
+`(P5A.102AD5ALX1ZZB3S3BG9)`, and taking the inner product gives
+`(P5A.102AD5ALX1ZZB3S3BGA)--(P5A.102AD5ALX1ZZB3S3BGB)`.
+
+The vector `gamma_R` is supported on edges incident to `n`.  Its
+coordinate is negative below `n` and positive above `n`, independently
+of `R`; only its zero set changes.  Thus every coordinate product
+`(gamma_R)_(i,j)(gamma_S)_(i,j)` is nonnegative, proving the assertion
+for `C_4`.
+
+It remains to take `C_3`.  For `1<=Q,T<=2n`, put
+
+```text
+L_T=min(D,T),             M_T=min(D,T,2n-T).
+```
+
+Directly on the two edges at distance `d` from `n`,
+
+```text
+<alpha_Q,gamma_T>
+ =sum_(d=1)^(M_T){(N_Qp)_(n-d)-p_(n-d)}
+  +sum_(d=1)^(L_T)(N_Qp)_(n+d).                 (P5A.102AD5ALX1ZZB3S3BGD)
+```
+
+All terms are coefficientwise nonnegative in `p` except the displayed
+`-p_(n-d)`.  Fix one such term and put `t=n-d`.  The centers available
+among the positive fusion sums with distances at most `d` are
+
+```text
+[t,n-1] union [n+1,2n-t].
+```
+
+By fusion symmetry, `p_t` occurs in `(N_Qp)_i` exactly when
+
+```text
+i in [|Q-t|,Q+t].
+```
+
+This fusion interval meets `[t,2n-t]`.  Its intersection can consist
+only of the deleted center `{n}` precisely when `(t,Q)=(0,n)`.
+But `t=0` in `(P5A.102AD5ALX1ZZB3S3BGD)` forces `d=n` and then
+`T=n`; the exceptional case is therefore `Q=T`, which is excluded.
+Thus every negative coefficient in `(P5A.102AD5ALX1ZZB3S3BGD)` is
+covered by a positive fusion term.  Hence
+`<alpha_Q,gamma_T>=0` or is positive coefficientwise.  Apply this
+with `(Q,T)=(R,S)` and `(S,R)` to obtain `C_3>=0`.  QED.
+
+The two lower append coefficients do not have separate signs, and
+neither of the two automatic higher reserves may be discarded.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPAPPROBS
+(complete-quartic append-reserve obstruction).**  For the
+support-three case `(R,S,D)=(1,2,1)`, the coefficient `C_1` at the
+log-concave old root
+
+```text
+p=(5,10,18)
+```
+
+is `-8803`.  At the geometric old root `p=(1,2,4)`,
+
+```text
+(C_0,C_1,C_2,C_3,C_4)=(538,-81,-38,9,2).       (P5A.102AD5ALX1ZZB3S3BGE)
+```
+
+The valid append `x=3` gives
+
+```text
+C_0+xC_1+x^2C_2=-47,
+P_D^((1,2,4,3))(1,2)=358.                      (P5A.102AD5ALX1ZZB3S3BGF)
+```
+
+Thus the cubic reserve is load-bearing.  At the old root
+`p=(5,15,18)`,
+
+```text
+(C_0,C_1,C_2,C_3,C_4)
+ =(200667,-15358,-663,53,2).
+```
+
+The valid append `x=15` gives
+
+```text
+C_0+xC_1+x^2C_2+x^3C_3=-3,
+P_D^((5,15,18,15))(1,2)=101247.                (P5A.102AD5ALX1ZZB3S3BGG)
+```
+
+Thus the quartic reserve is also load-bearing.
+
+Finally, the append log-concavity bound itself is essential.  At the
+old log-concave root `p=(1,3,1)`, take `(R,S,D)=(1,6,1)`.  Then
+
+```text
+(C_0,C_1,C_2,C_3,C_4)=(0,1,-3,0,1).
+```
+
+The unrestricted append `x=1` gives
+
+```text
+P_D^((1,3,1,1))(1,6)=-1.                       (P5A.102AD5ALX1ZZB3S3BGG0)
+```
+
+This is not a counterexample to `(OCGIP)`, because the final
+log-concavity condition requires `x<=1/3`.
+
+**Proof.**  The old-root log-concavity checks are
+
+```text
+10^2>=5*18,       2^2=1*4,       15^2>=5*18,
+3^2>=1*1.
+```
+
+The two appended checks are `4^2>=2*3` and
+`18^2>=15*15`.  Substitution in
+`(P5A.102AD5ALX1ZZB3S3BGA)--(P5A.102AD5ALX1ZZB3S3BGB)` gives every
+displayed integer.  The fail-closed exact C++ replay is
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-gap-prefix-append-low-coefficients
+```
+
+and is recorded in
+`certificates/su2_complete_wall_gap_prefix.log`.  QED.
+
+Consequently the arbitrary-support induction has the following exact
+remaining form.
+
+**Target 5A8H28UIA2CGLPCIPOCGAPAPPRES
+(complete append-reserve payment).**  Under the hypotheses of
+Target 5A8H28UIA2CGLPCIPOCGAPIN, take `n>=2` with positive terminal
+old coordinates, assume the old prefix `C_0` in
+`(P5A.102AD5ALX1ZZB3S3BGA)` is nonnegative, and suppose
+
+```text
+0<=x<=p_(n-1)^2/p_(n-2).
+```
+
+Prove
+
+```text
+C_0+xC_1+x^2C_2+x^3C_3+x^4C_4>=0.             (GAPAPPRES)
+```
+
+Lemma 5A8H28UIA2CGLPCIPOCGAPAPP proves that the last two coefficients
+are already nonnegative; Proposition
+5A8H28UIA2CGLPCIPOCGAPAPPROBS shows that they must remain in the
+payment.  Proving `(GAPAPPRES)` for every `n,D,R,S` inducts on support
+and establishes `(OCGIP)`, hence `(OCLRC)` and `(OCSP)` for every
+ordinary factor word.  Vanishing endpoint coordinates then follow by
+the same positive log-concave approximation and continuity used in
+Theorems 5A8H28UIA2CGLPCIPOCGAPIN2--3.
+
 Exact deterministic ratio runs provide route evidence beyond this
 proved chamber.  Across supports through `40`, labels through `12`,
 and successive ratios as large as `10`, they evaluated
 `946,900,812` complete-wall gap prefixes without a negative value.
 The same runs found many negative fixed gaps and `101,554` negative
-outside-in gap tails.  These counts are bounded discovery evidence
-only; Theorem 5A8H28UIA2CGLPCIPOCGAPIN2 is the exact proved result.
+outside-in gap tails.  Two additional multiscale runs, with ratios
+through `10^3` and `10^6`, supports through `20` and `30`, and labels
+through `12` and `16`, evaluated another `158,728,768` exact gap
+prefixes without a negative value.  These counts are bounded discovery
+evidence only; Theorems 5A8H28UIA2CGLPCIPOCGAPIN2 and
+5A8H28UIA2CGLPCIPOCGAPIN3 are the exact proved support chambers.
 
 The first nontrivial root-support class can be closed directly.
 

@@ -376,6 +376,37 @@ BigPolynomial support_three_ratio_parameterization(
   return result;
 }
 
+BigPolynomial support_three_ordered_ratio_difference_parameterization(
+    const Polynomial& target) {
+  const BigPolynomial one = big_constant(1);
+  const BigPolynomial first_slack = big_variable(0);
+  const BigPolynomial second_slack = big_variable(1);
+  const BigPolynomial terminal_ratio = big_variable(2);
+  BigPolynomial middle_ratio = second_slack;
+  big_add_scaled(middle_ratio, terminal_ratio, 1);
+  BigPolynomial initial_ratio = first_slack;
+  big_add_scaled(initial_ratio, middle_ratio, 1);
+  const std::array<BigPolynomial, 4> root{
+      one,
+      initial_ratio,
+      big_multiply(initial_ratio, middle_ratio),
+      big_multiply(
+          big_multiply(initial_ratio, middle_ratio),
+          terminal_ratio)};
+
+  BigPolynomial result;
+  for (const auto& [exponent, coefficient] : target) {
+    BigPolynomial expanded = big_constant(coefficient);
+    for (std::size_t variable = 0; variable < exponent.size(); ++variable) {
+      expanded = big_multiply(
+          expanded,
+          big_power(root[variable], exponent[variable]));
+    }
+    big_add_scaled(result, expanded, 1);
+  }
+  return result;
+}
+
 BigPolynomial nd_constant(const int variables, const Integer& value) {
   BigPolynomial result;
   if (value != 0) {
@@ -488,27 +519,64 @@ Integer binomial(const int n, const int k) {
   return result;
 }
 
-BigPolynomial compactify_first_positive_variable(
-    const BigPolynomial& input) {
+BigPolynomial compactify_positive_variable(
+    const BigPolynomial& input, const std::size_t variable) {
   if (input.empty() || input.begin()->first.empty()) {
     throw std::invalid_argument(
         "positive-variable compactification needs a variable");
   }
+  if (variable >= input.begin()->first.size()) {
+    throw std::invalid_argument(
+        "positive-variable compactification index out of range");
+  }
   int degree = 0;
   for (const auto& [exponent, coefficient] : input) {
     static_cast<void>(coefficient);
-    degree = std::max(degree, exponent.front());
+    degree = std::max(degree, exponent[variable]);
   }
   BigPolynomial result;
   for (const auto& [exponent, coefficient] : input) {
-    const int complement = degree - exponent.front();
+    const int complement = degree - exponent[variable];
     for (int power = 0; power <= complement; ++power) {
       Exponent transformed = exponent;
-      transformed.front() += power;
+      transformed[variable] += power;
       const Integer sign = power % 2 == 0 ? 1 : -1;
       result[std::move(transformed)] +=
           coefficient * sign * binomial(complement, power);
     }
+  }
+  return result;
+}
+
+BigPolynomial compactify_first_positive_variable(
+    const BigPolynomial& input) {
+  return compactify_positive_variable(input, 0U);
+}
+
+BigPolynomial remove_common_monomial_factor(
+    const BigPolynomial& input) {
+  if (input.empty()) {
+    return input;
+  }
+  Exponent common = input.begin()->first;
+  for (const auto& [exponent, coefficient] : input) {
+    if (coefficient == 0) {
+      continue;
+    }
+    for (std::size_t variable = 0; variable < common.size(); ++variable) {
+      common[variable] = std::min(common[variable], exponent[variable]);
+    }
+  }
+  BigPolynomial result;
+  for (const auto& [exponent, coefficient] : input) {
+    if (coefficient == 0) {
+      continue;
+    }
+    Exponent reduced = exponent;
+    for (std::size_t variable = 0; variable < common.size(); ++variable) {
+      reduced[variable] -= common[variable];
+    }
+    result[std::move(reduced)] += coefficient;
   }
   return result;
 }
@@ -629,6 +697,40 @@ Rational evaluate_polynomial(
   return result;
 }
 
+Integer evaluate_append_power(
+    const Polynomial& input, const int append_variable,
+    const int append_power, const std::vector<Integer>& old_profile) {
+  if (
+      append_variable < 0
+      || static_cast<std::size_t>(append_variable)
+             != old_profile.size()
+  ) {
+    throw std::invalid_argument(
+        "append-power evaluation dimension mismatch");
+  }
+  Integer result = 0;
+  for (const auto& [exponent, coefficient] : input) {
+    if (
+        exponent[static_cast<std::size_t>(append_variable)]
+        != append_power
+    ) {
+      continue;
+    }
+    Integer term = coefficient;
+    for (int variable = 0; variable < append_variable; ++variable) {
+      for (
+          int power = 0;
+          power < exponent[static_cast<std::size_t>(variable)];
+          ++power
+      ) {
+        term *= old_profile[static_cast<std::size_t>(variable)];
+      }
+    }
+    result += term;
+  }
+  return result;
+}
+
 bool equal_polynomials(const RationalPolynomial& left,
                        const RationalPolynomial& right) {
   for (const auto& [exponent, coefficient] : left) {
@@ -663,6 +765,109 @@ std::pair<int, Rational> leading_at_last_one(
     }
   }
   return {-1, Rational(0)};
+}
+
+int replay_gap_prefix_append_low_coefficients() {
+  constexpr int support = 3;
+  const Polynomial target = direct_polynomial(
+      gap_prefix_polynomial(support, 1, 2, 1), support);
+  const std::vector<Integer> linear_profile{5, 10, 18};
+  const std::vector<Integer> quadratic_profile{1, 2, 4};
+  const Integer linear =
+      evaluate_append_power(target, support, 1, linear_profile);
+  const Integer constant =
+      evaluate_append_power(target, support, 0, quadratic_profile);
+  const Integer quadratic_linear =
+      evaluate_append_power(target, support, 1, quadratic_profile);
+  const Integer quadratic =
+      evaluate_append_power(target, support, 2, quadratic_profile);
+  const Integer cubic =
+      evaluate_append_power(target, support, 3, quadratic_profile);
+  const Integer quartic =
+      evaluate_append_power(target, support, 4, quadratic_profile);
+  const Integer append = 3;
+  const Integer low_truncation =
+      constant
+      + append * quadratic_linear
+      + append * append * quadratic;
+  const Integer full =
+      low_truncation
+      + append * append * append * cubic
+      + append * append * append * append * quartic;
+  const std::vector<Integer> cubic_profile{5, 15, 18};
+  const Integer cubic_constant =
+      evaluate_append_power(target, support, 0, cubic_profile);
+  const Integer cubic_linear =
+      evaluate_append_power(target, support, 1, cubic_profile);
+  const Integer cubic_quadratic =
+      evaluate_append_power(target, support, 2, cubic_profile);
+  const Integer cubic_cubic =
+      evaluate_append_power(target, support, 3, cubic_profile);
+  const Integer cubic_quartic =
+      evaluate_append_power(target, support, 4, cubic_profile);
+  const Integer cubic_append = 15;
+  const Integer cubic_truncation =
+      cubic_constant
+      + cubic_append * cubic_linear
+      + cubic_append * cubic_append * cubic_quadratic
+      + cubic_append * cubic_append * cubic_append * cubic_cubic;
+  const Integer cubic_full =
+      cubic_truncation
+      + cubic_append * cubic_append * cubic_append * cubic_append
+            * cubic_quartic;
+  const Polynomial unbounded_target = direct_polynomial(
+      gap_prefix_polynomial(support, 1, 6, 1), support);
+  const std::vector<Integer> unbounded_profile{1, 3, 1};
+  std::array<Integer, 5> unbounded_coefficients{};
+  for (int power = 0; power <= 4; ++power) {
+    unbounded_coefficients[static_cast<std::size_t>(power)] =
+        evaluate_append_power(
+            unbounded_target, support, power, unbounded_profile);
+  }
+  const Integer unbounded_value =
+      unbounded_coefficients[0]
+      + unbounded_coefficients[1]
+      + unbounded_coefficients[2]
+      + unbounded_coefficients[3]
+      + unbounded_coefficients[4];
+  if (
+      linear != -8803
+      || constant != 538
+      || quadratic_linear != -81
+      || quadratic != -38
+      || cubic != 9
+      || quartic != 2
+      || low_truncation != -47
+      || full != 358
+      || cubic_constant != 200667
+      || cubic_linear != -15358
+      || cubic_quadratic != -663
+      || cubic_cubic != 53
+      || cubic_quartic != 2
+      || cubic_truncation != -3
+      || cubic_full != 101247
+      || unbounded_coefficients
+             != std::array<Integer, 5>{0, 1, -3, 0, 1}
+      || unbounded_value != -1
+  ) {
+    throw std::runtime_error(
+        "gap-prefix append coefficient replay mismatch");
+  }
+  std::cout
+      << "SU2_GAP_PREFIX_APPEND_LOW_COEFFICIENT_OBSTRUCTIONS"
+      << " support=3 R=1 S=2 D=1"
+      << " C1_at_5_10_18=-8803"
+      << " coefficients_at_1_2_4=(538,-81,-38,9,2)"
+      << " append=3 low_truncation=-47 full=358"
+      << " coefficients_at_5_15_18=(200667,-15358,-663,53,2)"
+      << " append=15 cubic_truncation=-3 full=101247"
+      << " unbounded_append_profile=(1,3,1,1)"
+      << " unbounded_labels=(1,6,1)"
+      << " unbounded_coefficients=(0,1,-3,0,1)"
+      << " unbounded_value=-1"
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
 }
 
 int replay_support_three_gap_prefix_elevation_obstruction() {
@@ -1000,7 +1205,7 @@ bool z3_negative_on_unit_cube(const BigPolynomial& polynomial,
   const z3::check_result result = solver.check();
   if (result == z3::unknown) {
     throw std::runtime_error(
-        "Z3 returned unknown on support-two gap-prefix polynomial");
+        "Z3 returned unknown on gap-prefix polynomial");
   }
   if (result == z3::sat) {
     model_text = solver.get_model().to_string();
@@ -1082,6 +1287,125 @@ int analyze_support_two_gap_prefix_certificate() {
   }
   std::cout
       << "SU2_SUPPORT_TWO_GAP_PREFIX_CERTIFICATE"
+      << " cases=" << cases
+      << " coefficients=" << coefficients
+      << " initial_negative=" << initial_negative
+      << " subdivision_nodes=" << nodes
+      << " subdivision_leaves=" << leaves
+      << " subdivision_unresolved=" << unresolved
+      << " nlsat_unsat=" << nlsat_unsat
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
+int analyze_support_three_gap_prefix_certificate_part(
+    const int selected_first_label) {
+  constexpr int support = 3;
+  constexpr int maximum_relevant_label = 2 * support;
+  constexpr int subdivision_depth = 24;
+  if (
+      selected_first_label < 1
+      || selected_first_label > maximum_relevant_label
+  ) {
+    throw std::invalid_argument(
+        "support-three first label must lie in [1,6]");
+  }
+  std::size_t cases = 0U;
+  std::size_t coefficients = 0U;
+  std::size_t initial_negative = 0U;
+  std::size_t nodes = 0U;
+  std::size_t leaves = 0U;
+  std::size_t unresolved = 0U;
+  std::size_t nlsat_unsat = 0U;
+  for (int second_label = 1;
+       second_label <= maximum_relevant_label;
+       ++second_label) {
+    if (selected_first_label == second_label) {
+      continue;
+    }
+    const int maximum_gap =
+        support + std::min(selected_first_label, second_label);
+    for (int gap = 1; gap <= maximum_gap; ++gap) {
+      const Polynomial target = direct_polynomial(
+          gap_prefix_polynomial(
+              support, selected_first_label, second_label, gap),
+          support);
+      BigPolynomial parameterized =
+          support_three_ordered_ratio_difference_parameterization(target);
+      for (std::size_t variable = 0; variable < 3U; ++variable) {
+        parameterized =
+            compactify_positive_variable(parameterized, variable);
+      }
+      const BigPolynomial quotient =
+          remove_common_monomial_factor(parameterized);
+      const NDBernsteinGrid grid =
+          nd_bernstein_grid(quotient, support);
+      NDSubdivisionResult subdivision;
+      nd_certify_subdivision(
+          grid, 0, subdivision_depth, subdivision);
+      ++cases;
+      coefficients += grid.values.size();
+      initial_negative += static_cast<std::size_t>(std::count_if(
+          grid.values.begin(), grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+      nodes += subdivision.nodes;
+      leaves += subdivision.leaves;
+      unresolved += subdivision.unresolved;
+      if (subdivision.unresolved != 0U) {
+        std::string model_text;
+        const bool quotient_negative =
+            z3_negative_on_unit_cube(quotient, model_text);
+        if (
+            quotient_negative
+            && z3_negative_on_unit_cube(parameterized, model_text)
+        ) {
+          throw std::runtime_error(
+              "support-three gap-prefix counterexample at labels "
+              + std::to_string(selected_first_label) + ","
+              + std::to_string(second_label)
+              + " and gap " + std::to_string(gap)
+              + ": " + model_text);
+        }
+        ++nlsat_unsat;
+      }
+    }
+    std::cout
+        << "SU2_SUPPORT_THREE_GAP_PREFIX_PROGRESS"
+        << " first_label=" << selected_first_label
+        << " second_label=" << second_label
+        << " cases=" << cases
+        << " unresolved=" << unresolved
+        << '\n';
+    std::cout.flush();
+  }
+  const std::array<std::size_t, 6> expected_cases{
+      20U, 24U, 27U, 29U, 30U, 30U};
+  const std::array<std::size_t, 6> expected_coefficients{
+      11520U, 13995U, 15750U, 16920U, 17505U, 17190U};
+  const std::array<std::size_t, 6> expected_initial_negative{
+      788U, 633U, 531U, 321U, 135U, 0U};
+  const std::array<std::size_t, 6> expected_nodes{
+      212U, 190U, 151U, 155U, 114U, 30U};
+  const std::array<std::size_t, 6> expected_leaves{
+      116U, 107U, 89U, 92U, 72U, 30U};
+  const std::size_t partition =
+      static_cast<std::size_t>(selected_first_label - 1);
+  if (
+      cases != expected_cases[partition]
+      || coefficients != expected_coefficients[partition]
+      || initial_negative != expected_initial_negative[partition]
+      || nodes != expected_nodes[partition]
+      || leaves != expected_leaves[partition]
+      || unresolved != 0U
+      || nlsat_unsat != 0U
+  ) {
+    throw std::runtime_error(
+        "support-three gap-prefix partition count mismatch");
+  }
+  std::cout
+      << "SU2_SUPPORT_THREE_GAP_PREFIX_CERTIFICATE_PART"
+      << " first_label=" << selected_first_label
       << " cases=" << cases
       << " coefficients=" << coefficients
       << " initial_negative=" << initial_negative
@@ -1572,6 +1896,21 @@ int main(int argc, char** argv) {
                == "--support-two-gap-prefix-certificate"
     ) {
       return analyze_support_two_gap_prefix_certificate();
+    }
+    if (
+        argc == 3
+        && std::string{argv[1]}
+               == "--support-three-gap-prefix-certificate-part"
+    ) {
+      return analyze_support_three_gap_prefix_certificate_part(
+          parse_positive(argv[2], "first_label"));
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-gap-prefix-append-low-coefficients"
+    ) {
+      return replay_gap_prefix_append_low_coefficients();
     }
     if (
         argc == 2

@@ -1,12 +1,30 @@
 g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror analyze_su2_autocorrelation_lc_certificate.cpp -lz3 -o analyze_su2_autocorrelation_lc_certificate
 ./analyze_su2_autocorrelation_lc_certificate --support-two-gap-prefix-certificate
 SU2_SUPPORT_TWO_GAP_PREFIX_CERTIFICATE cases=44 coefficients=1980 initial_negative=58 subdivision_nodes=768 subdivision_leaves=392 subdivision_unresolved=14 nlsat_unsat=14 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --support-three-gap-prefix-certificate-part 1
+SU2_SUPPORT_THREE_GAP_PREFIX_CERTIFICATE_PART first_label=1 cases=20 coefficients=11520 initial_negative=788 subdivision_nodes=212 subdivision_leaves=116 subdivision_unresolved=0 nlsat_unsat=0 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --support-three-gap-prefix-certificate-part 2
+SU2_SUPPORT_THREE_GAP_PREFIX_CERTIFICATE_PART first_label=2 cases=24 coefficients=13995 initial_negative=633 subdivision_nodes=190 subdivision_leaves=107 subdivision_unresolved=0 nlsat_unsat=0 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --support-three-gap-prefix-certificate-part 3
+SU2_SUPPORT_THREE_GAP_PREFIX_CERTIFICATE_PART first_label=3 cases=27 coefficients=15750 initial_negative=531 subdivision_nodes=151 subdivision_leaves=89 subdivision_unresolved=0 nlsat_unsat=0 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --support-three-gap-prefix-certificate-part 4
+SU2_SUPPORT_THREE_GAP_PREFIX_CERTIFICATE_PART first_label=4 cases=29 coefficients=16920 initial_negative=321 subdivision_nodes=155 subdivision_leaves=92 subdivision_unresolved=0 nlsat_unsat=0 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --support-three-gap-prefix-certificate-part 5
+SU2_SUPPORT_THREE_GAP_PREFIX_CERTIFICATE_PART first_label=5 cases=30 coefficients=17505 initial_negative=135 subdivision_nodes=114 subdivision_leaves=72 subdivision_unresolved=0 nlsat_unsat=0 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --support-three-gap-prefix-certificate-part 6
+SU2_SUPPORT_THREE_GAP_PREFIX_CERTIFICATE_PART first_label=6 cases=30 coefficients=17190 initial_negative=0 subdivision_nodes=30 subdivision_leaves=30 subdivision_unresolved=0 nlsat_unsat=0 result=PASS_EXACT
 ./analyze_su2_autocorrelation_lc_certificate --replay-gap-prefix-elevation-obstruction
 SU2_GAP_PREFIX_ELEVATION_OBSTRUCTION support=3 R=1 S=2 D=1 old_root=(1,b,b^2) base_leading=(2b^8,b^9/4,-b^10/3,b^11/4,2b^12) elevated_index=2 elevated_leading=-4b^10/(N(N-1)) N12_b10=-268504190/11 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --replay-gap-prefix-append-low-coefficients
+SU2_GAP_PREFIX_APPEND_LOW_COEFFICIENT_OBSTRUCTIONS support=3 R=1 S=2 D=1 C1_at_5_10_18=-8803 coefficients_at_1_2_4=(538,-81,-38,9,2) append=3 low_truncation=-47 full=358 coefficients_at_5_15_18=(200667,-15358,-663,53,2) append=15 cubic_truncation=-3 full=101247 unbounded_append_profile=(1,3,1,1) unbounded_labels=(1,6,1) unbounded_coefficients=(0,1,-3,0,1) unbounded_value=-1 result=PASS_EXACT
 g++ -O2 -std=c++20 -pthread -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror probe_su2_log_concave_ratio_stress.cpp -o probe_su2_log_concave_ratio_stress
 ./probe_su2_log_concave_ratio_stress --replay-complete-wall-gap-tail
 SU2_COMPLETE_WALL_GAP_TAIL_OBSTRUCTION q=1 a=7 minimum_gap=8 value=-16682814543009861315632046030279412129824776371200 current=94153010945848127878367241684587477315345747381424000 result=PASS_EXACT
-analyzer_source_sha256=64113e7519b60e3f57c351c1ebddffa9da279e9793ea817475a2b342314dbadd
-analyzer_binary_sha256=497c9623ae4c27f731544e26dcba5dd018acf0e4e7331ca7ae4ec0f04f12ec30
+./probe_su2_log_concave_ratio_stress 5000 12 20 1000
+SU2_LOG_CONCAVE_RATIO_STRESS samples=5000 determinants=16152128 max_label=12 complete_wall_gap_energies=14712128 complete_wall_gap_failures=0 complete_wall_gap_tails=14712128 complete_wall_gap_tail_failures=0 complete_wall_gap_prefixes=14712128 complete_wall_gap_prefix_failures=0 maximum_length=20 maximum_ratio=1000 threads=30 result=NO_COUNTEREXAMPLE
+./probe_su2_log_concave_ratio_stress 20000 16 30 1000000
+SU2_LOG_CONCAVE_RATIO_STRESS samples=20000 determinants=154256640 max_label=16 complete_wall_gap_energies=144016640 complete_wall_gap_failures=0 complete_wall_gap_tails=144016640 complete_wall_gap_tail_failures=0 complete_wall_gap_prefixes=144016640 complete_wall_gap_prefix_failures=0 maximum_length=30 maximum_ratio=1000000 threads=27 result=NO_COUNTEREXAMPLE
+analyzer_source_sha256=ae7ed4b17466bbc53fab1f89d9e74c2a6a97d8ea14cfc4820089624e14ad7824
+analyzer_binary_sha256=8408b459db17e0a8f267750b7d7e30bcb317c259432700bae366320417fd2eec
 stress_source_sha256=6b64f20201bbf3e33db0425c21183fbf9cc553f582db36492973824017ce8d32
 stress_binary_sha256=e951a7fe47e248cfa1a0fc96a8e9b67814413c10c8d53d3c4553664a1d4d2e64
