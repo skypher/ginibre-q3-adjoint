@@ -13595,6 +13595,194 @@ analyze_su2_autocorrelation_lc_certificate \
 reconstructs the degree elevation, both unit-interval Bernstein lists,
 both shifted expansions, and the discriminant.  QED.
 
+The cubic term gives a second demand ceiling which is sharper than the
+quadratic envelope and remains rational in the local coefficients.  Unlike
+the geometric ceiling, its cleared payment is linear in the arbitrary-depth
+current `C_0`.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATCEIL
+(cubic-corrected rational demand ceiling).**  Under the branch hypotheses
+of Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121CRIT, put
+
+```text
+A=C_2,                 B=-C_1,                 C=C_3,
+H=4A^2+3BC,            ell=2AB/H.
+```
+
+Then
+
+```text
+ell<=tau,                                                     (P5A.102AD5ALX1ZZB3BH9I0A)
+
+C_2tau^2+2C_3tau^3
+ <=B^2/(4A)-C ell^3{1+9C ell/(4A)}.            (P5A.102AD5ALX1ZZB3BH9I0B)
+```
+
+Consequently Target 5A8H28UIA2CGLPCIPOCGAPWALL121PAY follows from
+the single polynomial inequality
+
+```text
+(4AC_0-B^2)H^4
+ +32A^4CB^3H+144A^4C^2B^4>=0.                 (P5A.102AD5ALX1ZZB3BH9I0C)
+```
+
+**Proof.**  The critical equation gives
+
+```text
+tau=B/(2A+3Ctau)<=B/(2A).
+```
+
+Substituting this upper bound in the denominator of the first expression
+gives
+
+```text
+tau>=B/{2A+3CB/(2A)}=2AB/H=ell,
+```
+
+which proves `(P5A.102AD5ALX1ZZB3BH9I0A)`.  Squaring the critical
+equation and using the definition of the demand gives the exact identity
+
+```text
+B^2/(4A)-{Atau^2+2Ctau^3}
+ =Ctau^3{1+9Ctau/(4A)}.                        (P5A.102AD5ALX1ZZB3BH9I0D)
+```
+
+The function on the right is increasing for nonnegative `tau`, so
+`(P5A.102AD5ALX1ZZB3BH9I0A)` and
+`(P5A.102AD5ALX1ZZB3BH9I0D)` prove
+`(P5A.102AD5ALX1ZZB3BH9I0B)`.  The proposed current payment against
+this ceiling is
+
+```text
+C_0>=B^2/(4A)-C ell^3{1+9C ell/(4A)}.
+```
+
+Multiplication by the positive denominator `4AH^4` gives exactly
+`(P5A.102AD5ALX1ZZB3BH9I0C)`.  Thus that polynomial inequality pays
+the critical demand and implies the original target.  QED.
+
+The cubic correction cannot be omitted.  Even on the critical branch,
+the bare quadratic current bound can fail while the exact cubic payment
+remains positive.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121QUADCEILOBS
+(quadratic demand-envelope obstruction).**  For the log-concave wall
+profile
+
+```text
+p=(0,10,14,16,17,16,14,11,8,5,3,1,0),
+```
+
+the wall-current coefficients are
+
+```text
+(C_0,A,B,C)=(17618,680,7148,40),
+```
+
+and
+
+```text
+4AC_0-B^2=-3172944<0.                           (P5A.102AD5ALX1ZZB3BH9I0E)
+```
+
+Nevertheless this profile lies in the critical branch, its exact cubic
+discriminant is negative, and the cubic-corrected margin in
+`(P5A.102AD5ALX1ZZB3BH9I0C)` is positive:
+
+```text
+b^2 Phi'(a^2/b)=1702992>0,
+
+Disc(Phi)=-15163796058880<0,
+
+(4AC_0-B^2)H^4+32A^4CB^3H+144A^4C^2B^4
+ =228746021443515431465475112960000>0.          (P5A.102AD5ALX1ZZB3BH9I0F)
+```
+
+Thus `C_0>=B^2/(4A)` is not an available proof of the wall payment,
+whereas the rational cubic correction retains enough reserve on this
+exact obstruction.
+
+**Proof.**  The nontrivial log-concavity comparisons, after removing
+common positive factors, are
+
+```text
+196>=160, 256>=238, 289>=256, 256>=238,
+196>=176, 121>=112, 64>=55, 25>=24, 9>=5.
+```
+
+The endpoint comparisons are immediate.  Direct substitution in
+`(P5A.102AD5ALX1ZZB3BGW)` and the current formula
+`(P5A.102AD5ALX1ZZB3BGY)` gives the four displayed coefficients.
+Substitution in the derivative, discriminant, and
+`(P5A.102AD5ALX1ZZB3BH9I0C)` gives
+`(P5A.102AD5ALX1ZZB3BH9I0E)--(P5A.102AD5ALX1ZZB3BH9I0F)`.
+The fail-closed exact C++ mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-wall-121-cubic-corrected-demand-ceiling
+```
+
+reconstructs log concavity, the complete terminal current, all four local
+coefficients, and every displayed integer using arbitrary-precision
+arithmetic.  QED.
+
+**Disproved Target 5A8H28UIA2CGLPCIPOCGAPWALL121RATPAY
+(support-uniform rational cubic-corrected current payment).**  The proposed
+strengthening was
+`(P5A.102AD5ALX1ZZB3BH9I0C)` for every finite nonnegative log-concave
+wall tail under the branch hypotheses of Corollary
+5A8H28UIA2CGLPCIPOCGAPWALL121CRIT.  By Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121RATCEIL, this support-uniform polynomial
+inequality would imply Target 5A8H28UIA2CGLPCIPOCGAPWALL121PAY.  Its left
+side is linear in the exact EDGE2 current
+`(P5A.102AD5ALX1ZZB3BGZ9D)` and contains no critical root `tau`.
+Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121RATPAYOBS below gives an exact
+support-22 counterexample to this strengthening.  The finite support
+payments proved below remain valid, but they cannot propagate this false
+uniform target.
+
+The rational ceiling has a strict coefficientwise payment on every
+saturated-geometric Bellman prefix.
+
+**Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121RATGEOMBEL
+(geometric rational Bellman payment).**  Under the hypotheses of Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121GEOM, at its cutoff `m` one has
+
+```text
+(4AQ_m-B^2)H^4
+ +32A^4CB^3H+144A^4C^2B^4>0.                  (P5A.102AD5ALX1ZZB3BH9I0G)
+```
+
+Thus `Q_m` pays the stronger rational ceiling in
+`(P5A.102AD5ALX1ZZB3BH9I0B)`, independently of every later
+log-concave continuation.
+
+**Proof.**  Normalize `a=1`.  Equations
+`(P5A.102AD5ALX1ZZB3BH9C)--(P5A.102AD5ALX1ZZB3BH9D)` give
+
+```text
+C_0=1+R,
+A=1+2R^2+R^3,       B=3R+2R^2,       C=1+R+R^2.
+```
+
+Substitute these four polynomials and `H=4A^2+3BC` in the left side
+of `(P5A.102AD5ALX1ZZB3BH9I0G)`.  Exact expansion gives the
+degree-`26` polynomial with coefficients, in ascending order,
+
+```text
+(1024,10240,71808,348480,1357460,4230852,11049207,
+ 24376076,46302282,76760012,112488037,147955104,
+ 175724946,189838320,187530543,169190696,139027496,
+ 103376016,68592960,39925984,20013840,8414336,2848128,
+ 733056,132608,14848,768).                     (P5A.102AD5ALX1ZZB3BH9I0H)
+```
+
+Every coefficient is positive and `R>0`, proving the claim.  The exact
+C++ mode `--replay-wall-121-cubic-corrected-demand-ceiling`
+independently reconstructs this expansion before checking the quadratic
+envelope obstruction.  QED.
+
 The ceiling in Lemma
 5A8H28UIA2CGLPCIPOCGAPWALL121GEOMCEIL cannot be combined with a
 separate terminal lower bound having the same geometric value, even on
@@ -13890,6 +14078,27 @@ Together with `(P5A.102AD5ALX1ZZB3BH9X)`, this proves
 rational endpoint constant in
 `(P5A.102AD5ALX1ZZB3BH9X)--(P5A.102AD5ALX1ZZB3BH9Z)`.  QED.
 
+The same chamber satisfies the stronger rational target.
+
+**Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121RATSMALLR
+(small-ratio rational-current payment).**  Under the hypotheses of Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121SMALLR, inequality
+`(P5A.102AD5ALX1ZZB3BH9I0C)` holds at every terminal cutoff.
+
+**Proof.**  Normalize `a=1`.  Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121SMALLR gives `C_0>=1`.  The first and
+last bounds in `(P5A.102AD5ALX1ZZB3BH9Y)`, together with `A=C_2>=1`,
+give
+
+```text
+B^2/(4A)<=4R^2<=4/9<1.                         (P5A.102AD5ALX1ZZB3BH9Z0)
+```
+
+The rational ceiling in `(P5A.102AD5ALX1ZZB3BH9I0B)` is no larger
+than its first term `B^2/(4A)`.  Hence `C_0` exceeds that ceiling.
+Multiplying by `4AH^4>0` gives
+`(P5A.102AD5ALX1ZZB3BH9I0C)`.  QED.
+
 The geometric demand ceiling and the Bellman current cannot be
 separated by the natural large-ratio floor.
 
@@ -14140,6 +14349,569 @@ checks the factor `x^10` and Newton face, assigns every negative
 corner monomial, and verifies all rational reserve inequalities.
 Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121Q2COUPLE now gives the cutoff-two
 payment.  QED.
+
+The same cutoff pays the stronger rational ceiling throughout the
+unrestricted moderate-ratio chamber.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATQ2MOD
+(moderate-ratio rational cutoff-two payment).**  Under the notation and
+branch hypotheses of Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121RATCEIL, if
+
+```text
+R=b/a<=3,
+```
+
+then the cutoff-two Bellman state satisfies
+
+```text
+(4AQ_2-B^2)H^4
+ +32A^4CB^3H+144A^4C^2B^4>=0.                 (P5A.102AD5ALX1ZZB3BH9Z7A)
+```
+
+Consequently `Q_2` pays the rational ceiling in
+`(P5A.102AD5ALX1ZZB3BH9I0B)`.
+
+**Proof.**  Normalize `a=1` and use the ratio coordinates `R,u,v` in
+`(P5A.102AD5ALX1ZZB3BH9K)`.  Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121BELEND minimizes `Q_2` over the next
+outer coordinate at its saturated value.  At that value,
+`(P5A.102AD5ALX1ZZB3BH9L)--(P5A.102AD5ALX1ZZB3BH9M)` give
+
+```text
+L=Q_2=1+RF(R,u,v).
+```
+
+Substitute this `L` and the local polynomials
+`(P5A.102AD5ALX1ZZB3BH9Z5)` in the left side of
+`(P5A.102AD5ALX1ZZB3BH9Z7A)`.  Compactify by
+
+```text
+w=R/(1+R),
+K_rat(w,u,v)=(1-w)^44 S_rat(w/(1-w),u,v),     (P5A.102AD5ALX1ZZB3BH9Z7B)
+```
+
+where `S_rat` denotes that left side.  The exact polynomial `K_rat`
+has coordinate degrees `(44,22,7)`.  Its root Bernstein grid has
+`8280` coefficients, `897` of them negative.  Split first at `w=1/2`
+and then at `w=3/4`.  Exact cyclic midpoint subdivision of the two
+boxes covering
+
+```text
+0<=w<=3/4,                    0<=u,v<=1
+```
+
+produces `18` nodes, `10` coefficientwise-nonnegative leaves, maximum
+depth `6`, and no unresolved leaf.  Hence `S_rat>=0` for `R<=3` at
+the saturated outer coordinate.  The left side of
+`(P5A.102AD5ALX1ZZB3BH9Z7A)` is affine increasing in `Q_2`, with
+positive coefficient
+
+```text
+4AH^4.                                         (P5A.102AD5ALX1ZZB3BH9Z7C)
+```
+
+Outer saturation therefore proves the same inequality for every
+admissible continuation.  The boundary follows by continuity.  The
+fail-closed exact C++ mode `--replay-wall-121-q2-floor` constructs
+`K_rat` independently and asserts every displayed grid and subdivision
+count.  QED.
+
+The complementary large-ratio chamber closes after imposing the exact
+critical-branch coordinates already used for the coupled cutoff-two
+certificate.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATQ2LARGE
+(large-ratio rational cutoff-two payment).**  Under the notation and
+branch hypotheses of Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121RATCEIL, if
+
+```text
+R=b/a>=3,
+```
+
+then the cutoff-two Bellman state satisfies
+`(P5A.102AD5ALX1ZZB3BH9Z7A)` and hence pays the rational ceiling in
+`(P5A.102AD5ALX1ZZB3BH9I0B)`.
+
+**Proof.**  Normalize `a=1`.  The critical branch has `B>0`, so the
+large-ratio coordinates
+`(P5A.102AD5ALX1ZZB3BH9Z9)--(P5A.102AD5ALX1ZZB3BH9ZA)` apply.  Thus,
+with `t=1-w`, `W=1-t`,
+
+```text
+u=U/W^2,                    v=(D-Z)/D,
+0<=t<=1/4,                  0<=alpha,beta<=1.  (P5A.102AD5ALX1ZZB3BH9Z7D)
+```
+
+Use the compact rational polynomial `K_rat` from
+`(P5A.102AD5ALX1ZZB3BH9Z7B)` and clear its exact denominators by
+
+```text
+P_rat(t,alpha,beta)
+ =W^44D^7 K_rat(W,U/W^2,(D-Z)/D).             (P5A.102AD5ALX1ZZB3BH9Z7E)
+```
+
+Put `x=4t`.  Exact expansion gives
+
+```text
+4^130 P_rat(x/4,alpha,beta)
+ =x^14 J_rat(x,alpha,beta),                   (P5A.102AD5ALX1ZZB3BH9Z7F)
+```
+
+where `J_rat` has coordinate degrees `(116,33,7)`, `26201` nonzero
+monomials, and `31824` root-grid Bernstein coefficients.  Exactly `115`
+of the latter are negative.  Its Newton face at the origin is the same
+coercive face as `(P5A.102AD5ALX1ZZB3BH9ZD)`:
+
+```text
+kappa{64alpha^2+8x alpha beta+x^2beta-x^2alpha
+       +(3/128)x^4},                    kappa>0. (P5A.102AD5ALX1ZZB3BH9Z7G)
+```
+
+On the singular cube
+
+```text
+0<=x,alpha,beta<=delta,                  delta=1/64,             (P5A.102AD5ALX1ZZB3BH9Z7H)
+```
+
+assign every negative monomial of `J_rat` by the five debit rules in
+`(P5A.102AD5ALX1ZZB3BH9ZF)`.  Among its `13070` negative monomials,
+every one is assigned.  Exact rational summation of the five debit
+totals gives reserves satisfying
+
+```text
+A_0>=0,       X_0>=0,       V_0>=0,       C_0>=0,
+4A_0C_0-d_L^2>=0.                             (P5A.102AD5ALX1ZZB3BH9Z7I)
+```
+
+The argument in `(P5A.102AD5ALX1ZZB3BH9ZH)` therefore proves
+`J_rat>=0` on this cube.
+
+For the complement, normalize the exact rational Bernstein grid to its
+common positive denominator.  There are `14594` distinct input
+denominators and the common denominator has `206` bits.  Every midpoint
+de Casteljau split can then be performed with integers only: at a split
+of degree `d`, multiply the level-`i` left sum by `2^(d-i)` and the
+corresponding right sum by `2^i`.  This changes every coefficient by the
+same positive denominator and hence preserves its exact sign.
+
+Cyclic integer subdivision gives `987` nodes, `493`
+coefficientwise-nonnegative leaves, the one corner leaf
+`(P5A.102AD5ALX1ZZB3BH9Z7H)`, maximum depth `38`, and no unresolved
+leaf.  Hence `J_rat>=0` on the full parameter cube.  All factors cleared
+in `(P5A.102AD5ALX1ZZB3BH9Z7E)--(P5A.102AD5ALX1ZZB3BH9Z7F)` are
+nonnegative, with positive interior denominators, and continuity gives
+the boundary.  Therefore the saturated cutoff-two state pays
+`(P5A.102AD5ALX1ZZB3BH9Z7A)`.  Finally, that margin is affine increasing
+in `Q_2` with coefficient `4AH^4>0`; Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121BELEND removes the outer saturation.  The
+fail-closed C++ mode `--replay-wall-121-q2-floor` reconstructs the
+polynomial, Newton face, every debit, the common-denominator integer
+grid, and the complete subdivision forest.  QED.
+
+**Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121RATQ2ALL
+(complete rational cutoff-two payment).**  Under the branch hypotheses
+of Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATCEIL, every admissible
+cutoff-two state satisfies `(P5A.102AD5ALX1ZZB3BH9Z7A)`.
+
+**Proof.**  Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATQ2MOD covers
+`R<=3`; Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATQ2LARGE covers `R>=3`.
+QED.
+
+The first actual terminal continuation also pays the rational ceiling.
+This is stronger than the cutoff-two statement because the Bellman state
+can decrease when the third current is terminalized.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATSUP3
+(support-three rational terminal payment).**  Target
+5A8H28UIA2CGLPCIPOCGAPWALL121RATPAY holds for every nonnegative
+log-concave wall tail supported in `{1,2,3}`.
+
+**Proof.**  Normalize `a=1` and write
+
+```text
+p=(0,1,R,R^2u,0),                    R>0,       0<=u<=1.
+                                                        (P5A.102AD5ALX1ZZB3BH9Z7K)
+```
+
+Here the critical coefficient is
+
+```text
+B=3R+2R^2-R^3+R^3u-R^4u^2-R^6u^3.  (P5A.102AD5ALX1ZZB3BH9Z7L)
+```
+
+Since `x-x^2<=1/4` for every real `x`,
+
+```text
+B/R
+ <=3+2R-R^2+R/4
+ =3+(9/4)R-R^2.                              (P5A.102AD5ALX1ZZB3BH9Z7M)
+```
+
+The last polynomial is decreasing for `R>=4` and equals `-4` at
+`R=4`.  Thus the critical branch `B>0` forces `R<4`.
+
+Construct the terminal current `C_0` directly from `g,h,k` in
+`(P5A.102AD5ALX1ZZB3BGX)--(P5A.102AD5ALX1ZZB3BGY)`, substitute it
+and the local coefficients in the rational margin
+`(P5A.102AD5ALX1ZZB3BH9I0C)`, and compactify by
+
+```text
+w=R/(1+R),
+K_3(w,u)=(1-w)^44 S_3(w/(1-w),u),             (P5A.102AD5ALX1ZZB3BH9Z7N)
+```
+
+where `S_3` is that terminal rational margin.  The exact polynomial
+`K_3` has coordinate degrees `(44,22)`.  Its root Bernstein grid has
+`1035` coefficients, `187` of them negative.  Split the `w` interval
+at `1/2`, `3/4`, and `7/8`, retaining the three boxes that cover
+
+```text
+0<=w<=7/8,                         0<=u<=1,    (P5A.102AD5ALX1ZZB3BH9Z7O)
+```
+
+or equivalently `0<=R<=7`.  Exact cyclic midpoint subdivision gives
+`29` nodes, `16` coefficientwise-nonnegative leaves, maximum depth `6`,
+and no unresolved leaf.  Hence `S_3>=0` on a box strictly larger than
+the complete critical branch `R<4`.  The faces `R=0` and `u=0` follow
+within the same polynomial certificate, so tails of smaller support are
+included.  The fail-closed C++ mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-wall-121-rational-support-three
+```
+
+reconstructs the terminal currents and local coefficients independently,
+checks the branch bound, and asserts every displayed exact grid and
+subdivision count.  QED.
+
+The next terminal chamber has an even simpler large-ratio face.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATSUP4
+(support-four rational terminal payment).**  Target
+5A8H28UIA2CGLPCIPOCGAPWALL121RATPAY holds for every nonnegative
+log-concave wall tail supported in `{1,2,3,4}`.
+
+**Proof.**  Support at most three is Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121RATSUP3.  For positive support four,
+normalize `a=1` and write
+
+```text
+p=(0,1,R,R^2u,R^3u^2v,0),
+R>0,                              0<u,v<=1.    (P5A.102AD5ALX1ZZB3BH9Z7P)
+```
+
+Construct the terminal current and rational margin directly as in the
+preceding lemma.  After compactifying `R` by `w=R/(1+R)`, put
+
+```text
+K_4(w,u,v)=(1-w)^47 S_4(w/(1-w),u,v).         (P5A.102AD5ALX1ZZB3BH9Z7Q)
+```
+
+The exact polynomial `K_4` has coordinate degrees `(47,25,8)`.  Its
+root Bernstein grid has `11232` coefficients, `1901` of them negative.
+On `0<=w<=3/4`, exact cyclic midpoint subdivision gives `50` nodes,
+`26` coefficientwise-nonnegative leaves, maximum depth `12`, and no
+unresolved leaf.  Hence the terminal margin is nonnegative for `R<=3`.
+
+For `R>=3`, use the critical-branch variables
+`(P5A.102AD5ALX1ZZB3BH9Z7D)`.  Clear denominators by
+
+```text
+P_4(t,alpha,beta)
+ =W^50D^8 K_4(W,U/W^2,(D-Z)/D).               (P5A.102AD5ALX1ZZB3BH9Z7R)
+```
+
+With `x=4t`, exact expansion gives
+
+```text
+4^145P_4(x/4,alpha,beta)
+ =x^8J_4(x,alpha,beta).                       (P5A.102AD5ALX1ZZB3BH9Z7S)
+```
+
+The quotient `J_4` has coordinate degrees `(137,41,8)`, `40204`
+nonzero monomials, and `52164` root-grid Bernstein coefficients, only
+`97` of which are negative.  Unlike the cutoff-two polynomial, its
+specialization at `x=0` consists of one strictly positive constant
+term.  Thus no singular-corner debit is needed.
+
+Normalize the rational Bernstein grid to its common positive
+denominator.  It has `24575` distinct input denominators and the common
+denominator has `244` bits.  The exact integer midpoint subdivision
+described in Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATQ2LARGE terminates
+after `5` nodes and `3` coefficientwise-nonnegative leaves, with maximum
+depth `2` and no unresolved or exceptional corner leaf.  Hence `J_4>=0`
+on the complete branch cube.  Equations
+`(P5A.102AD5ALX1ZZB3BH9Z7R)--(P5A.102AD5ALX1ZZB3BH9Z7S)` now prove the
+terminal margin for `R>=3`; continuity includes every boundary.
+
+The fail-closed C++ mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-wall-121-rational-support-four
+```
+
+reconstructs `g,h,k,C_0,A,B,C`, both compact polynomials, and both exact
+subdivision forests.  QED.
+
+The first append beyond the certified terminal chambers has a local
+quartic law.  It also shows exactly why support cannot be propagated by
+bare monotonicity of the terminal current.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121APPEND
+(arbitrary-depth terminal append law).**  Fix a log-concave terminal prefix
+
+```text
+p=(...,a,b,c,d),
+```
+
+whose displayed entries are its last four coordinates, and append `x`
+with `0<=x<=d^2/c`.  Let `C_0^(-)` and `C_0^(+)` denote the terminal
+currents before and after the append.  Then
+
+```text
+C_0^(+)-C_0^(-)
+ =x{L+Qx+(b+2c+d)x^2+2x^3},                   (P5A.102AD5ALX1ZZB3BH9Z7U)
+
+L=d^3-acd-4cd^2-2c^2d+2c^3-abc-2bcd+b^2d+b^3,
+Q=-2d^2-2cd+2c^2+bc.                          (P5A.102AD5ALX1ZZB3BH9Z7V)
+```
+
+**Proof.**  The append changes only the fixed-width terminal block of
+`g_i,h_i,k_i`.  Translate that block to coordinates `(a,b,c,d,x)`, construct
+both terminal currents from
+`(P5A.102AD5ALX1ZZB3BGX)--(P5A.102AD5ALX1ZZB3BGY)`, subtract, and
+collect powers of `x`.  Every earlier coordinate cancels.  The constant
+term vanishes and the four remaining coefficient blocks are exactly
+`(P5A.102AD5ALX1ZZB3BH9Z7U)--(P5A.102AD5ALX1ZZB3BH9Z7V)`.  The exact C++
+mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-wall-121-terminal-append-law
+```
+
+constructs both currents independently with indeterminates
+`(z,a,b,c,d,x)`, asserts that the preceding coordinate `z` cancels, and
+checks the displayed arbitrary-depth identity.  QED.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121APPENDOBS
+(terminal append monotonicity obstruction).**  The append in Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121APPEND can strictly decrease `C_0`.
+
+**Proof.**  In the normalized variables take
+
+```text
+(a,b,c,d,x)=(1,4/3,5/3,5/3,4/3).
+```
+
+The consecutive log-concavity comparisons, after multiplying by nine,
+are `16>=15`, `25>=20`, and `25>=20`.  Exact substitution in
+`(P5A.102AD5ALX1ZZB3BH9Z7U)` gives
+
+```text
+C_0^(+)-C_0^(-)=-1016/81<0.                   (P5A.102AD5ALX1ZZB3BH9Z7W)
+```
+
+Thus the support-four rational reserve cannot be propagated by the bare
+inequality `C_0^(m+1)>=C_0^(m)`.  The required arbitrary-depth state must
+absorb the explicit quartic debit in
+`(P5A.102AD5ALX1ZZB3BH9Z7U)`.  The same C++ replay checks the exact
+witness.  QED.
+
+The arbitrary-depth law has only three normalized state variables.  This
+is the exact Bellman reduction of the remaining support-uniform problem;
+in particular, no growing window of coefficients is needed.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121APPENDBEL
+(three-ratio terminal Bellman recursion).**  For
+
+```text
+r>=s>=t>=q>=0,
+```
+
+let `Delta(r,s,t,q)` be the right side of
+`(P5A.102AD5ALX1ZZB3BH9Z7U)` after substituting
+
+```text
+(a,b,c,d,x)=(1,r,rs,rst,rstq).                 (P5A.102AD5ALX1ZZB3BH9Z7X)
+```
+
+Define `V_0=0` and recursively
+
+```text
+V_(N+1)(r,s,t)
+ =min{0, inf_(0<=q<=t)
+   [Delta(r,s,t,q)+r^4 V_N(s,t,q)]}.           (P5A.102AD5ALX1ZZB3BH9Z7Y)
+```
+
+Then `V_N(r,s,t)` is exactly the infimum of the normalized change in
+terminal current over every log-concave continuation of
+
+```text
+(0,1,r,rs,rst)
+```
+
+having at most `N` further positive coordinates.  Consequently
+
+```text
+V(r,s,t)=inf_(N>=0)V_N(r,s,t)                  (P5A.102AD5ALX1ZZB3BH9Z7Z)
+```
+
+is the exact infimum over all finite continuations.
+
+**Proof.**  The case `N=0` is termination.  For a nonempty continuation,
+write its first new ratio as `q`.  Log concavity is exactly `0<=q<=t`.
+Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121APPEND gives the first current change
+as `Delta(r,s,t,q)`.  After deleting the first coordinate of the displayed
+four-coordinate window, its new first entry is `r`, its three ratios are
+`(s,t,q)`, and homogeneity of degree four multiplies every later current
+change by `r^4`.  Minimizing over `q` and allowing immediate termination
+gives `(P5A.102AD5ALX1ZZB3BH9Z7Y)`.  Induction on `N` proves the finite
+statement, and taking the infimum proves `(P5A.102AD5ALX1ZZB3BH9Z7Z)`.
+QED.
+
+**Target 5A8H28UIA2CGLPCIPOCGAPWALL121APPENDBELPAY
+(three-ratio global payment).**  Let `T_4(r,s,t)` be the terminal current
+of `(0,1,r,rs,rst)`.  On every initial critical-branch state, prove
+
+```text
+T_4(r,s,t)+V(r,s,t)
+ >=A tau^2+2C tau^3,                            (P5A.102AD5ALX1ZZB3BH9Z80)
+```
+
+where `A,B,C,tau` are the local quantities in Corollary
+5A8H28UIA2CGLPCIPOCGAPWALL121CRIT.  Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121APPENDBEL makes this target exactly
+equivalent to the arbitrary-support critical payment, rather than a
+sufficient strengthening.  Equivalently, the cubic with constant
+coefficient `T_4+V` must have nonpositive discriminant.  The rational
+ceiling from Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATCEIL cannot replace
+the right side: the following exact obstruction disproves that stronger
+Bellman target.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121RATPAYOBS
+(support-uniform rational-ceiling obstruction).**  There is a finite
+positive log-concave critical-branch tail for which the rational margin
+`(P5A.102AD5ALX1ZZB3BH9I0C)` is negative, while the exact cubic
+discriminant remains negative.
+
+**Proof.**  Normalize `p_1=1` and prescribe the `21` consecutive ratios
+`p_(i+1)/p_i` by dividing the following decreasing integers by `1000`:
+
+```text
+(1584,1323,1208,1139,1092,1057,1028,
+ 1003, 981, 960, 939, 919, 897, 874,
+  848, 818, 782, 734, 670, 572, 410).           (P5A.102AD5ALX1ZZB3BH9Z81)
+```
+
+Terminate after the resulting support `22`.  The displayed monotonicity
+is exactly log concavity.  Reconstructing the terminal current from
+`(P5A.102AD5ALX1ZZB3BGX)--(P5A.102AD5ALX1ZZB3BGY)` and the local
+coefficients from `(P5A.102AD5ALX1ZZB3BGW)` gives, for orientation,
+
+```text
+C_0=1.53104...,   A=8.92417...,   B=7.93352...,
+C=4.67963...,     Phi'(1/R)=8.92966... .        (P5A.102AD5ALX1ZZB3BH9Z82)
+```
+
+All entries here are exact rationals; the decimals are not used for the
+signs.  Exact integer cross multiplication gives
+
+```text
+B>0,                 Phi'(1/R)>0,
+
+(4AC_0-B^2)H^4+32A^4CB^3H+144A^4C^2B^4<0,
+
+Disc(Cy^3+Ay^2-By+C_0)<0,        H=4A^2+3BC.   (P5A.102AD5ALX1ZZB3BH9Z83)
+```
+
+Thus the profile is on the required critical branch and disproves the
+rational strengthening, but its negative exact discriminant means it does
+not disprove the original GKS2* payment.  The fail-closed C++ mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-wall-121-cubic-corrected-demand-ceiling
+```
+
+constructs the rational profile from `(P5A.102AD5ALX1ZZB3BH9Z81)`, checks
+every log-concavity comparison, reconstructs `g,h,k,C_0,A,B,C`, and asserts
+both exact signs in `(P5A.102AD5ALX1ZZB3BH9Z83)`.  QED.
+
+One further alternating fixed-point step removes this obstruction while
+retaining a rational polynomial payment.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RAT2CEIL
+(second-iterate rational demand ceiling).**  Under the branch hypotheses
+of Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121CRIT, retain `A,B,C,H` from
+Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RATCEIL and put
+
+```text
+J=2A^2+3BC,              K=8A^2J+3BCH,
+N=4ABJ,                  ell_2=N/K.             (P5A.102AD5ALX1ZZB3BH9Z84)
+```
+
+Then
+
+```text
+ell<=ell_2<=tau,
+
+A tau^2+2C tau^3
+ <=B^2/(4A)-C ell_2^3{1+9C ell_2/(4A)}.         (P5A.102AD5ALX1ZZB3BH9Z85)
+```
+
+Consequently the exact critical payment follows from
+
+```text
+(4AC_0-B^2)K^4+4ACN^3K+9C^2N^4>=0.            (P5A.102AD5ALX1ZZB3BH9Z86)
+```
+
+**Proof.**  Put `f(x)=B/(2A+3Cx)`.  The critical equation is
+`f(tau)=tau`, and `f` is decreasing.  Starting from
+
+```text
+0<=tau<=u_0=B/(2A),
+```
+
+the first lower and next upper iterates are
+
+```text
+ell=f(u_0)=2AB/H,
+u_1=f(ell)=BH/(4AJ).
+```
+
+Thus `ell<=tau<=u_1<=u_0`, and another decreasing iterate gives
+
+```text
+ell_2=f(u_1)=4ABJ/{8A^2J+3BCH}=N/K,
+ell<=ell_2<=tau.
+```
+
+Apply the increasing correction term in the exact identity
+`(P5A.102AD5ALX1ZZB3BH9I0D)` at `ell_2`.  This proves
+`(P5A.102AD5ALX1ZZB3BH9Z85)`.  Multiplication of the resulting payment by
+`4AK^4>0` gives `(P5A.102AD5ALX1ZZB3BH9Z86)`.  QED.
+
+**Target 5A8H28UIA2CGLPCIPOCGAPWALL121RAT2PAY
+(corrected support-uniform rational payment).**  Prove
+`(P5A.102AD5ALX1ZZB3BH9Z86)` for every finite nonnegative log-concave
+critical-branch tail.  This is still a sufficient strengthening of the
+exact Bellman target `(P5A.102AD5ALX1ZZB3BH9Z80)`, but it is strictly
+weaker than the disproved first-iterate target.  On the support-22 witness
+`(P5A.102AD5ALX1ZZB3BH9Z81)`, exact arithmetic gives a strictly positive
+second-iterate margin.  This is a diagnostic, not a proof of the target;
+the same fail-closed replay asserts that sign.
+
+The support-three and support-four rational certificates above, and the
+support-five calculation below, are therefore finite boundary facts only.
+Because `ell_2>=ell`, those first-iterate certificates automatically pay
+the weaker second-iterate ceiling as well.  They do not replace either the
+corrected uniform target `(P5A.102AD5ALX1ZZB3BH9Z86)` or the exact Bellman
+target `(P5A.102AD5ALX1ZZB3BH9Z80)`.
 
 Target 5A8H28UIA2CGLPCIPOCGAPWALL121PAY contains every
 arbitrary-depth variable only through the paired current differences

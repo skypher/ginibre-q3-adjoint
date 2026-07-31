@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <map>
+#include <set>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -2153,6 +2154,354 @@ int replay_wall_121_geometric_demand_ceiling() {
   return EXIT_SUCCESS;
 }
 
+int replay_wall_121_cubic_corrected_demand_ceiling() {
+  const BigPolynomial one = nd_constant(1, 1);
+  const BigPolynomial r = nd_variable(1, 0);
+  const BigPolynomial r_two = nd_power(r, 2);
+  BigPolynomial geometric_a = one;
+  big_add_scaled(geometric_a, r_two, 2);
+  big_add_scaled(geometric_a, nd_power(r, 3), 1);
+  BigPolynomial geometric_b;
+  big_add_scaled(geometric_b, r, 3);
+  big_add_scaled(geometric_b, r_two, 2);
+  BigPolynomial geometric_c = one;
+  big_add_scaled(geometric_c, r, 1);
+  big_add_scaled(geometric_c, r_two, 1);
+  BigPolynomial geometric_current = one;
+  big_add_scaled(geometric_current, r, 1);
+  BigPolynomial geometric_h = nd_power(geometric_a, 2);
+  for (auto& [exponent, coefficient] : geometric_h) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+  big_add_scaled(
+      geometric_h, big_multiply(geometric_b, geometric_c), 3);
+  BigPolynomial geometric_quadratic =
+      big_multiply(geometric_a, geometric_current);
+  for (auto& [exponent, coefficient] : geometric_quadratic) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+  big_add_scaled(geometric_quadratic, nd_power(geometric_b, 2), -1);
+  BigPolynomial geometric_margin =
+      big_multiply(geometric_quadratic, nd_power(geometric_h, 4));
+  BigPolynomial geometric_first_correction = big_multiply(
+      big_multiply(
+          big_multiply(nd_power(geometric_a, 4), geometric_c),
+          nd_power(geometric_b, 3)),
+      geometric_h);
+  big_add_scaled(geometric_margin, geometric_first_correction, 32);
+  const BigPolynomial geometric_second_correction = big_multiply(
+      big_multiply(
+          nd_power(geometric_a, 4), nd_power(geometric_c, 2)),
+      nd_power(geometric_b, 4));
+  big_add_scaled(geometric_margin, geometric_second_correction, 144);
+  const std::vector<Integer> geometric_expected{
+      1024, 10240, 71808, 348480, 1357460, 4230852, 11049207,
+      24376076, 46302282, 76760012, 112488037, 147955104,
+      175724946, 189838320, 187530543, 169190696, 139027496,
+      103376016, 68592960, 39925984, 20013840, 8414336, 2848128,
+      733056, 132608, 14848, 768};
+  std::vector<Integer> geometric_actual(geometric_expected.size(), 0);
+  for (const auto& [exponent, coefficient] : geometric_margin) {
+    if (coefficient == 0) {
+      continue;
+    }
+    if (
+        exponent.size() != 1U
+        || exponent[0] < 0
+        || exponent[0] >= static_cast<int>(geometric_actual.size())
+    ) {
+      throw std::runtime_error(
+          "wall (1,2,1) geometric rational-payment degree mismatch");
+    }
+    geometric_actual[static_cast<std::size_t>(exponent[0])] = coefficient;
+  }
+  if (geometric_actual != geometric_expected) {
+    throw std::runtime_error(
+        "wall (1,2,1) geometric rational-payment expansion mismatch");
+  }
+
+  constexpr int support = 11;
+  const std::array<Integer, 13> profile{
+      0, 10, 14, 16, 17, 16, 14, 11, 8, 5, 3, 1, 0};
+  for (int index = 1; index <= support; ++index) {
+    if (
+        profile[static_cast<std::size_t>(index)]
+              * profile[static_cast<std::size_t>(index)]
+        < profile[static_cast<std::size_t>(index - 1)]
+              * profile[static_cast<std::size_t>(index + 1)]
+    ) {
+      throw std::runtime_error(
+          "wall (1,2,1) quadratic-envelope profile is not log concave");
+    }
+  }
+
+  std::array<Integer, 14> g{};
+  std::array<Integer, 15> h{};
+  std::array<Integer, 14> k{};
+  for (int index = 1; index <= support + 1; ++index) {
+    g[static_cast<std::size_t>(index)] =
+        profile[static_cast<std::size_t>(index)]
+              * profile[static_cast<std::size_t>(index)]
+        - profile[static_cast<std::size_t>(index - 1)]
+              * (index + 1 < static_cast<int>(profile.size())
+                     ? profile[static_cast<std::size_t>(index + 1)]
+                     : Integer(0));
+  }
+  for (int index = 1; index <= support + 2; ++index) {
+    const Integer current =
+        index < static_cast<int>(profile.size())
+            ? profile[static_cast<std::size_t>(index)]
+            : Integer(0);
+    const Integer previous =
+        index - 1 < static_cast<int>(profile.size())
+            ? profile[static_cast<std::size_t>(index - 1)]
+            : Integer(0);
+    const Integer left_two =
+        index >= 2
+            ? profile[static_cast<std::size_t>(index - 2)]
+            : Integer(0);
+    const Integer next =
+        index + 1 < static_cast<int>(profile.size())
+            ? profile[static_cast<std::size_t>(index + 1)]
+            : Integer(0);
+    h[static_cast<std::size_t>(index)] =
+        current * previous - left_two * next;
+  }
+  for (int index = 1; index <= support + 1; ++index) {
+    k[static_cast<std::size_t>(index)] =
+        g[static_cast<std::size_t>(index)]
+        + h[static_cast<std::size_t>(index)]
+        + h[static_cast<std::size_t>(index + 1)];
+  }
+
+  Integer energy = 0;
+  for (int index = 1; index <= support; ++index) {
+    energy +=
+        (g[static_cast<std::size_t>(index)]
+         - g[static_cast<std::size_t>(index + 1)])
+        * (k[static_cast<std::size_t>(index)]
+           - k[static_cast<std::size_t>(index + 1)]);
+  }
+  const Integer a = profile[1];
+  const Integer b = profile[2];
+  const Integer c = profile[3];
+  const Integer d = profile[4];
+  const Integer c_zero = a * a * a * b + energy;
+  const Integer c_one =
+      b * b * b + a * c * c + c * c * c
+      - 3 * a * a * b - 2 * a * b * b
+      - a * b * c - a * b * d - b * c * d;
+  const Integer a_coefficient = a * a + b * b + (a + b) * c;
+  const Integer b_coefficient = -c_one;
+  const Integer c_coefficient = a + b + c;
+  const Integer quadratic_margin =
+      4 * a_coefficient * c_zero
+      - b_coefficient * b_coefficient;
+  const Integer endpoint_derivative_numerator =
+      c_one * b * b
+      + 2 * a_coefficient * a * a * b
+      + 3 * c_coefficient * a * a * a * a;
+  const Integer discriminant =
+      18 * c_coefficient * a_coefficient * c_one * c_zero
+      - 4 * a_coefficient * a_coefficient * a_coefficient * c_zero
+      + a_coefficient * a_coefficient * c_one * c_one
+      - 4 * c_coefficient * c_one * c_one * c_one
+      - 27 * c_coefficient * c_coefficient * c_zero * c_zero;
+  const Integer denominator =
+      4 * a_coefficient * a_coefficient
+      + 3 * b_coefficient * c_coefficient;
+  const Integer corrected_margin =
+      quadratic_margin
+          * denominator * denominator * denominator * denominator
+      + 32 * a_coefficient * a_coefficient
+          * a_coefficient * a_coefficient
+          * c_coefficient * b_coefficient * b_coefficient
+          * b_coefficient * denominator
+      + 144 * a_coefficient * a_coefficient
+          * a_coefficient * a_coefficient
+          * c_coefficient * c_coefficient
+          * b_coefficient * b_coefficient
+          * b_coefficient * b_coefficient;
+  if (
+      c_zero != 17618
+      || a_coefficient != 680
+      || b_coefficient != 7148
+      || c_coefficient != 40
+      || quadratic_margin != -3172944
+      || endpoint_derivative_numerator != 1702992
+      || discriminant != Integer("-15163796058880")
+      || corrected_margin
+             != Integer("228746021443515431465475112960000")
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) cubic-corrected demand replay mismatch");
+  }
+
+  const Integer long_ratio_denominator = 1000;
+  const std::vector<Integer> long_ratio_numerators{
+      1584, 1323, 1208, 1139, 1092, 1057, 1028, 1003, 981, 960,
+      939, 919, 897, 874, 848, 818, 782, 734, 670, 572, 410};
+  std::vector<Rational> long_ratios;
+  long_ratios.reserve(long_ratio_numerators.size());
+  for (const Integer& numerator : long_ratio_numerators) {
+    long_ratios.emplace_back(numerator, long_ratio_denominator);
+  }
+  for (std::size_t index = 1; index < long_ratios.size(); ++index) {
+    if (long_ratios[index - 1U] < long_ratios[index]) {
+      throw std::runtime_error(
+          "wall (1,2,1) rational-ceiling obstruction is not log concave");
+    }
+  }
+  const std::size_t long_support = long_ratios.size() + 1U;
+  std::vector<Rational> long_profile(long_support + 4U, Rational(0));
+  long_profile[1] = 1;
+  for (std::size_t index = 0; index < long_ratios.size(); ++index) {
+    long_profile[index + 2U] =
+        long_profile[index + 1U] * long_ratios[index];
+  }
+  std::vector<Rational> long_g(long_profile.size(), Rational(0));
+  std::vector<Rational> long_h(long_profile.size(), Rational(0));
+  std::vector<Rational> long_k(long_profile.size(), Rational(0));
+  for (std::size_t index = 1; index <= long_support + 1U; ++index) {
+    long_g[index] =
+        long_profile[index] * long_profile[index]
+        - long_profile[index - 1U] * long_profile[index + 1U];
+  }
+  for (std::size_t index = 1; index <= long_support + 2U; ++index) {
+    long_h[index] = long_profile[index] * long_profile[index - 1U];
+    if (index >= 2U) {
+      long_h[index] -=
+          long_profile[index - 2U] * long_profile[index + 1U];
+    }
+  }
+  for (std::size_t index = 1; index <= long_support + 1U; ++index) {
+    long_k[index] = long_g[index] + long_h[index] + long_h[index + 1U];
+  }
+  Rational long_c_zero =
+      long_profile[1] * long_profile[1] * long_profile[1]
+      * long_profile[2];
+  for (std::size_t index = 1; index <= long_support; ++index) {
+    long_c_zero +=
+        (long_g[index] - long_g[index + 1U])
+        * (long_k[index] - long_k[index + 1U]);
+  }
+  const Rational& long_a = long_profile[1];
+  const Rational& long_b = long_profile[2];
+  const Rational& long_c = long_profile[3];
+  const Rational& long_d = long_profile[4];
+  const Rational long_a_coefficient =
+      long_a * long_a + long_b * long_b
+      + (long_a + long_b) * long_c;
+  const Rational long_c_coefficient = long_a + long_b + long_c;
+  const Rational long_b_coefficient =
+      3 * long_a * long_a * long_b
+      + 2 * long_a * long_b * long_b
+      + long_a * long_b * long_c + long_a * long_b * long_d
+      + long_b * long_c * long_d - long_b * long_b * long_b
+      - long_a * long_c * long_c - long_c * long_c * long_c;
+  const Rational long_endpoint_derivative =
+      -long_b_coefficient
+      + 2 * long_a_coefficient * long_a * long_a / long_b
+      + 3 * long_c_coefficient * long_a * long_a * long_a * long_a
+            / (long_b * long_b);
+  const Rational long_h_coefficient =
+      4 * long_a_coefficient * long_a_coefficient
+      + 3 * long_b_coefficient * long_c_coefficient;
+  const Rational long_corrected_margin =
+      (4 * long_a_coefficient * long_c_zero
+       - long_b_coefficient * long_b_coefficient)
+          * long_h_coefficient * long_h_coefficient
+          * long_h_coefficient * long_h_coefficient
+      + 32 * long_a_coefficient * long_a_coefficient
+          * long_a_coefficient * long_a_coefficient
+          * long_c_coefficient * long_b_coefficient
+          * long_b_coefficient * long_b_coefficient
+          * long_h_coefficient
+      + 144 * long_a_coefficient * long_a_coefficient
+          * long_a_coefficient * long_a_coefficient
+          * long_c_coefficient * long_c_coefficient
+          * long_b_coefficient * long_b_coefficient
+          * long_b_coefficient * long_b_coefficient;
+  const Rational long_j_coefficient =
+      2 * long_a_coefficient * long_a_coefficient
+      + 3 * long_b_coefficient * long_c_coefficient;
+  const Rational long_k_coefficient =
+      8 * long_a_coefficient * long_a_coefficient
+          * long_j_coefficient
+      + 3 * long_b_coefficient * long_c_coefficient
+          * long_h_coefficient;
+  const Rational long_n_coefficient =
+      4 * long_a_coefficient * long_b_coefficient
+          * long_j_coefficient;
+  const Rational long_second_corrected_margin =
+      (4 * long_a_coefficient * long_c_zero
+       - long_b_coefficient * long_b_coefficient)
+          * long_k_coefficient * long_k_coefficient
+          * long_k_coefficient * long_k_coefficient
+      + 4 * long_a_coefficient * long_c_coefficient
+          * long_n_coefficient * long_n_coefficient
+          * long_n_coefficient * long_k_coefficient
+      + 9 * long_c_coefficient * long_c_coefficient
+          * long_n_coefficient * long_n_coefficient
+          * long_n_coefficient * long_n_coefficient;
+  const Rational long_discriminant =
+      18 * long_c_coefficient * long_a_coefficient
+          * (-long_b_coefficient) * long_c_zero
+      - 4 * long_a_coefficient * long_a_coefficient
+          * long_a_coefficient * long_c_zero
+      + long_a_coefficient * long_a_coefficient
+          * long_b_coefficient * long_b_coefficient
+      + 4 * long_c_coefficient * long_b_coefficient
+          * long_b_coefficient * long_b_coefficient
+      - 27 * long_c_coefficient * long_c_coefficient
+          * long_c_zero * long_c_zero;
+  if (
+      long_support != 22U
+      || long_c_zero <= 0
+      || long_b_coefficient <= 0
+      || long_endpoint_derivative <= 0
+      || long_corrected_margin >= 0
+      || long_second_corrected_margin <= 0
+      || long_discriminant >= 0
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) rational-ceiling obstruction mismatch");
+  }
+
+  std::cout
+      << "SU2_WALL_121_CUBIC_CORRECTED_DEMAND_CEILING"
+      << " lower_tau=2*A*B/(4*A^2+3*B*C)"
+      << " exact_gap=B^2/(4*A)-D=C*tau^3*(1+9*C*tau/(4*A))"
+      << " sufficient_margin=(4*A*C0-B^2)*H^4"
+      << "+32*A^4*C*B^3*H+144*A^4*C^2*B^4"
+      << " H=4*A^2+3*B*C"
+      << " geometric_margin_degree=26"
+      << " geometric_margin_coefficients="
+      << "(1024,10240,71808,348480,1357460,4230852,11049207,"
+      << "24376076,46302282,76760012,112488037,147955104,"
+      << "175724946,189838320,187530543,169190696,139027496,"
+      << "103376016,68592960,39925984,20013840,8414336,2848128,"
+      << "733056,132608,14848,768)"
+      << " obstruction_profile=(0,10,14,16,17,16,14,11,8,5,3,1)"
+      << " coefficients=(C0=17618,A=680,B=7148,C=40)"
+      << " quadratic_margin=-3172944"
+      << " critical_derivative_numerator=1702992"
+      << " discriminant=-15163796058880"
+      << " corrected_margin=228746021443515431465475112960000"
+      << " rational_ceiling_obstruction_support=22"
+      << " rational_ceiling_obstruction_ratios_per_1000="
+      << "(1584,1323,1208,1139,1092,1057,1028,1003,981,960,"
+      << "939,919,897,874,848,818,782,734,670,572,410)"
+      << " rational_ceiling_obstruction_margin_negative=1"
+      << " second_ceiling_margin_positive=1"
+      << " rational_ceiling_obstruction_discriminant_negative=1"
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
 int replay_support_three_gap_prefix_elevation_obstruction() {
   constexpr int support = 3;
   const Polynomial target = direct_polynomial(
@@ -2503,6 +2852,150 @@ void nd_certify_subdivision_with_corner(
       right_lower, upper, result);
 }
 
+struct NDIntegerBernsteinGrid {
+  std::vector<int> degrees;
+  std::vector<Integer> values;
+};
+
+struct NDIntegerGridConversion {
+  NDIntegerBernsteinGrid grid;
+  std::size_t distinct_denominators = 0U;
+  std::size_t common_denominator_bits = 0U;
+};
+
+Integer integer_gcd(Integer left, Integer right) {
+  if (left < 0) {
+    left = -left;
+  }
+  if (right < 0) {
+    right = -right;
+  }
+  while (right != 0) {
+    const Integer remainder = left % right;
+    left = right;
+    right = remainder;
+  }
+  return left;
+}
+
+NDIntegerGridConversion integer_bernstein_grid(
+    const NDBernsteinGrid& input) {
+  std::set<Integer> denominators;
+  for (const Rational& value : input.values) {
+    denominators.insert(value.denominator());
+  }
+  Integer common_denominator = 1;
+  for (const Integer& denominator : denominators) {
+    common_denominator =
+        (common_denominator / integer_gcd(
+            common_denominator, denominator))
+        * denominator;
+  }
+  NDIntegerBernsteinGrid grid{input.degrees, {}};
+  grid.values.reserve(input.values.size());
+  for (const Rational& value : input.values) {
+    grid.values.push_back(
+        value.numerator()
+        * (common_denominator / value.denominator()));
+  }
+  return {
+      std::move(grid), denominators.size(),
+      boost::multiprecision::msb(common_denominator) + 1U};
+}
+
+std::pair<NDIntegerBernsteinGrid, NDIntegerBernsteinGrid>
+nd_split_integer_grid(
+    const NDIntegerBernsteinGrid& input, const int dimension) {
+  NDIntegerBernsteinGrid left{input.degrees, input.values};
+  NDIntegerBernsteinGrid right{input.degrees, input.values};
+  const std::vector<Exponent> indices = grid_indices(input.degrees);
+  const int degree =
+      input.degrees[static_cast<std::size_t>(dimension)];
+  for (const Exponent& base : indices) {
+    if (base[static_cast<std::size_t>(dimension)] != 0) {
+      continue;
+    }
+    std::vector<std::vector<Integer>> triangle(
+        static_cast<std::size_t>(degree + 1));
+    triangle[0].resize(static_cast<std::size_t>(degree + 1));
+    for (int index = 0; index <= degree; ++index) {
+      Exponent source = base;
+      source[static_cast<std::size_t>(dimension)] = index;
+      triangle[0][static_cast<std::size_t>(index)] =
+          input.values[nd_grid_index(input.degrees, source)];
+    }
+    for (int level = 1; level <= degree; ++level) {
+      triangle[static_cast<std::size_t>(level)].resize(
+          static_cast<std::size_t>(degree - level + 1));
+      for (int index = 0; index <= degree - level; ++index) {
+        triangle[static_cast<std::size_t>(level)]
+                [static_cast<std::size_t>(index)] =
+            triangle[static_cast<std::size_t>(level - 1)]
+                    [static_cast<std::size_t>(index)]
+            + triangle[static_cast<std::size_t>(level - 1)]
+                      [static_cast<std::size_t>(index + 1)];
+      }
+    }
+    for (int index = 0; index <= degree; ++index) {
+      Exponent destination = base;
+      destination[static_cast<std::size_t>(dimension)] = index;
+      left.values[nd_grid_index(left.degrees, destination)] =
+          triangle[static_cast<std::size_t>(index)][0]
+          << (degree - index);
+      right.values[nd_grid_index(right.degrees, destination)] =
+          triangle[static_cast<std::size_t>(degree - index)]
+                  [static_cast<std::size_t>(index)]
+          << index;
+    }
+  }
+  return {std::move(left), std::move(right)};
+}
+
+void nd_certify_integer_subdivision_with_corner(
+    const NDIntegerBernsteinGrid& grid, const int depth,
+    const int depth_limit, const Rational& corner_upper,
+    const std::vector<Rational>& lower,
+    const std::vector<Rational>& upper,
+    NDCornerSubdivisionResult& result) {
+  ++result.counts.nodes;
+  result.counts.maximum_depth =
+      std::max(result.counts.maximum_depth, depth);
+  if (std::all_of(
+          grid.values.begin(), grid.values.end(),
+          [](const Integer& value) { return value >= 0; })) {
+    ++result.counts.leaves;
+    return;
+  }
+  if (std::all_of(
+          upper.begin(), upper.end(),
+          [&corner_upper](const Rational& value) {
+            return value <= corner_upper;
+          })) {
+    ++result.corner_leaves;
+    return;
+  }
+  if (depth >= depth_limit) {
+    ++result.counts.unresolved;
+    return;
+  }
+  const int dimension =
+      depth % static_cast<int>(grid.degrees.size());
+  auto [left, right] = nd_split_integer_grid(grid, dimension);
+  std::vector<Rational> left_upper = upper;
+  std::vector<Rational> right_lower = lower;
+  const Rational middle =
+      (lower[static_cast<std::size_t>(dimension)]
+       + upper[static_cast<std::size_t>(dimension)]) / 2;
+  left_upper[static_cast<std::size_t>(dimension)] = middle;
+  right_lower[static_cast<std::size_t>(dimension)] = middle;
+  nd_certify_integer_subdivision_with_corner(
+      left, depth + 1, depth_limit, corner_upper,
+      lower, left_upper, result);
+  nd_certify_integer_subdivision_with_corner(
+      right, depth + 1, depth_limit, corner_upper,
+      right_lower, upper, result);
+}
+
 int replay_wall_121_q2_floor() {
   constexpr int variables = 3;
   const BigPolynomial one = nd_constant(variables, 1);
@@ -2735,6 +3228,57 @@ int replay_wall_121_q2_floor() {
           coupled_grid.values.begin(), coupled_grid.values.end(),
           [](const Rational& value) { return value < 0; }));
 
+  BigPolynomial rational_h = nd_power(critical_a, 2);
+  for (auto& [exponent, coefficient] : rational_h) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+  big_add_scaled(
+      rational_h, big_multiply(critical_b, critical_c), 3);
+  BigPolynomial rational_quadratic =
+      big_multiply(critical_a, q2_payment);
+  for (auto& [exponent, coefficient] : rational_quadratic) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+  big_add_scaled(
+      rational_quadratic, nd_power(critical_b, 2), -1);
+  BigPolynomial rational_certificate = big_multiply(
+      rational_quadratic, nd_power(rational_h, 4));
+  const BigPolynomial rational_first_correction = big_multiply(
+      big_multiply(
+          big_multiply(
+              nd_power(critical_a, 4), critical_c),
+          nd_power(critical_b, 3)),
+      rational_h);
+  big_add_scaled(
+      rational_certificate, rational_first_correction, 32);
+  const BigPolynomial rational_second_correction = big_multiply(
+      big_multiply(
+          nd_power(critical_a, 4), nd_power(critical_c, 2)),
+      nd_power(critical_b, 4));
+  big_add_scaled(
+      rational_certificate, rational_second_correction, 144);
+  const BigPolynomial compact_rational = canonicalize(
+      compactify_positive_variable(rational_certificate, 0U));
+  const NDBernsteinGrid rational_grid =
+      nd_bernstein_grid(compact_rational, variables);
+  const std::size_t rational_negative = static_cast<std::size_t>(
+      std::count_if(
+          rational_grid.values.begin(), rational_grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+  auto [rational_lower_half, rational_upper_half] =
+      nd_split_grid(rational_grid, 0);
+  auto [rational_middle_quarter, rational_top_quarter] =
+      nd_split_grid(rational_upper_half, 0);
+  static_cast<void>(rational_top_quarter);
+  NDSubdivisionResult rational_moderate_subdivision;
+  nd_certify_subdivision(
+      rational_lower_half, 0, 24, rational_moderate_subdivision);
+  nd_certify_subdivision(
+      rational_middle_quarter, 0, 24,
+      rational_moderate_subdivision);
+
   auto [coupled_lower_half, coupled_upper_half] =
       nd_split_grid(coupled_grid, 0);
   auto [coupled_middle_quarter, coupled_top_quarter] =
@@ -2966,9 +3510,228 @@ int replay_wall_121_q2_floor() {
   const int blowup_depth_limit = 3 * corner_power_two + 18;
   std::cerr << "progress wall_121_q2 blowup_subdivision_start\n"
             << std::flush;
-  nd_certify_subdivision_with_corner(
-      blowup_grid, 0, blowup_depth_limit, corner_upper,
+  NDIntegerGridConversion blowup_integer_conversion =
+      integer_bernstein_grid(blowup_grid);
+  nd_certify_integer_subdivision_with_corner(
+      blowup_integer_conversion.grid, 0,
+      blowup_depth_limit, corner_upper,
       blowup_lower, blowup_upper, blowup_subdivision);
+
+  const int rational_u_degree = rational_grid.degrees[1];
+  const int rational_v_degree = rational_grid.degrees[2];
+  int rational_maximum_w_power = 0;
+  for (const auto& [exponent, coefficient] : compact_rational) {
+    static_cast<void>(coefficient);
+    rational_maximum_w_power = std::max(
+        rational_maximum_w_power,
+        exponent[0]
+            + 2 * (rational_u_degree - exponent[1]));
+  }
+  const auto power_table = [&one](
+      const BigPolynomial& base, const int maximum) {
+    std::vector<BigPolynomial> powers;
+    powers.reserve(static_cast<std::size_t>(maximum + 1));
+    powers.push_back(one);
+    for (int exponent = 1; exponent <= maximum; ++exponent) {
+      powers.push_back(big_multiply(powers.back(), base));
+    }
+    return powers;
+  };
+  const std::vector<BigPolynomial> rational_w_powers =
+      power_table(blowup_w, rational_maximum_w_power);
+  const std::vector<BigPolynomial> rational_u_powers =
+      power_table(blowup_u_numerator, rational_u_degree);
+  const std::vector<BigPolynomial> rational_d_powers =
+      power_table(blowup_denominator, rational_v_degree);
+  const std::vector<BigPolynomial> rational_v_powers =
+      power_table(blowup_v_numerator, rational_v_degree);
+  std::map<std::pair<int, int>, BigPolynomial> rational_grouped_w;
+  for (const auto& [exponent, coefficient] : compact_rational) {
+    big_add_scaled(
+        rational_grouped_w[{exponent[1], exponent[2]}],
+        rational_w_powers[static_cast<std::size_t>(
+            exponent[0]
+                + 2 * (rational_u_degree - exponent[1]))],
+        coefficient);
+  }
+  BigPolynomial rational_blowup_polynomial;
+  for (const auto& [uv_exponents, w_polynomial] :
+       rational_grouped_w) {
+    BigPolynomial term = w_polynomial;
+    term = big_multiply(
+        term,
+        rational_u_powers[static_cast<std::size_t>(
+            uv_exponents.first)]);
+    term = big_multiply(
+        term,
+        rational_d_powers[static_cast<std::size_t>(
+            rational_v_degree - uv_exponents.second)]);
+    term = big_multiply(
+        term,
+        rational_v_powers[static_cast<std::size_t>(
+            uv_exponents.second)]);
+    big_add_scaled(rational_blowup_polynomial, term, 1);
+  }
+  rational_blowup_polynomial =
+      canonicalize(rational_blowup_polynomial);
+  int rational_blowup_t_degree = 0;
+  for (const auto& [exponent, coefficient] :
+       rational_blowup_polynomial) {
+    static_cast<void>(coefficient);
+    rational_blowup_t_degree = std::max(
+        rational_blowup_t_degree, exponent[0]);
+  }
+  BigPolynomial rational_scaled_blowup;
+  for (const auto& [exponent, coefficient] :
+       rational_blowup_polynomial) {
+    Integer scale = 1;
+    for (int power = exponent[0];
+         power < rational_blowup_t_degree; ++power) {
+      scale *= 4;
+    }
+    rational_scaled_blowup[exponent] += coefficient * scale;
+  }
+  rational_scaled_blowup = canonicalize(rational_scaled_blowup);
+  constexpr int rational_blowup_t_factor = 14;
+  BigPolynomial rational_blowup_quotient;
+  for (const auto& [exponent, coefficient] :
+       rational_scaled_blowup) {
+    if (exponent[0] < rational_blowup_t_factor) {
+      throw std::runtime_error(
+          "wall (1,2,1) rational blowup t-factor mismatch");
+    }
+    Exponent quotient_exponent = exponent;
+    quotient_exponent[0] -= rational_blowup_t_factor;
+    rational_blowup_quotient[quotient_exponent] += coefficient;
+  }
+  rational_blowup_quotient =
+      canonicalize(rational_blowup_quotient);
+  const Integer rational_leading_scale =
+      rational_blowup_quotient.at(leading_beta);
+  if (
+      rational_leading_scale <= 0
+      || rational_blowup_quotient.at(leading_alpha2)
+          != 64 * rational_leading_scale
+      || rational_blowup_quotient.at(leading_alpha_beta)
+          != 8 * rational_leading_scale
+      || rational_blowup_quotient.at(leading_alpha)
+          != -rational_leading_scale
+      || 128 * rational_blowup_quotient.at(leading_constant)
+          != 3 * rational_leading_scale
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) rational blowup Newton face mismatch");
+  }
+  const auto compute_rational_corner_budget = [
+      &rational_blowup_quotient, &rational_leading_scale
+  ](const Rational& upper) {
+    const auto corner_power = [&upper](const int exponent) {
+      Rational result(1);
+      for (int power = 0; power < exponent; ++power) {
+        result *= upper;
+      }
+      return result;
+    };
+    Rational alpha_loss(0);
+    Rational cross_loss(0);
+    Rational beta_loss(0);
+    Rational linear_alpha(0);
+    Rational constant_loss(0);
+    CornerBudget budget;
+    for (const auto& [exponent, coefficient] :
+         rational_blowup_quotient) {
+      if (coefficient >= 0) {
+        continue;
+      }
+      ++budget.negative_monomials;
+      const int t_exponent = exponent[0];
+      const int alpha_exponent = exponent[1];
+      const int beta_exponent = exponent[2];
+      const Rational magnitude(
+          -coefficient, rational_leading_scale);
+      if (
+          alpha_exponent == 1 && beta_exponent == 0
+          && t_exponent >= 2
+      ) {
+        linear_alpha +=
+            magnitude * corner_power(t_exponent - 2);
+      } else if (
+          alpha_exponent >= 1 && beta_exponent >= 1
+          && t_exponent >= 1
+      ) {
+        cross_loss += magnitude * corner_power(
+            t_exponent - 1 + alpha_exponent - 1
+            + beta_exponent - 1);
+      } else if (alpha_exponent >= 2) {
+        alpha_loss += magnitude * corner_power(
+            t_exponent + alpha_exponent - 2
+            + beta_exponent);
+      } else if (beta_exponent >= 1 && t_exponent >= 2) {
+        beta_loss += magnitude * corner_power(
+            t_exponent - 2 + alpha_exponent
+            + beta_exponent - 1);
+      } else if (
+          alpha_exponent == 0 && beta_exponent == 0
+          && t_exponent >= 4
+      ) {
+        constant_loss +=
+            magnitude * corner_power(t_exponent - 4);
+      } else {
+        ++budget.unclassified_negative;
+      }
+    }
+    budget.alpha_reserve = Rational(64) - alpha_loss;
+    budget.cross_reserve = Rational(8) - cross_loss;
+    budget.beta_reserve = Rational(1) - beta_loss;
+    budget.linear_alpha = linear_alpha;
+    budget.constant_reserve = Rational(3, 128) - constant_loss;
+    budget.discriminant_margin =
+        4 * budget.alpha_reserve * budget.constant_reserve
+        - budget.linear_alpha * budget.linear_alpha;
+    return budget;
+  };
+  int rational_corner_power_two = 4;
+  Rational rational_corner_upper(1, 16);
+  CornerBudget rational_corner_budget =
+      compute_rational_corner_budget(rational_corner_upper);
+  for (; rational_corner_power_two <= 64;
+       ++rational_corner_power_two) {
+    Integer denominator = 1;
+    denominator <<= rational_corner_power_two;
+    rational_corner_upper = Rational(Integer(1), denominator);
+    rational_corner_budget =
+        compute_rational_corner_budget(rational_corner_upper);
+    if (
+        rational_corner_budget.unclassified_negative == 0U
+        && rational_corner_budget.alpha_reserve >= 0
+        && rational_corner_budget.cross_reserve >= 0
+        && rational_corner_budget.beta_reserve >= 0
+        && rational_corner_budget.constant_reserve >= 0
+        && rational_corner_budget.discriminant_margin >= 0
+    ) {
+      break;
+    }
+  }
+  if (rational_corner_power_two > 64) {
+    throw std::runtime_error(
+        "wall (1,2,1) rational blowup corner budget failed");
+  }
+  const NDBernsteinGrid rational_blowup_grid =
+      nd_bernstein_grid(rational_blowup_quotient, variables);
+  const std::size_t rational_blowup_negative =
+      static_cast<std::size_t>(std::count_if(
+          rational_blowup_grid.values.begin(),
+          rational_blowup_grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+  NDIntegerGridConversion rational_integer_conversion =
+      integer_bernstein_grid(rational_blowup_grid);
+  NDCornerSubdivisionResult rational_blowup_subdivision;
+  const int rational_blowup_depth_limit =
+      3 * rational_corner_power_two + 24;
+  nd_certify_integer_subdivision_with_corner(
+      rational_integer_conversion.grid, 0,
+      rational_blowup_depth_limit, rational_corner_upper,
+      blowup_lower, blowup_upper, rational_blowup_subdivision);
   const BigPolynomial compact = canonicalize(
       compactify_positive_variable(reduced, 0U));
   const NDBernsteinGrid grid =
@@ -2986,6 +3749,36 @@ int replay_wall_121_q2_floor() {
       || moderate_coupled_subdivision.leaves != 8U
       || moderate_coupled_subdivision.unresolved != 0U
       || moderate_coupled_subdivision.maximum_depth != 6
+      || rational_grid.degrees != std::vector<int>{44, 22, 7}
+      || rational_grid.values.size() != 8280U
+      || rational_negative != 897U
+      || rational_moderate_subdivision.nodes != 18U
+      || rational_moderate_subdivision.leaves != 10U
+      || rational_moderate_subdivision.unresolved != 0U
+      || rational_moderate_subdivision.maximum_depth != 6
+      || rational_maximum_w_power != 88
+      || rational_grouped_w.size() != 133U
+      || rational_blowup_t_degree != 130
+      || rational_blowup_grid.degrees
+          != std::vector<int>{116, 33, 7}
+      || rational_blowup_quotient.size() != 26201U
+      || rational_blowup_grid.values.size() != 31824U
+      || rational_blowup_negative != 115U
+      || rational_corner_budget.negative_monomials != 13070U
+      || rational_corner_budget.unclassified_negative != 0U
+      || rational_corner_power_two != 6
+      || rational_corner_budget.alpha_reserve < 0
+      || rational_corner_budget.cross_reserve < 0
+      || rational_corner_budget.beta_reserve < 0
+      || rational_corner_budget.constant_reserve < 0
+      || rational_corner_budget.discriminant_margin < 0
+      || rational_integer_conversion.distinct_denominators != 14594U
+      || rational_integer_conversion.common_denominator_bits != 206U
+      || rational_blowup_subdivision.counts.nodes != 987U
+      || rational_blowup_subdivision.counts.leaves != 493U
+      || rational_blowup_subdivision.corner_leaves != 1U
+      || rational_blowup_subdivision.counts.unresolved != 0U
+      || rational_blowup_subdivision.counts.maximum_depth != 38
       || blowup_grid.degrees != std::vector<int>{76, 27, 6}
       || blowup_quotient.size() != 10861U
       || blowup_grid.values.size() != 15092U
@@ -3031,6 +3824,30 @@ int replay_wall_121_q2_floor() {
       << " coupled_moderate_leaves=8"
       << " coupled_moderate_unresolved=0"
       << " coupled_moderate_depth=6"
+      << " rational_degrees=(44,22,7)"
+      << " rational_coefficients=8280"
+      << " rational_initial_negative=897"
+      << " rational_moderate_nodes=18"
+      << " rational_moderate_leaves=10"
+      << " rational_moderate_unresolved=0"
+      << " rational_moderate_depth=6"
+      << " rational_blowup_degrees=(116,33,7)"
+      << " rational_blowup_terms=26201"
+      << " rational_blowup_coefficients=31824"
+      << " rational_blowup_initial_negative=115"
+      << " rational_blowup_t_factor=14"
+      << " rational_corner=1/64"
+      << " rational_corner_negative_monomials=13070"
+      << " rational_corner_unclassified=0"
+      << " rational_corner_reserves_nonnegative=1"
+      << " rational_corner_discriminant_nonnegative=1"
+      << " rational_integer_denominators=14594"
+      << " rational_integer_common_denominator_bits=206"
+      << " rational_blowup_nodes=987"
+      << " rational_blowup_leaves=493"
+      << " rational_blowup_corner_leaves=1"
+      << " rational_blowup_unresolved=0"
+      << " rational_blowup_depth=38"
       << " coupled_blowup_degrees=(76,27,6)"
       << " coupled_blowup_terms=10861"
       << " coupled_blowup_coefficients=15092"
@@ -3048,6 +3865,722 @@ int replay_wall_121_q2_floor() {
       << " coupled_payment=PASS_EXACT"
       << " result=PASS_EXACT"
       << '\n';
+  return EXIT_SUCCESS;
+}
+
+int replay_wall_121_rational_support_three() {
+  constexpr int variables = 2;
+  constexpr int support = 3;
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial r = nd_variable(variables, 0);
+  const BigPolynomial u = nd_variable(variables, 1);
+  const BigPolynomial zero;
+  std::vector<BigPolynomial> profile(8, zero);
+  profile[1] = one;
+  profile[2] = r;
+  profile[3] = big_multiply(nd_power(r, 2), u);
+  std::vector<BigPolynomial> g(7, zero);
+  std::vector<BigPolynomial> h(7, zero);
+  std::vector<BigPolynomial> k(7, zero);
+  for (int index = 1; index <= support + 1; ++index) {
+    g[static_cast<std::size_t>(index)] = big_multiply(
+        profile[static_cast<std::size_t>(index)],
+        profile[static_cast<std::size_t>(index)]);
+    big_add_scaled(
+        g[static_cast<std::size_t>(index)],
+        big_multiply(
+            profile[static_cast<std::size_t>(index - 1)],
+            profile[static_cast<std::size_t>(index + 1)]),
+        -1);
+  }
+  for (int index = 1; index <= support + 2; ++index) {
+    h[static_cast<std::size_t>(index)] = big_multiply(
+        profile[static_cast<std::size_t>(index)],
+        profile[static_cast<std::size_t>(index - 1)]);
+    if (index >= 2) {
+      big_add_scaled(
+          h[static_cast<std::size_t>(index)],
+          big_multiply(
+              profile[static_cast<std::size_t>(index - 2)],
+              profile[static_cast<std::size_t>(index + 1)]),
+          -1);
+    }
+  }
+  for (int index = 1; index <= support + 1; ++index) {
+    k[static_cast<std::size_t>(index)] =
+        g[static_cast<std::size_t>(index)];
+    big_add_scaled(
+        k[static_cast<std::size_t>(index)],
+        h[static_cast<std::size_t>(index)], 1);
+    big_add_scaled(
+        k[static_cast<std::size_t>(index)],
+        h[static_cast<std::size_t>(index + 1)], 1);
+  }
+  BigPolynomial c_zero = r;
+  for (int index = 1; index <= support; ++index) {
+    BigPolynomial g_difference =
+        g[static_cast<std::size_t>(index)];
+    big_add_scaled(
+        g_difference,
+        g[static_cast<std::size_t>(index + 1)], -1);
+    BigPolynomial k_difference =
+        k[static_cast<std::size_t>(index)];
+    big_add_scaled(
+        k_difference,
+        k[static_cast<std::size_t>(index + 1)], -1);
+    big_add_scaled(
+        c_zero,
+        big_multiply(g_difference, k_difference), 1);
+  }
+  const BigPolynomial c = profile[3];
+  BigPolynomial a_coefficient = one;
+  big_add_scaled(a_coefficient, nd_power(r, 2), 1);
+  BigPolynomial one_plus_r = one;
+  big_add_scaled(one_plus_r, r, 1);
+  big_add_scaled(
+      a_coefficient,
+      big_multiply(one_plus_r, c), 1);
+  BigPolynomial c_coefficient = one_plus_r;
+  big_add_scaled(c_coefficient, c, 1);
+  BigPolynomial b_coefficient;
+  big_add_scaled(b_coefficient, r, 3);
+  big_add_scaled(b_coefficient, nd_power(r, 2), 2);
+  big_add_scaled(
+      b_coefficient, big_multiply(r, c), 1);
+  big_add_scaled(b_coefficient, nd_power(r, 3), -1);
+  big_add_scaled(b_coefficient, nd_power(c, 2), -1);
+  big_add_scaled(b_coefficient, nd_power(c, 3), -1);
+  BigPolynomial rational_h = nd_power(a_coefficient, 2);
+  for (auto& [exponent, coefficient] : rational_h) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+  big_add_scaled(
+      rational_h,
+      big_multiply(b_coefficient, c_coefficient), 3);
+  BigPolynomial rational_quadratic =
+      big_multiply(a_coefficient, c_zero);
+  for (auto& [exponent, coefficient] : rational_quadratic) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+  big_add_scaled(
+      rational_quadratic, nd_power(b_coefficient, 2), -1);
+  BigPolynomial rational_certificate = big_multiply(
+      rational_quadratic, nd_power(rational_h, 4));
+  const BigPolynomial first_correction = big_multiply(
+      big_multiply(
+          big_multiply(
+              nd_power(a_coefficient, 4), c_coefficient),
+          nd_power(b_coefficient, 3)),
+      rational_h);
+  big_add_scaled(rational_certificate, first_correction, 32);
+  const BigPolynomial second_correction = big_multiply(
+      big_multiply(
+          nd_power(a_coefficient, 4),
+          nd_power(c_coefficient, 2)),
+      nd_power(b_coefficient, 4));
+  big_add_scaled(rational_certificate, second_correction, 144);
+  const BigPolynomial compact =
+      compactify_positive_variable(rational_certificate, 0U);
+  BigPolynomial canonical;
+  for (const auto& [exponent, coefficient] : compact) {
+    if (coefficient != 0) {
+      canonical[exponent] = coefficient;
+    }
+  }
+  const NDBernsteinGrid grid =
+      nd_bernstein_grid(canonical, variables);
+  const std::size_t negative = static_cast<std::size_t>(
+      std::count_if(
+          grid.values.begin(), grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+  auto [lower_half, upper_half] = nd_split_grid(grid, 0);
+  auto [middle_quarter, top_quarter] =
+      nd_split_grid(upper_half, 0);
+  auto [upper_eighth, top_eighth] =
+      nd_split_grid(top_quarter, 0);
+  static_cast<void>(top_eighth);
+  NDSubdivisionResult subdivision;
+  nd_certify_subdivision(
+      lower_half, 0, 30, subdivision);
+  nd_certify_subdivision(
+      middle_quarter, 0, 30, subdivision);
+  nd_certify_subdivision(
+      upper_eighth, 0, 30, subdivision);
+  const Rational branch_upper_at_four =
+      3 + Rational(9, 4) * 4 - 16;
+  const Rational branch_upper_derivative_at_four =
+      Rational(9, 4) - 8;
+  if (
+      grid.degrees != std::vector<int>{44, 22}
+      || grid.values.size() != 1035U
+      || negative != 187U
+      || subdivision.nodes != 29U
+      || subdivision.leaves != 16U
+      || subdivision.unresolved != 0U
+      || subdivision.maximum_depth != 6
+      || branch_upper_at_four != -4
+      || branch_upper_derivative_at_four != Rational(-23, 4)
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) support-three rational certificate mismatch");
+  }
+  std::cout
+      << "SU2_WALL_121_RATIONAL_SUPPORT_THREE"
+      << " support<=3"
+      << " branch_bound=R<4"
+      << " certified_box=R<=7"
+      << " degrees=(44,22)"
+      << " bernstein_coefficients=1035"
+      << " initial_negative=187"
+      << " subdivision_nodes=29"
+      << " subdivision_leaves=16"
+      << " subdivision_unresolved=0"
+      << " subdivision_depth=6"
+      << " result=PASS_EXACT\n";
+  return EXIT_SUCCESS;
+}
+
+BigPolynomial wall_121_terminal_rational_certificate(
+    const std::vector<BigPolynomial>& profile, const int support) {
+  if (
+      support < 4
+      || profile.size() < static_cast<std::size_t>(support + 4)
+  ) {
+    throw std::invalid_argument(
+        "wall terminal rational certificate needs support at least four");
+  }
+  const int variables =
+      static_cast<int>(profile[1].begin()->first.size());
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial zero;
+  std::vector<BigPolynomial> g(
+      static_cast<std::size_t>(support + 4), zero);
+  std::vector<BigPolynomial> h(
+      static_cast<std::size_t>(support + 4), zero);
+  std::vector<BigPolynomial> k(
+      static_cast<std::size_t>(support + 4), zero);
+  for (int index = 1; index <= support + 1; ++index) {
+    g[static_cast<std::size_t>(index)] = big_multiply(
+        profile[static_cast<std::size_t>(index)],
+        profile[static_cast<std::size_t>(index)]);
+    big_add_scaled(
+        g[static_cast<std::size_t>(index)],
+        big_multiply(
+            profile[static_cast<std::size_t>(index - 1)],
+            profile[static_cast<std::size_t>(index + 1)]),
+        -1);
+  }
+  for (int index = 1; index <= support + 2; ++index) {
+    h[static_cast<std::size_t>(index)] = big_multiply(
+        profile[static_cast<std::size_t>(index)],
+        profile[static_cast<std::size_t>(index - 1)]);
+    if (index >= 2) {
+      big_add_scaled(
+          h[static_cast<std::size_t>(index)],
+          big_multiply(
+              profile[static_cast<std::size_t>(index - 2)],
+              profile[static_cast<std::size_t>(index + 1)]),
+          -1);
+    }
+  }
+  for (int index = 1; index <= support + 1; ++index) {
+    k[static_cast<std::size_t>(index)] =
+        g[static_cast<std::size_t>(index)];
+    big_add_scaled(
+        k[static_cast<std::size_t>(index)],
+        h[static_cast<std::size_t>(index)], 1);
+    big_add_scaled(
+        k[static_cast<std::size_t>(index)],
+        h[static_cast<std::size_t>(index + 1)], 1);
+  }
+  BigPolynomial c_zero = big_multiply(
+      nd_power(profile[1], 3), profile[2]);
+  for (int index = 1; index <= support; ++index) {
+    BigPolynomial g_difference =
+        g[static_cast<std::size_t>(index)];
+    big_add_scaled(
+        g_difference,
+        g[static_cast<std::size_t>(index + 1)], -1);
+    BigPolynomial k_difference =
+        k[static_cast<std::size_t>(index)];
+    big_add_scaled(
+        k_difference,
+        k[static_cast<std::size_t>(index + 1)], -1);
+    big_add_scaled(
+        c_zero,
+        big_multiply(g_difference, k_difference), 1);
+  }
+  const BigPolynomial& a = profile[1];
+  const BigPolynomial& b = profile[2];
+  const BigPolynomial& c = profile[3];
+  const BigPolynomial& d = profile[4];
+  BigPolynomial a_coefficient = nd_power(a, 2);
+  big_add_scaled(a_coefficient, nd_power(b, 2), 1);
+  BigPolynomial a_plus_b = a;
+  big_add_scaled(a_plus_b, b, 1);
+  big_add_scaled(
+      a_coefficient, big_multiply(a_plus_b, c), 1);
+  BigPolynomial c_coefficient = a_plus_b;
+  big_add_scaled(c_coefficient, c, 1);
+  BigPolynomial b_coefficient;
+  big_add_scaled(
+      b_coefficient,
+      big_multiply(big_multiply(nd_power(a, 2), b), one), 3);
+  big_add_scaled(
+      b_coefficient,
+      big_multiply(big_multiply(a, nd_power(b, 2)), one), 2);
+  big_add_scaled(
+      b_coefficient, big_multiply(big_multiply(a, b), c), 1);
+  big_add_scaled(
+      b_coefficient, big_multiply(big_multiply(a, b), d), 1);
+  big_add_scaled(
+      b_coefficient, big_multiply(big_multiply(b, c), d), 1);
+  big_add_scaled(b_coefficient, nd_power(b, 3), -1);
+  big_add_scaled(
+      b_coefficient, big_multiply(a, nd_power(c, 2)), -1);
+  big_add_scaled(b_coefficient, nd_power(c, 3), -1);
+  BigPolynomial rational_h = nd_power(a_coefficient, 2);
+  for (auto& [exponent, coefficient] : rational_h) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+  big_add_scaled(
+      rational_h,
+      big_multiply(b_coefficient, c_coefficient), 3);
+  BigPolynomial quadratic =
+      big_multiply(a_coefficient, c_zero);
+  for (auto& [exponent, coefficient] : quadratic) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+  big_add_scaled(quadratic, nd_power(b_coefficient, 2), -1);
+  BigPolynomial result =
+      big_multiply(quadratic, nd_power(rational_h, 4));
+  const BigPolynomial first_correction = big_multiply(
+      big_multiply(
+          big_multiply(
+              nd_power(a_coefficient, 4), c_coefficient),
+          nd_power(b_coefficient, 3)),
+      rational_h);
+  big_add_scaled(result, first_correction, 32);
+  const BigPolynomial second_correction = big_multiply(
+      big_multiply(
+          nd_power(a_coefficient, 4),
+          nd_power(c_coefficient, 2)),
+      nd_power(b_coefficient, 4));
+  big_add_scaled(result, second_correction, 144);
+  return result;
+}
+
+struct Wall121LargeRatioBlowupResult {
+  int maximum_w_power = 0;
+  std::size_t grouped_blocks = 0U;
+  int t_degree = 0;
+  int t_factor = 0;
+  std::vector<int> degrees;
+  std::size_t terms = 0U;
+  std::size_t coefficients = 0U;
+  std::size_t negative_coefficients = 0U;
+  std::size_t t_zero_terms = 0U;
+  std::size_t t_zero_negative = 0U;
+  std::size_t distinct_denominators = 0U;
+  std::size_t common_denominator_bits = 0U;
+  NDCornerSubdivisionResult subdivision;
+};
+
+Wall121LargeRatioBlowupResult wall_121_large_ratio_blowup(
+    const BigPolynomial& compact, const NDBernsteinGrid& compact_grid) {
+  constexpr int variables = 3;
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial t = nd_variable(variables, 0);
+  const BigPolynomial alpha = nd_variable(variables, 1);
+  const BigPolynomial beta = nd_variable(variables, 2);
+  BigPolynomial w = one;
+  big_add_scaled(w, t, -1);
+  BigPolynomial u_numerator = nd_power(w, 2);
+  big_add_scaled(
+      u_numerator,
+      big_multiply(big_multiply(t, w), alpha), -2);
+  big_add_scaled(
+      u_numerator,
+      big_multiply(nd_power(t, 2), alpha), -3);
+  BigPolynomial t2_plus_u = nd_power(t, 2);
+  big_add_scaled(t2_plus_u, u_numerator, 1);
+  const BigPolynomial denominator = big_multiply(
+      nd_power(u_numerator, 2), t2_plus_u);
+  BigPolynomial two_w_plus_three_t = w;
+  for (auto& [exponent, coefficient] : two_w_plus_three_t) {
+    static_cast<void>(exponent);
+    coefficient *= 2;
+  }
+  big_add_scaled(two_w_plus_three_t, t, 3);
+  BigPolynomial one_minus_alpha = one;
+  big_add_scaled(one_minus_alpha, alpha, -1);
+  const BigPolynomial drop_numerator = big_multiply(
+      big_multiply(
+          big_multiply(
+              big_multiply(beta, nd_power(t, 4)), w),
+          two_w_plus_three_t),
+      one_minus_alpha);
+  BigPolynomial v_numerator = denominator;
+  big_add_scaled(v_numerator, drop_numerator, -1);
+  const int u_degree = compact_grid.degrees[1];
+  const int v_degree = compact_grid.degrees[2];
+  int maximum_w_power = 0;
+  for (const auto& [exponent, coefficient] : compact) {
+    static_cast<void>(coefficient);
+    maximum_w_power = std::max(
+        maximum_w_power,
+        exponent[0] + 2 * (u_degree - exponent[1]));
+  }
+  const auto power_table = [&one](
+      const BigPolynomial& base, const int maximum) {
+    std::vector<BigPolynomial> powers;
+    powers.reserve(static_cast<std::size_t>(maximum + 1));
+    powers.push_back(one);
+    for (int exponent = 1; exponent <= maximum; ++exponent) {
+      powers.push_back(big_multiply(powers.back(), base));
+    }
+    return powers;
+  };
+  const std::vector<BigPolynomial> w_powers =
+      power_table(w, maximum_w_power);
+  const std::vector<BigPolynomial> u_powers =
+      power_table(u_numerator, u_degree);
+  const std::vector<BigPolynomial> d_powers =
+      power_table(denominator, v_degree);
+  const std::vector<BigPolynomial> v_powers =
+      power_table(v_numerator, v_degree);
+  std::map<std::pair<int, int>, BigPolynomial> grouped_w;
+  for (const auto& [exponent, coefficient] : compact) {
+    big_add_scaled(
+        grouped_w[{exponent[1], exponent[2]}],
+        w_powers[static_cast<std::size_t>(
+            exponent[0] + 2 * (u_degree - exponent[1]))],
+        coefficient);
+  }
+  BigPolynomial blowup;
+  for (const auto& [uv_exponents, w_polynomial] : grouped_w) {
+    BigPolynomial term = w_polynomial;
+    term = big_multiply(
+        term,
+        u_powers[static_cast<std::size_t>(uv_exponents.first)]);
+    term = big_multiply(
+        term,
+        d_powers[static_cast<std::size_t>(
+            v_degree - uv_exponents.second)]);
+    term = big_multiply(
+        term,
+        v_powers[static_cast<std::size_t>(uv_exponents.second)]);
+    big_add_scaled(blowup, term, 1);
+  }
+  BigPolynomial canonical_blowup;
+  for (const auto& [exponent, coefficient] : blowup) {
+    if (coefficient != 0) {
+      canonical_blowup[exponent] = coefficient;
+    }
+  }
+  int t_degree = 0;
+  int t_factor = std::numeric_limits<int>::max();
+  for (const auto& [exponent, coefficient] : canonical_blowup) {
+    static_cast<void>(coefficient);
+    t_degree = std::max(t_degree, exponent[0]);
+    t_factor = std::min(t_factor, exponent[0]);
+  }
+  BigPolynomial quotient;
+  for (const auto& [exponent, coefficient] : canonical_blowup) {
+    Integer scale = 1;
+    for (int power = exponent[0]; power < t_degree; ++power) {
+      scale *= 4;
+    }
+    Exponent quotient_exponent = exponent;
+    quotient_exponent[0] -= t_factor;
+    quotient[quotient_exponent] += coefficient * scale;
+  }
+  BigPolynomial canonical_quotient;
+  for (const auto& [exponent, coefficient] : quotient) {
+    if (coefficient != 0) {
+      canonical_quotient[exponent] = coefficient;
+    }
+  }
+  const NDBernsteinGrid quotient_grid =
+      nd_bernstein_grid(canonical_quotient, variables);
+  const std::size_t negative = static_cast<std::size_t>(
+      std::count_if(
+          quotient_grid.values.begin(), quotient_grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+  std::size_t t_zero_terms = 0U;
+  std::size_t t_zero_negative = 0U;
+  for (const auto& [exponent, coefficient] : canonical_quotient) {
+    if (exponent[0] == 0) {
+      ++t_zero_terms;
+      if (coefficient < 0) {
+        ++t_zero_negative;
+      }
+    }
+  }
+  NDIntegerGridConversion conversion =
+      integer_bernstein_grid(quotient_grid);
+  NDCornerSubdivisionResult subdivision;
+  const std::vector<Rational> lower(
+      static_cast<std::size_t>(variables), Rational(0));
+  const std::vector<Rational> upper(
+      static_cast<std::size_t>(variables), Rational(1));
+  nd_certify_integer_subdivision_with_corner(
+      conversion.grid, 0, 42, Rational(0),
+      lower, upper, subdivision);
+  return {
+      maximum_w_power, grouped_w.size(), t_degree, t_factor,
+      quotient_grid.degrees, canonical_quotient.size(),
+      quotient_grid.values.size(), negative,
+      t_zero_terms, t_zero_negative,
+      conversion.distinct_denominators,
+      conversion.common_denominator_bits,
+      std::move(subdivision)};
+}
+
+int replay_wall_121_rational_support_four() {
+  constexpr int variables = 3;
+  constexpr int support = 4;
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial r = nd_variable(variables, 0);
+  const BigPolynomial u = nd_variable(variables, 1);
+  const BigPolynomial v = nd_variable(variables, 2);
+  const BigPolynomial zero;
+  std::vector<BigPolynomial> profile(
+      static_cast<std::size_t>(support + 4), zero);
+  profile[1] = one;
+  profile[2] = r;
+  profile[3] = big_multiply(nd_power(r, 2), u);
+  profile[4] = big_multiply(
+      big_multiply(nd_power(r, 3), nd_power(u, 2)), v);
+  const BigPolynomial certificate =
+      wall_121_terminal_rational_certificate(profile, support);
+  const BigPolynomial compact_raw =
+      compactify_positive_variable(certificate, 0U);
+  BigPolynomial compact;
+  for (const auto& [exponent, coefficient] : compact_raw) {
+    if (coefficient != 0) {
+      compact[exponent] = coefficient;
+    }
+  }
+  const NDBernsteinGrid grid =
+      nd_bernstein_grid(compact, variables);
+  const std::size_t negative = static_cast<std::size_t>(
+      std::count_if(
+          grid.values.begin(), grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+  auto [lower_half, upper_half] = nd_split_grid(grid, 0);
+  auto [middle_quarter, top_quarter] =
+      nd_split_grid(upper_half, 0);
+  static_cast<void>(top_quarter);
+  NDSubdivisionResult moderate;
+  nd_certify_subdivision(lower_half, 0, 30, moderate);
+  nd_certify_subdivision(middle_quarter, 0, 30, moderate);
+  const Wall121LargeRatioBlowupResult large =
+      wall_121_large_ratio_blowup(compact, grid);
+  if (
+      grid.degrees != std::vector<int>{47, 25, 8}
+      || grid.values.size() != 11232U
+      || negative != 1901U
+      || moderate.nodes != 50U
+      || moderate.leaves != 26U
+      || moderate.unresolved != 0U
+      || moderate.maximum_depth != 12
+      || large.grouped_blocks != 153U
+      || large.t_degree != 145
+      || large.t_factor != 8
+      || large.degrees != std::vector<int>{137, 41, 8}
+      || large.terms != 40204U
+      || large.coefficients != 52164U
+      || large.negative_coefficients != 97U
+      || large.t_zero_terms != 1U
+      || large.t_zero_negative != 0U
+      || large.distinct_denominators != 24575U
+      || large.common_denominator_bits != 244U
+      || large.subdivision.counts.nodes != 5U
+      || large.subdivision.counts.leaves != 3U
+      || large.subdivision.corner_leaves != 0U
+      || large.subdivision.counts.unresolved != 0U
+      || large.subdivision.counts.maximum_depth != 2
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) support-four rational certificate mismatch");
+  }
+  std::cout
+      << "SU2_WALL_121_RATIONAL_SUPPORT_FOUR"
+      << " support=4"
+      << " moderate_degrees=(47,25,8)"
+      << " moderate_coefficients=11232"
+      << " moderate_initial_negative=1901"
+      << " moderate_nodes=50"
+      << " moderate_leaves=26"
+      << " moderate_unresolved=0"
+      << " moderate_depth=12"
+      << " blowup_t_factor=8"
+      << " blowup_degrees=(137,41,8)"
+      << " blowup_terms=40204"
+      << " blowup_coefficients=52164"
+      << " blowup_initial_negative=97"
+      << " blowup_t_zero_terms=1"
+      << " blowup_t_zero_negative=0"
+      << " blowup_integer_denominators=24575"
+      << " blowup_integer_common_denominator_bits=244"
+      << " blowup_nodes=5"
+      << " blowup_leaves=3"
+      << " blowup_corner_leaves=0"
+      << " blowup_unresolved=0"
+      << " blowup_depth=2"
+      << " result=PASS_EXACT\n";
+  return EXIT_SUCCESS;
+}
+
+int replay_wall_121_terminal_append_law() {
+  constexpr int variables = 6;
+  const BigPolynomial z = nd_variable(variables, 0);
+  const BigPolynomial a = nd_variable(variables, 1);
+  const BigPolynomial b = nd_variable(variables, 2);
+  const BigPolynomial c = nd_variable(variables, 3);
+  const BigPolynomial d = nd_variable(variables, 4);
+  const BigPolynomial x = nd_variable(variables, 5);
+  const BigPolynomial zero;
+  const auto terminal_current = [&zero](
+      const std::vector<BigPolynomial>& profile, const int support) {
+    std::vector<BigPolynomial> g(
+        static_cast<std::size_t>(support + 4), zero);
+    std::vector<BigPolynomial> h(
+        static_cast<std::size_t>(support + 4), zero);
+    std::vector<BigPolynomial> k(
+        static_cast<std::size_t>(support + 4), zero);
+    for (int index = 1; index <= support + 1; ++index) {
+      g[static_cast<std::size_t>(index)] = big_multiply(
+          profile[static_cast<std::size_t>(index)],
+          profile[static_cast<std::size_t>(index)]);
+      big_add_scaled(
+          g[static_cast<std::size_t>(index)],
+          big_multiply(
+              profile[static_cast<std::size_t>(index - 1)],
+              profile[static_cast<std::size_t>(index + 1)]), -1);
+    }
+    for (int index = 1; index <= support + 2; ++index) {
+      h[static_cast<std::size_t>(index)] = big_multiply(
+          profile[static_cast<std::size_t>(index)],
+          profile[static_cast<std::size_t>(index - 1)]);
+      if (index >= 2) {
+        big_add_scaled(
+            h[static_cast<std::size_t>(index)],
+            big_multiply(
+                profile[static_cast<std::size_t>(index - 2)],
+                profile[static_cast<std::size_t>(index + 1)]), -1);
+      }
+    }
+    for (int index = 1; index <= support + 1; ++index) {
+      k[static_cast<std::size_t>(index)] =
+          g[static_cast<std::size_t>(index)];
+      big_add_scaled(
+          k[static_cast<std::size_t>(index)],
+          h[static_cast<std::size_t>(index)], 1);
+      big_add_scaled(
+          k[static_cast<std::size_t>(index)],
+          h[static_cast<std::size_t>(index + 1)], 1);
+    }
+    BigPolynomial result = big_multiply(
+        nd_power(profile[1], 3), profile[2]);
+    for (int index = 1; index <= support; ++index) {
+      BigPolynomial g_difference =
+          g[static_cast<std::size_t>(index)];
+      big_add_scaled(
+          g_difference,
+          g[static_cast<std::size_t>(index + 1)], -1);
+      BigPolynomial k_difference =
+          k[static_cast<std::size_t>(index)];
+      big_add_scaled(
+          k_difference,
+          k[static_cast<std::size_t>(index + 1)], -1);
+      big_add_scaled(
+          result,
+          big_multiply(g_difference, k_difference), 1);
+    }
+    return result;
+  };
+  std::vector<BigPolynomial> appended(10, zero);
+  appended[1] = z;
+  appended[2] = a;
+  appended[3] = b;
+  appended[4] = c;
+  appended[5] = d;
+  appended[6] = x;
+  std::vector<BigPolynomial> truncated = appended;
+  truncated[6] = zero;
+  BigPolynomial difference = terminal_current(appended, 6);
+  big_add_scaled(
+      difference, terminal_current(truncated, 5), -1);
+  BigPolynomial linear = nd_power(d, 3);
+  big_add_scaled(
+      linear, big_multiply(big_multiply(a, c), d), -1);
+  big_add_scaled(
+      linear, big_multiply(c, nd_power(d, 2)), -4);
+  big_add_scaled(
+      linear, big_multiply(nd_power(c, 2), d), -2);
+  big_add_scaled(linear, nd_power(c, 3), 2);
+  big_add_scaled(
+      linear, big_multiply(big_multiply(a, b), c), -1);
+  big_add_scaled(
+      linear, big_multiply(big_multiply(b, c), d), -2);
+  big_add_scaled(
+      linear, big_multiply(nd_power(b, 2), d), 1);
+  big_add_scaled(linear, nd_power(b, 3), 1);
+  BigPolynomial quadratic = nd_power(c, 2);
+  for (auto& [exponent, coefficient] : quadratic) {
+    static_cast<void>(exponent);
+    coefficient *= 2;
+  }
+  big_add_scaled(quadratic, nd_power(d, 2), -2);
+  big_add_scaled(quadratic, big_multiply(c, d), -2);
+  big_add_scaled(quadratic, big_multiply(b, c), 1);
+  BigPolynomial cubic = b;
+  big_add_scaled(cubic, c, 2);
+  big_add_scaled(cubic, d, 1);
+  BigPolynomial expected = big_multiply(x, linear);
+  big_add_scaled(
+      expected, big_multiply(nd_power(x, 2), quadratic), 1);
+  big_add_scaled(
+      expected, big_multiply(nd_power(x, 3), cubic), 1);
+  big_add_scaled(expected, nd_power(x, 4), 2);
+  const auto canonicalize = [](const BigPolynomial& polynomial) {
+    BigPolynomial result;
+    for (const auto& [exponent, coefficient] : polynomial) {
+      if (coefficient != 0) {
+        result[exponent] = coefficient;
+      }
+    }
+    return result;
+  };
+  if (canonicalize(difference) != canonicalize(expected)) {
+    throw std::runtime_error(
+        "wall (1,2,1) terminal append identity mismatch");
+  }
+  const Rational witness = evaluate_polynomial(
+      rational_polynomial(difference),
+      {Rational(7, 5), Rational(1), Rational(4, 3),
+       Rational(5, 3), Rational(5, 3), Rational(4, 3)});
+  if (witness != Rational(-1016, 81)) {
+    throw std::runtime_error(
+        "wall (1,2,1) terminal append obstruction mismatch");
+  }
+  std::cout
+      << "SU2_WALL_121_TERMINAL_APPEND_LAW"
+      << " arbitrary_depth_previous=(a,b,c,d)"
+      << " append=x"
+      << " degree=4"
+      << " delta=x*(L+Q*x+(b+2*c+d)*x^2+2*x^3)"
+      << " L=d^3-a*c*d-4*c*d^2-2*c^2*d+2*c^3-a*b*c-2*b*c*d+b^2*d+b^3"
+      << " Q=-2*d^2-2*c*d+2*c^2+b*c"
+      << " normalized_witness=(a=1,b=4/3,c=5/3,d=5/3,x=4/3)"
+      << " witness_delta=" << witness
+      << " result=PASS_EXACT\n";
   return EXIT_SUCCESS;
 }
 
@@ -4262,9 +5795,37 @@ int main(int argc, char** argv) {
     if (
         argc == 2
         && std::string{argv[1]}
+               == "--replay-wall-121-cubic-corrected-demand-ceiling"
+    ) {
+      return replay_wall_121_cubic_corrected_demand_ceiling();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
                == "--replay-wall-121-q2-floor"
     ) {
       return replay_wall_121_q2_floor();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-wall-121-rational-support-three"
+    ) {
+      return replay_wall_121_rational_support_three();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-wall-121-rational-support-four"
+    ) {
+      return replay_wall_121_rational_support_four();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-wall-121-terminal-append-law"
+    ) {
+      return replay_wall_121_terminal_append_law();
     }
     if (
         argc == 2
