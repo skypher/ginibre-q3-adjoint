@@ -1658,6 +1658,151 @@ int replay_wall_121_current_normal_form() {
   return EXIT_SUCCESS;
 }
 
+int replay_ordinary_12_complete_current_sign() {
+  constexpr int minimum_support = 1;
+  constexpr int maximum_support = 12;
+  const auto canonical_quadratic = [](const QuadraticTerms& polynomial) {
+    QuadraticTerms result;
+    for (const auto& [monomial, coefficient] : polynomial) {
+      if (coefficient != 0) {
+        result.emplace(monomial, coefficient);
+      }
+    }
+    return result;
+  };
+  const auto canonical_quartic = [](const QuarticTerms& polynomial) {
+    QuarticTerms result;
+    for (const auto& [monomial, coefficient] : polynomial) {
+      if (coefficient != 0) {
+        result.emplace(monomial, coefficient);
+      }
+    }
+    return result;
+  };
+  const auto add_quadratic = [](
+      QuadraticTerms& target,
+      const QuadraticTerms& source,
+      const long long scale) {
+    for (const auto& [monomial, coefficient] : source) {
+      target[monomial] += scale * coefficient;
+    }
+  };
+  const auto ordinary_square_coefficient = [](
+      const int support,
+      const int label) {
+    QuadraticTerms result;
+    for (int first = 0; first <= support; ++first) {
+      for (int second = first; second <= support; ++second) {
+        if (
+            std::abs(first - second) <= label
+            && label <= first + second
+        ) {
+          result[pair_monomial(first, second)] +=
+              first == second ? 1 : 2;
+        }
+      }
+    }
+    return result;
+  };
+
+  for (int support = minimum_support;
+       support <= maximum_support; ++support) {
+    const QuadraticTerms c_zero =
+        ordinary_square_coefficient(support, 0);
+    const QuadraticTerms c_one =
+        ordinary_square_coefficient(support, 1);
+    const QuadraticTerms c_two =
+        ordinary_square_coefficient(support, 2);
+    const QuadraticTerms c_three =
+        ordinary_square_coefficient(support, 3);
+
+    QuadraticTerms fusion_interval = c_one;
+    add_quadratic(fusion_interval, c_two, 1);
+    add_quadratic(fusion_interval, c_three, 1);
+    QuarticTerms character_current;
+    add_product(character_current, c_zero, fusion_interval, 1);
+    add_product(character_current, c_one, c_two, -1);
+    if (canonical_quartic(character_current).empty()) {
+      throw std::runtime_error(
+          "ordinary (1,2) complete current vanished unexpectedly at support "
+          + std::to_string(support));
+    }
+
+    QuadraticTerms adjacent = c_one;
+    add_quadratic(adjacent, c_zero, -1);
+    QuadraticTerms adjacent_expected;
+    for (int index = 0; index < support; ++index) {
+      adjacent_expected[pair_monomial(index, index + 1)] += 2;
+    }
+    adjacent_expected[pair_monomial(0, 0)] -= 1;
+    if (
+        canonical_quadratic(adjacent)
+        != canonical_quadratic(adjacent_expected)
+    ) {
+      throw std::runtime_error(
+          "ordinary (1,2) alpha-threshold identity mismatch "
+          "at support " + std::to_string(support));
+    }
+
+    QuadraticTerms middle_difference = c_one;
+    add_quadratic(middle_difference, c_three, 1);
+    add_quadratic(middle_difference, c_two, -1);
+    QuadraticTerms middle_expected;
+    for (int index = 2; index <= support; ++index) {
+      middle_expected[pair_monomial(index, index)] += 1;
+    }
+    for (int index = 0; index < support; ++index) {
+      middle_expected[pair_monomial(index, index + 1)] += 2;
+    }
+    if (support >= 2) {
+      middle_expected[pair_monomial(0, 2)] -= 2;
+    }
+    for (int index = 0; index + 3 <= support; ++index) {
+      middle_expected[pair_monomial(index, index + 3)] += 2;
+    }
+    if (
+        canonical_quadratic(middle_difference)
+        != canonical_quadratic(middle_expected)
+    ) {
+      throw std::runtime_error(
+          "ordinary (1,2) middle-branch identity mismatch "
+          "at support " + std::to_string(support));
+    }
+
+    QuadraticTerms spectral_left = c_zero;
+    add_quadratic(spectral_left, c_one, 1);
+    QuadraticTerms spectral_squares;
+    for (int index = 0; index <= support; ++index) {
+      spectral_squares[pair_monomial(index, index)] += 1;
+      if (index + 1 <= support) {
+        spectral_squares[pair_monomial(index + 1, index + 1)] += 1;
+        spectral_squares[pair_monomial(index, index + 1)] += 2;
+      }
+    }
+    if (
+        canonical_quadratic(spectral_left)
+        != canonical_quadratic(spectral_squares)
+    ) {
+      throw std::runtime_error(
+          "ordinary (1,2) spectral-square identity mismatch "
+          "at support " + std::to_string(support));
+    }
+  }
+
+  std::cout
+      << "SU2_ORDINARY_12_COMPLETE_CURRENT_SIGN"
+      << " supports=1..12"
+      << " current=c0*(c1+c2+c3)-c1*c2"
+      << " alpha_cases=(alpha<=1,1<=alpha<=2,alpha>=2)"
+      << " middle_identity=c1+c3-c2"
+      << " threshold_identity=c1-c0=2*B1-p0^2"
+      << " spectral_identity=<z,(N1+I)z>=sum_i(z_i+z_(i+1))^2"
+      << " conclusion=J(1,2)>=0"
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
 int replay_wall_121_saturated_recurrence_obstruction() {
   constexpr int cutoff = 3;
   const std::array<Rational, 8> p{
@@ -4092,6 +4237,13 @@ int main(int argc, char** argv) {
                == "--replay-wall-121-current-normal-form"
     ) {
       return replay_wall_121_current_normal_form();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-ordinary-12-complete-current-sign"
+    ) {
+      return replay_ordinary_12_complete_current_sign();
     }
     if (
         argc == 2

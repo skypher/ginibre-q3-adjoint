@@ -25,6 +25,8 @@ SU2_GAP_PREFIX_APPEND_LOW_COEFFICIENT_OBSTRUCTIONS support=3 R=1 S=2 D=1 C1_at_5
 SU2_GAP_PREFIX_WALL_CUBIC_RESERVE labels=(1,2,1) linear_profile=(1,1,1) linear_coefficients=(3,-4,2,2,0) linear_truncation=-1 linear_full=3 cubic_profile=(2,3,3,2,1) cubic_coefficients=(120,-121,30,8,0) quadratic_truncation=-2 cubic_full=62 without_constant=-58 without_quadratic=-58 result=PASS_EXACT
 ./analyze_su2_autocorrelation_lc_certificate --replay-wall-121-current-normal-form
 SU2_WALL_121_CURRENT_NORMAL_FORM supports=2..12 C1_terms=8 C2_terms=4 C3_terms=3 C0_boundary=p_1^3*p_2 current_suffixes=(g_i,k_i) jacobi_identity_supports=2..12 ratio_band_supports=2..12 norm_contraction_profile=(0,4,3) norm_u=130 norm_w=144 current_pairing=238 remainder_profile=(0,1,1,1) remainder_square=3 remainder_cross=-1 geometric_certificate_degree=10 geometric_certificate_coefficients=(279,1773,5148,9135,11061,9576,6057,2835,972,225,27) cutoff_profile=(0,8,8,8,6,4,2,1) cutoff=2 cutoff_suffix=-230 cutoff_full=2842 constant_potential_core=4 farkas_weights=(90,1044,10,603) farkas_sum=(-1566,0,0,0) result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --replay-ordinary-12-complete-current-sign
+SU2_ORDINARY_12_COMPLETE_CURRENT_SIGN supports=1..12 current=c0*(c1+c2+c3)-c1*c2 alpha_cases=(alpha<=1,1<=alpha<=2,alpha>=2) middle_identity=c1+c3-c2 threshold_identity=c1-c0=2*B1-p0^2 spectral_identity=<z,(N1+I)z>=sum_i(z_i+z_(i+1))^2 conclusion=J(1,2)>=0 result=PASS_EXACT
 ./analyze_su2_autocorrelation_lc_certificate --replay-wall-121-saturated-recurrence-obstruction
 SU2_WALL_121_SATURATED_RECURRENCE_OBSTRUCTION profile=(0,1,1/2,1/8,1/32,1/128,1/512) cutoff=3 saturation=p_4*p_6=p_5^2 currents_g=(1,1/8,0,0) currents_k=(3/2,21/32,1/32,0) Q=(533/256,169/128,337/256) one_step_gap=-1/256 two_step_min_gap=-1/256 result=PASS_EXACT
 ./analyze_su2_autocorrelation_lc_certificate --replay-wall-121-geometric-demand-ceiling
@@ -40,7 +42,7 @@ SU2_COMPLETE_WALL_GAP_TAIL_OBSTRUCTION q=1 a=7 minimum_gap=8 value=-166828145430
 SU2_LOG_CONCAVE_RATIO_STRESS samples=5000 determinants=16152128 max_label=12 complete_wall_gap_energies=14712128 complete_wall_gap_failures=0 complete_wall_gap_tails=14712128 complete_wall_gap_tail_failures=0 complete_wall_gap_prefixes=14712128 complete_wall_gap_prefix_failures=0 maximum_length=20 maximum_ratio=1000 threads=30 result=NO_COUNTEREXAMPLE
 ./probe_su2_log_concave_ratio_stress 20000 16 30 1000000
 SU2_LOG_CONCAVE_RATIO_STRESS samples=20000 determinants=154256640 max_label=16 complete_wall_gap_energies=144016640 complete_wall_gap_failures=0 complete_wall_gap_tails=144016640 complete_wall_gap_tail_failures=0 complete_wall_gap_prefixes=144016640 complete_wall_gap_prefix_failures=0 maximum_length=30 maximum_ratio=1000000 threads=27 result=NO_COUNTEREXAMPLE
-analyzer_source_sha256=4dbe4502ba19a76d1873ea30994caddc6240cecda6d975fe4d33ed82fe7357f3
-analyzer_binary_sha256=9a87c9ce25f8fa0f4f33d140a0f1292a1b900d98453728b32551ce6f2bc04780
+analyzer_source_sha256=ed1095343bea78b55903a1e118bfdf2bdf5997b037e20f71b8fda04da9b606fa
+analyzer_binary_sha256=841ebe93102bd594f4efa85937c7af63cb4ffb5a2cf2aaf9e61d27cbaf77fcd3
 stress_source_sha256=6b64f20201bbf3e33db0425c21183fbf9cc553f582db36492973824017ce8d32
 stress_binary_sha256=e951a7fe47e248cfa1a0fc96a8e9b67814413c10c8d53d3c4553664a1d4d2e64

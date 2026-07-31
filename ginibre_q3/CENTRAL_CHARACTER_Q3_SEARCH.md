@@ -10837,6 +10837,112 @@ c_0 sum_(t=|R-S|)^(R+S)c_t>=1=c_Rc_S.
 
 This proves the claim.  QED.
 
+The lowest strict off-diagonal pair has a support-uniform complete
+payment which does not require log concavity or factor-word structure.
+
+**Lemma 5A8H28UIA2CGLPCIPOC12
+(universal ordinary `(1,2)` complete current).**  Let
+
+```text
+P=sum_(i>=0)p_i beta_i,                 p_i>=0,
+P^2=sum_(t>=0)c_t beta_t,
+```
+
+with finite support.  Then
+
+```text
+J(1,2)=c_0(c_1+c_2+c_3)-c_1c_2>=0.     (P5A.102AD5ALX1ZZB2A)
+```
+
+Consequently `(OCSP)` holds at `(R,S)=(1,2)` for every ordinary
+factor word.
+
+**Proof.**  Put
+
+```text
+M=sum_i p_i^2=c_0,              B_d=sum_(i>=0)p_ip_(i+d),
+```
+
+with zero continuation.  The claim is immediate if `M=0`, so assume
+`M>0` and put `alpha=c_1/M`.  Direct use of the ordinary
+Clebsch--Gordan intervals gives
+
+```text
+c_1-M=2B_1-p_0^2,                              (P5A.102AD5ALX1ZZB2B)
+
+c_1+c_3-c_2
+ =sum_(i>=2)p_i^2+2B_1-2p_0p_2+2B_3.          (P5A.102AD5ALX1ZZB2C)
+```
+
+If `alpha<=1`, nonnegativity of the square coefficients gives
+
+```text
+J(1,2)=M(c_1+c_3)+(M-c_1)c_2>=0.               (P5A.102AD5ALX1ZZB2D)
+```
+
+Suppose next that `1<=alpha<=2`.  Formula
+`(P5A.102AD5ALX1ZZB2B)` gives `2B_1>=p_0^2`, so
+`(P5A.102AD5ALX1ZZB2C)` implies
+
+```text
+c_1+c_3-c_2
+ >=(p_0-p_2)^2+sum_(i>=3)p_i^2+2B_3>=0.
+```
+
+Consequently
+
+```text
+J(1,2)
+ =M(c_1+c_3-c_2)+(2M-c_1)c_2>=0.               (P5A.102AD5ALX1ZZB2E)
+```
+
+It remains to take `alpha>=2`.  Let `N_1` denote ordinary
+multiplication by `beta_1` and put
+
+```text
+z=N_1p-alpha p.
+```
+
+Then `<p,z>=0`.  Since
+
+```text
+N_1N_2=N_1+N_2+N_3,             N_2=N_1^2-N_1-I,
+```
+
+one has
+
+```text
+J(1,2)/M
+ =<z,N_2p>
+ =(alpha-1)||z||_2^2+<z,N_1z>.                 (P5A.102AD5ALX1ZZB2F)
+```
+
+For every finitely supported real `z`, the boundary row of `N_1`
+and its three-term interior rows give the exact identity
+
+```text
+<z,(N_1+I)z>=sum_(i>=0)(z_i+z_(i+1))^2>=0,    (P5A.102AD5ALX1ZZB2G)
+```
+
+where `z_(i)=0` beyond the support.  Therefore
+`<z,N_1z> >= -||z||_2^2`, and `(P5A.102AD5ALX1ZZB2F)` yields
+
+```text
+J(1,2)/M>=(alpha-2)||z||_2^2>=0.
+```
+
+The fail-closed exact C++ replay
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-ordinary-12-complete-current-sign
+```
+
+constructs the square coefficients for supports one through twelve
+and checks `(P5A.102AD5ALX1ZZB2B)`,
+`(P5A.102AD5ALX1ZZB2C)`, and
+`(P5A.102AD5ALX1ZZB2G)` as polynomial identities.  QED.
+
 Two natural strengthenings of `(OCSP)` are false.  The first would
 replace the star-boundary minors by all adjacent minors.  For an
 ordinary factor word put
@@ -12709,6 +12815,103 @@ This proves `(P5A.102AD5ALX1ZZB3BGZ6)`.  Equation
 `C_0=a^3b+E_n`.  The exact C++ replay expands both sides as Laurent
 polynomials and verifies their identity symbolically for supports
 `2` through `12`.  QED.
+
+The same current has a tridiagonal form if one retains the first two
+edge gaps of the first exterior vector before eliminating them in
+favor of `g`.  Its mixed coefficients are positive; all remaining
+sign changes are confined to one adjacent current sequence.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121EDGE2
+(adjacent/gap-two Pluecker form).**  For the wall profile in Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121NF, put
+
+```text
+U_i=(p wedge N_1p)_(i,i+1),
+V_i=(p wedge N_1p)_(i,i+2),                    i>=0,
+```
+
+with zero continuation and `V_(-1)=0`.  Then
+
+```text
+(p wedge N_2p)_(i,i+1)
+ =1_(i>=1)U_i+V_(i-1)+V_i,                     (P5A.102AD5ALX1ZZB3BGZ9A)
+
+p_(i+1)V_i=p_(i+2)U_i+p_iU_(i+1),             (P5A.102AD5ALX1ZZB3BGZ9B)
+```
+
+and hence
+
+```text
+C_0=sum_(i>=1)U_i^2+sum_(i>=0)V_i(U_i+U_(i+1)).
+                                                        (P5A.102AD5ALX1ZZB3BGZ9C)
+```
+
+If `p_1,...,p_n>0`, put `r_i=p_i/p_(i-1)` for `2<=i<=n`, set
+
+```text
+1/r_1=0,                 r_(n+1)=r_(n+2)=0,
+```
+
+and omit every current beyond `U_n`.  Then
+
+```text
+C_0
+ =r_2U_0^2
+  +sum_(i=1)^n(1+1/r_i+r_(i+2))U_i^2
+  +sum_(i=0)^(n-1)(r_(i+2)+1/r_(i+1))U_iU_(i+1).
+                                                        (P5A.102AD5ALX1ZZB3BGZ9D)
+```
+
+Here `U_0=-a^2`, while
+
+```text
+U_i=g_i-g_(i+1),                         1<=i<=n.
+```
+
+Thus Target 5A8H28UIA2CGLPCIPOCGAPWALL121PAY is equivalently the
+lower bound of its critical demand by the tridiagonal expression in
+`(P5A.102AD5ALX1ZZB3BGZ9D)`.
+
+**Proof.**  Write `A=N_1` and let `A^[2]` be its additive second
+compound,
+
+```text
+A^[2](x wedge y)=Ax wedge y+x wedge Ay.
+```
+
+The ordinary fusion relation `N_2=A^2-A-I` and
+`Ap wedge Ap=0` give
+
+```text
+p wedge N_2p=A^[2](p wedge Ap)-(p wedge Ap).
+```
+
+On the adjacent edge `(i,i+1)`, the diagonal coefficient of `A^[2]`
+is one at `i=0` and two at `i>=1`.  Its only other incoming
+coordinates are `(i-1,i+1)` and `(i,i+2)`, both with coefficient
+one.  Subtracting the last exterior vector proves
+`(P5A.102AD5ALX1ZZB3BGZ9A)`.
+
+Equation `(P5A.102AD5ALX1ZZB3BGZ9B)` is the three-column Pluecker
+identity for the decomposable vector `p wedge Ap`; direct expansion
+of both sides gives
+
+```text
+p_i p_(i+1)(Ap)_(i+2)-p_(i+1)p_(i+2)(Ap)_i.
+```
+
+Multiply `(P5A.102AD5ALX1ZZB3BGZ9A)` by `U_i` and sum to obtain
+`(P5A.102AD5ALX1ZZB3BGZ9C)`.  On the positive tail,
+`(P5A.102AD5ALX1ZZB3BGZ9B)` becomes
+
+```text
+V_i=r_(i+2)U_i+(1/r_(i+1))U_(i+1).
+```
+
+Substitution and collection of consecutive diagonal and mixed terms
+gives `(P5A.102AD5ALX1ZZB3BGZ9D)`.  Finally the edge calculation
+`(P5A.102AD5ALX1ZZB3BH0)` gives the displayed identification of
+`U_i`; its wall-edge value is `-a^2`.  QED.
 
 The square part of the current cannot be separated from the signed
 Jacobi remainder, even on the smallest plateau with three positive
