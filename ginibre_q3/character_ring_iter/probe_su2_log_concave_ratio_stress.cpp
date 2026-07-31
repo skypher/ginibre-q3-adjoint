@@ -195,6 +195,98 @@ int replay_complete_wall_gap() {
     return pass ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
+int replay_complete_wall_gap_tail() {
+    const std::vector<int> numerators{
+        21, 20, 20, 18, 17, 16, 14, 13, 4, 3, 2
+    };
+    const int denominator = 11;
+    const std::vector<Integer> profile{
+        Integer{"285311670611"},
+        Integer{"544685916621"},
+        Integer{"990338030220"},
+        Integer{"1800614600400"},
+        Integer{"2946460255200"},
+        Integer{"4553620394400"},
+        Integer{"6623447846400"},
+        Integer{"8429842713600"},
+        Integer{"9962541388800"},
+        Integer{"3622742323200"},
+        Integer{"988020633600"},
+        Integer{"179640115200"}
+    };
+    for (std::size_t i = 1; i < profile.size(); ++i) {
+        if (
+            profile[i] * denominator
+            != profile[i - 1] * numerators[i - 1]
+        ) {
+            throw std::runtime_error(
+                "complete-wall gap-tail witness ratio mismatch"
+            );
+        }
+    }
+
+    constexpr int q = 1;
+    constexpr int a = 7;
+    constexpr int minimum_gap = 8;
+    const auto q_transform = transform(profile, q);
+    const auto a_transform = transform(profile, a);
+    const int size = std::max({
+        static_cast<int>(profile.size()),
+        static_cast<int>(q_transform.size()),
+        static_cast<int>(a_transform.size())
+    });
+    const auto pp = suffix_products(profile, profile, size);
+    const auto pq = suffix_products(profile, q_transform, size);
+    const auto pa = suffix_products(profile, a_transform, size);
+    const auto qa = suffix_products(q_transform, a_transform, size);
+    const Integer current =
+        pp.front() * qa.front() - pq.front() * pa.front();
+    std::vector<Integer> energies(static_cast<std::size_t>(size));
+    for (int gap = 1; gap < size; ++gap) {
+        for (int left = 0; left + gap < size; ++left) {
+            const int right = left + gap;
+            const Integer q_wedge =
+                at(profile, left) * at(q_transform, right)
+                - at(profile, right) * at(q_transform, left);
+            const Integer a_wedge =
+                at(profile, left) * at(a_transform, right)
+                - at(profile, right) * at(a_transform, left);
+            energies[static_cast<std::size_t>(gap)] +=
+                q_wedge * a_wedge;
+        }
+    }
+    std::vector<Integer> tails(energies.size());
+    Integer running = 0;
+    for (int gap = size - 1; gap >= 1; --gap) {
+        running += energies[static_cast<std::size_t>(gap)];
+        tails[static_cast<std::size_t>(gap)] = running;
+    }
+    const Integer expected_tail{
+        "-16682814543009861315632046030279412129824776371200"
+    };
+    const Integer expected_current{
+        "94153010945848127878367241684587477315345747381424000"
+    };
+    if (
+        tails[minimum_gap] != expected_tail
+        || current != expected_current
+        || tails[1] != current
+    ) {
+        throw std::runtime_error(
+            "complete-wall gap-tail obstruction replay mismatch"
+        );
+    }
+    std::cout
+        << "SU2_COMPLETE_WALL_GAP_TAIL_OBSTRUCTION"
+        << " q=" << q
+        << " a=" << a
+        << " minimum_gap=" << minimum_gap
+        << " value=" << tails[minimum_gap]
+        << " current=" << current
+        << " result=PASS_EXACT\n";
+    return EXIT_SUCCESS;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -204,8 +296,17 @@ int main(int argc, char** argv) {
     ) {
         return replay_complete_wall_gap();
     }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-complete-wall-gap-tail"
+    ) {
+        return replay_complete_wall_gap_tail();
+    }
     int samples = 20000;
     int max_label = 7;
+    int maximum_length = 14;
+    int maximum_ratio = 2;
     try {
         if (argc >= 2) {
             samples = parse_positive(argv[1], "samples");
@@ -213,10 +314,23 @@ int main(int argc, char** argv) {
         if (argc >= 3) {
             max_label = parse_positive(argv[2], "max_label");
         }
-        if (argc > 3) {
+        if (argc >= 4) {
+            maximum_length = parse_positive(argv[3], "maximum_length");
+            if (maximum_length < 2) {
+                throw std::invalid_argument(
+                    "maximum_length must be at least two"
+                );
+            }
+        }
+        if (argc >= 5) {
+            maximum_ratio = parse_positive(argv[4], "maximum_ratio");
+        }
+        if (argc > 5) {
             throw std::invalid_argument(
                 "usage: probe_su2_log_concave_ratio_stress "
-                "[samples] [max_label] | --replay-complete-wall-gap"
+                "[samples] [max_label] [maximum_length] [maximum_ratio] "
+                "| --replay-complete-wall-gap "
+                "| --replay-complete-wall-gap-tail"
             );
         }
     } catch (const std::exception& error) {
@@ -230,6 +344,10 @@ int main(int argc, char** argv) {
     std::atomic<unsigned long long> counterexamples{0};
     std::atomic<unsigned long long> complete_wall_gap_energies{0};
     std::atomic<unsigned long long> complete_wall_gap_failures{0};
+    std::atomic<unsigned long long> complete_wall_gap_tails{0};
+    std::atomic<unsigned long long> complete_wall_gap_tail_failures{0};
+    std::atomic<unsigned long long> complete_wall_gap_prefixes{0};
+    std::atomic<unsigned long long> complete_wall_gap_prefix_failures{0};
     std::mutex failure_mutex;
     Failure failure;
     GapFailure gap_failure;
@@ -248,7 +366,12 @@ int main(int argc, char** argv) {
                     * 0xbf58476d1ce4e5b9ULL
                 )
             );
-            const int length = 2 + static_cast<int>(generator() % 13ULL);
+            const int length =
+                2
+                + static_cast<int>(
+                    generator()
+                    % static_cast<unsigned long long>(maximum_length - 1)
+                );
             const int denominator = 2 + static_cast<int>(generator() % 63ULL);
             const int shift = static_cast<int>(generator() % 5ULL);
             std::vector<int> numerators(
@@ -259,7 +382,9 @@ int main(int argc, char** argv) {
                     1
                     + static_cast<int>(
                         generator()
-                        % static_cast<unsigned long long>(2 * denominator)
+                        % static_cast<unsigned long long>(
+                            maximum_ratio * denominator
+                        )
                     );
             }
             std::sort(
@@ -399,6 +524,36 @@ int main(int argc, char** argv) {
                             };
                         }
                     }
+                    Integer complete_gap_tail = 0;
+                    for (int gap = size - 1; gap >= 1; --gap) {
+                        complete_gap_tail +=
+                            gap_energy[static_cast<std::size_t>(gap)];
+                        complete_wall_gap_tails.fetch_add(
+                            1,
+                            std::memory_order_relaxed
+                        );
+                        if (complete_gap_tail < 0) {
+                            complete_wall_gap_tail_failures.fetch_add(
+                                1,
+                                std::memory_order_relaxed
+                            );
+                        }
+                    }
+                    Integer complete_gap_prefix = 0;
+                    for (int gap = 1; gap < size; ++gap) {
+                        complete_gap_prefix +=
+                            gap_energy[static_cast<std::size_t>(gap)];
+                        complete_wall_gap_prefixes.fetch_add(
+                            1,
+                            std::memory_order_relaxed
+                        );
+                        if (complete_gap_prefix < 0) {
+                            complete_wall_gap_prefix_failures.fetch_add(
+                                1,
+                                std::memory_order_relaxed
+                            );
+                        }
+                    }
                     for (int cutoff = 0; cutoff <= size; ++cutoff) {
                         const Integer determinant =
                             pp[static_cast<std::size_t>(cutoff)]
@@ -475,7 +630,17 @@ int main(int argc, char** argv) {
             << complete_wall_gap_energies.load()
             << " complete_wall_gap_failures="
             << complete_wall_gap_failures.load()
+            << " complete_wall_gap_tails="
+            << complete_wall_gap_tails.load()
+            << " complete_wall_gap_tail_failures="
+            << complete_wall_gap_tail_failures.load()
+            << " complete_wall_gap_prefixes="
+            << complete_wall_gap_prefixes.load()
+            << " complete_wall_gap_prefix_failures="
+            << complete_wall_gap_prefix_failures.load()
             << " threads=" << threads
+            << " maximum_length=" << maximum_length
+            << " maximum_ratio=" << maximum_ratio
             << " result=COUNTEREXAMPLE\n";
         return EXIT_SUCCESS;
     }
@@ -487,7 +652,17 @@ int main(int argc, char** argv) {
         << " complete_wall_gap_energies="
         << complete_wall_gap_energies.load()
         << " complete_wall_gap_failures="
-        << complete_wall_gap_failures.load();
+        << complete_wall_gap_failures.load()
+        << " complete_wall_gap_tails="
+        << complete_wall_gap_tails.load()
+        << " complete_wall_gap_tail_failures="
+        << complete_wall_gap_tail_failures.load()
+        << " complete_wall_gap_prefixes="
+        << complete_wall_gap_prefixes.load()
+        << " complete_wall_gap_prefix_failures="
+        << complete_wall_gap_prefix_failures.load()
+        << " maximum_length=" << maximum_length
+        << " maximum_ratio=" << maximum_ratio;
     if (gap_failure.sample >= 0) {
         std::cout
             << " first_complete_wall_gap={sample=" << gap_failure.sample

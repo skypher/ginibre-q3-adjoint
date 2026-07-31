@@ -11679,6 +11679,231 @@ recurrences, reproduces `(P5A.102AD5ALX1ZZB3S3A0)--(P5A.102AD5ALX1ZZB3S3A1)`,
 and verifies that the sum of all gap energies equals the positive
 complete current.
 
+The failed fixed-gap statement still leaves one cumulative direction
+which is both sufficient and compatible with every exact obstruction
+above.  Retain the complete wall and accumulate separations from the
+diagonal outward:
+
+```text
+P_D(R,S)=sum_(1<=d<=D)E_d(R,S).                  (P5A.102AD5ALX1ZZB3S3BG0)
+```
+
+**Target 5A8H28UIA2CGLPCIPOCGAPIN
+(complete-wall inside-out gap payment).**  Under the hypotheses of
+Target 5A8H28UIA2CGLPCIPOCB2RADLCR, prove
+
+```text
+P_D(R,S)>=0,                         D>=1, R,S>=0. (OCGIP)
+```
+
+For `D` beyond the finite support of the wedge array,
+`(P5A.102AD5ALX1ZZB3S3A)` gives
+
+```text
+P_D(R,S)=J(R,S).
+```
+
+Thus `(OCGIP)` implies `(OCLRC)`, hence `(OCSP)`.  It is genuinely
+weaker than fixed-gap positivity: an individual `E_d` may be negative
+after earlier separations have accumulated enough reserve.
+
+The opposite cumulative direction is false, even at the complete
+wall.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPOUTOBS
+(outside-in gap-tail obstruction).**  Put
+
+```text
+p=(285311670611,
+   544685916621,
+   990338030220,
+   1800614600400,
+   2946460255200,
+   4553620394400,
+   6623447846400,
+   8429842713600,
+   9962541388800,
+   3622742323200,
+   988020633600,
+   179640115200).
+```
+
+Its successive ratios have denominator `11` and nonincreasing
+positive numerators
+
+```text
+21,20,20,18,17,16,14,13,4,3,2,
+```
+
+so `p` is positive and log concave.  Nevertheless, at `(R,S)=(1,7)`,
+
+```text
+sum_(d>=8)E_d(1,7)
+=-16682814543009861315632046030279412129824776371200, (P5A.102AD5ALX1ZZB3S3BG1)
+```
+
+while
+
+```text
+J(1,7)
+=94153010945848127878367241684587477315345747381424000. (P5A.102AD5ALX1ZZB3S3BG2)
+```
+
+Thus the global payment may have to move from smaller separations to
+larger ones; an outside-in suffix proof in `d` is unavailable.
+
+**Proof.**  The strict C++ mode
+
+```text
+probe_su2_log_concave_ratio_stress \
+  --replay-complete-wall-gap-tail
+```
+
+checks every displayed ratio recurrence, constructs both ordinary
+fusion transforms with arbitrary-precision integers, evaluates every
+gap energy, and asserts `(P5A.102AD5ALX1ZZB3S3BG1)--(P5A.102AD5ALX1ZZB3S3BG2)`.
+It also checks that the gap prefix through the final nonzero
+separation equals the complete Lagrange current.  QED.
+
+The first three-coordinate chamber satisfies the stronger surviving
+target.
+
+**Theorem 5A8H28UIA2CGLPCIPOCGAPIN2
+(support-two inside-out gap payment).**  Let `p` be nonnegative and
+log concave with interval support contained in `{0,1,2}`.  Then
+`(OCGIP)` holds for every `D,R,S`.
+
+**Proof.**  The rows `R=S` are sums of squares, and a row with
+`R=0` or `S=0` vanishes.  If one of the two positive labels exceeds
+`4`, its transform is supported strictly to the right of `p`.
+Every nonzero wedge coordinate for that row then has one endpoint in
+the support of `p` and is nonnegative; the other row has the same sign
+on those coordinates.  Hence the product is termwise nonnegative.
+For labels at most `4`, no new product occurs after
+
+```text
+D=2+min(R,S).
+```
+
+It remains to certify the distinct pairs `1<=R,S<=4` and those
+separations, which gives exactly `44` cases.
+
+Roots with zero first coordinate follow by a log-concave positive
+approximation and continuity.  By homogeneity, normalize the positive
+first coordinate in the remaining cases and write the root as
+
+```text
+p=(1,b,b^2u),                         b>=0, 0<=u<=1. (P5A.102AD5ALX1ZZB3S3BG3)
+```
+
+Each member of `(P5A.102AD5ALX1ZZB3S3BG0)` is then an integer
+polynomial in `(b,u)`.  For its degree `B` in `b`, put
+
+```text
+b=t/(1-t),        F(t,u)=(1-t)^B P_D(R,S),
+                                      0<=t,u<=1. (P5A.102AD5ALX1ZZB3S3BG4)
+```
+
+For `t<1` this preserves the sign, while the endpoint follows by
+continuity.  The strict exact mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --support-two-gap-prefix-certificate
+```
+
+constructs all `44` polynomials directly from the fusion rule.  Their
+initial compact Bernstein grids contain `1,980` coefficients, of
+which `58` are negative.  Exact dyadic Bernstein subdivision produces
+`768` nodes and certifies `392` leaves.  The `14` boundary-touching
+residual cells are submitted as the exact QF_NRA negations
+
+```text
+0<=t,u<=1,                         F(t,u)<0;
+```
+
+all `14` are unsatisfiable.  The mode asserts every count and fails
+closed on a satisfiable or unknown result.  Therefore every polynomial
+in `(P5A.102AD5ALX1ZZB3S3BG4)` is nonnegative on the compact square,
+which proves all remaining cases.  The source-bound transcript,
+including the outside-in obstruction replay, is
+`certificates/su2_complete_wall_gap_prefix.log`.  QED.
+
+The most direct attempt to extend this certificate one support
+coordinate at a time fails coefficientwise, even after arbitrary
+fixed Bernstein degree elevation.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPBERNOBS
+(fixed-degree append-Bernstein obstruction).**  For the support-three
+gap-prefix polynomial with
+
+```text
+(R,S,D)=(1,2,1),
+```
+
+restrict the old root to `p=(1,b,b^2)` and append
+`p_3=b^3v`, where `0<=v<=1`.  Its degree-four Bernstein coefficients
+in `v` have respective leading terms in `b`
+
+```text
+2b^8, b^9/4, -b^10/3, b^11/4, 2b^12.           (P5A.102AD5ALX1ZZB3S3BG5)
+```
+
+After elevation to any fixed degree `N>=4`, coefficient number two
+has leading term
+
+```text
+-4b^10/(N(N-1)).                                (P5A.102AD5ALX1ZZB3S3BG6)
+```
+
+Consequently it is negative for all sufficiently large `b`.  In
+particular, at `N=12` and `b=10` that coefficient is exactly
+
+```text
+-268504190/11.                                  (P5A.102AD5ALX1ZZB3S3BG7)
+```
+
+**Proof.**  If `B_0,...,B_4` are the original Bernstein
+coefficients, degree elevation gives
+
+```text
+Btilde_k
+=sum_i B_i binom(4,i)binom(N-4,k-i)/binom(N,k).
+```
+
+For `k=2`, only the `B_2` summand reaches degree ten in `b`.
+Its leading coefficient is
+
+```text
+6(-1/3)/binom(N,2)=-4/(N(N-1)),
+```
+
+which proves `(P5A.102AD5ALX1ZZB3S3BG6)`.  The strict exact C++ mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-gap-prefix-elevation-obstruction
+```
+
+constructs the polynomial directly from the fusion rule, checks all
+five leading terms in `(P5A.102AD5ALX1ZZB3S3BG5)`, checks
+`(P5A.102AD5ALX1ZZB3S3BG6)` for `4<=N<=40`, and asserts the exact
+value `(P5A.102AD5ALX1ZZB3S3BG7)`.  QED.
+
+This proposition does not contradict `(OCGIP)`: a negative Bernstein
+coefficient need not give a negative polynomial.  It rules out the
+coefficientwise fixed-degree append induction.  Any support induction
+must instead retain inherited prefix or endpoint reserve and pair the
+Bernstein cells globally.
+
+Exact deterministic ratio runs provide route evidence beyond this
+proved chamber.  Across supports through `40`, labels through `12`,
+and successive ratios as large as `10`, they evaluated
+`946,900,812` complete-wall gap prefixes without a negative value.
+The same runs found many negative fixed gaps and `101,554` negative
+outside-in gap tails.  These counts are bounded discovery evidence
+only; Theorem 5A8H28UIA2CGLPCIPOCGAPIN2 is the exact proved result.
+
 The first nontrivial root-support class can be closed directly.
 
 **Lemma 5A8H28UIA2CGLPCIPOCOVLCR2

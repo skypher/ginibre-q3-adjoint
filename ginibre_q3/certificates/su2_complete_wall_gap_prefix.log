@@ -1,0 +1,12 @@
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror analyze_su2_autocorrelation_lc_certificate.cpp -lz3 -o analyze_su2_autocorrelation_lc_certificate
+./analyze_su2_autocorrelation_lc_certificate --support-two-gap-prefix-certificate
+SU2_SUPPORT_TWO_GAP_PREFIX_CERTIFICATE cases=44 coefficients=1980 initial_negative=58 subdivision_nodes=768 subdivision_leaves=392 subdivision_unresolved=14 nlsat_unsat=14 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --replay-gap-prefix-elevation-obstruction
+SU2_GAP_PREFIX_ELEVATION_OBSTRUCTION support=3 R=1 S=2 D=1 old_root=(1,b,b^2) base_leading=(2b^8,b^9/4,-b^10/3,b^11/4,2b^12) elevated_index=2 elevated_leading=-4b^10/(N(N-1)) N12_b10=-268504190/11 result=PASS_EXACT
+g++ -O2 -std=c++20 -pthread -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror probe_su2_log_concave_ratio_stress.cpp -o probe_su2_log_concave_ratio_stress
+./probe_su2_log_concave_ratio_stress --replay-complete-wall-gap-tail
+SU2_COMPLETE_WALL_GAP_TAIL_OBSTRUCTION q=1 a=7 minimum_gap=8 value=-16682814543009861315632046030279412129824776371200 current=94153010945848127878367241684587477315345747381424000 result=PASS_EXACT
+analyzer_source_sha256=64113e7519b60e3f57c351c1ebddffa9da279e9793ea817475a2b342314dbadd
+analyzer_binary_sha256=497c9623ae4c27f731544e26dcba5dd018acf0e4e7331ca7ae4ec0f04f12ec30
+stress_source_sha256=6b64f20201bbf3e33db0425c21183fbf9cc553f582db36492973824017ce8d32
+stress_binary_sha256=e951a7fe47e248cfa1a0fc96a8e9b67814413c10c8d53d3c4553664a1d4d2e64

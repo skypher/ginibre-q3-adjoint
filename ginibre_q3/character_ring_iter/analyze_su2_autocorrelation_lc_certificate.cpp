@@ -98,6 +98,62 @@ QuarticTerms radial_polynomial(const int support, const int antidiagonal,
   return result;
 }
 
+QuadraticTerms wedge_polynomial(const int support, const int label,
+                                const int left, const int right) {
+  QuadraticTerms result;
+  if (left <= support) {
+    for (int source = std::abs(right - label);
+         source <= right + label; ++source) {
+      if (source <= support) {
+        ++result[pair_monomial(left, source)];
+      }
+    }
+  }
+  if (right <= support) {
+    for (int source = std::abs(left - label);
+         source <= left + label; ++source) {
+      if (source <= support) {
+        --result[pair_monomial(right, source)];
+      }
+    }
+  }
+  return result;
+}
+
+QuarticTerms gap_prefix_polynomial(const int support, const int first_label,
+                                   const int second_label,
+                                   const int maximum_gap) {
+  QuarticTerms result;
+  const int maximum_right =
+      support + std::min(first_label, second_label);
+  for (int left = 0; left <= support; ++left) {
+    for (int right = left + 1; right <= maximum_right; ++right) {
+      if (right - left > maximum_gap) {
+        continue;
+      }
+      add_product(
+          result,
+          wedge_polynomial(support, first_label, left, right),
+          wedge_polynomial(support, second_label, left, right),
+          1);
+    }
+  }
+  return result;
+}
+
+Polynomial direct_polynomial(const QuarticTerms& input,
+                             const int support) {
+  Polynomial result;
+  for (const auto& [term, coefficient] : input) {
+    Exponent exponent(static_cast<std::size_t>(support + 1), 0);
+    for (const int index : term) {
+      ++exponent[static_cast<std::size_t>(index)];
+    }
+    result[std::move(exponent)] += coefficient;
+  }
+  return result;
+}
+
 Polynomial constant_polynomial(const int variables, const long long value) {
   Polynomial result;
   if (value != 0) {
@@ -432,6 +488,31 @@ Integer binomial(const int n, const int k) {
   return result;
 }
 
+BigPolynomial compactify_first_positive_variable(
+    const BigPolynomial& input) {
+  if (input.empty() || input.begin()->first.empty()) {
+    throw std::invalid_argument(
+        "positive-variable compactification needs a variable");
+  }
+  int degree = 0;
+  for (const auto& [exponent, coefficient] : input) {
+    static_cast<void>(coefficient);
+    degree = std::max(degree, exponent.front());
+  }
+  BigPolynomial result;
+  for (const auto& [exponent, coefficient] : input) {
+    const int complement = degree - exponent.front();
+    for (int power = 0; power <= complement; ++power) {
+      Exponent transformed = exponent;
+      transformed.front() += power;
+      const Integer sign = power % 2 == 0 ? 1 : -1;
+      result[std::move(transformed)] +=
+          coefficient * sign * binomial(complement, power);
+    }
+  }
+  return result;
+}
+
 std::vector<RationalPolynomial> outer_bernstein_coefficients(
     const BigPolynomial& input, const int variables) {
   if (variables < 1) {
@@ -455,6 +536,41 @@ std::vector<RationalPolynomial> outer_bernstein_coefficients(
           Rational(
               coefficient * binomial(index, power),
               binomial(degree, power));
+    }
+  }
+  return result;
+}
+
+std::vector<RationalPolynomial> elevate_bernstein_coefficients(
+    const std::vector<RationalPolynomial>& input,
+    const int target_degree) {
+  const int source_degree = static_cast<int>(input.size()) - 1;
+  if (source_degree < 0 || target_degree < source_degree) {
+    throw std::invalid_argument(
+        "invalid Bernstein degree elevation");
+  }
+  std::vector<RationalPolynomial> result(
+      static_cast<std::size_t>(target_degree + 1));
+  for (int index = 0; index <= target_degree; ++index) {
+    for (int source = 0; source <= source_degree; ++source) {
+      const int remainder = index - source;
+      if (
+          remainder < 0
+          || remainder > target_degree - source_degree
+      ) {
+        continue;
+      }
+      const Rational scale(
+          binomial(source_degree, source)
+              * binomial(
+                  target_degree - source_degree,
+                  remainder),
+          binomial(target_degree, index));
+      for (const auto& [exponent, coefficient] :
+           input[static_cast<std::size_t>(source)]) {
+        result[static_cast<std::size_t>(index)][exponent] +=
+            scale * coefficient;
+      }
     }
   }
   return result;
@@ -532,6 +648,81 @@ bool equal_polynomials(const RationalPolynomial& left,
     }
   }
   return true;
+}
+
+std::pair<int, Rational> leading_at_last_one(
+    const RationalPolynomial& polynomial) {
+  std::map<int, Rational> univariate;
+  for (const auto& [exponent, coefficient] : polynomial) {
+    univariate[exponent.front()] += coefficient;
+  }
+  for (auto iterator = univariate.rbegin();
+       iterator != univariate.rend(); ++iterator) {
+    if (iterator->second != 0) {
+      return *iterator;
+    }
+  }
+  return {-1, Rational(0)};
+}
+
+int replay_support_three_gap_prefix_elevation_obstruction() {
+  constexpr int support = 3;
+  const Polynomial target = direct_polynomial(
+      gap_prefix_polynomial(support, 1, 2, 1), support);
+  const std::vector<RationalPolynomial> base =
+      outer_bernstein_coefficients(
+          root_ratio_parameterization(target, support),
+          support);
+  const std::array<std::pair<int, Rational>, 5> expected{
+      std::pair<int, Rational>{8, Rational(2)},
+      std::pair<int, Rational>{9, Rational(1, 4)},
+      std::pair<int, Rational>{10, Rational(-1, 3)},
+      std::pair<int, Rational>{11, Rational(1, 4)},
+      std::pair<int, Rational>{12, Rational(2)}
+  };
+  if (base.size() != expected.size()) {
+    throw std::runtime_error(
+        "gap-prefix elevation obstruction degree mismatch");
+  }
+  for (std::size_t index = 0; index < base.size(); ++index) {
+    if (leading_at_last_one(base[index]) != expected[index]) {
+      throw std::runtime_error(
+          "gap-prefix elevation obstruction leading-term mismatch");
+    }
+  }
+  for (int degree = 4; degree <= 40; ++degree) {
+    const std::vector<RationalPolynomial> elevated =
+        elevate_bernstein_coefficients(base, degree);
+    const std::pair<int, Rational> leading =
+        leading_at_last_one(elevated[2]);
+    const Rational expected_coefficient(
+        -4, degree * (degree - 1));
+    if (
+        leading.first != 10
+        || leading.second != expected_coefficient
+    ) {
+      throw std::runtime_error(
+          "gap-prefix elevated leading-term mismatch");
+    }
+  }
+  const std::vector<RationalPolynomial> degree_twelve =
+      elevate_bernstein_coefficients(base, 12);
+  const Rational value = evaluate_polynomial(
+      degree_twelve[2], {Rational(10), Rational(1)});
+  if (value != Rational(-268504190, 11)) {
+    throw std::runtime_error(
+        "gap-prefix elevation obstruction evaluation mismatch");
+  }
+  std::cout
+      << "SU2_GAP_PREFIX_ELEVATION_OBSTRUCTION"
+      << " support=3 R=1 S=2 D=1"
+      << " old_root=(1,b,b^2)"
+      << " base_leading=(2b^8,b^9/4,-b^10/3,b^11/4,2b^12)"
+      << " elevated_index=2"
+      << " elevated_leading=-4b^10/(N(N-1))"
+      << " N12_b10=-268504190/11"
+      << " result=PASS_EXACT\n";
+  return EXIT_SUCCESS;
 }
 
 int replay_root_outer_bernstein_obstruction() {
@@ -772,6 +963,135 @@ void nd_certify_subdivision(const NDBernsteinGrid& grid, const int depth,
   auto [left, right] = nd_split_grid(grid, dimension);
   nd_certify_subdivision(left, depth + 1, depth_limit, result);
   nd_certify_subdivision(right, depth + 1, depth_limit, result);
+}
+
+bool z3_negative_on_unit_cube(const BigPolynomial& polynomial,
+                              std::string& model_text) {
+  if (polynomial.empty()) {
+    return false;
+  }
+  const int variables =
+      static_cast<int>(polynomial.begin()->first.size());
+  z3::context context;
+  z3::solver solver(context);
+  std::vector<z3::expr> coordinate;
+  coordinate.reserve(static_cast<std::size_t>(variables));
+  for (int variable = 0; variable < variables; ++variable) {
+    coordinate.push_back(
+        context.real_const(("x_" + std::to_string(variable)).c_str()));
+    solver.add(coordinate.back() >= 0);
+    solver.add(coordinate.back() <= 1);
+  }
+  z3::expr value = context.int_val(0);
+  for (const auto& [exponent, coefficient] : polynomial) {
+    z3::expr term = context.int_val(coefficient.str().c_str());
+    for (int variable = 0; variable < variables; ++variable) {
+      for (
+          int power = 0;
+          power < exponent[static_cast<std::size_t>(variable)];
+          ++power
+      ) {
+        term = term * coordinate[static_cast<std::size_t>(variable)];
+      }
+    }
+    value = value + term;
+  }
+  solver.add(value < 0);
+  const z3::check_result result = solver.check();
+  if (result == z3::unknown) {
+    throw std::runtime_error(
+        "Z3 returned unknown on support-two gap-prefix polynomial");
+  }
+  if (result == z3::sat) {
+    model_text = solver.get_model().to_string();
+    return true;
+  }
+  return false;
+}
+
+int analyze_support_two_gap_prefix_certificate() {
+  constexpr int support = 2;
+  constexpr int maximum_relevant_label = 2 * support;
+  constexpr int subdivision_depth = 24;
+  std::size_t cases = 0U;
+  std::size_t coefficients = 0U;
+  std::size_t initial_negative = 0U;
+  std::size_t nodes = 0U;
+  std::size_t leaves = 0U;
+  std::size_t unresolved = 0U;
+  std::size_t nlsat_unsat = 0U;
+  for (int first_label = 1;
+       first_label <= maximum_relevant_label;
+       ++first_label) {
+    for (int second_label = 1;
+         second_label <= maximum_relevant_label;
+         ++second_label) {
+      if (first_label == second_label) {
+        continue;
+      }
+      const int maximum_gap =
+          support + std::min(first_label, second_label);
+      for (int gap = 1; gap <= maximum_gap; ++gap) {
+        const Polynomial target = direct_polynomial(
+            gap_prefix_polynomial(
+                support, first_label, second_label, gap),
+            support);
+        const BigPolynomial root_parameterized =
+            root_ratio_parameterization(target, support);
+        const BigPolynomial parameterized =
+            compactify_first_positive_variable(root_parameterized);
+        const NDBernsteinGrid grid =
+            nd_bernstein_grid(parameterized, support);
+        NDSubdivisionResult subdivision;
+        nd_certify_subdivision(
+            grid, 0, subdivision_depth, subdivision);
+        ++cases;
+        coefficients += grid.values.size();
+        initial_negative += static_cast<std::size_t>(std::count_if(
+            grid.values.begin(), grid.values.end(),
+            [](const Rational& value) { return value < 0; }));
+        nodes += subdivision.nodes;
+        leaves += subdivision.leaves;
+        unresolved += subdivision.unresolved;
+        if (subdivision.unresolved != 0U) {
+          std::string model_text;
+          if (z3_negative_on_unit_cube(parameterized, model_text)) {
+            throw std::runtime_error(
+                "support-two gap-prefix counterexample at labels "
+                + std::to_string(first_label) + ","
+                + std::to_string(second_label)
+                + " and gap " + std::to_string(gap)
+                + ": " + model_text);
+          }
+          ++nlsat_unsat;
+        }
+      }
+    }
+  }
+  if (
+      cases != 44U
+      || coefficients != 1980U
+      || initial_negative != 58U
+      || nodes != 768U
+      || leaves != 392U
+      || unresolved != 14U
+      || nlsat_unsat != 14U
+  ) {
+    throw std::runtime_error(
+        "support-two gap-prefix certificate count mismatch");
+  }
+  std::cout
+      << "SU2_SUPPORT_TWO_GAP_PREFIX_CERTIFICATE"
+      << " cases=" << cases
+      << " coefficients=" << coefficients
+      << " initial_negative=" << initial_negative
+      << " subdivision_nodes=" << nodes
+      << " subdivision_leaves=" << leaves
+      << " subdivision_unresolved=" << unresolved
+      << " nlsat_unsat=" << nlsat_unsat
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
 }
 
 struct BernsteinResult {
@@ -1245,6 +1565,20 @@ int main(int argc, char** argv) {
                == "--replay-root-outer-first-variation"
     ) {
       return replay_root_outer_first_variation();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--support-two-gap-prefix-certificate"
+    ) {
+      return analyze_support_two_gap_prefix_certificate();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-gap-prefix-elevation-obstruction"
+    ) {
+      return replay_support_three_gap_prefix_elevation_obstruction();
     }
     if (
         argc == 2
