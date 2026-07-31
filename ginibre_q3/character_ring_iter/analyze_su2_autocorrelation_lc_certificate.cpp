@@ -590,6 +590,67 @@ BigPolynomial compactify_positive_variable(
   return result;
 }
 
+BigPolynomial half_shift_positive_variable(
+    const BigPolynomial& input, const std::size_t variable) {
+  if (input.empty() || input.begin()->first.empty()) {
+    throw std::invalid_argument(
+        "half-shift needs a nonempty polynomial");
+  }
+  if (variable >= input.begin()->first.size()) {
+    throw std::invalid_argument("half-shift index out of range");
+  }
+  int degree = 0;
+  for (const auto& [exponent, coefficient] : input) {
+    if (coefficient != 0) {
+      degree = std::max(degree, exponent[variable]);
+    }
+  }
+  BigPolynomial result;
+  for (const auto& [exponent, coefficient] : input) {
+    if (coefficient == 0) {
+      continue;
+    }
+    Integer denominator_clear = 1;
+    for (int power = exponent[variable]; power < degree; ++power) {
+      denominator_clear *= 2;
+    }
+    for (int power = 0; power <= exponent[variable]; ++power) {
+      Exponent transformed = exponent;
+      transformed[variable] = power;
+      result[std::move(transformed)] +=
+          coefficient * denominator_clear
+          * binomial(exponent[variable], power);
+    }
+  }
+  return result;
+}
+
+BigPolynomial reflect_unit_variable(
+    const BigPolynomial& input, const std::size_t variable) {
+  if (input.empty() || input.begin()->first.empty()) {
+    throw std::invalid_argument(
+        "unit reflection needs a nonempty polynomial");
+  }
+  if (variable >= input.begin()->first.size()) {
+    throw std::invalid_argument("unit reflection index out of range");
+  }
+  BigPolynomial result;
+  for (const auto& [exponent, coefficient] : input) {
+    if (coefficient == 0) {
+      continue;
+    }
+    for (int power = 0; power <= exponent[variable]; ++power) {
+      Exponent transformed = exponent;
+      transformed[variable] = power;
+      const Integer sign = power % 2 == 0 ? 1 : -1;
+      result[std::move(transformed)] +=
+          coefficient * sign
+          * binomial(exponent[variable], power);
+    }
+  }
+  return result;
+}
+
 BigPolynomial compactify_first_positive_variable(
     const BigPolynomial& input) {
   return compactify_positive_variable(input, 0U);
@@ -1021,6 +1082,207 @@ int replay_gap_prefix_wall_cubic_reserve() {
       << " cubic_coefficients=(120,-121,30,8,0)"
       << " quadratic_truncation=-2 cubic_full=62"
       << " without_constant=-58 without_quadratic=-58"
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
+int replay_wall_121_current_normal_form() {
+  constexpr int minimum_support = 2;
+  constexpr int maximum_support = 12;
+  for (int support = minimum_support;
+       support <= maximum_support; ++support) {
+    const int variables = support + 1;
+    const Polynomial target = direct_polynomial(
+        gap_prefix_polynomial(support, 1, 2, 1), support);
+    std::array<BigPolynomial, 4> actual;
+    for (const auto& [exponent, coefficient] : target) {
+      if (coefficient == 0 || exponent[0] > 3) {
+        continue;
+      }
+      Exponent tail_exponent = exponent;
+      const int power = tail_exponent[0];
+      tail_exponent[0] = 0;
+      actual[static_cast<std::size_t>(power)]
+            [std::move(tail_exponent)] += coefficient;
+    }
+
+    std::vector<BigPolynomial> p(
+        static_cast<std::size_t>(support + 4),
+        nd_constant(variables, 0));
+    for (int index = 1; index <= support; ++index) {
+      p[static_cast<std::size_t>(index)] =
+          nd_variable(variables, index);
+    }
+    const auto polynomial_power = [variables](
+        const BigPolynomial& base, const int exponent) {
+      if (base.empty()) {
+        return nd_constant(variables, exponent == 0 ? 1 : 0);
+      }
+      return nd_power(base, exponent);
+    };
+    const BigPolynomial& a = p[1];
+    const BigPolynomial& b = p[2];
+    const BigPolynomial& c = p[3];
+    const BigPolynomial& d = p[4];
+    std::array<BigPolynomial, 4> expected;
+    big_add_scaled(
+        expected[1],
+        big_multiply(polynomial_power(a, 2), b),
+        -3);
+    big_add_scaled(
+        expected[1],
+        big_multiply(a, polynomial_power(b, 2)),
+        -2);
+    big_add_scaled(
+        expected[1],
+        big_multiply(big_multiply(a, b), c),
+        -1);
+    big_add_scaled(
+        expected[1],
+        big_multiply(big_multiply(a, b), d),
+        -1);
+    big_add_scaled(
+        expected[1],
+        big_multiply(big_multiply(b, c), d),
+        -1);
+    big_add_scaled(expected[1], polynomial_power(b, 3), 1);
+    big_add_scaled(
+        expected[1],
+        big_multiply(a, polynomial_power(c, 2)),
+        1);
+    big_add_scaled(expected[1], polynomial_power(c, 3), 1);
+    big_add_scaled(expected[2], polynomial_power(a, 2), 1);
+    big_add_scaled(expected[2], polynomial_power(b, 2), 1);
+    big_add_scaled(
+        expected[2], big_multiply(a, c), 1);
+    big_add_scaled(
+        expected[2], big_multiply(b, c), 1);
+    big_add_scaled(expected[3], a, 1);
+    big_add_scaled(expected[3], b, 1);
+    big_add_scaled(expected[3], c, 1);
+
+    std::vector<BigPolynomial> g(
+        static_cast<std::size_t>(support + 2),
+        nd_constant(variables, 0));
+    for (int index = 1; index <= support + 1; ++index) {
+      g[static_cast<std::size_t>(index)] =
+          polynomial_power(
+              p[static_cast<std::size_t>(index)], 2);
+      big_add_scaled(
+          g[static_cast<std::size_t>(index)],
+          big_multiply(
+              p[static_cast<std::size_t>(index - 1)],
+              p[static_cast<std::size_t>(index + 1)]),
+          -1);
+    }
+    std::vector<BigPolynomial> h(
+        static_cast<std::size_t>(support + 3),
+        nd_constant(variables, 0));
+    for (int index = 1; index <= support + 2; ++index) {
+      h[static_cast<std::size_t>(index)] =
+          big_multiply(
+              p[static_cast<std::size_t>(index)],
+              p[static_cast<std::size_t>(index - 1)]);
+      if (index >= 2) {
+        big_add_scaled(
+            h[static_cast<std::size_t>(index)],
+            big_multiply(
+                p[static_cast<std::size_t>(index - 2)],
+                p[static_cast<std::size_t>(index + 1)]),
+            -1);
+      }
+    }
+    std::vector<BigPolynomial> k(
+        static_cast<std::size_t>(support + 2),
+        nd_constant(variables, 0));
+    for (int index = 1; index <= support + 1; ++index) {
+      k[static_cast<std::size_t>(index)] =
+          g[static_cast<std::size_t>(index)];
+      big_add_scaled(
+          k[static_cast<std::size_t>(index)],
+          h[static_cast<std::size_t>(index)],
+          1);
+      big_add_scaled(
+          k[static_cast<std::size_t>(index)],
+          h[static_cast<std::size_t>(index + 1)],
+          1);
+    }
+    big_add_scaled(
+        expected[0],
+        big_multiply(polynomial_power(a, 3), b),
+        1);
+    for (int index = 1; index <= support; ++index) {
+      BigPolynomial delta_g =
+          g[static_cast<std::size_t>(index)];
+      big_add_scaled(
+          delta_g,
+          g[static_cast<std::size_t>(index + 1)],
+          -1);
+      BigPolynomial delta_k =
+          k[static_cast<std::size_t>(index)];
+      big_add_scaled(
+          delta_k,
+          k[static_cast<std::size_t>(index + 1)],
+          -1);
+      big_add_scaled(
+          expected[0],
+          big_multiply(delta_g, delta_k),
+          1);
+    }
+
+    const auto canonicalize = [](
+        const BigPolynomial& polynomial) {
+      BigPolynomial result;
+      for (const auto& [exponent, coefficient] : polynomial) {
+        if (coefficient != 0) {
+          result.emplace(exponent, coefficient);
+        }
+      }
+      return result;
+    };
+    for (std::size_t power = 0; power < actual.size(); ++power) {
+      if (
+          canonicalize(actual[power])
+          != canonicalize(expected[power])
+      ) {
+        throw std::runtime_error(
+            "wall (1,2,1) current normal-form mismatch at support "
+            + std::to_string(support)
+            + " and power " + std::to_string(power));
+      }
+    }
+  }
+  const std::array<Integer, 2> obstruction_u{7, 9};
+  const std::array<Integer, 2> obstruction_w{0, 12};
+  Integer obstruction_u_norm = 0;
+  Integer obstruction_w_norm = 0;
+  Integer obstruction_pairing = 0;
+  for (std::size_t index = 0; index < obstruction_u.size(); ++index) {
+    obstruction_u_norm += obstruction_u[index] * obstruction_u[index];
+    obstruction_w_norm += obstruction_w[index] * obstruction_w[index];
+    obstruction_pairing +=
+        obstruction_u[index]
+        * (obstruction_u[index] + obstruction_w[index]);
+  }
+  if (
+      obstruction_u_norm != 130
+      || obstruction_w_norm != 144
+      || obstruction_pairing != 238
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) norm-contraction obstruction mismatch");
+  }
+  std::cout
+      << "SU2_WALL_121_CURRENT_NORMAL_FORM"
+      << " supports=2..12"
+      << " C1_terms=8"
+      << " C2_terms=4"
+      << " C3_terms=3"
+      << " C0_boundary=p_1^3*p_2"
+      << " current_suffixes=(g_i,k_i)"
+      << " norm_contraction_profile=(0,4,3)"
+      << " norm_u=130 norm_w=144 current_pairing=238"
       << " result=PASS_EXACT"
       << '\n';
   return EXIT_SUCCESS;
@@ -1621,6 +1883,332 @@ int analyze_support_four_exceptional_gap_prefix_certificate() {
   return EXIT_SUCCESS;
 }
 
+int analyze_support_four_161_saturated_blowup_certificate() {
+  constexpr int variables = 3;
+  constexpr int subdivision_depth = 16;
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial bounded_t = nd_variable(variables, 0);
+  const BigPolynomial bounded_u = nd_variable(variables, 1);
+  const BigPolynomial bounded_v = nd_variable(variables, 2);
+  BigPolynomial one_minus_u = one;
+  big_add_scaled(one_minus_u, bounded_u, -1);
+  BigPolynomial one_minus_v = one;
+  big_add_scaled(one_minus_v, bounded_v, -1);
+  BigPolynomial one_minus_uv = one;
+  big_add_scaled(
+      one_minus_uv, big_multiply(bounded_u, bounded_v), -1);
+
+  BigPolynomial reduced;
+  big_add_scaled(
+      reduced, big_multiply(one_minus_u, one_minus_uv), 1);
+  BigPolynomial t_minus_square = bounded_t;
+  big_add_scaled(t_minus_square, nd_power(bounded_t, 2), -1);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          big_multiply(one_minus_u, bounded_v),
+          t_minus_square),
+      1);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          nd_power(bounded_t, 3), nd_power(one_minus_v, 2)),
+      1);
+  BigPolynomial fourth_bracket = one;
+  big_add_scaled(fourth_bracket, bounded_v, -2);
+  big_add_scaled(
+      fourth_bracket,
+      big_multiply(bounded_u, nd_power(bounded_v, 2)),
+      1);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          big_multiply(nd_power(bounded_t, 4), bounded_v),
+          fourth_bracket),
+      1);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          big_multiply(
+              nd_power(bounded_t, 5), nd_power(bounded_v, 2)),
+          one_minus_v),
+      -2);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          nd_power(bounded_t, 6), nd_power(bounded_v, 3)),
+      1);
+  big_add_scaled(
+      reduced,
+      big_multiply(
+          nd_power(bounded_t, 7), nd_power(bounded_v, 4)),
+      2);
+
+  const auto canonicalize = [](
+      const BigPolynomial& polynomial) {
+    BigPolynomial result;
+    for (const auto& [exponent, coefficient] : polynomial) {
+      if (coefficient != 0) {
+        result.emplace(exponent, coefficient);
+      }
+    }
+    return result;
+  };
+  const BigPolynomial reduced_canonical = canonicalize(reduced);
+
+  constexpr int support = 4;
+  const Polynomial fusion_target = direct_polynomial(
+      gap_prefix_polynomial(support, 1, 6, 1), support);
+  std::size_t p_zero_terms = 0U;
+  bool p_zero_matches = true;
+  BigPolynomial normalized_saturated;
+  for (const auto& [exponent, coefficient] : fusion_target) {
+    if (coefficient == 0) {
+      continue;
+    }
+    p_zero_matches = p_zero_matches && exponent[0] <= 1;
+    if (exponent[0] == 1) {
+      ++p_zero_terms;
+      p_zero_matches =
+          p_zero_matches
+          && exponent == Exponent({1, 1, 1, 0, 1})
+          && coefficient == -1;
+    }
+    const int t_exponent =
+        -exponent[0] + exponent[2]
+        + 2 * exponent[3] + 3 * exponent[4] - 5;
+    const int u_exponent =
+        exponent[0] - exponent[2]
+        - exponent[3] - exponent[4] + 4;
+    normalized_saturated[
+        Exponent{t_exponent, u_exponent, exponent[4]}] +=
+        coefficient;
+  }
+  normalized_saturated = canonicalize(normalized_saturated);
+  if (
+      !p_zero_matches
+      || p_zero_terms != 1U
+      || std::any_of(
+          normalized_saturated.begin(),
+          normalized_saturated.end(),
+          [](const auto& term) {
+            return std::any_of(
+                term.first.begin(), term.first.end(),
+                [](const int exponent) { return exponent < 0; });
+          })
+      || normalized_saturated != reduced_canonical
+  ) {
+    throw std::runtime_error(
+        "support-four (1,6,1) saturated identity mismatch");
+  }
+
+  BigPolynomial local =
+      reflect_unit_variable(reduced, 1U);
+  local = reflect_unit_variable(local, 2U);
+  local = canonicalize(local);
+  const BigPolynomial local_a = nd_variable(variables, 1);
+  const BigPolynomial local_b = nd_variable(variables, 2);
+  BigPolynomial local_c = one;
+  big_add_scaled(local_c, local_b, -1);
+  BigPolynomial first_bracket = local_a;
+  big_add_scaled(first_bracket, local_b, 1);
+  big_add_scaled(
+      first_bracket, big_multiply(local_a, local_b), -1);
+  BigPolynomial local_bracket = one;
+  big_add_scaled(local_bracket, bounded_t, -1);
+  big_add_scaled(
+      local_bracket,
+      big_multiply(
+          nd_power(bounded_t, 3), nd_power(local_c, 2)),
+      -1);
+  BigPolynomial square_base = local_b;
+  big_add_scaled(
+      square_base,
+      big_multiply(
+          nd_power(bounded_t, 2), nd_power(local_c, 2)),
+      -1);
+  BigPolynomial local_decomposition;
+  big_add_scaled(
+      local_decomposition,
+      big_multiply(local_a, first_bracket),
+      1);
+  big_add_scaled(
+      local_decomposition,
+      big_multiply(
+          big_multiply(
+              big_multiply(local_a, bounded_t), local_c),
+          local_bracket),
+      1);
+  big_add_scaled(
+      local_decomposition,
+      big_multiply(
+          nd_power(bounded_t, 3), nd_power(square_base, 2)),
+      1);
+  big_add_scaled(
+      local_decomposition,
+      big_multiply(
+          big_multiply(
+              nd_power(bounded_t, 4), nd_power(local_b, 2)),
+          local_c),
+      1);
+  big_add_scaled(
+      local_decomposition,
+      big_multiply(nd_power(bounded_t, 6), nd_power(local_c, 3)),
+      1);
+  big_add_scaled(
+      local_decomposition,
+      big_multiply(nd_power(bounded_t, 7), nd_power(local_c, 4)),
+      1);
+  if (canonicalize(local_decomposition) != local) {
+    throw std::runtime_error(
+        "support-four (1,6,1) local decomposition mismatch");
+  }
+
+  const BigPolynomial s = nd_variable(variables, 0);
+  const BigPolynomial w = nd_variable(variables, 1);
+  const BigPolynomial u = nd_variable(variables, 2);
+  BigPolynomial t = s;
+  big_add_scaled(t, w, 1);
+  BigPolynomial blowup_one_minus_u = one;
+  big_add_scaled(blowup_one_minus_u, u, -1);
+  BigPolynomial blowup;
+  BigPolynomial term = t;
+  big_add_scaled(term, big_multiply(u, w), -1);
+  big_add_scaled(
+      blowup, big_multiply(blowup_one_minus_u, term), 1);
+  term = big_multiply(t, w);
+  big_add_scaled(
+      term, big_multiply(nd_power(t, 2), w), -1);
+  big_add_scaled(
+      blowup, big_multiply(blowup_one_minus_u, term), 1);
+  big_add_scaled(blowup, nd_power(t, 4), 1);
+  big_add_scaled(
+      blowup, big_multiply(nd_power(t, 3), w), -2);
+  big_add_scaled(
+      blowup,
+      big_multiply(nd_power(t, 2), nd_power(w, 2)),
+      1);
+  big_add_scaled(
+      blowup, big_multiply(nd_power(t, 4), w), 1);
+  big_add_scaled(
+      blowup,
+      big_multiply(nd_power(t, 3), nd_power(w, 2)),
+      -2);
+  big_add_scaled(
+      blowup,
+      big_multiply(
+          big_multiply(u, nd_power(t, 2)), nd_power(w, 3)),
+      1);
+  big_add_scaled(
+      blowup,
+      big_multiply(nd_power(t, 4), nd_power(w, 2)),
+      -2);
+  big_add_scaled(
+      blowup,
+      big_multiply(nd_power(t, 3), nd_power(w, 3)),
+      2);
+  big_add_scaled(
+      blowup,
+      big_multiply(nd_power(t, 4), nd_power(w, 3)),
+      1);
+  big_add_scaled(
+      blowup,
+      big_multiply(nd_power(t, 4), nd_power(w, 4)),
+      2);
+
+  struct Certificate {
+    std::size_t coefficients = 0U;
+    std::size_t initial_negative = 0U;
+    NDSubdivisionResult subdivision;
+  };
+  const auto certify = [&canonicalize](
+      const BigPolynomial& polynomial) {
+    const BigPolynomial canonical = canonicalize(polynomial);
+    const BigPolynomial quotient =
+        remove_common_monomial_factor(canonical);
+    const NDBernsteinGrid grid =
+        nd_bernstein_grid(quotient, variables);
+    Certificate result;
+    result.coefficients = grid.values.size();
+    result.initial_negative =
+        static_cast<std::size_t>(std::count_if(
+            grid.values.begin(), grid.values.end(),
+            [](const Rational& value) { return value < 0; }));
+    nd_certify_subdivision(
+        grid, 0, subdivision_depth, result.subdivision);
+    return result;
+  };
+
+  const Certificate bounded_upper = certify(
+      half_shift_positive_variable(local, 0U));
+  BigPolynomial s_half =
+      half_shift_positive_variable(blowup, 0U);
+  s_half = compactify_positive_variable(s_half, 0U);
+  s_half = compactify_positive_variable(s_half, 1U);
+  const Certificate s_half_result = certify(s_half);
+  BigPolynomial w_half =
+      half_shift_positive_variable(blowup, 1U);
+  w_half = compactify_positive_variable(w_half, 0U);
+  w_half = compactify_positive_variable(w_half, 1U);
+  const Certificate w_half_result = certify(w_half);
+
+  if (
+      bounded_upper.coefficients != 120U
+      || bounded_upper.initial_negative != 11U
+      || bounded_upper.subdivision.nodes != 13U
+      || bounded_upper.subdivision.leaves != 7U
+      || bounded_upper.subdivision.unresolved != 0U
+      || bounded_upper.subdivision.maximum_depth != 3
+      || s_half_result.coefficients != 135U
+      || s_half_result.initial_negative != 25U
+      || s_half_result.subdivision.nodes != 7U
+      || s_half_result.subdivision.leaves != 4U
+      || s_half_result.subdivision.unresolved != 0U
+      || s_half_result.subdivision.maximum_depth != 2
+      || w_half_result.coefficients != 135U
+      || w_half_result.initial_negative != 3U
+      || w_half_result.subdivision.nodes != 5U
+      || w_half_result.subdivision.leaves != 3U
+      || w_half_result.subdivision.unresolved != 0U
+      || w_half_result.subdivision.maximum_depth != 2
+  ) {
+    throw std::runtime_error(
+        "support-four (1,6,1) chart certificate mismatch");
+  }
+  std::cout
+      << "SU2_SUPPORT_FOUR_161_SATURATED_BLOWUP_CERTIFICATE"
+      << " p_zero_coefficient=-p_1*p_2*p_4"
+      << " reduced_terms=" << reduced_canonical.size()
+      << " local_identity=PASS_EXACT"
+      << " bounded_upper_coefficients="
+      << bounded_upper.coefficients
+      << " bounded_upper_initial_negative="
+      << bounded_upper.initial_negative
+      << " bounded_upper_nodes="
+      << bounded_upper.subdivision.nodes
+      << " bounded_upper_leaves="
+      << bounded_upper.subdivision.leaves
+      << " bounded_upper_unresolved="
+      << bounded_upper.subdivision.unresolved
+      << " s_half_coefficients=" << s_half_result.coefficients
+      << " s_half_initial_negative="
+      << s_half_result.initial_negative
+      << " s_half_nodes=" << s_half_result.subdivision.nodes
+      << " s_half_leaves=" << s_half_result.subdivision.leaves
+      << " s_half_unresolved="
+      << s_half_result.subdivision.unresolved
+      << " w_half_coefficients=" << w_half_result.coefficients
+      << " w_half_initial_negative="
+      << w_half_result.initial_negative
+      << " w_half_nodes=" << w_half_result.subdivision.nodes
+      << " w_half_leaves=" << w_half_result.subdivision.leaves
+      << " w_half_unresolved="
+      << w_half_result.subdivision.unresolved
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
 struct BernsteinResult {
   std::size_t coefficients = 0U;
   std::size_t negative = 0U;
@@ -2118,6 +2706,13 @@ int main(int argc, char** argv) {
     if (
         argc == 2
         && std::string{argv[1]}
+               == "--support-four-161-saturated-blowup-certificate"
+    ) {
+      return analyze_support_four_161_saturated_blowup_certificate();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
                == "--replay-gap-prefix-append-low-coefficients"
     ) {
       return replay_gap_prefix_append_low_coefficients();
@@ -2128,6 +2723,13 @@ int main(int argc, char** argv) {
                == "--replay-gap-prefix-wall-cubic-reserve"
     ) {
       return replay_gap_prefix_wall_cubic_reserve();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-wall-121-current-normal-form"
+    ) {
+      return replay_wall_121_current_normal_form();
     }
     if (
         argc == 2

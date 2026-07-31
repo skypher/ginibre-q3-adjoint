@@ -12413,6 +12413,226 @@ Lemma 5A8H28UIA2CGLPCIPOCGAPWALLCRIT proves that the two boundary
 faces together with `(GAPWALLDISC)` are equivalent to
 `(GAPWALLRES)`.
 
+The exceptional cubic branch has a support-uniform current normal
+form.  It identifies the precise arbitrary-depth reserve that the
+discriminant consumes.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121NF
+(`(1,2,1)` wall-current normal form).**  In Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL take `(R,S,D)=(1,2,1)` and put
+
+```text
+a=p_1,       b=p_2,       c=p_3,       d=p_4,
+```
+
+with zero continuation.  Then
+
+```text
+C_1=b^3+ac^2+c^3-3a^2b-2ab^2-abc-abd-bcd,
+C_2=a^2+b^2+(a+b)c,
+C_3=a+b+c.                                     (P5A.102AD5ALX1ZZB3BGW)
+```
+
+For `i>=1` define
+
+```text
+g_i=p_i^2-p_(i-1)p_(i+1),
+h_i=p_ip_(i-1)-p_(i-2)p_(i+1),
+k_i=g_i+h_i+h_(i+1),                           (P5A.102AD5ALX1ZZB3BGX)
+```
+
+where `p_(-1)=0`.  These sequences are nonnegative, vanish
+eventually, and
+
+```text
+C_0=a^3b+sum_(i>=1)(g_i-g_(i+1))(k_i-k_(i+1)).
+                                                        (P5A.102AD5ALX1ZZB3BGY)
+```
+
+In particular, if `u_i=g_i-g_(i+1)` and
+`v_i=k_i-k_(i+1)`, then their suffix currents are
+
+```text
+sum_(j>=i)u_j=g_i>=0,          sum_(j>=i)v_j=k_i>=0.
+                                                        (P5A.102AD5ALX1ZZB3BGZ)
+```
+
+**Proof.**  On the retained adjacent edge `(i,i+1)`, `i>=1`,
+zero continuation gives
+
+```text
+(N_1p)_i=p_(i-1)+p_i+p_(i+1),
+(N_2p)_i=p_(i-2)+p_(i-1)+p_i+p_(i+1)+p_(i+2).
+```
+
+Substitution in the two wedge currents gives respectively
+
+```text
+(p wedge N_1p)_(i,i+1)=g_i-g_(i+1),
+(p wedge N_2p)_(i,i+1)=k_i-k_(i+1).            (P5A.102AD5ALX1ZZB3BH0)
+```
+
+At the wall edge `(0,1)` the two currents are `-a^2` and `-ab`,
+so their product is `a^3b`.  Summing
+`(P5A.102AD5ALX1ZZB3BH0)` proves
+`(P5A.102AD5ALX1ZZB3BGY)`.  Telescoping proves
+`(P5A.102AD5ALX1ZZB3BGZ)`.
+
+Log concavity gives `g_i>=0`.  For positive coordinates, decreasing
+successive ratios give `h_i>=0`; the zero cases follow by continuity.
+Thus `k_i>=0`.  Finally, only the first three adjacent edges change
+under insertion at the wall.  Expanding those three edge products
+and collecting the first three powers of the insertion coordinate
+gives `(P5A.102AD5ALX1ZZB3BGW)`.  This also follows directly from
+`(P5A.102AD5ALX1ZZB3BGI)--(P5A.102AD5ALX1ZZB3BGJ)`.  QED.
+
+The two suffix currents cannot be made acute by an unweighted
+contraction estimate.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121NORMOBS
+(wall-current norm-contraction obstruction).**  The proposed bound
+
+```text
+sum_i(h_i-h_(i+2))^2<=sum_i(g_i-g_(i+1))^2       (P5A.102AD5ALX1ZZB3BH0A)
+```
+
+is false even for a two-coordinate positive log-concave tail.
+
+**Proof.**  Take the zero-wall profile
+
+```text
+p=(0,4,3).
+```
+
+Then
+
+```text
+(g_1,g_2,g_3)=(16,9,0),       (h_1,h_2,h_3,h_4)=(0,12,0,0).
+```
+
+Consequently
+
+```text
+u_i=g_i-g_(i+1)=(7,9),        w_i=h_i-h_(i+2)=(0,12),
+
+sum_i u_i^2=130<144=sum_i w_i^2.                (P5A.102AD5ALX1ZZB3BH0B)
+```
+
+The actual paired-current remainder is nevertheless positive:
+
+```text
+sum_i u_i(u_i+w_i)=238.
+```
+
+Thus Cauchy--Schwarz applied to `(P5A.102AD5ALX1ZZB3BH0A)` cannot
+prove `(P5A.102AD5ALX1ZZB3BGY)` or the stronger critical payment.
+The exact values are asserted by
+`--replay-wall-121-current-normal-form`.  QED.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121RATIOOBS
+(wall-current ratio-slack coefficient obstruction).**  Direct
+coefficientwise positivity in the ordered ratio differences cannot
+prove the paired-current remainder in
+`(P5A.102AD5ALX1ZZB3BGY)`.
+
+**Proof.**  Take
+
+```text
+p=(0,1,r),                              r>=0.
+```
+
+Then
+
+```text
+g=(1,r^2,0),            k=(1+r,r^2+r,0),
+```
+
+and therefore
+
+```text
+sum_(i>=1)(g_i-g_(i+1))(k_i-k_(i+1))
+ =(1-r^2)^2+r^2(r^2+r)
+ =1-2r^2+r^3+2r^4.                         (P5A.102AD5ALX1ZZB3BH0C)
+```
+
+Here `r` is the sole nonnegative ordered-ratio slack, but its
+quadratic coefficient is `-2`.  Thus even the first support chamber
+requires a circuit, subdivision, or cumulative allocation; expansion
+in nonnegative ratio-slack monomials is not coefficientwise positive.
+QED.
+
+**Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121CRIT
+(`(1,2,1)` critical-current criterion).**  Suppose `C_1<0`, put
+`B=-C_1`, and let `tau>0` be the unique solution of
+
+```text
+B=2C_2 tau+3C_3 tau^2.                         (P5A.102AD5ALX1ZZB3BH1)
+```
+
+If `Phi'(a^2/b)>0`, then `tau<a^2/b`, and
+`(GAPWALLDISC)` is equivalent to
+
+```text
+a^3b+sum_(i>=1)(g_i-g_(i+1))(k_i-k_(i+1))
+   >=C_2 tau^2+2C_3 tau^3.                     (P5A.102AD5ALX1ZZB3BH2)
+```
+
+**Proof.**  Here
+
+```text
+Phi'(y)=-B+2C_2y+3C_3y^2.
+```
+
+It is strictly increasing on the positive half-line, is negative at
+zero, and is positive at `a^2/b`; hence its unique zero `tau` lies
+in the asserted interval.  At that zero,
+
+```text
+Phi(tau)=C_0-C_2tau^2-2C_3tau^3.
+```
+
+Lemma 5A8H28UIA2CGLPCIPOCGAPWALLCRIT says that
+`Disc(Phi)<=0` is equivalent to `Phi(tau)>=0`.  Substitute
+`(P5A.102AD5ALX1ZZB3BGY)`.  QED.
+
+The same critical-point equation gives the exact saturated-face
+identity
+
+```text
+Phi(Y)-Phi(tau)
+ =(Y-tau)^2{C_2+C_3(Y+2tau)},          Y=a^2/b. (P5A.102AD5ALX1ZZB3BH3)
+```
+
+Indeed, subtract the two cubic values and use
+`B=2C_2tau+3C_3tau^2`.  Thus `(P5A.102AD5ALX1ZZB3BH2)` is also
+equivalent to the quantitative ratio-face reserve
+
+```text
+Phi(Y)>=(Y-tau)^2{C_2+C_3(Y+2tau)}.             (P5A.102AD5ALX1ZZB3BH4)
+```
+
+**Target 5A8H28UIA2CGLPCIPOCGAPWALL121PAY
+(`(1,2,1)` critical cumulative-current payment).**  Prove
+`(P5A.102AD5ALX1ZZB3BH2)` for every finite nonnegative log-concave
+tail satisfying the branch hypotheses of Corollary
+5A8H28UIA2CGLPCIPOCGAPWALL121CRIT; equivalently, prove the exact
+saturated-face margin `(P5A.102AD5ALX1ZZB3BH4)`.
+
+This target contains every arbitrary-depth variable only through the
+paired current differences in `(P5A.102AD5ALX1ZZB3BGY)`.  The exact
+C++ replay
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-wall-121-current-normal-form
+```
+
+constructs the fusion polynomial independently and checks
+`(P5A.102AD5ALX1ZZB3BGW)--(P5A.102AD5ALX1ZZB3BGY)` symbolically for
+supports `2` through `12`.  This replay checks the formulas; the
+support-uniform proof is the edge calculation
+`(P5A.102AD5ALX1ZZB3BH0)`.
+
 **Proposition 5A8H28UIA2CGLPCIPOCGAPWALLOBS
 (lower-wall cubic-reserve obstruction).**  At
 `(R,S,D)=(1,2,1)`, the wall expansion at
@@ -12551,6 +12771,143 @@ analyze_su2_autocorrelation_lc_certificate \
 constructs the fusion polynomial, performs every exact rational
 Bernstein transformation, asserts all displayed counts, and is
 recorded in
+`certificates/su2_complete_wall_gap_prefix.log`.  QED.
+
+The remote-label support-four leaf that resists a single global
+compactification also admits an exact finite cover.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPIN4R
+(support-four `(1,6,1)` inside-out payment).**  Let `p` be
+nonnegative and log concave with interval support contained in
+`{0,1,2,3,4}`.  Then
+
+```text
+P_1^p(1,6)>=0.                                  (P5A.102AD5ALX1ZZB3BGP)
+```
+
+**Proof.**  Begin with `p_1,p_2,p_3,p_4>0`.  Direct expansion of the
+fusion currents shows that the dependence on `p_0` is affine and that
+its entire `p_0` coefficient is
+
+```text
+-p_1p_2p_4.                                    (P5A.102AD5ALX1ZZB3BGQ)
+```
+
+Log concavity gives `p_0<=p_1^2/p_2`, so the minimum at fixed
+`p_1,...,p_4` occurs on the saturated face
+`p_0p_2=p_1^2`.  Put
+
+```text
+a=p_1,  x=p_2/p_1,  y=p_3/p_2,  z=p_4/p_3,
+x>=y>=z>0,
+t=y,    u=y/x,      v=z/y.                     (P5A.102AD5ALX1ZZB3BGR)
+```
+
+Thus `t>0` and `0<u,v<=1`, while the saturated profile is
+
+```text
+p=a(1/x,1,x,xy,xyz).
+```
+
+Exact substitution in the fusion polynomial gives
+
+```text
+P_1^p(1,6)=a^4(t^5/u^4)H(t,u,v),               (P5A.102AD5ALX1ZZB3BGS)
+```
+
+where
+
+```text
+H=(1-u)(1-uv)+(1-u)v(t-t^2)+t^3(1-v)^2
+  +t^4v(1-2v+uv^2)-2t^5v^2(1-v)
+  +t^6v^3+2t^7v^4.                             (P5A.102AD5ALX1ZZB3BGT)
+```
+
+First take `0<=t<=1/2`.  Set
+
+```text
+A=1-u,       B=1-v,       C=v=1-B.
+```
+
+Expansion and collection give the exact identity
+
+```text
+H=A(A+B-AB)+AtC((1-t)-t^3C^2)
+  +t^3(B-t^2C^2)^2+t^4B^2C+t^6C^3+t^7C^4.
+                                                        (P5A.102AD5ALX1ZZB3BGU)
+```
+
+Every displayed factor is nonnegative: in particular,
+
+```text
+(1-t)-t^3C^2>=1-1/2-1/8=3/8.
+```
+
+Hence `H>=0` on this first region.
+
+For `1/2<=t<=1`, substitute
+
+```text
+t=(1+q)/2,                         0<=q<=1,
+```
+
+in `(P5A.102AD5ALX1ZZB3BGU)`.  After clearing the exact power of
+two, the three-variable Bernstein grid in `(q,A,B)` has `120`
+rational coefficients, `11` of them initially negative.  Exact
+cyclic de Casteljau bisection at `1/2` produces `13` nodes and `7`
+terminal boxes, reaches depth three, and leaves zero unresolved
+boxes.  Every terminal Bernstein coefficient is nonnegative.
+
+It remains to take `t>=1`.  Blow up the coupled face by
+
+```text
+w=tv,                  s=t-w=t(1-v),            s,w>=0.
+```
+
+Multiplication by the positive factor `t=s+w` converts
+`(P5A.102AD5ALX1ZZB3BGT)` into the polynomial
+
+```text
+J=tH
+ =(1-u)(t-uw)+(1-u)(tw-t^2w)
+  +t^4-2t^3w+t^2w^2+t^4w-2t^3w^2+ut^2w^3
+  -2t^4w^2+2t^3w^3+t^4w^3+2t^4w^4,
+t=s+w.                                           (P5A.102AD5ALX1ZZB3BGV)
+```
+
+Since `s+w=t>=1`, at least one of `s,w` is at least `1/2`.
+On the first covering chart put
+
+```text
+s=(1+q)/2,       q=alpha/(1-alpha),
+w=beta/(1-beta),                  0<=alpha,beta<=1.
+```
+
+Clear the exact coordinate denominators in `(P5A.102AD5ALX1ZZB3BGV)`.
+The Bernstein grid in `(alpha,beta,u)` has `135` rational
+coefficients, `25` initially negative.  Exact cyclic bisection
+produces `7` nodes and `4` terminal boxes, reaches depth two, and
+leaves zero unresolved boxes.  On the second chart interchange the
+roles of `s,w`; its grid again has `135` coefficients, now `3`
+initially negative, and closes in `5` nodes and `3` terminal boxes at
+depth two with zero unresolved boxes.  The two charts cover `t>=1`,
+so `J>=0` there.  Consequently `H>=0` for every admissible
+`(t,u,v)`, and `(P5A.102AD5ALX1ZZB3BGS)` proves the claim for the
+positive chamber.
+
+Profiles with a zero coordinate follow by positive log-concave
+approximation and coefficientwise continuity, as in Theorems
+5A8H28UIA2CGLPCIPOCGAPIN2--3.  The fail-closed exact C++ mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --support-four-161-saturated-blowup-certificate
+```
+
+constructs the fusion polynomial, asserts `(P5A.102AD5ALX1ZZB3BGQ)`,
+checks the Laurent identity `(P5A.102AD5ALX1ZZB3BGS)`, checks the
+decomposition `(P5A.102AD5ALX1ZZB3BGU)`, and verifies every displayed
+Bernstein count.  Its output is recorded in
 `certificates/su2_complete_wall_gap_prefix.log`.  QED.
 
 Exact deterministic ratio runs provide route evidence beyond this

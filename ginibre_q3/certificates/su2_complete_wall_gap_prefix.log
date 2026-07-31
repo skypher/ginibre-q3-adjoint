@@ -15,12 +15,16 @@ SU2_SUPPORT_THREE_GAP_PREFIX_CERTIFICATE_PART first_label=5 cases=30 coefficient
 SU2_SUPPORT_THREE_GAP_PREFIX_CERTIFICATE_PART first_label=6 cases=30 coefficients=17190 initial_negative=0 subdivision_nodes=30 subdivision_leaves=30 subdivision_unresolved=0 nlsat_unsat=0 result=PASS_EXACT
 ./analyze_su2_autocorrelation_lc_certificate --support-four-exceptional-gap-prefix-certificate
 SU2_SUPPORT_FOUR_EXCEPTIONAL_GAP_PREFIX_CERTIFICATE labels=(1,2,1) coefficients=9945 initial_negative=766 subdivision_nodes=55 subdivision_leaves=28 subdivision_unresolved=0 maximum_depth=7 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --support-four-161-saturated-blowup-certificate
+SU2_SUPPORT_FOUR_161_SATURATED_BLOWUP_CERTIFICATE p_zero_coefficient=-p_1*p_2*p_4 reduced_terms=18 local_identity=PASS_EXACT bounded_upper_coefficients=120 bounded_upper_initial_negative=11 bounded_upper_nodes=13 bounded_upper_leaves=7 bounded_upper_unresolved=0 s_half_coefficients=135 s_half_initial_negative=25 s_half_nodes=7 s_half_leaves=4 s_half_unresolved=0 w_half_coefficients=135 w_half_initial_negative=3 w_half_nodes=5 w_half_leaves=3 w_half_unresolved=0 result=PASS_EXACT
 ./analyze_su2_autocorrelation_lc_certificate --replay-gap-prefix-elevation-obstruction
 SU2_GAP_PREFIX_ELEVATION_OBSTRUCTION support=3 R=1 S=2 D=1 old_root=(1,b,b^2) base_leading=(2b^8,b^9/4,-b^10/3,b^11/4,2b^12) elevated_index=2 elevated_leading=-4b^10/(N(N-1)) N12_b10=-268504190/11 result=PASS_EXACT
 ./analyze_su2_autocorrelation_lc_certificate --replay-gap-prefix-append-low-coefficients
 SU2_GAP_PREFIX_APPEND_LOW_COEFFICIENT_OBSTRUCTIONS support=3 R=1 S=2 D=1 C1_at_5_10_18=-8803 coefficients_at_1_2_4=(538,-81,-38,9,2) append=3 low_truncation=-47 full=358 coefficients_at_5_15_18=(200667,-15358,-663,53,2) append=15 cubic_truncation=-3 full=101247 unbounded_append_profile=(1,3,1,1) unbounded_labels=(1,6,1) unbounded_coefficients=(0,1,-3,0,1) unbounded_value=-1 result=PASS_EXACT
 ./analyze_su2_autocorrelation_lc_certificate --replay-gap-prefix-wall-cubic-reserve
 SU2_GAP_PREFIX_WALL_CUBIC_RESERVE labels=(1,2,1) linear_profile=(1,1,1) linear_coefficients=(3,-4,2,2,0) linear_truncation=-1 linear_full=3 cubic_profile=(2,3,3,2,1) cubic_coefficients=(120,-121,30,8,0) quadratic_truncation=-2 cubic_full=62 without_constant=-58 without_quadratic=-58 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --replay-wall-121-current-normal-form
+SU2_WALL_121_CURRENT_NORMAL_FORM supports=2..12 C1_terms=8 C2_terms=4 C3_terms=3 C0_boundary=p_1^3*p_2 current_suffixes=(g_i,k_i) norm_contraction_profile=(0,4,3) norm_u=130 norm_w=144 current_pairing=238 result=PASS_EXACT
 g++ -O2 -std=c++20 -pthread -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror probe_su2_log_concave_ratio_stress.cpp -o probe_su2_log_concave_ratio_stress
 ./probe_su2_log_concave_ratio_stress --replay-complete-wall-gap-tail
 SU2_COMPLETE_WALL_GAP_TAIL_OBSTRUCTION q=1 a=7 minimum_gap=8 value=-16682814543009861315632046030279412129824776371200 current=94153010945848127878367241684587477315345747381424000 result=PASS_EXACT
@@ -28,7 +32,7 @@ SU2_COMPLETE_WALL_GAP_TAIL_OBSTRUCTION q=1 a=7 minimum_gap=8 value=-166828145430
 SU2_LOG_CONCAVE_RATIO_STRESS samples=5000 determinants=16152128 max_label=12 complete_wall_gap_energies=14712128 complete_wall_gap_failures=0 complete_wall_gap_tails=14712128 complete_wall_gap_tail_failures=0 complete_wall_gap_prefixes=14712128 complete_wall_gap_prefix_failures=0 maximum_length=20 maximum_ratio=1000 threads=30 result=NO_COUNTEREXAMPLE
 ./probe_su2_log_concave_ratio_stress 20000 16 30 1000000
 SU2_LOG_CONCAVE_RATIO_STRESS samples=20000 determinants=154256640 max_label=16 complete_wall_gap_energies=144016640 complete_wall_gap_failures=0 complete_wall_gap_tails=144016640 complete_wall_gap_tail_failures=0 complete_wall_gap_prefixes=144016640 complete_wall_gap_prefix_failures=0 maximum_length=30 maximum_ratio=1000000 threads=27 result=NO_COUNTEREXAMPLE
-analyzer_source_sha256=d933ac578148ce00302c99e308fdc0708b845266ee65dd6d679ca24145bb841f
-analyzer_binary_sha256=92e03e98c465f7d43cdf0589de8edf98aa1a45ec4ce53fc718f3d68879b35f52
+analyzer_source_sha256=be06f90692727271bc95ff862a7987246ac6d9833f1239ede16948f786b963cc
+analyzer_binary_sha256=2d3678d30e76284df027c7a21f131dcdbcd2ad1d0bb7d1efa1805d9113dbc560
 stress_source_sha256=6b64f20201bbf3e33db0425c21183fbf9cc553f582db36492973824017ce8d32
 stress_binary_sha256=e951a7fe47e248cfa1a0fc96a8e9b67814413c10c8d53d3c4553664a1d4d2e64
