@@ -1753,6 +1753,261 @@ int replay_wall_121_saturated_recurrence_obstruction() {
   return EXIT_SUCCESS;
 }
 
+int replay_wall_121_geometric_demand_ceiling() {
+  const auto univariate = [](const std::vector<Rational>& coefficients) {
+    RationalPolynomial result;
+    for (std::size_t degree = 0; degree < coefficients.size(); ++degree) {
+      if (coefficients[degree] != 0) {
+        result[Exponent{static_cast<int>(degree)}] = coefficients[degree];
+      }
+    }
+    return result;
+  };
+  const auto shifted_coefficients = [](const std::vector<Integer>& powers) {
+    std::vector<Integer> result(powers.size(), 0);
+    for (std::size_t power = 0; power < powers.size(); ++power) {
+      for (std::size_t degree = 0; degree <= power; ++degree) {
+        result[degree] +=
+            powers[power]
+            * binomial(static_cast<int>(power), static_cast<int>(degree));
+      }
+    }
+    return result;
+  };
+
+  constexpr int variables = 2;
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial r = nd_variable(variables, 0);
+  const BigPolynomial x = nd_variable(variables, 1);
+  const BigPolynomial r3 = nd_power(r, 3);
+  const BigPolynomial r4 = nd_power(r, 4);
+  const BigPolynomial r5 = nd_power(r, 5);
+  BigPolynomial g_zero = r3;
+  big_add_scaled(g_zero, r4, 1);
+  BigPolynomial g_one;
+  big_add_scaled(g_one, r3, -3);
+  big_add_scaled(g_one, r4, -2);
+  big_add_scaled(g_one, r5, 1);
+  BigPolynomial g_two = r;
+  big_add_scaled(g_two, r3, 1);
+  BigPolynomial g_three = one;
+  big_add_scaled(g_three, r, 1);
+  BigPolynomial g = g_zero;
+  big_add_scaled(g, big_multiply(g_one, x), 1);
+  big_add_scaled(g, big_multiply(g_two, nd_power(x, 2)), 1);
+  big_add_scaled(g, big_multiply(g_three, nd_power(x, 3)), 1);
+
+  const std::vector<RationalPolynomial> cubic_bernstein =
+      outer_bernstein_coefficients(g, variables);
+  const std::vector<RationalPolynomial> elevated =
+      elevate_bernstein_coefficients(cubic_bernstein, 4);
+  const std::vector<RationalPolynomial> expected{
+      univariate({0, 0, 0, 1, 1}),
+      univariate({0, 0, 0, Rational(1, 4), Rational(1, 2),
+                  Rational(1, 4)}),
+      univariate({0, Rational(1, 6), 0, Rational(-1, 3), 0,
+                  Rational(1, 2)}),
+      univariate({Rational(1, 4), Rational(3, 4), 0,
+                  Rational(-3, 4), Rational(-1, 2),
+                  Rational(3, 4)}),
+      univariate({1, 2, 0, -1, -1, 1})};
+  if (elevated.size() != expected.size()) {
+    throw std::runtime_error(
+        "wall (1,2,1) demand-ceiling Bernstein degree mismatch");
+  }
+  for (std::size_t index = 0; index < elevated.size(); ++index) {
+    if (!equal_polynomials(elevated[index], expected[index])) {
+      throw std::runtime_error(
+          "wall (1,2,1) demand-ceiling Bernstein coefficient mismatch");
+    }
+  }
+
+  const BigPolynomial one_variable_one = nd_constant(1, 1);
+  const BigPolynomial one_variable_r = nd_variable(1, 0);
+  BigPolynomial h = one_variable_one;
+  big_add_scaled(h, one_variable_r, 3);
+  big_add_scaled(h, nd_power(one_variable_r, 3), -3);
+  big_add_scaled(h, nd_power(one_variable_r, 4), -2);
+  big_add_scaled(h, nd_power(one_variable_r, 5), 3);
+  BigPolynomial q = one_variable_one;
+  big_add_scaled(q, one_variable_r, 2);
+  big_add_scaled(q, nd_power(one_variable_r, 3), -1);
+  big_add_scaled(q, nd_power(one_variable_r, 4), -1);
+  big_add_scaled(q, nd_power(one_variable_r, 5), 1);
+  const auto scalar_bernstein = [](const BigPolynomial& polynomial) {
+    const std::vector<RationalPolynomial> converted =
+        outer_bernstein_coefficients(polynomial, 1);
+    std::vector<Rational> result;
+    result.reserve(converted.size());
+    for (const RationalPolynomial& coefficient : converted) {
+      const auto iterator = coefficient.find(Exponent{});
+      result.push_back(
+          iterator == coefficient.end() ? Rational(0) : iterator->second);
+      if (coefficient.size() > (iterator == coefficient.end() ? 0U : 1U)) {
+        throw std::runtime_error(
+            "wall (1,2,1) demand-ceiling scalar Bernstein mismatch");
+      }
+    }
+    return result;
+  };
+  const std::vector<Rational> h_unit_expected{
+      1, Rational(8, 5), Rational(11, 5), Rational(5, 2),
+      Rational(9, 5), 2};
+  const std::vector<Rational> q_unit_expected{
+      1, Rational(7, 5), Rational(9, 5), Rational(21, 10), 2, 2};
+  const std::vector<Integer> h_powers{1, 3, 0, -3, -2, 3};
+  const std::vector<Integer> q_powers{1, 2, 0, -1, -1, 1};
+  const std::vector<Integer> h_shift_expected{2, 1, 9, 19, 13, 3};
+  const std::vector<Integer> q_shift_expected{2, 0, 1, 5, 4, 1};
+  if (
+      scalar_bernstein(h) != h_unit_expected
+      || scalar_bernstein(q) != q_unit_expected
+      || shifted_coefficients(h_powers) != h_shift_expected
+      || shifted_coefficients(q_powers) != q_shift_expected
+      || Integer(-2) * Integer(-2) - 4 * Integer(3) * Integer(1)
+             != Integer(-8)
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) demand-ceiling positivity certificate mismatch");
+  }
+  constexpr int obstruction_support = 8;
+  const std::array<Integer, 10> obstruction_profile{
+      0, 3, 4, 5, 5, 4, 3, 2, 1, 0};
+  for (int index = 1; index < obstruction_support; ++index) {
+    if (
+        obstruction_profile[static_cast<std::size_t>(index)]
+              * obstruction_profile[static_cast<std::size_t>(index)]
+        < obstruction_profile[static_cast<std::size_t>(index - 1)]
+              * obstruction_profile[static_cast<std::size_t>(index + 1)]
+    ) {
+      throw std::runtime_error(
+          "wall (1,2,1) terminal-floor profile is not log concave");
+    }
+  }
+  std::array<Integer, 10> obstruction_g{};
+  std::array<Integer, 11> obstruction_h{};
+  std::array<Integer, 10> obstruction_k{};
+  for (int index = 1; index <= obstruction_support + 1; ++index) {
+    obstruction_g[static_cast<std::size_t>(index)] =
+        obstruction_profile[static_cast<std::size_t>(index)]
+              * obstruction_profile[static_cast<std::size_t>(index)]
+        - obstruction_profile[static_cast<std::size_t>(index - 1)]
+              * (index + 1 < static_cast<int>(obstruction_profile.size())
+                     ? obstruction_profile[static_cast<std::size_t>(index + 1)]
+                     : Integer(0));
+  }
+  for (int index = 1; index <= obstruction_support + 2; ++index) {
+    const Integer current =
+        index < static_cast<int>(obstruction_profile.size())
+            ? obstruction_profile[static_cast<std::size_t>(index)]
+            : Integer(0);
+    const Integer previous =
+        obstruction_profile[static_cast<std::size_t>(index - 1)];
+    const Integer left_two =
+        index >= 2
+            ? obstruction_profile[static_cast<std::size_t>(index - 2)]
+            : Integer(0);
+    const Integer next =
+        index + 1 < static_cast<int>(obstruction_profile.size())
+            ? obstruction_profile[static_cast<std::size_t>(index + 1)]
+            : Integer(0);
+    obstruction_h[static_cast<std::size_t>(index)] =
+        current * previous - left_two * next;
+  }
+  for (int index = 1; index <= obstruction_support + 1; ++index) {
+    obstruction_k[static_cast<std::size_t>(index)] =
+        obstruction_g[static_cast<std::size_t>(index)]
+        + obstruction_h[static_cast<std::size_t>(index)]
+        + obstruction_h[static_cast<std::size_t>(index + 1)];
+  }
+  const std::array<Integer, 10> obstruction_g_expected{
+      0, 9, 1, 5, 5, 1, 1, 1, 1, 0};
+  const std::array<Integer, 10> obstruction_k_expected{
+      0, 21, 18, 19, 19, 8, 5, 5, 3, 0};
+  if (
+      obstruction_g != obstruction_g_expected
+      || obstruction_k != obstruction_k_expected
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) terminal-floor current reconstruction mismatch");
+  }
+  Integer obstruction_energy = 0;
+  for (int index = 1; index <= obstruction_support; ++index) {
+    obstruction_energy +=
+        (obstruction_g[static_cast<std::size_t>(index)]
+         - obstruction_g[static_cast<std::size_t>(index + 1)])
+        * (obstruction_k[static_cast<std::size_t>(index)]
+           - obstruction_k[static_cast<std::size_t>(index + 1)]);
+  }
+  const Integer obstruction_wall =
+      obstruction_profile[1] * obstruction_profile[1]
+      * obstruction_profile[1] * obstruction_profile[2];
+  const Integer obstruction_floor =
+      obstruction_profile[1] * obstruction_profile[1]
+      * obstruction_profile[1] * obstruction_profile[1]
+      + obstruction_wall;
+  const Integer obstruction_a = obstruction_profile[1];
+  const Integer obstruction_b = obstruction_profile[2];
+  const Integer obstruction_c = obstruction_profile[3];
+  const Integer obstruction_d = obstruction_profile[4];
+  const Integer obstruction_c1 =
+      obstruction_b * obstruction_b * obstruction_b
+      + obstruction_a * obstruction_c * obstruction_c
+      + obstruction_c * obstruction_c * obstruction_c
+      - 3 * obstruction_a * obstruction_a * obstruction_b
+      - 2 * obstruction_a * obstruction_b * obstruction_b
+      - obstruction_a * obstruction_b * obstruction_c
+      - obstruction_a * obstruction_b * obstruction_d
+      - obstruction_b * obstruction_c * obstruction_d;
+  const Integer obstruction_c2 =
+      obstruction_a * obstruction_a
+      + obstruction_b * obstruction_b
+      + (obstruction_a + obstruction_b) * obstruction_c;
+  const Integer obstruction_c3 =
+      obstruction_a + obstruction_b + obstruction_c;
+  const Rational obstruction_endpoint(9, 4);
+  const Rational obstruction_derivative =
+      Rational(obstruction_c1)
+      + 2 * Rational(obstruction_c2) * obstruction_endpoint
+      + 3 * Rational(obstruction_c3) * obstruction_endpoint
+            * obstruction_endpoint;
+  if (
+      obstruction_energy != 75
+      || obstruction_wall + obstruction_energy != 183
+      || obstruction_floor != 189
+      || obstruction_c1 != -160
+      || obstruction_c2 != 60
+      || obstruction_c3 != 12
+      || obstruction_derivative != Rational(1169, 4)
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) terminal geometric-floor obstruction mismatch");
+  }
+  std::cout
+      << "SU2_WALL_121_GEOMETRIC_DEMAND_CEILING"
+      << " normalized_demand_bound=1+R"
+      << " legendre_endpoints=(u=0,u=1)"
+      << " u0_x_degree=3"
+      << " elevated_degree=4"
+      << " elevated_coefficients="
+      << "(R^3*(1+R),R^3*(1+R)^2/4,"
+      << "R*(1-2R^2+3R^4)/6,H(R)/4,Q(R))"
+      << " H_unit_bernstein=(1,8/5,11/5,5/2,9/5,2)"
+      << " Q_unit_bernstein=(1,7/5,9/5,21/10,2,2)"
+      << " H_shift=(2,1,9,19,13,3)"
+      << " Q_shift=(2,0,1,5,4,1)"
+      << " quadratic_discriminant=-8"
+      << " terminal_floor_profile=(3,4,5,5,4,3,2,1)"
+      << " terminal_paired_energy=75"
+      << " terminal_current=183"
+      << " terminal_geometric_floor=189"
+      << " terminal_floor_gap=-6"
+      << " terminal_critical_derivative=1169/4"
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
 int replay_support_three_gap_prefix_elevation_obstruction() {
   constexpr int support = 3;
   const Polynomial target = direct_polynomial(
@@ -3844,6 +4099,13 @@ int main(int argc, char** argv) {
                == "--replay-wall-121-saturated-recurrence-obstruction"
     ) {
       return replay_wall_121_saturated_recurrence_obstruction();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-wall-121-geometric-demand-ceiling"
+    ) {
+      return replay_wall_121_geometric_demand_ceiling();
     }
     if (
         argc == 2

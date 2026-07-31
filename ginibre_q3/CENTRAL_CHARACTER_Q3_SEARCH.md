@@ -13268,6 +13268,192 @@ Every coefficient is positive and `R>0`, proving
 reconstructs `(P5A.102AD5ALX1ZZB3BH9I)` from `A,B,C,Delta,N`.
 QED.
 
+The geometric value is in fact a ceiling for the critical demand even
+when the first ratio drops do not vanish.  This separates the local cubic
+demand from the arbitrary-depth current.  The corresponding terminal and
+cutoff-two separated Bellman floors are false by Propositions
+5A8H28UIA2CGLPCIPOCGAPWALL121GEOMCEILTERMFLOOROBS and
+5A8H28UIA2CGLPCIPOCGAPWALL121SEPFLOOROBS below.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121GEOMCEIL
+(uniform geometric critical-demand ceiling).**  Under the branch
+hypotheses of Corollary
+5A8H28UIA2CGLPCIPOCGAPWALL121CRIT,
+
+```text
+C_2tau^2+2C_3tau^3<=a^4+a^3b.                 (P5A.102AD5ALX1ZZB3BH9I0)
+```
+
+**Proof.**  By homogeneity and continuity, normalize `a=1`, put `R=b>0`,
+and first take the positive interior of the log-concavity chamber.  Write
+
+```text
+u=c/R^2,                 v=d/(R^3u^2),          0<u,v<=1.
+                                                        (P5A.102AD5ALX1ZZB3BH9I1)
+```
+
+With `A=C_2`, `B=-C_1`, and `C=C_3`, direct substitution in
+`(P5A.102AD5ALX1ZZB3BGW)` gives
+
+```text
+A=1+R^2+(1+R)R^2u,
+C=1+R+R^2u,
+B=3R+2R^2-R^3(1-u)
+  -(R^4u^2+R^6u^3)(1-v).                       (P5A.102AD5ALX1ZZB3BH9I2)
+```
+
+For `y>=0`, define
+
+```text
+F_(R,u,v)(y)=By-Ay^2-Cy^3.
+```
+
+The critical equation is `B=2Atau+3Ctau^2`.  Since `F` is strictly
+concave on the positive half-line,
+
+```text
+C_2tau^2+2C_3tau^3
+ =F_(R,u,v)(tau)=max_(y>=0)F_(R,u,v)(y).       (P5A.102AD5ALX1ZZB3BH9I3)
+```
+
+Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121CRIT also gives
+`0<tau<1/R`.  Fix `0<=y<=1/R`.  Formula
+`(P5A.102AD5ALX1ZZB3BH9I2)` shows first that `F` is maximized in `v`
+at `v=1`.  With `v=1`, it is affine in `u`, because its `u`
+coefficient is
+
+```text
+R^2y{R-(1+R)y-y^2}.
+```
+
+It is therefore enough to treat `u=0` and `u=1`.  At `u=1`, the first
+four coordinates are geometric.  Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121GEOM says that the maximum of this
+endpoint objective is at most `1+R`.
+
+At `u=0`, put `x=Ry`, so `0<=x<=1`.  Exact simplification gives
+
+```text
+G_0(R,x):=R^3{1+R-F_(R,0,1)(x/R)}
+
+ =R^3+R^4-(3R^3+2R^4-R^5)x
+  +(R+R^3)x^2+(1+R)x^3.                       (P5A.102AD5ALX1ZZB3BH9I4)
+```
+
+After elevation from degree three to degree four, the Bernstein
+coefficients of this polynomial in `x` are
+
+```text
+R^3(1+R),
+R^3(1+R)^2/4,
+R(1-2R^2+3R^4)/6,
+H(R)/4,
+Q(R),                                           (P5A.102AD5ALX1ZZB3BH9I5)
+
+H(R)=1+3R-3R^3-2R^4+3R^5,
+Q(R)=1+2R-R^3-R^4+R^5.
+```
+
+The middle quadratic factor is positive because
+
+```text
+disc_z(3z^2-2z+1)=-8.
+```
+
+On `0<=R<=1`, the degree-five Bernstein coefficients of `H` and `Q`
+are respectively
+
+```text
+(1,8/5,11/5,5/2,9/5,2),
+(1,7/5,9/5,21/10,2,2).                         (P5A.102AD5ALX1ZZB3BH9I6)
+```
+
+For `R=1+t`, `t>=0`, their power coefficients are respectively
+
+```text
+(2,1,9,19,13,3),
+(2,0,1,5,4,1).
+```
+
+Every displayed coefficient is nonnegative.  Thus every Bernstein
+coefficient in `(P5A.102AD5ALX1ZZB3BH9I5)` is nonnegative for `R>0`,
+and `(P5A.102AD5ALX1ZZB3BH9I4)` gives
+`F_(R,0,1)(y)<=1+R`.  The two affine endpoints now give the same bound
+for every `u,v`, and `(P5A.102AD5ALX1ZZB3BH9I3)` proves the normalized
+claim.  The faces `u=0` or `v=0` follow by continuity.  Restoring the
+factor `a^4` proves `(P5A.102AD5ALX1ZZB3BH9I0)`.  The fail-closed exact
+C++ replay
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-wall-121-geometric-demand-ceiling
+```
+
+reconstructs the degree elevation, both unit-interval Bernstein lists,
+both shifted expansions, and the discriminant.  QED.
+
+The ceiling in Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121GEOMCEIL cannot be combined with a
+separate terminal lower bound having the same geometric value, even on
+the critical branch.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121GEOMCEILTERMFLOOROBS
+(terminal geometric-floor obstruction).**  There is a finite
+nonnegative log-concave profile satisfying the branch hypotheses of
+Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121CRIT for which
+
+```text
+C_0<a^4+a^3b.                                  (P5A.102AD5ALX1ZZB3BH9I7)
+```
+
+**Proof.**  Take
+
+```text
+p=(0,3,4,5,5,4,3,2,1,0).
+```
+
+The nontrivial log-concavity comparisons are
+
+```text
+4^2>=3*5,  5^2>=4*5,  5^2>=5*4,
+4^2>=5*3,  3^2>=4*2,  2^2>=3*1.
+```
+
+Direct substitution in `(P5A.102AD5ALX1ZZB3BGX)` gives
+
+```text
+(g_1,...,g_9)=(9,1,5,5,1,1,1,1,0),
+(k_1,...,k_9)=(21,18,19,19,8,5,5,3,0).
+```
+
+Therefore
+
+```text
+sum_(i>=1)(g_i-g_(i+1))(k_i-k_(i+1))=75,
+C_0=3^3*4+75=183<189=3^4+3^3*4.       (P5A.102AD5ALX1ZZB3BH9I8)
+```
+
+The coefficients reconstructed from `(P5A.102AD5ALX1ZZB3BGW)` are
+
+```text
+C_1=-160,                 C_2=60,                 C_3=12.
+```
+
+Thus `C_1<0`, and at the critical comparison endpoint `Y=a^2/b=9/4`,
+
+```text
+Phi'(Y)=C_1+2C_2Y+3C_3Y^2=1169/4>0.            (P5A.102AD5ALX1ZZB3BH9I9)
+```
+
+This is the critical branch.  The fail-closed exact C++ replay for
+Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121GEOMCEIL reconstructs the profile,
+checks log concavity, reconstructs `g,k,C_1,C_2,C_3`, and checks every
+integer and rational value in
+`(P5A.102AD5ALX1ZZB3BH9I8)--(P5A.102AD5ALX1ZZB3BH9I9)`.  The
+proposition does not contradict the target payment: it proves that the
+ceiling and terminal current cannot be bounded separately at their
+geometric values.  QED.
+
 The first nontrivial Bellman cutoff has a support-independent floor.
 This does not yet propagate the floor through arbitrary cutoffs, but
 it supplies an exact base state for that propagation.
