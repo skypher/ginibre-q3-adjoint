@@ -13032,6 +13032,76 @@ support makes the remaining coordinates zero and the assertion
 follows directly; equivalently it follows by continuity from the
 positive case.  QED.
 
+Outer saturation does not turn the Bellman recurrence into a
+one- or two-cutoff descent.  Thus Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121BELEND must be combined with a
+quantitative margin, rather than iterated by bare comparison of the
+states `Q_m`.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121BELSATOBS
+(outer-saturated Bellman descent obstruction).**  Even on the
+minimizing face `(P5A.102AD5ALX1ZZB3BH8C)`, neither
+
+```text
+Q_m>=Q_(m-1)
+```
+
+nor the weaker two-cutoff comparison
+
+```text
+Q_m>=min{Q_(m-1),Q_(m-2)}                       (P5A.102AD5ALX1ZZB3BH8C0)
+```
+
+holds universally.
+
+**Proof.**  Take the positive log-concave profile
+
+```text
+p=(0,1,1/2,1/8,1/32,1/128,1/512).
+```
+
+Its positive successive ratios are
+
+```text
+1/2,1/4,1/4,1/4,1/4.
+```
+
+At cutoff `m=3` the outer coordinate is saturated because
+
+```text
+p_4p_6=p_5^2=1/16384.                           (P5A.102AD5ALX1ZZB3BH8C1)
+```
+
+The currents needed through this cutoff are
+
+```text
+(g_1,g_2,g_3,g_4)=(1,1/8,0,0),
+(k_1,k_2,k_3,k_4)=(3/2,21/32,1/32,0).
+```
+
+Substitution in `(P5A.102AD5ALX1ZZB3BH5)` gives
+
+```text
+(Q_1,Q_2,Q_3)=(533/256,169/128,337/256).
+                                                        (P5A.102AD5ALX1ZZB3BH8C2)
+```
+
+Consequently
+
+```text
+Q_3-Q_2=Q_3-min{Q_1,Q_2}=-1/256.               (P5A.102AD5ALX1ZZB3BH8C3)
+```
+
+The exact C++ replay
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-wall-121-saturated-recurrence-obstruction
+```
+
+checks log concavity, the saturation identity, all displayed
+currents, and all three Bellman values in rational arithmetic.  QED.
+
 **Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121BELCONSTOBS
 (constant Bellman-potential obstruction).**  No constants `A,B,C`
 make every append monotone after adding a terminal potential of the

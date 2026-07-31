@@ -1658,6 +1658,101 @@ int replay_wall_121_current_normal_form() {
   return EXIT_SUCCESS;
 }
 
+int replay_wall_121_saturated_recurrence_obstruction() {
+  constexpr int cutoff = 3;
+  const std::array<Rational, 8> p{
+      Rational(0), Rational(1), Rational(1, 2), Rational(1, 8),
+      Rational(1, 32), Rational(1, 128), Rational(1, 512),
+      Rational(0)};
+  for (int index = 1; index <= 5; ++index) {
+    if (p[static_cast<std::size_t>(index)]
+            * p[static_cast<std::size_t>(index)]
+        < p[static_cast<std::size_t>(index - 1)]
+              * p[static_cast<std::size_t>(index + 1)]) {
+      throw std::runtime_error(
+          "wall (1,2,1) saturated recurrence profile is not log concave");
+    }
+  }
+  if (p[4] * p[6] != p[5] * p[5]) {
+    throw std::runtime_error(
+        "wall (1,2,1) outer saturation identity mismatch");
+  }
+
+  std::array<Rational, 6> g{};
+  std::array<Rational, 7> h{};
+  std::array<Rational, 6> k{};
+  for (int index = 1; index <= cutoff + 1; ++index) {
+    g[static_cast<std::size_t>(index)] =
+        p[static_cast<std::size_t>(index)]
+            * p[static_cast<std::size_t>(index)]
+        - p[static_cast<std::size_t>(index - 1)]
+              * p[static_cast<std::size_t>(index + 1)];
+  }
+  for (int index = 1; index <= cutoff + 2; ++index) {
+    h[static_cast<std::size_t>(index)] =
+        p[static_cast<std::size_t>(index)]
+            * p[static_cast<std::size_t>(index - 1)]
+        - (index >= 2
+               ? p[static_cast<std::size_t>(index - 2)]
+                     * p[static_cast<std::size_t>(index + 1)]
+               : Rational(0));
+  }
+  for (int index = 1; index <= cutoff + 1; ++index) {
+    k[static_cast<std::size_t>(index)] =
+        g[static_cast<std::size_t>(index)]
+        + h[static_cast<std::size_t>(index)]
+        + h[static_cast<std::size_t>(index + 1)];
+  }
+  if (g != std::array<Rational, 6>{
+               Rational(0), Rational(1), Rational(1, 8),
+               Rational(0), Rational(0), Rational(0)}
+      || k != std::array<Rational, 6>{
+               Rational(0), Rational(3, 2), Rational(21, 32),
+               Rational(1, 32), Rational(0), Rational(0)}) {
+    throw std::runtime_error(
+        "wall (1,2,1) saturated recurrence current mismatch");
+  }
+
+  std::array<Rational, 4> q{};
+  Rational partial = p[1] * p[1] * p[1] * p[2];
+  for (int index = 1; index <= cutoff; ++index) {
+    partial +=
+        (g[static_cast<std::size_t>(index)]
+         - g[static_cast<std::size_t>(index + 1)])
+        * (k[static_cast<std::size_t>(index)]
+           - k[static_cast<std::size_t>(index + 1)]);
+    q[static_cast<std::size_t>(index)] =
+        partial
+        + g[static_cast<std::size_t>(index)]
+              * k[static_cast<std::size_t>(index + 1)]
+        + g[static_cast<std::size_t>(index + 1)]
+              * k[static_cast<std::size_t>(index)];
+  }
+  const std::array<Rational, 4> expected{
+      Rational(0), Rational(533, 256), Rational(169, 128),
+      Rational(337, 256)};
+  if (q != expected
+      || q[3] - q[2] != Rational(-1, 256)
+      || q[3] - std::min(q[1], q[2]) != Rational(-1, 256)) {
+    throw std::runtime_error(
+        "wall (1,2,1) saturated recurrence obstruction mismatch");
+  }
+
+  std::cout
+      << "SU2_WALL_121_SATURATED_RECURRENCE_OBSTRUCTION"
+      << " profile=(0,1,1/2,1/8,1/32,1/128,1/512)"
+      << " cutoff=3"
+      << " saturation=p_4*p_6=p_5^2"
+      << " currents_g=(1,1/8,0,0)"
+      << " currents_k=(3/2,21/32,1/32,0)"
+      << " Q=(533/256,169/128,337/256)"
+      << " one_step_gap=-1/256"
+      << " two_step_min_gap=-1/256"
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
 int replay_support_three_gap_prefix_elevation_obstruction() {
   constexpr int support = 3;
   const Polynomial target = direct_polynomial(
@@ -3742,6 +3837,13 @@ int main(int argc, char** argv) {
                == "--replay-wall-121-current-normal-form"
     ) {
       return replay_wall_121_current_normal_form();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-wall-121-saturated-recurrence-obstruction"
+    ) {
+      return replay_wall_121_saturated_recurrence_obstruction();
     }
     if (
         argc == 2
