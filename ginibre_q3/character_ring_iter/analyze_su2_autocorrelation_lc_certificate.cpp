@@ -1392,6 +1392,80 @@ int replay_wall_121_current_normal_form() {
     throw std::runtime_error(
         "wall (1,2,1) signed-Jacobi remainder mismatch");
   }
+  const int geometric_variables = 1;
+  const BigPolynomial geometric_one =
+      nd_constant(geometric_variables, 1);
+  const BigPolynomial geometric_r =
+      nd_variable(geometric_variables, 0);
+  const BigPolynomial geometric_r2 =
+      nd_power(geometric_r, 2);
+  const BigPolynomial geometric_r3 =
+      nd_power(geometric_r, 3);
+  BigPolynomial geometric_a = geometric_one;
+  big_add_scaled(geometric_a, geometric_r2, 2);
+  big_add_scaled(geometric_a, geometric_r3, 1);
+  BigPolynomial geometric_b =
+      nd_constant(geometric_variables, 0);
+  big_add_scaled(geometric_b, geometric_r, 3);
+  big_add_scaled(geometric_b, geometric_r2, 2);
+  BigPolynomial geometric_c = geometric_one;
+  big_add_scaled(geometric_c, geometric_r, 1);
+  big_add_scaled(geometric_c, geometric_r2, 1);
+  BigPolynomial geometric_d =
+      big_multiply(geometric_a, geometric_a);
+  big_add_scaled(
+      geometric_d,
+      big_multiply(geometric_b, geometric_c),
+      3);
+  BigPolynomial geometric_one_plus_r = geometric_one;
+  big_add_scaled(geometric_one_plus_r, geometric_r, 1);
+  BigPolynomial geometric_n =
+      big_multiply(geometric_a, geometric_b);
+  big_add_scaled(
+      geometric_n,
+      big_multiply(geometric_c, geometric_one_plus_r),
+      9);
+  BigPolynomial geometric_certificate =
+      big_multiply(
+          geometric_c,
+          big_multiply(geometric_n, geometric_n));
+  for (auto& [exponent, coefficient] : geometric_certificate) {
+    static_cast<void>(exponent);
+    coefficient *= 3;
+  }
+  big_add_scaled(
+      geometric_certificate,
+      big_multiply(
+          geometric_a,
+          big_multiply(geometric_n, geometric_d)),
+      4);
+  big_add_scaled(
+      geometric_certificate,
+      big_multiply(
+          geometric_b,
+          big_multiply(geometric_d, geometric_d)),
+      -4);
+  const std::array<Integer, 11> geometric_expected{
+      279, 1773, 5148, 9135, 11061, 9576,
+      6057, 2835, 972, 225, 27};
+  std::array<Integer, 11> geometric_actual{};
+  for (const auto& [exponent, coefficient] : geometric_certificate) {
+    if (coefficient == 0) {
+      continue;
+    }
+    if (exponent.size() != 1U
+        || exponent[0] < 0
+        || exponent[0] >= static_cast<int>(geometric_actual.size())) {
+      throw std::runtime_error(
+          "wall (1,2,1) geometric certificate degree mismatch");
+    }
+    geometric_actual[static_cast<std::size_t>(exponent[0])] =
+        coefficient;
+  }
+  if (geometric_actual != geometric_expected) {
+    throw std::runtime_error(
+        "wall (1,2,1) geometric certificate mismatch");
+  }
   const std::array<Integer, 8> cutoff_profile{
       0, 8, 8, 8, 6, 4, 2, 1};
   constexpr int cutoff_support = 7;
@@ -1570,6 +1644,10 @@ int replay_wall_121_current_normal_form() {
       << " norm_u=130 norm_w=144 current_pairing=238"
       << " remainder_profile=(0,1,1,1)"
       << " remainder_square=3 remainder_cross=-1"
+      << " geometric_certificate_degree=10"
+      << " geometric_certificate_coefficients="
+      << "(279,1773,5148,9135,11061,9576,"
+      << "6057,2835,972,225,27)"
       << " cutoff_profile=(0,8,8,8,6,4,2,1)"
       << " cutoff=2 cutoff_suffix=-230 cutoff_full=2842"
       << " constant_potential_core=4"

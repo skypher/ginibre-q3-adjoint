@@ -24,7 +24,7 @@ SU2_GAP_PREFIX_APPEND_LOW_COEFFICIENT_OBSTRUCTIONS support=3 R=1 S=2 D=1 C1_at_5
 ./analyze_su2_autocorrelation_lc_certificate --replay-gap-prefix-wall-cubic-reserve
 SU2_GAP_PREFIX_WALL_CUBIC_RESERVE labels=(1,2,1) linear_profile=(1,1,1) linear_coefficients=(3,-4,2,2,0) linear_truncation=-1 linear_full=3 cubic_profile=(2,3,3,2,1) cubic_coefficients=(120,-121,30,8,0) quadratic_truncation=-2 cubic_full=62 without_constant=-58 without_quadratic=-58 result=PASS_EXACT
 ./analyze_su2_autocorrelation_lc_certificate --replay-wall-121-current-normal-form
-SU2_WALL_121_CURRENT_NORMAL_FORM supports=2..12 C1_terms=8 C2_terms=4 C3_terms=3 C0_boundary=p_1^3*p_2 current_suffixes=(g_i,k_i) jacobi_identity_supports=2..12 ratio_band_supports=2..12 norm_contraction_profile=(0,4,3) norm_u=130 norm_w=144 current_pairing=238 remainder_profile=(0,1,1,1) remainder_square=3 remainder_cross=-1 cutoff_profile=(0,8,8,8,6,4,2,1) cutoff=2 cutoff_suffix=-230 cutoff_full=2842 constant_potential_core=4 farkas_weights=(90,1044,10,603) farkas_sum=(-1566,0,0,0) result=PASS_EXACT
+SU2_WALL_121_CURRENT_NORMAL_FORM supports=2..12 C1_terms=8 C2_terms=4 C3_terms=3 C0_boundary=p_1^3*p_2 current_suffixes=(g_i,k_i) jacobi_identity_supports=2..12 ratio_band_supports=2..12 norm_contraction_profile=(0,4,3) norm_u=130 norm_w=144 current_pairing=238 remainder_profile=(0,1,1,1) remainder_square=3 remainder_cross=-1 geometric_certificate_degree=10 geometric_certificate_coefficients=(279,1773,5148,9135,11061,9576,6057,2835,972,225,27) cutoff_profile=(0,8,8,8,6,4,2,1) cutoff=2 cutoff_suffix=-230 cutoff_full=2842 constant_potential_core=4 farkas_weights=(90,1044,10,603) farkas_sum=(-1566,0,0,0) result=PASS_EXACT
 g++ -O2 -std=c++20 -pthread -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror probe_su2_log_concave_ratio_stress.cpp -o probe_su2_log_concave_ratio_stress
 ./probe_su2_log_concave_ratio_stress --replay-complete-wall-gap-tail
 SU2_COMPLETE_WALL_GAP_TAIL_OBSTRUCTION q=1 a=7 minimum_gap=8 value=-16682814543009861315632046030279412129824776371200 current=94153010945848127878367241684587477315345747381424000 result=PASS_EXACT
@@ -32,7 +32,7 @@ SU2_COMPLETE_WALL_GAP_TAIL_OBSTRUCTION q=1 a=7 minimum_gap=8 value=-166828145430
 SU2_LOG_CONCAVE_RATIO_STRESS samples=5000 determinants=16152128 max_label=12 complete_wall_gap_energies=14712128 complete_wall_gap_failures=0 complete_wall_gap_tails=14712128 complete_wall_gap_tail_failures=0 complete_wall_gap_prefixes=14712128 complete_wall_gap_prefix_failures=0 maximum_length=20 maximum_ratio=1000 threads=30 result=NO_COUNTEREXAMPLE
 ./probe_su2_log_concave_ratio_stress 20000 16 30 1000000
 SU2_LOG_CONCAVE_RATIO_STRESS samples=20000 determinants=154256640 max_label=16 complete_wall_gap_energies=144016640 complete_wall_gap_failures=0 complete_wall_gap_tails=144016640 complete_wall_gap_tail_failures=0 complete_wall_gap_prefixes=144016640 complete_wall_gap_prefix_failures=0 maximum_length=30 maximum_ratio=1000000 threads=27 result=NO_COUNTEREXAMPLE
-analyzer_source_sha256=05404ad0896cf4a85cf409930a1f52cbbea282f20da811c8631fa58c8a9e6a0e
-analyzer_binary_sha256=4527097b071f6e9af66a93ebd24956106490050c32b908731cce44ceef5f28c7
+analyzer_source_sha256=2a00e2973a0e381408a0bb717926071ece517df5f671eb1eacf843c1c914c57e
+analyzer_binary_sha256=3fc04e19cb7104187684ec7d004dfea286ddeafe2547b906055c7bf3dbfb7168
 stress_source_sha256=6b64f20201bbf3e33db0425c21183fbf9cc553f582db36492973824017ce8d32
 stress_binary_sha256=e951a7fe47e248cfa1a0fc96a8e9b67814413c10c8d53d3c4553664a1d4d2e64

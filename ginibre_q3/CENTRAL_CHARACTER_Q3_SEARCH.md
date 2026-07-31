@@ -13097,6 +13097,107 @@ one-step state to be preserved; Proposition
 5A8H28UIA2CGLPCIPOCGAPWALL121CUTOFFOBS shows why the uncoupled
 suffix state cannot replace it.
 
+The asymptotic near-equality face of this target can be closed
+exactly.  It is the face on which the initial ratio drops vanish.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121GEOM
+(saturated-geometric Bellman payment).**  Let `m>=2`, and suppose
+that for some `a,R>0`,
+
+```text
+p_j=aR^(j-1),                         1<=j<=m+2.
+                                                        (P5A.102AD5ALX1ZZB3BH9A)
+```
+
+Any later continuation may be arbitrary subject to log concavity.
+Then the branch hypotheses in Corollary
+5A8H28UIA2CGLPCIPOCGAPWALL121CRIT hold, and
+
+```text
+Q_m=a^4(1+R)>=C_2tau^2+2C_3tau^3.             (P5A.102AD5ALX1ZZB3BH9B)
+```
+
+Thus Target 5A8H28UIA2CGLPCIPOCGAPWALL121BEL holds on every
+saturated-geometric prefix face.
+
+**Proof.**  On `(P5A.102AD5ALX1ZZB3BH9A)`,
+
+```text
+g_1=a^2,                    g_2=...=g_(m+1)=0,
+k_1=a^2(1+R),              k_2=a^2R.
+```
+
+Every term in `Q_m` except the wall term and the first current
+product therefore vanishes, giving
+
+```text
+Q_m=a^4R+a^2{k_1-k_2}=a^4(1+R).                (P5A.102AD5ALX1ZZB3BH9C)
+```
+
+The first four geometric coordinates give
+
+```text
+C_1=-a^3B,          C_2=a^2A,          C_3=aC,
+
+A=1+2R^2+R^3,       B=3R+2R^2,         C=1+R+R^2.
+                                                        (P5A.102AD5ALX1ZZB3BH9D)
+```
+
+In particular `C_1<0`.  Direct substitution at `Y=a^2/b=a/R`
+gives
+
+```text
+a^(-3)Phi'(Y)
+ =R+3+5/R+3/R^2>0,
+```
+
+so this is the critical branch.  Put `x=tau/a`.  The critical-point
+equation becomes
+
+```text
+3Cx^2+2Ax-B=0.                               (P5A.102AD5ALX1ZZB3BH9E)
+```
+
+Define
+
+```text
+Delta=A^2+3BC,             N=AB+9C(R+1).
+```
+
+Reduction modulo `(P5A.102AD5ALX1ZZB3BH9E)` gives
+
+```text
+A x^2+2C x^3={2Delta x-AB}/(9C).               (P5A.102AD5ALX1ZZB3BH9F)
+```
+
+Consequently the second inequality in
+`(P5A.102AD5ALX1ZZB3BH9B)` is equivalent to
+
+```text
+x<=N/(2Delta).                                  (P5A.102AD5ALX1ZZB3BH9G)
+```
+
+The left side of `(P5A.102AD5ALX1ZZB3BH9E)` is strictly increasing
+on the nonnegative half-line and vanishes at `x`.  Since
+`N/(2Delta)>0`, inequality `(P5A.102AD5ALX1ZZB3BH9G)` is therefore
+equivalent to
+
+```text
+3C N^2+4A N Delta-4B Delta^2>=0.                (P5A.102AD5ALX1ZZB3BH9H)
+```
+
+Exact expansion of its left side is
+
+```text
+279+1773R+5148R^2+9135R^3+11061R^4+9576R^5
+ +6057R^6+2835R^7+972R^8+225R^9+27R^10.        (P5A.102AD5ALX1ZZB3BH9I)
+```
+
+Every coefficient is positive and `R>0`, proving
+`(P5A.102AD5ALX1ZZB3BH9H)` and the lemma.  The exact C++ replay
+reconstructs `(P5A.102AD5ALX1ZZB3BH9I)` from `A,B,C,Delta,N`.
+QED.
+
 Target 5A8H28UIA2CGLPCIPOCGAPWALL121PAY contains every
 arbitrary-depth variable only through the paired current differences
 in `(P5A.102AD5ALX1ZZB3BGY)`.  The exact C++ replay
