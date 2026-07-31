@@ -731,6 +731,46 @@ Integer evaluate_append_power(
   return result;
 }
 
+Integer evaluate_coordinate_power(
+    const Polynomial& input, const int selected_variable,
+    const int selected_power,
+    const std::vector<Integer>& remaining_profile) {
+  if (
+      input.empty()
+      || selected_variable < 0
+      || static_cast<std::size_t>(selected_variable)
+             >= input.begin()->first.size()
+      || remaining_profile.size() + 1U
+             != input.begin()->first.size()
+  ) {
+    throw std::invalid_argument(
+        "coordinate-power evaluation dimension mismatch");
+  }
+  Integer result = 0;
+  for (const auto& [exponent, coefficient] : input) {
+    if (
+        exponent[static_cast<std::size_t>(selected_variable)]
+        != selected_power
+    ) {
+      continue;
+    }
+    Integer term = coefficient;
+    std::size_t remaining_variable = 0U;
+    for (std::size_t variable = 0; variable < exponent.size();
+         ++variable) {
+      if (static_cast<int>(variable) == selected_variable) {
+        continue;
+      }
+      for (int power = 0; power < exponent[variable]; ++power) {
+        term *= remaining_profile[remaining_variable];
+      }
+      ++remaining_variable;
+    }
+    result += term;
+  }
+  return result;
+}
+
 bool equal_polynomials(const RationalPolynomial& left,
                        const RationalPolynomial& right) {
   for (const auto& [exponent, coefficient] : left) {
@@ -865,6 +905,80 @@ int replay_gap_prefix_append_low_coefficients() {
       << " unbounded_labels=(1,6,1)"
       << " unbounded_coefficients=(0,1,-3,0,1)"
       << " unbounded_value=-1"
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
+int replay_gap_prefix_wall_cubic_reserve() {
+  {
+    constexpr int support = 2;
+    const Polynomial target = direct_polynomial(
+        gap_prefix_polynomial(support, 1, 2, 1), support);
+    const std::vector<Integer> tail{1, 1};
+    std::array<Integer, 5> coefficient{};
+    for (int power = 0; power <= 4; ++power) {
+      coefficient[static_cast<std::size_t>(power)] =
+          evaluate_coordinate_power(
+              target, 0, power, tail);
+    }
+    const Integer wall = 1;
+    const Integer linear =
+        coefficient[0] + wall * coefficient[1];
+    const Integer full =
+        linear
+        + wall * wall * coefficient[2]
+        + wall * wall * wall * coefficient[3];
+    if (
+        coefficient != std::array<Integer, 5>{3, -4, 2, 2, 0}
+        || linear != -1
+        || full != 3
+    ) {
+      throw std::runtime_error(
+          "wall linear-reserve replay mismatch");
+    }
+  }
+
+  constexpr int support = 4;
+  const Polynomial target = direct_polynomial(
+      gap_prefix_polynomial(support, 1, 2, 1), support);
+  const std::vector<Integer> tail{3, 3, 2, 1};
+  std::array<Integer, 5> coefficient{};
+  for (int power = 0; power <= 4; ++power) {
+    coefficient[static_cast<std::size_t>(power)] =
+        evaluate_coordinate_power(
+            target, 0, power, tail);
+  }
+  const Integer wall = 2;
+  const Integer quadratic =
+      coefficient[0]
+      + wall * coefficient[1]
+      + wall * wall * coefficient[2];
+  const Integer full =
+      quadratic + wall * wall * wall * coefficient[3];
+  const Integer without_constant = full - coefficient[0];
+  const Integer without_quadratic =
+      full - wall * wall * coefficient[2];
+  if (
+      coefficient != std::array<Integer, 5>{120, -121, 30, 8, 0}
+      || quadratic != -2
+      || full != 62
+      || without_constant != -58
+      || without_quadratic != -58
+  ) {
+    throw std::runtime_error(
+        "wall cubic-reserve replay mismatch");
+  }
+  std::cout
+      << "SU2_GAP_PREFIX_WALL_CUBIC_RESERVE"
+      << " labels=(1,2,1)"
+      << " linear_profile=(1,1,1)"
+      << " linear_coefficients=(3,-4,2,2,0)"
+      << " linear_truncation=-1 linear_full=3"
+      << " cubic_profile=(2,3,3,2,1)"
+      << " cubic_coefficients=(120,-121,30,8,0)"
+      << " quadratic_truncation=-2 cubic_full=62"
+      << " without_constant=-58 without_quadratic=-58"
       << " result=PASS_EXACT"
       << '\n';
   return EXIT_SUCCESS;
@@ -1911,6 +2025,13 @@ int main(int argc, char** argv) {
                == "--replay-gap-prefix-append-low-coefficients"
     ) {
       return replay_gap_prefix_append_low_coefficients();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-gap-prefix-wall-cubic-reserve"
+    ) {
+      return replay_gap_prefix_wall_cubic_reserve();
     }
     if (
         argc == 2

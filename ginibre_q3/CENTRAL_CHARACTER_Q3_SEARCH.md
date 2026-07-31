@@ -12195,6 +12195,191 @@ ordinary factor word.  Vanishing endpoint coordinates then follow by
 the same positive log-concave approximation and continuity used in
 Theorems 5A8H28UIA2CGLPCIPOCGAPIN2--3.
 
+The opposite endpoint has a strictly smaller insertion polynomial.
+This gives a second support-induction chart in which the quadratic
+coefficient also has an automatic sign.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL
+(lower-wall cubic edge expansion).**  Let `p` be nonnegative, have
+finite support, and satisfy `p_0=0`.  Put `e=e_0`,
+
+```text
+p(y)=p+ye,                                      y>=0,
+q_R=N_Rp,
+```
+
+and use the edge space `E_D` and restriction `pi_D` from Lemma
+5A8H28UIA2CGLPCIPOCGAPAPP.  For distinct positive labels `R,S`, set
+
+```text
+omega_R=pi_D(p wedge q_R),
+alpha_R=pi_D(p wedge e_R+e wedge q_R),
+gamma_R=pi_D(e wedge e_R).
+```
+
+Then
+
+```text
+P_D^(p(y))(R,S)
+ =C_0+yC_1+y^2C_2+y^3C_3,                      (P5A.102AD5ALX1ZZB3BGH)
+```
+
+where the coefficients are the specializations of
+`(P5A.102AD5ALX1ZZB3BGB)`, the quartic coefficient vanishes, and,
+with zero continuation,
+
+```text
+kappa=1_(R<=D)+1_(S<=D)+1_(|R-S|<=D),
+
+C_2=sum_(j=1)^D (q_R)_j(q_S)_j-kappa p_Rp_S>=0, (P5A.102AD5ALX1ZZB3BGI)
+
+C_3=1_(S<=D)(q_R)_S+1_(R<=D)(q_S)_R>=0,
+C_4=0.                                         (P5A.102AD5ALX1ZZB3BGJ)
+```
+
+The signs in `(P5A.102AD5ALX1ZZB3BGI)--(P5A.102AD5ALX1ZZB3BGJ)`
+need only `p>=0`; log concavity is not used.
+
+**Proof.**  Since `N_Re_0=e_R`, bilinearity gives
+
+```text
+pi_D(p(y) wedge N_Rp(y))
+ =omega_R+y alpha_R+y^2 gamma_R.
+```
+
+Taking the inner product gives `(P5A.102AD5ALX1ZZB3BGH)` and the
+coefficient formulas from Lemma
+5A8H28UIA2CGLPCIPOCGAPAPP.  The two vectors `gamma_R` and
+`gamma_S` are either zero or the distinct orthonormal star edges
+`e_0 wedge e_R` and `e_0 wedge e_S`; hence `C_4=0`.
+
+Write
+
+```text
+alpha_R=A_R+B_R,
+A_R=pi_D(e_0 wedge q_R),       B_R=pi_D(p wedge e_R).
+```
+
+The `A` vectors are supported on the wall star, while the only wall
+coordinate of `B_R` is zero because `p_0=0`.  Therefore the mixed
+inner products vanish.  The common coordinates of `B_R,B_S` consist
+only of the edge `(R,S)`, when that edge is retained, and their
+product there is `-p_Rp_S`.  Moreover
+
+```text
+<A_R,A_S>=sum_(j=1)^D(q_R)_j(q_S)_j,
+
+<omega_R,gamma_S>=-1_(S<=D)p_Sp_R,
+<gamma_R,omega_S>=-1_(R<=D)p_Rp_S.
+```
+
+This proves the identity in `(P5A.102AD5ALX1ZZB3BGI)`.
+
+It remains to check its coefficientwise sign.  Suppose `R<S` and put
+`d=S-R`.  For `j=1`, and also for `j=2` when `D>=2`, the product
+`(q_R)_j(q_S)_j` contains the standard monomial `p_Rp_S`: the
+fusion intervals at target `j` contain their respective centers
+`R,S`.  Whenever `d<=D`, the product at `j=d` contains one additional
+reversed monomial `p_Sp_R`, because
+
+```text
+R in [|S-d|,S+d],             S in [|R-d|,R+d].
+```
+
+If `D=1`, these occurrences cover
+`1_(R<=D)+1_(d<=D)`; the term `1_(S<=D)` is zero.  If `D>=2`, the
+two standard occurrences cover any two summands of `kappa`, and when
+all three are present the reversed occurrence supplies the third.
+Occurrences at the same `j` are distinct terms in the product
+expansion.  Thus the coefficient of `p_Rp_S` in the positive sum is
+at least `kappa`, while every other monomial coefficient is
+nonnegative.  This proves `C_2>=0`.
+
+Finally, pairing `alpha_R` with the star edge `gamma_S` reads the
+single coordinate `(0,S)` and gives
+`1_(S<=D)(q_R)_S`; the transposed term gives the other summand in
+`C_3`.  This proves `(P5A.102AD5ALX1ZZB3BGJ)`.  QED.
+
+Thus lower-wall insertion reduces the remaining reserve to one
+uncertain coefficient:
+
+```text
+C_0+yC_1+y^2C_2+y^3C_3>=0,
+              0<=y<=p_1^2/p_2,                (GAPWALLRES)
+```
+
+when the first two positive tail coordinates exist.  The inherited
+`C_0` and both higher terms are all load-bearing.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALLOBS
+(lower-wall cubic-reserve obstruction).**  At
+`(R,S,D)=(1,2,1)`, the wall expansion at
+
+```text
+p=(0,1,1)
+```
+
+has
+
+```text
+(C_0,C_1,C_2,C_3,C_4)=(3,-4,2,2,0).
+```
+
+The admissible value `y=1` gives
+
+```text
+C_0+yC_1=-1,                  P_D^((1,1,1))(1,2)=3.
+                                                        (P5A.102AD5ALX1ZZB3BGK)
+```
+
+At
+
+```text
+p=(0,3,3,2,1)
+```
+
+the coefficients are
+
+```text
+(C_0,C_1,C_2,C_3,C_4)=(120,-121,30,8,0).
+```
+
+The admissible value `y=2` gives
+
+```text
+C_0+yC_1+y^2C_2=-2,
+P_D^((2,3,3,2,1))(1,2)=62.                    (P5A.102AD5ALX1ZZB3BGL)
+```
+
+At the same point, deleting respectively the inherited or quadratic
+reserve gives
+
+```text
+yC_1+y^2C_2+y^3C_3=-58,
+C_0+yC_1+y^3C_3=-58.                           (P5A.102AD5ALX1ZZB3BGM)
+```
+
+Hence neither the inherited reserve nor the quadratic or cubic
+reserve can be discarded from `(GAPWALLRES)`.
+
+**Proof.**  Both completed profiles are log concave; for the second,
+the consecutive margins are
+
+```text
+3,3,1.
+```
+
+Direct substitution in `(P5A.102AD5ALX1ZZB3BGH)` gives all displayed
+coefficients and values.  The fail-closed exact C++ replay is
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-gap-prefix-wall-cubic-reserve
+```
+
+and is recorded in
+`certificates/su2_complete_wall_gap_prefix.log`.  QED.
+
 Exact deterministic ratio runs provide route evidence beyond this
 proved chamber.  Across supports through `40`, labels through `12`,
 and successive ratios as large as `10`, they evaluated
