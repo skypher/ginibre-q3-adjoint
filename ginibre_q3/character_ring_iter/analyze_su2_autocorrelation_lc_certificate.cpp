@@ -1958,6 +1958,56 @@ void nd_certify_subdivision(const NDBernsteinGrid& grid, const int depth,
   nd_certify_subdivision(right, depth + 1, depth_limit, result);
 }
 
+struct NDCornerSubdivisionResult {
+  NDSubdivisionResult counts;
+  std::size_t corner_leaves = 0U;
+};
+
+void nd_certify_subdivision_with_corner(
+    const NDBernsteinGrid& grid, const int depth,
+    const int depth_limit, const Rational& corner_upper,
+    const std::vector<Rational>& lower,
+    const std::vector<Rational>& upper,
+    NDCornerSubdivisionResult& result) {
+  ++result.counts.nodes;
+  result.counts.maximum_depth =
+      std::max(result.counts.maximum_depth, depth);
+  if (std::all_of(
+          grid.values.begin(), grid.values.end(),
+          [](const Rational& value) { return value >= 0; })) {
+    ++result.counts.leaves;
+    return;
+  }
+  if (std::all_of(
+          upper.begin(), upper.end(),
+          [&corner_upper](const Rational& value) {
+            return value <= corner_upper;
+          })) {
+    ++result.corner_leaves;
+    return;
+  }
+  if (depth >= depth_limit) {
+    ++result.counts.unresolved;
+    return;
+  }
+  const int dimension =
+      depth % static_cast<int>(grid.degrees.size());
+  auto [left, right] = nd_split_grid(grid, dimension);
+  std::vector<Rational> left_upper = upper;
+  std::vector<Rational> right_lower = lower;
+  const Rational middle =
+      (lower[static_cast<std::size_t>(dimension)]
+       + upper[static_cast<std::size_t>(dimension)]) / 2;
+  left_upper[static_cast<std::size_t>(dimension)] = middle;
+  right_lower[static_cast<std::size_t>(dimension)] = middle;
+  nd_certify_subdivision_with_corner(
+      left, depth + 1, depth_limit, corner_upper,
+      lower, left_upper, result);
+  nd_certify_subdivision_with_corner(
+      right, depth + 1, depth_limit, corner_upper,
+      right_lower, upper, result);
+}
+
 int replay_wall_121_q2_floor() {
   constexpr int variables = 3;
   const BigPolynomial one = nd_constant(variables, 1);
@@ -2189,6 +2239,241 @@ int replay_wall_121_q2_floor() {
       std::count_if(
           coupled_grid.values.begin(), coupled_grid.values.end(),
           [](const Rational& value) { return value < 0; }));
+
+  auto [coupled_lower_half, coupled_upper_half] =
+      nd_split_grid(coupled_grid, 0);
+  auto [coupled_middle_quarter, coupled_top_quarter] =
+      nd_split_grid(coupled_upper_half, 0);
+  static_cast<void>(coupled_top_quarter);
+  NDSubdivisionResult moderate_coupled_subdivision;
+  nd_certify_subdivision(
+      coupled_lower_half, 0, 24, moderate_coupled_subdivision);
+  nd_certify_subdivision(
+      coupled_middle_quarter, 0, 24,
+      moderate_coupled_subdivision);
+  std::cerr << "progress wall_121_q2 moderate_complete\n" << std::flush;
+
+  const BigPolynomial blowup_t = nd_variable(variables, 0);
+  const BigPolynomial blowup_alpha = nd_variable(variables, 1);
+  const BigPolynomial blowup_beta = nd_variable(variables, 2);
+  BigPolynomial blowup_w = one;
+  big_add_scaled(blowup_w, blowup_t, -1);
+  BigPolynomial blowup_u_numerator = nd_power(blowup_w, 2);
+  big_add_scaled(
+      blowup_u_numerator,
+      big_multiply(
+          big_multiply(blowup_t, blowup_w), blowup_alpha),
+      -2);
+  big_add_scaled(
+      blowup_u_numerator,
+      big_multiply(nd_power(blowup_t, 2), blowup_alpha),
+      -3);
+  BigPolynomial blowup_t2_plus_u = nd_power(blowup_t, 2);
+  big_add_scaled(blowup_t2_plus_u, blowup_u_numerator, 1);
+  const BigPolynomial blowup_denominator = big_multiply(
+      nd_power(blowup_u_numerator, 2), blowup_t2_plus_u);
+  BigPolynomial two_w_plus_three_t = blowup_w;
+  for (auto& [exponent, coefficient] : two_w_plus_three_t) {
+    static_cast<void>(exponent);
+    coefficient *= 2;
+  }
+  big_add_scaled(two_w_plus_three_t, blowup_t, 3);
+  BigPolynomial one_minus_alpha = one;
+  big_add_scaled(one_minus_alpha, blowup_alpha, -1);
+  const BigPolynomial blowup_drop_numerator = big_multiply(
+      big_multiply(
+          big_multiply(
+              big_multiply(
+                  blowup_beta, nd_power(blowup_t, 4)),
+              blowup_w),
+          two_w_plus_three_t),
+      one_minus_alpha);
+  BigPolynomial blowup_v_numerator = blowup_denominator;
+  big_add_scaled(
+      blowup_v_numerator, blowup_drop_numerator, -1);
+  const int coupled_u_degree = coupled_grid.degrees[1];
+  const int coupled_v_degree = coupled_grid.degrees[2];
+  BigPolynomial blowup_polynomial;
+  for (const auto& [exponent, coefficient] : compact_coupled) {
+    BigPolynomial term = nd_constant(variables, coefficient);
+    term = big_multiply(
+        term,
+        nd_power(
+            blowup_w,
+            exponent[0]
+                + 2 * (coupled_u_degree - exponent[1])));
+    term = big_multiply(
+        term, nd_power(blowup_u_numerator, exponent[1]));
+    term = big_multiply(
+        term,
+        nd_power(
+            blowup_denominator,
+            coupled_v_degree - exponent[2]));
+    term = big_multiply(
+        term, nd_power(blowup_v_numerator, exponent[2]));
+    big_add_scaled(blowup_polynomial, term, 1);
+  }
+  blowup_polynomial = canonicalize(blowup_polynomial);
+  int blowup_t_degree = 0;
+  for (const auto& [exponent, coefficient] : blowup_polynomial) {
+    static_cast<void>(coefficient);
+    blowup_t_degree = std::max(blowup_t_degree, exponent[0]);
+  }
+  BigPolynomial scaled_blowup;
+  for (const auto& [exponent, coefficient] : blowup_polynomial) {
+    Integer scale = 1;
+    for (int power = exponent[0]; power < blowup_t_degree; ++power) {
+      scale *= 4;
+    }
+    scaled_blowup[exponent] += coefficient * scale;
+  }
+  scaled_blowup = canonicalize(scaled_blowup);
+  constexpr int blowup_t_factor = 10;
+  BigPolynomial blowup_quotient;
+  for (const auto& [exponent, coefficient] : scaled_blowup) {
+    if (exponent[0] < blowup_t_factor) {
+      throw std::runtime_error(
+          "wall (1,2,1) coupled blowup t-factor mismatch");
+    }
+    Exponent quotient_exponent = exponent;
+    quotient_exponent[0] -= blowup_t_factor;
+    blowup_quotient[quotient_exponent] += coefficient;
+  }
+  blowup_quotient = canonicalize(blowup_quotient);
+  std::cerr << "progress wall_121_q2 blowup_constructed\n"
+            << std::flush;
+  const Exponent leading_alpha2{0, 2, 0};
+  const Exponent leading_alpha_beta{1, 1, 1};
+  const Exponent leading_beta{2, 0, 1};
+  const Exponent leading_alpha{2, 1, 0};
+  const Exponent leading_constant{4, 0, 0};
+  const Integer leading_scale = blowup_quotient.at(leading_beta);
+  if (
+      leading_scale <= 0
+      || blowup_quotient.at(leading_alpha2) != 64 * leading_scale
+      || blowup_quotient.at(leading_alpha_beta) != 8 * leading_scale
+      || blowup_quotient.at(leading_alpha) != -leading_scale
+      || 128 * blowup_quotient.at(leading_constant)
+          != 3 * leading_scale
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) coupled blowup Newton face mismatch");
+  }
+  struct CornerBudget {
+    Rational alpha_reserve{0};
+    Rational cross_reserve{0};
+    Rational beta_reserve{0};
+    Rational linear_alpha{0};
+    Rational constant_reserve{0};
+    Rational discriminant_margin{0};
+    std::size_t negative_monomials = 0U;
+    std::size_t unclassified_negative = 0U;
+  };
+  const auto compute_corner_budget = [
+      &blowup_quotient, &leading_scale
+  ](const Rational& upper) {
+    const auto corner_power = [&upper](const int exponent) {
+      Rational result(1);
+      for (int power = 0; power < exponent; ++power) {
+        result *= upper;
+      }
+      return result;
+    };
+    Rational alpha_loss(0);
+    Rational cross_loss(0);
+    Rational beta_loss(0);
+    Rational linear_alpha(0);
+    Rational constant_loss(0);
+    CornerBudget budget;
+    for (const auto& [exponent, coefficient] : blowup_quotient) {
+      if (coefficient >= 0) {
+        continue;
+      }
+      ++budget.negative_monomials;
+      const int t_exponent = exponent[0];
+      const int alpha_exponent = exponent[1];
+      const int beta_exponent = exponent[2];
+      const Rational magnitude(-coefficient, leading_scale);
+      if (
+          alpha_exponent == 1 && beta_exponent == 0
+          && t_exponent >= 2
+      ) {
+        linear_alpha += magnitude * corner_power(t_exponent - 2);
+      } else if (
+          alpha_exponent >= 1 && beta_exponent >= 1
+          && t_exponent >= 1
+      ) {
+        cross_loss += magnitude * corner_power(
+            t_exponent - 1 + alpha_exponent - 1
+            + beta_exponent - 1);
+      } else if (alpha_exponent >= 2) {
+        alpha_loss += magnitude * corner_power(
+            t_exponent + alpha_exponent - 2 + beta_exponent);
+      } else if (beta_exponent >= 1 && t_exponent >= 2) {
+        beta_loss += magnitude * corner_power(
+            t_exponent - 2 + alpha_exponent + beta_exponent - 1);
+      } else if (
+          alpha_exponent == 0 && beta_exponent == 0
+          && t_exponent >= 4
+      ) {
+        constant_loss += magnitude * corner_power(t_exponent - 4);
+      } else {
+        ++budget.unclassified_negative;
+      }
+    }
+    budget.alpha_reserve = Rational(64) - alpha_loss;
+    budget.cross_reserve = Rational(8) - cross_loss;
+    budget.beta_reserve = Rational(1) - beta_loss;
+    budget.linear_alpha = linear_alpha;
+    budget.constant_reserve = Rational(3, 128) - constant_loss;
+    budget.discriminant_margin =
+        4 * budget.alpha_reserve * budget.constant_reserve
+        - budget.linear_alpha * budget.linear_alpha;
+    return budget;
+  };
+  int corner_power_two = 4;
+  Rational corner_upper(1, 16);
+  CornerBudget corner_budget =
+      compute_corner_budget(corner_upper);
+  for (; corner_power_two <= 64; ++corner_power_two) {
+    Integer denominator = 1;
+    denominator <<= corner_power_two;
+    corner_upper = Rational(Integer(1), denominator);
+    corner_budget = compute_corner_budget(corner_upper);
+    if (
+        corner_budget.unclassified_negative == 0U
+        && corner_budget.alpha_reserve >= 0
+        && corner_budget.cross_reserve >= 0
+        && corner_budget.beta_reserve >= 0
+        && corner_budget.constant_reserve >= 0
+        && corner_budget.discriminant_margin >= 0
+    ) {
+      break;
+    }
+  }
+  if (corner_power_two > 64) {
+    throw std::runtime_error(
+        "wall (1,2,1) coupled blowup corner budget failed");
+  }
+  std::cerr << "progress wall_121_q2 corner_budget_complete\n"
+            << std::flush;
+  const NDBernsteinGrid blowup_grid =
+      nd_bernstein_grid(blowup_quotient, variables);
+  const std::size_t blowup_negative = static_cast<std::size_t>(
+      std::count_if(
+          blowup_grid.values.begin(), blowup_grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+  NDCornerSubdivisionResult blowup_subdivision;
+  const std::vector<Rational> blowup_lower(
+      static_cast<std::size_t>(variables), Rational(0));
+  const std::vector<Rational> blowup_upper(
+      static_cast<std::size_t>(variables), Rational(1));
+  const int blowup_depth_limit = 3 * corner_power_two + 18;
+  std::cerr << "progress wall_121_q2 blowup_subdivision_start\n"
+            << std::flush;
+  nd_certify_subdivision_with_corner(
+      blowup_grid, 0, blowup_depth_limit, corner_upper,
+      blowup_lower, blowup_upper, blowup_subdivision);
   const BigPolynomial compact = canonicalize(
       compactify_positive_variable(reduced, 0U));
   const NDBernsteinGrid grid =
@@ -2202,6 +2487,27 @@ int replay_wall_121_q2_floor() {
       || coupled_grid.degrees != std::vector<int>{24, 13, 6}
       || coupled_grid.values.size() != 2450U
       || coupled_negative != 253U
+      || moderate_coupled_subdivision.nodes != 14U
+      || moderate_coupled_subdivision.leaves != 8U
+      || moderate_coupled_subdivision.unresolved != 0U
+      || moderate_coupled_subdivision.maximum_depth != 6
+      || blowup_grid.degrees != std::vector<int>{76, 27, 6}
+      || blowup_quotient.size() != 10861U
+      || blowup_grid.values.size() != 15092U
+      || blowup_negative != 75U
+      || corner_budget.negative_monomials != 5396U
+      || corner_budget.unclassified_negative != 0U
+      || corner_power_two != 5
+      || corner_budget.alpha_reserve < 0
+      || corner_budget.cross_reserve < 0
+      || corner_budget.beta_reserve < 0
+      || corner_budget.constant_reserve < 0
+      || corner_budget.discriminant_margin < 0
+      || blowup_subdivision.counts.nodes != 611U
+      || blowup_subdivision.counts.leaves != 305U
+      || blowup_subdivision.corner_leaves != 1U
+      || blowup_subdivision.counts.unresolved != 0U
+      || blowup_subdivision.counts.maximum_depth != 32
       || lower_half.values.size() != 216U
       || result.nodes != 1U
       || result.leaves != 1U
@@ -2226,6 +2532,25 @@ int replay_wall_121_q2_floor() {
       << " coupled_coefficients=2450"
       << " coupled_initial_negative=253"
       << " coupled_branch_identity=1"
+      << " coupled_moderate_nodes=14"
+      << " coupled_moderate_leaves=8"
+      << " coupled_moderate_unresolved=0"
+      << " coupled_moderate_depth=6"
+      << " coupled_blowup_degrees=(76,27,6)"
+      << " coupled_blowup_terms=10861"
+      << " coupled_blowup_coefficients=15092"
+      << " coupled_blowup_initial_negative=75"
+      << " coupled_corner=1/32"
+      << " coupled_corner_negative_monomials=5396"
+      << " coupled_corner_unclassified=0"
+      << " coupled_corner_reserves_nonnegative=1"
+      << " coupled_corner_discriminant_nonnegative=1"
+      << " coupled_blowup_nodes=611"
+      << " coupled_blowup_leaves=305"
+      << " coupled_blowup_corner_leaves=1"
+      << " coupled_blowup_unresolved=0"
+      << " coupled_blowup_depth=32"
+      << " coupled_payment=PASS_EXACT"
       << " result=PASS_EXACT"
       << '\n';
   return EXIT_SUCCESS;

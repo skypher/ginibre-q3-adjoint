@@ -13545,30 +13545,142 @@ gives `(P5A.102AD5ALX1ZZB3BH9Z5)`.  Dropping one negative summand at
 a time and using `B>=0` proves the two inequalities in
 `(P5A.102AD5ALX1ZZB3BH9Z6)`.  QED.
 
-**Target 5A8H28UIA2CGLPCIPOCGAPWALL121Q2POLY
-(coupled cutoff-two polynomial).**  Prove
-`(P5A.102AD5ALX1ZZB3BH9Z4)` for `R>0`, `0<=u,v<=1`, and `B>=0`.
-After `w=R/(1+R)` compactification, the exact polynomial `H_2` has
-coordinate degrees
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121Q2POLY
+(coupled cutoff-two polynomial).**  For `R>0`, `0<=u,v<=1`, and
+`B>=0`,
 
 ```text
-(24,13,6).                                      (P5A.102AD5ALX1ZZB3BH9Z7)
+H_2>=0.                                           (P5A.102AD5ALX1ZZB3BH9Z7)
 ```
 
-Its full root Bernstein grid has `2450` coefficients, `253` of them
-negative, so coefficientwise positivity on the unreduced cube is
-not a proof.  The branch bounds
-`(P5A.102AD5ALX1ZZB3BH9Z6)` show that the remaining large-`R`
-region has the forced blow-up scales
+Consequently the cutoff-two Bellman payment holds on the complete
+critical branch.
+
+**Proof.**  Compactify by
 
 ```text
-1-u=O(R^(-1)),                   1-v=O(R^(-4)). (P5A.102AD5ALX1ZZB3BH9Z8)
+w=R/(1+R),
+K(w,u,v)=(1-w)^24H_2(w/(1-w),u,v).              (P5A.102AD5ALX1ZZB3BH9Z8)
 ```
 
-The exact C++ replay independently constructs `A,B,C,L,Delta,N_2,H_2`
-from the current polynomial and verifies the degree and root-grid
-counts.  Positivity in this target remains to be proved; the counts
-are exact reduction data, not a bounded certificate.
+The exact polynomial `K` has coordinate degrees `(24,13,6)`.  Its
+full root Bernstein grid has `2450` coefficients, `253` of them
+negative.  On `0<=w<=3/4`, split first at `w=1/2` and then apply
+cyclic midpoint subdivision in `(w,u,v)`.  All exact rational
+Bernstein coefficients are nonnegative after a forest of `14` nodes,
+`8` leaves, and maximum depth `6`; there are no unresolved leaves.
+Thus `(P5A.102AD5ALX1ZZB3BH9Z7)` holds for `R<=3`, even without the
+branch restriction `B>=0`.
+
+It remains to treat `R>=3`.  Put `s=1/R`.  The two ratio drops in
+`(P5A.102AD5ALX1ZZB3BH9Z5)` give the exact branch coordinates
+
+```text
+1-u=s(2+3s)alpha,
+
+1-v={beta s^4(2+3s)(1-alpha)}/{u^2(s^2+u)},
+
+B=R^2(2+3s)(1-alpha)(1-beta),
+                                      0<=alpha,beta<=1.       (P5A.102AD5ALX1ZZB3BH9Z9)
+```
+
+Indeed, the first branch bound in `(P5A.102AD5ALX1ZZB3BH9Z6)`
+defines `alpha`.  After this substitution, `B>=0` defines `beta`;
+the boundary cases follow by continuity.  Since `s<=1/3`, the first
+line also gives `u>=0` throughout the parameter cube.
+
+Write
+
+```text
+t=1-w,                         W=1-t,
+U=W^2-2tW alpha-3t^2alpha,
+D=U^2(t^2+U),
+Z=beta t^4W(2W+3t)(1-alpha).                    (P5A.102AD5ALX1ZZB3BH9ZA)
+```
+
+Then `u=U/W^2` and `v=(D-Z)/D`.  Clear the positive denominators by
+
+```text
+P(t,alpha,beta)
+ =W^26D^6 K(W,U/W^2,(D-Z)/D).                  (P5A.102AD5ALX1ZZB3BH9ZB)
+```
+
+For `R>=3`, `0<=t<=1/4`.  Set `x=4t`.  Exact expansion shows that
+
+```text
+4^86P(x/4,alpha,beta)=x^10J(x,alpha,beta),      (P5A.102AD5ALX1ZZB3BH9ZC)
+```
+
+where `J` has coordinate degrees `(76,27,6)`, `10861` nonzero
+monomials, and `15092` root-grid Bernstein coefficients.  Its Newton
+face at the origin is
+
+```text
+kappa{64alpha^2+8x alpha beta+x^2beta-x^2alpha
+       +(3/128)x^4},                            (P5A.102AD5ALX1ZZB3BH9ZD)
+```
+
+with `kappa>0`.
+
+We first certify the singular cube
+
+```text
+0<=x,alpha,beta<=delta,                 delta=1/32.             (P5A.102AD5ALX1ZZB3BH9ZE)
+```
+
+For every negative monomial `-c x^i alpha^j beta^k` of `J`, in the
+following precedence order, debit its normalized coefficient
+`c/kappa` to one of the five monomials in `(P5A.102AD5ALX1ZZB3BH9ZD)`:
+
+```text
+(j,k)=(1,0), i>=2:      L-debit  (c/kappa)delta^(i-2),
+j,k>=1, i>=1:           X-debit  (c/kappa)delta^(i+j+k-3),
+j>=2:                   A-debit  (c/kappa)delta^(i+j+k-2),
+k>=1, i>=2:             V-debit  (c/kappa)delta^(i+j+k-3),
+(j,k)=(0,0), i>=4:      C-debit  (c/kappa)delta^(i-4).           (P5A.102AD5ALX1ZZB3BH9ZF)
+```
+
+Each debit is valid because the quotient of its monomial by the
+assigned face monomial is at most the displayed power of `delta` on
+`(P5A.102AD5ALX1ZZB3BH9ZE)`.  Among the `5396` negative monomials,
+the exact replay assigns every one.  If the five debit totals are
+`d_A,d_X,d_V,d_L,d_C`, it further checks in exact rational arithmetic
+
+```text
+A_0=64-d_A>=0,                 X_0=8-d_X>=0,
+V_0=1-d_V>=0,                  C_0=3/128-d_C>=0,
+4A_0C_0-d_L^2>=0.                              (P5A.102AD5ALX1ZZB3BH9ZG)
+```
+
+All omitted monomials have positive coefficients.  Hence on the
+singular cube,
+
+```text
+J/kappa
+ >=A_0alpha^2+X_0x alpha beta+V_0x^2beta
+   -d_Lx^2alpha+C_0x^4
+ >=0.                                           (P5A.102AD5ALX1ZZB3BH9ZH)
+```
+
+The last inequality is precisely the nonpositive-discriminant check
+in `(P5A.102AD5ALX1ZZB3BH9ZG)`; the `X_0` and `V_0` terms are
+nonnegative.
+
+On the complement of the singular cube, cyclic midpoint subdivision
+of the exact Bernstein grid of `J` gives `611` nodes, `305`
+coefficientwise-nonnegative leaves, one leaf supplied by
+`(P5A.102AD5ALX1ZZB3BH9ZH)`, maximum depth `32`, and no unresolved
+leaves.  Therefore `J>=0` on the whole parameter cube.  Equations
+`(P5A.102AD5ALX1ZZB3BH9Z8)--(P5A.102AD5ALX1ZZB3BH9ZC)` multiply only
+by nonnegative factors, and their interior denominators are positive;
+continuity supplies the boundary.  Thus `H_2>=0` for `R>=3` as well.
+
+The C++ replay independently constructs `A,B,C,L,Delta,N_2,H_2`,
+checks the branch identity, performs both Bernstein subdivisions,
+checks the factor `x^10` and Newton face, assigns every negative
+corner monomial, and verifies all rational reserve inequalities.
+Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121Q2COUPLE now gives the cutoff-two
+payment.  QED.
 
 Target 5A8H28UIA2CGLPCIPOCGAPWALL121PAY contains every
 arbitrary-depth variable only through the paired current differences
