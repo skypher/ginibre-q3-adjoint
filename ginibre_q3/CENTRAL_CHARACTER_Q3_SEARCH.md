@@ -12077,6 +12077,205 @@ Substitution in the quartic
 The exponent of `u_j` in `H_i` is at most `n-j+1`; quartic
 homogeneity gives the degree bound.  QED.
 
+There is also an exact support-induction chart on the root itself.
+Unlike the compact tail chart, it retains precisely the root
+log-concavity hypothesis in Target
+5A8H28UIA2CGLPCIPOCB2RADLCR.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADROOTOUT
+(outer-root quartic reduction).**  Let
+
+```text
+P=sum_(i=0)^(n-1)p_i beta_i,             n>=2,
+p_i>=0,                                  p_(n-1)>0,
+P^2=sum_(t>=0)c_t beta_t,
+H_j=sum_(i=j)^(n-1)p_i.
+```
+
+For `a>=0`, put
+
+```text
+P_a=P+a beta_n,                 P_a^2=sum_(t>=0)c_t(a)beta_t,
+
+s_0=s_(2n)=0,
+s_t=H_|n-t|,                         1<=t<=2n-1,
+y_t=2s_t.                                             (P5A.102AD5ALX1ZZB3S3BPX0)
+```
+
+With zero continuation for `c`, one has
+
+```text
+c_t(a)=c_t+a y_t+a^2,                    0<=t<=2n.    (P5A.102AD5ALX1ZZB3S3BPX1)
+```
+
+Fix `1<=A<=2n-2`, `0<=2L<A`, and write `M=A-L`.  If `K_(A,L)(a)`
+denotes the radial expression `(P5A.102AD5ALX1ZZB3S1)` formed from
+`c(a)`, then
+
+```text
+K_(A,L)(a)
+ =K_(A,L)(0)+a Q_1+a^2 Q_2+a^3 Q_3+2a^4,              (P5A.102AD5ALX1ZZB3S3BPX2)
+
+Q_1
+ =c_0(y_(A+1)+y_(A+2))
+  +y_Lc_M+c_Ly_M-y_(L+1)c_(M+1)-c_(L+1)y_(M+1),
+
+Q_2
+ =2c_0+c_(A+1)+c_(A+2)
+  +c_L+c_M-c_(L+1)-c_(M+1)
+  +y_Ly_M-y_(L+1)y_(M+1),
+
+Q_3
+ =y_(A+1)+y_(A+2)+y_L+y_M-y_(L+1)-y_(M+1).
+                                                               (P5A.102AD5ALX1ZZB3S3BPX3)
+```
+
+Consequently support induction for Target
+5A8H28UIA2CGLPCIPOCB2RADLCR reduces exactly to proving this quartic
+nonnegative on
+
+```text
+0<=a<=p_(n-1)^2/p_(n-2),                         (P5A.102AD5ALX1ZZB3S3BPX4)
+```
+
+where the upper endpoint is interpreted as `+infinity` when
+`p_(n-2)=0`.
+
+**Proof.**  In the cross term `2aP beta_n`, the coefficient of
+`beta_t` is
+
+```text
+2a sum_(i=0)^(n-1)p_i
+       1_{|n-i|<=t<=n+i}=2a s_t.
+```
+
+Indeed the admissible indices are exactly
+`i>=|n-t|` for `1<=t<=2n-1`, and there is no admissible index at
+`t=0,2n`.  The ordinary fusion identity
+
+```text
+beta_n^2=sum_(t=0)^(2n)beta_t
+```
+
+then proves `(P5A.102AD5ALX1ZZB3S3BPX1)`.
+
+Substitute that identity into
+
+```text
+c_0(a){c_(A+1)(a)+c_(A+2)(a)}
+ +c_L(a)c_M(a)-c_(L+1)(a)c_(M+1)(a).
+```
+
+Collecting the coefficients of `a` gives
+`(P5A.102AD5ALX1ZZB3S3BPX2)--(P5A.102AD5ALX1ZZB3S3BPX3)`; the
+three `a^4` contributions have signs `2,+1,-1`, leaving `2a^4`.
+Finally, appending `p_n=a` preserves the last root log-concavity
+inequality exactly when
+
+```text
+p_(n-1)^2>=p_(n-2)a.
+```
+
+This proves `(P5A.102AD5ALX1ZZB3S3BPX4)` and the reduction.  QED.
+
+The quartic cannot be closed by demanding that every new outer
+Bernstein coefficient be nonnegative.
+
+**Proposition 5A8H28UIA2CGLPCIPOCB2RADROOTOUTOBS
+(outer-root Bernstein obstruction).**  At support two normalize the
+positive root as
+
+```text
+p=(1,b,b^2u),                   b>=0, 0<=u<=1.
+```
+
+For `(A,L)=(1,0)`, convert `K_(1,0)` to the degree-four Bernstein
+basis in `u`.  Its coefficient of Bernstein index two is
+
+```text
+B_2(b)
+ =2b+3b^2+b^3-(1/2)b^4+(1/3)b^5-(1/6)b^6.       (P5A.102AD5ALX1ZZB3S3BPX5)
+```
+
+In particular,
+
+```text
+6B_2(10)=-822080<0.                              (P5A.102AD5ALX1ZZB3S3BPX6)
+```
+
+Thus even the natural root-ratio chart has a negative new Bernstein
+coefficient.  A support induction must couple the Bernstein indices
+of the outer quartic, rather than certify them separately.
+
+**Proof.**  The fail-closed
+`--replay-root-outer-bernstein-obstruction` mode of
+`analyze_su2_autocorrelation_lc_certificate.cpp` constructs
+`K_(1,0)` from the autocorrelation, substitutes
+`p=(1,b,b^2u)`, and performs the univariate Bernstein conversion.
+It checks that the index-zero coefficient is exactly the support-one
+radial polynomial and that the index-two coefficient is
+`(P5A.102AD5ALX1ZZB3S3BPX5)`.  It also evaluates that coefficient
+at `b=10` using exact rationals.  The strict transcript is
+`certificates/su2_autocorrelation_root_outer_bernstein_obstruction.log`.
+QED.
+
+Nor is the first variation itself nonnegative.
+
+**Proposition 5A8H28UIA2CGLPCIPOCB2RADROOTOUTDEROBS
+(outer-root first-variation obstruction).**  Put
+
+```text
+P=beta_0+2beta_1+4beta_2.
+```
+
+This root is positive and log concave.  Its square profile and the
+`(A,L)=(2,0)` reserve are
+
+```text
+c=(21,40,44,32,16),                    K_(2,0)(0)=652.
+                                                        (P5A.102AD5ALX1ZZB3S3BPX7)
+```
+
+Append `a beta_3`.  In the outer-root quartic
+`(P5A.102AD5ALX1ZZB3S3BPX2)`, one has
+
+```text
+Q_1=-18<0.                                      (P5A.102AD5ALX1ZZB3S3BPX8)
+```
+
+The admissible log-concavity interval is `0<=a<=8`.  Consequently a
+support induction cannot discard the inherited value
+`K_(A,L)(0)` and prove positivity only from nonnegative variation.
+It must retain a quantitative old-support reserve that pays negative
+linear, quadratic, and cubic coefficients together.
+
+**Proof.**  Ordinary fusion gives the displayed `c`.  For `n=3`,
+the tail profile is
+
+```text
+H=(7,6,4),
+```
+
+so `(P5A.102AD5ALX1ZZB3S3BPX0)` gives
+
+```text
+(y_0,y_1,y_2,y_3,y_4)=(0,8,12,14,12).
+```
+
+Substitution in `Q_1` from
+`(P5A.102AD5ALX1ZZB3S3BPX3)` gives
+
+```text
+21(14+12)+21(12)-8(32)-40(14)=-18.
+```
+
+The final root inequality is `4^2>=2a`, hence `a<=8`.
+The fail-closed
+`--replay-root-outer-first-variation` mode constructs the same
+autocorrelation and symbolic outer coefficient independently.  Its
+root-ratio coordinate is `p_3=8u_3`, so it checks both the coefficient
+`-144` in `u_3` and `Q_1=-144/8=-18`.  QED.
+
 The next cube also has a complete exact certificate.
 
 **Theorem 5A8H28UIA2CGLPCIPOCOVLCR5
@@ -14833,6 +15032,53 @@ the genuine word `P=chi_2^8`, direct ordinary fusion gives
 
 Thus `c_1/c_0<alpha`; the later arbitrary-factor argument must still
 use the cumulative current outside the mean chamber.
+
+The repeated word in that countercontrol is covered independently by
+the repeated-factor theorem.  The two spectral thresholds together
+with all already closed structured chambers still do not exhaust the
+mixed words.
+
+**Proposition 5A8H28UIA2CGLPCIPOCB2RADTHIRDMIXOBS
+(mixed third-radial threshold obstruction).**  Put
+
+```text
+P=chi_1^6 chi_2 chi_3,                 P^2=sum_h c_h beta_h.
+```
+
+Then
+
+```text
+(c_0,c_1)=(5772,15248),
+
+7c_1-19c_0=-2932<0,                              (P5A.102AD5ALX1ZZB3S4N43A)
+
+(3c_1-2c_0)^2-40c_0^2=-162999360<0.              (P5A.102AD5ALX1ZZB3S4N43B)
+```
+
+Thus neither Lemma
+5A8H28UIA2CGLPCIPOCB2RADTHIRDZEROTHR nor Lemma
+5A8H28UIA2CGLPCIPOCB2RADTHIRDONETHR applies.  The word is not
+repeated, has two distinct nonfundamental labels, has eight factors,
+and its root support is eleven.  Hence it lies outside the proved
+repeated, one-arbitrary-factor, two-factor, and support-at-most-five
+chambers.  Nevertheless its two third-radial columns are positive:
+
+```text
+K_(3,0)=24095496,                 K_(3,1)=64241860. (P5A.102AD5ALX1ZZB3S4N43C)
+```
+
+Consequently those chambers plus the mean thresholds cannot prove the
+full `A=3` row.  A new mixed-word cumulative payment is already
+necessary at this fixed antidiagonal.
+
+**Proof.**  Eight successive exact ordinary interval transforms give
+the displayed coefficients and radial values.  Substitution gives
+the two threshold margins.  The fail-closed
+`--replay-third-threshold-obstruction` mode of
+`probe_su2_second_lower_radial_threshold.cpp` reconstructs the whole
+profile with arbitrary-precision integers and checks all six displayed
+integers.  Its transcript is
+`certificates/su2_third_threshold_mixed_obstruction.log`.  QED.
 
 For a factor word of root support `n>=2`, Theorem
 5A8H28UIA2CGLPCIPOCB2RADSECONDALL and Lemma

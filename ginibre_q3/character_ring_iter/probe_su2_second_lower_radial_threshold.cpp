@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
+#include <numeric>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -68,6 +69,47 @@ bool mean_threshold(const std::vector<Integer>& profile) {
   const Integer zero = at(profile, 0);
   const Integer one = at(profile, 1);
   return 3 * one * one >= 4 * zero * one + 8 * zero * zero;
+}
+
+bool third_zero_threshold(const std::vector<Integer>& profile) {
+  return 7 * at(profile, 1) >= 19 * at(profile, 0);
+}
+
+bool third_one_threshold(const std::vector<Integer>& profile) {
+  const Integer zero = at(profile, 0);
+  const Integer delta = 3 * at(profile, 1) - 2 * zero;
+  return delta >= 0 && delta * delta >= 40 * zero * zero;
+}
+
+bool covered_third_family(const std::vector<int>& word) {
+  if (word.size() <= 2U) {
+    return true;
+  }
+  if (std::all_of(
+          word.begin(), word.end(),
+          [&word](const int label) { return label == word.front(); })) {
+    return true;
+  }
+  if (
+      std::count_if(
+          word.begin(), word.end(),
+          [](const int label) { return label > 1; }) <= 1
+  ) {
+    return true;
+  }
+  return std::accumulate(word.begin(), word.end(), 0) <= 5;
+}
+
+int distinct_nonfundamental_labels(const std::vector<int>& word) {
+  int result = 0;
+  int previous = -1;
+  for (const int label : word) {
+    if (label > 1 && label != previous) {
+      ++result;
+      previous = label;
+    }
+  }
+  return result;
 }
 
 struct DeletionPrefixInspection {
@@ -220,12 +262,56 @@ std::string render(const std::vector<int>& word) {
   return result + "]";
 }
 
+int replay_third_threshold_obstruction() {
+  const std::vector<int> word{1, 1, 1, 1, 1, 1, 2, 3};
+  std::vector<Integer> profile{Integer(1)};
+  for (const int label : word) {
+    profile = multiply_by_square(profile, label);
+  }
+  const Integer zero = at(profile, 0);
+  const Integer one = at(profile, 1);
+  const Integer zero_threshold_margin = 7 * one - 19 * zero;
+  const Integer delta = 3 * one - 2 * zero;
+  const Integer one_threshold_margin =
+      delta * delta - 40 * zero * zero;
+  const Integer radial_zero = radial(profile, 3, 0);
+  const Integer radial_one = radial(profile, 3, 1);
+  if (
+      zero != 5772 || one != 15248
+      || zero_threshold_margin != -2932
+      || one_threshold_margin != -162999360
+      || radial_zero != 24095496 || radial_one != 64241860
+  ) {
+    throw std::runtime_error(
+        "third-threshold mixed obstruction replay mismatch");
+  }
+  std::cout
+      << "SU2_THIRD_THRESHOLD_MIXED_OBSTRUCTION"
+      << " word=" << render(word)
+      << " c0=" << zero
+      << " c1=" << one
+      << " zero_threshold_margin=" << zero_threshold_margin
+      << " one_threshold_margin=" << one_threshold_margin
+      << " K30=" << radial_zero
+      << " K31=" << radial_one
+      << " result=PASS_EXACT\n";
+  return EXIT_SUCCESS;
+}
+
 struct Inspection {
   std::uint64_t insertions = 0U;
   std::uint64_t below_threshold = 0U;
   std::uint64_t second_radial_failures = 0U;
   std::uint64_t third_radial_zero_failures = 0U;
   std::uint64_t third_radial_one_failures = 0U;
+  std::uint64_t third_zero_below_threshold = 0U;
+  std::uint64_t third_one_below_threshold = 0U;
+  std::uint64_t third_zero_uncovered = 0U;
+  std::uint64_t third_one_uncovered = 0U;
+  std::uint64_t third_zero_three_nonfundamental = 0U;
+  std::uint64_t third_one_three_nonfundamental = 0U;
+  std::uint64_t third_zero_two_nonfundamental_labels = 0U;
+  std::uint64_t third_one_two_nonfundamental_labels = 0U;
   std::uint64_t formula_checks = 0U;
   std::uint64_t formula_failures = 0U;
   std::uint64_t adjacent_drop_checks = 0U;
@@ -266,6 +352,38 @@ Inspection inspect_word(const std::vector<int>& word) {
   }
   if (result.final_third_radial_one < 0) {
     ++result.third_radial_one_failures;
+  }
+  if (!third_zero_threshold(profile)) {
+    ++result.third_zero_below_threshold;
+    if (!covered_third_family(word)) {
+      ++result.third_zero_uncovered;
+      if (
+          std::count_if(
+              word.begin(), word.end(),
+              [](const int label) { return label > 1; }) >= 3
+      ) {
+        ++result.third_zero_three_nonfundamental;
+      }
+      if (distinct_nonfundamental_labels(word) >= 2) {
+        ++result.third_zero_two_nonfundamental_labels;
+      }
+    }
+  }
+  if (!third_one_threshold(profile)) {
+    ++result.third_one_below_threshold;
+    if (!covered_third_family(word)) {
+      ++result.third_one_uncovered;
+      if (
+          std::count_if(
+              word.begin(), word.end(),
+              [](const int label) { return label > 1; }) >= 3
+      ) {
+        ++result.third_one_three_nonfundamental;
+      }
+      if (distinct_nonfundamental_labels(word) >= 2) {
+        ++result.third_one_two_nonfundamental_labels;
+      }
+    }
   }
   const int support = static_cast<int>(profile.size()) - 1;
   for (int label = 0; label <= support; ++label) {
@@ -448,6 +566,13 @@ Inspection inspect_word(const std::vector<int>& word) {
 
 int main(int argc, char** argv) {
   try {
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-third-threshold-obstruction"
+    ) {
+      return replay_third_threshold_obstruction();
+    }
     const int maximum_label =
         argc >= 2 ? parse_positive(argv[1], "maximum_label") : 12;
     const int maximum_factors =
@@ -477,6 +602,14 @@ int main(int argc, char** argv) {
     std::atomic<std::uint64_t> second_radial_failures{0U};
     std::atomic<std::uint64_t> third_radial_zero_failures{0U};
     std::atomic<std::uint64_t> third_radial_one_failures{0U};
+    std::atomic<std::uint64_t> third_zero_below_threshold{0U};
+    std::atomic<std::uint64_t> third_one_below_threshold{0U};
+    std::atomic<std::uint64_t> third_zero_uncovered{0U};
+    std::atomic<std::uint64_t> third_one_uncovered{0U};
+    std::atomic<std::uint64_t> third_zero_three_nonfundamental{0U};
+    std::atomic<std::uint64_t> third_one_three_nonfundamental{0U};
+    std::atomic<std::uint64_t> third_zero_two_nonfundamental_labels{0U};
+    std::atomic<std::uint64_t> third_one_two_nonfundamental_labels{0U};
     std::atomic<std::uint64_t> formula_checks{0U};
     std::atomic<std::uint64_t> formula_failures{0U};
     std::atomic<std::uint64_t> adjacent_drop_checks{0U};
@@ -485,6 +618,12 @@ int main(int argc, char** argv) {
     std::atomic<std::uint64_t> deletion_prefix_uncovered{0U};
     std::atomic<std::uint64_t> deletion_prefix_unexpected{0U};
     std::vector<int> first_deletion_prefix_uncovered;
+    std::vector<int> first_third_zero_uncovered;
+    std::vector<int> first_third_one_uncovered;
+    std::vector<int> first_third_zero_three_nonfundamental;
+    std::vector<int> first_third_one_three_nonfundamental;
+    std::vector<int> first_third_zero_two_nonfundamental_labels;
+    std::vector<int> first_third_one_two_nonfundamental_labels;
     Integer minimum_deletion_prefix = 0;
     Integer minimum_deletion_zero = 1;
     std::vector<int> minimum_deletion_prefix_word;
@@ -518,6 +657,30 @@ int main(int argc, char** argv) {
       third_radial_one_failures.fetch_add(
           inspection.third_radial_one_failures,
           std::memory_order_relaxed);
+      third_zero_below_threshold.fetch_add(
+          inspection.third_zero_below_threshold,
+          std::memory_order_relaxed);
+      third_one_below_threshold.fetch_add(
+          inspection.third_one_below_threshold,
+          std::memory_order_relaxed);
+      third_zero_uncovered.fetch_add(
+          inspection.third_zero_uncovered,
+          std::memory_order_relaxed);
+      third_one_uncovered.fetch_add(
+          inspection.third_one_uncovered,
+          std::memory_order_relaxed);
+      third_zero_three_nonfundamental.fetch_add(
+          inspection.third_zero_three_nonfundamental,
+          std::memory_order_relaxed);
+      third_one_three_nonfundamental.fetch_add(
+          inspection.third_one_three_nonfundamental,
+          std::memory_order_relaxed);
+      third_zero_two_nonfundamental_labels.fetch_add(
+          inspection.third_zero_two_nonfundamental_labels,
+          std::memory_order_relaxed);
+      third_one_two_nonfundamental_labels.fetch_add(
+          inspection.third_one_two_nonfundamental_labels,
+          std::memory_order_relaxed);
       formula_checks.fetch_add(
           inspection.formula_checks, std::memory_order_relaxed);
       formula_failures.fetch_add(
@@ -542,6 +705,58 @@ int main(int argc, char** argv) {
             (first_deletion_prefix_uncovered.empty() ||
              words[index] < first_deletion_prefix_uncovered)) {
           first_deletion_prefix_uncovered = words[index];
+        }
+        if (
+            inspection.third_zero_uncovered != 0U
+            && (
+                first_third_zero_uncovered.empty()
+                || words[index] < first_third_zero_uncovered)
+        ) {
+          first_third_zero_uncovered = words[index];
+        }
+        if (
+            inspection.third_one_uncovered != 0U
+            && (
+                first_third_one_uncovered.empty()
+                || words[index] < first_third_one_uncovered)
+        ) {
+          first_third_one_uncovered = words[index];
+        }
+        if (
+            inspection.third_zero_three_nonfundamental != 0U
+            && (
+                first_third_zero_three_nonfundamental.empty()
+                || words[index] <
+                       first_third_zero_three_nonfundamental)
+        ) {
+          first_third_zero_three_nonfundamental = words[index];
+        }
+        if (
+            inspection.third_one_three_nonfundamental != 0U
+            && (
+                first_third_one_three_nonfundamental.empty()
+                || words[index] <
+                       first_third_one_three_nonfundamental)
+        ) {
+          first_third_one_three_nonfundamental = words[index];
+        }
+        if (
+            inspection.third_zero_two_nonfundamental_labels != 0U
+            && (
+                first_third_zero_two_nonfundamental_labels.empty()
+                || words[index] <
+                       first_third_zero_two_nonfundamental_labels)
+        ) {
+          first_third_zero_two_nonfundamental_labels = words[index];
+        }
+        if (
+            inspection.third_one_two_nonfundamental_labels != 0U
+            && (
+                first_third_one_two_nonfundamental_labels.empty()
+                || words[index] <
+                       first_third_one_two_nonfundamental_labels)
+        ) {
+          first_third_one_two_nonfundamental_labels = words[index];
         }
         if (inspection.deletion_prefix_candidates != 0U &&
             !deletion_prefix_exception(words[index]) &&
@@ -609,6 +824,32 @@ int main(int argc, char** argv) {
         << third_radial_zero_failures.load()
         << " third_radial_one_failures="
         << third_radial_one_failures.load()
+        << " third_zero_below_threshold="
+        << third_zero_below_threshold.load()
+        << " third_one_below_threshold="
+        << third_one_below_threshold.load()
+        << " third_zero_uncovered=" << third_zero_uncovered.load()
+        << " third_one_uncovered=" << third_one_uncovered.load()
+        << " third_zero_three_nonfundamental="
+        << third_zero_three_nonfundamental.load()
+        << " third_one_three_nonfundamental="
+        << third_one_three_nonfundamental.load()
+        << " third_zero_two_nonfundamental_labels="
+        << third_zero_two_nonfundamental_labels.load()
+        << " third_one_two_nonfundamental_labels="
+        << third_one_two_nonfundamental_labels.load()
+        << " first_third_zero_uncovered="
+        << render(first_third_zero_uncovered)
+        << " first_third_one_uncovered="
+        << render(first_third_one_uncovered)
+        << " first_third_zero_three_nonfundamental="
+        << render(first_third_zero_three_nonfundamental)
+        << " first_third_one_three_nonfundamental="
+        << render(first_third_one_three_nonfundamental)
+        << " first_third_zero_two_nonfundamental_labels="
+        << render(first_third_zero_two_nonfundamental_labels)
+        << " first_third_one_two_nonfundamental_labels="
+        << render(first_third_one_two_nonfundamental_labels)
         << " formula_checks=" << formula_checks.load()
         << " formula_failures=" << formula_failures.load()
         << " adjacent_drop_checks=" << adjacent_drop_checks.load()

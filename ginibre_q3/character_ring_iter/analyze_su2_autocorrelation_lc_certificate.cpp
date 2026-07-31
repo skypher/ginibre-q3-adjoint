@@ -25,6 +25,7 @@ using Polynomial = std::map<Exponent, long long>;
 using Integer = boost::multiprecision::cpp_int;
 using Rational = boost::rational<Integer>;
 using BigPolynomial = std::map<Exponent, Integer>;
+using RationalPolynomial = std::map<Exponent, Rational>;
 
 int parse_positive(const char* text, const std::string& name) {
   const std::string value{text};
@@ -387,6 +388,38 @@ BigPolynomial ratio_cube_parameterization(const Polynomial& target,
   return result;
 }
 
+BigPolynomial root_ratio_parameterization(const Polynomial& target,
+                                           const int support) {
+  const int variables = support;
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial slope = nd_variable(variables, 0);
+  std::vector<BigPolynomial> root(
+      static_cast<std::size_t>(support + 1), one);
+  for (int index = 1; index <= support; ++index) {
+    root[static_cast<std::size_t>(index)] =
+        nd_power(slope, index);
+    for (int ratio = 2; ratio <= index; ++ratio) {
+      root[static_cast<std::size_t>(index)] = big_multiply(
+          root[static_cast<std::size_t>(index)],
+          nd_power(
+              nd_variable(variables, ratio - 1),
+              index - ratio + 1));
+    }
+  }
+
+  BigPolynomial result;
+  for (const auto& [exponent, coefficient] : target) {
+    BigPolynomial expanded = nd_constant(variables, coefficient);
+    for (std::size_t variable = 0; variable < exponent.size(); ++variable) {
+      expanded = big_multiply(
+          expanded,
+          nd_power(root[variable], exponent[variable]));
+    }
+    big_add_scaled(result, expanded, 1);
+  }
+  return result;
+}
+
 Integer binomial(const int n, const int k) {
   if (k < 0 || k > n) {
     return 0;
@@ -397,6 +430,182 @@ Integer binomial(const int n, const int k) {
     result /= index;
   }
   return result;
+}
+
+std::vector<RationalPolynomial> outer_bernstein_coefficients(
+    const BigPolynomial& input, const int variables) {
+  if (variables < 1) {
+    throw std::invalid_argument(
+        "outer Bernstein conversion needs at least one variable");
+  }
+  const std::size_t outer =
+      static_cast<std::size_t>(variables - 1);
+  int degree = 0;
+  for (const auto& [exponent, coefficient] : input) {
+    static_cast<void>(coefficient);
+    degree = std::max(degree, exponent[outer]);
+  }
+  std::vector<RationalPolynomial> result(
+      static_cast<std::size_t>(degree + 1));
+  for (const auto& [exponent, coefficient] : input) {
+    const int power = exponent[outer];
+    Exponent reduced(exponent.begin(), exponent.end() - 1);
+    for (int index = power; index <= degree; ++index) {
+      result[static_cast<std::size_t>(index)][reduced] +=
+          Rational(
+              coefficient * binomial(index, power),
+              binomial(degree, power));
+    }
+  }
+  return result;
+}
+
+std::vector<RationalPolynomial> outer_power_coefficients(
+    const BigPolynomial& input, const int variables) {
+  if (variables < 1) {
+    throw std::invalid_argument(
+        "outer power decomposition needs at least one variable");
+  }
+  const std::size_t outer =
+      static_cast<std::size_t>(variables - 1);
+  int degree = 0;
+  for (const auto& [exponent, coefficient] : input) {
+    static_cast<void>(coefficient);
+    degree = std::max(degree, exponent[outer]);
+  }
+  std::vector<RationalPolynomial> result(
+      static_cast<std::size_t>(degree + 1));
+  for (const auto& [exponent, coefficient] : input) {
+    Exponent reduced(exponent.begin(), exponent.end() - 1);
+    result[static_cast<std::size_t>(exponent[outer])][reduced] +=
+        Rational(coefficient);
+  }
+  return result;
+}
+
+RationalPolynomial rational_polynomial(
+    const BigPolynomial& input) {
+  RationalPolynomial result;
+  for (const auto& [exponent, coefficient] : input) {
+    result[exponent] += Rational(coefficient);
+  }
+  return result;
+}
+
+Rational evaluate_polynomial(
+    const RationalPolynomial& input,
+    const std::vector<Rational>& point) {
+  Rational result = 0;
+  for (const auto& [exponent, coefficient] : input) {
+    if (exponent.size() != point.size()) {
+      throw std::invalid_argument(
+          "polynomial evaluation dimension mismatch");
+    }
+    Rational term = coefficient;
+    for (std::size_t variable = 0; variable < exponent.size();
+         ++variable) {
+      for (int power = 0; power < exponent[variable]; ++power) {
+        term *= point[variable];
+      }
+    }
+    result += term;
+  }
+  return result;
+}
+
+bool equal_polynomials(const RationalPolynomial& left,
+                       const RationalPolynomial& right) {
+  for (const auto& [exponent, coefficient] : left) {
+    const auto iterator = right.find(exponent);
+    const Rational other =
+        iterator == right.end() ? Rational(0) : iterator->second;
+    if (coefficient != other) {
+      return false;
+    }
+  }
+  for (const auto& [exponent, coefficient] : right) {
+    const auto iterator = left.find(exponent);
+    const Rational other =
+        iterator == left.end() ? Rational(0) : iterator->second;
+    if (coefficient != other) {
+      return false;
+    }
+  }
+  return true;
+}
+
+int replay_root_outer_bernstein_obstruction() {
+  const Polynomial target = substitute_differences(
+      radial_polynomial(2, 1, 0), 2);
+  const std::vector<RationalPolynomial> bernstein =
+      outer_bernstein_coefficients(
+          root_ratio_parameterization(target, 2), 2);
+  const Polynomial previous_target = substitute_differences(
+      radial_polynomial(1, 1, 0), 1);
+  const RationalPolynomial previous = rational_polynomial(
+      root_ratio_parameterization(previous_target, 1));
+  const RationalPolynomial expected{
+      {Exponent{1}, Rational(2)},
+      {Exponent{2}, Rational(3)},
+      {Exponent{3}, Rational(1)},
+      {Exponent{4}, Rational(-1, 2)},
+      {Exponent{5}, Rational(1, 3)},
+      {Exponent{6}, Rational(-1, 6)}};
+  if (
+      bernstein.size() != 5U
+      || !equal_polynomials(bernstein.front(), previous)
+      || !equal_polynomials(bernstein[2], expected)
+  ) {
+    throw std::runtime_error(
+        "outer Bernstein obstruction replay mismatch");
+  }
+  const Rational value =
+      evaluate_polynomial(bernstein[2], {Rational(10)});
+  if (value != Rational(-411040, 3)) {
+    throw std::runtime_error(
+        "outer Bernstein obstruction evaluation mismatch");
+  }
+  std::cout
+      << "SU2_AUTOCORRELATION_ROOT_OUTER_BERNSTEIN_OBSTRUCTION"
+      << " support=2 A=1 L=0"
+      << " base_matches_support_one=1"
+      << " outer_index=2"
+      << " polynomial=2b+3b^2+b^3-b^4/2+b^5/3-b^6/6"
+      << " B2_at_b10=-411040/3"
+      << " result=PASS_EXACT\n";
+  return EXIT_SUCCESS;
+}
+
+int replay_root_outer_first_variation() {
+  const Polynomial target = substitute_differences(
+      radial_polynomial(3, 2, 0), 3);
+  const std::vector<RationalPolynomial> powers =
+      outer_power_coefficients(
+          root_ratio_parameterization(target, 3), 3);
+  const std::vector<Rational> point{Rational(2), Rational(1)};
+  const Rational base = evaluate_polynomial(powers[0], point);
+  const Rational parameter_first =
+      evaluate_polynomial(powers[1], point);
+  const Rational outer_scale = 8;
+  const Rational first_variation =
+      parameter_first / outer_scale;
+  if (
+      base != 652 || parameter_first != -144
+      || first_variation != -18
+  ) {
+    throw std::runtime_error(
+        "outer first-variation replay mismatch");
+  }
+  std::cout
+      << "SU2_AUTOCORRELATION_ROOT_OUTER_FIRST_VARIATION"
+      << " root=[1,2,4]"
+      << " A=2 L=0"
+      << " base=652"
+      << " outer_scale=8"
+      << " parameter_first_variation=-144"
+      << " Q1=-18"
+      << " result=PASS_EXACT\n";
+  return EXIT_SUCCESS;
 }
 
 std::vector<Exponent> grid_indices(const std::vector<int>& degrees) {
@@ -978,7 +1187,6 @@ CertificateResult certify(const Polynomial& target, const int support) {
       generators.push_back(multiply(curvature[first], curvature[second]));
     }
   }
-
   z3::context context;
   z3::solver solver(context);
   std::vector<z3::expr> weights;
@@ -1024,6 +1232,20 @@ CertificateResult certify(const Polynomial& target, const int support) {
 
 int main(int argc, char** argv) {
   try {
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-root-outer-bernstein-obstruction"
+    ) {
+      return replay_root_outer_bernstein_obstruction();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-root-outer-first-variation"
+    ) {
+      return replay_root_outer_first_variation();
+    }
     if (
         argc == 2
         && std::string{argv[1]} == "--support-three-bernstein"

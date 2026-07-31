@@ -1,0 +1,5 @@
+g++ -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror analyze_su2_autocorrelation_lc_certificate.cpp -lz3 -o analyze_su2_autocorrelation_lc_certificate
+./analyze_su2_autocorrelation_lc_certificate --replay-root-outer-bernstein-obstruction
+SU2_AUTOCORRELATION_ROOT_OUTER_BERNSTEIN_OBSTRUCTION support=2 A=1 L=0 base_matches_support_one=1 outer_index=2 polynomial=2b+3b^2+b^3-b^4/2+b^5/3-b^6/6 B2_at_b10=-411040/3 result=PASS_EXACT
+./analyze_su2_autocorrelation_lc_certificate --replay-root-outer-first-variation
+SU2_AUTOCORRELATION_ROOT_OUTER_FIRST_VARIATION root=[1,2,4] A=2 L=0 base=652 outer_scale=8 parameter_first_variation=-144 Q1=-18 result=PASS_EXACT
