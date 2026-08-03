@@ -2,7 +2,9 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
+#include <functional>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -21,7 +23,8 @@ int parse_nonnegative(const char* text, const std::string& name) {
   const std::string value{text};
   std::size_t consumed = 0U;
   const long parsed = std::stol(value, &consumed, 10);
-  if (consumed != value.size() || parsed < 0) {
+  if (consumed != value.size() || parsed < 0
+      || parsed > std::numeric_limits<int>::max()) {
     throw std::invalid_argument(name + " must be a nonnegative integer");
   }
   return static_cast<int>(parsed);
@@ -33,6 +36,14 @@ int parse_positive(const char* text, const std::string& name) {
     throw std::invalid_argument(name + " must be positive");
   }
   return result;
+}
+
+std::uint64_t splitmix64(std::uint64_t& state) {
+  state += UINT64_C(0x9e3779b97f4a7c15);
+  std::uint64_t value = state;
+  value = (value ^ (value >> 30U)) * UINT64_C(0xbf58476d1ce4e5b9);
+  value = (value ^ (value >> 27U)) * UINT64_C(0x94d049bb133111eb);
+  return value ^ (value >> 31U);
 }
 
 void trim(Polynomial& polynomial) {
@@ -376,12 +387,87 @@ void replay_broad_real_rooted_obstruction() {
             << " result=PASS_EXACT\n";
 }
 
+std::vector<int> random_log_concave_profile(
+    std::uint64_t& state, const int maximum_degree, const int denominator) {
+  if (denominator > std::numeric_limits<int>::max() / 2) {
+    throw std::invalid_argument("denominator is too large");
+  }
+  const int degree_value = 1 + static_cast<int>(
+      splitmix64(state) % static_cast<std::uint64_t>(maximum_degree));
+  std::vector<int> numerators(static_cast<std::size_t>(degree_value));
+  for (int& numerator : numerators) {
+    numerator = 1 + static_cast<int>(
+        splitmix64(state)
+        % static_cast<std::uint64_t>(2 * denominator));
+  }
+  std::sort(numerators.begin(), numerators.end(), std::greater<int>());
+
+  std::int64_t value = 1;
+  for (int index = 0; index < degree_value; ++index) {
+    if (value > std::numeric_limits<int>::max() / denominator) {
+      throw std::overflow_error("random profile exceeds int range");
+    }
+    value *= denominator;
+  }
+  std::vector<int> profile(static_cast<std::size_t>(degree_value + 1));
+  profile[0] = static_cast<int>(value);
+  for (int index = 0; index < degree_value; ++index) {
+    value = (value / denominator)
+        * numerators[static_cast<std::size_t>(index)];
+    if (value > std::numeric_limits<int>::max()) {
+      throw std::overflow_error("random profile exceeds int range");
+    }
+    profile[static_cast<std::size_t>(index + 1)] = static_cast<int>(value);
+  }
+  return profile;
+}
+
+void random_log_concave_search(
+    const int samples, const int maximum_degree, const int denominator) {
+  Counters counters;
+  const std::vector<Polynomial> basis = beta_basis(maximum_degree);
+  std::uint64_t state = UINT64_C(0x6a09e667f3bcc909);
+  for (int sample = 0; sample < samples; ++sample) {
+    const std::vector<int> profile = random_log_concave_profile(
+        state, maximum_degree, denominator);
+    inspect(profile, basis, counters);
+  }
+  std::cout << "SU2_ORDINARY_REAL_ROOTED_RANDOM"
+            << " samples=" << samples
+            << " maximum_degree=" << maximum_degree
+            << " denominator=" << denominator
+            << " examined=" << counters.examined
+            << " shaped=" << counters.shaped
+            << " real_rooted=" << counters.real_rooted
+            << " currents=" << counters.currents
+            << " failures=" << counters.failures;
+  if (!counters.first_failure_profile.empty()) {
+    std::cout << " first_profile=" << render(counters.first_failure_profile)
+              << " first_R=" << counters.first_failure_radius
+              << " first_S=" << counters.first_failure_target
+              << " first_value=" << counters.first_failure_value;
+  }
+  std::cout << " result="
+            << (counters.failures == 0U ? "NO_COUNTEREXAMPLE" : "FAIL")
+            << '\n';
+  if (counters.failures != 0U) {
+    throw std::runtime_error("random real-rooted search found a failure");
+  }
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
   try {
     if (argc == 2 && std::string(argv[1]) == "--replay-broad-obstruction") {
       replay_broad_real_rooted_obstruction();
+      return EXIT_SUCCESS;
+    }
+    if (argc == 5 && std::string(argv[1]) == "--random-log-concave") {
+      random_log_concave_search(
+          parse_positive(argv[2], "samples"),
+          parse_positive(argv[3], "maximum degree"),
+          parse_positive(argv[4], "denominator"));
       return EXIT_SUCCESS;
     }
     const int maximum_degree =

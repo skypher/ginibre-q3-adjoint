@@ -2,7 +2,9 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
+#include <functional>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -17,10 +19,19 @@ int parse_positive(const char* text, const std::string& name) {
   const std::string value{text};
   std::size_t consumed = 0U;
   const long parsed = std::stol(value, &consumed, 10);
-  if (consumed != value.size() || parsed <= 0) {
+  if (consumed != value.size() || parsed <= 0
+      || parsed > std::numeric_limits<int>::max()) {
     throw std::invalid_argument(name + " must be a positive integer");
   }
   return static_cast<int>(parsed);
+}
+
+std::uint64_t splitmix64(std::uint64_t& state) {
+  state += UINT64_C(0x9e3779b97f4a7c15);
+  std::uint64_t value = state;
+  value = (value ^ (value >> 30U)) * UINT64_C(0xbf58476d1ce4e5b9);
+  value = (value ^ (value >> 27U)) * UINT64_C(0x94d049bb133111eb);
+  return value ^ (value >> 31U);
 }
 
 Integer half_value(const std::vector<int>& half, const int index) {
@@ -461,6 +472,162 @@ int replay_upper_orthant_obstruction() {
   return passed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
+std::vector<int> random_symmetric_log_concave_half(
+    std::uint64_t& state, const int maximum_length, const int denominator) {
+  if (denominator > std::numeric_limits<int>::max() / 2) {
+    throw std::invalid_argument("denominator is too large");
+  }
+  const int length = 1 + static_cast<int>(
+      splitmix64(state) % static_cast<std::uint64_t>(maximum_length));
+  std::vector<int> numerators(static_cast<std::size_t>(length - 1));
+  for (int& numerator : numerators) {
+    numerator = 1 + static_cast<int>(
+        splitmix64(state) % static_cast<std::uint64_t>(denominator));
+  }
+  std::sort(numerators.begin(), numerators.end(), std::greater<int>());
+
+  std::int64_t value = 1;
+  for (int index = 1; index < length; ++index) {
+    if (value > std::numeric_limits<int>::max() / denominator) {
+      throw std::overflow_error("random half profile exceeds int range");
+    }
+    value *= denominator;
+  }
+  std::vector<int> half(static_cast<std::size_t>(length));
+  half[0] = static_cast<int>(value);
+  for (int index = 1; index < length; ++index) {
+    value = (value / denominator)
+        * numerators[static_cast<std::size_t>(index - 1)];
+    half[static_cast<std::size_t>(index)] = static_cast<int>(value);
+  }
+  return half;
+}
+
+std::vector<int> half_from_ratio_numerators(
+    const std::vector<int>& numerators, const int denominator) {
+  std::int64_t value = 1;
+  for (std::size_t index = 0U; index < numerators.size(); ++index) {
+    if (value > std::numeric_limits<int>::max() / denominator) {
+      throw std::overflow_error("ratio-grid half profile exceeds int range");
+    }
+    value *= denominator;
+  }
+  std::vector<int> half(numerators.size() + 1U);
+  half[0] = static_cast<int>(value);
+  for (std::size_t index = 0U; index < numerators.size(); ++index) {
+    value = (value / denominator) * numerators[index];
+    half[index + 1U] = static_cast<int>(value);
+  }
+  return half;
+}
+
+struct CurrentSearch {
+  std::uint64_t profiles = 0U;
+  std::uint64_t currents = 0U;
+  std::uint64_t failures = 0U;
+  std::vector<int> first_half;
+  int first_radius = -1;
+  int first_target = -1;
+  Integer first_value = 0;
+};
+
+void inspect_current_only(const std::vector<int>& half, CurrentSearch& search) {
+  const std::vector<Integer> weights = autocorrelation(half);
+  std::vector<Integer> character(weights.size());
+  for (std::size_t index = 0U; index < weights.size(); ++index) {
+    character[index] = weights[index]
+        - (index + 1U < weights.size() ? weights[index + 1U] : Integer(0));
+  }
+  while (!character.empty() && character.back() == 0) {
+    character.pop_back();
+  }
+  ++search.profiles;
+  const int support = static_cast<int>(character.size()) - 1;
+  for (int radius = 0; radius <= support; ++radius) {
+    for (int target = radius; target <= support; ++target) {
+      const Integer value = current(character, radius, target);
+      ++search.currents;
+      if (value < 0) {
+        ++search.failures;
+        if (search.first_half.empty()) {
+          search.first_half = half;
+          search.first_radius = radius;
+          search.first_target = target;
+          search.first_value = value;
+        }
+      }
+    }
+  }
+}
+
+void print_current_search(
+    const std::string& name, const CurrentSearch& search) {
+  std::cout << name
+            << " profiles=" << search.profiles
+            << " currents=" << search.currents
+            << " failures=" << search.failures;
+  if (!search.first_half.empty()) {
+    std::cout << " first_half=" << render(search.first_half)
+              << " first_R=" << search.first_radius
+              << " first_S=" << search.first_target
+              << " first_value=" << search.first_value;
+  }
+  std::cout << " result="
+            << (search.failures == 0U ? "NO_COUNTEREXAMPLE" : "FAIL") << '\n';
+}
+
+void enumerate_ratio_grid(const int remaining, const int upper,
+                          const int denominator,
+                          std::vector<int>& numerators,
+                          CurrentSearch& search) {
+  if (remaining == 0) {
+    inspect_current_only(half_from_ratio_numerators(numerators, denominator),
+                         search);
+    return;
+  }
+  for (int value = upper; value >= 1; --value) {
+    numerators.push_back(value);
+    enumerate_ratio_grid(remaining - 1, value, denominator, numerators,
+                         search);
+    numerators.pop_back();
+  }
+}
+
+void ratio_grid_search(const int maximum_length, const int denominator) {
+  CurrentSearch search;
+  for (int length = 1; length <= maximum_length; ++length) {
+    std::vector<int> numerators;
+    enumerate_ratio_grid(length - 1, denominator, denominator, numerators,
+                         search);
+  }
+  std::cout << "SU2_SYMMETRIC_LOG_CONCAVE_RATIO_GRID"
+            << " maximum_length=" << maximum_length
+            << " denominator=" << denominator << ' ';
+  print_current_search("", search);
+  if (search.failures != 0U) {
+    throw std::runtime_error("symmetric log-concave ratio grid failed");
+  }
+}
+
+void random_current_search(
+    const int samples, const int maximum_length, const int denominator) {
+  CurrentSearch search;
+  std::uint64_t state = UINT64_C(0xbb67ae8584caa73b);
+  for (int sample = 0; sample < samples; ++sample) {
+    const std::vector<int> half = random_symmetric_log_concave_half(
+        state, maximum_length, denominator);
+    inspect_current_only(half, search);
+  }
+  std::cout << "SU2_SYMMETRIC_LOG_CONCAVE_RANDOM"
+            << " samples=" << samples
+            << " maximum_length=" << maximum_length
+            << " denominator=" << denominator << ' ';
+  print_current_search("", search);
+  if (search.failures != 0U) {
+    throw std::runtime_error("random symmetric log-concave search failed");
+  }
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -468,6 +635,19 @@ int main(int argc, char** argv) {
     if (argc == 2 &&
         std::string(argv[1]) == "--replay-upper-orthant") {
       return replay_upper_orthant_obstruction();
+    }
+    if (argc == 5 && std::string(argv[1]) == "--random-current") {
+      random_current_search(
+          parse_positive(argv[2], "samples"),
+          parse_positive(argv[3], "maximum_length"),
+          parse_positive(argv[4], "denominator"));
+      return EXIT_SUCCESS;
+    }
+    if (argc == 4 && std::string(argv[1]) == "--ratio-grid") {
+      ratio_grid_search(
+          parse_positive(argv[2], "maximum_length"),
+          parse_positive(argv[3], "denominator"));
+      return EXIT_SUCCESS;
     }
     const int maximum_length =
         argc >= 2 ? parse_positive(argv[1], "maximum_length") : 7;
@@ -478,7 +658,11 @@ int main(int argc, char** argv) {
           "usage: probe_su2_symmetric_log_concave_autocorrelation "
           "[maximum_length] [maximum_coefficient]\n"
           "       probe_su2_symmetric_log_concave_autocorrelation "
-          "--replay-upper-orthant");
+          "--replay-upper-orthant\n"
+          "       probe_su2_symmetric_log_concave_autocorrelation "
+          "--random-current SAMPLES MAXIMUM_LENGTH DENOMINATOR\n"
+          "       probe_su2_symmetric_log_concave_autocorrelation "
+          "--ratio-grid MAXIMUM_LENGTH DENOMINATOR");
     }
 
     Counters counters;

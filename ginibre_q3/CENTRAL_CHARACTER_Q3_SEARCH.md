@@ -12644,6 +12644,38 @@ Its bounded zero-failure star-current scans are discovery evidence
 only; the identity and displayed integer calculations are the exact
 statements used here.
 
+The same checker now has a deterministic `--random-current` mode for a broad
+symmetric log-concave subcone.  It chooses nonincreasing rational
+successive ratios for the nonnegative half-profile, clears the common
+denominator, reflects the result, and checks every current using exact
+`cpp_int` arithmetic.  Three independent replays return
+
+```text
+samples=200,000, half-length<=15, denominator=2:
+  currents=31,514,611, failures=0;
+samples=200,000, half-length<=15, denominator=3:
+  currents=31,514,611, failures=0;
+samples=200,000, half-length<=13, denominator=5:
+  currents=23,727,223, failures=0.
+```
+
+Thus this wider target has survived `86,756,445` additional exact current
+checks.  The profile selection is deterministic but not exhaustive, so this
+is falsification evidence for `(OCBGP)`, not a proof of it.
+
+The same source also has an exhaustive `--ratio-grid` mode.  At fixed
+denominator `D`, it enumerates every nonincreasing list of `D`-denominator
+successive ratios, hence every profile in that finite rational grid rather
+than a random sample.  The exact replay
+
+```text
+--ratio-grid 7 20:
+profiles=230,230, currents=19,366,230, failures=0.
+```
+
+reaches half-support six on the complete denominator-twenty grid.  It is a
+subcone of the target, not a proof of `(OCBGP)`.
+
 There is a second exact reduction in which the complete star current
 becomes a rank-two Weyl-character triangle.  This retains the global
 sum which the two failed intermediate-pair allocations split apart.
@@ -13000,6 +13032,25 @@ profiles and checks `143,043` currents.  No box has a failure of this
 sharper target.  Extending that coefficient-five enumeration through degree
 ten retains `2,392` profiles and checks `342,009` currents, again with no
 failure.  These are falsification evidence only, not a proof.
+
+The same strict C++ probe now has a deterministic `--random-log-concave`
+mode.  It chooses nonincreasing rational successive ratios, clears their
+common denominator to form an integral interval-log-concave root profile,
+and then applies the exact rational Sturm filter and exact `cpp_int` current
+calculation.  Three complementary replays return
+
+```text
+samples=20,000, degree<=10, denominator=2:
+  real_rooted=6,219, currents=399,884;
+samples=20,000, degree<=15, denominator=2:
+  real_rooted=4,440, currents=372,595;
+samples=20,000, degree<=9, denominator=3:
+  real_rooted=6,221, currents=330,426;
+```
+
+with zero negative currents in every run.  The sampler is deterministic and
+each retained profile is checked exactly, but the selected profiles are not
+an exhaustive family; these are additional falsification evidence only.
 
 The log-concavity hypothesis on the root also cannot be replaced by
 log concavity of its square.
