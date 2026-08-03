@@ -28097,6 +28097,92 @@ failures, has `98` collisions, and fails to find a removable excursion for
 `22` sources.  The aggregate improvement in prefix validity is real but
 cannot be promoted to an injection without a shared-ticket allocation.
 
+The Ferrers crossing has an exact discrete-difference normal form.  It
+would have made the shell target termwise if the even quotient preserved the
+corresponding anchored cone; the latter preservation is false already at a
+small active crossing.
+
+**Lemma 5A8H28Q2 (Ferrers difference factorization and unweighted
+propagation obstruction).**  Work in the noncentral reflection quotient,
+put
+
+```text
+M=floor((K-1)/2),
+d=K-Q-M,
+```
+
+and index its rows and columns by `0,...,M`.  Let `J` reverse these
+coordinates, let `D` be the first-difference matrix
+
+```text
+D_(a,b)=indicator_(a=b)-indicator_(a>=1 and b=a-1),
+```
+
+and let `L=D^(-1)` be the lower cumulative matrix.  Then the crossing
+matrix `Delta=A_+-A_-` satisfies
+
+```text
+Delta_(a,b)=2 indicator_(a+b>=K-Q),
+D Delta J=2S^d,                                      (P5A.102BV3e)
+```
+
+where `S^d_(a,b)=indicator_(a=b+d)`.  Nevertheless the natural anchored
+invariance assertion
+
+```text
+D A_+^r L S^d>=0                                     (P5A.102BV3f)
+```
+
+is false in general.  At `(K,Q,r)=(10,2,3)`, the `a=3,b=0` entry is `-1`.
+
+**Proof.**  A crossed edge from `a` to `b` is the ordinary fusion edge
+from `a` to `K-b`.  Since `0<=a,b<=M` and `2Q<K`, the lower fusion endpoint
+and the affine upper wall are automatic; its sole remaining condition is
+
+```text
+a+b>=K-Q.
+```
+
+The crossed edge occurs once in `A_+` and with the opposite sign in `A_-`,
+which gives the first identity in `(P5A.102BV3e)`.  After reversal of the
+second coordinate,
+
+```text
+(Delta J)_(a,c)=2 indicator_(a>=c+d).
+```
+
+Taking the first difference in `a` leaves exactly the shifted diagonal
+`2S^d`.
+
+For the stated counterexample, `M=d=4` and direct fusion gives
+
+```text
+A_+=
+[0,0,1,0,0]
+[0,1,1,1,0]
+[1,1,1,1,1]
+[0,1,1,1,1]
+[0,0,1,1,2].
+```
+
+As `L S^4 e_0=e_4`, three multiplications give
+
+```text
+A_+^3 e_4=(4,10,17,16,20)^T,
+D A_+^3 L S^4 e_0=(4,6,7,-1,4)^T.
+```
+
+This disproves `(P5A.102BV3f)`.  QED.
+
+The strict C++ diagnostic
+`character_ring_iter/probe_su2_ferrers_difference.cpp` independently checks
+the shifted identity `(P5A.102BV3e)` through half-level `30` and finds the
+displayed anchored counterexample while testing powers through twelve.  The
+unbounded statements in the lemma are the direct fusion calculation above;
+the scan is an implementation audit.  Thus the Ferrers factorization is
+useful only together with the return-weighted kernels, not as a termwise
+invariant cone for the `A_+` propagation.
+
 There is also a representation-theoretic description of the exact
 shell cone.  Retain the lower fusion level
 

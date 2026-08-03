@@ -98,8 +98,13 @@ int main(int argc, char** argv) {
             );
         }
         const std::string target = argv[1];
-        if (target != "g0" && target != "g1" && target != "g2") {
-            throw std::runtime_error("target must be g0, g1, or g2");
+        if (
+            target != "c5"
+            && target != "g0"
+            && target != "g1"
+            && target != "g2"
+        ) {
+            throw std::runtime_error("target must be c5, g0, g1, or g2");
         }
         const std::size_t begin =
             parse_size(argv[2], "begin position");
