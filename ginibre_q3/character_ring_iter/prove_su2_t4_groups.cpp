@@ -577,33 +577,33 @@ bool parity_unit_offset_square_cone_certificate(
     struct Pair {
         std::size_t first;
         std::size_t second;
-        int minimum;
     };
     std::vector<Pair> pairs;
     for (std::size_t first = 0; first < constraints.size(); ++first) {
         for (std::size_t second = first + 1U;
              second < constraints.size();
              ++second) {
-            int minimum = 0;
-            for (int candidate = 1; candidate <= 20; ++candidate) {
-                if (
-                    constraints_imply_sum(
-                        constraints,
-                        constraints[first],
-                        constraints[second],
-                        candidate
-                    )
-                ) {
-                    minimum = candidate;
-                } else {
-                    break;
-                }
-            }
-            if (minimum > 0) {
-                pairs.push_back(Pair{first, second, minimum});
-            }
+            pairs.push_back(Pair{first, second});
         }
     }
+    const auto pair_minimum = [&constraints](const Pair& pair) {
+        int minimum = 0;
+        for (int candidate = 1; candidate <= 20; ++candidate) {
+            if (
+                constraints_imply_sum(
+                    constraints,
+                    constraints[pair.first],
+                    constraints[pair.second],
+                    candidate
+                )
+            ) {
+                minimum = candidate;
+            } else {
+                break;
+            }
+        }
+        return minimum;
+    };
     for (std::size_t left = 0; left < pairs.size(); ++left) {
         for (std::size_t right = left + 1U;
              right < pairs.size();
@@ -646,7 +646,12 @@ bool parity_unit_offset_square_cone_certificate(
             } else {
                 continue;
             }
-            if (right_pair->minimum != left_pair->minimum + offset) {
+            const int left_minimum = pair_minimum(*left_pair);
+            if (left_minimum == 0) {
+                continue;
+            }
+            const int right_minimum = pair_minimum(*right_pair);
+            if (right_minimum != left_minimum + offset) {
                 continue;
             }
             const std::array<std::size_t, 2> left_indices{
@@ -678,7 +683,7 @@ bool parity_unit_offset_square_cone_certificate(
                         !weighted_parity_orthant_certificate(
                             chamber.margin,
                             std::array<Polynomial, 3>{b, a - b, c},
-                            left_pair->minimum
+                            left_minimum
                         )
                     ) {
                         continue;
@@ -691,7 +696,7 @@ bool parity_unit_offset_square_cone_certificate(
                                 b - a - constant(2),
                                 d
                             },
-                            left_pair->minimum + offset - 2
+                            left_minimum + offset - 2
                         )
                     ) {
                         continue;
@@ -707,7 +712,7 @@ bool parity_unit_offset_square_cone_certificate(
                         << " orientations=("
                         << left_choice << ','
                         << right_choice << ')'
-                        << " minimum=" << left_pair->minimum
+                        << " minimum=" << left_minimum
                         << " offset=" << offset
                         << " result=PASS_EXACT_PARITY_SQUARE"
                         << std::endl;
