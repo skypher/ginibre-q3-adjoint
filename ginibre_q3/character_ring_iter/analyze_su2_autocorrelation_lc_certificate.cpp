@@ -4600,8 +4600,16 @@ struct Wall121SupportFiveLargeRatioDiagnostic {
   std::size_t t_zero_negative = 0U;
 };
 
-Wall121SupportFiveLargeRatioDiagnostic
-wall_121_support_five_large_ratio_diagnostic() {
+struct Wall121SupportFiveLargeRatioQuotient {
+  int maximum_w_power = 0;
+  std::size_t grouped_blocks = 0U;
+  int t_degree = 0;
+  int t_factor = 0;
+  BigPolynomial quotient;
+};
+
+Wall121SupportFiveLargeRatioQuotient
+wall_121_support_five_large_ratio_quotient() {
   constexpr int variables = 4;
   const BigPolynomial compact =
       wall_121_second_iterate_support_five_compact();
@@ -4724,14 +4732,24 @@ wall_121_support_five_large_ratio_diagnostic() {
       canonical_quotient[exponent] = coefficient;
     }
   }
+  return {
+      maximum_w_power, grouped_w.size(), t_degree, t_factor,
+      std::move(canonical_quotient)};
+}
+
+Wall121SupportFiveLargeRatioDiagnostic
+wall_121_support_five_large_ratio_diagnostic() {
+  constexpr int variables = 4;
+  const Wall121SupportFiveLargeRatioQuotient prepared =
+      wall_121_support_five_large_ratio_quotient();
   const NDBernsteinGrid quotient_grid =
-      nd_bernstein_grid(canonical_quotient, variables);
+      nd_bernstein_grid(prepared.quotient, variables);
   const std::size_t negative = static_cast<std::size_t>(std::count_if(
       quotient_grid.values.begin(), quotient_grid.values.end(),
       [](const Rational& value) { return value < 0; }));
   std::size_t t_zero_terms = 0U;
   std::size_t t_zero_negative = 0U;
-  for (const auto& [exponent, coefficient] : canonical_quotient) {
+  for (const auto& [exponent, coefficient] : prepared.quotient) {
     if (exponent[0] == 0) {
       ++t_zero_terms;
       if (coefficient < 0) {
@@ -4740,10 +4758,356 @@ wall_121_support_five_large_ratio_diagnostic() {
     }
   }
   return {
-      maximum_w_power, grouped_w.size(), t_degree, t_factor,
-      quotient_grid.degrees, canonical_quotient.size(),
+      prepared.maximum_w_power, prepared.grouped_blocks,
+      prepared.t_degree, prepared.t_factor,
+      quotient_grid.degrees, prepared.quotient.size(),
       quotient_grid.values.size(), negative,
       t_zero_terms, t_zero_negative};
+}
+
+struct Wall121SupportFiveLargeRatioFaceDiagnostic {
+  std::vector<int> degrees;
+  std::size_t terms = 0U;
+  std::size_t coefficients = 0U;
+  std::size_t negative_coefficients = 0U;
+  int t_factor = -1;
+  NDSubdivisionResult subdivision;
+};
+
+struct Wall121SupportFiveLargeRatioLeadingFace {
+  int t_factor = 0;
+  BigPolynomial polynomial;
+  BigPolynomial truncated_blowup;
+};
+
+Wall121SupportFiveLargeRatioLeadingFace
+wall_121_support_five_large_ratio_leading_face() {
+  constexpr int variables = 4;
+  constexpr int t_cap = 32;
+  const BigPolynomial compact =
+      wall_121_second_iterate_support_five_compact();
+  int u_degree = 0;
+  int v_degree = 0;
+  int z_degree = 0;
+  int maximum_w_power = 0;
+  for (const auto& [exponent, coefficient] : compact) {
+    static_cast<void>(coefficient);
+    u_degree = std::max(u_degree, exponent[1]);
+    v_degree = std::max(v_degree, exponent[2]);
+    z_degree = std::max(z_degree, exponent[3]);
+  }
+  for (const auto& [exponent, coefficient] : compact) {
+    static_cast<void>(coefficient);
+    maximum_w_power = std::max(
+        maximum_w_power,
+        exponent[0] + 2 * (u_degree - exponent[1]));
+  }
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial t = nd_variable(variables, 0);
+  const BigPolynomial alpha = nd_variable(variables, 1);
+  const BigPolynomial beta = nd_variable(variables, 2);
+  const BigPolynomial z = nd_variable(variables, 3);
+  BigPolynomial w = one;
+  big_add_scaled(w, t, -1);
+  BigPolynomial u_numerator = nd_power(w, 2);
+  big_add_scaled(
+      u_numerator,
+      big_multiply(big_multiply(t, w), alpha), -2);
+  big_add_scaled(
+      u_numerator,
+      big_multiply(nd_power(t, 2), alpha), -3);
+  BigPolynomial t2_plus_u = nd_power(t, 2);
+  big_add_scaled(t2_plus_u, u_numerator, 1);
+  const BigPolynomial denominator = big_multiply(
+      nd_power(u_numerator, 2), t2_plus_u);
+  BigPolynomial two_w_plus_three_t = w;
+  for (auto& [exponent, coefficient] : two_w_plus_three_t) {
+    static_cast<void>(exponent);
+    coefficient *= 2;
+  }
+  big_add_scaled(two_w_plus_three_t, t, 3);
+  BigPolynomial one_minus_alpha = one;
+  big_add_scaled(one_minus_alpha, alpha, -1);
+  const BigPolynomial drop_numerator = big_multiply(
+      big_multiply(
+          big_multiply(
+              big_multiply(beta, nd_power(t, 4)), w),
+          two_w_plus_three_t),
+      one_minus_alpha);
+  BigPolynomial v_numerator = denominator;
+  big_add_scaled(v_numerator, drop_numerator, -1);
+  const auto truncate_t = [](const BigPolynomial& input) {
+    BigPolynomial result;
+    for (const auto& [exponent, coefficient] : input) {
+      if (exponent[0] <= t_cap && coefficient != 0) {
+        result[exponent] = coefficient;
+      }
+    }
+    return result;
+  };
+  const auto multiply_truncated = [&truncate_t](
+      const BigPolynomial& left, const BigPolynomial& right) {
+    return truncate_t(big_multiply(left, right));
+  };
+  const auto power_table = [&multiply_truncated, &one](
+      const BigPolynomial& base, const int maximum) {
+    std::vector<BigPolynomial> powers;
+    powers.reserve(static_cast<std::size_t>(maximum + 1));
+    powers.push_back(one);
+    for (int exponent = 1; exponent <= maximum; ++exponent) {
+      powers.push_back(multiply_truncated(powers.back(), base));
+    }
+    return powers;
+  };
+  const std::vector<BigPolynomial> w_powers =
+      power_table(w, maximum_w_power);
+  const std::vector<BigPolynomial> u_powers =
+      power_table(u_numerator, u_degree);
+  const std::vector<BigPolynomial> d_powers =
+      power_table(denominator, v_degree);
+  const std::vector<BigPolynomial> v_powers =
+      power_table(v_numerator, v_degree);
+  const std::vector<BigPolynomial> z_powers =
+      power_table(z, z_degree);
+  std::map<Exponent, BigPolynomial> grouped_w;
+  for (const auto& [exponent, coefficient] : compact) {
+    const Exponent suffix{exponent[1], exponent[2], exponent[3]};
+    big_add_scaled(
+        grouped_w[suffix],
+        w_powers[static_cast<std::size_t>(
+            exponent[0] + 2 * (u_degree - exponent[1]))],
+        coefficient);
+  }
+  BigPolynomial truncated_blowup;
+  for (const auto& [suffix, w_polynomial] : grouped_w) {
+    BigPolynomial term = truncate_t(w_polynomial);
+    term = multiply_truncated(
+        term, u_powers[static_cast<std::size_t>(suffix[0])]);
+    term = multiply_truncated(
+        term, d_powers[static_cast<std::size_t>(v_degree - suffix[1])]);
+    term = multiply_truncated(
+        term, v_powers[static_cast<std::size_t>(suffix[1])]);
+    term = multiply_truncated(
+        term, z_powers[static_cast<std::size_t>(suffix[2])]);
+    big_add_scaled(truncated_blowup, term, 1);
+  }
+  int t_factor = t_cap + 1;
+  for (const auto& [exponent, coefficient] : truncated_blowup) {
+    if (coefficient != 0) {
+      t_factor = std::min(t_factor, exponent[0]);
+    }
+  }
+  if (t_factor > t_cap) {
+    throw std::runtime_error(
+        "support-five high-ratio leading face exceeds truncation cap");
+  }
+  BigPolynomial face;
+  for (const auto& [exponent, coefficient] : truncated_blowup) {
+    if (exponent[0] == t_factor && coefficient != 0) {
+      const Exponent face_exponent{
+          exponent[1], exponent[2], exponent[3]};
+      face[face_exponent] += coefficient;
+    }
+  }
+  BigPolynomial canonical_face;
+  for (const auto& [exponent, coefficient] : face) {
+    if (coefficient != 0) {
+      canonical_face[exponent] = coefficient;
+    }
+  }
+  return {
+      t_factor, std::move(canonical_face), std::move(truncated_blowup)};
+}
+
+Wall121SupportFiveLargeRatioFaceDiagnostic
+wall_121_support_five_large_ratio_leading_face_diagnostic(
+    const int depth_limit
+) {
+  constexpr int variables = 3;
+  const Wall121SupportFiveLargeRatioLeadingFace leading =
+      wall_121_support_five_large_ratio_leading_face();
+  const NDBernsteinGrid grid =
+      nd_bernstein_grid(leading.polynomial, variables);
+  const std::size_t negative = static_cast<std::size_t>(std::count_if(
+      grid.values.begin(), grid.values.end(),
+      [](const Rational& value) { return value < 0; }));
+  NDSubdivisionResult subdivision;
+  nd_certify_subdivision(grid, 0, depth_limit, subdivision);
+  return {
+      grid.degrees, leading.polynomial.size(), grid.values.size(), negative,
+      leading.t_factor, std::move(subdivision)};
+}
+
+Wall121SupportFiveLargeRatioFaceDiagnostic
+wall_121_support_five_large_ratio_leading_z_zero_diagnostic(
+    const int depth_limit
+) {
+  constexpr int variables = 2;
+  constexpr int t_cap = 32;
+  const Wall121SupportFiveLargeRatioLeadingFace leading =
+      wall_121_support_five_large_ratio_leading_face();
+  int t_factor = t_cap + 1;
+  for (const auto& [exponent, coefficient] : leading.truncated_blowup) {
+    if (exponent[3] == 0 && coefficient != 0) {
+      t_factor = std::min(t_factor, exponent[0]);
+    }
+  }
+  if (t_factor > t_cap) {
+    throw std::runtime_error(
+        "support-five high-ratio z-zero face exceeds truncation cap");
+  }
+  BigPolynomial face;
+  for (const auto& [exponent, coefficient] : leading.truncated_blowup) {
+    if (exponent[0] == t_factor && exponent[3] == 0 && coefficient != 0) {
+      const Exponent face_exponent{exponent[1], exponent[2]};
+      face[face_exponent] += coefficient;
+    }
+  }
+  BigPolynomial canonical_face;
+  for (const auto& [exponent, coefficient] : face) {
+    if (coefficient != 0) {
+      canonical_face[exponent] = coefficient;
+    }
+  }
+  const NDBernsteinGrid grid =
+      nd_bernstein_grid(canonical_face, variables);
+  const std::size_t negative = static_cast<std::size_t>(std::count_if(
+      grid.values.begin(), grid.values.end(),
+      [](const Rational& value) { return value < 0; }));
+  NDSubdivisionResult subdivision;
+  nd_certify_subdivision(grid, 0, depth_limit, subdivision);
+  return {
+      grid.degrees, canonical_face.size(), grid.values.size(), negative,
+      t_factor, std::move(subdivision)};
+}
+
+Wall121SupportFiveLargeRatioFaceDiagnostic
+wall_121_support_five_large_ratio_diagonal_corner_diagnostic(
+    const int depth_limit
+) {
+  constexpr int variables = 3;
+  constexpr int t_cap = 32;
+  const Wall121SupportFiveLargeRatioLeadingFace leading =
+      wall_121_support_five_large_ratio_leading_face();
+  int t_factor = t_cap + 1;
+  for (const auto& [exponent, coefficient] : leading.truncated_blowup) {
+    if (coefficient != 0) {
+      t_factor = std::min(t_factor, exponent[0] + exponent[3]);
+    }
+  }
+  if (t_factor > t_cap) {
+    throw std::runtime_error(
+        "support-five high-ratio diagonal face exceeds truncation cap");
+  }
+  BigPolynomial face;
+  for (const auto& [exponent, coefficient] : leading.truncated_blowup) {
+    if (
+        exponent[0] + exponent[3] == t_factor
+        && coefficient != 0
+    ) {
+      const Exponent face_exponent{
+          exponent[1], exponent[2], exponent[3]};
+      face[face_exponent] += coefficient;
+    }
+  }
+  BigPolynomial canonical_face;
+  for (const auto& [exponent, coefficient] : face) {
+    if (coefficient != 0) {
+      canonical_face[exponent] = coefficient;
+    }
+  }
+  const NDBernsteinGrid grid =
+      nd_bernstein_grid(canonical_face, variables);
+  const std::size_t negative = static_cast<std::size_t>(std::count_if(
+      grid.values.begin(), grid.values.end(),
+      [](const Rational& value) { return value < 0; }));
+  NDSubdivisionResult subdivision;
+  nd_certify_subdivision(grid, 0, depth_limit, subdivision);
+  return {
+      grid.degrees, canonical_face.size(), grid.values.size(), negative,
+      t_factor, std::move(subdivision)};
+}
+
+Wall121SupportFiveLargeRatioFaceDiagnostic
+wall_121_support_five_large_ratio_complementary_corner_diagnostic(
+    const int depth_limit
+) {
+  constexpr int variables = 3;
+  constexpr int t_cap = 32;
+  const Wall121SupportFiveLargeRatioLeadingFace leading =
+      wall_121_support_five_large_ratio_leading_face();
+  int total_factor = t_cap + 1;
+  for (const auto& [exponent, coefficient] : leading.truncated_blowup) {
+    if (coefficient != 0) {
+      total_factor = std::min(
+          total_factor, exponent[0] + exponent[3]);
+    }
+  }
+  if (total_factor > t_cap) {
+    throw std::runtime_error(
+        "support-five high-ratio complementary face exceeds truncation cap");
+  }
+  BigPolynomial face;
+  for (const auto& [exponent, coefficient] : leading.truncated_blowup) {
+    if (
+        exponent[0] + exponent[3] == total_factor
+        && coefficient != 0
+    ) {
+      if (exponent[0] < leading.t_factor) {
+        throw std::runtime_error(
+            "support-five high-ratio factor lost in complementary chart");
+      }
+      const Exponent face_exponent{
+          exponent[1], exponent[2], exponent[0] - leading.t_factor};
+      face[face_exponent] += coefficient;
+    }
+  }
+  BigPolynomial canonical_face;
+  for (const auto& [exponent, coefficient] : face) {
+    if (coefficient != 0) {
+      canonical_face[exponent] = coefficient;
+    }
+  }
+  const NDBernsteinGrid grid =
+      nd_bernstein_grid(canonical_face, variables);
+  const std::size_t negative = static_cast<std::size_t>(std::count_if(
+      grid.values.begin(), grid.values.end(),
+      [](const Rational& value) { return value < 0; }));
+  NDSubdivisionResult subdivision;
+  nd_certify_subdivision(grid, 0, depth_limit, subdivision);
+  return {
+      grid.degrees, canonical_face.size(), grid.values.size(), negative,
+      total_factor, std::move(subdivision)};
+}
+
+Wall121SupportFiveLargeRatioFaceDiagnostic
+wall_121_support_five_large_ratio_t_zero_face(const int depth_limit) {
+  constexpr int variables = 3;
+  const Wall121SupportFiveLargeRatioQuotient prepared =
+      wall_121_support_five_large_ratio_quotient();
+  BigPolynomial face;
+  for (const auto& [exponent, coefficient] : prepared.quotient) {
+    if (exponent[0] == 0) {
+      const Exponent face_exponent{
+          exponent[1], exponent[2], exponent[3]};
+      face[face_exponent] += coefficient;
+    }
+  }
+  BigPolynomial canonical_face;
+  for (const auto& [exponent, coefficient] : face) {
+    if (coefficient != 0) {
+      canonical_face[exponent] = coefficient;
+    }
+  }
+  const NDBernsteinGrid grid = nd_bernstein_grid(canonical_face, variables);
+  const std::size_t negative = static_cast<std::size_t>(std::count_if(
+      grid.values.begin(), grid.values.end(),
+      [](const Rational& value) { return value < 0; }));
+  NDSubdivisionResult subdivision;
+  nd_certify_subdivision(grid, 0, depth_limit, subdivision);
+  return {
+      grid.degrees, canonical_face.size(), grid.values.size(), negative,
+      -1, std::move(subdivision)};
 }
 
 int replay_wall_121_rational_support_four() {
@@ -6507,6 +6871,245 @@ int main(int argc, char** argv) {
                 << " t_zero_terms=" << result.t_zero_terms
                 << " t_zero_negative=" << result.t_zero_negative
                 << '\n';
+      return EXIT_SUCCESS;
+    }
+    if (
+        argc == 3
+        && std::string{argv[1]}
+               == "--support-five-rat2-high-ratio-t-zero"
+    ) {
+      const int depth_limit = parse_positive(argv[2], "depth limit");
+      if (depth_limit > 24) {
+        throw std::invalid_argument("depth limit must be at most 24");
+      }
+      const Wall121SupportFiveLargeRatioFaceDiagnostic result =
+          wall_121_support_five_large_ratio_t_zero_face(depth_limit);
+      std::cout << "SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO_T_ZERO"
+                << " degrees=(" << result.degrees[0] << ','
+                << result.degrees[1] << ',' << result.degrees[2] << ')'
+                << " terms=" << result.terms
+                << " bernstein_coefficients=" << result.coefficients
+                << " initial_negative=" << result.negative_coefficients
+                << " depth_limit=" << depth_limit
+                << " nodes=" << result.subdivision.nodes
+                << " leaves=" << result.subdivision.leaves
+                << " unresolved=" << result.subdivision.unresolved
+                << " maximum_depth=" << result.subdivision.maximum_depth;
+      if (result.subdivision.has_first_unresolved) {
+        std::cout << " first_unresolved_cell=(";
+        for (std::size_t index = 0U;
+             index < result.subdivision.first_unresolved_cell.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.subdivision.first_unresolved_cell[index];
+        }
+        std::cout << ") first_unresolved_splits=(";
+        for (std::size_t index = 0U;
+             index < result.subdivision.first_unresolved_splits.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.subdivision.first_unresolved_splits[index];
+        }
+        std::cout << ')';
+      }
+      std::cout << '\n';
+      return EXIT_SUCCESS;
+    }
+    if (
+        argc == 3
+        && std::string{argv[1]}
+               == "--support-five-rat2-high-ratio-leading-face"
+    ) {
+      const int depth_limit = parse_positive(argv[2], "depth limit");
+      if (depth_limit > 24) {
+        throw std::invalid_argument("depth limit must be at most 24");
+      }
+      const Wall121SupportFiveLargeRatioFaceDiagnostic result =
+          wall_121_support_five_large_ratio_leading_face_diagnostic(
+              depth_limit);
+      std::cout << "SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO_LEADING_FACE"
+                << " t_factor=" << result.t_factor
+                << " degrees=(" << result.degrees[0] << ','
+                << result.degrees[1] << ',' << result.degrees[2] << ')'
+                << " terms=" << result.terms
+                << " bernstein_coefficients=" << result.coefficients
+                << " initial_negative=" << result.negative_coefficients
+                << " depth_limit=" << depth_limit
+                << " nodes=" << result.subdivision.nodes
+                << " leaves=" << result.subdivision.leaves
+                << " unresolved=" << result.subdivision.unresolved
+                << " maximum_depth=" << result.subdivision.maximum_depth;
+      if (result.subdivision.has_first_unresolved) {
+        std::cout << " first_unresolved_cell=(";
+        for (std::size_t index = 0U;
+             index < result.subdivision.first_unresolved_cell.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.subdivision.first_unresolved_cell[index];
+        }
+        std::cout << ") first_unresolved_splits=(";
+        for (std::size_t index = 0U;
+             index < result.subdivision.first_unresolved_splits.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.subdivision.first_unresolved_splits[index];
+        }
+        std::cout << ')';
+      }
+      std::cout << '\n';
+      return EXIT_SUCCESS;
+    }
+    if (
+        argc == 3
+        && std::string{argv[1]}
+               == "--support-five-rat2-high-ratio-leading-z-zero"
+    ) {
+      const int depth_limit = parse_positive(argv[2], "depth limit");
+      if (depth_limit > 24) {
+        throw std::invalid_argument("depth limit must be at most 24");
+      }
+      const Wall121SupportFiveLargeRatioFaceDiagnostic result =
+          wall_121_support_five_large_ratio_leading_z_zero_diagnostic(
+              depth_limit);
+      std::cout << "SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO_LEADING_Z_ZERO"
+                << " t_factor=" << result.t_factor
+                << " degrees=(" << result.degrees[0] << ','
+                << result.degrees[1] << ')'
+                << " terms=" << result.terms
+                << " bernstein_coefficients=" << result.coefficients
+                << " initial_negative=" << result.negative_coefficients
+                << " depth_limit=" << depth_limit
+                << " nodes=" << result.subdivision.nodes
+                << " leaves=" << result.subdivision.leaves
+                << " unresolved=" << result.subdivision.unresolved
+                << " maximum_depth=" << result.subdivision.maximum_depth;
+      if (result.subdivision.has_first_unresolved) {
+        std::cout << " first_unresolved_cell=(";
+        for (std::size_t index = 0U;
+             index < result.subdivision.first_unresolved_cell.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.subdivision.first_unresolved_cell[index];
+        }
+        std::cout << ") first_unresolved_splits=(";
+        for (std::size_t index = 0U;
+             index < result.subdivision.first_unresolved_splits.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.subdivision.first_unresolved_splits[index];
+        }
+        std::cout << ')';
+      }
+      std::cout << '\n';
+      return EXIT_SUCCESS;
+    }
+    if (
+        argc == 3
+        && std::string{argv[1]}
+               == "--support-five-rat2-high-ratio-diagonal-corner"
+    ) {
+      const int depth_limit = parse_positive(argv[2], "depth limit");
+      if (depth_limit > 24) {
+        throw std::invalid_argument("depth limit must be at most 24");
+      }
+      const Wall121SupportFiveLargeRatioFaceDiagnostic result =
+          wall_121_support_five_large_ratio_diagonal_corner_diagnostic(
+              depth_limit);
+      std::cout << "SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO_DIAGONAL_CORNER"
+                << " t_factor=" << result.t_factor
+                << " degrees=(" << result.degrees[0] << ','
+                << result.degrees[1] << ',' << result.degrees[2] << ')'
+                << " terms=" << result.terms
+                << " bernstein_coefficients=" << result.coefficients
+                << " initial_negative=" << result.negative_coefficients
+                << " depth_limit=" << depth_limit
+                << " nodes=" << result.subdivision.nodes
+                << " leaves=" << result.subdivision.leaves
+                << " unresolved=" << result.subdivision.unresolved
+                << " maximum_depth=" << result.subdivision.maximum_depth;
+      if (result.subdivision.has_first_unresolved) {
+        std::cout << " first_unresolved_cell=(";
+        for (std::size_t index = 0U;
+             index < result.subdivision.first_unresolved_cell.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.subdivision.first_unresolved_cell[index];
+        }
+        std::cout << ") first_unresolved_splits=(";
+        for (std::size_t index = 0U;
+             index < result.subdivision.first_unresolved_splits.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.subdivision.first_unresolved_splits[index];
+        }
+        std::cout << ')';
+      }
+      std::cout << '\n';
+      return EXIT_SUCCESS;
+    }
+    if (
+        argc == 3
+        && std::string{argv[1]}
+               == "--support-five-rat2-high-ratio-complementary-corner"
+    ) {
+      const int depth_limit = parse_positive(argv[2], "depth limit");
+      if (depth_limit > 24) {
+        throw std::invalid_argument("depth limit must be at most 24");
+      }
+      const Wall121SupportFiveLargeRatioFaceDiagnostic result =
+          wall_121_support_five_large_ratio_complementary_corner_diagnostic(
+              depth_limit);
+      std::cout
+          << "SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO_COMPLEMENTARY_CORNER"
+          << " total_factor=" << result.t_factor
+          << " degrees=(" << result.degrees[0] << ','
+          << result.degrees[1] << ',' << result.degrees[2] << ')'
+          << " terms=" << result.terms
+          << " bernstein_coefficients=" << result.coefficients
+          << " initial_negative=" << result.negative_coefficients
+          << " depth_limit=" << depth_limit
+          << " nodes=" << result.subdivision.nodes
+          << " leaves=" << result.subdivision.leaves
+          << " unresolved=" << result.subdivision.unresolved
+          << " maximum_depth=" << result.subdivision.maximum_depth;
+      if (result.subdivision.has_first_unresolved) {
+        std::cout << " first_unresolved_cell=(";
+        for (std::size_t index = 0U;
+             index < result.subdivision.first_unresolved_cell.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.subdivision.first_unresolved_cell[index];
+        }
+        std::cout << ") first_unresolved_splits=(";
+        for (std::size_t index = 0U;
+             index < result.subdivision.first_unresolved_splits.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.subdivision.first_unresolved_splits[index];
+        }
+        std::cout << ')';
+      }
+      std::cout << '\n';
       return EXIT_SUCCESS;
     }
     if (

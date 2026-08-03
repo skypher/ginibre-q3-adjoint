@@ -17270,6 +17270,97 @@ unresolved dyadic cell and its split history, directing the next attempt to
 a critical-branch high-ratio blow-up rather than a large generic tree.  This
 is still a fixed-support diagnostic, not a proof of `(RAT2PAY)`.
 
+The first exact Newton face of that high-ratio chart is nevertheless
+positive.  With the compactified ratio written as `r=(1-t)/t`, retain the
+critical substitutions used by the support-four chart and clear the same
+positive denominator.  The strict C++ mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --support-five-rat2-high-ratio-leading-face 1
+```
+
+truncates the resulting polynomial only above `t^32`, finds its first
+nonzero `t`-coefficient exactly, and converts that coefficient to a
+Bernstein grid.  It returns
+
+```text
+SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO_LEADING_FACE
+  t_factor=16 degrees=(0,0,4) terms=1
+  bernstein_coefficients=5 initial_negative=0
+  depth_limit=1 nodes=1 leaves=1 unresolved=0 maximum_depth=0
+```
+
+Thus the high-ratio numerator has an exact factor `t^16`; after division,
+its `t=0` face is a nonnegative degree-four polynomial in the final tail
+ratio `z` alone.  In particular, every dependence on the two critical
+parameters `alpha,beta` cancels on that face.  This is an exact
+lower-dimensional boundary certificate, not a neighborhood certificate:
+the face can vanish at `z=0`, so the joint `(t,z)=(0,0)` Newton corner must
+still be paid before it can close any portion of `(RAT2PAY)`.
+
+That vanishing endpoint has a positive next face as well.  The companion
+exact mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --support-five-rat2-high-ratio-leading-z-zero 1
+```
+
+sets `z=0` before extracting its first nonzero `t`-coefficient and returns
+
+```text
+SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO_LEADING_Z_ZERO
+  t_factor=20 degrees=(0,0) terms=1
+  bernstein_coefficients=1 initial_negative=0
+  depth_limit=1 nodes=1 leaves=1 unresolved=0 maximum_depth=0.
+```
+
+Thus the two coordinate faces have leading orders `t^16 z^4` and `t^20`,
+respectively, with exact nonnegative coefficients.  The Newton balance is
+therefore `z=t gamma`.  The diagonal face is positive as well: the strict
+mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --support-five-rat2-high-ratio-diagonal-corner 1
+```
+
+substitutes `z=t gamma`, retains the exact first nonzero total
+`t`-coefficient, and returns
+
+```text
+SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO_DIAGONAL_CORNER
+  t_factor=20 degrees=(0,0,4) terms=5
+  bernstein_coefficients=5 initial_negative=0
+  depth_limit=1 nodes=1 leaves=1 unresolved=0 maximum_depth=0.
+```
+
+Thus the first coupled corner face is nonnegative throughout
+`0<=gamma<=1`; the critical parameters again cancel on that face.  This
+resolves the `z<=t` Newton cone.  The complementary cone is independently
+positive.  After writing `t=z delta` and retaining the global exact
+`t^16` factor, the strict mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --support-five-rat2-high-ratio-complementary-corner 1
+```
+
+returns
+
+```text
+SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO_COMPLEMENTARY_CORNER
+  total_factor=20 degrees=(0,0,4) terms=5
+  bernstein_coefficients=5 initial_negative=0
+  depth_limit=1 nodes=1 leaves=1 unresolved=0 maximum_depth=0.
+```
+
+The two degree-four directional face certificates cover both `z<=t` and
+`t<=z`, hence every Newton direction at `(t,z)=(0,0)`.  They are still
+boundary data: a certificate for a positive neighborhood in each chart and
+ultimately the support-uniform target remain required.
+
 The support-three and support-four rational certificates above, and the
 support-five calculation below, are therefore finite boundary facts only.
 Because `ell_2>=ell`, those first-iterate certificates automatically pay
