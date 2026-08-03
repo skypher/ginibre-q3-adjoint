@@ -46487,6 +46487,136 @@ Consequently this canonical one-load/one-credit rounded reflection sends a
 negative load to itself and cannot prove `(SPCP)`.  This does not rule out a
 multi-point transport using the adjacent-Jacobi likelihood-ratio reserve.
 
+There is a uniform sufficient form of such a multi-point transport.  For an
+unordered distinct pair `p={a,b}` of nonendpoint nodes, set
+
+```text
+L_p=(1-a)(1-b),             R_p=(1+a)(1+b),
+D_p=2(a-b)^2(1-ab)H(a,b)L_p^2R_p^2.                 (P22.5zz68zna)
+```
+
+Thus, on writing `M=2+u,r=2+v`, the pair contributes
+`D_p L_p^u R_p^v` to `(P22.5zz68zk)`.  Call `p` a credit when `D_p>0`
+and a load when `D_p<0`.
+
+**Lemma 22H3W11C (two-credit half-share criterion).**  Suppose that every
+load `ell` is assigned two distinct credits `p_ell,q_ell`, that no credit is
+assigned more than twice, and that
+
+```text
+L_(p_ell)L_(q_ell)>=L_ell^2,
+R_(p_ell)R_(q_ell)>=R_ell^2,
+D_(p_ell)D_(q_ell)>=D_ell^2.                         (P22.5zz68znb)
+```
+
+Then `(SPCP)` holds for that odd cycle.
+
+**Proof.**  Give each assigned occurrence half of its credit term.  The
+usage bound makes the total charge to every positive pair at most its whole
+term.  The three inequalities in `(P22.5zz68znb)` and AM--GM give, for
+every `u,v>=0`,
+
+```text
+(1/2)D_p L_p^uR_p^v+(1/2)D_q L_q^uR_q^v
+ >=sqrt(D_pD_q)(L_pL_q)^(u/2)(R_pR_q)^(v/2)
+ >=|D_ell|L_ell^uR_ell^v.
+```
+
+Sum over the loads.  The uncharged positive terms are nonnegative, so the
+full unordered-pair sum, hence `(P22.5zz68zk)`, is nonnegative.  QED.
+
+The integral assignment is stronger than necessary.  For every load `ell`,
+let `E_ell` be the set of unordered credit pairs satisfying
+`(P22.5zz68znb)` for that load.
+
+**Lemma 22H3W11C1 (fractional two-credit criterion).**  Suppose there are
+numbers `x_(ell,{p,q})>=0`, indexed by `ell` and `{p,q} in E_ell`, such that
+
+```text
+sum_({p,q} in E_ell) x_(ell,{p,q})>=1                 for every load ell,
+
+sum_(ell) sum_({p,q} in E_ell, p in {p,q})
+ x_(ell,{p,q})<=2                                     for every credit p.
+                                                               (P22.5zz68znc)
+```
+
+Then `(SPCP)` holds for that odd cycle.
+
+**Proof.**  Multiply the AM--GM payment in Lemma 22H3W11C for an eligible
+pair `{p,q}` by `x_(ell,{p,q})`.  It pays that same multiple of the load and
+uses `x_(ell,{p,q})/2` of each of the two credit terms.  The first line of
+`(P22.5zz68znc)` pays every load completely, while the second prevents the
+total use of any positive term from exceeding one.  Summing proves the
+claim.  QED.
+
+Thus the local uniform problem has an exact linear-capacity form: construct
+the fractional packing `(P22.5zz68znc)` on every odd cyclic grid.  The
+integral capacity-two covers below are convenient bounded certificates for
+this weaker target, not an assertion that integrality is required.
+The first uniform fractional guess is already too coarse: assigning equal
+weight to every eligible pair in each `E_ell` has credit use `7/3>2` at rank
+five (`n=11`).  Hence a proof of `(P22.5zz68znc)` must use a nonuniform
+packing, although it need not choose an integral cover.
+
+There is an exact dual form which removes the packing variables.  Give each
+credit `p` an arbitrary nonnegative price `z_p` and put
+
+```text
+m_ell(z)=min_({p,q} in E_ell)(z_p+z_q).              (P22.5zz68znd)
+```
+
+**Lemma 22H3W11C2 (dual fractional Hall criterion).**  The fractional
+packing `(P22.5zz68znc)` exists if and only if
+
+```text
+sum_ell m_ell(z)<=2 sum_p z_p                         (P22.5zz68zne)
+```
+
+for every nonnegative credit-price vector `z`.
+
+**Proof.**  Necessity follows by multiplying the load coverage inequality
+in `(P22.5zz68znc)` by `m_ell(z)`, using
+`m_ell(z)<=z_p+z_q` on every eligible pair, and then applying the credit
+capacities.  Conversely, Farkas' lemma says that failure of the packing is
+equivalent to nonnegative multipliers `y_ell,z_p` with
+
+```text
+y_ell<=z_p+z_q       ({p,q} in E_ell),
+sum_ell y_ell>2 sum_p z_p.
+```
+
+For fixed `z`, the largest permitted `y_ell` is exactly
+`m_ell(z)`, contradicting `(P22.5zz68zne)`.  QED.
+
+Thus a uniform proof may seek a direct price inequality `(P22.5zz68zne)`
+on the cyclic pair geometry.  It is the precise fractional Hall analogue of
+the integral cover, and retains the paired-credit constraint which the
+rank-four nonclique example shows cannot be discarded.
+
+This criterion is strictly stronger than a one-credit matching: it uses a
+single positive pair twice only after splitting its finite base amplitude,
+while retaining a uniform proof for every endpoint exponent.  The strict
+rational diagnostic `character_ring_iter/analyze_tp2_mixed_jacobi_matching.cpp`
+uses the classical enclosure `333/106<pi<355/113` and alternating Taylor
+enclosures for every cosine.  Its capacity-two mode certifies the criterion
+through odd cycle size `23` (ranks `3,...,11`):
+
+```text
+TP2_MIXED_JACOBI_MATCHING maximum_rank=11 graphs=9 loads=72 edges=348
+maximum_loads=18 two_credit_edges=3543 first_failure_rank=-1 result=PASS
+```
+
+The one-credit criterion already fails at `n=7`, while the disjoint
+two-credit criterion first fails at `n=9`; these are exact no-gos for those
+more restrictive ansatzes.  The bounded capacity-two cover is therefore a
+genuine enlargement, but not a uniform proof of `(SPCP)`: a construction of
+the required cover for every odd cyclic grid remains the local missing step.
+The paired-credit condition itself is essential.  At rank four (`n=9`), the
+load indexed by `(1,4)` has four credit neighbours but only five of their
+six unordered pairs satisfy `(P22.5zz68znb)`.  Thus this hypergraph cannot
+be replaced even at that size by the simpler rule "choose any two neighbours"
+and an ordinary capacitated bipartite matching.
+
 The scalar cyclic-Pearson correction itself has no fixed sign, even at its
 lowest index.  In the notation of Lemma 22H3UAA, the exact target-cone
 values on the five-cycle include

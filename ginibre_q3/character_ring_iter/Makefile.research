@@ -134,6 +134,10 @@ verify_tp2_finite_darboux: verify_tp2_finite_darboux.cpp
 	$(CXX) -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+analyze_tp2_mixed_jacobi_matching: analyze_tp2_mixed_jacobi_matching.cpp
+	$(CXX) -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 probe_cyclic_christoffel_minors: probe_cyclic_christoffel_minors.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -1075,6 +1079,7 @@ RESEARCH_TARGETS = \
 	derive_continuous_tp2 \
 	verify_tp2_mixed_jacobi_moment \
 	verify_tp2_finite_darboux \
+	analyze_tp2_mixed_jacobi_matching \
 	probe_cyclic_christoffel_minors \
 	probe_tp2_winding_sectors \
 	verify_su2_even_background_current \
