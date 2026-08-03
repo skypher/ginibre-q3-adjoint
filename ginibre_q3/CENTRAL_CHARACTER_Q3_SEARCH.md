@@ -45337,6 +45337,90 @@ when the required confluent Christoffel degree reaches that cutoff, where
 the final norm in `(P22.5zz59K7l)` vanishes and ordinary infinite-support
 Christoffel formulas no longer apply unchanged.
 
+There is nevertheless an exact finite Christoffel construction which does
+*not* stop at that cutoff.  It is a finite Darboux iteration of the Jacobi
+matrix, rather than one confluent determinant of growing degree.  This
+keeps the entire alias dependence in a rational tridiagonal table.
+
+**Lemma 22H3UC3 (finite endpoint-Darboux table).**  Let `J` be the monic
+Jacobi matrix of `nu_m`, indexed by `0,...,m-1`.  Its entries are
+
+```text
+alpha_0=-1/(n-1),
+beta_1=n(n-3)/(2(n-1)^2),
+
+alpha_j=-2/{(n-2j+1)(n-2j-1)},                    1<=j<m,
+beta_j={(n-2j-1)(n-2j+3)}/{4(n-2j+1)^2},          2<=j<m.  (P22.5zz59K7m)
+```
+
+For either endpoint `c in {-1,1}`, define the nonzero Darboux pivots
+
+```text
+d_0=alpha_0-c,
+d_j=alpha_j-c-beta_j/d_(j-1),                      1<=j<m.   (P22.5zz59K7n)
+```
+
+Then multiplication of the measure by `x-c` (and, at `c=1`, harmless
+multiplication of the resulting signed functional by `-1`) has Jacobi data
+
+```text
+alpha'_j=c+d_j+beta_(j+1)/d_j,                     0<=j<m-1,
+alpha'_(m-1)=c+d_(m-1),
+beta'_j=beta_j d_j/d_(j-1),                         1<=j<m.   (P22.5zz59K7o)
+```
+
+Consequently, starting from `(P22.5zz59K7m)`, applying the `c=1` update
+`M` times and the `c=-1` update `r` times gives the *exact* Jacobi
+parameters of
+
+```text
+sum_(q_m(a)=0)(1-a)^M(1+a)^r delta_a,              M,r>=0,   (P22.5zz59K7p)
+```
+
+with no restriction relating `M+r` to `m`.  In particular it supplies the
+four parameters in Lemma 22H3UC throughout the finite-alias regime.
+
+**Proof.**  The coefficient of `x^(j-1)` in the monic polynomial in
+`(P22.5zz59K7j)` is `1/(n-2j+1)` for `j>=1`; together with the norm ratios
+in `(P22.5zz59K7l)` this gives `(P22.5zz59K7m)`.  For an endpoint `c`, the
+monic tridiagonal factorization is
+
+```text
+J-cI=LU,
+U_(j,j)=d_j,       U_(j,j+1)=1,
+L_(j,j)=1,         L_(j,j-1)=beta_j/d_(j-1).
+```
+
+The pivots are nonzero because `c` is outside the support.  Reversing the
+factors gives the Christoffel Jacobi matrix `UL+cI`; reading its diagonal
+and subdiagonal gives `(P22.5zz59K7o)`.  The endpoint `1` is not a support
+node, so `x-1` merely changes the common sign of the positive functional
+`(1-x)nu`; recurrence coefficients are unaffected.  Iteration therefore
+gives `(P22.5zz59K7p)` exactly, even after the original base matrix has
+reached its finite terminal index.  QED.
+
+For an independent normalization check, the endpoint ratios of the base
+polynomials are
+
+```text
+p_1(1)/p_0(1)=n/(n-1),
+p_(j+1)(1)/p_j(1)=(n-2j+1)/{2(n-2j-1)},            1<=j<m,
+
+p_1(-1)/p_0(-1)=-(n-2)/(n-1),
+p_(j+1)(-1)/p_j(-1)
+ =-{(n-2j-2)(n-2j+1)}/{2(n-2j-1)(n-2j)},          1<=j<m.
+                                                               (P22.5zz59K7q)
+```
+
+They satisfy the monic recurrence with `(P22.5zz59K7m)` and give
+`d_j=-p_(j+1)(c)/p_j(c)`.  The strict rational verifier
+`character_ring_iter/verify_tp2_finite_darboux.cpp` checks these base
+identities, every endpoint pivot, the positivity of the transformed
+subdiagonals, and agreement of the resulting four-coefficient sign with
+the independent Pascal-cross calculation.  This is an exact alias-safe
+reduction, not yet a proof that the final four-coefficient expression has
+the required sign.
+
 **Lemma 22H3V (stable and no-alias `TP2`).**  The target `(TP2)` is
 strictly positive in the continuous cyclic limit.  At finite orbit rank
 `m`, it is also positive whenever
@@ -46301,11 +46385,35 @@ the exact finite grid.  For reference, if
 
 This short moment form is an exact target for a discrete Jacobi
 total-positivity argument; it is not yet such an argument.
+
+**Lemma 22H3W11A0 (two-node boundary case).**  The symmetric Pascal cross
+payment is an equality on the three- and five-cycles:
+
+```text
+C_(M,r)=0,                 n in {3,5},       M,r>=1.              (P22.5zz68zm0)
+```
+
+**Proof.**  At `n=3` the endpoint factor `(1-a)^M` leaves only one
+nonendpoint simple node, so the squared Vandermonde in
+`(P22.5zz68zk)` vanishes.  At `n=5` the two distinct nonendpoint values
+`a,b` satisfy
+
+```text
+ab=-1/4,       a^2+b^2=3/4,       a^2b^2=1/16.
+```
+
+Substitution in `(P22.5zz68zj)` gives `H(a,b)=0`; diagonal terms again
+vanish by `(a-b)^2`.  Thus every summand in `(P22.5zz68zk)` is zero.  QED.
+
+Hence the remaining finite sign problem starts at `n=7`, precisely the
+range in which the four Jacobi coefficients of Lemma 22H3UC are
+nondegenerate and the finite Darboux table applies.
+
 The strict exact verifier
 `character_ring_iter/verify_tp2_mixed_jacobi_moment.cpp` evaluates these
 moments by cyclic convolution, clears all powers of two, and checks that
 the scaled form of `(P22.5zz68zm)` is `64n^2 C_(M,r)`.  Its replay through
-odd cycle size `41` and `M,r<=30` passes all `15,979` systems.  This audits
+odd cycle size `41` and `M,r<=30` passes all `16,820` systems.  This audits
 the mixed-moment reduction independently of the endpoint and winding
 checkers; it does not promote the bounded target check to a proof.
 

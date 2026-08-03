@@ -126,16 +126,16 @@ int main(int argc, char** argv) {
   const int maximum_rank = argc > 1 ? std::atoi(argv[1]) : 20;
   const int maximum_minus_power = argc > 2 ? std::atoi(argv[2]) : 30;
   const int maximum_plus_power = argc > 3 ? std::atoi(argv[3]) : 30;
-  if (maximum_rank < 2 || maximum_minus_power < 2 ||
+  if (maximum_rank < 1 || maximum_minus_power < 2 ||
       maximum_plus_power < 2) {
     std::cerr << "usage: verify_tp2_mixed_jacobi_moment "
-                 "[maximum-rank>=2] [maximum-minus-power>=2] "
+                 "[maximum-rank>=1] [maximum-minus-power>=2] "
                  "[maximum-plus-power>=2]\n";
     return 2;
   }
 
   std::size_t systems = 0;
-  for (int rank = 2; rank <= maximum_rank; ++rank) {
+  for (int rank = 1; rank <= maximum_rank; ++rank) {
     const int modulus = 2 * rank + 1;
     for (int minus_power = 2; minus_power <= maximum_minus_power;
          ++minus_power) {
@@ -168,6 +168,14 @@ int main(int argc, char** argv) {
                     << " moment_form=" << moment_form
                     << " scaled_cross=" << scaled_cross(modulus, cross)
                     << '\n';
+          return 1;
+        }
+        if (rank <= 2 && cross != 0) {
+          std::cout << "TP2_MIXED_JACOBI_MOMENT result=BOUNDARY_CYCLE_FAIL"
+                    << " rank=" << rank
+                    << " minus_power=" << minus_power
+                    << " plus_power=" << plus_power
+                    << " cross=" << cross << '\n';
           return 1;
         }
         if (cross < 0) {
