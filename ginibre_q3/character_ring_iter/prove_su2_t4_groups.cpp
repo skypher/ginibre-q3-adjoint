@@ -510,13 +510,13 @@ bool certify_group_chamber(
         passed = direct_facet_certificate(chamber, domain_constraints);
     }
     if (!passed) {
+        passed = sum_cone_certificate(chamber, constraints);
+    }
+    if (!passed) {
         passed = constant_three_sum_certificate(
             chamber,
             constraints
         );
-    }
-    if (!passed) {
-        passed = sum_cone_certificate(chamber, constraints);
     }
     if (!passed) {
         passed = equal_sum_square_cone_certificate(
