@@ -17254,6 +17254,22 @@ fixed support-five chamber; any certificate must subdivide or retain a
 global reserve.  This is a diagnostic obstruction, not a counterexample to
 the margin.
 
+The exact subdivision mode confirms that the obstruction is confined to the
+high-ratio chart.  It first bisects the compactified ratio `r`, then cycles
+through the remaining ratio coordinates.  The first three finite trees give
+
+```text
+depth=1: nodes=3, leaves=1, unresolved=1;
+depth=2: nodes=5, leaves=1, unresolved=2;
+depth=3: nodes=9, leaves=1, unresolved=4.
+```
+
+Hence the full `r<=1` half is certified already, while blind subdivision of
+the high-`r` half makes no further leaf.  The mode records the first
+unresolved dyadic cell and its split history, directing the next attempt to
+a critical-branch high-ratio blow-up rather than a large generic tree.  This
+is still a fixed-support diagnostic, not a proof of `(RAT2PAY)`.
+
 The support-three and support-four rational certificates above, and the
 support-five calculation below, are therefore finite boundary facts only.
 Because `ell_2>=ell`, those first-iterate certificates automatically pay

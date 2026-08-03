@@ -2770,11 +2770,19 @@ struct NDSubdivisionResult {
   std::size_t leaves = 0U;
   std::size_t unresolved = 0U;
   int maximum_depth = 0;
+  bool has_first_unresolved = false;
+  std::vector<std::uint64_t> first_unresolved_cell;
+  std::vector<int> first_unresolved_splits;
 };
 
-void nd_certify_subdivision(const NDBernsteinGrid& grid, const int depth,
-                            const int depth_limit,
-                            NDSubdivisionResult& result) {
+void nd_certify_subdivision_impl(
+    const NDBernsteinGrid& grid,
+    const int depth,
+    const int depth_limit,
+    const std::vector<std::uint64_t>& cell,
+    const std::vector<int>& splits,
+    NDSubdivisionResult& result
+) {
   ++result.nodes;
   result.maximum_depth = std::max(result.maximum_depth, depth);
   if (std::all_of(
@@ -2785,6 +2793,11 @@ void nd_certify_subdivision(const NDBernsteinGrid& grid, const int depth,
   }
   if (depth >= depth_limit) {
     ++result.unresolved;
+    if (!result.has_first_unresolved) {
+      result.has_first_unresolved = true;
+      result.first_unresolved_cell = cell;
+      result.first_unresolved_splits = splits;
+    }
     return;
   }
   int dimension = depth % static_cast<int>(grid.degrees.size());
@@ -2798,8 +2811,27 @@ void nd_certify_subdivision(const NDBernsteinGrid& grid, const int depth,
     }
   }
   auto [left, right] = nd_split_grid(grid, dimension);
-  nd_certify_subdivision(left, depth + 1, depth_limit, result);
-  nd_certify_subdivision(right, depth + 1, depth_limit, result);
+  std::vector<std::uint64_t> left_cell = cell;
+  std::vector<std::uint64_t> right_cell = cell;
+  std::vector<int> child_splits = splits;
+  const std::size_t selected = static_cast<std::size_t>(dimension);
+  left_cell[selected] *= UINT64_C(2);
+  right_cell[selected] = right_cell[selected] * UINT64_C(2) + UINT64_C(1);
+  ++child_splits[selected];
+  nd_certify_subdivision_impl(
+      left, depth + 1, depth_limit, left_cell, child_splits, result);
+  nd_certify_subdivision_impl(
+      right, depth + 1, depth_limit, right_cell, child_splits, result);
+}
+
+void nd_certify_subdivision(const NDBernsteinGrid& grid, const int depth,
+                            const int depth_limit,
+                            NDSubdivisionResult& result) {
+  const std::size_t dimensions = grid.degrees.size();
+  nd_certify_subdivision_impl(
+      grid, depth, depth_limit,
+      std::vector<std::uint64_t>(dimensions, UINT64_C(0)),
+      std::vector<int>(dimensions, 0), result);
 }
 
 struct NDCornerSubdivisionResult {
@@ -6320,6 +6352,28 @@ int main(int argc, char** argv) {
                 << " result="
                 << (result.unresolved == 0U ? "PASS_EXACT" : "INCOMPLETE")
                 << '\n';
+      if (result.has_first_unresolved) {
+        std::cout << "SU2_WALL_121_RAT2_SUPPORT_FIVE_FIRST_UNRESOLVED"
+                  << " cell=(";
+        for (std::size_t index = 0U;
+             index < result.first_unresolved_cell.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.first_unresolved_cell[index];
+        }
+        std::cout << ") splits=(";
+        for (std::size_t index = 0U;
+             index < result.first_unresolved_splits.size();
+             ++index) {
+          if (index != 0U) {
+            std::cout << ',';
+          }
+          std::cout << result.first_unresolved_splits[index];
+        }
+        std::cout << ")\n";
+      }
       return EXIT_SUCCESS;
     }
     if (
