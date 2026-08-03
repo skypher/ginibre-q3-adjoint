@@ -20620,6 +20620,150 @@ profile with arbitrary-precision integers and checks all six displayed
 integers.  Its transcript is
 `certificates/su2_third_threshold_mixed_obstruction.log`.  QED.
 
+The same mixed family has an exact threshold recovery once enough
+fundamentals are present.  This does not prove a two-arbitrary-factor
+minimum theorem, but it rules out persistence of the displayed obstruction
+along its most difficult observed ray.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADTHIRDB23
+(exact `chi_1^m chi_2 chi_3` threshold recovery).**  Let
+
+```text
+P=chi_1^m chi_2 chi_3,                 P^2=sum_h c_h beta_h.
+```
+
+Then
+
+```text
+m>=11  implies  7c_1-19c_0>=0,
+m>=17  implies  (3c_1-2c_0)^2-40c_0^2>=0.             (P5A.102AD5ALX1ZZB3S4N43D)
+```
+
+Consequently the two third-radial spectral payments prove both strict
+`A=3` columns of this family for `m>=17`.  The direct exact certificate
+below closes its remaining finite prefix as well.
+
+**Proof.**  Write `d_t=[beta_t]chi_1^(2m)`, put
+
+```text
+r_t=d_t/d_0
+ =(2t+1)m(m-1)...(m-t+1)/
+   {(m+2)(m+3)...(m+t+1)},
+L=product_(j=2)^7(m+j).
+```
+
+Since
+
+```text
+chi_2^2 chi_3^2
+=3beta_0+7beta_1+8beta_2+6beta_3+3beta_4+beta_5,
+```
+
+the two normalized low-shell coefficients are
+
+```text
+C_0=c_0/d_0=3+7r_1+8r_2+6r_3+3r_4+r_5,
+C_1=c_1/d_0=7+18r_1+21r_2+17r_3+10r_4+4r_5+r_6.
+                                                               (P5A.102AD5ALX1ZZB3S4N43E)
+```
+
+After clearing `L`, respectively `L^2`, the two margins in
+`(P5A.102AD5ALX1ZZB3S4N43D)` have the following shifted coefficient
+lists, in increasing powers of `m-11` and `m-17`:
+
+```text
+7LC_1-19LC_0:
+35868960,92795856,33959472,5324160,427440,17424,288;
+
+L^2{(3C_1-2C_0)^2-40C_0^2}:
+11752911878935449600,26497393294167613440,
+13262021096471737344,3321591892843373568,
+513022457604953664,53455307041267200,
+3923985732164352,206573964142464,7789449203712,
+206040879360,3639587904,38631168,186624.
+                                                               (P5A.102AD5ALX1ZZB3S4N43F)
+```
+
+Every coefficient is positive.  Since `d_0,L>0`, these identities prove
+the two claims.  The strict `cpp_int` mode
+`probe_su2_fundamental_two_arbitrary_third.cpp
+--b23-threshold-polynomials` reconstructs both polynomials from the
+fusion profile and checks their values at `m=6,10,11,16,17`; it returns
+`PASS_EXACT`.  QED.
+
+**Corollary 5A8H28UIA2CGLPCIPOCB2RADTHIRDB23ALL
+(complete `chi_1^m chi_2 chi_3` third-radial family).**  For every
+`m>=0`, both strict `A=3` columns of
+
+```text
+P=chi_1^m chi_2 chi_3
+```
+
+are nonnegative.
+
+**Proof.**  Retain the factor profile in
+`(P5A.102AD5ALX1ZZB3S4N43E)`.  For `0<=r<=5`, direct fusion gives
+
+```text
+c_r/d_0
+ =sum_(s=0)^5 f_s sum_(t=|r-s|)^(r+s) r_t,
+(f_0,...,f_5)=(3,7,8,6,3,1).                         (P5A.102AD5ALX1ZZB3S4N43G)
+```
+
+Put `L_11=product_(j=2)^11(m+j)`.  Substitution in the two strict
+third-radial formulas shows that
+
+```text
+L_11^2 K_(3,0)/d_0^2,
+L_11^2 K_(3,1)/d_0^2
+```
+
+are degree-eighteen polynomials in `m`.  Their coefficient lists in
+increasing powers of `m` are strictly positive (their least coefficients
+are respectively `14929920` and `32348160`).  Hence both polynomials are
+nonnegative on every `m>=0`; `d_0,L_11` are positive.  The strict
+`cpp_int` mode
+
+```text
+probe_su2_fundamental_two_arbitrary_third.cpp
+--b23-radial-polynomials
+```
+
+constructs `(P5A.102AD5ALX1ZZB3S4N43G)`, clears the exact denominators,
+checks the coefficient signs, and independently reconstructs the values
+at `m=0,1,6,16`.  It returns `PASS_EXACT`; this is a symbolic polynomial
+certificate, not a bounded scan.  QED.
+
+The exact ray calculation isolates a sharply smaller two-arbitrary-factor
+target.  For a parity interval `I={u,u+2,...,u+2ell}` put
+
+```text
+F_m(I)=||N_1^m sum_(r in I)e_r||^2.
+```
+
+If `P=chi_1^m chi_b chi_c` with `2<=b<c`, then its interval is
+`I={c-b,c-b+2,...,c+b}` and
+
+```text
+c_0=F_m(I),                 c_1=F_(m+1)(I)-F_m(I).   (P5A.102AD5ALX1ZZB3S4N43H)
+```
+
+**Target 5A8H28UIA2CGLPCIPOCB2RADTHIRDIHM
+(interval heat-ratio minimum).**  For every `m>=0`, every `u>=1`, and
+every `ell>=2`, prove
+
+```text
+F_(m+1)({u,u+2,...,u+2ell})/F_m({u,u+2,...,u+2ell})
+ >=F_(m+1)({1,3,5})/F_m({1,3,5}).                   (P5A.102AD5ALX1ZZB3S4N43I)
+```
+
+By `(P5A.102AD5ALX1ZZB3S4N43H)`, this would make
+`chi_1^m chi_2 chi_3` the extremal distinct-two-arbitrary family and would
+transfer the proved spectral thresholds to every `chi_1^m chi_b chi_c` in
+the large-`m` chamber.  The strict exact scan through `m<=25` and
+`2<=b<c<=60` has this minimum at `(b,c)=(2,3)` for every `m`; it is evidence
+for `(P5A.102AD5ALX1ZZB3S4N43I)`, not a proof.
+
 For a factor word of root support `n>=2`, Theorem
 5A8H28UIA2CGLPCIPOCB2RADSECONDALL and Lemma
 5A8H28UIA2CGLPCIPOCB2RADFIRST remove the first two lower-wall

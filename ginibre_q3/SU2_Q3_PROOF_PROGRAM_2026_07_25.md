@@ -594,8 +594,12 @@ before any further construction.
    reduction the first two lower antidiagonals are proved for arbitrary
    factor words; the first unclosed mixed family begins at the two
    `A=3` columns, despite complete all-fundamental and one-arbitrary-factor
-   strands.  Thus a generic low-moment threshold is not enough for the
-   remaining mixed-label payment.
+   strands.  The first mixed ray
+   `chi_1^m chi_2 chi_3` is now fully closed there by an exact symbolic
+   polynomial certificate, but no proved extremal/minimization lemma yet
+   transfers that ray to arbitrary distinct labels.  Thus a generic
+   low-moment threshold is not enough for the remaining mixed-label
+   payment.
 
    A parallel signed formulation is the global maximal-cut payment `(GCP)`
    of Proposition 5A8.  Its precise target is
