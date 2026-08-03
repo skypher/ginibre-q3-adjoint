@@ -9619,6 +9619,24 @@ class and checks a univariate Newton certificate on each ray.  This is a
 finite exact partition of the original chamber, not a real-cone
 relaxation.
 
+The exhaustive structural replay
+
+```text
+analyze_su2_t4_group_chamber --scan-forced-equality
+```
+
+has traversed the same complete `601`-mask census and returns exactly
+
+```text
+SU2_T4_GROUP_FORCED_EQUALITY_SCAN masks=601 certified=29 unresolved=572
+result=PASS_EXACT_PARTITION.
+```
+
+Thus the forced-equality construction supplies 29 additional exact chamber
+certificates.  As with the low-cost scan, this is a certified scheduling
+partition only: `unresolved=572` calls for another exact certificate route;
+it neither supplies a counterexample nor proves all of `C_5`.
+
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
 Then
