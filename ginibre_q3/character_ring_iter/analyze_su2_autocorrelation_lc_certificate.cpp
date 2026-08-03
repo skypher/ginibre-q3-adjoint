@@ -4345,6 +4345,43 @@ BigPolynomial wall_121_terminal_current(
   return result;
 }
 
+NDBernsteinGrid wall_121_second_iterate_support_five_grid(
+    std::size_t& terms
+) {
+  constexpr int variables = 4;
+  constexpr int support = 5;
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial r = nd_variable(variables, 0);
+  const BigPolynomial u = nd_variable(variables, 1);
+  const BigPolynomial v = nd_variable(variables, 2);
+  const BigPolynomial z = nd_variable(variables, 3);
+  const BigPolynomial zero;
+  std::vector<BigPolynomial> profile(
+      static_cast<std::size_t>(support + 4), zero);
+  profile[1] = one;
+  profile[2] = r;
+  profile[3] = big_multiply(nd_power(r, 2), u);
+  profile[4] = big_multiply(
+      big_multiply(nd_power(r, 3), nd_power(u, 2)), v);
+  profile[5] = big_multiply(
+      big_multiply(
+          big_multiply(nd_power(r, 4), nd_power(u, 3)),
+          nd_power(v, 2)),
+      z);
+  const BigPolynomial target =
+      wall_121_terminal_second_iterate_certificate(profile, support);
+  const BigPolynomial compact_raw =
+      compactify_positive_variable(target, 0U);
+  BigPolynomial compact;
+  for (const auto& [exponent, coefficient] : compact_raw) {
+    if (coefficient != 0) {
+      compact[exponent] = coefficient;
+    }
+  }
+  terms = compact.size();
+  return nd_bernstein_grid(compact, variables);
+}
+
 struct Wall121LargeRatioBlowupResult {
   int maximum_w_power = 0;
   std::size_t grouped_blocks = 0U;
@@ -6253,45 +6290,50 @@ int main(int argc, char** argv) {
       return replay_wall_121_renewal_kernel();
     }
     if (
+        argc == 3
+        && std::string{argv[1]} == "--support-five-rat2-subdivide"
+    ) {
+      const int depth_limit = parse_positive(argv[2], "depth limit");
+      if (depth_limit > 12) {
+        throw std::invalid_argument("depth limit must be at most 12");
+      }
+      std::size_t terms = 0U;
+      const NDBernsteinGrid grid =
+          wall_121_second_iterate_support_five_grid(terms);
+      const std::size_t negative = static_cast<std::size_t>(std::count_if(
+          grid.values.begin(), grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+      NDSubdivisionResult result;
+      nd_certify_subdivision(grid, 0, depth_limit, result);
+      std::cout << "SU2_WALL_121_RAT2_SUPPORT_FIVE_SUBDIVISION"
+                << " terms=" << terms
+                << " degrees=(" << grid.degrees[0] << ','
+                << grid.degrees[1] << ',' << grid.degrees[2] << ','
+                << grid.degrees[3] << ')'
+                << " bernstein_coefficients=" << grid.values.size()
+                << " initial_negative=" << negative
+                << " depth_limit=" << depth_limit
+                << " nodes=" << result.nodes
+                << " leaves=" << result.leaves
+                << " unresolved=" << result.unresolved
+                << " maximum_depth=" << result.maximum_depth
+                << " result="
+                << (result.unresolved == 0U ? "PASS_EXACT" : "INCOMPLETE")
+                << '\n';
+      return EXIT_SUCCESS;
+    }
+    if (
         argc == 2
         && std::string{argv[1]} == "--support-five-rat2-diagnostic"
     ) {
-      constexpr int variables = 4;
-      constexpr int support = 5;
-      const BigPolynomial one = nd_constant(variables, 1);
-      const BigPolynomial r = nd_variable(variables, 0);
-      const BigPolynomial u = nd_variable(variables, 1);
-      const BigPolynomial v = nd_variable(variables, 2);
-      const BigPolynomial z = nd_variable(variables, 3);
-      const BigPolynomial zero;
-      std::vector<BigPolynomial> profile(
-          static_cast<std::size_t>(support + 4), zero);
-      profile[1] = one;
-      profile[2] = r;
-      profile[3] = big_multiply(nd_power(r, 2), u);
-      profile[4] = big_multiply(
-          big_multiply(nd_power(r, 3), nd_power(u, 2)), v);
-      profile[5] = big_multiply(
-          big_multiply(
-              big_multiply(nd_power(r, 4), nd_power(u, 3)),
-              nd_power(v, 2)),
-          z);
-      const BigPolynomial target =
-          wall_121_terminal_second_iterate_certificate(profile, support);
-      const BigPolynomial compact_raw =
-          compactify_positive_variable(target, 0U);
-      BigPolynomial compact;
-      for (const auto& [exponent, coefficient] : compact_raw) {
-        if (coefficient != 0) {
-          compact[exponent] = coefficient;
-        }
-      }
-      const NDBernsteinGrid grid = nd_bernstein_grid(compact, variables);
+      std::size_t terms = 0U;
+      const NDBernsteinGrid grid =
+          wall_121_second_iterate_support_five_grid(terms);
       const std::size_t negative = static_cast<std::size_t>(std::count_if(
           grid.values.begin(), grid.values.end(),
           [](const Rational& value) { return value < 0; }));
       std::cout << "SU2_WALL_121_RAT2_SUPPORT_FIVE_DIAGNOSTIC"
-                << " terms=" << compact.size()
+                << " terms=" << terms
                 << " degrees=(" << grid.degrees[0] << ','
                 << grid.degrees[1] << ',' << grid.degrees[2] << ','
                 << grid.degrees[3] << ')'

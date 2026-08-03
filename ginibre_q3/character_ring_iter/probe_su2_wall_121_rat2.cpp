@@ -62,7 +62,8 @@ Rational terminal_current(const std::vector<Rational>& p) {
 
 void check_tail(
     const std::vector<Rational>& ratios,
-    Counters& counters
+    Counters& counters,
+    const bool expect_unit_floor_payment_obstruction = false
 ) {
   // The wall tail is p_1=1, p_{i+1}=r_i p_i; ratios are nonincreasing.
   std::vector<Rational> p(ratios.size() + 2U, Rational(0));
@@ -114,6 +115,33 @@ void check_tail(
   const Rational J = 2 * power(A, 2) + 3 * B * C;
   const Rational K = 8 * power(A, 2) * J + 3 * B * C * H;
   const Rational N = 4 * A * B * J;
+  const Rational unit_floor_margin =
+      (4 * A - power(B, 2)) * power(K, 4)
+      + 4 * A * C * power(N, 3) * K
+      + 9 * power(C, 2) * power(N, 4);
+  if (expect_unit_floor_payment_obstruction) {
+    if (unit_floor_margin >= 0) {
+      throw std::runtime_error("expected unit-floor payment obstruction");
+    }
+    std::cout << "SU2_WALL_121_RAT2_UNIT_FLOOR_PAYMENT_OBSTRUCTION"
+              << " ratios=[";
+    for (std::size_t index = 0U; index < ratios.size(); ++index) {
+      if (index != 0U) {
+        std::cout << ',';
+      }
+      std::cout << ratios[index].numerator() << '/'
+                << ratios[index].denominator();
+    }
+    std::cout << "] C0=" << C_zero.numerator() << '/'
+              << C_zero.denominator()
+              << " A=" << A.numerator() << '/' << A.denominator()
+              << " B=" << B.numerator() << '/' << B.denominator()
+              << " C=" << C.numerator() << '/' << C.denominator()
+              << " margin=" << unit_floor_margin.numerator() << '/'
+              << unit_floor_margin.denominator()
+              << " result=PASS_EXACT_OBSTRUCTION\n";
+    std::exit(EXIT_SUCCESS);
+  }
   const Rational margin =
       (4 * A * C_zero - power(B, 2)) * power(K, 4)
       + 4 * A * C * power(N, 3) * K
@@ -234,6 +262,15 @@ void random_search(
 
 int main(int argc, char** argv) {
   try {
+    if (
+        argc == 2
+        && std::string(argv[1]) == "--replay-unit-floor-payment-obstruction"
+    ) {
+      Counters counters;
+      check_tail(
+          {Rational(4), Rational(4), Rational(4)}, counters, true);
+      throw std::runtime_error("unit-floor obstruction replay did not exit");
+    }
     if (argc == 6 && std::string(argv[1]) == "--random") {
       const std::uint64_t samples = parse_positive_u64(argv[2], "samples");
       const int maximum_length =
@@ -251,6 +288,7 @@ int main(int argc, char** argv) {
       throw std::invalid_argument(
           "usage: probe_su2_wall_121_rat2 [maximum_length]"
           " | --random SAMPLES MAXIMUM_LENGTH MAXIMUM_NUMERATOR DENOMINATOR"
+          " | --replay-unit-floor-payment-obstruction"
       );
     }
     // Descending order makes recursive index choices exactly the

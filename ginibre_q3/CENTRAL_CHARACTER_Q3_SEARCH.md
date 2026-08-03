@@ -17205,6 +17205,38 @@ sampled from `{1/64,...,128/64}` before sorting.  This is a reproducible
 exact falsification audit of the surviving second-iterate payment; it is not
 an arbitrary-depth proof.
 
+Nor can that payment be reduced to a normalized terminal floor.  In the
+wall normalization `p_1=1`, replace `C_0` by the putative lower bound `1`
+in `(P5A.102AD5ALX1ZZB3BH9Z86)`.  The three-ratio tail
+
+```text
+p=(0,1,4,16,64)
+```
+
+is log concave and is on the critical branch.  Its exact quantities are
+
+```text
+C_0=37748741,                 A=97, B=44, C=21,
+```
+
+but the resulting floor-only margin is
+
+```text
+(4A-B^2)K^4+4ACN^3K+9C^2N^4
+=-13314245936236584636848705239946207428608<0.
+```
+
+The strict replay
+
+```text
+probe_su2_wall_121_rat2 --replay-unit-floor-payment-obstruction
+```
+
+reconstructs this value with exact rationals.  Thus even a future proof of
+the normalized floor `C_0>=1` would not pay the second-iterate demand by
+itself; the terminal current and the local critical data must remain
+coupled.
+
 The first unproved symbolic chamber is already too coupled for an
 unsubdivided Bernstein certificate.  In the exact tail-ratio chart with five
 positive support coordinates, the strict diagnostic
