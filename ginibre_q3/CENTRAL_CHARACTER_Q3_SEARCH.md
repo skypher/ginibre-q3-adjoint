@@ -54891,9 +54891,13 @@ c_empty(2;k)>=D_2,             c_empty(4;k)>=D_4.   (P23.11z5m0bg0)
 Thus the two empty capacities telescope to
 
 ```text
-c_empty(2;k)=w_3-w_2,
+c_empty(2;k)=w_3-w_2-1,
 c_empty(4;k)=w_4-w_3.                              (P23.11z5m0bg1)
 ```
+
+The extra subtraction in the first line is the Kac--Walton reflection of
+the unique ordinary top path at label `k+4` into `k-2`; the `k-4` channel
+has no reflected partner below the full top label.
 
 The exact top coefficients through degree four are
 
@@ -54914,8 +54918,8 @@ Subtracting `D_2` from the first line of `(P23.11z5m0bg1)` therefore gives
 
 ```text
 c_empty(2;k)-D_2
- >=binom(n+1,3)-n(n-1)
- ={n(n-1)(n-5)}/6>=0.                               (P23.11z5m0bg3)
+ >=binom(n+1,3)-n(n-1)-1
+ ={n(n-1)(n-5)}/6-1>=0.                             (P23.11z5m0bg3)
 ```
 
 For the second block, `n-1>=f+1` and hence
@@ -54940,6 +54944,228 @@ B_f(n+1)-B_f(n)=binom(n+2,3)-(f+2)n+f>0.
 ```
 
 Thus `(P23.11z5m0bg4)` is nonnegative, proving both capacities.  QED.
+
+**Lemma 23A9H0D4B (large top-wall invariant allocation).**  Under the
+hypotheses of Lemma 23A9H0D4A, every invariant defect-two source row has a
+full allocation to nonempty invariant targets in the two-import graph.
+
+**Proof.**  Write `R` for the omitted set indexing a source, so its actual
+source support is `U=R^c`.  A target `W` is a two-import neighbour exactly
+when
+
+```text
+|W minus U|=|W intersection R|<=2.                  (P23.11z5m0bg5)
+```
+
+The invariant omitted types of total at most four are
+
+```text
+Q={2,2},       A={1,1},       T={1,1,2},       F={1,1,1,1}.
+                                                               (P23.11z5m0bg6)
+```
+
+Here and below each displayed set means an indexed support of that type.
+The source profiles of `Q,T,F` in the `a=0,2,4` blocks are respectively
+
+```text
+(1,1,1),                    (1,2,1),                    (2,3,1),
+                                                               (P23.11z5m0bg7)
+```
+
+An indexed fundamental pair `A` has demand `n-4` in each of its `a=0,2`
+blocks.  Its complementary word has top label `k+2`, so the unique top
+path reflects at the affine wall.  The profiles of `Q,T,F` in
+`(P23.11z5m0bg7)` are exact as well.
+
+At `q=k`, the `a=0,2` blocks of a target of total two see its `k` and
+`k-2` channels, while a target of total four sees its `k,k-2,k-4` top
+layers.  Direct top
+coefficient extraction therefore gives the following useful capacities.
+For a label-two pair `Q`, a fundamental pair `A`, and a triple
+`T=A union {j}` with `p_j=2`, they are
+
+```text
+c_Q(0,2,4;k)=(1, n-3, binom(n-2,2)-f),
+
+c_A(0;k)=n-4,
+c_A(2;k)=binom(n-2,2)-(f-2),
+
+c_T(0,2,4;k)=(1, n-4, binom(n-3,2)-(f-2)).          (P23.11z5m0bg8)
+```
+
+In particular, `Q` pays its own profile, every fundamental pair target
+pays its own pair source, and every displayed triple target pays `(1,2,1)`:
+the last entries in `(P23.11z5m0bg8)` are at least `5` and `3`, respectively,
+when `n>=7` and `f<=5`.  For later use, if `f=4` or `5` and `B` is a
+fundamental pair, put `g=f-2` and let `t_B` count the label-two factors in
+`B^c`.  Its remaining capacity is
+
+```text
+c_B(4;k)=binom(n-1,3)-g(n-3)-t_B
+          >=binom(n-1,3)-g(n-3)-(n-f)>0.            (P23.11z5m0bg9)
+```
+
+The lower bound is minimized at `(n,g,f)=(7,3,5)`, where it is `6`.
+
+First route every `Q` source to its own target.  This is permitted by
+`(P23.11z5m0bg5)`.  If there are no fundamental factors, or only one, this
+exhausts the nonempty invariant rows.  For `f=2`, write `A` for the unique
+fundamental pair.  If there are at least two label-two indices, apply a
+fixed-point-free permutation `sigma` to them and route
+
+```text
+A union {j}  ->  A union {sigma(j)}.                 (P23.11z5m0bga)
+```
+
+The target meets the omitted source support in `A`, hence imports two
+indices, and `(P23.11z5m0bg8)` pays `(1,2,1)`.  The pair `A` keeps its own
+target.  If there is exactly one label-two index `j`, put `T=A union {j}`.
+The direct triple target is then unavailable, but the following exchange
+uses all capacities exactly:
+
+```text
+T -> A                    in its three blocks,
+A -> T                    in one a=0 and n-4 a=2 slots,
+A -> A                    in n-5 a=0 slots.                  (P23.11z5m0bgb)
+```
+
+Indeed `c_T(0,2;k)=(1,n-4)` and `c_A(0;k)=n-4`; the two units of the
+triple `a=2` demand fit in `c_A(2;k)`, and its
+`a=4` capacity is positive by the same calculation as `(P23.11z5m0bg9)`
+with `g=0,t_B=1`.  Each arrow in `(P23.11z5m0bgb)` meets its omitted set
+in the two indices of `A`.
+
+For `f=3`, cycle the three fundamental pairs as in `(P23.11z5m0ak4)` and
+keep each label-two index: `A union {j}` goes to `tau(A) union {j}`.  The
+source and target then meet in one fundamental index and `j`, so this is a
+two-import route; `(P23.11z5m0bg8)` again pays its profile.  Every pair
+source keeps its own target.
+
+It remains to handle the four-fundamental rows for `f=4,5`.  Use the pairs
+`B` in the four-fundamental support `F` from Propositions 23A9H0B4 and
+23A9H0B5 (for `f=5`, use all five indexed choices `B_i subset F_i`).
+Their target capacities include
+
+```text
+c_B(0;k)=n-4,                 c_B(2;k)>=n-4,         c_B(4;k)>=1,
+c_F(0;k)=2,                   c_F(2;k)=2(n-5)>=n-4.  (P23.11z5m0bgc)
+```
+
+Send the four-fundamental source `F` to `B`.  This spends its profile
+`(2,3,1)` in the three blocks.  Send the displaced pair source `B` in its
+`a=2` block entirely to `F`; in the `a=0` block send two units to `F` and
+the remaining `n-6` back to `B`.  The first line of `(P23.11z5m0bgc)` is
+then used exactly, and the second pays the displaced pair.  All arrows
+satisfy `(P23.11z5m0bg5)` because `B subset F`.  The chosen `B_i` and
+`F_i` are pairwise distinct as target supports, so these exchanges do not
+interfere.
+
+All remaining fundamental-pair sources keep their own targets.  Route
+their triples by the same pair maps as in Propositions 23A9H0B4 and
+23A9H0B5: complementary pairs for `f=4`, and the perfect matching
+`(P23.11z5m0ak24)` for `f=5`.  These target triples are distinct from the
+pair and four-support targets, and each meets its source in at most two
+indices.  Thus every target block used is separated by support or by its
+`a` label, and the stated invariant allocation follows.  QED.
+
+**Corollary 23A9H0D4 (large-arity fourth-affine defect-two collar).**  Let
+all indexed labels be positive, put `q=P-4>=4`, and work in `SU(2)_k` under
+
+```text
+P<=k+4.                                             (P23.11z5m0bgd)
+```
+
+If either the word has at least seven factors or it has at least six
+fundamental factors, then Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  The range `P<=k+3` is Corollary 23A9H0D3.  At `P=k+4`, words
+with at most five fundamental factors and `n>=7` are covered by the empty
+allocation of Lemma 23A9H0D4A and the invariant allocation of Lemma
+23A9H0D4B.  Proposition 23A9H0C covers every word with at least six
+fundamental factors, without any arity condition.  These cases assemble by
+the empty/nonempty target separation.  QED.
+
+**Proposition 23A9H0D4E (small-arity fourth-shell exact certificate).**
+Let all indexed labels be positive, let `q=P-4=k>=4`, and suppose the word
+has at most six factors.  Then Target 23A9G2 has a full capacitated
+matching.
+
+**Proof.**  We give a finite exact certificate, together with the
+saturation reduction which makes it uniform in the level.  A nonzero source
+at `q=k` has omitted label total at most four.  Hence it occurs only in an
+`a=0,2,4` block.  Restrict target supports to factors labelled at most four.
+If such a target support `W` contributes to an `a` block, its complementary
+word has top label `k+4-sum(W)`, so necessarily
+
+```text
+sum(W)<=a+4<=8.                                    (P23.11z5m0bge)
+```
+
+Every source multiplicity and every retained target capacity is therefore
+a top coefficient at lowering degree at most four (including its unique
+Kac--Walton reflected partner when present).  Consequently it depends only
+on the saturated indexed signature
+
+```text
+1^f 2^t 3^u 4^v H^h,                H>=5,           (P23.11z5m0bgf)
+```
+
+and not on the numerical values of the `H` labels.
+
+Put `S=f+2t+3u+4v`.  If `h=0`, admissibility is exactly
+`k=S-4>=5` together with `max{1,2,3,4 present}<=k`.  If `h=1` or `2`, the
+conditions `p_i<=k=P-4` are feasible exactly when `S>=4`; if `h>=3` they
+are automatic.  In the latter cases equal sufficiently large `H` values
+give an admissible representative, and every actual realization has the
+same retained network.  Thus, for `k>=5`, all
+words of arity at most six reduce to finitely many signatures `(P23.11z5m0bgf)`.
+
+The strict C++ checker
+
+```text
+character_ring_iter/search_su2_boundary_support_monotone.cpp
+  --topwall-low-target-signatures 6 5
+```
+
+constructs one admissible representative of each signature and runs an
+exact `cpp_int` max-flow calculation after the above target restriction.
+It returns
+
+```text
+factors                 1  2  3   4    5    6
+feasible signatures     0  1  17  56  118  206.     (P23.11z5m0bgg)
+```
+
+with no failure.  This is already a full matching in a subgraph of Target
+23A9G2, hence proves the assertion for every `k>=5`.
+
+For the remaining level `k=4`, every label lies in `1,...,4`, `P=8`, and
+there are at most eight factors.  The exact commands
+
+```text
+--two-import-outer-defect-sum 4 n 4 4 8,            1<=n<=8,
+```
+
+enumerate all fifteen sorted words (the respective counts are
+`0,1,3,4,3,2,1,1`) and return `PASS` in every case.  Renaming equal-label
+indices preserves the capacitated graph, so this enumerates every indexed
+word as well.  The finite `k=4` certificate and the saturated `k>=5`
+certificate prove the proposition.  QED.
+
+**Corollary 23A9H0D4F (complete fourth-affine defect-two collar).**  Let
+all indexed labels be positive, put `q=P-4>=4`, and work in `SU(2)_k` under
+
+```text
+P<=k+4.                                             (P23.11z5m0bgh)
+```
+
+Then Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  Corollary 23A9H0D3 handles `P<=k+3`.  At `P=k+4`, Proposition
+23A9H0D4E covers all words with `n<=6`.  When `n>=7` and `f<=5`, combine
+Lemmas 23A9H0D4A and 23A9H0D4B; when `f>=6`, use Proposition 23A9H0C.
+These cases are exhaustive and their empty/nonempty blocks are disjoint.
+QED.
 
 The same support-matching mechanism reaches one further outer layer on the
 all-fundamental ray.  Here the size-four and size-six omitted supports are
@@ -56014,6 +56240,86 @@ the all-layer average can be nonnegative with an isolated negative sign
 placement.  The missing lemma must exploit overlap between the Johnson
 stars (or the coherent Plucker/Temperley--Lieb ticket transport), rather
 than only their scalar sums.
+
+There is one further exact structure behind every Johnson current.  It is
+stronger than an arbitrary scalar assignment, but still does not by itself
+close the global payment.
+
+**Lemma 23A9L1D (invariant-split Fourier form).**  For every subset
+`T subset [N]`, put
+
+```text
+d_A(T)=m_(A_T)(0),
+c_A(T)=d_A(T)d_A(T^c).                              (P23.11z5zc4j)
+```
+
+Then, for every even sign set `S`,
+
+```text
+J_A(S)=sum_(T subset [N])(-1)^|S intersection T| c_A(T).       (P23.11z5zc4k)
+```
+
+In particular, `J_A` is positive definite on the even Boolean subgroup,
+its Fourier weights are nonnegative and complement-symmetric, and
+`c_A(T)` has the displayed invariant-split factorization.
+
+**Proof.**  In the product defining `(P23.11z5zc4d)`, choose the second
+coordinate term exactly at the positions `T`.  The first coordinate then
+has product `X_(A_(T^c))` and the second has `X_(A_T)`, so its
+`V_0 box-times V_0` coefficient is precisely `(P23.11z5zc4j)`.  The sign
+is `(-1)^|S intersection T|`.  Summing the expansion proves
+`(P23.11z5zc4k)`.  Positivity and complement symmetry of the Fourier
+weights are immediate.  QED.
+
+The Fourier positivity, the singleton zeros forced by positive labels, and
+all scalar two-bit inequalities are nevertheless still insufficient.  Thus
+the missing ingredient is specifically the overlap compatibility of genuine
+`A_1` invariant multiplicities.
+
+**Proposition 23A9L1E (factorized Fourier-current obstruction).**  On the
+even Boolean subgroup of four positions, there are nonnegative numbers
+`d(T)=d(T^c)`, with `d(T)=0` for every singleton and co-singleton, such
+that the factorized Fourier current
+
+```text
+J(S)=sum_T (-1)^|S intersection T| d(T)d(T^c)        (P23.11z5zc4l)
+```
+
+satisfies every scalar two-bit inequality
+
+```text
+J(S)+J(S triangle {i,j})>=0,                         (P23.11z5zc4m)
+```
+
+but has a negative value.
+
+**Proof.**  Put
+
+```text
+d(empty)=d({1,2,3,4})=1,
+d({1,3})=d({2,4})=d({1,4})=d({2,3})=1,               (P23.11z5zc4n)
+```
+
+and set every other `d(T)` to zero.  On even `S`, complementarity gives
+
+```text
+J(S)=2+2 chi_(13)(S)+2 chi_(14)(S),
+chi_(ij)(S)=(-1)^|S intersection {i,j}|.             (P23.11z5zc4o)
+```
+
+At `S={1,2}`, both characters are `-1`, so `J(S)=-2`.  A flip of either
+`{1,2}` or `{3,4}` reverses both characters, and its pair sum is `4`.
+A flip of one of `{1,3},{2,4}` preserves `chi_(13)` and reverses
+`chi_(14)`, giving pair sum `4+4chi_(13)`, which is `0` or `8`; the two
+remaining flips are symmetric.  Hence every instance of `(P23.11z5zc4m)`
+holds.
+
+This model cannot arise from positive `SU(2)` labels: the four nonzero
+two-factor invariants in `(P23.11z5zc4n)` force, successively,
+`a_1=a_3=a_4=a_2`, which would also make `{1,2}` invariant.  It proves that
+the global argument must use precisely these fused overlap constraints, not
+only positive definiteness, complement symmetry, singleton vanishing, or
+the factorization in `(P23.11z5zc4j)`.  QED.
 
 This is a genuinely fused-channel statement: all intermediate labels of
 the new `V_p` leaf have already been summed with their exact fusion
