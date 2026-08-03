@@ -136,7 +136,7 @@ int main(int argc, char** argv) {
         );
         const std::vector<Polynomial> reduced = irredundant_constraints(chamber);
         if (parity_only) {
-            const bool passed = parity_equal_sum_square_cone_certificate(
+            const bool passed = parity_unit_offset_square_cone_certificate(
                 chamber,
                 reduced
             );
