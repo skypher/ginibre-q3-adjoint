@@ -484,37 +484,30 @@ bool certify_group_chamber(
     const GroupFormula& formula
 ) {
     static_cast<void>(formula);
-    const std::vector<Polynomial> domain_constraints(
-        chamber.constraints.begin(),
-        chamber.constraints.begin() + 4
-    );
-    bool passed = direct_facet_certificate(
-        chamber,
-        domain_constraints
-    );
-    if (passed) {
-        return true;
-    }
     const std::vector<Polynomial> constraints =
         irredundant_constraints(chamber);
     const std::vector<bool> forced_zero =
         forced_zero_constraints(constraints);
-    passed = direct_facet_certificate(
-        chamber,
-        constraints,
-        forced_zero
-    );
-    if (!passed) {
-        passed = bounded_group_integer_certificate(
-            chamber,
-            constraints
-        );
-    }
+    bool passed = bounded_group_integer_certificate(chamber, constraints);
     if (!passed) {
         passed = bounded_qy_h_ray_newton_certificate(
             chamber,
             constraints
         );
+    }
+    if (!passed) {
+        passed = direct_facet_certificate(
+            chamber,
+            constraints,
+            forced_zero
+        );
+    }
+    if (!passed) {
+        const std::vector<Polynomial> domain_constraints(
+            chamber.constraints.begin(),
+            chamber.constraints.begin() + 4
+        );
+        passed = direct_facet_certificate(chamber, domain_constraints);
     }
     if (!passed) {
         passed = constant_three_sum_certificate(

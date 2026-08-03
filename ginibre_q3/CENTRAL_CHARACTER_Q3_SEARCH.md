@@ -9510,8 +9510,8 @@ They force `2<=Q<=4` and `h<=65/2`.  Direct exact enumeration of its
 `19` feasible integer points verifies `K_5(Y)>=0`, returning
 `SU2_T4_GROUP_BOUNDED ... points=19 result=PASS_EXACT_FINITE`.
 The certifier therefore attempts bounded and bounded-`(Q,Y)` ray
-certificates before the more expensive three-sum search.  This changes
-only the search order, not any certificate condition.
+certificates before every symbolic cone search.  This changes only the
+search order, not any certificate condition.
 
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
