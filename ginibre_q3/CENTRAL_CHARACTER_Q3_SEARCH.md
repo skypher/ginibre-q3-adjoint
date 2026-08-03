@@ -46676,6 +46676,30 @@ Thus ranks through twenty-three (`n<=47`) now have exact selected-cover
 certificates.  These larger replays extend the exact finite evidence but do
 not supply a uniform construction.
 
+**Corollary 22H3W11C3 (finite-rank Pascal cross theorem).**  The symmetric
+Pascal cross payment `(SPCP)` holds for every odd cycle of size
+
+```text
+n<=47
+```
+
+and every `M,r>=2`.  Consequently the mixed `TP2` chamber is proved,
+uniformly in both exponents, for orbit ranks at most twenty-three.
+
+**Proof.**  On the three- and five-cycles the cross is identically zero by
+Lemma 22H3W11A0.  For every rank from three through twenty-three, the
+deterministic selected-cover replays described above produce, for each
+negative pair, two interval-certified credits satisfying
+`(P22.5zz68znb)`, with no credit selected more than twice.  The approximate
+and randomized stages choose only a candidate cover; every chosen edge is
+then rechecked with the rational cosine enclosures before the reported
+certificate is accepted.  Lemma 22H3W11C therefore pays every load for all
+`M=2+u,r=2+v`, `u,v>=0`, on each of these finite grids.  This is exactly
+`(SPCP)`.  For the parameters of `(TP2)`, every term
+`C_(M',r)` with `M'>=M` remains in this same quadrant.  Lemma 22H3W4
+therefore gives `Q_(M,r)>=0`, and Lemma 22H3U identifies that current with
+the mixed `TP2` target.  QED.
+
 The one-credit criterion already fails at `n=7`, while the disjoint
 two-credit criterion first fails at `n=9`; these are exact no-gos for those
 more restrictive ansatzes.  The bounded capacity-two cover is therefore a
@@ -56067,7 +56091,21 @@ the signed background table independently, checks its symmetry, verifies
 `(P23.11z5zc4c)`, and separately expands both new minus differences to
 check the factor-two contraction assertion.  It also exhausts the
 two-bit fusion identity `(P23.11z5zc4ha)` over every even sign mask of
-each tested indexed label word.  Its medium exact replay returns
+each tested indexed label word.  For words of at most twelve indexed
+factors it now independently computes every subset invariant
+`m_(A_T)(0)` by direct fusion and compares the full Fourier sum
+`(P23.11z5zc4k)` against the signed contraction at every even sign set.
+Thus this last audit shares neither the leave-one-out construction nor the
+two-bit reduction.  A replay returns
+
+```text
+SU2_EVEN_BACKGROUND_CURRENT levels=2..5 labels<=3
+background_factors<=1 leaves<=5 backgrounds=15
+currents=13320 contractions=60504 hypercube_edges=1351062
+invariant_split_fourier=101302 result=PASS.
+```
+
+The earlier medium exact replay returns
 
 ```text
 SU2_EVEN_BACKGROUND_CURRENT levels=2..5 labels<=3
@@ -56320,6 +56358,66 @@ two-factor invariants in `(P23.11z5zc4n)` force, successively,
 the global argument must use precisely these fused overlap constraints, not
 only positive definiteness, complement symmetry, singleton vanishing, or
 the factorization in `(P23.11z5zc4j)`.  QED.
+
+The exact positive multiplicities are also essential; invariant feasibility
+alone cannot supply the missing transport.
+
+**Proposition 23A9L1F (invariant-support Fourier obstruction).**  In
+`SU(2)_2`, take the indexed word
+
+```text
+A=(1,1,1,1,2)
+```
+
+and let `S={1,2}` be the first two fundamental positions.  Replace the
+Fourier weight in `(P23.11z5zc4j)` by its support indicator
+
+```text
+c^supp_A(T)=indicator_(d_A(T)d_A(T^c)>0).
+```
+
+Then its even Fourier coefficient is negative:
+
+```text
+sum_T (-1)^|S intersection T|c^supp_A(T)=-2,          (P23.11z5zc4p)
+```
+
+whereas the genuine current is zero:
+
+```text
+J_A(S)=0.                                              (P23.11z5zc4q)
+```
+
+**Proof.**  Put `I={1,2,3,4}`.  Besides the empty and full cuts, the cuts
+for which both sides carry an invariant are exactly the six two-subsets
+`U subset I` and their six complements `U^c union {5}`.  Their invariant
+multiplicities on both sides are one, whereas
+
+```text
+d_A(empty)=1,                 d_A({1,2,3,4,5})=2.
+```
+
+All other cuts have zero weight.  Hence
+`c_A(empty)=c_A({1,2,3,4,5})=2`; every one of the other twelve nonzero cut
+weights is one.  Among the six two-subsets the signed sum is `-2` (two have
+even and four have odd intersection with `S`), and complementation gives
+another `-2`.  Support weights therefore give `2-2-2=-2`, while the true
+empty/full weights give `4-2-2=0`.
+
+The strict C++ check
+
+```text
+verify_su2_even_background_current --support-fourier-nogo
+```
+
+returns
+
+```text
+INVARIANT_SUPPORT_FOURIER_NOGO level=2 labels=1,1,1,1,2
+minus_mask=3 support_value=-2 exact_value=0 result=PASS.
+```
+
+QED.
 
 This is a genuinely fused-channel statement: all intermediate labels of
 the new `V_p` leaf have already been summed with their exact fusion

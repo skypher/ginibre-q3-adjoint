@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -160,6 +161,110 @@ bool even_parity(std::uint64_t mask) {
     return parity == 0;
 }
 
+std::vector<Integer> subset_invariant_multiplicities(
+    const Fusion& fusion,
+    const std::vector<int>& labels
+) {
+    const std::uint64_t masks = std::uint64_t{1} << labels.size();
+    std::vector<std::vector<Integer>> products(
+        static_cast<std::size_t>(masks),
+        std::vector<Integer>(static_cast<std::size_t>(fusion.level + 1))
+    );
+    products[0].front() = 1;
+    for (std::uint64_t mask = 1U; mask < masks; ++mask) {
+        const std::uint64_t bit = mask & (~mask + std::uint64_t{1});
+        std::size_t position = 0U;
+        while ((bit & (std::uint64_t{1} << position)) == 0U) {
+            ++position;
+        }
+        const std::vector<Integer>& source = products[
+            static_cast<std::size_t>(mask ^ bit)
+        ];
+        std::vector<Integer>& target = products[static_cast<std::size_t>(mask)];
+        const int label = labels[position];
+        for (int input = 0; input <= fusion.level; ++input) {
+            if (source[static_cast<std::size_t>(input)] == 0) {
+                continue;
+            }
+            for (const int output
+                 : fusion.channels[static_cast<std::size_t>(label)]
+                                  [static_cast<std::size_t>(input)]) {
+                target[static_cast<std::size_t>(output)] +=
+                    source[static_cast<std::size_t>(input)];
+            }
+        }
+    }
+    std::vector<Integer> result(static_cast<std::size_t>(masks));
+    for (std::uint64_t mask = 0U; mask < masks; ++mask) {
+        result[static_cast<std::size_t>(mask)] =
+            products[static_cast<std::size_t>(mask)].front();
+    }
+    return result;
+}
+
+bool verify_invariant_split_fourier(
+    const Fusion& fusion,
+    const std::vector<int>& labels,
+    std::uint64_t& checks
+) {
+    // This is exponential in the number of factors and is deliberately a
+    // bounded audit of the exact subset-Fourier identity.
+    if (labels.size() > 12U) {
+        return true;
+    }
+    const std::uint64_t masks = std::uint64_t{1} << labels.size();
+    const std::uint64_t all = masks - 1U;
+    const std::vector<Integer> invariant =
+        subset_invariant_multiplicities(fusion, labels);
+    for (std::uint64_t minus_mask = 0U; minus_mask < masks; ++minus_mask) {
+        if (!even_parity(minus_mask)) {
+            continue;
+        }
+        Integer fourier = 0;
+        for (std::uint64_t subset = 0U; subset < masks; ++subset) {
+            const Integer weight = invariant[static_cast<std::size_t>(subset)]
+                * invariant[static_cast<std::size_t>(all ^ subset)];
+            if (even_parity(minus_mask & subset)) {
+                fourier += weight;
+            } else {
+                fourier -= weight;
+            }
+        }
+        if (fourier != contraction(fusion, labels, minus_mask)) {
+            std::cerr << "INVARIANT_SPLIT_FOURIER failure"
+                      << " level=" << fusion.level
+                      << " factors=" << labels.size() << '\n';
+            return false;
+        }
+        ++checks;
+    }
+    return true;
+}
+
+Integer invariant_support_fourier_value(
+    const std::vector<Integer>& invariant,
+    std::uint64_t minus_mask
+) {
+    const std::uint64_t masks =
+        static_cast<std::uint64_t>(invariant.size());
+    const std::uint64_t all = masks - 1U;
+    Integer result = 0;
+    for (std::uint64_t subset = 0U; subset < masks; ++subset) {
+        const bool supported = invariant[static_cast<std::size_t>(subset)]
+                != 0
+            && invariant[static_cast<std::size_t>(all ^ subset)] != 0;
+        if (!supported) {
+            continue;
+        }
+        if (even_parity(minus_mask & subset)) {
+            ++result;
+        } else {
+            --result;
+        }
+    }
+    return result;
+}
+
 bool verify_two_bit_hypercube(
     const Fusion& fusion,
     const std::vector<int>& labels,
@@ -245,6 +350,28 @@ int parse_positive(const char* text, const char* name) {
 }  // namespace
 
 int main(int argc, char** argv) {
+    if (argc == 2
+        && std::string(argv[1]) == "--support-fourier-nogo") {
+        const Fusion fusion(2);
+        const std::vector<int> labels{1, 1, 1, 1, 2};
+        const std::uint64_t minus_mask = 3U;
+        const std::vector<Integer> invariant =
+            subset_invariant_multiplicities(fusion, labels);
+        const Integer support = invariant_support_fourier_value(
+            invariant, minus_mask
+        );
+        const Integer exact = contraction(fusion, labels, minus_mask);
+        if (support != -2 || exact != 0) {
+            std::cerr << "INVARIANT_SUPPORT_FOURIER_NOGO failure\n";
+            return 1;
+        }
+        std::cout << "INVARIANT_SUPPORT_FOURIER_NOGO"
+                  << " level=2 labels=1,1,1,1,2"
+                  << " minus_mask=3 support_value=" << support
+                  << " exact_value=" << exact
+                  << " result=PASS\n";
+        return 0;
+    }
     if (argc != 5) {
         std::cerr << "usage: verify_su2_even_background_current "
                   << "MAXIMUM_LEVEL MAXIMUM_LABEL "
@@ -267,6 +394,7 @@ int main(int argc, char** argv) {
     std::uint64_t currents = 0U;
     std::uint64_t contraction_checks = 0U;
     std::uint64_t hypercube_checks = 0U;
+    std::uint64_t fourier_checks = 0U;
     for (int level = 2; level <= maximum_level; ++level) {
         const int label_limit = std::min(level, maximum_label);
         const Fusion fusion(level);
@@ -312,6 +440,11 @@ int main(int argc, char** argv) {
                                 );
                                 if (!verify_two_bit_hypercube(
                                         fusion, full_labels, hypercube_checks
+                                    )) {
+                                    return 1;
+                                }
+                                if (!verify_invariant_split_fourier(
+                                        fusion, full_labels, fourier_checks
                                     )) {
                                     return 1;
                                 }
@@ -396,6 +529,7 @@ int main(int argc, char** argv) {
               << " currents=" << currents
               << " contractions=" << contraction_checks
               << " hypercube_edges=" << hypercube_checks
+              << " invariant_split_fourier=" << fourier_checks
               << " result=PASS\n";
     return 0;
 }
