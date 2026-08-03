@@ -83,6 +83,22 @@ Profile square_full_profile(const Profile& profile) {
   return result;
 }
 
+Profile bounded_composition_profile(const std::vector<int>& word) {
+  Profile result{Integer(1)};
+  for (const int label : word) {
+    const int old_degree = static_cast<int>(result.size()) - 1;
+    Profile next(static_cast<std::size_t>(old_degree + label + 1));
+    for (int degree = 0; degree <= old_degree; ++degree) {
+      for (int increment = 0; increment <= label; ++increment) {
+        next[static_cast<std::size_t>(degree + increment)] +=
+            result[static_cast<std::size_t>(degree)];
+      }
+    }
+    result = std::move(next);
+  }
+  return result;
+}
+
 Integer total(const Profile& profile) {
   Integer result = 0;
   for (const Integer& entry : profile) {
@@ -129,6 +145,13 @@ struct Witness {
   Integer zero_weight = 0;
   Integer next_invariant = 0;
   Integer next_zero_weight = 0;
+};
+
+struct RatioWitness {
+  bool present = false;
+  std::vector<int> word;
+  int lowering = 0;
+  Integer margin = 0;
 };
 
 int total_label(const std::vector<int>& word) {
@@ -385,9 +408,13 @@ int main(int argc, char** argv) {
     std::size_t words = 0U;
     std::size_t reserve_failures = 0U;
     std::size_t total_label_reserve_failures = 0U;
+    std::size_t lower_half_ratio_failures = 0U;
     bool total_label_minimum_initialized = false;
     Integer total_label_minimum = 0;
     Witness total_label_minimum_witness;
+    bool lower_half_ratio_minimum_initialized = false;
+    Integer lower_half_ratio_minimum = 0;
+    RatioWitness lower_half_ratio_minimum_witness;
     std::size_t append_failures = 0U;
     std::size_t fractional_append_failures = 0U;
     Witness reserve_witness;
@@ -427,6 +454,26 @@ int main(int argc, char** argv) {
               total_label_minimum = total_label_margin;
               total_label_minimum_witness = {true, word, 0, invariant,
                                              zero_weight, 0, 0};
+            }
+            const int label_sum = total_label(word);
+            const Profile compositions = bounded_composition_profile(word);
+            for (int lowering = 1; 2 * lowering <= label_sum; ++lowering) {
+              const Integer ratio_margin =
+                  Integer(label_sum - lowering + 1)
+                      * compositions[static_cast<std::size_t>(lowering - 1)]
+                  - Integer(lowering)
+                      * compositions[static_cast<std::size_t>(lowering)];
+              if (ratio_margin < 0) {
+                ++lower_half_ratio_failures;
+              }
+              if (!lower_half_ratio_minimum_initialized
+                  || ratio_margin < lower_half_ratio_minimum) {
+                lower_half_ratio_minimum_initialized = true;
+                lower_half_ratio_minimum = ratio_margin;
+                lower_half_ratio_minimum_witness = {
+                    true, word, lowering, ratio_margin
+                };
+              }
             }
             if (check_append) {
               for (int append = 1; append <= maximum_label; ++append) {
@@ -471,6 +518,10 @@ int main(int argc, char** argv) {
               << " reserve_failures=" << reserve_failures
               << " total_label_reserve_failures="
               << total_label_reserve_failures
+              << " lower_half_ratio_failures="
+              << lower_half_ratio_failures
+              << " lower_half_ratio_minimum="
+              << lower_half_ratio_minimum
               << " total_label_minimum=" << total_label_minimum
               << " append_checked=" << (check_append ? 1 : 0)
               << " append_failures=" << append_failures
@@ -495,6 +546,12 @@ int main(int argc, char** argv) {
                 << " zero_weight="
                 << total_label_minimum_witness.zero_weight;
     }
+    if (lower_half_ratio_minimum_witness.present) {
+      std::cout << " lower_half_ratio_minimum_word=";
+      print_word(lower_half_ratio_minimum_witness.word);
+      std::cout << " lowering="
+                << lower_half_ratio_minimum_witness.lowering;
+    }
     if (append_witness.present) {
       std::cout << " append_first=";
       print_word(append_witness.word);
@@ -507,12 +564,14 @@ int main(int argc, char** argv) {
     std::cout << " result="
               << (reserve_failures == 0U
                       && total_label_reserve_failures == 0U
+                      && lower_half_ratio_failures == 0U
                       && append_failures == 0U
                       ? "PASS_EXACT_BOX"
                       : "COUNTEREXAMPLE")
               << '\n';
     return reserve_failures == 0U
                && total_label_reserve_failures == 0U
+               && lower_half_ratio_failures == 0U
                && append_failures == 0U
                ? EXIT_SUCCESS
                : EXIT_FAILURE;

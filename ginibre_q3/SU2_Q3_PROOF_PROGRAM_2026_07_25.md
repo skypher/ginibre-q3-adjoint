@@ -608,6 +608,20 @@ before any further construction.
    low-moment threshold alone still does not resolve the mixed-label
    payment.
 
+   One previously open factor-word reserve is now available uniformly:
+   if `Q=product_i chi_(a_i)` has total label `A`, then its zero-weight
+   multiplicity satisfies `Z(Q)>=(A+1)I(Q)`.  The proof factors the
+   derivative numerator of each chain factor into a positive
+   symmetric-unimodal kernel, yielding the sharp lower-half
+   bounded-composition ratio.  This is a genuine global factor-word
+   reservoir, not a profile hypothesis.  It does not by itself prove `(CIP)`,
+   whose deficit is a localized fusion interval current; the remaining
+   transport must still allocate that reserve across the central affine image.
+   In particular, the associated dimension-weighted ray cone already has
+   negative anchored generators at level seven, so a generatorwise use of
+   this reserve is ruled out; any successful payment must retain the coupled
+   affine-image structure.
+
    A parallel signed formulation is the global maximal-cut payment `(GCP)`
    of Proposition 5A8.  Its precise target is
    `T_n<=U_n+L_n(C_*)`, where `U_n` aggregates every positive unordered

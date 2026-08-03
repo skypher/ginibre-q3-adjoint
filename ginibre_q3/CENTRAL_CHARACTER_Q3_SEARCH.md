@@ -21121,8 +21121,10 @@ Q^2=sum_(s>=0)d_s beta_s,
 I(Q)=d_0,                                Z(Q)=sum_s d_s.
 ```
 
-**Target 5A8H28UIA2CGLPCIPOCB2RADTOTALRESERVE
-(total-label zero-weight reserve).**  Prove
+Label-zero factors may be discarded, so all factors below have `a_i>=1`.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADTOTALRESERVE
+(total-label zero-weight reserve).**  Every ordinary factor word satisfies
 
 ```text
 Z(Q)>=(A+1)I(Q).                                      (TLZR)
@@ -21156,10 +21158,101 @@ for the product of paired chains
 (A+1)h_(A-1)>=A h_A.                               (TLZR2)
 ```
 
-This reduction is exact and retains the tensor-product origin that the
-generic parity-log-concave counterexample lacks.  It is not yet a proof of
-`(TLZR2)`: a general symmetric log-concave rank sequence does not supply
-this sharp central-ratio bound.  For example,
+The required lower-half rank comparison is a direct product-of-chains
+statement.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADTOTALRESERVERATIO
+(bounded-composition lower-half ratio).**  If
+
+```text
+F(x)=product_i(1+x+...+x^(a_i))=sum_(r=0)^A f_r x^r,
+```
+
+then
+
+```text
+s f_s<=(A-s+1)f_(s-1),              1<=s<=floor(A/2).    (TLZR2A)
+```
+
+**Proof.**  Put `U_a=1+x+...+x^a` and, for `a>=2`,
+
+```text
+C_a(x)=sum_(r=0)^(a-2)(r+1)(a-1-r)x^r,
+```
+
+with `C_1=0`.  Direct coefficient comparison gives the exact one-factor
+identity
+
+```text
+a U_a(x)-(1+x)U'_a(x)=(1-x)C_a(x).                (TLZR2B)
+```
+
+Every `C_a` is symmetric and unimodal of degree `a-2`; so is every chain
+polynomial `U_a`.  Convolution preserves symmetric unimodality: if `g` is
+symmetric and unimodal of degree `B`, the forward difference after
+convolution with `U_a` is `g_r-g_(r-a-1)`, which is nonnegative in the
+lower half.  Hence every product of these factors is symmetric and
+unimodal, and sums of such polynomials with a common centre retain the same
+property.
+
+Differentiate the displayed product without division.  Using `(TLZR2B)`
+gives
+
+```text
+A F-(1+x)F'=(1-x)G,
+G=sum_i C_(a_i) product_(j!=i)U_(a_j).             (TLZR2C)
+```
+
+The polynomial `G` is symmetric and unimodal of degree `A-2` (or zero when
+every factor is fundamental).  Therefore its coefficients satisfy
+`G_r>=G_(r-1)` for every `r<A/2`; the possible pair of central coefficients
+when `A-2` is odd are equal.  Taking the `x^r` coefficient of
+`(TLZR2C)` gives
+
+```text
+(A-r)f_r-(r+1)f_(r+1)=G_r-G_(r-1)>=0,
+                                                     r<A/2. (TLZR2D)
+```
+
+Taking `r=s-1` proves `(TLZR2A)`.  QED.
+
+We now prove `(TLZR)`.  Write `f_(-1)=0` and, for
+`0<=s<=floor(A/2)`, put
+
+```text
+mu_s=f_s-f_(s-1).
+```
+
+Highest-weight subtraction gives
+
+```text
+Q=sum_(s=0)^floor(A/2) mu_s beta_(A-2s).
+```
+
+Thus
+
+```text
+I(Q)=sum_s mu_s^2,
+Z(Q)=sum_(r,s)mu_r mu_s {A-2max(r,s)+1}.
+```
+
+After separating the diagonal and grouping the two orders of every
+off-diagonal pair, the desired margin is exactly
+
+```text
+Z(Q)-(A+1)I(Q)
+ =2sum_(s=1)^floor(A/2)
+    mu_s {(A-2s+1)f_(s-1)-s mu_s}.                 (TLZR2F)
+```
+
+The brace equals `(A-s+1)f_(s-1)-s f_s` and is nonnegative by
+`(TLZR2A)`.  Every `mu_s` is nonnegative, so `(TLZR2F)` proves `(TLZR)`.
+QED.
+
+This proof uses the complete product-of-chains origin in `(TLZR1)`, not only
+its symmetric log-concave consequence.  The distinction is necessary: a
+general symmetric log-concave rank sequence does not supply this sharp
+central-ratio bound.  For example,
 
 ```text
 (h_0,h_1,h_2,h_3,h_4)=(1,2,4,2,1)
@@ -21171,10 +21264,9 @@ is symmetric and log concave but violates the rank-four instance,
 3h_1=6<8=2h_2.
 ```
 
-Thus a proof must use the complete product-of-chains origin in `(TLZR1)`,
-not only its symmetric log-concave consequence.
+Thus a proof cannot retain only symmetric log concavity.
 
-The first nontrivial factor count is nevertheless exact.
+The two-factor computation below remains a useful exact sharpened margin.
 
 **Lemma 5A8H28UIA2CGLPCIPOCB2RADTOTALRESERVE2
 (two-factor total-label reserve).**  For `a>=b>=1`, the word
@@ -21214,10 +21306,38 @@ probe_su2_zero_weight_reserve.cpp --reserve-only 12 8
 ```
 
 checks all `125,969` nondecreasing words with labels at most twelve and at
-most eight factors.  It finds zero violations of both the older
-factor-count reserve and `(TLZR)`, with minimum total-label margin zero at
-`[1]`.  This is a route-selection audit only; `(TLZR2)` is the required
-unbounded combinatorial statement.
+most eight factors.  It finds zero violations of the older factor-count
+reserve, `(TLZR)`, and every lower-half coefficient inequality `(TLZR2A)`;
+the minimum total-label margin is zero at `[1]` and the minimum ratio margin
+is zero at `[1,1]` at lowering degree one.  This is an independent finite
+audit of the proved identities, not a substitute for their proof.
+
+The lower-half ratio does not turn the finite central assembly into a
+generatorwise cone proof.  Indeed, on the `SO(3)` half-label fusion ring
+consider the dimension-weighted rays
+
+```text
+v^(t)_r=(2r+1) 1_(r<=t).
+```
+
+Their nonnegative coefficients are exactly the formal differences of the
+ratio-normalized coordinates `a_r/(2r+1)`.  Nevertheless, already at level
+seven, `v^(1)=(1,3,0,...,0)` has
+
+```text
+A(v^(1))_(1,1)=1(1+3)-3^2=-5.                    (TLZR4)
+```
+
+Equivalently its polarized self-cross current is `-10`.  Thus neither
+positivity of these dimension rays nor pairwise ray payment can be used to
+deduce `(CIP)` from the total-label reserve; the special coupling of the
+actual affine-image suffix remains necessary.  The strict replay
+
+```text
+probe_su2_dimension_ray_payment.cpp --replay-ray-obstruction
+```
+
+computes the two displayed integers with exact `cpp_int` arithmetic.
 
 For a factor word of root support `n>=2`, Theorem
 5A8H28UIA2CGLPCIPOCB2RADSECONDALL and Lemma
