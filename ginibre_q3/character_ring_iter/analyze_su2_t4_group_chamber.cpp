@@ -67,13 +67,21 @@ void print_model(const std::vector<Polynomial>& constraints) {
 int main(int argc, char** argv) {
     try {
         static_cast<void>(&certify_group_chamber);
-        if (argc != 2) {
+        if (argc != 2 && argc != 3) {
             throw std::invalid_argument(
                 "usage: analyze_su2_t4_group_chamber <c5-position>"
                 "\n   or: analyze_su2_t4_group_chamber --scan-low-cost"
+                "\n   or: analyze_su2_t4_group_chamber --parity-only"
+                " <c5-position>"
             );
         }
         const bool scan_low_cost = std::string(argv[1]) == "--scan-low-cost";
+        const bool parity_only = std::string(argv[1]) == "--parity-only";
+        if (parity_only && argc != 3) {
+            throw std::invalid_argument(
+                "--parity-only requires a c5 position"
+            );
+        }
         const GroupFormula formula = make_group_formula("c5");
         const std::vector<WideMask> masks = feasible_group_masks(formula);
         if (scan_low_cost) {
@@ -117,7 +125,9 @@ int main(int argc, char** argv) {
                 << '\n';
             return EXIT_SUCCESS;
         }
-        const std::size_t position = parse_position(argv[1]);
+        const std::size_t position = parse_position(
+            parity_only ? argv[2] : argv[1]
+        );
         if (position >= masks.size()) {
             throw std::invalid_argument("position is out of range");
         }
@@ -125,6 +135,19 @@ int main(int argc, char** argv) {
             formula, masks[position], "c5", static_cast<std::uint64_t>(position)
         );
         const std::vector<Polynomial> reduced = irredundant_constraints(chamber);
+        if (parity_only) {
+            const bool passed = parity_equal_sum_square_cone_certificate(
+                chamber,
+                reduced
+            );
+            std::cout
+                << "SU2_T4_GROUP_PARITY_ONLY"
+                << " position=" << position
+                << " result="
+                << (passed ? "PASS_EXACT" : "NO_CERTIFICATE")
+                << '\n';
+            return passed ? EXIT_SUCCESS : EXIT_FAILURE;
+        }
         std::cout << "SU2_T4_GROUP_CHAMBER"
                   << " target=c5"
                   << " position=" << position

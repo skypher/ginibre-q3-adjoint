@@ -9531,6 +9531,36 @@ transport cone certificates is still required.  It is an exact scheduling
 partition, not a claim that the remaining 349 masks fail or that the full
 `C_5` theorem has been proved.
 
+The C++ certifier also has an exact index-two refinement for an equal-sum
+square cone.  Suppose nonnegative affine facets satisfy
+
+```text
+a+c=b+d,                 a-b in 2 Z,
+a+c>=m.                                               (P5A.102AC5B)
+```
+
+On `a>=b`, put `(b,a-b,c)=(x,2r,z)`; on the complementary integer branch
+`b>=a+1`, put `(a,b-a-2,d)=(x,2r,z)`.  These are respectively the complete
+integer domains
+
+```text
+x+2r+z>=m,               x+2r+z>=m-2.
+```
+
+Each is covered by `r>=ceil(m/2)` plus the finite slices below it; every
+piece is certified by a nonnegative monomial or Newton expansion.  This is
+an exact lattice refinement, not a relaxation to the ambient real cone.
+The diagnostic replay
+
+```text
+analyze_su2_t4_group_chamber --parity-only 78
+```
+
+returns `PASS_EXACT_PARITY_SQUARE` on the fan position whose four reduced
+facets are the two equal-sum pairs.  Position `78` was already certified by
+the ordinary square triangulation; this replay validates the strictly
+stronger index-two fallback for later chambers.
+
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
 Then

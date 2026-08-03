@@ -479,6 +479,220 @@ bool bounded_qy_h_ray_newton_certificate(
     return true;
 }
 
+// A square-cone certificate may lose an index-two lattice condition.  If
+// a-b is always even, the two integer branches a>=b and b>=a+1 are better
+// parameterised by their *even* difference.  This routine checks precisely
+// that finite parity refinement.  On each branch the remaining condition is
+// x+2y+z>=minimum, which is reduced to finitely many translated orthants.
+bool even_integral_affine(const Polynomial& polynomial) {
+    for (const auto& [exponent, coefficient] : polynomial.terms()) {
+        if (
+            exponent[0] + exponent[1] + exponent[2] > 1
+            || coefficient.denominator() != 1
+            || coefficient.numerator() % 2 != 0
+        ) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool weighted_parity_orthant_certificate(
+    const Polynomial& margin,
+    const std::array<Polynomial, 3>& facets,
+    int minimum
+) {
+    if (minimum < 0) {
+        minimum = 0;
+    }
+    std::array<Polynomial, 3> inverse;
+    try {
+        inverse = inverse_facet_map(facets);
+    } catch (const std::runtime_error&) {
+        return false;
+    }
+    const Polynomial x = Polynomial::variable(0);
+    const Polynomial y = Polynomial::variable(1);
+    const Polynomial z = Polynomial::variable(2);
+    const Polynomial pulled = substitute(
+        substitute(margin, inverse),
+        std::array<Polynomial, 3>{x, scale(y, 2), z}
+    );
+    const int y_floor = (minimum + 1) / 2;
+    if (
+        !nonnegative_basis(
+            substitute(
+                pulled,
+                std::array<Polynomial, 3>{
+                    x,
+                    y + constant(y_floor),
+                    z
+                }
+            )
+        )
+    ) {
+        return false;
+    }
+    for (int y_value = 0; y_value < y_floor; ++y_value) {
+        const int remainder = minimum - 2 * y_value;
+        if (
+            !nonnegative_basis(
+                substitute(
+                    pulled,
+                    std::array<Polynomial, 3>{
+                        x + constant(remainder),
+                        constant(y_value),
+                        z
+                    }
+                )
+            )
+        ) {
+            return false;
+        }
+        for (int x_value = 0; x_value < remainder; ++x_value) {
+            if (
+                !nonnegative_basis(
+                    substitute(
+                        pulled,
+                        std::array<Polynomial, 3>{
+                            constant(x_value),
+                            constant(y_value),
+                            z + constant(remainder - x_value)
+                        }
+                    )
+                )
+            ) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool parity_equal_sum_square_cone_certificate(
+    const Chamber& chamber,
+    const std::vector<Polynomial>& constraints
+) {
+    struct Pair {
+        std::size_t first;
+        std::size_t second;
+        int minimum;
+    };
+    std::vector<Pair> pairs;
+    for (std::size_t first = 0; first < constraints.size(); ++first) {
+        for (std::size_t second = first + 1U;
+             second < constraints.size();
+             ++second) {
+            int minimum = 0;
+            for (int candidate = 1; candidate <= 20; ++candidate) {
+                if (
+                    constraints_imply_sum(
+                        constraints,
+                        constraints[first],
+                        constraints[second],
+                        candidate
+                    )
+                ) {
+                    minimum = candidate;
+                } else {
+                    break;
+                }
+            }
+            if (minimum > 0) {
+                pairs.push_back(Pair{first, second, minimum});
+            }
+        }
+    }
+    for (std::size_t left = 0; left < pairs.size(); ++left) {
+        for (std::size_t right = left + 1U;
+             right < pairs.size();
+             ++right) {
+            const Pair& left_pair = pairs[left];
+            const Pair& right_pair = pairs[right];
+            if (
+                left_pair.minimum != right_pair.minimum
+                || left_pair.first == right_pair.first
+                || left_pair.first == right_pair.second
+                || left_pair.second == right_pair.first
+                || left_pair.second == right_pair.second
+                || (
+                    constraints[left_pair.first]
+                    + constraints[left_pair.second]
+                    - constraints[right_pair.first]
+                    - constraints[right_pair.second]
+                ).terms().size() != 0U
+            ) {
+                continue;
+            }
+            const std::array<std::size_t, 2> left_indices{
+                left_pair.first,
+                left_pair.second
+            };
+            const std::array<std::size_t, 2> right_indices{
+                right_pair.first,
+                right_pair.second
+            };
+            for (std::size_t left_choice = 0;
+                 left_choice < 2U;
+                 ++left_choice) {
+                for (std::size_t right_choice = 0;
+                     right_choice < 2U;
+                     ++right_choice) {
+                    const Polynomial& a =
+                        constraints[left_indices[left_choice]];
+                    const Polynomial& c =
+                        constraints[left_indices[1U - left_choice]];
+                    const Polynomial& b =
+                        constraints[right_indices[right_choice]];
+                    const Polynomial& d =
+                        constraints[right_indices[1U - right_choice]];
+                    if (!even_integral_affine(a - b)) {
+                        continue;
+                    }
+                    if (
+                        !weighted_parity_orthant_certificate(
+                            chamber.margin,
+                            std::array<Polynomial, 3>{b, a - b, c},
+                            left_pair.minimum
+                        )
+                    ) {
+                        continue;
+                    }
+                    if (
+                        !weighted_parity_orthant_certificate(
+                            chamber.margin,
+                            std::array<Polynomial, 3>{
+                                a,
+                                b - a - constant(2),
+                                d
+                            },
+                            left_pair.minimum - 2
+                        )
+                    ) {
+                        continue;
+                    }
+                    std::cout
+                        << "SU2_T4_GROUP_PARITY_EQUAL_SUM_CONE"
+                        << " position=" << chamber.mask
+                        << " pairs=("
+                        << left_pair.first << ','
+                        << left_pair.second << ';'
+                        << right_pair.first << ','
+                        << right_pair.second << ')'
+                        << " orientations=("
+                        << left_choice << ','
+                        << right_choice << ')'
+                        << " minimum=" << left_pair.minimum
+                        << " result=PASS_EXACT_PARITY_SQUARE"
+                        << std::endl;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 bool certify_group_chamber(
     const Chamber& chamber,
     const GroupFormula& formula
@@ -520,6 +734,12 @@ bool certify_group_chamber(
     }
     if (!passed) {
         passed = equal_sum_square_cone_certificate(
+            chamber,
+            constraints
+        );
+    }
+    if (!passed) {
+        passed = parity_equal_sum_square_cone_certificate(
             chamber,
             constraints
         );
