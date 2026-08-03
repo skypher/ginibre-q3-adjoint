@@ -20,6 +20,10 @@ namespace {
 std::size_t maximum_source_escape
     = std::numeric_limits<std::size_t>::max();
 bool require_almost_square_free = false;
+bool audit_source_shell_capacity = false;
+bool audit_two_sided_source_exit = false;
+bool audit_source_all_exit = false;
+bool audit_unfiltered_source_no_exit = false;
 
 struct State {
     std::vector<std::size_t> order;
@@ -84,6 +88,20 @@ struct SearchCounts {
     std::uint64_t source_normal_zero_transfer_states = 0U;
     std::uint64_t source_normal_zero_transfer_escapes = 0U;
     std::uint64_t source_normal_zero_transfer_failures = 0U;
+    // Exact contrapositive audit of Target 22F3R2.  It must run before the
+    // short-escape fast paths: a direct descent at the initial state need
+    // not be a shrinking descent at a scheduling source of its plateau.
+    std::uint64_t source_shell_capacity_negative_states = 0U;
+    std::uint64_t source_shell_capacity_sources = 0U;
+    std::uint64_t
+        source_shell_capacity_sources_without_shrink_descent = 0U;
+    std::uint64_t source_two_sided_exit_negative_states = 0U;
+    std::uint64_t source_two_sided_exit_sources = 0U;
+    std::uint64_t
+        source_two_sided_exit_sources_without_zero_transfer_descent = 0U;
+    std::uint64_t source_all_exit_negative_states = 0U;
+    std::uint64_t source_all_exit_sources = 0U;
+    std::uint64_t source_all_exit_sources_without_descent = 0U;
     std::size_t source_maximum_zero_transfer_component = 0U;
     std::size_t source_maximum_threshold_tie_quotient = 0U;
     std::uint64_t hard_extremal_shell_states = 0U;
@@ -836,6 +854,14 @@ struct ExtremalShellAnalysis {
     bool has_source_enlarge_escape = false;
     bool has_source_positive_escape = false;
     bool has_reachable_extremal_positive_plateau = false;
+    std::size_t reachable_source_components = 0U;
+    std::size_t
+        reachable_source_components_without_shrink_descent = 0U;
+    std::size_t
+        reachable_source_components_without_zero_transfer_descent = 0U;
+    std::size_t reachable_source_components_without_descent = 0U;
+    bool has_source_without_shrink_descent = false;
+    State first_source_without_shrink_descent;
 };
 
 class DisjointSet {
@@ -1011,6 +1037,9 @@ ExtremalShellAnalysis analyze_zero_transfer_extrema(
             = backward[component] && incoming[component].empty();
         extremal[component] = sink[component] || source[component];
     }
+    std::vector<bool> source_shrink_descent(quotient_size, false);
+    std::vector<bool> source_zero_transfer_descent(quotient_size, false);
+    std::vector<bool> source_any_descent(quotient_size, false);
 
     ExtremalShellAnalysis result;
     result.states = states.size();
@@ -1044,15 +1073,18 @@ ExtremalShellAnalysis analyze_zero_transfer_extrema(
                 }
                 if (source[component]) {
                     result.has_source_escape = true;
+                    source_any_descent[component] = true;
                     if (transfer > 0) {
                         result.has_source_positive_escape = true;
                     } else {
+                        source_zero_transfer_descent[component] = true;
                         const int direction
                             = scheduling_move_direction(
                                 state, degrees, generator
                             );
                         if (direction < 0) {
                             result.has_source_shrink_escape = true;
+                            source_shrink_descent[component] = true;
                         } else if (direction > 0) {
                             result.has_source_enlarge_escape = true;
                         } else {
@@ -1067,6 +1099,35 @@ ExtremalShellAnalysis analyze_zero_transfer_extrema(
                 && transfer > 0 && plateau(candidate, original)) {
                 result.has_reachable_extremal_positive_plateau = true;
             }
+        }
+    }
+    for (std::size_t component = 0U;
+         component < quotient_size; ++component) {
+        if (!source[component]) {
+            continue;
+        }
+        ++result.reachable_source_components;
+        if (!source_shrink_descent[component]) {
+            ++result
+                .reachable_source_components_without_shrink_descent;
+            if (!result.has_source_without_shrink_descent) {
+                result.has_source_without_shrink_descent = true;
+                for (std::size_t state_index = 0U;
+                     state_index < states.size(); ++state_index) {
+                    if (state_quotient[state_index] == component) {
+                        result.first_source_without_shrink_descent
+                            = states[state_index];
+                        break;
+                    }
+                }
+            }
+        }
+        if (!source_zero_transfer_descent[component]) {
+            ++result
+                .reachable_source_components_without_zero_transfer_descent;
+        }
+        if (!source_any_descent[component]) {
+            ++result.reachable_source_components_without_descent;
         }
     }
     return result;
@@ -1202,6 +1263,64 @@ std::vector<std::size_t> plateau_escape_word(
     return {};
 }
 
+// Target 22F3J is existential: a generic breadth-first tie-break is not a
+// counterexample merely because its first shortest escape repeats a generator
+// before the exit.  This search retains the used plateau generators in its
+// state and permits a repeated generator only on the final lowering move.
+std::vector<std::size_t> plateau_escape_word_with_square_free_prefix(
+    const State& initial,
+    const std::vector<int>& degrees,
+    const std::vector<int>& signs,
+    std::size_t target,
+    const Potential& original
+) {
+    using Key = std::tuple<
+        std::vector<std::size_t>, std::vector<int>, std::vector<bool>
+    >;
+    struct SearchNode {
+        State state;
+        std::vector<std::size_t> word;
+        std::vector<bool> used;
+    };
+    const std::size_t generator_count = initial.order.size() - 1U;
+    std::queue<SearchNode> frontier;
+    std::set<Key> visited;
+    std::vector<bool> empty_used(generator_count, false);
+    frontier.push(SearchNode{initial, {}, empty_used});
+    visited.emplace(initial.order, initial.alpha, empty_used);
+    while (!frontier.empty()) {
+        SearchNode current = std::move(frontier.front());
+        frontier.pop();
+        for (std::size_t generator = 0U;
+             generator < generator_count;
+             ++generator) {
+            State neighbor = bk_neighbor(
+                current.state, degrees, generator
+            );
+            const Potential value = transfer_potential(
+                neighbor, degrees, signs, target
+            );
+            std::vector<std::size_t> word = current.word;
+            word.push_back(generator);
+            if (lower(value, original)) {
+                return word;
+            }
+            if (!plateau(value, original) || current.used[generator]) {
+                continue;
+            }
+            std::vector<bool> used = current.used;
+            used[generator] = true;
+            if (!visited.emplace(neighbor.order, neighbor.alpha, used).second) {
+                continue;
+            }
+            frontier.push(SearchNode{
+                std::move(neighbor), std::move(word), std::move(used)
+            });
+        }
+    }
+    return {};
+}
+
 void print_vector(const std::vector<int>& values) {
     std::cout << '[';
     for (std::size_t index = 0U; index < values.size(); ++index) {
@@ -1257,9 +1376,13 @@ void print_vector(const std::vector<int>& values) {
         );
     }
     const std::vector<std::size_t> escape_word
-        = plateau_escape_word(
-            state, degrees, signs, target, original
-        );
+        = require_almost_square_free
+            ? plateau_escape_word_with_square_free_prefix(
+                state, degrees, signs, target, original
+            )
+            : plateau_escape_word(
+                state, degrees, signs, target, original
+            );
     std::cout << " plateau_escape_word=[";
     for (std::size_t index = 0U; index < escape_word.size(); ++index) {
         if (index != 0U) {
@@ -1304,6 +1427,78 @@ void print_vector(const std::vector<int>& values) {
     std::exit(EXIT_FAILURE);
 }
 
+[[noreturn]] void report_source_shell_capacity_counterexample(
+    const ExtremalShellAnalysis& source_shell,
+    const std::vector<int>& degrees,
+    const std::vector<int>& signs,
+    std::size_t target,
+    const Potential& original
+) {
+    if (!source_shell.has_source_without_shrink_descent) {
+        throw std::runtime_error(
+            "missing source-shell-capacity counterexample state"
+        );
+    }
+    const State& source = source_shell.first_source_without_shrink_descent;
+    const SourceTotals totals = source_totals(degrees, signs, target);
+    const Potential source_value = transfer_potential(
+        source, degrees, signs, target
+    );
+    std::cout
+        << "SU2_BK_SOURCE_SHELL_CAPACITY result=FAIL"
+        << " O=" << totals.odd
+        << " P=" << totals.positive
+        << " initial_delta=" << original.delta
+        << " source_delta=" << source_value.delta
+        << " source_total=" << source_value.total
+        << " reachable_sources="
+        << source_shell.reachable_source_components
+        << " sources_without_shrink_descent="
+        << source_shell
+            .reachable_source_components_without_shrink_descent
+        << " source_order=";
+    std::vector<int> displayed_order;
+    std::vector<int> displayed_alpha;
+    std::vector<int> displayed_beta;
+    std::vector<int> displayed_signs;
+    displayed_order.reserve(source.order.size());
+    displayed_alpha.reserve(source.order.size());
+    displayed_beta.reserve(source.order.size());
+    displayed_signs.reserve(source.order.size());
+    for (const std::size_t vertex : source.order) {
+        displayed_order.push_back(static_cast<int>(vertex));
+        displayed_alpha.push_back(source.alpha[vertex]);
+        displayed_beta.push_back(degrees[vertex] - source.alpha[vertex]);
+        displayed_signs.push_back(vertex == target ? 0 : signs[vertex]);
+    }
+    print_vector(displayed_order);
+    std::cout << " alpha=";
+    print_vector(displayed_alpha);
+    std::cout << " beta=";
+    print_vector(displayed_beta);
+    std::cout << " signs=";
+    print_vector(displayed_signs);
+    std::cout << " source_neighbors={";
+    for (std::size_t generator = 0U;
+         generator + 1U < source.order.size(); ++generator) {
+        if (generator != 0U) {
+            std::cout << ',';
+        }
+        const State neighbor = bk_neighbor(source, degrees, generator);
+        const Potential value = transfer_potential(
+            neighbor, degrees, signs, target
+        );
+        std::cout << generator << ":(z="
+                  << bk_transfer_amount(source, degrees, generator)
+                  << ",dir="
+                  << scheduling_move_direction(source, degrees, generator)
+                  << ",delta=" << value.delta
+                  << ",total=" << value.total << ')';
+    }
+    std::cout << "}\n";
+    std::exit(EXIT_FAILURE);
+}
+
 void test_signed_state(
     const std::vector<int>& alpha,
     const std::vector<int>& beta,
@@ -1333,6 +1528,81 @@ void test_signed_state(
         return;
     }
     ++counts.negative_states;
+    if ((source_filtered || audit_unfiltered_source_no_exit)
+        && (audit_source_shell_capacity || audit_two_sided_source_exit
+            || audit_source_all_exit || audit_unfiltered_source_no_exit)) {
+        const ExtremalShellAnalysis source_shell
+            = analyze_zero_transfer_extrema(
+                state, degrees, signs, target, original
+            );
+        if (audit_source_shell_capacity) {
+            ++counts.source_shell_capacity_negative_states;
+            counts.source_shell_capacity_sources
+                += static_cast<std::uint64_t>(
+                    source_shell.reachable_source_components
+                );
+            counts.source_shell_capacity_sources_without_shrink_descent
+                += static_cast<std::uint64_t>(
+                    source_shell
+                        .reachable_source_components_without_shrink_descent
+                );
+            // In source-only mode test_queue_path has already established
+            // O>P.  A source without a shrinking descent is exactly the
+            // negation of the former one-sided capacity statement.
+            if (source_shell
+                    .reachable_source_components_without_shrink_descent
+                    != 0U) {
+                report_source_shell_capacity_counterexample(
+                    source_shell, degrees, signs, target, original
+                );
+            }
+        }
+        if (audit_two_sided_source_exit) {
+            ++counts.source_two_sided_exit_negative_states;
+            counts.source_two_sided_exit_sources
+                += static_cast<std::uint64_t>(
+                    source_shell.reachable_source_components
+                );
+            counts
+                .source_two_sided_exit_sources_without_zero_transfer_descent
+                += static_cast<std::uint64_t>(
+                    source_shell
+                        .reachable_source_components_without_zero_transfer_descent
+                );
+            if (source_shell
+                    .reachable_source_components_without_zero_transfer_descent
+                    != 0U) {
+                if (source_shell.has_source_without_shrink_descent) {
+                    report_source_shell_capacity_counterexample(
+                        source_shell, degrees, signs, target, original
+                    );
+                }
+                report_failure(state, degrees, signs, target, original);
+            }
+        }
+        if (audit_source_all_exit) {
+            ++counts.source_all_exit_negative_states;
+            counts.source_all_exit_sources += static_cast<std::uint64_t>(
+                source_shell.reachable_source_components
+            );
+            counts.source_all_exit_sources_without_descent
+                += static_cast<std::uint64_t>(
+                    source_shell
+                        .reachable_source_components_without_descent
+                );
+            if (source_shell.reachable_source_components_without_descent
+                != 0U) {
+                report_failure(state, degrees, signs, target, original);
+            }
+        }
+        if (audit_unfiltered_source_no_exit
+            && source_shell.reachable_source_components_without_descent
+                != 0U) {
+            report_source_shell_capacity_counterexample(
+                source_shell, degrees, signs, target, original
+            );
+        }
+    }
     if (source_filtered
         && !primitive_queue_path(state, degrees)) {
         ++counts.source_nonprimitive_negative_states;
@@ -1923,7 +2193,10 @@ void test_random_composite_states(
     std::uint64_t seed,
     bool require_source_deficit,
     bool force_composite,
-    bool minimal_deficit_only
+    bool minimal_deficit_only,
+    bool require_source_shell,
+    bool require_source_all_exit,
+    bool require_square_free_prefix
 ) {
     if (trials_input < 1 || vertices_input < 3 || part_bound < 1) {
         throw std::runtime_error("random search bounds are too small");
@@ -1946,6 +2219,10 @@ void test_random_composite_states(
     std::uint64_t over_two_strict_scheduling_failures = 0U;
     std::uint64_t normal_zero_transfer_states = 0U;
     std::uint64_t normal_zero_transfer_failures = 0U;
+    std::uint64_t source_shell_states = 0U;
+    std::uint64_t source_shell_failures = 0U;
+    std::uint64_t source_all_exit_states = 0U;
+    std::uint64_t source_all_exit_failures = 0U;
     std::size_t maximum_strict_scheduling_steps = 0U;
     std::size_t maximum_escape_length = 0U;
     std::map<
@@ -2094,6 +2371,20 @@ void test_random_composite_states(
                 }
             }
             ++tested_negative_states;
+            if (require_source_all_exit) {
+                ++source_all_exit_states;
+                const ExtremalShellAnalysis extremal
+                    = analyze_zero_transfer_extrema(
+                        state, degrees, signs, target, original
+                    );
+                if (extremal.reachable_source_components_without_descent
+                    != 0U) {
+                    ++source_all_exit_failures;
+                    report_failure(
+                        state, degrees, signs, target, original
+                    );
+                }
+            }
             if (require_source_deficit
                 && !primitive_queue_path(state, degrees)) {
                 ++nonprimitive_negative_states;
@@ -2109,6 +2400,19 @@ void test_random_composite_states(
             const int depth = generic_two_step_escape_depth(
                 state, degrees, signs, target, original
             );
+            if (require_source_shell && depth != 1) {
+                ++source_shell_states;
+                const ExtremalShellAnalysis extremal
+                    = analyze_zero_transfer_extrema(
+                        state, degrees, signs, target, original
+                    );
+                if (!extremal.has_source_shrink_escape) {
+                    ++source_shell_failures;
+                    report_failure(
+                        state, degrees, signs, target, original
+                    );
+                }
+            }
             if (depth != 1) {
                 ++normal_zero_transfer_states;
                 if (!has_normal_zero_transfer_escape(
@@ -2167,9 +2471,13 @@ void test_random_composite_states(
                 }
             } else {
                 const std::vector<std::size_t> word
-                    = plateau_escape_word(
-                        state, degrees, signs, target, original
-                    );
+                    = require_square_free_prefix
+                        ? plateau_escape_word_with_square_free_prefix(
+                            state, degrees, signs, target, original
+                        )
+                        : plateau_escape_word(
+                            state, degrees, signs, target, original
+                        );
                 std::size_t positive_transfers = 0U;
                 std::size_t strict_scheduling_steps = 0U;
                 bool has_positive_direction = false;
@@ -2241,6 +2549,8 @@ void test_random_composite_states(
         << " forced_composite=" << (force_composite ? 1 : 0)
         << " minimal_deficit_only="
         << (minimal_deficit_only ? 1 : 0)
+        << " prefix_restricted="
+        << (require_square_free_prefix ? 1 : 0)
         << " trials=" << trials
         << " vertices=" << vertices
         << " maximum_queue_part=" << part_bound
@@ -2267,6 +2577,10 @@ void test_random_composite_states(
         << normal_zero_transfer_states
         << " normal_zero_transfer_failures="
         << normal_zero_transfer_failures
+        << " source_shell_states=" << source_shell_states
+        << " source_shell_failures=" << source_shell_failures
+        << " source_all_exit_states=" << source_all_exit_states
+        << " source_all_exit_failures=" << source_all_exit_failures
         << " maximum_strict_scheduling_steps="
         << maximum_strict_scheduling_steps
         << " maximum_escape_length="
@@ -2560,6 +2874,9 @@ void test_composite_two_step_counterexample() {
     const std::vector<std::size_t> word = plateau_escape_word(
         state, degrees, signs, target, original
     );
+    const ExtremalShellAnalysis extremal = analyze_zero_transfer_extrema(
+        state, degrees, signs, target, original
+    );
     const auto factor = two_excursion_factor_signature(
         state, degrees, signs, target
     );
@@ -2601,7 +2918,8 @@ void test_composite_two_step_counterexample() {
         || word.size() != 4U
         || !prefix_is_plateau
         || word_potentials.empty()
-        || !lower(word_potentials.back(), original)) {
+        || !lower(word_potentials.back(), original)
+        || !extremal.has_source_shrink_escape) {
         throw std::runtime_error(
             "composite two-step counterexample audit failed"
         );
@@ -2650,7 +2968,202 @@ void test_composite_two_step_counterexample() {
         std::cout << '(' << word_potentials[index].delta
                   << ',' << word_potentials[index].total << ')';
     }
-    std::cout << "] result=PASS\n";
+    std::cout
+        << "] source_shrink_escape="
+        << (extremal.has_source_shrink_escape ? 1 : 0)
+        << " result=PASS\n";
+}
+
+void test_source_shrink_capacity_counterexample() {
+    // This is a counterexample to the one-sided source-shell capacity
+    // statement formerly called Target 22F3R2.  The relevant source has no
+    // shrinking descent, but it does have an enlarging descent; omitting the
+    // latter polarity was the error in that target.
+    const std::vector<int> alpha{1, 1, 1, 0, 2, 0, 1, 2, 0};
+    const std::vector<int> beta{0, 0, 0, 1, 1, 2, 0, 2, 2};
+    const std::vector<int> signs{-1, -1, -1, -1, 1, 1, 1, 1, 1};
+    constexpr std::size_t target = 6U;
+    std::vector<int> degrees(alpha.size(), 0);
+    for (std::size_t index = 0U; index < alpha.size(); ++index) {
+        degrees[index] = alpha[index] + beta[index];
+    }
+    State state;
+    state.alpha = alpha;
+    state.order.resize(alpha.size());
+    for (std::size_t index = 0U; index < alpha.size(); ++index) {
+        state.order[index] = index;
+    }
+    const Potential original = transfer_potential(
+        state, degrees, signs, target
+    );
+    const SourceTotals totals = source_totals(degrees, signs, target);
+    const ExtremalShellAnalysis extremal = analyze_zero_transfer_extrema(
+        state, degrees, signs, target, original
+    );
+    const State& source = extremal.first_source_without_shrink_descent;
+    const Potential shrinking = transfer_potential(
+        bk_neighbor(source, degrees, 2U), degrees, signs, target
+    );
+    const Potential enlarging = transfer_potential(
+        bk_neighbor(source, degrees, 3U), degrees, signs, target
+    );
+    if (original.delta != -2
+        || totals.odd != 340U || totals.positive != 334U
+        || extremal.reachable_source_components != 1U
+        || extremal.reachable_source_components_without_shrink_descent != 1U
+        || !extremal.has_source_without_shrink_descent
+        || source.order != state.order || source.alpha != state.alpha
+        || bk_transfer_amount(source, degrees, 2U) != 0
+        || scheduling_move_direction(source, degrees, 2U) != -1
+        || lower(shrinking, original)
+        || bk_transfer_amount(source, degrees, 3U) != 0
+        || scheduling_move_direction(source, degrees, 3U) != 1
+        || !lower(enlarging, original)) {
+        throw std::runtime_error(
+            "source-shrink capacity counterexample audit failed"
+        );
+    }
+    std::cout
+        << "SU2_BK_SOURCE_SHRINK_CAPACITY_COUNTEREXAMPLE"
+        << " O=" << totals.odd
+        << " P=" << totals.positive
+        << " delta=" << original.delta
+        << " shrinking_neighbor=(" << shrinking.delta
+        << ',' << shrinking.total << ')'
+        << " enlarging_neighbor=(" << enlarging.delta
+        << ',' << enlarging.total << ')'
+        << " result=PASS\n";
+}
+
+void test_source_zero_transfer_exit_counterexample() {
+    // Both zero-transfer shell polarities can be non-descending at a source.
+    // The admissible final exit is then a positive-transfer BK switch.
+    const std::vector<int> alpha{1, 1, 1, 0, 2, 0, 2, 1, 0};
+    const std::vector<int> beta{0, 0, 0, 1, 1, 2, 1, 2, 1};
+    const std::vector<int> signs{-1, -1, -1, -1, -1, -1, -1, -1, 1};
+    constexpr std::size_t target = 8U;
+    std::vector<int> degrees(alpha.size(), 0);
+    for (std::size_t index = 0U; index < alpha.size(); ++index) {
+        degrees[index] = alpha[index] + beta[index];
+    }
+    State state;
+    state.alpha = alpha;
+    state.order.resize(alpha.size());
+    for (std::size_t index = 0U; index < alpha.size(); ++index) {
+        state.order[index] = index;
+    }
+    const Potential original = transfer_potential(
+        state, degrees, signs, target
+    );
+    const SourceTotals totals = source_totals(degrees, signs, target);
+    const ExtremalShellAnalysis extremal = analyze_zero_transfer_extrema(
+        state, degrees, signs, target, original
+    );
+    const State& source = extremal.first_source_without_shrink_descent;
+    const Potential shrinking = transfer_potential(
+        bk_neighbor(source, degrees, 2U), degrees, signs, target
+    );
+    const Potential enlarging_first = transfer_potential(
+        bk_neighbor(source, degrees, 3U), degrees, signs, target
+    );
+    const Potential enlarging_second = transfer_potential(
+        bk_neighbor(source, degrees, 5U), degrees, signs, target
+    );
+    const Potential positive_transfer = transfer_potential(
+        bk_neighbor(source, degrees, 4U), degrees, signs, target
+    );
+    if (original.delta != -2
+        || totals.odd != 414U || totals.positive != 398U
+        || extremal.reachable_source_components != 1U
+        || extremal.reachable_source_components_without_shrink_descent != 1U
+        || extremal
+                .reachable_source_components_without_zero_transfer_descent
+                != 1U
+        || !extremal.has_source_positive_escape
+        || !extremal.has_source_escape
+        || source.order != state.order || source.alpha != state.alpha
+        || bk_transfer_amount(source, degrees, 2U) != 0
+        || scheduling_move_direction(source, degrees, 2U) != -1
+        || lower(shrinking, original)
+        || bk_transfer_amount(source, degrees, 3U) != 0
+        || scheduling_move_direction(source, degrees, 3U) != 1
+        || lower(enlarging_first, original)
+        || bk_transfer_amount(source, degrees, 5U) != 0
+        || scheduling_move_direction(source, degrees, 5U) != 1
+        || lower(enlarging_second, original)
+        || bk_transfer_amount(source, degrees, 4U) != 1
+        || !lower(positive_transfer, original)) {
+        throw std::runtime_error(
+            "source zero-transfer exit counterexample audit failed"
+        );
+    }
+    std::cout
+        << "SU2_BK_SOURCE_ZERO_TRANSFER_EXIT_COUNTEREXAMPLE"
+        << " O=" << totals.odd
+        << " P=" << totals.positive
+        << " delta=" << original.delta
+        << " shrinking_neighbor=(" << shrinking.delta
+        << ',' << shrinking.total << ')'
+        << " enlarging_neighbors=[("
+        << enlarging_first.delta << ',' << enlarging_first.total << "),("
+        << enlarging_second.delta << ',' << enlarging_second.total << ")]"
+        << " positive_transfer_neighbor=(" << positive_transfer.delta
+        << ',' << positive_transfer.total << ')'
+        << " result=PASS\n";
+}
+
+void test_source_all_exit_local_counterexample() {
+    // The all-exit theorem genuinely needs the global source deficit O>P.
+    // With O<P this negative source has no direct descent of any type.
+    const std::vector<int> alpha{1, 1, 1, 1, 2, 0, 1, 0};
+    const std::vector<int> beta{0, 0, 0, 0, 1, 2, 2, 2};
+    const std::vector<int> signs{1, -1, -1, -1, 1, -1, 1, -1};
+    constexpr std::size_t target = 0U;
+    std::vector<int> degrees(alpha.size(), 0);
+    for (std::size_t index = 0U; index < alpha.size(); ++index) {
+        degrees[index] = alpha[index] + beta[index];
+    }
+    State state;
+    state.alpha = alpha;
+    state.order.resize(alpha.size());
+    for (std::size_t index = 0U; index < alpha.size(); ++index) {
+        state.order[index] = index;
+    }
+    const Potential original = transfer_potential(
+        state, degrees, signs, target
+    );
+    const SourceTotals totals = source_totals(degrees, signs, target);
+    const ExtremalShellAnalysis extremal = analyze_zero_transfer_extrema(
+        state, degrees, signs, target, original
+    );
+    const State& source = extremal.first_source_without_shrink_descent;
+    bool source_has_descent = false;
+    for (std::size_t generator = 0U;
+         generator + 1U < source.order.size(); ++generator) {
+        source_has_descent = source_has_descent || lower(
+            transfer_potential(
+                bk_neighbor(source, degrees, generator),
+                degrees, signs, target
+            ),
+            original
+        );
+    }
+    if (original.delta != -1
+        || totals.odd != 70U || totals.positive != 150U
+        || extremal.reachable_source_components != 1U
+        || extremal.reachable_source_components_without_descent != 1U
+        || extremal.has_source_escape || source_has_descent
+        || source.order != state.order || source.alpha != state.alpha) {
+        throw std::runtime_error(
+            "source all-exit local counterexample audit failed"
+        );
+    }
+    std::cout
+        << "SU2_BK_SOURCE_ALL_EXIT_LOCAL_COUNTEREXAMPLE"
+        << " O=" << totals.odd
+        << " P=" << totals.positive
+        << " delta=" << original.delta
+        << " result=PASS\n";
 }
 
 void scan_closed_rigid_source_totals(
@@ -2908,6 +3421,24 @@ int main(int argc, char** argv) {
             return EXIT_SUCCESS;
         }
         if (argc == 2
+            && std::string(argv[1])
+                == "source-shrink-capacity-counterexample") {
+            test_source_shrink_capacity_counterexample();
+            return EXIT_SUCCESS;
+        }
+        if (argc == 2
+            && std::string(argv[1])
+                == "source-zero-transfer-exit-counterexample") {
+            test_source_zero_transfer_exit_counterexample();
+            return EXIT_SUCCESS;
+        }
+        if (argc == 2
+            && std::string(argv[1])
+                == "source-all-exit-local-counterexample") {
+            test_source_all_exit_local_counterexample();
+            return EXIT_SUCCESS;
+        }
+        if (argc == 2
             && std::string(argv[1]) == "closed-core-slice") {
             analyze_closed_core_order_slice();
             return EXIT_SUCCESS;
@@ -2949,7 +3480,10 @@ int main(int argc, char** argv) {
         if (argc == 6
             && (std::string(argv[1]) == "random-composite"
                 || std::string(argv[1]) == "random-composite-any"
-                || std::string(argv[1]) == "random-source")) {
+                || std::string(argv[1]) == "random-source"
+                || std::string(argv[1]) == "random-source-prefix-forest"
+                || std::string(argv[1]) == "random-source-shell"
+                || std::string(argv[1]) == "random-source-all-exit")) {
             const std::string random_mode(argv[1]);
             test_random_composite_states(
                 parse_nonnegative(argv[2], "trial count"),
@@ -2959,8 +3493,13 @@ int main(int argc, char** argv) {
                     parse_nonnegative(argv[5], "seed")
                 ),
                 random_mode != "random-composite-any",
-                random_mode != "random-source",
-                random_mode == "random-composite-any"
+                random_mode != "random-source"
+                    && random_mode != "random-source-all-exit"
+                    && random_mode != "random-source-prefix-forest",
+                random_mode == "random-composite-any",
+                random_mode == "random-source-shell",
+                random_mode == "random-source-all-exit",
+                random_mode == "random-source-prefix-forest"
             );
             return EXIT_SUCCESS;
         }
@@ -2972,29 +3511,52 @@ int main(int argc, char** argv) {
         const bool strict_forest
             = mode == "source-forest"
               || mode == "source-forest-shard";
+        const bool source_shell_capacity_mode
+            = mode == "source-shell-capacity";
+        const bool two_sided_source_exit_mode
+            = mode == "source-two-sided-exit";
+        const bool source_all_exit_mode
+            = mode == "source-all-exit"
+              || mode == "source-all-exit-shard";
+        const bool unfiltered_source_no_exit_mode
+            = mode == "unfiltered-source-no-exit"
+              || mode == "unfiltered-source-no-exit-shard";
         const bool source_only
             = (argc == 4
                && (mode == "source" || mode == "source3"
-                   || mode == "source-forest"))
+                   || mode == "source-forest"
+                   || source_shell_capacity_mode
+                   || two_sided_source_exit_mode
+                   || source_all_exit_mode))
               || (argc == 6
                   && (mode == "source-shard"
                       || mode == "source3-shard"
-                      || mode == "source-forest-shard"));
+                      || mode == "source-forest-shard"
+                      || mode == "source-all-exit-shard"));
         const bool sharded
             = unrestricted_sharded
               || (argc == 6
                   && (mode == "source-shard"
                       || mode == "source3-shard"
-                      || mode == "source-forest-shard"));
-        if ((!source_only && !unrestricted_sharded && argc != 3)
+                      || mode == "source-forest-shard"
+                      || mode == "source-all-exit-shard"
+                      || mode == "unfiltered-source-no-exit-shard"));
+        const bool prefixed_unfiltered = unfiltered_source_no_exit_mode;
+        if ((!source_only && !unrestricted_sharded
+             && !prefixed_unfiltered && argc != 3)
             || (source_only && !sharded && argc != 4)
-            || (sharded && argc != 6)) {
+            || (sharded && argc != 6)
+            || (prefixed_unfiltered && !sharded && argc != 4)) {
             throw std::runtime_error(
                 "usage: search_su2_bk_local_escape"
                 " vertices maximum_queue_part |"
                 " source vertices maximum_queue_part |"
                 " source3 vertices maximum_queue_part |"
                 " source-forest vertices maximum_queue_part |"
+                " source-shell-capacity vertices maximum_queue_part |"
+                " source-two-sided-exit vertices maximum_queue_part |"
+                " source-all-exit vertices maximum_queue_part |"
+                " unfiltered-source-no-exit vertices maximum_queue_part |"
                 " shard vertices maximum_queue_part"
                 " shard_count shard_index |"
                 " source-shard vertices maximum_queue_part"
@@ -3003,9 +3565,16 @@ int main(int argc, char** argv) {
                 " shard_count shard_index |"
                 " source-forest-shard vertices maximum_queue_part"
                 " shard_count shard_index |"
+                " source-all-exit-shard vertices maximum_queue_part"
+                " shard_count shard_index |"
+                " unfiltered-source-no-exit-shard vertices maximum_queue_part"
+                " shard_count shard_index |"
                 " family even_middle_jobs [sign_mask] |"
                 " embedding | embedding-scan maximum_label |"
                 " composite-counterexample |"
+                " source-shrink-capacity-counterexample |"
+                " source-zero-transfer-exit-counterexample |"
+                " source-all-exit-local-counterexample |"
                 " closed-core-slice |"
                 " closed-embedding-scan maximum_label |"
                 " closed-padding-scan maximum_label maximum_pairs |"
@@ -3015,11 +3584,18 @@ int main(int argc, char** argv) {
                 " random-composite-any trials vertices"
                 " maximum_queue_part seed |"
                 " random-source trials vertices"
+                " maximum_queue_part seed |"
+                " random-source-prefix-forest trials vertices"
+                " maximum_queue_part seed |"
+                " random-source-shell trials vertices"
+                " maximum_queue_part seed |"
+                " random-source-all-exit trials vertices"
                 " maximum_queue_part seed"
             );
         }
         const int argument_offset
-            = (source_only || unrestricted_sharded) ? 2 : 1;
+            = (source_only || unrestricted_sharded || prefixed_unfiltered)
+                ? 2 : 1;
         const int vertices_input = parse_nonnegative(
             argv[argument_offset], "vertex count"
         );
@@ -3045,6 +3621,10 @@ int main(int argc, char** argv) {
             maximum_source_escape = 3U;
         }
         require_almost_square_free = strict_forest;
+        audit_source_shell_capacity = source_shell_capacity_mode;
+        audit_two_sided_source_exit = two_sided_source_exit_mode;
+        audit_source_all_exit = source_all_exit_mode;
+        audit_unfiltered_source_no_exit = unfiltered_source_no_exit_mode;
         const std::size_t vertices
             = static_cast<std::size_t>(vertices_input);
         std::vector<int> alpha(vertices, 0);
@@ -3122,6 +3702,26 @@ int main(int argc, char** argv) {
             << counts.source_normal_zero_transfer_escapes
             << " source_normal_zero_transfer_failures="
             << counts.source_normal_zero_transfer_failures
+            << " source_shell_capacity_negative_states="
+            << counts.source_shell_capacity_negative_states
+            << " source_shell_capacity_sources="
+            << counts.source_shell_capacity_sources
+            << " source_shell_capacity_sources_without_shrink_descent="
+            << counts
+                .source_shell_capacity_sources_without_shrink_descent
+            << " source_two_sided_exit_negative_states="
+            << counts.source_two_sided_exit_negative_states
+            << " source_two_sided_exit_sources="
+            << counts.source_two_sided_exit_sources
+            << " source_two_sided_exit_sources_without_zero_transfer_descent="
+            << counts
+                .source_two_sided_exit_sources_without_zero_transfer_descent
+            << " source_all_exit_negative_states="
+            << counts.source_all_exit_negative_states
+            << " source_all_exit_sources="
+            << counts.source_all_exit_sources
+            << " source_all_exit_sources_without_descent="
+            << counts.source_all_exit_sources_without_descent
             << " source_maximum_zero_transfer_component="
             << counts.source_maximum_zero_transfer_component
             << " source_maximum_threshold_tie_quotient="

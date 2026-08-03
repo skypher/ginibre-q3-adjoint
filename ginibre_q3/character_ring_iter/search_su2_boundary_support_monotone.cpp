@@ -7,7 +7,9 @@
 #include <utility>
 #include <vector>
 
-using Count = std::uint64_t;
+#include <boost/multiprecision/cpp_int.hpp>
+
+using Count = boost::multiprecision::cpp_int;
 
 struct Edge {
     int to;
@@ -36,7 +38,11 @@ class Dinic {
         Count answer = 0;
         while (bfs(source, sink)) {
             std::fill(next_.begin(), next_.end(), 0);
-            while (Count pushed = dfs(source, sink, std::numeric_limits<Count>::max())) {
+            Count limit = 0;
+            for (const Edge& edge : graph_[static_cast<std::size_t>(source)]) {
+                limit += edge.capacity;
+            }
+            while (Count pushed = dfs(source, sink, limit)) {
                 answer += pushed;
             }
         }
@@ -188,7 +194,9 @@ bool inspect_word(
     const std::vector<int>& labels,
     int level,
     bool print_pass,
-    Routing routing
+    Routing routing,
+    int fixed_q = -1,
+    bool require_total_capacity = false
 ) {
     const int factors = static_cast<int>(labels.size());
     const int masks = 1 << factors;
@@ -207,7 +215,12 @@ bool inspect_word(
     }
 
     const int maximum_q = routing == Routing::one_toggle_q1 ? 1 : level;
-    for (int q = 1; q <= maximum_q; ++q) {
+    const int first_q = fixed_q > 0 ? fixed_q : 1;
+    const int last_q = fixed_q > 0 ? fixed_q : maximum_q;
+    if (first_q > maximum_q) {
+        return true;
+    }
+    for (int q = first_q; q <= last_q; ++q) {
         for (int a = 0; a <= level; ++a) {
             std::vector<Count> demand(static_cast<std::size_t>(masks), 0);
             std::vector<Count> capacity(static_cast<std::size_t>(masks), 0);
@@ -229,8 +242,22 @@ bool inspect_word(
                 total_demand += demand[static_cast<std::size_t>(mask)];
                 total_capacity += capacity[static_cast<std::size_t>(mask)];
             }
-            if (total_demand == 0 || total_demand > total_capacity) {
+            if (total_demand == 0) {
                 continue;
+            }
+            if (total_demand > total_capacity) {
+                if (!require_total_capacity) {
+                    continue;
+                }
+                std::cout << "FAIL level=" << level << " labels=";
+                for (int label : labels) {
+                    std::cout << label << ',';
+                }
+                std::cout << " q=" << q << " a=" << a
+                          << " total_demand=" << total_demand
+                          << " total_capacity=" << total_capacity
+                          << " global_capacity_deficit\n";
+                return false;
             }
 
             const int source = 2 * masks;
@@ -324,7 +351,167 @@ bool enumerate_words(
     return true;
 }
 
+bool enumerate_simple_current_family(
+    std::vector<int>& labels,
+    int position,
+    int low_factors,
+    int maximum_low_label,
+    int level,
+    std::uint64_t& checked
+) {
+    if (position == low_factors) {
+        ++checked;
+        return inspect_word(labels, level, false, Routing::two_import);
+    }
+    const int lower = position == 0
+        ? 1
+        : labels[static_cast<std::size_t>(position - 1)];
+    for (int label = lower; label <= maximum_low_label; ++label) {
+        labels[static_cast<std::size_t>(position)] = label;
+        if (!enumerate_simple_current_family(
+                labels, position + 1, low_factors, maximum_low_label,
+                level, checked
+            )) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool enumerate_outer_defect(
+    std::vector<int>& labels,
+    int position,
+    int maximum_label,
+    int defect,
+    int level,
+    std::uint64_t& checked
+) {
+    if (position == static_cast<int>(labels.size())) {
+        int total = 0;
+        for (const int label : labels) {
+            total += label;
+        }
+        const int q = total - defect;
+        if (q < 1 || q > level) {
+            return true;
+        }
+        ++checked;
+        return inspect_word(
+            labels, level, false, Routing::two_import, q
+        );
+    }
+    const int lower = position == 0
+        ? 1
+        : labels[static_cast<std::size_t>(position - 1)];
+    for (int label = lower; label <= maximum_label; ++label) {
+        labels[static_cast<std::size_t>(position)] = label;
+        if (!enumerate_outer_defect(
+                labels, position + 1, maximum_label, defect, level, checked
+            )) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main(int argc, char** argv) {
+    if (argc >= 5
+        && std::string(argv[1]) == "--two-import-outer-defect-word") {
+        const int level = std::stoi(argv[2]);
+        const int defect = std::stoi(argv[3]);
+        if (level < 1 || defect < 1) {
+            std::cerr << "usage: --two-import-outer-defect-word "
+                         "LEVEL DEFECT LABEL...\n";
+            return 2;
+        }
+        std::vector<int> labels;
+        int total = 0;
+        for (int index = 4; index < argc; ++index) {
+            const int label = std::stoi(argv[index]);
+            if (label < 1 || label > level) {
+                std::cerr << "labels must lie in [1, LEVEL]\n";
+                return 2;
+            }
+            labels.push_back(label);
+            total += label;
+        }
+        const int q = total - defect;
+        if (q < 1 || q > level) {
+            std::cerr << "outer-defect label must lie in [1, LEVEL]\n";
+            return 2;
+        }
+        const bool passed = inspect_word(
+            labels, level, true, Routing::two_import, q, true
+        );
+        return passed ? 0 : 1;
+    }
+    if (argc == 6
+        && std::string(argv[1]) == "--two-import-outer-defect") {
+        const int level = std::stoi(argv[2]);
+        const int factors = std::stoi(argv[3]);
+        const int maximum_label = std::stoi(argv[4]);
+        const int defect = std::stoi(argv[5]);
+        if (level < 1 || factors < 1 || maximum_label < 1
+            || maximum_label > level || defect < 1) {
+            std::cerr << "usage: --two-import-outer-defect "
+                         "LEVEL FACTORS MAXIMUM_LABEL DEFECT\n";
+            return 2;
+        }
+        std::vector<int> labels(static_cast<std::size_t>(factors), 1);
+        std::uint64_t checked = 0U;
+        if (!enumerate_outer_defect(
+                labels, 0, maximum_label, defect, level, checked
+            )) {
+            return 1;
+        }
+        std::cout << "PASS two_import_outer_defect"
+                  << " level=" << level
+                  << " factors=" << factors
+                  << " maximum_label=" << maximum_label
+                  << " defect=" << defect
+                  << " words=" << checked << '\n';
+        return 0;
+    }
+    if ((argc == 5 || argc == 6)
+        && std::string(argv[1]) == "--two-import-simple-current-family") {
+        const int level = std::stoi(argv[2]);
+        const int low_factors = std::stoi(argv[3]);
+        const int maximum_low_label = std::stoi(argv[4]);
+        const int maximum_offset = level - maximum_low_label;
+        const int requested_offset = argc == 6 ? std::stoi(argv[5]) : 0;
+        if (level < 2 || low_factors < 1 || maximum_low_label < 1
+            || maximum_low_label >= level || requested_offset < 0
+            || requested_offset > maximum_offset) {
+            std::cerr << "usage: --two-import-simple-current-family "
+                         "LEVEL LOW_FACTORS MAXIMUM_LOW_LABEL [OFFSET]\n";
+            return 2;
+        }
+        std::uint64_t checked = 0U;
+        const int first_offset = requested_offset == 0 ? 1 : requested_offset;
+        const int last_offset = requested_offset == 0
+            ? maximum_offset
+            : requested_offset;
+        for (int offset = first_offset; offset <= last_offset; ++offset) {
+            std::vector<int> labels(
+                static_cast<std::size_t>(low_factors + 2), 1
+            );
+            labels[static_cast<std::size_t>(low_factors)] = level - offset;
+            labels[static_cast<std::size_t>(low_factors + 1)] = level;
+            if (!enumerate_simple_current_family(
+                    labels, 0, low_factors, maximum_low_label,
+                    level, checked
+                )) {
+                return 1;
+            }
+        }
+        std::cout << "PASS two_import_simple_current_family"
+                  << " level=" << level
+                  << " low_factors=" << low_factors
+                  << " maximum_low_label=" << maximum_low_label
+                  << " offset=" << requested_offset
+                  << " words=" << checked << '\n';
+        return 0;
+    }
     if (argc >= 2
         && (std::string(argv[1]) == "--word"
             || std::string(argv[1]) == "--one-import-word"

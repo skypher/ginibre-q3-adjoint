@@ -55,6 +55,39 @@ State update(const State& state, const int label) {
     return result;
 }
 
+State mixed_update(const State& state, const int first_label,
+                   const int second_label) {
+    State result;
+    for (const auto& [wedge, coefficient] : state) {
+        const auto [first, second] = wedge;
+        for (int first_output = std::abs(first - first_label);
+             first_output <= first + first_label;
+             first_output += 2) {
+            for (int second_output = std::abs(second - second_label);
+                 second_output <= second + second_label;
+                 second_output += 2) {
+                add_wedge(result, first_output, second_output, coefficient);
+            }
+        }
+        for (int first_output = std::abs(first - second_label);
+             first_output <= first + second_label;
+             first_output += 2) {
+            for (int second_output = std::abs(second - first_label);
+                 second_output <= second + first_label;
+                 second_output += 2) {
+                add_wedge(result, first_output, second_output, coefficient);
+            }
+        }
+    }
+    return result;
+}
+
+void add_state(State& destination, const State& source) {
+    for (const auto& [wedge, coefficient] : source) {
+        add_wedge(destination, wedge.first, wedge.second, coefficient);
+    }
+}
+
 State source_curl_seed(const int q, const int r) {
     State answer;
     State fundamental;
@@ -118,15 +151,17 @@ int main(int argc, char** argv) {
             throw std::runtime_error(
                 "usage: search_su2_two_odd_twisted_cone "
                 "MAXIMUM_ODD_LABEL MAXIMUM_EVEN_LABEL MAXIMUM_EVEN_FACTORS "
-                "[--dominance]"
+                "[--dominance|--cross|--recurrence]"
             );
         }
         const int maximum_odd = std::stoi(argv[1]);
         const int maximum_even = std::stoi(argv[2]);
         const int maximum_factors = std::stoi(argv[3]);
-        const bool dominance_mode = argc == 5
-            && std::string(argv[4]) == "--dominance";
-        if (argc == 5 && !dominance_mode) {
+        const std::string mode = argc == 5 ? std::string{argv[4]} : "";
+        const bool dominance_mode = mode == "--dominance";
+        const bool cross_mode = mode == "--cross";
+        const bool recurrence_mode = mode == "--recurrence";
+        if (argc == 5 && !dominance_mode && !cross_mode && !recurrence_mode) {
             throw std::runtime_error("unknown mode");
         }
         if (maximum_odd < 1 || maximum_even < 2 || maximum_factors < 0) {
@@ -161,7 +196,71 @@ int main(int argc, char** argv) {
                     for (const int label : word) {
                         current = update(current, label);
                     }
-                    if (dominance_mode) {
+                    if (recurrence_mode) {
+                        for (int first_label = 2;
+                             first_label <= maximum_even;
+                             first_label += 2) {
+                            for (int second_label = 2;
+                                 second_label <= maximum_even;
+                                 second_label += 2) {
+                                const State left = update(
+                                    update(current, first_label), second_label
+                                );
+                                State right = mixed_update(
+                                    current, first_label, second_label
+                                );
+                                for (int fused = std::abs(
+                                         first_label - second_label
+                                     );
+                                     fused <= first_label + second_label;
+                                     fused += 2) {
+                                    add_state(right, update(current, fused));
+                                }
+                                if (left != right) {
+                                    std::cout << "RECURRENCE_FAIL q=" << q
+                                              << " r=" << r
+                                              << " even_word=";
+                                    print_word(word);
+                                    std::cout << " first=" << first_label
+                                              << " second=" << second_label
+                                              << '\n';
+                                    std::exit(EXIT_FAILURE);
+                                }
+                            }
+                        }
+                    } else if (cross_mode) {
+                        int support = q + r + 1;
+                        for (const int label : word) {
+                            support += label;
+                        }
+                        for (int first_label = 2;
+                             first_label <= maximum_even;
+                             first_label += 2) {
+                            for (int second_label = 2;
+                                 second_label <= maximum_even;
+                                 second_label += 2) {
+                                const State cross = mixed_update(
+                                    current, first_label, second_label
+                                );
+                                for (int a = 1;
+                                     a <= support + first_label + second_label;
+                                     a += 2) {
+                                    const cpp_int value = twisted_at(cross, a, 0);
+                                    if (value < 0) {
+                                        std::cout << "CROSS_FAIL q=" << q
+                                                  << " r=" << r
+                                                  << " even_word=";
+                                        print_word(word);
+                                        std::cout << " first=" << first_label
+                                                  << " second=" << second_label
+                                                  << " a=" << a
+                                                  << " value=" << value << '\n';
+                                        std::exit(EXIT_SUCCESS);
+                                    }
+                                }
+                            }
+                        }
+                    } else if (dominance_mode) {
                         int support = q + r + 1;
                         for (const int label : word) {
                             support += label;
@@ -226,9 +325,13 @@ int main(int argc, char** argv) {
                 visit(visit, 2);
             }
         }
-        std::cout << (dominance_mode
-                          ? "SU2_TWO_ODD_INTERVAL_DOMINANCE PASS states="
-                          : "SU2_TWO_ODD_TWISTED_CONE PASS states=")
+        std::cout << (recurrence_mode
+                          ? "SU2_TWO_ODD_CUMULATIVE_RECURRENCE PASS states="
+                          : (cross_mode
+                              ? "SU2_TWO_ODD_CROSS_CONE PASS states="
+                              : (dominance_mode
+                                  ? "SU2_TWO_ODD_INTERVAL_DOMINANCE PASS states="
+                                  : "SU2_TWO_ODD_TWISTED_CONE PASS states=")))
                   << states
                   << " source_identities=" << source_identities
                   << " maximum_odd_label=" << maximum_odd

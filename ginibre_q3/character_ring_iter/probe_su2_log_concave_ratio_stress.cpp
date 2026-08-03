@@ -307,6 +307,7 @@ int main(int argc, char** argv) {
     int max_label = 7;
     int maximum_length = 14;
     int maximum_ratio = 2;
+    bool complete_wall_only = false;
     try {
         if (argc >= 2) {
             samples = parse_positive(argv[1], "samples");
@@ -325,10 +326,13 @@ int main(int argc, char** argv) {
         if (argc >= 5) {
             maximum_ratio = parse_positive(argv[4], "maximum_ratio");
         }
-        if (argc > 5) {
+        if (argc == 6 && std::string(argv[5]) == "--complete-wall-only") {
+            complete_wall_only = true;
+        } else if (argc > 5) {
             throw std::invalid_argument(
                 "usage: probe_su2_log_concave_ratio_stress "
                 "[samples] [max_label] [maximum_length] [maximum_ratio] "
+                "[--complete-wall-only] "
                 "| --replay-complete-wall-gap "
                 "| --replay-complete-wall-gap-tail"
             );
@@ -444,124 +448,130 @@ int main(int argc, char** argv) {
                         transforms[static_cast<std::size_t>(a)],
                         size
                     );
-                    std::vector<Integer> gap_energy(
-                        static_cast<std::size_t>(size)
-                    );
-                    int first_negative_gap = -1;
-                    Integer first_negative_gap_value = 0;
-                    for (int gap = 1; gap < size; ++gap) {
-                        Integer energy = 0;
-                        for (int left = 0; left + gap < size; ++left) {
-                            const int right = left + gap;
-                            const Integer q_wedge =
-                                at(profile, left)
-                                    * at(
-                                        transforms[
-                                            static_cast<std::size_t>(q)
-                                        ],
-                                        right
-                                    )
-                                - at(profile, right)
-                                    * at(
-                                        transforms[
-                                            static_cast<std::size_t>(q)
-                                        ],
-                                        left
-                                    );
-                            const Integer a_wedge =
-                                at(profile, left)
-                                    * at(
-                                        transforms[
-                                            static_cast<std::size_t>(a)
-                                        ],
-                                        right
-                                    )
-                                - at(profile, right)
-                                    * at(
-                                        transforms[
-                                            static_cast<std::size_t>(a)
-                                        ],
-                                        left
-                                    );
-                            energy += q_wedge * a_wedge;
-                        }
-                        gap_energy[static_cast<std::size_t>(gap)] = energy;
-                        complete_wall_gap_energies.fetch_add(
-                            1,
-                            std::memory_order_relaxed
+                    if (!complete_wall_only) {
+                        std::vector<Integer> gap_energy(
+                            static_cast<std::size_t>(size)
                         );
-                        if (energy < 0) {
-                            complete_wall_gap_failures.fetch_add(
+                        int first_negative_gap = -1;
+                        Integer first_negative_gap_value = 0;
+                        for (int gap = 1; gap < size; ++gap) {
+                            Integer energy = 0;
+                            for (int left = 0; left + gap < size; ++left) {
+                                const int right = left + gap;
+                                const Integer q_wedge =
+                                    at(profile, left)
+                                        * at(
+                                            transforms[
+                                                static_cast<std::size_t>(q)
+                                            ],
+                                            right
+                                        )
+                                    - at(profile, right)
+                                        * at(
+                                            transforms[
+                                                static_cast<std::size_t>(q)
+                                            ],
+                                            left
+                                        );
+                                const Integer a_wedge =
+                                    at(profile, left)
+                                        * at(
+                                            transforms[
+                                                static_cast<std::size_t>(a)
+                                            ],
+                                            right
+                                        )
+                                    - at(profile, right)
+                                        * at(
+                                            transforms[
+                                                static_cast<std::size_t>(a)
+                                            ],
+                                            left
+                                        );
+                                energy += q_wedge * a_wedge;
+                            }
+                            gap_energy[static_cast<std::size_t>(gap)] = energy;
+                            complete_wall_gap_energies.fetch_add(
                                 1,
                                 std::memory_order_relaxed
                             );
-                            if (first_negative_gap < 0) {
-                                first_negative_gap = gap;
-                                first_negative_gap_value = energy;
+                            if (energy < 0) {
+                                complete_wall_gap_failures.fetch_add(
+                                    1,
+                                    std::memory_order_relaxed
+                                );
+                                if (first_negative_gap < 0) {
+                                    first_negative_gap = gap;
+                                    first_negative_gap_value = energy;
+                                }
+                            }
+                        }
+                        if (first_negative_gap >= 0) {
+                            const Integer complete_current =
+                                pp.front() * qa.front() -
+                                pq.front() * pa.front();
+                            std::lock_guard<std::mutex> lock(failure_mutex);
+                            if (
+                                gap_failure.sample < 0
+                                || sample < gap_failure.sample
+                            ) {
+                                gap_failure = {
+                                    sample,
+                                    q,
+                                    a,
+                                    first_negative_gap,
+                                    denominator,
+                                    numerators,
+                                    first_negative_gap_value,
+                                    complete_current,
+                                    profile,
+                                    gap_energy
+                                };
+                            }
+                        }
+                        Integer complete_gap_tail = 0;
+                        for (int gap = size - 1; gap >= 1; --gap) {
+                            complete_gap_tail +=
+                                gap_energy[static_cast<std::size_t>(gap)];
+                            complete_wall_gap_tails.fetch_add(
+                                1,
+                                std::memory_order_relaxed
+                            );
+                            if (complete_gap_tail < 0) {
+                                complete_wall_gap_tail_failures.fetch_add(
+                                    1,
+                                    std::memory_order_relaxed
+                                );
+                            }
+                        }
+                        Integer complete_gap_prefix = 0;
+                        for (int gap = 1; gap < size; ++gap) {
+                            complete_gap_prefix +=
+                                gap_energy[static_cast<std::size_t>(gap)];
+                            complete_wall_gap_prefixes.fetch_add(
+                                1,
+                                std::memory_order_relaxed
+                            );
+                            if (complete_gap_prefix < 0) {
+                                complete_wall_gap_prefix_failures.fetch_add(
+                                    1,
+                                    std::memory_order_relaxed
+                                );
                             }
                         }
                     }
-                    if (first_negative_gap >= 0) {
-                        const Integer complete_current =
-                            pp.front() * qa.front() -
-                            pq.front() * pa.front();
-                        std::lock_guard<std::mutex> lock(failure_mutex);
-                        if (
-                            gap_failure.sample < 0
-                            || sample < gap_failure.sample
-                        ) {
-                            gap_failure = {
-                                sample,
-                                q,
-                                a,
-                                first_negative_gap,
-                                denominator,
-                                numerators,
-                                first_negative_gap_value,
-                                complete_current,
-                                profile,
-                                gap_energy
-                            };
-                        }
-                    }
-                    Integer complete_gap_tail = 0;
-                    for (int gap = size - 1; gap >= 1; --gap) {
-                        complete_gap_tail +=
-                            gap_energy[static_cast<std::size_t>(gap)];
-                        complete_wall_gap_tails.fetch_add(
-                            1,
-                            std::memory_order_relaxed
-                        );
-                        if (complete_gap_tail < 0) {
-                            complete_wall_gap_tail_failures.fetch_add(
-                                1,
-                                std::memory_order_relaxed
-                            );
-                        }
-                    }
-                    Integer complete_gap_prefix = 0;
-                    for (int gap = 1; gap < size; ++gap) {
-                        complete_gap_prefix +=
-                            gap_energy[static_cast<std::size_t>(gap)];
-                        complete_wall_gap_prefixes.fetch_add(
-                            1,
-                            std::memory_order_relaxed
-                        );
-                        if (complete_gap_prefix < 0) {
-                            complete_wall_gap_prefix_failures.fetch_add(
-                                1,
-                                std::memory_order_relaxed
-                            );
-                        }
-                    }
-                    for (int cutoff = 0; cutoff <= size; ++cutoff) {
+                    const int cutoff_limit = complete_wall_only ? 0 : size;
+                    for (int cutoff = 0; cutoff <= cutoff_limit; ++cutoff) {
                         const Integer determinant =
                             pp[static_cast<std::size_t>(cutoff)]
                                 * qa[static_cast<std::size_t>(cutoff)]
                             - pq[static_cast<std::size_t>(cutoff)]
                                 * pa[static_cast<std::size_t>(cutoff)];
                         determinants.fetch_add(1, std::memory_order_relaxed);
-                        if (determinant < 0) {
+                        if (
+                            determinant < 0
+                            && (!complete_wall_only || cutoff == 0)
+                        ) {
                             counterexamples.fetch_add(
                                 1,
                                 std::memory_order_relaxed
@@ -662,7 +672,8 @@ int main(int argc, char** argv) {
         << " complete_wall_gap_prefix_failures="
         << complete_wall_gap_prefix_failures.load()
         << " maximum_length=" << maximum_length
-        << " maximum_ratio=" << maximum_ratio;
+        << " maximum_ratio=" << maximum_ratio
+        << " complete_wall_only=" << (complete_wall_only ? 1 : 0);
     if (gap_failure.sample >= 0) {
         std::cout
             << " first_complete_wall_gap={sample=" << gap_failure.sample

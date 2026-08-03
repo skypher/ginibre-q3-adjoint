@@ -8,16 +8,24 @@
 #include <utility>
 #include <vector>
 
+#include <boost/math/constants/constants.hpp>
+#include <boost/multiprecision/cpp_dec_float.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
 
 namespace {
 
 using boost::multiprecision::cpp_int;
+using HighPrecision = boost::multiprecision::cpp_dec_float_100;
 using IntegerMatrix = std::vector<std::vector<cpp_int>>;
 
 struct Atom {
     long double eigenvalue = 0.0L;
     long double residue = 0.0L;
+};
+
+struct PreciseAtom {
+    HighPrecision eigenvalue = 0;
+    HighPrecision residue = 0;
 };
 
 struct ShiftResult {
@@ -45,6 +53,68 @@ struct ConvexResult {
     long double cutoff = 0.0L;
     long double scale = 0.0L;
 };
+
+struct ExactMinorResult {
+    std::size_t tested = 0U;
+    std::size_t negative = 0U;
+    bool has_minimum = false;
+    cpp_int minimum = 0;
+    int level = 0;
+    int factor = 0;
+    int target = 0;
+};
+
+struct PreciseTailResult {
+    std::size_t tested_tails = 0U;
+    std::size_t negative_tails = 0U;
+    bool has_witness = false;
+    HighPrecision witness_tail = 0;
+    HighPrecision cutoff_eigenvalue = 0;
+    HighPrecision scale = 0;
+    int level = 0;
+    int factor = 0;
+    int target = 0;
+};
+
+bool same_precise_eigenvalue(
+    const HighPrecision& left,
+    const HighPrecision& right
+) {
+    using boost::multiprecision::abs;
+    const HighPrecision left_absolute = abs(left);
+    const HighPrecision right_absolute = abs(right);
+    const HighPrecision scale = std::max(
+        HighPrecision(1),
+        std::max(left_absolute, right_absolute)
+    );
+    return abs(left - right) <= HighPrecision("1e-70") * scale;
+}
+
+void record_precise_tail(
+    PreciseTailResult& result,
+    const HighPrecision& tail,
+    const HighPrecision& scale,
+    const HighPrecision& cutoff_eigenvalue,
+    int level,
+    int factor,
+    int target
+) {
+    ++result.tested_tails;
+    const HighPrecision tolerance = HighPrecision("1e-60")
+        * std::max(HighPrecision(1), scale);
+    if (tail < -tolerance) {
+        ++result.negative_tails;
+        if (!result.has_witness || tail < result.witness_tail) {
+            result.has_witness = true;
+            result.witness_tail = tail;
+            result.cutoff_eigenvalue = cutoff_eigenvalue;
+            result.scale = scale;
+            result.level = level;
+            result.factor = factor;
+            result.target = target;
+        }
+    }
+}
 
 void record_convex_call(
     ConvexResult& result,
@@ -213,6 +283,34 @@ std::vector<long double> mode_vector(
     return result;
 }
 
+std::vector<HighPrecision> precise_mode_vector(
+    int level,
+    int half_level,
+    int mode
+) {
+    using boost::multiprecision::sin;
+    using boost::multiprecision::sqrt;
+    const HighPrecision pi = boost::math::constants::pi<HighPrecision>();
+    const HighPrecision normalization = sqrt(
+        HighPrecision(2) / HighPrecision(level + 2)
+    );
+    const HighPrecision pairing_factor = mode == half_level
+        ? HighPrecision(1)
+        : sqrt(HighPrecision(2));
+    std::vector<HighPrecision> result(
+        static_cast<std::size_t>(half_level + 1)
+    );
+    for (int vertex = 0; vertex <= half_level; ++vertex) {
+        result[static_cast<std::size_t>(vertex)] = pairing_factor
+            * normalization
+            * sin(
+                HighPrecision((2 * vertex + 1) * (mode + 1))
+                * pi / HighPrecision(level + 2)
+            );
+    }
+    return result;
+}
+
 long double fusion_eigenvalue(
     int level,
     int factor,
@@ -230,6 +328,18 @@ long double fusion_eigenvalue(
         / std::sin(theta);
 }
 
+HighPrecision precise_fusion_eigenvalue(
+    int level,
+    int factor,
+    int mode
+) {
+    using boost::multiprecision::sin;
+    const HighPrecision pi = boost::math::constants::pi<HighPrecision>();
+    const HighPrecision theta = HighPrecision(mode + 1)
+        * pi / HighPrecision(level + 2);
+    return sin(HighPrecision(2 * factor + 1) * theta) / sin(theta);
+}
+
 long double wedge_coordinate(
     const std::vector<long double>& left_mode,
     const std::vector<long double>& right_mode,
@@ -243,38 +353,61 @@ long double wedge_coordinate(
             * left_mode[static_cast<std::size_t>(second)];
 }
 
+HighPrecision precise_wedge_coordinate(
+    const std::vector<HighPrecision>& left_mode,
+    const std::vector<HighPrecision>& right_mode,
+    int first,
+    int second
+) {
+    return left_mode[static_cast<std::size_t>(first)]
+            * right_mode[static_cast<std::size_t>(second)]
+        - right_mode[static_cast<std::size_t>(first)]
+            * left_mode[static_cast<std::size_t>(second)];
+}
+
+HighPrecision integer_power(HighPrecision base, int exponent) {
+    HighPrecision result = 1;
+    while (exponent > 0) {
+        if ((exponent & 1) != 0) {
+            result *= base;
+        }
+        base *= base;
+        exponent /= 2;
+    }
+    return result;
+}
+
 void crosscheck_moment(
-    const std::vector<Atom>& groups,
+    const std::vector<PreciseAtom>& atoms,
     int shift,
     const cpp_int& exact,
     int level,
     int factor,
     int target
 ) {
-    long double moment = 0.0L;
-    long double moment_scale = 0.0L;
-    for (const Atom& group : groups) {
-        const long double summand =
-            group.residue * std::pow(group.eigenvalue, shift);
+    using boost::multiprecision::abs;
+    HighPrecision moment = 0;
+    HighPrecision moment_scale = 0;
+    for (const PreciseAtom& atom : atoms) {
+        const HighPrecision summand = atom.residue
+            * integer_power(atom.eigenvalue, shift);
         moment += summand;
-        moment_scale += std::abs(summand);
+        moment_scale += abs(summand);
     }
-    const long double expected = exact.convert_to<long double>();
-    const long double tolerance =
-        2.0e-9L
-        * std::max(
-            1.0L,
-            std::max(std::abs(expected), moment_scale)
-        );
-    if (std::abs(moment - expected) > tolerance) {
+    const HighPrecision expected(exact.convert_to<std::string>());
+    const HighPrecision expected_absolute = abs(expected);
+    const HighPrecision scale = std::max(expected_absolute, moment_scale);
+    const HighPrecision tolerance = HighPrecision("1e-70")
+        * std::max(HighPrecision(1), scale);
+    if (abs(moment - expected) > tolerance) {
         throw std::runtime_error(
-            "spectral moment disagrees with exact fusion minor"
+            "high-precision spectral moment disagrees with exact fusion minor"
             " at level=" + std::to_string(level)
             + " factor=" + std::to_string(factor)
             + " target=" + std::to_string(target)
             + " shift=" + std::to_string(shift)
             + " moment="
-            + std::to_string(static_cast<double>(moment))
+            + moment.convert_to<std::string>()
             + " exact=" + exact.convert_to<std::string>()
         );
     }
@@ -330,12 +463,18 @@ int main(int argc, char** argv) {
         std::vector<ConvexResult> affine_power_convex_results(
             static_cast<std::size_t>(maximum_shift + 1)
         );
+        std::vector<ExactMinorResult> exact_minor_results(
+            static_cast<std::size_t>(maximum_shift + 1)
+        );
+        std::vector<PreciseTailResult> precise_affine_tail_results(
+            static_cast<std::size_t>(maximum_shift + 1)
+        );
         ConvexResult closure_anchor_interior_log_convex;
         ConvexResult closure_anchor_interior_power_convex;
         std::size_t parameter_rows = 0U;
         std::size_t target_rows = 0U;
         std::size_t grouped_atoms = 0U;
-        std::size_t exact_moment_crosschecks = 0U;
+        std::size_t high_precision_moment_crosschecks = 0U;
 
         for (
             int level = first_level;
@@ -344,10 +483,15 @@ int main(int argc, char** argv) {
         ) {
             const int half_level = level / 2;
             std::vector<std::vector<long double>> modes;
+            std::vector<std::vector<HighPrecision>> precise_modes;
             modes.reserve(static_cast<std::size_t>(half_level + 1));
+            precise_modes.reserve(static_cast<std::size_t>(half_level + 1));
             for (int mode = 0; mode <= half_level; ++mode) {
                 modes.push_back(
                     mode_vector(level, half_level, mode)
+                );
+                precise_modes.push_back(
+                    precise_mode_vector(level, half_level, mode)
                 );
             }
 
@@ -360,9 +504,14 @@ int main(int argc, char** argv) {
                 std::vector<long double> eigenvalues(
                     static_cast<std::size_t>(half_level + 1)
                 );
+                std::vector<HighPrecision> precise_eigenvalues(
+                    static_cast<std::size_t>(half_level + 1)
+                );
                 for (int mode = 0; mode <= half_level; ++mode) {
                     eigenvalues[static_cast<std::size_t>(mode)] =
                         fusion_eigenvalue(level, factor, mode);
+                    precise_eigenvalues[static_cast<std::size_t>(mode)] =
+                        precise_fusion_eigenvalue(level, factor, mode);
                 }
 
                 const IntegerMatrix fusion =
@@ -387,6 +536,7 @@ int main(int argc, char** argv) {
                      ++target) {
                     ++target_rows;
                     std::vector<Atom> atoms;
+                    std::vector<PreciseAtom> precise_atoms;
                     for (int left = 0;
                          left <= half_level;
                          ++left) {
@@ -428,6 +578,94 @@ int main(int argc, char** argv) {
                                     source * destination
                                 }
                             );
+                            const HighPrecision precise_product =
+                                precise_eigenvalues[
+                                    static_cast<std::size_t>(left)
+                                ]
+                                * precise_eigenvalues[
+                                    static_cast<std::size_t>(right)
+                                ];
+                            const HighPrecision precise_source =
+                                precise_wedge_coordinate(
+                                    precise_modes[
+                                        static_cast<std::size_t>(left)
+                                    ],
+                                    precise_modes[
+                                        static_cast<std::size_t>(right)
+                                    ],
+                                    0,
+                                    factor
+                                );
+                            const HighPrecision precise_destination =
+                                precise_wedge_coordinate(
+                                    precise_modes[
+                                        static_cast<std::size_t>(left)
+                                    ],
+                                    precise_modes[
+                                        static_cast<std::size_t>(right)
+                                    ],
+                                    0,
+                                    target
+                                );
+                            precise_atoms.push_back(
+                                PreciseAtom{
+                                    precise_product * precise_product,
+                                    precise_source * precise_destination
+                                }
+                            );
+                        }
+                    }
+                    std::sort(
+                        precise_atoms.begin(),
+                        precise_atoms.end(),
+                        [](const PreciseAtom& left,
+                           const PreciseAtom& right) {
+                            return left.eigenvalue < right.eigenvalue;
+                        }
+                    );
+                    std::vector<PreciseAtom> precise_groups;
+                    for (const PreciseAtom& atom : precise_atoms) {
+                        if (
+                            precise_groups.empty()
+                            || !same_precise_eigenvalue(
+                                precise_groups.back().eigenvalue,
+                                atom.eigenvalue
+                            )
+                        ) {
+                            precise_groups.push_back(atom);
+                        } else {
+                            precise_groups.back().residue += atom.residue;
+                        }
+                    }
+                    for (int shift = 0;
+                         shift <= maximum_shift;
+                         ++shift) {
+                        if (2 * shift * factor <= half_level) {
+                            continue;
+                        }
+                        HighPrecision tail = 0;
+                        HighPrecision scale = 0;
+                        for (std::size_t index = precise_groups.size();
+                             index > 0U;
+                             --index) {
+                            const PreciseAtom& atom =
+                                precise_groups[index - 1U];
+                            const HighPrecision summand = atom.residue
+                                * integer_power(atom.eigenvalue, shift);
+                            tail += summand;
+                            using boost::multiprecision::abs;
+                            scale += abs(summand);
+                            record_precise_tail(
+                                precise_affine_tail_results[
+                                    static_cast<std::size_t>(shift)
+                                ],
+                                tail,
+                                scale,
+                                atom.eigenvalue,
+                                level,
+                                factor,
+                                target
+                            );
                         }
                     }
                     std::sort(
@@ -463,15 +701,30 @@ int main(int argc, char** argv) {
                             factor,
                             target
                         );
+                        ExactMinorResult& exact_result = exact_minor_results[
+                            static_cast<std::size_t>(shift)
+                        ];
+                        ++exact_result.tested;
+                        if (!exact_result.has_minimum
+                            || exact < exact_result.minimum) {
+                            exact_result.has_minimum = true;
+                            exact_result.minimum = exact;
+                            exact_result.level = level;
+                            exact_result.factor = factor;
+                            exact_result.target = target;
+                        }
+                        if (exact < 0) {
+                            ++exact_result.negative;
+                        }
                         crosscheck_moment(
-                            groups,
+                            precise_atoms,
                             shift,
                             exact,
                             level,
                             factor,
                             target
                         );
-                        ++exact_moment_crosschecks;
+                        ++high_precision_moment_crosschecks;
 
                         long double tail = 0.0L;
                         long double scale = 0.0L;
@@ -785,10 +1038,27 @@ int main(int argc, char** argv) {
             << " parameter_rows=" << parameter_rows
             << " target_rows=" << target_rows
             << " grouped_atoms=" << grouped_atoms
-            << " exact_moment_crosschecks="
-            << exact_moment_crosschecks
+            << " high_precision_moment_crosschecks="
+            << high_precision_moment_crosschecks
             << '\n';
         for (int shift = 0; shift <= maximum_shift; ++shift) {
+            const ExactMinorResult& exact_result = exact_minor_results[
+                static_cast<std::size_t>(shift)
+            ];
+            std::cout
+                << "SU2_FINITE_ANCHORED_EXACT_MINOR_SHIFT"
+                << " shift=" << shift
+                << " tested=" << exact_result.tested
+                << " negative=" << exact_result.negative
+                << " minimum=" << exact_result.minimum
+                << " worst_level=" << exact_result.level
+                << " worst_factor=" << exact_result.factor
+                << " worst_target=" << exact_result.target
+                << " result="
+                << (exact_result.negative == 0U
+                    ? "NO_NEGATIVE_MINOR"
+                    : "NEGATIVE_MINOR")
+                << '\n';
             const ShiftResult& result =
                 results[static_cast<std::size_t>(shift)];
             std::cout
@@ -842,6 +1112,36 @@ int main(int argc, char** argv) {
                 << " result="
                 << (
                     affine_result.negative_tails == 0U
+                        ? "NO_NEGATIVE_UPPER_TAIL"
+                        : "NEGATIVE_UPPER_TAIL"
+                )
+                << '\n';
+            const PreciseTailResult& precise_affine_result =
+                precise_affine_tail_results[
+                    static_cast<std::size_t>(shift)
+                ];
+            std::cout
+                << "SU2_FINITE_ANCHORED_HIGH_PRECISION_AFFINE_TAIL_SHIFT"
+                << " shift=" << shift
+                << " tested_tails="
+                << precise_affine_result.tested_tails
+                << " negative_tails="
+                << precise_affine_result.negative_tails;
+            if (precise_affine_result.has_witness) {
+                std::cout
+                    << " worst_level=" << precise_affine_result.level
+                    << " worst_factor=" << precise_affine_result.factor
+                    << " worst_target=" << precise_affine_result.target
+                    << " worst_tail="
+                    << precise_affine_result.witness_tail
+                    << " worst_cutoff_eigenvalue="
+                    << precise_affine_result.cutoff_eigenvalue
+                    << " worst_scale=" << precise_affine_result.scale;
+            }
+            std::cout
+                << " result="
+                << (
+                    precise_affine_result.negative_tails == 0U
                         ? "NO_NEGATIVE_UPPER_TAIL"
                         : "NEGATIVE_UPPER_TAIL"
                 )

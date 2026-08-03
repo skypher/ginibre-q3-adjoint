@@ -6939,6 +6939,61 @@ in `(P5A.32)` and then sum over the negative cuts in `(ASI)`.  The right
 side is `L_n(C_*)-w(C_*)` by `(P5A.28)` and its zero-channel identity.
 QED.
 
+The signed sum in `(ASI)` cannot be strengthened by paying each positive
+four-block minor independently.  Cancellation between distinct negative
+cuts is already necessary at a small finite level.
+
+**Proposition 5A8D1 (positive-minor payment obstruction).**  In
+`SU(2)_11`, take the indexed label list
+
+```text
+[1,5,11,9,3,4,8,10,7,6,2]
+```
+
+and put the minus positions at indices
+
+```text
+{1,2,3,4,7,9}={5,11,9,3,10,6}.
+```
+
+The maximal negative cut selected in increasing mask order is
+
+```text
+C_*={11,4,7},                 w(C_*)=105.
+```
+
+Put
+
+```text
+P^+(C_*)=
+ sum_(negative D != C_*) max{w(D)-w(C_* triangle D),0}.
+```
+
+Then the exact retained nonzero anchor payment and the two defect sums are
+
+```text
+P^+(C_*)=1585,
+sum_(negative D != C_*){w(D)-w(C_* triangle D)}=-449,
+L_11(C_*)-w(C_*)=1482.                         (P5A.36a)
+```
+
+Thus `P^+(C_*)>L_11(C_*)-w(C_*)`, while `(ASI)` itself holds strictly.
+In particular, the required global-payment lemma must pair positive and
+negative switching defects before applying the nonzero-channel reservoir.
+
+**Proof.**  The strict C++ replay
+
+```text
+character_ring_iter/probe_su2_positive_minor_payment --replay
+```
+
+constructs every subset fusion vector by the exact finite recurrence,
+selects the maximal negative cut, and evaluates all three integers in
+`(P5A.36a)` with signed `__int128` arithmetic.  It fails closed unless
+the selected mask is `292`, its cut weight is `105`, and the displayed
+integers agree.  The strict inequality is `1585>1482`; the signed sum
+`-449` is the left side of `(ASI)`.  QED.
+
 The exterior coordinates also factor the full signed contraction, not
 only its anchored defect.  This gives a closed arbitrary-factor state
 space for the remaining induction.
@@ -10034,6 +10089,412 @@ generic counterexample below proves that discarding the PSD
 character-square origin and retaining only the incoming coefficient
 cone does not preserve this closure.
 
+There is an equivalent endpoint form which keeps that product-square
+origin in the physical fusion space.  It is useful because both
+reflection sectors are propagated by exactly the same factor product.
+
+**Lemma 5A8H28UIA2CGLCSER
+(reflection-sector Rayleigh reduction).**  Let
+
+```text
+J=N_K,                    P=product_i N_(Q_i),
+p=Pe_0,                   d=p^2,
+v_+=P(e_0+e_K),           v_-=P(e_0-e_K).
+```
+
+For `0<=R<=K`, write
+
+```text
+r_+(R)=<v_+,N_Rv_+>/<v_+,v_+>,
+r_-(R)=<v_-,N_Rv_->/<v_-,v_->
+```
+
+whenever the corresponding denominator is nonzero.  Then
+
+```text
+B_R(d)
+ ={d_0^2-d_K^2}/2 {r_+(R)-r_-(R)}.              (P5A.102AD5ALX1Y0)
+```
+
+If one of the two sector vectors vanishes, `B_R(d)=0`.  Consequently
+the boundary-current cone for an actual factor word is exactly the
+family of endpoint inequalities
+
+```text
+r_+(R)>=r_-(R),                                  0<=R<=K. (ERS)
+```
+
+Under insertion of one more irreducible factor `Q`, both endpoint
+vectors are simply replaced by `N_Qv_+` and `N_Qv_-`.  Thus the finite
+global-payment lemma is equivalently the assertion that `(ERS)` is
+preserved by this common Chebyshev--Christoffel transform along the
+orbit starting at `e_0+e_K,e_0-e_K`.
+
+**Proof.**  The simple current commutes with every fusion matrix and
+acts by reflection, so `Jp=P e_K` and `JN_R=N_RJ`.  Put
+
+```text
+x_R=<p,N_Rp>=d_R,             y_R=<p,JN_Rp>=d_(K-R),
+a=<p,p>=d_0,                 b=<p,Jp>=d_K.
+```
+
+Expansion of the two sector quadratic forms gives
+
+```text
+<v_+,v_+>=2(a+b),       <v_-,v_->=2(a-b),
+<v_+,N_Rv_+>=2(x_R+y_R),
+<v_-,N_Rv_->=2(x_R-y_R).
+```
+
+Subtract the two displayed Rayleigh quotients.  Its numerator is
+`2(ay_R-bx_R)=2B_R(d)`, while the denominator is
+`a^2-b^2`.  This proves `(P5A.102AD5ALX1Y0)`.  If a sector vanishes,
+then `p=+/-Jp`, so `x_R=+/-y_R` and the boundary current is zero.
+Finally `N_Q` commutes with `J`, so factor insertion sends
+`v_+/-` to `N_Qv_+/-`.  QED.
+
+The endpoint formulation does not yield a generic invariant cone.  Let
+`R_K` be the set of nonnegative vectors `p` for which every numerator
+
+```text
+<p,p><p,JN_Rp>-<p,Jp><p,N_Rp>                         (P5A.102AD5ALX1Y1)
+```
+
+is nonnegative.  At level `K=5`, take
+
+```text
+p=e_2+3e_5,                 N_1p=e_1+e_3+3e_4.
+```
+
+For the source vector, the six numerators in `(P5A.102AD5ALX1Y1)`,
+indexed by `R=0,...,5`, are
+
+```text
+(0,10,60,10,0,100).
+```
+
+Thus `p` belongs to `R_5`.  The corresponding numerators after applying
+`N_1` are
+
+```text
+(0,-3,54,71,48,85).
+```
+
+Hence `N_1p` leaves `R_5` already at `R=1`.  The strict exact C++ probe
+`character_ring_iter/probe_su2_reflection_rayleigh_cone.cpp` exhausts
+bounded nonnegative vectors and reports this first counterexample with
+integer arithmetic.  Therefore `(ERS)` must retain the factor-word/PSD
+square origin; it cannot be proved by invariance of the bare
+reflection-Rayleigh boundary cone.
+
+Even the one-parity restriction, which every actual factor word satisfies,
+does not make the boundary cone invariant.  At level `K=10`, take
+
+```text
+p=e_2+2e_10,                 N_1p=e_1+e_3+2e_9.
+```
+
+The boundary numerators of the source, indexed by `R=0,...,10`, are
+
+```text
+(0,0,20,0,0,0,5,0,5,0,25),
+```
+
+whereas those of its image are
+
+```text
+(0,0,16,0,18,0,-2,0,16,0,20).
+```
+
+Thus `N_1p` fails `(ERS)` at `R=6`.  The source has a single label
+parity but a disconnected support.  Hence parity alone cannot be the
+missing factor-word invariant: at least connected parity support must be
+retained.  This example does not distinguish the interval condition from
+the additional log-concavity condition.
+
+The interval-only strengthening is false, despite a substantial bounded
+range which did not reach the first obstruction.  This makes the
+log-concavity in the next target genuinely load-bearing.
+
+**Proposition 5A8H28UIA2CGLCPISMF
+(parity-interval insertion obstruction).**  In `SU(2)_10`, let
+
+```text
+p=28e_2+e_4+e_6+e_8+56e_10.
+```
+
+Thus `p` is character-positive, supported on one label parity, and has
+interval support.  Its fusion square is
+
+```text
+d=p^2=(3923,0,959,0,1017,0,288,0,3254,0,58).
+```
+
+All boundary currents of `d` are nonnegative; in order `R=0,...,10` they
+are
+
+```text
+(0,0,12709820,0,1070838,0,3972987,0,3573425,0,15386565).
+```
+
+However, after one fundamental insertion,
+
+```text
+p'=N_1p=28e_1+29e_3+2e_5+2e_7+57e_9,
+
+(p')^2=(4882,0,6858,0,3281,0,4847,0,6854,0,3312),
+```
+
+and its radius-six boundary current is negative:
+
+```text
+B_6((p')^2)=4882*3281-4847*3312=-35422.
+```
+
+**Proof.**  Each displayed square follows by direct finite interval fusion.
+The listed source currents are the values
+`d_0d_(10-R)-d_Rd_10`.  The final displayed calculation proves the failed
+insertion.  The strict exact `cpp_int` diagnostic
+`character_ring_iter/probe_su2_interval_bridge.cpp` scans the bridged family
+`Me_2+e_4+e_6+e_8+2Me_10` and returns this first failure at `M=28`.
+QED.
+
+For comparison, the strict C++ modes `parity-interval` and
+`parity-interval-boundary-to-full` in
+`character_ring_iter/probe_su2_reflection_rayleigh_cone.cpp` exhaust all
+single-parity interval roots with entries at most three through level twelve.
+Among `14,553` roots, `14,489` satisfy the boundary cone; all `169,789`
+irreducible-factor images retain it, and every one of those roots has the
+complete anchored current cone.  The first obstruction above explains why
+this bounded evidence cannot be promoted to a theorem.
+
+The first obstruction has a strict valley in its compressed root profile.
+This leaves a narrower live candidate, sufficient for every actual factor
+word because Lemma 5A8H28UIA2CGLC supplies parity-log-concavity and hence
+unimodality.
+
+**Target 5A8H28UIA2CGLCPUSM (parity-unimodal square star-minor lemma).**
+Let `p` be character-positive, supported on one label parity, and unimodal
+on its interval support.  Put `d=p^2` and assume
+
+```text
+B_R(d)>=0,                                      0<=R<=K.
+```
+
+Prove both
+
+```text
+d_0(N_d)_(R,S)-d_Rd_S>=0,                       0<=R,S<=K,
+B_R(N_Q^2d)>=0,                                 0<=R,Q<=K.
+```
+
+The new exact C++ modes `parity-unimodal` and
+`parity-unimodal-boundary-to-full` exhaust coefficients at most three
+through level twelve.  They retain `5,553` boundary-admissible roots and
+check `61,629` factor images, with no failure of either conclusion.  The
+coefficient-four replay through level ten retains `6,712` roots and checks
+`64,488` factor images, again with no failure.  The independent exact
+one-parameter families
+
+```text
+(M,1,1,1,1),       (1,1,1,1,M),       (1,M,M,M,1)
+```
+
+on the even labels `2,4,6,8,10` in `SU(2)_10` pass both conclusions for
+every `1<=M<=100000`.  These checks are bounded evidence only; unlike the
+interval target, `(USM)` has not been proved or refuted.
+
+The deterministic exact stress
+`character_ring_iter/probe_su2_unimodal_random.cpp` independently generates
+one-parity unimodal interval roots with coefficients up to `10^6`.  Its
+`100000 24 1000000` replay retains `99,722` boundary-admissible roots and
+checks one independently selected nontrivial irreducible insertion for each,
+with no failure.  Its `10000 24 1000000 all-factors` replay retains `9,965`
+roots and checks all `124,495` nontrivial factor images, again with no
+failure.  All decisions use exact `cpp_int` arithmetic.  These are stress
+tests of `(USM)`, not a finite proof.
+
+The first nontrivial insertion has an exact one-line residual.  This gives a
+smaller analytic sublemma of `(USM)`.  Let `K=2H`, let `d` be supported on
+the even labels, and put
+
+```text
+e_r=d_(2r),                  0<=r<=H,
+C_r=e_(r-1)+2e_r+e_(r+1),   1<=r<H,
+b_r=e_0e_(H-r)-e_re_H.
+```
+
+After `d'=N_1^2d`, write `b'_r=d'_0d'_(2H-2r)-d'_(2r)d'_(2H)`.  Then
+
+```text
+b'_r=b_(r-1)+2b_r+b_(r+1)
+     +e_1C_(H-r)-e_(H-1)C_r,                 1<=r<H. (USM1)
+```
+
+Indeed `d'_0=e_0+e_1`, `d'_(2H)=e_(H-1)+e_H`, and
+`d'_(2r)=C_r` in the interior; expansion proves `(USM1)`.  The first
+three terms are nonnegative under the incoming boundary hypothesis.  The
+remaining reflected residual is the exact fundamental global payment.
+For the false interval root in Proposition 5A8H28UIA2CGLCPISMF at `r=3`,
+it is `-12625659`, while the three-current reserve is `12590237`, leaving
+the observed deficit `-35422`.  Thus a proof of `(USM)` must use
+unimodality (or stronger factor-word structure) precisely to pay this
+residual; entrywise residual positivity is false on the interval cone.
+
+It is false even on the genuine factor-word orbit, so this is not an
+artefact of enlarging to arbitrary interval roots.
+
+**Proposition 5A8H28UIA2CGLCPUSM1F
+(structured fundamental-residual obstruction).**  In `SU(2)_6`, take
+
+```text
+p=chi_2^2=e_0+e_2+e_4,
+d=p^2=3e_0+6e_2+6e_4+2e_6.
+```
+
+Thus, in the notation of `(USM1)`,
+
+```text
+H=3,                 e=(3,6,6,2),
+b=(0,6,6,0).
+```
+
+At `r=1`, the two local interval sums are
+
+```text
+C_1=21,              C_2=20,
+```
+
+and consequently the reflected residual and its adjacent boundary reserve
+are
+
+```text
+e_1 C_2-e_2 C_1=120-126=-6,
+b_0+2b_1+b_2=18.
+```
+
+Their coupled value is nevertheless positive:
+
+```text
+b'_1=18-6=12.                                  (P5A.102AD5ALX1ZUSM1F)
+```
+
+**Proof.**  Two finite `2`-fusion steps from the vacuum give the displayed
+root `p`.  Squaring it by the finite Clebsch--Gordan rule gives the displayed
+`d`, and direct substitution gives all four integers.  QED.
+
+Therefore neither parity-unimodality, parity-log-concavity, nor the actual
+factor-word/square origin makes the residual in `(USM1)` nonnegative.  Any
+fundamental insertion proof must retain at least its coupled three-current
+reserve.  The strict `cpp_int` replay
+
+```text
+character_ring_iter/probe_su2_usm_reserve --replay-structured-residual
+```
+
+checks the complete calculation.  Its deterministic sweep through half-level
+ten and root coefficients at most four finds `1,784` negative residuals in
+`14,874` boundary-admissible checks, with no negative coupled update and no
+disagreement between `(USM1)` and the directly fused new boundary current.
+This last count is bounded route evidence; the displayed word is the exact
+obstruction to a termwise-residual proof.
+
+Even compressed log-concavity cannot replace the square origin in this
+fundamental payment.
+
+**Proposition 5A8H28UIA2CGLCPUSMELCF
+(even log-concave smoothing obstruction).**  In `SU(2)_10`, take the
+even-supported profile
+
+```text
+d=(100000000,0,10000000000,0,990000000000,0,
+   990000000000,0,980100000000,0,980100).
+```
+
+Its compressed even profile is positive and log concave.  Its boundary
+currents are nonnegative, with margins
+
+```text
+(0,0,98000199000000000000,0,98029701000000000000,0,
+ 98029701000000000000,0,39403990000000000,0,9999039403990000).
+```
+
+Nevertheless,
+
+```text
+N_1^2d=(10100000000,0,1010100000000,0,2980000000000,0,
+        3950100000000,0,2950200980100,0,980100980100)
+```
+
+has
+
+```text
+B_2(N_1^2d)=-960202970100000000000000<0.
+```
+
+**Proof.**  Direct finite fusion gives the displayed transformed profile
+and currents.  The strict exact `cpp_int` replay
+`character_ring_iter/probe_su2_even_logconcave_smoothing.cpp` checks
+compressed log-concavity, every source margin, and the negative output
+margin.  It also finds a negative order-two principal minor
+`-979899990000000000000000` of `N_d`; hence this profile is not PSD and is
+not an asserted character square.  Thus any proof of `(USM)` or `(PSM2)`
+must use the linkage `d=p^2` (equivalently `N_d=N_p^2>=0`), not only the
+compressed log-concavity and boundary conditions.  QED.
+
+Compress a vector
+supported on one label parity to its nonzero parity class.  Call it
+parity-log-concave when that compressed vector is nonnegative, log concave,
+and has interval support.
+
+**Target 5A8H28UIA2CGLCPSM (parity-compressed square star-minor lemma).**
+Let `p` be character-positive and parity-log-concave in `SU(2)_K`, put
+`d=p^2`, and assume that the compressed square profile is log concave with
+interval support.  If
+
+```text
+B_R(d)>=0,                                      0<=R<=K,
+```
+
+then both
+
+```text
+d_0(N_d)_(R,S)-d_Rd_S>=0,                       0<=R,S<=K, (PSM1)
+B_R(N_Q^2d)>=0,                                 0<=R,Q<=K  (PSM2)
+```
+
+hold.  Lemma 5A8H28UIA2CGLC preserves the root and square shape hypotheses
+under `p -> N_Qp`; hence `(PSM1)--(PSM2)` would close the finite
+boundary-reduction/insertion induction from `p=e_0`.
+
+The new strict exact C++ diagnostic
+`character_ring_iter/probe_su2_reflection_rayleigh_cone.cpp` exhausts all
+such roots with compressed entries at most three through level twelve.  It
+finds `2,606` admissible boundary profiles, no failure of `(PSM1)`, and no
+failure of `(PSM2)` in `27,298` factor images.  This is bounded evidence
+for the displayed lemma only; the generic counterexample above shows why a
+proof must use the interval/log-concavity structure rather than merely the
+endpoint Rayleigh inequalities.
+
+The independent strict C++ stress
+`character_ring_iter/probe_su2_psm_ratio_random.cpp` generates exact
+parity-log-concave roots by nonincreasing integral log-ratio steps, filters
+for the required compressed-square shape and boundary cone, and then checks
+every star current and every nontrivial irreducible-square insertion.  Its
+two deterministic replays give
+
+```text
+samples=500,  maximum_level=20, base=2, maximum_step=4:
+  square_shape=500, boundary_profiles=500, insertion_tests=5,176;
+
+samples=1,000, maximum_level=28, base=3, maximum_step=6:
+  square_shape=1,000, boundary_profiles=999, insertion_tests=14,385.
+```
+
+Both return `result=PASS`.  The randomized ratio family is deliberately
+different from the bounded coordinate box, but remains falsification
+evidence rather than a proof of `(PSM1)--(PSM2)`.
+
 The spectral form suggests the correct companion to PSD boundary
 reduction.
 
@@ -10456,6 +10917,211 @@ which proves `(P5A.102AD5ALX1ZN)` and `(CSES)`.  Conversely every
 anchored current of a factor word is the displayed boundary
 coefficient, so the two assertions are equivalent.  QED.
 
+**Proposition 5A8H28UIA2CGLCPES0 (one-factor arbitrary-label base).**
+For every `0<=q<=K`, put
+
+```text
+p=e_q,                         d=p^2.
+```
+
+Then the complete anchored-current cone holds:
+
+```text
+d_0(N_d)_(R,S)-d_Rd_S>=0,             0<=R,S<=K. (P5A.102AD5ALX1ZN0)
+```
+
+**Proof.**  Put `h=min(q,K-q)`.  The finite Clebsch--Gordan rule gives
+
+```text
+d=e_q^2=sum_(j=0)^h e_(2j),             d_0=1.  (P5A.102AD5ALX1ZN0a)
+```
+
+If `d_Rd_S=0`, `(P5A.102AD5ALX1ZN0)` follows from nonnegativity of
+the fusion coefficients.  Otherwise `R,S` are even and belong to
+`[0,2h]`.  The least channel `|R-S|` belongs to `R star_K S` and is
+an even label in the same interval.  It occurs in `d` by
+`(P5A.102AD5ALX1ZN0a)`, so
+
+```text
+(N_d)_(R,S)>=d_(|R-S|)=1=d_Rd_S.
+```
+
+This proves every anchored current.  QED.
+
+The strict C++ mode
+
+```text
+verify_su2_fundamental_anchored_tn --one-factor 64
+```
+
+checks the same inequality by exact fusion matrices for every one-factor
+word through level `64`; it evaluates `4,601,025` currents with
+`result=PASS`.
+
+**Proposition 5A8H28UIA2CGLCPESF (fundamental/simple-current-partner
+factor words).**  For every finite level `K`, let the finite factor word
+have every label in `{1,K-1}`, and let `m` be its number of factors.  If
+
+```text
+p=N_(Q_1)...N_(Q_m)e_0,       d=p^2,
+```
+
+Then the complete anchored-current cone holds:
+
+```text
+A(d)_(R,S)=d_0(N_d)_(R,S)-d_Rd_S>=0,
+                                      0<=R,S<=K.      (P5A.102AD5ALX1ZNA)
+```
+
+Equivalently, `(CSES)` holds for every such word.  Thus the
+anchored-current/global-payment reduction is proved for arbitrary mixed
+fundamental/simple-current-partner words at every factor count and level.
+
+**Proof.**  Put `T=N_1` and `J=N_K`.  Since
+
+```text
+N_(K-1)=JT,
+```
+
+all fusion matrices commute, and `J^2=I`, one has for some integer `r`
+
+```text
+N_(Q_1)...N_(Q_m)=J^rT^m,
+N_d=(J^rT^m)^2=T^(2m).                         (P5A.102AD5ALX1ZNA0)
+```
+
+In the ordered simple basis
+`0,1,...,K`, `T` is the adjacency matrix of the path graph.  Split its
+vertices into even and odd labels.  After preserving the order inside each
+parity class, it has the block form
+
+```text
+T=[[0,B],[B^T,0]].
+```
+
+The rectangular matrix `B` is lower bidiagonal with ones on its nonzero
+diagonals, up to deletion of one boundary row or column.  Hence every minor
+of `B` is either zero or one: `B` is totally nonnegative.  The same is true
+of `B^T`, and Cauchy--Binet gives total nonnegativity of every power of
+
+```text
+BB^T,                    B^TB.
+```
+
+Consequently the two parity blocks of
+
+```text
+T^(2m)=diag((BB^T)^m,(B^TB)^m)                   (P5A.102AD5ALX1ZNB)
+```
+
+are totally nonnegative.
+
+Therefore the current in `(P5A.102AD5ALX1ZNA)` is the minor
+
+```text
+det [[(T^(2m))_(0,0), (T^(2m))_(0,S)],
+     [(T^(2m))_(R,0), (T^(2m))_(R,S)]].          (P5A.102AD5ALX1ZNC)
+```
+
+If `R,S` are even, it is an ordered two-by-two minor of the even
+totally nonnegative block in `(P5A.102AD5ALX1ZNB)`.  If either test
+label is odd, its `d` coefficient vanishes; the remaining term in the
+current is either zero or the nonnegative entry
+`d_0(T^(2m))_(R,S)`.  Thus every current is nonnegative.  The case
+`m=0` is included, or follows directly from `N_d=I`.  Lemma
+5A8H28UIA2CGLCPES identifies these currents with `(CSES)`.  QED.
+
+The strict C++ verifier
+
+```text
+character_ring_iter/verify_su2_fundamental_anchored_tn.cpp
+```
+
+computes `T^(2m)` independently by exact `cpp_int` matrix products and
+checks `(P5A.102AD5ALX1ZNC)` at every pair of labels.  Its strict replay
+
+```text
+verify_su2_fundamental_anchored_tn 32 100
+```
+
+checks `1,265,328` currents with `result=PASS`; the proof is the
+total-nonnegative path factorization above.
+
+The same verifier has a separate `--one-two` diagnostic mode for the first
+unproved enlargement: all factor words whose labels lie in `{1,2}`.  It
+forms the exact square operator
+
+```text
+N_1^(2a)N_2^(2b),
+```
+
+and checks every anchored current without assuming total nonnegativity of
+the individual `N_2` block.  Its strict replay
+
+```text
+verify_su2_fundamental_anchored_tn --one-two 32 40
+```
+
+checks `52,111` words and `21,052,844` currents with `result=PASS`.
+This is a focused falsification probe, not a proof: the compressed
+label-two transfer matrix itself has signed ordered minors, so the
+fundamental path-factorization proof does not extend term by term.
+
+That proof cannot be extended by declaring every squared irreducible
+fusion operator totally nonnegative inside the parity block relevant to a
+factor-word square.
+
+**Proposition 5A8H28UIA2CGLCPESPTNF (parity-block
+total-nonnegativity obstruction).**  In the compressed even sector of
+`SU(2)_8`, put `F=N_2^2`, where compressed label `2` is the physical
+label `4`.  On the compressed even block with labels `{0,2,4}` one has
+
+```text
+F|_{even}=
+[[1,1,1],
+ [1,5,1],
+ [1,1,1]].
+```
+
+Consequently its ordered minor with rows `{0,2}` and columns `{2,4}` is
+
+```text
+det [[1,1],[5,1]]=-4.                            (P5A.102AD5ALX1ZNCa)
+```
+
+Equivalently, in physical labels the rows are `{0,4}` and the columns
+are `{4,8}`.  Thus `N_Q^2` need not be totally nonnegative even after
+restricting to the parity block preserved by every squared factor.
+
+**Proof.**  In compressed labels, fusion by `2` has rows
+
+```text
+(0,0,1,0,0),
+(0,1,1,1,0),
+(1,1,1,1,1),
+(0,1,1,1,0),
+(0,0,1,0,0).
+```
+
+Squaring gives the displayed three-by-three restriction, and the
+displayed determinant follows.  QED.
+
+The strict C++ diagnostic
+`character_ring_iter/probe_su2_parity_block_tn.cpp` finds this first
+obstruction with
+
+```text
+probe_su2_parity_block_tn 12
+SU2_PARITY_BLOCK_TN result=COUNTEREXAMPLE
+level=8 factor=4 parity=0 rows=[0,4] columns=[4,8]
+minor=-4 checks=21.
+```
+
+Therefore the fundamental/simple-current-partner proof cannot be
+generalized by a parity-block total-nonnegative factorization; any
+arbitrary-label proof must retain the global cancellation between
+non-TN factor blocks.
+
 The same semigroup has a scalar cyclic realization in which every
 generator is a triangular convolution kernel.  This retains the
 complete global payment while removing all interior wedge
@@ -10689,6 +11355,468 @@ unbounded affine tail, whose current cone follows for free from
 monotonicity, from one central image payment against the complete
 outer reserve `D_1`.
 
+There is an exact categorical form of the remaining payment.  It is
+useful because it retains the factor word as one physical tensor object,
+rather than replacing it by an abstract coefficient profile.
+
+**Lemma 5A8H28UIA2CGLPCIPMA (matrix-algebra multiplicity form).**
+Let
+
+```text
+V=V_(Q_1) tensor ... tensor V_(Q_s),
+M=V tensor V^*,
+m_R=dim Hom(V_R,M),                              0<=R<=K.
+```
+
+If `p_R=[V_R]V` and `d=p^2`, then `m_R=d_R`, and
+
+```text
+(N_d)_(R,S)=dim Hom(V_R tensor V_S,M).
+```
+
+Consequently every finite anchored current is exactly
+
+```text
+A(d)_(R,S)
+ =dim End(V) dim Hom(V_R tensor V_S,M)
+  -dim Hom(V_R,M) dim Hom(V_S,M).                (CIPMA)
+```
+
+Thus the remaining central assembly `(CIP)` is equivalently the
+following multiplicity inequality for the canonical matrix algebra
+object `M=End(V)`:
+
+```text
+dim End(V) dim Hom(V_R tensor V_S,End(V))
+ >=dim Hom(V_R,End(V)) dim Hom(V_S,End(V)).
+                                                        (CIPMA*)
+```
+
+**Proof.**  Rigidity and self-duality in `SU(2)_K` identify
+
+```text
+Hom(V_R,V tensor V^*)=Hom(V_R tensor V,V),
+```
+
+so the multiplicity vector of `M` is the fusion square `p^2=d`.  In
+particular,
+
+```text
+m_0=dim Hom(1,M)=dim End(V)=d_0.
+```
+
+The coefficient of `V_S` in `d V_R` is, by Frobenius reciprocity and
+the symmetry of the fusion coefficients,
+
+```text
+sum_T d_T N_(T,R)^S
+ =sum_T d_T N_(R,S)^T
+ =dim Hom(V_R tensor V_S,M).
+```
+
+This coefficient is `(N_d)_(S,R)`, and the fusion matrices are
+symmetric.  Substituting these three identities into
+`A(d)_(R,S)=d_0(N_d)_(R,S)-d_Rd_S` proves `(CIPMA)` and `(CIPMA*)`.
+QED.
+
+This is an exact reformulation, not a proof of `(CIPMA*)`.  The failed
+coefficientwise and fixed-allocation routes above show that a proof must
+use the matrix-algebra structure together with the fact that `V` is a
+tensor product of simples; it cannot retain only an arbitrary
+nonnegative multiplicity vector for `M`.
+
+In fact the matrix-algebra structure alone is also insufficient, even before
+one asks for a factorwise proof.
+
+**Proposition 5A8H28UIA2CGLPCIPMAOBS (matrix-algebra-only obstruction).**
+The inequality `(CIPMA*)` fails for general semisimple `SU(2)` modules and
+for general `SU(2)_k` modules.
+
+Ordinarily, take
+
+```text
+V=V_1 direct-sum V_2 direct-sum V_4.
+```
+
+Writing `d` for the character multiplicities of `End(V)=V tensor V`, one
+has
+
+```text
+d=(3,2,5,4,4,2,3,0,1),
+(N_d)_(1,8)=0,
+
+A(d)_(1,8)=d_0(N_d)_(1,8)-d_1d_8=-2.                (P5A.102AD5ALX1CIPMA1)
+```
+
+At level four, take
+
+```text
+V=V_1 direct-sum 2V_3 direct-sum V_4.
+```
+
+Then
+
+```text
+d=(6,4,9,2,4),
+(N_d)_(1,4)=2,
+
+A(d)_(1,4)=6*2-4*4=-4.                              (P5A.102AD5ALX1CIPMA2)
+```
+
+**Proof.**  In the ordinary ring, expand the three displayed tensor squares
+and their six ordered cross terms.  This gives the first vector.  Fusion by
+`V_1` sends `V_8` only to `V_7` and `V_9`, both absent from `d`, proving the
+first defect.
+
+At level four, use
+
+```text
+V_1V_1=V_0+V_2,
+V_3V_3=V_0+V_2,
+V_4V_4=V_0,
+V_1V_3=V_2+V_4,
+V_1V_4=V_3,
+V_3V_4=V_1.
+```
+
+They give the second vector.  Since `V_1V_4=V_3`, the displayed value of
+`(N_d)_(1,4)` and the second defect follow.  QED.
+
+The strict exact C++ falsifier
+`character_ring_iter/probe_su2_endomorphism_cipma.cpp` reproduces these
+two witnesses with respectively
+
+```text
+--ordinary 4 2: multiplicity=[0,1,1,0,1], left=1, right=8, value=-2;
+--finite   4 2: multiplicity=[0,1,0,2,1], left=1, right=4, value=-4.
+```
+
+Thus any global current payment must use the actual factor-word origin of
+`V`, not merely that its doubled character comes from a matrix algebra.
+
+The obstruction also isolates a sharper factor-profile candidate.  The
+required shape invariant is available on the genuine tensor orbit.
+
+**Lemma 5A8H28UIA2CGLPCIPFPLPC (parity-compressed fusion
+log concavity).**  Let `p` be nonnegative, supported on the label parity
+`epsilon in {0,1}`, and suppose that its compressed profile
+
+```text
+pbar_j=p_(epsilon+2j)
+```
+
+is log concave with interval support.  For any simple fusion factor `Q`, the
+profile `N_Qp` is supported on the parity
+
+```text
+epsilon'=epsilon+Q (mod 2),
+```
+
+and its compressed profile is again log concave with interval support.
+Consequently the multiplicity profile of every tensor product of simple
+`SU(2)_K` objects is parity-log-concave.
+
+**Proof.**  Write an output label of the forced parity as
+
+```text
+r=epsilon'+2i
+```
+
+and an input label as `h=epsilon+2j`.  The finite fusion interval gives
+
+```text
+(N_Qp)_r=sum_(j in C_i) pbar_j,
+
+C_i=[L_i,U_i],
+L_i={abs(epsilon'+2i-Q)-epsilon}/2,
+U_i=min(epsilon'+2i+Q-epsilon,
+        2K-epsilon'-2i-Q-epsilon)/2.             (CIPFPLPC1)
+```
+
+All displayed endpoints are integers because of the parity choice.  The
+lower endpoint is convex in `i`, while the upper endpoint is concave: it is
+the minimum of two affine functions.  Hence, for `x in C_(i-1)` and
+`y in C_(i+1)`, both integer midpoints of `x,y` lie in `C_i`.  The discrete
+midpoint-summation argument in Lemma 5A8H28UIA2CGLC therefore gives
+
+```text
+(N_Qp)bar_i^2 >=(N_Qp)bar_(i-1)(N_Qp)bar_(i+1).
+```
+
+If the support of `pbar` is `[A,B]`, positivity of the sum in
+`(CIPFPLPC1)` is equivalent to `L_i<=B` and `U_i>=A`.  A sublevel set of the
+convex `L_i` and a superlevel set of the concave `U_i` are intervals, so the
+new compressed support is an interval.  Starting at `e_0` and iterating
+proves the consequence.  QED.
+
+This gives the following direct replacement for the false matrix-algebra-only
+statement.
+
+**Lemma 5A8H28UIA2CGLPCIPFPLES (even-sector reduction).**  Under the
+hypotheses of the next target, put `d=p^2`.  Then the full anchored-current
+inequality is automatic unless both test labels are even.  More precisely,
+
+```text
+A(d)_(R,S)=0                         if R,S have different parity,
+A(d)_(R,S)=d_0(N_d)_(R,S)>=0         if R,S are both odd.  (CIPFPLES1)
+```
+
+For `R=2r` and `S=2s`, it is exactly the anchored current of the
+even-label, or `SO(3)`, fusion subring after the relabelling
+`V_(2a) -> W_a`.  Thus `(CIPFPL)` is equivalent to its even--even sector.
+
+**Proof.**  A product of two characters having the same label parity has
+even label parity, so `d_R=0` for odd `R`.  Fusion by the even character
+`d` preserves label parity.  Hence both terms in the anchored current vanish
+for mixed parity, while for odd `R,S` its rank-one subtraction is zero and
+the remaining fusion multiplicity is nonnegative.  When both labels are
+even, the finite Clebsch--Gordan interval consists entirely of even labels;
+dividing every label by two identifies it with the stated even-sector fusion
+rule and preserves every coefficient in the displayed current.  QED.
+
+**Disproved target 5A8H28UIA2CGLPCIPFPL (parity-log-concave
+factor-profile enlargement).**
+Let `V` be an `SU(2)_K` module whose multiplicity vector
+
+```text
+p_R=dim Hom(V_R,V),                    0<=R<=K,
+```
+
+is supported on one parity and is log concave with interval support after
+compression to that parity.  Put `d=p^2`.  Prove
+
+```text
+d_0(N_d)_(R,S)>=d_R d_S,               0<=R,S<=K.   (CIPFPL)
+```
+
+Equivalently, the canonical algebra object `End(V)` satisfies `(CIPMA*)`.
+Every tensor product of simple objects satisfies the displayed profile
+hypothesis by Lemma 5A8H28UIA2CGLPCIPFPLPC, so this would have proved the
+arbitrary-factor anchored-current lemma directly.  It is nevertheless false:
+the profile condition has discarded essential factor-word information.
+
+**Proposition 5A8H28UIA2CGLPCIPFPLF (finite parity-log-concave
+obstruction).**  At level `K=22`, take the odd-supported multiplicity profile
+
+```text
+p=(0,0,0,0,0,1,0,2,0,4,0,8,0,2,0,0,0,0,0,0,0,0,0).
+```
+
+Its compressed profile is
+
+```text
+(1,2,4,8,2),
+```
+
+which is log concave with interval support.  Yet for `d=p^2`,
+
+```text
+d_0=89,                 d_2=205,
+d_(20)=184,             d_(22)=80,
+(N_d)_(2,22)=d_(20),
+
+A(d)_(2,22)=89*184-205*80=-24.                 (CIPFPLF1)
+```
+
+Thus `(CIPFPL)` is false even in the even--even sector of Lemma
+5A8H28UIA2CGLPCIPFPLES.
+
+**Proof.**  The unit multiplicity gives
+
+```text
+d_0=1^2+2^2+4^2+8^2+2^2=89.
+```
+
+The label-two interval contains every diagonal pair and exactly the four
+adjacent support pairs, so
+
+```text
+d_2=89+2*{1*2+2*4+4*8+8*2}=205.
+```
+
+At the affine top, label twenty receives exactly the ordered support pairs
+whose sums are `20,22,24`, namely
+
+```text
+(7,13), (9,11), (9,13), (11,11), (11,13),
+```
+
+with total multiplicity
+
+```text
+8+64+16+64+32=184.
+```
+
+Label twenty-two receives only the sum-twenty-two pairs `(9,13)` and
+`(11,11)`, giving `16+64=80`.  Finally the finite interval
+`2 star_22 22` is the singleton `{20}`.  These identities give
+`(CIPFPLF1)`.  QED.
+
+The failed profile points to a stronger invariant of genuine factor words.
+Put `x=chi_2`.  If an *ordinary* character is supported on parity `epsilon`,
+write it uniquely as
+
+```text
+P=chi_1^epsilon F(x).                             (CIPFPLRR1)
+```
+
+**Lemma 5A8H28UIA2CGLPCIPFPLRR (unfolded factor-word spectral-root
+invariant).**  For every ordinary product `P=product_i chi_(Q_i)`, the
+polynomial `F` in `(CIPFPLRR1)` has all of its roots in the closed interval
+`[-1,3]`; the only possible endpoint root is `-1`.
+
+**Proof.**  At `x=chi_2=1+2cos(2theta)`, one has
+
+```text
+chi_Q={sin((Q+1)theta)}/{sin(theta)}.
+```
+
+Every zero of a factor lies at `theta=j*pi/(Q+1)` and hence maps into
+`[-1,3]`.  If `Q` is odd, the zero at `theta=pi/2` is exactly the `chi_1`
+factor and maps to `x=-1`; divide it out once when the total parity is odd.
+All remaining zeros remain in the stated interval.  Products preserve the
+assertion.  QED.
+
+At a finite level this root property belongs to the *unfolded lift*, not in
+general to the degree-`K` representative of its fusion reduction.  If
+
+```text
+P_K=sum_(R=0)^K p_R chi_R
+```
+
+is the finite character representative, then the two polynomials agree on
+the Verlinde grid and hence
+
+```text
+P-P_K is divisible by chi_(K+1).                  (CIPFPLRR1A)
+```
+
+Affine folding may change the roots of `P_K`.  Thus the root claim above may
+not be imposed directly on `P_K` when one seeks a theorem for all finite
+factor words.
+
+For the counterexample, write
+
+```text
+p=chi_5+2chi_7+4chi_9+8chi_11+2chi_13=chi_1F(x).
+```
+
+Using `chi_(2r+1)/chi_1=beta_r-beta_(r-1)+...+(-1)^r beta_0` gives
+
+```text
+F(x)=2x^6-4x^5-16x^4+34x^3+5x^2-20x
+    =x{2x^5-4x^4-16x^3+34x^2+5x-20}.            (CIPFPLRR2)
+```
+
+The bracket is `106` at `x=-2` and tends to negative infinity as
+`x -> -infinity`, so the canonical representative has a root below `-2`.
+This excludes it from the *canonical* real-rooted subclass, but does not by
+itself exclude a higher-degree affine lift satisfying `(CIPFPLRR1A)`.
+
+The lift condition itself is still too weak: it remembers only the zero set,
+not the factorization into irreducible Chebyshev characters.
+
+**Proposition 5A8H28UIA2CGLPCIPFPLRLF (finite real-rooted-lift
+obstruction).**  The same level-`22` profile in Proposition
+5A8H28UIA2CGLPCIPFPLF admits a real-rooted affine lift.  Put
+
+```text
+H(x)=chi_23/chi_1,
+F_tilde(x)=F(x)-(16x+8)H(x),                        (CIPFPLRLF1)
+```
+
+where `F` is `(CIPFPLRR2)`.  Then every zero of `F_tilde` lies in `[-1,3]`,
+and
+
+```text
+chi_1 F_tilde=P_K-(16x+14)chi_23
+             =P_K (mod chi_23).                    (CIPFPLRLF2)
+```
+
+Nevertheless its finite anchored current is the negative integer
+`(CIPFPLF1)`.  Thus the real-rooted-lift version of `(CIPFPL)` is false.
+
+**Proof.**  The congruence in `(CIPFPLRLF2)` is immediate from the
+definition of `H`.  The strict C++ replay
+
+```text
+character_ring_iter/probe_su2_endomorphism_cipma \
+  --replay-finite-counterexample-lift
+```
+
+constructs `(CIPFPLRLF1)` over the rationals, removes any endpoint factors,
+forms its square-free quotient, and applies Sturm's exact variation count at
+`-1` and `3`.  It returns
+
+```text
+SU2_ENDOMORPHISM_CIPMA_LIFT result=COUNTEREXAMPLE
+level=22 parity=1 correction_linear=-16 correction_constant=-8.
+```
+
+Thus all roots of the degree-twelve lift are certified in the displayed
+closed interval, while Proposition 5A8H28UIA2CGLPCIPFPLF supplies the
+negative current.  QED.
+
+Consequently neither parity-log-concavity, nor a real-rooted unfolded lift,
+can replace the actual product factorization.  The remaining global-payment
+proof must use that factorization itself--for example through the exact
+coloured Hall/Temperley--Lieb transport--rather than a one-variable profile
+cone.
+
+The strict `cpp_int` falsifier was extended with profile filters.  Exhaustion
+through maximum label `12` and multiplicity `3` gives
+
+```text
+mode=ordinary, restriction=parity_logconcave: tested=611, result=PASS;
+mode=finite,   restriction=parity_logconcave: tested=611, result=PASS.
+```
+
+The direct parity-profile generator extends this exact check through maximum
+label `20` and multiplicity `5`:
+
+```text
+mode=ordinary, restriction=parity_logconcave: tested=15,064, result=PASS;
+mode=finite,   restriction=parity_logconcave: tested=15,064, result=PASS.
+```
+
+The finite `K=22`, multiplicity-eight run finds Proposition
+5A8H28UIA2CGLPCIPFPLF after `197,682` admissible profiles.  Thus the earlier
+zero-failure boxes are only falsification evidence; they cannot support the
+disproved enlargement.
+
+The same strict C++ probe now constructs the reduced polynomial `F`, removes
+endpoint factors, and applies an exact rational Sturm count to its square-free
+part.  With the additional
+`parity-logconcave-realrooted` filter, the complete boxes through maximum
+label `20` and multiplicity `5` retain and check
+
+```text
+mode=ordinary: tested=6,129, result=PASS;
+mode=finite:   tested=6,129, result=PASS.
+```
+
+These counts test only the narrower canonical-real-rooted subclass: the
+probe inspects `P_K`, whereas a genuine factor word may require its
+higher-degree unfolded lift.  Proposition 5A8H28UIA2CGLPCIPFPLRLF shows
+that even the larger real-rooted-lift class is false.  The counts therefore
+serve only as exact diagnostics for the Sturm filter, not as evidence for a
+global-payment theorem.  Every filter and current decision uses exact
+arithmetic.
+
+In contrast, the weaker finite parity-interval class already fails at maximum
+label `8` and multiplicity `3`:
+
+```text
+p=(2,0,1,0,1,0,2,0,3),
+(R,S)=(2,8),
+d_0(N_d)_(2,8)-d_2d_8=-1.
+```
+
+Thus parity interval support alone cannot be the missing lemma, and even
+compressed log concavity is not sufficient.  Any surviving global-payment
+lemma must retain a stricter factor-word invariant, such as the complete
+interval-product or its real-rooted spectral data.
+
 The decreasing-cone proof can be polarized exactly.  This exposes
 which part of the proper suffix is available to pay the central
 shell.  For `0<=j<=K`, put
@@ -10784,6 +11912,251 @@ removed: only the linear central load and the explicit nonnegative
 quadratic slope reserve remain.  Identity
 `(P5A.102AD5ALX1ZZB2)` shows that `(CSP)` is exactly `(CIP)`, not a
 stronger unproved replacement.
+
+There is an exact rank-two packet form of the same finite central
+assembly.  Unlike the individual shell or diagonal-ray expansions, it
+does not discard the cross-ray terms.
+
+**Lemma 5A8H28UIA2CGLPCIPFCP (finite `C_2` packet reduction).**
+Work in `SU(2)_k`.  Put
+
+```text
+theta_j=(j+1)pi/(k+2),
+x_j=2cos(theta_j),
+w_j=2sin(theta_j)^2/(k+2),
+mu_k=sum_(j=0)^k w_j delta_(x_j),
+dnu_k(x,y)=(1/2)(x-y)^2 dmu_k(x)dmu_k(y).
+```
+
+For `a>=b>=0`, write
+
+```text
+Psi_(a,b)(x,y)
+ ={chi_(a+1)(x)chi_b(y)-chi_b(x)chi_(a+1)(y)}/(x-y),
+
+D_R(x,y)={chi_R(x)-chi_R(y)}/(x-y)=Psi_(R-1,0)(x,y), R>=1.
+```
+
+Let `P=product_i chi_(q_i)` be any finite factor word, let
+`d=P^2` in the finite fusion ring, and set
+
+```text
+p_(a,b)^(k)(P)
+ =integral Psi_(a,b)(x,y)P(x)^2P(y)^2 dnu_k(x,y).
+                                                        (FCP0)
+```
+
+Then, for `1<=R<=S<=k`, its anchored current is exactly
+
+```text
+A(d)_(R,S)
+ =sum_(i=0)^(R-1) sum_(j=0)^(R-1-i)
+    p_(R+S-2-i-2j,i)^(k)(P).                    (FCP1)
+```
+
+Moreover the factor-word dependence in `(FCP0)` is the square of a
+product of adjacent rectangular `C_2` differences:
+
+```text
+P(x)P(y)
+ =product_i{Psi_(q_i,q_i)-Psi_(q_i-1,q_i-1)},   (FCP2)
+```
+
+where `Psi_(-1,-1)=0`.  Consequently `(CIP)` is equivalent to
+nonnegativity of every complete triangular packet `(FCP1)`.  This is
+an exact reformulation, not a termwise positivity claim for the
+individual finite packet coefficients.
+
+**Proof.**  Finite Verlinde orthogonality gives
+
+```text
+d_R=integral P(x)^2 chi_R(x)dmu_k(x),
+(N_d)_(R,S)=integral P(x)^2 chi_R(x)chi_S(x)dmu_k(x).
+```
+
+Polarizing the resulting covariance and using the definition of
+`dnu_k` gives
+
+```text
+A(d)_(R,S)
+ =integral D_R(x,y)D_S(x,y)P(x)^2P(y)^2dnu_k(x,y).
+                                                        (FCP3)
+```
+
+The polynomial `C_2` Pieri identity is
+
+```text
+D_R D_S
+ =sum_(i=0)^(R-1) sum_(j=0)^(R-1-i)
+    Psi_(R+S-2-i-2j,i),                         R<=S.
+```
+
+It remains valid after restriction to the finite spectral grid.
+Substitution in `(FCP3)` proves `(FCP1)`.  Finally the two-row Weyl
+determinant identity
+
+```text
+chi_q(x)chi_q(y)=Psi_(q,q)-Psi_(q-1,q-1)
+```
+
+is a polynomial identity, so multiplying it over the factor word
+proves `(FCP2)`.  QED.
+
+The strict C++ verifier
+`character_ring_iter/verify_su2_finite_c2_packet.cpp` computes every
+`p_(a,b)^(k)(P)` by exact Chebyshev folding in the finite fusion ring,
+then compares `(FCP1)` with the direct anchored current.  Its deterministic
+replay
+
+```text
+verify_su2_finite_c2_packet 2000 48 24
+```
+
+checks `805,243` currents and `105,740,839` packet coordinates with
+`result=PASS`.  This is a bounded implementation audit of the finite
+folding, not evidence for the unproved packet sign.
+
+The triangle has a useful radial telescoping, but its individual radial
+layers are not positive.  For `r>=-1`, put
+
+```text
+dhat_r=integral P(x)^2 chi_r(x)dmu_k(x),
+```
+
+with `chi_(-1)=0`; thus `dhat_r` includes the exact affine Chebyshev
+fold for `r>k`.  Direct expansion of `(FCP0)` gives
+
+```text
+p_(a,b)^(k)(P)
+ ={dhat_a+dhat_(a+2)}dhat_b
+  -dhat_(a+1){dhat_(b-1)+dhat_(b+1)}.            (FCP4)
+```
+
+Consequently, for `0<=2L<=A`, the radial packet
+
+```text
+K_(A,L)=sum_(i=0)^L p_(A-i,i)^(k)(P)
+```
+
+telescopes to
+
+```text
+K_(A,L)
+ =dhat_0 dhat_(A+2)
+  +dhat_L dhat_(A-L)-dhat_(L+1)dhat_(A-L+1).     (FCP5)
+```
+
+The complete current is the sum of the relevant radial packets:
+
+```text
+A(d)_(R,S)
+ =sum_(c=0)^(R-1)K_(R+S-2-2c,R-1-c).            (FCP6)
+```
+
+Equations `(FCP4)--(FCP6)` follow by expanding `(x-y)Psi_(a,b)` and
+telescoping the two shifted sums in `i`.
+
+Termwise radial positivity is false on the actual factor orbit.  At
+level `k=19`, for
+
+```text
+P=chi_18 chi_13 chi_13 chi_17 chi_5 chi_4 chi_2 chi_3
+  chi_12 chi_9 chi_14 chi_14 chi_12,
+```
+
+one has
+
+```text
+K_(2,1)=-1280347057489994893804416213636,
+
+A(P^2)_(2,2)=9249735277492518834396.
+```
+
+Thus the innermost radial packet is paid by the remaining packet
+`K_(0,0)`; neither a fixed radial contraction nor its direct finite
+fold can prove `(FCP1)`.  The strict packet verifier reproduces these
+integers while checking `(FCP4)--(FCP6)` by exact `cpp_int` arithmetic.
+Its wider replay through level `48` and twenty-four factors checks
+`199,950` complete currents, `25,761,200` packet coordinates, and
+`2,512,533` radial identities; `605,260` individual radial layers are
+negative, with no identity mismatch.
+
+The inner-to-outer packet suffixes add no stronger filtration: direct
+reindexing of `(FCP6)` gives
+
+```text
+sum_(c=h)^(R-1)K_(R+S-2-2c,R-1-c)=A(d)_(R-h,S-h).
+```
+
+Thus those suffixes are exactly the same current family at smaller
+targets.  The opposite outer-to-inner filtration is already false at
+its first term in the displayed example.  A proof must therefore keep
+the complete triangular packet rather than inducting on a radial
+increment in either direction.
+
+There is also no factor-by-factor invariance of the cone generated by
+the complete Pieri triangles.  This rules out the most direct induction
+on the number of factors.  In the finite exterior model write
+
+```text
+T_(R,S)=(x-y)D_R(x,y)D_S(x,y),
+```
+
+with every character folded at level `k`.  Positivity of the
+coordinates of `C_2(N_q^2)T_(R,S)` in the `T`-basis would have implied
+`(FCP1)` by induction from the vacuum.  It is false already in
+`SU(2)_2`: with wedge basis
+`e_1 wedge e_0, e_2 wedge e_0, e_2 wedge e_1`, one has
+
+```text
+T_(1,1)=e_1 wedge e_0,
+T_(2,2)=e_1 wedge e_0+e_2 wedge e_1,
+C_2(N_1^2)T_(1,1)=4T_(1,1)-2T_(2,2).
+```
+
+The new exact `cpp_int` probe constructs the folded `T`-basis and
+performs its rational change of basis; it returns this coefficient
+`-2` before any larger level is reached.  Hence the desired payment
+must use a larger coupled state tied to the actual product orbit, not
+only the nonnegative cone of all complete Pieri triangles.
+
+Even the boundary-compound power of one repeated factor cannot be
+proved term by term after a Cauchy--Binet split.  In `SU(2)_6`, with
+factor `q=2`, half-power `N_2^2`, and target `S=4`, the intermediate
+pair `{2,4}` contributes
+
+```text
+det (N_2^2)_[{0,2},{2,4}]=-1,
+det (N_2^2)_[{0,4},{2,4}]=1,
+```
+
+so its Cauchy--Binet product is `-1`, although the complete anchored
+minor is
+
+```text
+det (N_2^4)_[{0,2},{0,4}]=6.
+```
+
+Thus a proof of the finite anchored hierarchy must retain payment
+between intermediate compound states; positivity of its individual
+Cauchy--Binet channels is false even on the one-factor power orbit.
+Nor does either immediate reflected cumulative order repair that
+split.  In the same `SU(2)_6` row at half-power two, the central
+intermediate window `1<=i<j<=5` has total `-1`, while the full minor
+is `6`.  At half-power three, the complementary reflected outer band
+has total `-1`, while the full minor is `35`.  Thus neither a central
+window nor an outside band of Cauchy--Binet channels is the coupled
+state required by the finite payment.
+The fail-closed replay
+`probe_su2_finite_boundary_cauchy_binet --replay-obstructions`
+checks all six displayed integers by exact `cpp_int` arithmetic.
+
+Thus the unresolved finite lemma can be sought as an affine `C_2`
+packet payment: finite folding may change signs of individual
+`p_(a,b)^(k)(P)`, but must preserve the complete Pieri triangles in
+`(FCP1)`.  The exact cross-ray obstruction above is the physical-space
+shadow of this requirement; no diagonal or fixed packet subfamily can
+replace the whole triangle.
 
 The wall-free member is already a nontrivial necessary subproblem.
 Let
@@ -11562,6 +12935,71 @@ Target 5A8H28UIA2CGLPCIPOCB2RADLCR is sufficient for every ordinary
 factor word and is not asserted for an arbitrary nonnegative
 character root.  Proposition 5A8H28UIA2CGLPCIPOCB2ARB below shows
 that the latter enlargement is false.
+
+The actual factor orbit has one further rigid property which is absent
+from the coefficient-only target: its character polynomial is real rooted
+on the full `SO(3)` spectral interval.  This yields a sharper live lemma.
+
+**Target 5A8H28UIA2CGLPCIPOCB2RADRRC
+(real-rooted factor-orbit radial lemma).**  Let
+
+```text
+P(x)=sum_(i>=0)p_i beta_i(x),
+```
+
+where `p` is finite, nonnegative, log concave, and has interval support.
+Assume moreover that every zero of `P(x)` is in the open interval
+`(-1,3)`.  If
+
+```text
+P^2=sum_(h>=0)c_h beta_h,
+```
+
+then prove `(OCRD)` for every `0<=2L<A`.
+
+This is sufficient for every ordinary factor word.  Indeed, for
+`x=beta_1`, the `q` zeros of
+
+```text
+beta_q(x)=chi_(2q)(x)
+```
+
+are
+
+```text
+4 cos^2(j pi/(2q+1))-1,             1<=j<=q,
+```
+
+which are distinct and lie in `(-1,3)`.  Products preserve this
+root condition, while Lemma 5A8H28UIA2RLC1 gives the required
+nonnegative log-concave interval coefficient profile from `e_0`.
+Thus this target would prove `(OCSP)` for every ordinary factor word
+without enlarging to arbitrary shaped roots.
+
+Real rootedness alone is insufficient.  The exact profile
+
+```text
+P=beta_1+2 beta_2+2 beta_3+2 beta_4+2 beta_6
+```
+
+has every zero in `(-1,3)`, but its support has a gap and
+
+```text
+J(1,12)=-12.
+```
+
+The strict rational-Sturm C++ probe
+`character_ring_iter/probe_su2_ordinary_real_rooted_current.cpp`
+checks that obstruction exactly.  Its exhaustive coefficient boxes
+at degrees six through ten with coefficient four retain
+respectively `363`, `501`, `660`, `838`, and `1,044`
+interval-log-concave interior-real-rooted profiles, with `21,391`,
+`37,951`, `62,278`, `96,098`, and `143,684` exact currents.  The
+independent degree-eight, coefficient-five box retains `1,454` such
+profiles and checks `143,043` currents.  No box has a failure of this
+sharper target.  Extending that coefficient-five enumeration through degree
+ten retains `2,392` profiles and checks `342,009` currents, again with no
+failure.  These are falsification evidence only, not a proof.
 
 The log-concavity hypothesis on the root also cannot be replaced by
 log concavity of its square.
@@ -13975,7 +15413,7 @@ critical demand.
 of Corollary 5A8H28UIA2CGLPCIPOCGAPWALL121CRIT, if
 
 ```text
-R=b/a<=1/3,
+R=b/a<=2/5,
 ```
 
 then for every cutoff `m>=1`,
@@ -14014,7 +15452,7 @@ Thus the first paired difference satisfies
  >=(1-R^2)(1-R^2-R^3).                        (P5A.102AD5ALX1ZZB3BH9V)
 ```
 
-Both factors on the right are positive for `R<=1/3`.  For every
+Both factors on the right are positive for `R<=2/5`.  For every
 later index,
 
 ```text
@@ -14024,27 +15462,29 @@ later index,
 ```
 
 Use the nonnegative terminal terms in
-`(P5A.102AD5ALX1ZZB3BH8A)`, sum
-`(P5A.102AD5ALX1ZZB3BH9W)` from `i=2` to infinity, and note that
-
-```text
-{2(1+R+R^2)}/{1-R^4}
- <={2(13/9)}/{80/81}=117/40<3.
-```
-
-It follows that, for every `m>=2`,
+`(P5A.102AD5ALX1ZZB3BH8A)` and sum
+`(P5A.102AD5ALX1ZZB3BH9W)` from `i=2` to infinity.  This gives
 
 ```text
 Q_m-1
- >=R+(1-R^2)(1-R^2-R^3)-1-3R^5
+ >=R+(1-R^2)(1-R^2-R^3)-1
+   -{2(1+R+R^2)R^5}/{1-R^4}
+ ={R H(R)}/{1-R^4},                            (P5A.102AD5ALX1ZZB3BH9X)
 
- >=(2/9)R-3R^5
- >=(5/27)R>=0.                                (P5A.102AD5ALX1ZZB3BH9X)
+H(R)=1-2R-R^2+R^3-2R^4-R^6-R^7-R^8.
 ```
 
-The middle inequality uses
-`1-2R-R^2>=2/9`; the last uses `R^4<=1/81`.
-The case `m=1` is Lemma
+On `0<=R<=2/5`,
+
+```text
+H'(R)=-2-2R+3R^2-8R^3-6R^5-7R^6-8R^7
+ <=-2+3R^2<=-38/25,
+
+H(R)>=H(2/5)=18129/390625>0.
+```
+
+Therefore `(P5A.102AD5ALX1ZZB3BH9X)` proves `Q_m>=1` for every
+`m>=2`.  The case `m=1` is Lemma
 5A8H28UIA2CGLPCIPOCGAPWALL121Q2.
 
 It remains to compare this floor with the critical demand.  Write
@@ -14052,10 +15492,11 @@ It remains to compare this floor with the critical demand.  Write
 `(P5A.102AD5ALX1ZZB3BGW)` gives
 
 ```text
-C_2<=1+2R^2+R^3<=34/27,
-C_3<=1+R+R^2<=13/9,
+C_2<=1+2R^2+R^3<=173/125,
+C_3<=1+R+R^2<=39/25,
 
-B<=3R+2R^2+R^3+R^4+R^6<=4R<=4/3.              (P5A.102AD5ALX1ZZB3BH9Y)
+B<=3R+2R^2+R^3+R^4+R^6
+ <=25214/15625<7/4.                            (P5A.102AD5ALX1ZZB3BH9Y)
 ```
 
 At `x=1/2`, the increasing right side of the critical equation
@@ -14070,7 +15511,7 @@ Hence `tau<1/2`, and
 ```text
 C_2tau^2+2C_3tau^3
  <=(C_2+C_3)/4
- <=73/108<1.                                  (P5A.102AD5ALX1ZZB3BH9Z)
+ <=92/125<1.                                  (P5A.102AD5ALX1ZZB3BH9Z)
 ```
 
 Together with `(P5A.102AD5ALX1ZZB3BH9X)`, this proves
@@ -14091,7 +15532,7 @@ last bounds in `(P5A.102AD5ALX1ZZB3BH9Y)`, together with `A=C_2>=1`,
 give
 
 ```text
-B^2/(4A)<=4R^2<=4/9<1.                         (P5A.102AD5ALX1ZZB3BH9Z0)
+B^2/(4A)<=4R^2<=16/25<1.                       (P5A.102AD5ALX1ZZB3BH9Z0)
 ```
 
 The rational ceiling in `(P5A.102AD5ALX1ZZB3BH9I0B)` is no larger
@@ -14722,6 +16163,41 @@ absorb the explicit quartic debit in
 `(P5A.102AD5ALX1ZZB3BH9Z7U)`.  The same C++ replay checks the exact
 witness.  QED.
 
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121APPENDQGEONEOBS
+(large-ratio append monotonicity obstruction).**  The append in Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121APPEND can strictly decrease `C_0` even
+when every displayed successive ratio, including the appended one, is at
+least one.
+
+**Proof.**  Take
+
+```text
+(a,b,c,d,x)=(1,10,100,150,150).
+```
+
+The successive ratios are
+
+```text
+b/a=10,             c/b=10,             d/c=3/2,             x/d=1,
+```
+
+so the profile is positive and log concave, and the append is admissible:
+`x=150<=d^2/c=225`.  In particular, the normalized Bellman ratios are
+`(r,s,t,q)=(10,10,3/2,1)`.  Exact substitution in
+`(P5A.102AD5ALX1ZZB3BH9Z7U)` gives
+
+```text
+L+Qx+(b+2c+d)x^2+2x^3=-175000,
+
+C_0^(+)-C_0^(-)=-26250000<0.                 (P5A.102AD5ALX1ZZB3BH9Z7W0)
+```
+
+Thus the tempting assertion `q>=1 => Delta(r,s,t,q)>=0` is false.
+The arbitrary-tail proof must retain a coupled reserve even before the
+ratios cross below one.  The strict `cpp_int` diagnostic
+`character_ring_iter/prove_su2_wall_121_append_ge_one.cpp` reconstructs
+both displayed integers directly.  QED.
+
 The arbitrary-depth law has only three normalized state variables.  This
 is the exact Bellman reduction of the remaining support-uniform problem;
 in particular, no growing window of coefficients is needed.
@@ -14773,6 +16249,289 @@ change by `r^4`.  Minimizing over `q` and allowing immediate termination
 gives `(P5A.102AD5ALX1ZZB3BH9Z7Y)`.  Induction on `N` proves the finite
 statement, and taking the infimum proves `(P5A.102AD5ALX1ZZB3BH9Z7Z)`.
 QED.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121BARRIER
+(exact Bellman-barrier criterion).**  Define the normalized renewal kernel
+
+```text
+R(r,s,t;q)
+ =T_4(r,s,t)+Delta(r,s,t,q)-r^4T_4(s,t,q).
+                                                        (P5A.102AD5ALX1ZZB3BH9Z7ZA)
+```
+
+Let `B(r,s,t)` be any real function on `r>=s>=t>=0` such that, for every
+`r>=s>=t>=q>=0`,
+
+```text
+B(r,s,t)<=T_4(r,s,t),
+
+B(r,s,t)<=R(r,s,t;q)+r^4B(s,t,q).               (P5A.102AD5ALX1ZZB3BH9Z7ZB)
+```
+
+Then
+
+```text
+T_4(r,s,t)+V(r,s,t)>=B(r,s,t).                   (P5A.102AD5ALX1ZZB3BH9Z7ZC)
+```
+
+Consequently, the global payment target follows once one constructs a
+barrier satisfying `(P5A.102AD5ALX1ZZB3BH9Z7ZB)` and
+
+```text
+B(r,s,t)>=A tau^2+2C tau^3                      (P5A.102AD5ALX1ZZB3BH9Z7ZD)
+```
+
+on every initial critical-branch state.
+
+**Proof.**  Put `F_N=T_4+V_N`.  The recursion
+`(P5A.102AD5ALX1ZZB3BH9Z7Y)` is exactly
+
+```text
+F_(N+1)(r,s,t)
+ =min{T_4(r,s,t),
+       inf_(0<=q<=t){R(r,s,t;q)+r^4F_N(s,t,q)}}.
+                                                        (P5A.102AD5ALX1ZZB3BH9Z7ZE)
+```
+
+The first inequality in `(P5A.102AD5ALX1ZZB3BH9Z7ZB)` gives
+`F_0>=B`.  If `F_N>=B`, the second inequality and
+`(P5A.102AD5ALX1ZZB3BH9Z7ZE)` give `F_(N+1)>=B`.  Thus the assertion
+holds for every finite `N`; taking the infimum in `N` proves
+`(P5A.102AD5ALX1ZZB3BH9Z7ZC)`.  Combining it with
+`(P5A.102AD5ALX1ZZB3BH9Z7ZD)` proves the stated consequence.  QED.
+
+This is the required arbitrary-tail lemma interface.  It retains the full
+continuous control `q`; it does not assume nonnegative append increments,
+endpoint minimization, or any finite-support truncation.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RENEWAL
+(affine-control renewal kernel).**  The renewal kernel in Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121BARRIER is
+
+```text
+R(r,s,t;q)=P(r,s,t)-r^3s^2t(1+st)q,             (P5A.102AD5ALX1ZZB3BH9Z7ZF)
+
+P(r,s,t)
+ =1+r(1+2s+st)
+  +r^2(-2-2s+2s^2+s^2t)
+  +r^3(1-4s-2s^2-2s^2t+s^2t^2+2s^3+s^3t^3)
+  +r^4.
+```
+
+In particular, the complete dependence of the Bellman renewal on its new
+control is the single negative affine term in `(P5A.102AD5ALX1ZZB3BH9Z7ZF)`.
+
+**Proof.**  Substitute `(P5A.102AD5ALX1ZZB3BH9Z7X)` into the append
+law `(P5A.102AD5ALX1ZZB3BH9Z7U)`, construct both terminal currents in
+`(P5A.102AD5ALX1ZZB3BH9Z7ZA)` from
+`(P5A.102AD5ALX1ZZB3BGX)--(P5A.102AD5ALX1ZZB3BGY)`, and collect the
+eighteen resulting monomials.  The two `q` monomials are
+
+```text
+-r^3s^2tq-r^3s^3t^2q=-r^3s^2t(1+st)q.
+```
+
+The fail-closed C++ replay
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-wall-121-renewal-kernel
+```
+
+constructs both terminal currents and the append polynomial independently,
+then checks the complete eighteen-term identity over `Z[r,s,t,q]`.  QED.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121GEOMCAL
+(geometric barrier calibration).**  For every `rho>0`, the terminated
+geometric support-four state and one further geometric append satisfy
+
+```text
+T_4(rho,rho,rho)=1+rho+rho^11(1+2rho),
+
+Delta(rho,rho,rho,rho)
+ =rho^11(rho^4-1)(1+2rho),
+
+R(rho,rho,rho;rho)=(1+rho)(1-rho^4).            (P5A.102AD5ALX1ZZB3BH9Z7ZG)
+```
+
+More generally, if the geometric tail is terminated after `m>=4` positive
+coordinates, its complete terminal current is
+
+```text
+C_0^(m)=1+rho+rho^(4m-5)(1+2rho).               (P5A.102AD5ALX1ZZB3BH9Z7ZG0)
+```
+
+Every finite real barrier satisfying
+`(P5A.102AD5ALX1ZZB3BH9Z7ZB)` therefore obeys the necessary geometric
+calibration
+
+```text
+B(rho,rho,rho)<=1+rho,       0<rho<1,
+B(rho,rho,rho)>=1+rho,       rho>1.             (P5A.102AD5ALX1ZZB3BH9Z7ZH)
+```
+
+**Proof.**  With a geometric prefix all interior defects vanish.  For
+`m>=4`, the wall pair contributes `1+rho` and the two terminal defects
+contribute `rho^(4m-5)+2rho^(4m-4)`, proving
+`(P5A.102AD5ALX1ZZB3BH9Z7ZG0)`.  Taking `m=4,5` gives the first two
+identities, and their substitution in
+`(P5A.102AD5ALX1ZZB3BH9Z7ZA)` gives the renewal identity.
+
+At the geometric control `q=t=r=s=rho`, the second barrier inequality is
+
+```text
+B(rho,rho,rho)
+ <=(1+rho)(1-rho^4)+rho^4B(rho,rho,rho).        (P5A.102AD5ALX1ZZB3BH9Z7ZI)
+```
+
+For `rho>1`, division by `1-rho^4<0` gives the second inequality in
+`(P5A.102AD5ALX1ZZB3BH9Z7ZH)`.  For `rho<1`, iterate
+`(P5A.102AD5ALX1ZZB3BH9Z7ZI)` `N` times.  Its geometric sum gives
+
+```text
+B(rho,rho,rho)
+ <=(1+rho)(1-rho^(4N))+rho^(4N)B(rho,rho,rho).
+```
+
+Letting `N` tend to infinity proves the first inequality.  The exact C++
+renewal replay checks all three polynomial identities in
+`(P5A.102AD5ALX1ZZB3BH9Z7ZG)` and
+`(P5A.102AD5ALX1ZZB3BH9Z7ZG0)` for `4<=m<=12`; the displayed endpoint
+calculation is the unbounded proof.  QED.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121TANOBS
+(tangent barrier obstruction).**  The first-order diagonal extension
+
+```text
+B_tan(r,s,t)
+ =1+t+(1-2t)(r-s)+(1-t^2-t^4)(s-t)
+```
+
+is not a Bellman barrier in Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121BARRIER: its terminal inequality already
+fails on the log-concave boundary face.
+
+**Proof.**  At
+
+```text
+(r,s,t)=(1/8,0,0),
+```
+
+the terminated profile is `(0,1,1/8,0,0)`.  Direct substitution in the
+terminal current gives
+
+```text
+T_4=2245/2048,
+B_tan=9/8=2304/2048.
+```
+
+Hence
+
+```text
+T_4-B_tan=-59/2048<0.
+```
+
+The first barrier inequality fails, so this tangent extension cannot
+control arbitrary continuations.  QED.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121ONEOBS
+(one-ratio terminal barrier obstruction).**  The exact support-two
+terminal value
+
+```text
+f(r)=1+r-2r^2+r^3+2r^4
+```
+
+cannot be used as a one-ratio barrier `B(r,s,t)=f(r)`: it fails the
+terminal inequality in Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121BARRIER.
+
+**Proof.**  At
+
+```text
+(r,s,t)=(7/12,1/12,0),
+```
+
+the terminated profile is
+
+```text
+(0,1,7/12,7/144,0).
+```
+
+Direct exact expansion gives
+
+```text
+T_4-f(7/12)=-3297497/214990848<0.
+```
+
+Thus a barrier for the arbitrary continuation problem cannot collapse to
+the first ratio alone.  QED.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121LASTOBS
+(last-ratio terminal barrier obstruction).**  The same support-two
+terminal polynomial cannot be used at the opposite end of the state:
+
+```text
+B_last(r,s,t)=f(t),
+f(x)=1+x-2x^2+x^3+2x^4.
+```
+
+It fails the renewal inequality in Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121BARRIER.
+
+**Proof.**  On the diagonal state
+
+```text
+r=s=t=rho
+```
+
+take the legal terminating control `q=0`.  Direct substitution in the
+affine renewal kernel `(P5A.102AD5ALX1ZZB3BH9Z7ZF)` gives
+
+```text
+R(rho,rho,rho;0)+rho^4 f(0)-f(rho)
+ =rho^2(2-rho-2rho^2-rho^3+rho^5+rho^7).       (P5A.102AD5ALX1ZZB3BH9Z7ZI0)
+```
+
+At `rho=25/32`, this is exactly
+
+```text
+-217245774375/35184372088832<0.
+```
+
+Hence the second barrier inequality in
+`(P5A.102AD5ALX1ZZB3BH9Z7ZB)` fails.  Thus neither endpoint ratio by
+itself can carry the terminal reserve; an admissible barrier must retain
+genuine multi-ratio information.  The strict `cpp_int` replay is
+
+```text
+character_ring_iter/probe_su2_wall_121_simple_barrier \
+  --replay-last-ratio
+```
+
+It also records the independent linear candidate `B=1+t` failing at
+`rho=1/64`.  QED.
+
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121TWOOBS
+(two-ratio terminal barrier obstruction).**  Let `T_3(r,s)` denote the
+terminal current of `(0,1,r,rs)`.  It cannot be used as a two-ratio
+barrier `B(r,s,t)=T_3(r,s)`.
+
+**Proof.**  At
+
+```text
+(r,s,t)=(1,1,1/2),
+```
+
+the support-three prefix `(0,1,1,1)` is extended legally to
+`(0,1,1,1,1/2)`.  Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121APPEND gives
+
+```text
+T_4(1,1,1/2)-T_3(1,1)=-9/8<0.
+```
+
+Thus the terminal barrier inequality fails.  A successful barrier must
+retain the full three-ratio state `(r,s,t)`, not merely `(r,s)`.  QED.
 
 **Target 5A8H28UIA2CGLPCIPOCGAPWALL121APPENDBELPAY
 (three-ratio global payment).**  Let `T_4(r,s,t)` be the terminal current
@@ -14905,6 +16664,54 @@ weaker than the disproved first-iterate target.  On the support-22 witness
 `(P5A.102AD5ALX1ZZB3BH9Z81)`, exact arithmetic gives a strictly positive
 second-iterate margin.  This is a diagnostic, not a proof of the target;
 the same fail-closed replay asserts that sign.
+
+The independent strict `cpp_int` probe
+`character_ring_iter/probe_su2_wall_121_rat2.cpp` gives a focused
+falsification audit of this surviving second-iterate route.  It constructs
+the complete current `C_0` from the exact paired-current normal form
+`(P5A.102AD5ALX1ZZB3BGY)`, retains only tails on the critical branch, and
+evaluates the cleared margin `(P5A.102AD5ALX1ZZB3BH9Z86)` without floating
+point arithmetic.  The exhaustive nonincreasing-ratio grid
+
+```text
+4, 3, 2, 4/3, 1, 2/3, 1/2, 1/3, 1/4
+```
+
+through twelve ratios contains `293,875` positive log-concave tails, of
+which `174,772` are on the critical branch; it finds no negative
+second-iterate margin.  The earlier length-eleven replay is retained as a
+smaller reproducibility checkpoint:
+
+```text
+probe_su2_wall_121_rat2 11
+SU2_WALL_121_RAT2_GRID_PASS maximum_length=11
+  tails=167905 critical=97225
+
+probe_su2_wall_121_rat2 12
+SU2_WALL_121_RAT2_GRID_PASS maximum_length=12
+  tails=293875 critical=174772
+```
+
+This deliberately does not assert `(RAT2PAY)` beyond the displayed finite
+grid.  Its purpose is to test the exact strengthened lemma after the
+first-iterate counterexample, not to replace its arbitrary-depth proof.
+
+The first unproved symbolic chamber is already too coupled for an
+unsubdivided Bernstein certificate.  In the exact tail-ratio chart with five
+positive support coordinates, the strict diagnostic
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --support-five-rat2-diagnostic
+```
+
+constructs the cleared second-iterate margin with `49,460` monomials and
+coordinate degrees `(83,45,16,4)`.  Its root Bernstein grid has `328,440`
+coefficients, of which `50,297` are negative.  Thus coefficientwise
+Bernstein positivity at the root cube cannot prove `(RAT2PAY)` even in this
+fixed support-five chamber; any certificate must subdivide or retain a
+global reserve.  This is a diagnostic obstruction, not a counterexample to
+the margin.
 
 The support-three and support-four rational certificates above, and the
 support-five calculation below, are therefore finite boundary facts only.
@@ -18712,6 +20519,15 @@ square profiles in its `maximum_length=6, maximum_coefficient=4`
 box, again without a failure.  It also reproduces the exact diagonal
 value `-6`.  These counts are bounded evidence only; the telescoping
 identities and displayed diagonal obstruction are exact.
+
+An independent stricter root-side replay of the same C++ diagnostic,
+with `maximum_length=10`, `maximum_coefficient=4`, and every leading
+zero shift through four, retained `3,110` positive interval-supported
+log-concave roots.  It checked all `491,130` complete currents and all
+`2,583,660` transverse `B_2` column sums for the log-concave square
+subfamily, with zero failures and zero triangle-identity mismatches.
+This expands the bounded evidence for the log-concave-root route only;
+it is not a proof of `(OCRD)`.
 
 Two further shortcuts fail before the live root cone is reached.
 First, the single central spectral inequality is insufficient.  The
@@ -25092,6 +26908,13 @@ length-two shells is still false: the first new deficits are `424` at
 Thus the deeper reflected-shell recoupling is genuine and cannot be
 replaced by the earlier local or fixed-depth rules.
 
+The analyzer option named `--matching-capacity-down-basic` is not a
+certificate for that smaller graph: after selecting the minimal
+two-cut mode, it still enters the time-word splice, concatenation,
+loop-extraction, rotation, and deeper reflected-recoupling branches.
+Its successful max-flow rows therefore support only the full downward
+operation graph, not a four-move Hall lemma.
+
 The graph-theoretic boundary of the phenomenon is also now explicit.
 Reflection and chordality alone fail with the exact value `-23,692`;
 the outside-in perfect-elimination order alone fails with value `-32`.
@@ -25167,6 +26990,107 @@ The edge `q -> 0` is unique, so this is the negative `s`-summand.
 Summing from `s=0` through `t` proves `(P5A.102BU)`.  The two sets are
 finite, hence their cardinality inequality is equivalent to the
 existence of `(P5A.102BV)`.  QED.
+
+The reflection and the odd total length turn the negative endpoint into a
+same-endpoint source-switch problem.  This is the form in which a global
+path involution would have to be constructed.  Let
+`H_(m,t)(a,b)` be the set of length-`m` product walks from `(a,b)` to
+`(k-q,0)` whose number of second-coordinate moves belongs to
+
+```text
+{m-2t,m-2t+2,...,m}.                              (P5A.102BV1)
+```
+
+All these numbers are odd because `m=2j+1`.
+
+**Lemma 5A8H28Q1 (corner--parity reflection).**  There is a canonical
+bijection
+
+```text
+P_(m,t)(k,q)  <->  H_(m,t)(k,k).                  (P5A.102BV2)
+```
+
+Consequently `(P5A.102BV)` is equivalent to the corner-switch injection
+
+```text
+H_(m,t)(k,k) -> P_(m,t)(k-q,0).                   (P5A.102BV3)
+```
+
+**Proof.**  On a product state put
+
+```text
+J(x,y)=(k-y,k-x).
+```
+
+The fusion graph is invariant under `r -> k-r`, so applying `J` to every
+state of a product walk preserves every edge.  It sends the initial and
+terminal states as
+
+```text
+(0,0) -> (k,k),             (k,q) -> (k-q,0).
+```
+
+It also exchanges the two move coordinates.  Hence a source walk with
+`2s` second-coordinate moves is sent to a walk with `m-2s` second-coordinate
+moves.  As `0<=s<=t`, these are exactly the odd counts in
+`(P5A.102BV1)`.  The involution `J^2=id` gives the stated bijection.
+Taking cardinalities and using Lemma 5A8H28Q gives the equivalence with
+`(P5A.102BV3)`.  QED.
+
+Thus the unresolved allocation can be sought as a single endpoint-fixed
+source switch: it must transfer paths from the reflected corner `(k,k)`
+whose second-coordinate activity is in the late odd tail to paths from
+`(0,0)` in the early even prefix.  It may redistribute those activity
+classes globally; an activity-by-activity comparison is not implied.
+
+The direct chronological loop-erased tail switch is not itself that
+allocation.  In the first hard row `(k,q,j,t)=(6,2,4,3)`, apply it to the
+unshuffled skeleton consisting of a path from `k` to `0` and one from `0`
+to `q`, switching tails at the first second-path vertex in the chronological
+loop erasure of the first path.  The two distinct skeleton pairs
+
+```text
+(6,4,2,0,2,0 ; 0,2,0,2,2),
+(6,4,2,0,2,0,2,0 ; 0,2,2)
+```
+
+both switch to
+
+```text
+(6,4,2,0,2,0,2,0,2,2 ; 0).
+```
+
+All three displayed paths obey the fusion rule and the target has an
+allowed even second length.  The strict C++ replay
+`probe_su2_fomin_prefix_switch.cpp --replay-first-prefix-collision` checks
+all `106` unshuffled sources in this row: no output violates the prefix
+bound, but `14` collisions occur.  Thus chronological loop erasure is a
+prefix-compatible switching skeleton in this row, not an injection.  This
+does not rule out a shuffle-aware or marked global allocation.
+
+In fact, in that orientation the first second-path vertex is the boundary
+leaf `0`, which is the terminal vertex of the first path's loop erasure;
+the switch is consequently just concatenation at `0`.  Reversing the two
+paths avoids this trivial cut but destroys the prefix condition.  The valid
+source pair
+
+```text
+(6,4,2,0,2,0,2,0 ; 0,2,2)
+```
+
+switches in the reversed chronological convention to
+
+```text
+(6,4,2 ; 0,2,2,0,2,0,2,0).
+```
+
+Its second path has length seven, whereas this row permits only even
+lengths through six.  The companion replay
+`probe_su2_fomin_prefix_switch.cpp --replay-reverse-prefix-obstruction`
+finds `91` prefix violations among the same `106` skeleton sources.
+Thus neither direct chronological loop-erased orientation gives the
+required prefix allocation; any loop-erased construction must change the
+crossing rule or retain a more global carrier.
 
 There is also a representation-theoretic description of the exact
 shell cone.  Retain the lower fusion level
@@ -27075,6 +28999,21 @@ d8a0c34c2580ce250683a8053fbd5c1666b097522e4b808e30ba3a9890eccf79.
 The transcript is
 `certificates/su2_log_concave_ratio_stress.log`.  The exact witness,
 not the scan, disproves the target.
+
+The same exact `cpp_int` reproducer has a focused
+`--complete-wall-only` mode.  It skips the already-refuted positive-cutoff
+tail tests and checks only the surviving complete-wall determinant
+`rho=0`.  Its deterministic replay
+
+```text
+probe_su2_log_concave_ratio_stress 1000 20 40 100 --complete-wall-only
+```
+
+checks `400,000` complete-wall determinants for positive log-concave roots
+with support through `40`, labels through `20`, and successive rational
+ratios through `100`, with no counterexample.  This is targeted
+falsification evidence for `(OCLRC)`, not a proof; the cutoff-one witness
+above remains a counterexample to the stronger tail statement.
 
 Lemma 5A8H28UIA2RLC1 and the now-disproved target would have implied
 the complete ordinary anchored hierarchy.  Indeed `e_0` is log
@@ -29354,6 +31293,24 @@ implementation and shows that collisions and candidate-free domains
 are not exceptional.  Family `(P5A.102CB8S3Z36)` is the unbounded
 proof that crossing selection alone fails.
 
+The full bridge graph also does not collapse to a one-dimensional interval
+Hall problem in the two evident tableau orders.  The strict C++ diagnostic
+`character_ring_iter/probe_su2_kostka_bridge_biconvex.cpp` orders both
+source and target pairs first lexicographically by their path data and then
+by total path area with lexicographic ties.  In each order it tests whether
+every left and right neighbourhood is consecutive.  Already at
+
+```text
+Q=1,                 n=2,
+source=(0,1,1 ; 0,1,1,0),
+```
+
+the area-refined order gives the noninterval target neighbourhood
+`{0,1,3}`.  Thus the bridge relation is not biconvex in either natural
+recording order.  This is an obstruction only to a lexicographic or
+area-order interval-Hall proof: it does not rule out a different
+tableau/rigging order or the full Hall statement `(P5A.102CB8S3Z44)`.
+
 The remaining ordinary payment can now be stated without analytic
 slack.
 
@@ -30140,6 +32097,78 @@ same-parity terms have the signs in `(P5A.102CB8ZF)`.  Because `m` is
 odd, symmetrizing the second sum replaces `sigma_r` by
 `(sigma_r-sigma_s)/2`; same-parity terms cancel, and orienting every
 remaining pair from even to odd gives `(P5A.102CB8ZG)`.  QED.
+
+The same spectral variables give one exact kernel for every truncated
+prefix, not only for the terminal even Pascal sum.  It keeps the
+prefix dependence in one positive bivariate polynomial and makes the
+remaining alternating allocation explicit.
+
+**Lemma 5A8H28UI5A (all-prefix spectral kernel).**  Retain the level,
+weights, eigenvalues, and signs of Lemma 5A8H28UI5.  Put
+
+```text
+m=2j+1,
+R_(j,t)(a,b)=sum_(ell=0)^t binom(m,2ell)a^(j-ell)b^ell,
+                                                  0<=t<=j. (P5A.102CB8SPX1)
+```
+
+Then the full-prefix current of Lemma 5A8H26 is exactly
+
+```text
+Q_(j,t)
+ =sum_(r,s)u_r^2u_s^2 sigma_r lambda_r(lambda_r-lambda_s)
+    R_(j,t)(lambda_r^2,lambda_s^2).             (P5A.102CB8SPX2)
+```
+
+Equivalently, after symmetrizing the two spectral variables,
+
+```text
+2Q_(j,t)
+ =sum_(r,s)u_r^2u_s^2(lambda_r-lambda_s)
+   {sigma_r lambda_r R_(j,t)(lambda_r^2,lambda_s^2)
+    -sigma_s lambda_s R_(j,t)(lambda_s^2,lambda_r^2)}.
+                                                      (P5A.102CB8SPX3)
+```
+
+Every coefficient of `R_(j,t)` is nonnegative.  Thus the only sign in
+the all-prefix spectral formulation is the alternating two-mode
+bracket in `(P5A.102CB8SPX3)`; in particular, a proof cannot split the
+time prefix into independently signed slices.
+
+**Proof.**  Let
+
+```text
+f_a=(N_(2Q)^a)_(0,0),             g_a=(N_(2Q)^a)_(0,2K).
+```
+
+Verlinde diagonalization gives
+
+```text
+f_a=sum_s u_s^2 lambda_s^a,
+g_a=sum_r u_r^2 sigma_r lambda_r^a.             (P5A.102CB8SPX4)
+```
+
+With `n=2j+2`, Lemma 5A8H26 gives
+
+```text
+Q_(j,t)=sum_(ell=0)^t binom(m,2ell)
+ {f_(2ell)g_(n-2ell)-f_(2ell+1)g_(n-2ell-1)}.
+                                                      (P5A.102CB8SPX5)
+```
+
+Substituting `(P5A.102CB8SPX4)`, the summand at a pair `(r,s)` is
+
+```text
+lambda_s^(2ell)lambda_r^(n-2ell)
+ -lambda_s^(2ell+1)lambda_r^(n-2ell-1)
+ =lambda_r(lambda_r-lambda_s)
+    (lambda_r^2)^(j-ell)(lambda_s^2)^ell.
+```
+
+Summation over `ell` proves `(P5A.102CB8SPX2)`.  Interchanging `r,s`
+in a second copy of that identity and averaging proves
+`(P5A.102CB8SPX3)`.  Positivity of the coefficients in `(P5A.102CB8SPX1)`
+is immediate.  QED.
 
 Grouping the mixed current by the squared additive eigenvalue does not
 make every group positive.  At `(k,q)=(6,2)`, let
@@ -33668,6 +35697,66 @@ factors, every next label `p` between the largest prefix label and six, and
 every disjoint interior target.  All cases passed.  This is a sharper
 inductive target than `(TLS)`, but it remains unproved for unbounded labels.
 
+**Proposition 7B (one-sided domination obstruction).**  The two individual
+inequalities `(OSD)` are false, already in the ordinary representation ring.
+Take the plus prefix
+
+```text
+P=[1,1,1,1,1,1,1,1],
+```
+
+the next ordered plus label `p=5`, and the disjoint target `(a,b)=(3,2)`.
+Then
+
+```text
+A_5^E(3,2)=1763 < 1764=E_(5,5),                       (P7B.1)
+```
+
+so the first inequality in `(OSD)` fails by one.
+
+**Proof.**  Write `d=C_P e_0`.  Direct fundamental fusion for the
+eight-factor prefix gives
+
+```text
+(d_0,d_2,d_4,d_6,d_8)=(588,840,300,35,1),             (P7B.2)
+```
+
+with every odd entry zero.  Since `E_P=H(d)-C_P`, the required entries are
+
+```text
+E_(2,2)=594,  E_(4,2)=825,  E_(6,2)=308,
+E_(8,2)=36,   E_(5,5)=1764.                           (P7B.3)
+```
+
+For example, `H(d)_(2,2)-C_P(2,2)=1728-1134=594` and
+`H(d)_(4,2)-C_P(4,2)=1175-350=825`; the remaining entries follow from the
+same length-eight ballot multiplicities.  As `3 star 5={2,4,6,8}` and the
+zero column of `E_P` vanishes,
+
+```text
+A_5^E(3,2)
+ =sum_(u in 3 star 5)E_(u,2)
+  -sum_(u in 1 star 5)E_(u,0)
+ =594+825+308+36=1763.
+```
+
+The first demand in `(OSD)` is `E_(a+b,p)=E_(5,5)=1764`.  The word is
+ordered, `p>=max(P)`, and neither `a` nor `b` occurs in the prefix, so all
+hypotheses of `(OSD)` hold.  QED.
+
+The fixed exact C++ replay
+
+```text
+search_su2_defect_cone --replay-osd-obstruction
+```
+
+constructs the complete ordinary defect matrix and fails closed unless the
+two integers in `(P7B.1)` are respectively `1763` and `1764`.
+
+Thus `(TLS)` may still be viable, but a factor insertion cannot preserve its
+two outer channels separately; a successful induction must retain a coupled
+cumulative payment.
+
 The parity-chain edge `b=1` is genuinely separate.  The analogous pair of
 one-sided edge bounds fails, as does the stronger proposal to inject every
 `(a,1)` source only into the two global multiplicity spaces of labels `a-1`
@@ -34301,6 +36390,93 @@ Thus `(PH_t)` asks for positivity after the remaining suffix has been forced
 to travel as a single monochromatic carrier.  This is a sharper target for a
 reflection or carrier-switching proof than the raw two-colour count.
 
+**Lemma 12A (first-cut edge carrier).**  The edge coefficient in `(EDGE-CUT)`
+is nonnegative at the first cut, uniformly in the ordinary ring and in every
+finite `SU(2)_k`.  More precisely, let `p=p_1`, let
+
+```text
+K=N_(p_2)...N_(p_N),
+```
+
+with the empty product interpreted as `I`, and write `B=e_1 wedge e_0`.
+For every `1<=a<=k`, with the usual omitted top neighbor at finite level,
+
+```text
+[e_a wedge e_0](K tensor I+I tensor K)dGamma(N_p)B
+ =sum_(r in 1 star_k p, r>0)
+    {K_(a,r)+indicator_(a=r)K_(0,0)}
+  +indicator_(p>=2){indicator_(a=1)K_(0,p)
+                    -indicator_(a=p)K_(0,1)} >=0.       (P12A.1)
+```
+
+No ordering assumption on the suffix is needed.
+
+**Proof.**  The first additive compound is
+
+```text
+dGamma(N_p)B
+ =sum_(r in 1 star_k p, r>0)e_r wedge e_0
+   +indicator_(p>=2)e_1 wedge e_p.                      (P12A.2)
+```
+
+Applying `K tensor I+I tensor K` gives `(P12A.1)` directly.  All its
+summands are nonnegative except possibly `-K_(0,1)` when `p>=2` and `a=p`.
+Expand the positive suffix character as
+
+```text
+K=sum_j k_j N_j,                 k_j=K_(j,0)>=0.
+```
+
+Since `1` occurs in `(p-1) star_k p`, including at the affine top endpoint,
+
+```text
+K_(p,p-1)=sum_j k_j(N_j)_(p,p-1)>=k_1=K_(0,1).
+```
+
+The `r=p-1` term in `(P12A.1)` therefore pays the only possible negative
+contribution.  The ordinary proof is identical without the upper endpoint.
+QED.
+
+The fail-closed exact C++ verifier
+`character_ring_iter/verify_su2_first_prefix_hall_cut.cpp` compares the
+closed formula `(P12A.1)` with direct exterior propagation and checks the
+anchored payment term by term.  Its replay through level eight and four
+arbitrary suffix factors checked `60,060` boundary coefficients with
+`result=PASS`.  The finite calculation is an implementation audit; the
+uniform proof is the displayed positive-character expansion.
+
+**Corollary 12A1 (four initial edge carriers).**  In the ordinary ring and
+in every finite `SU(2)_k`, `(EDGE-CUT)` is nonnegative at each cut
+`t=1,2,3,4`, with an arbitrary remaining suffix.
+
+**Proof.**  Expand the monochromatic suffix as
+
+```text
+K_t=N_(p_(t+1))...N_(p_N)=sum_s k_s N_s,         k_s>=0.
+```
+
+Linearity of the additive compound gives
+
+```text
+(K_t tensor I+I tensor K_t) product_(i<=t)dGamma(N_(p_i))B
+ =sum_s k_s dGamma(N_s)product_(i<=t)dGamma(N_(p_i))B.  (P12A.3)
+```
+
+The additive compounds commute.  By `(EDGE-EXT)`, the boundary coefficient
+of the `s`th summand is exactly
+
+```text
+E_[p_1,...,p_t,s](a,1).
+```
+
+It is the Q3 integral with two minus labels `a,1` and `t+1` plus labels,
+hence has at most `t+3<=7` factors.  A zero `s` just removes a trivial plus
+factor.  Proposition 1, Proposition 1B, and Proposition 1C prove the
+ordinary cases `t=1,2,3`, respectively, while Corollary 23A9ZD proves
+`t=4`; Proposition 25D4 proves the finite cases `t=1,2,3`, and Corollary
+23A9ZZ10 proves finite `t=4`.  Every summand in `(P12A.3)` is therefore
+nonnegative, hence so is the complete coefficient.  QED.
+
 The strict exact C++ verifier
 `character_ring_iter/search_su2_level_edge_exterior.cpp` implements
 `(EDGE-CUT)` directly in every finite fusion ring.  It passed all 48,619
@@ -34888,6 +37064,30 @@ apply directly because every bracketed suffix factor is virtual.  The
 ordered hypothesis `p<=min(Q)` must therefore be used in a cancellation or
 straightening theorem for the row coefficient itself.
 
+There is one useful restriction on a possible Dirac explanation.  The
+three terms in one suffix factor cannot be the character of a *single*
+ordinary `B_2` BGG resolution.  In orthogonal highest-weight coordinates,
+the three dominant weights in
+
+```text
+Psi_(q,0)-Psi_(q-1,1)+Psi_(q-2,0)                    (P12E2.5a)
+```
+
+have `rho`-shifts
+
+```text
+(q+3/2,1/2),       (q+1/2,3/2),       (q-1/2,1/2),  (P12E2.5b)
+```
+
+because `rho_(B_2)=(3/2,1/2)`.  A `B_2` dot orbit only permutes these
+coordinates and changes their signs.  The three multisets of absolute
+coordinates in `(P12E2.5b)` are distinct (for `q>=2`), so they are not one
+dot orbit.  Thus a direct finite-dimensional BGG/parabolic-resolution
+argument cannot supply the needed cancellation.  This does *not* rule out
+an induced Dirac index or a larger derived complex: such an object may have
+several infinitesimal-character blocks.  It rules out only the tempting
+one-orbit shortcut.
+
 The strict arbitrary-precision C++ tools
 `character_ring_iter/search_su2_opd_subset_prefix.cpp` and
 `character_ring_iter/inspect_su2_opd_subset_prefix.cpp` reproduce both
@@ -35114,6 +37314,67 @@ the same minus sign.  Their product is positive.  The identical argument
 applies when the smaller index is updated and crosses above the larger one.
 Thus `dGamma(N_(2r))` has a nonnegative integral matrix in the basis
 `(P12F.2)`, proving `(P12F.3)` by induction.  QED.
+
+**Corollary 12F1A (all-even edge carriers at every cut).**  Let
+
+```text
+P=(p_1,...,p_n),                 p_i>0 and p_i even.
+```
+
+Then, in the ordinary ring and in every finite `SU(2)_k`, the edge
+coefficient is nonnegative:
+
+```text
+[e_a wedge e_0] product_(i=1)^n dGamma(N_(p_i))
+ (e_1 wedge e_0) >=0.                              (P12F.4)
+```
+
+More strongly, every prefix carrier is nonnegative.  For every `t`, put
+
+```text
+K_t=N_(p_(t+1))...N_(p_n).
+```
+
+Then
+
+```text
+[e_a wedge e_0](K_t tensor I+I tensor K_t)
+ product_(i<=t)dGamma(N_(p_i))(e_1 wedge e_0) >=0. (P12F.5)
+```
+
+Thus the edge part of `(PH_t)` holds at all cuts on the complete all-even
+plus cone, with no factor-count bound.
+
+**Proof.**  The additive compounds commute, so arrange a nonempty word as
+`P=(p,Q)` with `p` even and every label of `Q` even.  In the ordinary ring,
+and in the finite ring when `p<k`, `(P12B.1)` gives
+
+```text
+dGamma(N_p)(e_1 wedge e_0)=X_p+Y_p.
+```
+
+At the finite top wall `p=k`, the absent `e_(k+1) wedge e_0` term simply
+leaves `Y_p`.  The proof of Proposition 12F1 uses only parity preservation
+of even fusion, so it applies verbatim after finite truncation.  Hence every
+boundary coefficient of `T_QY_p` is nonnegative.
+
+For the outer packet, when it is present, `(P12B.2)` identifies its boundary
+coefficient with `E_Q(a,p+1)`.  Since all labels of `Q` are even, its
+two-colour coefficient array is supported on even--even pairs.  Therefore
+`c_Q(a,p+1)=0`, as `p+1` is odd, and the exact boundary formula makes
+`E_Q(a,p+1)` a sum of nonnegative boundary multiplicities.  This proves
+`(P12F.4)`; the argument is identical in `SU(2)_k`.
+
+Finally expand the monochromatic suffix in the fusion basis:
+
+```text
+K_t=sum_s k_s N_s,                 k_s>=0.
+```
+
+Parity forces `k_s=0` for odd `s`.  The coefficient in `(P12F.5)` is the
+nonnegative sum of the coefficients in `(P12F.4)` for the all-even words
+`(p_1,...,p_t,s)`, weighted by `k_s`.  If `s=0`, its additive compound is
+just the positive scalar `2I`.  This proves `(P12F.5)`.  QED.
 
 Conceptually, this cone is the image of an ordinary character cone.  Apply
 central translation in the second `SU(2)` factor,
@@ -35356,6 +37617,63 @@ exactly one odd plus label is already closed: the right side of `(P12F.7)`
 contains only defects for the strictly shorter all-even word `E`.  This does
 not require separate positivity of `Y_p`.
 
+**Corollary 12F2B (one-odd edge carriers at every cut).**  Let
+
+```text
+P=(p_1,...,p_n)
+```
+
+be a positive-label word having at most one odd label.  Then, in the
+ordinary ring and in every finite `SU(2)_k), for every cut `t` and every
+`a`,
+
+```text
+[e_a wedge e_0](K_t tensor I+I tensor K_t)
+ product_(i<=t)dGamma(N_(p_i))(e_1 wedge e_0) >=0,
+
+K_t=N_(p_(t+1))...N_(p_n).                         (P12F.7a)
+```
+
+Thus the edge part of `(PH_t)` holds at every cut on the complete
+one-odd cone, with no bound on the number of even factors.
+
+**Proof.**  Expand the monochromatic suffix in the ordinary or finite fusion
+basis,
+
+```text
+K_t=sum_s k_sN_s,                 k_s>=0.        (P12F.7b)
+```
+
+Every `s` appearing has the parity of the number of odd labels in the
+suffix.  Hence the word formed by the prefix `(p_1,...,p_t)` and the
+additional label `s` has at most one odd label: if the original odd label
+is in the prefix, then every such `s` is even; if it is in the suffix,
+then the prefix is all even and every such `s` is odd.  The same assertion
+is immediate when `s=0`.
+
+For `s>0`, Proposition 12F2, followed by the all-even conclusion of
+Proposition 12F, gives
+
+```text
+[e_a wedge e_0]dGamma(N_s)
+ product_(i<=t)dGamma(N_(p_i))(e_1 wedge e_0)>=0.
+```
+
+For `s=0`, the additive compound is `2I`, so the conclusion is the
+already closed prefix edge word.  Multiply these inequalities by
+`k_s>=0` and sum over `s` in `(P12F.7b)`.  This is exactly
+`(P12F.7a)`.  The parity-twist identity and all-even packet proof used in
+Proposition 12F2 are valid after affine truncation, so the same argument
+proves the finite statement.  QED.
+
+The strict exact C++ verifier
+`character_ring_iter/verify_su2_level_one_odd_prefix_carrier.cpp`
+constructs the two monochromatic suffix actions independently and checks
+the complete carrier in `(P12F.7a)`.  Its replay through level twelve and
+six even factors checks `468,202` cuts and `5,088,650` boundary
+coefficients with result `PASS`.  This is a bounded audit of the displayed
+unbounded reduction, not part of its proof.
+
 That distinction is essential at finite level.  The strict exact verifier
 `character_ring_iter/verify_su2_level_even_prefix_cone.cpp` finds
 
@@ -35437,6 +37755,206 @@ signed word with one fewer factor and the latter vanishes.  The induction
 hypothesis proves nonnegativity.  The argument for `r=1` is identical.
 This is also the specialization `i=1` of Proposition 5, and it is
 independent of the number and labels of the even background factors.  QED.
+
+**Corollary 12F3B (two-odd carrier equivalence).**  The following two
+statements are equivalent, in the ordinary ring and in every finite
+`SU(2)_k`.
+
+1. For every even word `E), odd labels `q,r), and target `a), the
+   complete two-odd edge coefficient is nonnegative:
+
+```text
+[e_a wedge e_0]T_qT_rT_EB_1>=0.                    (P12F.9b)
+```
+
+2. Every word with at most two odd labels satisfies the edge carrier
+   inequality at every prefix cut:
+
+```text
+[e_a wedge e_0](K_t tensor I+I tensor K_t)
+ product_(i<=t)dGamma(N_(p_i))B_1>=0.              (P12F.9c)
+```
+
+In particular, after the all-even and one-odd sectors, the sole new
+arbitrary-cut lemma in the two-odd sector is the terminal source--curl Hall
+inequality `(SCH)`, equivalently the nonnegativity in `(P12F.9)`.
+
+**Proof.**  The implication from (2) to (1) is the final cut `t=n`, for
+which `K_t=I`.  Conversely, assume (1) and expand the monochromatic suffix
+at an arbitrary cut as
+
+```text
+K_t=sum_s k_sN_s,                 k_s>=0.          (P12F.9d)
+```
+
+Every occurring `s` has the parity of the number of odd labels in that
+suffix.  If the prefix contains no odd label, then the suffix contains both
+odd labels, so every `s` is even and adjoining it leaves an all-even edge
+word.  If the prefix contains one odd label, then every `s` is odd and
+adjoining it gives a two-odd edge word.  If the prefix contains both odd
+labels, every `s` is even and again gives a two-odd edge word.  The
+all-even case is Proposition 12F and the two-odd cases are (1).  The
+`s=0` summand is the positive scalar additive compound `2I`.
+Multiplying by `k_s>=0` and summing gives `(P12F.9c)`.
+
+Proposition 12F3 identifies (1) with `(SCH)`; every identity used above
+is a fusion identity, so the proof includes affine-wall truncation.  QED.
+
+The carrier verifier above also has an `ODD_COUNT=2` mode.  It constructs
+both odd-label placements relative to the cut and checks the complete
+monochromatic suffix carrier directly.  Through level ten and five even
+factors it checks `343,320` two-odd cuts and `3,126,600` boundary
+coefficients with result `PASS`.  This is an exact finite audit of the
+equivalence, not a proof of `(SCH)`.
+
+**Lemma 12F3C (two-odd interval-carrier identity).**  Retain the even
+background E and odd terminals q,r.  Write the parity-twisted
+source--curl state from `(P12F.13)` as
+
+```text
+H_(E;q,r)=J(T_qT_rT_EB_1)
+          =sum_(a odd, b even) h_(E;q,r)(a,b) M_(a,b).
+```
+
+For every even b and odd a, define
+
+```text
+I_(E;q,r)(a,b)
+ =h_(E;q,r)(a,b)+sum_(u in a star_k b)h_(E;q,r)(u,0).
+                                                               (P12F.9e)
+```
+
+Then, ordinarily and at every finite level,
+
+```text
+I_(E;q,r)(a,b)
+ =[e_a wedge e_0]T_bT_qT_rT_EB_1.                 (P12F.9f)
+```
+
+Thus `I_(E;q,r)(a,b)>=0` is precisely the boundary payment after one
+additional even factor.  In particular, a two-odd induction can close
+`(SCH)` only by preserving these complete interval-carrier payments;
+it cannot pay the interior coefficient `h(a,b)` separately.
+
+**Proof.**  An even additive update commutes with the central translation,
+so it acts on `H_(E;q,r)` by
+
+```text
+S_b=N_b tensor I+I tensor N_b.
+```
+
+The coefficient of `e_a tensor e_0` in its first summand is
+
+```text
+sum_(u in a star_k b)h_(E;q,r)(u,0).
+```
+
+For the second summand, fusion to the trivial type forces the incoming
+second label to be exactly `b`; its contribution is
+`h_(E;q,r)(a,b)`.  Their sum is `(P12F.9e)`.  Since the boundary wedge
+`e_a wedge e_0` has odd--even orientation, its central translation has
+positive sign, proving `(P12F.9f)`.  The calculation uses only the
+finite fusion interval, so it is uniform at the affine wall.  QED.
+
+The strict C++ mode search_su2_two_odd_twisted_cone --dominance evaluates
+the complete interval carrier in (P12F.9e) directly.  Through odd labels
+at most nine, even labels at most ten, and six even factors, it checked
+4,620 exact states without a failure.  This is finite evidence for the
+interval-carrier target, not a proof of (SCH).
+
+**Proposition 12F3D (mixed-update cross obstruction).**  The interval
+carrier in Lemma 12F3C is not preserved by declaring the mixed term in two
+even updates nonnegative.  Already in the ordinary ring,
+
+~~~text
+[e_1 wedge e_0](N_2 tensor N_2+N_2 tensor N_2)T_3^2B_1=-2.  (P12F.9g)
+~~~
+
+Thus the recurrence
+
+~~~text
+T_eT_b
+ =sum_(c in e star b)T_c
+   +(N_e tensor N_b+N_b tensor N_e)                 (P12F.9h)
+~~~
+
+cannot close (SCH) by a nonnegative cross-term induction.
+
+**Proof.**  The exact exterior expansion is
+
+~~~text
+T_3^2B_1
+ ={1^0:3, 2^1:-1, 3^0:2, 3^2:-2, 4^1:-1,
+   4^3:2, 5^0:2, 6^1:-1, 7^0:1},
+~~~
+
+as in (P12F.18).  Since the two labels in (P12F.9g) agree, its operator is
+2N_2 tensor N_2.  The input e_3 wedge e_2, of coefficient -2, contributes
+-4 to e_1 wedge e_0.  The input e_2 wedge e_1, of coefficient -1, reaches
+e_0 wedge e_1 and hence contributes +2 after wedge reorientation.  No other
+displayed wedge can reach the target.  The total is -2, proving
+(P12F.9g).  Expanding the two additive compounds gives (P12F.9h).  QED.
+
+The strict C++ mode
+search_su2_two_odd_twisted_cone --cross computes this mixed term
+independently and locates the same first obstruction.  It is a no-go for a
+termwise recurrence, not a counterexample to the complete interval carrier
+or to (SCH).
+
+**Lemma 12F3E (cumulative mixed-cross recurrence).**  For even labels
+e,b, retain the two-odd state with even background E and put
+
+~~~text
+X_(E;q,r)(a;e,b)
+ =[e_a wedge e_0](N_e tensor N_b+N_b tensor N_e)
+   T_qT_rT_EB_1.                                    (P12F.9i)
+~~~
+
+Then
+
+~~~text
+I_(E union {e};q,r)(a,b)
+ =sum_(c in e star_k b) I_(E;q,r)(a,c)
+   +X_(E;q,r)(a;e,b).                               (P12F.9j)
+~~~
+
+Consequently the uniform two-odd source--curl lemma is equivalently the
+family of cumulative cross payments
+
+~~~text
+sum_(c in e star_k b) I_(E;q,r)(a,c)
+ >=-X_(E;q,r)(a;e,b)                                (P12F.9k)
+~~~
+
+for every even background E, odd q,r, even e,b, and odd a.  The left side
+consists entirely of shorter-word interval carriers; the right side is the
+sole mixed debt.  Proposition 12F3D shows why neither side can be replaced
+by a termwise nonnegative estimate.
+
+**Proof.**  The additive-compound product identity is
+
+~~~text
+T_eT_b
+ =sum_(c in e star_k b)T_c
+   +(N_e tensor N_b+N_b tensor N_e).
+~~~
+
+Indeed, expand both factors as N tensor I plus I tensor N and use
+N_eN_b=sum_(c in e star_k b)N_c.  Apply the identity to
+T_qT_rT_EB_1 and take the indicated boundary coefficient.  Lemma 12F3C
+identifies the first sum with the left sum in (P12F.9j), while its left side
+is the interval carrier after adjoining e.  This proves (P12F.9j), and
+rearrangement gives (P12F.9k).  Since a zero-even-factor background is
+already covered by the finite partial-character base, induction on the
+number of even factors proves the two-odd sector exactly when
+(P12F.9k) holds at every step.  QED.
+
+The strict C++ mode search_su2_two_odd_twisted_cone --recurrence
+constructs both sides of the full exterior-state identity before taking a
+boundary coefficient.  Through odd labels seven, even labels eight, and
+four even factors, it checked 420 states with result PASS.  This audits the
+ordinary implementation of (P12F.9j); the proof above supplies the
+finite-wall identity.
 
 The last line of `(P12F.9)` cannot be paid by either positive family alone.
 The strict exact verifier
@@ -37697,6 +40215,18 @@ diagnostic `character_ring_iter/search_su2_crystal_shuffle.cpp` sends 90
 two-colour highest-weight sources to only four distinct images.  Hence a
 crystal proof must switch the two colour carriers while retaining their
 separate boundary endpoints; ordinary unshuffle-and-forget is insufficient.
+
+Adding only one local swap-energy candidate does not repair this loss.
+On every inversion resolved by the same type-`A_1` swap, record
+`min(d_left,label_right-d_right)` and retain its total together with the
+unshuffled word.  The strict replay
+`search_su2_crystal_shuffle.cpp --replay-energy-obstruction` maps the
+two-factor `(1,1)` source set injectively (`2` sources to `2` tagged
+images), but maps the six-factor source set above from `90` sources to only
+`24` word-and-energy tags.  Thus this one scalar local-energy refinement is
+not a carrier-preserving allocation.  This is an exact obstruction to that
+specific tag, not an obstruction to a richer rigging or global support
+carrier.
 
 Thus forgetting the two colours of the source path loses too much
 information.  A successful injection must use boundary paths with a
@@ -40015,6 +42545,46 @@ By `(P22.5v5)` and `(P22.5v5a)`, these are exactly equivalent to
 22H3.  Their value is inductive: the fundamental vertex has disappeared,
 while every capacity term created by its deletion remains explicit.
 
+The exact lift credit is now audited directly, rather than inferred from
+the one-sided bound `(P22.5v6)`.  In the relative Pluecker verifier, let
+`Z_0=Z_- intersect Z_+` and intersect it with the two realized projected
+carrier kernels.  If that common realized intersection has rank `d_0`, then
+
+```text
+rank(Theta)=dim Z_0-d_0,
+lambda=rank(theta_-)+rank(theta_+)-rank(Theta).         (P22.5v7c0)
+```
+
+The same exact row-space calculation checks
+
+```text
+c=hat(c)-rank(theta_-)+rank(Theta),                    (P22.5v7c1)
+```
+
+before testing both inequalities in `(P22.5v7c)`.  Thus the verifier does
+not silently replace the pushout credit by the looser positive-lift bound.
+For the first failure of the uncredited target
+`[1^-,2^+,2^+,2^+,2^+,3^+]`, `p=2`, it obtains
+
+```text
+rank(theta_-)=8,  rank(theta_+)=12,
+rank(Theta)=4,    lambda=16,
+hat(c)=19,        c=15.
+```
+
+Consequently the uncredited projected criterion fails, while the corrected
+lift-credited criterion passes.  The strict run
+
+```text
+analyze_su2_plucker_kernel fundamental-sweep 4 6 4 14
+```
+
+checks the recurrence and the credited criterion in all `56` positive-target
+projected cases; it has one failure of the deliberately uncredited
+criterion and zero failures after the exact credit.  This is a bounded
+rank audit of `(P22.5v7c)`, not a construction of the arrows in
+`(P22.5v7g)` and not a proof of Target 22H3.
+
 The lift credit is itself a canonical pushout.  Put
 
 ```text
@@ -41545,6 +44115,71 @@ both sides of `(P22.5zz17)` as exact integer quadratic forms.  It passes all
 9,900 radius/parity identities through rank one hundred, including every
 cyclic endpoint case; see `certificates/su2_odd_orbit_gks.log`.
 
+The Fibonacci orbit ring itself has a particularly short complete argument.
+
+**Proposition 22H3M1 (uniform partial-character positivity for the
+level-three orbit ring).**  The rank-two orbit ring `O_3`, with basis
+`1,x` and relation
+
+```text
+x^2=1+x,                                                   (P22.5zz17a)
+```
+
+satisfies partial-character positivity for every signed word of arbitrary
+length.  In particular it satisfies full `GKS2*`.  Via Lemma 22H3J, the
+whole simple-current boundary column `(SCB)` holds at level three.
+
+**Proof.**  Let `a=phi` and `b=-phi^(-1)` be the two spectral values of
+`x`, with their positive trace weights `w_a,w_b`.  Thus
+
+```text
+a+b=1.                                                   (P22.5zz17b)
+```
+
+There are only two partial-character targets, `1` and `x`.  After removing
+trivial factors (a plus trivial factor multiplies the coefficient by two and
+a minus trivial factor makes it zero), a signed word with `p` plus factors
+and `q` minus factors has, at either target `c in {0,1}`, coefficient
+
+```text
+g_c=E[ x^c (x+y)^p (x-y)^q ],                         (P22.5zz17c)
+```
+
+where `x,y` are independent spectral variables with the trace measure.  The
+admissible sign condition makes `q` even.
+
+Suppose first that `q>0`.  Then `q>=2`, so the integrand vanishes on both
+diagonal spectral pairs.  On either off-diagonal pair one has `x+y=a+b=1`,
+and the two values of `(x-y)^q` agree and are nonnegative.  Hence
+
+```text
+g_0=2 w_a w_b (a-b)^q >=0,
+g_1=w_a w_b(a+b)(a-b)^q=w_a w_b(a-b)^q >=0.            (P22.5zz17d)
+```
+
+If `q=0`, expand the plus word.  Positive fusion linearization gives
+`tau(x^r)>=0` for every `r>=0`, and therefore
+
+```text
+g_c=sum_(j=0)^p binom(p,j) tau(x^(j+c)) tau(x^(p-j)) >=0
+                                                               (P22.5zz17e)
+```
+
+for `c=0,1`.  This proves every partial-character inequality of `O_3`.
+Lemma 22H3J identifies those inequalities exactly with `(SCB)` at level
+three, and its corner specialization gives `GKS2*`.  QED.
+
+The strict C++ rectangular-depth check independently reaches power twenty:
+
+```text
+SU2_ODD_ORBIT_RECTANGULAR_DEPTH rank=2 level=3 maximum_power=20
+words=41 corner_entries=41 boundary_entries=82 result=PASS.
+```
+
+This proposition closes the Fibonacci simple-current boundary slice only;
+it does not provide the arbitrary-level coloured matching required by
+Lemma 22G.
+
 The first non-group orbit rank beyond Fibonacci can be settled completely.
 
 **Proposition 22H3N (uniform `GKS2*` for the level-five orbit ring).**
@@ -42304,6 +44939,206 @@ new combined target.  The tadpole analyzer independently compares `(TPD)`
 with direct orbit transfer in `7,056` exact cases through rank twenty and
 `0<=u,v<=20`, all nonnegative.  This is bounded evidence, not yet an
 all-index proof.
+
+The finite beta functional satisfies the same Pearson recurrence as the
+continuous limit, with one completely explicit alias term.  Thus the
+finite-alias gap is not a failure of integration by parts; it is a
+one-dimensional cyclic derivative which can be retained in a cumulative
+allocation.
+
+**Lemma 22H3UAA (cyclic beta--Pearson identity).**  Let `n` be odd and
+put, in the Laurent quotient `Z[z,z^(-1)]/(z^n-1)`,
+
+```text
+T=2+z+z^(-1),          A=4-T=2-z-z^(-1),
+S=z-z^(-1),
+
+Lambda_(M,h)(F)=(1/n)sum_(z^n=1)A(z)^M T(z)^h F(T(z)),
+Delta_n(H)=(1/n)sum_(z^n=1)zH'(z).                 (P22.5zz59K8)
+```
+
+For every polynomial `F`, one has
+
+```text
+Delta_n(S A^M T^h F(T))
+ =Lambda_(M,h)([(M+h+1)T-(4h+2)]F-T(4-T)F').
+                                                        (P22.5zz59K9)
+```
+
+Equivalently, if `R_j(T)=z^j+z^(-j)`, `d=M-h`,
+`s=M+h+1`, and `L_j=Lambda_(M,h)(R_j)`, then
+
+```text
+(s+j)L_(j+1)+2dL_j+(s-j)L_(j-1)
+ =Delta_n(S A^M T^h R_j).                          (P22.5zz59K10)
+```
+
+Finally the right side is the exact alias sum
+
+```text
+Delta_n(H)=sum_(a in Z) an [z^(an)]H,
+
+S A^M T^h R_j
+ =(-1)^(M+1)z^(-M-h-1)(1-z)^(2M+1)(1+z)^(2h+1)
+    (z^j+z^(-j)).                                  (P22.5zz59K11)
+```
+
+Hence, below the alias threshold, the right side vanishes and
+`(P22.5zz59K10)` is exactly the continuous beta recurrence
+`(P22.5zz62)`.
+
+**Proof.**  The elementary derivatives are
+
+```text
+zT'=S,                 zA'=-S,                 zS'=T-2,
+S^2=-T(4-T).                                      (P22.5zz59K12)
+```
+
+Apply `z d/dz` to `S A^M T^h F(T)` and use
+`(P22.5zz59K12)`.  After factoring `A^M T^h`, the result is
+
+```text
+[(M+h+1)T-(4h+2)]F-T(4-T)F',
+```
+
+which proves `(P22.5zz59K9)` after cyclic averaging.  For `R_j`, use
+
+```text
+T R_j=R_(j+1)+2R_j+R_(j-1),
+T(4-T)R_j'=j(R_(j-1)-R_(j+1)).
+```
+
+This gives `(P22.5zz59K10)`.  If
+`H=sum_b h_bz^b`, cyclic averaging of `zH'` retains exactly the terms
+with `n` dividing `b`, proving the first identity in
+`(P22.5zz59K11)`.  The second follows by writing
+
+```text
+A^M T^h=(-1)^M z^(-M-h)(1-z)^(2M)(1+z)^(2h)
+```
+
+and multiplying by `S=z^(-1)(z-1)(z+1)`.  The no-alias assertion is
+immediate.  QED.
+
+The combined target has a two-node kernel whose sign geometry is much
+smaller than that of its three separate Turan terms.  This supplies a
+concrete interval structure for a future finite-alias allocation.
+
+**Lemma 22H3UA (two-node kernel and interval geometry).**  In the
+notation of Lemma 22H3U, put
+
+```text
+nu_ell=(2/n)(4-t_ell)^M t_ell^(q/2),
+t_ell=4cos^2(ell pi/n),                1<=ell<=m,
+x_ell=t_ell-2,
+
+K(x,y)=x^2y^2-2x^2+xy-2y^2+6.              (P22.5zz59K1)
+```
+
+Then `Lambda(G)=sum_ell nu_ell G(t_ell)` and the complete three-feature
+quantity in `(TPD)` is exactly
+
+```text
+(TPD)
+ =(1/4)sum_(ell,h)nu_ell nu_h
+       (t_ell-t_h)^2 K(x_ell,x_h).           (P22.5zz59K2)
+```
+
+Moreover, in the ordered upper triangle `ell<h`, the negative set of
+`K(x_ell,x_h)` is row- and column-convex: for each fixed `ell`, the
+indices `h>ell` at which it is negative form an interval (possibly
+empty), and the symmetric assertion holds after fixing `h`.
+
+**Proof.**  The identity root in the cyclic average defining `Lambda`
+has `t=4` and contributes zero because `M>=1`.  Pairing inverse roots
+therefore gives the first displayed formula for `Lambda`.
+
+Write `x=T-2`.  The two polynomials in `(P22.5zz59)` become
+
+```text
+R_2(T)=x^2-2,                 R_3(T)=x^3-3x.
+```
+
+A direct subtraction gives the symmetric divided difference
+
+```text
+{R_3(T)R_2(U)-R_2(T)R_3(U)}/{T-U}=K(T-2,U-2).
+                                                        (P22.5zz59K3)
+```
+
+Expanding `(P22.5zz59)` twice and interchanging `T,U` in one copy gives
+one half of the double sum of `(T-U)` times its numerator.  Apply
+`(P22.5zz59K3)` and then the factor `1/2` in `(P22.5zz59)` to obtain
+`(P22.5zz59K2)`.
+
+It remains to prove the interval assertion.  Fix `x` and regard
+`K(x,y)` as a quadratic in `y`:
+
+```text
+K(x,y)=(x^2-2)y^2+xy+6-2x^2.                    (P22.5zz59K4)
+```
+
+On the ordered triangle one has `-2<=y<x<=2`.  Its diagonal value is
+
+```text
+K(x,x)=x^4-3x^2+6>0.                             (P22.5zz59K5)
+```
+
+If `x^2>=2`, the negative sublevel set of `(P22.5zz59K4)` is an
+interval, since the quadratic is convex (or linear at equality).  If
+`x^2<2`, the quadratic is concave; `(P22.5zz59K5)` places `x` strictly
+between its two roots, so its negative part in `[-2,x]` is only its
+left ray and is again an interval.  The nodes `x_ell` are strictly
+decreasing, hence this proves row-convexity on the discrete triangle.
+For a fixed second coordinate the identical quadratic argument is applied
+on `[y,2]`: in the concave case `(P22.5zz59K5)` places `y` between the
+roots, leaving only the right negative ray.  This proves column-convexity.
+QED.
+
+Row- and column-convexity cannot be combined with bare log-concavity of
+the node weights.  The exact three-node obstruction is already below the
+first nontrivial alias rank.
+
+**Proposition 22H3UB (log-concave kernel-cone obstruction).**  At `m=3`,
+give the ordered nodes of Lemma 22H3UA the positive weights
+
+```text
+(nu_1,nu_2,nu_3)=(1,2,3).
+```
+
+They are log-concave.  Nevertheless the kernel aggregate in
+`(P22.5zz59K2)` is strictly negative.
+
+**Proof.**  Put `x=t_1=4cos^2(pi/7)`.  The three nodes are the roots of
+
+```text
+X^3-5X^2+6X-1,
+```
+
+and, in their decreasing order, are
+
+```text
+t_1=x,                 t_2=x^2-4x+4,
+t_3=1+3x-x^2.                                  (P22.5zz59K6)
+```
+
+Substitution in four times `(P22.5zz59K2)` gives exactly
+
+```text
+4(TPD)=78-130x+32x^2.                            (P22.5zz59K7)
+```
+
+The largest root satisfies `3<x<13/4`: the cubic is strictly increasing
+on this interval, has value `-1` at `3`, and value `1/64` at `13/4`.
+The polynomial on the right of `(P22.5zz59K7)` is strictly increasing
+there, while its value at `13/4` is `-13/2`.  Hence `(TPD)<0`.
+
+The strict C++ verifier
+`character_ring_iter/probe_tp2_logconcave_kernel.cpp` performs the
+calculation in the exact cubic quotient `Z[x]/(x^3-5x^2+6x-1)` and
+fails closed unless it obtains `(P22.5zz59K7)`.  Thus any finite-alias
+proof must use the special beta weights `t_ell^(q/2)(4-t_ell)^M`, not
+only their positivity and log-concavity.  QED.
 
 **Lemma 22H3V (stable and no-alias `TP2`).**  The target `(TP2)` is
 strictly positive in the continuous cyclic limit.  At finite orbit rank
@@ -44503,17 +47338,11 @@ nondirect states among its `822` negative source-deficit samples.  All
 
 The extremal-shell route is stronger in a different direction.
 
-**Target 22F3R1 (source-shell sign).**  Under `O>P` and `delta<0`, a
-scheduling source reachable by zero-transfer plateau moves out of
-scheduling order, as in Corollary 22F3A24A, has a strict zero-transfer
-boundary edge which moves out of scheduling order, shrinks the feasible-cut
-family, and is a descent.  Equivalently, one of its removable strict shells
-has signed sum at most zero.
-
-This removes the two-phase compatibility issue left by a positive
-transfer: a purely zero-transfer unidirectional prefix reaches the
-correctly signed shell.  It does not by itself give the square-free or
-two-strict compression in Target 22F3R.
+**False Target 22F3R1 (one-sided source-shell sign).**  The assertion that,
+under `O>P` and `delta<0`, every reachable scheduling source has a strict
+zero-transfer *shrinking* boundary descent is false.  The following
+hard-state audit first discarded every state with a direct or a two-step
+descent, so it never tested the case that refutes this one-sided statement.
 
 On the hard states of the same three complete domains, the exact
 zero-transfer plateau graphs give
@@ -44534,8 +47363,8 @@ The extrema also have positive-transfer plateau edges in respectively
 `8`, `8`, and `84` of these hard states, but none needs to take one: every
 case already has a descending removable source shell.  The sink count at
 `(9,2)` shows that a dual sink-only formulation is too strong in the
-bounded source-deficit domain.  Targets 22F3R and 22F3R1 are uniform proof
-obligations; `(P22.30R27N)--(P22.30R27O)` are bounded exact evidence.
+bounded source-deficit domain.  Target 22F3R remains a uniform proof
+obligation; `(P22.30R27N)--(P22.30R27O)` are bounded exact evidence only.
 
 The source condition now enters through one explicit contrapositive.
 
@@ -44581,35 +47410,154 @@ Thus its trapped negative states are paid only after summing over the full
 order slice, exactly as Lemma 22F3A25 predicts; a statewise nonnegative
 bound would be false.
 
-**Target 22F3R2 (source-shell capacity).**  Let `y` be a negative state in
-a threshold-tie component which is a scheduling source after the
-zero-transfer strict edges are oriented into scheduling order.  Suppose
-every strict adjacent switch out of scheduling order which shrinks
-`Fhat(y)` has strictly positive shell sum.  Then the order-independent
-source dimensions satisfy
+**Counterexample 22F3R1A (the missing shell polarity).**  Take the ordered
+state
 
 ```text
-O<=P.                                                   (P22.30R27R)
+alpha=[1,1,1,0,2,0,1,2,0],
+beta =[0,0,0,1,1,2,0,2,2],
+sign =[-,-,-,-,+,+,0,+,+],       target position=6.   (P22.30R27R)
 ```
 
-Targets 22F3R1 and 22F3R2 are equivalent.
-
-Indeed, assume Target 22F3R2 and start from `O>P`, `delta<0`.  Lemma
-22F3A24 reaches a scheduling source `y` on the same plateau.  If no
-removable source shell is a descent, Corollary 22F3A8 says that every such
-shell has strictly positive signed sum.  Target 22F3R2 would give `O<=P`,
-a contradiction, so Target 22F3R1 follows.  Conversely, if the hypotheses
-of Target 22F3R2 held with `O>P`, Target 22F3R1 applied at `y` would
-produce a removable shell with nonpositive signed sum, again a
-contradiction.  By Lemma 22F3A25, Target 22F3R2 asks precisely for the
-order-slice lower bound
+It is its own reachable scheduling source, with
 
 ```text
-sum_(x in X_prec)[delta(x)-1]>=0                       (P22.30R27S)
+delta=-2,       O=340,       P=334.
 ```
 
-from positivity of the removable shells at `y`.  This is the exact
-remaining global-capacity statement behind the local source-shell theorem.
+Its only strict zero-transfer shrinking boundary has scheduling direction
+`-1` and potential `(-3,9)`, hence a strictly positive shell and no
+descent.  The former one-sided source-shell hypothesis therefore holds even
+though `O>P`.  But its adjacent zero-transfer *enlarging* boundary has
+scheduling direction `+1` and potential `(1,13)`, so it is a direct
+descent.  The omitted enlarging polarity is exactly what invalidates the
+one-sided implication.
+
+The strict regression
+`search_su2_bk_local_escape source-shrink-capacity-counterexample` verifies
+this witness, including the source computation.  A complete source-deficit
+audit found no one-sided violation through `(8,2)` (it examined `3,372` and
+`17,698` reachable sources at `(7,2)` and `(8,2)` respectively), but the
+displayed `(9,2)` witness refutes the uniform statement.
+
+The correct global lemma must retain both boundary polarities.
+
+**False Target 22F3R1bis (two-sided zero-transfer source-exit).**  Even
+retaining both zero-transfer shell polarities is too strong.  The ordered
+source
+
+```text
+alpha=[1,1,1,0,2,0,2,1,0],
+beta =[0,0,0,1,1,2,1,2,1],
+sign =[-,-,-,-,-,-,-,-,0],       target position=8
+```
+
+has `delta=-2`, `O=414>P=398`, and no zero-transfer boundary descent.  Its
+strict zero-transfer boundaries have potentials `(-3,9)`, `(-5,13)`, and
+`(-8,16)`, all non-descending in their respective shrinking or enlarging
+directions.  But the adjacent positive-transfer boundary has transfer
+`z=1` and potential `(4,4)`, hence is a direct descent.  Thus a source exit
+need not be zero-transfer; this does not contradict Target 22F3R, whose
+*final* exit edge was always allowed to have positive transfer.
+
+The regression
+`search_su2_bk_local_escape source-zero-transfer-exit-counterexample`
+checks all four displayed neighboring potentials and the unique-source
+property exactly.
+
+**Target 22F3R1ter (all-exit source descent).**  Under `O>P` and
+`delta<0`, every scheduling source reachable by zero-transfer plateau moves
+has a direct boundary descent, allowing either zero-transfer shell polarity
+or a positive-transfer boundary edge.
+
+This is the first source statement compatible with both exact
+counterexamples.  It supplies a plateau escape with a possibly
+positive-transfer final edge, but does not itself give the square-free or
+two-strict compression in Target 22F3R.
+
+The source deficit is essential, not merely a sufficient global
+assumption.  The ordered state
+
+```text
+alpha=[1,1,1,1,2,0,1,0],
+beta =[0,0,0,0,1,2,2,2],
+sign =[0,-,-,-,+,-,+,-],       target position=0
+```
+
+is its unique reachable source and has `delta=-1`, but no direct descent of
+any type.  Its source dimensions are `O=70<P=150`.  The regression
+`search_su2_bk_local_escape source-all-exit-local-counterexample` checks
+all seven source neighbors exactly.  Hence no purely local negative-state
+lemma can replace the required global-capacity comparison.
+
+**Proposition 22F3R3 (sharp direct-source formulation).**  Among statements
+which seek a direct descent at a reachable scheduling source, each of the
+following weakenings of Target 22F3R1ter is false:
+
+1. require the descent to be on a shrinking zero-transfer boundary;
+2. allow both zero-transfer directions but forbid a positive-transfer final
+   edge;
+3. retain all three edge types but omit the global hypothesis `O>P`.
+
+**Proof.**  Counterexample 22F3R1A proves (1).  The state following False
+Target 22F3R1bis proves (2): all zero-transfer exits fail while its
+`z=1` edge descends.  The `O=70<P=150` source above proves (3).  Each state
+is checked by an independent exact C++ regression.  QED.
+
+**Target 22F3R2ter (all-exit source capacity).**  Let `y` be a negative
+reachable scheduling source.  Suppose every strict zero-transfer shrinking
+shell has strictly positive signed sum, every strict zero-transfer enlarging
+shell has nonpositive signed sum, and no positive-transfer boundary edge is
+a descent.  Then
+
+```text
+O<=P.                                                   (P22.30R27S)
+```
+
+Targets 22F3R1ter and 22F3R2ter are equivalent by contrapositive using the
+complete descent criterion of Corollary 22F3A8 plus the direct
+positive-transfer comparison.  By Lemma 22F3A25, the remaining global
+statement is again the order-slice lower bound
+
+```text
+sum_(x in X_prec)[delta(x)-1]>=0.                      (P22.30R27T)
+```
+
+but it must be derived from both zero-transfer shell polarities and the
+positive-transfer boundary capacity together.
+
+The strict C++ all-exit audit now checks this corrected local consequence
+without discarding direct or short escapes.  Its complete source-deficit
+domains give
+
+```text
+(N,max part)  negative states  reachable sources  sources without descent
+(7,2)                   3,216              3,372                         0
+(8,2)                  15,744             17,698                         0
+(9,2)                 201,620            235,266                         0.
+                                                               (P22.30R27U)
+```
+
+The last row is the union of the sixteen deterministic
+`source-all-exit-shard 9 2 16 i` replays.  Thus it includes both
+counterexamples above and confirms that each still has an allowed direct
+source exit.  This is exact bounded evidence for Target 22F3R1ter, not a
+proof of its all-factor global-capacity implication.
+
+The additional C++ falsifier
+`search_su2_bk_local_escape random-source-all-exit 3000 10 6 128993`
+also sampled the larger ten-vertex, queue-part-at-most-six domain.  Of its
+`249` signed states satisfying the true global filter `O>P` and
+`delta<0`, every reachable scheduling source had an allowed direct exit:
+
+```text
+source_all_exit_states=249,     source_all_exit_failures=0.
+```
+
+This is deliberately only a deterministic random stress check.  It tests
+the corrected all-exit statement beyond the exhaustive box; it neither
+establishes the global capacity lemma nor upgrades the table above to a
+proof.
 
 Thus a plateau word with no positive transfer moves through a fixed weak
 scheduling order on the jobs; only globally unsupported
@@ -45853,6 +48801,420 @@ Lemma 22F3B8a alone therefore gives neither a finite unit-core list nor a
 uniform three-gap theorem.  Target 22F3C0d, Target 22F3C0b, and the
 collision-free assembly remain separate missing assertions.
 
+The support growth is not merely an artefact of the endpoint audit.  It is
+already forced by a defect-one family of actual two-colour tableau factors.
+
+**Proposition 22F3B8h (unbounded direct-spectator absorption).**  For every
+`t>=1`, put
+
+```text
+p<u<v<q<r_1<...<r_t
+```
+
+and consider the two-colour bracket occurrence
+
+```text
+C_t=[uv]_P[pq]_N product_(j=1)^t [p r_j]_N.          (P22.30I7j)
+```
+
+The distinguished block `[uv]_P[pq]_N` has positive/negative local forms
+`(1,-t-1)`, hence BK additivity defect one.  Its defect-zero spectator is
+the product of the `t` brackets `[p r_j]_N`.  Neither nontrivial direct
+branch of the unit Plucker relation can be multiplied by any nonempty
+subproduct of that spectator while retaining a vertex cut.  Consequently a
+vertex-compatible resolution which starts with this unit block must absorb
+all `t` spectator columns before it can use either direct branch.  In
+particular the required core degree at `p` is at least `t+1` and is
+unbounded already at unit defect.
+
+**Proof.**  The two factor tableaux in `(P22.30I7j)` are standard: the
+`P` factor has its one column `[uv]`, and the `N` factor has top row
+`p,...,p` and increasing bottom row `q,r_1,...,r_t`.  At the adjacent pair
+`u,v`, the `P` column contributes local form `+1`, while all `t+1` `N`
+columns `[pq],[p r_1],..., [p r_t]` cross the pair and contribute
+`-t-1`.  Thus Lemma 22F3B8 gives defect
+
+```text
+1_+ +(-t-1)_+ -(1-t-1)_+=1.
+```
+
+Apply the unit block of Lemma 22F3B8d to `[uv]_P[pq]_N`.  Its two non-source
+branches have cuts `S symmetric_difference {p,u}` and
+`S symmetric_difference {p,v}`.  Both therefore recolour `p` from `N` to
+`P`.  Every unabsorbed spectator column `[p r_j]_N` has positive spectator
+degree at `p`.  Lemma 22F3B8c then excludes both branches: their symmetric
+difference with the source cut meets the spectator support at `p`.
+Hence no spectator column can remain outside the core when either direct
+branch is used.  Absorbing all of them gives core degree `t+1` at `p`, as
+claimed.  QED.
+
+This is a lower bound only for a direct coloured unit-block resolution; it
+does not refute Target 22F3C0d, whose core is allowed to grow and whose
+global row-ideal differential may combine several branches.  It does rule
+out any proof which tries to replace that differential by a bounded local
+unit packet with untouched spectators.
+
+The same family also gives an exact nonlocal coloured packet once the
+forced spectator absorption is performed.  Thus the preceding obstruction
+does not lose the Plucker relation; it specifies the support on which that
+relation must act.
+
+**Lemma 22F3B8i (star-propagated coloured unit packet).**  In the notation
+of Proposition 22F3B8h, put
+
+```text
+A_t=[pv]_P product_(j=1)^t[p r_j]_P [uq]_N,
+B_t=[pu]_P product_(j=1)^t[p r_j]_P [vq]_N,
+
+S_A^(t)=S symmetric_difference {p,u,r_1,...,r_t},
+S_B^(t)=S symmetric_difference {p,v,r_1,...,r_t}.
+                                                               (P22.30I7k)
+```
+
+All three displayed products are valid two-colour standard-tableau
+occurrences of the same multidegree, and their uncoloured multiplication
+images obey the exact relation
+
+```text
+mu_S(C_t)-mu_(S_A^(t))(A_t)+mu_(S_B^(t))(B_t)=0.       (P22.30I7l)
+```
+
+In particular, the defect-one event admits a coloured Plucker packet, but
+its two non-source cuts move `t+2` named vertices.  The packet is therefore
+not a bounded-support local ticket map as `t` grows.
+
+**Proof.**  In the `P` factor of `A_t`, respectively `B_t`, all columns
+have the common top entry `p` and strictly increasing bottom entries
+`v,r_1,...,r_t`, respectively `u,r_1,...,r_t`; its `N` factor is the
+single column `[uq]`, respectively `[vq]`.  These are standard.  The source
+factorization was checked in Proposition 22F3B8h.  Reading the factor
+supports gives exactly the two cuts in `(P22.30I7k)`.
+
+After forgetting colours, multiply the oriented Plucker identity
+
+```text
+[uv][pq]-[pv][uq]+[pu][vq]=0
+```
+
+by `product_j[p r_j]`.  The three resulting uncoloured monomials are the
+images in `(P22.30I7l)`.  This proves the identity.  The symmetric
+differences in `(P22.30I7k)` have cardinality `t+2`, which proves the last
+assertion.  QED.
+
+The preceding packet is a special case of a general component-closure rule.
+It is the exact coloured datum retained by a row-ideal move before the
+subsequent global ticket allocation.
+
+**Lemma 22F3B8j (clean-interface spectator-component closure).**  Let a
+coloured core branch change the source cut `S` by the vertex set `D`, and
+let `Z` be a product of spectator bracket columns, each lying wholly in one
+of the two source factors.  Form the multigraph `G_Z` with one edge for
+each spectator column.  Let
+
+```text
+W=D union {vertices in a nontrivial component of G_Z meeting D}. (P22.30I7m)
+```
+
+Assume that the branch core has no degree at a vertex of `W minus D`.
+Then the branch times `Z` has a valid coloured factorization for the cut
+`S symmetric_difference W`: move every spectator column in a component
+meeting `D` to the opposite factor, and leave every other spectator column
+in its original factor.  Its uncoloured multiplication image is unchanged.
+
+Conversely, every spectator column in a component of `G_Z` meeting `D`
+must change factor in any such factorwise cut extension of the branch.
+Thus the whole component, rather than a bounded neighborhood of `D`, is
+the minimal direct spectator core.
+
+**Proof.**  Since every spectator column has both endpoints in one source
+factor, each component of `G_Z` is monochromatic for the cut `S`.  On a
+component meeting `D`, the core branch reverses the colour at at least one
+vertex.  For every spectator edge to remain in a single factor, its other
+endpoint must reverse as well.  Connectivity therefore forces every vertex
+and every column of that component to reverse.  This proves the converse
+and shows that the prescribed recolouring is necessary.
+
+After all vertices of such a component are reversed, each of its columns
+again has both endpoints in one factor, now the opposite one.  Components
+disjoint from `D` retain their original monochromatic colour.  The
+clean-interface hypothesis says that no unchanged-colour core column meets
+`W minus D`; the branch core is therefore compatible with the cut
+`S symmetric_difference W` as well.  Forgetting the two colours leaves
+every bracket column unchanged, so the multiplication image is identical.
+QED.
+
+**Lemma 22F3B8jC (separated closure coherence).**  Let two
+clean-interface core branches `b_1,b_2` be applicable to the same coloured
+source, and suppose their uncoloured core moves form a commuting square.
+For the common spectator product `Z`, let `D_i` be the colour-changing set
+of `b_i` and let `W_i` be its component closure `(P22.30I7m)`.  Assume
+
+```text
+W_1 intersection W_2=empty,
+every core column of b_i avoids W_(3-i),                 i=1,2. (P22.30I7o)
+```
+
+Then closing the spectators after either order of the two core moves gives
+the same coloured terminal cut
+
+```text
+S symmetric_difference W_1 symmetric_difference W_2,
+```
+
+and the two resulting multiplication images agree.  Thus component closure
+is natural for every separated directed commuting square.  The same
+statement holds for the corresponding finite `TLJ_k` packets whenever the
+external Jones--Wenzl projectors of the two branches exist.
+
+**Proof.**  Each `W_i` is a union of connected components of `G_Z` together
+with the vertices of `D_i`.  The first condition in `(P22.30I7o)` makes the
+two prescribed spectator flips disjoint.  They therefore commute as maps
+on the two colours and their common result is the displayed symmetric
+difference.
+
+After closing `b_1`, every vertex met by the core of `b_2` retains its
+original colour, by the second condition in `(P22.30I7o)`; the same
+condition says that no newly flipped spectator column meets that core.
+Consequently Lemma 22F3B8j applies to `b_2` without alteration.  The
+argument with the indices reversed is identical.  Forgetting colours gives
+the original uncoloured commuting square, so the terminal multiplication
+images agree.
+
+In `TLJ_k`, the two separated closures tensor with disjoint spectator
+components.  Interchange of these tensor factors preserves the two local
+skein equalities, and the negligible quotient preserves equality whenever
+the stated projectors exist.  QED.
+
+This discharges the commuting-square part of Target 22F3C0d only under the
+separation hypothesis `(P22.30I7o)`.  It does not address closures that
+merge a spectator component, nor the braid hexagons where the two cores
+overlap; those are precisely the unresolved ticket-collision cases.
+
+**Lemma 22F3B8jD (component-touch parity).**  Retain a fixed spectator
+product `Z`, but now regard every isolated spectator vertex as a singleton
+component of `G_Z`.  Let
+
+```text
+gamma=(b_1,...,b_m)
+```
+
+be any composable sequence of clean-interface core branches for which the
+component closure of Lemma 22F3B8j is valid at every step.  If `D_j` is the
+colour-changing set of `b_j`, define, for each component `C` of `G_Z`,
+
+```text
+eta_C(gamma)=sum_(j=1)^m indicator_(D_j intersection C != empty) mod 2.
+                                                               (P22.30I7p)
+```
+
+Then the terminal cut of the lifted sequence is
+
+```text
+S_gamma=S symmetric_difference
+        union_(C: eta_C(gamma)=1) C.                 (P22.30I7q)
+```
+
+Consequently, two lifted paths in the same uncoloured commuting square or
+braid face can have the same coloured terminal cut only if their functions
+`eta_C` agree for every spectator component.  This component-touch parity
+is therefore a necessary coherence invariant for any collision-free ticket
+assignment.
+
+**Proof.**  With singleton components included, the closure set `W` of
+Lemma 22F3B8j is exactly the union of the components which meet its set
+`D`.  That lemma changes the current cut by symmetric difference with `W`.
+Iterating the branches changes a fixed component `C` once for each index
+`j` with `D_j intersection C` nonempty.  Symmetric difference cancels two
+identical changes, giving `(P22.30I7q)` and the parity formula
+`(P22.30I7p)`.  Equality of terminal cuts forces equality of the component
+coefficients in this disjoint-component symmetric-difference expansion.
+QED.
+
+Lemma 22F3B8jC is the special case in which the two paths have the same
+component-touch parity term by term.  In an overlapping braid face, a
+nonzero difference of the two `eta` functions cannot be repaired by merely
+identifying its two uncoloured endpoint monomials: the ticket space must
+retain the resulting component bit, or a higher resolution must cancel the
+two paths before tickets are allocated.  This is an exact formulation of
+the collision issue left in Target 22F3C0d.
+
+**Lemma 22F3B8jE (closure coherence conditional on existence).**  Let two
+uncoloured core branches form a commuting square, with colour-changing sets
+`D_1,D_2` independent of the order in which the branches are taken.  Suppose
+that the clean-interface component closure of each branch is valid both at
+the source and after the other branch has been closed.  Then the two lifted
+paths have the same coloured terminal cut and the same multiplication image.
+
+**Proof.**  For every spectator component `C`, both paths touch it with the
+same parity
+
+```text
+indicator_(D_1 intersection C != empty)
+ +indicator_(D_2 intersection C != empty) mod 2.
+```
+
+Lemma 22F3B8jD therefore gives the same terminal cut.  Forgetting colours
+recovers the assumed uncoloured commuting square, so the multiplication
+images agree.  QED.
+
+Lemma 22F3B8jC gives a checkable sufficient condition for the existence
+hypothesis here: separated closures cannot alter the other core.  The new
+lemma also covers a spectator component which meets both cores, provided
+the two sequential clean-interface extensions actually exist.  Thus terminal
+path-independence is no longer the issue in such a square; the remaining
+problem is to prove existence in overlapping cores and to keep its positive
+tickets distinct.
+
+**Lemma 22F3B8jF (edgewise overlap-stability criterion).**  Let `b` be a
+clean-interface bracket-core branch valid at a cut `S`, and let `W` be a
+union of spectator components already closed by an earlier branch.  Then the
+same core is a valid coloured bracket factorization at `S symmetric_difference
+W` if and only if every bracket column `[r s]` of its core satisfies
+
+```text
+indicator_(r in W)=indicator_(s in W).                (P22.30I7r)
+```
+
+If `(P22.30I7r)` holds, the original clean-interface component closure for
+`b` is still valid at the modified source.  The statement applies verbatim
+to a fundamental `TLJ_k` skein branch, before any external
+Jones--Wenzl symmetrization.
+
+**Proof.**  A core bracket is factorwise valid exactly when its two endpoints
+have the same cut colour.  They have the same colour at `S`.  Passing to
+`S symmetric_difference W` toggles the colour of an endpoint exactly when
+it belongs to `W`, so the two new colours agree exactly under
+`(P22.30I7r)`.  This proves necessity and sufficiency for every core
+column.  The spectator graph, the core degrees, and the branch's own
+colour-changing set are unchanged; hence its original clean-interface
+condition remains the one required by Lemma 22F3B8j.  The same endpoint
+test is the fundamental cup/cap test in the Temperley--Lieb realization.
+QED.
+
+Thus an overlapping commuting square has a direct sufficient existence
+test: each closure set must be constant on every bracket column of the
+other core.  Lemma 22F3B8jC is the degenerate case in which all those
+columns avoid the other closure set.  Failure of `(P22.30I7r)` is the
+specific local obstruction which forces a larger joint core or a higher
+Plucker/TL resolution.
+
+**Lemma 22F3B8jG (two-vertex braid coherence).**  Consider three adjacent
+named jobs `u,v,w`.  Suppose that every core recoupling branch in the braid
+face changes exactly the two names it exchanges, and that the associated
+clean-interface component closures are valid along both sides of the
+braid.  Then the two lifted braid paths have the same coloured terminal cut
+and the same uncoloured multiplication image.
+
+**Proof.**  Starting in the order `(u,v,w)`, the three successive core
+changes on the left side of the braid are
+
+```text
+{u,v}, {u,w}, {v,w};
+```
+
+whereas the right side encounters the same three sets in reverse order.
+For each spectator component `C`, the two paths therefore have the common
+touch parity
+
+```text
+indicator_(C meets {u,v})
+ +indicator_(C meets {u,w})
+ +indicator_(C meets {v,w}) mod 2.
+```
+
+Lemma 22F3B8jD gives equality of their coloured terminal cuts.  Lemma
+22G3 gives equality of the underlying uncoloured finite recoupling paths,
+including at the affine wall.  Forgetting colours therefore identifies the
+two terminal multiplication images.  QED.
+
+This settles braid naturality for two-vertex core recouplings, even when a
+spectator component meets more than one of the three jobs.  It does not
+cover a coloured Plucker/TL branch whose core changes additional vertices,
+and it supplies no injectivity when distinct braid faces reach the same
+positive ticket.  Those are the remaining parts of Target 22F3C0d.
+
+**Corollary 22F3B8jH (reduced-word closure coherence).**  Fix a labelled
+list of jobs.  Let `gamma` and `gamma'` be reduced adjacent-swap words with
+the same initial and terminal orders.  Suppose every core branch changes
+exactly the two jobs which its adjacent swap exchanges.  Suppose moreover
+that the clean-interface component closures are valid along both sides of
+each commuting-square or braid move in a Matsumoto chain from `gamma` to
+`gamma'`.  Then the two lifted words have the same coloured terminal cut and
+the same uncoloured multiplication image.
+
+**Proof.**  By Matsumoto's theorem, the two reduced words are connected by
+commutations of disjoint adjacent swaps and by three-swap braid moves.
+For a commutation, the two colour-changing sets are independent of their
+order.  Lemma 22F3B8jE therefore gives the same terminal cut; the
+uncoloured multiplication images agree by the corresponding directed
+commuting-square identity.  For a braid move, Lemma 22F3B8jG gives both
+assertions directly: its three exchanged-name sets occur once on each side,
+in reverse order.  The assumed validity lets these local conclusions be
+applied at every step of the Matsumoto chain.  Chaining them proves the
+claim.  QED.
+
+Thus, once a clean-interface core resolution has been lifted through a
+Matsumoto-connected family of reduced words, component closure creates no
+additional path dependence.  The unresolved issue in Target 22F3C0d is
+not the terminal cut of such a lift, but existence through overlapping
+cores and collision-free allocation of the resulting positive tickets.
+
+For the star family in Lemma 22F3B8i, the component containing `p` is the
+star with edges `[p r_j]`; applying Lemma 22F3B8j gives exactly the two
+fully absorbed packets `(P22.30I7k)--(P22.30I7l)`.  More generally it
+provides a canonical nonlocal coloured lift whenever a Plucker branch meets
+spectator components only through its colour-changing vertices.  The
+remaining global issue is to combine these component packets without
+reusing the same positive ticket after different closures merge.
+
+**Corollary 22F3B8jA (finite skein persistence of component packets).**
+For `t+1<=k`, the star packet `(P22.30I7l)` has a `TLJ_k` realization with
+the `p`-vertex carrying `V_(t+1)` and every other displayed vertex carrying
+`V_1`.  More generally, every clean-interface component packet of Lemma
+22F3B8j persists as a finite coloured skein relation whenever its external
+Jones--Wenzl projectors exist.  Its three coefficients are nonzero quantum
+units after a choice of bracket gauge.
+
+**Proof.**  Before semisimplification, replace every oriented bracket by
+the corresponding fundamental Temperley--Lieb cup/cap.  The oriented
+Plucker relation used in Lemma 22F3B8i is replaced by its quantum Plucker
+relation; its three coefficients are powers of the skein parameter and are
+therefore units.  Tensoring it with spectator columns and merely changing
+their two colours is exactly the construction of Lemma 22F3B8j.  The
+external symmetrizers are the Jones--Wenzl projectors of the indicated
+degrees, which exist for degrees at most `k`.  Passing to the negligible
+quotient preserves every skein equality.  Individual branches may vanish
+at an affine wall, so this is a relation packet rather than a claim of a
+finite cut injection.  QED.
+
+The star packet also has a forced parity alternative.  This is the first
+place where a component closure supplies an actual candidate positive ticket
+rather than only a relation vector.
+
+**Corollary 22F3B8jB (mixed-switch parity ticket).**  Give every vertex an
+exchange sign `epsilon_i`, and write `sigma(T)=product_(i in T)epsilon_i`
+for a cut sign.  The two propagated branches in `(P22.30I7k)` satisfy
+
+```text
+sigma(S_A^(t))/sigma(S)
+ =epsilon_p epsilon_u product_(j=1)^t epsilon_(r_j),
+
+sigma(S_B^(t))/sigma(S)
+ =epsilon_p epsilon_v product_(j=1)^t epsilon_(r_j).  (P22.30I7n)
+```
+
+If `epsilon_u=-epsilon_v`, exactly one branch has cut parity opposite to
+that of the source.  Thus an odd source occurrence has exactly one
+parity-eligible even branch in this packet (provided that branch survives
+the finite quotient).
+
+**Proof.**  The two symmetric differences in `(P22.30I7k)` give the two
+ratios in `(P22.30I7n)` immediately.  Their quotient is
+`epsilon_u epsilon_v=-1`, so precisely one ratio is `-1`.  If the source is
+odd, that branch is even.  Finite skein specialization preserves the vertex
+sign bookkeeping, while Corollary 22F3B8jA explains the stated possible
+vanishing at an affine wall.  QED.
+
 Thus Target 22F3C0 would follow from a terminal trace injection: cancel as
 many tickets of `U_x` as possible against the disjoint union of `P_y` for
 `y in N_(N-1)({x})`, and inject the remainder into the `P_y` for
@@ -46167,6 +49529,58 @@ The strict C++ checker now records violations separately as
 (7,4)               1,347,306                 0                4.
 ```
 
+The old breadth-first diagnostic returned its first shortest plateau escape,
+which is insufficient to falsify the existential assertion in Target
+22F3J.  The strict C++ checker now also exposes the mode
+
+```text
+search_su2_bk_local_escape
+  random-source-prefix-forest TRIALS VERTICES MAX_PART SEED.
+```
+
+It includes the set of already used plateau generators in the search state,
+permits a repeated generator only on the final lowering edge, and hence
+searches the target normal form directly.  Its replay
+
+```text
+random-source-prefix-forest 5000 12 6 908172635
+```
+
+generates `4,914` valid queue paths and tests `376` source-deficit negative
+states.  It finds `368` direct escapes, `7` two-step escapes, and one
+three-step escape, with
+
+```text
+prefix_forest_failures=0,
+multiple_transfer_failures=0,
+result=PASS.
+```
+
+All arithmetic and each constrained reachability decision are exact; the
+sample itself is randomized falsification evidence only, not a proof of
+Target 22F3J.
+
+The same constrained helper is now used by the exhaustive
+`source-forest` mode.  Its exact, complete replays give
+
+```text
+source-forest 8 2:
+  queue paths=180,389, signed states=138,344,
+  negative states=15,744, source-deficit beyond two steps=8,
+  prefix failures=0, maximum escape=3;
+
+source-forest 9 2:
+  queue paths=1,356,743, signed states=1,644,142,
+  negative states=201,620, source-deficit beyond two steps=94,
+  prefix failures=0, maximum escape=3.
+```
+
+In particular the `94` delayed source-deficit states in the second replay
+all have a directly searched square-free plateau prefix.  These complete
+finite domains give substantially stronger evidence than the former
+tie-broken BFS audit, but remain bounded evidence rather than a proof of
+Target 22F3J.
+
 The first run used twenty-nine shards and the second twenty-four, chosen
 from the live CPU headroom rather than fixed in the source.  Thus every
 previously tested source-deficit escape also satisfies Target 22F3J.
@@ -46174,6 +49588,40 @@ Unlike a Coxeter reduction, this statement cannot be obtained by imposing
 braid relations: exact plateau braid faces already have distinct endpoints.
 The proof must instead use the nested-family fibre and the signed boundary
 shell criterion `(P22.30R11)`.
+
+**Corollary 22F3J1 (Coxeter-forest closure normal form).**  Assume Target
+22F3J for one source-deficit state, and write its escape word as
+
+```text
+[i_1,...,i_r,j].                                     (P22.30N1a)
+```
+
+Suppose every plateau core branch changes exactly its two exchanged jobs and
+admits a valid clean-interface component closure.  Then the plateau prefix
+in `(P22.30N1a)` has a canonical lifted terminal cut and uncoloured
+multiplication image, independent of every reordering of its commuting
+adjacent moves.  Its set of generators is a forest in the type-`A` Coxeter
+path, so disconnected components of the prefix lift independently.
+
+**Proof.**  The generators `i_1,...,i_r` are pairwise distinct.  Hence the
+prefix is reduced: a Coxeter reduction would have to begin with either a
+cancellation or a braid, while a cancellation requires a repeated generator
+and no braid can first occur after only commutations, which preserve the
+distinct-generator property.  The same argument shows that every reduced
+expression for this element is reached using only commutations of disjoint
+generators; a first braid in a Matsumoto chain is impossible.
+
+Corollary 22F3B8jH applies to each such commutation and gives equality of
+the lifted cut and multiplication image.  Thus the lift is independent of
+the chosen linear extension of the commuting moves.  Finally the used
+simple generators form a subgraph of the type-`A` path, hence a forest.
+Moves from different connected components have disjoint job supports and
+commute, so the preceding conclusion applies componentwise.  QED.
+
+Consequently Target 22F3J would remove braid coherence from the plateau
+part of the global payment: after component closure, only the final exit
+shell and collisions among its positive terminal tickets remain.  It does
+not supply their Hall allocation.
 
 The positive-transfer part is even more localized.
 
@@ -46595,6 +50043,29 @@ standard lattice of membership atoms alone does not prove the required
 uncrossing; a successful differential must also use alternating matching
 paths, or equivalently the adjacent state transport `(P22.18)`.
 
+The admissible-cut family is not a delta-matroid, so its matching
+description cannot be promoted to a symmetric-exchange proof.  Take the
+four-block Dyck state
+
+```text
+alpha=[1,1,1,0],                 beta=[0,0,0,3].
+```
+
+Its complete target-free feasible-cut family is exactly
+
+```text
+Fhat={emptyset,{0,1,2,3}}.
+```
+
+Indeed every proper nonempty cut gives one colour a nonzero terminal queue
+height.  For the two feasible sets, choose `e=0` in their symmetric
+difference.  Toggling `e`, either alone or together with any other element
+of that difference, gives a nonempty proper cut and is infeasible.  This
+violates the symmetric-exchange axiom.  The strict C++ diagnostic
+`character_ring_iter/probe_su2_bk_cut_deltamatroid.cpp` reproduces this
+minimal obstruction.  Thus even the Ferrers matching formulation retains
+the genuinely non-matroidal global allocation problem.
+
 The queue formulation has an exact finite-level analogue.  For an ordered
 list `d_1,...,d_m` and a level-`k` fusion path
 
@@ -46639,6 +50110,282 @@ odd-to-positive matching on pairs of two-sided queue paths using moves that
 preserve both inequalities in `(P22.32)`.  Such a matching would prove
 `(PCP_k)` simultaneously for every `k`; dropping the upper queue would give
 the ordinary matching studied in Targets 22C--22F.
+
+The ordinary Bender--Knuth transport does not preserve this two-sided
+state space.  Thus the finite matching cannot be obtained by applying
+`(P22.18)` and then checking the upper queue afterwards.
+
+**Proposition 22G1 (affine Bender--Knuth ceiling obstruction).**  At level
+`k=2`, take the ordered degree list and finite top vector
+
+```text
+d=[1,1,2,2],                 alpha=[1,0,2,0].
+```
+
+They give the valid finite height path
+
+```text
+0 -> 1 -> 0 -> 2 -> 0.
+```
+
+Apply the ordinary Bender--Knuth switch `(P22.18)` at the middle positions
+of degrees `1,2`.  Its transfer is zero, and it gives
+
+```text
+d'=[1,2,1,2],                alpha'=[1,2,0,0].
+```
+
+The new second step would have height three.  Equivalently, its upper queue
+condition in `(P22.32)` is
+
+```text
+alpha'_2=2 > k-h_1=1.
+```
+
+Hence the ordinary switch sends a valid `SU(2)_2` fusion path outside the
+finite path set.
+
+**Proof.**  For the original vector, the successive pairs
+`(alpha_i,beta_i)` are
+
+```text
+(1,0), (0,1), (2,0), (0,2).
+```
+
+They satisfy both lower and upper inequalities in `(P22.32)` at heights
+`0,1,0,2`, and return to zero.  Before the switched pair the height is one,
+while its two bottom entries are one and zero.  Formula `(P22.17)` therefore
+gives `z=0`; substitution in `(P22.18)` gives the displayed `d',alpha'`.
+At its second step the upper condition fails as stated.  QED.
+
+The strict C++ probe
+
+```text
+character_ring_iter/probe_su2_finite_bk_exchange.cpp
+```
+
+enumerates finite paths from `(P22.32)`, applies the ordinary switch, and
+fails closed on the displayed witness:
+
+```text
+SU2_FINITE_BK_ORDINARY_TRANSPORT result=FAIL level=2
+degrees=[1,1,2,2] top=[1,0,2,0] position=1
+swapped_degrees=[1,2,1,2] swapped_top=[1,2,0,0].
+```
+
+Consequently the finite global-payment lemma needs an intrinsically affine
+transport--for example a packet-valued `q`-recoupling move which retains the
+upper-hole queue--rather than the ordinary BK component graph.
+
+There is nevertheless an exact local *uncoloured* affine transport.  It is
+the appropriate replacement for `(P22.18)` at the level of fusion paths.
+
+**Lemma 22G2 (rank-preserving finite path recoupling).**  Consider two
+adjacent labels `a,b` in a level-`k` fusion path, with incoming, intermediate,
+and outgoing labels `h,r,t`.  Put
+
+```text
+I_(a,b)(h,t)=(h star_k a) intersection (t star_k b),
+I_(b,a)(h,t)=(h star_k b) intersection (t star_k a).
+                                                               (P22.33)
+```
+
+Both are increasing parity intervals and have the same cardinality.  Map
+the `j`th member of `I_(a,b)(h,t)` to the `j`th member of
+`I_(b,a)(h,t)`.  Replacing `r` by this member after interchanging `a,b`
+gives a bijection of finite fusion paths; applying it again is the inverse.
+
+**Proof.**  The first interval indexes the multiplicity-free summands in
+
+```text
+Hom(V_t,V_h tensor V_a tensor V_b),
+```
+
+when `V_a` is fused first, and the second indexes the same space when
+`V_b` is fused first.  Associativity gives equality of their cardinalities.
+Every finite `SU(2)_k` fusion interval is an increasing step-two interval,
+so equal rank is a bijection.  The incoming and outgoing labels are fixed,
+and the selected new intermediate label belongs to both required fusion
+intervals, hence it gives a valid two-sided-queue path.  Swapping back
+uses the same two ordered intervals and restores the original rank.  QED.
+
+For the obstruction in Proposition 22G1, the ordinary invalid intermediate
+label three is replaced by the sole finite intermediate label one, producing
+the valid swapped path
+
+```text
+0 -> 1 -> 1 -> 2 -> 0,
+alpha'=[1,1,1,0].
+```
+
+The probe's `recoupling` mode checks this bijection and its involutivity
+through increasingly nontrivial boxes:
+
+```text
+level vertices max label  finite paths  tested swaps  result
+  2       4        2               9             27  PASS
+  4       5        4             940          3,760  PASS
+  6       6        6         117,032        585,160  PASS.
+```
+
+The rank correspondence in Lemma 22G2 has an explicit crystal realization.
+This supplies the coherence that is needed to organize local moves globally.
+Let two adjacent labels be `a,b`, and let their down-counts in the
+two-sided queue of Lemma 22G be
+
+```text
+u=a-alpha_i,                    v=b-alpha_(i+1).
+```
+
+Put
+
+```text
+c=min(v,a-u),                   d=u+v-c,
+u'=min(d,b-c),                  v'=c+max(0,d-b+c).  (P22.34)
+```
+
+After interchanging `a,b`, replace the two top counts by
+
+```text
+alpha'_i=b-u',                  alpha'_(i+1)=a-v'. (P22.35)
+```
+
+**Lemma 22G3 (finite crystal realization and Coxeter coherence).**  The
+map `(P22.34)--(P22.35)` is exactly the rank-preserving finite recoupling of
+Lemma 22G2.  In particular, if `s_i` denotes this map at positions
+`i,i+1`, then on every level-`k` fusion path
+
+```text
+s_i^2=1,
+s_i s_j=s_j s_i                    when |i-j|>1,
+s_i s_(i+1)s_i=s_(i+1)s_i s_(i+1).              (P22.36)
+```
+
+Thus ordered-rank recoupling gives a coherent symmetric-group transport of
+finite fusion paths.  This does not yet prove `(PCP_k)`: it does not allocate
+the two colours or resolve Plucker collisions.
+
+**Proof.**  Write `h` and `t` for the incoming and outgoing heights.  The
+old and new intermediate labels are
+
+```text
+r=h+a-2u,                     r'=h+b-2u',
+t=h+a+b-2(u+v).                                   (P22.37)
+```
+
+The two possible intermediate intervals have lower endpoints
+
+```text
+L_(a,b)=max(|h-a|,|t-b|),
+L_(b,a)=max(|h-b|,|t-a|).
+```
+
+Substituting `(P22.34)` into `(P22.37)` and splitting only according to
+which argument realizes each `min` gives
+
+```text
+r-L_(a,b)=r'-L_(b,a).                              (P22.38)
+```
+
+Both intervals have step two, so `(P22.38)` says precisely that `r` and
+`r'` have the same ordinal rank.  Lemma 22G2 therefore identifies
+`(P22.34)--(P22.35)` with its finite recoupling map, and in particular
+proves preservation of both queue bounds.
+
+Formula `(P22.34)` is the two-letter type-`A_1` crystal `R` rule: pair the
+`v` down-tokens of the right factor with the `a-u` up-tokens of the left
+factor, then exchange the two residual strings.  For three factors the
+noncrossing signature pairing of all down-tokens to the available up-tokens
+is independent of whether the left or the right adjacent pair is exchanged
+first.  This gives the braid relation in `(P22.36)`; pairing twice restores
+the two original residual strings, and disjoint pairs use disjoint strings.
+These give involutivity and distant commutation.  QED.
+
+The strict `coherence` mode of
+`character_ring_iter/probe_su2_finite_bk_exchange.cpp` checks all three
+relations in `(P22.36)` and independently checks equality of
+`(P22.34)--(P22.35)` with the interval-rank recoupling.  The following
+exhaustive boxes pass:
+
+```text
+level vertices max_label finite_paths  braid tests  distant tests
+  4       5        4             940         2,820          2,820
+  6       6        6         117,032       468,128        702,192
+  6       7        3          26,635       133,175        266,350
+  8       6        4          31,282       125,128        187,692
+  8       7        4         336,261     1,681,305      3,362,610.
+```
+
+Its independent `crystal-r 20` mode verifies the unrestricted token formula
+itself on `53,361` two-token involutions and `12,326,391` three-token braid
+instances.  These finite checks audit the formula and its implementation;
+the signature-pairing argument above is the uniform proof.
+
+This is a proved local path bijection, not yet the finite global lemma: a
+cut is a pair of coloured paths, and the rank map in `(P22.33)` need not
+preserve its two factorisations.  The next finite task is therefore to
+replace this scalar bijection by a packet/Temperley--Lieb transport whose
+boundary terms are injectively paid by even channels.
+
+The scalar recoupling nevertheless extends coherently to the *tickets* of a
+fixed two-colour channel.  This removes the affine-wall obstruction from
+transport in the order graph; what remains is the allocation of the
+transported tickets.
+
+**Lemma 22G4 (coherent two-colour finite-ticket transport).**  Keep a
+named remainder list, adjoin a fixed target vertex `star` of label `p`, and
+let a channel ticket for a cut `T` consist of a level-`k` invariant fusion
+path on the ordered vertices of `T` and one on the ordered vertices of
+`T^c union {star}`.  Track the named vertices under an adjacent
+transposition of the remainder order.
+
+If the transposed vertices have different cut colours, identify both paths
+unchanged.  If they have the same colour, apply the rank-preserving
+recoupling of Lemma 22G2 to their adjacent entries in that colour's path,
+and leave the other path unchanged.  These maps are bijections of finite
+channel tickets.  As the adjacent transposition varies, they satisfy the
+Coxeter relations, preserve the cut sign, and preserve both finite queue
+bounds.
+
+**Proof.**  When the two colours differ, deleting the vertices of the other
+colour leaves the ordered sequence on each side unchanged.  When they
+agree, they are adjacent in their common restricted sequence, so Lemma 22G2
+gives a bijection of precisely that finite fusion path and fixes its two
+external heights.  The path on the other side is untouched.  Thus both
+factorisations remain invariant and both two-sided queue bounds hold.
+
+Involutivity and distant commutation follow factorwise from Lemma 22G3.
+For a braid on three named vertices, the all-one-colour case is exactly the
+braid relation in Lemma 22G3.  Otherwise each colour occurs once or twice.
+The singleton-colour path is unchanged, while the two entries of the
+repeated colour are reversed exactly once on either side of the braid and
+receive the same rank recoupling.  The two composites therefore agree.
+Finally the cut is a fixed set of named vertices, so its sign and its odd or
+even parity are unchanged.  QED.
+
+Consequently the odd and even finite channel tickets form coherent bundles
+over the factor-order graph.  A finite proof may therefore transport a
+candidate global Hall allocation through arbitrary reorderings without ever
+leaving `SU(2)_k`.  Lemma 22G4 does not itself compare odd demand with even
+capacity: multiplication of the two transported paths still has the
+Plucker/Temperley--Lieb collisions isolated in Targets 22C2 and 22H3.
+
+The strict `coloured-ticket` mode of
+`character_ring_iter/probe_su2_finite_bk_exchange.cpp` independently
+enumerates both colour-path bases, applies the stated transport, and checks
+involutivity, braid coherence, and distant commutation.  It passed the
+complete boxes
+
+```text
+level vertices max_label degree words tickets swaps braids distant
+  4       5        3          243     1,590  6,360  4,770   4,770
+  6       6        3          729    18,998 94,990 75,992 113,988.
+```
+
+The audit uses two invariant colour paths; adjoining an untouched target
+leaf to either colour gives the channel-ticket convention in Lemma 22G4.
+These checks certify the finite implementation of the proved transport and
+make no claim about the unresolved Plucker/Temperley--Lieb allocation.
 
 Thus the remaining proof cannot be an order-independent polymatroid
 exchange, an order-independent pairwise XOR injection, or a fibrewise
@@ -46834,6 +50581,84 @@ characters `H_2(j-1)`.  The unpaired terms are `a^qV_q` in odd degree and
 
 This factorwise resolution does not make invariant homology even in the
 outer range.
+
+The most immediate attempt to couple different minus factors gives no new
+homological payment.  This closes the natural ``generic mixed Koszul
+differential'' shortcut, but does not restrict operations which also use
+plus factors.
+
+**Proposition 23A1B (cross-minus Koszul rigidity).**  Let there be `m`
+minus factors in `(P23.10)`.  On their tensor product, for a scalar matrix
+`C=(c_(ij))`, define
+
+```text
+d_C=sum_(i,j=1)^m c_(ij) sum_(epsilon=+,-)
+       iota_(i,epsilon) D_(j,epsilon).                 (P23.11bc)
+```
+
+Here `iota_(i,epsilon)` contracts the `epsilon`-weight exterior generator
+in the `i`th copy of `exterior^bullet(V)`, while `D_(j,epsilon)` is the
+derivation on the `j`th symmetric factor which sends its generator `x_j`
+to the corresponding weight vector of `V` and kills all other generators.
+The plus factors are left unchanged.  Then `d_C` is an odd,
+`SU(2)`-equivariant, outer-degree-preserving differential.  Moreover, in
+every fixed outer degree,
+
+```text
+dim H_odd(d_C)^SU(2) >= dim H_odd(d_I)^SU(2).          (P23.11bd)
+```
+
+Thus cross-minus contractions alone cannot improve on the factorwise
+Koszul differential.
+
+**Proof.**  The contractions anticommute and all the derivations commute.
+Every pair of summands in `d_C^2` therefore cancels with the reversed pair,
+while an individual square is zero.  Each summand removes and creates the
+same `SU(2)` weight and changes the total `a`-degree by `-1+1=0`; this
+proves the first assertion.
+
+Identify the exterior product of the minus factors with
+
+```text
+exterior^bullet(V tensor C^m).                         (P23.11be)
+```
+
+If `C` is invertible, a change of the `C^m` exterior generators conjugates
+`d_I` to `d_C` (with the inverse transpose on contractions).  Hence the
+ranks of both parity maps, and their invariant homology dimensions, are
+constant on the nonempty open set `det(C)!=0`.
+
+Fix one outer degree and restrict to `SU(2)` invariants.  The two
+differential matrices have entries linear in `C`.  A minor nonzero at any
+matrix `C_0` is a nonzero polynomial and is therefore nonzero at some
+invertible matrix.  Consequently each parity rank at `C_0` is at most its
+common invertible value.  Since
+
+```text
+dim H_odd=dim C_odd-rank(d: C_odd -> C_even)
+                     -rank(d: C_even -> C_odd),
+```
+
+this proves `(P23.11bd)`.  QED.
+
+For the first obstruction of Lemma 23A2, the strict C++ calculation
+`character_ring_iter/probe_su2_cross_koszul.cpp` constructs the entire
+outer-degree-six invariant complex for
+`[3^-,3^-,1^+,2^+,2^+]`.  It obtains
+
+```text
+coupling       rank even->odd  rank odd->even  H_even  H_odd
+I                         129             133      38     10
+[[1,1],[1,2]]             129             133      38     10
+[[1,1],[1,1]]             112             112      76     48.
+                                                               (P23.11bf)
+```
+
+All three differentials square to zero and commute with the raising
+operator exactly modulo the prime `1,000,003`.  This is an implementation
+check of the uniform rigidity proof, not evidence for a broader global
+claim.  A successful global payment differential must contain arrows which
+involve plus factors or genuinely higher operations.
 
 **Lemma 23A2 (factorwise-homology obstruction).**  Give every minus factor
 of `(P23.10)` its differential `d_q`, give the plus factors zero
@@ -48078,6 +51903,99 @@ The unrestricted total source and target capacities are respectively
 `12` and `14`; hence this coefficient of the boundary character is two.
 Only the local support-routing rule fails.  QED.
 
+The failure leaves a sharp next support-displacement candidate: allow two,
+rather than one, imported indices.  This does not make a canonical crystal
+map injective; it gives a materially smaller global Hall candidate whose
+edges are exactly the two-colour changes of one Plucker switch.
+
+**Target 23A9G2 (two-import boundary Hall allocation).**  In the notation
+of `(P23.11z5c)--(P23.11z5d)`, fix `a,q`.  Join a source support `U` to an
+invariant target support `W` precisely when
+
+```text
+|W minus U|<=2.                                      (P23.11z5h2)
+```
+
+Give `U` demand `d_U(a;q)` and `W` capacity `c_W(a;q)`.  Prove that this
+capacitated bipartite graph has a matching of total value
+
+```text
+sum_U d_U(a;q)                                       (P23.11z5h3)
+```
+
+whenever the unrestricted boundary coefficient is nonnegative.  The claim
+is to hold ordinarily and in every `SU(2)_k`.
+
+If true, it gives a scalar-grade injection
+
+```text
+K_q -> V_(q,x) tensor K_0
+```
+
+without requiring a support-monotone rule.  It is still only a one-minus
+boundary lemma: further coloured Plucker capacity is required for the full
+multi-minus `(PCP_k)` theorem.
+
+The condition is sharp with respect to the known obstruction.  The strict
+`cpp_int` max-flow program
+
+```text
+character_ring_iter/search_su2_boundary_support_monotone.cpp
+```
+
+returns `FAIL` at one import for the family `(P23.11z5i)`, while its
+two-import mode returns `PASS` for the complete matching, for every
+
+```text
+k=5,6,...,20,
+labels=[1,1,2,k-2,k].                              (P23.11z5h4)
+```
+
+It also exhausts all sorted words through eight factors with labels at most
+five at level twelve with `result=PASS`.  The latter replay uses arbitrary-
+precision `cpp_int` capacities throughout the max-flow computation.  These
+are exact finite checks of
+the stated support graph, not a proof of Target 23A9G2.
+
+The same strict checker has a focused affine-wall family mode.  It enumerates
+
+```text
+[low_1,...,low_d,k-offset,k],
+1<=low_1<=...<=low_d<=L,
+```
+
+and tests every `q,a` in the level-`k` fusion ring.  At `k=20`, with
+`d=5`, `L=4`, the four separate offsets `1,2,3,4` each return `PASS`,
+with `56` indexed words at each offset:
+
+```text
+PASS two_import_simple_current_family level=20
+low_factors=5 maximum_low_label=4 offset=2 words=56.
+```
+
+Thus this targeted seven-factor high-wall family has no two-import deficit.
+It is deliberately a falsification probe: it does not establish the
+unbounded Hall assertion.
+
+The same diagnostic has a fixed-outer-defect mode.  It enumerates sorted
+words and tests only the relevant boundary label `q=P-defect`, while still
+checking every `a`-isotypic capacitated flow.  Its exact two-import replays
+return
+
+```text
+level=12 factors=6  maximum_label=5 defect=4 words=80
+level=14 factors=7  maximum_label=5 defect=4 words=107
+level=16 factors=8  maximum_label=6 defect=4 words=183
+level=18 factors=9  maximum_label=6 defect=4 words=240
+level=20 factors=10 maximum_label=6 defect=4 words=310
+level=16 factors=8  maximum_label=6 defect=6 words=280,
+```
+
+all with a `PASS` return.  These scans include the first two affine shells
+whenever their selected `q` reaches them.  They are exact finite
+falsification checks, not evidence that a bounded defect classification
+closes the arbitrary-factor Hall theorem.
+
 The strict C++ diagnostic
 `character_ring_iter/search_su2_boundary_support_monotone.cpp` constructs
 the exact fusion multiplicities and capacitated flows.  It reproduces
@@ -48145,6 +52063,545 @@ Coevaluation still embeds each such source block separately into the
 empty-support target, but the images of different indexed blocks may
 intersect.  Controlling those collisions is the unresolved unrestricted
 Hall problem.
+
+The first outer defect nevertheless has a complete two-import allocation.
+It is the smallest chamber in which the single-source argument has genuinely
+ended, so it gives a concrete unbounded extension of Proposition 23A9H.
+
+**Proposition 23A9H0A (finite defect-one outer two-import collar).**  Let all
+indexed labels `p_i` be positive, put `P=sum_i p_i`, and assume
+
+```text
+q=P-2>=1.                                             (P23.11z5m0aa)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching
+ordinarily.  The same is true in every `SU(2)_k` whenever `q<=k`.
+Equivalently, there is an injection
+
+```text
+K_q -> V_(q,x) tensor K_0.                            (P23.11z5m0ab)
+```
+
+**Proof.**  Let `U` be a source support and write `R=[n] minus U`.  If
+`M_q(U)!=0`, the highest-weight bound gives
+
+```text
+sum_(i in R)p_i<=P-q=2.
+```
+
+Fusion parity makes this omitted total even.  Since every label is positive,
+the only possibilities are
+
+```text
+R=empty,             R={i} with p_i=2,
+R={i,j} with p_i=p_j=1.                              (P23.11z5m0ac)
+```
+
+For `R=empty`, the source is in the `a=0` block and has demand
+`m_[n](q)`.  Send it to the empty target support, whose `a=0` capacity is
+exactly `m_[n](q)` by rigidity.
+
+For an indexed pair `R={i,j}` of label-one factors, the complementary
+product has the unique top path to `V_q`.  Its source has one copy in each
+of the `a=0` and `a=2` blocks.  Send both copies to the target support
+`W=R`.  This is a two-import edge.  Since
+
+```text
+m_R(0)=1,                  m_(R^c)(q)=1,
+q in 0 star q,             q in 2 star q,
+```
+
+the target has at least one slot in each corresponding `a` block.  The
+supports `R` are indexed and distinct, so these images are disjoint.
+
+It remains to route the sources with `R={i}` and `p_i=2`.  Each has one
+copy in the `a=2` block.  Use the empty target support.  Its capacity is
+
+```text
+sum_(t in 2 star q)m_[n](t)
+ >=m_[n](q)+m_[n](q+2)=(n-1)+1=n.                    (P23.11z5m0ad)
+```
+
+Here `m_[n](P)=1`, while `m_[n](P-2)=n-1`: in the top-weight expansion of
+`product_i V_(p_i)`, the weights `P` and `P-2` have multiplicities `1` and
+`n`, respectively.  There are at most `n` indexed label-two sources, so
+this capacity suffices.  All maps used are permitted blocks of
+`(P23.11z3b)`, and the target supports or the `a`-isotypic blocks separate
+the stated images.  Thus their direct sum is injective.
+
+For the finite statement, `q<=k` leaves only `P<=k`, `P=k+1`, and
+`P=k+2`.  The first is the wall-free argument above.  Suppose first that
+`P=k+1`, so `q=k-1`.  The pair routes remain valid because
+`q in 2 star_k q`.  The empty `a=2` capacity for the singleton-label-two
+sources is
+
+```text
+m_[n](k-3)+m_[n](k-1)
+ =binom(n,2)+r-1>=c_2.                              (P23.11z5m0ae)
+```
+
+Here `r` is the number of labels at least two and `c_2` the number equal to
+two.  Indeed the two displayed multiplicities agree with their ordinary
+top-weight values: they are respectively
+`binom(n,2)+r-n` and `n-1`; no reflected label can occur below total label
+`P=k+1`.  Since `n>=2`, `(P23.11z5m0ae)` follows from `r>=c_2`.
+
+It remains that `P=k+2`, so `q=k`.  At the top wall,
+
+```text
+2 star_k k={k-2},                                    (P23.11z5m0af)
+```
+
+and the `a=2` pair-of-ones sources can no longer use their own target
+support.  If `n>=4`, route every such pair source to its own support in the
+`a=0` block as before, but route its `a=2` copy there only through the
+`k-2` channel: the complementary top product has
+`m_(R^c)(k-2)=n-3>=1`.  Route all singleton-label-two sources to the empty
+`a=2` target.  Its capacity is
+
+```text
+m_[n](k-2)=binom(n,2)+r-n>=c_2,                      (P23.11z5m0ag)
+```
+
+again by the ordinary top-weight count (the first reflected label is
+`k+4>P`).
+
+For `n=3`, the same empty capacity is `r`.  It pays all `a=2` sources
+unless `(k;p_1,p_2,p_3)=(2;1,1,2)`.  In that exceptional word, send the
+source omitting the label two to the all-three-factor invariant target and
+send the pair-of-ones source to the empty target; both target blocks have
+capacity one.  For `n=2`, only `[2,k]` (with `k>2`) can have a label-two
+source, and the empty target has its unique `k-2` slot.  The remaining
+case `[2,2]` at level two is resolved by sending one singleton source to
+the empty target and the other to the all-factor invariant target.  Finally
+at level one all labels are one, so only the `a=0` pair routes occur.
+Every target used differs from its source by at most two imported indices.
+This completes the finite allocation.  QED.
+
+The next outer defect also closes on a nontrivial arbitrary-label subcone.
+The restriction below removes the first competing pair supports, so its
+proof isolates exactly the new collision caused by fundamental labels.
+
+**Proposition 23A9H0B (defect-two collar without fundamental labels).**
+Work ordinarily, or in `SU(2)_k` with `P<=k`.  Suppose
+
+```text
+p_i>=2,                 q=P-4>=4.                    (P23.11z5m0ah)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching,
+and hence the boundary injection `(P23.11z5m0ab)` exists.
+
+**Proof.**  As in Proposition 23A9H0A, if `M_q(U)!=0` and
+`R=[n] minus U`, then the omitted label total is even and at most four.
+Under `(P23.11z5m0ah)` the only possibilities are
+
+```text
+R=empty,             R={i} with p_i=2,
+R={i} with p_i=4,    R={i,j} with p_i=p_j=2.           (P23.11z5m0ai)
+```
+
+The empty complement is routed to the empty `a=0` target exactly as before.
+For an omitted pair of label-two factors, use that pair itself as target.
+It is an invariant two-import support, and its complementary product has
+the unique top `V_q` path.  Since `q>=4`, the channel `q` occurs in each of
+
+```text
+0 star q,            2 star q,            4 star q,
+```
+
+so its three source blocks `a=0,2,4`, each of dimension one, fit in the
+corresponding target blocks.
+
+It remains to use the empty target for the singleton complements.  Write
+`c_2,c_4` for the numbers of labels two and four, and let
+`s` be the number of labels at least three.  An omitted label-two source
+has the next-to-top multiplicity `n-2` in its complement, so the complete
+`a=2` demand is `c_2(n-2)`.  The empty-target capacity contains the three
+top channels `q-2,q,q+2`; the elementary top-weight counts give
+
+```text
+m(P-6)+m(P-4)+m(P-2)
+ =binom(n,3)+n(n-1)-1+s
+ >=c_2(n-2).                                         (P23.11z5m0aj)
+```
+
+Here the last inequality uses `c_2<=n`; the residual lower bound is
+`binom(n,3)+n-1+s>=0`.  An omitted label-four source has one `a=4` copy.
+The three channels `q,q+2,q+4` in the empty target have total capacity at
+least
+
+```text
+m(P-4)+m(P-2)+m(P)=binom(n,2)+n>=c_4.                (P23.11z5m0ak)
+```
+
+Thus every singleton-label-four source also fits.  All target blocks used
+here are disjoint by support or by their `a`-isotypic label.  When `P<=k`,
+the same ordinary top-weight calculations and maps survive unchanged in
+`SU(2)_k`.  QED.
+
+The first omitted types excluded by Proposition 23A9H0B are
+`{1,1,2}` and `{1,1,1,1}`.  They can share an invariant label-one pair
+target with the smaller complement `{1,1}`; this is the first genuine
+global Hall collision at defect two.
+
+That collision is nevertheless resolvable once sufficiently many fundamental
+labels are available: the four-omission blocks are paid by globally matched
+supports of their own invariant type, rather than by the pair supports
+already needed by the two-omission blocks.
+
+**Proposition 23A9H0C (six-fundamental defect-two collar).**  Work
+ordinarily, or in `SU(2)_k` with `P<=k+4`.  Let `f>=6` be the number of
+indexed label-one factors, and put
+
+```text
+P=sum_i p_i,                 q=P-4.                  (P23.11z5m0al)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching.
+Consequently the boundary injection `(P23.11z5m0ab)` exists on this
+arbitrary-arity defect-two subcone.  In particular, it contains the
+all-fundamental ray and permits arbitrary additional irreducible labels.
+
+**Proof.**  Write `R=[n] minus U`.  If `M_q(U)` is nonzero, then
+`sum_(i in R)p_i<=4`; parity makes this omitted total even.  Thus the
+possible indexed omitted types are
+
+```text
+empty,  {2},  {1,1},  {4},  {1,3},
+{2,2},  {1,1,2},  {1,1,1,1}.                         (P23.11z5m0aq)
+```
+
+Put `n` for the total number of factors and `t` for the number labelled two.
+The elementary top-weight counts and low fundamental tensor powers give the
+complete source demands:
+
+```text
+omitted set R       nonzero a-block demands
+empty               a=0: m_n(q)
+{2}                 a=2: n-2
+{1,1}               a=0,2: n-3 each
+{4}                 a=4: 1
+{1,3}               a=2,4: 1,1
+{2,2}               a=0,2,4: 1,1,1
+{1,1,2}             a=0,2,4: 1,2,1
+{1,1,1,1}           a=0,2,4: 2,3,1.                 (P23.11z5m0am)
+```
+
+For the total-two omitted rows, the complementary product has total label
+`q+2`, so its `V_q` multiplicity is respectively `n-2` and `n-3` by the
+top-minus-two count.  Every total-four omitted complement has the unique
+top `V_q` path.  The listed `a`-profiles follow from
+
+```text
+V_1^(tensor 4)=2V_0 direct-sum 3V_2 direct-sum V_4.  (P23.11z5m0an)
+```
+
+together with `V_2 tensor V_2=V_0 direct-sum V_2 direct-sum V_4` and
+`V_1^(tensor 2) tensor V_2=V_0 direct-sum 2V_2 direct-sum V_4`; also
+`V_1 tensor V_3=V_2 direct-sum V_4`.
+
+Send the `R=empty` block to the empty target in its `a=0` channel, whose
+capacity is exactly `m_n(q)`.  The non-invariant omitted types use the empty
+target: the `{2}` and `{1,3}` sources use its `a=2` channel, while the
+`{4}` and `{1,3}` sources use its `a=4` channel.  We now show that both
+reservoirs have sufficient capacity.
+
+Let `w_j` be the coefficient at distance `2j` below the top weight in the
+product character, and write `u,v` for the numbers of labels three and four.
+Because `q>=2`, the `a=2` empty-target capacity is
+
+```text
+c_empty(2;q)=m(P-6)+m(P-4)+m(P-2)=w_3-1.            (P23.11z5m0ar)
+```
+
+For the subword consisting only of the `f` label-one and `t` label-two
+factors, direct coefficient extraction gives
+
+```text
+w_3=binom(f,3)+t binom(f,2)+f binom(t+1,2)
+    +binom(t,3)+t(t-1).
+```
+
+Consequently
+
+```text
+w_3-1-t(f+t-2)
+ =binom(f,3)-1+t{binom(f,2)-f}
+   +f binom(t+1,2)+binom(t,3)+t >=0.                 (P23.11z5m0as)
+```
+
+Adjoin the remaining factors one at a time.  A label three raises `w_3` by
+`w_2+w_1+1>=f+t`, while it raises the required demand by `t+f`: `t` from
+the singleton-label-two sources and `f` from the new `{1,3}` sources.  A
+label four or higher raises `w_3` by at least `w_2+w_1+1>=t`, while it
+raises that demand by at most `t`.  Thus `(P23.11z5m0as)` proves
+
+```text
+c_empty(2;q)>=t(n-2)+fu.                             (P23.11z5m0at)
+```
+
+If `u+v>0`, then `P>=9` and the `a=4` empty-target capacity is
+
+```text
+c_empty(4;q)=m(P-8)+m(P-6)+m(P-4)+m(P-2)+m(P)=w_4.
+                                                               (P23.11z5m0au)
+```
+
+For the base word with only labels one and two, `w_4-1>=0` because `f>=6`.
+Adjoining a label three raises `w_4` by `w_3+w_2+w_1>=f`, exactly enough for
+the new `f` `{1,3}` sources; adjoining a label four raises it by at least
+one; and adjoining a label at least five only increases it.  Hence
+
+```text
+c_empty(4;q)>=v+fu.                                  (P23.11z5m0av)
+```
+
+The right sides of `(P23.11z5m0at)` and `(P23.11z5m0av)` are precisely the
+total `a=2` and `a=4` demands of the non-invariant omitted types.
+
+For each omitted label-one pair `R`, send both of its blocks to `W=R`.
+This is a two-import edge.  Its invariant multiplicity is one and its
+complement is `X_U`; hence its `a=0` capacity is `m_U(q)=n-3`, while its
+`a=2` capacity is at least that number because `q in 2 star q`.  For each
+omitted label-two pair, use `W=R` similarly.  Its invariant multiplicity is
+one, its complementary product has one top `V_q` path, and
+`q in 0 star q`, `q in 2 star q`, and `q in 4 star q`; its three displayed
+source blocks therefore fit.  These pair target supports are all distinct.
+
+For the `{1,1,2}` type, form the bipartite graph whose two colour classes
+are its indexed supports, joining `R` to `W` when `|R intersection W|<=2`.
+It is regular by the action of the permutations of the label-one and
+label-two indices.  It is nonempty: retain the label-two index and replace
+the label-one pair by a disjoint pair.  Hence it has a perfect matching.
+For a matched target `W`, its invariant multiplicity is one and its
+complement has total label `q`, top multiplicity one, and top-minus-two
+multiplicity `n-4`.  Therefore its `a=0,2,4` capacities are at least
+
+```text
+1,                  (n-4)+1=n-3,                  1,
+```
+
+which pay the source demands `1,2,1`.  The matching condition is exactly
+the two-import condition.
+
+It remains to allocate the indexed four-omission sets.  Form the bipartite
+graph whose two colour classes are the indexed four-subsets of the `f`
+fundamental indices, with an edge `R--W` when
+
+```text
+|R intersection W|<=2.                               (P23.11z5m0ao)
+```
+
+This graph is regular by permutation symmetry and nonempty for `f>=6`: for
+`f=6` take the two fundamental indices outside `R` and any two inside it,
+while for `f>=7` choose a four-set meeting `R` in at most one index when
+possible (and in zero indices once `f>=8`).  Hall's theorem for a nonempty
+regular bipartite graph gives a perfect matching `R mapsto W(R)`.
+
+For a matched target `W=W(R)`, the import count is
+`|W minus U|=|W intersection R|<=2`.  Moreover `m_W(0)=2` and its
+complement has total label `q`.  Its top two multiplicities are
+`m_(W^c)(q)=1` and `m_(W^c)(q-2)=n-5`.  The three target capacities needed for
+the last row of `(P23.11z5m0am)` satisfy
+
+```text
+c_W(0;q)=2,
+c_W(2;q)>=2((n-5)+1)=2(n-4)>=4,
+c_W(4;q)>=2m_(W^c)(q)=2>=1.                          (P23.11z5m0ap)
+```
+
+Here `q>=2`, and both `q in 2 star q` and `q in 4 star q`.  Hence the
+`a=0,2,4` blocks of each
+four-omission source fit in its matched target.  Matched four-supports are
+distinct, and they are disjoint from the empty, pair, and triple targets
+used above, so all displayed block injections assemble.  When `P<=k`, every
+tensor word occurring here is wall-free, so the same decompositions and
+capacities hold in `SU(2)_k`.  If instead `P=k+1`, every source and every
+target channel used above is still below the affine ceiling except the top
+`P` channel in the empty `a=4` target.  That channel is absent, so its
+capacity is `w_4-1`; the induction above proved exactly
+`w_4-1>=v+fu`.  Thus the same allocation is valid on this first affine
+shell as well.
+
+Finally suppose that `P=k+2`, so `q=k-2`.  The top `k=P-2` component of the
+empty `a=2` target loses its one reflected top copy, so that capacity is
+`w_3-2` rather than `w_3-1`.  This still pays the demand in
+`(P23.11z5m0at)`: the derivation above gives the sharper persistent slack
+
+```text
+w_3-1-{t(n-2)+fu}>=binom(f,3)-1>=19.               (P23.11z5m0aw)
+```
+
+Indeed Kac--Walton gives
+`m_k(k)=m_infinity(P-2)-m_infinity(P)`, while the other two `a=2`
+channels have no reflected partner.  The base identity `(P23.11z5m0as)` has
+the displayed lower bound, and
+adjoining every further label increases its left side by a nonnegative
+amount.  The empty `a=4` channel need not pay the non-invariant `{4}` and
+`{1,3}` sources.  Instead use the `a=4` blocks of the indexed label-one-pair
+targets.  They are unused by the `{1,1}` sources.  For any such pair `W`,
+its complement has total label `k` and `n-2` factors, so
+
+```text
+c_W(4;q)>=m_(W^c)(q)=n-3,                          (P23.11z5m0ax)
+```
+
+because `q in 4 star_k q`.  Every `{4}` source and every `{1,3}` source is
+adjacent to every such `W` (it imports at most one of its two indices).
+Their complete `a=4` demand is `v+fu`.  Since
+
+```text
+binom(f,2)(n-3)>=f(n-f)>=v+fu,                     (P23.11z5m0ay)
+```
+
+the aggregate pair-target capacity pays this demand.  The first inequality
+in `(P23.11z5m0ay)` follows from `f>=6` and `n>=f`; the second uses
+`v+fu<=f(u+v)<=f(n-f)`.  The remaining source and target channels are below
+the wall, or retain the channel `q` used above, so the preceding allocation
+is unchanged.  Thus the same conclusion holds through `P=k+2`.
+
+Suppose next that `P=k+3`, so `q=k-1`.  Apart from the direct low case
+`k=3`, where all six labels are one and `V_1^(tensor 4)` has only its
+`2V_0 direct-sum 3V_2` truncation, route every `a=2` or `a=4` block not
+already paid above to the fundamental-pair targets.  The direct `k=3`
+allocation uses the same four-support matching and the displayed truncated
+profile, so assume `k>=4` below.
+
+For a fundamental pair `W`, put `H=m_(W^c)(k-3)`.  Its complement has total
+label `k+1`, has `n-2` factors, and no reflection at `k-3`; consequently
+
+```text
+H=binom(n-2,2)-(n-2)+s >=(n-2)(n-5)/2,             (P23.11z5m0az)
+```
+
+where `s` counts its factors of label at least two.  The `{1,1}` source
+uses the `q=k-1` part of its own pair target's `a=2` capacity, leaving at
+least `H` free `a=2` slots there.  The same target has at least `H` free
+`a=4` slots because both channels `k-3` in `2 star_k q` and in
+`4 star_k q` are present; no `{1,1}` source uses its `a=4` block.
+
+Every non-invariant `a=2` source has an edge to every fundamental-pair
+target.  Its complete demand is `t(n-2)+fu`, and the aggregate spare
+capacity pays it, since with `A=binom(f,2)`
+
+```text
+A H >= n^2-f^2 >=t(n-2)+fu.                         (P23.11z5m0ba)
+```
+
+For the first inequality it is enough to take `f=6`, when twice the
+difference is `13n^2-105n+222>0`; increasing `f` only increases the left
+side and decreases the right.  The second follows from
+`t(n-2)+fu<=t n+f u<=(n-f)(n+f)`.
+
+The `a=4` blocks requiring this same reservoir come from the omitted types
+`{4}`, `{1,3}`, `{2,2}`, `{1,1,2}`, and `{1,1,1,1}`.  Their total demand is
+
+```text
+v+fu+binom(t,2)+At+binom(f,4).                      (P23.11z5m0bb)
+```
+
+and every one again has a two-import edge to every fundamental pair.  Put
+`h=n-f`.  The right side of `(P23.11z5m0bb)` is at most
+`fh+h^2/2+Ah+binom(f,4)`.  Subtracting this from the lower bound `AH` in
+`(P23.11z5m0az)` gives a quadratic in `h` with coefficients
+
+```text
+(A-1)/2,
+A(f-9/2)-f,
+f(f-1)(f-2)(5f-27)/24,
+```
+
+all nonnegative for `f>=6`.  Thus the free `a=4` pair capacity pays every
+listed block.  All other blocks retain the allowed `q` channel used in the
+preceding construction.  This completes the allocation also at `P=k+3`.
+
+It remains that `P=k+4`, so `q=k`.  For `k=2,3`, positivity and `f>=6`
+force respectively the all-fundamental words of length six and seven.  The
+truncated profiles are
+
+```text
+k=2: V_1^(tensor 4)=2V_0 direct-sum 2V_2,
+k=3: V_1^(tensor 4)=2V_0 direct-sum 3V_2,
+```
+
+and the same pair and four-support routes used above give the allocation
+directly.  Assume `k>=4` henceforth.  A label-one pair target `W` has
+complement of total label `k+2`.  Put
+
+```text
+H=m_(W^c)(k-2)
+ =binom(n-2,2)-(n-2)+s,
+G=m_(W^c)(k-4)
+ =binom(n-2,3)-binom(n-2,2)+(n-4)s+s',             (P23.11z5m0bc)
+```
+
+where `s` and `s'` count, respectively, its factors of label at least two
+and at least three.  These are ordinary top-layer counts: their reflected
+partners lie above the complementary total label `k+2`.  The `{1,1}` source
+has `a=0,2` demand `n-4`; its own pair target pays the `a=0` block at label
+`k` and has `a=2` capacity `H`, because `2 star_k k={k-2}`.  Thus its unused
+`a=2` capacity is at least
+
+```text
+H-(n-4) >=(n-3)(n-6)/2+s.                          (P23.11z5m0bd)
+```
+
+Every non-invariant `a=2` source is adjacent to every label-one pair.
+Their complete demand is now `t(n-3)+fu`.  If `n>=f+3`, it is at most
+`(n-f)(n-3)`, while the aggregate lower bound from `(P23.11z5m0bd)` is at
+least `binom(f,2)(n-3)(n-6)/2`, which dominates it for `f>=6`.  The two
+remaining cases `n=f+1,f+2` have respectively demand at most `f,2f`.
+When this demand is nonzero, `(P23.11z5m0bd)` gives respectively at least
+`3,6` spare slots per pair (already at `f=6`), so their aggregate capacities
+are at least `3 binom(f,2),6 binom(f,2)` and again dominate the demands.
+Hence the unused pair `a=2` blocks pay all non-invariant `a=2` sources.
+
+The total-four types retain their own `a=0,2` routes.  Their `a=4` routes
+also remain available: in `4 star_k k={k-4}`, the complementary top-minus-
+four multiplicity is at least one for the types `{2,2}`, `{1,1,2}`, and
+`{1,1,1,1}`.  (For the last type, the only borderline three-factor
+complement has one label at least two.)  Thus no such source consumes a
+label-one-pair `a=4` block.
+
+The pair `a=4` capacity is `G`.  Since
+
+```text
+G >=(n-4)(u+v),
+```
+
+the aggregate capacity `binom(f,2)G` pays the remaining non-invariant
+`a=4` demand `v+fu`: indeed
+`binom(f,2)(n-4)(u+v)>=fu+v` for `f>=6`.  These sources have at most one
+label-one index, hence are adjacent to every pair target.  All used target
+blocks are separated by support or by their `a`-label, completing the
+allocation at `P=k+4`.  This exhausts the finite cases compatible with
+`q=P-4<=k`, and proves the proposition.  QED.
+
+The strict C++ mode
+
+```text
+search_su2_boundary_support_monotone
+  --two-import-outer-defect-word LEVEL 4 LABEL...
+```
+
+checks this fixed `q=P-4` allocation without the diagnostic's usual
+permission to skip a global-capacity-deficit sector.  Exact replays return
+`PASS` for representative words in the displayed collar:
+
+```text
+level=20  labels=[1,1,1,1,1,1,3,4,5],
+level=20  labels=[1,1,1,1,1,1,2,2,3,4],
+level=14  labels=[1,1,1,1,1,1,2,2,2,2],
+level=17  labels=[1,1,1,1,1,1,3,4,5],
+level=16  labels=[1,1,1,1,1,1,3,4,5],
+level=15  labels=[1,1,1,1,1,1,3,4,5],
+level=14  labels=[1,1,1,1,1,1,3,4,5].
+```
+
+They audit the capacities and the two-import max flow; the construction
+above, not the finite replays, proves the proposition.
 
 There is a general separation criterion for the pure transfers of
 Lemma 23A9A.  For an object `Y`, let `Supp(Y)` be the set of simple labels
@@ -48714,6 +53171,328 @@ C_F(p,q;a)=T_F(p,q,a)-T_F(a,p,q).
 
 This proves `(P23.11z5zb)`; adding the two instances of
 `(P23.11z5za)` proves `(P23.11z5zc)`.  QED.
+
+There is an exact global current after summing over the choice of the
+appended boundary leaf.  It is the first place in the one-minus problem
+where the local antisymmetric remainder cancels without being assigned a
+sign.
+
+**Corollary 23A9L1 (leave-one-out boundary current).**  Let
+`L=(p_1,...,p_n)` be an indexed plus list with `n>=2`, and write `F_L` for
+its two-coordinate table.  For an external label `q`, put
+
+```text
+beta_i(L;q)=B_(F_(L minus {i}))(q,p_i).               (P23.11z5zc1)
+```
+
+Then, ordinarily and in every finite fusion ring `SU(2)_k`,
+
+```text
+(n-1) sum_i beta_i(L;q)
+ =2 sum_(i<j) sum_(v in p_i star_k p_j)
+       B_(F_(L minus {i,j}))(q,v).                    (P23.11z5zc2)
+```
+
+In particular, if every two-leaves-shorter boundary defect on the right is
+nonnegative, then the complete leave-one-out current `sum_i beta_i(L;q)`
+is nonnegative.
+
+**Proof.**  Apply the paired identity `(P23.11z5zc)` with
+
+```text
+F=F_(L minus {i,j}),       p=p_i,       a=p_j.
+```
+
+Its left side is exactly
+
+```text
+B_(F_(L minus {j}))(q,p_j)+B_(F_(L minus {i}))(q,p_i)
+=beta_j(L;q)+beta_i(L;q).
+```
+
+Sum this identity over all unordered indexed pairs `{i,j}`.  Each
+`beta_i` occurs in exactly `n-1` pairs, which proves
+`(P23.11z5zc2)`.  The final assertion is immediate because every finite
+`SU(2)` fusion interval is multiplicity-free and all coefficients on the
+right are nonnegative under its hypothesis.  QED.
+
+Thus a negative one-minus boundary coefficient is never isolated once all
+factor-deleted alternatives are retained: its complete indexed component
+has a nonnegative current paid by two-leaves-shorter carriers.  This is a
+genuine cumulative payment identity, but it does not yet prove the
+individual inequality `beta_i>=0`; its other component vertices correspond
+to different choices of the appended boundary leaf.
+
+More sharply, under the same shorter-word hypothesis the paired identity
+itself gives
+
+```text
+beta_i(L;q)+beta_j(L;q)>=0                 for every i!=j. (P23.11z5zc3)
+```
+
+Hence a deficit `beta_i=-d<0` forces every one of the other `n-1` vertices
+to carry at least `d`, and therefore
+
+```text
+sum_j beta_j(L;q)>=(n-2)d.                            (P23.11z5zc4)
+```
+
+This is the quantitative pairwise-payment form of the current.  It makes
+the obstruction to an individual proof precise: the available positive
+reserve lives on different appended-leaf targets, so an additional
+transport which returns that reserve to the original target is still
+required.
+
+The all-plus hypothesis in Corollary 23A9L1 is inessential for the current
+identity.  What matters is only the exchange symmetry of the table before
+the indexed plus leaves are adjoined.  This makes the same conservation law
+available in every higher-minus packet after two minus positions have been
+distinguished.
+
+**Corollary 23A9L1A (even-background leave-one-out current).**  Let `E` be
+an indexed signed background with an even number of minus positions, and
+write its two-coordinate coefficient table as
+
+```text
+F_E(r,s)=[V_r box-times V_s]
+ product_(e in E)(V_e box-times 1+epsilon_e 1 box-times V_e),
+epsilon_e in {+1,-1}.                                (P23.11z5zc4a)
+```
+
+Let `L=(p_1,...,p_n)` be an indexed list of further plus leaves, with
+`n>=2`, and set
+
+```text
+F_(E;L)=F_E^[p_1]...[p_n],
+beta_i^E(L;q)=B_(F_(E;L minus {i}))(q,p_i).           (P23.11z5zc4b)
+```
+
+Then, in the ordinary ring and in every `SU(2)_k`,
+
+```text
+(n-1) sum_i beta_i^E(L;q)
+ =2 sum_(i<j) sum_(v in p_i star_k p_j)
+     B_(F_(E;L minus {i,j}))(q,v).                    (P23.11z5zc4c)
+```
+
+Moreover, `2 beta_i^E(L;q)` is the signed contraction obtained from the
+background `E` by adjoining `q` and `p_i` as the two further minus leaves
+and every leaf of `L minus {i}` as a plus leaf.  Thus `(P23.11z5zc4c)` is
+an exact current conservation law inside every fixed even-minus background,
+not merely in the two-minus chamber.
+
+**Proof.**  Swapping the two coordinates in `(P23.11z5zc4a)` multiplies
+the product by `product_(e in E) epsilon_e=1`.  Hence `F_E` is symmetric.
+The plus updates `F -> F^[p]=N_pF+FN_p` commute, so for every pair `i!=j`
+we may apply Lemma 23A9L to the symmetric base table
+
+```text
+F=F_(E;L minus {i,j}),       p=p_i,       a=p_j.
+```
+
+Its paired identity is
+
+```text
+beta_i^E(L;q)+beta_j^E(L;q)
+ =2 sum_(v in p_i star_k p_j)
+     B_(F_(E;L minus {i,j}))(q,v).
+```
+
+Summing over the unordered indexed pairs gives `(P23.11z5zc4c)`, since
+each `beta_i^E` occurs `n-1` times.  Finally, expanding the two
+distinguished differences
+`(V_q box-times 1-1 box-times V_q)` and
+`(V_(p_i) box-times 1-1 box-times V_(p_i))` against the symmetric table
+in `(P23.11z5zc4b)` gives twice its boundary defect, exactly as in
+`(P25.29e9)`.  This identifies `2 beta_i^E` with the stated contraction.
+QED.
+
+In particular, if every fused shorter defect on the right of
+`(P23.11z5zc4c)` is nonnegative for this same background, then
+`sum_i beta_i^E(L;q)>=0`; and a negative component vertex
+`beta_i^E=-d` forces the other `n-1` vertices to carry at least `d` each.
+This is the exact higher-minus cumulative reserve.  It still does not
+produce the transport that returns this reserve to a prescribed `i`.
+
+The strict C++ verifier
+`character_ring_iter/verify_su2_even_background_current.cpp` constructs
+the signed background table independently, checks its symmetry, verifies
+`(P23.11z5zc4c)`, and separately expands both new minus differences to
+check the factor-two contraction assertion.  It also exhausts the
+two-bit fusion identity `(P23.11z5zc4ha)` over every even sign mask of
+each tested indexed label word.  Its medium exact replay returns
+
+```text
+SU2_EVEN_BACKGROUND_CURRENT levels=2..5 labels<=3
+background_factors<=3 leaves<=3 backgrounds=433
+currents=43152 contractions=118582 hypercube_edges=1351062 result=PASS.
+```
+
+The earlier current-only replay returns
+
+```text
+SU2_EVEN_BACKGROUND_CURRENT levels=2..6 labels<=4
+background_factors<=3 leaves<=3 backgrounds=1052
+currents=296352 contractions=828946 result=PASS.
+```
+
+These are implementation audits of the uniform symmetry proof and finite
+fusion identities, including affine walls; they are not bounded substitutes
+for either corollary.
+
+The same statement can be written directly on the sign-placement graph.
+This is the precise arbitrary-factor current supplied by the fused-leaf
+identity.
+
+**Corollary 23A9L1B (Johnson-star fused current).**  Let
+`A=(a_1,...,a_N)` be an indexed label list, and for an even set of minus
+positions `S` write
+
+```text
+J_A(S)=[1 box-times 1]
+ product_(i in S)(V_(a_i) box-times 1-1 box-times V_(a_i))
+ product_(i notin S)(V_(a_i) box-times 1+1 box-times V_(a_i)).
+                                                        (P23.11z5zc4d)
+```
+
+This is the signed contraction of the word with minus set `S`.  Fix an
+odd set `C` of positions and put `R=[N] minus C`, with `|R|>=2`.  For
+distinct `i,j in R` and `v in a_i star_k a_j`, let `A_(ij:v)` be the
+indexed list obtained by deleting positions `i,j` and adjoining one new
+position `star` labelled `v`.  Then
+
+```text
+J_A(C union {i})+J_A(C union {j})
+ =2 sum_(v in a_i star_k a_j)
+    J_(A_(ij:v))(C union {star}),                    (P23.11z5zc4e)
+
+(|R|-1) sum_(i in R)J_A(C union {i})
+ =2 sum_(i<j, i,j in R) sum_(v in a_i star_k a_j)
+    J_(A_(ij:v))(C union {star}).                    (P23.11z5zc4f)
+```
+
+Both formulas hold in the ordinary ring and in every `SU(2)_k`.  Hence if
+all the one-factor-shorter contractions on the right of
+`(P23.11z5zc4e)` are nonnegative, every pair sum in this Johnson star is
+nonnegative; if those on the right of `(P23.11z5zc4f)` are nonnegative,
+the complete star current is nonnegative.
+
+**Proof.**  Choose any `q in C`, let `E=C minus {q}` carry its inherited
+minus signs, and regard the positions in `R` as the plus list `L`.  The
+background `E` has even minus parity, so Corollary 23A9L1A applies.  Its
+`beta_i^E(L;q)` satisfies
+
+```text
+J_A(C union {i})=2 beta_i^E(L;q).                    (P23.11z5zc4g)
+```
+
+After fusing `i,j` to `v`, the same two-difference expansion gives
+
+```text
+J_(A_(ij:v))(C union {star})
+ =2 B_(F_(E;L minus {i,j}))(q,v).                    (P23.11z5zc4h)
+```
+
+Multiply the pair identity and the leave-one-out identity of Corollary
+23A9L1A by two and substitute `(P23.11z5zc4g)--(P23.11z5zc4h)`.  This is
+exactly `(P23.11z5zc4e)--(P23.11z5zc4f)`.  Fusion is multiplicity-free in
+`SU(2)_k`, and the identities retained the full fusion sums, so the finite
+and ordinary statements are identical.  QED.
+
+Corollary 23A9L1B is the corrected global-payment reduction available at
+arbitrary factor number: finite certification of the fused shorter words
+pays every Johnson-star current.  It is deliberately a component result.
+The abstract assignment with one negative star vertex and all other
+vertices carrying the opposite value satisfies both displayed conclusions,
+so a separate overlap/transport theorem is still necessary to deduce
+`J_A(S)>=0` for one prescribed sign set `S`.
+
+The same two-factor calculation supplies the missing edges between distinct
+minus layers.  It is useful to retain the full even hypercube rather than
+only its fixed-layer Johnson subgraphs.
+
+**Corollary 23A9L1B2 (two-bit fused hypercube relation).**  Let `S` be any
+even subset of `[N]`, let `i!=j`, and put
+
+```text
+C=S minus {i,j},             epsilon=|S intersection {i,j}| mod 2.
+```
+
+For `v in a_i star_k a_j`, let `S_(ij:v)` be the sign set on
+`A_(ij:v)` obtained from `C` by giving the new `star` position minus sign
+exactly when `epsilon=1`.  Then
+
+```text
+J_A(S)+J_A(S triangle {i,j})
+ =2 sum_(v in a_i star_k a_j) J_(A_(ij:v))(S_(ij:v)).  (P23.11z5zc4ha)
+```
+
+This holds ordinarily and in every `SU(2)_k`.  Therefore uniform
+nonnegativity for the fused `(N-1)`-factor words gives
+
+```text
+J_A(S)+J_A(S triangle {i,j})>=0                    (P23.11z5zc4hb)
+```
+
+for every edge of the even sign hypercube.  The `epsilon=1` case is the
+Johnson-star pair law `(P23.11z5zc4e)`; the `epsilon=0` case links the
+layers `|S|` and `|S|+/-2`.
+
+**Proof.**  Write `X_l=V_(a_l) box-times 1` and
+`Y_l=1 box-times V_(a_l)`.  The two sign assignments at `i,j` have sum
+
+```text
+(X_i+Y_i)(X_j+Y_j)+(X_i-Y_i)(X_j-Y_j)
+ =2(X_iX_j+Y_iY_j)                                  if epsilon=0,
+
+(X_i-Y_i)(X_j+Y_j)+(X_i+Y_i)(X_j-Y_j)
+ =2(X_iX_j-Y_iY_j)                                  if epsilon=1.
+```
+
+Fuse `X_iX_j` and `Y_iY_j` through every
+`v in a_i star_k a_j`.  In the first line this creates a plus `star`
+position and in the second a minus `star` position, giving
+`(P23.11z5zc4ha)`.  The asserted inequality follows from the induction
+hypothesis on each fused word.  QED.
+
+Corollary 23A9L1B2 is a genuine overlap enlargement: it couples all even
+minus layers, and the graph with edges `S--S triangle {i,j}` is connected.
+It still cannot by itself establish an individual sign placement.  The
+abstract value assignment `J(S_0)=-1` and `J(T)=1` for every other even
+vertex satisfies every inequality `(P23.11z5zc4hb)`.  Hence any successful
+transport must retain shared ticket capacity or a coherent Plucker/TL
+resolution, rather than only nonnegative scalar combinations of these
+edge relations.
+
+Summing the Johnson-star law gives a literal global payment identity at
+every even minus layer.
+
+**Corollary 23A9L1C (global fixed-minus-layer current).**  Let `m` be even
+with `2<=m<=N-1`.  In the notation of Corollary 23A9L1B,
+
+```text
+m(N-m) sum_(S subset [N], |S|=m) J_A(S)
+ =2 sum_(C subset [N], |C|=m-1)
+    sum_({i,j} subset [N] minus C)
+    sum_(v in a_i star_k a_j)
+       J_(A_(ij:v))(C union {star}).                 (P23.11z5zc4i)
+```
+
+Thus uniform nonnegativity of the fused `(N-1)`-factor words proves the
+complete signed average over all `m`-minus placements at length `N`.
+
+**Proof.**  Sum `(P23.11z5zc4f)` over all `(m-1)`-subsets `C`.  On the
+left, a fixed `m`-subset `S` occurs once for each choice of the distinguished
+position `i in S`, namely with `C=S minus {i}`.  It therefore occurs `m`
+times, while `|[N] minus C|-1=N-m`.  This gives the left side of
+`(P23.11z5zc4i)`, and the right side is the summed right side of
+`(P23.11z5zc4f)`.  QED.
+
+Formula `(P23.11z5zc4i)` is a global payment, not an individual-sign proof:
+the all-layer average can be nonnegative with an isolated negative sign
+placement.  The missing lemma must exploit overlap between the Johnson
+stars (or the coherent Plucker/Temperley--Lieb ticket transport), rather
+than only their scalar sums.
 
 This is a genuinely fused-channel statement: all intermediate labels of
 the new `V_p` leaf have already been summed with their exact fusion
@@ -64865,6 +69644,53 @@ chosen level.  Its default level-fourteen replay covers `77,520` sextuples
 and `913,200` signed cases and is recorded in
 `certificates/su2_finite_six_pair_reservoir.log`.  This is bounded
 cross-checking only; the proof is the unbounded case analysis above.
+
+The six-factor theorem already pays the first genuinely seven-label
+one-minus component, provided the second minus position is retained as a
+global current rather than fixed in advance.
+
+**Corollary 25D5 (finite seven-label leave-one-out identity).**  Let
+`q,p_1,...,p_6` be positive labels in `SU(2)_k`, with their positions
+indexed, and let `F_M` denote the two-coordinate plus table for an indexed
+sublist `M` of the six `p`-positions.  Put
+
+```text
+beta_i=B_(F_({p_1,...,p_6} minus {p_i}))(q,p_i),
+                                                        1<=i<=6. (P25.29e9)
+```
+
+Equivalently, `2 beta_i` is the signed seven-factor contraction in which
+the labels `q,p_i` carry the two minus signs and the other five `p` labels
+carry plus signs.  Then
+
+```text
+beta_i+beta_j>=0                    for every i!=j,
+sum_(i=1)^6 beta_i>=0.                              (P25.29e10)
+```
+
+**Proof.**  For `i!=j`, the paired fused-leaf identity
+`(P23.11z5zc)` gives
+
+```text
+beta_i+beta_j
+ =2 sum_(v in p_i star_k p_j)
+     B_(F_({p_1,...,p_6} minus {p_i,p_j}))(q,v).
+                                                        (P25.29e11)
+```
+
+Each boundary defect on the right is the `V_v` coefficient of the
+one-minus partial character whose remainder consists of `q` and the four
+remaining plus labels.  This has five remainder factors, so it is
+nonnegative by Proposition 25D4.  This proves the pairwise assertion.
+Summing `(P25.29e11)` over all fifteen indexed pairs, or applying
+Corollary 23A9L1 directly, gives the nonnegative total current.  QED.
+
+Corollary 23A9ZZ10 is stronger in this particular two-minus chamber: it
+proves every `beta_i>=0` individually.  The value of `(P25.29e10)` is
+therefore not to replace that theorem, but to exhibit the exact
+leave-one-out current which remains available when a higher-minus packet
+replaces the distinguished two-minus scalar.  It does not by itself supply
+the transport needed in that higher-minus setting.
 
 Raw `N>=T` cannot replace `(P25.29e6)`.  For example, for every `k>=4`,
 the list `[1,1,k-2,k-1,k-1,k]` has `(N,T)=(3,4)`.  Giving minus signs to

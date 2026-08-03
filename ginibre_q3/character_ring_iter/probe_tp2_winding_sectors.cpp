@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <map>
+#include <stdexcept>
 #include <utility>
 #include <vector>
 
@@ -12,34 +13,28 @@ using boost::multiprecision::cpp_int;
 
 namespace {
 
-cpp_int binomial(int top, int bottom) {
-  if (bottom < 0 || bottom > top) {
-    return 0;
-  }
-  bottom = std::min(bottom, top - bottom);
-  cpp_int result = 1;
-  for (int factor = 1; factor <= bottom; ++factor) {
-    result *= top - bottom + factor;
-    result /= factor;
-  }
-  return result;
-}
-
 std::vector<cpp_int> fourier_coefficients(int minus_pairs, int half_power) {
   const int degree = minus_pairs + half_power;
   std::vector<cpp_int> result(static_cast<std::size_t>(2 * degree + 1));
-  for (int selected_minus = 0; selected_minus <= 2 * minus_pairs;
-       ++selected_minus) {
-    for (int selected_plus = 0; selected_plus <= 2 * half_power;
-         ++selected_plus) {
-      cpp_int value = binomial(2 * minus_pairs, selected_minus) *
-                      binomial(2 * half_power, selected_plus);
-      if ((minus_pairs + selected_minus) % 2 != 0) {
-        value = -value;
-      }
-      const int exponent = selected_minus + selected_plus - degree;
-      result[static_cast<std::size_t>(degree + exponent)] += value;
+  const int negative_degree = 2 * minus_pairs;
+  const int positive_degree = 2 * half_power;
+  cpp_int previous = 0;
+  cpp_int current = 1;
+  const cpp_int linear = positive_degree - negative_degree;
+  for (int coefficient = 0; coefficient <= 2 * degree; ++coefficient) {
+    result[static_cast<std::size_t>(coefficient)] =
+        (minus_pairs & 1) == 0 ? current : -current;
+    if (coefficient == 2 * degree) {
+      break;
     }
+    const cpp_int next_numerator = linear * current
+        + (coefficient - 2 * degree - 1) * previous;
+    const int next_denominator = coefficient + 1;
+    if (next_numerator % next_denominator != 0) {
+      throw std::runtime_error("nonintegral Fourier recurrence");
+    }
+    previous = current;
+    current = next_numerator / next_denominator;
   }
   return result;
 }

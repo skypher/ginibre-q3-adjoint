@@ -741,8 +741,11 @@ struct Result {
     std::size_t positive_lower_branch_dimension = 0U;
     std::size_t negative_lift_obstruction_rank = 0U;
     std::size_t positive_lift_obstruction_rank = 0U;
+    std::size_t common_lift_rank = 0U;
+    std::size_t lift_pushout_dimension = 0U;
     bool enriched_deletion_contraction_valid = true;
     bool projected_carrier_criterion = true;
+    bool lift_credited_projected_criterion = true;
 };
 
 std::vector<std::vector<Integer>> column_matrix(
@@ -765,15 +768,15 @@ std::vector<std::vector<Integer>> column_matrix(
 
 Result analyze_case(
     const std::vector<int>& labels,
-    int target,
+    int target_label,
     unsigned int minus_mask,
     bool diagnostics = true,
-    bool relations = false,
-    bool fundamental = false
+    bool relations_mode = false,
+    bool fundamental_mode = false
 ) {
     const std::size_t factors = labels.size();
     std::vector<int> degrees = labels;
-    degrees.push_back(target);
+    degrees.push_back(target_label);
     const std::vector<Key> global_tops = tops(degrees);
     std::map<Key, std::size_t> basis_index;
     for (const Key& top : global_tops) {
@@ -804,7 +807,7 @@ Result analyze_case(
                 right_degrees[factor] = labels[factor];
             }
         }
-        right_degrees[factors] = target;
+        right_degrees[factors] = target_label;
         const std::vector<Key> left_tops = tops(left_degrees);
         const std::vector<Key> right_tops = tops(right_degrees);
         const std::uint64_t channel_dimension
@@ -818,7 +821,8 @@ Result analyze_case(
             result.positive_sources += channel_dimension;
         }
         if (!odd) {
-            if ((diagnostics || relations || fundamental) && subset != 0U) {
+            if ((diagnostics || relations_mode || fundamental_mode)
+                && subset != 0U) {
                 std::size_t basis = 0U;
                 for (const Key& left_top : left_tops) {
                     const Graph left_graph = standard_graph(
@@ -879,7 +883,7 @@ Result analyze_case(
                 result.column_labels.emplace_back(
                     subset, odd_columns[subset].size() - 1U
                 );
-                if (diagnostics || fundamental) {
+                if (diagnostics || fundamental_mode) {
                     result.column_graphs.push_back(
                         add_graphs(left_graph, right_graph)
                     );
@@ -893,7 +897,7 @@ Result analyze_case(
         = column_matrix(columns, basis_index.size());
     result.rank = exact_rank(full_matrix);
     std::vector<std::vector<Integer>> candidate_relations;
-    if (diagnostics || relations || fundamental) {
+    if (diagnostics || relations_mode || fundamental_mode) {
         for (const auto& [raw_graph, sources] : raw_odd_sources) {
             (void)raw_graph;
             for (std::size_t index = 1U; index < sources.size(); ++index) {
@@ -1019,15 +1023,15 @@ Result analyze_case(
 
         std::vector<std::vector<Integer>> cut_boundary_relations;
         if (popcount(minus_mask) == 1) {
-            std::size_t fundamental = 0U;
-            while (((minus_mask >> fundamental) & 1U) == 0U) {
-                ++fundamental;
+            std::size_t fundamental_vertex = 0U;
+            while (((minus_mask >> fundamental_vertex) & 1U) == 0U) {
+                ++fundamental_vertex;
             }
-            if (labels[fundamental] == 1) {
+            if (labels[fundamental_vertex] == 1) {
                 const auto build_cut_boundary = [
                     &lift_to_odd_subset,
                     factors,
-                    fundamental
+                    fundamental_vertex
                 ](const std::vector<Result::PositiveSource>& sources) {
                     std::vector<std::vector<Integer>> relations;
                     for (const Result::PositiveSource& source : sources) {
@@ -1035,13 +1039,13 @@ Result analyze_case(
                         std::size_t neighbor = stripped.size();
                         for (std::size_t vertex = 0U;
                              vertex < stripped.size(); ++vertex) {
-                            if (vertex == fundamental) {
+                            if (vertex == fundamental_vertex) {
                                 continue;
                             }
                             const std::size_t first
-                                = std::min(vertex, fundamental);
+                                = std::min(vertex, fundamental_vertex);
                             const std::size_t second
-                                = std::max(vertex, fundamental);
+                                = std::max(vertex, fundamental_vertex);
                             if (stripped[first][second] == 0) {
                                 continue;
                             }
@@ -1098,7 +1102,7 @@ Result analyze_case(
                             );
                         }
                         const unsigned int base_mask
-                            = (1U << fundamental) | component_mask;
+                            = (1U << fundamental_vertex) | component_mask;
                         const unsigned int extended_mask
                             = base_mask | source.mask;
                         std::vector<Integer> base_lift;
@@ -1172,9 +1176,9 @@ Result analyze_case(
                                     order.push_back(factors);
                                 } else if (position
                                            == fundamental_position) {
-                                    order.push_back(fundamental);
+                                    order.push_back(fundamental_vertex);
                                 } else {
-                                    while (next_other == fundamental
+                                    while (next_other == fundamental_vertex
                                            || next_other == factors) {
                                         ++next_other;
                                     }
@@ -1206,7 +1210,7 @@ Result analyze_case(
                                     right_degrees[factor] = labels[factor];
                                 }
                             }
-                            right_degrees[factors] = target;
+                            right_degrees[factors] = target_label;
                             std::size_t basis = 0U;
                             const auto left_graphs = ordered_standard_graphs(
                                 left_degrees, order
@@ -1356,14 +1360,14 @@ Result analyze_case(
         }
         result.candidate_relation_rank = exact_rank(candidate_relations);
     }
-    if (diagnostics || fundamental) {
+    if (diagnostics || fundamental_mode) {
         result.nullspace = exact_nullspace(full_matrix);
         if (popcount(minus_mask) == 1) {
-            std::size_t fundamental = 0U;
-            while (((minus_mask >> fundamental) & 1U) == 0U) {
-                ++fundamental;
+            std::size_t fundamental_vertex = 0U;
+            while (((minus_mask >> fundamental_vertex) & 1U) == 0U) {
+                ++fundamental_vertex;
             }
-            if (labels[fundamental] == 1) {
+            if (labels[fundamental_vertex] == 1) {
                 using F0Key = std::pair<std::size_t, Key>;
                 struct F1Element {
                     std::array<std::size_t, 3> triple{};
@@ -1373,11 +1377,12 @@ Result analyze_case(
                 std::map<F0Key, std::size_t> f0_indices;
                 for (std::size_t neighbor = 0U;
                      neighbor < degrees.size(); ++neighbor) {
-                    if (neighbor == fundamental || degrees[neighbor] == 0) {
+                    if (neighbor == fundamental_vertex
+                        || degrees[neighbor] == 0) {
                         continue;
                     }
                     std::vector<int> residual = degrees;
-                    residual[fundamental] = 0;
+                    residual[fundamental_vertex] = 0;
                     --residual[neighbor];
                     for (const Key& top : tops(residual)) {
                         const Key graph_key = flatten(
@@ -1392,21 +1397,21 @@ Result analyze_case(
                 std::vector<F1Element> f1_basis;
                 for (std::size_t first = 0U;
                      first < degrees.size(); ++first) {
-                    if (first == fundamental) {
+                    if (first == fundamental_vertex) {
                         continue;
                     }
                     for (std::size_t second = first + 1U;
                          second < degrees.size(); ++second) {
-                        if (second == fundamental) {
+                        if (second == fundamental_vertex) {
                             continue;
                         }
                         for (std::size_t third = second + 1U;
                              third < degrees.size(); ++third) {
-                            if (third == fundamental) {
+                            if (third == fundamental_vertex) {
                                 continue;
                             }
                             std::vector<int> residual = degrees;
-                            residual[fundamental] = 0;
+                            residual[fundamental_vertex] = 0;
                             --residual[first];
                             --residual[second];
                             --residual[third];
@@ -1495,7 +1500,7 @@ Result analyze_case(
                 }
                 const auto strip_to_f0 = [
                     &degrees,
-                    fundamental,
+                    fundamental_vertex,
                     &f0_indices,
                     &straightening_cache
                 ](const Graph& graph) {
@@ -1504,13 +1509,13 @@ Result analyze_case(
                     std::size_t neighbor = degrees.size();
                     for (std::size_t vertex = 0U;
                          vertex < degrees.size(); ++vertex) {
-                        if (vertex == fundamental) {
+                        if (vertex == fundamental_vertex) {
                             continue;
                         }
                         const std::size_t left
-                            = std::min(vertex, fundamental);
+                            = std::min(vertex, fundamental_vertex);
                         const std::size_t right
-                            = std::max(vertex, fundamental);
+                            = std::max(vertex, fundamental_vertex);
                         if (stripped[left][right] != 0) {
                             if (stripped[left][right] != 1
                                 || neighbor != degrees.size()) {
@@ -1528,7 +1533,7 @@ Result analyze_case(
                         );
                     }
                     const Integer orientation
-                        = fundamental < neighbor ? 1 : -1;
+                        = fundamental_vertex < neighbor ? 1 : -1;
                     const Key stripped_key = flatten(stripped);
                     for (const auto& [graph_key, expansion_coefficient]
                          : straighten(
@@ -1699,7 +1704,7 @@ Result analyze_case(
                     );
                     Integer orientation = 1;
                     add_oriented_edge(
-                        product, fundamental, f0_basis[source].first,
+                        product, fundamental_vertex, f0_basis[source].first,
                         orientation
                     );
                     const Key product_key = flatten(product);
@@ -2100,7 +2105,7 @@ Result analyze_case(
                 merged_degrees.reserve(degrees.size() - 1U);
                 for (std::size_t vertex = 0U;
                      vertex < degrees.size(); ++vertex) {
-                    if (vertex == fundamental) {
+                    if (vertex == fundamental_vertex) {
                         continue;
                     }
                     merged_degrees.push_back(
@@ -2160,13 +2165,13 @@ Result analyze_case(
                         continue;
                     }
                     const std::size_t merged_neighbor
-                        = neighbor < fundamental
+                        = neighbor < fundamental_vertex
                             ? neighbor : neighbor - 1U;
                     const Graph graph = delete_graph_vertex(
                         unflatten(
                             f0_basis[source].second, degrees.size()
                         ),
-                        fundamental
+                        fundamental_vertex
                     );
                     const Key graph_key_input = flatten(graph);
                     for (const auto& [graph_key, coefficient]
@@ -2314,6 +2319,54 @@ Result analyze_case(
                     = projected_positive_carrier_dimension
                         - result.positive_internal_kernel_rank;
 
+                const auto common_lift_kernel = span_intersection(
+                    projected_carrier_overlap,
+                    projected_realized_negative_carrier,
+                    merged_f0_dimension
+                );
+                const auto common_realized_lift_kernel = span_intersection(
+                    common_lift_kernel,
+                    projected_realized_positive_carrier,
+                    merged_f0_dimension
+                );
+                result.common_lift_rank = exact_rank(
+                    common_realized_lift_kernel
+                );
+                const std::size_t theta_pair_rank
+                    = projected_carrier_overlap_dimension
+                        - result.common_lift_rank;
+                if (result.negative_lift_obstruction_rank
+                        + result.positive_lift_obstruction_rank
+                    < theta_pair_rank) {
+                    throw std::runtime_error(
+                        "lift-pushout rank exceeds its two lift ranks"
+                    );
+                }
+                result.lift_pushout_dimension
+                    = result.negative_lift_obstruction_rank
+                        + result.positive_lift_obstruction_rank
+                        - theta_pair_rank;
+                if (result.projected_unshared_carrier_dimension
+                        - result.negative_lift_obstruction_rank
+                        + theta_pair_rank
+                    != result.unshared_negative_carrier_dimension) {
+                    throw std::runtime_error(
+                        "lift-credited carrier recurrence failed: hat_c="
+                        + std::to_string(
+                            result.projected_unshared_carrier_dimension
+                        )
+                        + " theta_minus="
+                        + std::to_string(
+                            result.negative_lift_obstruction_rank
+                        )
+                        + " theta_pair="
+                        + std::to_string(theta_pair_rank)
+                        + " c=" + std::to_string(
+                            result.unshared_negative_carrier_dimension
+                        )
+                    );
+                }
+
                 result.enriched_deletion_contraction_valid
                     = result.allocation_dimension
                         + result.negative_lower_branch_dimension
@@ -2340,6 +2393,17 @@ Result analyze_case(
                                 + result.projected_unshared_carrier_dimension
                             <= result.projected_positive_allocation_dimension
                                 + result.projected_positive_rank;
+                result.lift_credited_projected_criterion
+                    = result.projected_unshared_carrier_dimension
+                            <= result.projected_positive_rank
+                                + result.positive_lower_branch_dimension
+                                + result.lift_pushout_dimension
+                        && result.projected_allocation_dimension
+                                + result.projected_unshared_carrier_dimension
+                            <= result.projected_positive_allocation_dimension
+                                + result.projected_positive_rank
+                                + result.negative_lower_branch_dimension
+                                + result.lift_pushout_dimension;
                 result.ambient_kernel_criterion
                     = result.positive_sources
                             >= result.f0_kernel_dimension
@@ -2922,6 +2986,31 @@ int main(int argc, char** argv) {
                                         << '\n';
                                     return 1;
                                 }
+                                if (!result.lift_credited_projected_criterion) {
+                                    std::cout
+                                        << "SU2_PLUCKER_LIFT_CREDITED "
+                                        << "result=FAIL labels=";
+                                    print_vector(labels);
+                                    std::cout
+                                        << " target=" << target
+                                        << " minus_mask=" << minus_mask
+                                        << " hat_alpha="
+                                        << result.projected_allocation_dimension
+                                        << " hat_beta="
+                                        << result.projected_positive_allocation_dimension
+                                        << " hat_c="
+                                        << result.projected_unshared_carrier_dimension
+                                        << " bar_r="
+                                        << result.projected_positive_rank
+                                        << " A0="
+                                        << result.negative_lower_branch_dimension
+                                        << " B0="
+                                        << result.positive_lower_branch_dimension
+                                        << " lambda="
+                                        << result.lift_pushout_dimension
+                                        << '\n';
+                                    return 1;
+                                }
                                 const std::size_t projected_demand
                                     = result.projected_unshared_carrier_dimension;
                                 const std::size_t projected_supply
@@ -3014,7 +3103,8 @@ int main(int argc, char** argv) {
                                     || !result.optimal_section_criterion
                                     || !result.optimal_section_cover_feasible
                                     || !result.deletion_contraction_valid
-                                    || !result.enriched_deletion_contraction_valid)) {
+                                    || !result.enriched_deletion_contraction_valid
+                                    || !result.lift_credited_projected_criterion)) {
                                 std::cout
                                     << "SU2_PLUCKER_FUNDAMENTAL_LIFT "
                                     << "result=FAIL labels=";
@@ -3061,6 +3151,9 @@ int main(int argc, char** argv) {
                                                   ? "PASS" : "FAIL")
                                           << " projected="
                                           << (result.projected_carrier_criterion
+                                                  ? "PASS" : "FAIL")
+                                          << " lift_credited="
+                                          << (result.lift_credited_projected_criterion
                                                   ? "PASS" : "FAIL")
                                           << '\n';
                                 return 1;
@@ -3275,6 +3368,7 @@ int main(int argc, char** argv) {
                           << maximum_projected_capacity_deficit
                           << " recurrences=PASS inequalities="
                           << (projected_failures == 0U ? "PASS" : "FAIL")
+                          << " lift_credited=PASS"
                           << '\n';
             }
             return 0;
@@ -3402,11 +3496,18 @@ int main(int argc, char** argv) {
                   << result.negative_lift_obstruction_rank
                   << " positive_lift_obstruction_rank="
                   << result.positive_lift_obstruction_rank
+                  << " common_lift_rank="
+                  << result.common_lift_rank
+                  << " lift_pushout_dimension="
+                  << result.lift_pushout_dimension
                   << " enriched_deletion_contraction_valid="
                   << (result.enriched_deletion_contraction_valid
                           ? "PASS" : "FAIL")
                   << " projected_carrier_criterion="
                   << (result.projected_carrier_criterion ? "PASS" : "FAIL")
+                  << " lift_credited_projected_criterion="
+                  << (result.lift_credited_projected_criterion
+                          ? "PASS" : "FAIL")
                   << " ambient_kernel_criterion="
                   << (result.ambient_kernel_criterion ? "PASS" : "FAIL")
                   << " optimal_section_rank="

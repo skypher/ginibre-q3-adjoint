@@ -145,16 +145,53 @@ void print_labels(const std::vector<int>& labels) {
     std::cout << ']';
 }
 
+int replay_osd_obstruction() {
+    const std::vector<int> prefix(8U, 1);
+    const Matrix matrix = defect(prefix);
+    const int left = 3;
+    const int right = 2;
+    const int next_label = 5;
+
+    cpp_int first_supply = 0;
+    for_each_output(left, next_label, [&](int output) {
+        first_supply += matrix[static_cast<std::size_t>(output)]
+            [static_cast<std::size_t>(right)];
+    });
+    for_each_output(left - 2, next_label, [&](int output) {
+        first_supply -= matrix[static_cast<std::size_t>(output)]
+            [static_cast<std::size_t>(right - 2)];
+    });
+    const cpp_int first_demand = matrix[5U][5U];
+
+    const bool matches = first_supply == 1763
+        && first_demand == 1764
+        && first_supply < first_demand;
+    std::cout << "SU2_DEFECT_CONE_OSD_OBSTRUCTION result="
+              << (matches ? "PASS" : "FAIL")
+              << " plus=";
+    print_labels(prefix);
+    std::cout << " next_label=" << next_label
+              << " target=(" << left << ',' << right << ')'
+              << " supply=" << first_supply
+              << " demand=" << first_demand << '\n';
+    return matches ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
     try {
+        if (argc == 2
+            && std::string(argv[1]) == "--replay-osd-obstruction") {
+            return replay_osd_obstruction();
+        }
         if (argc != 4) {
             throw std::runtime_error(
                 "usage: search_su2_defect_cone "
                 "(--step-one|--step-one-disjoint|--tls|--cross|--local"
                 "|--edge-global|--edge-step) "
-                "MAXIMUM_LABEL MAXIMUM_FACTORS"
+                "MAXIMUM_LABEL MAXIMUM_FACTORS; or "
+                "--replay-osd-obstruction"
             );
         }
         const std::string mode = argv[1];
@@ -181,6 +218,7 @@ int main(int argc, char** argv) {
         std::size_t first_failure = words.size();
         int failure_left = -1;
         int failure_right = -1;
+        int failure_next_label = -1;
         cpp_int failure_value = 0;
 
 #pragma omp parallel
@@ -188,6 +226,7 @@ int main(int argc, char** argv) {
             std::size_t local_first = words.size();
             int local_left = -1;
             int local_right = -1;
+            int local_next_label = -1;
             cpp_int local_value = 0;
 
 #pragma omp for schedule(dynamic)
@@ -337,6 +376,7 @@ int main(int argc, char** argv) {
                                         local_first = index;
                                         local_left = left;
                                         local_right = right;
+                                        local_next_label = p;
                                         local_value = std::min(
                                             first_supply - first_demand,
                                             second_supply - second_demand
@@ -420,6 +460,7 @@ int main(int argc, char** argv) {
                     first_failure = local_first;
                     failure_left = local_left;
                     failure_right = local_right;
+                    failure_next_label = local_next_label;
                     failure_value = local_value;
                 }
             }
@@ -433,7 +474,8 @@ int main(int argc, char** argv) {
             std::cout << "FAIL plus=";
             print_labels(words[first_failure]);
             std::cout << " at=(" << failure_left << ',' << failure_right
-                      << ") difference=" << failure_value << '\n';
+                      << ") next_label=" << failure_next_label
+                      << " difference=" << failure_value << '\n';
             return EXIT_FAILURE;
         }
         std::cout << "PASS\n";

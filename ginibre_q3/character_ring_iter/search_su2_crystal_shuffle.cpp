@@ -172,6 +172,46 @@ std::vector<int> crystal_unshuffle(
     return output;
 }
 
+std::pair<std::vector<int>, int> crystal_unshuffle_with_energy(
+    const std::vector<int>& labels,
+    unsigned int red_mask,
+    const std::vector<int>& red_state,
+    const std::vector<int>& blue_lowest_state
+) {
+    std::vector<Token> tokens;
+    std::size_t red_index = 0U;
+    std::size_t blue_index = 0U;
+    for (std::size_t i = 0U; i < labels.size(); ++i) {
+        if (((red_mask >> i) & 1U) != 0U) {
+            tokens.push_back({i, labels[i], red_state[red_index]});
+            ++red_index;
+        } else {
+            tokens.push_back({i, labels[i], blue_lowest_state[blue_index]});
+            ++blue_index;
+        }
+    }
+    int energy = 0;
+    bool changed = true;
+    while (changed) {
+        changed = false;
+        for (std::size_t i = 0U; i + 1U < tokens.size(); ++i) {
+            if (tokens[i].original > tokens[i + 1U].original) {
+                energy += std::min(
+                    tokens[i].down,
+                    tokens[i + 1U].label - tokens[i + 1U].down
+                );
+                swap_by_crystal_r(tokens[i], tokens[i + 1U]);
+                changed = true;
+            }
+        }
+    }
+    std::vector<int> output(labels.size(), 0);
+    for (const Token& token : tokens) {
+        output[token.original] = token.down;
+    }
+    return {output, energy};
+}
+
 struct CaseResult {
     std::size_t sources = 0U;
     std::size_t distinct_images = 0U;
@@ -342,6 +382,81 @@ CaseResult analyze_case(
     return {sources, images.size(), channels_valid};
 }
 
+CaseResult analyze_case_with_energy(
+    const std::vector<int>& labels,
+    int target_a,
+    int target_b,
+    bool verbose
+) {
+    if (labels.size() >= std::numeric_limits<unsigned int>::digits) {
+        throw std::runtime_error("too many factors for subset mask");
+    }
+    const unsigned int subset_count = 1U << labels.size();
+    std::set<std::pair<std::vector<int>, int>> images;
+    std::size_t sources = 0U;
+    bool channels_valid = true;
+    for (unsigned int red_mask = 0U; red_mask < subset_count; ++red_mask) {
+        std::vector<int> red_labels;
+        std::vector<int> blue_labels;
+        for (std::size_t i = 0U; i < labels.size(); ++i) {
+            if (((red_mask >> i) & 1U) != 0U) {
+                red_labels.push_back(labels[i]);
+            } else {
+                blue_labels.push_back(labels[i]);
+            }
+        }
+        const auto red_states = highest_states(red_labels, target_a);
+        const auto blue_states = highest_states(blue_labels, target_b);
+        for (const auto& red_state : red_states) {
+            for (const auto& blue_state : blue_states) {
+                std::vector<int> blue_lowest = blue_state;
+                lower_word(blue_labels, blue_lowest, target_b);
+                const auto [image, energy] = crystal_unshuffle_with_energy(
+                    labels, red_mask, red_state, blue_lowest
+                );
+                const CrystalStats stats = crystal_stats(
+                    labels, image, labels.size()
+                );
+                const int top_weight = crystal_weight(labels, image)
+                    + 2 * stats.epsilon;
+                if (top_weight < std::abs(target_a - target_b)
+                    || top_weight > target_a + target_b
+                    || ((top_weight - target_a - target_b) & 1) != 0) {
+                    channels_valid = false;
+                }
+                images.insert({image, energy});
+                ++sources;
+            }
+        }
+    }
+    if (verbose) {
+        std::cout << "energy_sources=" << sources
+                  << " energy_distinct_images=" << images.size()
+                  << " channels_valid=" << channels_valid << '\n';
+    }
+    return {sources, images.size(), channels_valid};
+}
+
+void replay_energy_obstruction() {
+    const CaseResult two_factor = analyze_case_with_energy(
+        std::vector<int>{1, 1}, 1, 1, false
+    );
+    const CaseResult six_factor = analyze_case_with_energy(
+        std::vector<int>{1, 1, 1, 1, 1, 3}, 2, 2, false
+    );
+    if (!two_factor.channels_valid || two_factor.sources != 2U
+        || two_factor.distinct_images != 2U
+        || !six_factor.channels_valid || six_factor.sources != 90U
+        || six_factor.distinct_images != 24U) {
+        throw std::runtime_error("crystal-energy obstruction replay mismatch");
+    }
+    std::cout
+        << "SU2_CRYSTAL_ENERGY_OBSTRUCTION"
+        << " two_factor=2:2"
+        << " six_factor=90:24"
+        << " result=PASS_EXACT\n";
+}
+
 void combinations_rec(
     int maximum_label,
     int remaining,
@@ -397,6 +512,11 @@ int main(int argc, char** argv) {
                 labels, target_a, target_b, true
             ) ? 0 : 1;
         }
+        if (argc == 2
+            && std::string(argv[1]) == "--replay-energy-obstruction") {
+            replay_energy_obstruction();
+            return 0;
+        }
         if (argc >= 5 && std::string(argv[1]) == "--case") {
             const int target_a = static_cast<int>(std::strtol(argv[2], nullptr, 10));
             const int target_b = static_cast<int>(std::strtol(argv[3], nullptr, 10));
@@ -416,10 +536,27 @@ int main(int argc, char** argv) {
                     && result.channels_valid
                 ? 0 : 1;
         }
+        if (argc >= 5 && std::string(argv[1]) == "--case-energy") {
+            const int target_a = static_cast<int>(std::strtol(argv[2], nullptr, 10));
+            const int target_b = static_cast<int>(std::strtol(argv[3], nullptr, 10));
+            std::vector<int> labels;
+            for (int i = 4; i < argc; ++i) {
+                labels.push_back(
+                    static_cast<int>(std::strtol(argv[i], nullptr, 10))
+                );
+            }
+            const CaseResult result = analyze_case_with_energy(
+                labels, target_a, target_b, true
+            );
+            return result.sources == result.distinct_images
+                    && result.channels_valid
+                ? 0 : 1;
+        }
         if (argc != 3) {
             throw std::runtime_error(
                 "usage: search_su2_crystal_shuffle MAX_LABEL MAX_FACTORS"
-                " | --case A B LABEL... | --recolour A B LABEL..."
+                " | --case A B LABEL... | --case-energy A B LABEL..."
+                " | --recolour A B LABEL... | --replay-energy-obstruction"
             );
         }
         const int maximum_label = static_cast<int>(

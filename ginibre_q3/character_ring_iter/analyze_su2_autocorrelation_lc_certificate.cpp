@@ -4174,6 +4174,177 @@ BigPolynomial wall_121_terminal_rational_certificate(
   return result;
 }
 
+BigPolynomial wall_121_terminal_current(
+    const std::vector<BigPolynomial>& profile, const int support);
+
+// This is the cleared second fixed-point payment for the wall (1,2,1)
+// cubic.  Unlike wall_121_terminal_rational_certificate(), it is only a
+// diagnostic for the remaining arbitrary-support lemma: nonnegativity would
+// imply the exact critical payment, but it is not equivalent to it.
+BigPolynomial wall_121_terminal_second_iterate_certificate(
+    const std::vector<BigPolynomial>& profile, const int support) {
+  if (
+      support < 1
+      || profile.size() < static_cast<std::size_t>(support + 4)
+  ) {
+    throw std::invalid_argument(
+        "wall terminal second-iterate certificate needs positive support");
+  }
+  const int variables =
+      static_cast<int>(profile[1].begin()->first.size());
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial& a = profile[1];
+  const BigPolynomial& b = profile[2];
+  const BigPolynomial& c = profile[3];
+  const BigPolynomial& d = profile[4];
+
+  BigPolynomial a_coefficient = nd_power(a, 2);
+  big_add_scaled(a_coefficient, nd_power(b, 2), 1);
+  BigPolynomial a_plus_b = a;
+  big_add_scaled(a_plus_b, b, 1);
+  big_add_scaled(
+      a_coefficient, big_multiply(a_plus_b, c), 1);
+
+  BigPolynomial c_coefficient = a_plus_b;
+  big_add_scaled(c_coefficient, c, 1);
+
+  // b_coefficient is B=-C_1 in the critical cubic C y^3+A y^2-B y+C_0.
+  BigPolynomial b_coefficient;
+  big_add_scaled(
+      b_coefficient,
+      big_multiply(big_multiply(nd_power(a, 2), b), one), 3);
+  big_add_scaled(
+      b_coefficient,
+      big_multiply(big_multiply(a, nd_power(b, 2)), one), 2);
+  big_add_scaled(
+      b_coefficient, big_multiply(big_multiply(a, b), c), 1);
+  big_add_scaled(
+      b_coefficient, big_multiply(big_multiply(a, b), d), 1);
+  big_add_scaled(
+      b_coefficient, big_multiply(big_multiply(b, c), d), 1);
+  big_add_scaled(b_coefficient, nd_power(b, 3), -1);
+  big_add_scaled(
+      b_coefficient, big_multiply(a, nd_power(c, 2)), -1);
+  big_add_scaled(b_coefficient, nd_power(c, 3), -1);
+
+  const BigPolynomial c_zero =
+      wall_121_terminal_current(profile, support);
+  BigPolynomial j = nd_power(a_coefficient, 2);
+  for (auto& [exponent, coefficient] : j) {
+    static_cast<void>(exponent);
+    coefficient *= 2;
+  }
+  big_add_scaled(
+      j, big_multiply(b_coefficient, c_coefficient), 3);
+
+  BigPolynomial h = nd_power(a_coefficient, 2);
+  for (auto& [exponent, coefficient] : h) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+  big_add_scaled(
+      h, big_multiply(b_coefficient, c_coefficient), 3);
+
+  BigPolynomial k = big_multiply(nd_power(a_coefficient, 2), j);
+  for (auto& [exponent, coefficient] : k) {
+    static_cast<void>(exponent);
+    coefficient *= 8;
+  }
+  big_add_scaled(
+      k,
+      big_multiply(
+          big_multiply(b_coefficient, c_coefficient), h), 3);
+
+  BigPolynomial n = big_multiply(
+      big_multiply(a_coefficient, b_coefficient), j);
+  for (auto& [exponent, coefficient] : n) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+
+  BigPolynomial quadratic = big_multiply(a_coefficient, c_zero);
+  for (auto& [exponent, coefficient] : quadratic) {
+    static_cast<void>(exponent);
+    coefficient *= 4;
+  }
+  big_add_scaled(quadratic, nd_power(b_coefficient, 2), -1);
+
+  BigPolynomial result = big_multiply(quadratic, nd_power(k, 4));
+  const BigPolynomial first_correction = big_multiply(
+      big_multiply(
+          big_multiply(a_coefficient, c_coefficient), nd_power(n, 3)),
+      k);
+  big_add_scaled(result, first_correction, 4);
+  const BigPolynomial second_correction = big_multiply(
+      big_multiply(nd_power(c_coefficient, 2), nd_power(n, 4)), one);
+  big_add_scaled(result, second_correction, 9);
+  return result;
+}
+
+BigPolynomial wall_121_terminal_current(
+    const std::vector<BigPolynomial>& profile, const int support) {
+  if (
+      support < 1
+      || profile.size() < static_cast<std::size_t>(support + 4)
+  ) {
+    throw std::invalid_argument(
+        "wall terminal current needs a positive finite support");
+  }
+  const BigPolynomial zero;
+  std::vector<BigPolynomial> g(
+      static_cast<std::size_t>(support + 4), zero);
+  std::vector<BigPolynomial> h(
+      static_cast<std::size_t>(support + 4), zero);
+  std::vector<BigPolynomial> k(
+      static_cast<std::size_t>(support + 4), zero);
+  for (int index = 1; index <= support + 1; ++index) {
+    g[static_cast<std::size_t>(index)] = big_multiply(
+        profile[static_cast<std::size_t>(index)],
+        profile[static_cast<std::size_t>(index)]);
+    big_add_scaled(
+        g[static_cast<std::size_t>(index)],
+        big_multiply(
+            profile[static_cast<std::size_t>(index - 1)],
+            profile[static_cast<std::size_t>(index + 1)]),
+        -1);
+  }
+  for (int index = 1; index <= support + 2; ++index) {
+    h[static_cast<std::size_t>(index)] = big_multiply(
+        profile[static_cast<std::size_t>(index)],
+        profile[static_cast<std::size_t>(index - 1)]);
+    if (index >= 2) {
+      big_add_scaled(
+          h[static_cast<std::size_t>(index)],
+          big_multiply(
+              profile[static_cast<std::size_t>(index - 2)],
+              profile[static_cast<std::size_t>(index + 1)]),
+          -1);
+    }
+  }
+  for (int index = 1; index <= support + 1; ++index) {
+    k[static_cast<std::size_t>(index)] =
+        g[static_cast<std::size_t>(index)];
+    big_add_scaled(
+        k[static_cast<std::size_t>(index)],
+        h[static_cast<std::size_t>(index)], 1);
+    big_add_scaled(
+        k[static_cast<std::size_t>(index)],
+        h[static_cast<std::size_t>(index + 1)], 1);
+  }
+  BigPolynomial result = big_multiply(
+      nd_power(profile[1], 3), profile[2]);
+  for (int index = 1; index <= support; ++index) {
+    BigPolynomial g_difference = g[static_cast<std::size_t>(index)];
+    big_add_scaled(
+        g_difference, g[static_cast<std::size_t>(index + 1)], -1);
+    BigPolynomial k_difference = k[static_cast<std::size_t>(index)];
+    big_add_scaled(
+        k_difference, k[static_cast<std::size_t>(index + 1)], -1);
+    big_add_scaled(result, big_multiply(g_difference, k_difference), 1);
+  }
+  return result;
+}
+
 struct Wall121LargeRatioBlowupResult {
   int maximum_w_power = 0;
   std::size_t grouped_blocks = 0U;
@@ -4585,30 +4756,27 @@ int replay_wall_121_terminal_append_law() {
 }
 
 int replay_wall_121_small_ratio_payment() {
-  const Rational r(1, 3);
+  const Rational r(2, 5);
   const Rational tail_prefactor =
       2 * (1 + r + r * r)
       / (1 - r * r * r * r);
-  const Rational current_linear_reserve(2, 9);
-  const Rational tail_linear_debit(1, 27);
+  const Rational current_numerator_at_endpoint(18129, 390625);
   const Rational current_margin =
-      current_linear_reserve - tail_linear_debit;
-  const Rational c2_max(34, 27);
-  const Rational c3_max(13, 9);
-  const Rational b_over_r_max(4);
+      r * current_numerator_at_endpoint / (1 - r * r * r * r);
+  const Rational c2_max(173, 125);
+  const Rational c3_max(39, 25);
   const Rational critical_half_min(7, 4);
-  const Rational b_max(4, 3);
+  const Rational b_max(25214, 15625);
   const Rational demand_max =
       (c2_max + c3_max) / 4;
   if (
-      tail_prefactor != Rational(117, 40)
-      || !(tail_prefactor < 3)
-      || current_margin != Rational(5, 27)
-      || c2_max != Rational(34, 27)
-      || c3_max != Rational(13, 9)
-      || b_over_r_max != 4
+      tail_prefactor != Rational(650, 203)
+      || !(current_numerator_at_endpoint > 0)
+      || !(current_margin > 0)
+      || c2_max != Rational(173, 125)
+      || c3_max != Rational(39, 25)
       || !(critical_half_min > b_max)
-      || demand_max != Rational(73, 108)
+      || demand_max != Rational(92, 125)
       || !(demand_max < 1)
   ) {
     throw std::runtime_error(
@@ -4616,14 +4784,257 @@ int replay_wall_121_small_ratio_payment() {
   }
   std::cout
       << "SU2_WALL_121_SMALL_RATIO_PAYMENT"
-      << " ratio_max=1/3"
-      << " tail_prefactor=117/40<3"
-      << " current_margin=(5/27)R"
-      << " C2_max=34/27"
-      << " C3_max=13/9"
-      << " B_max=(4R)<=4/3"
+      << " ratio_max=2/5"
+      << " tail_prefactor=650/203"
+      << " current_numerator_at_ratio_max=18129/390625>0"
+      << " current_margin>0"
+      << " C2_max=173/125"
+      << " C3_max=39/25"
+      << " B_max=25214/15625"
       << " critical_half_min=7/4"
-      << " demand_max=73/108<1"
+      << " demand_max=92/125<1"
+      << " result=PASS_EXACT\n";
+  return EXIT_SUCCESS;
+}
+
+int replay_wall_121_renewal_kernel() {
+  constexpr int variables = 4;
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial zero;
+  const BigPolynomial r = nd_variable(variables, 0);
+  const BigPolynomial s = nd_variable(variables, 1);
+  const BigPolynomial t = nd_variable(variables, 2);
+  const BigPolynomial q = nd_variable(variables, 3);
+  const BigPolynomial rs = big_multiply(r, s);
+  const BigPolynomial rst = big_multiply(rs, t);
+  std::vector<BigPolynomial> profile(8U, zero);
+  profile[1] = one;
+  profile[2] = r;
+  profile[3] = rs;
+  profile[4] = rst;
+  const BigPolynomial terminal = wall_121_terminal_current(profile, 4);
+  std::vector<BigPolynomial> next_profile(8U, zero);
+  next_profile[1] = one;
+  next_profile[2] = s;
+  next_profile[3] = big_multiply(s, t);
+  next_profile[4] = big_multiply(next_profile[3], q);
+  const BigPolynomial next_terminal =
+      wall_121_terminal_current(next_profile, 4);
+
+  const BigPolynomial b = r;
+  const BigPolynomial c = rs;
+  const BigPolynomial d = rst;
+  const BigPolynomial x = big_multiply(rst, q);
+  BigPolynomial linear = nd_power(d, 3);
+  big_add_scaled(linear, big_multiply(c, d), -1);
+  big_add_scaled(linear, big_multiply(c, nd_power(d, 2)), -4);
+  big_add_scaled(linear, big_multiply(nd_power(c, 2), d), -2);
+  big_add_scaled(linear, nd_power(c, 3), 2);
+  big_add_scaled(linear, big_multiply(b, c), -1);
+  big_add_scaled(linear, big_multiply(big_multiply(b, c), d), -2);
+  big_add_scaled(linear, big_multiply(nd_power(b, 2), d), 1);
+  big_add_scaled(linear, nd_power(b, 3), 1);
+  BigPolynomial quadratic = nd_power(d, 2);
+  for (auto& [exponent, coefficient] : quadratic) {
+    static_cast<void>(exponent);
+    coefficient *= -2;
+  }
+  big_add_scaled(quadratic, big_multiply(c, d), -2);
+  big_add_scaled(quadratic, nd_power(c, 2), 2);
+  big_add_scaled(quadratic, big_multiply(b, c), 1);
+  BigPolynomial cubic = b;
+  big_add_scaled(cubic, c, 2);
+  big_add_scaled(cubic, d, 1);
+  BigPolynomial delta = big_multiply(x, linear);
+  big_add_scaled(delta, big_multiply(nd_power(x, 2), quadratic), 1);
+  big_add_scaled(delta, big_multiply(nd_power(x, 3), cubic), 1);
+  big_add_scaled(delta, nd_power(x, 4), 2);
+
+  BigPolynomial renewal = terminal;
+  big_add_scaled(renewal, delta, 1);
+  big_add_scaled(
+      renewal, big_multiply(nd_power(r, 4), next_terminal), -1);
+
+  const auto add = [](BigPolynomial& target, const BigPolynomial& term,
+                      const long coefficient) {
+    big_add_scaled(target, term, coefficient);
+  };
+  BigPolynomial expected = one;
+  add(expected, r, 1);
+  add(expected, rs, 2);
+  add(expected, rst, 1);
+  add(expected, nd_power(r, 2), -2);
+  add(expected, big_multiply(nd_power(r, 2), s), -2);
+  add(expected, big_multiply(nd_power(rs, 2), t), 1);
+  add(expected, nd_power(rs, 2), 2);
+  add(expected, nd_power(r, 3), 1);
+  add(expected, big_multiply(nd_power(r, 3), s), -4);
+  add(expected, big_multiply(nd_power(r, 3), nd_power(s, 2)), -2);
+  add(expected, big_multiply(big_multiply(nd_power(r, 3), nd_power(s, 2)), t), -2);
+  add(expected, big_multiply(big_multiply(nd_power(r, 3), nd_power(s, 2)),
+                             big_multiply(t, q)), -1);
+  add(expected, big_multiply(big_multiply(nd_power(r, 3), nd_power(s, 2)),
+                             nd_power(t, 2)), 1);
+  add(expected, big_multiply(nd_power(r, 3), nd_power(s, 3)), 2);
+  add(expected, big_multiply(big_multiply(nd_power(r, 3), nd_power(s, 3)),
+                             nd_power(t, 3)), 1);
+  add(expected, big_multiply(
+                    big_multiply(nd_power(r, 3), nd_power(s, 3)),
+                    big_multiply(nd_power(t, 2), q)),
+      -1);
+  add(expected, nd_power(r, 4), 1);
+  const auto canonicalize = [](const BigPolynomial& polynomial) {
+    BigPolynomial result;
+    for (const auto& [exponent, coefficient] : polynomial) {
+      if (coefficient != 0) {
+        result.emplace(exponent, coefficient);
+      }
+    }
+    return result;
+  };
+  if (
+      canonicalize(renewal) != canonicalize(expected)
+      || canonicalize(expected).size() != 18U
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) renewal-kernel identity mismatch");
+  }
+  constexpr int geometric_variables = 1;
+  const BigPolynomial geometric_one = nd_constant(geometric_variables, 1);
+  const BigPolynomial rho = nd_variable(geometric_variables, 0);
+  std::vector<BigPolynomial> geometric_profile(9U);
+  geometric_profile[1] = geometric_one;
+  geometric_profile[2] = rho;
+  geometric_profile[3] = nd_power(rho, 2);
+  geometric_profile[4] = nd_power(rho, 3);
+  const BigPolynomial geometric_terminal =
+      wall_121_terminal_current(geometric_profile, 4);
+  geometric_profile[5] = nd_power(rho, 4);
+  const BigPolynomial geometric_extended =
+      wall_121_terminal_current(geometric_profile, 5);
+  BigPolynomial geometric_expected = geometric_one;
+  big_add_scaled(geometric_expected, rho, 1);
+  big_add_scaled(geometric_expected, nd_power(rho, 11), 1);
+  big_add_scaled(geometric_expected, nd_power(rho, 12), 2);
+  BigPolynomial geometric_extended_expected = geometric_one;
+  big_add_scaled(geometric_extended_expected, rho, 1);
+  big_add_scaled(geometric_extended_expected, nd_power(rho, 15), 1);
+  big_add_scaled(geometric_extended_expected, nd_power(rho, 16), 2);
+  BigPolynomial geometric_delta = geometric_extended;
+  big_add_scaled(geometric_delta, geometric_terminal, -1);
+  BigPolynomial rho_four_minus_one = nd_power(rho, 4);
+  big_add_scaled(rho_four_minus_one, geometric_one, -1);
+  BigPolynomial one_plus_two_rho = geometric_one;
+  big_add_scaled(one_plus_two_rho, rho, 2);
+  const BigPolynomial geometric_delta_expected = big_multiply(
+      big_multiply(nd_power(rho, 11), rho_four_minus_one),
+      one_plus_two_rho);
+  BigPolynomial geometric_renewal = geometric_terminal;
+  big_add_scaled(geometric_renewal, geometric_delta, 1);
+  big_add_scaled(
+      geometric_renewal,
+      big_multiply(nd_power(rho, 4), geometric_terminal), -1);
+  BigPolynomial geometric_renewal_expected = geometric_one;
+  big_add_scaled(geometric_renewal_expected, rho, 1);
+  BigPolynomial one_minus_rho_four = geometric_one;
+  big_add_scaled(one_minus_rho_four, nd_power(rho, 4), -1);
+  geometric_renewal_expected = big_multiply(
+      geometric_renewal_expected, one_minus_rho_four);
+  if (
+      canonicalize(geometric_terminal) != canonicalize(geometric_expected)
+      || canonicalize(geometric_extended)
+             != canonicalize(geometric_extended_expected)
+      || canonicalize(geometric_delta)
+             != canonicalize(geometric_delta_expected)
+      || canonicalize(geometric_renewal)
+             != canonicalize(geometric_renewal_expected)
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) geometric renewal calibration mismatch");
+  }
+  for (int support = 4; support <= 12; ++support) {
+    std::vector<BigPolynomial> geometric_tail(
+        static_cast<std::size_t>(support + 4));
+    for (int index = 1; index <= support; ++index) {
+      geometric_tail[static_cast<std::size_t>(index)] =
+          nd_power(rho, index - 1);
+    }
+    const BigPolynomial actual =
+        wall_121_terminal_current(geometric_tail, support);
+    BigPolynomial expected_tail = geometric_one;
+    big_add_scaled(expected_tail, rho, 1);
+    big_add_scaled(expected_tail, nd_power(rho, 4 * support - 5), 1);
+    big_add_scaled(expected_tail, nd_power(rho, 4 * support - 4), 2);
+    if (canonicalize(actual) != canonicalize(expected_tail)) {
+      throw std::runtime_error(
+          "wall (1,2,1) geometric terminal-tail identity mismatch");
+    }
+  }
+  std::vector<BigPolynomial> tangent_profile(8U);
+  tangent_profile[1] = nd_constant(geometric_variables, 8);
+  tangent_profile[2] = geometric_one;
+  const BigPolynomial tangent_terminal =
+      wall_121_terminal_current(tangent_profile, 4);
+  const BigPolynomial tangent_terminal_expected =
+      nd_constant(geometric_variables, 4490);
+  const BigPolynomial tangent_barrier_expected =
+      nd_constant(geometric_variables, 4608);
+  if (
+      canonicalize(tangent_terminal)
+          != canonicalize(tangent_terminal_expected)
+      || !(4490 < 4608)
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) tangent-barrier obstruction mismatch");
+  }
+  std::vector<BigPolynomial> one_ratio_profile(8U);
+  one_ratio_profile[1] = nd_constant(geometric_variables, 144);
+  one_ratio_profile[2] = nd_constant(geometric_variables, 84);
+  one_ratio_profile[3] = nd_constant(geometric_variables, 7);
+  const BigPolynomial one_ratio_terminal =
+      wall_121_terminal_current(one_ratio_profile, 3);
+  const BigPolynomial one_ratio_terminal_expected =
+      nd_constant(geometric_variables, 566506574);
+  const BigPolynomial one_ratio_barrier_expected =
+      nd_constant(geometric_variables, 573101568);
+  if (
+      canonicalize(one_ratio_terminal)
+          != canonicalize(one_ratio_terminal_expected)
+      || !(566506574 < 573101568)
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) one-ratio barrier obstruction mismatch");
+  }
+  std::vector<BigPolynomial> two_ratio_prefix(8U);
+  two_ratio_prefix[1] = nd_constant(geometric_variables, 2);
+  two_ratio_prefix[2] = nd_constant(geometric_variables, 2);
+  two_ratio_prefix[3] = nd_constant(geometric_variables, 2);
+  const BigPolynomial two_ratio_terminal =
+      wall_121_terminal_current(two_ratio_prefix, 3);
+  two_ratio_prefix[4] = geometric_one;
+  BigPolynomial two_ratio_append =
+      wall_121_terminal_current(two_ratio_prefix, 4);
+  big_add_scaled(two_ratio_append, two_ratio_terminal, -1);
+  if (
+      canonicalize(two_ratio_append)
+          != canonicalize(nd_constant(geometric_variables, -18))
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) two-ratio barrier obstruction mismatch");
+  }
+  std::cout
+      << "SU2_WALL_121_RENEWAL_KERNEL"
+      << " variables=(r,s,t,q)"
+      << " terms=18"
+      << " q_degree=1"
+      << " q_coefficient=-r^3*s^2*t*(1+s*t)"
+      << " geometric_T4=1+rho+rho^11*(1+2*rho)"
+      << " geometric_delta=rho^11*(rho^4-1)*(1+2*rho)"
+      << " geometric_R=(1+rho)*(1-rho^4)"
+      << " geometric_terminal_supports=4..12"
+      << " tangent_barrier_boundary_residual=-59/2048"
+      << " one_ratio_barrier_residual=-3297497/214990848"
+      << " two_ratio_barrier_append=-9/8"
       << " result=PASS_EXACT\n";
   return EXIT_SUCCESS;
 }
@@ -5833,6 +6244,60 @@ int main(int argc, char** argv) {
                == "--replay-wall-121-small-ratio-payment"
     ) {
       return replay_wall_121_small_ratio_payment();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-wall-121-renewal-kernel"
+    ) {
+      return replay_wall_121_renewal_kernel();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]} == "--support-five-rat2-diagnostic"
+    ) {
+      constexpr int variables = 4;
+      constexpr int support = 5;
+      const BigPolynomial one = nd_constant(variables, 1);
+      const BigPolynomial r = nd_variable(variables, 0);
+      const BigPolynomial u = nd_variable(variables, 1);
+      const BigPolynomial v = nd_variable(variables, 2);
+      const BigPolynomial z = nd_variable(variables, 3);
+      const BigPolynomial zero;
+      std::vector<BigPolynomial> profile(
+          static_cast<std::size_t>(support + 4), zero);
+      profile[1] = one;
+      profile[2] = r;
+      profile[3] = big_multiply(nd_power(r, 2), u);
+      profile[4] = big_multiply(
+          big_multiply(nd_power(r, 3), nd_power(u, 2)), v);
+      profile[5] = big_multiply(
+          big_multiply(
+              big_multiply(nd_power(r, 4), nd_power(u, 3)),
+              nd_power(v, 2)),
+          z);
+      const BigPolynomial target =
+          wall_121_terminal_second_iterate_certificate(profile, support);
+      const BigPolynomial compact_raw =
+          compactify_positive_variable(target, 0U);
+      BigPolynomial compact;
+      for (const auto& [exponent, coefficient] : compact_raw) {
+        if (coefficient != 0) {
+          compact[exponent] = coefficient;
+        }
+      }
+      const NDBernsteinGrid grid = nd_bernstein_grid(compact, variables);
+      const std::size_t negative = static_cast<std::size_t>(std::count_if(
+          grid.values.begin(), grid.values.end(),
+          [](const Rational& value) { return value < 0; }));
+      std::cout << "SU2_WALL_121_RAT2_SUPPORT_FIVE_DIAGNOSTIC"
+                << " terms=" << compact.size()
+                << " degrees=(" << grid.degrees[0] << ','
+                << grid.degrees[1] << ',' << grid.degrees[2] << ','
+                << grid.degrees[3] << ')'
+                << " bernstein_coefficients=" << grid.values.size()
+                << " initial_negative=" << negative << '\n';
+      return EXIT_SUCCESS;
     }
     if (
         argc == 2

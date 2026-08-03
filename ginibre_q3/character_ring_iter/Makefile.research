@@ -20,6 +20,34 @@
 
 CXX ?= g++
 
+probe_su2_wall_121_bellman_barrier: \
+		probe_su2_wall_121_bellman_barrier.cpp
+	$(CXX) -O3 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+verify_su2_level_one_odd_prefix_carrier: \
+		verify_su2_level_one_odd_prefix_carrier.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+search_su2_two_odd_twisted_cone: \
+		search_su2_two_odd_twisted_cone.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_boundary_reflection_quotient: \
+		probe_su2_boundary_reflection_quotient.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+search_su2_tls_last_update: search_su2_tls_last_update.cpp
+	$(CXX) -O3 -std=c++20 -fopenmp -Wall -Wextra -Wpedantic \
+		-Wconversion -Wsign-conversion -Wshadow -Werror $< -o $@
+
+verify_su2_first_prefix_hall_cut: verify_su2_first_prefix_hall_cut.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 verify_su2_plucker_second_syzygies: verify_su2_plucker_second_syzygies.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wshadow -Werror -fopenmp $< -o $@
@@ -104,6 +132,10 @@ probe_cyclic_christoffel_minors: probe_cyclic_christoffel_minors.cpp
 
 probe_tp2_winding_sectors: probe_tp2_winding_sectors.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+verify_su2_even_background_current: verify_su2_even_background_current.cpp
+	$(CXX) -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
 probe_tp2_multiplicative_compound: probe_tp2_multiplicative_compound.cpp
@@ -290,6 +322,19 @@ probe_su2_finite_square_profile_cone: \
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+verify_su2_finite_c2_packet: verify_su2_finite_c2_packet.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_finite_c2_pieri_cone: probe_su2_finite_c2_pieri_cone.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_finite_boundary_cauchy_binet: \
+		probe_su2_finite_boundary_cauchy_binet.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 probe_su2_compound_gauge: probe_su2_compound_gauge.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -413,6 +458,10 @@ probe_su2_symmetric_log_concave_autocorrelation: \
 	$(CXX) -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
 		-Wconversion -Wshadow -Werror $< -o $@
 
+probe_su2_wall_121_rat2: probe_su2_wall_121_rat2.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 probe_su2_log_concave_diagonal_completion: \
 		probe_su2_log_concave_diagonal_completion.cpp
 	$(CXX) -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
@@ -533,6 +582,10 @@ probe_su2_kostka_crossing_switch: \
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@ -pthread
 
+probe_su2_bk_cut_deltamatroid: probe_su2_bk_cut_deltamatroid.cpp
+	$(CXX) -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic \
+		-Wconversion -Wsign-conversion -Wshadow -Werror $< -o $@
+
 analyze_su2_log_concave_tail_profile: \
 		analyze_su2_log_concave_tail_profile.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -632,6 +685,10 @@ analyze_su2_reduced_current_payment: analyze_su2_reduced_current_payment.cpp
 	-Wsign-conversion -Wshadow -Werror $< -o $@
 
 analyze_su2_loop_erased_current: analyze_su2_loop_erased_current.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+	-Wsign-conversion -Wshadow -Werror $< -o $@
+
+probe_su2_fomin_prefix_switch: probe_su2_fomin_prefix_switch.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 	-Wsign-conversion -Wshadow -Werror $< -o $@
 
@@ -872,6 +929,9 @@ RESEARCH_TARGETS = \
 	probe_su2_finite_cyclic_gradient_currents \
 	probe_su2_finite_half_power_wedge_windows \
 	probe_su2_finite_square_profile_cone \
+	verify_su2_finite_c2_packet \
+	probe_su2_finite_c2_pieri_cone \
+	probe_su2_finite_boundary_cauchy_binet \
 	probe_su2_compound_gauge \
 	probe_su2_suffix_cone_insertion \
 	verify_su2_two_factor_intermediate_radial_slacks \
@@ -900,6 +960,7 @@ RESEARCH_TARGETS = \
 	probe_su2_ordinary_variable_box_tp2 \
 	analyze_su2_ordinary_quartic_majorization \
 	probe_su2_symmetric_log_concave_autocorrelation \
+	probe_su2_wall_121_rat2 \
 	probe_su2_log_concave_diagonal_completion \
 	probe_su2_ordinary_arbitrary_root_current \
 	analyze_su2_b2_radial_cone_transport \
@@ -943,6 +1004,7 @@ RESEARCH_TARGETS = \
 	analyze_su2_return_current_abel \
 	analyze_su2_reduced_current_payment \
 	analyze_su2_loop_erased_current \
+	probe_su2_fomin_prefix_switch \
 	analyze_su2_last_exit_groups \
 	prove_su2_shell_stable_width \
 	verify_su2_schur_branch_cone \
@@ -1005,6 +1067,7 @@ RESEARCH_TARGETS = \
 	derive_continuous_tp2 \
 	probe_cyclic_christoffel_minors \
 	probe_tp2_winding_sectors \
+	verify_su2_even_background_current \
 	probe_tp2_multiplicative_compound \
 	analyze_su2_gt_exchange \
 	verify_su2_equal_terminal_exception \
