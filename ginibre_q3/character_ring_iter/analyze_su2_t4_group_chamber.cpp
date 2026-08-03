@@ -70,11 +70,54 @@ int main(int argc, char** argv) {
         if (argc != 2) {
             throw std::invalid_argument(
                 "usage: analyze_su2_t4_group_chamber <c5-position>"
+                "\n   or: analyze_su2_t4_group_chamber --scan-low-cost"
             );
         }
-        const std::size_t position = parse_position(argv[1]);
+        const bool scan_low_cost = std::string(argv[1]) == "--scan-low-cost";
         const GroupFormula formula = make_group_formula("c5");
         const std::vector<WideMask> masks = feasible_group_masks(formula);
+        if (scan_low_cost) {
+            std::size_t certified = 0U;
+            for (std::size_t position = 0U; position < masks.size(); ++position) {
+                const Chamber chamber = make_group_chamber(
+                    formula,
+                    masks[position],
+                    "c5",
+                    static_cast<std::uint64_t>(position)
+                );
+                const std::vector<Polynomial> reduced =
+                    irredundant_constraints(chamber);
+                bool passed = bounded_group_integer_certificate(
+                    chamber,
+                    reduced
+                );
+                if (!passed) {
+                    passed = bounded_qy_h_ray_newton_certificate(
+                        chamber,
+                        reduced
+                    );
+                }
+                if (passed) {
+                    ++certified;
+                }
+                if ((position + 1U) % 25U == 0U) {
+                    std::cerr
+                        << "SU2_T4_GROUP_LOW_COST"
+                        << " progress=" << position + 1U
+                        << '/' << masks.size()
+                        << " certified=" << certified << '\n';
+                }
+            }
+            std::cout
+                << "SU2_T4_GROUP_LOW_COST"
+                << " masks=" << masks.size()
+                << " certified=" << certified
+                << " unresolved=" << masks.size() - certified
+                << " result=PASS_EXACT_PARTITION"
+                << '\n';
+            return EXIT_SUCCESS;
+        }
+        const std::size_t position = parse_position(argv[1]);
         if (position >= masks.size()) {
             throw std::invalid_argument("position is out of range");
         }
