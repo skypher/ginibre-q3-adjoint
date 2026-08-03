@@ -9513,6 +9513,24 @@ The certifier therefore attempts bounded and bounded-`(Q,Y)` ray
 certificates before every symbolic cone search.  This changes only the
 search order, not any certificate condition.
 
+The independent low-cost partition replay
+
+```text
+analyze_su2_t4_group_chamber --scan-low-cost
+```
+
+has now traversed all `601` masks.  It returns exactly
+
+```text
+certified=252,                 unresolved=349.
+```
+
+Here `certified` means a standalone bounded enumeration or bounded-`(Q,Y)`
+Newton-ray certificate; `unresolved` means only that one of the direct or
+transport cone certificates is still required.  It is an exact scheduling
+partition, not a claim that the remaining 349 masks fail or that the full
+`C_5` theorem has been proved.
+
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
 Then
