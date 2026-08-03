@@ -471,35 +471,55 @@ std::vector<std::uint64_t> feasible_masks(const Formula& formula) {
 std::vector<Polynomial> irredundant_constraints(
     const Chamber& chamber
 ) {
-    std::vector<Polynomial> constraints = chamber.constraints;
-    for (std::size_t position = 0; position < constraints.size();) {
-        z3::context context;
-        z3::solver solver(context);
-        const std::array<z3::expr, 3> variables{
-            context.int_const("Q"),
-            context.int_const("H"),
-            context.int_const("Y")
-        };
-        for (std::size_t other = 0; other < constraints.size(); ++other) {
-            if (other != position) {
-                solver.add(
-                    z3_affine(context, constraints[other], variables) >= 0
-                );
+    const std::vector<Polynomial>& original = chamber.constraints;
+    z3::context context;
+    z3::solver solver(context);
+    const std::array<z3::expr, 3> variables{
+        context.int_const("Q"),
+        context.int_const("H"),
+        context.int_const("Y")
+    };
+    std::vector<z3::expr> enabled;
+    enabled.reserve(original.size());
+    for (std::size_t index = 0; index < original.size(); ++index) {
+        const std::string name = "irredundant_" + std::to_string(index);
+        enabled.push_back(context.bool_const(name.c_str()));
+        solver.add(z3::implies(
+            enabled.back(),
+            z3_affine(context, original[index], variables) >= 0
+        ));
+    }
+
+    std::vector<bool> retained(original.size(), true);
+    for (std::size_t position = 0; position < original.size(); ++position) {
+        if (!retained[position]) {
+            continue;
+        }
+        z3::expr_vector assumptions(context);
+        for (std::size_t other = 0; other < original.size(); ++other) {
+            if (other != position && retained[other]) {
+                assumptions.push_back(enabled[other]);
             }
         }
+        solver.push();
         solver.add(
-            z3_affine(context, constraints[position], variables) < 0
+            z3_affine(context, original[position], variables) < 0
         );
-        if (solver.check() == z3::unsat) {
-            constraints.erase(
-                constraints.begin()
-                    + static_cast<std::ptrdiff_t>(position)
-            );
-        } else {
-            ++position;
+        const z3::check_result result = solver.check(assumptions);
+        solver.pop();
+        if (result == z3::unsat) {
+            retained[position] = false;
         }
     }
-    return constraints;
+
+    std::vector<Polynomial> result;
+    result.reserve(original.size());
+    for (std::size_t index = 0; index < original.size(); ++index) {
+        if (retained[index]) {
+            result.push_back(original[index]);
+        }
+    }
+    return result;
 }
 
 Rational determinant(
