@@ -72,12 +72,15 @@ int main(int argc, char** argv) {
                 "usage: analyze_su2_t4_group_chamber <c5-position>"
                 "\n   or: analyze_su2_t4_group_chamber --scan-low-cost"
                 "\n   or: analyze_su2_t4_group_chamber --scan-parity"
+                "\n   or: analyze_su2_t4_group_chamber --scan-forced-equality"
                 "\n   or: analyze_su2_t4_group_chamber --parity-only"
                 " <c5-position>"
             );
         }
         const bool scan_low_cost = std::string(argv[1]) == "--scan-low-cost";
         const bool scan_parity = std::string(argv[1]) == "--scan-parity";
+        const bool scan_forced_equality =
+            std::string(argv[1]) == "--scan-forced-equality";
         const bool parity_only = std::string(argv[1]) == "--parity-only";
         if (parity_only && argc != 3) {
             throw std::invalid_argument(
@@ -154,6 +157,40 @@ int main(int argc, char** argv) {
             }
             std::cout
                 << "SU2_T4_GROUP_PARITY_SCAN"
+                << " masks=" << masks.size()
+                << " certified=" << certified
+                << " unresolved=" << masks.size() - certified
+                << " result=PASS_EXACT_PARTITION"
+                << '\n';
+            return EXIT_SUCCESS;
+        }
+        if (scan_forced_equality) {
+            std::size_t certified = 0U;
+            for (std::size_t position = 0U; position < masks.size(); ++position) {
+                const Chamber chamber = make_group_chamber(
+                    formula,
+                    masks[position],
+                    "c5",
+                    static_cast<std::uint64_t>(position)
+                );
+                const std::vector<Polynomial> reduced =
+                    irredundant_constraints(chamber);
+                if (forced_equality_slice_ray_newton_certificate(
+                        chamber,
+                        reduced
+                    )) {
+                    ++certified;
+                }
+                if ((position + 1U) % 25U == 0U) {
+                    std::cerr
+                        << "SU2_T4_GROUP_FORCED_EQUALITY_SCAN"
+                        << " progress=" << position + 1U
+                        << '/' << masks.size()
+                        << " certified=" << certified << '\n';
+                }
+            }
+            std::cout
+                << "SU2_T4_GROUP_FORCED_EQUALITY_SCAN"
                 << " masks=" << masks.size()
                 << " certified=" << certified
                 << " unresolved=" << masks.size() - certified
