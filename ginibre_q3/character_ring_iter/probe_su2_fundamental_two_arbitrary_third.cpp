@@ -98,6 +98,8 @@ void print_word(const int fundamentals, const int first, const int second) {
   std::cout << first << ',' << second << "]";
 }
 
+Integer binomial(int size, int selection);
+
 void inspect_case(const int fundamentals, const int first, const int second) {
   const std::vector<Integer> profile =
       profile_for(fundamentals, first, second);
@@ -115,6 +117,141 @@ void inspect_case(const int fundamentals, const int first, const int second) {
             << " K30=" << radial(profile, 0)
             << " K31=" << radial(profile, 1)
             << " result=PASS_EXACT\n";
+}
+
+// For I={u,u+2,...,u+2(length-1)}, reflection at -1 gives
+//
+// <1_I,N_1^(2m)1_I>
+// =sum_(i,j)[C(2m,m+j-i)-C(2m,m+u+i+j+1)].
+//
+// This avoids constructing a full character profile in the interval-ratio
+// diagnostic below, while retaining exact arbitrary-precision arithmetic.
+std::vector<Integer> binomial_row(const int steps) {
+  std::vector<Integer> row(static_cast<std::size_t>(2 * steps + 1));
+  row[0U] = 1;
+  for (int index = 0; index < 2 * steps; ++index) {
+    row[static_cast<std::size_t>(index + 1)] =
+        row[static_cast<std::size_t>(index)] * (2 * steps - index)
+        / (index + 1);
+  }
+  return row;
+}
+
+Integer interval_heat(const std::vector<Integer>& row, const int steps,
+                      const int lower, const int length) {
+  const auto choose = [&row](const int index) -> Integer {
+    return index >= 0 && index < static_cast<int>(row.size())
+               ? row[static_cast<std::size_t>(index)]
+               : Integer(0);
+  };
+  Integer result = 0;
+  for (int first = 0; first < length; ++first) {
+    for (int second = 0; second < length; ++second) {
+      result += choose(steps + second - first);
+      result -= choose(steps + lower + first + second + 1);
+    }
+  }
+  return result;
+}
+
+bool ratio_less(const Integer& first_numerator,
+                const Integer& first_denominator,
+                const Integer& second_numerator,
+                const Integer& second_denominator) {
+  return first_numerator * second_denominator
+         < second_numerator * first_denominator;
+}
+
+struct IntervalRatioWitness {
+  bool present = false;
+  int steps = 0;
+  int lower = 0;
+  int length = 0;
+};
+
+void verify_interval_heat_minimum_box(const int maximum_steps,
+                                      const int maximum_lower,
+                                      const int maximum_length) {
+  std::size_t words = 0U;
+  std::size_t target_failures = 0U;
+  std::size_t outward_failures = 0U;
+  std::size_t length_failures = 0U;
+  IntervalRatioWitness target_witness;
+  IntervalRatioWitness outward_witness;
+  IntervalRatioWitness length_witness;
+
+  for (int steps = 0; steps <= maximum_steps; ++steps) {
+    const std::vector<Integer> row = binomial_row(steps);
+    const std::vector<Integer> next_row = binomial_row(steps + 1);
+    const Integer base = interval_heat(row, steps, 1, 3);
+    const Integer base_next = interval_heat(next_row, steps + 1, 1, 3);
+    const std::vector<Integer> profile = profile_for(steps, 2, 3);
+    if (base != at(profile, 0)
+        || base_next != at(profile, 0) + at(profile, 1)) {
+      throw std::runtime_error("interval-reflection reconstruction failed");
+    }
+    for (int lower = 1; lower <= maximum_lower; ++lower) {
+      for (int length = 3; length <= maximum_length; ++length) {
+        const Integer value = interval_heat(row, steps, lower, length);
+        const Integer next =
+            interval_heat(next_row, steps + 1, lower, length);
+        ++words;
+        if (ratio_less(next, value, base_next, base)) {
+          ++target_failures;
+          if (!target_witness.present) {
+            target_witness = {true, steps, lower, length};
+          }
+        }
+        if (lower + 2 <= maximum_lower) {
+          const Integer outward =
+              interval_heat(row, steps, lower + 2, length);
+          const Integer outward_next =
+              interval_heat(next_row, steps + 1, lower + 2, length);
+          if (ratio_less(outward_next, outward, next, value)) {
+            ++outward_failures;
+            if (!outward_witness.present) {
+              outward_witness = {true, steps, lower, length};
+            }
+          }
+        }
+        if (length + 1 <= maximum_length) {
+          const Integer longer =
+              interval_heat(row, steps, lower, length + 1);
+          const Integer longer_next =
+              interval_heat(next_row, steps + 1, lower, length + 1);
+          if (ratio_less(longer_next, longer, next, value)) {
+            ++length_failures;
+            if (!length_witness.present) {
+              length_witness = {true, steps, lower, length};
+            }
+          }
+        }
+      }
+    }
+  }
+
+  std::cout << "SU2_INTERVAL_HEAT_RATIO_BOX"
+            << " maximum_steps=" << maximum_steps
+            << " maximum_lower=" << maximum_lower
+            << " maximum_length=" << maximum_length
+            << " intervals=" << words
+            << " target_failures=" << target_failures
+            << " outward_failures=" << outward_failures
+            << " length_failures=" << length_failures;
+  const auto print_witness = [](const char* name,
+                                const IntervalRatioWitness& witness) {
+    if (witness.present) {
+      std::cout << ' ' << name << "=[m=" << witness.steps
+                << ",u=" << witness.lower
+                << ",n=" << witness.length << ']';
+    }
+  };
+  print_witness("target_first", target_witness);
+  print_witness("outward_first", outward_witness);
+  print_witness("length_first", length_witness);
+  std::cout << " result="
+            << (target_failures == 0U ? "PASS_EXACT_BOX" : "FAIL")
+            << '\n';
 }
 
 using Polynomial = std::vector<Integer>;
@@ -361,6 +498,93 @@ void verify_b2c3_radial_polynomials() {
   std::cout << " result=PASS_EXACT\n";
 }
 
+Polynomial scaled_ballot_shell(const int shell, const int denominator_top) {
+  Polynomial result{Integer(2 * shell + 1)};
+  for (int index = 0; index < shell; ++index) {
+    result = multiply(result, linear(1, -index));
+  }
+  for (int index = shell + 2; index <= denominator_top; ++index) {
+    result = multiply(result, linear(1, index));
+  }
+  return result;
+}
+
+int prefix_weight(const int factor, const int cutoff, const int source) {
+  int result = 0;
+  for (int factor_shell = 0; factor_shell <= factor; ++factor_shell) {
+    for (int target = 0; target <= cutoff; ++target) {
+      if (std::abs(source - factor_shell) <= target
+          && target <= source + factor_shell) {
+        ++result;
+      }
+    }
+  }
+  return result;
+}
+
+void verify_two_arbitrary_prefix_polynomials() {
+  constexpr int minimum_fundamentals = 40;
+  constexpr int maximum_small_factor = 12;
+  for (int factor = 2; factor <= maximum_small_factor; ++factor) {
+    const int denominator_top = 2 * factor + 2;
+    Polynomial reserve;
+    Polynomial intermediate_zero;
+    for (int source = 0; source <= denominator_top; ++source) {
+      const Polynomial shell =
+          scaled_ballot_shell(source, denominator_top);
+      add_scaled(reserve, shell,
+                 3 * prefix_weight(factor, factor + 1, source));
+      if (source <= factor) {
+        add_scaled(reserve, shell, -40);
+        add_scaled(intermediate_zero, shell, 1);
+      }
+    }
+    const Polynomial shifted =
+        shifted_coefficients(reserve, minimum_fundamentals);
+    if (!nonnegative_coefficients(shifted)) {
+      throw std::runtime_error(
+          "two-arbitrary prefix sign certificate failed at factor "
+          + std::to_string(factor));
+    }
+
+    Polynomial denominator{Integer(1)};
+    for (int index = 2; index <= denominator_top; ++index) {
+      denominator = multiply(denominator, linear(1, index));
+    }
+    for (const int fundamentals : {minimum_fundamentals,
+                                   minimum_fundamentals + 1}) {
+      std::vector<Integer> fundamental_profile{Integer(1)};
+      for (int index = 0; index < fundamentals; ++index) {
+        fundamental_profile = multiply_by_square(fundamental_profile, 1);
+      }
+      const std::vector<Integer> intermediate =
+          multiply_by_square(fundamental_profile, factor);
+      const std::vector<Integer> final_profile =
+          multiply_by_square(intermediate, factor + 1);
+      const Integer direct_reserve =
+          3 * at(final_profile, 0) - 40 * at(intermediate, 0);
+      const Integer divisor = evaluate(denominator, fundamentals);
+      if (evaluate(reserve, fundamentals) * at(fundamental_profile, 0)
+              != direct_reserve * divisor
+          || evaluate(intermediate_zero, fundamentals)
+                 * at(fundamental_profile, 0)
+                 != at(intermediate, 0) * divisor) {
+        throw std::runtime_error("two-arbitrary prefix reconstruction failed");
+      }
+    }
+    Integer least = shifted.front();
+    for (const Integer& coefficient : shifted) {
+      if (coefficient < least) {
+        least = coefficient;
+      }
+    }
+    std::cout << "SU2_TWO_ARBITRARY_PREFIX factor=" << factor
+              << " degree=" << (shifted.size() - 1U)
+              << " least_coefficient=" << least << '\n';
+  }
+  std::cout << "SU2_TWO_ARBITRARY_PREFIX result=PASS_EXACT\n";
+}
+
 struct RatioMinimum {
   bool initialized = false;
   Integer numerator = 0;
@@ -392,6 +616,11 @@ int main(int argc, char** argv) {
       verify_b2c3_radial_polynomials();
       return EXIT_SUCCESS;
     }
+    if (argc == 2
+        && std::string{argv[1]} == "--two-arbitrary-prefix-polynomials") {
+      verify_two_arbitrary_prefix_polynomials();
+      return EXIT_SUCCESS;
+    }
     if (argc == 5 && std::string{argv[1]} == "--case") {
       inspect_case(
           parse_nonnegative(argv[2], "fundamental count"),
@@ -399,12 +628,21 @@ int main(int argc, char** argv) {
           parse_positive(argv[4], "second arbitrary label"));
       return EXIT_SUCCESS;
     }
+    if (argc == 5 && std::string{argv[1]} == "--heat-minimum") {
+      verify_interval_heat_minimum_box(
+          parse_nonnegative(argv[2], "maximum steps"),
+          parse_positive(argv[3], "maximum lower endpoint"),
+          parse_positive(argv[4], "maximum interval length"));
+      return EXIT_SUCCESS;
+    }
     if (argc != 3) {
       throw std::invalid_argument(
           "usage: probe_su2_fundamental_two_arbitrary_third "
           "MAXIMUM_FUNDAMENTALS MAXIMUM_LABEL | "
           "--case FUNDAMENTALS FIRST SECOND | "
-          "--b23-threshold-polynomials | --b23-radial-polynomials");
+          "--heat-minimum MAXIMUM_STEPS MAXIMUM_LOWER MAXIMUM_LENGTH | "
+          "--b23-threshold-polynomials | --b23-radial-polynomials | "
+          "--two-arbitrary-prefix-polynomials");
     }
     const int maximum_fundamentals =
         parse_nonnegative(argv[1], "maximum fundamentals");

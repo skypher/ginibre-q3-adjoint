@@ -596,9 +596,16 @@ before any further construction.
    `A=3` columns, despite complete all-fundamental and one-arbitrary-factor
    strands.  The first mixed ray
    `chi_1^m chi_2 chi_3` is now fully closed there by an exact symbolic
-   polynomial certificate, but no proved extremal/minimization lemma yet
-   transfers that ray to arbitrary distinct labels.  Thus a generic
-   low-moment threshold is not enough for the remaining mixed-label
+   polynomial certificate.  The complete two-arbitrary-factor strand is
+   now closed: a prefix-reserve proof handles `m>=40`, while an exact
+   finite-fundamental/affine-label-tail partition handles every `m<=39`
+   without a label cutoff.  The interval heat-ratio minimum remains
+   unproved but is no longer needed for this strand.  The same prefix
+   argument also closes the third row of every arbitrary-length word whose
+   second-largest factor label is at least `13`.  Arbitrary longer mixed
+   words with all but perhaps one factor label at most `12`, and hence the
+   central cumulative-current payment itself, remain open.  Thus a generic
+   low-moment threshold alone still does not resolve the mixed-label
    payment.
 
    A parallel signed formulation is the global maximal-cut payment `(GCP)`

@@ -12771,6 +12771,31 @@ problem and is not asserted here without proof.  Its value is to identify
 the missing payment as pairwise acuteness of the residual reflected windows,
 rather than as a sign assignment over individual Cauchy--Binet pairs.
 
+The most immediate Chebyshev proof of `(IHRWA)` is false even on the factor
+orbit.  It would order the quotients
+
+```text
+r_R(i)=g_R(i)/g_0(i),
+```
+
+on the positive half-support in the outside-in order
+`0,m,1,m-1,...`, and use their common monotonicity.  For
+
+```text
+P=beta_2^3=beta_0+3beta_2+2beta_4+beta_6,
+h=(7,6,3,1),                 u=g_0=(1,3,2,1),
+```
+
+take `R=1`.  The outside-in quotient sequence is
+
+```text
+(r_1(0),r_1(3),r_1(1),r_1(2))=(3,3,2,3).
+```
+
+It is neither nondecreasing nor nonincreasing.  Thus a proof of reflected
+window acuteness must retain a genuinely two-function comparison; no fixed
+outside-in likelihood-ratio order reduces it to scalar Chebyshev.
+
 There is a second exact reduction in which the complete star current
 becomes a rank-two Weyl-character triangle.  This retains the global
 sum which the two failed intermediate-pair allocations split apart.
@@ -20763,6 +20788,436 @@ transfer the proved spectral thresholds to every `chi_1^m chi_b chi_c` in
 the large-`m` chamber.  The strict exact scan through `m<=25` and
 `2<=b<c<=60` has this minimum at `(b,c)=(2,3)` for every `m`; it is evidence
 for `(P5A.102AD5ALX1ZZB3S4N43I)`, not a proof.
+
+The extremal statement is not needed in the genuinely large-fundamental
+chamber.  A coarser prefix reserve, which does not identify a minimizing
+interval, already closes that chamber uniformly in both arbitrary labels.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADTHIRDTWOARBLARGE
+(two-arbitrary-factor large-fundamental third payment).**  Let
+
+```text
+P=chi_1^m chi_b chi_c,              m>=40,  2<=b<c,
+P^2=sum_(h>=0)c_h beta_h.
+```
+
+Then both strict third-radial columns are nonnegative:
+
+```text
+K_(3,0)>=0,                         K_(3,1)>=0.       (P5A.102AD5ALX1ZZB3S4N43J)
+```
+
+**Proof.**  Put
+
+```text
+chi_1^(2m)=sum_(t>=0)e_t beta_t,
+d=(sum_t e_t beta_t)A_b,
+S_r=sum_(s=0)^r d_s.
+```
+
+Thus `d` is the squared profile of `chi_1^m chi_b`.  Inserting the
+last factor gives
+
+```text
+c_0=S_c,
+c_1=3S_c-(2d_0+d_c-d_(c+1)).                     (P5A.102AD5ALX1ZZB3S4N43K)
+```
+
+The required reserve is
+
+```text
+3S_c>=40d_0.                                      (P5A.102AD5ALX1ZZB3S4N43L)
+```
+
+First suppose `2<=b<=12`.  Since `c>=b+1`, it is enough to prove
+`3S_(b+1)>=40d_0`.  Write
+
+```text
+L_b=product_(j=2)^(2b+2)(m+j).
+```
+
+For `0<=t<=2b+1`, the exact scaled ballot numerator is
+
+```text
+L_b e_t/e_0
+ =(2t+1) product_(j=0)^(t-1)(m-j)
+             product_(j=t+2)^(2b+2)(m+j).       (P5A.102AD5ALX1ZZB3S4N43M)
+```
+
+The coefficient with which `e_t` enters `S_(b+1)` is exactly the
+number of pairs `(s,r)` with
+
+```text
+0<=s<=b,  0<=r<=b+1,
+|t-s|<=r<=t+s.                                  (P5A.102AD5ALX1ZZB3S4N43N)
+```
+
+Substituting `(P5A.102AD5ALX1ZZB3S4N43M)` in
+`L_b(3S_(b+1)-40d_0)/e_0` and shifting by `m-40` gives a polynomial
+with nonnegative integer coefficients in every listed row:
+
+```text
+b       degree       least coefficient
+2          5                 72
+3          7                560
+4          9               1700
+5         11               3852
+6         13               7448
+7         15              12992
+8         17              21060
+9         19              32300
+10        21              47432
+11        23              67248
+12        25              92612.                (P5A.102AD5ALX1ZZB3S4N43O)
+```
+
+Hence the reserve holds for `2<=b<=12` and `m>=40`.  The strict
+`cpp_int` mode
+
+```text
+probe_su2_fundamental_two_arbitrary_third.cpp
+--two-arbitrary-prefix-polynomials
+```
+
+constructs the counts in `(P5A.102AD5ALX1ZZB3S4N43N)`, expands every
+polynomial, checks all coefficient signs, and independently reconstructs
+the cases `m=40,41` from exact fusion profiles.
+
+Now take `b>=13`.  Formula `(P5A.102AD5ALX1ZZB3S4N19)` gives
+`N_b(t)>=b+1` for `0<=t<=b`, whereas
+`d_0=sum_(t=0)^b e_t`.  Therefore
+
+```text
+S_c>=S_b>=(b+1)d_0>=14d_0,
+```
+
+which is stronger than `(P5A.102AD5ALX1ZZB3S4N43L)`.  This proves the
+reserve in all cases.  The parity-square adjacent-drop bound gives
+`d_c-d_(c+1)<=d_0`; hence `(P5A.102AD5ALX1ZZB3S4N43K)` and the reserve
+yield
+
+```text
+c_1/c_0>=3-9/40=111/40.
+```
+
+This exceeds both radial thresholds: `111/40>19/7`, and
+
+```text
+111/40>(2+2sqrt(10))/3
+```
+
+because `253^2>10*80^2`.  Lemmas
+5A8H28UIA2CGLPCIPOCB2RADTHIRDZEROTHR and
+5A8H28UIA2CGLPCIPOCB2RADTHIRDONETHR now prove the two inequalities in
+`(P5A.102AD5ALX1ZZB3S4N43J)`.  QED.
+
+The complementary finite-fundamental strip has an exact affine-tail
+partition.  It completes the whole distinct two-arbitrary-factor strand,
+rather than merely supplying bounded evidence for it.
+
+**Theorem 5A8H28UIA2CGLPCIPOCB2RADTHIRDTWOARB
+(complete distinct two-arbitrary-factor third payment).**  For every
+`m>=0` and every `2<=b<c`, put
+
+```text
+P=chi_1^m chi_b chi_c,
+P^2=sum_(h>=0)c_h beta_h.
+```
+
+Then
+
+```text
+K_(3,0)>=0,                         K_(3,1)>=0.       (P5A.102AD5ALX1ZZB3S4N43P)
+```
+
+**Proof.**  Lemma
+5A8H28UIA2CGLPCIPOCB2RADTHIRDTWOARBLARGE proves the statement for
+`m>=40`.  It remains to take `0<=m<=39` and put `H=m+5`.  Write
+
+```text
+chi_b^2 chi_c^2=sum_(s>=0)f_s beta_s,
+d=c-b>=1.
+```
+
+Only the shells `0<=s<=H` can enter `c_0,...,c_5`, because the
+fundamental square profile has support through shell `m`.  Direct
+Clebsch--Gordan counting gives
+
+```text
+f_s=#{(p,q): 0<=p<=b, 0<=q<=c,
+                 |p-q|<=s<=p+q}.               (P5A.102AD5ALX1ZZB3S4N43Q)
+```
+
+If `d>=H`, the upper cap `q<=c` is inactive in `(P5A.102AD5ALX1ZZB3S4N43Q)`
+for every needed shell.  Thus the representative `d=H` covers every
+larger gap exactly.  For `2<=b<2H`, direct exact fusion consequently
+leaves only the finite cells
+
+```text
+2<=b<2H,                         1<=d<=H.       (P5A.102AD5ALX1ZZB3S4N43R)
+```
+
+For `b>=2H`, the same count has the explicit affine form
+
+```text
+f_s=(2s+1)b-s^2+s+1
+    -{max(s-d,0)(max(s-d,0)+1)}/2,
+                 0<=s<=H,                       (P5A.102AD5ALX1ZZB3S4N43S)
+```
+
+again with `d=H` representing every larger gap.  Hence every
+`c_r (0<=r<=5)` is affine in `x=b-2H`, and each expression in
+`(P5A.102AD5ALX1ZZB3S4N43P)` is a quadratic polynomial in `x`.
+
+The strict `cpp_int` verifier
+
+```text
+character_ring_iter/verify_su2_two_arbitrary_third_full.cpp
+```
+
+checks all `56,720` finite cells in `(P5A.102AD5ALX1ZZB3S4N43R)`,
+with respective minimum margins `9` and `18`.  For all `980` pairs
+`(m,d)` in the affine tail it independently checks
+`(P5A.102AD5ALX1ZZB3S4N43S)` at three successive values of `b`,
+recovers the exact quadratic, and verifies all three shifted coefficients
+are nonnegative.  Thus the finite cells and the affine identity cover
+every `b,c`, with no label cutoff.  This proves the strip `m<=39`;
+the large-fundamental lemma proves its complement.  QED.
+
+The prefix argument in the large-label portion is in fact independent of
+the fundamental origin.  It removes every `A=3` mixed word whose second
+largest factor is already large.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADTHIRDPENULT
+(arbitrary-prefix penultimate-label third payment).**  Let `Q` be any
+ordinary factor word and let `2<=b<=c` with `b>=13`.  If
+
+```text
+P=Q chi_b chi_c,
+P^2=sum_(h>=0)c_h beta_h,
+```
+
+then
+
+```text
+K_(3,0)>=0,                         K_(3,1)>=0.       (P5A.102AD5ALX1ZZB3S4N43T)
+```
+
+**Proof.**  Write
+
+```text
+Q^2=sum_(t>=0)e_t beta_t,
+d=(sum_t e_t beta_t)A_b,
+S_r=sum_(s=0)^r d_s.
+```
+
+As in `(P5A.102AD5ALX1ZZB3S4N43K)`, insertion of `chi_c` gives
+`c_0=S_c` and
+
+```text
+c_1=3S_c-(2d_0+d_c-d_(c+1)).                     (P5A.102AD5ALX1ZZB3S4N43U)
+```
+
+The constant coefficient is `d_0=sum_(t=0)^b e_t`.  For every source
+shell `0<=t<=b`, the count `N_b(t)` in
+`(P5A.102AD5ALX1ZZB3S4N19)` is at least `b+1`; all other source
+contributions are nonnegative.  Hence
+
+```text
+S_c>=S_b>=(b+1)d_0>=14d_0.
+```
+
+The parity-square adjacent-drop estimate supplies
+`d_c-d_(c+1)<=d_0`, so
+
+```text
+c_1/c_0>=3-3/14=39/14.
+```
+
+Now `39/14>19/7`, and it exceeds the one-contraction threshold because
+`89^2>10*28^2`.  The two spectral payment lemmas cited in the preceding
+proof establish `(P5A.102AD5ALX1ZZB3S4N43T)`.  QED.
+
+The associated zero-weight reserve does not grow additively under one
+further factor.  This rules out a tempting induction for the remaining
+bounded-label words.  For an ordinary factor word `Q`, write
+
+```text
+Q^2=sum_(s>=0)d_s beta_s,
+I(Q)=d_0,                    Z(Q)=sum_s d_s.
+```
+
+The proposed bootstrap `Z(Q chi_a)/I(Q chi_a)>=Z(Q)/I(Q)+1` is false.
+Indeed, for
+
+```text
+Q=chi_1^5 chi_2,             a=1,
+(I(Q),Z(Q))=(207,1836),
+(I(Q chi_1),Z(Q chi_1))=(704,6930).
+```
+
+Thus
+
+```text
+6930*207-(1836+207)*704=-3762<0.                (P5A.102AD5ALX1ZZB3S4N43V)
+```
+
+The strict `cpp_int` diagnostic
+`character_ring_iter/probe_su2_zero_weight_reserve.cpp` constructs the
+two squares directly from Clebsch--Gordan intervals and reproduces this
+identity.  This does not disprove the weaker possible bound
+`Z(Q)>=(number of factors in Q+1)I(Q)`; it only eliminates the additive
+insertion proof of that bound.
+
+The scale-corrected fractional version is also false, even on a
+parity-pure positive root with log-concave torus half-profile.  Let
+
+```text
+Q=32beta_0+16beta_1+8beta_2+4beta_3
+  +2beta_4+beta_5+beta_6.
+```
+
+Its torus half-profile is
+
+```text
+(64,32,16,8,4,2,1),
+```
+
+which is positive and log-concave.  Nevertheless, for `a=1`, exact
+Clebsch--Gordan multiplication gives
+
+```text
+(I(Q),Z(Q))=(2732,5461),
+(I(Q chi_1),Z(Q chi_1))=(6150,12286).
+```
+
+Thus the proposed fractional bootstrap
+
+```text
+Z(Q chi_a)/I(Q chi_a)>=Z(Q)/I(Q)+a/(a+1)        (ZFR)
+```
+
+has exact margin
+
+```text
+2*12286*2732-(2*5461+2732)*6150
+=-16841396<0.                                  (P5A.102AD5ALX1ZZB3S4N43W)
+```
+
+The strict `--parity-geometric` mode of
+`character_ring_iter/probe_su2_zero_weight_reserve.cpp` constructs this
+example.  It is not a factor word, but it rules out a proof which retains
+only parity, positive interval support, and log-concavity of the torus
+half-profile.
+
+There is a sharper reserve which still survives every exact factor-word
+test.  Unlike the failed insertion statements, it is a single global
+inequality and its natural scale is the total highest weight, not the number
+of irreducible factors.  Let
+
+```text
+Q=product_(i=1)^n chi_(a_i),             A=sum_i a_i,
+Q^2=sum_(s>=0)d_s beta_s,
+I(Q)=d_0,                                Z(Q)=sum_s d_s.
+```
+
+**Target 5A8H28UIA2CGLPCIPOCB2RADTOTALRESERVE
+(total-label zero-weight reserve).**  Prove
+
+```text
+Z(Q)>=(A+1)I(Q).                                      (TLZR)
+```
+
+This is sharp: for every all-fundamental word `Q=chi_1^A`, equality is
+the ballot identity
+
+```text
+Z(Q)=binom(2A,A),             I(Q)=binom(2A,A)/(A+1).
+```
+
+The target has a particularly compact product-of-chains form.  Put
+
+```text
+H(x)=product_i(1+x+...+x^(a_i)),
+h_r=[x^r]H(x)^2.
+```
+
+The torus weights of `Q^2` are the coefficients `h_r`, centred at degree
+`A`.  Highest-weight subtraction therefore gives exactly
+
+```text
+Z(Q)=h_A,                    I(Q)=h_A-h_(A-1).        (TLZR1)
+```
+
+Consequently `(TLZR)` is equivalent to the single central rank inequality
+for the product of paired chains
+
+```text
+(A+1)h_(A-1)>=A h_A.                               (TLZR2)
+```
+
+This reduction is exact and retains the tensor-product origin that the
+generic parity-log-concave counterexample lacks.  It is not yet a proof of
+`(TLZR2)`: a general symmetric log-concave rank sequence does not supply
+this sharp central-ratio bound.  For example,
+
+```text
+(h_0,h_1,h_2,h_3,h_4)=(1,2,4,2,1)
+```
+
+is symmetric and log concave but violates the rank-four instance,
+
+```text
+3h_1=6<8=2h_2.
+```
+
+Thus a proof must use the complete product-of-chains origin in `(TLZR1)`,
+not only its symmetric log-concave consequence.
+
+The first nontrivial factor count is nevertheless exact.
+
+**Lemma 5A8H28UIA2CGLPCIPOCB2RADTOTALRESERVE2
+(two-factor total-label reserve).**  For `a>=b>=1`, the word
+
+```text
+Q=chi_a chi_b
+```
+
+satisfies `(TLZR)`, with the exact margin
+
+```text
+Z(Q)-(a+b+1)I(Q)={(b+1)b(3a-b-2)}/3>=0.          (TLZR3)
+```
+
+**Proof.**  Clebsch--Gordan gives the multiplicity-free expansion
+
+```text
+Q=sum_(i=0)^b beta_(a-b+2i),
+```
+
+so `I(Q)=b+1`.  The product of the `i`th and `j`th summands has
+`a-b+2min(i,j)+1` irreducible components.  Hence
+
+```text
+Z(Q)
+ =(b+1)^2(a-b+1)+2sum_(i,j=0)^b min(i,j)
+ =(b+1)^2(a-b+1)+b(b+1)(2b+1)/3.
+```
+
+Subtracting `(a+b+1)(b+1)` gives `(TLZR3)`.  Its last factor is
+nonnegative because `a>=b>=1`.  QED.
+
+The strict `cpp_int` factor-word mode
+
+```text
+probe_su2_zero_weight_reserve.cpp --reserve-only 12 8
+```
+
+checks all `125,969` nondecreasing words with labels at most twelve and at
+most eight factors.  It finds zero violations of both the older
+factor-count reserve and `(TLZR)`, with minimum total-label margin zero at
+`[1]`.  This is a route-selection audit only; `(TLZR2)` is the required
+unbounded combinatorial statement.
 
 For a factor word of root support `n>=2`, Theorem
 5A8H28UIA2CGLPCIPOCB2RADSECONDALL and Lemma
