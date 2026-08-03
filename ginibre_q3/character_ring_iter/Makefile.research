@@ -470,6 +470,14 @@ probe_su2_symmetric_log_concave_autocorrelation: \
 	$(CXX) -O3 -march=native -std=c++20 -Wall -Wextra -Wpedantic \
 		-Wconversion -Wshadow -Werror $< -o $@
 
+probe_su2_gap_append_endpoint: probe_su2_gap_append_endpoint.cpp
+	$(CXX) -O3 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_t4_group_chamber: analyze_su2_t4_group_chamber.cpp
+	$(CXX) -O3 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
 probe_su2_wall_121_rat2: probe_su2_wall_121_rat2.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -976,6 +984,8 @@ RESEARCH_TARGETS = \
 	probe_su2_ordinary_variable_box_tp2 \
 	analyze_su2_ordinary_quartic_majorization \
 	probe_su2_symmetric_log_concave_autocorrelation \
+	probe_su2_gap_append_endpoint \
+	analyze_su2_t4_group_chamber \
 	probe_su2_wall_121_rat2 \
 	probe_su2_log_concave_diagonal_completion \
 	probe_su2_ordinary_arbitrary_root_current \

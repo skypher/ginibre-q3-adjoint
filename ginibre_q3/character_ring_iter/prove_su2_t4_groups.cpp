@@ -346,6 +346,139 @@ bool bounded_group_integer_certificate(
     return true;
 }
 
+Integer floor_rational(const Rational& value) {
+    const Integer numerator = value.numerator();
+    const Integer denominator = value.denominator();
+    if (numerator >= 0) {
+        return numerator / denominator;
+    }
+    return -((-numerator + denominator - 1) / denominator);
+}
+
+Integer ceil_rational(const Rational& value) {
+    return -floor_rational(-value);
+}
+
+bool bounded_qy_h_ray_newton_certificate(
+    const Chamber& chamber,
+    const std::vector<Polynomial>& constraints
+) {
+    const std::optional<Rational> q_bound =
+        affine_upper_bound(constraints, 0U);
+    const std::optional<Rational> y_bound =
+        affine_upper_bound(constraints, 2U);
+    if (
+        !q_bound.has_value()
+        || !y_bound.has_value()
+        || *q_bound < 1
+        || *y_bound < 0
+    ) {
+        return false;
+    }
+    const Integer maximum_q_integer = floor_rational(*q_bound);
+    const Integer maximum_y_integer = floor_rational(*y_bound);
+    if (
+        maximum_q_integer > 1000
+        || maximum_y_integer > 10000
+    ) {
+        return false;
+    }
+    const int maximum_q = maximum_q_integer.convert_to<int>();
+    const int maximum_y = maximum_y_integer.convert_to<int>();
+    std::uint64_t rays = 0U;
+    for (int q_value = 1; q_value <= maximum_q; ++q_value) {
+        for (int y_value = 0; y_value <= maximum_y; ++y_value) {
+            Integer minimum_h = 0;
+            std::optional<Integer> maximum_h;
+            bool feasible = true;
+            for (const Polynomial& constraint : constraints) {
+                const Affine affine = affine_coefficients(constraint);
+                const Rational constant_part =
+                    affine[0]
+                    + affine[1] * q_value
+                    + affine[3] * y_value;
+                const Rational h_coefficient = affine[2];
+                if (h_coefficient == 0) {
+                    if (constant_part < 0) {
+                        feasible = false;
+                        break;
+                    }
+                    continue;
+                }
+                if (h_coefficient > 0) {
+                    minimum_h = std::max(
+                        minimum_h,
+                        ceil_rational(-constant_part / h_coefficient)
+                    );
+                } else {
+                    const Integer bound = floor_rational(
+                        constant_part / (-h_coefficient)
+                    );
+                    if (!maximum_h.has_value() || bound < *maximum_h) {
+                        maximum_h = bound;
+                    }
+                }
+            }
+            if (
+                !feasible
+                || (maximum_h.has_value() && *maximum_h < minimum_h)
+            ) {
+                continue;
+            }
+            if (minimum_h > std::numeric_limits<long>::max()) {
+                return false;
+            }
+            const std::array<Polynomial, 3> substitution{
+                constant(q_value),
+                Polynomial::variable(1)
+                    + constant(minimum_h.convert_to<long>()),
+                constant(y_value)
+            };
+            const Polynomial translated = substitute(
+                chamber.margin,
+                substitution
+            );
+            if (nonnegative_newton(translated)) {
+                ++rays;
+                continue;
+            }
+            if (!maximum_h.has_value() || *maximum_h > 10000) {
+                return false;
+            }
+            for (Integer h_value = minimum_h;
+                 h_value <= *maximum_h;
+                 ++h_value) {
+                if (h_value > std::numeric_limits<int>::max()) {
+                    return false;
+                }
+                const std::array<int, 3> values{
+                    q_value,
+                    h_value.convert_to<int>(),
+                    y_value
+                };
+                if (evaluate(chamber.margin, values) < 0) {
+                    throw std::runtime_error(
+                        "bounded Q,Y chamber contains a negative point"
+                    );
+                }
+            }
+            ++rays;
+        }
+    }
+    if (rays == 0U) {
+        return false;
+    }
+    std::cout
+        << "SU2_T4_GROUP_H_RAY_NEWTON"
+        << " position=" << chamber.mask
+        << " Q_bound=" << *q_bound
+        << " Y_bound=" << *y_bound
+        << " rays=" << rays
+        << " result=PASS_EXACT"
+        << std::endl;
+    return true;
+}
+
 bool certify_group_chamber(
     const Chamber& chamber,
     const GroupFormula& formula
@@ -384,6 +517,12 @@ bool certify_group_chamber(
         );
     }
     if (!passed) {
+        passed = bounded_qy_h_ray_newton_certificate(
+            chamber,
+            constraints
+        );
+    }
+    if (!passed) {
         passed = sum_cone_certificate(chamber, constraints);
     }
     if (!passed) {
@@ -412,6 +551,7 @@ bool certify_group_chamber(
 
 }  // namespace
 
+#ifndef SU2_T4_GROUPS_EMBEDDED
 int main(int argc, char** argv) {
     try {
         if (argc < 2 || argc > 4) {
@@ -520,3 +660,4 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 }
+#endif
