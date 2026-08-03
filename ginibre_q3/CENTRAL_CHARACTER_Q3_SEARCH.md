@@ -9567,6 +9567,10 @@ analyze_su2_t4_group_chamber --parity-only 84
 ```
 
 which has `delta=1` and also returns `PASS_EXACT_PARITY_SQUARE`.
+The certifier runs this exact structural test immediately after its bounded
+checks and before generic facet and composition searches, so a matching
+index-two cone is discharged by the smaller certificate rather than by a
+larger ambient-lattice triangulation.
 
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.

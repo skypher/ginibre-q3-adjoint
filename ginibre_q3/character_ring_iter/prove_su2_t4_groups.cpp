@@ -741,6 +741,12 @@ bool certify_group_chamber(
         );
     }
     if (!passed) {
+        passed = parity_unit_offset_square_cone_certificate(
+            chamber,
+            constraints
+        );
+    }
+    if (!passed) {
         passed = direct_facet_certificate(
             chamber,
             constraints,
@@ -765,12 +771,6 @@ bool certify_group_chamber(
     }
     if (!passed) {
         passed = equal_sum_square_cone_certificate(
-            chamber,
-            constraints
-        );
-    }
-    if (!passed) {
-        passed = parity_unit_offset_square_cone_certificate(
             chamber,
             constraints
         );
