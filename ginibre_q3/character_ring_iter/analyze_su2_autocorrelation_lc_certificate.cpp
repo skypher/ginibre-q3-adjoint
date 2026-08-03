@@ -4772,6 +4772,8 @@ struct Wall121SupportFiveLargeRatioFaceDiagnostic {
   std::size_t negative_coefficients = 0U;
   int t_factor = -1;
   NDSubdivisionResult subdivision;
+  bool lower_endpoint_positive = false;
+  bool upper_endpoint_positive = false;
 };
 
 struct Wall121SupportFiveLargeRatioLeadingFace {
@@ -5023,9 +5025,16 @@ wall_121_support_five_large_ratio_diagonal_corner_diagnostic(
       [](const Rational& value) { return value < 0; }));
   NDSubdivisionResult subdivision;
   nd_certify_subdivision(grid, 0, depth_limit, subdivision);
-  return {
+  Wall121SupportFiveLargeRatioFaceDiagnostic result{
       grid.degrees, canonical_face.size(), grid.values.size(), negative,
       t_factor, std::move(subdivision)};
+  const Exponent lower{0, 0, 0};
+  const Exponent upper{0, 0, grid.degrees[2]};
+  result.lower_endpoint_positive =
+      grid.values[nd_grid_index(grid.degrees, lower)] > 0;
+  result.upper_endpoint_positive =
+      grid.values[nd_grid_index(grid.degrees, upper)] > 0;
+  return result;
 }
 
 Wall121SupportFiveLargeRatioFaceDiagnostic
@@ -5075,9 +5084,16 @@ wall_121_support_five_large_ratio_complementary_corner_diagnostic(
       [](const Rational& value) { return value < 0; }));
   NDSubdivisionResult subdivision;
   nd_certify_subdivision(grid, 0, depth_limit, subdivision);
-  return {
+  Wall121SupportFiveLargeRatioFaceDiagnostic result{
       grid.degrees, canonical_face.size(), grid.values.size(), negative,
       total_factor, std::move(subdivision)};
+  const Exponent lower{0, 0, 0};
+  const Exponent upper{0, 0, grid.degrees[2]};
+  result.lower_endpoint_positive =
+      grid.values[nd_grid_index(grid.degrees, lower)] > 0;
+  result.upper_endpoint_positive =
+      grid.values[nd_grid_index(grid.degrees, upper)] > 0;
+  return result;
 }
 
 Wall121SupportFiveLargeRatioFaceDiagnostic
@@ -7038,7 +7054,11 @@ int main(int argc, char** argv) {
                 << " nodes=" << result.subdivision.nodes
                 << " leaves=" << result.subdivision.leaves
                 << " unresolved=" << result.subdivision.unresolved
-                << " maximum_depth=" << result.subdivision.maximum_depth;
+                << " maximum_depth=" << result.subdivision.maximum_depth
+                << " lower_endpoint_positive="
+                << (result.lower_endpoint_positive ? 1 : 0)
+                << " upper_endpoint_positive="
+                << (result.upper_endpoint_positive ? 1 : 0);
       if (result.subdivision.has_first_unresolved) {
         std::cout << " first_unresolved_cell=(";
         for (std::size_t index = 0U;
@@ -7087,7 +7107,11 @@ int main(int argc, char** argv) {
           << " nodes=" << result.subdivision.nodes
           << " leaves=" << result.subdivision.leaves
           << " unresolved=" << result.subdivision.unresolved
-          << " maximum_depth=" << result.subdivision.maximum_depth;
+          << " maximum_depth=" << result.subdivision.maximum_depth
+          << " lower_endpoint_positive="
+          << (result.lower_endpoint_positive ? 1 : 0)
+          << " upper_endpoint_positive="
+          << (result.upper_endpoint_positive ? 1 : 0);
       if (result.subdivision.has_first_unresolved) {
         std::cout << " first_unresolved_cell=(";
         for (std::size_t index = 0U;

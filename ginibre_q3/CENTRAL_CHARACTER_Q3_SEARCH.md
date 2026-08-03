@@ -17357,12 +17357,67 @@ SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO_COMPLEMENTARY_CORNER
 ```
 
 The two degree-four directional face certificates cover both `z<=t` and
-`t<=z`, hence every Newton direction at `(t,z)=(0,0)`.  They are still
-boundary data: a certificate for a positive neighborhood in each chart and
-ultimately the support-uniform target remain required.
+`t<=z`, hence every Newton direction at `(t,z)=(0,0)`.  The compactness
+argument below promotes this boundary information to a positive
+neighborhood; the support-uniform target remains separate.
+
+In fact the face data give a local certificate without a numerical grid
+threshold.  The endpoint-enhanced exact replays append
+
+```text
+lower_endpoint_positive=1 upper_endpoint_positive=1
+```
+
+to both directional outputs.  Since every Bernstein coefficient is
+nonnegative, these two positive endpoint coefficients make each degree-four
+directional face strictly positive on its whole unit interval.
+
+**Lemma 5A8H28UIA2CGLPCIPOCGAPWALL121RAT2P5HI
+(support-five high-ratio neighborhood).**  Let `F(t,alpha,beta,z)` be the
+cleared high-ratio numerator used in the preceding modes.  There is an
+`epsilon>0` such that
+
+```text
+F(t,alpha,beta,z)>=0,
+0<=t<=epsilon, 0<=alpha,beta,z<=1.                 (P5A.102AD5ALX1ZZB3BH9Z87)
+```
+
+**Proof.**  The exact leading-face computation shows that `t^16` divides
+`F`; write `F=t^16 G`.  Its `t=0` face is a strictly positive multiple of
+`z^4`.  On the cone `z<=t`, put `z=t gamma`.  Exact collection of the
+total `t`-degree twenty face gives
+
+```text
+G(t,alpha,beta,t gamma)
+ =t^4{P_<(gamma)+t E_<(t,alpha,beta,gamma)},
+```
+
+where `P_<` is the strictly positive diagonal Bernstein polynomial certified
+above.  On the complementary cone `t<=z`, put `t=z delta`; the retained
+`t^16` factor gives
+
+```text
+G(z delta,alpha,beta,z)
+ =z^4{P_>(delta)+z E_>(z,alpha,beta,delta)},
+```
+
+where `P_>` is the strictly positive complementary Bernstein polynomial.
+Both remainder functions are ordinary polynomials on compact cubes.  Their
+absolute values are bounded, while the displayed face polynomials have
+positive minima.  Hence both braces are nonnegative on sufficiently small
+closed coordinate neighborhoods.  For `z` bounded away from zero, the
+strict `t=0` face `G(0,alpha,beta,z)>0` and compact continuity supply the
+same conclusion uniformly.  These three regions cover the cube for a
+smaller common `epsilon`.  Finally `t^16>=0`, proving
+`(P5A.102AD5ALX1ZZB3BH9Z87)`.  QED.
+
+This is a rigorous fixed-support high-ratio neighborhood, not an explicit
+finite cutoff and not an arbitrary-support proof.  The full exact chart is
+still needed to bridge this neighborhood to the already certified compact
+half.
 
 The support-three and support-four rational certificates above, and the
-support-five calculation below, are therefore finite boundary facts only.
+support-five calculation below, are therefore finite partial facts only.
 Because `ell_2>=ell`, those first-iterate certificates automatically pay
 the weaker second-iterate ceiling as well.  They do not replace either the
 corrected uniform target `(P5A.102AD5ALX1ZZB3BH9Z86)` or the exact Bellman
