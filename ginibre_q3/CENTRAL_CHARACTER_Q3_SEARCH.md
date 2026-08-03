@@ -12676,6 +12676,101 @@ profiles=230,230, currents=19,366,230, failures=0.
 reaches half-support six on the complete denominator-twenty grid.  It is a
 subcone of the target, not a proof of `(OCBGP)`.
 
+The complementary long-support replay
+
+```text
+--ratio-grid 18 3:
+profiles=1,140, currents=445,911, failures=0
+```
+
+reaches half-support seventeen on the complete denominator-three grid.  It
+likewise supplies only a finite rational-subcone check, not a proof.
+
+There is an equivalent one-dimensional Hilbert-space form which keeps the
+complete global sum while removing the Cauchy--Binet intermediate-pair
+coordinates.  It is useful because log concavity becomes the increasing
+hazard-rate condition of a finite profile.
+
+**Lemma 5A8H28UIA2CGLPCIPOCBWH (reflected-window Gram identity).**
+Let `h` be any finite symmetric real profile on `Z`, put
+
+```text
+W_t=sum_i h_i h_(i+t),              c_t=W_t-W_(t+1),
+u_i=h_i-h_(i+1),
+g_R(i)=h_(i-R)-h_(i+R+1)=sum_(a=-R)^R u_(i+a).
+                                                        (P5A.102AD5ALX1ZZB3I1)
+```
+
+For every `R,S>=0`, one has
+
+```text
+(1/2)<g_R,g_S>
+ =W_(|R-S|)-W_(R+S+1)
+ =(N_c)_(R,S).                                      (P5A.102AD5ALX1ZZB3I2)
+```
+
+In particular, if `h` is nonzero and
+
+```text
+q_R=g_R-{<g_0,g_R>/<g_0,g_0>}g_0,
+```
+
+then the ordinary anchored current is exactly
+
+```text
+c_0(N_c)_(R,S)-c_Rc_S
+ ={1/4}<g_0,g_0><q_R,q_S>.                         (P5A.102AD5ALX1ZZB3I3)
+```
+
+**Proof.**  Expand the scalar product in `(P5A.102AD5ALX1ZZB3I1)`.
+The two same-side terms are `W_(R-S)=W_(|R-S|)`, while both cross
+terms are `W_(R+S+1)`.  This proves the first equality in
+`(P5A.102AD5ALX1ZZB3I2)`.  Telescoping the ordinary fusion interval gives
+
+```text
+(N_c)_(R,S)=sum_(t=|R-S|)^(R+S)c_t
+            =W_(|R-S|)-W_(R+S+1),
+```
+
+which proves the second.  At `R=0`, this says
+`c_R=(1/2)<g_0,g_R>`.  Substitute these three Gram identities into the
+anchored current and orthogonally project `g_R,g_S` away from `g_0`; this is
+exactly `(P5A.102AD5ALX1ZZB3I3)`.  QED.
+
+If `h_i>0` on `0<=i<=m` and `h_(m+1)=0`, define its discrete hazard
+
+```text
+lambda_i=(h_i-h_(i+1))/h_i=1-h_(i+1)/h_i.
+```
+
+For a symmetric nonnegative log-concave profile, `h_0>=h_1>=...>=h_m`
+and
+
+```text
+0<=lambda_0<=lambda_1<=...<=lambda_m=1.          (P5A.102AD5ALX1ZZB3I4)
+```
+
+Conversely `(P5A.102AD5ALX1ZZB3I4)` is log concavity on the positive
+half-support.  Indeed log concavity says precisely that the successive
+ratios `h_(i+1)/h_i` are nonincreasing.  Symmetry gives
+`u_(-i-1)=-u_i` and `g_R(-i-1)=-g_R(i)`, so each `g_R` is a reflected
+interval-window sum of this increasing-hazard increment profile.
+
+**Target 5A8H28UIA2CGLPCIPOCBWHGP
+(increasing-hazard reflected-window acuteness).**  Under the hypotheses
+above, prove
+
+```text
+<q_R,q_S> >= 0,                                  R,S>=0. (IHRWA)
+```
+
+By `(P5A.102AD5ALX1ZZB3I3)`, this is exactly `(OCSP)` for the symmetric
+log-concave profile `h`; in particular it would prove `(OCBGP)` after the
+earlier Cauchy--Binet identity.  This is not a new enlargement of the
+problem and is not asserted here without proof.  Its value is to identify
+the missing payment as pairwise acuteness of the residual reflected windows,
+rather than as a sign assignment over individual Cauchy--Binet pairs.
+
 There is a second exact reduction in which the complete star current
 becomes a rank-two Weyl-character triangle.  This retains the global
 sum which the two failed intermediate-pair allocations split apart.
@@ -13168,6 +13263,55 @@ nonmonotone likelihood-ratio example following that lemma already
 rules out a direct Chebyshev proof of `(OCLRC)`.  The benefit of
 `(P5A.102AD5ALX1ZZB3S3)` is therefore a genuine cone reduction, not
 a hidden monotonicity claim.
+
+The failure of pointwise comonotonicity already occurs on the genuine
+factor orbit, so it cannot be restored by retaining the exact product
+factorization.
+
+**Proposition 5A8H28UIA2CGLPCIPOCOVLCOM
+(factor-orbit comonotonicity obstruction).**  Put
+
+```text
+P=beta_1^2=beta_0+beta_1+beta_2,
+p=(1,1,1).
+```
+
+On the support of `p`, the two likelihood-ratio functions in `(OCLRC)` obey
+
+```text
+F_1(1)-F_1(2)=1,
+F_2(1)-F_2(2)=-1.                              (P5A.102AD5ALX1ZZB3S3C)
+```
+
+Thus `F_1` and `F_2` are not comonotone, although the complete current is
+
+```text
+J(1,2)=9.                                       (P5A.102AD5ALX1ZZB3S3D)
+```
+
+**Proof.**  Ordinary interval multiplication gives
+
+```text
+T_1p=(1,3,2,1),             T_2p=(1,2,3,2,1).
+```
+
+Since `p_1=p_2=1`, their entries at labels one and two give
+`(P5A.102AD5ALX1ZZB3S3C)`.  Squaring the displayed factor word gives
+
+```text
+P^2=beta_1^4,
+c=(3,6,6,3,1).
+```
+
+Therefore
+
+```text
+J(1,2)=c_0(c_1+c_2+c_3)-c_1c_2
+      =3(6+6+3)-6*6=9.
+```
+
+Thus a proof of the positive covariance cannot use the pointwise sign
+`{F_R(i)-F_R(j)}{F_S(i)-F_S(j)}>=0`, even for an actual factor word. QED.
 
 The complete wall also singles out a tempting stronger exterior
 payment.  Put
