@@ -480,22 +480,30 @@ bool bounded_qy_h_ray_newton_certificate(
 }
 
 // A square-cone certificate may lose an index-two lattice condition.  If
-// a-b is always even, the two integer branches a>=b and b>=a+1 are better
-// parameterised by their *even* difference.  This routine checks precisely
-// that finite parity refinement for equal pair sums and for a pair-sum
-// offset of one.  On each branch the remaining condition is
+// a-b has fixed integral parity, the two integer branches a>=b and b>=a+1
+// are better parameterised by their parity-corrected *even* difference.
+// This routine checks precisely that finite refinement for equal pair sums
+// and for a pair-sum offset of one.  On each branch the remaining condition is
 // x+2y+z>=minimum, which is reduced to finitely many translated orthants.
-bool even_integral_affine(const Polynomial& polynomial) {
+std::optional<int> integral_affine_parity(const Polynomial& polynomial) {
+    int parity = 0;
     for (const auto& [exponent, coefficient] : polynomial.terms()) {
         if (
             exponent[0] + exponent[1] + exponent[2] > 1
             || coefficient.denominator() != 1
-            || coefficient.numerator() % 2 != 0
         ) {
-            return false;
+            return std::nullopt;
+        }
+        const int residue = (
+            coefficient.numerator() % 2
+        ).convert_to<int>();
+        if (exponent == Exponent{0, 0, 0}) {
+            parity = residue < 0 ? residue + 2 : residue;
+        } else if (residue != 0) {
+            return std::nullopt;
         }
     }
-    return true;
+    return parity;
 }
 
 bool weighted_parity_orthant_certificate(
@@ -676,14 +684,22 @@ bool parity_unit_offset_square_cone_certificate(
                         constraints[right_indices[right_choice]];
                     const Polynomial& d =
                         constraints[right_indices[1U - right_choice]];
-                    if (!even_integral_affine(a - b)) {
+                    const std::optional<int> parity =
+                        integral_affine_parity(a - b);
+                    if (!parity.has_value()) {
                         continue;
                     }
+                    const int first_shift = *parity;
+                    const int second_shift = 2 - *parity;
                     if (
                         !weighted_parity_orthant_certificate(
                             chamber.margin,
-                            std::array<Polynomial, 3>{b, a - b, c},
-                            left_minimum
+                            std::array<Polynomial, 3>{
+                                b,
+                                a - b - constant(first_shift),
+                                c
+                            },
+                            left_minimum - first_shift
                         )
                     ) {
                         continue;
@@ -693,10 +709,10 @@ bool parity_unit_offset_square_cone_certificate(
                             chamber.margin,
                             std::array<Polynomial, 3>{
                                 a,
-                                b - a - constant(2),
+                                b - a - constant(second_shift),
                                 d
                             },
-                            left_minimum + offset - 2
+                            left_minimum + offset - second_shift
                         )
                     ) {
                         continue;
@@ -714,6 +730,7 @@ bool parity_unit_offset_square_cone_certificate(
                         << right_choice << ')'
                         << " minimum=" << left_minimum
                         << " offset=" << offset
+                        << " parity=" << *parity
                         << " result=PASS_EXACT_PARITY_SQUARE"
                         << std::endl;
                     return true;

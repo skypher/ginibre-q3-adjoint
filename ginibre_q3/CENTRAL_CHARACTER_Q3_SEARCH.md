@@ -9536,16 +9536,17 @@ with equal pair sums or the exact one-unit offset.  Suppose nonnegative
 affine facets satisfy
 
 ```text
-a+c+delta=b+d,           a-b in 2 Z,
-a+c>=m,                  delta in {0,1}.             (P5A.102AC5B)
+a+c+delta=b+d,           a-b=epsilon (mod 2),
+a+c>=m,                  delta,epsilon in {0,1}.      (P5A.102AC5B)
 ```
 
-On `a>=b`, put `(b,a-b,c)=(x,2r,z)`; on the complementary integer branch
-`b>=a+1`, put `(a,b-a-2,d)=(x,2r,z)`.  These are respectively the complete
-integer domains
+On `a>=b`, put
+`(b,a-b-epsilon,c)=(x,2r,z)`; on the complementary integer branch
+`b>=a+1`, put `(a,b-a-(2-epsilon),d)=(x,2r,z)`.  These are respectively
+the complete integer domains
 
 ```text
-x+2r+z>=m,               x+2r+z>=m+delta-2.
+x+2r+z>=m-epsilon,       x+2r+z>=m+delta-2+epsilon.
 ```
 
 Each is covered by `r>=ceil(m/2)` plus the finite slices below it; every
@@ -9567,6 +9568,14 @@ analyze_su2_t4_group_chamber --parity-only 84
 ```
 
 which has `delta=1` and also returns `PASS_EXACT_PARITY_SQUARE`.
+The opposite parity is needed already at
+
+```text
+analyze_su2_t4_group_chamber --parity-only 85,
+```
+
+where `delta=0`, `epsilon=1`, and the same exact certificate returns
+`PASS_EXACT_PARITY_SQUARE`.
 The certifier runs this exact structural test immediately after its bounded
 checks and before generic facet and composition searches, so a matching
 index-two cone is discharged by the smaller certificate rather than by a
