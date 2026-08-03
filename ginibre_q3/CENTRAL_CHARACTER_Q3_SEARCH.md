@@ -9531,43 +9531,47 @@ transport cone certificates is still required.  It is an exact scheduling
 partition, not a claim that the remaining 349 masks fail or that the full
 `C_5` theorem has been proved.
 
-The C++ certifier also has an exact index-two refinement for a square cone
-with equal pair sums or the exact one-unit offset.  Suppose nonnegative
+The C++ certifier also has an exact congruence-lattice refinement for a square
+cone with equal pair sums or the exact one-unit offset.  Suppose nonnegative
 affine facets satisfy
 
 ```text
-a+c+delta=b+d,           a-b=epsilon (mod 2),
-a+c>=m,                  delta,epsilon in {0,1}.      (P5A.102AC5B)
+a+c+delta=b+d,           a-b=epsilon (mod g),
+a+c>=m,                  delta in {0,1},
+                         g>=2, 0<=epsilon<g.          (P5A.102AC5B)
 ```
 
 On `a>=b`, put
-`(b,a-b-epsilon,c)=(x,2r,z)`; on the complementary integer branch
-`b>=a+1`, put `(a,b-a-(2-epsilon),d)=(x,2r,z)`.  These are respectively
+`(b,a-b-epsilon,c)=(x,gr,z)`; on the complementary integer branch
+`b>=a+1`, put `(a,b-a-(g-epsilon),d)=(x,gr,z)`.  These are respectively
 the complete integer domains
 
 ```text
-x+2r+z>=m-epsilon,       x+2r+z>=m+delta-2+epsilon.
+x+gr+z>=m-epsilon,       x+gr+z>=m+delta-g+epsilon.
 ```
 
-Each is covered by `r>=ceil(m/2)` plus the finite slices below it; every
+Each is covered by `r>=ceil(m/g)` plus the finite slices below it; every
 piece is certified by a nonnegative monomial or Newton expansion.  This is
-an exact lattice refinement, not a relaxation to the ambient real cone.
+an exact lattice refinement, not a relaxation to the ambient real cone.  The
+implementation enumerates every integral modulus `g>=2` dividing the gcd of
+the three linear coefficients of `a-b`; hence it tries every fixed congruence
+sublattice exposed by a selected four-facet shape.
 The diagnostic replay
 
 ```text
 analyze_su2_t4_group_chamber --parity-only 78
 ```
 
-returns `PASS_EXACT_PARITY_SQUARE` on the fan position whose four reduced
+returns `PASS_EXACT_MODULAR_SQUARE` with `g=2` on the fan position whose four reduced
 facets are the two equal-sum pairs.  Position `78` was already certified by
 the ordinary square triangulation; this replay validates the strictly
-stronger index-two fallback.  The first strict extension is
+stronger congruence fallback.  The first strict offset extension is
 
 ```text
 analyze_su2_t4_group_chamber --parity-only 84
 ```
 
-which has `delta=1` and also returns `PASS_EXACT_PARITY_SQUARE`.
+which has `delta=1` and also returns `PASS_EXACT_MODULAR_SQUARE`.
 The opposite parity is needed already at
 
 ```text
@@ -9575,7 +9579,9 @@ analyze_su2_t4_group_chamber --parity-only 85,
 ```
 
 where `delta=0`, `epsilon=1`, and the same exact certificate returns
-`PASS_EXACT_PARITY_SQUARE`.
+`PASS_EXACT_MODULAR_SQUARE` with `g=2`.  The next formerly generic chamber,
+position `102`, has the same odd-residue certificate and is likewise
+discharged directly.
 The certifier runs this exact structural test immediately after its bounded
 checks and before generic facet and composition searches, so a matching
 index-two cone is discharged by the smaller certificate rather than by a

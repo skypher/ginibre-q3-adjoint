@@ -479,38 +479,72 @@ bool bounded_qy_h_ray_newton_certificate(
     return true;
 }
 
-// A square-cone certificate may lose an index-two lattice condition.  If
-// a-b has fixed integral parity, the two integer branches a>=b and b>=a+1
-// are better parameterised by their parity-corrected *even* difference.
-// This routine checks precisely that finite refinement for equal pair sums
-// and for a pair-sum offset of one.  On each branch the remaining condition is
-// x+2y+z>=minimum, which is reduced to finitely many translated orthants.
-std::optional<int> integral_affine_parity(const Polynomial& polynomial) {
-    int parity = 0;
-    for (const auto& [exponent, coefficient] : polynomial.terms()) {
-        if (
-            exponent[0] + exponent[1] + exponent[2] > 1
-            || coefficient.denominator() != 1
-        ) {
-            return std::nullopt;
-        }
-        const int residue = (
-            coefficient.numerator() % 2
-        ).convert_to<int>();
-        if (exponent == Exponent{0, 0, 0}) {
-            parity = residue < 0 ? residue + 2 : residue;
-        } else if (residue != 0) {
-            return std::nullopt;
-        }
+// A square-cone certificate may lose a congruence sublattice.  If a-b has
+// fixed residue modulo g, the two integer branches a>=b and b>=a+1 are better
+// parameterised by their residue-corrected multiple-of-g difference.  This
+// routine checks that finite refinement for equal pair sums and for a
+// pair-sum offset of one.  On each branch the remaining condition is
+// x+g*y+z>=minimum, which is reduced to finitely many translated orthants.
+Integer positive_gcd(Integer left, Integer right) {
+    if (left < 0) {
+        left = -left;
     }
-    return parity;
+    if (right < 0) {
+        right = -right;
+    }
+    while (right != 0) {
+        const Integer remainder = left % right;
+        left = right;
+        right = remainder;
+    }
+    return left;
 }
 
-bool weighted_parity_orthant_certificate(
+std::vector<int> integral_affine_moduli(const Polynomial& polynomial) {
+    const Affine affine = affine_coefficients(polynomial);
+    for (const Rational& coefficient : affine) {
+        if (coefficient.denominator() != 1) {
+            return {};
+        }
+    }
+    Integer common = 0;
+    for (std::size_t index = 1U; index < affine.size(); ++index) {
+        common = positive_gcd(common, affine[index].numerator());
+    }
+    if (
+        common < 2
+        || common > std::numeric_limits<int>::max()
+    ) {
+        return {};
+    }
+    const int maximum = common.convert_to<int>();
+    std::set<int> moduli;
+    for (int divisor = 2; divisor <= maximum / divisor; ++divisor) {
+        if (maximum % divisor != 0) {
+            continue;
+        }
+        moduli.insert(divisor);
+        moduli.insert(maximum / divisor);
+    }
+    moduli.insert(maximum);
+    return {moduli.begin(), moduli.end()};
+}
+
+int affine_residue(const Polynomial& polynomial, int modulus) {
+    const Affine affine = affine_coefficients(polynomial);
+    const int residue = (affine[0].numerator() % modulus).convert_to<int>();
+    return residue < 0 ? residue + modulus : residue;
+}
+
+bool weighted_modular_orthant_certificate(
     const Polynomial& margin,
     const std::array<Polynomial, 3>& facets,
-    int minimum
+    int minimum,
+    int modulus
 ) {
+    if (modulus < 2) {
+        throw std::invalid_argument("modulus must be at least two");
+    }
     if (minimum < 0) {
         minimum = 0;
     }
@@ -525,9 +559,9 @@ bool weighted_parity_orthant_certificate(
     const Polynomial z = Polynomial::variable(2);
     const Polynomial pulled = substitute(
         substitute(margin, inverse),
-        std::array<Polynomial, 3>{x, scale(y, 2), z}
+        std::array<Polynomial, 3>{x, scale(y, modulus), z}
     );
-    const int y_floor = (minimum + 1) / 2;
+    const int y_floor = (minimum + modulus - 1) / modulus;
     if (
         !nonnegative_basis(
             substitute(
@@ -543,7 +577,7 @@ bool weighted_parity_orthant_certificate(
         return false;
     }
     for (int y_value = 0; y_value < y_floor; ++y_value) {
-        const int remainder = minimum - 2 * y_value;
+        const int remainder = minimum - modulus * y_value;
         if (
             !nonnegative_basis(
                 substitute(
@@ -684,56 +718,57 @@ bool parity_unit_offset_square_cone_certificate(
                         constraints[right_indices[right_choice]];
                     const Polynomial& d =
                         constraints[right_indices[1U - right_choice]];
-                    const std::optional<int> parity =
-                        integral_affine_parity(a - b);
-                    if (!parity.has_value()) {
-                        continue;
+                    for (const int modulus : integral_affine_moduli(a - b)) {
+                        const int residue = affine_residue(a - b, modulus);
+                        const int first_shift = residue;
+                        const int second_shift = modulus - residue;
+                        if (
+                            !weighted_modular_orthant_certificate(
+                                chamber.margin,
+                                std::array<Polynomial, 3>{
+                                    b,
+                                    a - b - constant(first_shift),
+                                    c
+                                },
+                                left_minimum - first_shift,
+                                modulus
+                            )
+                        ) {
+                            continue;
+                        }
+                        if (
+                            !weighted_modular_orthant_certificate(
+                                chamber.margin,
+                                std::array<Polynomial, 3>{
+                                    a,
+                                    b - a - constant(second_shift),
+                                    d
+                                },
+                                left_minimum + offset - second_shift,
+                                modulus
+                            )
+                        ) {
+                            continue;
+                        }
+                        std::cout
+                            << "SU2_T4_GROUP_MODULAR_PAIR_SUM_CONE"
+                            << " position=" << chamber.mask
+                            << " pairs=("
+                            << left_pair->first << ','
+                            << left_pair->second << ';'
+                            << right_pair->first << ','
+                            << right_pair->second << ')'
+                            << " orientations=("
+                            << left_choice << ','
+                            << right_choice << ')'
+                            << " minimum=" << left_minimum
+                            << " offset=" << offset
+                            << " modulus=" << modulus
+                            << " residue=" << residue
+                            << " result=PASS_EXACT_MODULAR_SQUARE"
+                            << std::endl;
+                        return true;
                     }
-                    const int first_shift = *parity;
-                    const int second_shift = 2 - *parity;
-                    if (
-                        !weighted_parity_orthant_certificate(
-                            chamber.margin,
-                            std::array<Polynomial, 3>{
-                                b,
-                                a - b - constant(first_shift),
-                                c
-                            },
-                            left_minimum - first_shift
-                        )
-                    ) {
-                        continue;
-                    }
-                    if (
-                        !weighted_parity_orthant_certificate(
-                            chamber.margin,
-                            std::array<Polynomial, 3>{
-                                a,
-                                b - a - constant(second_shift),
-                                d
-                            },
-                            left_minimum + offset - second_shift
-                        )
-                    ) {
-                        continue;
-                    }
-                    std::cout
-                        << "SU2_T4_GROUP_PARITY_PAIR_SUM_CONE"
-                        << " position=" << chamber.mask
-                        << " pairs=("
-                        << left_pair->first << ','
-                        << left_pair->second << ';'
-                        << right_pair->first << ','
-                        << right_pair->second << ')'
-                        << " orientations=("
-                        << left_choice << ','
-                        << right_choice << ')'
-                        << " minimum=" << left_minimum
-                        << " offset=" << offset
-                        << " parity=" << *parity
-                        << " result=PASS_EXACT_PARITY_SQUARE"
-                        << std::endl;
-                    return true;
                 }
             }
         }
