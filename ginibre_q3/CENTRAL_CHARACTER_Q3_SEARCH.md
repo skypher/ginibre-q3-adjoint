@@ -9436,6 +9436,32 @@ Exact finite-fusion discovery through level `300`, for every `2<=s<=20`,
 checks `10,738,325` coordinates of `(P5A.102AC)` without a negative
 value.  This is bounded evidence only.
 
+The next genuinely new anchored member has an exact finite affine-fan
+reduction.  At `s=5`, write
+
+```text
+K_5(Y)=f_10 u_11(Y)-f_11 u_10(Y).                 (P5A.102AC5)
+```
+
+Put `h=K-(2Q+1)`.  The complete Kac--Walton activation fan on
+
+```text
+Q>=1,       h>=0,       0<=Y<=2Q+1+h
+```
+
+has `72` affine hinges and exactly `601` feasible sign masks.  The strict
+C++ command
+
+```text
+prove_su2_t4_groups c5 --masks-only
+```
+
+enumerates these masks directly over the unbounded Presburger domain.
+The engine already supplies direct exact rational certificates for the
+initial masks, but the full `601`-chamber certificate has not yet been
+completed.  Thus this is a finite exact reduction of the next anchored
+kernel, not a proof of `(P5A.102AC)` for `s=5`.
+
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
 Then
@@ -28005,6 +28031,71 @@ finds `91` prefix violations among the same `106` skeleton sources.
 Thus neither direct chronological loop-erased orientation gives the
 required prefix allocation; any loop-erased construction must change the
 crossing rule or retain a more global carrier.
+
+Selecting the last *parity-compatible* loop-erased contact removes the
+collision in the first full-prefix row, but it is still not a prefix
+allocation.  More precisely, if the contact occurs at times `a,b` in the
+two input walks, retain only contacts with `a+b` odd and select the last
+one.  The switched second path then has the required even length.  At the
+full row `(k,q,j,t)=(6,2,4,3)` this rule maps all `106` sources to distinct
+prefix-valid outputs.  Already at the preceding prefix
+`(k,q,j,t)=(6,2,4,2)`, however, it sends
+
+```text
+(6,4,2,0,2,0 ; 0,2,4,4,2)
+   ->
+(6,4,4,2 ; 0,2,4,2,0,2,0).                       (P5A.102BV3a)
+```
+
+The image has even second-coordinate activity `6`, whereas this prefix
+allows only `0,2,4`.  Thus parity selection repairs neither the activity
+cutoff nor the complete injection.  The strict C++ integer-path
+probe `probe_su2_fomin_prefix_switch.cpp --scan 8 11` checks the direct
+parity-last rule in the complete small box and finds
+
+```text
+sources=3987,  prefix_failures=118,  collisions=2,
+missing_parity_contacts=0,
+first=(k,q,m,t)=(6,2,9,2).                         (P5A.102BV3b)
+```
+
+This is a no-go only for the canonical parity-last rule: a successful
+switch may still need a globally chosen contact together with an activity
+carrier move.
+
+The most immediate activity carrier does not repair this obstruction.  If a
+parity-last image exceeds the prefix by `2`, delete a terminal
+`0 -> q -> 0` return from its second path and append `q -> 0 -> q` to its
+first path.  This fixes the image in `(P5A.102BV3a)`, but the same row has
+the exact source--image pair
+
+```text
+(6,4,2,2,2,0 ; 0,2,4,4,2)
+   ->
+(6,4,4,2 ; 0,2,4,2,2,2,0).                       (P5A.102BV3c)
+```
+
+whose excessive second path has terminal segment `2,2,0`, not the required
+removable return `0,2,0`.  Thus the local terminal transfer is undefined.
+At `(6,2,4,2)` the parity-last rule has `71` sources and this repair has
+three such failures; through the same small box as `(P5A.102BV3b)` it has
+`99` prefix failures and `8` collisions.  A viable carrier must therefore
+move a nonterminal excursion or use a genuinely global reallocation.
+
+Moving the last closed two-step excursion anywhere in the excessive second
+path is also insufficient.  Delete that excursion and append two `q` loops
+to the first path.  This repairs `(P5A.102BV3c)`, but sends it to
+
+```text
+(6,4,4,2,2,2 ; 0,2,4,2,0),                       (P5A.102BV3d)
+```
+
+which is also the image of the source in `(P5A.102BV3a)` after the same
+transfer.  Thus this stronger local carrier has a collision in the first
+hard row.  Through level eight and odd length eleven it leaves `22` prefix
+failures, has `98` collisions, and fails to find a removable excursion for
+`22` sources.  The aggregate improvement in prefix validity is real but
+cannot be promoted to an injection without a shared-ticket allocation.
 
 There is also a representation-theoretic description of the exact
 shell cone.  Retain the lower fusion level

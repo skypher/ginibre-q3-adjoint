@@ -69,8 +69,14 @@ GroupFormula make_group_formula(const std::string& target) {
     } else if (target == "g2") {
         f_powers = {6, 7, 8, 9};
         u_powers = {7, 8, 9, 10};
+    } else if (target == "c5") {
+        // The next anchored kernel is
+        // f_10 u_11-f_11 u_10.  It is the exact finite C_5 target,
+        // not a low-group relaxation.
+        f_powers = {10, 11};
+        u_powers = {10, 11};
     } else {
-        throw std::runtime_error("target must be g0, g1, or g2");
+        throw std::runtime_error("target must be c5, g0, g1, or g2");
     }
 
     GroupFormula formula;
@@ -177,6 +183,9 @@ Polynomial group_margin(
         return
             scale(block(6, 10), 2035)
             + scale(block(8, 8), 4026);
+    }
+    if (target == "c5") {
+        return block(10, 11);
     }
     throw std::runtime_error("unknown group target");
 }

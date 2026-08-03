@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iterator>
 #include <map>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -15,6 +16,12 @@ struct Result {
     std::size_t sources = 0U;
     std::size_t prefix_failures = 0U;
     std::size_t collisions = 0U;
+    std::size_t missing_parity_contacts = 0U;
+    std::size_t transfer_failures = 0U;
+    int witness_level = -1;
+    int witness_label = -1;
+    int witness_length = -1;
+    int witness_truncation = -1;
     std::vector<int> first_source;
     std::vector<int> first_image;
     std::vector<int> first_preimage;
@@ -49,7 +56,7 @@ std::vector<int> key(const std::vector<int>& first, const std::vector<int>& seco
 std::pair<std::vector<int>, std::vector<int>> fomin_switch(
     const std::vector<int>& first,
     const std::vector<int>& second,
-    bool last_intersection
+    int contact_mode
 ) {
     std::vector<int> loop_erasure;
     std::vector<int> exit_index;
@@ -71,7 +78,7 @@ std::pair<std::vector<int>, std::vector<int>> fomin_switch(
         exit_index.resize(keep + 1U);
         exit_index[keep] = static_cast<int>(index);
     }
-    int chosen_second_index = -1;
+    std::optional<std::size_t> chosen_second_index;
     std::size_t chosen_loop_position = 0U;
     for (std::size_t second_index = 0U;
          second_index < second.size();
@@ -80,16 +87,21 @@ std::pair<std::vector<int>, std::vector<int>> fomin_switch(
         if (found == position.end()) {
             continue;
         }
-        chosen_second_index = static_cast<int>(second_index);
+        const int first_index = exit_index[found->second];
+        const bool parity_compatible =
+            ((first_index + static_cast<int>(second_index)) & 1) != 0;
+        if (contact_mode == 2 && !parity_compatible) {
+            continue;
+        }
+        chosen_second_index = second_index;
         chosen_loop_position = found->second;
-        if (!last_intersection) {
+        if (contact_mode == 0) {
             break;
         }
     }
-    if (chosen_second_index >= 0) {
+    if (chosen_second_index.has_value()) {
         const int first_index = exit_index[chosen_loop_position];
-        const std::size_t second_index =
-            static_cast<std::size_t>(chosen_second_index);
+        const std::size_t second_index = *chosen_second_index;
         std::vector<int> switched_first(
             first.begin(), first.begin() + first_index + 1
         );
@@ -110,7 +122,11 @@ std::pair<std::vector<int>, std::vector<int>> fomin_switch(
         );
         return {switched_first, switched_second};
     }
-    throw std::runtime_error("the two paths have no loop-erased intersection");
+    throw std::runtime_error(
+        contact_mode == 2
+            ? "the two paths have no parity-compatible loop-erased intersection"
+            : "the two paths have no loop-erased intersection"
+    );
 }
 
 bool valid_path(int level, int label, const std::vector<int>& path) {
@@ -122,13 +138,54 @@ bool valid_path(int level, int label, const std::vector<int>& path) {
     return true;
 }
 
+bool transfer_two_step_returns(
+    std::vector<int>& first,
+    std::vector<int>& second,
+    int label,
+    int maximum_second_length,
+    bool terminal_only
+) {
+    while (static_cast<int>(second.size()) - 1 > maximum_second_length) {
+        if (first.empty() || first.back() != label || second.size() < 3U) {
+            return false;
+        }
+        if (terminal_only) {
+            if (second[second.size() - 3U] != 0
+                || second[second.size() - 2U] != label
+                || second.back() != 0) {
+                return false;
+            }
+            second.erase(second.end() - 2, second.end());
+            first.push_back(0);
+            first.push_back(label);
+            continue;
+        }
+        std::optional<std::size_t> last_return;
+        for (std::size_t index = 0U; index + 2U < second.size(); ++index) {
+            if (second[index] == second[index + 2U]) {
+                last_return = index;
+            }
+        }
+        if (!last_return.has_value()) {
+            return false;
+        }
+        const auto erase_begin = second.begin()
+            + static_cast<std::ptrdiff_t>(*last_return + 1U);
+        second.erase(erase_begin, erase_begin + 2);
+        first.push_back(label);
+        first.push_back(label);
+    }
+    return true;
+}
+
 Result probe(
     int level,
     int label,
     int length,
     int truncation,
     bool reverse_orientation,
-    bool last_intersection
+    int contact_mode,
+    int transfer_mode
 ) {
     if (level <= 0 || label <= 0 || label >= level || (level & 1) != 0
         || (label & 1) != 0 || 2 * label >= level || (length & 1) == 0
@@ -147,16 +204,42 @@ Result probe(
                 if (second_path.back() != label) {
                     return;
                 }
-                const auto switched = reverse_orientation
-                    ? fomin_switch(second_path, first_path, last_intersection)
-                    : fomin_switch(first_path, second_path, last_intersection);
-                const std::vector<int>& image_first = reverse_orientation
+                ++result.sources;
+                std::pair<std::vector<int>, std::vector<int>> switched;
+                try {
+                    switched = reverse_orientation
+                        ? fomin_switch(second_path, first_path, contact_mode)
+                        : fomin_switch(first_path, second_path, contact_mode);
+                } catch (const std::runtime_error&) {
+                    ++result.missing_parity_contacts;
+                    ++result.prefix_failures;
+                    if (result.first_source.empty()) {
+                        result.first_source = key(first_path, second_path);
+                    }
+                    return;
+                }
+                std::vector<int> image_first = reverse_orientation
                     ? switched.second
                     : switched.first;
-                const std::vector<int>& image_second = reverse_orientation
+                std::vector<int> image_second = reverse_orientation
                     ? switched.first
                     : switched.second;
-                ++result.sources;
+                if (transfer_mode != 0
+                    && !transfer_two_step_returns(
+                        image_first,
+                        image_second,
+                        label,
+                        2 * truncation,
+                        transfer_mode == 1
+                    )) {
+                    ++result.transfer_failures;
+                    ++result.prefix_failures;
+                    if (result.first_source.empty()) {
+                        result.first_source = key(first_path, second_path);
+                        result.first_image = key(image_first, image_second);
+                    }
+                    return;
+                }
                 const bool valid = image_first.front() == level
                     && image_first.back() == label
                     && image_second.front() == 0
@@ -218,8 +301,60 @@ Result probe(
     return result;
 }
 
+void accumulate(Result& total, const Result& part) {
+    total.sources += part.sources;
+    total.prefix_failures += part.prefix_failures;
+    total.collisions += part.collisions;
+    total.missing_parity_contacts += part.missing_parity_contacts;
+    total.transfer_failures += part.transfer_failures;
+    if (total.first_source.empty() && !part.first_source.empty()) {
+        total.first_source = part.first_source;
+        total.first_image = part.first_image;
+        total.first_preimage = part.first_preimage;
+    }
+}
+
+Result scan_direct_parity_last(
+    int maximum_level,
+    int maximum_length,
+    int transfer_mode
+) {
+    Result result;
+    for (int level = 4; level <= maximum_level; level += 2) {
+        for (int label = 2; 2 * label < level; label += 2) {
+            for (int length = 3; length <= maximum_length; length += 2) {
+                for (int truncation = 0;
+                     2 * truncation <= length - 3;
+                     ++truncation) {
+                    const bool have_witness = !result.first_source.empty();
+                    const Result part = probe(
+                        level,
+                        label,
+                        length,
+                        truncation,
+                        false,
+                        2,
+                        transfer_mode
+                    );
+                    accumulate(
+                        result,
+                        part
+                    );
+                    if (!have_witness && !part.first_source.empty()) {
+                        result.witness_level = level;
+                        result.witness_label = label;
+                        result.witness_length = length;
+                        result.witness_truncation = truncation;
+                    }
+                }
+            }
+        }
+    }
+    return result;
+}
+
 void replay_first_prefix_collision() {
-    const Result result = probe(6, 2, 9, 3, false, false);
+    const Result result = probe(6, 2, 9, 3, false, 0, false);
     if (result.sources != 106U || result.prefix_failures != 0U
         || result.collisions != 14U) {
         throw std::runtime_error("Fomin-prefix collision replay mismatch");
@@ -232,7 +367,7 @@ void replay_first_prefix_collision() {
 }
 
 void replay_reverse_prefix_obstruction() {
-    const Result result = probe(6, 2, 9, 3, true, false);
+    const Result result = probe(6, 2, 9, 3, true, 0, false);
     if (result.sources != 106U || result.prefix_failures != 91U
         || result.collisions != 3U) {
         throw std::runtime_error("reverse Fomin-prefix replay mismatch");
@@ -248,6 +383,62 @@ void replay_reverse_prefix_obstruction() {
 
 int main(int argc, char** argv) {
     try {
+        if (argc == 4 && (std::string(argv[1]) == "--scan"
+            || std::string(argv[1]) == "--transfer-scan"
+            || std::string(argv[1]) == "--excursion-transfer-scan")) {
+            const int maximum_level =
+                parse_nonnegative(argv[2], "maximum level");
+            const int maximum_length =
+                parse_nonnegative(argv[3], "maximum odd length");
+            if (maximum_level < 4 || maximum_length < 3
+                || (maximum_length & 1) == 0) {
+                throw std::runtime_error(
+                    "scan bounds require even level at least four and odd length at least three"
+                );
+            }
+            const std::string scan_mode(argv[1]);
+            const int transfer_mode = scan_mode == "--transfer-scan"
+                ? 1
+                : (scan_mode == "--excursion-transfer-scan" ? 2 : 0);
+            const Result result = scan_direct_parity_last(
+                maximum_level,
+                maximum_length,
+                transfer_mode
+            );
+            std::cout
+                << "SU2_FOMIN_PARITY_LAST_SCAN"
+                << " transfer_mode=" << transfer_mode
+                << " maximum_level=" << maximum_level
+                << " maximum_odd_length=" << maximum_length
+                << " sources=" << result.sources
+                << " prefix_failures=" << result.prefix_failures
+                << " collisions=" << result.collisions
+                << " missing_parity_contacts="
+                << result.missing_parity_contacts
+                << " transfer_failures=" << result.transfer_failures;
+            if (!result.first_source.empty()) {
+                std::cout
+                    << " witness_level=" << result.witness_level
+                    << " witness_label=" << result.witness_label
+                    << " witness_odd_length=" << result.witness_length
+                    << " witness_truncation=" << result.witness_truncation;
+                std::cout << " first_source=";
+                for (const int value : result.first_source) {
+                    std::cout << value << ',';
+                }
+                std::cout << " first_image=";
+                for (const int value : result.first_image) {
+                    std::cout << value << ',';
+                }
+            }
+            std::cout
+                << " result="
+                << (result.prefix_failures == 0U && result.collisions == 0U
+                    ? "PASS_EXACT_BOX" : "COUNTEREXAMPLE")
+                << '\n';
+            return result.prefix_failures == 0U && result.collisions == 0U
+                ? 0 : 1;
+        }
         if (argc == 2
             && std::string(argv[1]) == "--replay-first-prefix-collision") {
             replay_first_prefix_collision();
@@ -261,22 +452,42 @@ int main(int argc, char** argv) {
         const bool switched_mode = argc == 6
             && (std::string(argv[1]) == "--reverse"
                 || std::string(argv[1]) == "--last"
-                || std::string(argv[1]) == "--reverse-last");
+                || std::string(argv[1]) == "--reverse-last"
+                || std::string(argv[1]) == "--parity-last"
+                || std::string(argv[1]) == "--reverse-parity-last"
+                || std::string(argv[1]) == "--parity-last-transfer"
+                || std::string(argv[1]) == "--parity-last-excursion-transfer");
         if (argc != 5 && !switched_mode) {
             throw std::runtime_error(
                 "usage: probe_su2_fomin_prefix_switch LEVEL LABEL ODD_LENGTH TRUNCATION"
                 " | --reverse LEVEL LABEL ODD_LENGTH TRUNCATION"
                 " | --last LEVEL LABEL ODD_LENGTH TRUNCATION"
                 " | --reverse-last LEVEL LABEL ODD_LENGTH TRUNCATION"
+                " | --parity-last LEVEL LABEL ODD_LENGTH TRUNCATION"
+                " | --reverse-parity-last LEVEL LABEL ODD_LENGTH TRUNCATION"
+                " | --parity-last-transfer LEVEL LABEL ODD_LENGTH TRUNCATION"
+                " | --parity-last-excursion-transfer LEVEL LABEL ODD_LENGTH TRUNCATION"
+                " | --scan MAXIMUM_EVEN_LEVEL MAXIMUM_ODD_LENGTH"
+                " | --transfer-scan MAXIMUM_EVEN_LEVEL MAXIMUM_ODD_LENGTH"
+                " | --excursion-transfer-scan MAXIMUM_EVEN_LEVEL MAXIMUM_ODD_LENGTH"
                 " | --replay-first-prefix-collision"
                 " | --replay-reverse-prefix-obstruction"
             );
         }
         const std::string mode = switched_mode ? std::string(argv[1]) : "";
         const bool reverse_orientation = mode == "--reverse"
-            || mode == "--reverse-last";
-        const bool last_intersection = mode == "--last"
-            || mode == "--reverse-last";
+            || mode == "--reverse-last"
+            || mode == "--reverse-parity-last";
+        const int contact_mode = (mode == "--last" || mode == "--reverse-last")
+            ? 1
+            : ((mode == "--parity-last" || mode == "--reverse-parity-last"
+                || mode == "--parity-last-transfer"
+                || mode == "--parity-last-excursion-transfer")
+                ? 2
+                : 0);
+        const int transfer_mode = mode == "--parity-last-transfer"
+            ? 1
+            : (mode == "--parity-last-excursion-transfer" ? 2 : 0);
         const int offset = switched_mode ? 1 : 0;
         const Result result = probe(
             parse_nonnegative(argv[1 + offset], "level"),
@@ -284,15 +495,22 @@ int main(int argc, char** argv) {
             parse_nonnegative(argv[3 + offset], "odd length"),
             parse_nonnegative(argv[4 + offset], "truncation"),
             reverse_orientation,
-            last_intersection
+            contact_mode,
+            transfer_mode
         );
         std::cout << "SU2_FOMIN_PREFIX_SWITCH"
                   << " orientation="
                   << (reverse_orientation ? "reverse" : "direct")
-                  << " contact=" << (last_intersection ? "last" : "first")
+                  << " contact="
+                  << (contact_mode == 0 ? "first"
+                      : (contact_mode == 1 ? "last" : "parity-last"))
                   << " sources=" << result.sources
                   << " prefix_failures=" << result.prefix_failures
-                  << " collisions=" << result.collisions;
+                  << " collisions=" << result.collisions
+                  << " missing_parity_contacts="
+                  << result.missing_parity_contacts
+                  << " transfer_mode=" << transfer_mode
+                  << " transfer_failures=" << result.transfer_failures;
         if (!result.first_source.empty()) {
             std::cout << " first_source=";
             for (const int value : result.first_source) {
