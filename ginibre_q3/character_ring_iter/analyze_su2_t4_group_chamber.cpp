@@ -71,11 +71,13 @@ int main(int argc, char** argv) {
             throw std::invalid_argument(
                 "usage: analyze_su2_t4_group_chamber <c5-position>"
                 "\n   or: analyze_su2_t4_group_chamber --scan-low-cost"
+                "\n   or: analyze_su2_t4_group_chamber --scan-parity"
                 "\n   or: analyze_su2_t4_group_chamber --parity-only"
                 " <c5-position>"
             );
         }
         const bool scan_low_cost = std::string(argv[1]) == "--scan-low-cost";
+        const bool scan_parity = std::string(argv[1]) == "--scan-parity";
         const bool parity_only = std::string(argv[1]) == "--parity-only";
         if (parity_only && argc != 3) {
             throw std::invalid_argument(
@@ -118,6 +120,40 @@ int main(int argc, char** argv) {
             }
             std::cout
                 << "SU2_T4_GROUP_LOW_COST"
+                << " masks=" << masks.size()
+                << " certified=" << certified
+                << " unresolved=" << masks.size() - certified
+                << " result=PASS_EXACT_PARTITION"
+                << '\n';
+            return EXIT_SUCCESS;
+        }
+        if (scan_parity) {
+            std::size_t certified = 0U;
+            for (std::size_t position = 0U; position < masks.size(); ++position) {
+                const Chamber chamber = make_group_chamber(
+                    formula,
+                    masks[position],
+                    "c5",
+                    static_cast<std::uint64_t>(position)
+                );
+                const std::vector<Polynomial> reduced =
+                    irredundant_constraints(chamber);
+                if (parity_unit_offset_square_cone_certificate(
+                        chamber,
+                        reduced
+                    )) {
+                    ++certified;
+                }
+                if ((position + 1U) % 25U == 0U) {
+                    std::cerr
+                        << "SU2_T4_GROUP_PARITY_SCAN"
+                        << " progress=" << position + 1U
+                        << '/' << masks.size()
+                        << " certified=" << certified << '\n';
+                }
+            }
+            std::cout
+                << "SU2_T4_GROUP_PARITY_SCAN"
                 << " masks=" << masks.size()
                 << " certified=" << certified
                 << " unresolved=" << masks.size() - certified
