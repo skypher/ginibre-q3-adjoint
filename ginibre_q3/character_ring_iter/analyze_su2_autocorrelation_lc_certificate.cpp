@@ -4377,9 +4377,7 @@ BigPolynomial wall_121_terminal_current(
   return result;
 }
 
-NDBernsteinGrid wall_121_second_iterate_support_five_grid(
-    std::size_t& terms
-) {
+BigPolynomial wall_121_second_iterate_support_five_compact() {
   constexpr int variables = 4;
   constexpr int support = 5;
   const BigPolynomial one = nd_constant(variables, 1);
@@ -4410,8 +4408,16 @@ NDBernsteinGrid wall_121_second_iterate_support_five_grid(
       compact[exponent] = coefficient;
     }
   }
+  return compact;
+}
+
+NDBernsteinGrid wall_121_second_iterate_support_five_grid(
+    std::size_t& terms
+) {
+  const BigPolynomial compact =
+      wall_121_second_iterate_support_five_compact();
   terms = compact.size();
-  return nd_bernstein_grid(compact, variables);
+  return nd_bernstein_grid(compact, 4);
 }
 
 struct Wall121LargeRatioBlowupResult {
@@ -4579,6 +4585,165 @@ Wall121LargeRatioBlowupResult wall_121_large_ratio_blowup(
       conversion.distinct_denominators,
       conversion.common_denominator_bits,
       std::move(subdivision)};
+}
+
+struct Wall121SupportFiveLargeRatioDiagnostic {
+  int maximum_w_power = 0;
+  std::size_t grouped_blocks = 0U;
+  int t_degree = 0;
+  int t_factor = 0;
+  std::vector<int> degrees;
+  std::size_t terms = 0U;
+  std::size_t coefficients = 0U;
+  std::size_t negative_coefficients = 0U;
+  std::size_t t_zero_terms = 0U;
+  std::size_t t_zero_negative = 0U;
+};
+
+Wall121SupportFiveLargeRatioDiagnostic
+wall_121_support_five_large_ratio_diagnostic() {
+  constexpr int variables = 4;
+  const BigPolynomial compact =
+      wall_121_second_iterate_support_five_compact();
+  const NDBernsteinGrid compact_grid =
+      nd_bernstein_grid(compact, variables);
+  const BigPolynomial one = nd_constant(variables, 1);
+  const BigPolynomial t = nd_variable(variables, 0);
+  const BigPolynomial alpha = nd_variable(variables, 1);
+  const BigPolynomial beta = nd_variable(variables, 2);
+  const BigPolynomial z = nd_variable(variables, 3);
+  BigPolynomial w = one;
+  big_add_scaled(w, t, -1);
+  BigPolynomial u_numerator = nd_power(w, 2);
+  big_add_scaled(
+      u_numerator,
+      big_multiply(big_multiply(t, w), alpha), -2);
+  big_add_scaled(
+      u_numerator,
+      big_multiply(nd_power(t, 2), alpha), -3);
+  BigPolynomial t2_plus_u = nd_power(t, 2);
+  big_add_scaled(t2_plus_u, u_numerator, 1);
+  const BigPolynomial denominator = big_multiply(
+      nd_power(u_numerator, 2), t2_plus_u);
+  BigPolynomial two_w_plus_three_t = w;
+  for (auto& [exponent, coefficient] : two_w_plus_three_t) {
+    static_cast<void>(exponent);
+    coefficient *= 2;
+  }
+  big_add_scaled(two_w_plus_three_t, t, 3);
+  BigPolynomial one_minus_alpha = one;
+  big_add_scaled(one_minus_alpha, alpha, -1);
+  const BigPolynomial drop_numerator = big_multiply(
+      big_multiply(
+          big_multiply(
+              big_multiply(beta, nd_power(t, 4)), w),
+          two_w_plus_three_t),
+      one_minus_alpha);
+  BigPolynomial v_numerator = denominator;
+  big_add_scaled(v_numerator, drop_numerator, -1);
+
+  const int u_degree = compact_grid.degrees[1];
+  const int v_degree = compact_grid.degrees[2];
+  const int z_degree = compact_grid.degrees[3];
+  int maximum_w_power = 0;
+  for (const auto& [exponent, coefficient] : compact) {
+    static_cast<void>(coefficient);
+    maximum_w_power = std::max(
+        maximum_w_power,
+        exponent[0] + 2 * (u_degree - exponent[1]));
+  }
+  const auto power_table = [&one](
+      const BigPolynomial& base, const int maximum) {
+    std::vector<BigPolynomial> powers;
+    powers.reserve(static_cast<std::size_t>(maximum + 1));
+    powers.push_back(one);
+    for (int exponent = 1; exponent <= maximum; ++exponent) {
+      powers.push_back(big_multiply(powers.back(), base));
+    }
+    return powers;
+  };
+  const std::vector<BigPolynomial> w_powers =
+      power_table(w, maximum_w_power);
+  const std::vector<BigPolynomial> u_powers =
+      power_table(u_numerator, u_degree);
+  const std::vector<BigPolynomial> d_powers =
+      power_table(denominator, v_degree);
+  const std::vector<BigPolynomial> v_powers =
+      power_table(v_numerator, v_degree);
+  const std::vector<BigPolynomial> z_powers =
+      power_table(z, z_degree);
+  std::map<Exponent, BigPolynomial> grouped_w;
+  for (const auto& [exponent, coefficient] : compact) {
+    const Exponent suffix{exponent[1], exponent[2], exponent[3]};
+    big_add_scaled(
+        grouped_w[suffix],
+        w_powers[static_cast<std::size_t>(
+            exponent[0] + 2 * (u_degree - exponent[1]))],
+        coefficient);
+  }
+  BigPolynomial blowup;
+  for (const auto& [suffix, w_polynomial] : grouped_w) {
+    BigPolynomial term = w_polynomial;
+    term = big_multiply(
+        term, u_powers[static_cast<std::size_t>(suffix[0])]);
+    term = big_multiply(
+        term,
+        d_powers[static_cast<std::size_t>(v_degree - suffix[1])]);
+    term = big_multiply(
+        term, v_powers[static_cast<std::size_t>(suffix[1])]);
+    term = big_multiply(
+        term, z_powers[static_cast<std::size_t>(suffix[2])]);
+    big_add_scaled(blowup, term, 1);
+  }
+  BigPolynomial canonical_blowup;
+  for (const auto& [exponent, coefficient] : blowup) {
+    if (coefficient != 0) {
+      canonical_blowup[exponent] = coefficient;
+    }
+  }
+  int t_degree = 0;
+  int t_factor = std::numeric_limits<int>::max();
+  for (const auto& [exponent, coefficient] : canonical_blowup) {
+    static_cast<void>(coefficient);
+    t_degree = std::max(t_degree, exponent[0]);
+    t_factor = std::min(t_factor, exponent[0]);
+  }
+  BigPolynomial quotient;
+  for (const auto& [exponent, coefficient] : canonical_blowup) {
+    Integer scale = 1;
+    for (int power = exponent[0]; power < t_degree; ++power) {
+      scale *= 4;
+    }
+    Exponent quotient_exponent = exponent;
+    quotient_exponent[0] -= t_factor;
+    quotient[quotient_exponent] += coefficient * scale;
+  }
+  BigPolynomial canonical_quotient;
+  for (const auto& [exponent, coefficient] : quotient) {
+    if (coefficient != 0) {
+      canonical_quotient[exponent] = coefficient;
+    }
+  }
+  const NDBernsteinGrid quotient_grid =
+      nd_bernstein_grid(canonical_quotient, variables);
+  const std::size_t negative = static_cast<std::size_t>(std::count_if(
+      quotient_grid.values.begin(), quotient_grid.values.end(),
+      [](const Rational& value) { return value < 0; }));
+  std::size_t t_zero_terms = 0U;
+  std::size_t t_zero_negative = 0U;
+  for (const auto& [exponent, coefficient] : canonical_quotient) {
+    if (exponent[0] == 0) {
+      ++t_zero_terms;
+      if (coefficient < 0) {
+        ++t_zero_negative;
+      }
+    }
+  }
+  return {
+      maximum_w_power, grouped_w.size(), t_degree, t_factor,
+      quotient_grid.degrees, canonical_quotient.size(),
+      quotient_grid.values.size(), negative,
+      t_zero_terms, t_zero_negative};
 }
 
 int replay_wall_121_rational_support_four() {
@@ -6320,6 +6485,29 @@ int main(int argc, char** argv) {
                == "--replay-wall-121-renewal-kernel"
     ) {
       return replay_wall_121_renewal_kernel();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--support-five-rat2-high-ratio-diagnostic"
+    ) {
+      const Wall121SupportFiveLargeRatioDiagnostic result =
+          wall_121_support_five_large_ratio_diagnostic();
+      std::cout << "SU2_WALL_121_RAT2_SUPPORT_FIVE_HIGH_RATIO"
+                << " maximum_w_power=" << result.maximum_w_power
+                << " grouped_blocks=" << result.grouped_blocks
+                << " t_degree=" << result.t_degree
+                << " t_factor=" << result.t_factor
+                << " degrees=(" << result.degrees[0] << ','
+                << result.degrees[1] << ',' << result.degrees[2] << ','
+                << result.degrees[3] << ')'
+                << " terms=" << result.terms
+                << " bernstein_coefficients=" << result.coefficients
+                << " initial_negative=" << result.negative_coefficients
+                << " t_zero_terms=" << result.t_zero_terms
+                << " t_zero_negative=" << result.t_zero_negative
+                << '\n';
+      return EXIT_SUCCESS;
     }
     if (
         argc == 3
