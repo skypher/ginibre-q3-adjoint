@@ -46386,6 +46386,37 @@ the exact finite grid.  For reference, if
 This short moment form is an exact target for a discrete Jacobi
 total-positivity argument; it is not yet such an argument.
 
+**Lemma 22H3W11A1 (five-phase Dirichlet form).**  For
+`a=cos(alpha)`, `b=cos(beta)`, with `0<alpha<beta<pi`, one has
+
+```text
+H(a,b)=D_2(beta-alpha)+D_2(beta+alpha),
+D_2(t)=sin(5t/2)/sin(t/2).
+                                                               (P22.5zz68zm1)
+```
+
+Thus on the odd grid `alpha=2pi i/n`, `beta=2pi j/n`, the two summands
+change sign only when `j-i` or `i+j` crosses one of the four fifth-phase
+walls `n/5,2n/5,3n/5,4n/5` (with the walls understood cyclically).
+
+**Proof.**  The degree-two Chebyshev kernel satisfies
+
+```text
+K_2(cos(alpha),cos(beta))
+ =[D_2(beta-alpha)+D_2(beta+alpha)]/2,
+```
+
+by the product-to-sum identities for `cos(alpha)cos(beta)` and
+`cos(2alpha)cos(2beta)`.  Since `H=2K_2`, this proves the formula.  The
+zeros of `D_2` in `(0,2pi)` are exactly the displayed fifth-phase walls.
+QED.
+
+This organizes the sign geometry into a discretized two-coordinate
+five-phase arrangement, rather than an arbitrary kernel.  It does not
+classify the sign pointwise: the two Dirichlet terms in `(P22.5zz68zm1)`
+can have opposite signs and can cancel inside one phase cell, so a transport
+must still compare their combined amplitude with the endpoint reserves.
+
 **Lemma 22H3W11A0 (two-node boundary case).**  The symmetric Pascal cross
 payment is an equality on the three- and five-cycles:
 
@@ -46606,6 +46637,25 @@ TP2_MIXED_JACOBI_MATCHING maximum_rank=11 graphs=9 loads=72 edges=348
 maximum_loads=18 two_credit_edges=3543 first_failure_rank=-1 result=PASS
 ```
 
+For larger exploratory ranks, its `--coarse-greedy-certificate` mode first
+forms a *superset* of eligible pairs using lower-order rational interval
+enclosures, chooses a greedy cover there, and then reruns the full interval
+test on every selected pair.  Consequently a `COARSE_CERTIFICATE_PASS` is
+still a valid payment certificate; a `COARSE_CANDIDATE_FAIL` asserts only
+that this fast construction did not certify a cover.
+
+The analogous `--approx-greedy-certificate` selector uses `long double`
+only to propose the paired credits, and again interval-certifies every
+selected pair before reporting success.  Its full replay through rank
+fifteen, followed by the single-rank replays at ranks sixteen, seventeen,
+and eighteen, gives certificates on every rank through eighteen (odd cycle
+size `37`).  The single-rank mode also certifies rank twenty (`n=41`).  The
+raw approximate tie rule returns `APPROX_CANDIDATE_FAIL` at rank nineteen;
+this is a failure of that deterministic selector, not a failed interval
+edge or a counterexample to the capacity-two criterion.  Thus these larger
+replays extend the exact finite evidence but do not supply a uniform
+construction.
+
 The one-credit criterion already fails at `n=7`, while the disjoint
 two-credit criterion first fails at `n=9`; these are exact no-gos for those
 more restrictive ansatzes.  The bounded capacity-two cover is therefore a
@@ -46616,6 +46666,29 @@ load indexed by `(1,4)` has four credit neighbours but only five of their
 six unordered pairs satisfy `(P22.5zz68znb)`.  Thus this hypergraph cannot
 be replaced even at that size by the simpler rule "choose any two neighbours"
 and an ordinary capacitated bipartite matching.
+
+It is not even a rank-two partition-matroid base system in general.  The
+strict interval graph at rank seven (`n=15`) has, for the load `(1,5)`, the
+two eligible credit pairs
+
+```text
+{(1,3),(3,4)},       {(2,3),(2,5)}.
+```
+
+Replacing `(3,4)` in the first pair by either element of the second would
+require one of
+
+```text
+{(1,3),(2,3)},       {(1,3),(2,5)},
+```
+
+and neither is eligible.  This violates basis exchange.  The
+`--analyze-graph` mode now checks the stronger complete-multipartite
+(partition-matroid) condition directly and returns `partition_matroid=no`
+for this load.  Thus the tempting reduction of the two-credit allocation to
+an ordinary flow through per-load colour classes is false; the general
+paired hypergraph and its fractional Hall dual `(P22.5zz68zne)` are
+load-bearing.
 
 The scalar cyclic-Pearson correction itself has no fixed sign, even at its
 lowest index.  In the notation of Lemma 22H3UAA, the exact target-cone
@@ -53245,6 +53318,8 @@ checking every `a`-isotypic capacitated flow.  Its exact two-import replays
 return
 
 ```text
+level=16 factors=7  maximum_label=5 defect=2 words=107
+level=20 factors=10 maximum_label=6 defect=2 words=194
 level=12 factors=6  maximum_label=5 defect=4 words=80
 level=14 factors=7  maximum_label=5 defect=4 words=107
 level=16 factors=8  maximum_label=6 defect=4 words=183
@@ -53253,8 +53328,10 @@ level=20 factors=10 maximum_label=6 defect=4 words=310
 level=16 factors=8  maximum_label=6 defect=6 words=280,
 ```
 
-all with a `PASS` return.  These scans include the first two affine shells
-whenever their selected `q` reaches them.  They are exact finite
+all with a `PASS` return.  The first two rows include the unresolved
+defect-two band with `1<=f<=5` fundamental labels, as well as the collars
+proved below.  These scans include the first two affine shells whenever
+their selected `q` reaches them.  They are exact finite
 falsification checks, not evidence that a bounded defect classification
 closes the arbitrary-factor Hall theorem.
 
@@ -53507,6 +53584,159 @@ The first omitted types excluded by Proposition 23A9H0B are
 `{1,1,2}` and `{1,1,1,1}`.  They can share an invariant label-one pair
 target with the smaller complement `{1,1}`; this is the first genuine
 global Hall collision at defect two.
+
+One small-fundamental regime nevertheless closes without the four-subset
+matching used later.  It isolates the triple collision and will be useful
+when separating the remaining `f=1,2,4,5` band.
+
+**Proposition 23A9H0B1 (three-fundamental wall-free defect-two collar).**
+Work ordinarily, or in `SU(2)_k` with `P<=k`.  Suppose exactly three
+indexed labels are one and put
+
+```text
+P=sum_i p_i,                 q=P-4>=4.               (P23.11z5m0ak1)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching.
+Consequently the boundary injection `(P23.11z5m0ab)` exists.
+
+**Proof.**  Let `t,u,v` be the respective numbers of labels `2,3,4`, and
+let `n` be the total factor count.  A contributing omitted support has
+even total label at most four.  Because there are only three fundamental
+indices, its possible types are exactly
+
+```text
+empty,  {2},  {1,1},  {4},  {1,3},  {2,2},  {1,1,2}.
+                                                               (P23.11z5m0ak2)
+```
+
+Their nonzero source demands are the corresponding rows of
+`(P23.11z5m0am)`:
+
+```text
+empty: a=0:m_n(q);       {2}: a=2:n-2;
+{1,1}: a=0,2:n-3;        {4}: a=4:1;
+{1,3}: a=2,4:1;          {2,2}: a=0,2,4:1;
+{1,1,2}: a=0,2,4:1,2,1.                              (P23.11z5m0ak3)
+```
+
+Route the empty row to the empty target in its `a=0` block.  Route each
+`{1,1}` and each `{2,2}` row to its own omitted support, exactly as in
+Proposition 23A9H0C.  The first has `a=0,2` capacity at least `n-3`; the
+second has one slot in each of `a=0,2,4`, since `q` occurs in all three
+of `0 star q`, `2 star q`, and `4 star q`.
+
+It remains to separate the triples.  Name the fundamental indices
+`r_1,r_2,r_3`, and cyclically permute their two-subsets by
+
+```text
+{r_1,r_2}->{r_2,r_3}->{r_1,r_3}->{r_1,r_2}.          (P23.11z5m0ak4)
+```
+
+For each indexed label-two factor `j`, route the source omitted set
+`A union {j}` to `tau(A) union {j}`.  The two pairs `A,tau(A)` meet in
+one fundamental index, so the target imports exactly that index and `j`:
+it is a two-import edge.  The target has invariant profile
+`V_1 tensor V_1 tensor V_2=V_0 direct-sum 2V_2 direct-sum V_4`, while its
+complement has unique top `V_q`; its `a=0,2,4` capacities therefore pay
+`1,2,1`.  The cyclic permutation makes these targets distinct.
+
+Only the non-invariant rows `{2}`, `{1,3}`, and `{4}` remain.  Use the
+empty target.  Its `a=2` capacity is `w_3-1`, and the elementary
+top-layer count used in `(P23.11z5m0as)` specializes at `f=3` to
+
+```text
+w_3-1-t(n-2)
+ =3 binom(t+1,2)+binom(t,3)+t>=0                    (P23.11z5m0ak5)
+```
+
+before any labels at least three are adjoined.  Adjoining a label three
+raises `w_3` by `w_2+w_1+1>=t+3`, precisely the increase of
+`t(n-2)+3u`; adjoining a label at least four raises `w_3` by at least
+`t`, precisely enough for the increase of the first term.  Hence
+
+```text
+w_3-1>=t(n-2)+3u.                                   (P23.11z5m0ak6)
+```
+
+This pays every required `a=2` block.  If `u+v>0`, the empty `a=4`
+capacity is `w_4`.  Starting from the label-one/two word, a first label
+three raises it by `w_3+w_2+w_1>=3`, a label four raises it by at least
+one, and further labels only increase it.  Thus
+
+```text
+w_4>=3u+v,                                          (P23.11z5m0ak7)
+```
+
+paying all remaining `a=4` blocks.  The targets used above are separated
+by support or by their `a`-isotypic block, so their maps assemble to an
+injection.  When `P<=k`, every displayed top-layer calculation is
+unreflected and the same fusion channels are available in `SU(2)_k`.
+QED.
+
+The strict two-import flow checker reproduces this collar, for example at
+level twenty on
+
+```text
+[1,1,1,2,3,4],          [1,1,1,2,2,2,5].
+```
+
+The one-fundamental sector has no triple or four-fundamental omitted support.
+When it contains a label-two factor, the empty-target reserves close it
+directly.
+
+**Proposition 23A9H0B2 (one-fundamental label-two wall-free collar).**
+Work ordinarily, or in `SU(2)_k` with `P<=k`.  Suppose exactly one indexed
+label is one, at least one indexed label is two, and
+
+```text
+q=P-4>=4.                                            (P23.11z5m0ak8)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  Let `t>=1,u,v` be the numbers of labels `2,3,4`, respectively,
+and write `n` for the factor count.  The only contributing omitted types are
+
+```text
+empty,  {2},  {4},  {1,3},  {2,2}.                   (P23.11z5m0ak9)
+```
+
+Route the empty row to the empty target in its `a=0` block.  Route every
+`{2,2}` row to its own support: its invariant profile has one copy of each
+of `0,2,4`, and its complement is top at `q`, so those three target blocks
+pay the source profile `1,1,1`.  Send all other rows to the empty target.
+Their required `a=2` and `a=4` capacities are
+
+```text
+t(n-2)+u,                 u+v,                       (P23.11z5m0ak10)
+```
+
+respectively.  For the base word with only the one label-one and `t`
+label-two factors, the top-layer identity `(P23.11z5m0as)` specializes to
+
+```text
+w_3-1-t(n-2)=binom(t+1,2)+binom(t,3)-1>=0.           (P23.11z5m0ak11)
+```
+
+Adjoining a label three raises `w_3` by at least `t+1`, exactly the increase
+of the first demand in `(P23.11z5m0ak10)`; adjoining a label at least four
+raises it by at least `t`, enough for the increase caused by the factor
+count.  Hence the empty `a=2` capacity `w_3-1` pays the first demand.
+Starting from the same base word, a label three raises `w_4` by at least one
+and creates one `{1,3}` demand, while a label four raises it by at least one
+and creates one `{4}` demand.  Later labels cannot reduce this capacity, so
+the empty `a=4` capacity `w_4` pays the second demand.  All maps are
+separated by support or by their `a`-isotypic block.  The wall-free finite
+calculation is identical.  QED.
+
+The strict flow checker returns `PASS`, for example, on
+
+```text
+[1,2,5],             [1,2,2,3]
+```
+
+at level twenty.
 
 That collision is nevertheless resolvable once sufficiently many fundamental
 labels are available: the four-omission blocks are paid by globally matched

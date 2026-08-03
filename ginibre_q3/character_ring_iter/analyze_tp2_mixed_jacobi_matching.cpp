@@ -1,8 +1,10 @@
 #include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
+#include <numbers>
 #include <stdexcept>
 #include <string>
 #include <unordered_set>
@@ -29,8 +31,16 @@ struct PairData {
   Interval signed_base_amplitude;
 };
 
+struct ApproximatePairData {
+  long double endpoint_minus;
+  long double endpoint_plus;
+  long double base_amplitude;
+};
+
 struct IndexedPairData {
   PairData data;
+  PairData coarse_data;
+  ApproximatePairData approximate_data;
   int first;
   int second;
 };
@@ -51,6 +61,11 @@ struct CoverStateHash {
          (state.low >> 2U));
     return static_cast<std::size_t>(mixed);
   }
+};
+
+struct PartitionMatroidInfo {
+  bool valid;
+  std::size_t class_count;
 };
 
 int parse_positive(const char* text, const char* name) {
@@ -111,11 +126,10 @@ Interval scale(const Interval& value, const Rational& factor) {
   return multiply(value, Interval{factor, factor});
 }
 
-Interval cosine_at_rational(const Rational& argument) {
+Interval cosine_at_rational(const Rational& argument, int maximum_term) {
   const Rational square = argument * argument;
   Rational term(1);
   Rational sum(1);
-  constexpr int maximum_term = 16;
   for (int index = 1; index <= maximum_term; ++index) {
     term *= square;
     term /= Rational(static_cast<long long>(2 * index - 1) *
@@ -141,7 +155,7 @@ std::pair<Rational, Rational> pi_bounds() {
   return {Rational(333, 106), Rational(355, 113)};
 }
 
-Interval cosine(int index, int modulus) {
+Interval cosine(int index, int modulus, int maximum_term) {
   if (index <= 0 || 2 * index >= modulus) {
     throw std::runtime_error("cosine index is outside the acute range");
   }
@@ -150,8 +164,12 @@ Interval cosine(int index, int modulus) {
       2 * pi_lower * Rational(index, modulus);
   const Rational upper_argument =
       2 * pi_upper * Rational(index, modulus);
-  const Interval lower_value = cosine_at_rational(upper_argument);
-  const Interval upper_value = cosine_at_rational(lower_argument);
+  const Interval lower_value = cosine_at_rational(
+      upper_argument, maximum_term
+  );
+  const Interval upper_value = cosine_at_rational(
+      lower_argument, maximum_term
+  );
   return Interval{lower_value.lower, upper_value.upper};
 }
 
@@ -179,6 +197,33 @@ PairData make_pair(const Interval& first, const Interval& second) {
                                         square_nonnegative(endpoint_plus));
   return PairData{endpoint_minus, endpoint_plus, base_weight,
                   multiply(common, h)};
+}
+
+ApproximatePairData make_approximate_pair(
+    int first, int second, int modulus
+) {
+  const long double first_angle =
+      2.0L * std::numbers::pi_v<long double> *
+      static_cast<long double>(first) / static_cast<long double>(modulus);
+  const long double second_angle =
+      2.0L * std::numbers::pi_v<long double> *
+      static_cast<long double>(second) / static_cast<long double>(modulus);
+  const long double first_node = std::cos(first_angle);
+  const long double second_node = std::cos(second_angle);
+  const long double endpoint_minus =
+      (1.0L - first_node) * (1.0L - second_node);
+  const long double endpoint_plus =
+      (1.0L + first_node) * (1.0L + second_node);
+  const long double kernel = 6.0L + 4.0L * first_node * second_node -
+      8.0L * (first_node * first_node + second_node * second_node) +
+      16.0L * first_node * first_node * second_node * second_node;
+  const long double amplitude =
+      2.0L * (first_node - second_node) * (first_node - second_node) *
+      (1.0L - first_node * second_node) * kernel *
+      endpoint_minus * endpoint_minus * endpoint_plus * endpoint_plus;
+  return ApproximatePairData{
+      endpoint_minus, endpoint_plus, std::fabs(amplitude)
+  };
 }
 
 bool at_least(const Interval& credit, const Interval& load) {
@@ -229,6 +274,77 @@ bool certified_two_credit_edge(
       scale(multiply(first_value, second_value), Rational(4)),
       square_nonnegative(load_value)
   );
+}
+
+bool possibly_two_credit_edge(
+    const PairData& load,
+    const PairData& first_credit,
+    const PairData& second_credit,
+    const Rational& first_share,
+    const Rational& second_share
+) {
+  // This is a deliberately coarse interval rejection filter.  Returning
+  // false proves that the exact edge inequalities fail; returning true is
+  // followed by certified_two_credit_edge on the sharper intervals.
+  const Interval endpoint_minus_product = multiply(
+      first_credit.endpoint_minus, second_credit.endpoint_minus
+  );
+  const Interval endpoint_minus_square = multiply(
+      load.endpoint_minus, load.endpoint_minus
+  );
+  if (endpoint_minus_product.upper < endpoint_minus_square.lower) {
+    return false;
+  }
+  const Interval endpoint_plus_product = multiply(
+      first_credit.endpoint_plus, second_credit.endpoint_plus
+  );
+  const Interval endpoint_plus_square = multiply(
+      load.endpoint_plus, load.endpoint_plus
+  );
+  if (endpoint_plus_product.upper < endpoint_plus_square.lower) {
+    return false;
+  }
+  const Interval first_value = multiply(
+      scale(first_credit.signed_base_amplitude, first_share),
+      first_credit.base_weight
+  );
+  const Interval second_value = multiply(
+      scale(second_credit.signed_base_amplitude, second_share),
+      second_credit.base_weight
+  );
+  const Interval load_value = multiply(
+      negate(load.signed_base_amplitude), load.base_weight
+  );
+  const Interval credit_product = scale(
+      multiply(first_value, second_value), Rational(4)
+  );
+  const Interval load_square = multiply(load_value, load_value);
+  return credit_product.upper >= load_square.lower;
+}
+
+bool approximate_two_credit_edge(
+    const ApproximatePairData& load,
+    const ApproximatePairData& first_credit,
+    const ApproximatePairData& second_credit
+) {
+  constexpr long double tolerance = 1.0e-12L;
+  const auto at_least_approximately = [tolerance](long double left,
+                                                   long double right) {
+    return left + tolerance *
+        (1.0L + std::fabs(left) + std::fabs(right)) >= right;
+  };
+  return at_least_approximately(
+             first_credit.endpoint_minus * second_credit.endpoint_minus,
+             load.endpoint_minus * load.endpoint_minus
+         ) &&
+      at_least_approximately(
+          first_credit.endpoint_plus * second_credit.endpoint_plus,
+          load.endpoint_plus * load.endpoint_plus
+      ) &&
+      at_least_approximately(
+          first_credit.base_amplitude * second_credit.base_amplitude,
+          load.base_amplitude * load.base_amplitude
+      );
 }
 
 bool augment(int load, const std::vector<std::vector<int>>& adjacency,
@@ -461,6 +577,72 @@ bool verifies_two_credit_cover(
   return true;
 }
 
+PartitionMatroidInfo partition_matroid_info(
+    const std::vector<std::pair<int, int>>& edges,
+    int credit_count
+) {
+  std::vector<unsigned char> neighbour(
+      static_cast<std::size_t>(credit_count), 0U
+  );
+  for (const auto& [first, second] : edges) {
+    neighbour[static_cast<std::size_t>(first)] = 1U;
+    neighbour[static_cast<std::size_t>(second)] = 1U;
+  }
+  std::vector<int> vertices;
+  for (int credit = 0; credit < credit_count; ++credit) {
+    if (neighbour[static_cast<std::size_t>(credit)] != 0U) {
+      vertices.push_back(credit);
+    }
+  }
+  std::vector<std::vector<unsigned char>> eligible(
+      vertices.size(), std::vector<unsigned char>(vertices.size(), 0U)
+  );
+  std::vector<int> local_index(static_cast<std::size_t>(credit_count), -1);
+  for (std::size_t index = 0U; index < vertices.size(); ++index) {
+    local_index[static_cast<std::size_t>(vertices[index])] =
+        static_cast<int>(index);
+  }
+  for (const auto& [first, second] : edges) {
+    const int first_local = local_index[static_cast<std::size_t>(first)];
+    const int second_local = local_index[static_cast<std::size_t>(second)];
+    eligible[static_cast<std::size_t>(first_local)]
+            [static_cast<std::size_t>(second_local)] = 1U;
+    eligible[static_cast<std::size_t>(second_local)]
+            [static_cast<std::size_t>(first_local)] = 1U;
+  }
+  std::vector<int> class_index(vertices.size(), -1);
+  std::size_t class_count = 0U;
+  for (std::size_t seed = 0U; seed < vertices.size(); ++seed) {
+    if (class_index[seed] >= 0) {
+      continue;
+    }
+    std::vector<std::size_t> pending{seed};
+    class_index[seed] = static_cast<int>(class_count);
+    for (std::size_t cursor = 0U; cursor < pending.size(); ++cursor) {
+      const std::size_t current = pending[cursor];
+      for (std::size_t next = 0U; next < vertices.size(); ++next) {
+        if (current == next || eligible[current][next] != 0U ||
+            class_index[next] >= 0) {
+          continue;
+        }
+        class_index[next] = static_cast<int>(class_count);
+        pending.push_back(next);
+      }
+    }
+    ++class_count;
+  }
+  for (std::size_t first = 0U; first < vertices.size(); ++first) {
+    for (std::size_t second = first + 1U; second < vertices.size(); ++second) {
+      const bool same_class = class_index[first] == class_index[second];
+      const bool is_eligible = eligible[first][second] != 0U;
+      if (same_class == is_eligible) {
+        return PartitionMatroidInfo{false, class_count};
+      }
+    }
+  }
+  return PartitionMatroidInfo{true, class_count};
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -472,13 +654,22 @@ int main(int argc, char** argv) {
           std::string(argv[2]) == "--two-credit-half")) ||
         (argc == 4 && std::string(argv[2]) == "--two-credit-half" &&
          (std::string(argv[3]) == "--print-cover" ||
+          std::string(argv[3]) == "--greedy-cover" ||
+          std::string(argv[3]) == "--coarse-greedy-certificate" ||
+          std::string(argv[3]) == "--approx-greedy-certificate" ||
+          std::string(argv[3]) == "--approx-greedy-certificate-single" ||
           std::string(argv[3]) == "--analyze-graph" ||
+          std::string(argv[3]) == "--dump-hyperedges" ||
           std::string(argv[3]) == "--uniform-fractional"));
     if (!valid_arguments) {
       throw std::runtime_error(
           "usage: analyze_tp2_mixed_jacobi_matching MAXIMUM_RANK "
           "[--two-credit|--two-credit-half] "
-          "[--two-credit-half --print-cover|--analyze-graph|"
+          "[--two-credit-half --print-cover|--greedy-cover|"
+          "--coarse-greedy-certificate|--approx-greedy-certificate|"
+          "--approx-greedy-certificate-single|"
+          "--analyze-graph|"
+          "--dump-hyperedges|"
           "--uniform-fractional]");
     }
     const int maximum_rank = parse_positive(argv[1], "maximum rank");
@@ -487,8 +678,20 @@ int main(int argc, char** argv) {
         std::string(argv[2]) == "--two-credit-half";
     const bool print_cover = argc == 4 &&
         std::string(argv[3]) == "--print-cover";
+    const bool greedy_cover = argc == 4 &&
+        std::string(argv[3]) == "--greedy-cover";
+    const bool coarse_greedy_certificate = argc == 4 &&
+        std::string(argv[3]) == "--coarse-greedy-certificate";
+    const bool approximate_greedy_certificate = argc == 4 &&
+        std::string(argv[3]) == "--approx-greedy-certificate";
+    const bool approximate_greedy_certificate_single = argc == 4 &&
+        std::string(argv[3]) == "--approx-greedy-certificate-single";
+    const bool approximate_greedy_mode = approximate_greedy_certificate ||
+        approximate_greedy_certificate_single;
     const bool analyze_graph = argc == 4 &&
         std::string(argv[3]) == "--analyze-graph";
+    const bool dump_hyperedges = argc == 4 &&
+        std::string(argv[3]) == "--dump-hyperedges";
     const bool uniform_fractional = argc == 4 &&
         std::string(argv[3]) == "--uniform-fractional";
     std::size_t graphs = 0U;
@@ -497,11 +700,15 @@ int main(int argc, char** argv) {
     std::size_t two_credit_edges = 0U;
     int first_failure_rank = -1;
     int maximum_loads = 0;
-    for (int rank = 3; rank <= maximum_rank; ++rank) {
+    const int minimum_rank = approximate_greedy_certificate_single
+        ? maximum_rank : 3;
+    for (int rank = minimum_rank; rank <= maximum_rank; ++rank) {
       const int modulus = 2 * rank + 1;
       std::vector<Interval> nodes;
+      std::vector<Interval> coarse_nodes;
       for (int index = 1; index <= rank; ++index) {
-        nodes.push_back(cosine(index, modulus));
+        nodes.push_back(cosine(index, modulus, 16));
+        coarse_nodes.push_back(cosine(index, modulus, 8));
       }
       std::vector<IndexedPairData> negative;
       std::vector<IndexedPairData> positive;
@@ -517,10 +724,21 @@ int main(int argc, char** argv) {
               nodes[static_cast<std::size_t>(first)],
               nodes[static_cast<std::size_t>(second)]
           );
+          const PairData coarse_pair = make_pair(
+              coarse_nodes[static_cast<std::size_t>(first)],
+              coarse_nodes[static_cast<std::size_t>(second)]
+          );
+          const ApproximatePairData approximate_pair = make_approximate_pair(
+              first + 1, second + 1, modulus
+          );
           if (pair.signed_base_amplitude.upper < 0) {
-            negative.push_back(IndexedPairData{pair, first, second});
+            negative.push_back(IndexedPairData{
+                pair, coarse_pair, approximate_pair, first, second
+            });
           } else if (pair.signed_base_amplitude.lower > 0) {
-            positive.push_back(IndexedPairData{pair, first, second});
+            positive.push_back(IndexedPairData{
+                pair, coarse_pair, approximate_pair, first, second
+            });
           } else {
             std::cout << "TP2_MIXED_JACOBI_MATCHING result=UNRESOLVED_SIGN"
                       << " rank=" << rank
@@ -563,11 +781,28 @@ int main(int argc, char** argv) {
                  second < positive.size(); ++second) {
               const Rational share = two_credit_half
                   ? Rational(1, 2) : Rational(1);
-              if (certified_two_credit_edge(
+              const bool candidate_edge = approximate_greedy_mode
+                  // Approximation is used only to choose a candidate cover;
+                  // every selected pair is interval-certified below.
+                  ? approximate_two_credit_edge(
+                      negative[load].approximate_data,
+                      positive[first].approximate_data,
+                      positive[second].approximate_data
+                  )
+                  : possibly_two_credit_edge(
+                      negative[load].coarse_data,
+                      positive[first].coarse_data,
+                      positive[second].coarse_data,
+                      share, share
+                  );
+              if (candidate_edge &&
+                  (coarse_greedy_certificate ||
+                   approximate_greedy_mode ||
+                   certified_two_credit_edge(
                       negative[load].data, positive[first].data,
                       positive[second].data,
                       share, share
-                  )) {
+                   ))) {
                 two_credit_adjacency[load].emplace_back(
                     static_cast<int>(first), static_cast<int>(second)
                 );
@@ -583,22 +818,24 @@ int main(int argc, char** argv) {
             ++credit_degree[static_cast<std::size_t>(second)];
           }
         }
-        for (auto& load_edges : two_credit_adjacency) {
-          std::sort(
-              load_edges.begin(), load_edges.end(),
-              [&credit_degree](
-                  const std::pair<int, int>& left,
-                  const std::pair<int, int>& right
-              ) {
-                const int left_degree =
-                    credit_degree[static_cast<std::size_t>(left.first)] +
-                    credit_degree[static_cast<std::size_t>(left.second)];
-                const int right_degree =
-                    credit_degree[static_cast<std::size_t>(right.first)] +
-                    credit_degree[static_cast<std::size_t>(right.second)];
-                return left_degree < right_degree;
-              }
-          );
+        if (!approximate_greedy_mode) {
+          for (auto& load_edges : two_credit_adjacency) {
+            std::sort(
+                load_edges.begin(), load_edges.end(),
+                [&credit_degree](
+                    const std::pair<int, int>& left,
+                    const std::pair<int, int>& right
+                ) {
+                  const int left_degree =
+                      credit_degree[static_cast<std::size_t>(left.first)] +
+                      credit_degree[static_cast<std::size_t>(left.second)];
+                  const int right_degree =
+                      credit_degree[static_cast<std::size_t>(right.first)] +
+                      credit_degree[static_cast<std::size_t>(right.second)];
+                  return left_degree < right_degree;
+                }
+            );
+          }
         }
         if (analyze_graph && rank == maximum_rank) {
           for (std::size_t load = 0U; load < negative.size(); ++load) {
@@ -612,6 +849,9 @@ int main(int argc, char** argv) {
             );
             const std::size_t complete_edges =
                 neighbour_count * (neighbour_count - 1U) / 2U;
+            const PartitionMatroidInfo partition = partition_matroid_info(
+                two_credit_adjacency[load], static_cast<int>(positive.size())
+            );
             std::cout << "TP2_MIXED_JACOBI_HYPERGRAPH rank=" << rank
                       << " load=" << negative[load].first + 1
                       << ',' << negative[load].second + 1
@@ -620,10 +860,104 @@ int main(int argc, char** argv) {
                       << " clique="
                       << (two_credit_adjacency[load].size() == complete_edges
                               ? "yes" : "no")
+                      << " partition_matroid="
+                      << (partition.valid ? "yes" : "no")
+                      << " classes=" << partition.class_count
                       << '\n';
           }
         }
-        if (uniform_fractional) {
+        if (dump_hyperedges && rank == maximum_rank) {
+          for (std::size_t load = 0U; load < negative.size(); ++load) {
+            std::cout << "TP2_MIXED_JACOBI_HYPEREDGES rank=" << rank
+                      << " load=" << negative[load].first + 1
+                      << ',' << negative[load].second + 1
+                      << " eligible=";
+            bool first_edge = true;
+            for (const auto& [first, second] : two_credit_adjacency[load]) {
+              if (!first_edge) {
+                std::cout << ',';
+              }
+              first_edge = false;
+              const IndexedPairData& first_credit =
+                  positive[static_cast<std::size_t>(first)];
+              const IndexedPairData& second_credit =
+                  positive[static_cast<std::size_t>(second)];
+              std::cout << first_credit.first + 1 << ':'
+                        << first_credit.second + 1 << ';'
+                        << second_credit.first + 1 << ':'
+                        << second_credit.second + 1;
+            }
+            std::cout << '\n';
+          }
+        }
+        if (greedy_cover || coarse_greedy_certificate ||
+            approximate_greedy_mode) {
+          std::vector<std::pair<int, int>> cover;
+          bool covered = two_credit_greedy_cover(
+              two_credit_adjacency, static_cast<int>(positive.size()),
+              two_credit_half ? static_cast<unsigned char>(2U)
+                              : static_cast<unsigned char>(1U),
+              cover
+          );
+          if (covered && !verifies_two_credit_cover(
+                  two_credit_adjacency, cover,
+                  static_cast<int>(positive.size()),
+                  two_credit_half ? static_cast<unsigned char>(2U)
+                                  : static_cast<unsigned char>(1U)
+              )) {
+            throw std::runtime_error("greedy cover verification failure");
+          }
+          if (covered && (coarse_greedy_certificate ||
+                          approximate_greedy_mode)) {
+            const Rational share(1, 2);
+            for (std::size_t load = 0U; load < negative.size(); ++load) {
+              const auto [first, second] = cover[load];
+              if (!certified_two_credit_edge(
+                      negative[load].data,
+                      positive[static_cast<std::size_t>(first)].data,
+                      positive[static_cast<std::size_t>(second)].data,
+                      share, share
+                  )) {
+                covered = false;
+                break;
+              }
+            }
+          }
+          if (!covered && first_failure_rank < 0) {
+            first_failure_rank = rank;
+            std::cout << (coarse_greedy_certificate
+                              ? "TP2_MIXED_JACOBI_COARSE_CANDIDATE"
+                              : (approximate_greedy_mode
+                                  ? "TP2_MIXED_JACOBI_APPROX_CANDIDATE"
+                                  : "TP2_MIXED_JACOBI_GREEDY_COVER"))
+                      << " first_failure_rank=" << rank
+                      << " loads=" << negative.size()
+                      << " credits=" << positive.size()
+                      << " two_credit_edges=" << two_credit_edges << '\n';
+          }
+          if (rank == maximum_rank && covered) {
+            for (std::size_t load = 0U; load < negative.size(); ++load) {
+              const auto [first, second] = cover[load];
+              std::cout << (coarse_greedy_certificate
+                                ? "TP2_MIXED_JACOBI_COARSE_CERTIFICATE"
+                                : (approximate_greedy_mode
+                                    ? "TP2_MIXED_JACOBI_APPROX_CERTIFICATE"
+                                    : "TP2_MIXED_JACOBI_GREEDY_COVER"))
+                        << " rank=" << rank
+                        << " load=" << negative[load].first + 1
+                        << ',' << negative[load].second + 1
+                        << " credits="
+                        << positive[static_cast<std::size_t>(first)].first + 1
+                        << ','
+                        << positive[static_cast<std::size_t>(first)].second + 1
+                        << ';'
+                        << positive[static_cast<std::size_t>(second)].first + 1
+                        << ','
+                        << positive[static_cast<std::size_t>(second)].second + 1
+                        << '\n';
+            }
+          }
+        } else if (uniform_fractional) {
           std::vector<Rational> use(positive.size(), Rational(0));
           for (const auto& load_edges : two_credit_adjacency) {
             if (load_edges.empty()) {
@@ -644,7 +978,7 @@ int main(int argc, char** argv) {
                       << " first_failure_rank=" << rank
                       << " maximum_credit_use=" << *maximum << '\n';
           }
-        } else if (!analyze_graph) {
+        } else if (!analyze_graph && !dump_hyperedges) {
           std::vector<std::pair<int, int>> cover;
           const bool covered = two_credit_cover(
               two_credit_adjacency, static_cast<int>(positive.size()),
@@ -698,12 +1032,25 @@ int main(int argc, char** argv) {
               << " edges=" << edges << " maximum_loads=" << maximum_loads
               << " two_credit_edges=" << two_credit_edges
               << " first_failure_rank=" << first_failure_rank
-              << " result=" << (analyze_graph ? "GRAPH_ONLY"
-                                                : (first_failure_rank < 0
-                                                       ? "PASS" : "FAIL"))
+              << " result=" << (analyze_graph || dump_hyperedges
+                      ? "GRAPH_ONLY"
+                      : (greedy_cover || coarse_greedy_certificate ||
+                         approximate_greedy_mode
+                          ? (first_failure_rank < 0
+                              ? (coarse_greedy_certificate
+                                  ? "COARSE_CERTIFICATE_PASS"
+                                  : (approximate_greedy_mode
+                                      ? "APPROX_CERTIFICATE_PASS"
+                                      : "GREEDY_PASS"))
+                              : (coarse_greedy_certificate
+                                  ? "COARSE_CANDIDATE_FAIL"
+                                  : (approximate_greedy_mode
+                                      ? "APPROX_CANDIDATE_FAIL"
+                                      : "GREEDY_FAIL")))
+                          : (first_failure_rank < 0 ? "PASS" : "FAIL")))
               << '\n';
-    return analyze_graph || first_failure_rank < 0 ? EXIT_SUCCESS
-                                                    : EXIT_FAILURE;
+    return analyze_graph || dump_hyperedges || first_failure_rank < 0
+        ? EXIT_SUCCESS : EXIT_FAILURE;
   } catch (const std::exception& error) {
     std::cerr << "TP2_MIXED_JACOBI_MATCHING error=" << error.what() << '\n';
     return EXIT_FAILURE;
