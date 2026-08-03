@@ -46653,16 +46653,26 @@ size `37`).  The single-rank mode also certifies rank twenty (`n=41`).  The
 raw approximate tie rule returns `APPROX_CANDIDATE_FAIL` at rank nineteen;
 this is a failure of that deterministic selector, not a failed interval
 edge or a counterexample to the capacity-two criterion.  The deterministic
-`--approx-random-certificate-single` mode retries only those tie choices
-with `256` fixed seeds and interval-certifies its final selected cover.  It
-returns
+`--approx-random-certificate-single` mode retries with `256` fixed seeds,
+sampling among the top sixteen viable credit pairs by future feasible-edge
+count, and interval-certifies its final selected cover.  At rank twenty-three
+the candidate set is widened to the top thirty-two pairs.  It returns
 
 ```text
 rank=19  loads=55  two_credit_edges=54305
 result=APPROX_RANDOM_CERTIFICATE_PASS.
 ```
 
-Thus ranks through twenty (`n<=41`) now have exact selected-cover
+The same exact selected-cover replay now passes at the next two ranks:
+
+```text
+rank=21  loads=66  two_credit_edges=93178
+rank=22  loads=73  two_credit_edges=130594
+rank=23  loads=81  two_credit_edges=162885
+result=APPROX_RANDOM_CERTIFICATE_PASS.
+```
+
+Thus ranks through twenty-three (`n<=47`) now have exact selected-cover
 certificates.  These larger replays extend the exact finite evidence but do
 not supply a uniform construction.
 
@@ -54530,6 +54540,406 @@ w_4-1>=fu+v.                                        (P23.11z5m0bd3)
 This pays `(P23.11z5m0bd2)`.  All other target blocks are unchanged and
 remain separated by support or isotypic label, completing the allocation.
 QED.
+
+At the next affine shell, both empty reservoirs lose one further top path.
+The following coefficient reserve pays both losses simultaneously, without
+any restriction on the number of fundamental factors.
+
+**Lemma 23A9H0D2A (two-unit empty-reservoir reserve).**  Let the indexed
+labels be positive with total `P>=8`, and let `f,t,u,v` be the counts of
+labels `1,2,3,4`, respectively.  Write `w_j` for the coefficient of `z^j`
+in the top-weight polynomial
+
+```text
+product_i (1+z+...+z^(p_i)).
+```
+
+For `n>=3`, put
+
+```text
+D_2=t(n-2)+fu,                 D_4=fu+v.             (P23.11z5m0bd4)
+```
+
+Then
+
+```text
+D_2>0  implies  w_3-2>=D_2,
+D_4>0  implies  w_4-2>=D_4.                          (P23.11z5m0bd5)
+```
+
+For `n<=2`, both displayed non-invariant demands vanish under `P>=8`.
+
+**Proof.**  The exact degree-three coefficient is
+
+```text
+w_3=binom(n+2,3)-fn-t.                              (P23.11z5m0bd6)
+```
+
+Indeed, from the unrestricted weak compositions of three, a label-one
+factor excludes its `n` assignments of weight at least two and a label-two
+factor excludes its one assignment of weight three; these exclusions are
+disjoint.  Put `r=n-f-t-u>=0`.  Then
+
+```text
+n^2-{fn+t(n-1)+fu}=u(n-f)+nr+t>=0.                  (P23.11z5m0bd7)
+```
+
+Thus, for `n>=4`,
+
+```text
+w_3-2-D_2
+ =binom(n+2,3)-2-{fn+t(n-1)+fu}
+ >=binom(n+2,3)-n^2-2>=0.                            (P23.11z5m0bd8)
+```
+
+For `n=3`, the left side is `8-3f-2t-fu`.  If `f=0`,
+it is at least two.  If `f=1`, the total-weight condition forces
+`2t+u<=2`, so it is at least three.  If `f>=2`, the same condition makes
+`D_2=0`.  This proves the first assertion.
+
+For the second, first designate the `fu` monomials consisting of one
+fundamental `z` term and one label-three `z^3` term, and the `v` monomials
+given by the label-four `z^4` terms.  These are distinct contributions to
+`w_4`, so it remains to construct two further monomials whenever `D_4>0`.
+Let `h` be the number of labels at least five.  If `h>=2`, use the `z^4`
+terms of two such factors.  If `h=1`, the positivity of `D_4` supplies
+another nonfundamental factor; use the `z^4` term of the high factor and
+the product of its `z^2` term with the other factor's `z^2` term.
+
+It remains that all labels are at most four.  Put `r=t+u+v`.  If `r>=3`,
+two distinct pairs of nonfundamental factors give two `z^2z^2` monomials.
+If `r=2`, one such monomial is available; when `f>=2`, multiply the
+`z^2` term of either nonfundamental factor by two fundamental `z` terms.
+When `f=1`, the inequality `P>=8` forces one of the two factors to have
+label four, and its `z^3` term times the fundamental `z` term is a second
+monomial.  When `f=0`, both factors have label four, and a `z^3z` product
+is a second monomial.  Finally, `r<=1` and `D_4>0` force `r=1` with a
+label-three or label-four factor; then `P>=8` gives at least four
+fundamentals.  Use four fundamental `z` terms and, separately, two such
+terms times the nonfundamental `z^2` term.  In every case the two monomials
+are distinct from the designated ones and from each other.  Hence
+`w_4>=D_4+2`, proving the second assertion.  QED.
+
+**Corollary 23A9H0D2 (complete second-affine defect-two collar).**  Let all
+indexed labels be positive, put `q=P-4>=4`, and work in `SU(2)_k` under
+
+```text
+P<=k+2.                                             (P23.11z5m0bd9)
+```
+
+Then Target 23A9G2 has a full capacitated matching.  Thus the boundary
+injection `(P23.11z5m0ab)` holds throughout the second affine shell.
+
+**Proof.**  Corollary 23A9H0D1 covers `P<=k+1`.  Suppose `P=k+2`, so
+`q=k-2`.  The pair, triple, and four-support routes used in Propositions
+23A9H0B--H0C are unchanged.  Their lower-bound channels lie among
+`q-4,q-2,q,q+2=k`; the quoted source and target top-layer multiplicities have
+no reflected partner within the corresponding word.  The channels
+`q in 2 star_k q` and `q in 4 star_k q` also remain available.
+
+Only the empty reservoirs change.  Kac--Walton reflection removes one
+further top path from each: their `a=2` and `a=4` capacities are
+
+```text
+w_3-2,                         w_4-2,               (P23.11z5m0be0)
+```
+
+respectively.  The complete non-invariant demands in those blocks are the
+two quantities `D_2,D_4` in `(P23.11z5m0bd4)`.  Lemma 23A9H0D2A pays every
+positive demand; a zero demand needs no reservoir.  All remaining blocks
+are still separated by support or isotypic label, so the routes assemble
+to the required matching.  QED.
+
+The third shell also closes throughout the no-fundamental sector.  Here the
+truncated empty channels telescope to a larger coefficient gap, so no
+support exchange beyond the label-two pairs is needed.
+
+**Corollary 23A9H0D3B (no-fundamental third-affine defect-two collar).**
+Suppose every indexed label is at least two, put `q=P-4>=4`, and work in
+`SU(2)_k` under
+
+```text
+P<=k+3.                                             (P23.11z5m0be1)
+```
+
+Then Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  Corollary 23A9H0D2 covers `P<=k+2`.  Suppose `P=k+3`, so
+`q=k-1`.  The indexed `{2,2}` sources retain their own invariant pair
+targets: the channel `q` lies in each of `0 star_k q`, `2 star_k q`, and
+`4 star_k q`, and the complementary word has its unique top path to
+`V_q`.  Thus only the singleton `{2}` and `{4}` sources remain.
+
+Let `t,v` be the counts of labels two and four, respectively, and let `n`
+be the number of factors.  The `a=2` empty target has exactly the two
+channels `P-6,P-4`, while its `a=4` block has exactly the three channels
+`P-8,P-6,P-4`.  None has a reflected partner within the full word.  Hence
+the top-weight telescoping identities give
+
+```text
+c_empty(2;q)=w_3-w_1,
+c_empty(4;q)=w_4-w_1=w_4-n.                         (P23.11z5m0be2)
+```
+
+Because every label is at least two,
+
+```text
+w_3=binom(n+2,3)-t.                                (P23.11z5m0be3)
+```
+
+Consequently, for `n>=2`,
+
+```text
+w_3-w_1-t(n-2)
+ =binom(n+2,3)-n-t(n-1)
+ >=binom(n+2,3)-n^2>=0.                              (P23.11z5m0be4)
+```
+
+This pays all `t(n-2)` singleton-label-two blocks.  For the `a=4` demand,
+the coefficient `w_4` is minimized when every label is two.  If `n>=3`,
+that minimum is
+
+```text
+binom(n+3,4)-n^2>=2n>=n+v.                           (P23.11z5m0be5)
+```
+
+Thus `w_4-n>=v`.  If `n=2` and `v>0`, the condition `P>=8` forces both
+labels to be at least four, so `w_4=5>=2+v`; if `v=0` there is no such
+demand.  The case `n<=1` is vacuous.  The two empty reservoirs therefore
+pay every remaining singleton source, and all target blocks are disjoint
+by support or isotypic label.  QED.
+
+**Corollary 23A9H0D3C (one-fundamental third-affine defect-two collar).**
+Suppose exactly one indexed label is one, put `q=P-4>=4`, and work in
+`SU(2)_k` under
+
+```text
+P<=k+3.                                             (P23.11z5m0be6)
+```
+
+Then Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  Corollary 23A9H0D2 again leaves only `P=k+3`, with `q=k-1`.
+The indexed `{2,2}` sources use their own invariant pair targets exactly
+as in Proposition 23A9H0B2.  Let `t,u,v` count labels `2,3,4` and let `n`
+be the total factor count.  The remaining singleton `{2}`, `{1,3}`, and
+`{4}` sources have empty-target demands
+
+```text
+t(n-2)+u,                         u+v.              (P23.11z5m0be7)
+```
+
+The two empty capacities are still `(P23.11z5m0be2)`.  The degree-three
+coefficient is
+
+```text
+w_3=binom(n+2,3)-n-t.                              (P23.11z5m0be8)
+```
+
+For `n>=4`, using `t+u<=n-1`,
+
+```text
+w_3-n-{t(n-2)+u}
+ =binom(n+2,3)-2n-t(n-1)-u
+ >=binom(n+2,3)-n^2-1>=0.                            (P23.11z5m0be9)
+```
+
+For `n=3`, the same left side is `4-2t-u`; the condition `P>=8` permits
+only `2t+u<=2`, so it is nonnegative.  For `n<=2`, every nonzero demand in
+`(P23.11z5m0be7)` is absent.
+
+At degree four, inclusion--exclusion for the unique fundamental factor
+gives
+
+```text
+w_4=binom(n+3,4)-binom(n+1,2)-tn-u.                (P23.11z5m0bf0)
+```
+
+For `n>=3`, since `tn+2u+v<=n(n-1)`,
+
+```text
+w_4-n-(u+v)
+ >=binom(n+3,4)-binom(n+1,2)-n^2>=0.                (P23.11z5m0bf1)
+```
+
+For `n<=2`, the total-weight condition again forces `t=u=v=0`.  Thus the
+two empty reservoirs pay `(P23.11z5m0be7)`, and the support-separated routes
+assemble to the stated matching.  QED.
+
+The remaining small-fundamental exchanges also survive the third shell.
+The only ordinary high channel which disappears can be replaced by a
+lower channel supplied by the label-two or fundamental part of the same
+target complement.
+
+**Corollary 23A9H0D3D (two-to-five-fundamental third-affine collar).**
+Suppose the number `f` of indexed fundamental labels satisfies
+
+```text
+2<=f<=5,                 q=P-4>=4,                 P<=k+3. (P23.11z5m0bf2)
+```
+
+Then Target 23A9G2 has a full capacitated matching in `SU(2)_k`.
+
+**Proof.**  Corollary 23A9H0D2 leaves only `P=k+3`, so `q=k-1`.  The
+support exchanges of Propositions 23A9H0B3--H0B5 retain their stated
+capacities.  Indeed, every quoted lower channel other than a possible top
+`q+2` is one of `q-4,q-2,q` and is unchanged.  The only capacities for
+which the wall-free proof could use that top channel are the `a=2` bounds
+`n-2` of the pair targets in Propositions 23A9H0B3a, 23A9H0B4, and
+23A9H0B5.  In the first case the target complement contains its label-two
+factor and a word top at `q`; hence its surviving `q-2` channel has one
+path, since `q-2 in 2 star_k q`.  In the latter two cases the complement
+contains two unused fundamental factors and a word top at `q`; their
+`V_2` summand gives the same `q-2` path.  Together with the unchanged
+`n-3` paths in the `q` channel, these give `n-2` slots exactly as before.
+All other pair, triple, and four-support lower bounds use only the surviving
+channels.  The source multiplicities have no reflected partner, so the
+wall-free support routes remain valid.
+
+It remains to pay the non-invariant rows from the empty target.  Let
+`t,u,v` count labels `2,3,4`, respectively, and let `n` be the factor
+count.  Their demands are
+
+```text
+D_2=t(n-2)+fu,                 D_4=fu+v.             (P23.11z5m0bf3)
+```
+
+The empty capacities are again `w_3-n,w_4-n` by
+`(P23.11z5m0be2)`.  Exact coefficient extraction gives
+
+```text
+w_3=binom(n+2,3)-fn-t,
+w_4=binom(n+3,4)-f binom(n+1,2)-tn-u+binom(f,2).
+                                                               (P23.11z5m0bf4)
+```
+
+The second identity has only the pairwise intersections of two fundamental
+upper-bound exclusions; every other intersection already has degree above
+four.  Since `P>=8` while `f<=5`, there is at least one nonfundamental
+factor, so `n>=f+1`; therefore
+
+```text
+t(n-1)+fu<=(n-f)(n-1),
+tn+(f+1)u+v<=n(n-f).                                 (P23.11z5m0bf5)
+```
+
+For `n>=4`, the first line gives
+
+```text
+w_3-n-D_2>=binom(n+2,3)-n^2-f>=0.                   (P23.11z5m0bf6)
+```
+
+The last expression is increasing in `n` from `n=4`; its values at the
+relevant minima `f=2,3,4,5` are respectively `2,1,6,15`.  The only omitted
+case is `(f,n)=(2,3)`, where `P>=8` forces the third label to be at least
+six, so `t=u=0` and the left side is one.
+
+Similarly, for `n>=4`,
+
+```text
+w_4-n-D_4
+ >=F_f(n):=binom(n+3,4)-f binom(n+1,2)
+            -n(n-f)-n+binom(f,2)>=0.                (P23.11z5m0bf7)
+```
+
+For fixed `f<=5`, `F_f(n+1)-F_f(n)=binom(n+3,3)-(f+2)n-2>0` for `n>=4`.
+At the same relevant minima its values are `4,0,6,19`; the exceptional
+`(f,n)=(2,3)` again has `D_4=0` and `w_4-n=1`.  Thus both empty reservoirs
+pay `(P23.11z5m0bf3)`, and the retained support routes are disjoint by
+support or isotypic label.  QED.
+
+**Corollary 23A9H0D3 (complete third-affine defect-two collar).**  Let all
+indexed labels be positive, put `q=P-4>=4`, and work in `SU(2)_k` under
+
+```text
+P<=k+3.                                             (P23.11z5m0bf8)
+```
+
+Then Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  Partition by the number `f` of fundamental labels.  Corollaries
+23A9H0D3B, 23A9H0D3C, and 23A9H0D3D cover `f=0`, `f=1`, and `2<=f<=5`,
+respectively.  Proposition 23A9H0C is stronger when `f>=6`, since it
+already reaches `P<=k+4`.  These cases are exhaustive.  QED.
+
+At the final top wall, the non-invariant rows cease to be an obstruction as
+soon as there are seven factors.  The remaining fourth-shell difficulty is
+therefore confined to the invariant pair/triple/four-support exchanges.
+
+**Lemma 23A9H0D4A (large top-wall empty-reservoir reserve).**  Let the
+positive indexed label word have `n>=7` factors and at most five fundamental
+labels.  Put
+
+```text
+P=k+4,                 q=k,
+D_2=t(n-2)+fu,         D_4=fu+v,                    (P23.11z5m0bf9)
+```
+
+where `f,t,u,v` count labels `1,2,3,4`, respectively.  Then the empty
+target has sufficient capacity for every non-invariant defect-two source:
+
+```text
+c_empty(2;k)>=D_2,             c_empty(4;k)>=D_4.   (P23.11z5m0bg0)
+```
+
+**Proof.**  The simple-current fusion intervals are
+
+```text
+2 star_k k={k-2},               4 star_k k={k-4}.
+```
+
+Thus the two empty capacities telescope to
+
+```text
+c_empty(2;k)=w_3-w_2,
+c_empty(4;k)=w_4-w_3.                              (P23.11z5m0bg1)
+```
+
+The exact top coefficients through degree four are
+
+```text
+w_2=binom(n+1,2)-f,
+w_3=binom(n+2,3)-fn-t,
+w_4=binom(n+3,4)-f binom(n+1,2)-tn-u+binom(f,2).
+                                                               (P23.11z5m0bg2)
+```
+
+Because `t+u+v<=n-f` and `n-1>=f`,
+
+```text
+t(n-1)+fu<=(n-f)(n-1).
+```
+
+Subtracting `D_2` from the first line of `(P23.11z5m0bg1)` therefore gives
+
+```text
+c_empty(2;k)-D_2
+ >=binom(n+1,3)-n(n-1)
+ ={n(n-1)(n-5)}/6>=0.                               (P23.11z5m0bg3)
+```
+
+For the second block, `n-1>=f+1` and hence
+
+```text
+t(n-1)+(f+1)u+v<=(n-f)(n-1).
+```
+
+Using `(P23.11z5m0bg2)`, this yields
+
+```text
+c_empty(4;k)-D_4
+ >=B_f(n):=binom(n+2,4)-f binom(n+1,2)+fn
+            -(n-f)(n-1)+binom(f,2).                 (P23.11z5m0bg4)
+```
+
+For `0<=f<=5,n>=7`, this polynomial is minimized at `(f,n)=(5,7)`,
+where it equals `19`: it decreases with `f`, while
+
+```text
+B_f(n+1)-B_f(n)=binom(n+2,3)-(f+2)n+f>0.
+```
+
+Thus `(P23.11z5m0bg4)` is nonnegative, proving both capacities.  QED.
 
 The same support-matching mechanism reaches one further outer layer on the
 all-fundamental ray.  Here the size-four and size-six omitted supports are

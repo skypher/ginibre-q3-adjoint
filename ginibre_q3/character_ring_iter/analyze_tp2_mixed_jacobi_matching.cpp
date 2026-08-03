@@ -467,6 +467,7 @@ bool two_credit_random_greedy_cover(
     const std::vector<std::vector<std::pair<int, int>>>& adjacency,
     int credit_count,
     unsigned char maximum_uses,
+    std::size_t candidate_width,
     std::mt19937_64& generator,
     std::vector<std::pair<int, int>>& cover
 ) {
@@ -502,8 +503,7 @@ bool two_credit_random_greedy_cover(
         0U, load_choices.size() - 1U
     );
     const int chosen_load = load_choices[load_pick(generator)];
-    std::size_t best_future = 0U;
-    std::vector<std::pair<int, int>> edge_choices;
+    std::vector<std::pair<std::size_t, std::pair<int, int>>> edge_choices;
     for (const auto& [first, second]
          : adjacency[static_cast<std::size_t>(chosen_load)]) {
       const std::size_t first_slot = static_cast<std::size_t>(first);
@@ -539,21 +539,22 @@ bool two_credit_random_greedy_cover(
       if (!feasible_future) {
         continue;
       }
-      if (future > best_future) {
-        best_future = future;
-        edge_choices.clear();
-      }
-      if (future == best_future) {
-        edge_choices.emplace_back(first, second);
-      }
+      edge_choices.emplace_back(future, std::make_pair(first, second));
     }
     if (edge_choices.empty()) {
       return false;
     }
-    std::uniform_int_distribution<std::size_t> edge_pick(
-        0U, edge_choices.size() - 1U
+    std::sort(
+        edge_choices.begin(), edge_choices.end(),
+        [](const auto& left, const auto& right) {
+          return left.first > right.first;
+        }
     );
-    const auto [first, second] = edge_choices[edge_pick(generator)];
+    const std::size_t choice_count = std::min<std::size_t>(
+        candidate_width, edge_choices.size()
+    );
+    std::uniform_int_distribution<std::size_t> edge_pick(0U, choice_count - 1U);
+    const auto [first, second] = edge_choices[edge_pick(generator)].second;
     ++used[static_cast<std::size_t>(first)];
     ++used[static_cast<std::size_t>(second)];
     assigned[static_cast<std::size_t>(chosen_load)] = 1U;
@@ -1006,6 +1007,7 @@ int main(int argc, char** argv) {
           bool covered = false;
           if (approximate_random_mode) {
             constexpr std::uint64_t attempts = 256U;
+            const std::size_t candidate_width = rank <= 22 ? 16U : 32U;
             for (std::uint64_t attempt = 0U; attempt < attempts; ++attempt) {
               std::mt19937_64 generator(
                   UINT64_C(0x9e3779b97f4a7c15) ^
@@ -1013,10 +1015,11 @@ int main(int argc, char** argv) {
                       UINT64_C(0xbf58476d1ce4e5b9) ^ attempt
               );
               if (two_credit_random_greedy_cover(
-                      two_credit_adjacency,
-                      static_cast<int>(positive.size()), maximum_uses,
-                      generator, cover
-                  )) {
+                  two_credit_adjacency,
+                  static_cast<int>(positive.size()), maximum_uses,
+                  candidate_width,
+                  generator, cover
+              )) {
                 covered = true;
                 break;
               }

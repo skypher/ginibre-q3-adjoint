@@ -24,7 +24,10 @@ class Dinic {
           level_(static_cast<std::size_t>(vertices)),
           next_(static_cast<std::size_t>(vertices)) {}
 
-    void add_edge(int from, int to, Count capacity) {
+    int add_edge(int from, int to, Count capacity) {
+        const int forward_index = static_cast<int>(
+            graph_[static_cast<std::size_t>(from)].size()
+        );
         Edge forward{to, static_cast<int>(graph_[static_cast<std::size_t>(to)].size()),
                      capacity};
         Edge reverse{from,
@@ -32,6 +35,7 @@ class Dinic {
                      0};
         graph_[static_cast<std::size_t>(from)].push_back(forward);
         graph_[static_cast<std::size_t>(to)].push_back(reverse);
+        return forward_index;
     }
 
     Count flow(int source, int sink) {
@@ -66,6 +70,14 @@ class Dinic {
             }
         }
         return seen;
+    }
+
+    Count edge_flow(int from, int edge_index) const {
+        const Edge& forward = graph_[static_cast<std::size_t>(from)]
+                                    [static_cast<std::size_t>(edge_index)];
+        return graph_[static_cast<std::size_t>(forward.to)]
+                     [static_cast<std::size_t>(forward.reverse)]
+                         .capacity;
     }
 
   private:
@@ -196,7 +208,8 @@ bool inspect_word(
     bool print_pass,
     Routing routing,
     int fixed_q = -1,
-    bool require_total_capacity = false
+    bool require_total_capacity = false,
+    bool print_flow = false
 ) {
     const int factors = static_cast<int>(labels.size());
     const int masks = 1 << factors;
@@ -263,6 +276,12 @@ bool inspect_word(
             const int source = 2 * masks;
             const int sink = source + 1;
             Dinic network(sink + 1);
+            struct Route {
+                int source_mask;
+                int target_mask;
+                int edge_index;
+            };
+            std::vector<Route> routes;
             const Count infinity = total_demand;
             for (int left = 0; left < masks; ++left) {
                 if (demand[static_cast<std::size_t>(left)] == 0) {
@@ -272,7 +291,10 @@ bool inspect_word(
                 for (int right = 0; right < masks; ++right) {
                     if (routing_allowed(left, right, routing)
                         && capacity[static_cast<std::size_t>(right)] != 0) {
-                        network.add_edge(left, masks + right, infinity);
+                        const int edge_index = network.add_edge(
+                            left, masks + right, infinity
+                        );
+                        routes.push_back(Route{left, right, edge_index});
                     }
                 }
             }
@@ -286,6 +308,22 @@ bool inspect_word(
             }
             const Count rank = network.flow(source, sink);
             if (rank == total_demand) {
+                if (print_flow) {
+                    for (const Route& route : routes) {
+                        const Count assigned = network.edge_flow(
+                            route.source_mask, route.edge_index
+                        );
+                        if (assigned == 0) {
+                            continue;
+                        }
+                        std::cout << "FLOW q=" << q << " a=" << a
+                                  << " source="
+                                  << mask_string(route.source_mask, factors)
+                                  << " target="
+                                  << mask_string(route.target_mask, factors)
+                                  << " value=" << assigned << '\n';
+                    }
+                }
                 continue;
             }
             const auto reachable = network.reachable(source);
@@ -414,13 +452,59 @@ bool enumerate_outer_defect(
     return true;
 }
 
+bool enumerate_outer_defect_sum(
+    std::vector<int>& labels,
+    int position,
+    int maximum_label,
+    int defect,
+    int target_total,
+    int current_total,
+    int level,
+    std::uint64_t& checked
+) {
+    if (position == static_cast<int>(labels.size())) {
+        if (current_total != target_total) {
+            return true;
+        }
+        ++checked;
+        return inspect_word(
+            labels, level, false, Routing::two_import, target_total - defect,
+            true
+        );
+    }
+    const int lower = position == 0
+        ? 1
+        : labels[static_cast<std::size_t>(position - 1)];
+    const int remaining = static_cast<int>(labels.size()) - position - 1;
+    for (int label = lower; label <= maximum_label; ++label) {
+        const int next_total = current_total + label;
+        if (next_total + remaining * label > target_total) {
+            break;
+        }
+        if (next_total + remaining * maximum_label < target_total) {
+            continue;
+        }
+        labels[static_cast<std::size_t>(position)] = label;
+        if (!enumerate_outer_defect_sum(
+                labels, position + 1, maximum_label, defect, target_total,
+                next_total, level, checked
+            )) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main(int argc, char** argv) {
     if (argc >= 5
-        && std::string(argv[1]) == "--two-import-outer-defect-word") {
+        && (std::string(argv[1]) == "--two-import-outer-defect-word"
+            || std::string(argv[1]) == "--two-import-outer-defect-word-flow")) {
+        const bool print_flow =
+            std::string(argv[1]) == "--two-import-outer-defect-word-flow";
         const int level = std::stoi(argv[2]);
         const int defect = std::stoi(argv[3]);
         if (level < 1 || defect < 1) {
-            std::cerr << "usage: --two-import-outer-defect-word "
+            std::cerr << "usage: --two-import-outer-defect-word[-flow] "
                          "LEVEL DEFECT LABEL...\n";
             return 2;
         }
@@ -441,9 +525,41 @@ int main(int argc, char** argv) {
             return 2;
         }
         const bool passed = inspect_word(
-            labels, level, true, Routing::two_import, q, true
+            labels, level, true, Routing::two_import, q, true, print_flow
         );
         return passed ? 0 : 1;
+    }
+    if (argc == 7
+        && std::string(argv[1]) == "--two-import-outer-defect-sum") {
+        const int level = std::stoi(argv[2]);
+        const int factors = std::stoi(argv[3]);
+        const int maximum_label = std::stoi(argv[4]);
+        const int defect = std::stoi(argv[5]);
+        const int target_total = std::stoi(argv[6]);
+        if (level < 1 || factors < 1 || maximum_label < 1
+            || maximum_label > level || defect < 1
+            || target_total < factors
+            || target_total - defect < 1 || target_total - defect > level) {
+            std::cerr << "usage: --two-import-outer-defect-sum "
+                         "LEVEL FACTORS MAXIMUM_LABEL DEFECT TOTAL\n";
+            return 2;
+        }
+        std::vector<int> labels(static_cast<std::size_t>(factors), 1);
+        std::uint64_t checked = 0U;
+        if (!enumerate_outer_defect_sum(
+                labels, 0, maximum_label, defect, target_total, 0, level,
+                checked
+            )) {
+            return 1;
+        }
+        std::cout << "PASS two_import_outer_defect_sum"
+                  << " level=" << level
+                  << " factors=" << factors
+                  << " maximum_label=" << maximum_label
+                  << " defect=" << defect
+                  << " total=" << target_total
+                  << " words=" << checked << '\n';
+        return 0;
     }
     if (argc == 6
         && std::string(argv[1]) == "--two-import-outer-defect") {
