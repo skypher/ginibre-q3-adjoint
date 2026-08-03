@@ -278,31 +278,36 @@ lanes the repository's own record supports:
   by Audit correction 5A7B45 are now reinstated against the corrected
   quotient.  The restored census is 168 rank-one plus 140 rank-two
   cells, for 308 total, and 7,296 switch cells.
-  A complete corrected-source replay of all 308 residual cells is now
-  in flight locally, with concurrency chosen from live RAM and machine
-  load.  Its first cell has independently returned `UNSAT`; completion
-  of every cell remains required before the shallow leaf is a theorem.
-  The first long direct cell, task 99, is now independently closed by
-  its exact rank-one bad-switch query `|B_C|<=L(C)-1`.  A 128-chamber
-  supply-only split found a `SAT` negative control at
-  `(wall,interval)=(2,10)`, showing why that stronger surrogate stalled;
-  the switch query itself returned `UNSAT`.  Its corrected-source
-  transcript is `certificates/su2_corrected_task99_switch_z3.log`.
-  A fresh complete replay selected 44 workers from the then-current
-  64 logical CPUs, load approximately 20, and 98 GiB available RAM.
-  That observed launch count is not a fixed thread setting.
-  A hash-checked machine-C package is staged at
-  `/root/q3_su2_corrected_308_20260727`.  Its watcher preserves the
-  currently running bounded replay and launches no corrected work until
-  that process exits.  At launch it computes the largest safe worker
-  count from live runnable threads and `MemAvailable`; the watcher
-  source SHA-256 is
-  `8c2b14198ef0d0b0da779fd895d624bb61af7772ca8d4467e465d77c335521b6`,
-  and the staged `libz3.so.4` SHA-256 is
-  `730694c87a99a1e512562bd36d005c121610531c146e4317be0e1a8d53882b18`.
-  The exact equality-partition replay for this residual is in flight and is an
-  overcomplete check because it also includes the analytically closed
-  larger ranks.  The 768-cell deep rank-at-most-two two-minus replay has
+  The corrected shallow residual is now closed, rather than merely
+  in flight.  The committed receipt directory
+  `certificates/su2_seven_shallow_exact_receipts` contains the exact
+  `168+140=308`-cell cover, with a SHA-256 manifest.  Every manifest
+  entry verifies, and the current strict collector replay
+
+  ```text
+  collect_su2_seven_shallow_exact \
+    verify_su2_seven_shallow_z3 rank_one_aggregate.log RECEIPT_ROOT
+  ```
+
+  returns
+
+  ```text
+  tasks=308 rank_one=168/168 rank_two=140/140
+  direct_receipts=103 chamber_receipts=37 method_overlap=0
+  missing=0 result=PASS_EXACT_UNION.
+  ```
+
+  The current rank-one verifier, rank-two verifier, and collector source
+  hashes are, respectively,
+  `5c4f65cd45ca6d5237f43d0641b97cf288edc6a2f251405f605e9b2325ed86aa`,
+  `a55ea6da6a01e2c07a4ed0e72745493f72808fd0ad792d1c290a8f3ed1f2d0e8`,
+  and
+  `e173390c1a611b46f76da6fd807765c6aade844ff74dba1c07733f49facba372`.
+  The latter two executable hashes are recorded in Corollary 5A7B51 of
+  `CENTRAL_CHARACTER_Q3_SEARCH.md`.  Thus the seven-factor shallow
+  residual is theorem evidence.  Any still-running replay is only a
+  redundant diagnostic audit, not an open prerequisite.  The 768-cell
+  deep rank-at-most-two two-minus replay has
   completed with every cell `UNSAT`.  Corollary 23A9ZZ9 combines it with
   the shallow-minus theorem, and Corollary 23A9ZZ10 combines those
   rank-one/two branches with Corollary 23A9ZZ8 to prove the complete
@@ -576,8 +581,24 @@ before any further construction.
    The exact transcript is
    `certificates/su2_seven_reservoir_ablation_k20.log`; it is bounded
    discovery, not the missing unbounded theorem.
-3. Prove the global maximal-cut payment `(GCP)` of Proposition 5A8.
-   This is now the precise arbitrary-factor target:
+3. Complete the arbitrary-factor central-current payment.  Corollary
+   `5A8H28UIA2CGLCPAIMGPC` has proved the full proper affine-suffix
+   payment `(AIM)`, uniformly in the level and factor count.  The remaining
+   direct finite statement is therefore exactly the central assembly
+   `(CIP)`, equivalently the complete finite `C_2` Pieri packet `(FCP1)`.
+   In the stable wall-free chamber it contains the necessary ordinary
+   cumulative-current inequality `(OCSP)`.  Profile-only, matrix-algebra,
+   and real-rooted-lift enlargements all have exact counterexamples, so the
+   proof must retain the actual interval-factor product.  This is the
+   current unbounded positive-factor bottleneck.  On its ordinary radial
+   reduction the first two lower antidiagonals are proved for arbitrary
+   factor words; the first unclosed mixed family begins at the two
+   `A=3` columns, despite complete all-fundamental and one-arbitrary-factor
+   strands.  Thus a generic low-moment threshold is not enough for the
+   remaining mixed-label payment.
+
+   A parallel signed formulation is the global maximal-cut payment `(GCP)`
+   of Proposition 5A8.  Its precise target is
    `T_n<=U_n+L_n(C_*)`, where `U_n` aggregates every positive unordered
    cut and `L_n(C_*)` keeps the first and last five channels of one
    maximal negative cut.  It implies the signed value is at least
