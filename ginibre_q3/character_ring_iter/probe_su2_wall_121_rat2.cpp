@@ -1,8 +1,10 @@
 #include <algorithm>
 #include <array>
 #include <cstddef>
+#include <cstdint>
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -165,15 +167,90 @@ int parse_positive(const char* text, const char* name) {
   return static_cast<int>(parsed);
 }
 
+std::uint64_t parse_positive_u64(const char* text, const char* name) {
+  const std::string value{text};
+  std::size_t consumed = 0U;
+  const unsigned long long parsed = std::stoull(value, &consumed, 10);
+  if (consumed != value.size() || parsed == 0U) {
+    throw std::invalid_argument(std::string(name) + " must be positive");
+  }
+  return static_cast<std::uint64_t>(parsed);
+}
+
+int parse_positive_int(const char* text, const char* name) {
+  const std::uint64_t parsed = parse_positive_u64(text, name);
+  if (parsed > static_cast<std::uint64_t>(std::numeric_limits<int>::max())) {
+    throw std::invalid_argument(std::string(name) + " is too large");
+  }
+  return static_cast<int>(parsed);
+}
+
+std::uint64_t splitmix64(std::uint64_t& state) {
+  state += UINT64_C(0x9e3779b97f4a7c15);
+  std::uint64_t value = state;
+  value = (value ^ (value >> 30U)) * UINT64_C(0xbf58476d1ce4e5b9);
+  value = (value ^ (value >> 27U)) * UINT64_C(0x94d049bb133111eb);
+  return value ^ (value >> 31U);
+}
+
+void random_search(
+    std::uint64_t samples,
+    int maximum_length,
+    std::uint64_t maximum_numerator,
+    std::uint64_t denominator
+) {
+  if (maximum_length < 3) {
+    throw std::invalid_argument("maximum_length must be at least three");
+  }
+  std::uint64_t state = UINT64_C(0x7e8b6d4c1f2a3905);
+  Counters counters;
+  for (std::uint64_t sample = 0U; sample < samples; ++sample) {
+    const int length = 3 + static_cast<int>(
+        splitmix64(state)
+        % static_cast<std::uint64_t>(maximum_length - 2)
+    );
+    std::vector<Rational> ratios;
+    ratios.reserve(static_cast<std::size_t>(length));
+    for (int index = 0; index < length; ++index) {
+      ratios.emplace_back(
+          Integer(1) + Integer(splitmix64(state) % maximum_numerator),
+          Integer(denominator)
+      );
+    }
+    std::sort(ratios.begin(), ratios.end(), std::greater<Rational>());
+    ++counters.tails;
+    check_tail(ratios, counters);
+  }
+  std::cout << "SU2_WALL_121_RAT2_RANDOM_PASS samples=" << samples
+            << " maximum_length=" << maximum_length
+            << " maximum_numerator=" << maximum_numerator
+            << " denominator=" << denominator
+            << " seed=0x7e8b6d4c1f2a3905"
+            << " tails=" << counters.tails
+            << " critical=" << counters.critical << '\n';
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
   try {
+    if (argc == 6 && std::string(argv[1]) == "--random") {
+      const std::uint64_t samples = parse_positive_u64(argv[2], "samples");
+      const int maximum_length =
+          parse_positive_int(argv[3], "maximum_length");
+      const std::uint64_t maximum_numerator =
+          parse_positive_u64(argv[4], "maximum_numerator");
+      const std::uint64_t denominator =
+          parse_positive_u64(argv[5], "denominator");
+      random_search(samples, maximum_length, maximum_numerator, denominator);
+      return EXIT_SUCCESS;
+    }
     const int maximum_length = argc == 2
         ? parse_positive(argv[1], "maximum_length") : 8;
     if (argc > 2) {
       throw std::invalid_argument(
           "usage: probe_su2_wall_121_rat2 [maximum_length]"
+          " | --random SAMPLES MAXIMUM_LENGTH MAXIMUM_NUMERATOR DENOMINATOR"
       );
     }
     // Descending order makes recursive index choices exactly the

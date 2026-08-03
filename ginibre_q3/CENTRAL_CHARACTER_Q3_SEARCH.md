@@ -17182,6 +17182,29 @@ This deliberately does not assert `(RAT2PAY)` beyond the displayed finite
 grid.  Its purpose is to test the exact strengthened lemma after the
 first-iterate counterexample, not to replace its arbitrary-depth proof.
 
+The same strict C++ probe has a deterministic mixed-ratio mode, which does
+not reuse the grid alphabet.  It samples every successive ratio independently
+from a rational interval, orders the resulting ratios to impose exact log
+concavity, and evaluates the complete terminal current and `(RAT2PAY)` using
+`cpp_int` rationals.  The reproducible replay
+
+```text
+probe_su2_wall_121_rat2 --random 10000 64 128 64
+```
+
+returns
+
+```text
+SU2_WALL_121_RAT2_RANDOM_PASS samples=10000 maximum_length=64
+maximum_numerator=128 denominator=64 seed=0x7e8b6d4c1f2a3905
+tails=10000 critical=9773.
+```
+
+Here every tail has between three and sixty-four positive ratios, each
+sampled from `{1/64,...,128/64}` before sorting.  This is a reproducible
+exact falsification audit of the surviving second-iterate payment; it is not
+an arbitrary-depth proof.
+
 The first unproved symbolic chamber is already too coupled for an
 unsubdivided Bernstein certificate.  In the exact tail-ratio chart with five
 positive support coordinates, the strict diagnostic
