@@ -169,5 +169,49 @@ int main() {
             << minimum_cross_coefficient << '\n';
   std::cout << "CONTINUOUS_TP2_PASCAL_CROSS result="
             << (cross_nonnegative ? "PASS" : "FAIL") << '\n';
-  return nonnegative && cross_nonnegative ? 0 : 1;
+
+  const Polynomial symmetric_s = Polynomial(5) + u + v;
+  const Polynomial symmetric_d = u - v;
+  const Polynomial symmetric_n0 = numerator_for(symmetric_s, symmetric_d);
+  const Polynomial symmetric_d0 = denominator_for(symmetric_s);
+  const Polynomial symmetric_n_minus = numerator_for(
+      symmetric_s + Polynomial(1), symmetric_d + Polynomial(1)
+  );
+  const Polynomial symmetric_d_minus = denominator_for(
+      symmetric_s + Polynomial(1)
+  );
+  const Polynomial symmetric_n_plus = numerator_for(
+      symmetric_s + Polynomial(1), symmetric_d - Polynomial(1)
+  );
+  const Polynomial symmetric_d_plus = denominator_for(
+      symmetric_s + Polynomial(1)
+  );
+  const Polynomial symmetric_cross_numerator =
+      16 * symmetric_n0 * symmetric_d_minus * symmetric_d_plus
+      - symmetric_n_minus * symmetric_d0 * symmetric_d_plus
+      - symmetric_n_plus * symmetric_d0 * symmetric_d_minus;
+  bool symmetric_cross_nonnegative = true;
+  cpp_int symmetric_minimum_cross_coefficient = 0;
+  bool first_symmetric_cross_coefficient = true;
+  std::cout << "CONTINUOUS_TP2_PASCAL_CROSS_SYMMETRIC terms="
+            << symmetric_cross_numerator.coefficients().size() << '\n';
+  for (const auto& [degree, coefficient] :
+       symmetric_cross_numerator.coefficients()) {
+    (void)degree;
+    if (first_symmetric_cross_coefficient
+        || coefficient < symmetric_minimum_cross_coefficient) {
+      symmetric_minimum_cross_coefficient = coefficient;
+      first_symmetric_cross_coefficient = false;
+    }
+    if (coefficient < 0) {
+      symmetric_cross_nonnegative = false;
+    }
+  }
+  std::cout << "CONTINUOUS_TP2_PASCAL_CROSS_SYMMETRIC "
+               "minimum_coefficient="
+            << symmetric_minimum_cross_coefficient << '\n';
+  std::cout << "CONTINUOUS_TP2_PASCAL_CROSS_SYMMETRIC result="
+            << (symmetric_cross_nonnegative ? "PASS" : "FAIL") << '\n';
+  return nonnegative && cross_nonnegative && symmetric_cross_nonnegative
+      ? 0 : 1;
 }

@@ -45582,6 +45582,29 @@ replay finds no negative antiperiodic current and no negative sum
 evidence only; the viable use of the twist would require a genuine
 two-component recurrence or allocation, not a scalar reserve inequality.
 
+The same reflection survives the Pascal polarization:
+
+```text
+C^-_(M,r)=C^+_(r,M).                                 (P22.5zz68ga)
+```
+
+Indeed, the two antiperiodic inputs to `(P22.5zz68j)` become respectively
+`c^+^(r,M+1)` and `c^+^(r+1,M)` after `z=-w`; symmetry of `B_Q` gives the
+displayed equality.  Thus the cross state also naturally lives on the
+periodic/antiperiodic pair.  It still has no scalar dominance: at
+
+```text
+n=11,       M=4,       r=2,
+C^+=1672,             C^-=1688.                     (P22.5zz68gb)
+```
+
+The strict `20,40,40` replay finds no negative antiperiodic cross and no
+negative sum `C^++C^-`, but finds `4,970` failures of `C^+>=C^-`.  It
+also independently verifies `(P22.5zz68ga)` at every tested parameter.
+Consequently even after passing to the symmetric union of the periodic and
+antiperiodic grids, a proof must return the resulting reserve through a
+genuinely coupled recurrence rather than a one-sided comparison.
+
 There is a more direct induction interface in the two exponents.  Write
 `c^(M,r)_j` for the periodic coefficient `c^+_j` in `(P22.5zz68f)`, and
 let `B_Q` be the symmetric polarization of its quadratic current:
@@ -45649,6 +45672,23 @@ stays inside this cone.  The strict C++ checker now verifies both
 cross term in `11,248` parameter systems.  This is a sharply reduced
 unproved lemma, not a proof of `(PCP)`.
 
+The continuous result below and the finite reflection both point to a
+strictly larger, symmetric candidate.
+
+**Strengthened Target 22H3W5A (symmetric Pascal cross payment).**  For
+every odd cycle, prove
+
+```text
+C_(M,r)>=0,                  M>=2,       r>=2.       (SPCP)
+```
+
+This contains `(PCP)` and is exchanged with its antiperiodic companion by
+`(P22.5zz68ga)`.  The exact endpoint checker has an `all-pairs` mode; its
+finite replay through odd cycle size `29` and `M,r<=20` passes all `4,693`
+pairs.  This is evidence for the enlarged target only.  A proof of it would
+give the original Pascal descent while retaining the twist symmetry that
+the one-sided cone discards.
+
 The mixed current has the same centre-frequency collapse as Lemma
 22H3W0, with one additional positive factor.
 
@@ -45715,11 +45755,19 @@ strictly positive.
 continuous circle model of Lemma 22H3V, `C_(M,r)>0` for
 
 ```text
-M-r>=2,                 r>=2.                       (P22.5zz68q)
+M>=2,                   r>=2.                       (P22.5zz68q)
 ```
 
-**Proof.**  Retain the notation `s=7+2u+v`, `d=2+v` from Lemma 22H3V,
-and write
+**Proof.**  For the original `TP2` cone one may retain the notation
+`s=7+2u+v`, `d=2+v` from Lemma 22H3V.  To prove the stronger symmetric
+quadrant, instead put
+
+```text
+M=2+u,             r=2+v,
+s=5+u+v,           d=u-v,           u,v>=0.          (P22.5zz68qc)
+```
+
+Write
 
 ```text
 D(s)=s^2(s+1)^2(s+2)^2(s+3)(s-2),
@@ -45734,26 +45782,284 @@ C_(M,r)=16J(s,d)-J(s+1,d+1)-J(s+1,d-1)
         =G(u,v)/[D(s)D(s+1)^2].                    (P22.5zz68r)
 ```
 
-The exact expansion of `G` has `299` monomials in `u,v`; every coefficient
-is positive (the smallest is `560`).  Hence `G(u,v)>0` for all
-`u,v>=0`, while the displayed denominator is positive because `s>=7`.
-This proves the claim.  The strict C++ certificate
+For the symmetric substitution `(P22.5zz68qc)`, the exact expansion of
+`G` has `298` monomials in `u,v`; every coefficient is positive (the
+smallest is `560`).  Hence `G(u,v)>0` for all `u,v>=0`, while the displayed
+denominator is positive because `s>=5`.  This proves the claim.  The
+strict C++ certificate
 `character_ring_iter/derive_continuous_tp2.cpp` constructs the two
-polynomials as maps of bidegrees to `cpp_int`, checks all `299` signs, and
-returns
+polynomials as maps of bidegrees to `cpp_int`, checks all `298` signs in
+the symmetric quadrant, and returns
 
 ```text
 CONTINUOUS_TP2_PASCAL_CROSS terms=299
 CONTINUOUS_TP2_PASCAL_CROSS minimum_coefficient=560
 CONTINUOUS_TP2_PASCAL_CROSS result=PASS.
+
+CONTINUOUS_TP2_PASCAL_CROSS_SYMMETRIC terms=298
+CONTINUOUS_TP2_PASCAL_CROSS_SYMMETRIC minimum_coefficient=560
+CONTINUOUS_TP2_PASCAL_CROSS_SYMMETRIC result=PASS.
 ```
 
 The calculation is an exact expansion of `(P22.5zz68r)`, with no numerical
 spectral evaluation.  QED.
 
 Thus the unresolved content of `(PCP)` is purely finite alias payment:
-the continuous and every no-alias specialization already have a strict
-cross reserve.
+the continuous model has a strict cross reserve on the full quadrant
+`M,r>=2`, and every no-alias specialization does as well.
+
+The cross current itself cannot be allocated by a common radial winding
+box.  For the two unperiodized coefficient sequences in `(P22.5zz68j)`, put
+
+```text
+a_[h](j)=sum_(|w|<=h)c_hat^(M+1,r)(j+wn),
+b_[h](j)=sum_(|w|<=h)c_hat^(M,r+1)(j+wn),
+
+C_[h]=2B_Q(a_[h],b_[h]).                            (P22.5zz68s)
+```
+
+Thus `C_[h]` is the Pascal cross after truncating both factors to the
+same symmetric winding box.  The natural prefix claim is false:
+
+```text
+n=11,       M=38,       r=5,       h=1,
+C_[1]=-533391715123976738321415744253920.          (P22.5zz68t)
+```
+
+The strict replay `probe_tp2_winding_sectors 20 40 40` finds `77`
+negative prefixes of this form, while its complete cross is nonnegative
+in every tested system.  Hence the cross reduction does not revive a
+one-parameter radial payment; the required finite allocation must still
+retain a coupled alias state.
+
+There is, however, an exact endpoint form of that coupled state.  It
+separates the positive commuting bulk from a single mixed boundary
+vector, and is therefore the appropriate formulation for a prospective
+invariant-cone proof.  In the cycle notation of Lemma 22H3W, let
+`e=e_0`, retain `U=e_2 wedge e_3`, and put
+
+```text
+W=(2I-A)e wedge A^2e=(S+S^(-1))e wedge A^2e.        (P22.5zz68u)
+```
+
+**Lemma 22H3W8 (mixed endpoint reduction).**  For every odd cycle and
+all `M,r>=0`,
+
+```text
+C_(M,r)=-2 <U, (wedge^2(A^M B^r)) W>.              (P22.5zz68v)
+```
+
+**Proof.**  Write `K=A^M B^r`, `V=e wedge Ae`, and use the polarized
+wedge action
+
+```text
+(G wedge H)(x wedge y)=Gx wedge Hy.
+```
+
+Polarizing `(P22.5zz66)` between `KA` and `KB` gives
+
+```text
+C_(M,r)=-<U,(wedge^2K)(A wedge B+B wedge A)V>.     (P22.5zz68w)
+```
+
+Since `A+B=4I`, the boundary vector on the right is
+
+```text
+Ae wedge ABe+Be wedge A^2e
+=Ae wedge (4Ae-A^2e)+(4e-Ae) wedge A^2e
+=2(2e-Ae) wedge A^2e=2W.
+```
+
+Substitution proves `(P22.5zz68v)`.  QED.
+
+In the target cone this is equivalently
+
+```text
+C_(4+u+v,2+u)
+=-2 <LU,P^v(PR)^u LW>,
+L=P^2R,        u,v>=0.                              (P22.5zz68x)
+```
+
+The new endpoint is itself a single centre current multiplied by the
+positive mixed operator.  Let `T=wedge^2 S` and put
+
+```text
+D=16I-P-R=A wedge B+B wedge A.                       (P22.5zz68y)
+```
+
+The second equality follows by taking the exterior square of `A+B=4I`.
+On a two-frequency vector with `A`-eigenvalues `A_a,A_b`, the eigenvalue
+of `D` is `A_aB_b+B_aA_b>=0`, so `D` is positive semidefinite.
+
+**Lemma 22H3W9 (centre-current factorization of the cross endpoint).**
+With `W` as in `(P22.5zz68u)`,
+
+```text
+W=(1/2)T^(-3)(I-T)DU,                               (P22.5zz68z)
+
+C_(M,r)=<U,P^M R^r D(T^2-T^3)U>.                    (P22.5zz68za)
+```
+
+**Proof.**  On an ordered Fourier pair `(z,w)`, set `p=zw` and let
+`delta=z-w`.  Up to the common nonzero Fourier normalization, the three
+endpoint amplitudes are
+
+```text
+U=-p^2 delta,
+W=delta (p-1)F/p,
+D=2F,
+F=2(A_a+A_b)-A_aA_b=(16-P-R)/2.
+```
+
+The first two formulas follow directly from `U=e_2 wedge e_3` and
+`W=(S+S^(-1))e wedge A^2e`; the displayed expression for `F` uses
+`A_b-A_a=delta(p-1)/p`.  Therefore
+
+```text
+(1/2)p^(-3)(1-p)(2F)(-p^2 delta)
+=delta(p-1)F/p,
+```
+
+which proves `(P22.5zz68z)`.  Substitute it into `(P22.5zz68v)`.  The
+operators `P,R,D,T` commute, are real with `P,R,D` self-adjoint, and `T`
+is orthogonal.  Moving the inverse powers of `T` across the scalar pairing
+then gives `(P22.5zz68za)`.  QED.
+
+Thus `(PCP)` is exactly a weighted outer-current drop for the structured
+vector `U`, with the additional nonnegative spectral weight `D`.  This
+does not make the drop termwise positive: `T^2-T^3` is the same sign-changing
+centre kernel already displayed in `(P22.5zz68n)`.  It does, however,
+rule out an arbitrary mixed-boundary interpretation and leaves a concrete
+candidate for the missing coupled centre-current/global-payment lemma.
+
+The same reduction has a particularly short two-variable Laurent form.  Put
+
+```text
+F_(M,r)(z)=A(z)^M B(z)^r,
+c_j^(M,r)=(1/n)sum_(z^n=1)F_(M,r)(z)z^(-j).          (P22.5zz68zc)
+```
+
+**Lemma 22H3W10 (factorized Laurent cross kernel).**  One has
+
+```text
+C_(M,r)=(1/n^2)sum_(z^n=w^n=1)
+ F_(M,r)(z)A(z) F_(M,r)(w)B(w) K(z,w),              (P22.5zz68zd)
+
+K(z,w)=z^(-4)w^(-4)(1-zw)(z-w)^2.                  (P22.5zz68ze)
+```
+
+Equivalently, the first line may be symmetrized by replacing `A(z)B(w)`
+by `(A(z)B(w)+B(z)A(w))/2`.
+
+**Proof.**  Expand the polarization `(P22.5zz68i)` using
+`c_j=(1/n)sum_z F(z)z^(-j)`.  Its Laurent kernel is
+
+```text
+z^(-2)w^(-4)+z^(-4)w^(-2)+2z^(-2)w^(-2)
+-2z^(-3)w^(-3)-z^(-1)w^(-3)-z^(-3)w^(-1).
+```
+
+Multiplication by `z^4w^4` turns this into
+
+```text
+z^2+w^2+2z^2w^2-2zw-z^3w-zw^3
+=(1-zw)(z-w)^2,
+```
+
+This is the direct expansion of the displayed factorization, proving
+`(P22.5zz68zd)--(P22.5zz68ze)`.
+Swapping `z,w` preserves `K`, and averaging the two orientations gives
+the symmetrized form.  QED.
+
+Thus all nontrivial finite alias motion in the Pascal cross is carried by
+the single common-centre factor `1-zw`; `(z-w)^2` is the two-particle
+Vandermonde factor.  This is the Laurent counterpart of the centre-current
+factorization `(P22.5zz68z)`, and supplies a more rigid starting point for
+a coupled global payment than independent winding boxes.
+
+The same weight is a two-node Jacobi weight in centre--relative angular
+coordinates.  In `(P22.5zz68o)`, write
+
+```text
+phi=(theta_u+theta_v)/2,       psi=(theta_u-theta_v)/2,
+s=sin(phi)^2,                  t=sin(psi)^2.          (P22.5zz68zf)
+```
+
+**Lemma 22H3W11 (two-node Jacobi form).**  The nonnegative weight in
+`(P22.5zz68p)` has the exact form
+
+```text
+W_(M,r)(x_u,x_v)
+=2^(2M+2r+1)(s-t)^2(s+t-2st)
+   (st)^M[(1-s)(1-t)]^r,                            (P22.5zz68zg)
+```
+
+while its signed character factor is
+
+```text
+P(x_u^2)+P(x_v^2)
+=10-40(s+t)+32(s+t)^2+208st
+  -256st(s+t)+256s^2t^2.                             (P22.5zz68zh)
+```
+
+**Proof.**  The elementary sum/difference identities give
+
+```text
+x_u-x_v=-2sin(phi)sin(psi),
+x_u+x_v= 2cos(phi)cos(psi),
+
+(1-x_u^2)(1-x_v^2)=(s-t)^2,
+2-x_u^2-x_v^2=2(s+t-2st).
+```
+
+Substitution gives `(P22.5zz68zg)`.  Moreover
+
+```text
+x_u^2+x_v^2=2-2(s+t)+4st,
+x_u^2x_v^2=(1-s-t)^2.
+```
+
+Insert these into `P(X)=16X^2-12X+1` and collect terms to obtain
+`(P22.5zz68zh)`.  QED.
+
+Thus `(SPCP)` is a discrete two-node Jacobi expectation with squared
+Vandermonde ` (s-t)^2 `, positive Jacobi endpoint weights, and one explicit
+symmetric degree-four character.  This is structurally the same kind of
+finite angular-transport problem resolved for the `V_1,V_2` cone in
+Propositions 24B17--24B17A; the remaining task is to construct a transport
+for the negative region of `(P22.5zz68zh)` which preserves the odd-cycle
+centre/relative grid.
+
+The scalar cyclic-Pearson correction itself has no fixed sign, even at its
+lowest index.  In the notation of Lemma 22H3UAA, the exact target-cone
+values on the five-cycle include
+
+```text
+(n,M,r)=(5,4,2):  Delta_n(SA^M T^rR_0)=20,
+                  Delta_n(SA^M T^rR_2)=-180,
+
+(n,M,r)=(5,5,2):  Delta_n(SA^M T^rR_0)=-200.       (P22.5zz68zb)
+```
+
+Thus no sign choice depending only on the Chebyshev index, including the
+bottom derivative channel, can turn `(P22.5zz59K10)` into a one-channel
+finite payment.  The strict exact analyzer
+`character_ring_iter/analyze_tp2_beta_alias.cpp` independently evaluates
+the derivative alias sum `(P22.5zz59K11)` and its three-term recurrence.
+Its `14 30 30 6` replay verifies all `34,398` identities; each of the
+indices `0,...,6` has both positive and negative alias defects.  This is
+an exact obstruction to a scalar Pearson-error proof, not to a coupled
+current identity.
+
+The strict exact checker
+`character_ring_iter/verify_tp2_pascal_cross_endpoint.cpp` independently
+compares `(P22.5zz68v)` and `(P22.5zz68z)` with the coefficient definition
+of `C`.  It passes
+all `4,914` systems with odd cycle size at most `29` and
+`M,r<=30`, and finds no negative complete cross in that domain.  This is
+an identity certificate and bounded evidence only; the unproved step is
+now precisely to prove the weighted outer-current inequality in
+`(P22.5zz68za)`.
 
 Second, the complete cyclic value need not dominate the continuous one:
 at `n=11`, `M=9`, `r=2`, they are respectively `3,204,806` and

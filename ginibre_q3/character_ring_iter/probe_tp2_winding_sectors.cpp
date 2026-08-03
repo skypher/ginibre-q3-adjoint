@@ -100,6 +100,9 @@ int main(int argc, char** argv) {
   std::size_t negative_antiperiodic_targets = 0;
   std::size_t negative_periodic_antiperiodic_sums = 0;
   std::size_t negative_periodic_antiperiodic_differences = 0;
+  std::size_t negative_antiperiodic_cross_terms = 0;
+  std::size_t negative_periodic_antiperiodic_cross_sums = 0;
+  std::size_t negative_periodic_antiperiodic_cross_differences = 0;
   std::size_t negative_exponent_recurrence_cross_terms = 0;
   std::size_t negative_exponent_cross_box_prefixes = 0;
   std::size_t boxed_identity_checks = 0;
@@ -114,6 +117,9 @@ int main(int argc, char** argv) {
   bool reported_antiperiodic_target = false;
   bool reported_periodic_antiperiodic_sum = false;
   bool reported_periodic_antiperiodic_difference = false;
+  bool reported_antiperiodic_cross_term = false;
+  bool reported_periodic_antiperiodic_cross_sum = false;
+  bool reported_periodic_antiperiodic_cross_difference = false;
   bool reported_exponent_recurrence_cross_term = false;
   bool reported_exponent_cross_box_prefix = false;
   for (int rank = 5; rank <= maximum_rank; ++rank) {
@@ -415,23 +421,35 @@ int main(int argc, char** argv) {
             }
           }
         }
-        const auto antiperiodic_coefficient = [&](int offset) {
-          cpp_int result = 0;
-          for (const int winding : windings) {
-            const cpp_int value = coefficient(
-                values, offset + winding * modulus
-            );
-            result += (winding & 1) == 0 ? value : -value;
-          }
-          return result;
+        const auto antiperiodic_current = [&](const std::vector<cpp_int>& input) {
+          const int input_degree =
+              (static_cast<int>(input.size()) - 1) / 2;
+          const int bound = (input_degree + 4) / modulus + 2;
+          const auto antiperiodic_coefficient = [&](int offset) {
+            cpp_int result = 0;
+            for (int winding = -bound; winding <= bound; ++winding) {
+              const cpp_int value = coefficient(
+                  input, offset + winding * modulus
+              );
+              result += (winding & 1) == 0 ? value : -value;
+            }
+            return result;
+          };
+          const cpp_int input_c1 = antiperiodic_coefficient(1);
+          const cpp_int input_c2 = antiperiodic_coefficient(2);
+          const cpp_int input_c3 = antiperiodic_coefficient(3);
+          const cpp_int input_c4 = antiperiodic_coefficient(4);
+          return std::array<cpp_int, 5>{
+              input_c1,
+              input_c2,
+              input_c3,
+              input_c4,
+              input_c2 * input_c4 + input_c2 * input_c2
+                  - input_c3 * input_c3 - input_c1 * input_c3
+          };
         };
-        const cpp_int anti_c1 = antiperiodic_coefficient(1);
-        const cpp_int anti_c2 = antiperiodic_coefficient(2);
-        const cpp_int anti_c3 = antiperiodic_coefficient(3);
-        const cpp_int anti_c4 = antiperiodic_coefficient(4);
-        const cpp_int antiperiodic_target =
-            anti_c2 * anti_c4 + anti_c2 * anti_c2
-            - anti_c3 * anti_c3 - anti_c1 * anti_c3;
+        const auto antiperiodic = antiperiodic_current(values);
+        const cpp_int antiperiodic_target = antiperiodic[4U];
         if (antiperiodic_target < 0) {
           ++negative_antiperiodic_targets;
           if (!reported_antiperiodic_target) {
@@ -468,6 +486,97 @@ int main(int argc, char** argv) {
                 << " periodic=" << target
                 << " antiperiodic=" << antiperiodic_target
                 << " difference=" << target - antiperiodic_target << '\n';
+          }
+        }
+        const auto antiperiodic_after_minus =
+            antiperiodic_current(values_after_minus);
+        const auto antiperiodic_after_plus =
+            antiperiodic_current(values_after_plus);
+        const std::array<cpp_int, 4> antiperiodic_minus_coefficients{
+            antiperiodic_after_minus[0U],
+            antiperiodic_after_minus[1U],
+            antiperiodic_after_minus[2U],
+            antiperiodic_after_minus[3U]
+        };
+        const std::array<cpp_int, 4> antiperiodic_plus_coefficients{
+            antiperiodic_after_plus[0U],
+            antiperiodic_after_plus[1U],
+            antiperiodic_after_plus[2U],
+            antiperiodic_after_plus[3U]
+        };
+        const cpp_int antiperiodic_cross = exponent_cross(
+            antiperiodic_minus_coefficients,
+            antiperiodic_plus_coefficients
+        );
+        const auto reflected_after_minus = cyclic_current(
+            fourier_coefficients(half_power + 1, minus_pairs)
+        );
+        const auto reflected_after_plus = cyclic_current(
+            fourier_coefficients(half_power, minus_pairs + 1)
+        );
+        const std::array<cpp_int, 4> reflected_minus_coefficients{
+            reflected_after_minus[0U],
+            reflected_after_minus[1U],
+            reflected_after_minus[2U],
+            reflected_after_minus[3U]
+        };
+        const std::array<cpp_int, 4> reflected_plus_coefficients{
+            reflected_after_plus[0U],
+            reflected_after_plus[1U],
+            reflected_after_plus[2U],
+            reflected_after_plus[3U]
+        };
+        const cpp_int reflected_cross = exponent_cross(
+            reflected_minus_coefficients, reflected_plus_coefficients
+        );
+        if (antiperiodic_cross != reflected_cross) {
+          std::cout << "TP2_WINDING result=CROSS_TWIST_REFLECTION_FAIL"
+                    << " rank=" << rank
+                    << " minus_pairs=" << minus_pairs
+                    << " half_power=" << half_power
+                    << " antiperiodic=" << antiperiodic_cross
+                    << " reflected=" << reflected_cross << '\n';
+          return 1;
+        }
+        if (antiperiodic_cross < 0) {
+          ++negative_antiperiodic_cross_terms;
+          if (!reported_antiperiodic_cross_term) {
+            reported_antiperiodic_cross_term = true;
+            std::cout << "TP2_WINDING first_negative_antiperiodic_cross"
+                      << " rank=" << rank
+                      << " minus_pairs=" << minus_pairs
+                      << " half_power=" << half_power
+                      << " value=" << antiperiodic_cross << '\n';
+          }
+        }
+        if (twice_exponent_cross + antiperiodic_cross < 0) {
+          ++negative_periodic_antiperiodic_cross_sums;
+          if (!reported_periodic_antiperiodic_cross_sum) {
+            reported_periodic_antiperiodic_cross_sum = true;
+            std::cout << "TP2_WINDING "
+                         "first_negative_periodic_antiperiodic_cross_sum"
+                      << " rank=" << rank
+                      << " minus_pairs=" << minus_pairs
+                      << " half_power=" << half_power
+                      << " periodic=" << twice_exponent_cross
+                      << " antiperiodic=" << antiperiodic_cross
+                      << " sum=" << twice_exponent_cross + antiperiodic_cross
+                      << '\n';
+          }
+        }
+        if (twice_exponent_cross - antiperiodic_cross < 0) {
+          ++negative_periodic_antiperiodic_cross_differences;
+          if (!reported_periodic_antiperiodic_cross_difference) {
+            reported_periodic_antiperiodic_cross_difference = true;
+            std::cout << "TP2_WINDING "
+                         "first_negative_periodic_antiperiodic_cross_difference"
+                      << " rank=" << rank
+                      << " minus_pairs=" << minus_pairs
+                      << " half_power=" << half_power
+                      << " periodic=" << twice_exponent_cross
+                      << " antiperiodic=" << antiperiodic_cross
+                      << " difference="
+                      << twice_exponent_cross - antiperiodic_cross << '\n';
           }
         }
         const cpp_int ordinary_c1 = coefficient(values, 1);
@@ -544,6 +653,12 @@ int main(int argc, char** argv) {
             << negative_periodic_antiperiodic_sums
             << " negative_periodic_antiperiodic_differences="
             << negative_periodic_antiperiodic_differences
+            << " negative_antiperiodic_cross_terms="
+            << negative_antiperiodic_cross_terms
+            << " negative_periodic_antiperiodic_cross_sums="
+            << negative_periodic_antiperiodic_cross_sums
+            << " negative_periodic_antiperiodic_cross_differences="
+            << negative_periodic_antiperiodic_cross_differences
             << " negative_exponent_recurrence_cross_terms="
             << negative_exponent_recurrence_cross_terms
             << " negative_exponent_cross_box_prefixes="
