@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <numbers>
+#include <random>
 #include <stdexcept>
 #include <string>
 #include <unordered_set>
@@ -462,6 +463,105 @@ bool two_credit_greedy_cover(
   return true;
 }
 
+bool two_credit_random_greedy_cover(
+    const std::vector<std::vector<std::pair<int, int>>>& adjacency,
+    int credit_count,
+    unsigned char maximum_uses,
+    std::mt19937_64& generator,
+    std::vector<std::pair<int, int>>& cover
+) {
+  std::vector<unsigned char> used(static_cast<std::size_t>(credit_count), 0U);
+  std::vector<unsigned char> assigned(adjacency.size(), 0U);
+  cover.assign(adjacency.size(), {-1, -1});
+  for (std::size_t depth = 0U; depth < adjacency.size(); ++depth) {
+    std::size_t minimum_feasible = std::numeric_limits<std::size_t>::max();
+    std::vector<int> load_choices;
+    for (std::size_t load = 0U; load < adjacency.size(); ++load) {
+      if (assigned[load] != 0U) {
+        continue;
+      }
+      std::size_t feasible = 0U;
+      for (const auto& [first, second] : adjacency[load]) {
+        if (used[static_cast<std::size_t>(first)] < maximum_uses &&
+            used[static_cast<std::size_t>(second)] < maximum_uses) {
+          ++feasible;
+        }
+      }
+      if (feasible == 0U) {
+        return false;
+      }
+      if (feasible < minimum_feasible) {
+        minimum_feasible = feasible;
+        load_choices.clear();
+      }
+      if (feasible == minimum_feasible) {
+        load_choices.push_back(static_cast<int>(load));
+      }
+    }
+    std::uniform_int_distribution<std::size_t> load_pick(
+        0U, load_choices.size() - 1U
+    );
+    const int chosen_load = load_choices[load_pick(generator)];
+    std::size_t best_future = 0U;
+    std::vector<std::pair<int, int>> edge_choices;
+    for (const auto& [first, second]
+         : adjacency[static_cast<std::size_t>(chosen_load)]) {
+      const std::size_t first_slot = static_cast<std::size_t>(first);
+      const std::size_t second_slot = static_cast<std::size_t>(second);
+      if (used[first_slot] >= maximum_uses ||
+          used[second_slot] >= maximum_uses) {
+        continue;
+      }
+      ++used[first_slot];
+      ++used[second_slot];
+      std::size_t future = 0U;
+      bool feasible_future = true;
+      for (std::size_t load = 0U; load < adjacency.size(); ++load) {
+        if (assigned[load] != 0U ||
+            static_cast<int>(load) == chosen_load) {
+          continue;
+        }
+        std::size_t options = 0U;
+        for (const auto& [next_first, next_second] : adjacency[load]) {
+          if (used[static_cast<std::size_t>(next_first)] < maximum_uses &&
+              used[static_cast<std::size_t>(next_second)] < maximum_uses) {
+            ++options;
+          }
+        }
+        if (options == 0U) {
+          feasible_future = false;
+          break;
+        }
+        future += options;
+      }
+      --used[first_slot];
+      --used[second_slot];
+      if (!feasible_future) {
+        continue;
+      }
+      if (future > best_future) {
+        best_future = future;
+        edge_choices.clear();
+      }
+      if (future == best_future) {
+        edge_choices.emplace_back(first, second);
+      }
+    }
+    if (edge_choices.empty()) {
+      return false;
+    }
+    std::uniform_int_distribution<std::size_t> edge_pick(
+        0U, edge_choices.size() - 1U
+    );
+    const auto [first, second] = edge_choices[edge_pick(generator)];
+    ++used[static_cast<std::size_t>(first)];
+    ++used[static_cast<std::size_t>(second)];
+    assigned[static_cast<std::size_t>(chosen_load)] = 1U;
+    cover[static_cast<std::size_t>(chosen_load)] = {first, second};
+  }
+  return true;
+}
+
 bool two_credit_cover_search(
     const std::vector<std::vector<std::pair<int, int>>>& adjacency,
     const std::vector<int>& order,
@@ -658,6 +758,7 @@ int main(int argc, char** argv) {
           std::string(argv[3]) == "--coarse-greedy-certificate" ||
           std::string(argv[3]) == "--approx-greedy-certificate" ||
           std::string(argv[3]) == "--approx-greedy-certificate-single" ||
+          std::string(argv[3]) == "--approx-random-certificate-single" ||
           std::string(argv[3]) == "--analyze-graph" ||
           std::string(argv[3]) == "--dump-hyperedges" ||
           std::string(argv[3]) == "--uniform-fractional"));
@@ -668,6 +769,7 @@ int main(int argc, char** argv) {
           "[--two-credit-half --print-cover|--greedy-cover|"
           "--coarse-greedy-certificate|--approx-greedy-certificate|"
           "--approx-greedy-certificate-single|"
+          "--approx-random-certificate-single|"
           "--analyze-graph|"
           "--dump-hyperedges|"
           "--uniform-fractional]");
@@ -686,8 +788,12 @@ int main(int argc, char** argv) {
         std::string(argv[3]) == "--approx-greedy-certificate";
     const bool approximate_greedy_certificate_single = argc == 4 &&
         std::string(argv[3]) == "--approx-greedy-certificate-single";
+    const bool approximate_random_certificate_single = argc == 4 &&
+        std::string(argv[3]) == "--approx-random-certificate-single";
     const bool approximate_greedy_mode = approximate_greedy_certificate ||
-        approximate_greedy_certificate_single;
+        approximate_greedy_certificate_single ||
+        approximate_random_certificate_single;
+    const bool approximate_random_mode = approximate_random_certificate_single;
     const bool analyze_graph = argc == 4 &&
         std::string(argv[3]) == "--analyze-graph";
     const bool dump_hyperedges = argc == 4 &&
@@ -701,6 +807,7 @@ int main(int argc, char** argv) {
     int first_failure_rank = -1;
     int maximum_loads = 0;
     const int minimum_rank = approximate_greedy_certificate_single
+        || approximate_random_certificate_single
         ? maximum_rank : 3;
     for (int rank = minimum_rank; rank <= maximum_rank; ++rank) {
       const int modulus = 2 * rank + 1;
@@ -893,17 +1000,36 @@ int main(int argc, char** argv) {
         if (greedy_cover || coarse_greedy_certificate ||
             approximate_greedy_mode) {
           std::vector<std::pair<int, int>> cover;
-          bool covered = two_credit_greedy_cover(
-              two_credit_adjacency, static_cast<int>(positive.size()),
-              two_credit_half ? static_cast<unsigned char>(2U)
-                              : static_cast<unsigned char>(1U),
-              cover
-          );
+          const unsigned char maximum_uses = two_credit_half
+              ? static_cast<unsigned char>(2U)
+              : static_cast<unsigned char>(1U);
+          bool covered = false;
+          if (approximate_random_mode) {
+            constexpr std::uint64_t attempts = 256U;
+            for (std::uint64_t attempt = 0U; attempt < attempts; ++attempt) {
+              std::mt19937_64 generator(
+                  UINT64_C(0x9e3779b97f4a7c15) ^
+                  static_cast<std::uint64_t>(rank) *
+                      UINT64_C(0xbf58476d1ce4e5b9) ^ attempt
+              );
+              if (two_credit_random_greedy_cover(
+                      two_credit_adjacency,
+                      static_cast<int>(positive.size()), maximum_uses,
+                      generator, cover
+                  )) {
+                covered = true;
+                break;
+              }
+            }
+          } else {
+            covered = two_credit_greedy_cover(
+                two_credit_adjacency, static_cast<int>(positive.size()),
+                maximum_uses, cover
+            );
+          }
           if (covered && !verifies_two_credit_cover(
                   two_credit_adjacency, cover,
-                  static_cast<int>(positive.size()),
-                  two_credit_half ? static_cast<unsigned char>(2U)
-                                  : static_cast<unsigned char>(1U)
+                  static_cast<int>(positive.size()), maximum_uses
               )) {
             throw std::runtime_error("greedy cover verification failure");
           }
@@ -927,9 +1053,11 @@ int main(int argc, char** argv) {
             first_failure_rank = rank;
             std::cout << (coarse_greedy_certificate
                               ? "TP2_MIXED_JACOBI_COARSE_CANDIDATE"
-                              : (approximate_greedy_mode
+                              : (approximate_random_mode
+                                  ? "TP2_MIXED_JACOBI_APPROX_RANDOM_CANDIDATE"
+                                  : (approximate_greedy_mode
                                   ? "TP2_MIXED_JACOBI_APPROX_CANDIDATE"
-                                  : "TP2_MIXED_JACOBI_GREEDY_COVER"))
+                                  : "TP2_MIXED_JACOBI_GREEDY_COVER")))
                       << " first_failure_rank=" << rank
                       << " loads=" << negative.size()
                       << " credits=" << positive.size()
@@ -940,9 +1068,11 @@ int main(int argc, char** argv) {
               const auto [first, second] = cover[load];
               std::cout << (coarse_greedy_certificate
                                 ? "TP2_MIXED_JACOBI_COARSE_CERTIFICATE"
-                                : (approximate_greedy_mode
+                                : (approximate_random_mode
+                                    ? "TP2_MIXED_JACOBI_APPROX_RANDOM_CERTIFICATE"
+                                    : (approximate_greedy_mode
                                     ? "TP2_MIXED_JACOBI_APPROX_CERTIFICATE"
-                                    : "TP2_MIXED_JACOBI_GREEDY_COVER"))
+                                    : "TP2_MIXED_JACOBI_GREEDY_COVER")))
                         << " rank=" << rank
                         << " load=" << negative[load].first + 1
                         << ',' << negative[load].second + 1
@@ -1039,14 +1169,18 @@ int main(int argc, char** argv) {
                           ? (first_failure_rank < 0
                               ? (coarse_greedy_certificate
                                   ? "COARSE_CERTIFICATE_PASS"
-                                  : (approximate_greedy_mode
+                                  : (approximate_random_mode
+                                      ? "APPROX_RANDOM_CERTIFICATE_PASS"
+                                      : (approximate_greedy_mode
                                       ? "APPROX_CERTIFICATE_PASS"
-                                      : "GREEDY_PASS"))
+                                      : "GREEDY_PASS")))
                               : (coarse_greedy_certificate
                                   ? "COARSE_CANDIDATE_FAIL"
-                                  : (approximate_greedy_mode
+                                  : (approximate_random_mode
+                                      ? "APPROX_RANDOM_CANDIDATE_FAIL"
+                                      : (approximate_greedy_mode
                                       ? "APPROX_CANDIDATE_FAIL"
-                                      : "GREEDY_FAIL")))
+                                      : "GREEDY_FAIL"))))
                           : (first_failure_rank < 0 ? "PASS" : "FAIL")))
               << '\n';
     return analyze_graph || dump_hyperedges || first_failure_rank < 0

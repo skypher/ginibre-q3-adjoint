@@ -46652,9 +46652,19 @@ and eighteen, gives certificates on every rank through eighteen (odd cycle
 size `37`).  The single-rank mode also certifies rank twenty (`n=41`).  The
 raw approximate tie rule returns `APPROX_CANDIDATE_FAIL` at rank nineteen;
 this is a failure of that deterministic selector, not a failed interval
-edge or a counterexample to the capacity-two criterion.  Thus these larger
-replays extend the exact finite evidence but do not supply a uniform
-construction.
+edge or a counterexample to the capacity-two criterion.  The deterministic
+`--approx-random-certificate-single` mode retries only those tie choices
+with `256` fixed seeds and interval-certifies its final selected cover.  It
+returns
+
+```text
+rank=19  loads=55  two_credit_edges=54305
+result=APPROX_RANDOM_CERTIFICATE_PASS.
+```
+
+Thus ranks through twenty (`n<=41`) now have exact selected-cover
+certificates.  These larger replays extend the exact finite evidence but do
+not supply a uniform construction.
 
 The one-credit criterion already fails at `n=7`, while the disjoint
 two-credit criterion first fails at `n=9`; these are exact no-gos for those
@@ -53636,10 +53646,17 @@ It remains to separate the triples.  Name the fundamental indices
 For each indexed label-two factor `j`, route the source omitted set
 `A union {j}` to `tau(A) union {j}`.  The two pairs `A,tau(A)` meet in
 one fundamental index, so the target imports exactly that index and `j`:
-it is a two-import edge.  The target has invariant profile
-`V_1 tensor V_1 tensor V_2=V_0 direct-sum 2V_2 direct-sum V_4`, while its
-complement has unique top `V_q`; its `a=0,2,4` capacities therefore pay
-`1,2,1`.  The cyclic permutation makes these targets distinct.
+it is a two-import edge.  The target has one invariant path, while its
+complement has total label `q`, one top path, and `n-4` paths one step below
+the top.  Hence its `a=0,2,4` capacities are at least
+
+```text
+1,                  (n-4)+1=n-3,                  1,
+```
+
+which pay the source profile `1,2,1`: a triple source can occur here only
+when `n>=5`, because `q>=4`.  The cyclic permutation makes these targets
+distinct.
 
 Only the non-invariant rows `{2}`, `{1,3}`, and `{4}` remain.  Use the
 empty target.  Its `a=2` capacity is `w_3-1`, and the elementary
@@ -53703,9 +53720,10 @@ empty,  {2},  {4},  {1,3},  {2,2}.                   (P23.11z5m0ak9)
 ```
 
 Route the empty row to the empty target in its `a=0` block.  Route every
-`{2,2}` row to its own support: its invariant profile has one copy of each
-of `0,2,4`, and its complement is top at `q`, so those three target blocks
-pay the source profile `1,1,1`.  Send all other rows to the empty target.
+`{2,2}` row to its own support: it has one invariant path, and its
+complement is top at `q`, so the channels `q in 0 star q`, `q in 2 star q`,
+and `q in 4 star q` give one target slot in each of `a=0,2,4`, paying the
+source profile `1,1,1`.  Send all other rows to the empty target.
 Their required `a=2` and `a=4` capacities are
 
 ```text
@@ -53737,6 +53755,383 @@ The strict flow checker returns `PASS`, for example, on
 ```
 
 at level twenty.
+
+The complementary one-fundamental sector, with no label two, needs no
+nonempty invariant target at all: its two empty-target inequalities follow
+from explicit top-weight monomials.
+
+**Proposition 23A9H0B2a (one-fundamental no-label-two wall-free collar).**
+Work ordinarily, or in `SU(2)_k` with `P<=k`.  Suppose exactly one indexed
+label is one, no indexed label is two, and
+
+```text
+q=P-4>=4.                                            (P23.11z5m0ak11a)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  The only contributing omitted types are
+
+```text
+empty,  {4},  {1,3}.                                (P23.11z5m0ak11b)
+```
+
+Route the empty row to the empty `a=0` target and all remaining rows to the
+empty target in their indicated `a=2,4` blocks.  Let `u,v` be the counts of
+labels `3,4`.  The required capacities are `u` in `a=2` and `u+v` in `a=4`.
+
+Write the top-weight character as a polynomial in the lowering variable
+`z`, so that `w_j` is its `z^j` coefficient.  For each label-three factor,
+the monomial using its `z^3` term is a distinct contribution to `w_3`.  If
+`u>0`, the product of the fundamental `z` term and the `z^2` term of any
+one label-three factor is one more distinct contribution.  If `u=0`, the
+hypothesis `P>=8` supplies a label at least four and its `z^3` term gives
+that contribution.  Hence
+
+```text
+w_3-1>=u.                                            (P23.11z5m0ak11c)
+```
+
+For `w_4`, the `u` monomials consisting of the fundamental `z` term and
+one label-three `z^3` term, together with the `v` label-four `z^4` terms,
+are distinct.  Thus
+
+```text
+w_4>=u+v.                                            (P23.11z5m0ak11d)
+```
+
+For `q>=4`, these are exactly the empty `a=2` and `a=4` capacities by the
+same telescoping calculation as `(P23.11z5m0ar)` and `(P23.11z5m0au)`.
+The wall-free finite statement is identical.  QED.
+
+The exact flow checker returns `PASS`, for example, at level twenty on
+
+```text
+[1,3,4],             [1,3,3,3].
+```
+
+With two fundamental factors, two label-two factors are enough to restore
+the missing target permutation: permute the latter while retaining the
+fundamental pair.  This closes another infinite, arbitrary-label subcone.
+
+**Proposition 23A9H0B3 (two-fundamental two-label-two wall-free collar).**
+Work ordinarily, or in `SU(2)_k` with `P<=k`.  Suppose exactly two indexed
+labels are one, at least two indexed labels are two, and
+
+```text
+q=P-4>=4.                                            (P23.11z5m0ak12)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  Let `t>=2,u,v` count the labels `2,3,4`, and let `n` be the
+total factor count.  The contributing omitted types are
+
+```text
+empty,  {2},  {1,1},  {4},  {1,3},  {2,2},  {1,1,2}.
+                                                               (P23.11z5m0ak13)
+```
+
+Route the empty row to the empty target in its `a=0` block.  Route every
+`{1,1}` row to its own pair target, using its `a=0,2` capacities, and every
+`{2,2}` row to its own pair target, using its `a=0,2,4` capacities, exactly
+as in Proposition 23A9H0C.  These supports are pairwise distinct.
+
+For the triples, enumerate the indexed label-two factors by `j` and choose
+a fixed-point-free permutation `sigma` of them.  Send the source omitted
+set
+
+```text
+{r_1,r_2,j}  ->  {r_1,r_2,sigma(j)}.                 (P23.11z5m0ak14)
+```
+
+The source and target meet in the two fundamental indices, so this is a
+two-import edge.  The targets are distinct, and each has one invariant
+path.  Its complement has total label `q`, one top path, and `n-4` paths
+one step below the top.  Thus its `a=0,2,4` capacities are at least
+
+```text
+1,                  (n-4)+1=n-3,                  1,
+```
+
+which pay the triple-source demand `1,2,1`; the hypotheses force `n>=5`.
+
+It remains to pay the non-invariant rows from the empty target.  In the
+base word with only the two labels one and the `t` labels two, the
+top-layer coefficient calculation of `(P23.11z5m0as)`, specialized to
+`f=2`, gives
+
+```text
+w_3-1-t(n-2)=t^2+t+binom(t,3)-1>=0.                 (P23.11z5m0ak15)
+```
+
+Adjoining a label three raises `w_3` by at least `t+2`, which is exactly the
+increase of `t(n-2)+2u`; adjoining a label at least four raises it by at
+least `t`, enough for the increase caused by the factor count.  Consequently
+the empty `a=2` capacity is at least
+
+```text
+w_3-1>=t(n-2)+2u.                                   (P23.11z5m0ak16)
+```
+
+This pays the singleton-label-two and `{1,3}` rows.  There is no `a=4`
+demand at the base word.  A first or subsequent label three raises `w_4` by
+`w_3+w_2+w_1>=2` (already the base has `t>=2`), while creating exactly two
+`{1,3}` rows; a label four raises `w_4` by at least one and creates its one
+`{4}` row.  Further labels do not decrease `w_4`.  Hence its empty-target
+capacity pays
+
+```text
+w_4>=2u+v.                                          (P23.11z5m0ak17)
+```
+
+All used target blocks are separated by support or by their `a`-isotypic
+label.  In the wall-free finite range every displayed ordinary channel
+survives unchanged.  QED.
+
+The exact two-import flow checker returns `PASS`, for example, at level
+twenty on
+
+```text
+[1,1,2,2,2],          [1,1,2,2,3].
+```
+
+The remaining two-fundamental case, with a unique label-two factor, closes
+by a direct exchange between its pair and triple supports.
+
+**Proposition 23A9H0B3a (two-fundamental one-label-two wall-free collar).**
+Work ordinarily, or in `SU(2)_k` with `P<=k`.  Suppose exactly two indexed
+labels are one, exactly one indexed label is two, and
+
+```text
+q=P-4>=4.                                            (P23.11z5m0ak17a)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  Let `A` be the fundamental pair, `j` the label-two index, and
+`T=A union {j}`.  The only invariant total-four supports are `T` itself;
+it has one invariant path, and its complement has total label `q`.  Thus
+its capacities in `a=0,2,4` are `1,n-3,1`.  The pair target `A` has
+capacities at least `n-3,n-2,n-3` in the same three blocks, as in
+`(P23.11z5m0ak19)`.
+
+Route the pair source `A` as follows: send one of its `a=0` units and all
+of its `a=2` demand `n-3` to `T`, and send its remaining `n-4` `a=0` units
+to `A`.  Route the triple source `T`, of profile `1,2,1`, to `A`.  Every
+route imports exactly its two fundamental indices or fewer.  The displayed
+capacities prove the allocation: `n>=4` follows from `q>=4`.  The empty
+row uses its empty `a=0` target as usual.
+
+It remains only to pay the non-invariant rows from the empty target.  At
+the label-one/label-two base, `(P23.11z5m0ak15)` with `t=1` gives
+
+```text
+w_3-1-(n-2)=1.                                      (P23.11z5m0ak17b)
+```
+
+A label three increases `w_3` by at least three, exactly the increase of
+the `a=2` demand `(n-2)+2u`; a label at least four increases it by at least
+one.  Thus the empty `a=2` capacity suffices.  There is no base `a=4`
+demand; a label three raises `w_4` by at least two and creates two
+`{1,3}` rows, while a label four raises it by at least one.  Hence the
+empty `a=4` capacity also suffices.  All remaining supports are separated
+by support or `a`-isotypic label, and the wall-free finite calculation is
+identical.  QED.
+
+The exact flow checker returns `PASS`, for example, at level twenty on
+
+```text
+[1,1,2,4],          [1,1,2,3,3].
+```
+
+With two fundamental factors and no label two, there is no triple collision;
+the pair source keeps its own target and the empty reservoir suffices.
+
+**Proposition 23A9H0B3b (two-fundamental no-label-two wall-free collar).**
+Work ordinarily, or in `SU(2)_k` with `P<=k`.  Suppose exactly two indexed
+labels are one, no indexed label is two, and
+
+```text
+q=P-4>=4.                                            (P23.11z5m0ak17c)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  The only nonempty invariant omitted type is the fundamental
+pair `A`.  Its source has `a=0,2` demand `n-3`, and its own target has at
+least that capacity in each block, because the complement has total label
+`q+2`, one top path, and `n-3` top-minus-two paths.  Route this row to
+`A`, and route the empty row to the empty `a=0` target.
+
+Let `u,v` count labels `3,4`.  The remaining empty-target demands are
+`2u` in `a=2` and `2u+v` in `a=4`.  In the top-weight polynomial, each
+label-three `z^3` term and each of the two monomials obtained by multiplying
+its `z^2` term with one of the two fundamental `z` terms contribute
+distinctly to `w_3`.  Thus, if `u>0`, `w_3>=3u>=2u+1`; if `u=0`, `P>=8`
+supplies a label at least four and gives `w_3>=1`.  Hence `w_3-1>=2u`.
+For `w_4`, the two monomials consisting of one fundamental `z` term and a
+label-three `z^3` term give `2u` distinct contributions, while the
+label-four `z^4` terms give `v` more.  Therefore `w_4>=2u+v`.  The
+telescoping identities identify these with the required empty capacities.
+All channels are wall-free for `P<=k`.  QED.
+
+The exact flow checker returns `PASS`, for example, at level twenty on
+
+```text
+[1,1,3,3],          [1,1,4,5].
+```
+
+Four fundamental factors admit a different exchange: use the four-factor
+invariant target to take two units from one fundamental-pair source, freeing
+that pair target for the four-omission source.  This works without any
+assumption on the remaining labels.
+
+**Proposition 23A9H0B4 (four-fundamental wall-free defect-two collar).**
+Work ordinarily, or in `SU(2)_k` with `P<=k`.  Suppose exactly four indexed
+labels are one and
+
+```text
+q=P-4>=4.                                            (P23.11z5m0ak18)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  Let `t,u,v` count labels `2,3,4`, let `n` be the factor count,
+and name the fundamental indices `r_1,r_2,r_3,r_4`.  The possible omitted
+types are those in `(P23.11z5m0aq)`, including the unique four-fundamental
+set `F={r_1,r_2,r_3,r_4}`.  Use the empty target for the empty row, each
+`{2,2}` target for its own row, and every fundamental-pair target except
+one for its own `{1,1}` row.  The non-invariant rows are reserved for the
+empty target below.
+
+Fix `B={r_1,r_2}`.  Send the four-omission source to the pair target `B`.
+This imports two indices.  The target has capacities at least
+
+```text
+a=0:n-3,                 a=2:n-2,                 a=4:n-3,
+                                                               (P23.11z5m0ak19)
+```
+
+because its complement has total label `q+2`, one top path, and `n-3` paths
+one step below the top.  It therefore pays the four-omission profile
+`2,3,1`.  The displaced `B` source sends all of its `a=2` demand `n-3` to
+the four-fundamental target `F`, whose invariant multiplicity is two and
+whose `a=2` capacity is
+
+```text
+2((n-5)+1)=2(n-4)>=n-3.                              (P23.11z5m0ak20)
+```
+
+For its `a=0` demand, send two units to `F` and the remaining `n-5` units
+back to `B`; their capacities are respectively `2` and the unused
+`n-5` part of `(P23.11z5m0ak19)`.  Each of these three transfers imports at
+most two fundamental indices.  Thus the only collision between the
+four-omission and pair-omission rows is fully resolved.
+
+For every triple `{A,j}` of a fundamental pair `A` and a label-two index
+`j`, send it to the target `{A^c,j}`, where `A^c` is the complementary
+fundamental pair.  Source and target meet only in `j`, so this is a
+two-import edge.  The target has one invariant path and a complement of
+total label `q`; its `a=0,2,4` capacities are at least `1,n-3,1`, which
+pay `1,2,1` because `n>=5`.  Complementation makes these triple targets
+distinct and disjoint from the supports used above.
+
+It remains to check the empty reservoirs.  The specialization `f=4` of
+the base identity `(P23.11z5m0as)` gives
+
+```text
+w_3-1-t(n-2)
+ =3+2t+4 binom(t+1,2)+binom(t,3)+t>=0.              (P23.11z5m0ak21)
+```
+
+Adjoining a label three raises `w_3` by at least `t+4`, exactly the increase
+of the non-invariant `a=2` demand `t(n-2)+4u`; a label at least four raises
+it by at least `t`.  Hence `w_3-1>=t(n-2)+4u`.  There is no base `a=4`
+demand.  A label three raises `w_4` by at least four and creates four
+`{1,3}` rows, and a label four raises it by at least one.  Therefore
+`w_4>=4u+v`, paying the remaining `a=4` rows.  All target blocks used are
+disjoint by support or `a`-isotypic label.  The same calculation holds in
+the wall-free finite range.  QED.
+
+The exact flow checker returns `PASS`, for example, at level twenty on
+
+```text
+[1,1,1,1,5],          [1,1,1,1,2,3].
+```
+
+Five fundamental factors admit the same exchange simultaneously for all
+five four-omission supports.  The only additional combinatorics is the
+elementary perfect matching of the Petersen graph on their pair supports.
+
+**Proposition 23A9H0B5 (five-fundamental wall-free defect-two collar).**
+Work ordinarily, or in `SU(2)_k` with `P<=k`.  Suppose exactly five indexed
+labels are one and
+
+```text
+q=P-4>=4.                                            (P23.11z5m0ak22)
+```
+
+Then the two-import graph of Target 23A9G2 has a full capacitated matching.
+
+**Proof.**  Let the fundamental indices be cyclically labelled by
+`r_0,...,r_4`, and put
+
+```text
+F_i={r_0,...,r_4} minus {r_i},
+B_i={r_(i+1),r_(i+2)}                                (i mod 5).
+                                                               (P23.11z5m0ak23)
+```
+
+The five pairs `B_i` are distinct and lie in their corresponding `F_i`.
+Let `t,u,v,n` have their usual meanings.  As before, use the empty target
+for the empty row, each label-two-pair target for its own row, and every
+fundamental-pair target other than the `B_i` for its own row.
+
+For each `i`, send the four-omission source `F_i` to `B_i`.  Its profile is
+`2,3,1`, while the target capacities in `a=0,2,4` are at least
+`n-3,n-2,n-3`, exactly as in `(P23.11z5m0ak19)`.  Send the `a=2` demand
+`n-3` of the displaced pair source `B_i` to `F_i`; since `m_(F_i)(0)=2`,
+that target has `a=2` capacity `2(n-4)>=n-3`.  Send two units of its `a=0`
+demand to `F_i`, and its remaining `n-5` units back to `B_i`.  The target
+capacities are respectively `2` and the part of `B_i` left after the two
+`F_i` units.  Every transfer imports at most two indices.  The five support
+pairs use ten distinct target supports, so these exchanges do not interfere.
+
+For the triples, take the following perfect matching of the ten
+fundamental pairs, written as disjoint pairs of disjoint pairs:
+
+```text
+01--23,  02--34,  03--14,  04--12,  13--24.          (P23.11z5m0ak24)
+```
+
+For every label-two index `j`, exchange the fundamental pair in `{A,j}`
+according to `(P23.11z5m0ak24)` and retain `j`.  Source and target then
+meet only in `j`.  The target has capacities at least `1,n-3,1` in
+`a=0,2,4`, paying the triple profile `1,2,1`; these targets are all
+distinct and are disjoint from the pair and four-support targets above.
+
+The empty-reservoir argument is again coefficientwise.  At the label-one/
+label-two base, `(P23.11z5m0as)` with `f=5` reads
+
+```text
+w_3-1-t(n-2)
+ =9+5t+5 binom(t+1,2)+binom(t,3)+t>=0.              (P23.11z5m0ak25)
+```
+
+Each label three raises `w_3` by at least `t+5` and creates exactly the
+corresponding increment of `t(n-2)+5u`; a label at least four raises it by
+at least `t`.  Thus the empty `a=2` capacity pays the non-invariant demand.
+There is no base `a=4` demand; a label three raises `w_4` by at least five,
+and a label four by at least one.  Hence `w_4>=5u+v` pays the remaining
+`a=4` demand.  All target blocks are separated by support or isotypic
+label, and all ordinary channels persist for `P<=k`.  QED.
+
+The exact flow checker returns `PASS`, for example, at level twenty on
+
+```text
+[1,1,1,1,1,5],          [1,1,1,1,1,2,3].
+```
 
 That collision is nevertheless resolvable once sufficiently many fundamental
 labels are available: the four-omission blocks are paid by globally matched
@@ -54071,15 +54466,239 @@ blocks are separated by support or by their `a`-label, completing the
 allocation at `P=k+4`.  This exhausts the finite cases compatible with
 `q=P-4<=k`, and proves the proposition.  QED.
 
+**Corollary 23A9H0D (complete wall-free defect-two collar).**  Let all
+indexed labels be positive, put `q=P-4>=4`, and work ordinarily or in
+`SU(2)_k` with `P<=k`.  Then Target 23A9G2 has a full capacitated matching.
+Equivalently, the boundary injection `(P23.11z5m0ab)` holds uniformly on
+the entire wall-free outer-defect-two chamber.
+
+**Proof.**  Partition by the number `f` of indexed fundamental labels.  For
+`f=0` use Proposition 23A9H0B.  For `f=1`, use Proposition 23A9H0B2 when a
+label two is present and Proposition 23A9H0B2a otherwise.  For `f=2`, use
+Proposition 23A9H0B3b with no label two, Proposition 23A9H0B3a with one,
+and Proposition 23A9H0B3 with at least two.  The cases `f=3,4,5` are
+Propositions 23A9H0B1, 23A9H0B4, and 23A9H0B5, respectively; `f>=6` is
+the wall-free part of Proposition 23A9H0C.  These are exhaustive and have
+identical two-import conclusion.  QED.
+
+The defect-two allocation survives one affine shell for every fundamental
+count.  The only changed reservoir loses the ordinary top channel, and a
+single additional top-weight monomial pays for that loss uniformly.
+
+**Corollary 23A9H0D1 (complete first-affine defect-two collar).**  Let all
+indexed labels be positive, put `q=P-4>=4`, and work in `SU(2)_k` under
+
+```text
+P<=k+1.                                             (P23.11z5m0bd1)
+```
+
+Then Target 23A9G2 has a full capacitated matching.  Thus the boundary
+injection `(P23.11z5m0ab)` holds throughout the first affine shell as well
+as the wall-free chamber.
+
+**Proof.**  The case `P<=k` is Corollary 23A9H0D.  Suppose `P=k+1`, so
+`q=k-3`.  Every source multiplicity and every lower-bound channel used in
+the nonempty target routes is unchanged: its simple labels are at most
+`k-1`, whose Kac--Walton reflected partners are strictly above `P`.  The channels
+`q in 2 star_k q` and `q in 4 star_k q` also remain available.  Hence all
+pair, triple, and four-support routes used in Propositions 23A9H0B--H0C
+remain valid without alteration.
+
+The empty `a=2` reservoir is likewise unchanged: its three channels are
+`P-6,P-4,P-2`.  The empty `a=4` reservoir loses only its ordinary top
+`P` channel, and therefore has capacity `w_4-1`.  Let `f,u,v` denote the
+counts of labels `1,3,4`.  Its complete non-invariant `a=4` demand is
+
+```text
+fu+v.                                                (P23.11z5m0bd2)
+```
+
+Write the top-weight character as a polynomial in the lowering variable
+`z`.  The `fu` monomials formed from one fundamental `z` term and one
+label-three `z^3` term, together with the `v` label-four `z^4` monomials,
+are distinct contributions to `w_4`.  There is always one additional,
+distinct degree-four monomial.  Indeed, a label at least five supplies its
+own `z^4` term; otherwise, two nonfundamental factors supply `z^2z^2`; and
+if there are fewer than two nonfundamental factors, `P>=8` forces at least
+four fundamental factors, whose product of four `z` terms supplies it.
+Consequently
+
+```text
+w_4-1>=fu+v.                                        (P23.11z5m0bd3)
+```
+
+This pays `(P23.11z5m0bd2)`.  All other target blocks are unchanged and
+remain separated by support or isotypic label, completing the allocation.
+QED.
+
+The same support-matching mechanism reaches one further outer layer on the
+all-fundamental ray.  Here the size-four and size-six omitted supports are
+handled separately, so no empty-target reservoir is needed.
+
+**Proposition 23A9H0E (all-fundamental wall-free defect-three collar).**
+Let `f>=10`, put
+
+```text
+X=V_1^(tensor f),                 q=f-6>=4,
+```
+
+and work ordinarily, or in `SU(2)_k` with `f<=k`.  Then the two-import
+graph of Target 23A9G2 has a full capacitated matching for this word.
+
+**Proof.**  Write `R` for the omitted support.  Parity and the
+highest-weight bound leave only
+
+```text
+|R|=0, 2, 4, 6.                                     (P23.11z5m0be)
+```
+
+The empty row uses the empty `a=0` target.  For `|R|=2`, use `W=R`.
+Its source has equal `a=0,2` demand `m_(R^c)(q)`, while its invariant
+target has exactly that `a=0` capacity and at least that `a=2` capacity
+through the channel `q in 2 star q`.
+
+For the size-four supports, form the bipartite graph on the indexed
+four-subsets of `[f]`, joining `R` to `W` when `|R intersection W|<=2`.
+It is regular under the symmetric group and nonempty (take two indices in
+and two outside `R`), hence has a perfect matching.  For a matched target,
+put `N=f-4`.  Its invariant multiplicity is two, its complement has total
+label `N=q+2`, and
+
+```text
+m_(W^c)(q+2)=1,
+m_(W^c)(q)=f-5,
+m_(W^c)(q-2)=(f-4)(f-7)/2.                          (P23.11z5m0bf)
+```
+
+The source profile is `(2,3,1)` multiplied by `f-5`.  The target capacities
+in its three required blocks are at least
+
+```text
+a=0: 2(f-5),
+a=2: (f-4)(f-7)+2(f-5)+2=f^2-9f+20,
+a=4: 2(f-5).                                       (P23.11z5m0bg)
+```
+
+The middle value exceeds `3(f-5)` by `(f-5)(f-7)`, so all three source
+blocks fit for `f>=10`.
+
+For the size-six supports, use the analogous regular graph on indexed
+six-subsets with intersection at most two.  It is nonempty already at
+`f=10`: take all four indices outside `R` and two inside it.  A matched
+target has invariant multiplicity five and a complementary word of total
+label `q` with one top path.  Thus its `a=0,2,4,6` capacities are at least
+
+```text
+5,                 5(1+f-7)=5(f-6),                 5, 5.
+                                                               (P23.11z5m0bh)
+```
+
+They pay the `V_1^(tensor 6)` source profile
+`5,9,5,1`.  The matched size-four and size-six targets are distinct, and
+are distinct from every pair target.  All routes have at most two imports.
+Since `f<=k`, no displayed ordinary channel is truncated.  QED.
+
+The exact two-import flow checker returns `PASS`, for example, at level
+twenty for `f=10,11`:
+
+```text
+[1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1].
+```
+
+There is also a uniform, though deliberately nonoptimal, all-fundamental
+outer collar at every fixed defect.  It reduces every capacity comparison to
+a single ballot-number ratio.
+
+**Proposition 23A9H0E1 (arbitrary outer defect on a long fundamental ray).**
+Let `d>=1` and
+
+```text
+f>=4d^2+6d+4,                 q=f-2d.
+                                                               (P23.11z5m0bi)
+```
+
+Then the word `V_1^(tensor f)` has a full two-import allocation of
+Target 23A9G2 at boundary label `q`, ordinarily and in every `SU(2)_k`
+with `f<=k`.
+
+**Proof.**  Put
+
+```text
+b_N(r)=binom(N,r)-binom(N,r-1),
+```
+
+with `b_N(r)=0` outside its natural range.  This is the multiplicity of
+`V_(N-2r)` in `V_1^(tensor N)`.  Let `R` be an omitted support of size
+`2s`, set
+
+```text
+r=d-s,                    N=f-2s,                  0<=s<=d.
+                                                               (P23.11z5m0bj)
+```
+
+The source multiplicity in its `a=2j` block is
+
+```text
+b_N(r)b_(2s)(s-j),                         0<=j<=s. (P23.11z5m0bk)
+```
+
+For `s=0`, route the empty support to the empty `a=0` target.  For every
+`1<=s<=d`, match the indexed `2s`-subsets to indexed `2s`-subsets
+with intersection at most two.  This bipartite graph is regular.  It is
+nonempty because `(P23.11z5m0bi)` gives `f>=4s-2`, so one may retain two
+indices of `R` and replace the other `2s-2` by indices outside `R`.
+Hall's theorem supplies a perfect matching.  A matched target has invariant
+multiplicity
+
+```text
+C_s=b_(2s)(s)=binom(2s,s)/(s+1),
+```
+
+and its exact `a=2j` capacity is
+
+```text
+C_s sum_(h=-j)^j b_N(r-h).                           (P23.11z5m0bl)
+```
+
+Indeed the fusion interval `2j star q` consists of the labels
+`q+2h=N-2(r-h)`; the lower wall is absent because `q` is larger than every
+needed `2j` under `(P23.11z5m0bi)`.
+
+For `j=0`, `(P23.11z5m0bk)` and `(P23.11z5m0bl)` agree exactly.  Suppose
+`j>=1`.  First,
+
+```text
+b_(2s)(s-j)<=binom(2s,s)=(s+1)C_s.                  (P23.11z5m0bm)
+```
+
+If `r=0`, the sum in `(P23.11z5m0bl)` contains
+`b_N(0)+b_N(1)=N`, which is at least `s+1`.  If `r>=1`, direct division of
+the ballot numbers gives
+
+```text
+b_N(r+1)/b_N(r)
+ =((N-2r-1)(N-r+1))/((r+1)(N-2r+1))>=2s+1.          (P23.11z5m0bn)
+```
+
+For completeness, `(P23.11z5m0bi)` implies
+`N>=4(s+1)(r+1)` and `N-2r>=3`; hence the first factor in the ratio is at
+least one half, while the second is at least `4s+3`.  Therefore the window
+in `(P23.11z5m0bl)` is at least `(s+1)b_N(r)` in either case.  Combining
+this with `(P23.11z5m0bm)` proves that every target capacity dominates its
+source demand.  The target supports are distinct across cardinality classes,
+and every matching edge has at most two imports.  Finally, `f<=k`
+makes every ordinary multiplicity and channel wall-free.  QED.
+
 The strict C++ mode
 
 ```text
 search_su2_boundary_support_monotone
-  --two-import-outer-defect-word LEVEL 4 LABEL...
+  --two-import-outer-defect-word LEVEL DEFECT LABEL...
 ```
 
-checks this fixed `q=P-4` allocation without the diagnostic's usual
-permission to skip a global-capacity-deficit sector.  Exact replays return
+checks the fixed label `q=P-DEFECT` without the diagnostic's usual
+permission to skip a global-capacity-deficit sector.  Exact defect-two replays return
 `PASS` for representative words in the displayed collar:
 
 ```text
