@@ -1,6 +1,7 @@
 #include <boost/multiprecision/cpp_int.hpp>
 
 #include <algorithm>
+#include <array>
 #include <cstddef>
 #include <cstdlib>
 #include <iostream>
@@ -94,12 +95,27 @@ int main(int argc, char** argv) {
   std::size_t negative_sum_groups = 0;
   std::size_t negative_shell_groups = 0;
   std::size_t negative_shell_prefixes = 0;
+  std::size_t negative_shell_suffixes = 0;
+  std::size_t negative_physical_image_prefixes = 0;
+  std::size_t negative_antiperiodic_targets = 0;
+  std::size_t negative_periodic_antiperiodic_sums = 0;
+  std::size_t negative_periodic_antiperiodic_differences = 0;
+  std::size_t negative_exponent_recurrence_cross_terms = 0;
+  std::size_t negative_exponent_cross_box_prefixes = 0;
+  std::size_t boxed_identity_checks = 0;
   std::size_t same_sign_adjacent_coefficients = 0;
   std::size_t negative_cyclic_corrections = 0;
   bool reported = false;
   bool reported_sum = false;
   bool reported_shell = false;
   bool reported_shell_prefix = false;
+  bool reported_shell_suffix = false;
+  bool reported_physical_image_prefix = false;
+  bool reported_antiperiodic_target = false;
+  bool reported_periodic_antiperiodic_sum = false;
+  bool reported_periodic_antiperiodic_difference = false;
+  bool reported_exponent_recurrence_cross_term = false;
+  bool reported_exponent_cross_box_prefix = false;
   for (int rank = 5; rank <= maximum_rank; ++rank) {
     const int modulus = 2 * rank + 1;
     for (int half_power = 2; half_power <= maximum_half_power; ++half_power) {
@@ -112,6 +128,23 @@ int main(int argc, char** argv) {
         cpp_int total = 0;
         std::map<int, cpp_int> sum_groups;
         std::map<int, cpp_int> shell_groups;
+        std::map<int, std::array<cpp_int, 4>> shell_coefficients;
+        std::map<int, std::array<cpp_int, 4>>
+            physical_image_coefficients;
+        for (const int winding : windings) {
+          const int shell = std::abs(winding);
+          std::array<cpp_int, 4>& coefficients =
+              shell_coefficients[shell];
+          for (int offset = 1; offset <= 4; ++offset) {
+            const cpp_int value = coefficient(
+                values, offset + winding * modulus
+            );
+            coefficients[static_cast<std::size_t>(offset - 1)] += value;
+            const int distance = std::abs(offset + winding * modulus);
+            physical_image_coefficients[distance]
+                [static_cast<std::size_t>(offset - 1)] += value;
+          }
+        }
         for (int first : windings) {
           for (int second : windings) {
             const auto c = [&](int offset, int winding) {
@@ -158,8 +191,40 @@ int main(int argc, char** argv) {
           }
         }
         cpp_int shell_prefix = 0;
+        std::array<cpp_int, 4> boxed_coefficients{};
         for (const auto& [shell, value] : shell_groups) {
           shell_prefix += value;
+          const auto coefficients = shell_coefficients.find(shell);
+          if (coefficients == shell_coefficients.end()) {
+            std::cout << "TP2_WINDING result=BOX_SHELL_MISSING"
+                      << " rank=" << rank
+                      << " minus_pairs=" << minus_pairs
+                      << " half_power=" << half_power
+                      << " shell=" << shell << '\n';
+            return 1;
+          }
+          for (std::size_t offset = 0U;
+               offset < boxed_coefficients.size(); ++offset) {
+            boxed_coefficients[offset] += coefficients->second[offset];
+          }
+          const cpp_int twice_boxed_current = 2 * (
+              boxed_coefficients[1U] * boxed_coefficients[3U]
+              + boxed_coefficients[1U] * boxed_coefficients[1U]
+              - boxed_coefficients[2U] * boxed_coefficients[2U]
+              - boxed_coefficients[0U] * boxed_coefficients[2U]
+          );
+          ++boxed_identity_checks;
+          if (shell_prefix != twice_boxed_current) {
+            std::cout << "TP2_WINDING result=BOX_IDENTITY_FAIL"
+                      << " rank=" << rank
+                      << " minus_pairs=" << minus_pairs
+                      << " half_power=" << half_power
+                      << " shell=" << shell
+                      << " sector_sum=" << shell_prefix
+                      << " boxed_current=" << twice_boxed_current
+                      << '\n';
+            return 1;
+          }
           if (shell_prefix < 0) {
             ++negative_shell_prefixes;
             if (!reported_shell_prefix) {
@@ -170,6 +235,61 @@ int main(int argc, char** argv) {
                         << " half_power=" << half_power
                         << " shell=" << shell
                         << " prefix=" << shell_prefix << '\n';
+            }
+          }
+        }
+        cpp_int shell_before = 0;
+        for (const auto& [shell, value] : shell_groups) {
+          const cpp_int shell_suffix = total - shell_before;
+          if (shell_suffix < 0) {
+            ++negative_shell_suffixes;
+            if (!reported_shell_suffix) {
+              reported_shell_suffix = true;
+              std::cout << "TP2_WINDING first_negative_shell_suffix"
+                        << " rank=" << rank
+                        << " minus_pairs=" << minus_pairs
+                        << " half_power=" << half_power
+                        << " shell=" << shell
+                        << " suffix=" << shell_suffix << '\n';
+            }
+          }
+          shell_before += value;
+        }
+        if (shell_before != total) {
+          std::cout << "TP2_WINDING result=SHELL_TOTAL_MISMATCH"
+                    << " rank=" << rank
+                    << " minus_pairs=" << minus_pairs
+                    << " half_power=" << half_power << '\n';
+          return 1;
+        }
+        std::array<cpp_int, 4> physical_image_coefficients_sum{};
+        for (const auto& [distance, coefficients]
+             : physical_image_coefficients) {
+          for (std::size_t offset = 0U;
+               offset < physical_image_coefficients_sum.size(); ++offset) {
+            physical_image_coefficients_sum[offset] += coefficients[offset];
+          }
+          const cpp_int twice_physical_image_current = 2 * (
+              physical_image_coefficients_sum[1U]
+                  * physical_image_coefficients_sum[3U]
+              + physical_image_coefficients_sum[1U]
+                  * physical_image_coefficients_sum[1U]
+              - physical_image_coefficients_sum[2U]
+                  * physical_image_coefficients_sum[2U]
+              - physical_image_coefficients_sum[0U]
+                  * physical_image_coefficients_sum[2U]
+          );
+          if (twice_physical_image_current < 0) {
+            ++negative_physical_image_prefixes;
+            if (!reported_physical_image_prefix) {
+              reported_physical_image_prefix = true;
+              std::cout << "TP2_WINDING first_negative_physical_image_prefix"
+                        << " rank=" << rank
+                        << " minus_pairs=" << minus_pairs
+                        << " half_power=" << half_power
+                        << " distance=" << distance
+                        << " prefix=" << twice_physical_image_current
+                        << '\n';
             }
           }
         }
@@ -192,6 +312,164 @@ int main(int argc, char** argv) {
         const cpp_int c3 = cyclic_coefficient(values, modulus, 3);
         const cpp_int c4 = cyclic_coefficient(values, modulus, 4);
         const cpp_int target = c2 * c4 + c2 * c2 - c3 * c3 - c1 * c3;
+        const std::vector<cpp_int> values_after_minus =
+            fourier_coefficients(minus_pairs + 1, half_power);
+        const std::vector<cpp_int> values_after_plus =
+            fourier_coefficients(minus_pairs, half_power + 1);
+        const auto cyclic_current = [&](const std::vector<cpp_int>& input) {
+          const cpp_int input_c1 = cyclic_coefficient(input, modulus, 1);
+          const cpp_int input_c2 = cyclic_coefficient(input, modulus, 2);
+          const cpp_int input_c3 = cyclic_coefficient(input, modulus, 3);
+          const cpp_int input_c4 = cyclic_coefficient(input, modulus, 4);
+          return std::array<cpp_int, 5>{
+              input_c1,
+              input_c2,
+              input_c3,
+              input_c4,
+              input_c2 * input_c4 + input_c2 * input_c2
+                  - input_c3 * input_c3 - input_c1 * input_c3
+          };
+        };
+        const auto after_minus = cyclic_current(values_after_minus);
+        const auto after_plus = cyclic_current(values_after_plus);
+        const auto exponent_cross = [](
+                                        const std::array<cpp_int, 4>& left,
+                                        const std::array<cpp_int, 4>& right) {
+          return left[1U] * right[3U] + left[3U] * right[1U]
+                 + 2 * left[1U] * right[1U]
+                 - 2 * left[2U] * right[2U]
+                 - left[0U] * right[2U] - left[2U] * right[0U];
+        };
+        const std::array<cpp_int, 4> after_minus_coefficients{
+            after_minus[0U], after_minus[1U], after_minus[2U],
+            after_minus[3U]
+        };
+        const std::array<cpp_int, 4> after_plus_coefficients{
+            after_plus[0U], after_plus[1U], after_plus[2U], after_plus[3U]
+        };
+        const cpp_int twice_exponent_cross = exponent_cross(
+            after_minus_coefficients, after_plus_coefficients
+        );
+        if (16 * target
+            != after_minus[4U] + after_plus[4U]
+                + twice_exponent_cross) {
+          std::cout << "TP2_WINDING result=EXPONENT_RECURRENCE_FAIL"
+                    << " rank=" << rank
+                    << " minus_pairs=" << minus_pairs
+                    << " half_power=" << half_power << '\n';
+          return 1;
+        }
+        if (twice_exponent_cross < 0) {
+          ++negative_exponent_recurrence_cross_terms;
+          if (!reported_exponent_recurrence_cross_term) {
+            reported_exponent_recurrence_cross_term = true;
+            std::cout << "TP2_WINDING first_negative_exponent_recurrence_cross"
+                      << " rank=" << rank
+                      << " minus_pairs=" << minus_pairs
+                      << " half_power=" << half_power
+                      << " twice_cross=" << twice_exponent_cross << '\n';
+          }
+        }
+        const std::vector<int> cross_windings = winding_indices(
+            modulus, degree + 1
+        );
+        using CrossCoefficientPair = std::pair<
+            std::array<cpp_int, 4>, std::array<cpp_int, 4>
+        >;
+        std::map<int, CrossCoefficientPair> cross_shell_coefficients;
+        for (const int winding : cross_windings) {
+          CrossCoefficientPair& shell_pair = cross_shell_coefficients[
+              std::abs(winding)
+          ];
+          for (int offset = 1; offset <= 4; ++offset) {
+            const std::size_t index = static_cast<std::size_t>(offset - 1);
+            shell_pair.first[index] += coefficient(
+                values_after_minus, offset + winding * modulus
+            );
+            shell_pair.second[index] += coefficient(
+                values_after_plus, offset + winding * modulus
+            );
+          }
+        }
+        std::array<cpp_int, 4> cross_box_left{};
+        std::array<cpp_int, 4> cross_box_right{};
+        for (const auto& [shell, shell_pair] : cross_shell_coefficients) {
+          for (std::size_t index = 0U;
+               index < cross_box_left.size(); ++index) {
+            cross_box_left[index] += shell_pair.first[index];
+            cross_box_right[index] += shell_pair.second[index];
+          }
+          const cpp_int cross_box_value = exponent_cross(
+              cross_box_left, cross_box_right
+          );
+          if (cross_box_value < 0) {
+            ++negative_exponent_cross_box_prefixes;
+            if (!reported_exponent_cross_box_prefix) {
+              reported_exponent_cross_box_prefix = true;
+              std::cout << "TP2_WINDING first_negative_exponent_cross_box"
+                        << " rank=" << rank
+                        << " minus_pairs=" << minus_pairs
+                        << " half_power=" << half_power
+                        << " shell=" << shell
+                        << " value=" << cross_box_value << '\n';
+            }
+          }
+        }
+        const auto antiperiodic_coefficient = [&](int offset) {
+          cpp_int result = 0;
+          for (const int winding : windings) {
+            const cpp_int value = coefficient(
+                values, offset + winding * modulus
+            );
+            result += (winding & 1) == 0 ? value : -value;
+          }
+          return result;
+        };
+        const cpp_int anti_c1 = antiperiodic_coefficient(1);
+        const cpp_int anti_c2 = antiperiodic_coefficient(2);
+        const cpp_int anti_c3 = antiperiodic_coefficient(3);
+        const cpp_int anti_c4 = antiperiodic_coefficient(4);
+        const cpp_int antiperiodic_target =
+            anti_c2 * anti_c4 + anti_c2 * anti_c2
+            - anti_c3 * anti_c3 - anti_c1 * anti_c3;
+        if (antiperiodic_target < 0) {
+          ++negative_antiperiodic_targets;
+          if (!reported_antiperiodic_target) {
+            reported_antiperiodic_target = true;
+            std::cout << "TP2_WINDING first_negative_antiperiodic_target"
+                      << " rank=" << rank
+                      << " minus_pairs=" << minus_pairs
+                      << " half_power=" << half_power
+                      << " value=" << antiperiodic_target << '\n';
+          }
+        }
+        if (target + antiperiodic_target < 0) {
+          ++negative_periodic_antiperiodic_sums;
+          if (!reported_periodic_antiperiodic_sum) {
+            reported_periodic_antiperiodic_sum = true;
+            std::cout << "TP2_WINDING first_negative_periodic_antiperiodic_sum"
+                      << " rank=" << rank
+                      << " minus_pairs=" << minus_pairs
+                      << " half_power=" << half_power
+                      << " periodic=" << target
+                      << " antiperiodic=" << antiperiodic_target
+                      << " sum=" << target + antiperiodic_target << '\n';
+          }
+        }
+        if (target - antiperiodic_target < 0) {
+          ++negative_periodic_antiperiodic_differences;
+          if (!reported_periodic_antiperiodic_difference) {
+            reported_periodic_antiperiodic_difference = true;
+            std::cout
+                << "TP2_WINDING first_negative_periodic_antiperiodic_difference"
+                << " rank=" << rank
+                << " minus_pairs=" << minus_pairs
+                << " half_power=" << half_power
+                << " periodic=" << target
+                << " antiperiodic=" << antiperiodic_target
+                << " difference=" << target - antiperiodic_target << '\n';
+          }
+        }
         const cpp_int ordinary_c1 = coefficient(values, 1);
         const cpp_int ordinary_c2 = coefficient(values, 2);
         const cpp_int ordinary_c3 = coefficient(values, 3);
@@ -257,6 +535,20 @@ int main(int argc, char** argv) {
             << " negative_sum_groups=" << negative_sum_groups
             << " negative_shell_groups=" << negative_shell_groups
             << " negative_shell_prefixes=" << negative_shell_prefixes
+            << " negative_shell_suffixes=" << negative_shell_suffixes
+            << " negative_physical_image_prefixes="
+            << negative_physical_image_prefixes
+            << " negative_antiperiodic_targets="
+            << negative_antiperiodic_targets
+            << " negative_periodic_antiperiodic_sums="
+            << negative_periodic_antiperiodic_sums
+            << " negative_periodic_antiperiodic_differences="
+            << negative_periodic_antiperiodic_differences
+            << " negative_exponent_recurrence_cross_terms="
+            << negative_exponent_recurrence_cross_terms
+            << " negative_exponent_cross_box_prefixes="
+            << negative_exponent_cross_box_prefixes
+            << " boxed_identity_checks=" << boxed_identity_checks
             << " same_sign_adjacent_coefficients="
             << same_sign_adjacent_coefficients
             << " negative_cyclic_corrections="

@@ -115,5 +115,59 @@ int main() {
   }
   std::cout << "CONTINUOUS_TP2_NUMERATOR result="
             << (nonnegative ? "PASS" : "FAIL") << '\n';
-  return nonnegative ? 0 : 1;
+
+  const auto numerator_for = [](const Polynomial& s_value,
+                                const Polynomial& d_value) {
+    const Polynomial a_value = 2 * square(d_value) - square(s_value)
+                               + s_value;
+    const Polynomial b_value = 3 * square(s_value) - 3 * s_value
+                               - Polynomial(2) - 4 * square(d_value);
+    return 6 * (s_value - Polynomial(2))
+               * square(s_value + Polynomial(2)) * square(a_value)
+           + 10 * square(d_value) * (s_value + Polynomial(2))
+               * a_value * b_value
+           + 4 * (s_value + Polynomial(3)) * square(d_value)
+               * square(b_value);
+  };
+  const auto denominator_for = [](const Polynomial& s_value) {
+    return square(s_value) * square(s_value + Polynomial(1))
+           * square(s_value + Polynomial(2)) * (s_value + Polynomial(3))
+           * (s_value - Polynomial(2));
+  };
+  const Polynomial n0 = numerator_for(s, d);
+  const Polynomial d0 = denominator_for(s);
+  const Polynomial n_minus = numerator_for(
+      s + Polynomial(1), d + Polynomial(1)
+  );
+  const Polynomial d_minus = denominator_for(s + Polynomial(1));
+  const Polynomial n_plus = numerator_for(
+      s + Polynomial(1), d - Polynomial(1)
+  );
+  const Polynomial d_plus = denominator_for(s + Polynomial(1));
+  const Polynomial cross_numerator =
+      16 * n0 * d_minus * d_plus
+      - n_minus * d0 * d_plus
+      - n_plus * d0 * d_minus;
+  bool cross_nonnegative = true;
+  cpp_int minimum_cross_coefficient = 0;
+  bool first_cross_coefficient = true;
+  std::cout << "CONTINUOUS_TP2_PASCAL_CROSS terms="
+            << cross_numerator.coefficients().size() << '\n';
+  for (const auto& [degree, coefficient] :
+       cross_numerator.coefficients()) {
+    (void)degree;
+    if (first_cross_coefficient
+        || coefficient < minimum_cross_coefficient) {
+      minimum_cross_coefficient = coefficient;
+      first_cross_coefficient = false;
+    }
+    if (coefficient < 0) {
+      cross_nonnegative = false;
+    }
+  }
+  std::cout << "CONTINUOUS_TP2_PASCAL_CROSS minimum_coefficient="
+            << minimum_cross_coefficient << '\n';
+  std::cout << "CONTINUOUS_TP2_PASCAL_CROSS result="
+            << (cross_nonnegative ? "PASS" : "FAIL") << '\n';
+  return nonnegative && cross_nonnegative ? 0 : 1;
 }

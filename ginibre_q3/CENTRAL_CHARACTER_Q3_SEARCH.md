@@ -45376,15 +45376,384 @@ Translation is orthogonal, so their inner product is exactly
 analogous to `(COTM)`: it is the first unresolved outer-Turan drop for the
 single structured Plucker vector `g wedge Sg`.
 
+The structured wedge has an exact centre-frequency disintegration.  It
+collapses the two-particle spectral sum to one signed trigonometric
+quadrature against a nonnegative, explicitly coupled weight.  Let
+`zeta=exp(2pi i/n)`, write `theta_t=2pi t/n`, and let `u,v` range over
+`Z/nZ`.  Put
+
+```text
+x_u=cos(theta_u),             y_v=cos(theta_v),
+
+Xi_(M,r)(u)=sum_v (1-y_v^2)(x_u-y_v)^(2M)
+                         (x_u+y_v)^(2r).          (P22.5zz67b)
+```
+
+**Lemma 22H3W0 (centre-frequency disintegration).**  With `Q` as in
+`(P22.5zz66)--(P22.5zz67a)`,
+
+```text
+(2n^2/4^(M+r+1)) Q
+ =sum_u Xi_(M,r)(u)
+       {cos(4theta_u)-cos(6theta_u)}.              (P22.5zz67c)
+```
+
+In particular `Xi_(M,r)(u)>=0` for every `u`.
+
+**Proof.**  In the Fourier basis of the cycle, the coefficient of
+`X=g wedge Sg` at an unordered pair `{a,b}` has squared modulus
+
+```text
+|X_(a,b)|^2
+ =n^(-2) A_a^M B_a^r A_b^M B_b^r |zeta^a-zeta^b|^2.
+```
+
+Because `n` is odd, the change of variables
+
+```text
+a=u+v,                 b=u-v
+```
+
+is a bijection on ordered pairs.  The elementary identities
+
+```text
+A_(u+v)A_(u-v)=4(x_u-y_v)^2,
+B_(u+v)B_(u-v)=4(x_u+y_v)^2,
+|zeta^(u+v)-zeta^(u-v)|^2=4(1-y_v^2)
+```
+
+give the stated weight after passing from ordered to unordered pairs.
+Finally `(wedge^2 S)^j` has eigenvalue `zeta^(2ju)` at this pair, so the
+real part of its contributions for `j=2,3` is respectively
+`cos(4theta_u),cos(6theta_u)`.  Subtracting proves `(P22.5zz67c)`.
+Every summand in `(P22.5zz67b)` is nonnegative.  QED.
+
+This is not a positivity proof: the last trigonometric factor changes
+sign.  It is, however, a genuine reduction from a signed two-particle
+allocation to one nonnegative centre-frequency profile.  Any successful
+spectral payment for `(CBW)` may therefore be sought as a shape or
+recurrence theorem for the coupled profile `Xi_(M,r)`, rather than as a
+sign rule for individual wedge coordinates.
+
 The reduction is useful but the final inference is deliberately not made:
 a positive-semidefinite middle operator does not fix the sign of a
 bilinear form between two different vectors.  Exact probes rule out four
-shortcuts.  First, winding-shell prefixes need not be positive.  Already
+shortcuts.  First, winding-depth prefixes need not be positive.  Already
 at `n=11`, `M=37`, `r=5`, the depth-one prefix is
 
 ```text
 -16865348928368453742537769860112.                  (P22.5zz68)
 ```
+
+There is, however, a different symmetric truncation for which the sector
+decomposition has an exact closed form.  Write `c_hat(t)` for the
+unperiodized coefficient of `A^M B^r`, and, for `h>=0`, put
+
+```text
+c_[h](s)=sum_(|a|<=h)c_hat(s+an),
+
+Q_h=c_[h](2)c_[h](4)+c_[h](2)^2
+    -c_[h](3)^2-c_[h](1)c_[h](3).                 (P22.5zz68a)
+```
+
+For two windings define the symmetrized sector by
+
+```text
+2q_(a,b)=c_hat(2+an)c_hat(4+bn)
+        +c_hat(4+an)c_hat(2+bn)
+        +2c_hat(2+an)c_hat(2+bn)
+        -2c_hat(3+an)c_hat(3+bn)
+        -c_hat(1+an)c_hat(3+bn)
+        -c_hat(3+an)c_hat(1+bn).                  (P22.5zz68b)
+```
+
+**Lemma 22H3W1 (symmetric winding-box identity).**  For every `h>=0`,
+
+```text
+2Q_h=sum_(max(|a|,|b|)<=h)2q_(a,b).               (P22.5zz68c)
+```
+
+**Proof.**  Expand each of the four products in `(P22.5zz68a)`.  Its two
+winding indices range independently over `[-h,h]`.  Symmetrizing the
+two nonsymmetric products gives exactly `(P22.5zz68b)`, and the displayed
+sum is the resulting square of winding indices.  QED.
+
+The displayed negative value is in fact the first negative symmetric
+winding box: by Lemma 22H3W1 it is `2Q_1` for this parameter triple.
+Thus the most natural cumulative two-dimensional strengthening is also
+false.
+
+**False Target 22H3W2 (symmetric winding-box payment).**  In the
+parameter cone of Lemma 22H3W, namely odd `n` and `M-r>=2`, `r>=2`, it
+is false that
+
+```text
+Q_h>=0,                                             h>=0. (SWBP)
+```
+
+The witness is `(P22.5zz68)`, with `h=1`.  Nor can the payment be made
+from the opposite radial direction.  At `n=11`, `M=9`, `r=2`, the exact
+outer tail
+
+```text
+sum_(max(|a|,|b|)>=1)2q_(a,b)=-91732.             (P22.5zz68d)
+```
+
+is negative.  Hence neither nested symmetric boxes nor their complementary
+outer tails provide a one-directional winding allocation.  Any proof of
+`(CBW)` must pair noncontiguous radial shells, or use a coupled state that
+retains additional winding information.
+
+The strict C++ checker `character_ring_iter/probe_tp2_winding_sectors.cpp`
+now verifies `(P22.5zz68c)` independently at every active shell.  Its
+replay
+
+```text
+probe_tp2_winding_sectors 20 40 40
+```
+
+has `11,248` parameter systems and `29,043` boxed-identity checks.  It
+finds `76` negative symmetric boxes and `9,690` negative complementary
+tails, alongside `116,647` negative individual sectors, `33,951` negative
+winding-sum groups, and `9,696` negative shell increments.  These are
+exact finite counterexamples to the two radial allocations; the identity
+itself is proved above.
+
+The more geometric common Fourier-image filtration fails as well.  Put
+
+```text
+c_<H>(s)=sum_(a: |s+an|<=H)c_hat(s+an)
+```
+
+and form the same `Q` as in `(P22.5zz68a)` from `c_<H>`.  The exact
+physical-image prefix at
+
+```text
+n=11,       M=31,       r=2,       H=8
+```
+
+is
+
+```text
+2Q_<8=-946262655134355705249539397696.            (P22.5zz68e)
+```
+
+Thus aligning the four residue classes by their actual Fourier distance,
+rather than by their winding number, does not repair the cumulative
+payment.  The checker finds `8,210` negative physical-image prefixes in
+the same `20,40,40` replay.  This is an exact finite obstruction to every
+one-parameter image-radius allocation considered here.
+
+There is nevertheless an exact twisted companion which is the natural
+second component for a coupled recurrence.  Let
+
+```text
+c^+_j=sum_a c_hat(j+an),
+c^-_j=sum_a (-1)^a c_hat(j+an),
+
+Q^epsilon=c^epsilon_2 c^epsilon_4+(c^epsilon_2)^2
+          -(c^epsilon_3)^2-c^epsilon_1c^epsilon_3. (P22.5zz68f)
+```
+
+**Lemma 22H3W3 (periodic--antiperiodic reflection).**  For odd `n`,
+
+```text
+Q^-_(M,r)=Q^+_(r,M).                               (P22.5zz68g)
+```
+
+**Proof.**  In the antiperiodic root average substitute `z=-w`.  Since
+`n` is odd, `w^n=1`; moreover `A(-w)=B(w)` and `B(-w)=A(w)`.  The
+`j`th coefficient acquires the factor `(-1)^j`.  Every monomial in the
+quadratic current `(P22.5zz68f)` has even total index, so those signs
+cancel.  This gives `(P22.5zz68g)`.  QED.
+
+The reflection supplies a coupled periodic/antiperiodic state, but not a
+one-sided comparison.  At
+
+```text
+n=11,       M=9,       r=2,
+
+Q^+=3204806,             Q^-=3225206.             (P22.5zz68h)
+```
+
+Thus the tempting dominance `Q^+>=Q^-` is false.  The exact `20,40,40`
+replay finds no negative antiperiodic current and no negative sum
+`Q^++Q^-`, but `5,018` failures of that dominance.  This is bounded
+evidence only; the viable use of the twist would require a genuine
+two-component recurrence or allocation, not a scalar reserve inequality.
+
+There is a more direct induction interface in the two exponents.  Write
+`c^(M,r)_j` for the periodic coefficient `c^+_j` in `(P22.5zz68f)`, and
+let `B_Q` be the symmetric polarization of its quadratic current:
+
+```text
+2B_Q(a,b)=a_2b_4+a_4b_2+2a_2b_2
+           -2a_3b_3-a_1b_3-a_3b_1.               (P22.5zz68i)
+```
+
+Put
+
+```text
+C_(M,r)=2B_Q(c^(M+1,r),c^(M,r+1)).                (P22.5zz68j)
+```
+
+**Lemma 22H3W4 (Pascal descent).**  For odd `n`,
+
+```text
+16Q_(M,r)=Q_(M+1,r)+Q_(M,r+1)+C_(M,r).            (P22.5zz68k)
+```
+
+Consequently, if `C_(M',r)>=0` for every `M'>=M`, then
+
+```text
+Q_(M,r)>=0.                                       (P22.5zz68l)
+```
+
+**Proof.**  The identity `A+B=4I` gives
+
+```text
+c^(M+1,r)+c^(M,r+1)=4c^(M,r).
+```
+
+Apply the quadratic form `Q` and its polarization `(P22.5zz68i)` to
+this identity.  This proves `(P22.5zz68k)`.
+
+Set `q_(M,r)=16^(-M-r)Q_(M,r)` and
+`gamma_(M,r)=16^(-M-r-1)C_(M,r)`.  Then
+
+```text
+q_(M,r)=q_(M+1,r)+q_(M,r+1)+gamma_(M,r).          (P22.5zz68m)
+```
+
+Under the stated cross hypothesis this gives
+`q_(M,r)>=q_(M+1,r)`.  On the odd cycle,
+`||A/4||<1`, while `||B/4||<=1`.  Hence the normalized convolution
+vector `4^(-M-r)A^M B^r e_0` tends to zero as `M` tends to infinity
+with `r` fixed.  Since `q_(M,r)` is a fixed quadratic form of that
+vector, its limit is zero.  Letting `M'` tend to infinity in the
+preceding monotonicity gives `(P22.5zz68l)`.  QED.
+
+Thus the finite-alias target `(CBW)` has the following exact sufficient
+form, which does not ask for a winding-shell sign.
+
+**Target 22H3W5 (Pascal cross payment).**  In the `TP2` cone
+`M-r>=2`, `r>=2`, prove
+
+```text
+C_(M,r)>=0.                                       (PCP)
+```
+
+Lemma 22H3W4 then proves `Q_(M,r)>=0` by increasing only `M`, which
+stays inside this cone.  The strict C++ checker now verifies both
+`(P22.5zz68k)` and `(PCP)`.  Its `20,40,40` replay has no negative
+cross term in `11,248` parameter systems.  This is a sharply reduced
+unproved lemma, not a proof of `(PCP)`.
+
+The mixed current has the same centre-frequency collapse as Lemma
+22H3W0, with one additional positive factor.
+
+**Lemma 22H3W6 (Pascal-cross centre kernel).**  In the notation of Lemma
+22H3W0,
+
+```text
+(n^2/4^(M+r+2)) C_(M,r)
+ =sum_(u,v) (1-y_v^2)(2-x_u^2-y_v^2)
+       (x_u-y_v)^(2M)(x_u+y_v)^(2r)
+       {cos(4theta_u)-cos(6theta_u)}.              (P22.5zz68n)
+```
+
+The weight preceding the final braces is nonnegative.
+
+**Proof.**  Polarize the Fourier-pair expansion in Lemma 22H3W0 between
+the two spectral weights `A^(M+1)B^r` and `A^M B^(r+1)`.  At the pair
+`a=u+v`, `b=u-v`, their normalized mixed factor is
+
+```text
+A_aB_b+B_aA_b
+ =8{1-cos(theta_(u+v))cos(theta_(u-v))}
+ =8(2-x_u^2-y_v^2).
+```
+
+The three product identities in the proof of Lemma 22H3W0 supply the
+remaining factor and the normalization.  Since `x_u^2,y_v^2<=1`, the
+new factor is nonnegative; all other weight factors have even powers.
+QED.
+
+Thus `(PCP)` is a one-dimensional signed quadrature against an explicitly
+nonnegative two-node profile.  It is still not pointwise, because the
+last cosine difference changes sign.  The factor
+`2-x_u^2-y_v^2` is the exact additional reserve which a finite-alias
+proof must exploit; it is absent from the original winding-shell targets.
+
+Equivalently, this is a symmetric two-node polynomial mean.  Put
+
+```text
+P(X)=16X^2-12X+1,
+
+W_(M,r)(x,y)=(1-x^2)(1-y^2)(2-x^2-y^2)
+                 (x-y)^(2M)(x+y)^(2r).           (P22.5zz68o)
+```
+
+Then direct symmetrization in `u,v` in `(P22.5zz68n)` gives
+
+```text
+(n^2/4^(M+r+2)) C_(M,r)
+ =sum_(u,v) W_(M,r)(x_u,y_v)
+             {P(x_u^2)+P(y_v^2)}.                (P22.5zz68p)
+```
+
+Every weight `W_(M,r)` is nonnegative and symmetric.  Thus `(PCP)` is
+exactly the assertion that this strongly diagonal-repelling two-point
+measure has nonnegative mean for `P`.  The polynomial is negative only
+between its two roots `(3-sqrt(5))/8` and `(3+sqrt(5))/8`; pointwise
+positivity is false, but the remaining sign geometry is now explicit.
+
+The corresponding continuous, hence no-alias, Pascal cross payment is
+strictly positive.
+
+**Proposition 22H3W7 (continuous Pascal cross payment).**  In the
+continuous circle model of Lemma 22H3V, `C_(M,r)>0` for
+
+```text
+M-r>=2,                 r>=2.                       (P22.5zz68q)
+```
+
+**Proof.**  Retain the notation `s=7+2u+v`, `d=2+v` from Lemma 22H3V,
+and write
+
+```text
+D(s)=s^2(s+1)^2(s+2)^2(s+3)(s-2),
+J(s,d)=N(s,d)/D(s),
+```
+
+where `N` is the numerator in `(P22.5zz64)`.  The continuous version of
+`(P22.5zz68k)` is
+
+```text
+C_(M,r)=16J(s,d)-J(s+1,d+1)-J(s+1,d-1)
+        =G(u,v)/[D(s)D(s+1)^2].                    (P22.5zz68r)
+```
+
+The exact expansion of `G` has `299` monomials in `u,v`; every coefficient
+is positive (the smallest is `560`).  Hence `G(u,v)>0` for all
+`u,v>=0`, while the displayed denominator is positive because `s>=7`.
+This proves the claim.  The strict C++ certificate
+`character_ring_iter/derive_continuous_tp2.cpp` constructs the two
+polynomials as maps of bidegrees to `cpp_int`, checks all `299` signs, and
+returns
+
+```text
+CONTINUOUS_TP2_PASCAL_CROSS terms=299
+CONTINUOUS_TP2_PASCAL_CROSS minimum_coefficient=560
+CONTINUOUS_TP2_PASCAL_CROSS result=PASS.
+```
+
+The calculation is an exact expansion of `(P22.5zz68r)`, with no numerical
+spectral evaluation.  QED.
+
+Thus the unresolved content of `(PCP)` is purely finite alias payment:
+the continuous and every no-alias specialization already have a strict
+cross reserve.
 
 Second, the complete cyclic value need not dominate the continuous one:
 at `n=11`, `M=9`, `r=2`, they are respectively `3,204,806` and
