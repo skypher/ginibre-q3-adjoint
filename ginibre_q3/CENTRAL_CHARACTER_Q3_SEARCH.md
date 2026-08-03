@@ -9494,6 +9494,25 @@ prove_su2_t4_groups c5 --position 32
 and returns `SU2_T4_GROUP_H_RAY_NEWTON ... rays=9 result=PASS_EXACT`.
 This resolves one chamber only; the full 601-mask statement remains open.
 
+The adjacent position `34` is a distinct exact bounded chamber.  Its
+irredundant inequalities are
+
+```text
+10Q-Y>=0,
+2-6Q+2h-Y>=0,
+Y-9Q>=0,
+-3+7Q-2h+Y>=0,
+3Q-4>=0,
+4-Q>=0.
+```
+
+They force `2<=Q<=4` and `h<=65/2`.  Direct exact enumeration of its
+`19` feasible integer points verifies `K_5(Y)>=0`, returning
+`SU2_T4_GROUP_BOUNDED ... points=19 result=PASS_EXACT_FINITE`.
+The certifier therefore attempts bounded and bounded-`(Q,Y)` ray
+certificates before the more expensive three-sum search.  This changes
+only the search order, not any certificate condition.
+
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
 Then

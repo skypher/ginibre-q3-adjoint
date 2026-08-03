@@ -505,12 +505,6 @@ bool certify_group_chamber(
         forced_zero
     );
     if (!passed) {
-        passed = constant_three_sum_certificate(
-            chamber,
-            constraints
-        );
-    }
-    if (!passed) {
         passed = bounded_group_integer_certificate(
             chamber,
             constraints
@@ -518,6 +512,12 @@ bool certify_group_chamber(
     }
     if (!passed) {
         passed = bounded_qy_h_ray_newton_certificate(
+            chamber,
+            constraints
+        );
+    }
+    if (!passed) {
+        passed = constant_three_sum_certificate(
             chamber,
             constraints
         );
