@@ -479,12 +479,41 @@ bool bounded_qy_h_ray_newton_certificate(
     return true;
 }
 
-// A square-cone certificate may lose a congruence sublattice.  If a-b has
-// fixed residue modulo g, the two integer branches a>=b and b>=a+1 are better
-// parameterised by their residue-corrected multiple-of-g difference.  This
-// routine checks that finite refinement for equal pair sums and for a
-// pair-sum offset of one.  On each branch the remaining condition is
-// x+g*y+z>=minimum, which is reduced to finitely many translated orthants.
+std::optional<int> slice_bound_on_forced_equality(
+    const Polynomial& first,
+    const Polynomial& second,
+    const Polynomial& equality
+) {
+    const Affine sum = affine_coefficients(first + second);
+    const Affine forced = affine_coefficients(equality);
+    std::optional<Rational> multiple;
+    for (std::size_t index = 1U; index < sum.size(); ++index) {
+        if (forced[index] == 0) {
+            if (sum[index] != 0) {
+                return std::nullopt;
+            }
+            continue;
+        }
+        const Rational candidate = -sum[index] / forced[index];
+        if (multiple.has_value() && candidate != *multiple) {
+            return std::nullopt;
+        }
+        multiple = candidate;
+    }
+    if (!multiple.has_value()) {
+        return std::nullopt;
+    }
+    const Rational bound = sum[0] + *multiple * forced[0];
+    if (
+        bound.denominator() != 1
+        || bound.numerator() < 0
+        || bound.numerator() > std::numeric_limits<int>::max()
+    ) {
+        return std::nullopt;
+    }
+    return bound.numerator().convert_to<int>();
+}
+
 Integer positive_gcd(Integer left, Integer right) {
     if (left < 0) {
         left = -left;
@@ -500,6 +529,187 @@ Integer positive_gcd(Integer left, Integer right) {
     return left;
 }
 
+Integer positive_lcm(const Integer& left, const Integer& right) {
+    if (left == 0 || right == 0) {
+        return 0;
+    }
+    return (left / positive_gcd(left, right)) * right;
+}
+
+std::optional<int> affine_lattice_period(
+    const std::array<Polynomial, 3>& inverse
+) {
+    Integer period = 1;
+    for (const Polynomial& coordinate : inverse) {
+        const Affine affine = affine_coefficients(coordinate);
+        period = positive_lcm(period, affine[3].denominator());
+        if (period > std::numeric_limits<int>::max()) {
+            return std::nullopt;
+        }
+    }
+    return period.convert_to<int>();
+}
+
+bool integral_inverse_point(
+    const std::array<Polynomial, 3>& inverse,
+    int slice,
+    int residue
+) {
+    const std::array<int, 3> values{slice, 0, residue};
+    return std::all_of(
+        inverse.begin(),
+        inverse.end(),
+        [&values](const Polynomial& coordinate) {
+            return evaluate(coordinate, values).denominator() == 1;
+        }
+    );
+}
+
+// If an affine chamber has one forced equality and one bounded complementary
+// facet pair modulo that equality, its integer points split into finitely many
+// congruence rays.  The first coordinate is a facet a in 0<=a<=M, the second
+// is an equality facet e=0, and the third is a nonnegative ray facet c.  The
+// inverse facet map makes all admissible c values periodic modulo the exact
+// lattice period.  A nonnegative Newton expansion on every resulting ray
+// certifies the whole chamber without relaxing its integer lattice.
+bool forced_equality_slice_ray_newton_certificate(
+    const Chamber& chamber,
+    const std::vector<Polynomial>& constraints
+) {
+    for (std::size_t equality_first = 0U;
+         equality_first < constraints.size();
+         ++equality_first) {
+        for (std::size_t equality_second = equality_first + 1U;
+             equality_second < constraints.size();
+             ++equality_second) {
+            const Polynomial equality_sum =
+                constraints[equality_first] + constraints[equality_second];
+            if (!equality_sum.terms().empty()) {
+                continue;
+            }
+            for (std::size_t slice_first = 0U;
+                 slice_first < constraints.size();
+                 ++slice_first) {
+                if (
+                    slice_first == equality_first
+                    || slice_first == equality_second
+                ) {
+                    continue;
+                }
+                for (std::size_t slice_second = slice_first + 1U;
+                     slice_second < constraints.size();
+                     ++slice_second) {
+                    if (
+                        slice_second == equality_first
+                        || slice_second == equality_second
+                    ) {
+                        continue;
+                    }
+                    const std::optional<int> slice_bound =
+                        slice_bound_on_forced_equality(
+                            constraints[slice_first],
+                            constraints[slice_second],
+                            constraints[equality_first]
+                        );
+                    if (!slice_bound.has_value() || *slice_bound > 64) {
+                        continue;
+                    }
+                    for (std::size_t ray = 0U;
+                         ray < constraints.size();
+                         ++ray) {
+                        if (
+                            ray == equality_first
+                            || ray == equality_second
+                            || ray == slice_first
+                            || ray == slice_second
+                        ) {
+                            continue;
+                        }
+                        std::array<Polynomial, 3> inverse;
+                        try {
+                            inverse = inverse_facet_map(
+                                std::array<Polynomial, 3>{
+                                    constraints[slice_first],
+                                    constraints[equality_first],
+                                    constraints[ray]
+                                }
+                            );
+                        } catch (const std::runtime_error&) {
+                            continue;
+                        }
+                        const std::optional<int> period =
+                            affine_lattice_period(inverse);
+                        if (!period.has_value()) {
+                            continue;
+                        }
+                        const Polynomial pulled = substitute(
+                            chamber.margin,
+                            inverse
+                        );
+                        std::uint64_t rays = 0U;
+                        bool passed = true;
+                        for (int slice = 0;
+                             slice <= *slice_bound && passed;
+                             ++slice) {
+                            for (int residue = 0;
+                                 residue < *period;
+                                 ++residue) {
+                                if (!integral_inverse_point(
+                                        inverse,
+                                        slice,
+                                        residue
+                                    )) {
+                                    continue;
+                                }
+                                const Polynomial parameter =
+                                    Polynomial::variable(0);
+                                const Polynomial ray_margin = substitute(
+                                    pulled,
+                                    std::array<Polynomial, 3>{
+                                        constant(slice),
+                                        constant(0),
+                                        scale(parameter, *period)
+                                            + constant(residue)
+                                    }
+                                );
+                                if (!nonnegative_newton(ray_margin)) {
+                                    passed = false;
+                                    break;
+                                }
+                                ++rays;
+                            }
+                        }
+                        if (!passed || rays == 0U) {
+                            continue;
+                        }
+                        std::cout
+                            << "SU2_T4_GROUP_FORCED_EQUALITY_RAYS"
+                            << " position=" << chamber.mask
+                            << " equality=("
+                            << equality_first << ',' << equality_second << ')'
+                            << " slice=("
+                            << slice_first << ',' << slice_second << ')'
+                            << " ray=" << ray
+                            << " bound=" << *slice_bound
+                            << " period=" << *period
+                            << " rays=" << rays
+                            << " result=PASS_EXACT_NEWTON"
+                            << std::endl;
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+// A square-cone certificate may lose a congruence sublattice.  If a-b has
+// fixed residue modulo g, the two integer branches a>=b and b>=a+1 are better
+// parameterised by their residue-corrected multiple-of-g difference.  This
+// routine checks that finite refinement for equal pair sums and for a
+// pair-sum offset of one.  On each branch the remaining condition is
+// x+g*y+z>=minimum, which is reduced to finitely many translated orthants.
 std::vector<int> integral_affine_moduli(const Polynomial& polynomial) {
     const Affine affine = affine_coefficients(polynomial);
     for (const Rational& coefficient : affine) {
@@ -788,6 +998,12 @@ bool certify_group_chamber(
     bool passed = bounded_group_integer_certificate(chamber, constraints);
     if (!passed) {
         passed = bounded_qy_h_ray_newton_certificate(
+            chamber,
+            constraints
+        );
+    }
+    if (!passed) {
+        passed = forced_equality_slice_ray_newton_certificate(
             chamber,
             constraints
         );

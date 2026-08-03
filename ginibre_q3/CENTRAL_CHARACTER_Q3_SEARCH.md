@@ -9587,6 +9587,38 @@ checks and before generic facet and composition searches, so a matching
 index-two cone is discharged by the smaller certificate rather than by a
 larger ambient-lattice triangulation.
 
+A complementary exact ray partition handles chambers with one forced affine
+equality and a bounded transverse slice.  At position `124`, the reduced
+facets `C_i` satisfy
+
+```text
+C_3+C_4=0,                 C_0+C_1+C_3=3.
+```
+
+Thus `C_3=0` and `0<=C_0<=3`.  Using the coordinates
+`(C_0,C_3,C_2)=(r,0,2t)` gives the complete integer chamber
+
+```text
+Q=5+2t,                    H=16+7t,
+Y=4+2t-r,                  0<=r<=3, t>=0.
+```
+
+The four pulled-back `K_5` polynomials have nonnegative Newton
+coefficients in `t`.  The exact scheduler replay
+
+```text
+prove_su2_t4_groups c5 --position 124
+```
+
+returns `SU2_T4_GROUP_FORCED_EQUALITY_RAYS ... period=2 rays=4
+result=PASS_EXACT_NEWTON`.  In general, the certifier detects an opposite
+facet pair `e,-e`, a pair whose sum becomes a bounded integral constant on
+`e=0`, and an independent nonnegative ray facet.  The inverse affine map
+makes the residual lattice periodic; it enumerates every integral residue
+class and checks a univariate Newton certificate on each ray.  This is a
+finite exact partition of the original chamber, not a real-cone
+relaxation.
+
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
 Then
