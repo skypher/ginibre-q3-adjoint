@@ -126,6 +126,10 @@ derive_continuous_tp2: derive_continuous_tp2.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+verify_tp2_mixed_jacobi_moment: verify_tp2_mixed_jacobi_moment.cpp
+	$(CXX) -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 probe_cyclic_christoffel_minors: probe_cyclic_christoffel_minors.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -1065,6 +1069,7 @@ RESEARCH_TARGETS = \
 	probe_separated_pole_turan \
 	verify_separated_pole_turan_ect \
 	derive_continuous_tp2 \
+	verify_tp2_mixed_jacobi_moment \
 	probe_cyclic_christoffel_minors \
 	probe_tp2_winding_sectors \
 	verify_su2_even_background_current \

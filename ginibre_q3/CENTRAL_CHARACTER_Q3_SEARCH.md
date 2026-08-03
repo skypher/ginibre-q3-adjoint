@@ -45140,6 +45140,203 @@ fails closed unless it obtains `(P22.5zz59K7)`.  Thus any finite-alias
 proof must use the special beta weights `t_ell^(q/2)(4-t_ell)^M`, not
 only their positivity and log-concavity.  QED.
 
+The combined kernel also admits a finite-dimensional Jacobi-parameter
+form.  This is useful because it replaces the two-node sign allocation by
+one inequality in the first four recurrence coefficients of the actual
+finite beta measure.  On `A_n={cos(2pi j/n)}`, with its cyclic
+multiplicities, give `a` the positive weight
+
+```text
+w(a)=(1-a)^M(1+a)^r,
+```
+
+and write `mu_0=sum_(a in A_n)w(a)`.  Let `p_j` be its monic orthogonal
+polynomials, normalized by
+
+```text
+a p_0=p_1+alpha_0p_0,
+a p_1=p_2+alpha_1p_1+beta_1p_0,
+a p_2=p_3+alpha_2p_2+beta_2p_1.                    (P22.5zz59K7a)
+```
+
+Thus `beta_1>0` and `beta_2>=0`; the latter is zero only in the degenerate
+two-node case, where the same identity is read in the quotient by the
+zero-norm polynomial.
+
+**Lemma 22H3UC (four-Jacobi-coefficient form).**  Define
+
+```text
+u_0=2(alpha_0^2+beta_1)-1,
+u_1=2(alpha_0+alpha_1),
+
+v_0=4{alpha_0^3+beta_1(2alpha_0+alpha_1)}-3alpha_0,
+v_1=4{alpha_0^2+beta_1+beta_2
+      +alpha_1(alpha_0+alpha_1)}-3.                (P22.5zz59K7b)
+```
+
+Then the sign of `(TPD)` is the sign of
+
+```text
+-4mu_0^2 beta_1 (v_0u_1-v_1u_0).                   (P22.5zz59K7c)
+```
+
+In particular, the finite `TP2` target is equivalent to the one inequality
+`v_0u_1-v_1u_0<=0` for this endpoint-Christoffel modification of the
+cyclic Chebyshev measure.
+
+**Proof.**  After `t=2+2a`, the positive constants in
+`(P22.5zz59K2)` may be discarded, leaving
+
+```text
+sum_(a,b)w(a)w(b)(a-b)^2
+ {6+4ab-8(a^2+b^2)+16a^2b^2}.                      (P22.5zz59K7d)
+```
+
+As in `(P22.5zz68zp)`, the braces are twice the degree-two Chebyshev
+kernel.  Applying the two-by-two Cauchy--Binet expansion with the pair
+`(1,a)` and the pair `(T_3,T_2)` turns `(P22.5zz59K7d)` into minus four
+times
+
+```text
+det [ <1,T_3>  <1,T_2> ] .                          (P22.5zz59K7e)
+    [ <a,T_3>  <a,T_2> ]
+```
+
+where the brackets use the weight `w`.
+
+Modulo the orthogonal span of `p_2,p_3`, recurrence
+`(P22.5zz59K7a)` gives
+
+```text
+T_2=u_1p_1+u_0p_0,
+T_3=v_1p_1+v_0p_0.
+```
+
+The Gram norms of `p_0,p_1` are `mu_0,mu_0beta_1`.  Substitution into
+`(P22.5zz59K7e)` proves `(P22.5zz59K7c)`.  QED.
+
+This does not yet prove the required recurrence-coefficient inequality:
+ordinary support bounds give only `beta_i>0` and are too weak.  It isolates
+the possible finite proof to explicit endpoint-Christoffel control of
+`alpha_0,alpha_1,beta_1,beta_2`, rather than a growing-dimensional alias
+state.
+
+The finite measure in Lemma 22H3UC has a simple-node realization which
+removes the apparent cyclic multiplicity.  Let `n=2m+1`, let `U_j` be the
+second-kind Chebyshev polynomial, with `U_(-1)=0`, and put
+
+```text
+q_m(x)=U_m(x)+U_(m-1)(x).                            (P22.5zz59K7f)
+```
+
+**Lemma 22H3UC1 (simple-node Christoffel realization).**  One has
+
+```text
+T_(2m+1)(x)-1=(x-1)q_m(x)^2.                         (P22.5zz59K7g)
+```
+
+The `m` roots of `q_m` are the distinct nonendpoint values in `A_n`; each
+has cyclic multiplicity two.  Consequently, for `M>=1`, every moment in
+Lemma 22H3UC is exactly
+
+```text
+mu_j=2 sum_(q_m(a)=0)(1-a)^M(1+a)^r a^j.             (P22.5zz59K7h)
+```
+
+Thus the finite beta measure is the `(1-a)^M(1+a)^r` endpoint-Christoffel
+transform of an equal-weight measure on `m` simple nodes.
+
+**Proof.**  Put `x=cos(theta)`.  The sum identity for second-kind
+Chebyshev polynomials gives
+
+```text
+U_m(x)+U_(m-1)(x)
+=sin((2m+1)theta/2)/sin(theta/2).
+```
+
+Squaring and using `cos((2m+1)theta)-1=-2sin^2((2m+1)theta/2)` and
+`x-1=-2sin^2(theta/2)` proves `(P22.5zz59K7g)` (including its polynomial
+extension at the removable trigonometric endpoints).  Its roots are
+`cos(2pi j/(2m+1))`, `1<=j<=m`; the factorization shows that they are
+double roots of `T_n-1`, corresponding to the paired cyclic indices
+`j,n-j`.  The endpoint `a=1` has zero weight when `M>=1`, which proves
+`(P22.5zz59K7h)`.  QED.
+
+This form is the appropriate starting point for an explicit finite
+Christoffel/Darboux calculation of the four Jacobi coefficients.  It does
+not itself control their sign inequality: equal node weights are not the
+standard Gaussian quadrature weights for `q_m`.
+
+The unweighted simple-node measure is nevertheless an explicit rank-one
+modification of the arcsine measure.  This gives its entire initial Jacobi
+system in closed form.  Let `mu_arc` be the probability arcsine measure on
+`[-1,1]`, and let
+
+```text
+nu_m=sum_(q_m(a)=0) delta_a.
+```
+
+**Lemma 22H3UC2 (Uvarov base system).**  For every polynomial of degree at
+most `2m`,
+
+```text
+nu_m(f)=(n/2)mu_arc(f)-(1/2)f(1).                    (P22.5zz59K7i)
+```
+
+For `1<=j<=m`, the monic orthogonal polynomial of degree `j` for `nu_m`
+(with the degree-`m` polynomial understood to have zero norm) is
+
+```text
+p_j(x)=2^(1-j){T_j(x)+D_(j-1)(x)/(n-2j+1)},
+D_(j-1)(x)=1+2sum_(ell=1)^(j-1)T_ell(x).             (P22.5zz59K7j)
+```
+
+In particular,
+
+```text
+p_j(1)=2^(1-j)n/(n-2j+1),
+p_j(-1)=2^(1-j)(-1)^j(n-2j)/(n-2j+1),                (P22.5zz59K7k)
+```
+
+and, for `1<=j<m`,
+
+```text
+||p_j||_(nu_m)^2
+=n 2^(-2j)(n-2j-1)/(n-2j+1).                         (P22.5zz59K7l)
+```
+
+**Proof.**  For degree below `n`, averaging over the full cyclic node set
+is the same as arcsine averaging.  Separate the endpoint `1` and pair the
+other `n-1` cyclic nodes; this proves `(P22.5zz59K7i)`.
+
+The monic arcsine polynomials are `2^(1-j)T_j`, with squared norms
+`2^(1-2j)` for `j>=1`.  Their reproducing kernel at the endpoint is
+
+```text
+K_(j-1)(x,1)=1+2sum_(ell=1)^(j-1)T_ell(x)=D_(j-1)(x),
+K_(j-1)(1,1)=2j-1.
+```
+
+Apply the one-point Uvarov formula to
+`mu_arc-(1/n)delta_1`; its denominator is
+`1-(2j-1)/n=(n-2j+1)/n`.  This gives `(P22.5zz59K7j)`.
+At `x=1`, use `D_(j-1)(1)=2j-1`; at `x=-1`, use
+`D_(j-1)(-1)=(-1)^(j-1)`.  These give `(P22.5zz59K7k)`.
+The Uvarov norm ratio is
+
+```text
+(1-(2j+1)/n)/(1-(2j-1)/n).
+```
+
+Multiply by the arcsine norm and the scale `n/2` in `(P22.5zz59K7i)` to
+obtain `(P22.5zz59K7l)`.  QED.
+
+Thus all endpoint data needed by a finite multiple-Christoffel determinant
+are explicit up to the support cutoff.  The unresolved alias regime begins
+when the required confluent Christoffel degree reaches that cutoff, where
+the final norm in `(P22.5zz59K7l)` vanishes and ordinary infinite-support
+Christoffel formulas no longer apply unchanged.
+
 **Lemma 22H3V (stable and no-alias `TP2`).**  The target `(TP2)` is
 strictly positive in the continuous cyclic limit.  At finite orbit rank
 `m`, it is also positive whenever
@@ -46029,6 +46226,158 @@ finite angular-transport problem resolved for the `V_1,V_2` cone in
 Propositions 24B17--24B17A; the remaining task is to construct a transport
 for the negative region of `(P22.5zz68zh)` which preserves the odd-cycle
 centre/relative grid.
+
+There is a more rigid mixed-moment form which eliminates the last
+two-variable prefactor.  Put
+
+```text
+a=1-2s=cos(2phi),       b=1-2t=cos(2psi),
+
+A_n={cos(2pi j/n): j in Z/nZ},
+w_(M,r)(a)=(1-a)^M(1+a)^r.                          (P22.5zz68zi)
+```
+
+The change `(u,v)->(u+v,u-v)` is bijective for odd `n`, so `a,b` range
+independently over `A_n`.  The signed factor in Lemma 22H3W11 is
+
+```text
+H(a,b)=6+4ab-8(a^2+b^2)+16a^2b^2.                  (P22.5zz68zj)
+```
+
+**Lemma 22H3W11A (mixed adjacent-Jacobi form).**  For every odd cycle,
+
+```text
+(4n^2/4^(M+r+2)) C_(M,r)
+=sum_(a,b in A_n)(a-b)^2
+ w_(M+1,r)(a) w_(M,r+1)(b) H(a,b).                 (P22.5zz68zk)
+```
+
+**Proof.**  The substitutions in `(P22.5zz68zf)` give
+
+```text
+s-t=(b-a)/2,             s+t-2st=(1-ab)/2,
+
+st=(1-a)(1-b)/4,
+(1-s)(1-t)=(1+a)(1+b)/4.
+```
+
+Hence the weight in `(P22.5zz68zg)` is exactly
+
+```text
+(1/4)(a-b)^2(1-ab)w_(M,r)(a)w_(M,r)(b).            (P22.5zz68zl)
+```
+
+Also `P(cos(theta)^2)=1+2cos(2theta)+2cos(4theta)`,
+which gives `(P22.5zz68zj)`.  Finally,
+
+```text
+(1-ab)w_(M,r)(a)w_(M,r)(b)
+=(1/2){w_(M+1,r)(a)w_(M,r+1)(b)
+       +w_(M,r+1)(a)w_(M+1,r)(b)}.
+```
+
+The remaining factor is symmetric in `a,b`, so the two sums on the right
+are equal after exchanging the variables.  Multiply `(P22.5zz68p)` by four
+to obtain `(P22.5zz68zk)`.  QED.
+
+This is a two-measure, adjacent-Christoffel problem rather than a generic
+two-point quadrature: the quotient of the two weights is
+
+```text
+w_(M+1,r)(a)/w_(M,r+1)(a)=(1-a)/(1+a),
+```
+
+strictly decreasing on `(-1,1)`.  Thus a prospective payment can use the
+monotone-likelihood-ratio order of the two Jacobi weights, while preserving
+the exact finite grid.  For reference, if
+`mu_j=sum_(a in A_n)w_(M,r)(a)a^j`, the right side of
+`(P22.5zz68zk)` expands exactly to
+
+```text
+12mu_0mu_2-12mu_1^2-16mu_0mu_4+28mu_1mu_3
++16mu_1mu_5-12mu_2^2-8mu_2mu_4-8mu_3^2
+-32mu_3mu_5+32mu_4^2.                              (P22.5zz68zm)
+```
+
+This short moment form is an exact target for a discrete Jacobi
+total-positivity argument; it is not yet such an argument.
+The strict exact verifier
+`character_ring_iter/verify_tp2_mixed_jacobi_moment.cpp` evaluates these
+moments by cyclic convolution, clears all powers of two, and checks that
+the scaled form of `(P22.5zz68zm)` is `64n^2 C_(M,r)`.  Its replay through
+odd cycle size `41` and `M,r<=30` passes all `15,979` systems.  This audits
+the mixed-moment reduction independently of the endpoint and winding
+checkers; it does not promote the bounded target check to a proof.
+
+The same form has one further Christoffel--Darboux compression.  Let
+`T_j` denote the Chebyshev polynomial of the first kind and retain the
+moments `mu_j` above.
+
+**Lemma 22H3W11B (mixed Chebyshev--Jacobi minor).**  The sum on the right
+of `(P22.5zz68zk)` equals
+
+```text
+-4 det [ 4mu_5+mu_3-3mu_1     2mu_4+mu_2-mu_0 ]
+       [ 4mu_4-3mu_2          2mu_3-mu_1     ].     (P22.5zz68zo)
+```
+
+Consequently `(SPCP)` is exactly the assertion that this mixed
+Chebyshev--Jacobi determinant is nonpositive.
+
+**Proof.**  The signed kernel is twice the degree-two Chebyshev
+reproducing kernel,
+
+```text
+H(a,b)=2K_2(a,b),
+K_2(a,b)=1+2T_1(a)T_1(b)+2T_2(a)T_2(b).
+```
+
+The elementary Christoffel--Darboux identity is
+
+```text
+T_3(a)T_2(b)-T_2(a)T_3(b)=(a-b)K_2(a,b).            (P22.5zz68zp)
+```
+
+On the other hand,
+
+```text
+det [ 1+a^2  a ]=(b-a)(1-ab).
+    [ 1+b^2  b ]
+```
+
+Thus the summand in `(P22.5zz68zk)` is `-2` times the product of these
+two displayed antisymmetric determinants.  Expanding the two-variable
+sum, equivalently the two-by-two Andreief identity, gives `-4` times the
+determinant of their cross-moment matrix.  Its four entries are precisely
+the four displayed linear combinations of `mu_0,...,mu_5`.  QED.
+
+This is now a single finite sign-regularity question for two explicit
+Chebyshev pairs, rather than a pointwise kernel claim.  The pair
+`(1+a^2,a)` has determinant `(b-a)(1-ab)` of fixed orientation on
+`[-1,1]`; the other pair in `(P22.5zz68zp)` is not sign-regular on its
+own, so the determinant does not yet follow from ordinary Chebyshev-system
+positivity.  A successful proof must use its interaction with the adjacent
+Jacobi weight, not merely the two separate orientations.
+
+The most direct import of the quarter-turn transport from
+Propositions 24B17--24B17A already fails before weight comparison.  In the
+acute representatives `p=1,...,h`, `n=2h+1`, the downward rounded
+one-coordinate quarter turn is `p -> h-p`, corresponding to
+`phi -> pi/2-phi-pi/(2n)`.  At `n=9`, take `p=2`, `q=4`.  This map fixes
+`p`, while the load has nonzero weight and negative character factor.  More
+explicitly, with `gamma=2cos(pi/9)`, one has
+
+```text
+a=cos(4pi/9),       b=cos(8pi/9),
+H(a,b)=2-gamma^2<0.                                 (P22.5zz68zn)
+```
+
+Indeed `2a=-gamma^2+gamma+2`, `2b=-gamma`, and
+`gamma>sqrt(2)`.  Both nodes are distinct and interior, so every factor in
+`(P22.5zz68zk)` other than `H` is strictly positive for `M,r>=2`.
+Consequently this canonical one-load/one-credit rounded reflection sends a
+negative load to itself and cannot prove `(SPCP)`.  This does not rule out a
+multi-point transport using the adjacent-Jacobi likelihood-ratio reserve.
 
 The scalar cyclic-Pearson correction itself has no fixed sign, even at its
 lowest index.  In the notation of Lemma 22H3UAA, the exact target-cone
