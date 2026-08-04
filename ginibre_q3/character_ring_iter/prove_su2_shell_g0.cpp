@@ -6,7 +6,9 @@
 //     (2Q+1)d_5(x)-f_5 d_4(x),
 //
 // where d_a is evaluated by the three Kac--Walton tail intervals.  This
-// Passing --g1 instead certifies f_4 d_4(V)-f_5 d_3(V).  The source
+// Passing --g1 instead certifies f_4 d_4(V)-f_5 d_3(V).  Passing --g2
+// certifies f_4 d_3(V)-f_5 d_2(V) on the wide pointwise reserve cone
+// 3Q>2d.  The source
 // enumerates the exact Presburger endpoint/activation fan and certifies the
 // selected rational polynomial in each chamber.  It embeds the general
 // three-variable Newton/cone checker so all arithmetic is exact.
@@ -193,6 +195,10 @@ Chamber make_g0_chamber(
         scale(q, 2) + h + constant(11) - scale(x, 2),
         scale(x, 2) - h - constant(12)
     };
+    if (first_power == 2) {
+        // d=H+11 and 3Q>2d are integral, hence 3Q-2H-23>=0.
+        constraints.push_back(scale(q, 3) - scale(h, 2) - constant(23));
+    }
     // f_5 has its unique affine correction precisely when Q-2d-3>=0.
     const Polynomial return_slack = q - scale(h, 2) - constant(25);
     append_constraint(
@@ -230,6 +236,9 @@ std::vector<G0Record> enumerate_g0_records(int first_power) {
     solver.add(x >= 0);
     solver.add(2 * x < k);
     solver.add(k - q - x <= q + x);
+    if (first_power == 2) {
+        solver.add(3 * q > 2 * (h + 11));
+    }
 
     std::vector<z3::expr> hinges;
     const z3::expr return_active = q - 2 * h - 25 >= 0;
@@ -504,6 +513,9 @@ void audit_g0_formula(
             if (d < 11) {
                 continue;
             }
+            if (first_power == 2 && 3 * q <= 2 * d) {
+                continue;
+            }
             ++parameters;
             const Integer f4 = 2 * q + 1;
             const Integer f5 = (5 * Integer(q) * q + 5 * q + 2) / 2
@@ -574,8 +586,13 @@ int main(int argc, char** argv) {
         if (argc > 1 && std::string(argv[1]) == "--g1") {
             first_power = 3;
             ++argument;
+        } else if (argc > 1 && std::string(argv[1]) == "--g2") {
+            first_power = 2;
+            ++argument;
         }
-        const std::string target = first_power == 4 ? "G0" : "G1";
+        const std::string target = first_power == 4
+            ? "G0"
+            : (first_power == 3 ? "G1" : "H2_EVEN_P2_MARGIN");
         std::optional<std::size_t> selected_position;
         std::optional<std::pair<std::size_t, std::size_t>> selected_range;
         std::optional<int> audit_bound;
@@ -619,7 +636,7 @@ int main(int argc, char** argv) {
             }
         } else if (remaining != 0) {
             throw std::runtime_error(
-                "usage: [--g1] [--masks-only|--position INDEX|"
+                "usage: [--g1|--g2] [--masks-only|--position INDEX|"
                 "--range BEGIN END|--audit MAXIMUM_K]"
             );
         }

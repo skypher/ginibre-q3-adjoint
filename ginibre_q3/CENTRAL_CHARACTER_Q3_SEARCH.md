@@ -28905,16 +28905,103 @@ and returns the displayed census with
 `2,481` cutoff profiles; these are paid by the certified even reserve,
 not omitted from the calculation.
 
-Combining Lemmas 5A8H28G--5A8H28M, the exact remaining `t=2` band is
+The first free-width row is also finite after its now-established terminal
+range is retained.
+
+**Lemma 5A8H28M1 (offset-twelve finite-width shell certificate).**  If
 
 ```text
-Q>=7,                  2Q+12<=K<10Q.              (P5A.102BN)
+K=2Q+12,                Q>=7,
+```
+
+then `(LBK2)` holds for every shell.
+
+**Proof.**  Here `d=11`, so the normalized cutoff construction of Lemma
+5A8H28M has even radius `22`, odd support from `-16` through `17`, and
+stable boundary distance
+
+```text
+4d+1=45.
+```
+
+The full/partial/empty split `(P5A.102BM)` is unchanged.  On every stable
+ray or cone the five-step fixed-width recurrence has total degree at most
+eight.  The strict C++ certificate evaluates the exact fusion suffixes,
+reconstructs each ray and cone in the Newton basis, rejects a negative
+coefficient, and rejects a nonzero ninth difference.  Its exhaustive
+census is
+
+```text
+boundary entries:        158,599       minimum: 70
+one-variable rays:         8,162       minimum coefficient: 0
+two-variable cones:          112       minimum coefficient: 0
+negative odd packets:      74,993      cutoff profiles: 3,077
+negative even packets:          0       negative totals: 0.
+```
+
+The fail-closed command is
+
+```text
+analyze_su2_shell_fixed_offset 160 12 --certificate
+```
+
+It also checks all additional values in each reconstructed class.  The
+fixed recurrence supplies the degree-eight bound, so the nonnegative
+Newton expansions are identities on the unbounded rays and cones rather
+than interpolation evidence.  Together with the finite boundary box they
+exhaust `(P5A.102BM)`, proving `(LBK2)`. QED.
+
+Combining Lemmas 5A8H28G--5A8H28M1, the exact remaining `t=2` band is
+
+```text
+Q>=7,                  2Q+13<=K<10Q.              (P5A.102BN)
+```
+
+The next fixed-width row obeys the same proof-carrying recurrence.
+
+**Lemma 5A8H28M2 (offset-thirteen finite-width shell certificate).**  If
+
+```text
+K=2Q+13,                Q>=7,
+```
+
+then `(LBK2)` holds for every shell.
+
+**Proof.**  Here `d=12`, hence the even radius is `24`, the odd support
+is `[-18,18]`, and the stable boundary distance is `49`.  The normalized
+partition `(P5A.102BM)` and the degree-eight fixed-width recurrence are
+the same as in Lemma 5A8H28M1.  The fail-closed command
+
+```text
+analyze_su2_shell_fixed_offset 220 13 --certificate
+```
+
+constructs every exact suffix, rejects negative Newton coefficients and
+nonzero ninth differences, and gives the exhaustive census
+
+```text
+boundary entries:        207,056       minimum: 74
+one-variable rays:         9,730       minimum coefficient: 0
+two-variable cones:          122       minimum coefficient: 0
+negative odd packets:     157,812      cutoff profiles: 4,903
+negative even packets:          0       negative totals: 0.
+```
+
+The reconstruction checks every additional sampled coordinate in each
+class.  The recurrence degree bound turns these Newton expansions into
+unbounded ray and cone identities; the finite boundary box completes the
+partition.  Thus `(LBK2)` holds. QED.
+
+Combining Lemmas 5A8H28G--5A8H28M2, the exact remaining `t=2` band is
+
+```text
+Q>=7,                  2Q+14<=K<10Q.              (P5A.102BN)
 ```
 
 The normalized variables in `(P5A.102BM)` are the active route to a
 single variable-width proof: it remains to prove their Newton
-coefficients nonnegative with `d` free, rather than certifying further
-fixed values of `d`.
+coefficients nonnegative with `d>=13` free, rather than certifying
+further fixed values of `d`.
 
 The first free-`d` interpolation determines the missing chamber
 geometry.
@@ -29489,7 +29576,7 @@ normalizes this safe over-refinement symbolically.  It does not assert
 feasibility of every wall or positivity of any segment sum.  QED.
 
 The catalog also has an exact feasibility pruning in the wider audit band
-`Q>=7`, `d=K-1-2Q>=10`, which contains the still-open band `d>=11`.  Of
+`Q>=7`, `d=K-1-2Q>=10`, which contains the still-open band `d>=13`.  Of
 the `372` moving walls, only `160` can meet
 an integer `V` transition in the physical active-crossing domain.  Of
 the `110` parameter-only walls, only `26` meet that domain.  The
@@ -29673,6 +29760,31 @@ Then, identically,
 Phi=G_0+G_1+H_2.                                  (P5A.102BUK2)
 ```
 
+The `H_2` entry fan has a smaller structural split than the full terminal
+packet.  Its even terminal cluster uses crossing powers `1,2,3` and
+terminal powers `2,4`, while its odd cluster uses crossing powers `1,2`
+and terminal power `3`.  The strict modes
+
+```text
+analyze_su2_shell_joint_activation_masks h2-even-active --parity 0
+analyze_su2_shell_joint_activation_masks h2-odd-active  --parity 0
+```
+
+exhaust the unbounded parity-zero class (`K,Q,V,x` all even) and give
+
+```text
+cluster       hinges     feasible masks
+even            168              545
+odd              98              272.
+```
+
+This is an exact Presburger reduction of the `H_2` entry fan, not a tail
+certificate: the other fifteen parity classes, the variable `V` segments,
+and the reserve allocation still have to be certified.  It does, however,
+avoid the unnecessarily large simultaneous `P_2,P_3,P_4` selector product
+and isolates the two terminal-support clusters required by a cumulative
+proof.
+
 Thus nonnegativity of the four residue tails of each of `G_0`, `G_1`,
 and `H_2` is a sufficient three-family replacement for
 `(P5A.102BUK1)`.  The strict direct audit through `K=100` checks this
@@ -29706,8 +29818,8 @@ the full summand.  It is bounded diagnostic evidence only, but rules out
 treating the three-term block as pointwise nonnegative or assuming a
 small fixed payment radius.
 
-There is also an exact separated debit--credit family in the actual first
-open width.  It does not by itself prove an allocation-distance lower bound
+There is also an exact separated debit--credit family in the first formerly
+open free-width row.  It does not by itself prove an allocation-distance lower bound
 (intervening reserve must still be controlled), but it exhibits the
 unbounded geometry which a cumulative proof must accommodate.
 
@@ -29772,6 +29884,301 @@ The strict optional C++ mode
 coordinates directly from the finite fusion matrices; its output through
 `Q=75` agrees with the displayed formulas.  This audits the endpoint
 calculation but is not used in place of the proof.
+
+The same ray is in fact completely soluble once the two terminal clusters
+are kept together.  This supplies an exact model of the variable-range
+payment required by the open problem.
+
+**Lemma 5A8H28P3B (complete residue tail on the separated `d=11` ray).**
+Under the hypotheses of Lemma 5A8H28P3A, strengthen the lower bound to
+`Q>=39`.  On the residue-zero rail, the only nonzero entries of `H_2` are
+
+```text
+ V        H_2(V)
+
+ 8        380Q+190
+12        6336-44Q^2
+16        1776+96Q-12Q^2
+Q-15      36Q+18
+Q-11      196Q+98
+Q-7       484Q+242
+Q-3       144Q^2+180Q-20646
+Q+1       88Q^2+1020Q-12162
+Q+5       56Q^2+1276Q-7426.                       (P5A.102BUK7)
+```
+
+Consequently every residue-zero suffix is nonnegative.  In particular,
+the total upper cluster and the three possible suffixes that enter the
+lower cluster are
+
+```text
+U                   =288Q^2+3192Q-39876,
+U+H_2(16)           =276Q^2+3288Q-38100,
+U+H_2(16)+H_2(12)  =232Q^2+3288Q-31764,
+U+H_2(16)+H_2(12)+H_2(8)
+                    =232Q^2+3668Q-31574,          (P5A.102BUK8)
+```
+
+all strictly positive for `Q>=39`.
+
+**Proof.**  By the simple-current bridge `(P5A.102BUA)`, the terminal
+factors are powers of `N_11` with the appropriate reflected endpoint.
+On the displayed residue rail their nonzero values are
+
+```text
+V=8,12,16:           P_3=19,11,3;
+V=Q-15,...,Q+5:      P_4=9,49,121,189,165,45;
+V=Q-3,Q+1,Q+5:       P_2=2,2,2,
+```
+
+in the indicated increasing orders; every other terminal factor which
+can meet a nonzero crossing weight vanishes.  The three signed tail
+intervals `(P5A.102BUI)` give, at the lower coordinates,
+
+```text
+(d_1,d_2)(8) =(0,10),
+(d_1,d_2)(12)=(2,26),
+(d_1,d_2)(16)=(2,42),
+```
+
+and at `V=Q-3,Q+1,Q+5`, respectively,
+
+```text
+d_1=2,
+d_2=4Q-34,4Q-20,4Q-12,
+d_3=4Q^2+52Q-1162, 4Q^2+52Q-746, 4Q^2+52Q-458.
+```
+
+Together with `(P5A.102BUK6A)`, direct substitution in the definition of
+`H_2` yields `(P5A.102BUK7)`; the three intermediate upper positions use
+only the positive `P_4 f_4d_1` term.  The support statement follows from
+the four-step `N_11` path intervals and the inactive lower crossing
+tail below `V=8`.
+
+The six upper values in `(P5A.102BUK7)` are positive for `Q>=39`.
+Summing them gives `U`; adjoining the lower entries successively gives
+`(P5A.102BUK8)`.  Each displayed quadratic is already positive at
+`Q=39` and has positive forward difference thereafter.  Between listed
+coordinates the rail entry is zero, so these are all possible residue-zero
+suffixes. QED.
+
+The strict diagnostic mode
+`analyze_su2_shell_fixed_offset MAXIMUM_Q 12 --h2-family-rail` prints the
+individual endpoint data and suffixes in this proof.  It is an independent
+replay of the finite fusion calculation, not a replacement for the stated
+path-interval derivation.  Lemma 5A8H28P3B closes one unbounded width-one
+ray only; the uniform `H_2` target still requires a certificate in the
+free band `d>=13`.
+
+The terminal block has an exact two-cluster geometry uniformly in that
+free band.
+
+**Lemma 5A8H28P3C (uniform `H_2` terminal-support split).**  Put
+
+```text
+ell=K-1=2Q+d,            R=(ell-2x)/2=Q+d/2-x.
+```
+
+Write `H_2=E_2+O_3`, where `E_2` is the sum of the `P_2` and `P_4`
+terms and `O_3` is the `P_3` term.  Then
+
+```text
+E_2(V,x)=0  unless |V-x|<=2d,
+O_3(V,x)=0  unless |2V-(ell-2x)|<=3d.              (P5A.102BUK9)
+```
+
+Consequently these two supports are disjoint whenever
+
+```text
+|4x-ell|>7d.                                      (P5A.102BUK10)
+```
+
+**Proof.**  The simple-current bridge `(P5A.102BUA)` also gives the
+equivalent terminal form
+
+```text
+P_b(V,x)=(N_d^b)_(2V,J^b(2x)).
+```
+
+Every one-step `N_d` transition changes its label by at most `d`; the
+level truncation can remove transitions but cannot create a longer one.
+Thus a nonzero `b`-step entry satisfies
+
+```text
+|2V-J^b(2x)|<=bd.
+```
+
+For `b=2,4`, `J^b(2x)=2x`, giving supports of radii `d,2d`; for `b=3`,
+`J^3(2x)=ell-2x`, giving the second assertion in `(P5A.102BUK9)`.
+The even support has doubled radius `4d` about `2x`, while the odd support
+has doubled radius `3d` about `ell-2x`.  The strict separation condition is
+therefore exactly `(P5A.102BUK10)`. QED.
+
+This lemma does not assert a sign for either cluster.  It does show that
+outside the overlap slab `(P5A.102BUK10)` a suffix can require only an
+explicit whole-cluster reserve plus a partial tail of one cluster.  The
+exact `h2-even-active` and `h2-odd-active` fans above are the corresponding
+entry-level inputs; the overlap slab is the only region requiring their
+simultaneous refinement.
+
+The fixed-width split already identifies the reserve direction.  The strict
+command
+
+```text
+analyze_su2_shell_fixed_offset 100 12 --h2-residue-tails
+```
+
+checks `401,991` `H_2` residue tails on the `d=11` row through `Q=100`.
+It finds `26` negative atoms but zero negative tails for the `P_2,P_4`
+cluster; the `P_3` cluster alone has `78,660` negative atoms and `115,154`
+negative tails; their sum has `49,550` negative atoms but zero negative
+tails.  This is bounded diagnostic evidence only, but it rules out both
+pointwise positivity and a separate certificate for the reflected cluster.
+The appropriate uniform target is a two-stage exact payment: first within
+the even cluster, then from its accumulated reserve to the odd cluster, with
+the support split `(P5A.102BUK9)--(P5A.102BUK10)` retained.
+
+There is a much larger candidate pointwise cone for the first stage.  Put
+
+```text
+E_2(V,x)=P_2(V,x){f_4d_3(V)-f_5d_2(V)}
+          +P_4(V,x)f_4d_1(V).                       (P5A.102BUK11)
+```
+
+**Lemma 5A8H28P3D (pointwise even-reserve cone).**  In the free band,
+
+```text
+E_2(V,x)>=0       whenever Q>=7, d>=11, 3Q>2d.      (P5A.102BUK12)
+```
+
+Thus the first payment stage is pointwise on the cone
+`K<=floor((7Q+1)/2)`; only the reflected `P_3` debit and the complementary
+wide-width regime require a cumulative argument.
+
+**Proof.**  The two terms in `(P5A.102BUK11)` have nonnegative terminal
+factors, and `f_4,d_1>=0`.  It is therefore enough to prove
+
+```text
+f_4d_3(V)-f_5d_2(V)>=0.                            (P5A.102BUK12A)
+```
+
+Put `H=d-11`, so `K=2Q+H+12`.  On the active crossing domain use
+
+```text
+Q>=7, H>=0, 2V<K, 2V>=H+12,
+3Q-2H-23>=0,
+```
+
+where the last inequality is exactly the integral form of `3Q>2d`.
+The signed crossing endpoint formula `(P5A.102BU)` for powers two and
+three, together with the one return hinge `(P5A.102BUB)`, has an exact
+fan of
+
+```text
+67 hinges, 12 feasible masks.                       (P5A.102BUK12B)
+```
+
+The strict `cpp_int`/rational source
+`character_ring_iter/prove_su2_shell_g0.cpp --g2` substitutes the selected
+endpoint and return polynomials on every mask.  All twelve resulting
+polynomials pass an exact nonnegative Newton, recession-fan, or modular
+pair-sum certificate.  This is an unbounded chamber proof of
+`(P5A.102BUK12A)`, not a parameter scan.  Multiplying it by `P_2>=0` and
+adding `P_4f_4d_1>=0` proves `(P5A.102BUK12)`. QED.
+
+Its independent command
+
+```text
+prove_su2_shell_g0 --g2 --audit 30
+```
+
+replays the folded-tail formulas on all `29` coordinates of the `2`
+admissible cone rows through `K=30`, including `12` inactive zero entries.
+This audits the formula transcription; the twelve exact chambers prove the
+unbounded assertion.
+
+The exact fixed-width diagnostic is sharply consistent with this target.
+For every `11<=d<=40`, the command
+
+```text
+analyze_su2_shell_fixed_offset 100 (d+1) --h2-residue-tails
+```
+
+finds no negative `E_2` residue tail and finds that its largest negative
+individual atom occurs exactly at
+
+```text
+Q=floor(2d/3).
+```
+
+The scan therefore supports both the strict boundary `3Q>2d` and its
+sharpness as a pointwise assertion.  It is bounded evidence for sharpness
+only; the positive side is now the exact certificate above.
+
+The strictness is in fact sharp on an infinite exact family.
+
+**Lemma 5A8H28P3E (sharpness of the even-reserve cone).**  For every
+integer `r>=2`, put
+
+```text
+d=6r,             Q=4r,             K=14r+1,
+x=7r,             V=4r-1.
+```
+
+Then `3Q=2d`, and the even cluster has the negative coordinate
+
+```text
+E_2(V,x)=-2(2r+1)(r-1)<0.                          (P5A.102BUK13)
+```
+
+Thus the weak boundary `3Q>=2d` cannot replace the strict cone in Lemma
+5A8H28P3D.
+
+**Proof.**  Here `ell=K-1=14r`.  The two-step terminal interval has the
+unique intermediate label `8r`, so
+
+```text
+P_2(4r-1,7r)=1.
+```
+
+The three signed crossing-tail intervals `(P5A.102BUI)` give
+
+```text
+d_1=0,
+d_2=4r-4,
+d_3=20r^2-18r-2.
+```
+
+There is no return correction in `(P5A.102BUB)`, and hence
+
+```text
+f_4=8r+1,
+f_5=40r^2+10r+1.
+```
+
+Because `d_1=0`, the `P_4` term in `(P5A.102BUK11)` vanishes.  Direct
+substitution gives
+
+```text
+E_2=(8r+1)(20r^2-18r-2)
+    -(40r^2+10r+1)(4r-4)
+   =-2(2r+1)(r-1),
+```
+
+which is strictly negative for `r>=2`. QED.
+
+The most direct Abel reduction of the reflected cluster is false.  On the
+fixed `d=30` row through `Q=100`, the same exact evaluator records `1,360`
+negative residue tails of the unweighted margin
+
+```text
+f_4d_2(V)-f_5d_1(V).
+```
+
+Thus the observed nonnegative `P_3` tails in the separated-upper sector
+cannot follow merely by multiplying nonnegative terminal weights against
+bare margin suffixes.  Any summation-by-parts proof must retain the
+specific `P_3` path profile or a stronger coupled reserve.
 
 The first family already has a finite lower-dimensional activation cover.
 Because `P_0(V,x)=1_(V=x)`, every residue tail of `G_0` is either zero or
@@ -29930,8 +30337,10 @@ Target 5A8H28R5 by a finite certificate whose every record contains:
 4. preferably, a nonnegative cone or Newton expansion of each of the
    four residue tails `(P5A.102BUK1)`.  Lemmas 5A8H28P4A--P4B have now
    closed the `G_0` and `G_1` members of the structured sufficient route
-   `(P5A.102BUK2)`; it remains to certify the four residue tails of
-   `H_2`.  Failing that strengthening, give an exact allocation for the
+   `(P5A.102BUK2)`.  Lemma 5A8H28P3D also makes the `P_2,P_4` part of
+   `H_2` pointwise nonnegative on `3Q>2d`; it remains to certify the
+   reflected `P_3` payment there and the full `H_2` tails in the
+   complementary regime `3Q<=2d`.  Failing that strengthening, give an exact allocation for the
    complete tail `V>=rho`, with every reserve assigned inside that same
    suffix; and
 5. an exact coverage and adjacency proof showing that these allocations
@@ -29942,7 +30351,7 @@ and prove chamber coverage in Presburger arithmetic.  Finite samples or
 untracked interpolation do not certify this target.  In particular, a
 list of nonnegative individual rails is not a substitute for the required
 tail allocation.  Satisfying it proves `(LBK2)` for the remaining
-free-width band `d>=11`; Lemmas 5A8H28E--M then close the complete `t=2`
+free-width band `d>=13`; Lemmas 5A8H28E--M2 then close the complete `t=2`
 shell row.
 
 The natural Fubini reorganization of the shell does not make the

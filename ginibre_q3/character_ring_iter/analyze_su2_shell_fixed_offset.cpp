@@ -100,7 +100,7 @@ int main(int argc, char** argv) {
         if (argc != 3 && argc != 4) {
             throw std::runtime_error(
                 "usage: MAXIMUM_Q OFFSET [--certificate|--residue-tails|"
-                "--h2-residue-tails|--h2-family]"
+                "--h2-residue-tails|--h2-family|--h2-family-rail]"
             );
         }
         const int maximum_q = parse_positive(argv[1]);
@@ -113,25 +113,32 @@ int main(int argc, char** argv) {
             argc == 4 && std::string(argv[3]) == "--h2-residue-tails";
         const bool h2_family =
             argc == 4 && std::string(argv[3]) == "--h2-family";
+        const bool h2_family_rail =
+            argc == 4 && std::string(argv[3]) == "--h2-family-rail";
         if (
             argc == 4
             && !certificate
             && !residue_tails
             && !h2_residue_tails
             && !h2_family
+            && !h2_family_rail
         ) {
             throw std::runtime_error(
                 "the only optional flag is --certificate, --residue-tails, "
-                "--h2-residue-tails, or --h2-family"
+                "--h2-residue-tails, --h2-family, or --h2-family-rail"
             );
         }
         const int certificate_maximum_q =
-            offset <= 7 ? 100 : (offset <= 9 ? 120 : 140);
+            offset <= 7 ? 100
+            : offset <= 9 ? 120
+            : offset <= 11 ? 140
+            : offset <= 12 ? 160
+            : 220;
         if (
             certificate
             && (
                 offset < 3
-                || offset > 11
+                || offset > 13
                 || maximum_q != certificate_maximum_q
             )
         ) {
@@ -161,7 +168,27 @@ int main(int argc, char** argv) {
         bool printed_negative_residue_tail = false;
         std::uint64_t h2_residue_tail_entries = 0U;
         std::uint64_t negative_h2_residue_tails = 0U;
+        std::uint64_t negative_h2_even_residue_tails = 0U;
+        std::uint64_t negative_h2_odd_residue_tails = 0U;
+        std::uint64_t negative_h2_odd_separated_lower_tails = 0U;
+        std::uint64_t negative_h2_odd_separated_upper_tails = 0U;
+        std::uint64_t negative_h2_odd_overlap_tails = 0U;
         std::uint64_t negative_h2_atoms = 0U;
+        std::uint64_t negative_h2_even_atoms = 0U;
+        std::uint64_t negative_h2_odd_atoms = 0U;
+        bool printed_negative_h2_even_atom = false;
+        int maximum_h2_even_negative_q = -1;
+        int maximum_h2_even_negative_crossing = -1;
+        int maximum_h2_even_negative_target = -1;
+        int maximum_h2_even_negative_residue = -1;
+        Integer maximum_h2_even_negative_value = 0;
+        std::array<Integer, 3U> maximum_h2_even_negative_d{};
+        std::array<Integer, 2U> maximum_h2_even_negative_p{};
+        std::uint64_t negative_h2_p2_margin_reserve_cone = 0U;
+        std::uint64_t negative_h2_p3_margin_high_crossing = 0U;
+        std::uint64_t negative_h2_p3_margin_reserve_high = 0U;
+        std::uint64_t negative_h2_odd_separated_upper_atoms = 0U;
+        std::uint64_t negative_h2_p3_margin_residue_tails = 0U;
         int maximum_h2_payment_span = 0;
         bool has_maximum_h2_payment_span = false;
         int maximum_h2_payment_q = -1;
@@ -351,6 +378,8 @@ int main(int argc, char** argv) {
             );
             IntegerMatrix odd_column = even_column;
             IntegerMatrix h2_column = even_column;
+            IntegerMatrix h2_even_column = even_column;
+            IntegerMatrix h2_odd_column = even_column;
             for (int crossing_target = 0;
                  crossing_target < paired;
                  ++crossing_target) {
@@ -445,6 +474,91 @@ int main(int argc, char** argv) {
                                 static_cast<std::size_t>(crossing_target)
                             ][static_cast<std::size_t>(target)]
                         );
+                    h2_even_column[
+                        static_cast<std::size_t>(crossing_target)
+                    ][static_cast<std::size_t>(target)] =
+                        f4 * (
+                            prefix[3][
+                                static_cast<std::size_t>(crossing_target)
+                            ] * minus_powers[2][
+                                static_cast<std::size_t>(crossing_target)
+                            ][static_cast<std::size_t>(target)]
+                            + prefix[1][
+                                static_cast<std::size_t>(crossing_target)
+                            ] * minus_powers[4][
+                                static_cast<std::size_t>(crossing_target)
+                            ][static_cast<std::size_t>(target)]
+                        ) - f5 * prefix[2][
+                            static_cast<std::size_t>(crossing_target)
+                        ] * minus_powers[2][
+                            static_cast<std::size_t>(crossing_target)
+                        ][static_cast<std::size_t>(target)];
+                    h2_odd_column[
+                        static_cast<std::size_t>(crossing_target)
+                    ][static_cast<std::size_t>(target)] =
+                        f4 * prefix[2][
+                            static_cast<std::size_t>(crossing_target)
+                        ] * minus_powers[3][
+                            static_cast<std::size_t>(crossing_target)
+                        ][static_cast<std::size_t>(target)]
+                        - f5 * prefix[1][
+                            static_cast<std::size_t>(crossing_target)
+                        ] * minus_powers[3][
+                            static_cast<std::size_t>(crossing_target)
+                        ][static_cast<std::size_t>(target)];
+                    if (
+                        h2_column[
+                            static_cast<std::size_t>(crossing_target)
+                        ][static_cast<std::size_t>(target)]
+                        != h2_even_column[
+                            static_cast<std::size_t>(crossing_target)
+                        ][static_cast<std::size_t>(target)]
+                            + h2_odd_column[
+                                static_cast<std::size_t>(crossing_target)
+                            ][static_cast<std::size_t>(target)]
+                    ) {
+                        throw std::runtime_error("H2 cluster split mismatch");
+                    }
+                    if (
+                        h2_odd_column[
+                            static_cast<std::size_t>(crossing_target)
+                        ][static_cast<std::size_t>(target)] < 0
+                        && std::abs(4 * target - (level - 1)) > 7 * gap
+                        && 4 * target < level - 1
+                    ) {
+                        ++negative_h2_odd_separated_upper_atoms;
+                    }
+                    if (
+                        3 * q > 2 * gap
+                        && f4 * prefix[3][
+                            static_cast<std::size_t>(crossing_target)
+                        ] - f5 * prefix[2][
+                            static_cast<std::size_t>(crossing_target)
+                        ] < 0
+                    ) {
+                        ++negative_h2_p2_margin_reserve_cone;
+                    }
+                    if (
+                        crossing_target > 2 * gap
+                        && f4 * prefix[2][
+                            static_cast<std::size_t>(crossing_target)
+                        ] - f5 * prefix[1][
+                            static_cast<std::size_t>(crossing_target)
+                        ] < 0
+                    ) {
+                        ++negative_h2_p3_margin_high_crossing;
+                    }
+                    if (
+                        3 * q > 2 * gap
+                        && crossing_target > 2 * gap
+                        && f4 * prefix[2][
+                            static_cast<std::size_t>(crossing_target)
+                        ] - f5 * prefix[1][
+                            static_cast<std::size_t>(crossing_target)
+                        ] < 0
+                    ) {
+                        ++negative_h2_p3_margin_reserve_high;
+                    }
                     if (
                         even_column[
                             static_cast<std::size_t>(crossing_target)
@@ -469,7 +583,28 @@ int main(int argc, char** argv) {
                 }
             }
 
-            if ((h2_residue_tails || h2_family) && q >= 7 && offset >= 12) {
+            if (
+                (h2_residue_tails || h2_family || h2_family_rail)
+                && q >= 7
+                && offset >= 12
+            ) {
+                for (int residue = 0; residue < 4; ++residue) {
+                    Integer margin_tail = 0;
+                    int crossing = paired - 1;
+                    while (crossing >= 0 && crossing % 4 != residue) {
+                        --crossing;
+                    }
+                    for (; crossing >= 0; crossing -= 4) {
+                        margin_tail += f4 * prefix[2][
+                            static_cast<std::size_t>(crossing)
+                        ] - f5 * prefix[1][
+                            static_cast<std::size_t>(crossing)
+                        ];
+                        if (margin_tail < 0) {
+                            ++negative_h2_p3_margin_residue_tails;
+                        }
+                    }
+                }
                 struct Reserve {
                     int crossing = 0;
                     Integer amount = 0;
@@ -477,6 +612,8 @@ int main(int argc, char** argv) {
                 for (int target = 0; target < paired; ++target) {
                     for (int residue = 0; residue < 4; ++residue) {
                         Integer tail = 0;
+                        Integer even_tail = 0;
+                        Integer odd_tail = 0;
                         std::deque<Reserve> reserve;
                         int crossing = paired - 1;
                         while (crossing >= 0 && crossing % 4 != residue) {
@@ -486,10 +623,78 @@ int main(int argc, char** argv) {
                             const Integer& value = h2_column[
                                 static_cast<std::size_t>(crossing)
                             ][static_cast<std::size_t>(target)];
+                            const Integer& even_value = h2_even_column[
+                                static_cast<std::size_t>(crossing)
+                            ][static_cast<std::size_t>(target)];
+                            const Integer& odd_value = h2_odd_column[
+                                static_cast<std::size_t>(crossing)
+                            ][static_cast<std::size_t>(target)];
                             tail += value;
+                            even_tail += even_value;
+                            odd_tail += odd_value;
                             ++h2_residue_tail_entries;
                             if (tail < 0) {
                                 ++negative_h2_residue_tails;
+                            }
+                            if (even_tail < 0) {
+                                ++negative_h2_even_residue_tails;
+                            }
+                            if (odd_tail < 0) {
+                                ++negative_h2_odd_residue_tails;
+                                const int separation = std::abs(
+                                    4 * target - (level - 1)
+                                );
+                                if (separation <= 7 * gap) {
+                                    ++negative_h2_odd_overlap_tails;
+                                } else if (4 * target < level - 1) {
+                                    ++negative_h2_odd_separated_upper_tails;
+                                } else {
+                                    ++negative_h2_odd_separated_lower_tails;
+                                }
+                            }
+                            if (even_value < 0) {
+                                ++negative_h2_even_atoms;
+                                if (q >= maximum_h2_even_negative_q) {
+                                    maximum_h2_even_negative_q = q;
+                                    maximum_h2_even_negative_crossing =
+                                        crossing;
+                                    maximum_h2_even_negative_target = target;
+                                    maximum_h2_even_negative_residue = residue;
+                                    maximum_h2_even_negative_value = even_value;
+                                    maximum_h2_even_negative_d = {
+                                        prefix[1][
+                                            static_cast<std::size_t>(crossing)
+                                        ],
+                                        prefix[2][
+                                            static_cast<std::size_t>(crossing)
+                                        ],
+                                        prefix[3][
+                                            static_cast<std::size_t>(crossing)
+                                        ]
+                                    };
+                                    maximum_h2_even_negative_p = {
+                                        minus_powers[2U][
+                                            static_cast<std::size_t>(crossing)
+                                        ][static_cast<std::size_t>(target)],
+                                        minus_powers[4U][
+                                            static_cast<std::size_t>(crossing)
+                                        ][static_cast<std::size_t>(target)]
+                                    };
+                                }
+                                if (!printed_negative_h2_even_atom) {
+                                    printed_negative_h2_even_atom = true;
+                                    std::cout
+                                        << "FIRST_NEGATIVE_H2_EVEN_ATOM"
+                                        << " Q=" << q
+                                        << " offset=" << offset
+                                        << " V=" << crossing
+                                        << " target=" << target
+                                        << " residue=" << residue
+                                        << " value=" << even_value << '\n';
+                                }
+                            }
+                            if (odd_value < 0) {
+                                ++negative_h2_odd_atoms;
                             }
                             if (value >= 0) {
                                 if (value != 0) {
@@ -531,7 +736,7 @@ int main(int argc, char** argv) {
             }
 
             if (
-                h2_family
+                (h2_family || h2_family_rail)
                 && offset == 12
                 && q >= 15
                 && q % 4 == 3
@@ -589,6 +794,50 @@ int main(int argc, char** argv) {
                     << minus_powers[4U][static_cast<std::size_t>(credit)]
                        [static_cast<std::size_t>(target)] << ')'
                     << " tail_at_debit=" << tail << '\n';
+                if (h2_family_rail) {
+                    Integer suffix = 0;
+                    for (int crossing = paired - 1;
+                         crossing >= 0;
+                         --crossing) {
+                        if (crossing % 4 != 0) {
+                            continue;
+                        }
+                        const Integer& value = h2_column[
+                            static_cast<std::size_t>(crossing)
+                        ][static_cast<std::size_t>(target)];
+                        suffix += value;
+                        if (value == 0) {
+                            continue;
+                        }
+                        std::cout
+                            << "H2_D11_RAIL"
+                            << " Q=" << q
+                            << " x=" << target
+                            << " V=" << crossing
+                            << " value=" << value
+                            << " suffix=" << suffix
+                            << " d=("
+                            << prefix[1][static_cast<std::size_t>(crossing)]
+                            << ','
+                            << prefix[2][static_cast<std::size_t>(crossing)]
+                            << ','
+                            << prefix[3][static_cast<std::size_t>(crossing)]
+                            << ')'
+                            << " p=("
+                            << minus_powers[2U][
+                                   static_cast<std::size_t>(crossing)
+                               ][static_cast<std::size_t>(target)]
+                            << ','
+                            << minus_powers[3U][
+                                   static_cast<std::size_t>(crossing)
+                               ][static_cast<std::size_t>(target)]
+                            << ','
+                            << minus_powers[4U][
+                                   static_cast<std::size_t>(crossing)
+                               ][static_cast<std::size_t>(target)]
+                            << ')' << '\n';
+                    }
+                }
             }
 
             std::vector<Integer> even_suffix(
@@ -654,7 +903,7 @@ int main(int argc, char** argv) {
                         rho - reflected
                     };
                     if (
-                        (offset >= 3 && offset <= 11)
+                        (offset >= 3 && offset <= 13)
                         && q >= 7
                     ) {
                         const int x = target;
@@ -874,7 +1123,7 @@ int main(int argc, char** argv) {
             }
         }
 
-        if (!certificate && !h2_family) {
+        if (!certificate && !h2_family && !h2_family_rail) {
             for (const auto& [profile, count]
                  : negative_even_profiles) {
                 std::cout
@@ -1252,6 +1501,30 @@ int main(int argc, char** argv) {
                     && negative_total == 0U
                     && negative_odd_profiles.size() == 2481U
                     && entries == 1047970U;
+            } else if (offset == 12) {
+                valid_census =
+                    box_entries == 158599U
+                    && ray_certificates == 8162U
+                    && cone_certificates == 112U
+                    && maximum_even_radius == 22
+                    && maximum_odd_radius == 17
+                    && negative_even == 0U
+                    && negative_odd == 74993U
+                    && negative_total == 0U
+                    && negative_odd_profiles.size() == 3077U
+                    && entries == 1538480U;
+            } else if (offset == 13) {
+                valid_census =
+                    box_entries == 207056U
+                    && ray_certificates == 9730U
+                    && cone_certificates == 122U
+                    && maximum_even_radius == 24
+                    && maximum_odd_radius == 18
+                    && negative_even == 0U
+                    && negative_odd == 157812U
+                    && negative_total == 0U
+                    && negative_odd_profiles.size() == 4903U
+                    && entries == 3924690U;
             }
             if (certificate && !valid_census) {
                 throw std::runtime_error(
@@ -1286,7 +1559,47 @@ int main(int argc, char** argv) {
             << " negative_residue_tails=" << negative_residue_tails
             << " h2_residue_tail_entries=" << h2_residue_tail_entries
             << " negative_h2_residue_tails=" << negative_h2_residue_tails
+            << " negative_h2_even_residue_tails="
+            << negative_h2_even_residue_tails
+            << " negative_h2_odd_residue_tails="
+            << negative_h2_odd_residue_tails
+            << " negative_h2_odd_separated_lower_tails="
+            << negative_h2_odd_separated_lower_tails
+            << " negative_h2_odd_separated_upper_tails="
+            << negative_h2_odd_separated_upper_tails
+            << " negative_h2_odd_overlap_tails="
+            << negative_h2_odd_overlap_tails
             << " negative_h2_atoms=" << negative_h2_atoms
+            << " negative_h2_even_atoms=" << negative_h2_even_atoms
+            << " negative_h2_odd_atoms=" << negative_h2_odd_atoms
+            << " maximum_h2_even_negative_q="
+            << maximum_h2_even_negative_q
+            << " maximum_h2_even_negative_witness=";
+        if (maximum_h2_even_negative_q >= 0) {
+            std::cout
+                << "V:" << maximum_h2_even_negative_crossing
+                << ",target:" << maximum_h2_even_negative_target
+                << ",residue:" << maximum_h2_even_negative_residue
+                << ",value:" << maximum_h2_even_negative_value
+                << ",d:(" << maximum_h2_even_negative_d[0U]
+                << ',' << maximum_h2_even_negative_d[1U]
+                << ',' << maximum_h2_even_negative_d[2U] << ')'
+                << ",p:(" << maximum_h2_even_negative_p[0U]
+                << ',' << maximum_h2_even_negative_p[1U] << ')';
+        } else {
+            std::cout << "none";
+        }
+        std::cout
+            << " negative_h2_p2_margin_reserve_cone="
+            << negative_h2_p2_margin_reserve_cone
+            << " negative_h2_p3_margin_high_crossing="
+            << negative_h2_p3_margin_high_crossing
+            << " negative_h2_p3_margin_reserve_high="
+            << negative_h2_p3_margin_reserve_high
+            << " negative_h2_odd_separated_upper_atoms="
+            << negative_h2_odd_separated_upper_atoms
+            << " negative_h2_p3_margin_residue_tails="
+            << negative_h2_p3_margin_residue_tails
             << " maximum_h2_payment_span=" << maximum_h2_payment_span
             << " maximum_h2_payment_witness=";
         if (has_maximum_h2_payment_span) {

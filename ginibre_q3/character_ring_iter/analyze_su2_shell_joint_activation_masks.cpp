@@ -266,7 +266,12 @@ std::uint64_t enumerate_masks(const std::string& mode, int parity_class) {
         hinges.push_back(crossing == target);
     }
     hinges.push_back(label - 2 * width - 3 >= 0);
-    const bool active_only = mode == "even-active" || mode == "odd-active";
+    const bool active_only =
+        mode == "even-active"
+        || mode == "odd-active"
+        || mode == "h2-active"
+        || mode == "h2-even-active"
+        || mode == "h2-odd-active";
 
     const auto append_crossing_powers = [&context, &level, &label,
         &crossing, &hinges, active_only](const std::vector<int>& powers) {
@@ -320,6 +325,21 @@ std::uint64_t enumerate_masks(const std::string& mode, int parity_class) {
     if (mode == "odd-active") {
         append_crossing_powers({1, 2, 3, 4});
         append_terminal_powers({1, 3});
+    }
+    if (mode == "h2-active") {
+        // H_2=G_2+G_3+G_4 uses exactly these three crossing and
+        // terminal powers.  It is the smallest joint fan which can
+        // support a direct cumulative-tail certificate after G_0,G_1.
+        append_crossing_powers({1, 2, 3});
+        append_terminal_powers({2, 3, 4});
+    }
+    if (mode == "h2-even-active") {
+        append_crossing_powers({1, 2, 3});
+        append_terminal_powers({2, 4});
+    }
+    if (mode == "h2-odd-active") {
+        append_crossing_powers({1, 2});
+        append_terminal_powers({3});
     }
     if (mode == "g0") {
         append_crossing_powers({4, 5});
@@ -395,12 +415,16 @@ int main(int argc, char** argv) {
             && mode != "odd"
             && mode != "even-active"
             && mode != "odd-active"
+            && mode != "h2-active"
+            && mode != "h2-even-active"
+            && mode != "h2-odd-active"
             && mode != "g0"
             && mode != "full"
         ) {
             throw std::runtime_error(
                 "mode must be crossing, terminal, even, odd, even-active, "
-                "odd-active, g0, or full"
+                "odd-active, h2-active, h2-even-active, h2-odd-active, "
+                "g0, or full"
             );
         }
         static_cast<void>(enumerate_masks(mode, parity_class));
