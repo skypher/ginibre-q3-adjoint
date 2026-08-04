@@ -45681,6 +45681,103 @@ The pattern-fifteen replay is recorded in
 frontier is now every sign sector through deficit ten.  The next unresolved
 outer coefficient is deficit twelve.
 
+### Deficit-twelve finite reduction
+
+The preceding frontier has one exact consequence before any new
+certificate is sought.  A factor whose label is larger than half the
+defect cannot occur in an invariant contracted subset contributing at that
+defect.  At defect twelve this removes every label at least seven.
+
+**Lemma 17T (deficit-twelve peeling identity).**  Let `R` be an ordinary
+signed remainder with total label `S`, and adjoin a factor of label `p>=7`
+with either sign.  In the outer range `S>=12`, write the resulting outer
+coefficient as `g'_(S+p-12)`.  Then
+
+```text
+g'_(S+p-12)
+ =g_(S-12)+g_(S-10)+g_(S-8)+g_(S-6)
+  +g_(S-4)+g_(S-2)+g_S.                            (D12.1)
+```
+
+Consequently Propositions 16, 17, 17B, 17F, and 17S reduce the complete
+defect-twelve assertion exactly to signed lists whose labels lie in
+`{1,2,3,4,5,6}`.  After central-parity normalization there are only
+`32` sign patterns.
+
+**Proof.**
+
+1. Use the subset expansion `(P16.2)` for the enlarged remainder.  A
+   selected invariant subset which contains the new label `p` must contain
+   other labels of total at least `p`; otherwise its tensor product cannot
+   contain `V_0`.  Its selected total label is therefore at least
+   `2p>=14`.  The complementary product then has highest label strictly
+   below `S+p-12`, so this subset has zero contribution.  Thus the sign of
+   the adjoined factor is absent from every surviving term.
+2. Let `U` be a selected invariant subset of the old remainder, with total
+   label `2h`.  Its complement has total label `L=S-2h`.  Only `0<=h<=6`
+   can contribute.  Put `d=12-2h`.  Clebsch--Gordan gives, because
+   `p>=7>d/2`,
+
+```text
+[V_(p+L-d)](V_p tensor X_(U^c))
+ =sum_(ell=0)^(6-h)[V_(L-d+2ell)]X_(U^c)
+ =sum_(ell=0)^(6-h)[V_(S-12+2ell)]X_(U^c).
+                                                        (D12.2)
+```
+
+3. Multiply `(D12.2)` by the signed invariant weight of `U` and sum over
+   `U`.  For fixed `ell`, the allowed condition `h<=6-ell` is precisely
+   the subset range in `g_(S-12+2ell)`.  Reordering the finite sum proves
+   `(D12.1)`.  The seven terms on its right are the already proved defects
+   `12,10,8,6,4,2,0`, respectively, so the claimed finite reduction follows.
+   QED.
+
+The strict `cpp_int` probe
+`character_ring_iter/probe_su2_outer_twelve.cpp` evaluates the residual
+subset formula directly, retaining all labels one through six and every
+normalized sign pattern.  Its first replay returns
+
+```text
+SU2_OUTER_TWELVE result=PASS tested=575552 maximum_factors=12
+minimum=10 minimum_pattern=0 minimum_counts=[0,0,0,0,0,3].
+```
+
+This is bounded discovery evidence for the defect-twelve residual, not an
+unbounded certificate.  In particular, Lemma 17T narrows the next proof
+task but does not establish its `32` residual sign sectors.
+
+**Lemma 17U (defect-twelve residual base domain).**  For counts
+`c=(c_1,...,c_6)` in the residual of Lemma 17T, the outer admissibility
+domain
+
+```text
+sum_(j=1)^6 j c_j-12 >= max{j:c_j>0}                (D12.3)
+```
+
+is the upward closure of `209` product-order minimal count vectors.  Every
+minimal vector has total label at most `22`.
+
+**Proof.**
+
+1. Condition `(D12.3)` is monotone under increasing any count, so its
+   product-order minimal elements generate the whole domain by upward
+   closure.
+2. If a count vector has total label at least `25`, deleting any one present
+   factor removes at most six label units.  The remaining total is at least
+   `19`, while its largest possible label is at most six; hence it still
+   satisfies `(D12.3)`.  Such a vector cannot be minimal.
+3. The finite exact enumeration through total label `24` tests `(D12.3)`
+   and each one-factor predecessor.  The strict C++ replay returns
+
+```text
+SU2_OUTER_TWELVE_MINIMAL_BASES bases=209
+maximum_total_label=22 result=PASS.
+```
+
+   This proves the stated finite base description.  It supplies the exact
+   domain for a future degree-twelve Newton/Sturm certificate; it is not
+   itself a positivity certificate.  QED.
+
 All outer layers can be assembled into one palindromic polynomial.  Put
 
 ```text
