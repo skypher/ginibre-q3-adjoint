@@ -46,6 +46,20 @@ z3::expr ceiling_half(const z3::expr& value) {
     return -((-value) / 2);
 }
 
+int parse_parity_class(const char* text) {
+    char* end = nullptr;
+    const long value = std::strtol(text, &end, 10);
+    if (
+        end == text
+        || *end != '\0'
+        || value < 0
+        || value > 15
+    ) {
+        throw std::runtime_error("parity class must be an integer in 0..15");
+    }
+    return static_cast<int>(value);
+}
+
 bool model_boolean(
     const z3::model& model,
     const z3::expr& expression,
@@ -63,6 +77,7 @@ void append_crossing_hinges(
     const z3::expr& label,
     const z3::expr& crossing,
     int power,
+    bool active_only,
     std::vector<z3::expr>& hinges
 ) {
     const z3::expr product = power * label;
@@ -85,16 +100,26 @@ void append_crossing_hinges(
         const z3::expr raw_upper = product - lower_label;
         const z3::expr lower = maximum2(context.int_val(0), raw_lower);
         const z3::expr upper = minimum2(product, raw_upper);
-        hinges.push_back(lower == context.int_val(0));
-        hinges.push_back(lower == raw_lower);
-        hinges.push_back(upper == product);
-        hinges.push_back(upper == raw_upper);
-        hinges.push_back(lower <= upper);
-        hinges.push_back(lower - 1 >= 0);
+        const z3::expr nonempty = lower <= upper;
+        hinges.push_back(nonempty);
+        // Empty endpoint runs contribute zero, so active-packet modes retain
+        // only the selectors that can change an endpoint polynomial.
+        const auto append_selector = [&hinges, &nonempty, active_only](
+            const z3::expr& selector
+        ) {
+            hinges.push_back(
+                active_only ? z3::implies(nonempty, selector) : selector
+            );
+        };
+        append_selector(lower == context.int_val(0));
+        append_selector(lower == raw_lower);
+        append_selector(upper == product);
+        append_selector(upper == raw_upper);
+        append_selector(lower - 1 >= 0);
         for (int image = 1; image <= power; ++image) {
             const z3::expr activation = image * (2 * label + 1);
-            hinges.push_back(upper >= activation);
-            hinges.push_back(lower - 1 >= activation);
+            append_selector(upper >= activation);
+            append_selector(lower - 1 >= activation);
         }
     }
 }
@@ -106,19 +131,17 @@ void append_terminal_hinges(
     const z3::expr& crossing,
     const z3::expr& target,
     int power,
+    bool active_only,
     std::vector<z3::expr>& hinges
 ) {
     const z3::expr ell = level - 1;
-    const z3::expr d = ell - 2 * label;
+    const z3::expr terminal_label = 2 * label;
     const z3::expr source_label = 2 * crossing;
-    const z3::expr target_label = power % 2 == 0
-        ? 2 * target
-        : ell - 2 * target;
+    const z3::expr target_label = 2 * target;
     const z3::expr half_period = ell + 2;
-    const z3::expr total = power * d;
-    // The parity condition is an identity after the simple-current target
-    // shift: for even power both source and target are even, and for odd
-    // power d and ell have the same parity because ell-d=2Q.
+    const z3::expr total = power * terminal_label;
+    // Lemma 5A8H28P1A cancels the simple-current shifts, so the terminal
+    // packet is the unshifted lower-level power N_(2Q)^power at 2V,2x.
     const z3::expr source_above = source_label >= target_label;
     const z3::expr lower_label = z3::ite(
         source_above,
@@ -171,22 +194,30 @@ void append_terminal_hinges(
             upper_branch,
             upper_fusion
         );
-        hinges.push_back(lower == lower_zero);
-        hinges.push_back(lower == lower_branch);
-        hinges.push_back(lower == lower_fusion);
-        hinges.push_back(upper == upper_weight);
-        hinges.push_back(upper == upper_branch);
-        hinges.push_back(upper == upper_fusion);
-        hinges.push_back(lower <= upper);
-        hinges.push_back(lower - 1 >= 0);
+        const z3::expr nonempty = lower <= upper;
+        hinges.push_back(nonempty);
+        const auto append_selector = [&hinges, &nonempty, active_only](
+            const z3::expr& selector
+        ) {
+            hinges.push_back(
+                active_only ? z3::implies(nonempty, selector) : selector
+            );
+        };
+        append_selector(lower == lower_zero);
+        append_selector(lower == lower_branch);
+        append_selector(lower == lower_fusion);
+        append_selector(upper == upper_weight);
+        append_selector(upper == upper_branch);
+        append_selector(upper == upper_fusion);
+        append_selector(lower - 1 >= 0);
         if (power >= 3) {
-            hinges.push_back(upper >= d + 1);
-            hinges.push_back(lower - 1 >= d + 1);
+            append_selector(upper >= terminal_label + 1);
+            append_selector(lower - 1 >= terminal_label + 1);
         }
     }
 }
 
-std::uint64_t enumerate_masks(const std::string& mode) {
+std::uint64_t enumerate_masks(const std::string& mode, int parity_class) {
     z3::context context;
     z3::solver solver(context);
     const z3::expr level = context.int_const("K");
@@ -200,17 +231,45 @@ std::uint64_t enumerate_masks(const std::string& mode) {
     solver.add(crossing >= 0 && 2 * crossing < level);
     solver.add(target >= 0 && 2 * target < level);
     solver.add(level - label - crossing <= label + crossing);
+    const bool diagonal_g0 = mode == "g0";
+    if (diagonal_g0) {
+        solver.add(target == crossing);
+    }
 
     std::vector<z3::expr> hinges;
-    hinges.push_back(z3::mod(level, 2) == 0);
-    hinges.push_back(z3::mod(label, 2) == 0);
-    hinges.push_back(z3::mod(crossing, 2) == 0);
-    hinges.push_back(z3::mod(target, 2) == 0);
-    hinges.push_back(crossing == target);
+    if (parity_class < 0) {
+        hinges.push_back(z3::mod(level, 2) == 0);
+        hinges.push_back(z3::mod(label, 2) == 0);
+        hinges.push_back(z3::mod(crossing, 2) == 0);
+        if (!diagonal_g0) {
+            hinges.push_back(z3::mod(target, 2) == 0);
+        }
+    } else {
+        solver.add(
+            z3::mod(level, 2)
+            == ((parity_class >> 0) & 1)
+        );
+        solver.add(
+            z3::mod(label, 2)
+            == ((parity_class >> 1) & 1)
+        );
+        solver.add(
+            z3::mod(crossing, 2)
+            == ((parity_class >> 2) & 1)
+        );
+        solver.add(
+            z3::mod(target, 2)
+            == ((parity_class >> 3) & 1)
+        );
+    }
+    if (!diagonal_g0) {
+        hinges.push_back(crossing == target);
+    }
     hinges.push_back(label - 2 * width - 3 >= 0);
+    const bool active_only = mode == "even-active" || mode == "odd-active";
 
     const auto append_crossing_powers = [&context, &level, &label,
-        &crossing, &hinges](const std::vector<int>& powers) {
+        &crossing, &hinges, active_only](const std::vector<int>& powers) {
         for (const int power : powers) {
             append_crossing_hinges(
                 context,
@@ -218,12 +277,15 @@ std::uint64_t enumerate_masks(const std::string& mode) {
                 label,
                 crossing,
                 power,
+                active_only,
                 hinges
             );
         }
     };
     const auto append_terminal_powers = [&context, &level, &label,
-        &crossing, &target, &hinges](const std::vector<int>& powers) {
+        &crossing, &target, &hinges, active_only](
+            const std::vector<int>& powers
+        ) {
         for (const int power : powers) {
             append_terminal_hinges(
                 context,
@@ -232,6 +294,7 @@ std::uint64_t enumerate_masks(const std::string& mode) {
                 crossing,
                 target,
                 power,
+                active_only,
                 hinges
             );
         }
@@ -250,6 +313,17 @@ std::uint64_t enumerate_masks(const std::string& mode) {
         append_crossing_powers({1, 2, 3, 4});
         append_terminal_powers({1, 3});
     }
+    if (mode == "even-active") {
+        append_crossing_powers({1, 2, 3, 4, 5});
+        append_terminal_powers({2, 4});
+    }
+    if (mode == "odd-active") {
+        append_crossing_powers({1, 2, 3, 4});
+        append_terminal_powers({1, 3});
+    }
+    if (mode == "g0") {
+        append_crossing_powers({4, 5});
+    }
     if (hinges.size() > 1000U) {
         throw std::runtime_error("joint activation mask is unexpectedly wide");
     }
@@ -267,10 +341,28 @@ std::uint64_t enumerate_masks(const std::string& mode) {
             throw std::runtime_error("activation-mask counter overflow");
         }
         ++masks;
+        if (masks % 100U == 0U) {
+            std::cerr
+                << "SU2_SHELL_JOINT_ACTIVATION_MASKS_PROGRESS"
+                << " mode=" << mode
+                << " parity_class="
+                << (
+                    parity_class < 0
+                        ? std::string("all")
+                        : std::to_string(parity_class)
+                )
+                << " masks=" << masks << '\n';
+        }
     }
     std::cout
         << "SU2_SHELL_JOINT_ACTIVATION_MASKS"
         << " mode=" << mode
+        << " parity_class="
+        << (
+            parity_class < 0
+                ? std::string("all")
+                : std::to_string(parity_class)
+        )
         << " hinges=" << hinges.size()
         << " masks=" << masks
         << " result=PASS_EXACT_PRESBURGER_CENSUS\n";
@@ -281,24 +373,37 @@ std::uint64_t enumerate_masks(const std::string& mode) {
 
 int main(int argc, char** argv) {
     try {
-        if (argc != 2) {
+        if (argc != 2 && argc != 4) {
             throw std::runtime_error(
-                "usage: [crossing|terminal|even|odd|full]"
+                "usage: MODE [--parity 0..15]"
             );
         }
         const std::string mode(argv[1]);
+        int parity_class = -1;
+        if (argc == 4) {
+            if (std::string(argv[2]) != "--parity") {
+                throw std::runtime_error(
+                    "the only optional selector is --parity 0..15"
+                );
+            }
+            parity_class = parse_parity_class(argv[3]);
+        }
         if (
             mode != "crossing"
             && mode != "terminal"
             && mode != "even"
             && mode != "odd"
+            && mode != "even-active"
+            && mode != "odd-active"
+            && mode != "g0"
             && mode != "full"
         ) {
             throw std::runtime_error(
-                "mode must be crossing, terminal, even, odd, or full"
+                "mode must be crossing, terminal, even, odd, even-active, "
+                "odd-active, g0, or full"
             );
         }
-        static_cast<void>(enumerate_masks(mode));
+        static_cast<void>(enumerate_masks(mode, parity_class));
         return EXIT_SUCCESS;
     } catch (const std::exception& error) {
         std::cerr << "error: " << error.what() << '\n';

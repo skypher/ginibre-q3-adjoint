@@ -310,12 +310,10 @@ void append_terminal_walls(std::set<Affine, AffineLess>& walls) {
     const Affine v = coordinate(V);
     const Affine x = coordinate(X);
     const Affine lower_level = add(k, constant(-1));
-    const Affine width = add(lower_level, scale(-2, q));
+    const Affine terminal_label = scale(2, q);
     const Affine half_period = add(k, constant(1));
     for (int power = 1; power <= 4; ++power) {
-        const Affine target = power % 2 == 0
-            ? scale(2, x)
-            : subtract(lower_level, scale(2, x));
+        const Affine target = scale(2, x);
         const Affine source = scale(2, v);
         const std::vector<Affine> lower_labels{
             subtract(source, target),
@@ -327,7 +325,7 @@ void append_terminal_walls(std::set<Affine, AffineLess>& walls) {
         };
         insert_internal_rounded_comparisons(walls, lower_labels);
         insert_internal_rounded_comparisons(walls, upper_labels);
-        const Affine total = scale(power, width);
+        const Affine total = scale(power, terminal_label);
         for (int branch = 0; branch < 4; ++branch) {
             const Affine branch_lower = add(
                 subtract(total, scale(branch + 1, half_period)),
@@ -372,10 +370,10 @@ void append_terminal_walls(std::set<Affine, AffineLess>& walls) {
                     if (power >= 3) {
                         const Affine upper_activation = scale(
                             2,
-                            add(width, constant(1))
+                            add(terminal_label, constant(1))
                         );
                         const Affine lower_activation = add(
-                            scale(2, width),
+                            scale(2, terminal_label),
                             constant(3)
                         );
                         insert_comparisons(
@@ -762,6 +760,12 @@ struct SegmentAuditSummary {
     std::uint64_t negative_residue_tails = 0U;
     std::uint64_t free_residue_tails = 0U;
     std::uint64_t negative_free_residue_tails = 0U;
+    std::array<std::uint64_t, 5U> group_free_residue_tails{};
+    std::array<std::uint64_t, 5U> negative_group_free_residue_tails{};
+    std::uint64_t high_block_free_residue_tails = 0U;
+    std::uint64_t negative_high_block_free_residue_tails = 0U;
+    std::array<std::uint64_t, 5U> suffix_block_free_residue_tails{};
+    std::array<std::uint64_t, 5U> negative_suffix_block_free_residue_tails{};
     std::uint64_t free_residue_negative_atoms = 0U;
     int maximum_free_residue_payment_span = 0;
     bool has_maximum_free_residue_payment_span = false;
@@ -1057,6 +1061,77 @@ void record_tail_signs(
     }
 }
 
+void record_terminal_power_group_tails(
+    int level,
+    int label,
+    const std::array<std::vector<Integer>, 5U>& groups,
+    SegmentAuditSummary& summary
+) {
+    if (label < 7 || level - 1 - 2 * label < 10) {
+        return;
+    }
+    for (std::size_t power = 0U; power < groups.size(); ++power) {
+        const int paired = static_cast<int>(groups[power].size());
+        for (int residue = 0; residue < 4; ++residue) {
+            int crossing = paired - 1;
+            while (crossing >= 0 && crossing % 4 != residue) {
+                --crossing;
+            }
+            Integer tail = 0;
+            for (; crossing >= 0; crossing -= 4) {
+                tail += groups[power][static_cast<std::size_t>(crossing)];
+                ++summary.group_free_residue_tails[power];
+                if (tail < 0) {
+                    ++summary.negative_group_free_residue_tails[power];
+                }
+            }
+        }
+    }
+    const int paired = static_cast<int>(groups[0].size());
+    for (int residue = 0; residue < 4; ++residue) {
+        int crossing = paired - 1;
+        while (crossing >= 0 && crossing % 4 != residue) {
+            --crossing;
+        }
+        Integer tail = 0;
+        for (; crossing >= 0; crossing -= 4) {
+            const std::size_t coordinate =
+                static_cast<std::size_t>(crossing);
+            tail += groups[3U][coordinate] + groups[4U][coordinate];
+            ++summary.high_block_free_residue_tails;
+            if (tail < 0) {
+                ++summary.negative_high_block_free_residue_tails;
+            }
+        }
+    }
+    for (std::size_t first_power = 0U;
+         first_power < groups.size();
+         ++first_power) {
+        for (int residue = 0; residue < 4; ++residue) {
+            int crossing = paired - 1;
+            while (crossing >= 0 && crossing % 4 != residue) {
+                --crossing;
+            }
+            Integer tail = 0;
+            for (; crossing >= 0; crossing -= 4) {
+                const std::size_t coordinate =
+                    static_cast<std::size_t>(crossing);
+                for (std::size_t power = first_power;
+                     power < groups.size();
+                     ++power) {
+                    tail += groups[power][coordinate];
+                }
+                ++summary.suffix_block_free_residue_tails[first_power];
+                if (tail < 0) {
+                    ++summary.negative_suffix_block_free_residue_tails[
+                        first_power
+                    ];
+                }
+            }
+        }
+    }
+}
+
 SegmentAuditSummary audit_cubic_segments(
     const std::set<Affine, AffineLess>& walls,
     int maximum_level
@@ -1188,6 +1263,10 @@ SegmentAuditSummary audit_cubic_segments(
                 std::vector<Integer> summand(
                     static_cast<std::size_t>(paired)
                 );
+                std::array<std::vector<Integer>, 5U> groups{};
+                for (std::vector<Integer>& group : groups) {
+                    group.assign(static_cast<std::size_t>(paired), 0);
+                }
                 for (int crossing = 0; crossing < paired; ++crossing) {
                     const std::size_t coordinate =
                         static_cast<std::size_t>(crossing);
@@ -1216,6 +1295,40 @@ SegmentAuditSummary audit_cubic_segments(
                             * terminal_powers[0][coordinate][target_coordinate]
                     );
                     summand[coordinate] = even - odd;
+                    for (int terminal_power = 0;
+                         terminal_power <= 4;
+                         ++terminal_power) {
+                        const std::size_t group_index =
+                            static_cast<std::size_t>(terminal_power);
+                        const std::size_t crossing_power =
+                            static_cast<std::size_t>(5 - terminal_power);
+                        Integer group = f4
+                            * crossing_weights[crossing_power][coordinate]
+                            * terminal_powers[group_index]
+                                [coordinate][target_coordinate];
+                        if (terminal_power <= 3) {
+                            group -= f5
+                                * crossing_weights[
+                                    static_cast<std::size_t>(
+                                        4 - terminal_power
+                                    )
+                                ][coordinate]
+                                * terminal_powers[group_index]
+                                    [coordinate][target_coordinate];
+                        }
+                        groups[group_index][coordinate] = group;
+                    }
+                }
+                for (int crossing = 0; crossing < paired; ++crossing) {
+                    Integer grouped = 0;
+                    for (const std::vector<Integer>& group : groups) {
+                        grouped += group[static_cast<std::size_t>(crossing)];
+                    }
+                    if (grouped != summand[static_cast<std::size_t>(crossing)]) {
+                        throw std::runtime_error(
+                            "terminal-power grouping mismatch"
+                        );
+                    }
                 }
                 record_direct_cubic_partition(summand, summary);
                 record_safe_rail_signs(
@@ -1231,6 +1344,12 @@ SegmentAuditSummary audit_cubic_segments(
                     label,
                     target,
                     summand,
+                    summary
+                );
+                record_terminal_power_group_tails(
+                    level,
+                    label,
+                    groups,
                     summary
                 );
 
@@ -1445,6 +1564,57 @@ int main(int argc, char** argv) {
             std::cout
                 << " residue_step=4"
                 << " result=PASS_CUBIC_SEGMENT_AUDIT\n";
+            std::cout
+                << "SU2_SHELL_V_TERMINAL_POWER_GROUP_TAILS"
+                << " free_residue_tails=";
+            for (std::size_t power = 0U;
+                 power < summary.group_free_residue_tails.size();
+                 ++power) {
+                if (power != 0U) {
+                    std::cout << ',';
+                }
+                std::cout << summary.group_free_residue_tails[power];
+            }
+            std::cout << " negative_free_residue_tails=";
+            for (std::size_t power = 0U;
+                 power < summary.negative_group_free_residue_tails.size();
+                 ++power) {
+                if (power != 0U) {
+                    std::cout << ',';
+                }
+                std::cout
+                    << summary.negative_group_free_residue_tails[power];
+            }
+            std::cout << " terminal_powers=0..4"
+                      << " high_block_free_residue_tails="
+                      << summary.high_block_free_residue_tails
+                      << " negative_high_block_free_residue_tails="
+                      << summary.negative_high_block_free_residue_tails
+                      << " high_block=3+4"
+                      << " suffix_block_free_residue_tails=";
+            for (std::size_t first_power = 0U;
+                 first_power < summary.suffix_block_free_residue_tails.size();
+                 ++first_power) {
+                if (first_power != 0U) {
+                    std::cout << ',';
+                }
+                std::cout
+                    << summary.suffix_block_free_residue_tails[first_power];
+            }
+            std::cout << " negative_suffix_block_free_residue_tails=";
+            for (std::size_t first_power = 0U;
+                 first_power
+                    < summary.negative_suffix_block_free_residue_tails.size();
+                 ++first_power) {
+                if (first_power != 0U) {
+                    std::cout << ',';
+                }
+                std::cout << summary.negative_suffix_block_free_residue_tails[
+                    first_power
+                ];
+            }
+            std::cout << " suffix_blocks=0..4"
+                      << " result=PASS_EXACT_GROUP_RECOMBINATION\n";
         }
         if (segments) {
             emit_segments(

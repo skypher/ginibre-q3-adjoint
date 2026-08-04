@@ -29328,27 +29328,37 @@ For lower-orbit coordinates `V,x` in `I`, the terminal factor in the
 
 ```text
 (A_-^b)_(V,x)
- =(N_d^b)_(2V,J^b(2x)),                  1<=b<=4,  (P5A.102BUA)
+ =(N_d^b)_(2V,J^b(2x))
+ =(N_(2Q)^b)_(2V,2x),                    1<=b<=4.  (P5A.102BUA)
 ```
 
 where `J(c)=ell-c` is the level-`ell` simple current.  Thus the
 crossing formula `(P5A.102BU)` and the signed terminal endpoint formula
-`(P5A.102BS)` share the literal crossing coordinate `V`; no inferred
-rescaling or parity convention remains in the joint fan.
+`(P5A.102BS)` share the literal crossing coordinate `V`.  More strongly,
+the terminal packet may be evaluated with the unshifted lower-level label
+`2Q`; the free-width label `d` and the terminal simple-current shifts cancel
+identically.
 
 **Proof.**  The first assertion of Lemma 5A8H28A identifies the
 nonzero odd quotient with the even-label component of
 `N_(2Q)^(ell)` under `V -> 2V`.  Its simple-current factorization is
 `N_(2Q)=J N_d`, and `J` commutes with every fusion matrix.  Taking the
-`b`-th power gives `(P5A.102BUA)`.  QED.
+`b`-th power gives the first equality.  Equivalently,
+
+```text
+N_d^b=J^b N_(2Q)^b.
+```
+
+Since `J^b N_(2Q)^b J^b=N_(2Q)^b`, evaluating this identity at
+`(2V,J^b(2x))` gives the second equality.  QED.
 
 The strict C++ verifier
 `character_ring_iter/verify_su2_shell_terminal_coordinates.cpp` builds
 the quotient directly from the half-label fusion rule and independently
-evaluates the right-hand side of `(P5A.102BUA)`.  Through `K=100` it
-checked `3,165,400` quotient entries and `12,661,600` power coordinates
-for `1<=b<=4`, with no mismatch.  This audits the coordinate convention;
-the displayed identity is uniform.
+evaluates both right-hand sides of `(P5A.102BUA)`.  Through `K=100` it
+checked `3,165,400` quotient entries and two independent sets of
+`12,661,600` power coordinates for `1<=b<=4`, with no mismatch.  This
+audits the coordinate convention; the displayed identity is uniform.
 
 The strict C++ verifier
 `character_ring_iter/verify_su2_crossing_weight_fold.cpp` constructs
@@ -29457,17 +29467,18 @@ subsequent exact segment summation.  QED.
 With the parities of `K,Q,V,x` fixed, all endpoint and activation
 choices in `(P5A.102BU)`, `(P5A.102BUA)`, and `(P5A.102BUB)` can change
 only on affine walls `aK+bQ+cV+d x+e=0`.  There are exactly `139`
-normalized crossing walls (`127` with nonzero `V` coefficient), `378`
-normalized terminal walls (`276` with nonzero `V` coefficient), and one
-return wall `2K-5Q+1=0`.  Thus the joint catalog has `510` walls, of
-which `402` move in `V`.  Every moving wall has `V` coefficient of
+normalized crossing walls (`127` with nonzero `V` coefficient), `348`
+normalized terminal walls (`246` with nonzero `V` coefficient), and one
+return wall `2K-5Q+1=0`.  Thus the joint catalog has `482` walls, of
+which `372` move in `V`.  Every moving wall has `V` coefficient of
 absolute value `1`, `2`, or `4`.
 
 **Proof.**  Crossing endpoints are maxima or minima of two affine
 forms.  After resolving the two terminal absolute-value and upper-wall
 choices, terminal endpoints are floors or ceilings of affine forms.
-Their comparisons need only the adjacent doubled differences `-1,0,1`;
-their two activation thresholds are `2d+3` and `2d+2`.  This exhausts
+Their comparisons need only the adjacent doubled differences `-1,0,1`,
+and, by Lemma 5A8H28P1A, their two activation thresholds are `4Q+3`
+and `4Q+2`.  This exhausts
 every `V`-dependent operation in the endpoint formulas.  Lemma
 5A8H28P1B supplies the sole remaining parameter switch, whose normalized
 equation is `2K-5Q+1=0`.  Thus, after adjoining `V=rho` and the physical
@@ -29477,10 +29488,11 @@ integrand and an exact Faulhaber sum.  The strict C++ generator
 normalizes this safe over-refinement symbolically.  It does not assert
 feasibility of every wall or positivity of any segment sum.  QED.
 
-The catalog also has an exact feasibility pruning in the still-open band
-`Q>=7`, `d=K-1-2Q>=10`.  Of the `402` moving walls, only `154` can meet
+The catalog also has an exact feasibility pruning in the wider audit band
+`Q>=7`, `d=K-1-2Q>=10`, which contains the still-open band `d>=11`.  Of
+the `372` moving walls, only `160` can meet
 an integer `V` transition in the physical active-crossing domain.  Of
-the `108` parameter-only walls, only `26` meet that domain.  The
+the `110` parameter-only walls, only `26` meet that domain.  The
 `--feasible` mode of `emit_su2_shell_v_wall_catalog.cpp` checks each
 affine wall independently in Presburger arithmetic.  This is a
 reduction of candidate events, not a positivity certificate.
@@ -29506,6 +29518,27 @@ one Presburger solver.  Thus this count is an unbounded chamber-cover
 census for that coupled subfan, not a finite scan or a positivity
 certificate.  The terminal selectors and the subsequent tail allocation
 remain to be joined to it.
+
+The same C++ enumerator now has a resumable exact partition:
+
+```text
+analyze_su2_shell_joint_activation_masks crossing --parity e
+```
+
+for `0<=e<16` fixes, in bit order, the parities of `K,Q,V,x` and removes
+the four now-constant predicates from the blocked mask.  The classes are
+disjoint and exhaustive.  Their exact counts are
+
+```text
+108, 106, 106, 106, 56, 52, 55, 58,
+54, 53, 53, 53, 112, 104, 110, 116,
+```
+
+whose sum is again `1,302`.  This independently checks the partition
+without changing the stated crossing subfan.  It also permits the larger
+terminal packet census to be completed and replayed one parity class at a
+time; a completed packet total remains required before it can be used in a
+certificate.
 
 **Lemma 5A8H28P4 (cubic joint-shell segments).**  Fix `K,Q,x`, and
 fix the residue of `V` modulo four.  Put `P_0(V,x)=1_(V=x)` and, for
@@ -29555,7 +29588,7 @@ from the finite fusion rule.  It discards only length-five residue-four
 windows that meet a catalog wall or cross one between adjacent vertices,
 and verifies that every other fourth finite difference vanishes exactly.
 Through `K=100` it found
-`21,236` such wall-free windows, with no mismatch.  This is an audit of
+`22,631` such wall-free windows, with no mismatch.  This is an audit of
 the symbolic degree argument, not a finite-range replacement for it.
 
 The raw wall catalog is intentionally too coarse to serve directly as
@@ -29574,7 +29607,7 @@ free-width analysis.  The strict audit above finds
 K=43, Q=16, d=10, x=0, V=12 (a singleton residue-zero rail):  Phi=-96.
 ```
 
-It finds `17,158` negative safe rails among `2,108,801` such rails
+It finds `17,772` negative safe rails among `2,089,113` such rails
 through `K=100` with `Q>=7` and `d>=10`.  These are bounded diagnostics,
 not counterexamples to `(LBK2)`: the latter is a complete suffix sum.
 They do rule out the stronger local route in which every rail sum is
@@ -29624,6 +29657,63 @@ checks all `401,991` residue-tail entries with `d=10`, `7<=Q<=100` and
 finds none negative.  This is a larger bounded falsification check of
 `(P5A.102BUK1)`, not a substitute for its symbolic certificate.
 
+The unshifted terminal formula in Lemma 5A8H28P1A supplies a more
+structured split of the same summand.  Put
+
+```text
+G_b(V)=f_4 d_(5-b)(V)P_b(V,x)
+       -1_(b<=3) f_5 d_(4-b)(V)P_b(V,x),
+                                                   0<=b<=4,
+H_2(V)=G_2(V)+G_3(V)+G_4(V).
+```
+
+Then, identically,
+
+```text
+Phi=G_0+G_1+H_2.                                  (P5A.102BUK2)
+```
+
+Thus nonnegativity of the four residue tails of each of `G_0`, `G_1`,
+and `H_2` is a sufficient three-family replacement for
+`(P5A.102BUK1)`.  The strict direct audit through `K=100` checks this
+recombination entrywise.  In the wider audit band `Q>=7,d>=10`, it finds
+the following negative residue-tail counts, listed by terminal power or
+initial suffix power:
+
+```text
+individual G_b, b=0,...,4:       0, 0, 0, 243342, 0;
+suffix sum_(b>=r) G_b, r=0,...,4: 0, 0, 0,   7642, 0.
+```
+
+In particular, the three families in `(P5A.102BUK2)` have no negative
+tested tail, whereas `G_3+G_4` alone does.  This is bounded evidence only:
+it isolates the necessary three-term terminal-current block `H_2`, but
+does not prove any of its residue-tail inequalities.
+
+The first family already has a finite lower-dimensional activation cover.
+Because `P_0(V,x)=1_(V=x)`, every residue tail of `G_0` is either zero or
+
+```text
+f_4 d_5(x)-f_5 d_4(x).                            (P5A.102BUK3)
+```
+
+Thus pointwise nonnegativity of `(P5A.102BUK3)` proves all four `G_0`
+residue-tail inequalities.  The strict command
+
+```text
+analyze_su2_shell_joint_activation_masks g0
+```
+
+imposes `V=x`, retains only crossing powers `4,5` and the return hinge,
+and exhausts the unbounded Presburger domain with
+
+```text
+hinges=94, masks=312.
+```
+
+This is an exact chamber cover for the `G_0` polynomial, not yet its
+nonnegative Newton or cone certificate.
+
 **Target 5A8H28P5 (proof-carrying segment certificate).**  Complete
 Target 5A8H28R5 by a finite certificate whose every record contains:
 
@@ -29636,9 +29726,11 @@ Target 5A8H28R5 by a finite certificate whose every record contains:
    5A8H28P1, 5A8H28P1B, and 5A8H28O and the resulting quartic segment
    sum from Lemma 5A8H28P4;
 4. preferably, a nonnegative cone or Newton expansion of each of the
-   four residue tails `(P5A.102BUK1)`; failing that strengthening, an
-   exact allocation for the complete tail `V>=rho`, with every reserve
-   assigned inside that same suffix; and
+   four residue tails `(P5A.102BUK1)`.  Equivalently, the more structured
+   sufficient route `(P5A.102BUK2)` may certify the four residue tails of
+   each of `G_0`, `G_1`, and `H_2`; failing those strengthenings, an exact
+   allocation for the complete tail `V>=rho`, with every reserve assigned
+   inside that same suffix; and
 5. an exact coverage and adjacency proof showing that these allocations
    partition every admissible suffix `V>=rho`.
 

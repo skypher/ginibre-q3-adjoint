@@ -84,6 +84,7 @@ int main(int argc, char** argv) {
         std::uint64_t parameters = 0U;
         std::uint64_t block_entries = 0U;
         std::uint64_t power_entries = 0U;
+        std::uint64_t direct_power_entries = 0U;
 
         for (int k = 3; k <= maximum_k; ++k) {
             const int lower_level = k - 1;
@@ -136,6 +137,12 @@ int main(int argc, char** argv) {
                         static_cast<std::size_t>(lower_level + 1)
                     )
                 );
+                Matrix direct_terminal(
+                    static_cast<std::size_t>(lower_level + 1),
+                    std::vector<int>(
+                        static_cast<std::size_t>(lower_level + 1)
+                    )
+                );
                 for (int source = 0; source <= lower_level; ++source) {
                     for (int target = 0; target <= lower_level; ++target) {
                         terminal[static_cast<std::size_t>(source)]
@@ -145,14 +152,25 @@ int main(int argc, char** argv) {
                                 width,
                                 source,
                                 target
+                                ) ? 1 : 0;
+                        direct_terminal[
+                            static_cast<std::size_t>(source)
+                        ][static_cast<std::size_t>(target)] =
+                            fuses_standard(
+                                lower_level,
+                                2 * q,
+                                source,
+                                target
                             ) ? 1 : 0;
                     }
                 }
                 IntegerMatrix odd_power = identity(paired);
                 IntegerMatrix terminal_power = identity(lower_level + 1);
+                IntegerMatrix direct_power = identity(lower_level + 1);
                 for (int power = 1; power <= 4; ++power) {
                     odd_power = multiply(odd_power, odd);
                     terminal_power = multiply(terminal_power, terminal);
+                    direct_power = multiply(direct_power, direct_terminal);
                     for (int source = 0; source < paired; ++source) {
                         for (int target = 0; target < paired; ++target) {
                             const int reflected_target = power % 2 == 0
@@ -172,6 +190,20 @@ int main(int argc, char** argv) {
                                     "terminal-coordinate power mismatch"
                                 );
                             }
+                            const Integer& direct_expected = direct_power[
+                                static_cast<std::size_t>(2 * source)
+                            ][static_cast<std::size_t>(2 * target)];
+                            ++direct_power_entries;
+                            if (
+                                odd_power[
+                                    static_cast<std::size_t>(source)
+                                ][static_cast<std::size_t>(target)]
+                                != direct_expected
+                            ) {
+                                throw std::runtime_error(
+                                    "unshifted terminal-coordinate mismatch"
+                                );
+                            }
                         }
                     }
                 }
@@ -184,6 +216,7 @@ int main(int argc, char** argv) {
             << " parameters=" << parameters
             << " block_entries=" << block_entries
             << " power_entries=" << power_entries
+            << " direct_power_entries=" << direct_power_entries
             << " powers=1..4"
             << " result=PASS_EXACT_IDENTITIES\n";
         return EXIT_SUCCESS;
