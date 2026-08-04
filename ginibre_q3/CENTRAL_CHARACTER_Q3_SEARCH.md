@@ -17145,6 +17145,60 @@ T_4(1,1,1/2)-T_3(1,1)=-9/8<0.
 Thus the terminal barrier inequality fails.  A successful barrier must
 retain the full three-ratio state `(r,s,t)`, not merely `(r,s)`.  QED.
 
+**Proposition 5A8H28UIA2CGLPCIPOCGAPWALL121ENDPOINTOBS
+(interior-control obstruction).**  Even restricted to initial states on
+the critical branch, the finite-horizon Bellman minimization in Lemma
+5A8H28UIA2CGLPCIPOCGAPWALL121APPENDBEL cannot be reduced to the two
+controls `q=0,t`.
+
+**Proof.**  At the normalized state
+
+```text
+(r,s,t)=(1/2,1/2,3/8),
+```
+
+the local coefficients are
+
+```text
+A=13/8,                 B=507/256,                 C=7/4,
+Phi'(1/r)=6533/256>0.
+```
+
+Thus this is a critical-branch state.  Write its one-step action value as
+
+```text
+W(q)=R(r,s,t;q)+r^4T_4(s,t,q)
+    =T_4(r,s,t)+Delta(r,s,t,q),       0<=q<=3/8.
+```
+
+Direct exact substitution gives
+
+```text
+W(0)=T_4(r,s,t)=766557/524288,
+W(1/4)=196216899/134217728,
+W(3/8)=3139522317/2147483648.
+```
+
+After placing the three values over the common denominator `2^31`,
+
+```text
+W(0)-W(1/4)=347088/2^31>0,
+W(3/8)-W(1/4)=51933/2^31>0.
+```
+
+Hence the legal interior control `q=1/4` strictly improves both endpoint
+controls and immediate termination.  In particular, an arbitrary-tail proof
+must retain the continuous control in the barrier inequality
+`(P5A.102AD5ALX1ZZB3BH9Z7ZB)`; endpoint minimization is false already at
+one Bellman step.  The exact replay
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-wall-121-renewal-kernel
+```
+
+checks all displayed rational identities.  QED.
+
 **Target 5A8H28UIA2CGLPCIPOCGAPWALL121APPENDBELPAY
 (three-ratio global payment).**  Let `T_4(r,s,t)` be the terminal current
 of `(0,1,r,rs,rst)`.  On every initial critical-branch state, prove

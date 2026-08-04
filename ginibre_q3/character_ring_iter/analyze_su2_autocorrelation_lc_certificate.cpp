@@ -5636,6 +5636,69 @@ int replay_wall_121_renewal_kernel() {
     throw std::runtime_error(
         "wall (1,2,1) two-ratio barrier obstruction mismatch");
   }
+  BigPolynomial one_step = terminal;
+  big_add_scaled(one_step, delta, 1);
+  const RationalPolynomial one_step_rational =
+      rational_polynomial(one_step);
+  const std::vector<Rational> endpoint_control_state{
+      Rational(1, 2), Rational(1, 2), Rational(3, 8)};
+  const auto one_step_value = [&](const Rational& control) {
+    std::vector<Rational> point = endpoint_control_state;
+    point.push_back(control);
+    return evaluate_polynomial(one_step_rational, point);
+  };
+  const Rational endpoint_zero = one_step_value(Rational(0));
+  const Rational endpoint_upper = one_step_value(Rational(3, 8));
+  const Rational interior_control = one_step_value(Rational(1, 4));
+  std::vector<Rational> terminal_point = endpoint_control_state;
+  terminal_point.push_back(Rational(0));
+  const Rational terminal_control_value = evaluate_polynomial(
+      rational_polynomial(terminal), terminal_point);
+  const Rational endpoint_ratio = endpoint_control_state[0];
+  const Rational endpoint_second_ratio = endpoint_control_state[1];
+  const Rational endpoint_third_ratio = endpoint_control_state[2];
+  const Rational endpoint_second_coordinate = endpoint_ratio;
+  const Rational endpoint_third_coordinate =
+      endpoint_ratio * endpoint_second_ratio;
+  const Rational endpoint_fourth_coordinate =
+      endpoint_third_coordinate * endpoint_third_ratio;
+  const Rational endpoint_a(13, 8);
+  const Rational endpoint_b(507, 256);
+  const Rational endpoint_c(7, 4);
+  const Rational endpoint_a_from_state =
+      1 + endpoint_ratio * endpoint_ratio
+      + (1 + endpoint_ratio) * endpoint_third_coordinate;
+  const Rational endpoint_b_from_state =
+      3 * endpoint_ratio + 2 * endpoint_ratio * endpoint_ratio
+      + endpoint_ratio * endpoint_third_coordinate
+      + endpoint_ratio * endpoint_fourth_coordinate
+      + endpoint_ratio * endpoint_third_coordinate
+            * endpoint_fourth_coordinate
+      - endpoint_ratio * endpoint_ratio * endpoint_ratio
+      - endpoint_third_coordinate * endpoint_third_coordinate
+      - endpoint_third_coordinate * endpoint_third_coordinate
+            * endpoint_third_coordinate;
+  const Rational endpoint_c_from_state =
+      1 + endpoint_ratio + endpoint_third_coordinate;
+  const Rational endpoint_derivative =
+      -endpoint_b + 2 * endpoint_a / endpoint_ratio
+      + 3 * endpoint_c / (endpoint_ratio * endpoint_ratio);
+  if (
+      endpoint_zero != Rational(766557, 524288)
+      || interior_control != Rational(196216899, 134217728)
+      || endpoint_upper != Rational(3139522317, 2147483648)
+      || terminal_control_value != endpoint_zero
+      || endpoint_a_from_state != endpoint_a
+      || endpoint_b_from_state != endpoint_b
+      || endpoint_c_from_state != endpoint_c
+      || endpoint_b != Rational(507, 256)
+      || endpoint_derivative != Rational(6533, 256)
+      || !(interior_control < endpoint_zero)
+      || !(interior_control < endpoint_upper)
+  ) {
+    throw std::runtime_error(
+        "wall (1,2,1) endpoint-control obstruction mismatch");
+  }
   std::cout
       << "SU2_WALL_121_RENEWAL_KERNEL"
       << " variables=(r,s,t,q)"
@@ -5649,6 +5712,12 @@ int replay_wall_121_renewal_kernel() {
       << " tangent_barrier_boundary_residual=-59/2048"
       << " one_ratio_barrier_residual=-3297497/214990848"
       << " two_ratio_barrier_append=-9/8"
+      << " endpoint_control_values=(q0=" << endpoint_zero
+      << ",q1/4=" << interior_control
+      << ",q3/8=" << endpoint_upper
+      << ",terminate=" << terminal_control_value << ')'
+      << " endpoint_control_critical_data=(B=" << endpoint_b
+      << ",Phi_prime=" << endpoint_derivative << ')'
       << " result=PASS_EXACT\n";
   return EXIT_SUCCESS;
 }
