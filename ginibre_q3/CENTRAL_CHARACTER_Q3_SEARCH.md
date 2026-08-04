@@ -10721,6 +10721,65 @@ consequence, a nonconstant multiplier, or the global payment structure;
 it cannot be a degree-three constant-coefficient assembly from the listed
 local generators.
 
+**Proposition 5A8H28UIA2CGLCPL5A12R
+(four-ratio `A_(1,2)` reduction obstruction).**  The following necessary
+consequences of the `K=5` hypotheses do not imply the residual current
+`A_(1,2)>=0`.  Normalize `a=1` and write
+
+```text
+b=x,             c=xy,             ell=xyz,             e=xyzw.
+```
+
+The positive-coordinate log-concavity order, the two selected odd-block
+principal minors, and the two selected coordinate principal minors are
+
+```text
+x>=y>=z>=w>=0,
+x^2(1-yzw)^2<=1,                  x^2y^2(1-z)^2<=1,
+x^2<=1+x+xy,
+x^2y^2<=1+x+xy+xyz+xyzw.                         (P5A.102AD5ALX1L5R)
+```
+
+They admit a point at which `A_(1,2)` is strictly negative.
+
+**Proof.**
+
+(1) Take
+
+```text
+(x,y,z,w)=(5/2,5/4,89/128,177/256).
+```
+
+This obeys the displayed order.  Direct rational substitution gives
+
+```text
+x^2(1-yzw)^2=68400556225/68719476736<1,
+x^2y^2(1-z)^2=950625/1048576<1,
+x^2=25/4<53/8=1+x+xy,
+x^2y^2=2560000/262144<2700129/262144
+                         =1+x+xy+xyz+xyzw.
+```
+
+(2) In these coordinates the residual is
+
+```text
+A_(1,2)/a^2=x(1+y+yz-xy).
+```
+
+At the displayed point its parenthesis is `-3/512`, so
+
+```text
+A_(1,2)/a^2=-15/1024<0.
+```
+
+(3) Thus these four principal-minor inequalities, even together with the
+positive log-concavity ratio order, cannot close the `A_(1,2)` residual.
+The exact-real search mode
+`search_su2_k5_current_farkas --counterexample-a12-reduced` finds this
+same rational point; the substitution above is the certificate.  This
+does not contradict the full PSD target, which imposes further minors and
+determinants.  QED.
+
 **Lemma 5A8H28UIA2CGLCPIL4 (half-level-four PSD boundary insertion).**
 At `K=4`, Target 5A8H28UIA2CGLCPI holds for every insertion label
 `0<=Q<=4`.
@@ -37280,6 +37339,108 @@ because `q` is even and `q` occurs in `q star_k q`.  Hence
 `(N_q^2)_(q,q)>=2`, and that diagonal entry is at least one.  The
 initial boundary state is nonnegative by `(P5A.102CB8ZM)`; applying the
 nonnegative block proves `(P5A.102CB8ZO)`.  QED.
+
+**Lemma 5A8H28UI7A2 (positive paired-power-two boundary block).**  In
+the setting of Lemma 5A8H28UI7A, the next paired boundary block is also
+entrywise nonnegative:
+
+```text
+R_2=P_boundary A_q^4 P_boundary>=0.              (P5A.102CB8ZN1)
+```
+
+More explicitly, put `I=q star_k q={0,2,...,2q}`.  For `u,v>0`, the
+coefficient of `E_v` in `P_boundary A_q^4 E_u` is
+
+```text
+(N_q^4)_(v,u)+6(N_q^2)_(v,u)+4(N_q)_(v,u)
+ +(q+1)1_(v=u)
+ -4 1_(v=q)(N_q^2)_(u,q)
+ -6 1_(u in I)1_(v in I)
+ -4 1_(u=q)(N_q^2)_(v,q),                         (P5A.102CB8ZN2)
+```
+
+and this integer is nonnegative.  Consequently every boundary coefficient
+in `A_q^5(e_q wedge e_0)` is nonnegative.
+
+**Proof.**
+
+(1) Write `N=N_q`.  Since its two tensor factors commute, expand
+
+```text
+A_q^4(e_u wedge e_0)
+ =sum_(r=0)^4 binom(4,r)
+    N^(4-r)e_u wedge N^r e_0.                    (P5A.102CB8ZN3)
+```
+
+The `E_v` coefficient of its `r`th summand is
+
+```text
+(N^(4-r))_(v,u)(N^r)_(0,0)
+ -(N^(4-r))_(0,u)(N^r)_(v,0).                    (P5A.102CB8ZN4)
+```
+
+Here
+
+```text
+(N^1)_(0,0)=0,  (N^2)_(0,0)=(N^3)_(0,0)=1,
+(N^4)_(0,0)=|I|=q+1,
+N_(v,0)=1_(v=q),  (N^2)_(v,0)=1_(v in I),
+(N^3)_(v,0)=(N^2)_(v,q).
+```
+
+Substitution in `(P5A.102CB8ZN3)--(P5A.102CB8ZN4)` gives
+`(P5A.102CB8ZN2)`.
+
+(2) Suppose first that neither `u` nor `v` equals `q`.  The only
+possibly negative term is `-6` when both belong to `I`.  In that case
+the two-step path `u -> q -> v` gives `(N^2)_(v,u)>=1`, so the term
+`6(N^2)_(v,u)` pays it.
+
+(3) By symmetry take `v=q` and `u!=q`.  Formula
+`(P5A.102CB8ZN2)` becomes
+
+```text
+(N^4)_(q,u)+2(N^2)_(q,u)+4N_(q,u)-6 1_(u in I).
+```
+
+If `u` is not in `I`, this is visibly nonnegative.  If `u` is in `I`,
+then `N_(q,u)=1` and the loop `q -> q` gives
+`(N^2)_(q,u)>=1`, so the displayed expression is again nonnegative.
+The case `u=q`, `v!=q` is identical.
+
+(4) Finally take `u=v=q`.  Put `a=|I|=q+1`.  Then
+`(N^2)_(q,q)=a`, and `(P5A.102CB8ZN2)` reduces to
+
+```text
+(N^4)_(q,q)-a-2.
+```
+
+For every `r in I`, the path `q -> q -> r` contributes to
+`(N^2)_(q,r)`.  Therefore
+
+```text
+(N^4)_(q,q)=sum_r (N^2)_(q,r)^2
+ >=a^2+(a-1),
+```
+
+where the square at `r=q` is `a^2` and the other `a-1` terms are at
+least one.  Since `q>=2`, `a>=3`, so the last expression is at least
+`a^2-3>=0`.  This proves `(P5A.102CB8ZN1)`.
+
+(5) Lemma 5A8H28UI7 gives a nonnegative boundary vector
+`A_q(e_q wedge e_0)`.  Apply `(P5A.102CB8ZN1)` to it to obtain the
+final assertion.  QED.
+
+The strict C++ mode
+
+```text
+analyze_su2_terminal_boundary_block --verify-pair-power-two-formula 32
+```
+
+checks `(P5A.102CB8ZN2)` against direct exterior propagation in all
+`16,184` parity-compatible boundary entries through level thirty-two;
+it returns `PASS_IDENTITY`.  This is an implementation audit of the
+uniform calculation above.
 
 The nonnegative block does not extend to independently positive interior
 excursions.  Decompose the same two-step operator as
