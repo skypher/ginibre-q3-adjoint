@@ -174,6 +174,10 @@ analyze_su2_outer_ten: analyze_su2_outer_ten.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
 
+probe_su2_outer_twelve: probe_su2_outer_twelve.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 verify_su2_orbit_amgm_stack: verify_su2_orbit_amgm_stack.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror -pthread $< \

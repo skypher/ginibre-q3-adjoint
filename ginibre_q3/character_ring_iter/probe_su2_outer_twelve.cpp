@@ -1,11 +1,13 @@
 #include <algorithm>
 #include <array>
+#include <cstdint>
 #include <cstdlib>
 #include <iostream>
 #include <map>
 #include <numeric>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 #include <boost/multiprecision/cpp_int.hpp>
 
@@ -185,64 +187,200 @@ void print_counts(const Counts& counts) {
     std::cout << ']';
 }
 
+cpp_int finite_difference(
+    const Counts& base,
+    const Counts& degree,
+    const Counts& signs
+) {
+    cpp_int result = 0;
+    Counts offset{};
+    int total_degree = 0;
+    for (int value : degree) {
+        total_degree += value;
+    }
+    const auto visit = [&](const auto& self, int coordinate,
+                           int used_degree, cpp_int coefficient) -> void {
+        if (coordinate == label_count) {
+            Counts point{};
+            for (std::size_t index = 0U; index < point.size(); ++index) {
+                point[index] = base[index] + offset[index];
+            }
+            const cpp_int term = coefficient * outer_value(point, signs);
+            result += ((total_degree - used_degree) & 1) == 0
+                ? term : -term;
+            return;
+        }
+        const int maximum = degree[static_cast<std::size_t>(coordinate)];
+        for (int value = 0; value <= maximum; ++value) {
+            offset[static_cast<std::size_t>(coordinate)] = value;
+            self(
+                self,
+                coordinate + 1,
+                used_degree + value,
+                coefficient * binomial(maximum, value)
+            );
+        }
+    };
+    visit(visit, 0, 0, 1);
+    return result;
+}
+
+bool first_negative_newton_coefficient(
+    const Counts& base,
+    const Counts& signs,
+    Counts& negative_degree,
+    cpp_int& negative_value,
+    std::uint64_t& tested
+) {
+    Counts degree{};
+    for (int total_degree = 0; total_degree <= deficit; ++total_degree) {
+        const auto visit = [&](const auto& self, int coordinate,
+                               int remaining) -> bool {
+            if (coordinate == label_count) {
+                if (remaining != 0) {
+                    return false;
+                }
+                const cpp_int coefficient = finite_difference(
+                    base, degree, signs
+                );
+                ++tested;
+                if (coefficient < 0) {
+                    negative_degree = degree;
+                    negative_value = coefficient;
+                    return true;
+                }
+                return false;
+            }
+            for (int value = 0; value <= remaining; ++value) {
+                degree[static_cast<std::size_t>(coordinate)] = value;
+                if (self(self, coordinate + 1, remaining - value)) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        if (visit(visit, 0, total_degree)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+std::vector<Counts> minimal_bases() {
+    std::vector<Counts> bases;
+    Counts counts{};
+    const auto visit = [&](const auto& self, int coordinate,
+                           int used_label) -> void {
+        if (coordinate == label_count) {
+            if (!admissible(counts)) {
+                return;
+            }
+            for (int index = 0; index < label_count; ++index) {
+                const std::size_t position = static_cast<std::size_t>(index);
+                if (counts[position] == 0) {
+                    continue;
+                }
+                --counts[position];
+                const bool predecessor_admissible = admissible(counts);
+                ++counts[position];
+                if (predecessor_admissible) {
+                    return;
+                }
+            }
+            bases.push_back(counts);
+            return;
+        }
+        const int label = coordinate + 1;
+        for (int amount = 0; used_label + label * amount <= 24; ++amount) {
+            counts[static_cast<std::size_t>(coordinate)] = amount;
+            self(self, coordinate + 1, used_label + label * amount);
+        }
+        counts[static_cast<std::size_t>(coordinate)] = 0;
+    };
+    visit(visit, 0, 0);
+    return bases;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
     try {
-        if (argc != 2 && argc != 3) {
+        if (argc < 2 || argc > 5) {
             throw std::runtime_error(
-                "usage: probe_su2_outer_twelve MAXIMUM_FACTORS [minimal-bases]"
+                "usage: probe_su2_outer_twelve MAXIMUM_FACTORS "
+                "[minimal-bases|newton PATTERN [BASE_INDEX]]"
             );
         }
         const int maximum_factors = std::stoi(argv[1]);
         if (maximum_factors < 1 || maximum_factors > 60) {
             throw std::runtime_error("invalid maximum factor count");
         }
-        const bool minimal_bases = argc == 3;
-        if (minimal_bases && std::string(argv[2]) != "minimal-bases") {
+        const std::string mode = argc >= 3 ? argv[2] : "search";
+        if (mode != "search" && mode != "minimal-bases" && mode != "newton") {
             throw std::runtime_error("invalid probe mode");
         }
+        if ((mode == "search" && argc != 2)
+            || (mode == "minimal-bases" && argc != 3)
+            || (mode == "newton" && argc != 4 && argc != 5)) {
+            throw std::runtime_error("invalid probe arguments");
+        }
 
-        if (minimal_bases) {
-            std::uint64_t bases = 0U;
+        if (mode == "minimal-bases") {
+            const std::vector<Counts> bases = minimal_bases();
             int largest_total_label = 0;
-            Counts counts{};
-            const auto visit_bases = [&](const auto& self, int coordinate,
-                                         int used_label) -> void {
-                if (coordinate == label_count) {
-                    if (!admissible(counts)) {
-                        return;
-                    }
-                    for (int index = 0; index < label_count; ++index) {
-                        const std::size_t position = static_cast<std::size_t>(index);
-                        if (counts[position] == 0) {
-                            continue;
-                        }
-                        --counts[position];
-                        const bool predecessor_admissible = admissible(counts);
-                        ++counts[position];
-                        if (predecessor_admissible) {
-                            return;
-                        }
-                    }
-                    ++bases;
-                    largest_total_label = std::max(
-                        largest_total_label, total_label(counts)
-                    );
-                    return;
-                }
-                const int label = coordinate + 1;
-                for (int amount = 0;
-                     used_label + label * amount <= 24; ++amount) {
-                    counts[static_cast<std::size_t>(coordinate)] = amount;
-                    self(self, coordinate + 1, used_label + label * amount);
-                }
-                counts[static_cast<std::size_t>(coordinate)] = 0;
-            };
-            visit_bases(visit_bases, 0, 0);
-            std::cout << "SU2_OUTER_TWELVE_MINIMAL_BASES bases=" << bases
+            for (const Counts& base : bases) {
+                largest_total_label = std::max(
+                    largest_total_label, total_label(base)
+                );
+            }
+            std::cout << "SU2_OUTER_TWELVE_MINIMAL_BASES bases=" << bases.size()
                       << " maximum_total_label=" << largest_total_label
                       << " result=PASS\n";
+            return EXIT_SUCCESS;
+        }
+
+        if (mode == "newton") {
+            const int pattern = std::stoi(argv[3]);
+            if (pattern < 0 || pattern >= (1 << (label_count - 1))) {
+                throw std::runtime_error("invalid Newton sign pattern");
+            }
+            const std::vector<Counts> bases = minimal_bases();
+            const int requested_base = argc == 5 ? std::stoi(argv[4]) : -1;
+            if (requested_base < -1
+                || requested_base >= static_cast<int>(bases.size())) {
+                throw std::runtime_error("invalid Newton base index");
+            }
+            const Counts signs = signs_for_pattern(pattern);
+            const int first_base = requested_base < 0 ? 0 : requested_base;
+            const int last_base = requested_base < 0
+                ? static_cast<int>(bases.size()) - 1 : requested_base;
+            std::uint64_t tested = 0U;
+            for (int index = first_base; index <= last_base; ++index) {
+                Counts negative_degree{};
+                cpp_int negative_value = 0;
+                if (first_negative_newton_coefficient(
+                        bases[static_cast<std::size_t>(index)],
+                        signs,
+                        negative_degree,
+                        negative_value,
+                        tested
+                    )) {
+                    std::cout << "SU2_OUTER_TWELVE_NEWTON_FAIL pattern="
+                              << pattern << " base_index=" << index
+                              << " base=";
+                    print_counts(bases[static_cast<std::size_t>(index)]);
+                    std::cout << " degree=";
+                    print_counts(negative_degree);
+                    std::cout << " value=" << negative_value
+                              << " tested=" << tested << '\n';
+                    return EXIT_FAILURE;
+                }
+            }
+            std::cout << "SU2_OUTER_TWELVE_NEWTON_PASS pattern=" << pattern
+                      << " first_base=" << first_base
+                      << " last_base=" << last_base
+                      << " bases=" << last_base - first_base + 1
+                      << " coefficients=" << tested << '\n';
             return EXIT_SUCCESS;
         }
 

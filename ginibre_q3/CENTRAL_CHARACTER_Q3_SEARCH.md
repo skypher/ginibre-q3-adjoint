@@ -45916,6 +45916,65 @@ maximum_total_label=22 result=PASS.
    domain for a future degree-twelve Newton/Sturm certificate; it is not
    itself a positivity certificate.  QED.
 
+**Lemma 17V (degree bound for the residual polynomial).**  For each fixed
+normalized sign pattern, the residual outer coefficient at deficit twelve
+is a polynomial in `(c_1,...,c_6)` of total degree at most twelve.
+
+**Proof.**  In the subset formula, let the selected invariant sublist have
+total label `2h`.  Only `0<=h<=6` can contribute.  Its indexed-selection
+factor is a product of binomial coefficients of total degree at most `2h`,
+because it contains at most `2h` positive-label factors.  The complementary
+product has top label `S-2h`, while the requested coefficient is at deficit
+`12-2h=2(6-h)` from that top.  Its weight coefficient, and therefore its
+irreducible multiplicity after one adjacent weight difference, has count
+degree at most `6-h`: every monomial reaching that weight lowers at most
+`6-h` factors.  Thus the complete summand has degree at most
+
+```text
+2h+(6-h)=6+h<=12.
+```
+
+The subset sum is finite and preserves this bound.  QED.
+
+The same strict C++ probe now has a fail-closed `newton` mode.  At a chosen
+minimal base it computes every multivariate forward difference of the exact
+degree-twelve outer polynomial, in increasing total degree, and either
+prints the first negative coefficient or certifies the complete Newton
+orthant.  At the first base
+
+```text
+b=(0,0,0,0,0,3),
+```
+
+the direct orthant certificate passes for normalized patterns zero and one
+(each checks all `C(18,6)=18,564` coefficients), but fails immediately in
+the first hard sign sectors:
+
+```text
+pattern 8:  signs (+,+,-,+,+,+), degree (1,1,1,1,0,1), value -1;
+pattern 16: signs (+,-,+,+,+,+), degree (1,1,2,0,0,1), value -2;
+pattern 24: signs (+,-,-,+,+,+), degree (2,1,0,3,0,0), value -1;
+pattern 31: signs (+,-,-,-,-,-), degree (3,0,4,0,0,0), value -1.
+                                                        (D12.4)
+```
+
+These are failures of coefficientwise Newton positivity, not negative outer
+coefficients and not counterexamples to the deficit-twelve assertion.  They
+show that the degree-twelve certificate, like deficit ten, must use a
+chamber or coupled-tail domination rather than a single product-order
+orthant.  The deterministic replays are
+
+```text
+probe_su2_outer_twelve 1 newton 0 0
+probe_su2_outer_twelve 1 newton 8 0
+probe_su2_outer_twelve 1 newton 16 0
+probe_su2_outer_twelve 1 newton 24 0
+probe_su2_outer_twelve 1 newton 31 0.
+```
+
+All forward differences and subset contractions use `cpp_int`; a `PASS`
+means only the stated orthant, while a negative coefficient exits nonzero.
+
 All outer layers can be assembled into one palindromic polynomial.  Put
 
 ```text
