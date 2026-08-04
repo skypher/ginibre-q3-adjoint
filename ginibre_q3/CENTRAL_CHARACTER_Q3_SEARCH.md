@@ -10658,6 +10658,69 @@ A_(1,2), A_(1,3), A_(1,4), A_(2,4), A_(3,4).
 
 No log-concavity inequality was used in the central-current payment.
 
+**Exact certificate-class limitation (half-level-five residuals).**
+For each of these five currents `A_(R,S)`, the exact C++ search
+`character_ring_iter/search_su2_k5_current_farkas.cpp` asks whether the
+cubic `d_0 A_(R,S)` is a nonnegative constant-coefficient combination of
+
+```text
+d_i times q(d),
+```
+
+where `q` ranges over the coordinate monomials, the four log-concavity
+inequalities, the five boundary currents, every coordinate `2 by 2` minor
+of `N_d`, and every `2 by 2` simple-current block minor, together with the
+two full `3 by 3` even/odd block determinants.  Every generator is
+nonnegative under Target 5A8H28UIA2CGLCP.  The two block determinants are
+included without a coordinate multiplier; all other listed quadratic
+generators are multiplied by one nonnegative coordinate.  Since `d_0=0`
+forces `d=0` under PSD, a SAT result would prove the corresponding residual
+current.
+
+The exact rational feasibility systems have `308` generators and return
+
+```text
+target=a12  UNSAT       target=a13  UNSAT
+target=a14  UNSAT       target=a24  UNSAT
+target=a34  UNSAT.
+```
+
+The `a12` obstruction has a short independently checked dual.  Write
+`d=(a,b,c,ell,e,f)` and let `Lambda` be the linear functional on homogeneous
+cubics which is zero on every monomial except
+
+```text
+Lambda(a^3)=Lambda(a^2 f)=Lambda(a f^2)=Lambda(f^3)=1,
+Lambda(a b c)=Lambda(b^3)=4.
+```
+
+Then the exact `cpp_int` verifier returns
+
+```text
+Lambda(d_0 A_(1,2))=-4,
+Lambda(g)>=0 for all 308 generators.
+```
+
+Thus `d_0 A_(1,2)` is not in this cubic generator cone by the elementary
+Farkas separation argument.  The source mode
+`--verify-degree3-block-psd-a12-dual` performs this check without invoking
+a solver.
+
+The first degree-four enlargement also fails at this same residual.  It
+tests `d_0^2 A_(1,2)` against all products of one listed quadratic generator
+with an arbitrary nonnegative coordinate quadratic monomial, together with
+one coordinate times either block determinant.  Its exact rational system
+has `1,083` generators and returns `UNSAT`.  This still omits products of
+two nonmonomial constraints, so it is not a full degree-four preordering;
+it only rules out the natural one-generator-multiplier extension of the
+cubic class.
+
+This is a limitation of that fixed cubic Farkas class, not a disproof of
+Target 5A8H28UIA2CGLCP.  A proof must use a nonlinear or coupled PSD
+consequence, a nonconstant multiplier, or the global payment structure;
+it cannot be a degree-three constant-coefficient assembly from the listed
+local generators.
+
 **Lemma 5A8H28UIA2CGLCPIL4 (half-level-four PSD boundary insertion).**
 At `K=4`, Target 5A8H28UIA2CGLCPI holds for every insertion label
 `0<=Q<=4`.
