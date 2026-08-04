@@ -33360,6 +33360,144 @@ core `H`, prove `(P5A.102CB8S3Z41IC)`.  This is the remaining arbitrary-
 factor Hall payment: a three-block exchange may pay only a width-two deficit
 and must pay it with a ticket free in the original width-two matching.
 
+The full subset family has a sharp one-ticket normalization.  It is the
+appropriate replacement for the false hope that only the complete core `H`
+must be checked.
+
+**Lemma 5A8H28UIA2RKCH3DM1MIN (minimal free-ticket obstruction).**  In the
+notation of Lemma 5A8H28UIA2RKCH3DM1H, put
+
+```text
+N(A)=N_0(A) union N_F(A).
+```
+
+If `(P5A.102CB8S3Z41IB)` fails, then there is a nonempty `A subset H` such
+that
+
+```text
+|N(A)|=|A|-1,
+N(A minus {a})=N(A)                 for every a in A,       (P5A.102CB8S3Z41IB1)
+d_0(A):=|A|-|N_0(A)|=|N_F(A)|+1.                    (P5A.102CB8S3Z41IB2)
+```
+
+In particular, every target in `N(A)` has at least two neighbours in `A`,
+the induced bipartite graph on `A union N(A)` is connected, and deleting
+any source `a` leaves a perfect matching
+
+```text
+A minus {a}  ->  N(A).                              (P5A.102CB8S3Z41IB2A)
+```
+
+Consequently that matching uses every target in each colour class:
+
+```text
+A minus {a} matches onto N_0(A) through E_0
+and onto N_F(A) through E_F.                         (P5A.102CB8S3Z41IB2B)
+```
+
+**Proof.**  Choose an inclusion-minimal nonempty set `A` for which
+`|N(A)|<|A|`.  Every proper subset satisfies Hall.  Hence, for every
+`a in A`,
+
+```text
+|A|-1<=|N(A minus {a})|<=|N(A)|<=|A|-1.
+```
+
+This proves `(P5A.102CB8S3Z41IB1)`.  If a target of `N(A)` had only one
+neighbour `a` in `A`, it would disappear on deleting `a`, contradicting the
+same equality.  Finally `K` and `F` are disjoint, so
+
+```text
+|N(A)|=|N_0(A)|+|N_F(A)|=|A|-1,
+```
+
+which is exactly `(P5A.102CB8S3Z41IB2)`.  If the induced graph were
+disconnected, take the left sets of its connected components.  Each proper
+component set has at least as many neighbours as vertices by minimality, and
+the component neighbourhoods are disjoint.  Summing would give
+`|N(A)|>=|A|`, a contradiction.  Finally every subset of `A minus {a}` is a
+proper subset of `A`, so it satisfies Hall.  Its full neighbourhood is
+`N(A)` by `(P5A.102CB8S3Z41IB1)`, and both sides have size `|A|-1`; Hall
+therefore gives `(P5A.102CB8S3Z41IB2A)`.  This matching is bijective onto
+`N(A)`.  The target classes `K` and `F` are disjoint, and the combined
+graph has respectively only `E_0` and `E_F` edges into them, proving
+`(P5A.102CB8S3Z41IB2B)`.  QED.
+
+**Target 5A8H28UIA2RKCH3DM1MIN (paired one-ticket obstruction
+exclusion).**  In every paired bridge core, rule out a nonempty path-pair
+set `A` satisfying `(P5A.102CB8S3Z41IB1)--(P5A.102CB8S3Z41IB2)`.  By Lemma
+5A8H28UIA2RKCH3DM1MIN this proves Target 5A8H28UIA2RKCH3DM1H.  Thus the
+remaining global allocation need only defeat a deficiency-one obstruction
+whose every old or free ticket is shared by at least two sources and whose
+source-ticket incidence graph is connected, left-factor-critical, and
+simultaneously target-saturating in both ticket colours after every source
+deletion.
+
+There is a sharper formulation in matching ranks.  It does not retain
+unusable neighbours, and makes the minimal obstruction simultaneously
+cyclic for the old and free ticket systems.  For `A subset H`, let
+
+```text
+r_0(A)=maximum matching size from A to K using E_0,
+r_F(A)=maximum matching size from A to F using E_F.       (P5A.102CB8S3Z41IB3)
+```
+
+**Lemma 5A8H28UIA2RKCH3DM1R (two-transversal rank form).**  The Hall
+condition `(P5A.102CB8S3Z41IB)` is equivalent to
+
+```text
+r_0(A)+r_F(A)>=|A|                         for every A subset H. (P5A.102CB8S3Z41IB4)
+```
+
+**Proof.**  If `(P5A.102CB8S3Z41IB)` holds, Hall gives a matching of `H`
+into `K union F`.  Restrict it to `A` and split its edges according to their
+disjoint target classes.  The two pieces have total size `|A|`, and their
+sizes are at most `r_0(A)` and `r_F(A)`, proving
+`(P5A.102CB8S3Z41IB4)`.
+
+Conversely, if Hall failed on `A`, then
+
+```text
+r_0(A)+r_F(A)
+ <=|N_0(A)|+|N_F(A)|<|A|,
+```
+
+contradicting `(P5A.102CB8S3Z41IB4)`.  QED.
+
+**Lemma 5A8H28UIA2RKCH3DM1RMIN (doubly rank-cyclic minimal
+obstruction).**  If `(P5A.102CB8S3Z41IB4)` fails, there is a nonempty
+`A subset H` for which
+
+```text
+r_0(A)+r_F(A)=|A|-1,                            (P5A.102CB8S3Z41IB5)
+r_0(A minus {a})=r_0(A),
+r_F(A minus {a})=r_F(A)                for every a in A. (P5A.102CB8S3Z41IB6)
+```
+
+**Proof.**  Choose an inclusion-minimal failing `A`.  Every deletion
+`A minus {a}` satisfies `(P5A.102CB8S3Z41IB4)`, whereas monotonicity of the
+two matching ranks and failure on `A` give
+
+```text
+|A|-1
+ <=r_0(A minus {a})+r_F(A minus {a})
+ <=r_0(A)+r_F(A)
+ <=|A|-1.
+```
+
+All three quantities are therefore equal.  Since each rank is individually
+nondecreasing under inclusion, equality of their sums forces both equalities
+in `(P5A.102CB8S3Z41IB6)`, and the common sum is
+`(P5A.102CB8S3Z41IB5)`.  QED.
+
+**Target 5A8H28UIA2RKCH3DM1RMIN (paired doubly-cyclic obstruction
+exclusion).**  Rule out a nonempty path-pair set satisfying
+`(P5A.102CB8S3Z41IB5)--(P5A.102CB8S3Z41IB6)`.  Equivalently, prove that
+the old two-block and free three-block transversal systems cannot have a
+common connected one-defect restriction in which every source is
+rank-redundant in both systems.  Lemma 5A8H28UIA2RKCH3DM1R reduces this
+target exactly to the arbitrary-factor free-ticket payment.
+
 **Proposition 5A8H28UIA2RKCH3DM1EX (single-exchange non-Cartesian
 linkage).**  In the `(1,1,2,2,6,6)`, `(R,S)=(9,2)` instance of Proposition
 5A8H28UIA2RKCH3ROOTESC, Target 5A8H28UIA2RKCH3DM1 holds.  The exact flow

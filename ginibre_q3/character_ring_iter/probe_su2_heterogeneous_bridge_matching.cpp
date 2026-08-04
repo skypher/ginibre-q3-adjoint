@@ -1,5 +1,7 @@
 #include <algorithm>
+#include <bit>
 #include <cstdlib>
+#include <cstdint>
 #include <iostream>
 #include <limits>
 #include <map>
@@ -549,7 +551,100 @@ struct Statistics {
     std::vector<std::string> first_hall_vertices;
     std::vector<std::pair<Path, Path>> first_hall_pairs;
     std::string first_three_block_repair;
+    std::string first_core_deficit_enumeration;
 };
+
+std::string enumerate_core_deficits(
+    const std::vector<std::vector<int>>& graph,
+    const Matching& matching
+) {
+    std::vector<int> right_remap(matching.hall_right_membership.size(), -1);
+    std::size_t right_count = 0U;
+    for (std::size_t right = 0U;
+         right < matching.hall_right_membership.size();
+         ++right) {
+        if (!matching.hall_right_membership[right]) {
+            continue;
+        }
+        right_remap[right] = static_cast<int>(right_count);
+        ++right_count;
+    }
+    std::vector<std::size_t> left_indices;
+    left_indices.reserve(matching.hall_left);
+    for (std::size_t left = 0U;
+         left < matching.hall_left_membership.size();
+         ++left) {
+        if (matching.hall_left_membership[left]) {
+            left_indices.push_back(left);
+        }
+    }
+    if (left_indices.size() != matching.hall_left
+        || right_count != matching.hall_right) {
+        throw std::runtime_error("inconsistent alternating core membership");
+    }
+    if (left_indices.size() > 22U || right_count > 64U) {
+        throw std::invalid_argument(
+            "--enumerate-core-deficits requires core_left<=22 and core_right<=64"
+        );
+    }
+    std::vector<std::uint64_t> edge_masks(left_indices.size(), 0U);
+    for (std::size_t local_left = 0U;
+         local_left < left_indices.size();
+         ++local_left) {
+        const std::size_t global_left = left_indices[local_left];
+        for (const int global_right : graph[global_left]) {
+            const std::size_t right_index = static_cast<std::size_t>(global_right);
+            const int local_right = right_remap[right_index];
+            if (local_right < 0) {
+                throw std::runtime_error("core edge leaves alternating neighbourhood");
+            }
+            const unsigned bit = static_cast<unsigned>(local_right);
+            edge_masks[local_left] |= std::uint64_t{1} << bit;
+        }
+    }
+    const std::uint64_t subset_count =
+        std::uint64_t{1} << static_cast<unsigned>(left_indices.size());
+    std::vector<std::uint64_t> neighbourhoods(
+        static_cast<std::size_t>(subset_count),
+        0U
+    );
+    std::size_t positive_deficit_subsets = 0U;
+    std::size_t proper_positive_deficit_subsets = 0U;
+    std::size_t maximum_deficit = 0U;
+    std::size_t maximum_deficit_subsets = 0U;
+    for (std::uint64_t subset = 1U; subset < subset_count; ++subset) {
+        const std::uint64_t previous = subset & (subset - 1U);
+        const unsigned added_bit = static_cast<unsigned>(std::countr_zero(subset));
+        const std::size_t subset_index = static_cast<std::size_t>(subset);
+        neighbourhoods[subset_index] = neighbourhoods[
+            static_cast<std::size_t>(previous)
+        ] | edge_masks[static_cast<std::size_t>(added_bit)];
+        const std::size_t subset_size = static_cast<std::size_t>(std::popcount(subset));
+        const std::size_t neighbourhood_size = static_cast<std::size_t>(
+            std::popcount(neighbourhoods[subset_index])
+        );
+        if (subset_size <= neighbourhood_size) {
+            continue;
+        }
+        const std::size_t deficit = subset_size - neighbourhood_size;
+        ++positive_deficit_subsets;
+        if (subset + 1U != subset_count) {
+            ++proper_positive_deficit_subsets;
+        }
+        if (deficit > maximum_deficit) {
+            maximum_deficit = deficit;
+            maximum_deficit_subsets = 1U;
+        } else if (deficit == maximum_deficit) {
+            ++maximum_deficit_subsets;
+        }
+    }
+    return "core_deficit_subsets=" + std::to_string(positive_deficit_subsets)
+        + " core_proper_deficit_subsets="
+        + std::to_string(proper_positive_deficit_subsets)
+        + " core_maximum_deficit=" + std::to_string(maximum_deficit)
+        + " core_maximum_deficit_subsets="
+        + std::to_string(maximum_deficit_subsets);
+}
 
 void inspect_instance(
     int boundary,
@@ -561,6 +656,7 @@ void inspect_instance(
     bool print_hall,
     bool summarize_hall,
     bool repair_hall_three,
+    bool enumerate_core_deficits_flag,
     Statistics& statistics
 ) {
     std::map<std::string, int> ids;
@@ -635,6 +731,12 @@ void inspect_instance(
                         }
                     }
                 }
+            }
+            if (enumerate_core_deficits_flag) {
+                statistics.first_core_deficit_enumeration = enumerate_core_deficits(
+                    graph,
+                    matching
+                );
             }
             if (repair_hall_three) {
                 std::map<std::string, int> root_escape_ids;
@@ -925,6 +1027,52 @@ void inspect_instance(
                     }
                     one_exchange_graph.push_back(std::move(retained));
                 }
+                std::vector<std::size_t> one_exchange_free_degrees(
+                    one_exchange_targets,
+                    0U
+                );
+                for (std::size_t left = 0U;
+                     left < one_exchange_graph.size();
+                     ++left) {
+                    const std::vector<int>& neighbours = one_exchange_graph[left];
+                    for (const int neighbour : neighbours) {
+                        const std::size_t neighbour_index =
+                            static_cast<std::size_t>(neighbour);
+                        if (!one_exchange_target_is_neighbourhood[
+                                neighbour_index
+                            ]) {
+                            ++one_exchange_free_degrees[neighbour_index];
+                        }
+                    }
+                }
+                std::size_t one_exchange_free_targets = 0U;
+                std::size_t one_exchange_free_minimum_degree =
+                    std::numeric_limits<std::size_t>::max();
+                std::size_t one_exchange_free_maximum_degree = 0U;
+                for (std::size_t one_exchange_target = 0U;
+                     one_exchange_target < one_exchange_targets;
+                     ++one_exchange_target) {
+                    if (one_exchange_target_is_neighbourhood[
+                            one_exchange_target
+                        ]) {
+                        continue;
+                    }
+                    const std::size_t degree = one_exchange_free_degrees[
+                        one_exchange_target
+                    ];
+                    if (degree == 0U) {
+                        throw std::runtime_error("retained free ticket has no edge");
+                    }
+                    ++one_exchange_free_targets;
+                    one_exchange_free_minimum_degree = std::min(
+                        one_exchange_free_minimum_degree,
+                        degree
+                    );
+                    one_exchange_free_maximum_degree = std::max(
+                        one_exchange_free_maximum_degree,
+                        degree
+                    );
+                }
                 const std::size_t one_exchange_left_count =
                     one_exchange_graph.size();
                 const std::size_t one_exchange_vertex_count =
@@ -1173,6 +1321,12 @@ void inspect_instance(
                     + std::to_string(one_exchange_targets)
                     + " one_exchange_neighbourhood_targets="
                     + std::to_string(one_exchange_neighbourhood_targets)
+                    + " one_exchange_free_targets="
+                    + std::to_string(one_exchange_free_targets)
+                    + " one_exchange_free_minimum_degree="
+                    + std::to_string(one_exchange_free_minimum_degree)
+                    + " one_exchange_free_maximum_degree="
+                    + std::to_string(one_exchange_free_maximum_degree)
                     + " one_exchange_required_flow="
                     + std::to_string(one_exchange_required_flow)
                     + " one_exchange_achieved_flow="
@@ -1319,6 +1473,7 @@ int main(int argc, char** argv) {
         bool print_hall = false;
         bool summarize_hall = false;
         bool repair_hall_three = false;
+        bool enumerate_core_deficits_flag = false;
         while (argument_end >= 2) {
             const std::string flag{argv[argument_end - 1]};
             if (flag == "--print-hall") {
@@ -1329,6 +1484,9 @@ int main(int argc, char** argv) {
                 --argument_end;
             } else if (flag == "--repair-hall-three") {
                 repair_hall_three = true;
+                --argument_end;
+            } else if (flag == "--enumerate-core-deficits") {
+                enumerate_core_deficits_flag = true;
                 --argument_end;
             } else {
                 break;
@@ -1345,7 +1503,8 @@ int main(int argc, char** argv) {
                 throw std::invalid_argument(
                     "instance mode requires --instance R S --maximum-blocks "
                     "L --paired-root LABEL... [--print-hall] "
-                    "[--summarize-hall] [--repair-hall-three]"
+                    "[--summarize-hall] [--repair-hall-three] "
+                    "[--enumerate-core-deficits]"
                 );
             }
             fixed_instance = true;
@@ -1358,7 +1517,8 @@ int main(int argc, char** argv) {
                 "usage: probe_su2_heterogeneous_bridge_matching "
                 "--paired-root LABEL... or --instance R S --maximum-blocks "
                 "L --paired-root LABEL... [--print-hall] "
-                "[--summarize-hall] [--repair-hall-three]"
+                "[--summarize-hall] [--repair-hall-three] "
+                "[--enumerate-core-deficits]"
             );
         }
         std::vector<int> root;
@@ -1430,6 +1590,7 @@ int main(int argc, char** argv) {
                         print_hall,
                         summarize_hall,
                         repair_hall_three,
+                        enumerate_core_deficits_flag,
                         statistics
                     );
                 }
@@ -1459,6 +1620,10 @@ int main(int argc, char** argv) {
         if (repair_hall_three) {
             std::cout << " three_block_hall_repair="
                       << statistics.first_three_block_repair;
+        }
+        if (enumerate_core_deficits_flag) {
+            std::cout << " core_deficit_enumeration="
+                      << statistics.first_core_deficit_enumeration;
         }
         std::cout
                   << " result=PASS"
