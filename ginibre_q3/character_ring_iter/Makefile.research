@@ -776,6 +776,27 @@ analyze_su2_fusion_endpoint_masks: analyze_su2_fusion_endpoint_masks.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
 
+verify_su2_crossing_weight_fold: verify_su2_crossing_weight_fold.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+analyze_su2_crossing_weight_masks: analyze_su2_crossing_weight_masks.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+verify_su2_shell_terminal_coordinates: \
+		verify_su2_shell_terminal_coordinates.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
+emit_su2_shell_v_wall_catalog: emit_su2_shell_v_wall_catalog.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
+probe_su2_shell_tail_swap: probe_su2_shell_tail_swap.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -o $@
+
 analyze_general_graph_full_prefix_kernel: analyze_general_graph_full_prefix_kernel.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -o $@
@@ -1047,6 +1068,11 @@ RESEARCH_TARGETS = \
 	verify_su2_tensor_power_hinges \
 	verify_su2_fusion_power_endpoints \
 	analyze_su2_fusion_endpoint_masks \
+	verify_su2_crossing_weight_fold \
+	analyze_su2_crossing_weight_masks \
+	verify_su2_shell_terminal_coordinates \
+	emit_su2_shell_v_wall_catalog \
+	probe_su2_shell_tail_swap \
 	analyze_general_graph_full_prefix_kernel \
 	prove_su2_k3_kernel \
 	analyze_su2_k3_intermediate_masks \

@@ -29227,6 +29227,226 @@ the `1,948` marginal masks alone were the complete packet workload was
 too strong; they close entry-level affine-wall discovery, not the
 variable-range suffix summation.
 
+The crossing weights admit the same finite endpoint reduction; they do
+not introduce an unbounded recurrence into that remaining workload.
+
+**Lemma 5A8H28P1 (crossing weights are folded tensor-power tails).**
+Let `F_(K,Q)` be the rescaled even-label form of the level-`2K` fusion
+matrix `N_(2Q)^(2K)`; equivalently, its labels are `0,...,K` and
+
+```text
+(F_(K,Q))_(s,t)=1_(|s-Q|<=t<=s+Q, s+t+Q<=2K).
+```
+
+Let `A_+` and `Delta` be its reflected quotient and crossing triangle
+from Lemma 5A8H28A, and put
+
+```text
+d_a(V)=(e_0^T A_+^a Delta)_V,                 0<=a<=5.
+```
+
+Write `I={0,...,floor((K-1)/2)}` and include the fixed centre `K/2`
+once when `K` is even.  For `U` below the centre set
+
+```text
+R_a(U)=(F_(K,Q))^a_(0,U)+(F_(K,Q))^a_(0,K-U),
+```
+
+and at the centre set `R_a(K/2)=(F_(K,Q))^a_(0,K/2)`.  Then, for every
+`1<=a<=5`,
+
+```text
+d_a(V)=2 sum_(U>=K-Q-V) R_a(U).                 (P5A.102BU)
+```
+
+Moreover `d_a(V)` is a signed sum of a bounded number of truncated
+binomial endpoint terms, uniformly in `K,Q,V`.
+
+**Proof.**  Folding the full fusion walk at reflection gives, by
+induction on `a`, exactly
+
+```text
+(e_0^T A_+^a)_U=R_a(U).
+```
+
+The centre has one orbit point; the asymmetric centre entries of
+`A_+` are precisely its orbit-size correction, so the same identity
+holds there.  Lemma 5A8H28A gives
+`Delta_(U,V)=2 1_(U+V>=K-Q)`, which proves `(P5A.102BU)`.
+
+For the endpoint claim, decompose the classical tensor power as
+
+```text
+V_(2Q)^(tensor a)
+ =sum_(r=0)^(aQ){w_(a,2Q)(r)-w_(a,2Q)(r-1)}V_(2(aQ-r)),
+w_(a,2Q)(r)=[x^r](1+x+...+x^(2Q))^a.
+```
+
+Put `L=K-Q-V` and `H=Q+V`; if `L>H`, the tail is empty.  Otherwise,
+folding at level `2K` sends `m=aQ-r` through the three possible signed
+rescaled branches
+
+```text
+m in [L,H],                    sign +;
+m in [2K+1-H,2K+1-L],          sign -;
+m in [2K+2+L,2K+2+H],          sign +.             (P5A.102BUI)
+```
+
+The condition on each line is one interval in `r`, and summing the
+displayed first differences telescopes to endpoint values of
+`w_(a,2Q)`.  Since `aQ<3(K+1)` for `a<=5` and `2Q<K`, no fourth branch
+can occur.  Finally
+
+```text
+w_(a,2Q)(r)=sum_(j=0)^a (-1)^j binom(a,j)
+              binom(r-j(2Q+1)+a-1,a-1),
+```
+
+so every endpoint is a truncated-binomial polynomial.  QED.
+
+**Lemma 5A8H28P1A (terminal endpoint coordinate bridge).**
+Put
+
+```text
+ell=K-1,                    d=ell-2Q.
+```
+
+For lower-orbit coordinates `V,x` in `I`, the terminal factor in the
+`t=2` packet is exactly
+
+```text
+(A_-^b)_(V,x)
+ =(N_d^b)_(2V,J^b(2x)),                  1<=b<=4,  (P5A.102BUA)
+```
+
+where `J(c)=ell-c` is the level-`ell` simple current.  Thus the
+crossing formula `(P5A.102BU)` and the signed terminal endpoint formula
+`(P5A.102BS)` share the literal crossing coordinate `V`; no inferred
+rescaling or parity convention remains in the joint fan.
+
+**Proof.**  The first assertion of Lemma 5A8H28A identifies the
+nonzero odd quotient with the even-label component of
+`N_(2Q)^(ell)` under `V -> 2V`.  Its simple-current factorization is
+`N_(2Q)=J N_d`, and `J` commutes with every fusion matrix.  Taking the
+`b`-th power gives `(P5A.102BUA)`.  QED.
+
+The strict C++ verifier
+`character_ring_iter/verify_su2_shell_terminal_coordinates.cpp` builds
+the quotient directly from the half-label fusion rule and independently
+evaluates the right-hand side of `(P5A.102BUA)`.  Through `K=100` it
+checked `3,165,400` quotient entries and `12,661,600` power coordinates
+for `1<=b<=4`, with no mismatch.  This audits the coordinate convention;
+the displayed identity is uniform.
+
+The strict C++ verifier
+`character_ring_iter/verify_su2_crossing_weight_fold.cpp` constructs
+both sides of `(P5A.102BU)` independently from the full fusion matrix
+and the reflected quotient.  Its bounded replay audits the fold and
+the central-orbit convention; the proof above is uniform.  Thus the
+remaining variable-width task is now one finite joint fan for the
+endpoint formulas of `d_a(V)` and `P_b(V,x)`, followed by exact
+polynomial summation on its `V`-segments.  It is not yet a packet-sign
+certificate.
+
+**Lemma 5A8H28P2 (exact crossing-weight endpoint-mask census).**
+On the active crossing domain
+
+```text
+Q>=1,                 2Q<K,                 0<=V<K/2,
+K-Q-V<=Q+V,
+```
+
+the three branch intervals in `(P5A.102BUI)`, together with every
+truncated-binomial activation at both of their endpoints, have the
+following exact feasible-mask counts:
+
+```text
+a                  1   2   3   4    5
+masks             16  28  44  72  102
+joint a=1,...,5                         408.       (P5A.102BUJ)
+```
+
+Outside the displayed domain all `d_a(V)` vanish, so it contributes one
+zero crossing region.
+
+**Proof.**  The endpoint lower and upper indices on each line of
+`(P5A.102BUI)` are respectively the maximum of `0` and one affine
+function, and the minimum of `aQ` and one affine function.  Record both
+attainment choices, interval nonemptiness, the `L-1` endpoint, and the
+activation of every term
+
+```text
+binom(r-j(2Q+1)+a-1,a-1),                 1<=j<=a,
+```
+
+at each endpoint.  Along with the three residue bits of `K,Q,V`, this
+Boolean data determine every endpoint polynomial.  The strict Z3 source
+`character_ring_iter/analyze_su2_crossing_weight_masks.cpp` ranges over
+the unbounded integer domain above and blocks each complete Boolean mask.
+It returns exactly the counts in `(P5A.102BUJ)`.  The census deliberately
+retains endpoint choices of empty branch intervals, so it is a finite
+over-refinement of the actual polynomial fan; this is harmless for the
+subsequent exact segment summation.  QED.
+
+**Lemma 5A8H28P3 (finite joint `V`-wall catalog).**
+With the parities of `K,Q,V,x` fixed, all endpoint and activation
+choices in `(P5A.102BU)` and `(P5A.102BUA)` can change only on affine
+walls `aK+bQ+cV+d x+e=0`.  There are exactly `139` normalized crossing
+walls (`127` with nonzero `V` coefficient), `378` normalized terminal
+walls (`276` with nonzero `V` coefficient), and `509` in their union
+(`402` with nonzero `V` coefficient).  Every moving wall has `V`
+coefficient of absolute value `1`, `2`, or `4`.
+
+**Proof.**  Crossing endpoints are maxima or minima of two affine
+forms.  After resolving the two terminal absolute-value and upper-wall
+choices, terminal endpoints are floors or ceilings of affine forms.
+Their comparisons need only the adjacent doubled differences `-1,0,1`;
+their two activation thresholds are `2d+3` and `2d+2`.  This exhausts
+every `V`-dependent operation in the endpoint formulas.  Thus, after
+adjoining `V=rho` and the physical endpoints, every maximal integer
+`V`-segment has a fixed polynomial integrand and an exact Faulhaber
+sum.  The strict C++ generator
+`character_ring_iter/emit_su2_shell_v_wall_catalog.cpp` constructs and
+normalizes this safe over-refinement symbolically.  It does not assert
+feasibility of every wall or positivity of any segment sum.  QED.
+
+The catalog also has an exact feasibility pruning in the still-open band
+`Q>=7`, `d=K-1-2Q>=10`.  Of the `402` moving walls, only `154` can meet
+an integer `V` transition in the physical active-crossing domain.  Of
+the `107` parameter-only walls, only `25` meet that domain.  The
+`--feasible` mode of `emit_su2_shell_v_wall_catalog.cpp` checks each
+affine wall independently in Presburger arithmetic.  This is a
+reduction of candidate events, not a positivity certificate.
+
+The natural Fubini reorganization of the shell does not make the
+five-step payment local in the pre-crossing coordinate.  If
+
+```text
+d_a(V)=sum_U r_a(U) Delta_(U,V),
+```
+
+then the exact identity
+
+```text
+sum_(V>=rho)d_a(V)P_b(V,x)
+ =sum_U r_a(U) sum_(V>=rho)Delta_(U,V)P_b(V,x)     (P5A.102BUL)
+```
+
+holds term by term.  However, after combining all `f_4` and `-f_5`
+terms of `(LBK2)`, the individual `U`-groups in the right-hand side of
+`(P5A.102BUL)` are not nonnegative.  The first exact witness is
+
+```text
+(K,Q,rho,x,U)=(7,2,0,0,2),              value=-2.  (P5A.102BUM)
+```
+
+The strict C++ probe
+`character_ring_iter/probe_su2_shell_tail_swap.cpp` computes both sides
+of `(P5A.102BUL)` independently, checks their equality before reporting
+the witness, and returns `tail_swap=PASS_EXACT_IDENTITY`.  Thus Fubini is
+useful for alternative global reorganizations but cannot supply a
+pointwise pre-crossing payment cone.
+
 Thus the following is a sufficient strengthening of the missing
 global-payment lemma:
 
