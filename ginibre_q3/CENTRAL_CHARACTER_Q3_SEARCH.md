@@ -29137,6 +29137,68 @@ satisfies every hypothesis by `(P5A.102E)`, `(P5A.102Q)`, and Lemma
 5A8H27, so this target implies every `(FBPC_j)` and hence the
 arbitrary-factor global-payment lemma.
 
+**Lemma 5A8H28R6A (interior block-Jacobi normal form).**  Retain
+`k=2K`, `q=2Q`, and `K>2Q`.  On the central label interval
+`[Q,K-Q]`, take any consecutive collection of complete blocks
+
+```text
+B_r={Q+rQ,Q+rQ+1,...,Q+(r+1)Q-1},
+                  0<=r<B.                         (P5A.102BV4)
+```
+
+which are contained in that interval.  Let `M` be the restriction of
+`N_(2Q)` to their union.  With local block indices `0,...,Q-1`, put
+
+```text
+J_Q=(1)_(0<=i,j<Q),
+L_Q(i,j)=1_(j<=i),
+D_Q(i,j)=1_(i=j)-1_(i=j+1),
+S_B(r,s)=1_(s=r+1).
+```
+
+Then `M` is block tridiagonal:
+
+```text
+M=I_B tensor J_Q+S_B tensor L_Q+S_B^T tensor L_Q^T. (P5A.102BV5)
+```
+
+Moreover, for `mathcal D=I_B tensor D_Q`,
+
+```text
+mathcal D M mathcal D^T
+ =I_B tensor e_0e_0^T
+   +S_B tensor D_Q^T+S_B^T tensor D_Q.             (P5A.102BV6)
+```
+
+Thus the full fusion graph consists of this explicit block-Jacobi core,
+two affine boundary strips of width `Q`, and at most one residual partial
+block of width less than `Q`.  The block difference form has signed
+nearest-neighbour entries for `Q>1`; it is a normal form for the global
+allocation, not an entrywise-positive propagation claim.
+
+**Proof.**  For `X,Y` in `[Q,K-Q]`, the two lower fusion inequalities in
+`(P5A.102AY)` are equivalent to `|X-Y|<=Q`, and the affine upper inequality
+is automatic.  In the block coordinates `X=Q+rQ+i`,
+`Y=Q+sQ+j`, this permits every pair in one block, permits between adjacent
+blocks exactly `j<=i` when `s=r+1`, and permits no pair of blocks farther
+apart.  This is `(P5A.102BV5)`.
+
+The lower unitriangular matrix is `L_Q=D_Q^(-1)`, while
+
+```text
+D_Q J_Q D_Q^T=e_0e_0^T,
+D_Q L_Q D_Q^T=D_Q^T.
+```
+
+Taking transposes gives the other off-diagonal block.  Applying this block
+by block to `(P5A.102BV5)` proves `(P5A.102BV6)`.  QED.
+
+The exact C++ verifier
+`character_ring_iter/verify_su2_block_jacobi_core.cpp` reconstructs the
+fusion core and both displayed block identities through half-level eighty
+and half-label twelve.  This is an implementation audit; the interval
+calculation above proves the uniform normal form.
+
 The same target has two exact forms which remove inessential
 bookkeeping.  The first removes both projected-path pairs and their
 shuffle capacities.  For `m=2j+1`, let
@@ -37655,6 +37717,85 @@ corner entry of a polynomial is its divided difference at the
 spectrum times the product of the off-diagonal entries.  That product
 is one here.  Substitution of the definition of `R_(m,t)` gives
 `(P5A.102CI)`.  QED.
+
+**Proposition 5A8H28XA (the minimal label is the unique positive
+mixed-incidence recurrence).**  Let `k` be even, let `q` be even with
+`2<=q<=k`, and write `E` and `O` for the even and odd label sectors.
+The fundamental fusion recurrence is
+
+```text
+N_1 N_(q-1)=N_q+N_(q-2).                         (P5A.102CIa)
+```
+
+For `q=2`, its right side is the positive Gram matrix
+
+```text
+N_2+I=N_1^2.
+```
+
+For every `q>=4`, the right side is not positive semidefinite, already
+on the even sector.  More precisely, with
+
+```text
+A_q=(N_q+N_(q-2))|_E,
+```
+
+the principal minor on the vacuum and `q-2` is
+
+```text
+det (A_q)_[{0,q-2},{0,q-2}]=-1.                  (P5A.102CIb)
+```
+
+The mixed incidence itself is also not totally nonnegative.  Its rows
+`q-3,q-1` and columns `0,2` have minor
+
+```text
+det (N_(q-1))_[{q-3,q-1},{0,2}]=-1.              (P5A.102CIc)
+```
+
+Consequently the factorization in `(P5A.102CIa)` is a Gram factorization
+only at the minimal label.  In particular, replacing the incidence matrix
+in Lemmas 5A8H28AD--5A8H28AM by `N_(q-1)` cannot give a direct higher-label
+positive-compound extension of the `q=2` proof; a termwise mixed
+Cauchy--Binet proof cannot recover it either.
+
+**Proof.**  The interval `1 star_k (q-1)` has exactly the two outputs
+`q-2,q`, including at the upper wall `q=k`, proving `(P5A.102CIa)`.
+At `q=2`, this reads `N_1^2=N_2+N_0=N_2+I`, so it is a Gram matrix.
+
+For `q>=4`, the vacuum fusion row gives
+
+```text
+(A_q)_(0,0)=0,                 (A_q)_(0,q-2)=1.
+```
+
+Symmetry gives the transposed entry, so the indicated determinant is
+`0*(A_q)_(q-2,q-2)-1=-1`.  Thus `A_q` is not positive semidefinite.
+The two vacuum-neighbour fusion intervals for `N_(q-1)` give
+
+```text
+(N_(q-1))_(q-3,0)=0,       (N_(q-1))_(q-3,2)=1,
+(N_(q-1))_(q-1,0)=1,       (N_(q-1))_(q-1,2)=1.
+```
+
+Their determinant is `(P5A.102CIc)`.  Hence the mixed factor is not
+totally nonnegative in the natural label orders.
+Finally write
+
+```text
+B=(N_1)_(O,E),                 C=(N_(q-1))_(O,E).
+```
+
+The even block of `(P5A.102CIa)` is `B^T C=C^T B`.  At `q=2`, `C=B`
+and this is `B^T B`; at every larger even `q` the negative principal
+minor proves that it cannot be a Gram/PSD factor.  QED.
+
+The strict C++ verifier
+`character_ring_iter/verify_su2_mixed_incidence_obstruction.cpp`
+reconstructs the finite fusion matrices, audits `(P5A.102CIa)`, the
+minimal Gram identity, and the exact minors `(P5A.102CIb)--(P5A.102CIc)`
+through level thirty-two.  Its bounded range audits the implementation
+only; the proof above supplies the uniform statement.
 
 Two tempting strengthenings of `(P5A.102CI)` are false.
 

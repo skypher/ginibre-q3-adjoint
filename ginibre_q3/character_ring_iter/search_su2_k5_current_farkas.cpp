@@ -950,12 +950,62 @@ int nonlinear_counterexample(const std::string& target_name) {
     return EXIT_SUCCESS;
 }
 
+int reduced_a12_counterexample() {
+    z3::context context;
+    z3::solver solver(context);
+    const z3::expr x = context.real_const("ratio_x");
+    const z3::expr y = context.real_const("ratio_y");
+    const z3::expr z = context.real_const("ratio_z");
+    const z3::expr w = context.real_const("ratio_w");
+    const z3::expr one = context.real_val(1);
+    const z3::expr zero = context.real_val(0);
+
+    // Normalize a=1 and write b=x, c=xy, ell=xyz, e=xyzw.
+    // These are the positive-coordinate log-concavity ratios.  The two
+    // odd-block minors and the two coordinate PSD minors below are necessary
+    // consequences of the full K=5 hypotheses.
+    solver.add(x >= zero && y >= zero && z >= zero && w >= zero);
+    solver.add(x >= y && y >= z && z >= w);
+    solver.add(one + y + y * z - x * y < zero);
+    solver.add(x * x * (one - y * z * w) * (one - y * z * w) <= one);
+    solver.add(x * x * y * y * (one - z) * (one - z) <= one);
+    solver.add(x * x <= one + x + x * y);
+    solver.add(
+        x * x * y * y
+            <= one + x + x * y + x * y * z + x * y * z * w
+    );
+
+    const z3::check_result result = solver.check();
+    std::cout
+        << "SU2_K5_A12_RATIO_REDUCTION"
+        << " result="
+        << (result == z3::sat
+                ? "SAT"
+                : result == z3::unsat ? "UNSAT" : "UNKNOWN")
+        << '\n';
+    if (result == z3::sat) {
+        const z3::model model = solver.get_model();
+        std::cout
+            << "SU2_K5_A12_RATIO_REDUCTION_WITNESS"
+            << " x=" << model.eval(x, true)
+            << " y=" << model.eval(y, true)
+            << " z=" << model.eval(z, true)
+            << " w=" << model.eval(w, true)
+            << '\n';
+    }
+    return EXIT_SUCCESS;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
     try {
         if (argc == 3 && std::string(argv[1]) == "--counterexample") {
             return nonlinear_counterexample(argv[2]);
+        }
+        if (argc == 2 && std::string(argv[1])
+            == "--counterexample-a12-reduced") {
+            return reduced_a12_counterexample();
         }
         if (argc == 3 && std::string(argv[1]) == "--degree3") {
             return cubic_farkas(argv[2], true, true);
@@ -983,6 +1033,7 @@ int main(int argc, char** argv) {
             throw std::invalid_argument(
                 "usage: search_su2_k5_current_farkas [aRS] | "
                 "--counterexample aRS | --degree3 aRS | "
+                "--counterexample-a12-reduced | "
                 "--degree3-basic aRS | --degree3-block-psd aRS | "
                 "--degree3-block-psd-dual aRS | "
                 "--degree4-block-psd aRS | "
