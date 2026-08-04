@@ -19213,6 +19213,39 @@ one.  Thus this run is an incomplete certificate, not a negative
 value or a counterexample.  No six-coordinate theorem is inferred
 from it.
 
+An exact adaptive refinement of that first residual rules out blind
+subdivision as a credible completion mechanism.  The C++ mode
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --ratio-cube-best 5 20 10 1
+```
+
+uses, at each nonnegative-Bernstein failure, the coordinate split
+minimizing the combined number of negative child coefficients.  It reduces
+the four cyclic residual boxes to one, located at
+
+```text
+cell=(3,7,7,15,255),       splits=(2,3,3,4,8).
+```
+
+The stricter exact replay with depth `28` instead returns
+
+```text
+nodes=95, leaves=37, unresolved=11,
+first_unresolved_cell=(15,31,59,31,255),
+first_unresolved_splits=(4,5,6,5,8).
+```
+
+The associated corner substitution also has mixed power coefficients;
+its leading term is positive but does not pay the higher terms.  These are
+exact diagnostics of a proof method, not a positivity theorem or a
+counterexample.  They concern the broader tail-only cone: the shaped-square
+theorem below adds log concavity of the doubled profile and still closes the
+actual six-coordinate factor-word class.  Thus only a tail-only extension
+would need a coupled boundary reserve rather than a finer Bernstein
+partition.
+
 The finite-support ladder is not needed on the upper half of the
 radial triangle.  There is a uniform injection there which uses log
 concavity of the root rather than log concavity of its torus tail.

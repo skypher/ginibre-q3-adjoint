@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 #include <map>
 #include <set>
 #include <stdexcept>
@@ -36,6 +37,49 @@ int parse_positive(const char* text, const std::string& name) {
     throw std::invalid_argument(name + " must be a positive integer");
   }
   return static_cast<int>(parsed);
+}
+
+int parse_nonnegative(const char* text, const std::string& name) {
+  const std::string value{text};
+  std::size_t consumed = 0U;
+  const long parsed = std::stol(value, &consumed, 10);
+  if (consumed != value.size() || parsed < 0) {
+    throw std::invalid_argument(name + " must be a nonnegative integer");
+  }
+  return static_cast<int>(parsed);
+}
+
+std::vector<int> parse_csv_nonnegative(
+    const char* text,
+    const std::string& name
+) {
+  const std::string input{text};
+  std::vector<int> result;
+  std::size_t begin = 0U;
+  while (begin < input.size()) {
+    const std::size_t end = input.find(',', begin);
+    const std::string part = input.substr(
+        begin,
+        end == std::string::npos ? std::string::npos : end - begin
+    );
+    if (part.empty()) {
+      throw std::invalid_argument(name + " contains an empty coordinate");
+    }
+    std::size_t consumed = 0U;
+    const long value = std::stol(part, &consumed, 10);
+    if (consumed != part.size() || value < 0) {
+      throw std::invalid_argument(name + " has an invalid coordinate");
+    }
+    result.push_back(static_cast<int>(value));
+    if (end == std::string::npos) {
+      break;
+    }
+    begin = end + 1U;
+  }
+  if (result.empty()) {
+    throw std::invalid_argument(name + " is empty");
+  }
+  return result;
 }
 
 Pair pair_monomial(const int first, const int second) {
@@ -648,6 +692,60 @@ BigPolynomial reflect_unit_variable(
           coefficient * sign
           * binomial(exponent[variable], power);
     }
+  }
+  return result;
+}
+
+Integer integer_power(Integer base, int exponent) {
+  Integer result = 1;
+  while (exponent > 0) {
+    if ((exponent & 1) != 0) {
+      result *= base;
+    }
+    base *= base;
+    exponent /= 2;
+  }
+  return result;
+}
+
+BigPolynomial restrict_to_dyadic_cell(
+    const BigPolynomial& input,
+    const std::vector<int>& cell,
+    const std::vector<int>& splits
+) {
+  if (input.empty() || input.begin()->first.empty()
+      || cell.size() != input.begin()->first.size()
+      || splits.size() != cell.size()) {
+    throw std::invalid_argument("invalid dyadic-cell restriction");
+  }
+  BigPolynomial result = input;
+  for (std::size_t variable = 0U; variable < cell.size(); ++variable) {
+    if (splits[variable] < 0) {
+      throw std::invalid_argument("negative dyadic split count");
+    }
+    const Integer denominator = integer_power(Integer(2), splits[variable]);
+    if (Integer(cell[variable]) >= denominator) {
+      throw std::invalid_argument("dyadic cell lies outside the unit cube");
+    }
+    int degree = 0;
+    for (const auto& [exponent, coefficient] : result) {
+      static_cast<void>(coefficient);
+      degree = std::max(degree, exponent[variable]);
+    }
+    BigPolynomial transformed;
+    for (const auto& [exponent, coefficient] : result) {
+      const int power = exponent[variable];
+      const Integer scale = coefficient
+          * integer_power(denominator, degree - power);
+      for (int replacement = 0; replacement <= power; ++replacement) {
+        Exponent output = exponent;
+        output[variable] = replacement;
+        transformed[std::move(output)] += scale
+            * binomial(power, replacement)
+            * integer_power(Integer(cell[variable]), power - replacement);
+      }
+    }
+    result = std::move(transformed);
   }
   return result;
 }
@@ -2864,6 +2962,82 @@ void nd_certify_subdivision(const NDBernsteinGrid& grid, const int depth,
   const std::size_t dimensions = grid.degrees.size();
   nd_certify_subdivision_impl(
       grid, depth, depth_limit,
+      std::vector<std::uint64_t>(dimensions, UINT64_C(0)),
+      std::vector<int>(dimensions, 0), result);
+}
+
+std::size_t nd_negative_count(const NDBernsteinGrid& grid) {
+  return static_cast<std::size_t>(std::count_if(
+      grid.values.begin(), grid.values.end(),
+      [](const Rational& value) { return value < 0; }));
+}
+
+void nd_certify_subdivision_best_impl(
+    const NDBernsteinGrid& grid,
+    const int depth,
+    const int depth_limit,
+    const std::vector<std::uint64_t>& cell,
+    const std::vector<int>& splits,
+    NDSubdivisionResult& result
+) {
+  ++result.nodes;
+  result.maximum_depth = std::max(result.maximum_depth, depth);
+  if (nd_negative_count(grid) == 0U) {
+    ++result.leaves;
+    return;
+  }
+  if (depth >= depth_limit) {
+    ++result.unresolved;
+    if (!result.has_first_unresolved) {
+      result.has_first_unresolved = true;
+      result.first_unresolved_cell = cell;
+      result.first_unresolved_splits = splits;
+    }
+    return;
+  }
+
+  int dimension = -1;
+  std::size_t best_score = std::numeric_limits<std::size_t>::max();
+  for (std::size_t candidate = 0U;
+       candidate < grid.degrees.size();
+       ++candidate) {
+    if (grid.degrees[candidate] == 0) {
+      continue;
+    }
+    const auto [left, right] = nd_split_grid(
+        grid, static_cast<int>(candidate)
+    );
+    const std::size_t score = nd_negative_count(left)
+        + nd_negative_count(right);
+    if (score < best_score) {
+      best_score = score;
+      dimension = static_cast<int>(candidate);
+    }
+  }
+  if (dimension < 0) {
+    throw std::runtime_error("Bernstein grid has no splittable dimension");
+  }
+
+  auto [left, right] = nd_split_grid(grid, dimension);
+  std::vector<std::uint64_t> left_cell = cell;
+  std::vector<std::uint64_t> right_cell = cell;
+  std::vector<int> child_splits = splits;
+  const std::size_t selected = static_cast<std::size_t>(dimension);
+  left_cell[selected] *= UINT64_C(2);
+  right_cell[selected] = right_cell[selected] * UINT64_C(2) + UINT64_C(1);
+  ++child_splits[selected];
+  nd_certify_subdivision_best_impl(
+      left, depth + 1, depth_limit, left_cell, child_splits, result);
+  nd_certify_subdivision_best_impl(
+      right, depth + 1, depth_limit, right_cell, child_splits, result);
+}
+
+void nd_certify_subdivision_best(const NDBernsteinGrid& grid,
+                                 const int depth_limit,
+                                 NDSubdivisionResult& result) {
+  const std::size_t dimensions = grid.degrees.size();
+  nd_certify_subdivision_best_impl(
+      grid, 0, depth_limit,
       std::vector<std::uint64_t>(dimensions, UINT64_C(0)),
       std::vector<int>(dimensions, 0), result);
 }
@@ -6702,6 +6876,8 @@ int analyze_ratio_cube_bernstein(const int support,
   int maximum_depth = 0;
   int first_unresolved_antidiagonal = -1;
   int first_unresolved_depth = -1;
+  std::vector<std::uint64_t> first_unresolved_cell;
+  std::vector<int> first_unresolved_splits;
   for (int antidiagonal = 1; antidiagonal <= maximum_antidiagonal;
        ++antidiagonal) {
     for (int depth = 0; 2 * depth < antidiagonal; ++depth) {
@@ -6725,6 +6901,8 @@ int analyze_ratio_cube_bernstein(const int support,
       if (result.unresolved > 0U && first_unresolved_antidiagonal < 0) {
         first_unresolved_antidiagonal = antidiagonal;
         first_unresolved_depth = depth;
+        first_unresolved_cell = result.first_unresolved_cell;
+        first_unresolved_splits = result.first_unresolved_splits;
       }
       if (result.nodes > 1U) {
         std::cout
@@ -6755,10 +6933,222 @@ int analyze_ratio_cube_bernstein(const int support,
     std::cout
         << " first_unresolved_antidiagonal="
         << first_unresolved_antidiagonal
-        << " first_unresolved_depth=" << first_unresolved_depth;
+        << " first_unresolved_depth=" << first_unresolved_depth
+        << " first_unresolved_cell=(";
+    for (std::size_t index = 0U;
+         index < first_unresolved_cell.size();
+         ++index) {
+      if (index != 0U) {
+        std::cout << ',';
+      }
+      std::cout << first_unresolved_cell[index];
+    }
+    std::cout << ") first_unresolved_splits=(";
+    for (std::size_t index = 0U;
+         index < first_unresolved_splits.size();
+         ++index) {
+      if (index != 0U) {
+        std::cout << ',';
+      }
+      std::cout << first_unresolved_splits[index];
+    }
+    std::cout << ')';
   }
   std::cout
       << " result=" << (unresolved == 0U ? "PASS" : "INCOMPLETE")
+      << '\n' << std::flush;
+  return EXIT_SUCCESS;
+}
+
+int analyze_ratio_cube_best_subdivision(
+    const int support,
+    const int depth_limit,
+    const int antidiagonal,
+    const int depth
+) {
+  if (2 * depth >= antidiagonal) {
+    throw std::invalid_argument("radial depth must be strictly below half");
+  }
+  const Polynomial target = substitute_differences(
+      radial_polynomial(support, antidiagonal, depth), support);
+  const BigPolynomial parameterized =
+      ratio_cube_parameterization(target, support);
+  const NDBernsteinGrid grid = nd_bernstein_grid(parameterized, support);
+  NDSubdivisionResult result;
+  nd_certify_subdivision_best(grid, depth_limit, result);
+  std::cout
+      << "SU2_AUTOCORRELATION_RATIO_CUBE_BEST"
+      << " support=" << support
+      << " antidiagonal=" << antidiagonal
+      << " depth=" << depth
+      << " coefficients=" << grid.values.size()
+      << " initial_negative=" << nd_negative_count(grid)
+      << " depth_limit=" << depth_limit
+      << " nodes=" << result.nodes
+      << " leaves=" << result.leaves
+      << " unresolved=" << result.unresolved
+      << " maximum_depth=" << result.maximum_depth;
+  if (result.has_first_unresolved) {
+    std::cout << " first_unresolved_cell=(";
+    for (std::size_t index = 0U;
+         index < result.first_unresolved_cell.size();
+         ++index) {
+      if (index != 0U) {
+        std::cout << ',';
+      }
+      std::cout << result.first_unresolved_cell[index];
+    }
+    std::cout << ") first_unresolved_splits=(";
+    for (std::size_t index = 0U;
+         index < result.first_unresolved_splits.size();
+         ++index) {
+      if (index != 0U) {
+        std::cout << ',';
+      }
+      std::cout << result.first_unresolved_splits[index];
+    }
+    std::cout << ')';
+  }
+  std::cout
+      << " result=" << (result.unresolved == 0U ? "PASS" : "INCOMPLETE")
+      << '\n' << std::flush;
+  return EXIT_SUCCESS;
+}
+
+int analyze_ratio_cube_local_corner(
+    const int support,
+    const int antidiagonal,
+    const int depth,
+    const std::vector<int>& cell,
+    const std::vector<int>& splits
+) {
+  if (2 * depth >= antidiagonal) {
+    throw std::invalid_argument("radial depth must be strictly below half");
+  }
+  if (static_cast<int>(cell.size()) != support
+      || splits.size() != cell.size()) {
+    throw std::invalid_argument("cell dimension does not match support");
+  }
+  const Polynomial target = substitute_differences(
+      radial_polynomial(support, antidiagonal, depth), support);
+  BigPolynomial local = restrict_to_dyadic_cell(
+      ratio_cube_parameterization(target, support), cell, splits);
+  for (std::size_t variable = 0U; variable < cell.size(); ++variable) {
+    local = reflect_unit_variable(local, variable);
+  }
+  local = remove_common_monomial_factor(local);
+  std::size_t negative = 0U;
+  bool has_first_negative = false;
+  Exponent first_negative;
+  Integer first_negative_value = 0;
+  Integer negative_sum = 0;
+  Integer constant = 0;
+  int leading_degree = std::numeric_limits<int>::max();
+  for (const auto& [exponent, coefficient] : local) {
+    if (coefficient != 0) {
+      int total_degree = 0;
+      for (const int power : exponent) {
+        total_degree += power;
+      }
+      leading_degree = std::min(leading_degree, total_degree);
+    }
+    const bool is_constant = std::all_of(
+        exponent.begin(), exponent.end(),
+        [](const int value) { return value == 0; });
+    if (is_constant) {
+      constant = coefficient;
+    }
+    if (coefficient < 0) {
+      ++negative;
+      negative_sum += coefficient;
+      if (!has_first_negative) {
+        has_first_negative = true;
+        first_negative = exponent;
+        first_negative_value = coefficient;
+      }
+    }
+  }
+  std::cout
+      << "SU2_AUTOCORRELATION_RATIO_CUBE_LOCAL_CORNER"
+      << " support=" << support
+      << " antidiagonal=" << antidiagonal
+      << " depth=" << depth
+      << " terms=" << local.size()
+      << " negative=" << negative
+      << " constant=" << constant
+      << " leading_degree=" << leading_degree
+      << " coefficient_lower_bound=" << constant + negative_sum;
+  if (has_first_negative) {
+    std::cout << " first_negative_exponent=(";
+    for (std::size_t index = 0U; index < first_negative.size(); ++index) {
+      if (index != 0U) {
+        std::cout << ',';
+      }
+      std::cout << first_negative[index];
+    }
+    std::cout << ") first_negative_value=" << first_negative_value;
+  }
+  std::cout
+      << " result="
+      << (negative == 0U || constant + negative_sum >= 0
+              ? "PASS"
+              : "INCOMPLETE")
+      << '\n' << std::flush;
+  if (leading_degree != std::numeric_limits<int>::max()) {
+    std::cout << "SU2_AUTOCORRELATION_RATIO_CUBE_LOCAL_LEADING terms={";
+    bool first = true;
+    for (const auto& [exponent, coefficient] : local) {
+      int total_degree = 0;
+      for (const int power : exponent) {
+        total_degree += power;
+      }
+      if (total_degree != leading_degree) {
+        continue;
+      }
+      if (!first) {
+        std::cout << ',';
+      }
+      first = false;
+      std::cout << '(';
+      for (std::size_t index = 0U; index < exponent.size(); ++index) {
+        if (index != 0U) {
+          std::cout << ',';
+        }
+        std::cout << exponent[index];
+      }
+      std::cout << "):" << coefficient;
+    }
+    std::cout << "}\n" << std::flush;
+  }
+  BigPolynomial outer_boundary;
+  BigPolynomial outer_quotient;
+  const std::size_t outer = cell.size() - 1U;
+  for (const auto& [exponent, coefficient] : local) {
+    Exponent reduced = exponent;
+    if (reduced[outer] == 0) {
+      outer_boundary[std::move(reduced)] += coefficient;
+    } else {
+      --reduced[outer];
+      outer_quotient[std::move(reduced)] += coefficient;
+    }
+  }
+  const auto negative_terms = [](const BigPolynomial& polynomial) {
+    return static_cast<std::size_t>(std::count_if(
+        polynomial.begin(), polynomial.end(),
+        [](const auto& term) { return term.second < 0; }));
+  };
+  const std::size_t boundary_negative = negative_terms(outer_boundary);
+  const std::size_t quotient_negative = negative_terms(outer_quotient);
+  std::cout
+      << "SU2_AUTOCORRELATION_RATIO_CUBE_LOCAL_OUTER_SPLIT"
+      << " boundary_terms=" << outer_boundary.size()
+      << " boundary_negative=" << boundary_negative
+      << " quotient_terms=" << outer_quotient.size()
+      << " quotient_negative=" << quotient_negative
+      << " result="
+      << (boundary_negative == 0U && quotient_negative == 0U
+              ? "PASS"
+              : "INCOMPLETE")
       << '\n' << std::flush;
   return EXIT_SUCCESS;
 }
@@ -7361,6 +7751,29 @@ int main(int argc, char** argv) {
           parse_positive(argv[4], "maximum antidiagonal");
       return analyze_ratio_cube_bernstein(
           support, depth_limit, maximum_antidiagonal);
+    }
+    if (
+        argc == 6
+        && std::string{argv[1]} == "--ratio-cube-best"
+    ) {
+      const int support = parse_positive(argv[2], "support");
+      const int depth_limit = parse_positive(argv[3], "depth limit");
+      const int antidiagonal = parse_positive(argv[4], "antidiagonal");
+      const int depth = parse_nonnegative(argv[5], "radial depth");
+      return analyze_ratio_cube_best_subdivision(
+          support, depth_limit, antidiagonal, depth);
+    }
+    if (
+        argc == 7
+        && std::string{argv[1]} == "--ratio-cube-local-corner"
+    ) {
+      const int support = parse_positive(argv[2], "support");
+      const int antidiagonal = parse_positive(argv[3], "antidiagonal");
+      const int depth = parse_nonnegative(argv[4], "radial depth");
+      return analyze_ratio_cube_local_corner(
+          support, antidiagonal, depth,
+          parse_csv_nonnegative(argv[5], "cell"),
+          parse_csv_nonnegative(argv[6], "splits"));
     }
     if (
         argc == 2
