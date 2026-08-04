@@ -1182,6 +1182,17 @@ minimum was zero, attained for minus labels `[1,1]` and plus labels
 negative.  This is falsification evidence, not a proof of boundary domination
 or of full `GKS2*`.
 
+An independent exact replay at level `100`, completed on 2026-08-04, used
+20,000 deterministic samples with at most 60 factors.  Its minimum was zero,
+attained with minus labels
+`[1,1,1,1,3,10,11,19,22,25,31,44,45,51,54,55,56,61,62,70,80,84,84,85,86,89,93,100]`
+and plus labels `[3,17,28,59,84]`; no sampled contraction was negative.  The
+source and executable SHA-256 identities are respectively
+`1db99e9997d791ad00d4688c8da5ad48bc016f864ab83e6770c004b075198bc0`
+and `fdcb8c2f408c255ae8f303f3a6f068a657dd7be17a40c52c45cc92b3927b59e6`.
+This is again exact-arithmetic falsification evidence only, not a proof of
+the arbitrary-factor lemma or of `GKS2*`.
+
 ## Two exact reductions of the remaining target
 
 **Proposition 5 (disjoint-support reduction).** In either the ordinary
