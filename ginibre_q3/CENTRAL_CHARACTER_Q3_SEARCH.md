@@ -13083,6 +13083,46 @@ It is neither nondecreasing nor nonincreasing.  Thus a proof of reflected
 window acuteness must retain a genuinely two-function comparison; no fixed
 outside-in likelihood-ratio order reduces it to scalar Chebyshev.
 
+Nor can that order be rescued by discarding a finite boundary prefix.
+
+**Proposition 5A8H28UIA2CGLPCIPOCBWHTAILOBS
+(tail-quotient monotonicity obstruction).**  Let `h` be the finite symmetric
+profile with positive half
+
+```text
+(h_0,h_1,h_2,h_3,h_4)=(1000,1000,900,90,9),
+```
+
+and zero continuation.  It is nonnegative and log concave.  Nevertheless,
+for `R=1`, the positive-half quotients
+
+```text
+r_1(i)={h_(i-1)-h_(i+2)}/{h_i-h_(i+1)}
+```
+
+strictly decrease inside the tail `i>=R`:
+
+```text
+r_1(1)=91/10,                 r_1(2)=991/810.    (P5A.102AD5ALX1ZZB3I0A)
+```
+
+Thus log concavity does not make the reflected-window quotients monotone
+after their natural boundary window.  The exact star currents of this
+profile are nevertheless nonnegative, so this is an obstruction to the
+tail-Chebyshev route rather than to `(IHRWA)`.
+
+**Proof.**  The successive positive-half ratios are
+
+```text
+1, 9/10, 1/10, 1/10,
+```
+
+which are nonincreasing, proving log concavity.  Direct substitution gives
+`(P5A.102AD5ALX1ZZB3I0A)`, and
+`91/10>991/810`.  The strict C++ direct-profile mode of
+`probe_su2_symmetric_log_concave_autocorrelation.cpp` checks all `45`
+star currents of this profile and returns zero failures.  QED.
+
 There is a second exact reduction in which the complete star current
 becomes a rank-two Weyl-character triangle.  This retains the global
 sum which the two failed intermediate-pair allocations split apart.
@@ -33395,6 +33435,31 @@ A minus {a} matches onto N_0(A) through E_0
 and onto N_F(A) through E_F.                         (P5A.102CB8S3Z41IB2B)
 ```
 
+Equivalently, each colour restriction remains right-perfect after every
+source deletion:
+
+```text
+N_i(A minus {a})=N_i(A),
+nu(E_i[A minus {a},N_i(A)])=|N_i(A)|,
+nu(E_i[A,N_i(A)])=|N_i(A)|,
+                                      i in {0,F}.    (P5A.102CB8S3Z41IB2C)
+```
+
+Thus every old ticket and every free ticket has at least two neighbours in
+its own colour, not merely in the uncoloured union.
+
+More generally, if `T subseteq N_i(A)` is nonempty and
+
+```text
+Gamma_i(T)={a in A: a is joined through E_i to some ticket in T},
+```
+
+then the coloured graph has strict target-side Hall expansion
+
+```text
+|Gamma_i(T)|>=|T|+1,                              i in {0,F}. (P5A.102CB8S3Z41IB2D)
+```
+
 **Proof.**  Choose an inclusion-minimal nonempty set `A` for which
 `|N(A)|<|A|`.  Every proper subset satisfies Hall.  Hence, for every
 `a in A`,
@@ -33421,7 +33486,141 @@ proper subset of `A`, so it satisfies Hall.  Its full neighbourhood is
 therefore gives `(P5A.102CB8S3Z41IB2A)`.  This matching is bijective onto
 `N(A)`.  The target classes `K` and `F` are disjoint, and the combined
 graph has respectively only `E_0` and `E_F` edges into them, proving
-`(P5A.102CB8S3Z41IB2B)`.  QED.
+`(P5A.102CB8S3Z41IB2B)`.  The same disjointness and
+`N(A minus {a})=N(A)` give `N_i(A minus {a})=N_i(A)` in each colour.
+Restricting the matching in `(P5A.102CB8S3Z41IB2A)` to the targets of one
+colour therefore saturates `N_i(A)` through `E_i`; no matching in that
+restriction can use more than `|N_i(A)|` targets.  This proves all three
+equalities in `(P5A.102CB8S3Z41IB2C)`.  If a target in colour `i` had a
+unique neighbour `a`, it would leave `N_i(A minus {a})`, contradicting the
+first equality.  Finally, fix nonempty `T subseteq N_i(A)` and choose
+`a in Gamma_i(T)`.  The right-perfect matching after deleting `a` must
+match every ticket of `T` to a distinct vertex of
+`Gamma_i(T) minus {a}`.  Hence
+`|Gamma_i(T)|-1>=|T|`, which is `(P5A.102CB8S3Z41IB2D)`.  QED.
+
+**Lemma 5A8H28UIA2RKCH3DM1MINAR (colourwise alternating-root form).**
+Under the hypotheses of Lemma 5A8H28UIA2RKCH3DM1MIN, fix, for
+`i in {0,F}`, any matching `M_i` in `E_i[A,N_i(A)]` that saturates
+`N_i(A)`, and put
+
+```text
+U_i=A minus M_i(N_i(A)).
+```
+
+Then
+
+```text
+|U_0|=|N_F(A)|+1,             |U_F|=|N_0(A)|+1,    (P5A.102CB8S3Z41IB2E)
+```
+
+and every `a in A` is the endpoint of an `M_i`-alternating path in the
+colour-`i` graph which starts at a vertex of `U_i`.  A zero-length path is
+allowed when `a in U_i`.
+
+**Proof.**  The matching sizes in `(P5A.102CB8S3Z41IB2C)` and the
+cardinality identity `(P5A.102CB8S3Z41IB2)` give `(P5A.102CB8S3Z41IB2E)`.
+Fix `a in A`.  By `(P5A.102CB8S3Z41IB2C)`, there is a matching `M_i^a`
+which saturates `N_i(A)` while omitting `a`.  The symmetric difference of
+the two target-saturating matchings `M_i` and `M_i^a` is a disjoint union
+of alternating cycles and alternating paths.  Its unique noncyclic path
+with endpoint `a` has its other endpoint in `U_i`; traverse it from that
+endpoint.  This is the required `M_i`-alternating path.  If `a in U_i`,
+the empty path already has the stated property.  QED.
+
+**Lemma 5A8H28UIA2RKCH3DM1MINQ (old-component weighted quotient).**
+Under the same hypotheses, let `C_1,...,C_c` be the source vertex sets of
+the connected components of the old-ticket graph `E_0[A,N_0(A)]`, and put
+
+```text
+e_j=|C_j|-|N_0(C_j)|>=1,
+F(I)=N_F(union_(j in I) C_j),                    I subseteq {1,...,c}.
+```
+
+Then
+
+```text
+|F(I)|>=sum_(j in I)e_j       for every nonempty proper I,
+|F({1,...,c})|=sum_(j=1)^c e_j-1.               (P5A.102CB8S3Z41IB2F)
+```
+
+In fact every nontrivial old-component cut is crossed by a common free
+ticket:
+
+```text
+F(I) intersect F(I^c) is nonempty
+                    for every nonempty proper I. (P5A.102CB8S3Z41IB2G)
+```
+
+Moreover the bipartite quotient joining an old component `C_j` to a free
+ticket in `N_F(A)` whenever that ticket has an `E_F` neighbour in `C_j` is
+connected.  Thus the residual obstruction is a connected weighted
+one-ticket Hall circuit: every proper collection of old components receives
+its complete total excess in distinct free tickets, while the complete
+collection is short by exactly one.
+
+**Proof.**  The paired two-block bridge lemma gives every source in `A` an
+old-ticket neighbour, so the displayed old components partition `A`.
+Their old-ticket neighbourhoods are disjoint.  For nonempty proper `I`,
+the source set `B_I=union_(j in I)C_j` is a proper subset of the
+minimal Hall obstruction.  Hence it satisfies combined Hall, and
+
+```text
+|F(I)|>=|B_I|-|N_0(B_I)|=sum_(j in I)e_j.
+```
+
+For the full collection, disjointness of the old neighbourhoods and
+`(P5A.102CB8S3Z41IB2)` give
+
+```text
+|N_F(A)|=|A|-|N_0(A)|-1=sum_j e_j-1.
+```
+
+This proves `(P5A.102CB8S3Z41IB2F)`.  If the quotient were disconnected,
+apply its proper-set inequality to the old components in each quotient
+component.  Their free-ticket neighbourhoods are disjoint and together
+are `N_F(A)`, so summing would give
+`|N_F(A)|>=sum_j e_j`, contradicting the full equality.  More directly,
+for a nonempty proper `I`, the two lower bounds in
+`(P5A.102CB8S3Z41IB2F)` and the full equality give
+
+```text
+|F(I) intersect F(I^c)|
+ =|F(I)|+|F(I^c)|-|N_F(A)|>=1,
+```
+
+which proves `(P5A.102CB8S3Z41IB2G)` and the stated connectivity.  QED.
+
+**Proposition 5A8H28UIA2RKCH3DM1MINQMERGEOBS
+(shared-free-ticket component-merger obstruction).**  In the paired word
+
+```text
+w=(1,1,2,2,4,4),                 (R,S)=(7,2),
+```
+
+the width-two alternating core has `320` sources and `296` old tickets.
+Its old-ticket graph has `14` source components.  Among the `597` free
+tickets reached by one--two--three-block bridges, `494` have neighbours in
+at least two old components, and one free ticket meets `3` old components:
+
+```text
+one_exchange_old_components=14,
+one_exchange_free_cross_component_targets=494,
+one_exchange_free_maximum_component_span=3.     (P5A.102CB8S3Z41IB2H)
+```
+
+Thus a shared free three-block ticket does not, by itself, merge its old
+two-block source components.  Any use of `(P5A.102CB8S3Z41IB2G)` must also
+exploit the minimal one-defect/right-critical hypotheses of Lemma
+5A8H28UIA2RKCH3DM1MIN; a purely local component-merger assertion is false.
+
+**Proof.**  The strict C++ bridge diagnostic constructs the exact
+width-two alternating core, forms the old-ticket graph on that core, and
+unites its source vertices through common old tickets.  It then records, for
+each free one--two--three-block ticket, the number of resulting old
+components among its source neighbours.  The exact output is
+`(P5A.102CB8S3Z41IB2H)`.  The displayed cross-component tickets are
+therefore direct counterexamples to the unqualified merger assertion.  QED.
 
 **Target 5A8H28UIA2RKCH3DM1MIN (paired one-ticket obstruction
 exclusion).**  In every paired bridge core, rule out a nonempty path-pair
@@ -33429,9 +33628,15 @@ set `A` satisfying `(P5A.102CB8S3Z41IB1)--(P5A.102CB8S3Z41IB2)`.  By Lemma
 5A8H28UIA2RKCH3DM1MIN this proves Target 5A8H28UIA2RKCH3DM1H.  Thus the
 remaining global allocation need only defeat a deficiency-one obstruction
 whose every old or free ticket is shared by at least two sources and whose
-source-ticket incidence graph is connected, left-factor-critical, and
-simultaneously target-saturating in both ticket colours after every source
-deletion.
+source-ticket incidence graph is connected, left-factor-critical, and whose
+two coloured restrictions are separately right-perfect after every source
+deletion, equivalently strict Hall expanders from their respective ticket
+sides, or equivalently two simultaneous alternating-root routing systems
+as in Lemma 5A8H28UIA2RKCH3DM1MINAR.  After old-component compression it
+is further a connected weighted one-ticket Hall circuit by Lemma
+5A8H28UIA2RKCH3DM1MINQ.  Proposition
+5A8H28UIA2RKCH3DM1MINQMERGEOBS rules out closing this circuit by a
+local shared-ticket merger alone.
 
 There is a sharper formulation in matching ranks.  It does not retain
 unusable neighbours, and makes the minimal obstruction simultaneously

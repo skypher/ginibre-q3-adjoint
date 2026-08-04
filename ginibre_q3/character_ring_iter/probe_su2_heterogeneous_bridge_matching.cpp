@@ -430,6 +430,48 @@ private:
     std::vector<std::size_t> next_edge_;
 };
 
+class DisjointSet {
+public:
+    explicit DisjointSet(std::size_t size)
+        : parent_(size), rank_(size, 0U) {
+        for (std::size_t index = 0U; index < size; ++index) {
+            parent_[index] = index;
+        }
+    }
+
+    std::size_t find(std::size_t vertex) {
+        std::size_t root = vertex;
+        while (parent_[root] != root) {
+            root = parent_[root];
+        }
+        while (parent_[vertex] != vertex) {
+            const std::size_t parent = parent_[vertex];
+            parent_[vertex] = root;
+            vertex = parent;
+        }
+        return root;
+    }
+
+    void unite(std::size_t first, std::size_t second) {
+        std::size_t first_root = find(first);
+        std::size_t second_root = find(second);
+        if (first_root == second_root) {
+            return;
+        }
+        if (rank_[first_root] < rank_[second_root]) {
+            std::swap(first_root, second_root);
+        }
+        parent_[second_root] = first_root;
+        if (rank_[first_root] == rank_[second_root]) {
+            ++rank_[first_root];
+        }
+    }
+
+private:
+    std::vector<std::size_t> parent_;
+    std::vector<unsigned int> rank_;
+};
+
 Matching maximum_matching(const std::vector<std::vector<int>>& graph,
                           std::size_t image_count) {
     if (graph.size() > static_cast<std::size_t>(std::numeric_limits<int>::max())
@@ -1027,6 +1069,93 @@ void inspect_instance(
                     }
                     one_exchange_graph.push_back(std::move(retained));
                 }
+                DisjointSet old_components(one_exchange_graph.size());
+                std::vector<int> old_target_representatives(
+                    one_exchange_targets,
+                    -1
+                );
+                for (std::size_t repair_left = 0U;
+                     repair_left < one_exchange_graph.size();
+                     ++repair_left) {
+                    for (const int one_exchange_target
+                         : one_exchange_graph[repair_left]) {
+                        const std::size_t target_index =
+                            static_cast<std::size_t>(one_exchange_target);
+                        if (!one_exchange_target_is_neighbourhood[
+                                target_index
+                            ]) {
+                            continue;
+                        }
+                        int& representative = old_target_representatives[
+                            target_index
+                        ];
+                        if (representative < 0) {
+                            representative = static_cast<int>(repair_left);
+                            continue;
+                        }
+                        old_components.unite(
+                            repair_left,
+                            static_cast<std::size_t>(representative)
+                        );
+                    }
+                }
+                std::map<std::size_t, std::size_t> old_component_ids;
+                std::vector<std::size_t> old_component_of_left(
+                    one_exchange_graph.size(),
+                    0U
+                );
+                for (std::size_t repair_left = 0U;
+                     repair_left < one_exchange_graph.size();
+                     ++repair_left) {
+                    const std::size_t root = old_components.find(repair_left);
+                    const auto insertion = old_component_ids.emplace(
+                        root,
+                        old_component_ids.size()
+                    );
+                    old_component_of_left[repair_left] = insertion.first->second;
+                }
+                std::vector<std::set<std::size_t>> free_target_components(
+                    one_exchange_targets
+                );
+                for (std::size_t repair_left = 0U;
+                     repair_left < one_exchange_graph.size();
+                     ++repair_left) {
+                    const std::size_t component = old_component_of_left[
+                        repair_left
+                    ];
+                    for (const int one_exchange_target
+                         : one_exchange_graph[repair_left]) {
+                        const std::size_t target_index =
+                            static_cast<std::size_t>(one_exchange_target);
+                        if (one_exchange_target_is_neighbourhood[
+                                target_index
+                            ]) {
+                            continue;
+                        }
+                        free_target_components[target_index].insert(component);
+                    }
+                }
+                std::size_t one_exchange_free_cross_component_targets = 0U;
+                std::size_t one_exchange_free_maximum_component_span = 0U;
+                for (std::size_t one_exchange_target = 0U;
+                     one_exchange_target < one_exchange_targets;
+                     ++one_exchange_target) {
+                    if (one_exchange_target_is_neighbourhood[
+                            one_exchange_target
+                        ]) {
+                        continue;
+                    }
+                    const std::size_t component_span = free_target_components[
+                        one_exchange_target
+                    ].size();
+                    if (component_span >= 2U) {
+                        ++one_exchange_free_cross_component_targets;
+                    }
+                    one_exchange_free_maximum_component_span = std::max(
+                        one_exchange_free_maximum_component_span,
+                        component_span
+                    );
+                }
                 std::vector<std::size_t> one_exchange_free_degrees(
                     one_exchange_targets,
                     0U
@@ -1327,6 +1456,12 @@ void inspect_instance(
                     + std::to_string(one_exchange_free_minimum_degree)
                     + " one_exchange_free_maximum_degree="
                     + std::to_string(one_exchange_free_maximum_degree)
+                    + " one_exchange_old_components="
+                    + std::to_string(old_component_ids.size())
+                    + " one_exchange_free_cross_component_targets="
+                    + std::to_string(one_exchange_free_cross_component_targets)
+                    + " one_exchange_free_maximum_component_span="
+                    + std::to_string(one_exchange_free_maximum_component_span)
                     + " one_exchange_required_flow="
                     + std::to_string(one_exchange_required_flow)
                     + " one_exchange_achieved_flow="
@@ -1512,13 +1647,22 @@ int main(int argc, char** argv) {
             fixed_target = parse_positive_index(argv[3], "S");
             maximum_blocks = parse_positive_index(argv[5], "L");
             root_start = 7;
+        } else if (argument_end >= 5
+                   && std::string(argv[1]) == "--maximum-blocks") {
+            maximum_blocks = parse_positive_index(argv[2], "L");
+            if (std::string(argv[3]) != "--paired-root") {
+                throw std::invalid_argument(
+                    "--maximum-blocks L requires --paired-root LABEL..."
+                );
+            }
+            root_start = 4;
         } else if (argument_end < 3 || std::string(argv[1]) != "--paired-root") {
             throw std::invalid_argument(
                 "usage: probe_su2_heterogeneous_bridge_matching "
-                "--paired-root LABEL... or --instance R S --maximum-blocks "
-                "L --paired-root LABEL... [--print-hall] "
-                "[--summarize-hall] [--repair-hall-three] "
-                "[--enumerate-core-deficits]"
+                "--paired-root LABEL... or --maximum-blocks L --paired-root "
+                "LABEL... or --instance R S --maximum-blocks L --paired-root "
+                "LABEL... [--print-hall] [--summarize-hall] "
+                "[--repair-hall-three] [--enumerate-core-deficits]"
             );
         }
         std::vector<int> root;
@@ -1559,6 +1703,10 @@ int main(int argc, char** argv) {
         const int first_boundary = fixed_instance ? fixed_boundary : 1;
         const int last_boundary = fixed_instance ? fixed_boundary : total_label;
         for (int boundary = first_boundary; boundary <= last_boundary; ++boundary) {
+            if (!fixed_instance) {
+                std::cerr << "SU2_HETEROGENEOUS_SWEEP boundary=" << boundary
+                          << '/' << total_label << '\n' << std::flush;
+            }
             const std::vector<Path> all_long_paths =
                 paths_from(boundary, labels);
             std::vector<Path> long_paths;

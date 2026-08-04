@@ -632,6 +632,26 @@ void random_current_search(
 
 int main(int argc, char** argv) {
   try {
+    if (argc >= 3 && std::string(argv[1]) == "--profile") {
+      std::vector<int> half;
+      half.reserve(static_cast<std::size_t>(argc - 2));
+      for (int index = 2; index < argc; ++index) {
+        half.push_back(parse_positive(argv[index], "profile entry"));
+      }
+      Counters counters;
+      inspect(half, counters);
+      std::cout << "SU2_SYMMETRIC_LOG_CONCAVE_PROFILE"
+                << " half=" << render(half)
+                << " currents=" << counters.currents
+                << " failures=" << counters.failures;
+      if (!counters.first_half.empty()) {
+        std::cout << " first_radius=" << counters.first_radius
+                  << " first_target=" << counters.first_target
+                  << " first_value=" << counters.first_value;
+      }
+      std::cout << '\n';
+      return EXIT_SUCCESS;
+    }
     if (argc == 2 &&
         std::string(argv[1]) == "--replay-upper-orthant") {
       return replay_upper_orthant_obstruction();
@@ -662,7 +682,9 @@ int main(int argc, char** argv) {
           "       probe_su2_symmetric_log_concave_autocorrelation "
           "--random-current SAMPLES MAXIMUM_LENGTH DENOMINATOR\n"
           "       probe_su2_symmetric_log_concave_autocorrelation "
-          "--ratio-grid MAXIMUM_LENGTH DENOMINATOR");
+          "--ratio-grid MAXIMUM_LENGTH DENOMINATOR\n"
+          "       probe_su2_symmetric_log_concave_autocorrelation "
+          "--profile H_0 H_1 ... H_m");
     }
 
     Counters counters;
