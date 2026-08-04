@@ -35350,6 +35350,51 @@ pay the insufficiently smoothed new defect `B_t` in precisely the
 payments; it rules out treating the low groups at different depths as
 unrelated chamber problems.
 
+**Proposition 5A8H28UI1A (low-Newton-kernel obstruction).**  The
+coefficientwise low-group strengthening `(P5A.102CB8P)` is false.  At
+the open finite row
+
+```text
+(K,Q,t,r)=(3,1,9,3),
+```
+
+the compressed fusion matrix is
+
+```text
+N=[[0,1,0,0],
+   [1,1,1,0],
+   [0,1,1,1],
+   [0,0,1,1]],
+```
+
+and the exact low Newton kernel is
+
+```text
+mathcalL_(9,3)
+=(2792137465802,-50207500068,6738308342900,-19771615524)^T.
+                                                        (P5A.102CB8WA)
+```
+
+Thus its coordinates one and three are strictly negative.  This does
+not negate the scalar full-prefix current: it only eliminates the
+stronger route which asks every low Newton base vector to be entrywise
+nonnegative.
+
+**Proof.**  Compute `f_r=(N^r)_(0,0)` and substitute the direct finite
+difference
+
+```text
+b^(9)_(3,s)=Delta_2^3 binom(21,2s)
+```
+
+in `(P5A.102CB8T)`.  Exact integer matrix multiplication gives
+`(P5A.102CB8WA)`.  Independently, form `V^(9)_j` from
+`(P5A.102CB8M)`, take the defining third Newton difference at `j=10`,
+and reflect by the simple current; it gives the same vector.  The strict
+`cpp_int` replay is
+`character_ring_iter/probe_su2_newton_depth_recursion.cpp`; it fails
+closed on disagreement between these two calculations.  QED.
+
 **Corollary 5A8H28UI2 (exact smoothing distance).**  Assume the
 anchored hierarchy `C_s>=0`.  For every `t>=2` and
 `0<=r<=t-2`,
@@ -37862,13 +37907,16 @@ The transcript is `certificates/su2_terminal_wedge_square.log`.  This
 is bounded discovery evidence for `(TBC)`, not a proof of its unbounded
 boundary-minor sign.
 
-Consequently the arbitrary-factor global-payment lemma now has a
-two-layer exact kernel target: prove the anchored boundary-minor cone
-`C_s>=0` for every `s`, and prove the low groups `(P5A.102CB8P)`.
-For `t=4`, after separating the already nonnegative `C_1,C_2`
-summands, the genuinely new parts of these low groups are precisely
-`G_0,G_1,G_2` in Lemma 5A8H28UH.  This hierarchy is a reduction of
-the unbounded problem, not yet its sign proof.
+Consequently the arbitrary-factor global-payment lemma retains one
+unbounded anchored target: prove the boundary-minor cone `C_s>=0` for
+every `s`.  The formerly proposed coefficientwise low-group branch
+`(P5A.102CB8P)` is false by Proposition 5A8H28UI1A, even though its
+smoothed form `(P5A.102CB8Y)` remains valid.  Thus the endpoint route
+after the anchored hierarchy is the weaker scalar diagonal band in
+Corollary 5A8H28UI3, not entrywise positivity of all low Newton
+kernels.  For `t=4`, the sign blocks `G_0,G_1,G_2` of Lemma
+5A8H28UH remain valid fixed-depth certificates; they no longer support
+an arbitrary-depth cone induction.
 
 For the endpoint theorem alone, Corollary 5A8H28UI3 supplies the
 weaker alternative target: prove the same anchored cone and only the

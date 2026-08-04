@@ -88,6 +88,12 @@ Vector scale(const Vector& vector, const Integer& scalar) {
     return result;
 }
 
+Vector reflected(const Vector& vector) {
+    Vector result = vector;
+    std::reverse(result.begin(), result.end());
+    return result;
+}
+
 bool nonnegative(const Vector& vector) {
     return std::all_of(vector.begin(), vector.end(), [](const Integer& value) {
         return value >= 0;
@@ -166,6 +172,51 @@ Vector terminal_defect(const Powers& powers, int depth, int order) {
     );
 }
 
+Vector direct_base_value(const Powers& powers, int depth, int index) {
+    const int size = static_cast<int>(powers.values.front().size());
+    Vector result(static_cast<std::size_t>(size));
+    for (int slice = 0; slice <= depth; ++slice) {
+        const Integer weight = binomial(2 * index + 1, 2 * slice);
+        if (weight == 0) {
+            continue;
+        }
+        const int first_power = 2 * index + 2 - 2 * slice;
+        const int second_power = first_power - 1;
+        result = add(
+            result,
+            add(
+                scale(
+                    reflected(powers.values[static_cast<std::size_t>(first_power)]),
+                    powers.returns[static_cast<std::size_t>(2 * slice)] * weight
+                ),
+                scale(
+                    reflected(powers.values[static_cast<std::size_t>(second_power)]),
+                    -powers.returns[static_cast<std::size_t>(2 * slice + 1)] * weight
+                )
+            )
+        );
+    }
+    return result;
+}
+
+Vector direct_newton_kernel(const Matrix& matrix, const Powers& powers,
+                             int depth, int order) {
+    const int size = static_cast<int>(powers.values.front().size());
+    Vector result(static_cast<std::size_t>(size));
+    for (int increment = 0; increment <= order; ++increment) {
+        Vector term = direct_base_value(powers, depth, depth + 1 + increment);
+        for (int step = 0; step < order - increment; ++step) {
+            term = multiply(matrix, multiply(matrix, term));
+        }
+        const Integer weight = binomial(order, increment);
+        result = add(
+            result,
+            scale(term, ((order - increment) & 1) == 0 ? weight : -weight)
+        );
+    }
+    return reflected(result);
+}
+
 std::string render(const Vector& vector) {
     std::string result{"["};
     for (std::size_t index = 0U; index < vector.size(); ++index) {
@@ -181,21 +232,34 @@ std::string render(const Vector& vector) {
 
 int main(int argc, char** argv) {
     try {
-        const int maximum_half_level = argc >= 2
-            ? positive(argv[1], "maximum half level")
+        int argument = 1;
+        bool scalar_diagonal_only = false;
+        if (argc >= 2 && std::string(argv[1]) == "--scalar-diagonal") {
+            scalar_diagonal_only = true;
+            ++argument;
+        }
+        const int maximum_half_level = argc > argument
+            ? positive(argv[argument], "maximum half level")
             : 20;
-        const int maximum_depth = argc >= 3
-            ? positive(argv[2], "maximum depth")
+        const int maximum_depth = argc > argument + 1
+            ? positive(argv[argument + 1], "maximum depth")
             : 10;
-        if (argc > 3) {
+        if (argc > argument + 2) {
             throw std::invalid_argument(
                 "usage: probe_su2_newton_depth_recursion "
-                "[maximum_half_level] [maximum_depth]"
+                "[--scalar-diagonal] [maximum_half_level] [maximum_depth]"
             );
         }
 
         std::uint64_t recurrence_checks = 0U;
         std::uint64_t paired_checks = 0U;
+        bool paired_counterexample = false;
+        int paired_half_level = 0;
+        int paired_half_factor = 0;
+        int paired_depth = 0;
+        int paired_order = 0;
+        Vector paired_witness;
+        Vector paired_current;
         for (int half_level = 3;
              half_level <= maximum_half_level;
              ++half_level) {
@@ -208,6 +272,14 @@ int main(int argc, char** argv) {
                 for (int depth = 2; depth <= maximum_depth; ++depth) {
                     for (int order = 0; order <= depth - 2; ++order) {
                         const Vector current = low_group(data, depth, order);
+                        const Vector direct = direct_newton_kernel(
+                            matrix, data, depth, order
+                        );
+                        if (current != direct) {
+                            throw std::runtime_error(
+                                "closed low group disagrees with direct Newton kernel"
+                            );
+                        }
                         const Vector previous = low_group(
                             data, depth - 1, order
                         );
@@ -227,28 +299,73 @@ int main(int argc, char** argv) {
                                 "Newton depth recurrence mismatch"
                             );
                         }
-                        const Vector paired = add(shifted, defect);
-                        ++paired_checks;
-                        if (!nonnegative(paired)) {
+                        Vector smoothed = current;
+                        for (int smoothing = 0;
+                             smoothing <= depth - 2 - order;
+                             ++smoothing) {
+                            if (smoothed[0] < 0) {
+                                std::cout
+                                    << "SU2_NEWTON_DEPTH_RECURSION"
+                                    << " result=SCALAR_DIAGONAL_COUNTEREXAMPLE"
+                                    << " half_level=" << half_level
+                                    << " half_factor=" << half_factor
+                                    << " depth=" << depth
+                                    << " order=" << order
+                                    << " smoothing=" << smoothing
+                                    << " value=" << smoothed[0]
+                                    << " current=" << render(current)
+                                    << '\n';
+                                return EXIT_SUCCESS;
+                            }
+                            if (smoothing != depth - 2 - order) {
+                                smoothed = multiply(
+                                    matrix, multiply(matrix, smoothed)
+                                );
+                            }
+                        }
+                        if (!scalar_diagonal_only && !nonnegative(current)) {
                             std::cout
                                 << "SU2_NEWTON_DEPTH_RECURSION"
-                                << " result=PAIRED_COUNTEREXAMPLE"
+                                << " result=LOW_GROUP_COUNTEREXAMPLE"
                                 << " half_level=" << half_level
                                 << " half_factor=" << half_factor
                                 << " depth=" << depth
                                 << " order=" << order
-                                << " paired=" << render(paired)
                                 << " current=" << render(current)
                                 << '\n';
                             return EXIT_SUCCESS;
+                        }
+                        const Vector paired = add(shifted, defect);
+                        ++paired_checks;
+                        if (!paired_counterexample && !nonnegative(paired)) {
+                            paired_counterexample = true;
+                            paired_half_level = half_level;
+                            paired_half_factor = half_factor;
+                            paired_depth = depth;
+                            paired_order = order;
+                            paired_witness = paired;
+                            paired_current = current;
                         }
                     }
                 }
             }
         }
+        std::cout << "SU2_NEWTON_DEPTH_RECURSION";
+        if (scalar_diagonal_only) {
+            std::cout << " result=NO_SCALAR_DIAGONAL_COUNTEREXAMPLE";
+        } else if (paired_counterexample) {
+            std::cout
+                << " result=PAIRED_COUNTEREXAMPLE_LOW_GROUPS_NONNEGATIVE"
+                << " half_level=" << paired_half_level
+                << " half_factor=" << paired_half_factor
+                << " depth=" << paired_depth
+                << " order=" << paired_order
+                << " paired=" << render(paired_witness)
+                << " current=" << render(paired_current);
+        } else {
+            std::cout << " result=NO_PAIRED_COUNTEREXAMPLE";
+        }
         std::cout
-            << "SU2_NEWTON_DEPTH_RECURSION"
-            << " result=NO_PAIRED_COUNTEREXAMPLE"
             << " maximum_half_level=" << maximum_half_level
             << " maximum_depth=" << maximum_depth
             << " recurrence_checks=" << recurrence_checks
