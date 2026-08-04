@@ -172,6 +172,19 @@ Vector terminal_defect(const Powers& powers, int depth, int order) {
     );
 }
 
+Vector anchored_kernel(const Powers& powers, int depth) {
+    return add(
+        scale(
+            powers.values[static_cast<std::size_t>(2 * depth + 1)],
+            powers.returns[static_cast<std::size_t>(2 * depth)]
+        ),
+        scale(
+            powers.values[static_cast<std::size_t>(2 * depth)],
+            -powers.returns[static_cast<std::size_t>(2 * depth + 1)]
+        )
+    );
+}
+
 Vector direct_base_value(const Powers& powers, int depth, int index) {
     const int size = static_cast<int>(powers.values.front().size());
     Vector result(static_cast<std::size_t>(size));
@@ -234,8 +247,29 @@ int main(int argc, char** argv) {
     try {
         int argument = 1;
         bool scalar_diagonal_only = false;
+        bool diagonal_prefix_only = false;
+        bool diagonal_payment_only = false;
+        bool top_diagonal_payment_only = false;
+        bool top_diagonal_vector_payment_only = false;
         if (argc >= 2 && std::string(argv[1]) == "--scalar-diagonal") {
             scalar_diagonal_only = true;
+            ++argument;
+        } else if (argc >= 2
+                   && std::string(argv[1]) == "--diagonal-prefix") {
+            diagonal_prefix_only = true;
+            ++argument;
+        } else if (argc >= 2
+                   && std::string(argv[1]) == "--diagonal-payment") {
+            diagonal_payment_only = true;
+            ++argument;
+        } else if (argc >= 2
+                   && std::string(argv[1]) == "--top-diagonal-payment") {
+            top_diagonal_payment_only = true;
+            ++argument;
+        } else if (argc >= 2
+                   && std::string(argv[1])
+                       == "--top-diagonal-vector-payment") {
+            top_diagonal_vector_payment_only = true;
             ++argument;
         }
         const int maximum_half_level = argc > argument
@@ -247,7 +281,9 @@ int main(int argc, char** argv) {
         if (argc > argument + 2) {
             throw std::invalid_argument(
                 "usage: probe_su2_newton_depth_recursion "
-                "[--scalar-diagonal] [maximum_half_level] [maximum_depth]"
+                "[--scalar-diagonal|--diagonal-prefix|--diagonal-payment|"
+                "--top-diagonal-payment|--top-diagonal-vector-payment] "
+                "[maximum_half_level] [maximum_depth]"
             );
         }
 
@@ -269,7 +305,67 @@ int main(int argc, char** argv) {
                 const Matrix matrix = fusion_matrix(half_level, half_factor);
                 const int maximum_power = 4 * maximum_depth + 4;
                 const Powers data = powers(matrix, maximum_power);
+                if (top_diagonal_payment_only
+                    || top_diagonal_vector_payment_only) {
+                    for (int depth = 2; depth <= maximum_depth; ++depth) {
+                        Vector preceding = anchored_kernel(data, depth - 1);
+                        for (int smoothing = 0; smoothing < 3; ++smoothing) {
+                            preceding = multiply(matrix, preceding);
+                        }
+                        preceding = scale(
+                            preceding, binomial(4 * depth - 1, 2 * depth - 2)
+                        );
+                        const Vector last = scale(
+                            add(
+                                scale(
+                                    data.values[static_cast<std::size_t>(
+                                        2 * depth
+                                    )],
+                                    data.returns[static_cast<std::size_t>(
+                                        2 * depth
+                                    )]
+                                ),
+                                scale(
+                                    data.values[static_cast<std::size_t>(
+                                        2 * depth - 1
+                                    )],
+                                    -data.returns[static_cast<std::size_t>(
+                                        2 * depth + 1
+                                    )]
+                                )
+                            ),
+                            binomial(4 * depth - 1, 2 * depth)
+                        );
+                        const Vector payment = add(preceding, last);
+                        const bool failed = top_diagonal_vector_payment_only
+                            ? !nonnegative(payment)
+                            : payment.back() < 0;
+                        if (failed) {
+                            std::cout
+                                << "SU2_NEWTON_DEPTH_RECURSION"
+                                << " result="
+                                << (top_diagonal_vector_payment_only
+                                    ? "TOP_DIAGONAL_VECTOR_PAYMENT_COUNTEREXAMPLE"
+                                    : "TOP_DIAGONAL_PAYMENT_COUNTEREXAMPLE")
+                                << " half_level=" << half_level
+                                << " half_factor=" << half_factor
+                                << " depth=" << depth
+                                << " value=" << payment.back()
+                                << " payment=" << render(payment)
+                                << '\n';
+                            return EXIT_SUCCESS;
+                        }
+                    }
+                    continue;
+                }
                 for (int depth = 2; depth <= maximum_depth; ++depth) {
+                    std::vector<Vector> diagonal_prefixes;
+                    if (diagonal_prefix_only) {
+                        diagonal_prefixes.assign(
+                            static_cast<std::size_t>(depth - 1),
+                            Vector(static_cast<std::size_t>(half_level + 1))
+                        );
+                    }
                     for (int order = 0; order <= depth - 2; ++order) {
                         const Vector current = low_group(data, depth, order);
                         const Vector direct = direct_newton_kernel(
@@ -299,31 +395,39 @@ int main(int argc, char** argv) {
                                 "Newton depth recurrence mismatch"
                             );
                         }
-                        Vector smoothed = current;
-                        for (int smoothing = 0;
-                             smoothing <= depth - 2 - order;
-                             ++smoothing) {
-                            if (smoothed[0] < 0) {
-                                std::cout
-                                    << "SU2_NEWTON_DEPTH_RECURSION"
-                                    << " result=SCALAR_DIAGONAL_COUNTEREXAMPLE"
-                                    << " half_level=" << half_level
-                                    << " half_factor=" << half_factor
-                                    << " depth=" << depth
-                                    << " order=" << order
-                                    << " smoothing=" << smoothing
-                                    << " value=" << smoothed[0]
-                                    << " current=" << render(current)
-                                    << '\n';
-                                return EXIT_SUCCESS;
-                            }
-                            if (smoothing != depth - 2 - order) {
-                                smoothed = multiply(
-                                    matrix, multiply(matrix, smoothed)
-                                );
+                        if (scalar_diagonal_only) {
+                            Vector smoothed = current;
+                            for (int smoothing = 0;
+                                 smoothing <= depth - 2 - order;
+                                 ++smoothing) {
+                                // low_group is the simple-current reflection
+                                // of the Newton base.  The scalar current Q
+                                // is its endpoint (label K) coordinate.
+                                if (smoothed.back() < 0) {
+                                    std::cout
+                                        << "SU2_NEWTON_DEPTH_RECURSION"
+                                        << " result=SCALAR_DIAGONAL_COUNTEREXAMPLE"
+                                        << " half_level=" << half_level
+                                        << " half_factor=" << half_factor
+                                        << " depth=" << depth
+                                        << " order=" << order
+                                        << " smoothing=" << smoothing
+                                        << " evaluation_label=" << half_level
+                                        << " value=" << smoothed.back()
+                                        << " current=" << render(current)
+                                        << '\n';
+                                    return EXIT_SUCCESS;
+                                }
+                                if (smoothing != depth - 2 - order) {
+                                    smoothed = multiply(
+                                        matrix, multiply(matrix, smoothed)
+                                    );
+                                }
                             }
                         }
-                        if (!scalar_diagonal_only && !nonnegative(current)) {
+                        if (!scalar_diagonal_only && !diagonal_prefix_only
+                            && !diagonal_payment_only
+                            && !nonnegative(current)) {
                             std::cout
                                 << "SU2_NEWTON_DEPTH_RECURSION"
                                 << " result=LOW_GROUP_COUNTEREXAMPLE"
@@ -334,6 +438,155 @@ int main(int argc, char** argv) {
                                 << " current=" << render(current)
                                 << '\n';
                             return EXIT_SUCCESS;
+                        }
+                        if (diagonal_prefix_only) {
+                            Vector contribution = current;
+                            for (int offset = order;
+                                 offset <= depth - 2;
+                                 ++offset) {
+                                Vector& prefix = diagonal_prefixes[
+                                    static_cast<std::size_t>(offset)
+                                ];
+                                prefix = add(
+                                    prefix,
+                                    scale(
+                                        contribution, binomial(offset, order)
+                                    )
+                                );
+                                if (prefix.back() < 0) {
+                                    std::cout
+                                        << "SU2_NEWTON_DEPTH_RECURSION"
+                                        << " result=DIAGONAL_PREFIX_COUNTEREXAMPLE"
+                                        << " half_level=" << half_level
+                                        << " half_factor=" << half_factor
+                                        << " depth=" << depth
+                                        << " offset=" << offset
+                                        << " order=" << order
+                                        << " value=" << prefix.back()
+                                        << " prefix=" << render(prefix)
+                                        << '\n';
+                                    return EXIT_SUCCESS;
+                                }
+                                if (offset != depth - 2) {
+                                    contribution = multiply(
+                                        matrix,
+                                        multiply(matrix, contribution)
+                                    );
+                                }
+                            }
+                        }
+                        if (diagonal_payment_only) {
+                            for (int offset = order;
+                                 offset <= depth - 2;
+                                 ++offset) {
+                                Vector inherited = shifted;
+                                for (int smoothing = 0;
+                                     smoothing < offset - order;
+                                     ++smoothing) {
+                                    inherited = multiply(
+                                        matrix,
+                                        multiply(matrix, inherited)
+                                    );
+                                }
+                                inherited = scale(
+                                    inherited, binomial(offset, order)
+                                );
+                                Integer defect_weight = 0;
+                                for (int increment = 0;
+                                     increment <= order;
+                                     ++increment) {
+                                    defect_weight += binomial(
+                                        offset, increment
+                                    ) * coefficient(depth, increment, depth);
+                                }
+                                const Vector boundary = add(
+                                    scale(
+                                        data.values[static_cast<std::size_t>(
+                                            2 * offset + 4
+                                        )],
+                                        data.returns[static_cast<std::size_t>(
+                                            2 * depth
+                                        )]
+                                    ),
+                                    scale(
+                                        data.values[static_cast<std::size_t>(
+                                            2 * offset + 3
+                                        )],
+                                        -data.returns[static_cast<std::size_t>(
+                                            2 * depth + 1
+                                        )]
+                                    )
+                                );
+                                const Vector payment = add(
+                                    inherited, scale(boundary, defect_weight)
+                                );
+                                Vector current_prefix(
+                                    static_cast<std::size_t>(half_level + 1)
+                                );
+                                Vector previous_prefix(
+                                    static_cast<std::size_t>(half_level + 1)
+                                );
+                                for (int increment = 0;
+                                     increment <= order;
+                                     ++increment) {
+                                    Vector current_term = low_group(
+                                        data, depth, increment
+                                    );
+                                    for (int smoothing = 0;
+                                         smoothing < offset - increment;
+                                         ++smoothing) {
+                                        current_term = multiply(
+                                            matrix,
+                                            multiply(matrix, current_term)
+                                        );
+                                    }
+                                    current_prefix = add(
+                                        current_prefix,
+                                        scale(
+                                            current_term,
+                                            binomial(offset, increment)
+                                        )
+                                    );
+                                    Vector previous_term = low_group(
+                                        data, depth - 1, increment
+                                    );
+                                    for (int smoothing = 0;
+                                         smoothing < offset + 1 - increment;
+                                         ++smoothing) {
+                                        previous_term = multiply(
+                                            matrix,
+                                            multiply(matrix, previous_term)
+                                        );
+                                    }
+                                    previous_prefix = add(
+                                        previous_prefix,
+                                        scale(
+                                            previous_term,
+                                            binomial(offset + 1, increment)
+                                        )
+                                    );
+                                }
+                                if (current_prefix
+                                    != add(previous_prefix, payment)) {
+                                    throw std::runtime_error(
+                                        "diagonal partial-current recurrence mismatch"
+                                    );
+                                }
+                                if (payment.back() < 0) {
+                                    std::cout
+                                        << "SU2_NEWTON_DEPTH_RECURSION"
+                                        << " result=DIAGONAL_PAYMENT_COUNTEREXAMPLE"
+                                        << " half_level=" << half_level
+                                        << " half_factor=" << half_factor
+                                        << " depth=" << depth
+                                        << " offset=" << offset
+                                        << " order=" << order
+                                        << " value=" << payment.back()
+                                        << " payment=" << render(payment)
+                                        << '\n';
+                                    return EXIT_SUCCESS;
+                                }
+                            }
                         }
                         const Vector paired = add(shifted, defect);
                         ++paired_checks;
@@ -353,6 +606,15 @@ int main(int argc, char** argv) {
         std::cout << "SU2_NEWTON_DEPTH_RECURSION";
         if (scalar_diagonal_only) {
             std::cout << " result=NO_SCALAR_DIAGONAL_COUNTEREXAMPLE";
+        } else if (diagonal_prefix_only) {
+            std::cout << " result=NO_DIAGONAL_PREFIX_COUNTEREXAMPLE";
+        } else if (diagonal_payment_only) {
+            std::cout << " result=NO_DIAGONAL_PAYMENT_COUNTEREXAMPLE";
+        } else if (top_diagonal_payment_only) {
+            std::cout << " result=NO_TOP_DIAGONAL_PAYMENT_COUNTEREXAMPLE";
+        } else if (top_diagonal_vector_payment_only) {
+            std::cout
+                << " result=NO_TOP_DIAGONAL_VECTOR_PAYMENT_COUNTEREXAMPLE";
         } else if (paired_counterexample) {
             std::cout
                 << " result=PAIRED_COUNTEREXAMPLE_LOW_GROUPS_NONNEGATIVE"

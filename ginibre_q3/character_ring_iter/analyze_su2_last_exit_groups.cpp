@@ -70,6 +70,7 @@ int main(int argc, char** argv) {
         std::uint64_t groups = 0;
         std::uint64_t negative_groups = 0;
         std::uint64_t nonspecial_negative_groups = 0;
+        std::uint64_t special_negative_groups = 0;
         std::uint64_t special_positive_groups = 0;
         std::uint64_t outside_in_prefixes = 0;
         std::uint64_t negative_outside_in_prefixes = 0;
@@ -947,6 +948,19 @@ int main(int argc, char** argv) {
                                             << " margin=" << margin
                                             << '\n';
                                     }
+                                } else {
+                                    ++special_negative_groups;
+                                    if (special_negative_groups == 1) {
+                                        std::cout
+                                            << "FIRST_NEGATIVE_SPECIAL"
+                                            << " K=" << K
+                                            << " Q=" << Q
+                                            << " j=" << j
+                                            << " t=" << t
+                                            << " y=" << y
+                                            << " margin=" << margin
+                                            << '\n';
+                                    }
                                 }
                             } else if (special) {
                                 ++special_positive_groups;
@@ -1555,6 +1569,7 @@ int main(int argc, char** argv) {
             << " negative_groups=" << negative_groups
             << " nonspecial_negative_groups="
             << nonspecial_negative_groups
+            << " special_negative_groups=" << special_negative_groups
             << " special_positive_groups=" << special_positive_groups
             << " outside_in_prefixes=" << outside_in_prefixes
             << " negative_outside_in_prefixes="

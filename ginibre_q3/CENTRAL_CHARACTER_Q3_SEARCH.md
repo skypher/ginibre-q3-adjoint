@@ -30353,6 +30353,35 @@ full skeleton expansion, it has only `|Y|<=2Q-1` channels.  Thus Target
 5A8H28R13 is a sufficient, finite-channel form of the remaining
 `SU(2)` global-payment lemma.
 
+**Proposition 5A8H28R13A (central-channel obstruction).**  The central
+channel cannot be appended to the strict `d=1` tail by a separate sign
+claim.  At
+
+```text
+(K,Q,j,t)=(5,2,7,6),             X=K-Q=3,
+```
+
+one has
+
+```text
+J_X(j,t)=-36728800,              Q_(7,6)=442038016. (P5A.102CB8X0)
+```
+
+Thus the positive strict tail must pay a negative central channel even in
+the first `2Q<K<=3Q` band where that channel exists.
+
+**Proof.**
+
+1. The exact `cpp_int` last-exit recurrence in
+   `character_ring_iter/analyze_su2_last_exit_groups.cpp` evaluates the
+   channel formula `(P5A.102CB6)` at the displayed parameters and returns
+   the first negative special channel in `(P5A.102CB8X0)`.
+2. Independently,
+   `character_ring_iter/analyze_su2_full_prefix_kernel.cpp --case 10 4 7 6`
+   evaluates the original endpoint current and gives the second value in
+   `(P5A.102CB8X0)`.  Hence the negative channel is a payment obstruction,
+   not a counterexample to `(FBPC_j)`.  QED.
+
 The exact C++ recurrence
 `character_ring_iter/analyze_su2_last_exit_groups.cpp` constructs all
 channel Green series, verifies `(P5A.102CB7)` against the independent
@@ -35378,7 +35407,24 @@ mathcalL_(9,3)
 Thus its coordinates one and three are strictly negative.  This does
 not negate the scalar full-prefix current: it only eliminates the
 stronger route which asks every low Newton base vector to be entrywise
-nonnegative.
+nonnegative.  It also eliminates the natural termwise scalar
+diagonal strengthening.  Indeed, in `(P5A.102CB8R)`, take `h=r=3`.
+After reflection, the scalar current reads the `K` coordinate, so the
+order-three summand at `(j,t)=(13,9)` is exactly
+
+```text
+(mathcalL_(9,3))_K=-19771615524.                 (P5A.102CB8WB)
+```
+
+The complete current remains positive:
+
+```text
+Q_(13,9)=8979141515942.                           (P5A.102CB8WC)
+```
+
+Hence a successful diagonal-band proof must retain cancellation among
+distinct Newton orders; it cannot sign their scalar contributions one
+at a time.
 
 **Proof.**  Compute `f_r=(N^r)_(0,0)` and substitute the direct finite
 difference
@@ -35393,7 +35439,129 @@ in `(P5A.102CB8T)`.  Exact integer matrix multiplication gives
 and reflect by the simple current; it gives the same vector.  The strict
 `cpp_int` replay is
 `character_ring_iter/probe_su2_newton_depth_recursion.cpp`; it fails
-closed on disagreement between these two calculations.  QED.
+closed on disagreement between these two calculations, and its
+`--scalar-diagonal` mode detects `(P5A.102CB8WB)`.  Independently,
+`character_ring_iter/analyze_su2_full_prefix_kernel.cpp --case 6 2 13 9`
+gives `(P5A.102CB8WC)` at its endpoint.  QED.
+
+The only surviving Newton-order strengthening must retain a cumulative
+reserve.  Its exact depth recursion makes the required payment explicit.
+
+**Lemma 5A8H28UI1B (diagonal partial-current recursion).**  For `t>=3`,
+`h>=0`, and `0<=R<=h`, put
+
+```text
+mathscrS_(t,h,R)
+ =\left(sum_(r=0)^R binom(h,r)
+       N^(2(h-r))mathcalL_(t,r)\right)_K,
+
+alpha^(t)_(h,R)=sum_(r=0)^R binom(h,r)b^(t)_(r,t).
+                                                        (P5A.102CB8WD)
+```
+
+Then
+
+```text
+mathscrS_(t,h,R)
+ =mathscrS_(t-1,h+1,R)
+  +binom(h,R)\left(N^(2(h-R))mathcalL_(t-1,R+1)\right)_K
+  +alpha^(t)_(h,R)\left(N^(2h+3)B_t e_0\right)_K.
+                                                        (P5A.102CB8WE)
+```
+
+At `R=h`, the left side is the diagonal-band current
+`Q_(t+1+h,t)` after simple-current reflection.
+
+**Proof.**
+
+1. Substitute the cross-depth identity `(P5A.102CB8U)` in the first
+   formula of `(P5A.102CB8WD)`.
+2. The `N^2mathcalL_(t-1,r)` block and the reindexed
+   `mathcalL_(t-1,r+1)` block combine by Pascal's identity into
+   `mathscrS_(t-1,h+1,R)`, leaving only its `r=R+1` boundary term.
+3. In every new-defect summand the smoothing cancels its `r` dependence:
+   `N^(2(h-r))N^(3+2r)B_t e_0=N^(2h+3)B_t e_0`.  Their scalar sum is
+   `alpha^(t)_(h,R)`, proving `(P5A.102CB8WE)`.  At `R=h`, operator
+   Newton expansion `(P5A.102CB8R)` and reflection identify the left
+   side with `Q_(t+1+h,t)`.  QED.
+
+**Proposition 5A8H28UI1C (local diagonal-payment obstruction).**  The
+sum of the final two terms in `(P5A.102CB8WE)` need not be nonnegative.
+At
+
+```text
+(K,Q,t,h,R)=(3,1,6,2,2),
+```
+
+its full reflected vector is
+
+```text
+(160093444,-18990228,385369666,-7456548)^T.      (P5A.102CB8WF)
+```
+
+In particular its scalar endpoint is negative.  Thus any induction on
+the partial currents `mathscrS` must use the preceding term in
+`(P5A.102CB8WE)` as a genuine reserve; it cannot sign the newly exposed
+boundary payment separately.
+
+**Proof.**
+
+1. Use the four-by-four compressed matrix in Proposition 5A8H28UI1A,
+   with `t=6,h=R=2`, in `(P5A.102CB8WE)`.
+2. Exact integer multiplication gives `(P5A.102CB8WF)`.  The strict
+   `cpp_int` replay
+`character_ring_iter/probe_su2_newton_depth_recursion.cpp
+   --diagonal-payment 3 6` independently reconstructs both partial
+currents and fails closed unless their difference equals the displayed
+two-term payment.  QED.
+
+The opposite edge of the diagonal band has a particularly small
+desmoothing target.
+
+**Lemma 5A8H28UI1D (conditional outer-diagonal reduction).**  Assume the
+anchored hierarchy through depth `t` and assume the vector inequality
+
+```text
+mathscrP_t
+ =(2t-1)N^3C_(t-1)+(2t+1)N^(2t-1)B_t e_0>=0.
+                                                        (P5A.102CB8WG)
+```
+
+Then the complete outer diagonal is nonnegative:
+
+```text
+Q_(2t-1,t)>=0.                                    (P5A.102CB8WH)
+```
+
+**Proof of the reduction.**
+
+1. At `j=2t-1` the full Newton coefficient of `C_s` is
+   `binom(4t-1,2s)`.  The terms through `s=t-2` have nonnegative powers
+   of their anchored kernels.
+2. For the final two terms, put
+
+```text
+a=binom(4t-1,2t-2),
+b=binom(4t-1,2t)=a(2t+1)/(2t-1).
+```
+
+3. Their vector sum is exactly `a mathscrP_t/(2t-1)`.  Thus
+   `(P5A.102CB8WG)` implies `(P5A.102CB8WH)`.  The one-step smoothing is
+   already free under the anchored hierarchy, since
+
+```text
+N mathscrP_t
+ =(2t-1)N^4C_(t-1)+(2t+1)C_t>=0.                (P5A.102CB8WI)
+```
+
+This completes the proof.  The missing assertion is precisely removal
+of this last fusion step, not another anchored inequality.
+
+**Target 5A8H28UI1E (terminal two-packet desmoothing).**  Prove the
+additional hypothesis `(P5A.102CB8WG)` in Lemma 5A8H28UI1D for every
+`t>=2`.  The exact `cpp_int` probe
+`probe_su2_newton_depth_recursion --top-diagonal-vector-payment 40 50`
+finds no counterexample in that box; this is discovery evidence only.
 
 **Corollary 5A8H28UI2 (exact smoothing distance).**  Assume the
 anchored hierarchy `C_s>=0`.  For every `t>=2` and
