@@ -1345,7 +1345,21 @@ bool recession_fan_newton_certificate(
     if (bases.empty()) {
         return false;
     }
-    for (const std::array<int, 3>& point : bases) {
+    std::cerr
+        << "SU2_T4_GROUP_RECESSION_FAN_PROGRESS"
+        << " position=" << chamber.mask
+        << " phase=base_newton"
+        << " bases=" << bases.size()
+        << std::endl;
+    for (std::size_t base_index = 0U; base_index < bases.size(); ++base_index) {
+        const std::array<int, 3>& point = bases[base_index];
+        std::cerr
+            << "SU2_T4_GROUP_RECESSION_FAN_PROGRESS"
+            << " position=" << chamber.mask
+            << " phase=base_newton"
+            << " base=" << base_index + 1U
+            << '/' << bases.size()
+            << std::endl;
         std::array<Polynomial, 3> substitution{
             constant(point[0]), constant(point[1]), constant(point[2])
         };
@@ -1367,6 +1381,16 @@ bool recession_fan_newton_certificate(
         << "SU2_T4_GROUP_RECESSION_FAN"
         << " position=" << chamber.mask
         << " rays=" << rays.size()
+        << " ray_vectors=(";
+    for (std::size_t ray_index = 0U; ray_index < rays.size(); ++ray_index) {
+        if (ray_index != 0U) {
+            std::cout << ',';
+        }
+        const IntegralRecessionRay& ray = rays[ray_index];
+        std::cout << '(' << ray[0] << ',' << ray[1] << ',' << ray[2] << ')';
+    }
+    std::cout
+        << ')'
         << " threshold=" << threshold
         << " base_points=" << bases.size()
         << " H_bound=" << *h_bound
@@ -1411,14 +1435,14 @@ bool certify_group_chamber(
         );
     }
     if (!passed) {
+        passed = recession_fan_newton_certificate(chamber, constraints);
+    }
+    if (!passed) {
         passed = direct_facet_certificate(
             chamber,
             constraints,
             forced_zero
         );
-    }
-    if (!passed) {
-        passed = recession_fan_newton_certificate(chamber, constraints);
     }
     if (!passed) {
         const std::vector<Polynomial> domain_constraints(

@@ -9675,6 +9675,54 @@ The construction is attempted before the expensive integer pair-cut tree;
 it resolves these three chambers only and does not assert the full
 601-chamber `C_5` certificate.
 
+**Proposition 5A.102AC5D (exact multi-ray recession-fan certificate).**
+Let `P` be an integer chamber in the `C_5` scheduler.  From every pair of
+irredundant affine facets, retain each primitive integral cross-product ray
+`r_j` with positive `Q` coordinate whose slope on every facet is
+nonnegative.  Suppose the exact QF-LIA check establishes
+
+```text
+x in P, Q(x)>=T  implies  some_j x-r_j in P.          (P5A.102AC5D1)
+```
+
+Suppose further that `H,Y` have exact affine upper bounds on
+`P intersect {Q<T}` and that, for every irreducible point `b` in that
+finite slab,
+
+```text
+K_5(b+sum_j t_j r_j)>=0,                 t_j in Z_>=0, (P5A.102AC5D2)
+```
+
+is certified by a nonnegative multivariate Newton expansion.  Then
+`K_5>=0` at every integral point of `P`.
+
+**Proof.**  The slope test gives `x+sum_j t_j r_j in P` for every
+`x in P` and `t_j>=0`.  Starting from any lattice point of `P`, repeatedly
+apply `(P5A.102AC5D1)` while `Q>=T`.  Once in the slab, continue subtracting
+any ray whose predecessor remains in `P`.  Every subtraction lowers the
+positive integral coordinate `Q`, so the process terminates at one of the
+enumerated irreducible slab points `b`.  Reversing the steps writes the
+original point as `b+sum_j t_j r_j`.  Formula `(P5A.102AC5D2)` proves its
+nonnegativity.  QED.
+
+The first non-single-ray chamber is position `431`.  Its exact fan has
+
+```text
+r_1=(1,1,3),     r_2=(4,3,10),     r_3=(6,5,14),
+T=15,             #B=6,            H<=11, Y<=38.
+```
+
+The QF-LIA descent check and all six three-variable exact basis checks return
+`PASS_EXACT_NEWTON`; the source-matched transcript is
+`certificates/su2_t4_c5_recession_fan_431.log` (SHA-256
+`ea6239da4baefa9f2cc2c40c2b7de82aa28216cfb395b97ddeaf63bc9ef90ff4`),
+from source SHA-256
+`7db365009c9b4f07f1b009d06b4b9d30bd522d6f3d2a3336e07a65fdd6657da1`.
+The scheduler tries this fan before the unbounded direct-facet search, so
+the certified finite route is reached for position `431`; this adds one
+exact chamber certificate and does not assert the full 601-chamber `C_5`
+theorem.
+
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
 Then
