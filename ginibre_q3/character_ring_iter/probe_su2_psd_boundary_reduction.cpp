@@ -68,6 +68,38 @@ Matrix multiplication_matrix(const Vector& values) {
     return matrix;
 }
 
+Vector fusion_transform(const Vector& values, int factor) {
+    const int level = static_cast<int>(values.size()) - 1;
+    Vector output(values.size(), 0);
+    for (int source = 0; source <= level; ++source) {
+        const cpp_int& value = values[static_cast<std::size_t>(source)];
+        if (value == 0) {
+            continue;
+        }
+        const int lower = std::abs(source - factor);
+        const int upper = std::min(
+            source + factor,
+            2 * level - source - factor
+        );
+        for (int target = lower; target <= upper; ++target) {
+            output[static_cast<std::size_t>(target)] += value;
+        }
+    }
+    return output;
+}
+
+int first_bad_boundary(const Vector& values) {
+    const int level = static_cast<int>(values.size()) - 1;
+    for (int radius = 0; radius <= level; ++radius) {
+        if (values[0U] * values[static_cast<std::size_t>(level - radius)]
+            < values[static_cast<std::size_t>(radius)]
+                * values[static_cast<std::size_t>(level)]) {
+            return radius;
+        }
+    }
+    return -1;
+}
+
 cpp_int determinant(Matrix matrix) {
     const std::size_t size = matrix.size();
     if (size == 0U) {
@@ -101,6 +133,7 @@ cpp_int determinant(Matrix matrix) {
                             * matrix[pivot_index][column])
                       / previous;
             }
+            matrix[row][pivot_index] = 0;
         }
         previous = pivot;
     }
@@ -170,6 +203,8 @@ int main(int argc, char** argv) {
         std::uint64_t psd_negative_current_profiles = 0U;
         std::uint64_t diagonal_boundary_profiles = 0U;
         std::uint64_t diagonal_boundary_failures = 0U;
+        std::uint64_t psd_insertion_checks = 0U;
+        std::uint64_t psd_insertion_failures = 0U;
         int first_level = -1;
         int first_radius = -1;
         int first_target = -1;
@@ -180,6 +215,12 @@ int main(int argc, char** argv) {
         int first_diagonal_target = -1;
         cpp_int first_diagonal_value = 0;
         Vector first_diagonal_profile;
+        int first_insertion_level = -1;
+        int first_insertion_factor = -1;
+        int first_insertion_radius = -1;
+        cpp_int first_insertion_value = 0;
+        Vector first_insertion_profile;
+        Vector first_insertion_output;
 
         for (int level = 1; level <= maximum_level; ++level) {
             const std::uint64_t base
@@ -251,6 +292,33 @@ int main(int argc, char** argv) {
                         }
                     }
                 }
+                const bool psd = positive_semidefinite(matrix);
+                if (psd) {
+                    for (int factor = 0; factor <= level; ++factor) {
+                        ++psd_insertion_checks;
+                        const Vector once = fusion_transform(values, factor);
+                        const Vector output = fusion_transform(once, factor);
+                        const int insertion_radius = first_bad_boundary(output);
+                        if (insertion_radius < 0) {
+                            continue;
+                        }
+                        ++psd_insertion_failures;
+                        if (first_insertion_level < 0) {
+                            first_insertion_level = level;
+                            first_insertion_factor = factor;
+                            first_insertion_radius = insertion_radius;
+                            first_insertion_value
+                                = output[0U]
+                                    * output[static_cast<std::size_t>(
+                                        level - insertion_radius)]
+                                  - output[static_cast<std::size_t>(
+                                        insertion_radius)]
+                                    * output[static_cast<std::size_t>(level)];
+                            first_insertion_profile = values;
+                            first_insertion_output = output;
+                        }
+                    }
+                }
                 if (bad_radius < 0) {
                     continue;
                 }
@@ -265,7 +333,7 @@ int main(int argc, char** argv) {
                         first_diagonal_profile = values;
                     }
                 }
-                if (!positive_semidefinite(matrix)) {
+                if (!psd) {
                     continue;
                 }
                 ++psd_negative_current_profiles;
@@ -292,6 +360,8 @@ int main(int argc, char** argv) {
             << diagonal_boundary_profiles
             << " diagonal_boundary_failures="
             << diagonal_boundary_failures
+            << " psd_insertion_checks=" << psd_insertion_checks
+            << " psd_insertion_failures=" << psd_insertion_failures
             << " first_failure=("
             << (first_level < 0 ? -1 : 2 * first_level) << ','
             << (first_radius < 0 ? -1 : 2 * first_radius) << ','
@@ -311,8 +381,20 @@ int main(int argc, char** argv) {
             << first_diagonal_value << ')'
             << " first_diagonal_profile="
             << render(first_diagonal_profile)
+            << " first_insertion_failure=("
+            << (first_insertion_level < 0 ? -1 : 2 * first_insertion_level)
+            << ','
+            << (first_insertion_factor < 0 ? -1 : 2 * first_insertion_factor)
+            << ','
+            << (first_insertion_radius < 0 ? -1 : 2 * first_insertion_radius)
+            << ',' << first_insertion_value << ')'
+            << " first_insertion_profile="
+            << render(first_insertion_profile)
+            << " first_insertion_output="
+            << render(first_insertion_output)
             << " result="
             << (psd_negative_current_profiles == 0U
+                    && psd_insertion_failures == 0U
                     ? "NO_PSD_BOUNDARY_REDUCTION_FAILURE"
                     : "PSD_BOUNDARY_REDUCTION_FAILURE")
             << '\n';

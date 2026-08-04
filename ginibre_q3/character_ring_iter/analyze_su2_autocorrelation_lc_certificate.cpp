@@ -1804,6 +1804,40 @@ int replay_ordinary_12_complete_current_sign() {
   return EXIT_SUCCESS;
 }
 
+int replay_ordinary_one_row_universal_obstruction() {
+  const std::array<Integer, 7> root{
+      Integer(1), Integer(2), Integer(2), Integer(0),
+      Integer(1), Integer(0), Integer(0)};
+  std::array<Integer, 13> square{};
+  for (std::size_t left = 0U; left < root.size(); ++left) {
+    for (std::size_t right = 0U; right < root.size(); ++right) {
+      const std::size_t lower = left > right ? left - right : right - left;
+      for (std::size_t target = lower; target <= left + right; ++target) {
+        square[target] += root[left] * root[right];
+      }
+    }
+  }
+  const std::array<Integer, 13> expected_square{
+      Integer(10), Integer(21), Integer(25), Integer(21),
+      Integer(15), Integer(9), Integer(5), Integer(1), Integer(1),
+      Integer(0), Integer(0), Integer(0), Integer(0)};
+  const Integer current = square[0] * (square[7] + square[8] + square[9])
+      - square[1] * square[8];
+  if (square != expected_square || current != Integer(-1)) {
+    throw std::runtime_error(
+        "ordinary one-row universal-current obstruction mismatch");
+  }
+  std::cout
+      << "SU2_ORDINARY_ONE_ROW_UNIVERSAL_OBSTRUCTION"
+      << " root=(1,2,2,0,1)"
+      << " target=(1,8)"
+      << " square=(10,21,25,21,15,9,5,1,1)"
+      << " current=-1"
+      << " result=PASS_EXACT"
+      << '\n';
+  return EXIT_SUCCESS;
+}
+
 int replay_wall_121_saturated_recurrence_obstruction() {
   constexpr int cutoff = 3;
   const std::array<Rational, 8> p{
@@ -6871,6 +6905,13 @@ int main(int argc, char** argv) {
                == "--replay-ordinary-12-complete-current-sign"
     ) {
       return replay_ordinary_12_complete_current_sign();
+    }
+    if (
+        argc == 2
+        && std::string{argv[1]}
+               == "--replay-ordinary-one-row-universal-obstruction"
+    ) {
+      return replay_ordinary_one_row_universal_obstruction();
     }
     if (
         argc == 2

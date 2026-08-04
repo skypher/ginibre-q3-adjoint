@@ -10291,6 +10291,371 @@ N_d=N_p^2>=0
 
 as an operator: every finite fusion matrix is real symmetric.
 
+**Lemma 5A8H28UIA2CGLCPL3 (PSD boundary reduction through
+half-level three).**  Target 5A8H28UIA2CGLCP holds for `0<=K<=3`.
+
+**Proof.**  If `d_0=0`, positive semidefiniteness forces the zeroth
+row and column of `N_d` to vanish; since that row is `d`, this is the
+zero profile and the assertion is immediate.  Hence assume `d_0>0`.
+The cases `K<=1` are immediate.  At `K=2`, write
+`d=(a,b,c)`.  The only off-diagonal anchored current not obtained by
+symmetry or a boundary current is absent: the off-diagonal entries are
+the two boundary values `b(a-c)` and `a^2-c^2`; diagonal entries are
+nonnegative because `d_0N_d-dd^T` is the Schur complement of the
+positive-semidefinite matrix `N_d` at its positive `(0,0)` entry.
+
+For `K=3`, write `d=(a,b,c,e)`.  In the orthonormal simple-current
+eigenbases
+
+```text
+ (e_0+e_3,e_1+e_2)/sqrt(2),
+ (e_0-e_3,e_1-e_2)/sqrt(2),
+```
+
+the two blocks of `N_d` are
+
+```text
+ [ a+e,       b+c       ]       [ a-e, b-c ]
+ [ b+c, a+2b+2c+e ] ,    [ b-c, a-e ].          (P5A.102AD5ALX1L3A)
+```
+
+Put `x=b+c`, `delta=b-c`, and `u=a-e`.  The `R=K` boundary
+current gives `u>=0`.  Positive semidefiniteness of the first block
+gives
+
+```text
+ D=(a+e)(a+e+2x)-x^2>=0.                         (P5A.102AD5ALX1L3B)
+```
+
+All off-diagonal anchored entries except `A_(1,2)` are boundary
+entries (or their symmetric copies).  For the remaining one,
+
+```text
+ 4A_(1,2)=4a(x+e)-x^2+delta^2=:F,
+
+ F-D=2ux-u^2+delta^2.                            (P5A.102AD5ALX1L3C)
+```
+
+If the second line is nonnegative, then `F>=D>=0`.  Otherwise
+`u>0` and `x<u/2<=a/2`; hence, for `x>0`,
+
+```text
+ F>=4ax-x^2=x(4a-x)>0.
+```
+
+For `x=0`, nonnegativity is immediate from the definition of `F`.
+Thus `A_(1,2)>=0`.  Finally every diagonal entry of `A` is
+nonnegative by the same Schur-complement argument, completing all
+cases.  QED.
+
+**Lemma 5A8H28UIA2CGLCPL4R (half-level-four one-current reduction).**
+At `K=4`, write
+
+```text
+d=(a,b,c,e,f),                 A=aN_d-d d^T.
+```
+
+Under the hypotheses of Target 5A8H28UIA2CGLCP, every anchored entry
+of `A` is nonnegative except possibly the single interior current
+
+```text
+A_(1,3)=a(c+e+f)-be.                           (P5A.102AD5ALX1L4A)
+```
+
+Thus the `K=4` PSD boundary target is equivalent to the nonnegativity
+of `(P5A.102AD5ALX1L4A)`.
+
+**Proof.**  If `a=0`, positive semidefiniteness forces the zeroth row
+of `N_d`, hence `d`, to vanish.  Take `a>0`.  The half-label fusion
+rule gives
+
+```text
+N_d=
+[ a, b,       c,             e,       f
+  b, a+b+c,   b+c+e,         c+e+f,   e
+  c, b+c+e,   a+b+c+e+f,     b+c+e,   c
+  e, c+e+f,   b+c+e,         a+b+c,   b
+  f, e,       c,             b,       a ].       (P5A.102AD5ALX1L4B)
+```
+
+The Schur complement at its positive zeroth entry proves every diagonal
+entry of `A` nonnegative.  Its zeroth row vanishes, and the entries
+meeting the top index are exactly the boundary currents
+
+```text
+A_(1,4)=ae-bf,
+A_(2,4)=c(a-f),
+A_(3,4)=ab-ef.
+```
+
+The two other interior entries are
+
+```text
+A_(1,2)=a(b+c+e)-bc,
+A_(2,3)=a(b+c+e)-ce.                         (P5A.102AD5ALX1L4C)
+```
+
+Put
+
+```text
+s=a+f,       g=a-f,       t=b+e,       h=b-e.
+```
+
+The two outer boundary currents give
+
+```text
+gt>=s|h|.                                      (P5A.102AD5ALX1L4D)
+```
+
+In the orthonormal even simple-current eigenbasis
+
+```text
+(e_0+e_4)/sqrt(2), (e_1+e_3)/sqrt(2), e_2,
+```
+
+the PSD block is
+
+```text
+[ s,       t,       sqrt(2)c
+  t,       s+t+2c, sqrt(2)(t+c)
+  sqrt(2)c,sqrt(2)(t+c),s+t+c ].                (P5A.102AD5ALX1L4E)
+```
+
+Its `{0,1}` and `{0,2}` principal minors give
+
+```text
+t^2<=s(s+t+2c),              2c^2<=s(s+t+c).   (P5A.102AD5ALX1L4F)
+```
+
+These two inequalities imply the auxiliary inequality
+
+```text
+D=s(t+c)-tc>=0.                                 (P5A.102AD5ALX1L4G)
+```
+
+Indeed, this is immediate if `t<=s` or `c<=s`.  Otherwise put
+`x=c/s>1`, `y=t/s>1`.  The two inequalities in
+`(P5A.102AD5ALX1L4F)` become
+
+```text
+y^2<=1+y+2x,               y>=2x^2-x-1.         (P5A.102AD5ALX1L4H)
+```
+
+They force `x<=phi=(1+sqrt(5))/2`: for `x>phi`, the lower bound `L`
+in the second line obeys
+
+```text
+L^2-L-(1+2x)=(x^2-x-1)(4x^2-1)>0,
+```
+
+contradicting the first line.  If `D<0`, then
+`y>x/(x-1)`.  For `1<x<=phi`, however,
+
+```text
+[x/(x-1)]^2-x/(x-1)-(1+2x)
+ ={(-2x+1)(x^2-x-1)}/{(x-1)^2}>=0,
+```
+
+whereas the first line of `(P5A.102AD5ALX1L4H)` forces the reverse
+inequality on `y`.  This contradiction proves `(P5A.102AD5ALX1L4G)`.
+
+Finally `(P5A.102AD5ALX1L4D)` gives
+
+```text
+b,e<=(t+|h|)/2<=at/s.
+```
+
+Consequently each entry in `(P5A.102AD5ALX1L4C)` is at least
+
+```text
+a(t+c)-atc/s=aD/s>=0.
+```
+
+The sole unlisted off-diagonal entry is `(P5A.102AD5ALX1L4A)`, proving
+the reduction.  QED.
+
+**Lemma 5A8H28UIA2CGLCPL4 (PSD boundary reduction through
+half-level four).**  Target 5A8H28UIA2CGLCP holds for `0<=K<=4`.
+
+**Proof.**  Lemma 5A8H28UIA2CGLCPL3 handles `K<=3`.  At `K=4`, use
+Lemma 5A8H28UIA2CGLCPL4R, so it remains only to prove
+
+```text
+A_(1,3)=a(c+e+f)-be>=0.                         (P5A.102AD5ALX1L4I)
+```
+
+The `{0,1}` minor in `(P5A.102AD5ALX1L4E)` gives
+
+```text
+t^2<=s(s+t+2c).
+```
+
+Since `be=(t^2-h^2)/4`, substitution and the definitions of
+`s,g,t,h` give the exact lower payment
+
+```text
+4A_(1,3)
+ >=(gt-sh)+g(2c-g-h)+h^2.                       (P5A.102AD5ALX1L4J)
+```
+
+The first term is nonnegative by `(P5A.102AD5ALX1L4D)`.  Complete the
+remaining quadratic in `h`:
+
+```text
+g(2c-g-h)+h^2
+ =(h-g/2)^2+2gc-5g^2/4.                         (P5A.102AD5ALX1L4K)
+```
+
+If `c>=5g/8`, `(P5A.102AD5ALX1L4J)`--`(P5A.102AD5ALX1L4K)` prove the
+claim.  If `c<5g/8`, then `c<a`, because `g=a-f<=a`.  Log concavity
+at the middle coefficient gives `be<=c^2`, and hence
+
+```text
+A_(1,3)
+ >=a(c+e+f)-c^2
+ =c(a-c)+a(e+f)>=0.
+```
+
+This pays the sole residual current; Lemma
+5A8H28UIA2CGLCPL4R proves every other anchored entry.  QED.
+
+**Lemma 5A8H28UIA2CGLCPIL4 (half-level-four PSD boundary insertion).**
+At `K=4`, Target 5A8H28UIA2CGLCPI holds for every insertion label
+`0<=Q<=4`.
+
+**Proof.**  Retain the notation of Lemma 5A8H28UIA2CGLCPL4R.  The
+odd simple-current block of `(P5A.102AD5ALX1L4B)` is
+
+```text
+[ g, h, 0
+  h, g+h, 0
+  0, 0, s ].                                      (P5A.102AD5ALX1L4L)
+```
+
+Thus
+
+```text
+g>=0,       g+h>=0,       g(g+h)>=h^2.          (P5A.102AD5ALX1L4M)
+```
+
+Together with the two outer boundary currents, we retain
+
+```text
+gt>=s|h|.                                        (P5A.102AD5ALX1L4N)
+```
+
+The insertions `Q=0,4` are the identity.  For `Q=2`, one has
+
+`N_2^2=N_0+N_1+N_2+N_3+N_4`; direct multiplication produces the
+palindromic profile
+
+```text
+(a+b+c+e+f,
+ a+3b+3c+3e+f,
+ a+3b+5c+3e+f,
+ a+3b+3c+3e+f,
+ a+b+c+e+f),                                     (P5A.102AD5ALX1L4O)
+```
+
+whose boundary currents all vanish.
+
+It remains to treat `Q=1`; `Q=3` is identical because
+`N_3=N_4N_1`.  Here `N_1^2=N_0+N_1+N_2`, so the new profile is
+
+```text
+p=(a+b+c,
+   a+3b+2c+e,
+   a+2b+3c+2e+f,
+   b+2c+3e+f,
+   c+e+f).                                       (P5A.102AD5ALX1L4P)
+```
+
+Put
+
+```text
+m=c+(s+t)/2,                 n=s/2+2t+2c,
+delta_0=g+h,                 delta_1=g+2h.
+```
+
+The boundary currents of `(P5A.102AD5ALX1L4P)` are
+
+```text
+B_1=n delta_0-m delta_1,
+B_2=p_2 delta_0,
+B_3=n delta_0+m delta_1,
+B_4=2m delta_0.                                 (P5A.102AD5ALX1L4Q)
+```
+
+By `(P5A.102AD5ALX1L4M)`, `delta_0>=0`, so only
+
+```text
+n delta_0>=m|delta_1|                           (P5A.102AD5ALX1L4R)
+```
+
+requires proof.
+
+First suppose `delta_1>=0`.  The left side minus the right side in
+`(P5A.102AD5ALX1L4R)` is
+
+```text
+g(c+3t/2)+h(t-s/2).                               (P5A.102AD5ALX1L4S)
+```
+
+If `h>=0` and `2t<s`, use `h<=gt/s` from
+`(P5A.102AD5ALX1L4N)`; the expression is at least
+
+```text
+g{c+t+t^2/s}>=0.
+```
+
+The other `h>=0` subcase is immediate.  If
+`-g/2<=h<0` and `2t>s`, use `h>=-g/2`; the expression is at least
+
+```text
+g{c+t+s/4}>=0.
+```
+
+The remaining subcase has both the second term and the first term in
+`(P5A.102AD5ALX1L4S)` nonnegative.  This proves
+`(P5A.102AD5ALX1L4R)` when `delta_1>=0`.
+
+Now suppose `delta_1<0`.  Then `g>0`; put `q=-h/g`.  By
+`(P5A.102AD5ALX1L4M)`,
+
+```text
+1/2<q<=(sqrt(5)-1)/2.                            (P5A.102AD5ALX1L4T)
+```
+
+The left side minus the right side in `(P5A.102AD5ALX1L4R)`, divided
+by `g`, is
+
+```text
+s(1-3q/2)+t(5/2-3q)+c(3-4q).                     (P5A.102AD5ALX1L4U)
+```
+
+Every displayed coefficient is nonnegative on `(P5A.102AD5ALX1L4T)`:
+at its upper endpoint they are respectively
+
+```text
+(7-3sqrt(5))/4,  (8-3sqrt(5))/2,  5-2sqrt(5).
+```
+
+Thus `(P5A.102AD5ALX1L4U)` is nonnegative.  This proves all four
+boundary currents in the `Q=1,3` cases, completing every insertion.
+QED.
+
+**Corollary 5A8H28UIA2CGLCPIL4F (all-factor PSD-boundary
+certification at half-level four).**  Starting from `d=e_0`, every
+finite word of irreducible-square insertions at `K=4` remains
+boundary-admissible and has nonnegative anchored currents.
+
+**Proof.**  The vacuum profile has a positive-semidefinite multiplication
+matrix and zero boundary currents.  Finite fusion preserves nonnegativity,
+interval log concavity, and positive semidefiniteness under an
+irreducible-square insertion.  Lemma 5A8H28UIA2CGLCPIL4 preserves the
+boundary inequalities, and Lemma 5A8H28UIA2CGLCPL4 then supplies every
+anchored current.  Induction on the word length proves the claim.  QED.
+
 The PSD target has an exact folded-Verlinde probability form.  This
 also identifies precisely what square-factor insertion does to the
 boundary order.
@@ -12602,6 +12967,48 @@ constructs the square coefficients for supports one through twelve
 and checks `(P5A.102AD5ALX1ZZB2B)`,
 `(P5A.102AD5ALX1ZZB2C)`, and
 `(P5A.102AD5ALX1ZZB2G)` as polynomial identities.  QED.
+
+The support-uniform statement is exceptional to this lowest strict pair; it
+cannot be extended to every current in the first row while discarding the
+factor/shape structure.
+
+**Proposition 5A8H28UIA2CGLPCIPOC1SOBS
+(ordinary one-row universal obstruction).**  Let
+
+```text
+P=beta_0+2beta_1+2beta_2+beta_4.
+```
+
+Then
+
+```text
+P^2=10beta_0+21beta_1+25beta_2+21beta_3+15beta_4
+    +9beta_5+5beta_6+beta_7+beta_8,
+```
+
+and the ordinary first-row current at `(R,S)=(1,8)` is negative:
+
+```text
+J(1,8)=10(beta_7+beta_8+beta_9 coefficient)
+       -21*1
+      =10(1+1)-21=-1.                             (P5A.102AD5ALX1ZZB2H)
+```
+
+Thus no proof may generalize Lemma 5A8H28UIA2CGLPCIPOC12 by treating `P` as
+an arbitrary nonnegative character-positive root.  This root has a support
+gap, so the proposition does not test the factor-word or interval-root
+subclasses.
+
+**Proof.**  Direct Clebsch--Gordan interval multiplication gives the
+displayed square; substitution in the `1 star 8={7,8,9}` current is
+`(P5A.102AD5ALX1ZZB2H)`.  The strict replay is
+
+```text
+analyze_su2_autocorrelation_lc_certificate \
+  --replay-ordinary-one-row-universal-obstruction
+```
+
+which constructs the square independently over `cpp_int`.  QED.
 
 Two natural strengthenings of `(OCSP)` are false.  The first would
 replace the star-boundary minors by all adjacent minors.  For an
@@ -25126,6 +25533,13 @@ finds eight further shape-and-boundary failures and again no
 positive-semidefinite failure.  Every PSD decision uses all principal
 minors and exact fraction-free integer elimination.  These are bounded
 results for Target 5A8H28UIA2CGLCP, not its proof.
+
+The same exact arbitrary-profile audit now also applies every
+irreducible-square insertion to each retained PSD boundary profile.  Its
+replay through `K=4` and coefficients in `{0,...,10}` performs `15,381`
+such exact insertion checks and finds no output boundary failure.  This is
+bounded evidence for Target 5A8H28UIA2CGLCPI; it does not replace its
+two-block cumulative-payment proof.
 
 The sharper exact audit
 `character_ring_iter/probe_su2_psd_boundary_obstruction.cpp` extends
