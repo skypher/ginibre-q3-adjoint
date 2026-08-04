@@ -9637,6 +9637,44 @@ certificates.  As with the low-cost scan, this is a certified scheduling
 partition only: `unresolved=572` calls for another exact certificate route;
 it neither supplies a counterexample nor proves all of `C_5`.
 
+There is a separate exact route for a chamber with one usable integral
+recession direction.  Let `P` be its exact integer polyhedron and suppose
+the certifier finds an integral `v=(v_Q,v_H,v_Y)` with `v_Q>0`.  It first
+proves in QF-LIA that, for some integer `T`,
+
+```text
+x in P, Q(x)>=T  implies  x-v in P.                 (P5A.102AC5C)
+```
+
+It then obtains exact affine upper bounds for `H,Y` on `P` intersect
+`{Q<T}`, enumerates that finite integer base, and checks a univariate
+Newton expansion of `K_5(b+t v)` for every base point `b` and `t>=0`.
+Repeated use of `(P5A.102AC5C)` reduces every lattice point of `P` to one of
+these bases, while nonnegative ray slope keeps every `b+t v` inside `P`.
+This is therefore an exact lattice certificate, not an asymptotic or
+real-cone argument.
+
+The current strict source discharges three formerly running chambers by
+this route:
+
+```text
+position   v             T    base points    H bound    Y bound
+328        (2,3,6)       10      16          13         79/3
+487        (4,3,10)      13       7           7         32
+507        (2,1,4)        7       5           1         14.
+```
+
+Their exact replays return respectively
+`SU2_T4_GROUP_SINGLE_RECESSION_RAY ... result=PASS_EXACT_NEWTON`.
+The combined strict transcript is
+`certificates/su2_t4_c5_single_recession_rays.log` (SHA-256
+`bbb610ac638b84fc8b12b2b331cdec3bae474e8ae0379b78dd492341e3019aac`);
+the corresponding source SHA-256 is
+`efe4b7863b958d3b55fda013c435aa0af5c54e7b76b518cb9954e5f84fea5798`.
+The construction is attempted before the expensive integer pair-cut tree;
+it resolves these three chambers only and does not assert the full
+601-chamber `C_5` certificate.
+
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
 Then

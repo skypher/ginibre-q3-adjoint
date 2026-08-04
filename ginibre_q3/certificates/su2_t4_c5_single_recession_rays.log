@@ -1,0 +1,9 @@
+SU2_T4_GROUP_MASKS target=c5 hinges=72 masks=601 result=PASS_EXACT_CENSUS
+SU2_T4_GROUP_SINGLE_RECESSION_RAY position=328 ray=(2,3,6) threshold=10 base_points=16 H_bound=13/1 Y_bound=79/3 result=PASS_EXACT_NEWTON
+SU2_T4_GROUP target=c5 attempted=1 certified=1 result=PASS_EXACT_CERTIFICATE
+SU2_T4_GROUP_MASKS target=c5 hinges=72 masks=601 result=PASS_EXACT_CENSUS
+SU2_T4_GROUP_SINGLE_RECESSION_RAY position=487 ray=(4,3,10) threshold=13 base_points=7 H_bound=7/1 Y_bound=32/1 result=PASS_EXACT_NEWTON
+SU2_T4_GROUP target=c5 attempted=1 certified=1 result=PASS_EXACT_CERTIFICATE
+SU2_T4_GROUP_MASKS target=c5 hinges=72 masks=601 result=PASS_EXACT_CENSUS
+SU2_T4_GROUP_SINGLE_RECESSION_RAY position=507 ray=(2,1,4) threshold=7 base_points=5 H_bound=1/1 Y_bound=14/1 result=PASS_EXACT_NEWTON
+SU2_T4_GROUP target=c5 attempted=1 certified=1 result=PASS_EXACT_CERTIFICATE
