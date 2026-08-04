@@ -2,6 +2,7 @@
 #include <array>
 #include <cstdint>
 #include <cstdlib>
+#include <deque>
 #include <iostream>
 #include <limits>
 #include <map>
@@ -98,7 +99,8 @@ int main(int argc, char** argv) {
     try {
         if (argc != 3 && argc != 4) {
             throw std::runtime_error(
-                "usage: MAXIMUM_Q OFFSET [--certificate|--residue-tails]"
+                "usage: MAXIMUM_Q OFFSET [--certificate|--residue-tails|"
+                "--h2-residue-tails|--h2-family]"
             );
         }
         const int maximum_q = parse_positive(argv[1]);
@@ -107,9 +109,20 @@ int main(int argc, char** argv) {
             argc == 4 && std::string(argv[3]) == "--certificate";
         const bool residue_tails =
             argc == 4 && std::string(argv[3]) == "--residue-tails";
-        if (argc == 4 && !certificate && !residue_tails) {
+        const bool h2_residue_tails =
+            argc == 4 && std::string(argv[3]) == "--h2-residue-tails";
+        const bool h2_family =
+            argc == 4 && std::string(argv[3]) == "--h2-family";
+        if (
+            argc == 4
+            && !certificate
+            && !residue_tails
+            && !h2_residue_tails
+            && !h2_family
+        ) {
             throw std::runtime_error(
-                "the only optional flag is --certificate or --residue-tails"
+                "the only optional flag is --certificate, --residue-tails, "
+                "--h2-residue-tails, or --h2-family"
             );
         }
         const int certificate_maximum_q =
@@ -146,6 +159,16 @@ int main(int argc, char** argv) {
         std::uint64_t residue_tail_entries = 0U;
         std::uint64_t negative_residue_tails = 0U;
         bool printed_negative_residue_tail = false;
+        std::uint64_t h2_residue_tail_entries = 0U;
+        std::uint64_t negative_h2_residue_tails = 0U;
+        std::uint64_t negative_h2_atoms = 0U;
+        int maximum_h2_payment_span = 0;
+        bool has_maximum_h2_payment_span = false;
+        int maximum_h2_payment_q = -1;
+        int maximum_h2_payment_target = -1;
+        int maximum_h2_payment_residue = -1;
+        int maximum_h2_payment_debit = -1;
+        int maximum_h2_payment_credit = -1;
         std::uint64_t negative_even = 0U;
         std::uint64_t negative_odd = 0U;
         std::uint64_t negative_total = 0U;
@@ -327,6 +350,7 @@ int main(int argc, char** argv) {
                 std::vector<Integer>(static_cast<std::size_t>(paired))
             );
             IntegerMatrix odd_column = even_column;
+            IntegerMatrix h2_column = even_column;
             for (int crossing_target = 0;
                  crossing_target < paired;
                  ++crossing_target) {
@@ -390,6 +414,37 @@ int main(int argc, char** argv) {
                                 static_cast<std::size_t>(crossing_target)
                             ][static_cast<std::size_t>(target)]
                         );
+                    h2_column[
+                        static_cast<std::size_t>(crossing_target)
+                    ][static_cast<std::size_t>(target)] =
+                        f4 * (
+                            prefix[3][
+                                static_cast<std::size_t>(crossing_target)
+                            ] * minus_powers[2][
+                                static_cast<std::size_t>(crossing_target)
+                            ][static_cast<std::size_t>(target)]
+                            + prefix[2][
+                                static_cast<std::size_t>(crossing_target)
+                            ] * minus_powers[3][
+                                static_cast<std::size_t>(crossing_target)
+                            ][static_cast<std::size_t>(target)]
+                            + prefix[1][
+                                static_cast<std::size_t>(crossing_target)
+                            ] * minus_powers[4][
+                                static_cast<std::size_t>(crossing_target)
+                            ][static_cast<std::size_t>(target)]
+                        ) - f5 * (
+                            prefix[2][
+                                static_cast<std::size_t>(crossing_target)
+                            ] * minus_powers[2][
+                                static_cast<std::size_t>(crossing_target)
+                            ][static_cast<std::size_t>(target)]
+                            + prefix[1][
+                                static_cast<std::size_t>(crossing_target)
+                            ] * minus_powers[3][
+                                static_cast<std::size_t>(crossing_target)
+                            ][static_cast<std::size_t>(target)]
+                        );
                     if (
                         even_column[
                             static_cast<std::size_t>(crossing_target)
@@ -412,6 +467,128 @@ int main(int argc, char** argv) {
                         );
                     }
                 }
+            }
+
+            if ((h2_residue_tails || h2_family) && q >= 7 && offset >= 12) {
+                struct Reserve {
+                    int crossing = 0;
+                    Integer amount = 0;
+                };
+                for (int target = 0; target < paired; ++target) {
+                    for (int residue = 0; residue < 4; ++residue) {
+                        Integer tail = 0;
+                        std::deque<Reserve> reserve;
+                        int crossing = paired - 1;
+                        while (crossing >= 0 && crossing % 4 != residue) {
+                            --crossing;
+                        }
+                        for (; crossing >= 0; crossing -= 4) {
+                            const Integer& value = h2_column[
+                                static_cast<std::size_t>(crossing)
+                            ][static_cast<std::size_t>(target)];
+                            tail += value;
+                            ++h2_residue_tail_entries;
+                            if (tail < 0) {
+                                ++negative_h2_residue_tails;
+                            }
+                            if (value >= 0) {
+                                if (value != 0) {
+                                    reserve.push_back(Reserve{crossing, value});
+                                }
+                                continue;
+                            }
+                            ++negative_h2_atoms;
+                            Integer debt = -value;
+                            while (debt != 0) {
+                                if (reserve.empty()) {
+                                    throw std::runtime_error(
+                                        "negative H2 residue atom lacks reserve"
+                                    );
+                                }
+                                Reserve& nearest = reserve.back();
+                                const Integer payment = std::min(
+                                    nearest.amount, debt
+                                );
+                                nearest.amount -= payment;
+                                debt -= payment;
+                                const int span = nearest.crossing - crossing;
+                                if (span > maximum_h2_payment_span) {
+                                    maximum_h2_payment_span = span;
+                                    has_maximum_h2_payment_span = true;
+                                    maximum_h2_payment_q = q;
+                                    maximum_h2_payment_target = target;
+                                    maximum_h2_payment_residue = residue;
+                                    maximum_h2_payment_debit = crossing;
+                                    maximum_h2_payment_credit = nearest.crossing;
+                                }
+                                if (nearest.amount == 0) {
+                                    reserve.pop_back();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (
+                h2_family
+                && offset == 12
+                && q >= 15
+                && q % 4 == 3
+            ) {
+                const int target = q + 5;
+                const int debit = 12;
+                const int credit = q - 3;
+                if (target >= paired || credit >= paired) {
+                    throw std::runtime_error("H2 family target is out of range");
+                }
+                Integer tail = 0;
+                for (int crossing = paired - 1;
+                     crossing >= debit;
+                     --crossing) {
+                    if (crossing % 4 == 0) {
+                        tail += h2_column[
+                            static_cast<std::size_t>(crossing)
+                        ][static_cast<std::size_t>(target)];
+                    }
+                }
+                std::cout
+                    << "H2_D11_FAMILY"
+                    << " Q=" << q
+                    << " x=" << target
+                    << " f4=" << f4
+                    << " f5=" << f5
+                    << " debit=" << debit
+                    << " debit_value=" << h2_column[
+                        static_cast<std::size_t>(debit)
+                    ][static_cast<std::size_t>(target)]
+                    << " debit_d=("
+                    << prefix[1][static_cast<std::size_t>(debit)] << ','
+                    << prefix[2][static_cast<std::size_t>(debit)] << ','
+                    << prefix[3][static_cast<std::size_t>(debit)] << ')'
+                    << " debit_p=("
+                    << minus_powers[2U][static_cast<std::size_t>(debit)]
+                       [static_cast<std::size_t>(target)] << ','
+                    << minus_powers[3U][static_cast<std::size_t>(debit)]
+                       [static_cast<std::size_t>(target)] << ','
+                    << minus_powers[4U][static_cast<std::size_t>(debit)]
+                       [static_cast<std::size_t>(target)] << ')'
+                    << " credit=" << credit
+                    << " credit_value=" << h2_column[
+                        static_cast<std::size_t>(credit)
+                    ][static_cast<std::size_t>(target)]
+                    << " credit_d=("
+                    << prefix[1][static_cast<std::size_t>(credit)] << ','
+                    << prefix[2][static_cast<std::size_t>(credit)] << ','
+                    << prefix[3][static_cast<std::size_t>(credit)] << ')'
+                    << " credit_p=("
+                    << minus_powers[2U][static_cast<std::size_t>(credit)]
+                       [static_cast<std::size_t>(target)] << ','
+                    << minus_powers[3U][static_cast<std::size_t>(credit)]
+                       [static_cast<std::size_t>(target)] << ','
+                    << minus_powers[4U][static_cast<std::size_t>(credit)]
+                       [static_cast<std::size_t>(target)] << ')'
+                    << " tail_at_debit=" << tail << '\n';
             }
 
             std::vector<Integer> even_suffix(
@@ -697,7 +874,7 @@ int main(int argc, char** argv) {
             }
         }
 
-        if (!certificate) {
+        if (!certificate && !h2_family) {
             for (const auto& [profile, count]
                  : negative_even_profiles) {
                 std::cout
@@ -1107,6 +1284,22 @@ int main(int argc, char** argv) {
             << " odd_profiles=" << negative_odd_profiles.size()
             << " residue_tail_entries=" << residue_tail_entries
             << " negative_residue_tails=" << negative_residue_tails
+            << " h2_residue_tail_entries=" << h2_residue_tail_entries
+            << " negative_h2_residue_tails=" << negative_h2_residue_tails
+            << " negative_h2_atoms=" << negative_h2_atoms
+            << " maximum_h2_payment_span=" << maximum_h2_payment_span
+            << " maximum_h2_payment_witness=";
+        if (has_maximum_h2_payment_span) {
+            std::cout
+                << "Q:" << maximum_h2_payment_q
+                << ",target:" << maximum_h2_payment_target
+                << ",residue:" << maximum_h2_payment_residue
+                << ",debit:" << maximum_h2_payment_debit
+                << ",credit:" << maximum_h2_payment_credit;
+        } else {
+            std::cout << "none";
+        }
+        std::cout
             << " result="
             << (
                 negative_total == 0U && negative_residue_tails == 0U

@@ -762,10 +762,21 @@ struct SegmentAuditSummary {
     std::uint64_t negative_free_residue_tails = 0U;
     std::array<std::uint64_t, 5U> group_free_residue_tails{};
     std::array<std::uint64_t, 5U> negative_group_free_residue_tails{};
+    std::array<std::uint64_t, 5U> group_free_atoms{};
+    std::array<std::uint64_t, 5U> negative_group_free_atoms{};
     std::uint64_t high_block_free_residue_tails = 0U;
     std::uint64_t negative_high_block_free_residue_tails = 0U;
     std::array<std::uint64_t, 5U> suffix_block_free_residue_tails{};
     std::array<std::uint64_t, 5U> negative_suffix_block_free_residue_tails{};
+    std::uint64_t h2_free_residue_negative_atoms = 0U;
+    int maximum_h2_free_residue_payment_span = 0;
+    bool has_maximum_h2_free_residue_payment_span = false;
+    int maximum_h2_free_residue_payment_level = -1;
+    int maximum_h2_free_residue_payment_label = -1;
+    int maximum_h2_free_residue_payment_target = -1;
+    int maximum_h2_free_residue_payment_residue = -1;
+    int maximum_h2_free_residue_payment_debit = -1;
+    int maximum_h2_free_residue_payment_credit = -1;
     std::uint64_t free_residue_negative_atoms = 0U;
     int maximum_free_residue_payment_span = 0;
     bool has_maximum_free_residue_payment_span = false;
@@ -1064,6 +1075,7 @@ void record_tail_signs(
 void record_terminal_power_group_tails(
     int level,
     int label,
+    int target,
     const std::array<std::vector<Integer>, 5U>& groups,
     SegmentAuditSummary& summary
 ) {
@@ -1071,6 +1083,12 @@ void record_terminal_power_group_tails(
         return;
     }
     for (std::size_t power = 0U; power < groups.size(); ++power) {
+        for (const Integer& value : groups[power]) {
+            ++summary.group_free_atoms[power];
+            if (value < 0) {
+                ++summary.negative_group_free_atoms[power];
+            }
+        }
         const int paired = static_cast<int>(groups[power].size());
         for (int residue = 0; residue < 4; ++residue) {
             int crossing = paired - 1;
@@ -1126,6 +1144,56 @@ void record_terminal_power_group_tails(
                     ++summary.negative_suffix_block_free_residue_tails[
                         first_power
                     ];
+                }
+            }
+        }
+    }
+    struct Reserve {
+        int crossing = 0;
+        Integer amount = 0;
+    };
+    for (int residue = 0; residue < 4; ++residue) {
+        std::deque<Reserve> reserve;
+        for (int crossing = paired - 1; crossing >= 0; --crossing) {
+            if (crossing % 4 != residue) {
+                continue;
+            }
+            const std::size_t coordinate =
+                static_cast<std::size_t>(crossing);
+            const Integer value = groups[2U][coordinate]
+                + groups[3U][coordinate] + groups[4U][coordinate];
+            if (value >= 0) {
+                if (value != 0) {
+                    reserve.push_back(Reserve{crossing, value});
+                }
+                continue;
+            }
+            ++summary.h2_free_residue_negative_atoms;
+            Integer debt = -value;
+            while (debt != 0) {
+                if (reserve.empty()) {
+                    throw std::runtime_error(
+                        "negative H2 residue tail has no later reserve"
+                    );
+                }
+                Reserve& nearest = reserve.back();
+                const Integer payment = std::min(nearest.amount, debt);
+                nearest.amount -= payment;
+                debt -= payment;
+                const int span = nearest.crossing - crossing;
+                if (span > summary.maximum_h2_free_residue_payment_span) {
+                    summary.maximum_h2_free_residue_payment_span = span;
+                    summary.has_maximum_h2_free_residue_payment_span = true;
+                    summary.maximum_h2_free_residue_payment_level = level;
+                    summary.maximum_h2_free_residue_payment_label = label;
+                    summary.maximum_h2_free_residue_payment_target = target;
+                    summary.maximum_h2_free_residue_payment_residue = residue;
+                    summary.maximum_h2_free_residue_payment_debit = crossing;
+                    summary.maximum_h2_free_residue_payment_credit =
+                        nearest.crossing;
+                }
+                if (nearest.amount == 0) {
+                    reserve.pop_back();
                 }
             }
         }
@@ -1349,6 +1417,7 @@ SegmentAuditSummary audit_cubic_segments(
                 record_terminal_power_group_tails(
                     level,
                     label,
+                    target,
                     groups,
                     summary
                 );
@@ -1585,6 +1654,24 @@ int main(int argc, char** argv) {
                 std::cout
                     << summary.negative_group_free_residue_tails[power];
             }
+            std::cout << " free_atoms=";
+            for (std::size_t power = 0U;
+                 power < summary.group_free_atoms.size();
+                 ++power) {
+                if (power != 0U) {
+                    std::cout << ',';
+                }
+                std::cout << summary.group_free_atoms[power];
+            }
+            std::cout << " negative_free_atoms=";
+            for (std::size_t power = 0U;
+                 power < summary.negative_group_free_atoms.size();
+                 ++power) {
+                if (power != 0U) {
+                    std::cout << ',';
+                }
+                std::cout << summary.negative_group_free_atoms[power];
+            }
             std::cout << " terminal_powers=0..4"
                       << " high_block_free_residue_tails="
                       << summary.high_block_free_residue_tails
@@ -1614,6 +1701,26 @@ int main(int argc, char** argv) {
                 ];
             }
             std::cout << " suffix_blocks=0..4"
+                      << " h2_free_residue_negative_atoms="
+                      << summary.h2_free_residue_negative_atoms
+                      << " maximum_h2_free_residue_payment_span="
+                      << summary.maximum_h2_free_residue_payment_span
+                      << " maximum_h2_free_residue_payment_witness=";
+            if (summary.has_maximum_h2_free_residue_payment_span) {
+                std::cout
+                    << "K:" << summary.maximum_h2_free_residue_payment_level
+                    << ",Q:" << summary.maximum_h2_free_residue_payment_label
+                    << ",x:" << summary.maximum_h2_free_residue_payment_target
+                    << ",residue:"
+                    << summary.maximum_h2_free_residue_payment_residue
+                    << ",debit:"
+                    << summary.maximum_h2_free_residue_payment_debit
+                    << ",credit:"
+                    << summary.maximum_h2_free_residue_payment_credit;
+            } else {
+                std::cout << "none";
+            }
+            std::cout
                       << " result=PASS_EXACT_GROUP_RECOMBINATION\n";
         }
         if (segments) {

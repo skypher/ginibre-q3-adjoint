@@ -29687,8 +29687,91 @@ suffix sum_(b>=r) G_b, r=0,...,4: 0, 0, 0,   7642, 0.
 
 In particular, the three families in `(P5A.102BUK2)` have no negative
 tested tail, whereas `G_3+G_4` alone does.  This is bounded evidence only:
-it isolates the necessary three-term terminal-current block `H_2`, but
-does not prove any of its residue-tail inequalities.
+it isolates the necessary three-term terminal-current block `H_2`.
+The exact proofs of the `G_0` and `G_1` families are supplied below;
+this diagnostic does not prove the remaining `H_2` residue-tail
+inequalities.
+
+In the wider audit band `Q>=7,d>=10`, the same direct group audit records
+`26,729` negative individual `H_2` atoms through `K=100`, despite no
+negative `H_2` residue tail.  Its right-to-left greedy payment has maximum
+observed span `28`, at
+
+```text
+K=93, Q=41, x=46, residue=3, debit V=11, credit V=39.
+```
+
+This is the same growing fixed-width payment pattern already seen for
+the full summand.  It is bounded diagnostic evidence only, but rules out
+treating the three-term block as pointwise nonnegative or assuming a
+small fixed payment radius.
+
+There is also an exact separated debit--credit family in the actual first
+open width.  It does not by itself prove an allocation-distance lower bound
+(intervening reserve must still be controlled), but it exhibits the
+unbounded geometry which a cumulative proof must accommodate.
+
+**Lemma 5A8H28P3A (separated `H_2` debit and credit at `d=11`).**  Let
+
+```text
+d=11,                 K=2Q+12,
+Q=3 (mod 4),           Q>=31,
+x=Q+5.
+```
+
+Then the two same-residue coordinates `V=12` and `V=Q-3` satisfy
+
+```text
+H_2(12)  =6336-44Q^2 <0,
+H_2(Q-3)=144Q^2+180Q-20646 >0.                    (P5A.102BUK6)
+```
+
+Their separation is `Q-15`.
+
+**Proof.**  The return formula `(P5A.102BUB)` is active in this range and
+gives
+
+```text
+f_4=2Q+1,
+2f_5=4Q^2+52Q-550.                                (P5A.102BUK6A)
+```
+
+Directly from the three signed tail intervals `(P5A.102BUI)`, at `V=12`
+one has
+
+```text
+(d_1,d_2)=(2,26).
+```
+
+The simple-current form `(P5A.102BUA)` reduces the terminal powers to
+the fixed label `11`.  Its ordinary fusion intervals give
+
+```text
+(P_2,P_3,P_4)(12,x)=(0,11,0).
+```
+
+Thus only the middle term of `H_2` remains, and
+
+```text
+H_2(12)=11(26f_4-2f_5)=6336-44Q^2.
+```
+
+At `V=Q-3`, the same endpoint calculation gives
+
+```text
+(d_1,d_2,d_3)=(2,4Q-34,4Q^2+52Q-1162),
+(P_2,P_3,P_4)(Q-3,x)=(2,0,189).
+```
+
+Substitution into the definition of `H_2` gives the second expression in
+`(P5A.102BUK6)`.  Both inequalities are immediate for `Q>=31`; and
+`12=Q-3=0 (mod 4)` under the stated congruence. QED.
+
+The strict optional C++ mode
+`analyze_su2_shell_fixed_offset MAXIMUM_Q 12 --h2-family` evaluates these
+coordinates directly from the finite fusion matrices; its output through
+`Q=75` agrees with the displayed formulas.  This audits the endpoint
+calculation but is not used in place of the proof.
 
 The first family already has a finite lower-dimensional activation cover.
 Because `P_0(V,x)=1_(V=x)`, every residue tail of `G_0` is either zero or
@@ -29711,8 +29794,127 @@ and exhausts the unbounded Presburger domain with
 hinges=94, masks=312.
 ```
 
-This is an exact chamber cover for the `G_0` polynomial, not yet its
-nonnegative Newton or cone certificate.
+This is an exact chamber cover for the `G_0` polynomial; the exact
+nonnegative cone certificate is supplied immediately below.
+
+**Lemma 5A8H28P4A (uniform diagonal `G_0` determinant).**  In the
+remaining free-width band
+
+```text
+Q>=7,                    d=K-1-2Q>=11,
+0<=x<K/2,
+```
+
+one has
+
+```text
+f_4 d_5(x)-f_5 d_4(x)>=0.                          (P5A.102BUK4)
+```
+
+Consequently every residue-four tail of `G_0` is nonnegative.
+
+**Proof.**  If `K-Q-x>Q+x`, the folded-tail formula `(P5A.102BU)`
+gives `d_4(x)=d_5(x)=0`.  On the complementary active domain put
+
+```text
+H=d-11,                  K=2Q+H+12.
+```
+
+The three Kac--Walton intervals in `(P5A.102BUI)` for powers four and
+five have, respectively, a nonempty flag, two lower-endpoint selectors,
+two upper-endpoint selectors, the lower-minus-one flag, and their
+truncated-binomial endpoint activations.  Together with the sole return
+hinge
+
+```text
+Q-2H-25>=0,
+```
+
+from `(P5A.102BUB)`, this is a finite affine Presburger fan.  No parity
+split is needed here because all crossing endpoints are integral.  The
+strict `cpp_int`/rational C++ source
+`character_ring_iter/prove_su2_shell_g0.cpp` blocks the complete Boolean
+record over the unbounded domain.  It finds exactly
+
+```text
+91 hinges, 49 feasible masks.                       (P5A.102BUK4A)
+```
+
+On each mask it substitutes the selected endpoints directly into
+`(P5A.102BU)`, and the selected return formula into `(P5A.102BUB)`.
+The resulting margin `(P5A.102BUK4)` is an exact rational polynomial in
+`(Q,H,x)`.  Each of the forty-nine chambers has a finite exact cone
+certificate: either a nonnegative monomial/Newton expansion after an
+integral facet change, a finite recession-ray fan with an exact finite
+base set and a Presburger descent check, or an exact modular pair-sum
+partition.  The source replays all 49 records individually with
+`result=PASS_EXACT_CERTIFICATE`; thus no bounded parameter scan is used
+for the sign assertion.
+
+For an independent transcription audit, its command
+
+```text
+prove_su2_shell_g0 --audit 30
+```
+
+matches the direct folded-tail evaluator on all `130` coordinates of the
+`9` admissible rows through `K=30`, including `62` inactive zero
+coordinates.  This audit checks only the formula implementation; the
+unbounded sign proof is the preceding 49-record certificate.
+
+Finally `P_0(V,x)=1_(V=x)`, so a residue-four suffix of `G_0` is zero
+unless it contains `x`, in which case it is exactly `(P5A.102BUK4)`.
+The displayed inequality therefore proves every `G_0` residue tail. QED.
+
+**Lemma 5A8H28P4B (uniform one-step `G_1` determinant).**  In the same
+free-width band, for every active crossing coordinate `V`,
+
+```text
+f_4 d_4(V)-f_5 d_3(V)>=0.                          (P5A.102BUK5)
+```
+
+Consequently every residue-four tail of `G_1` is nonnegative.
+
+**Proof.**  Outside the active crossing domain both folded tails vanish.
+Inside it use the same coordinates `H=d-11`,
+
+```text
+K=2Q+H+12,
+2V<K,                    2V>=H+12.
+```
+
+The powers three and four have `79` exact endpoint/activation and return
+hinges.  The strict source
+`character_ring_iter/prove_su2_shell_g0.cpp --g1` blocks their complete
+Boolean record in the unbounded Presburger domain and obtains exactly
+
+```text
+31 feasible masks.                                  (P5A.102BUK5A)
+```
+
+Substitution of the selected endpoint polynomials in `(P5A.102BU)` and
+the selected return polynomial in `(P5A.102BUB)` gives
+`(P5A.102BUK5)` on each mask.  Every one of the 31 records passes an exact
+monomial/Newton facet certificate, finite recession-ray certificate, or
+modular pair-sum certificate, using `cpp_int` rational arithmetic.  The
+independent command
+
+```text
+prove_su2_shell_g0 --g1 --audit 30
+```
+
+replays all `130` coordinates of the `9` admissible rows through `K=30`
+against the direct folded-tail evaluator; this audits the implementation,
+whereas the 31 exact records prove the unbounded sign.
+
+By `(P5A.102BUA)`, `P_1(V,x)=(N_(2Q))_(2V,2x)` is a fusion multiplicity
+and hence nonnegative.  Thus
+
+```text
+G_1(V)=P_1(V,x){f_4d_4(V)-f_5d_3(V)}>=0
+```
+
+pointwise, which proves every residue tail. QED.
 
 **Target 5A8H28P5 (proof-carrying segment certificate).**  Complete
 Target 5A8H28R5 by a finite certificate whose every record contains:
@@ -29726,11 +29928,12 @@ Target 5A8H28R5 by a finite certificate whose every record contains:
    5A8H28P1, 5A8H28P1B, and 5A8H28O and the resulting quartic segment
    sum from Lemma 5A8H28P4;
 4. preferably, a nonnegative cone or Newton expansion of each of the
-   four residue tails `(P5A.102BUK1)`.  Equivalently, the more structured
-   sufficient route `(P5A.102BUK2)` may certify the four residue tails of
-   each of `G_0`, `G_1`, and `H_2`; failing those strengthenings, an exact
-   allocation for the complete tail `V>=rho`, with every reserve assigned
-   inside that same suffix; and
+   four residue tails `(P5A.102BUK1)`.  Lemmas 5A8H28P4A--P4B have now
+   closed the `G_0` and `G_1` members of the structured sufficient route
+   `(P5A.102BUK2)`; it remains to certify the four residue tails of
+   `H_2`.  Failing that strengthening, give an exact allocation for the
+   complete tail `V>=rho`, with every reserve assigned inside that same
+   suffix; and
 5. an exact coverage and adjacency proof showing that these allocations
    partition every admissible suffix `V>=rho`.
 
