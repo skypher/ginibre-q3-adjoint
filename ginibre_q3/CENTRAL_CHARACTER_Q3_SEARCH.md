@@ -28825,7 +28825,7 @@ The exact remaining `t=2` band is now
 Q>=7,                  2Q+5<=K<10Q.               (P5A.102BK)
 ```
 
-The finite-width construction is uniform enough to close the next six
+The finite-width construction is uniform enough to close the next seven
 rays in one normalized certificate.
 
 **Lemma 5A8H28M (normalized fixed-width shell certificate).**  Put
@@ -28834,7 +28834,7 @@ rays in one normalized certificate.
 d=K-1-2Q.
 ```
 
-If `4<=d<=9`, then `(LBK2)` holds for every `Q>=7` and every shell.
+If `4<=d<=10`, then `(LBK2)` holds for every `Q>=7` and every shell.
 
 **Proof.**  Lemma 5A8H28A gives `A_-=JN_d`.  Put
 
@@ -28882,21 +28882,33 @@ d  K-2Q  boundary entries  rays  cones  negative odd  negative total
 7    8         41,584      3,368   72       27,056           0
 8    9         62,498      4,400   82       31,586           0
 9   10         87,509      5,504   92       47,160           0
+10  11        120,772      6,804  102       53,250           0
 ```
 
 Every boundary value and every Newton coefficient is nonnegative; the
-minimum boundary values are respectively `30,34,38,46,50,58`.
+minimum boundary values are respectively `30,34,38,46,50,58,62`.
 The verifier rejects a nonzero ninth difference and reconstructs all
 additional exact audit values.  The degree bound and exhaustive
 parameterizations `(P5A.102BL)--(P5A.102BM)` turn each finite grid into
 an unbounded identity in `Q`.  Consequently the even reserve pays every
-one of the displayed negative odd packets, proving `(LBK2)` on all six
+one of the displayed negative odd packets, proving `(LBK2)` on all seven
 rays.  QED.
+
+For the newly included `d=10` row, the fail-closed replay is
+
+```text
+analyze_su2_shell_fixed_offset 140 11 --certificate
+```
+
+and returns the displayed census with
+`negative_total=0`.  It also records `53,250` negative odd packets across
+`2,481` cutoff profiles; these are paid by the certified even reserve,
+not omitted from the calculation.
 
 Combining Lemmas 5A8H28G--5A8H28M, the exact remaining `t=2` band is
 
 ```text
-Q>=7,                  2Q+11<=K<10Q.              (P5A.102BN)
+Q>=7,                  2Q+12<=K<10Q.              (P5A.102BN)
 ```
 
 The normalized variables in `(P5A.102BM)` are the active route to a
@@ -29473,6 +29485,28 @@ the `108` parameter-only walls, only `26` meet that domain.  The
 affine wall independently in Presburger arithmetic.  This is a
 reduction of candidate events, not a positivity certificate.
 
+The first coupled subfan is now enumerated rather than estimated.  On
+the free-width domain `Q>=7`, `d>=10`, the crossing-weight selectors for
+all powers `1,...,5`, together with the four residue bits, the
+`V=x` singleton, and the return activation in `(P5A.102BUB)`, have
+exactly
+
+```text
+1,302
+```
+
+feasible Boolean masks.  The strict C++ command
+
+```text
+analyze_su2_shell_joint_activation_masks crossing
+```
+
+uses `186` recorded predicates and blocks the entire combined mask in
+one Presburger solver.  Thus this count is an unbounded chamber-cover
+census for that coupled subfan, not a finite scan or a positivity
+certificate.  The terminal selectors and the subsequent tail allocation
+remain to be joined to it.
+
 **Lemma 5A8H28P4 (cubic joint-shell segments).**  Fix `K,Q,x`, and
 fix the residue of `V` modulo four.  Put `P_0(V,x)=1_(V=x)` and, for
 the terminal row in `(LBK2)`, write
@@ -29533,6 +29567,63 @@ Those numbers are bounded diagnostics, not a chamber census; they rule
 out treating the safe catalog itself as a small hand case split and make
 the activation-aware endpoint selectors in Target 5A8H28P5 necessary.
 
+Individual wall-free rails cannot be certified separately in the
+free-width analysis.  The strict audit above finds
+
+```text
+K=43, Q=16, d=10, x=0, V=12 (a singleton residue-zero rail):  Phi=-96.
+```
+
+It finds `17,158` negative safe rails among `2,108,801` such rails
+through `K=100` with `Q>=7` and `d>=10`.  These are bounded diagnostics,
+not counterexamples to `(LBK2)`: the latter is a complete suffix sum.
+They do rule out the stronger local route in which every rail sum is
+declared nonnegative.  Any valid finite certificate must retain an
+explicit reserve within each tail.
+
+The same exact audit supplies a sharper candidate allocation in the
+free-width band.  For every residue `r mod 4`, it found no negative
+value of
+
+```text
+sum_(V>=rho, V=r mod 4) Phi_(K,Q,x)(V).            (P5A.102BUK1)
+```
+
+through `K=100`: all `2,224,482` tested free-band residue tails were
+nonnegative, as were all complete tails.  By contrast, there are `1,010`
+negative residue tails before the free-width restrictions are imposed.
+Thus `(P5A.102BUK1)` is a plausible *free-band* strengthening sufficient
+for `(LBK2)`, not a theorem inferred from the audit.  If it is proved by
+the activation fan, each negative rail is paid by later terms of the same
+residue class; no cross-residue payment is then needed at fixed `t=2`.
+
+Nor should this same-residue payment be replaced by a fixed local radius.
+The deterministic right-to-left greedy allocation has, on the fixed ray
+`d=10`, the following exact diagnostic witnesses:
+
+```text
+Q=25, K=61, x=30:  debit V=11, credit V=23, span=12;
+Q=33, K=77, x=38:  debit V=11, credit V=31, span=20;
+Q=41, K=93, x=46:  debit V=11, credit V=39, span=28.
+```
+
+All three have `Q=1 mod 4`, and the displayed credit is `V=Q-2`.
+This is bounded evidence, not an unbounded lower-bound proof, but it
+rules out treating the observed payment radius as a small fixed constant.
+The free-width certificate must therefore retain the quartic residue tail
+itself, or prove a genuinely variable-range allocation.
+
+The independent fixed-offset C++ recurrence now also checks this proposed
+strengthening on the first unbounded-looking ray.  The command
+
+```text
+analyze_su2_shell_fixed_offset 100 11 --residue-tails
+```
+
+checks all `401,991` residue-tail entries with `d=10`, `7<=Q<=100` and
+finds none negative.  This is a larger bounded falsification check of
+`(P5A.102BUK1)`, not a substitute for its symbolic certificate.
+
 **Target 5A8H28P5 (proof-carrying segment certificate).**  Complete
 Target 5A8H28R5 by a finite certificate whose every record contains:
 
@@ -29544,15 +29635,20 @@ Target 5A8H28R5 by a finite certificate whose every record contains:
 3. the chosen return and signed endpoint polynomials from Lemmas
    5A8H28P1, 5A8H28P1B, and 5A8H28O and the resulting quartic segment
    sum from Lemma 5A8H28P4;
-4. a nonnegative cone or Newton expansion for that sum; and
-5. an exact coverage and adjacency proof showing that the records
+4. preferably, a nonnegative cone or Newton expansion of each of the
+   four residue tails `(P5A.102BUK1)`; failing that strengthening, an
+   exact allocation for the complete tail `V>=rho`, with every reserve
+   assigned inside that same suffix; and
+5. an exact coverage and adjacency proof showing that these allocations
    partition every admissible suffix `V>=rho`.
 
 The certificate must derive its polynomial degree from Lemma 5A8H28P4
 and prove chamber coverage in Presburger arithmetic.  Finite samples or
-untracked interpolation do not certify this target.  Satisfying it
-proves `(LBK2)` for the free-width band `d>=10`; Lemmas 5A8H28E--M then
-close the complete `t=2` shell row.
+untracked interpolation do not certify this target.  In particular, a
+list of nonnegative individual rails is not a substitute for the required
+tail allocation.  Satisfying it proves `(LBK2)` for the remaining
+free-width band `d>=11`; Lemmas 5A8H28E--M then close the complete `t=2`
+shell row.
 
 The natural Fubini reorganization of the shell does not make the
 five-step payment local in the pre-crossing coordinate.  If

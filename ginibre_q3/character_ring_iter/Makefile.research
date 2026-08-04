@@ -784,6 +784,11 @@ analyze_su2_crossing_weight_masks: analyze_su2_crossing_weight_masks.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
 		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
 
+analyze_su2_shell_joint_activation_masks: \
+		analyze_su2_shell_joint_activation_masks.cpp
+	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
+		-Wsign-conversion -Wshadow -Werror $< -lz3 -o $@
+
 verify_su2_shell_terminal_coordinates: \
 		verify_su2_shell_terminal_coordinates.cpp
 	$(CXX) -O2 -std=c++20 -Wall -Wextra -Wpedantic -Wconversion \
@@ -1074,6 +1079,7 @@ RESEARCH_TARGETS = \
 	analyze_su2_fusion_endpoint_masks \
 	verify_su2_crossing_weight_fold \
 	analyze_su2_crossing_weight_masks \
+	analyze_su2_shell_joint_activation_masks \
 	verify_su2_shell_terminal_coordinates \
 	verify_su2_shell_return_moments \
 	emit_su2_shell_v_wall_catalog \

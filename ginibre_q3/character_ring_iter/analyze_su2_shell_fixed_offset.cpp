@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <array>
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
@@ -97,16 +98,18 @@ int main(int argc, char** argv) {
     try {
         if (argc != 3 && argc != 4) {
             throw std::runtime_error(
-                "usage: MAXIMUM_Q OFFSET [--certificate]"
+                "usage: MAXIMUM_Q OFFSET [--certificate|--residue-tails]"
             );
         }
         const int maximum_q = parse_positive(argv[1]);
         const int offset = parse_positive(argv[2]);
         const bool certificate =
             argc == 4 && std::string(argv[3]) == "--certificate";
-        if (argc == 4 && !certificate) {
+        const bool residue_tails =
+            argc == 4 && std::string(argv[3]) == "--residue-tails";
+        if (argc == 4 && !certificate && !residue_tails) {
             throw std::runtime_error(
-                "the only optional flag is --certificate"
+                "the only optional flag is --certificate or --residue-tails"
             );
         }
         const int certificate_maximum_q =
@@ -115,7 +118,7 @@ int main(int argc, char** argv) {
             certificate
             && (
                 offset < 3
-                || offset > 10
+                || offset > 11
                 || maximum_q != certificate_maximum_q
             )
         ) {
@@ -140,6 +143,9 @@ int main(int argc, char** argv) {
         const int stable_boundary = 4 * gap + 1;
 
         std::uint64_t entries = 0U;
+        std::uint64_t residue_tail_entries = 0U;
+        std::uint64_t negative_residue_tails = 0U;
+        bool printed_negative_residue_tail = false;
         std::uint64_t negative_even = 0U;
         std::uint64_t negative_odd = 0U;
         std::uint64_t negative_total = 0U;
@@ -414,6 +420,10 @@ int main(int argc, char** argv) {
             std::vector<Integer> odd_suffix(
                 static_cast<std::size_t>(paired)
             );
+            std::array<std::vector<Integer>, 4U> residue_suffix{};
+            for (std::vector<Integer>& suffix : residue_suffix) {
+                suffix.assign(static_cast<std::size_t>(paired), 0);
+            }
             for (int rho = paired - 1; rho >= 0; --rho) {
                 for (int target = 0; target < paired; ++target) {
                     ++entries;
@@ -426,13 +436,48 @@ int main(int argc, char** argv) {
                     const Integer total =
                         even_suffix[static_cast<std::size_t>(target)]
                         + odd_suffix[static_cast<std::size_t>(target)];
+                    std::vector<Integer>& current_residue_tail =
+                        residue_suffix[static_cast<std::size_t>(rho % 4)];
+                    current_residue_tail[static_cast<std::size_t>(target)] +=
+                        even_column[static_cast<std::size_t>(rho)]
+                                   [static_cast<std::size_t>(target)]
+                        + odd_column[static_cast<std::size_t>(rho)]
+                                  [static_cast<std::size_t>(target)];
+                    if (
+                        residue_tails
+                        && q >= 7
+                        && offset >= 11
+                    ) {
+                        ++residue_tail_entries;
+                        if (
+                            current_residue_tail[
+                                static_cast<std::size_t>(target)
+                            ] < 0
+                        ) {
+                            ++negative_residue_tails;
+                            if (!printed_negative_residue_tail) {
+                                printed_negative_residue_tail = true;
+                                std::cout
+                                    << "FIRST_NEGATIVE_FIXED_OFFSET_RESIDUE_TAIL"
+                                    << " Q=" << q
+                                    << " offset=" << offset
+                                    << " rho=" << rho
+                                    << " target=" << target
+                                    << " residue=" << rho % 4
+                                    << " value="
+                                    << current_residue_tail[
+                                        static_cast<std::size_t>(target)
+                                    ] << '\n';
+                            }
+                        }
+                    }
                     const int reflected = paired - 1 - target;
                     const std::pair<int, int> profile{
                         rho - target,
                         rho - reflected
                     };
                     if (
-                        (offset >= 3 && offset <= 10)
+                        (offset >= 3 && offset <= 11)
                         && q >= 7
                     ) {
                         const int x = target;
@@ -706,7 +751,10 @@ int main(int argc, char** argv) {
                     << " entries=" << band.entries << '\n';
             }
         }
-        if (offset >= 3 && offset <= 10) {
+        if (
+            offset >= 3
+            && (offset <= 10 || certificate)
+        ) {
             std::size_t ray_certificates = 0U;
             Integer ray_minimum = 0;
             bool initialized_ray = false;
@@ -1015,6 +1063,18 @@ int main(int argc, char** argv) {
                     && negative_total == 0U
                     && negative_odd_profiles.size() == 2225U
                     && entries == 1026690U;
+            } else if (offset == 11) {
+                valid_census =
+                    box_entries == 120772U
+                    && ray_certificates == 6804U
+                    && cone_certificates == 102U
+                    && maximum_even_radius == 20
+                    && maximum_odd_radius == 15
+                    && negative_even == 0U
+                    && negative_odd == 53250U
+                    && negative_total == 0U
+                    && negative_odd_profiles.size() == 2481U
+                    && entries == 1047970U;
             }
             if (certificate && !valid_census) {
                 throw std::runtime_error(
@@ -1045,9 +1105,11 @@ int main(int argc, char** argv) {
             << " negative_total=" << negative_total
             << " even_profiles=" << negative_even_profiles.size()
             << " odd_profiles=" << negative_odd_profiles.size()
+            << " residue_tail_entries=" << residue_tail_entries
+            << " negative_residue_tails=" << negative_residue_tails
             << " result="
             << (
-                negative_total == 0U
+                negative_total == 0U && negative_residue_tails == 0U
                     ? "PASS_FIXED_OFFSET_DISCOVERY"
                     : "FAIL_FIXED_OFFSET_CANDIDATE"
             ) << '\n';

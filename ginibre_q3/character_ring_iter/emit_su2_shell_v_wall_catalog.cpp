@@ -2,6 +2,7 @@
 #include <array>
 #include <cstdint>
 #include <cstdlib>
+#include <deque>
 #include <iostream>
 #include <limits>
 #include <numeric>
@@ -749,6 +750,56 @@ struct SegmentAuditSummary {
     std::uint64_t direct_cubic_rails = 0U;
     std::uint64_t direct_cubic_pieces = 0U;
     std::uint64_t maximum_direct_piece_terms = 0U;
+    std::uint64_t safe_rails = 0U;
+    std::uint64_t negative_safe_rails = 0U;
+    std::uint64_t free_safe_rails = 0U;
+    std::uint64_t negative_free_safe_rails = 0U;
+    std::uint64_t full_tails = 0U;
+    std::uint64_t negative_full_tails = 0U;
+    std::uint64_t free_full_tails = 0U;
+    std::uint64_t negative_free_full_tails = 0U;
+    std::uint64_t residue_tails = 0U;
+    std::uint64_t negative_residue_tails = 0U;
+    std::uint64_t free_residue_tails = 0U;
+    std::uint64_t negative_free_residue_tails = 0U;
+    std::uint64_t free_residue_negative_atoms = 0U;
+    int maximum_free_residue_payment_span = 0;
+    bool has_maximum_free_residue_payment_span = false;
+    int maximum_free_residue_payment_level = -1;
+    int maximum_free_residue_payment_label = -1;
+    int maximum_free_residue_payment_target = -1;
+    int maximum_free_residue_payment_residue = -1;
+    int maximum_free_residue_payment_debit = -1;
+    int maximum_free_residue_payment_credit = -1;
+    bool has_negative_safe_rail = false;
+    bool has_negative_free_safe_rail = false;
+    int first_negative_level = -1;
+    int first_negative_label = -1;
+    int first_negative_target = -1;
+    int first_negative_residue = -1;
+    int first_negative_lower = -1;
+    int first_negative_upper = -1;
+    Integer first_negative_sum = 0;
+    int first_negative_free_level = -1;
+    int first_negative_free_label = -1;
+    int first_negative_free_target = -1;
+    int first_negative_free_residue = -1;
+    int first_negative_free_lower = -1;
+    int first_negative_free_upper = -1;
+    Integer first_negative_free_sum = 0;
+    bool has_negative_free_full_tail = false;
+    int first_negative_free_full_level = -1;
+    int first_negative_free_full_label = -1;
+    int first_negative_free_full_target = -1;
+    int first_negative_free_full_rho = -1;
+    Integer first_negative_free_full_sum = 0;
+    bool has_negative_free_residue_tail = false;
+    int first_negative_free_residue_level = -1;
+    int first_negative_free_residue_label = -1;
+    int first_negative_free_residue_target = -1;
+    int first_negative_free_residue_class = -1;
+    int first_negative_free_residue_rho = -1;
+    Integer first_negative_free_residue_sum = 0;
 };
 
 Integer third_difference(
@@ -799,6 +850,209 @@ void record_direct_cubic_partition(
                 terms
             );
             lower = upper + 1U;
+        }
+    }
+}
+
+void record_safe_rail_signs(
+    const std::set<Affine, AffineLess>& walls,
+    int level,
+    int label,
+    int target,
+    const std::vector<Integer>& summand,
+    SegmentAuditSummary& summary
+) {
+    const int paired = static_cast<int>(summand.size());
+    std::vector<bool> singleton(static_cast<std::size_t>(paired));
+    std::vector<bool> edge_cut(
+        static_cast<std::size_t>(std::max(0, paired - 1))
+    );
+    for (int crossing = 0; crossing < paired; ++crossing) {
+        singleton[static_cast<std::size_t>(crossing)] = hits_moving_wall(
+            walls,
+            level,
+            label,
+            crossing,
+            target
+        );
+        if (crossing + 1 < paired) {
+            edge_cut[static_cast<std::size_t>(crossing)] =
+                crosses_moving_wall(
+                    walls,
+                    level,
+                    label,
+                    crossing,
+                    target
+                );
+        }
+    }
+    for (int lower = 0; lower < paired;) {
+        int upper = lower;
+        if (!singleton[static_cast<std::size_t>(lower)]) {
+            while (
+                upper + 1 < paired
+                && !singleton[static_cast<std::size_t>(upper + 1)]
+                && !edge_cut[static_cast<std::size_t>(upper)]
+            ) {
+                ++upper;
+            }
+        }
+        for (int residue = 0; residue < 4; ++residue) {
+            const int offset = (residue - lower % 4 + 4) % 4;
+            const int rail_lower = lower + offset;
+            if (rail_lower > upper) {
+                continue;
+            }
+            Integer rail_sum = 0;
+            for (int crossing = rail_lower;
+                 crossing <= upper;
+                 crossing += 4) {
+                rail_sum += summand[static_cast<std::size_t>(crossing)];
+            }
+            ++summary.safe_rails;
+            if (rail_sum < 0) {
+                ++summary.negative_safe_rails;
+                if (!summary.has_negative_safe_rail) {
+                    summary.has_negative_safe_rail = true;
+                    summary.first_negative_level = level;
+                    summary.first_negative_label = label;
+                    summary.first_negative_target = target;
+                    summary.first_negative_residue = residue;
+                    summary.first_negative_lower = rail_lower;
+                    summary.first_negative_upper = upper;
+                    summary.first_negative_sum = rail_sum;
+                }
+            }
+            if (label >= 7 && level - 1 - 2 * label >= 10) {
+                ++summary.free_safe_rails;
+                if (rail_sum < 0) {
+                    ++summary.negative_free_safe_rails;
+                    if (!summary.has_negative_free_safe_rail) {
+                        summary.has_negative_free_safe_rail = true;
+                        summary.first_negative_free_level = level;
+                        summary.first_negative_free_label = label;
+                        summary.first_negative_free_target = target;
+                        summary.first_negative_free_residue = residue;
+                        summary.first_negative_free_lower = rail_lower;
+                        summary.first_negative_free_upper = upper;
+                        summary.first_negative_free_sum = rail_sum;
+                    }
+                }
+            }
+        }
+        lower = upper + 1;
+    }
+}
+
+void record_tail_signs(
+    int level,
+    int label,
+    int target,
+    const std::vector<Integer>& summand,
+    SegmentAuditSummary& summary
+) {
+    const int paired = static_cast<int>(summand.size());
+    const bool free_band = label >= 7 && level - 1 - 2 * label >= 10;
+    Integer full_tail = 0;
+    for (int crossing = paired - 1; crossing >= 0; --crossing) {
+        full_tail += summand[static_cast<std::size_t>(crossing)];
+        ++summary.full_tails;
+        if (full_tail < 0) {
+            ++summary.negative_full_tails;
+        }
+        if (free_band) {
+            ++summary.free_full_tails;
+            if (full_tail < 0) {
+                ++summary.negative_free_full_tails;
+                if (!summary.has_negative_free_full_tail) {
+                    summary.has_negative_free_full_tail = true;
+                    summary.first_negative_free_full_level = level;
+                    summary.first_negative_free_full_label = label;
+                    summary.first_negative_free_full_target = target;
+                    summary.first_negative_free_full_rho = crossing;
+                    summary.first_negative_free_full_sum = full_tail;
+                }
+            }
+        }
+    }
+    for (int residue = 0; residue < 4; ++residue) {
+        int crossing = paired - 1;
+        while (crossing >= 0 && crossing % 4 != residue) {
+            --crossing;
+        }
+        Integer residue_tail = 0;
+        for (; crossing >= 0; crossing -= 4) {
+            residue_tail += summand[static_cast<std::size_t>(crossing)];
+            ++summary.residue_tails;
+            if (residue_tail < 0) {
+                ++summary.negative_residue_tails;
+            }
+            if (free_band) {
+                ++summary.free_residue_tails;
+                if (residue_tail < 0) {
+                    ++summary.negative_free_residue_tails;
+                    if (!summary.has_negative_free_residue_tail) {
+                        summary.has_negative_free_residue_tail = true;
+                        summary.first_negative_free_residue_level = level;
+                        summary.first_negative_free_residue_label = label;
+                        summary.first_negative_free_residue_target = target;
+                        summary.first_negative_free_residue_class = residue;
+                        summary.first_negative_free_residue_rho = crossing;
+                        summary.first_negative_free_residue_sum = residue_tail;
+                    }
+                }
+            }
+        }
+        if (free_band) {
+            struct Reserve {
+                int crossing = 0;
+                Integer amount = 0;
+            };
+            std::deque<Reserve> reserve;
+            for (int payment_crossing = paired - 1;
+                 payment_crossing >= 0;
+                 --payment_crossing) {
+                if (payment_crossing % 4 != residue) {
+                    continue;
+                }
+                const Integer& value =
+                    summand[static_cast<std::size_t>(payment_crossing)];
+                if (value >= 0) {
+                    if (value != 0) {
+                        reserve.push_back(Reserve{payment_crossing, value});
+                    }
+                    continue;
+                }
+                ++summary.free_residue_negative_atoms;
+                Integer debt = -value;
+                while (debt != 0) {
+                    if (reserve.empty()) {
+                        throw std::runtime_error(
+                            "negative residue tail has no later reserve"
+                        );
+                    }
+                    Reserve& nearest = reserve.back();
+                    const Integer payment = std::min(nearest.amount, debt);
+                    nearest.amount -= payment;
+                    debt -= payment;
+                    const int span = nearest.crossing - payment_crossing;
+                    if (span > summary.maximum_free_residue_payment_span) {
+                        summary.maximum_free_residue_payment_span = span;
+                        summary.has_maximum_free_residue_payment_span = true;
+                        summary.maximum_free_residue_payment_level = level;
+                        summary.maximum_free_residue_payment_label = label;
+                        summary.maximum_free_residue_payment_target = target;
+                        summary.maximum_free_residue_payment_residue = residue;
+                        summary.maximum_free_residue_payment_debit =
+                            payment_crossing;
+                        summary.maximum_free_residue_payment_credit =
+                            nearest.crossing;
+                    }
+                    if (nearest.amount == 0) {
+                        reserve.pop_back();
+                    }
+                }
+            }
         }
     }
 }
@@ -964,6 +1218,21 @@ SegmentAuditSummary audit_cubic_segments(
                     summand[coordinate] = even - odd;
                 }
                 record_direct_cubic_partition(summand, summary);
+                record_safe_rail_signs(
+                    walls,
+                    level,
+                    label,
+                    target,
+                    summand,
+                    summary
+                );
+                record_tail_signs(
+                    level,
+                    label,
+                    target,
+                    summand,
+                    summary
+                );
 
                 for (int lower = 0; lower + 16 < paired; ++lower) {
                     ++summary.candidate_windows;
@@ -1088,6 +1357,92 @@ int main(int argc, char** argv) {
                 << " direct_cubic_pieces=" << summary.direct_cubic_pieces
                 << " maximum_direct_piece_terms="
                     << summary.maximum_direct_piece_terms
+                << " safe_rails=" << summary.safe_rails
+                << " negative_safe_rails=" << summary.negative_safe_rails
+                << " free_safe_rails=" << summary.free_safe_rails
+                << " negative_free_safe_rails="
+                    << summary.negative_free_safe_rails
+                << " full_tails=" << summary.full_tails
+                << " negative_full_tails=" << summary.negative_full_tails
+                << " free_full_tails=" << summary.free_full_tails
+                << " negative_free_full_tails="
+                    << summary.negative_free_full_tails
+                << " residue_tails=" << summary.residue_tails
+                << " negative_residue_tails="
+                    << summary.negative_residue_tails
+                << " free_residue_tails=" << summary.free_residue_tails
+                << " negative_free_residue_tails="
+                    << summary.negative_free_residue_tails
+                << " free_residue_negative_atoms="
+                    << summary.free_residue_negative_atoms
+                << " maximum_free_residue_payment_span="
+                    << summary.maximum_free_residue_payment_span
+                << " maximum_free_residue_payment_witness=";
+            if (summary.has_maximum_free_residue_payment_span) {
+                std::cout
+                    << "K:" << summary.maximum_free_residue_payment_level
+                    << ",Q:" << summary.maximum_free_residue_payment_label
+                    << ",x:" << summary.maximum_free_residue_payment_target
+                    << ",residue:"
+                    << summary.maximum_free_residue_payment_residue
+                    << ",debit:" << summary.maximum_free_residue_payment_debit
+                    << ",credit:"
+                    << summary.maximum_free_residue_payment_credit;
+            } else {
+                std::cout << "none";
+            }
+            std::cout
+                << " first_negative_safe_rail=";
+            if (summary.has_negative_safe_rail) {
+                std::cout
+                    << "K:" << summary.first_negative_level
+                    << ",Q:" << summary.first_negative_label
+                    << ",x:" << summary.first_negative_target
+                    << ",residue:" << summary.first_negative_residue
+                    << ",lower:" << summary.first_negative_lower
+                    << ",upper:" << summary.first_negative_upper
+                    << ",sum:" << summary.first_negative_sum;
+            } else {
+                std::cout << "none";
+            }
+            std::cout << " first_negative_free_safe_rail=";
+            if (summary.has_negative_free_safe_rail) {
+                std::cout
+                    << "K:" << summary.first_negative_free_level
+                    << ",Q:" << summary.first_negative_free_label
+                    << ",x:" << summary.first_negative_free_target
+                    << ",residue:" << summary.first_negative_free_residue
+                    << ",lower:" << summary.first_negative_free_lower
+                    << ",upper:" << summary.first_negative_free_upper
+                    << ",sum:" << summary.first_negative_free_sum;
+            } else {
+                std::cout << "none";
+            }
+            std::cout << " first_negative_free_full_tail=";
+            if (summary.has_negative_free_full_tail) {
+                std::cout
+                    << "K:" << summary.first_negative_free_full_level
+                    << ",Q:" << summary.first_negative_free_full_label
+                    << ",x:" << summary.first_negative_free_full_target
+                    << ",rho:" << summary.first_negative_free_full_rho
+                    << ",sum:" << summary.first_negative_free_full_sum;
+            } else {
+                std::cout << "none";
+            }
+            std::cout << " first_negative_free_residue_tail=";
+            if (summary.has_negative_free_residue_tail) {
+                std::cout
+                    << "K:" << summary.first_negative_free_residue_level
+                    << ",Q:" << summary.first_negative_free_residue_label
+                    << ",x:" << summary.first_negative_free_residue_target
+                    << ",residue:"
+                    << summary.first_negative_free_residue_class
+                    << ",rho:" << summary.first_negative_free_residue_rho
+                    << ",sum:" << summary.first_negative_free_residue_sum;
+            } else {
+                std::cout << "none";
+            }
+            std::cout
                 << " residue_step=4"
                 << " result=PASS_CUBIC_SEGMENT_AUDIT\n";
         }
