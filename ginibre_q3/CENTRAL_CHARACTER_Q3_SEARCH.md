@@ -29348,6 +29348,59 @@ endpoint formulas of `d_a(V)` and `P_b(V,x)`, followed by exact
 polynomial summation on its `V`-segments.  It is not yet a packet-sign
 certificate.
 
+**Lemma 5A8H28P1B (two return-moment formulas).**  Put
+
+```text
+d=K-1-2Q,
+binom(n,2)_+=0 for n<2.
+```
+
+For the full level-`2K` return moments used in `(LBK2)`, one has
+
+```text
+f_4=2Q+1,
+f_5=(5Q^2+5Q+2)/2-binom(Q-2d-1,2)_+.             (P5A.102BUB)
+```
+
+Thus the return factor contributes only the single parameter hinge
+`Q-2d-3=0`, equivalently `5Q-2K-1=0`, to the eventual certificate fan.
+
+**Proof.**  Classically, the square of `V_(2Q)` has the `2Q+1`
+distinct summands from `V_0` through `V_(4Q)` in steps of two.  Taking
+its squared norm gives the first formula.  The standard weight
+subtraction formula for the fifth power gives
+
+```text
+[V_0] V_(2Q)^(tensor 5)=(5Q^2+5Q+2)/2.           (P5A.102BUC)
+```
+
+At level `2K`, no affine image of the fourth power reaches `V_0`, since
+its largest label is `8Q<4K+2`.  For the fifth power the only additional
+preimages of `V_0` below the largest label `10Q` are
+
+```text
+4K+2  with sign -,             4K+4 with sign +.
+```
+
+The next pair is above `10Q` because `K>2Q`.  If
+`r=Q-2d-3`, the two displayed classical multiplicities occur at tensor
+depths `r` and `r-1`.  Their difference is
+
+```text
+binom(r+2,2)=binom(Q-2d-1,2)
+```
+
+when `r>=0`, and is zero otherwise.  Subtracting this affine pair from
+`(P5A.102BUC)` proves `(P5A.102BUB)`.  QED.
+
+The strict verifier
+`character_ring_iter/verify_su2_shell_return_moments.cpp` builds the
+full level-`2K` fusion row directly, independently evaluates the two
+Kac--Walton images, and checks `(P5A.102BUB)`.  Through `K=100` it
+checked `4,900` direct return entries and `2,450` affine-fold identities,
+including `470` active fifth-moment corrections.  This audits the
+displayed uniform formulas.
+
 **Lemma 5A8H28P2 (exact crossing-weight endpoint-mask census).**
 On the active crossing domain
 
@@ -29390,22 +29443,24 @@ subsequent exact segment summation.  QED.
 
 **Lemma 5A8H28P3 (finite joint `V`-wall catalog).**
 With the parities of `K,Q,V,x` fixed, all endpoint and activation
-choices in `(P5A.102BU)` and `(P5A.102BUA)` can change only on affine
-walls `aK+bQ+cV+d x+e=0`.  There are exactly `139` normalized crossing
-walls (`127` with nonzero `V` coefficient), `378` normalized terminal
-walls (`276` with nonzero `V` coefficient), and `509` in their union
-(`402` with nonzero `V` coefficient).  Every moving wall has `V`
-coefficient of absolute value `1`, `2`, or `4`.
+choices in `(P5A.102BU)`, `(P5A.102BUA)`, and `(P5A.102BUB)` can change
+only on affine walls `aK+bQ+cV+d x+e=0`.  There are exactly `139`
+normalized crossing walls (`127` with nonzero `V` coefficient), `378`
+normalized terminal walls (`276` with nonzero `V` coefficient), and one
+return wall `2K-5Q+1=0`.  Thus the joint catalog has `510` walls, of
+which `402` move in `V`.  Every moving wall has `V` coefficient of
+absolute value `1`, `2`, or `4`.
 
 **Proof.**  Crossing endpoints are maxima or minima of two affine
 forms.  After resolving the two terminal absolute-value and upper-wall
 choices, terminal endpoints are floors or ceilings of affine forms.
 Their comparisons need only the adjacent doubled differences `-1,0,1`;
 their two activation thresholds are `2d+3` and `2d+2`.  This exhausts
-every `V`-dependent operation in the endpoint formulas.  Thus, after
-adjoining `V=rho` and the physical endpoints, every maximal integer
-`V`-segment has a fixed polynomial integrand and an exact Faulhaber
-sum.  The strict C++ generator
+every `V`-dependent operation in the endpoint formulas.  Lemma
+5A8H28P1B supplies the sole remaining parameter switch, whose normalized
+equation is `2K-5Q+1=0`.  Thus, after adjoining `V=rho` and the physical
+endpoints, every maximal integer `V`-segment has a fixed polynomial
+integrand and an exact Faulhaber sum.  The strict C++ generator
 `character_ring_iter/emit_su2_shell_v_wall_catalog.cpp` constructs and
 normalizes this safe over-refinement symbolically.  It does not assert
 feasibility of every wall or positivity of any segment sum.  QED.
@@ -29413,10 +29468,91 @@ feasibility of every wall or positivity of any segment sum.  QED.
 The catalog also has an exact feasibility pruning in the still-open band
 `Q>=7`, `d=K-1-2Q>=10`.  Of the `402` moving walls, only `154` can meet
 an integer `V` transition in the physical active-crossing domain.  Of
-the `107` parameter-only walls, only `25` meet that domain.  The
+the `108` parameter-only walls, only `26` meet that domain.  The
 `--feasible` mode of `emit_su2_shell_v_wall_catalog.cpp` checks each
 affine wall independently in Presburger arithmetic.  This is a
 reduction of candidate events, not a positivity certificate.
+
+**Lemma 5A8H28P4 (cubic joint-shell segments).**  Fix `K,Q,x`, and
+fix the residue of `V` modulo four.  Put `P_0(V,x)=1_(V=x)` and, for
+the terminal row in `(LBK2)`, write
+
+```text
+Phi_(K,Q,x)(V)
+ =f_4 sum_(a+b=5)d_a(V)P_b(V,x)
+  -f_5 sum_(a+b=4)d_a(V)P_b(V,x).                 (P5A.102BUK)
+```
+
+On every residue-four `V`-segment on which no moving wall of Lemma
+5A8H28P3 is met at a vertex or crossed between adjacent vertices,
+`Phi_(K,Q,x)(V)` is a polynomial in `V` of degree at most three.  The
+isolated `P_0` contribution is separated by the wall `V=x`.  Consequently
+the sum of `Phi` over any such segment is an exact quartic Faulhaber
+polynomial in its two rail endpoints.
+
+**Proof.**  On a fixed endpoint and activation mask, Lemma 5A8H28P1
+expresses `d_a(V)` as a signed sum of truncated-binomial endpoints of
+degree at most `a-1` in `V`.  Lemma 5A8H28P1A followed by Lemmas
+5A8H28N--5A8H28O gives the corresponding bound `b-1` for
+`P_b(V,x)`, for `1<=b<=4`.  Fixing residues modulo four resolves every
+remaining floor or ceiling; Lemma 5A8H28P3 says precisely that no
+endpoint or activation choice can change in the stated segment.
+
+For the `f_4` terms, `a+b=5`, so the product degree is at most
+
+```text
+(a-1)+(b-1)=3.
+```
+
+For the `f_5` terms it is at most two.  The only omitted factor is
+`P_0`; away from its singleton `V=x` it vanishes, and that singleton is
+already a catalog wall.  Thus `(P5A.102BUK)` is cubic on every remaining
+rail segment.  Summing a cubic on an arithmetic progression of step
+four gives the asserted quartic Faulhaber expression.  QED.
+
+The strict mode
+
+```text
+emit_su2_shell_v_wall_catalog --audit 100
+```
+
+constructs `A_+`, `A_-`, `Delta`, and the summand `(P5A.102BUK)` directly
+from the finite fusion rule.  It discards only length-five residue-four
+windows that meet a catalog wall or cross one between adjacent vertices,
+and verifies that every other fourth finite difference vanishes exactly.
+Through `K=100` it found
+`21,236` such wall-free windows, with no mismatch.  This is an audit of
+the symbolic degree argument, not a finite-range replacement for it.
+
+The raw wall catalog is intentionally too coarse to serve directly as
+the final record list.  The same audit also greedily partitions the
+direct summand values into residue-four cubic pieces, without treating
+inactive catalog walls as events.  Through `K=100` this gives `704,401`
+pieces on `333,180` rails, with a largest observed piece of `13` terms.
+Those numbers are bounded diagnostics, not a chamber census; they rule
+out treating the safe catalog itself as a small hand case split and make
+the activation-aware endpoint selectors in Target 5A8H28P5 necessary.
+
+**Target 5A8H28P5 (proof-carrying segment certificate).**  Complete
+Target 5A8H28R5 by a finite certificate whose every record contains:
+
+1. a residue-four parameter chamber and its exact Presburger
+   inequalities, including the return hinge `5Q-2K-1=0` from Lemma
+   5A8H28P1B;
+2. a wall-free `V` rail segment selected from Lemma 5A8H28P3, including
+   the isolated `V=x` record when present;
+3. the chosen return and signed endpoint polynomials from Lemmas
+   5A8H28P1, 5A8H28P1B, and 5A8H28O and the resulting quartic segment
+   sum from Lemma 5A8H28P4;
+4. a nonnegative cone or Newton expansion for that sum; and
+5. an exact coverage and adjacency proof showing that the records
+   partition every admissible suffix `V>=rho`.
+
+The certificate must derive its polynomial degree from Lemma 5A8H28P4
+and prove chamber coverage in Presburger arithmetic.  Finite samples or
+untracked interpolation do not certify this target.  Satisfying it
+proves `(LBK2)` for the free-width band `d>=10`; Lemmas 5A8H28E--M then
+close the complete `t=2` shell row.
 
 The natural Fubini reorganization of the shell does not make the
 five-step payment local in the pre-crossing coordinate.  If
