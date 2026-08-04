@@ -1198,6 +1198,184 @@ bool single_recession_ray_newton_certificate(
     return true;
 }
 
+bool recession_ray_family_descends(
+    const std::vector<Polynomial>& constraints,
+    const std::vector<IntegralRecessionRay>& rays,
+    int threshold
+) {
+    z3::context context;
+    z3::solver solver(context);
+    const std::array<z3::expr, 3> variables{
+        context.int_const("Q"),
+        context.int_const("H"),
+        context.int_const("Y")
+    };
+    for (const Polynomial& constraint : constraints) {
+        solver.add(z3_affine(context, constraint, variables) >= 0);
+    }
+    solver.add(variables[0] >= threshold);
+    for (const IntegralRecessionRay& ray : rays) {
+        const std::array<Polynomial, 3> shift{
+            Polynomial::variable(0) - constant(ray[0]),
+            Polynomial::variable(1) - constant(ray[1]),
+            Polynomial::variable(2) - constant(ray[2])
+        };
+        z3::expr leaves_chamber = context.bool_val(false);
+        for (const Polynomial& constraint : constraints) {
+            leaves_chamber = leaves_chamber
+                || z3_affine(
+                    context,
+                    substitute(constraint, shift),
+                    variables
+                ) < 0;
+        }
+        solver.add(leaves_chamber);
+    }
+    return solver.check() == z3::unsat;
+}
+
+bool recession_fan_newton_certificate(
+    const Chamber& chamber,
+    const std::vector<Polynomial>& constraints
+) {
+    if (constraints.size() < 3U || constraints.size() > 8U) {
+        return false;
+    }
+    std::set<IntegralRecessionRay> ray_set;
+    for (std::size_t first = 0U; first < constraints.size(); ++first) {
+        for (std::size_t second = first + 1U;
+             second < constraints.size();
+             ++second) {
+            const std::optional<IntegralRecessionRay> ray =
+                primitive_recession_ray(
+                    constraints[first], constraints[second], constraints
+                );
+            if (ray.has_value()) {
+                ray_set.insert(*ray);
+            }
+        }
+    }
+    if (ray_set.size() < 2U || ray_set.size() > 3U) {
+        return false;
+    }
+    const std::vector<IntegralRecessionRay> rays{
+        ray_set.begin(), ray_set.end()
+    };
+    constexpr int maximum_threshold = 96;
+    if (!recession_ray_family_descends(
+            constraints, rays, maximum_threshold
+        )) {
+        return false;
+    }
+    int lower = 1;
+    int upper = maximum_threshold;
+    while (lower < upper) {
+        const int middle = lower + (upper - lower) / 2;
+        if (recession_ray_family_descends(constraints, rays, middle)) {
+            upper = middle;
+        } else {
+            lower = middle + 1;
+        }
+    }
+    const int threshold = lower;
+    std::vector<Polynomial> bounded_constraints = constraints;
+    bounded_constraints.push_back(
+        constant(threshold - 1) - Polynomial::variable(0)
+    );
+    const std::optional<Rational> h_bound =
+        affine_upper_bound(bounded_constraints, 1U);
+    const std::optional<Rational> y_bound =
+        affine_upper_bound(bounded_constraints, 2U);
+    if (
+        !h_bound.has_value()
+        || !y_bound.has_value()
+        || *h_bound < 0
+        || *y_bound < 0
+    ) {
+        return false;
+    }
+    const Integer maximum_h_integer = floor_rational(*h_bound);
+    const Integer maximum_y_integer = floor_rational(*y_bound);
+    if (maximum_h_integer > 256 || maximum_y_integer > 1024) {
+        return false;
+    }
+    const int maximum_h = maximum_h_integer.convert_to<int>();
+    const int maximum_y = maximum_y_integer.convert_to<int>();
+    constexpr std::size_t maximum_base_points = 64U;
+    std::vector<std::array<int, 3>> bases;
+    for (int q_value = 1; q_value < threshold; ++q_value) {
+        for (int h_value = 0; h_value <= maximum_h; ++h_value) {
+            for (int y_value = 0; y_value <= maximum_y; ++y_value) {
+                const std::array<int, 3> point{q_value, h_value, y_value};
+                if (!std::all_of(
+                        constraints.begin(), constraints.end(),
+                        [&point](const Polynomial& constraint) {
+                            return evaluate(constraint, point) >= 0;
+                        }
+                    )) {
+                    continue;
+                }
+                bool reducible = false;
+                for (const IntegralRecessionRay& ray : rays) {
+                    const std::array<int, 3> predecessor{
+                        q_value - ray[0],
+                        h_value - ray[1],
+                        y_value - ray[2]
+                    };
+                    if (std::all_of(
+                            constraints.begin(), constraints.end(),
+                            [&predecessor](const Polynomial& constraint) {
+                                return evaluate(constraint, predecessor) >= 0;
+                            }
+                        )) {
+                        reducible = true;
+                        break;
+                    }
+                }
+                if (reducible) {
+                    continue;
+                }
+                bases.push_back(point);
+                if (bases.size() > maximum_base_points) {
+                    return false;
+                }
+            }
+        }
+    }
+    if (bases.empty()) {
+        return false;
+    }
+    for (const std::array<int, 3>& point : bases) {
+        std::array<Polynomial, 3> substitution{
+            constant(point[0]), constant(point[1]), constant(point[2])
+        };
+        for (std::size_t index = 0U; index < rays.size(); ++index) {
+            const Polynomial parameter = Polynomial::variable(index);
+            for (std::size_t coordinate = 0U;
+                 coordinate < substitution.size();
+                 ++coordinate) {
+                substitution[coordinate] += scale(
+                    parameter, rays[index][coordinate]
+                );
+            }
+        }
+        if (!nonnegative_basis(substitute(chamber.margin, substitution))) {
+            return false;
+        }
+    }
+    std::cout
+        << "SU2_T4_GROUP_RECESSION_FAN"
+        << " position=" << chamber.mask
+        << " rays=" << rays.size()
+        << " threshold=" << threshold
+        << " base_points=" << bases.size()
+        << " H_bound=" << *h_bound
+        << " Y_bound=" << *y_bound
+        << " result=PASS_EXACT_NEWTON"
+        << std::endl;
+    return true;
+}
+
 bool certify_group_chamber(
     const Chamber& chamber,
     const GroupFormula& formula
@@ -1238,6 +1416,9 @@ bool certify_group_chamber(
             constraints,
             forced_zero
         );
+    }
+    if (!passed) {
+        passed = recession_fan_newton_certificate(chamber, constraints);
     }
     if (!passed) {
         const std::vector<Polynomial> domain_constraints(
