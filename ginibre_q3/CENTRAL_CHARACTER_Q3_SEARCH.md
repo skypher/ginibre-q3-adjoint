@@ -33098,6 +33098,103 @@ layers:
 Theorem 5A8H28UIA2RLC10G removes the stable part of the first line;
 it does not remove either affine payment in this display.
 
+**Proposition 5A8H28UI1F (permanent finite full-TP2 obstruction).**
+No eventual full-TP2 theorem for the finite even fusion powers can
+prove the first line of `(P5A.102CB8S3Z26ZA3)`.  Already at compressed
+level and factor
+
+```text
+(K,Q)=(3,1),
+
+N=[[0,1,0,0],
+   [1,1,1,0],
+   [0,1,1,1],
+   [0,0,1,1]],                                  (P5A.102CB8SJ)
+```
+
+one has, for every `s>=1`,
+
+```text
+det (N^(2s))_[{0,1},{1,2}]
+ =- (B^(2s))_(0,1)/2<0,
+
+B=[[0,1],[1,2]].                                (P5A.102CB8SK)
+```
+
+Thus `N^(2s)` is not `TP2` at any even power, despite the fact that
+the anchored minors `C_s` use the distinct column pair `{0,r}` and may
+remain nonnegative.  A finite proof must retain that anchored geometry;
+it cannot obtain `C_s>=0` by a delayed full-TP2/Cauchy--Binet shortcut.
+
+**Proof.**
+
+1. Decompose the four coordinates in `(P5A.102CB8SJ)` into the
+   simple-current symmetric pairs `(e_0+e_3,e_1+e_2)` and antisymmetric
+   pairs `(e_0-e_3,e_1-e_2)`.  The two resulting blocks are respectively
+   `B` and `[[0,1],[1,0]]`.
+2. At an even power the second block is the identity.  If
+   `B^(2s)=[[a,b],[b,c]]`, direct recombination gives
+
+```text
+(N^(2s))_(0,1)=(N^(2s))_(0,2)=b/2,
+(N^(2s))_(1,1)=(c+1)/2,
+(N^(2s))_(1,2)=(c-1)/2.
+```
+
+   Their adjacent determinant is `-b/2`.  Since `B` is nonnegative
+   and its off-diagonal entry in every positive power is strictly
+   positive, `(P5A.102CB8SK)` follows.  QED.
+
+The exact `cpp_int` enumerator
+`character_ring_iter/analyze_su2_finite_power_tp2.cpp` independently
+finds these negative adjacent minors through compressed level forty and
+power twenty; at the displayed row their even-power values begin
+`-1,-6,-35,-204`.  In the same finite box it separately checks the
+`108,300` actual anchored minors with rows `{0,Q}` and columns `{0,R}`
+at the ten even powers, finding no negative value.  The latter is
+discovery evidence for `C_s>=0`, not a replacement for its proof.
+
+**Lemma 5A8H28UI1G (anchored kernels are repeated-word central
+currents).**  Fix `Q` and `s>=1`, and put
+
+```text
+d=N_Q^(2s)e_0.
+```
+
+Then the anchored current of this finite square profile is exactly the
+depth-`s` kernel:
+
+```text
+A(d)_(Q,R)=left(C_sight)_R,
+                                      0<=R<=K.    (P5A.102CB8SL)
+```
+
+Thus the finite hierarchy `C_s>=0` is the `{Q,R}` slice of the central
+assembly `(CIP)` for the repeated factor word `V_Q^(tensor s)`.
+
+**Proof.**
+
+1. The zeroth and `Q` coordinates of `d` are
+
+```text
+d_0=f_(2s),                    d_Q=f_(2s+1),
+```
+
+   since `N_Qe_0=e_Q`.  Multiplication by the character `d` is the
+   fusion operator `N_d=N_Q^(2s)`.
+2. Therefore
+
+```text
+A(d)_(Q,R)
+ =f_(2s)(N_Q^(2s))_(Q,R)
+  -f_(2s+1)(N_Q^(2s))_(0,R).
+```
+
+   Symmetry and one final `Q` fusion identify this with the `R`
+   coordinate of
+   `f_(2s)N_Q^(2s+1)e_0-f_(2s+1)N_Q^(2s)e_0=C_s`, proving
+   `(P5A.102CB8SL)`.  QED.
+
 The following rank-one coefficient theorem remains a stronger abstract
 statement, but Corollary 5A8H28UIA2RLC11A shows that it is no longer
 needed for the structured ordinary application.
