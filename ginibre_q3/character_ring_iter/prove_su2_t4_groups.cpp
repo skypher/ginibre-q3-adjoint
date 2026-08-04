@@ -1498,14 +1498,16 @@ bool certify_group_chamber(
 #ifndef SU2_T4_GROUPS_EMBEDDED
 int main(int argc, char** argv) {
     try {
-        if (argc < 2 || argc > 4) {
+        if (argc < 2 || argc > 5) {
             throw std::runtime_error(
-                "usage: TARGET [--masks-only|--position INDEX]"
+                "usage: TARGET [--masks-only|--position INDEX|"
+                "--range BEGIN END]"
             );
         }
         const std::string target = argv[1];
         bool masks_only = false;
         std::optional<std::size_t> selected_position;
+        std::optional<std::pair<std::size_t, std::size_t>> selected_range;
         if (argc == 3 && std::string(argv[2]) == "--masks-only") {
             masks_only = true;
         } else if (
@@ -1514,9 +1516,24 @@ int main(int argc, char** argv) {
         ) {
             selected_position =
                 static_cast<std::size_t>(std::stoull(argv[3]));
+        } else if (
+            argc == 5
+            && std::string(argv[2]) == "--range"
+        ) {
+            const std::size_t begin =
+                static_cast<std::size_t>(std::stoull(argv[3]));
+            const std::size_t end =
+                static_cast<std::size_t>(std::stoull(argv[4]));
+            if (begin >= end) {
+                throw std::runtime_error(
+                    "range must satisfy BEGIN < END"
+                );
+            }
+            selected_range = std::make_pair(begin, end);
         } else if (argc != 2) {
             throw std::runtime_error(
-                "usage: TARGET [--masks-only|--position INDEX]"
+                "usage: TARGET [--masks-only|--position INDEX|"
+                "--range BEGIN END]"
             );
         }
 
@@ -1541,6 +1558,14 @@ int main(int argc, char** argv) {
                 "selected chamber position is out of range"
             );
         }
+        if (
+            selected_range.has_value()
+            && selected_range->second > masks.size()
+        ) {
+            throw std::runtime_error(
+                "selected chamber range is out of range"
+            );
+        }
 
         std::size_t attempted = 0U;
         std::size_t certified = 0U;
@@ -1550,6 +1575,15 @@ int main(int argc, char** argv) {
             if (
                 selected_position.has_value()
                 && position != *selected_position
+            ) {
+                continue;
+            }
+            if (
+                selected_range.has_value()
+                && (
+                    position < selected_range->first
+                    || position >= selected_range->second
+                )
             ) {
                 continue;
             }
@@ -1582,19 +1616,28 @@ int main(int argc, char** argv) {
                     << std::endl;
             }
         }
-        const bool complete =
-            certified == attempted
-            && (
-                selected_position.has_value()
-                || attempted == masks.size()
-            );
+        const bool complete = certified == attempted;
         std::cout
             << "SU2_T4_GROUP"
             << " target=" << target
             << " attempted=" << attempted
             << " certified=" << certified
+            << " scope="
+            << (
+                selected_position.has_value()
+                    ? "position"
+                    : (selected_range.has_value() ? "range" : "all")
+            )
             << " result="
-            << (complete ? "PASS_EXACT_CERTIFICATE" : "INCOMPLETE")
+            << (
+                complete
+                    ? (
+                        selected_range.has_value()
+                            ? "PASS_EXACT_RANGE"
+                            : "PASS_EXACT_CERTIFICATE"
+                    )
+                    : "INCOMPLETE"
+            )
             << std::endl;
         return complete ? EXIT_SUCCESS : EXIT_FAILURE;
     } catch (const std::exception& error) {
