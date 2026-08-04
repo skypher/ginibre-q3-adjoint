@@ -324,6 +324,108 @@ struct Matching {
     std::size_t hall_left = 0U;
     std::size_t hall_right = 0U;
     std::vector<bool> hall_left_membership;
+    std::vector<bool> hall_right_membership;
+    std::vector<int> matched_left;
+    std::vector<int> matched_right;
+};
+
+class Dinic {
+public:
+    explicit Dinic(std::size_t vertex_count)
+        : graph_(vertex_count), level_(vertex_count, -1), next_edge_(vertex_count, 0U) {}
+
+    void add_edge(int source, int target, int capacity) {
+        const std::size_t source_index = static_cast<std::size_t>(source);
+        const std::size_t target_index = static_cast<std::size_t>(target);
+        const int forward_reverse = static_cast<int>(graph_[target_index].size());
+        const int backward_reverse = static_cast<int>(graph_[source_index].size());
+        graph_[source_index].push_back({target, forward_reverse, capacity});
+        graph_[target_index].push_back({source, backward_reverse, 0});
+    }
+
+    int maximum_flow(int source, int sink) {
+        int result = 0;
+        while (build_levels(source, sink)) {
+            std::fill(next_edge_.begin(), next_edge_.end(), 0U);
+            while (true) {
+                const int pushed = push_flow(
+                    source,
+                    sink,
+                    std::numeric_limits<int>::max() / 4
+                );
+                if (pushed == 0) {
+                    break;
+                }
+                result += pushed;
+            }
+        }
+        return result;
+    }
+
+private:
+    struct Edge {
+        int target = 0;
+        int reverse = 0;
+        int capacity = 0;
+    };
+
+    bool build_levels(int source, int sink) {
+        std::fill(level_.begin(), level_.end(), -1);
+        std::queue<int> queue;
+        const std::size_t source_index = static_cast<std::size_t>(source);
+        level_[source_index] = 0;
+        queue.push(source);
+        while (!queue.empty()) {
+            const int vertex = queue.front();
+            queue.pop();
+            const std::size_t vertex_index = static_cast<std::size_t>(vertex);
+            for (const Edge& edge : graph_[vertex_index]) {
+                const std::size_t target_index =
+                    static_cast<std::size_t>(edge.target);
+                if (edge.capacity > 0 && level_[target_index] < 0) {
+                    level_[target_index] = level_[vertex_index] + 1;
+                    queue.push(edge.target);
+                }
+            }
+        }
+        return level_[static_cast<std::size_t>(sink)] >= 0;
+    }
+
+    int push_flow(int vertex, int sink, int available) {
+        if (vertex == sink) {
+            return available;
+        }
+        const std::size_t vertex_index = static_cast<std::size_t>(vertex);
+        for (std::size_t& edge_index = next_edge_[vertex_index];
+             edge_index < graph_[vertex_index].size();
+             ++edge_index) {
+            Edge& edge = graph_[vertex_index][edge_index];
+            const std::size_t target_index = static_cast<std::size_t>(edge.target);
+            if (edge.capacity == 0
+                || level_[target_index] != level_[vertex_index] + 1) {
+                continue;
+            }
+            const int pushed = push_flow(
+                edge.target,
+                sink,
+                std::min(available, edge.capacity)
+            );
+            if (pushed == 0) {
+                continue;
+            }
+            edge.capacity -= pushed;
+            Edge& reverse_edge = graph_[target_index][static_cast<std::size_t>(
+                edge.reverse
+            )];
+            reverse_edge.capacity += pushed;
+            return pushed;
+        }
+        return 0;
+    }
+
+    std::vector<std::vector<Edge>> graph_;
+    std::vector<int> level_;
+    std::vector<std::size_t> next_edge_;
 };
 
 Matching maximum_matching(const std::vector<std::vector<int>>& graph,
@@ -428,6 +530,9 @@ Matching maximum_matching(const std::vector<std::vector<int>>& graph,
         }
     }
     result.hall_left_membership = std::move(reachable_left);
+    result.hall_right_membership = std::move(reachable_right);
+    result.matched_left = std::move(matched_left);
+    result.matched_right = std::move(matched_right);
     return result;
 }
 
@@ -532,9 +637,92 @@ void inspect_instance(
                 }
             }
             if (repair_hall_three) {
+                std::map<std::string, int> root_escape_ids;
+                std::vector<std::vector<int>> root_escape_graph;
+                for (std::size_t index = 0U;
+                     index < matching.matched_left.size();
+                     ++index) {
+                    if (matching.matched_left[index] >= 0) {
+                        continue;
+                    }
+                    const Path& returning = domain_pairs[index].first;
+                    const Path& outgoing = domain_pairs[index].second;
+                    std::vector<int> images;
+                    add_one_block_images(
+                        returning,
+                        outgoing,
+                        labels,
+                        images,
+                        root_escape_ids
+                    );
+                    add_two_block_images(
+                        returning,
+                        outgoing,
+                        labels,
+                        images,
+                        root_escape_ids
+                    );
+                    add_wide_block_images(
+                        returning,
+                        outgoing,
+                        labels,
+                        3,
+                        images,
+                        root_escape_ids
+                    );
+                    std::sort(images.begin(), images.end());
+                    images.erase(
+                        std::unique(images.begin(), images.end()),
+                        images.end()
+                    );
+                    root_escape_graph.push_back(std::move(images));
+                }
+                std::vector<int> root_free_target_remap(
+                    root_escape_ids.size(),
+                    -1
+                );
+                std::size_t root_free_targets = 0U;
+                for (const auto& entry : root_escape_ids) {
+                    const auto global_target = ids.find(entry.first);
+                    if (global_target == ids.end()) {
+                        continue;
+                    }
+                    const std::size_t global_target_index =
+                        static_cast<std::size_t>(global_target->second);
+                    if (matching.matched_right[global_target_index] >= 0) {
+                        continue;
+                    }
+                    const std::size_t root_target =
+                        static_cast<std::size_t>(entry.second);
+                    root_free_target_remap[root_target] =
+                        static_cast<int>(root_free_targets);
+                    ++root_free_targets;
+                }
+                std::vector<std::vector<int>> root_free_graph;
+                root_free_graph.reserve(root_escape_graph.size());
+                for (const std::vector<int>& neighbours : root_escape_graph) {
+                    std::vector<int> retained;
+                    retained.reserve(neighbours.size());
+                    for (const int root_target : neighbours) {
+                        const std::size_t target_index =
+                            static_cast<std::size_t>(root_target);
+                        const int remapped_target =
+                            root_free_target_remap[target_index];
+                        if (remapped_target >= 0) {
+                            retained.push_back(remapped_target);
+                        }
+                    }
+                    root_free_graph.push_back(std::move(retained));
+                }
+                const Matching root_free_matching = maximum_matching(
+                    root_free_graph,
+                    root_free_targets
+                );
                 std::map<std::string, int> repair_ids;
                 std::vector<std::vector<int>> repair_graph;
+                std::vector<std::size_t> repair_source_indices;
                 repair_graph.reserve(matching.hall_left);
+                repair_source_indices.reserve(matching.hall_left);
                 for (std::size_t index = 0U;
                      index < matching.hall_left_membership.size();
                      ++index) {
@@ -572,6 +760,7 @@ void inspect_instance(
                         images.end()
                     );
                     repair_graph.push_back(std::move(images));
+                    repair_source_indices.push_back(index);
                     if (repair_graph.size() % 10000U == 0U) {
                         std::cerr << "SU2_HALL_REPAIR_BUILD selected="
                                   << repair_graph.size()
@@ -584,13 +773,391 @@ void inspect_instance(
                     repair_ids.size()
                 );
                 std::size_t repair_width_two_targets = 0U;
+                std::vector<int> width_two_target_remap(
+                    repair_ids.size(),
+                    -1
+                );
+                std::vector<int> alternating_carrier_remap(
+                    repair_ids.size(),
+                    -1
+                );
+                std::vector<int> repair_global_targets(
+                    repair_ids.size(),
+                    -1
+                );
+                std::vector<int> alternating_carrier_inverse;
+                std::size_t alternating_carrier_targets = 0U;
                 for (const auto& entry : repair_ids) {
-                    if (ids.contains(entry.first)) {
+                    const auto global_target = ids.find(entry.first);
+                    if (global_target != ids.end()) {
+                        const std::size_t repair_target = static_cast<std::size_t>(
+                            entry.second
+                        );
+                        repair_global_targets[repair_target] =
+                            global_target->second;
+                        width_two_target_remap[repair_target] =
+                            static_cast<int>(repair_width_two_targets);
                         ++repair_width_two_targets;
+                        const std::size_t global_target_index =
+                            static_cast<std::size_t>(global_target->second);
+                        if (matching.hall_right_membership[global_target_index]
+                            || matching.matched_right[global_target_index] < 0) {
+                            alternating_carrier_remap[repair_target] =
+                                static_cast<int>(alternating_carrier_targets);
+                            alternating_carrier_inverse.push_back(
+                                static_cast<int>(repair_target)
+                            );
+                            ++alternating_carrier_targets;
+                        }
+                    }
+                }
+                const auto restricted_graph = [&repair_graph](
+                    const std::vector<int>& target_remap
+                ) {
+                    std::vector<std::vector<int>> restricted;
+                    restricted.reserve(repair_graph.size());
+                    for (const std::vector<int>& neighbours : repair_graph) {
+                        std::vector<int> retained;
+                        retained.reserve(neighbours.size());
+                        for (const int repair_target : neighbours) {
+                            const std::size_t target_index =
+                                static_cast<std::size_t>(repair_target);
+                            const int remapped_target =
+                                target_remap[target_index];
+                            if (remapped_target >= 0) {
+                                retained.push_back(remapped_target);
+                            }
+                        }
+                        restricted.push_back(std::move(retained));
+                    }
+                    return restricted;
+                };
+                std::size_t width_two_target_matching_size = 0U;
+                {
+                    const std::vector<std::vector<int>> width_two_target_graph =
+                        restricted_graph(width_two_target_remap);
+                    width_two_target_matching_size = maximum_matching(
+                        width_two_target_graph,
+                        repair_width_two_targets
+                    ).size;
+                }
+                Matching alternating_carrier_matching;
+                {
+                    const std::vector<std::vector<int>> alternating_carrier_graph =
+                        restricted_graph(alternating_carrier_remap);
+                    alternating_carrier_matching = maximum_matching(
+                        alternating_carrier_graph,
+                        alternating_carrier_targets
+                    );
+                }
+                const std::size_t alternating_carrier_matching_size =
+                    alternating_carrier_matching.size;
+                const std::size_t minimum_three_block_only_targets =
+                    repair_graph.size() - width_two_target_matching_size;
+                std::vector<int> one_exchange_target_remap(
+                    repair_ids.size(),
+                    -1
+                );
+                std::vector<bool> one_exchange_target_is_neighbourhood;
+                std::size_t one_exchange_targets = 0U;
+                std::size_t one_exchange_neighbourhood_targets = 0U;
+                for (std::size_t repair_target = 0U;
+                     repair_target < repair_global_targets.size();
+                     ++repair_target) {
+                    const int global_target = repair_global_targets[repair_target];
+                    if (global_target < 0) {
+                        continue;
+                    }
+                    const std::size_t global_target_index =
+                        static_cast<std::size_t>(global_target);
+                    const bool in_neighbourhood =
+                        matching.hall_right_membership[global_target_index];
+                    const bool is_free =
+                        matching.matched_right[global_target_index] < 0;
+                    if (!in_neighbourhood && !is_free) {
+                        continue;
+                    }
+                    one_exchange_target_remap[repair_target] =
+                        static_cast<int>(one_exchange_targets);
+                    one_exchange_target_is_neighbourhood.push_back(
+                        in_neighbourhood
+                    );
+                    ++one_exchange_targets;
+                    if (in_neighbourhood) {
+                        ++one_exchange_neighbourhood_targets;
+                    }
+                }
+                std::vector<std::vector<int>> one_exchange_graph;
+                one_exchange_graph.reserve(repair_graph.size());
+                for (std::size_t repair_left = 0U;
+                     repair_left < repair_graph.size();
+                     ++repair_left) {
+                    const std::size_t global_left =
+                        repair_source_indices[repair_left];
+                    std::vector<int> retained;
+                    retained.reserve(repair_graph[repair_left].size());
+                    for (const int repair_target : repair_graph[repair_left]) {
+                        const std::size_t repair_target_index =
+                            static_cast<std::size_t>(repair_target);
+                        const int remapped_target =
+                            one_exchange_target_remap[repair_target_index];
+                        if (remapped_target < 0) {
+                            continue;
+                        }
+                        const std::size_t remapped_target_index =
+                            static_cast<std::size_t>(remapped_target);
+                        if (one_exchange_target_is_neighbourhood[
+                                remapped_target_index
+                            ]) {
+                            const int global_target =
+                                repair_global_targets[repair_target_index];
+                            const std::vector<int>& width_two_neighbours =
+                                graph[global_left];
+                            if (!std::binary_search(
+                                    width_two_neighbours.begin(),
+                                    width_two_neighbours.end(),
+                                    global_target
+                                )) {
+                                continue;
+                            }
+                        }
+                        retained.push_back(remapped_target);
+                    }
+                    one_exchange_graph.push_back(std::move(retained));
+                }
+                const std::size_t one_exchange_left_count =
+                    one_exchange_graph.size();
+                const std::size_t one_exchange_vertex_count =
+                    2U + one_exchange_left_count + one_exchange_targets + 2U;
+                const int one_exchange_source = 0;
+                const int one_exchange_left_offset = 1;
+                const int one_exchange_target_offset = static_cast<int>(
+                    1U + one_exchange_left_count
+                );
+                const int one_exchange_sink = static_cast<int>(
+                    1U + one_exchange_left_count + one_exchange_targets
+                );
+                const int one_exchange_super_source = one_exchange_sink + 1;
+                const int one_exchange_super_sink = one_exchange_sink + 2;
+                Dinic one_exchange_flow(one_exchange_vertex_count);
+                std::vector<int> one_exchange_balance(
+                    one_exchange_vertex_count,
+                    0
+                );
+                const auto add_lower_bounded_edge = [&one_exchange_flow,
+                                                      &one_exchange_balance](
+                    int source,
+                    int target_vertex,
+                    int lower,
+                    int upper
+                ) {
+                    if (lower < 0 || upper < lower) {
+                        throw std::runtime_error("invalid lower-bounded edge");
+                    }
+                    one_exchange_flow.add_edge(
+                        source,
+                        target_vertex,
+                        upper - lower
+                    );
+                    one_exchange_balance[static_cast<std::size_t>(source)] -=
+                        lower;
+                    one_exchange_balance[static_cast<std::size_t>(target_vertex)] +=
+                        lower;
+                };
+                for (std::size_t repair_left = 0U;
+                     repair_left < one_exchange_left_count;
+                     ++repair_left) {
+                    const int left_vertex = one_exchange_left_offset
+                        + static_cast<int>(repair_left);
+                    add_lower_bounded_edge(
+                        one_exchange_source,
+                        left_vertex,
+                        1,
+                        1
+                    );
+                    for (const int one_exchange_target : one_exchange_graph[repair_left]) {
+                        add_lower_bounded_edge(
+                            left_vertex,
+                            one_exchange_target_offset + one_exchange_target,
+                            0,
+                            1
+                        );
+                    }
+                }
+                for (std::size_t one_exchange_target = 0U;
+                     one_exchange_target < one_exchange_targets;
+                     ++one_exchange_target) {
+                    const int lower = one_exchange_target_is_neighbourhood[
+                        one_exchange_target
+                    ]
+                        ? 1
+                        : 0;
+                    add_lower_bounded_edge(
+                        one_exchange_target_offset + static_cast<int>(
+                            one_exchange_target
+                        ),
+                        one_exchange_sink,
+                        lower,
+                        1
+                    );
+                }
+                add_lower_bounded_edge(
+                    one_exchange_sink,
+                    one_exchange_source,
+                    0,
+                    static_cast<int>(one_exchange_left_count)
+                );
+                int one_exchange_required_flow = 0;
+                for (std::size_t vertex = 0U;
+                     vertex < one_exchange_balance.size();
+                     ++vertex) {
+                    const int balance = one_exchange_balance[vertex];
+                    if (balance > 0) {
+                        one_exchange_flow.add_edge(
+                            one_exchange_super_source,
+                            static_cast<int>(vertex),
+                            balance
+                        );
+                        one_exchange_required_flow += balance;
+                    } else if (balance < 0) {
+                        one_exchange_flow.add_edge(
+                            static_cast<int>(vertex),
+                            one_exchange_super_sink,
+                            -balance
+                        );
+                    }
+                }
+                const int one_exchange_achieved_flow =
+                    one_exchange_flow.maximum_flow(
+                        one_exchange_super_source,
+                        one_exchange_super_sink
+                    );
+                const bool one_exchange_linkage =
+                    one_exchange_neighbourhood_targets == matching.hall_right
+                    && one_exchange_achieved_flow == one_exchange_required_flow;
+                std::size_t escape_linkage_paths = 0U;
+                std::size_t escape_linkage_three_edges = 0U;
+                std::size_t escape_linkage_maximum_three_edges = 0U;
+                std::size_t escape_linkage_single_three_edge_paths = 0U;
+                bool escape_linkage_valid =
+                    alternating_carrier_matching_size == repair_graph.size();
+                if (escape_linkage_valid) {
+                    std::vector<int> spliced_left = matching.matched_left;
+                    for (std::size_t repair_left = 0U;
+                         repair_left < repair_source_indices.size();
+                         ++repair_left) {
+                        const int carrier_target =
+                            alternating_carrier_matching.matched_left[repair_left];
+                        if (carrier_target < 0) {
+                            escape_linkage_valid = false;
+                            break;
+                        }
+                        const std::size_t carrier_target_index =
+                            static_cast<std::size_t>(carrier_target);
+                        const int repair_target =
+                            alternating_carrier_inverse[carrier_target_index];
+                        const std::size_t repair_target_index =
+                            static_cast<std::size_t>(repair_target);
+                        const int global_target =
+                            repair_global_targets[repair_target_index];
+                        if (global_target < 0) {
+                            escape_linkage_valid = false;
+                            break;
+                        }
+                        spliced_left[repair_source_indices[repair_left]] =
+                            global_target;
+                    }
+                    std::vector<int> spliced_right(ids.size(), -1);
+                    if (escape_linkage_valid) {
+                        for (std::size_t left = 0U;
+                             left < spliced_left.size();
+                             ++left) {
+                            const int right = spliced_left[left];
+                            if (right < 0) {
+                                escape_linkage_valid = false;
+                                break;
+                            }
+                            const std::size_t right_index =
+                                static_cast<std::size_t>(right);
+                            if (spliced_right[right_index] >= 0) {
+                                escape_linkage_valid = false;
+                                break;
+                            }
+                            spliced_right[right_index] =
+                                static_cast<int>(left);
+                        }
+                    }
+                    std::vector<bool> linkage_left_seen(graph.size(), false);
+                    std::vector<bool> linkage_right_seen(ids.size(), false);
+                    for (std::size_t source = 0U;
+                         escape_linkage_valid && source < matching.matched_left.size();
+                         ++source) {
+                        if (matching.matched_left[source] >= 0) {
+                            continue;
+                        }
+                        ++escape_linkage_paths;
+                        int left = static_cast<int>(source);
+                        std::size_t path_three_edges = 0U;
+                        while (true) {
+                            const std::size_t left_index =
+                                static_cast<std::size_t>(left);
+                            if (linkage_left_seen[left_index]) {
+                                escape_linkage_valid = false;
+                                break;
+                            }
+                            linkage_left_seen[left_index] = true;
+                            const int right = spliced_left[left_index];
+                            const std::size_t right_index =
+                                static_cast<std::size_t>(right);
+                            if (linkage_right_seen[right_index]) {
+                                escape_linkage_valid = false;
+                                break;
+                            }
+                            linkage_right_seen[right_index] = true;
+                            const std::vector<int>& width_two_neighbours =
+                                graph[left_index];
+                            if (!std::binary_search(
+                                    width_two_neighbours.begin(),
+                                    width_two_neighbours.end(),
+                                    right
+                                )) {
+                                ++path_three_edges;
+                            }
+                            const int next_left = matching.matched_right[right_index];
+                            if (next_left < 0) {
+                                break;
+                            }
+                            left = next_left;
+                        }
+                        if (!escape_linkage_valid || path_three_edges == 0U) {
+                            escape_linkage_valid = false;
+                            break;
+                        }
+                        escape_linkage_three_edges += path_three_edges;
+                        escape_linkage_maximum_three_edges = std::max(
+                            escape_linkage_maximum_three_edges,
+                            path_three_edges
+                        );
+                        if (path_three_edges == 1U) {
+                            ++escape_linkage_single_three_edge_paths;
+                        }
+                    }
+                    if (escape_linkage_paths != graph.size() - matching.size) {
+                        escape_linkage_valid = false;
                     }
                 }
                 statistics.first_three_block_repair =
                     "domain=" + std::to_string(repair_graph.size())
+                    + " unmatched_left="
+                    + std::to_string(root_escape_graph.size())
+                    + " root_free_targets="
+                    + std::to_string(root_free_targets)
+                    + " root_free_matching="
+                    + std::to_string(root_free_matching.size)
+                    + " root_escape_splice="
+                    + (root_free_matching.size == root_escape_graph.size()
+                        ? "PASS"
+                        : "FAIL")
                     + " image=" + std::to_string(repair_ids.size())
                     + " width_two_targets="
                     + std::to_string(repair_width_two_targets)
@@ -598,6 +1165,38 @@ void inspect_instance(
                     + std::to_string(
                         repair_ids.size() - repair_width_two_targets
                     )
+                    + " width_two_target_matching="
+                    + std::to_string(width_two_target_matching_size)
+                    + " min_three_block_only_targets="
+                    + std::to_string(minimum_three_block_only_targets)
+                    + " one_exchange_targets="
+                    + std::to_string(one_exchange_targets)
+                    + " one_exchange_neighbourhood_targets="
+                    + std::to_string(one_exchange_neighbourhood_targets)
+                    + " one_exchange_required_flow="
+                    + std::to_string(one_exchange_required_flow)
+                    + " one_exchange_achieved_flow="
+                    + std::to_string(one_exchange_achieved_flow)
+                    + " one_exchange_linkage="
+                    + (one_exchange_linkage ? "PASS" : "FAIL")
+                    + " alternating_carrier_targets="
+                    + std::to_string(alternating_carrier_targets)
+                    + " alternating_carrier_matching="
+                    + std::to_string(alternating_carrier_matching_size)
+                    + " global_splice="
+                    + (alternating_carrier_matching_size == repair_graph.size()
+                        ? "PASS"
+                        : "FAIL")
+                    + " escape_linkage_paths="
+                    + std::to_string(escape_linkage_paths)
+                    + " escape_linkage_three_edges="
+                    + std::to_string(escape_linkage_three_edges)
+                    + " escape_linkage_maximum_three_edges="
+                    + std::to_string(escape_linkage_maximum_three_edges)
+                    + " escape_linkage_single_three_edge_paths="
+                    + std::to_string(escape_linkage_single_three_edge_paths)
+                    + " escape_linkage="
+                    + (escape_linkage_valid ? "PASS" : "FAIL")
                     + " matching=" + std::to_string(repair_matching.size)
                     + " result=" + (repair_matching.size == repair_graph.size()
                         ? "PASS"

@@ -33077,13 +33077,71 @@ family.  It does not assert a matching for every root or every Hall subset,
 but it rules out an argument that localizes the need for pooling to a
 three-factor root.
 
+The repair does **not** pay the deficit by adding target vertices unavailable
+to the width-two graph.  Among its `1,112,682` targets,
+
+```text
+width-two targets=1,111,547,       three-block-only targets=1,135,
+matching on width-two target vertices=69,015,
+minimum three-block-only targets=0.                    (P5A.102CB8S3Z41HT)
+```
+
+Here the last matching retains every one--two--three-block edge of the
+repair graph but restricts its target vertices to the global one--two-block
+image.  Thus a complete repair matching exists without using a single
+three-block-only target vertex.  Three-block bridges supply essential
+alternating exchange edges, not indispensable new target capacity.
+
+There is a stronger carrier-respecting repair.  For the width-two maximum
+matching, let `K` be the alternating right set of `H` and let `F` be its
+globally unmatched right vertices.  The repair image meets `K union F` in
+`144,635` targets, and its one--two--three-block restriction has
+
+```text
+alternating-carrier targets=144,635,
+alternating-carrier matching=69,015,       global splice=PASS. (P5A.102CB8S3Z41HU)
+```
+
+Lemma 5A8H28UIA2RKCH3AC consequently splices this repair to the original
+width-two matching on the complement of `H`.  Thus the full `2,228,733`
+source four-factor instance has a matching using bridges of width at most
+three.  This remains one exact finite instance, not a uniform theorem.
+
+It also satisfies the sharper single-exchange condition.  The `975`
+unmatched roots have `9,426` reachable free-ticket targets but their direct
+root-free matching has size only `773`, so the root-only splice fails.  The
+lower-bounded flow which forces every old-neighbourhood ticket and permits
+bridge edges only for free tickets instead returns
+
+```text
+one-exchange targets=144,635,
+one-exchange neighbourhood targets=68,040,
+one-exchange linkage=PASS.                           (P5A.102CB8S3Z41IA)
+```
+
+It therefore supplies exactly `975` free tickets and, by Lemma
+5A8H28UIA2RKCH3DM1, a disjoint linkage with one three-block exchange per
+deficit unit.  The global width-two reallocation before that final exchange
+is essential.
+
 **Proof.**  The strict C++ diagnostic enumerates every source and every
 one--two-block bridge in the fixed instance, then extracts the alternating
 left set from its exact maximum matching.  Its `--repair-hall-three` mode
 rebuilds only the bridge graph on that displayed set, adding all crossed
 three-block paths before a second exact maximum matching.  The two matching
 outputs are `(P5A.102CB8S3Z41HR)` and `(P5A.102CB8S3Z41HS)`, respectively.
-QED.
+For `(P5A.102CB8S3Z41HT)`, the same diagnostic identifies the repair target
+keys which occur in the original global width-two image, remaps those keys,
+and runs a third exact maximum matching after deleting every other target
+vertex.  The returned complete matching proves the last two assertions.
+For `(P5A.102CB8S3Z41HU)`, it instead retains precisely the repair targets
+lying in the alternating right set or among the globally free right vertices,
+and runs a fourth exact maximum matching.  Lemma
+5A8H28UIA2RKCH3AC gives the displayed full-instance splice.  For
+`(P5A.102CB8S3Z41IA)`, the diagnostic builds the lower-bounded flow whose
+source vertices and alternating-neighbourhood targets are compulsory, while
+only free targets may receive non-width-two bridge edges.  Its feasible flow
+is exactly the matching required by Lemma 5A8H28UIA2RKCH3DM1.  QED.
 
 The smallest remaining bridge statement is now explicit.
 
@@ -33122,6 +33180,209 @@ which is `(OCSP)` for the corresponding ordinary factor word.  Lemma
 5A8H28UIA2RKCH2 supplies all singleton Hall inequalities.  The preceding
 finite roots show that width two is false and width three repairs the first
 two complete heterogeneous chambers, but they do not establish the target.
+
+Proposition 5A8H28UIA2RKCH3FOUR further fixes the required mechanism:
+three-block windows cannot be treated merely as a source of fresh target
+tickets.  In the displayed four-factor deficit they repair all `69,015`
+sources while using only target vertices already available somewhere in the
+global width-two graph.  The missing uniform statement must transport those
+old target tickets through overlapping three-block alternating exchanges.
+
+**Lemma 5A8H28UIA2RKCH3AC (alternating-carrier splice).**  Let
+`G_2=(L,V,E_2)` be any finite bipartite graph and let `M` be a maximum
+matching.  Start alternating reachability from every `M`-unmatched vertex
+of `L`, traversing nonmatching edges from left to right and matching edges
+from right to left.  Write `H` and `K` for the reached left and right sets,
+and put `F=V\M(L)`.  Let `E_3` be any extension of `E_2`.  If the graph
+`(H,K union F,E_3)` has a matching saturating `H`, then `(L,V,E_3)` has a
+matching saturating `L`.
+
+**Proof.**  Alternating reachability gives `K=N_(G_2)(H)`: every
+nonmatching neighbour of a reached left vertex is reached, while the matched
+neighbour of a nonroot reached left vertex was already traversed immediately
+before it.  Every left vertex outside `H` is `M`-matched, since every
+`M`-unmatched left vertex is a root.  Moreover no matching edge from
+`L\H` enters `K`; otherwise its right endpoint would reach its matched left
+endpoint.  Hence the restriction of `M` to `L\H` has image disjoint from
+both `K` and `F`.  Its union with the assumed matching of `H` into
+`K union F` is therefore a matching saturating all of `L`.  QED.
+
+**Target 5A8H28UIA2RKCH3AC (paired alternating-carrier payment).**  In the
+paired bridge graph of Target 5A8H28UIA2RKCH3, choose a maximum width-two
+matching, form its alternating sets `H,K`, and let `F` be its unmatched
+right vertices.  Prove that one--two--three-block bridges match `H` into
+`K union F` for every paired word and every `R,S>0`.
+
+By Lemma 5A8H28UIA2RKCH3AC, this target supplies a full bridge matching.  It
+replaces verification of every Hall subset by one canonical sufficient
+carrier-matching problem: only the alternating deficiency set of one maximum
+width-two matching remains to be paid, and its allowable targets are exactly
+its old width-two neighbourhood plus the globally free tickets.  This is a
+sufficient reduction, not an assertion that every full bridge matching must
+respect that carrier.
+
+The stronger attempt to pay only the initially unmatched left roots is false.
+
+**Proposition 5A8H28UIA2RKCH3ROOTESC (root-only free-ticket
+obstruction).**  For
+
+```text
+w=(1,1,2,2,6,6),                 (R,S)=(9,2),
+```
+
+the width-two maximum matching has `314` unmatched left roots.  Let `F` be
+its globally free width-two target vertices.  Restrict every one--two--
+three-block bridge from those roots to `F`.  The exact graph has
+
+```text
+roots=314,       root-free targets=1,567,
+root-free matching=71,       root escape splice=FAIL. (P5A.102CB8S3Z41HW)
+```
+
+In the same instance the alternating core has `|H|=5,110`,
+`|N_(G_2)(H)|=4,796`, and its alternating-carrier matching has size `5,110`.
+Thus the full carrier repair succeeds, but it cannot be obtained by sending
+the initially unmatched roots directly to globally free tickets.
+
+**Proof.**  The strict C++ diagnostic first computes the exact width-two
+maximum matching.  It then reconstructs all one--two--three-block images of
+only its unmatched left roots, keeps targets which are globally unmatched in
+that width-two matching, and runs an exact bipartite maximum matching.  The
+output is `(P5A.102CB8S3Z41HW)`.  The stated strict shortfall disproves the
+root-only splice.  The same run returns the displayed complete carrier
+matching.  QED.
+
+The required reallocation has an equivalent path form.  This removes the
+misleading root-to-ticket picture while retaining the exact disjointness
+obligation.
+
+**Lemma 5A8H28UIA2RKCH3DM (alternating escape linkage).**  In the notation
+of Lemma 5A8H28UIA2RKCH3AC, let `U` be the `M`-unmatched vertices of `L`
+and put `delta=|U|=|H|-|K|`.  Direct every `M`-edge from right to left and
+every nonmatching edge of an extension `E_3` from left to right.  If this
+directed graph contains `delta` vertex-disjoint paths from `U` to `F`, then
+`(L,V,E_3)` has a matching saturating `L`.  Every such path uses an edge of
+`E_3 minus E_2`.
+
+**Proof.**  The paths are alternating by their orientations.  Toggle `M`
+along their disjoint union.  Each path starts at a previously unmatched left
+vertex and ends at a previously unmatched right vertex, so the toggle
+increases the matching size by one per path.  Since `M` has exactly `delta`
+unmatched left vertices, the resulting matching saturates `L`.  If a path
+used only `E_2`, it would be an augmenting path for the maximum matching
+`M`, which is impossible.  QED.
+
+**Target 5A8H28UIA2RKCH3DM (paired alternating escape linkage).**  For the
+paired bridge graph, construct the `delta` disjoint paths of Lemma
+5A8H28UIA2RKCH3DM using width-two alternating edges inside `H` and
+one--two--three-block forward bridge edges.  This is the exact global
+transport missing from the root-only rule: Proposition
+5A8H28UIA2RKCH3ROOTESC shows that the paths cannot generally leave directly
+from their initial roots.
+
+There is a sharper sufficient linkage in which the global transport is
+concentrated into one escape edge on each path.
+
+**Lemma 5A8H28UIA2RKCH3DM1 (single-exchange escape linkage).**  Retain the
+notation of Lemma 5A8H28UIA2RKCH3AC.  Suppose there is a matching of `H`
+into `K union F` which saturates every vertex of `K`, uses only width-two
+edges for targets in `K`, and uses one--two--three-block edges for targets
+in `F`.  Then the conclusion of Lemma 5A8H28UIA2RKCH3DM holds with exactly
+one edge of `E_3 minus E_2` on each of its `delta` paths.
+
+**Proof.**  Since `|H|=|K|+delta`, saturation of `K` leaves exactly `delta`
+matched targets in `F`.  Splice the matching to `M` on `L\H` as in Lemma
+5A8H28UIA2RKCH3AC and take its symmetric difference with `M`.  This gives
+`delta` disjoint augmenting paths.  All matched edges of the new matching
+which end in `K`, and all edges of `M`, lie in `E_2`.  Each augmenting path
+ends at a unique free target in `F`, so it has one final edge not in `E_2`;
+it has no other such edge.  QED.
+
+**Target 5A8H28UIA2RKCH3DM1 (paired single-exchange payment).**  Construct
+the matching of Lemma 5A8H28UIA2RKCH3DM1 for every paired word and every
+`R,S>0`.  Equivalently, route the canonical width-two Hall core to all of
+its old width-two tickets and exactly `delta` free tickets, with one
+three-block escape per deficit unit.
+
+The root-only obstruction does not falsify this target: the single escape
+edge may occur only after its root has travelled through matched width-two
+tickets inside `H`.
+
+The single-exchange target has one exact Hall inequality family, with no
+auxiliary two-sided matching condition.
+
+**Lemma 5A8H28UIA2RKCH3DM1H (free-ticket Hall reduction).**  Let `E_0` be
+the width-two edges from `H` to `K`, and let `E_F` be the one--two--
+three-block edges from `H` to `F`.  For `A subset H`, write
+`N_0(A)` and `N_F(A)` for their two target neighbourhoods.  Then the
+matching required in Target 5A8H28UIA2RKCH3DM1 exists if and only if
+
+```text
+|N_0(A)|+|N_F(A)|>=|A|              for every A subset H. (P5A.102CB8S3Z41IB)
+```
+
+Equivalently, every width-two Hall deficit in the canonical core is paid by
+distinct free tickets:
+
+```text
+|N_F(A)|>=|A|-|N_0(A)|.                              (P5A.102CB8S3Z41IC)
+```
+
+**Proof.**  Necessity is Hall's inequality for the requested matching.  For
+the converse, `M` matches every vertex of `K` to `H`, and its restriction to
+the width-two graph has maximum size `|K|`.  Thus, with
+`delta=|H|-|K|`, every `A subset H` satisfies
+
+```text
+|N_0(A)|+delta>=|A|.                                 (P5A.102CB8S3Z41ID)
+```
+
+Indeed the largest Hall deficiency of a bipartite graph is the number of
+left vertices missed by a maximum matching.  Applying
+`(P5A.102CB8S3Z41IB)` to `A=H` gives `|F|>=delta`.  Adjoin `|F|-delta`
+dummy left vertices, each adjacent to every vertex of `F`.  The two sides
+now both have `|K|+|F|` vertices.  A subset with no dummy vertices satisfies
+Hall by `(P5A.102CB8S3Z41IB)`.  If it contains `d` dummies, its neighbourhood
+contains all of `F`, so its Hall inequality follows from
+
+```text
+|F|+|N_0(A)| >= (|F|-delta)+|A|
+```
+
+and `(P5A.102CB8S3Z41ID)`.  Hall therefore gives a perfect matching in the
+augmented graph.  Restricting it to `H` matches all of `H`, saturates `K`
+because the dummies use only `F`, and has exactly the stated edge types.
+QED.
+
+**Target 5A8H28UIA2RKCH3DM1H (paired free-ticket global payment).**  For
+every paired word, maximum width-two matching, and canonical alternating
+core `H`, prove `(P5A.102CB8S3Z41IC)`.  This is the remaining arbitrary-
+factor Hall payment: a three-block exchange may pay only a width-two deficit
+and must pay it with a ticket free in the original width-two matching.
+
+**Proposition 5A8H28UIA2RKCH3DM1EX (single-exchange non-Cartesian
+linkage).**  In the `(1,1,2,2,6,6)`, `(R,S)=(9,2)` instance of Proposition
+5A8H28UIA2RKCH3ROOTESC, Target 5A8H28UIA2RKCH3DM1 holds.  The exact flow
+has `5,110` left vertices, forces all `4,796` old-neighbourhood tickets,
+and supplies the remaining `314` vertices from free tickets:
+
+```text
+one-exchange targets=7,825,
+one-exchange neighbourhood targets=4,796,
+one-exchange linkage=PASS.                           (P5A.102CB8S3Z41HY)
+```
+
+Hence there is a `314`-path disjoint escape linkage with exactly one
+three-block exchange on every path, despite the root-only matching shortfall
+in `(P5A.102CB8S3Z41HW)`.
+
+**Proof.**  The strict C++ diagnostic builds the bipartite graph on `H` in
+which an edge to `K` is retained only when it is a width-two edge, while an
+edge to `F` may be a one--two--three-block bridge.  It solves the resulting
+lower-bounded flow: every source and every `K` target has lower capacity
+one, and each target has upper capacity one.  Feasibility is exactly the
+matching required by Lemma 5A8H28UIA2RKCH3DM1.  The exact result is
+`(P5A.102CB8S3Z41HY)`.  QED.
 
 Nor can `(RKCH3)` be reduced to selecting one triple with nonnegative local
 capacity.  For the homogeneous triple `(1,1,1)`, with upper and lower
@@ -33203,6 +33464,45 @@ statement; it cannot simply identify every critical family with one product
 of independent path sets.  No such stronger compression theorem is presently
 proved.
 
+**Proposition 5A8H28UIA2RKCH3NONBOX (non-Cartesian alternating-carrier
+repair).**  For the non-Cartesian Hall set of Proposition
+5A8H28UIA2RKCH3BOXOBS, the one--two--three-block repair graph has
+
+```text
+domain=3,570,       image=27,137,
+width-two targets=27,137,       three-block-only targets=0,
+alternating-carrier targets=5,892,
+alternating-carrier matching=3,570,       global splice=PASS. (P5A.102CB8S3Z41HV)
+```
+
+The `184` initially unmatched roots cannot be sent directly to free tickets:
+their root-free graph has `914` targets but matching size only `67`.  After
+width-two reallocation through the full Hall core, the single-exchange flow
+does pass:
+
+```text
+one-exchange targets=5,892,
+one-exchange neighbourhood targets=3,386,
+one-exchange linkage=PASS.                           (P5A.102CB8S3Z41HZ)
+```
+
+Thus this non-Cartesian core has a `184`-path disjoint linkage with exactly
+one three-block exchange per path, even though its roots cannot escape
+directly.
+
+Consequently the full `(1,1,2,2,5,5)`, `(R,S)=(8,2)` bridge graph has a
+matching saturating all `30,528` sources using bridges of width at most three.
+The result is a second finite instance of Target 5A8H28UIA2RKCH3AC, now with
+a Hall core that is provably not a Cartesian product.
+
+**Proof.**  The strict C++ diagnostic reconstructs the alternating Hall set
+from the width-two maximum matching and runs its exact carrier-restricted
+matching with `--repair-hall-three`.  The output is
+`(P5A.102CB8S3Z41HV)`.  Its root-free subgraph and lower-bounded
+single-exchange flow return `(P5A.102CB8S3Z41HZ)`.  Lemmas
+5A8H28UIA2RKCH3AC and 5A8H28UIA2RKCH3DM1 give the two asserted splices.
+QED.
+
 The strict C++ probe
 `character_ring_iter/probe_su2_heterogeneous_two_block_bridge.cpp`
 independently reproduces both ordering obstructions above and exhausts the
@@ -33214,7 +33514,8 @@ matchings for roots `(1,2)` and `(1,3)`, and returns the displayed
 twenty-versus-nineteen Hall obstruction for root `(1,2,3)`.  Its
 `--repair-hall-three` mode fixes one width-two Hall set and checks the
 complete one--two--three-block matching on that set; the four-factor replay
-returns `(P5A.102CB8S3Z41HS)` with progress output throughout the construction.
+returns `(P5A.102CB8S3Z41HU)`, including the alternating-carrier splice,
+with progress output throughout the construction.
 
 Even choosing a window with enough local bridge capacity is false.
 For every `Q>=1`, take
