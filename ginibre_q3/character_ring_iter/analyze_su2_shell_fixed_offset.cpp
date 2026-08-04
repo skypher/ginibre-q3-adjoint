@@ -100,7 +100,9 @@ int main(int argc, char** argv) {
         if (argc != 3 && argc != 4) {
             throw std::runtime_error(
                 "usage: MAXIMUM_Q OFFSET [--certificate|--residue-tails|"
-                "--h2-residue-tails|--h2-family|--h2-family-rail]"
+                "--h2-residue-tails|--h2-family|--h2-family-rail|"
+                "--h2-p3-upper-rail|--h2-p3-upper-low|"
+                "--h2-lower-z-differences]"
             );
         }
         const int maximum_q = parse_positive(argv[1]);
@@ -115,6 +117,13 @@ int main(int argc, char** argv) {
             argc == 4 && std::string(argv[3]) == "--h2-family";
         const bool h2_family_rail =
             argc == 4 && std::string(argv[3]) == "--h2-family-rail";
+        const bool h2_p3_upper_rail =
+            argc == 4 && std::string(argv[3]) == "--h2-p3-upper-rail";
+        const bool h2_p3_upper_low =
+            argc == 4 && std::string(argv[3]) == "--h2-p3-upper-low";
+        const bool h2_lower_z_differences =
+            argc == 4
+            && std::string(argv[3]) == "--h2-lower-z-differences";
         if (
             argc == 4
             && !certificate
@@ -122,10 +131,15 @@ int main(int argc, char** argv) {
             && !h2_residue_tails
             && !h2_family
             && !h2_family_rail
+            && !h2_p3_upper_rail
+            && !h2_p3_upper_low
+            && !h2_lower_z_differences
         ) {
             throw std::runtime_error(
                 "the only optional flag is --certificate, --residue-tails, "
-                "--h2-residue-tails, --h2-family, or --h2-family-rail"
+                "--h2-residue-tails, --h2-family, --h2-family-rail, or "
+                "--h2-p3-upper-rail, --h2-p3-upper-low, or "
+                "--h2-lower-z-differences"
             );
         }
         const int certificate_maximum_q =
@@ -173,6 +187,20 @@ int main(int argc, char** argv) {
         std::uint64_t negative_h2_odd_separated_lower_tails = 0U;
         std::uint64_t negative_h2_odd_separated_upper_tails = 0U;
         std::uint64_t negative_h2_odd_overlap_tails = 0U;
+        Integer maximum_h2_odd_separated_lower_tail_debt = 0;
+        int maximum_h2_odd_separated_lower_tail_q = -1;
+        int maximum_h2_odd_separated_lower_tail_target = -1;
+        int maximum_h2_odd_separated_lower_tail_residue = -1;
+        int maximum_h2_odd_separated_lower_tail_rho = -1;
+        Integer maximum_h2_odd_separated_lower_tail_even_reserve = 0;
+        Integer maximum_h2_odd_separated_lower_tail_total = 0;
+        bool has_minimum_h2_separated_lower_total = false;
+        Integer minimum_h2_separated_lower_total = 0;
+        int minimum_h2_separated_lower_total_q = -1;
+        int minimum_h2_separated_lower_total_target = -1;
+        int minimum_h2_separated_lower_total_residue = -1;
+        int minimum_h2_separated_lower_total_rho = -1;
+        int minimum_h2_separated_lower_total_y = -1;
         std::uint64_t negative_h2_atoms = 0U;
         std::uint64_t negative_h2_even_atoms = 0U;
         std::uint64_t negative_h2_odd_atoms = 0U;
@@ -188,6 +216,22 @@ int main(int argc, char** argv) {
         std::uint64_t negative_h2_p3_margin_high_crossing = 0U;
         std::uint64_t negative_h2_p3_margin_reserve_high = 0U;
         std::uint64_t negative_h2_odd_separated_upper_atoms = 0U;
+        std::uint64_t h2_p3_lower_sign_audit_entries = 0U;
+        std::uint64_t h2_p3_lower_sign_audit_failures = 0U;
+        bool printed_negative_h2_odd_separated_upper_atom = false;
+        bool printed_h2_p3_upper_rail = false;
+        int h2_p3_upper_rail_q = -1;
+        int h2_p3_upper_rail_target = -1;
+        int h2_p3_upper_rail_residue = -1;
+        std::uint64_t h2_p3_upper_low_rails = 0U;
+        std::uint64_t negative_h2_p3_upper_low_rails = 0U;
+        std::uint64_t h2_p3_upper_core_rails = 0U;
+        std::uint64_t negative_h2_p3_upper_core_rails = 0U;
+        std::uint64_t h2_p3_upper_normal_form_entries = 0U;
+        bool printed_negative_h2_p3_upper_low_rail = false;
+        bool printed_negative_h2_p3_upper_core_rail = false;
+        std::map<std::pair<int, int>, std::vector<std::pair<int, Integer>>>
+            h2_lower_current_series;
         std::uint64_t negative_h2_p3_margin_residue_tails = 0U;
         int maximum_h2_payment_span = 0;
         bool has_maximum_h2_payment_span = false;
@@ -527,6 +571,63 @@ int main(int argc, char** argv) {
                         && 4 * target < level - 1
                     ) {
                         ++negative_h2_odd_separated_upper_atoms;
+                        if (
+                            h2_p3_upper_rail
+                            && h2_p3_upper_rail_q < 0
+                        ) {
+                            h2_p3_upper_rail_q = q;
+                            h2_p3_upper_rail_target = target;
+                            h2_p3_upper_rail_residue =
+                                crossing_target % 4;
+                        }
+                        if (
+                            h2_p3_upper_rail
+                            && !printed_negative_h2_odd_separated_upper_atom
+                        ) {
+                            printed_negative_h2_odd_separated_upper_atom = true;
+                            std::cout
+                                << "FIRST_NEGATIVE_H2_ODD_SEPARATED_UPPER_ATOM"
+                                << " Q=" << q
+                                << " gap=" << gap
+                                << " V=" << crossing_target
+                                << " target=" << target
+                                << " value="
+                                << h2_odd_column[
+                                    static_cast<std::size_t>(crossing_target)
+                                ][static_cast<std::size_t>(target)]
+                                << " d1="
+                                << prefix[1][
+                                    static_cast<std::size_t>(crossing_target)
+                                ]
+                                << " d2="
+                                << prefix[2][
+                                    static_cast<std::size_t>(crossing_target)
+                                ]
+                                << " P3="
+                                << minus_powers[3U][
+                                    static_cast<std::size_t>(crossing_target)
+                                ][static_cast<std::size_t>(target)]
+                                << '\n';
+                        }
+                    }
+                    if (
+                        minus_powers[3U][
+                            static_cast<std::size_t>(crossing_target)
+                        ][static_cast<std::size_t>(target)] != 0
+                        && 4 * target - (level - 1) > 7 * gap
+                    ) {
+                        const Integer margin = f4 * prefix[2][
+                            static_cast<std::size_t>(crossing_target)
+                        ] - f5 * prefix[1][
+                            static_cast<std::size_t>(crossing_target)
+                        ];
+                        ++h2_p3_lower_sign_audit_entries;
+                        if (
+                            (crossing_target <= gap && margin < 0)
+                            || (crossing_target > gap && margin >= 0)
+                        ) {
+                            ++h2_p3_lower_sign_audit_failures;
+                        }
                     }
                     if (
                         3 * q > 2 * gap
@@ -584,7 +685,169 @@ int main(int argc, char** argv) {
             }
 
             if (
-                (h2_residue_tails || h2_family || h2_family_rail)
+                h2_p3_upper_rail
+                && !printed_h2_p3_upper_rail
+                && h2_p3_upper_rail_q == q
+            ) {
+                Integer suffix = 0;
+                for (int crossing = paired - 1;
+                     crossing >= 0;
+                     --crossing) {
+                    if (crossing % 4 != h2_p3_upper_rail_residue) {
+                        continue;
+                    }
+                    const Integer& p3 = minus_powers[3U][
+                        static_cast<std::size_t>(crossing)
+                    ][static_cast<std::size_t>(h2_p3_upper_rail_target)];
+                    const Integer margin = f4 * prefix[2][
+                        static_cast<std::size_t>(crossing)
+                    ] - f5 * prefix[1][
+                        static_cast<std::size_t>(crossing)
+                    ];
+                    const Integer value = p3 * margin;
+                    suffix += value;
+                    if (p3 == 0 && margin == 0) {
+                        continue;
+                    }
+                    std::cout
+                        << "H2_P3_SEPARATED_UPPER_RAIL"
+                        << " Q=" << q
+                        << " gap=" << gap
+                        << " target=" << h2_p3_upper_rail_target
+                        << " residue=" << h2_p3_upper_rail_residue
+                        << " V=" << crossing
+                        << " P3=" << p3
+                        << " d1=" << prefix[1][
+                            static_cast<std::size_t>(crossing)
+                        ]
+                        << " d2=" << prefix[2][
+                            static_cast<std::size_t>(crossing)
+                        ]
+                        << " margin=" << margin
+                        << " value=" << value
+                        << " suffix=" << suffix << '\n';
+                }
+                printed_h2_p3_upper_rail = true;
+            }
+
+            if (h2_p3_upper_low && q >= 7 && gap >= 11) {
+                for (int target = 0; target < paired; ++target) {
+                    // The strict separated-upper sector is equivalent to
+                    // Q>=3d+2x+1.  On it V=Q-d-x+s has P_3 support at
+                    // s>=0, and the lower portion s<=d+x contains every
+                    // possible negative P_3 margin at the boundary Q.
+                    if (q < 3 * gap + 2 * target + 1) {
+                        continue;
+                    }
+                    const auto ordinary_profile = [gap](int index) {
+                        return binomial_integer(index + 2, 2)
+                            - 3 * binomial_integer(index - gap + 1, 2);
+                    };
+                    for (int crossing = 0;
+                         crossing < paired;
+                         ++crossing) {
+                        const int s = crossing - (q - gap - target);
+                        if (
+                            s < 0
+                            || s > 3 * gap
+                            || 2 * s > 3 * gap + 2 * target
+                        ) {
+                            continue;
+                        }
+                        const int upper = std::min(s, 3 * gap - s);
+                        const int lower = std::max(0, s - 2 * target);
+                        const Integer expected_p3 = ordinary_profile(upper)
+                            - ordinary_profile(lower - 1);
+                        const Integer expected_d1 = 2;
+                        const Integer expected_d2 = s <= gap + target
+                            ? 4 * q - 6 * gap - 4 * target + 4 * s
+                            : 4 * q - 4 * gap - 2 * target + 2 * s;
+                        if (
+                            minus_powers[3U][
+                                static_cast<std::size_t>(crossing)
+                            ][static_cast<std::size_t>(target)] != expected_p3
+                            || prefix[1][
+                                static_cast<std::size_t>(crossing)
+                            ] != expected_d1
+                            || prefix[2][
+                                static_cast<std::size_t>(crossing)
+                            ] != expected_d2
+                        ) {
+                            throw std::runtime_error(
+                                "separated-upper P3 normal-form mismatch"
+                            );
+                        }
+                        ++h2_p3_upper_normal_form_entries;
+                    }
+                    for (int residue = 0; residue < 4; ++residue) {
+                        Integer lower_current = 0;
+                        Integer core_current = 0;
+                        for (int crossing = 0;
+                             crossing < paired;
+                             ++crossing) {
+                            if (crossing % 4 != residue) {
+                                continue;
+                            }
+                            const int s = crossing - (q - gap - target);
+                            if (
+                                s < 0
+                                || s > std::min(gap + target, 3 * gap)
+                            ) {
+                                continue;
+                            }
+                            const Integer margin = f4 * prefix[2][
+                                static_cast<std::size_t>(crossing)
+                            ] - f5 * prefix[1][
+                                static_cast<std::size_t>(crossing)
+                            ];
+                            lower_current += minus_powers[3U][
+                                static_cast<std::size_t>(crossing)
+                            ][static_cast<std::size_t>(target)] * margin;
+                            if (s <= gap) {
+                                core_current += minus_powers[3U][
+                                    static_cast<std::size_t>(crossing)
+                                ][static_cast<std::size_t>(target)] * margin;
+                            }
+                        }
+                        ++h2_p3_upper_low_rails;
+                        if (lower_current < 0) {
+                            ++negative_h2_p3_upper_low_rails;
+                            if (!printed_negative_h2_p3_upper_low_rail) {
+                                printed_negative_h2_p3_upper_low_rail = true;
+                                std::cout
+                                    << "FIRST_NEGATIVE_H2_P3_UPPER_LOW_RAIL"
+                                    << " Q=" << q
+                                    << " gap=" << gap
+                                    << " target=" << target
+                                    << " residue=" << residue
+                                << " value=" << lower_current << '\n';
+                            }
+                        }
+                        ++h2_p3_upper_core_rails;
+                        if (core_current < 0) {
+                            ++negative_h2_p3_upper_core_rails;
+                            if (!printed_negative_h2_p3_upper_core_rail) {
+                                printed_negative_h2_p3_upper_core_rail = true;
+                                std::cout
+                                    << "FIRST_NEGATIVE_H2_P3_UPPER_CORE_RAIL"
+                                    << " Q=" << q
+                                    << " gap=" << gap
+                                    << " target=" << target
+                                    << " residue=" << residue
+                                    << " value=" << core_current << '\n';
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (
+                (
+                    h2_residue_tails
+                    || h2_family
+                    || h2_family_rail
+                    || h2_lower_z_differences
+                )
                 && q >= 7
                 && offset >= 12
             ) {
@@ -636,6 +899,22 @@ int main(int argc, char** argv) {
                             if (tail < 0) {
                                 ++negative_h2_residue_tails;
                             }
+                            if (
+                                h2_lower_z_differences
+                                && 4 * target - (level - 1) > 7 * gap
+                            ) {
+                                const int first_lower = gap + 1
+                                    + ((residue - (gap + 1)) % 4 + 4) % 4;
+                                if (crossing == first_lower) {
+                                    const int y = level - 1 - 2 * target;
+                                    h2_lower_current_series[
+                                        std::pair<int, int>{y, residue}
+                                    ].push_back(std::pair<int, Integer>{
+                                        q,
+                                        tail
+                                    });
+                                }
+                            }
                             if (even_tail < 0) {
                                 ++negative_h2_even_residue_tails;
                             }
@@ -650,6 +929,43 @@ int main(int argc, char** argv) {
                                     ++negative_h2_odd_separated_upper_tails;
                                 } else {
                                     ++negative_h2_odd_separated_lower_tails;
+                                    const Integer debt = -odd_tail;
+                                    if (
+                                        debt
+                                        > maximum_h2_odd_separated_lower_tail_debt
+                                    ) {
+                                        maximum_h2_odd_separated_lower_tail_debt =
+                                            debt;
+                                        maximum_h2_odd_separated_lower_tail_q = q;
+                                        maximum_h2_odd_separated_lower_tail_target =
+                                            target;
+                                        maximum_h2_odd_separated_lower_tail_residue =
+                                            residue;
+                                        maximum_h2_odd_separated_lower_tail_rho =
+                                            crossing;
+                                        maximum_h2_odd_separated_lower_tail_even_reserve =
+                                            even_tail;
+                                        maximum_h2_odd_separated_lower_tail_total =
+                                            tail;
+                                    }
+                                    if (
+                                        !has_minimum_h2_separated_lower_total
+                                        || tail
+                                            < minimum_h2_separated_lower_total
+                                    ) {
+                                        has_minimum_h2_separated_lower_total =
+                                            true;
+                                        minimum_h2_separated_lower_total = tail;
+                                        minimum_h2_separated_lower_total_q = q;
+                                        minimum_h2_separated_lower_total_target =
+                                            target;
+                                        minimum_h2_separated_lower_total_residue =
+                                            residue;
+                                        minimum_h2_separated_lower_total_rho =
+                                            crossing;
+                                        minimum_h2_separated_lower_total_y =
+                                            level - 1 - 2 * target;
+                                    }
                                 }
                             }
                             if (even_value < 0) {
@@ -1177,6 +1493,49 @@ int main(int argc, char** argv) {
                     << " entries=" << band.entries << '\n';
             }
         }
+
+        if (h2_lower_z_differences) {
+            std::uint64_t fourth_differences = 0U;
+            std::uint64_t nonzero_fourth_differences = 0U;
+            for (const auto& [key, values] : h2_lower_current_series) {
+                for (std::size_t index = 0U;
+                     index + 4U < values.size();
+                     ++index) {
+                    if (
+                        values[index + 1U].first != values[index].first + 1
+                        || values[index + 2U].first
+                            != values[index].first + 2
+                        || values[index + 3U].first
+                            != values[index].first + 3
+                        || values[index + 4U].first
+                            != values[index].first + 4
+                    ) {
+                        continue;
+                    }
+                    const Integer difference = values[index + 4U].second
+                        - 4 * values[index + 3U].second
+                        + 6 * values[index + 2U].second
+                        - 4 * values[index + 1U].second
+                        + values[index].second;
+                    ++fourth_differences;
+                    if (difference != 0) {
+                        ++nonzero_fourth_differences;
+                    }
+                }
+            }
+            std::cout
+                << "SU2_SHELL_H2_LOWER_Z_DIFFERENCES"
+                << " series=" << h2_lower_current_series.size()
+                << " fourth_differences=" << fourth_differences
+                << " nonzero_fourth_differences="
+                << nonzero_fourth_differences
+                << " result="
+                << (
+                    nonzero_fourth_differences == 0U
+                        ? "PASS_CUBIC_DIAGNOSTIC"
+                        : "FAIL_CUBIC_DIAGNOSTIC"
+                ) << '\n';
+        }
         if (
             offset >= 3
             && (offset <= 10 || certificate)
@@ -1569,6 +1928,43 @@ int main(int argc, char** argv) {
             << negative_h2_odd_separated_upper_tails
             << " negative_h2_odd_overlap_tails="
             << negative_h2_odd_overlap_tails
+            << " maximum_h2_odd_separated_lower_tail_debt="
+            << maximum_h2_odd_separated_lower_tail_debt
+            << " maximum_h2_odd_separated_lower_tail_witness=";
+        if (maximum_h2_odd_separated_lower_tail_q >= 0) {
+            std::cout
+                << "Q:" << maximum_h2_odd_separated_lower_tail_q
+                << ",target:"
+                << maximum_h2_odd_separated_lower_tail_target
+                << ",residue:"
+                << maximum_h2_odd_separated_lower_tail_residue
+                << ",rho:"
+                << maximum_h2_odd_separated_lower_tail_rho
+                << ",even_reserve:"
+                << maximum_h2_odd_separated_lower_tail_even_reserve
+                << ",total:"
+                << maximum_h2_odd_separated_lower_tail_total;
+        } else {
+            std::cout << "none";
+        }
+        std::cout
+            << " minimum_h2_separated_lower_total=";
+        if (has_minimum_h2_separated_lower_total) {
+            std::cout
+                << minimum_h2_separated_lower_total
+                << " minimum_h2_separated_lower_total_witness=Q:"
+                << minimum_h2_separated_lower_total_q
+                << ",target:"
+                << minimum_h2_separated_lower_total_target
+                << ",y:" << minimum_h2_separated_lower_total_y
+                << ",residue:"
+                << minimum_h2_separated_lower_total_residue
+                << ",rho:"
+                << minimum_h2_separated_lower_total_rho;
+        } else {
+            std::cout << "none";
+        }
+        std::cout
             << " negative_h2_atoms=" << negative_h2_atoms
             << " negative_h2_even_atoms=" << negative_h2_even_atoms
             << " negative_h2_odd_atoms=" << negative_h2_odd_atoms
@@ -1598,8 +1994,20 @@ int main(int argc, char** argv) {
             << negative_h2_p3_margin_reserve_high
             << " negative_h2_odd_separated_upper_atoms="
             << negative_h2_odd_separated_upper_atoms
+            << " h2_p3_lower_sign_audit_entries="
+            << h2_p3_lower_sign_audit_entries
+            << " h2_p3_lower_sign_audit_failures="
+            << h2_p3_lower_sign_audit_failures
             << " negative_h2_p3_margin_residue_tails="
             << negative_h2_p3_margin_residue_tails
+            << " h2_p3_upper_low_rails=" << h2_p3_upper_low_rails
+            << " negative_h2_p3_upper_low_rails="
+            << negative_h2_p3_upper_low_rails
+            << " h2_p3_upper_core_rails=" << h2_p3_upper_core_rails
+            << " negative_h2_p3_upper_core_rails="
+            << negative_h2_p3_upper_core_rails
+            << " h2_p3_upper_normal_form_entries="
+            << h2_p3_upper_normal_form_entries
             << " maximum_h2_payment_span=" << maximum_h2_payment_span
             << " maximum_h2_payment_witness=";
         if (has_maximum_h2_payment_span) {

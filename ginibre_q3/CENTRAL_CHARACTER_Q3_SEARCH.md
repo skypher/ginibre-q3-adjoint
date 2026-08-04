@@ -30167,6 +30167,355 @@ E_2=(8r+1)(20r^2-18r-2)
 
 which is strictly negative for `r>=2`. QED.
 
+The separated-upper reflected cluster has a considerably more rigid normal
+form than its entry fan suggests.
+
+**Lemma 5A8H28P3F (separated-upper reflected normal form).**  Assume
+`d>=11` and
+
+```text
+Q>=3d+2x+1,
+V=Q-d-x+s,
+0<=s<=min(3d,floor((3d+2x)/2)).                    (P5A.102BUK14)
+```
+
+The first inequality is exactly the strict separated-upper condition
+`4x+7d<ell=2Q+d`.  Put
+
+```text
+W_d(r)=binom(r+2,2)-3 binom(r-d+1,2)_+,
+W_d(r)=0 for r<0.                                 (P5A.102BUK15)
+```
+
+Then the reflected terminal factor and the two relevant crossing weights
+are
+
+```text
+P_3(V,x)=W_d(min(s,3d-s))-W_d(max(0,s-2x)-1),
+
+d_1(V)=2,
+d_2(V)=4Q-6d-4x+4s       for 0<=s<=d+x,
+       =4Q-4d-2x+2s       for d+x<=s.             (P5A.102BUK16)
+```
+
+Moreover the return hinge is active and
+
+```text
+f_5=2Q^2+2dQ-2d^2+4Q-3d.                         (P5A.102BUK17)
+```
+
+For `m(V)=f_4d_2(V)-f_5d_1(V)`, write
+`Q=3d+2x+1+z`, where `z>=0`.  On the two ranges in
+`(P5A.102BUK16)`, respectively,
+
+```text
+m(V)=4{(6d+4x+3)s-(2d+1)(d+x)}
+     +4z^2+4(2d+2x+2s+1)z,
+
+m(V)=4d^2+12dx+8x^2+2d+2x+(12d+8x+6)s
+     +4z^2+4(3d+3x+s+1)z.                         (P5A.102BUK18)
+```
+
+In particular `m(V)` is strictly increasing in `s`, and it is
+nondecreasing in `Q` throughout this sector.
+
+**Proof.**  The bridge `(P5A.102BUA)` and one simple-current move turn the
+odd terminal factor into the ordinary three-step coefficient
+
+```text
+P_3(V,x)=(N_d^3)_(2x,ell-2V).
+```
+
+The strict separation in `(P5A.102BUK14)` keeps every intermediate label
+below the level.  Decompose `V_d^3` by its ordinary weight coefficients
+
+```text
+w(r)=[z^r](1+z+...+z^d)^3.
+```
+
+The fusion interval with `V_(2x)` is
+
+```text
+max(0,s-2x)<=r<=min(s,3d-s).
+```
+
+Its multiplicity telescopes to `w(U)-w(L-1)`.  Both endpoints are at most
+`3d/2`, so inclusion--exclusion leaves exactly `W_d` in
+`(P5A.102BUK15)`, proving the first line of `(P5A.102BUK16)`.
+
+For the crossing terms, substitute `V=Q-d-x+s` into the first signed
+interval in `(P5A.102BUI)`.  The `a=1` interval has lower endpoint zero,
+giving `d_1=2`.  For `a=2`, its lower endpoint is
+`max(0,d+x-s)` and its upper endpoint is
+`2Q-2d-x-1+s`; the other two signed intervals are empty under
+`(P5A.102BUK14)`.  Telescoping the triangular ordinary weight gives the
+second and third lines of `(P5A.102BUK16)`.  The same inequality makes
+`Q-2d-1>=d+2x`, so `(P5A.102BUB)` gives `(P5A.102BUK17)`.
+Substitution of `f_4=2Q+1` now gives `(P5A.102BUK18)` directly.  Its
+displayed coefficients prove both monotonicity assertions. QED.
+
+Consequently the separated-upper `P_3` suffix problem has no variable
+allocation left.  Fix `sigma in {0,1,2,3}` and let
+
+```text
+T_sigma(d,x)=sum_(0<=s<=min(3d,floor((3d+2x)/2)), s=sigma (mod 4))
+ P_3(s) m_0(s),                                   (P5A.102BUK19)
+```
+
+where `P_3` is `(P5A.102BUK16)` and `m_0` is `(P5A.102BUK18)` at `z=0`.
+Since `P_3>=0` and `m` has one increasing sign transition, a suffix is
+either termwise nonnegative or is bounded below by its complete-support
+current.  The nonnegative `z` terms in `(P5A.102BUK18)` show that it is
+enough to prove the four bivariate inequalities
+
+```text
+T_sigma(d,x)>=0       (d>=11, x>=0).              (P5A.102BUK20)
+```
+
+For an even smaller sufficient target, discard the positive second branch
+of `(P5A.102BUK18)` and prove the truncated B-spline currents
+
+```text
+sum_(0<=s<=min(d+x,3d), s=sigma (mod 4))
+ P_3(s){(6d+4x+3)s-(2d+1)(d+x)}>=0.                (P5A.102BUK21)
+```
+
+There is a still smaller exact core.  At the boundary `z=0`, its bracket
+at `s=d` is
+
+```text
+(6d+4x+3)d-(2d+1)(d+x)
+ =4d^2+2d+(2d-1)x>0.                               (P5A.102BUK22)
+```
+
+Thus every term with `s>d` is positive.  On `0<=s<=d`, the first line of
+`(P5A.102BUK16)` reduces to the quadratic profile
+
+```text
+P_3(s)=binom(s+2,2)-binom(s-2x+1,2)_+.              (P5A.102BUK23)
+```
+
+**Lemma 5A8H28P3G (separated-upper quadratic core current).**  For every
+`d>=11`, `x>=0`, and `sigma in {0,1,2,3}`,
+
+```text
+sum_(0<=s<=d, s=sigma (mod 4))
+ {binom(s+2,2)-binom(s-2x+1,2)_+}
+ {(6d+4x+3)s-(2d+1)(d+x)}>=0.                       (P5A.102BUK24)
+```
+
+Consequently `(P5A.102BUK21)`, `(P5A.102BUK20)`, and every separated-upper
+`P_3` residue suffix are nonnegative.
+
+**Proof.**  Put
+
+```text
+d=4a+delta,        x=2b+epsilon,
+0<=delta<4,        0<=epsilon<2.                   (P5A.102BUK25)
+```
+
+For a rail start `r` and count `N>=0`, define the exact Faulhaber sum
+
+```text
+F_(r,N)(A,B)=sum_(j=0)^N binom(4j+r+2,2)
+                         {A(4j+r)-B}.              (P5A.102BUK26)
+```
+
+Take `A=6d+4x+3`, `B=(2d+1)(d+x)`, and set
+
+```text
+tau=sigma-2epsilon-1 (mod 4),
+c=floor((delta-2epsilon-1-tau)/4).
+```
+
+The two quadratic terms in `(P5A.102BUK23)` give, identically,
+
+```text
+C_sigma=F_(sigma,a+floor((delta-sigma)/4))(A,B)
+ -F_(tau,a-b+c)(A,B-A(2x+1)),                       (P5A.102BUK27)
+```
+
+where the second summand is omitted when its upper count is negative.
+The source
+`character_ring_iter/prove_su2_shell_h2_p3_upper_core.cpp` evaluates the
+four Faulhaber powers through degree three in exact `cpp_int` rational
+arithmetic.  It exhausts the `4*2*4=32` residue data and the two exact
+cones `a-b+c>=0` and `a-b+c<0`.
+
+On the first cone put `v=a-b+c>=0`; the only additional condition is the
+small integral floor `a>=2` or `a>=3`, which is covered by its finite
+simplex-face split.  On the second cone put
+`b=a+c+1+v`, with `v>=0`; its finite exceptional `v` values and its
+translated nonnegative tail are checked coefficientwise.  Every resulting
+polynomial has a nonnegative exact monomial expansion on its full cone.
+The terminal receipt is
+
+```text
+SU2_SHELL_H2_P3_UPPER_CORE cases=64 certified=64
+integer_tail_certificates=24
+result=PASS_EXACT_FINITE_CONE_CERTIFICATE
+```
+
+Thus `(P5A.102BUK24)` is an unbounded finite cone certificate.  Equation
+`(P5A.102BUK22)` adds the omitted positive part, while Lemma 5A8H28P3F
+supplies the nonnegative `z` correction and the one-sign-transition suffix
+reduction. QED.
+
+The strict C++ diagnostic
+
+```text
+analyze_su2_shell_fixed_offset 100 12 --h2-p3-upper-low
+```
+
+replays `(P5A.102BUK16)` on `30,685` separated-upper coordinates and
+checks `4,624` instances of `(P5A.102BUK21)` and `(P5A.102BUK24)`, with no
+negative value.
+The analogous `d=30` row checks `1,420` coordinates and `120` currents,
+again with no negative value.  This is an independent bounded replay of the
+normal form and the proved unbounded certificate, not a replacement for it.
+
+The opposite separated sector has an equally useful exact coordinate form,
+but its sign is genuinely coupled to the even reserve.
+
+**Lemma 5A8H28P3H (separated-lower common-source form).**  Put
+
+```text
+y=ell-2x,                 ell=2Q+d.
+```
+
+The strict separated-lower condition is exactly
+
+```text
+Q-y>3d.                                             (P5A.102BUK28)
+```
+
+For every lower-orbit coordinate `V`, the three terminal factors become
+
+```text
+P_3(V,x)=(N_d^3)_(2V,y),
+P_2(V,x)=(N_d^2)_(ell-2V,y),
+P_4(V,x)=(N_d^4)_(ell-2V,y).                        (P5A.102BUK29)
+```
+
+Thus all three are ordinary level-`ell` paths from the same source `y`.
+The `P_3` path profile occupies the lower cluster, while the `P_2,P_4`
+profiles occupy the upper cluster.  Once a suffix enters the lower cluster,
+it contains the complete upper even cluster.
+
+**Proof.**  Since `2x=J(y)`, the bridge `(P5A.102BUA)` gives the first
+identity in `(P5A.102BUK29)`.  For even `b`, commute the terminal
+simple-current through `N_d^b` and use symmetry to reflect its target;
+this gives the other two identities.  Finally,
+
+```text
+4x-ell=ell-2y=2(Q-y)+d,
+```
+
+so `(P5A.102BUK28)` is equivalent to `4x-ell>7d`.  The ordinary path
+support bounds in Lemma 5A8H28P3C then place the odd and even profiles in
+the stated disjoint lower and upper intervals. QED.
+
+Accordingly, if `r` is the `V mod 4` rail and a lower-cluster cut is
+`rho`, the entire remaining separated-lower payment is the explicit
+common-source inequality
+
+```text
+ sum_(W>=0, W=ell-2r (mod 8))
+   [(N_d^2)_(W,y) M_2((ell-W)/2)
+    +(N_d^4)_(W,y) f_4 d_1((ell-W)/2)]
+
+ +sum_(L>=2rho, L=2r (mod 8))
+    (N_d^3)_(L,y) M_1(L/2) >=0,                    (P5A.102BUK30)
+```
+
+where `M_2=f_4d_3-f_5d_2` and `M_1=f_4d_2-f_5d_1`.  The first sum is the
+complete even reserve of that suffix, and the second is its remaining odd
+debit.  This is an exact two-cluster cumulative-current target, not a
+claim that either summand is separately nonnegative.
+
+The lower odd current itself has only one adverse suffix endpoint.
+
+**Lemma 5A8H28P3I (one-sign lower reflected margin).**  Under
+`(P5A.102BUK28)`, every `P_3`-active lower coordinate satisfies
+
+```text
+M_1(V)>=0       for V<=d,
+M_1(V)<0        for d+1<=V<=(y+3d)/2.              (P5A.102BUK31)
+```
+
+Consequently, on each residue-four rail, the most negative `P_3` suffix is
+the suffix beginning at its first active coordinate `V>=d+1`.
+
+**Proof.**  On the lower `P_3` support one has `V< Q`.  In the three
+folded crossing intervals `(P5A.102BUI)`, only the ordinary first interval
+can therefore contribute to powers one and two.  Its endpoint telescopes
+give
+
+```text
+d_1(V)=0                    for V<=d,
+       =2                    for V>=d+1,
+
+d_2(V)=max(0,4V-2d).                              (P5A.102BUK32)
+```
+
+The first line of `(P5A.102BUK31)` follows immediately.  On the interval
+`V>=d+1`, `M_1` is increasing in `V`, so it is enough to test the upper
+support endpoint.  Write
+
+```text
+Q=y+3d+1+z,                 z>=0.
+```
+
+The return hinge is active, and `(P5A.102BUB)` gives
+
+```text
+f_5=2Q^2+2dQ-2d^2+4Q-3d.
+```
+
+At `V=(y+3d)/2`, half of the margin is at most
+
+```text
+(2Q+1)(y+2d)-f_5
+=-4dQ+2d^2+2d-1-5Q-(2Q+1)z<0.                    (P5A.102BUK33)
+```
+
+All earlier `V>=d+1` have no larger margin.  Multiplication by the
+nonnegative terminal profile proves the suffix assertion. QED.
+
+Thus `(P5A.102BUK30)` reduces on each rail to one fixed endpoint current:
+the complete even reserve plus the `P_3` suffix beginning at the first
+`V>=d+1` in that rail.  It has no remaining cutoff variable in the
+separated-lower sector.
+
+As an independent transcription audit, the strict fixed-matrix evaluator
+checks the sign split in `(P5A.102BUK31)` directly before summing any tail.
+Its `d=11` row through `Q=100` checks `30,532` active separated-lower
+coordinates, and its `d=30` row checks `1,420`; both report zero sign
+mismatches.  This bounded replay audits the endpoint formula, while the
+preceding inequality proves the uniform sign split.
+
+The tempting boundary-monotonicity reduction is false.  Let `L_r(Q,d,y)`
+denote the fixed rail current in `(P5A.102BUK30)`.  At
+
+```text
+d=15,                 y=1,                 r=0,
+Q=47,48,
+```
+
+the strict evaluator gives the same lower endpoint `rho=16` and
+
+```text
+L_0(47,15,1)=1271008,
+L_0(48,15,1)=1157376.                              (P5A.102BUK34)
+```
+
+Thus it is false that this current is nondecreasing from the boundary
+`Q-y=3d+1`.  The `d=11` and `d=30` fixed-width minima happen to occur on
+that boundary, but they do not justify a uniform reduction there.  The
+remaining separated-lower certificate must retain the full three-variable
+cone `(Q,d,y)` in `(P5A.102BUK30)`; Lemma 5A8H28P3I removes its cutoff
+variable, not its level parameter.
+
 The most direct Abel reduction of the reflected cluster is false.  On the
 fixed `d=30` row through `Q=100`, the same exact evaluator records `1,360`
 negative residue tails of the unweighted margin
@@ -30338,9 +30687,10 @@ Target 5A8H28R5 by a finite certificate whose every record contains:
    four residue tails `(P5A.102BUK1)`.  Lemmas 5A8H28P4A--P4B have now
    closed the `G_0` and `G_1` members of the structured sufficient route
    `(P5A.102BUK2)`.  Lemma 5A8H28P3D also makes the `P_2,P_4` part of
-   `H_2` pointwise nonnegative on `3Q>2d`; it remains to certify the
-   reflected `P_3` payment there and the full `H_2` tails in the
-   complementary regime `3Q<=2d`.  Failing that strengthening, give an exact allocation for the
+   `H_2` pointwise nonnegative on `3Q>2d`; Lemmas 5A8H28P3F--P3G also
+   close its reflected `P_3` payment in the separated-upper sector.  It
+   remains to certify the separated-lower and overlap payments there, and
+   the full `H_2` tails in the complementary regime `3Q<=2d`.  Failing that strengthening, give an exact allocation for the
    complete tail `V>=rho`, with every reserve assigned inside that same
    suffix; and
 5. an exact coverage and adjacency proof showing that these allocations
