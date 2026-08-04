@@ -9790,8 +9790,39 @@ SU2_T4_GROUP_MASKS target=c6 hinges=98 masks=1181
 ```
 
 The receipt is `certificates/su2_t4_c6_masks.log`.  This is an exact fan
-census only—not a proof of `K_6>=0`—but it rules out treating the finite
-fan enumeration as a uniform all-power mechanism.
+census, and the corrected range certifier has now discharged every one of
+its chambers.
+
+**Theorem 5A8H28UIA2C6 (complete finite sixth anchored kernel).**
+For every `Q>=1`, `K>=2Q+1`, and `0<=Y<=K`,
+
+```text
+K_6(Y)=f_12u_13(Y)-f_13u_12(Y)>=0.
+```
+
+**Proof.**  The `98`-hinge Kac--Walton activation fan above has exactly
+`1,181` feasible integer chambers.  The exact C++ certifier partitions its
+full lattice domain into bounded checks and complete recession-cone Newton
+checks.  Twenty-two disjoint range transcripts cover the mask interval
+`[0,1181)`.  The fail-closed collector rejects every gap, overlap, malformed
+terminal record, or occurrence of `UNRESOLVED`, `INCOMPLETE`, or `FAILURE`.
+Its terminal record is
+
+```text
+SU2_C6_RANGE_AGGREGATE shards=22 chambers=1181 exact_pass=1181
+  bad=0 missing=0 result=PASS_EXACT_CERTIFICATE.
+```
+
+The archived receipt is `certificates/su2_t4_c6_complete.log`.  Its proof
+source and collector source SHA-256 identities are respectively
+`a577a79b82aa435294de080a3a4534d0528f539ee594796c0e321e7d6a0c2c73`
+and `1007e9a2047c5b712dc1979b056978a50f6ff80057821b5ecb0a0a091f67387c`.
+No bound on `K`, `Q`, or `Y` is used.  QED.
+
+This is a genuine finite `C_6` theorem, but not a uniform all-power
+induction: the jump from `601` feasible `C_5` masks to `1,181` at `C_6`
+confirms that chamber-by-chamber certification does not supply the missing
+arbitrary-factor cumulative-current/global-payment lemma.
 
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
