@@ -6634,7 +6634,7 @@ int analyze_ratio_cube_bernstein(const int support,
             << " leaves=" << result.leaves
             << " unresolved=" << result.unresolved
             << " maximum_depth=" << result.maximum_depth
-            << '\n';
+            << '\n' << std::flush;
       }
     }
   }
@@ -6656,7 +6656,7 @@ int analyze_ratio_cube_bernstein(const int support,
   }
   std::cout
       << " result=" << (unresolved == 0U ? "PASS" : "INCOMPLETE")
-      << '\n';
+      << '\n' << std::flush;
   return EXIT_SUCCESS;
 }
 
@@ -7240,6 +7240,17 @@ int main(int argc, char** argv) {
         && std::string{argv[1]} == "--support-five-bernstein"
     ) {
       return analyze_ratio_cube_bernstein(5, 20, 19);
+    }
+    if (
+        argc == 5
+        && std::string{argv[1]} == "--ratio-cube-bernstein"
+    ) {
+      const int support = parse_positive(argv[2], "support");
+      const int depth_limit = parse_positive(argv[3], "depth limit");
+      const int maximum_antidiagonal =
+          parse_positive(argv[4], "maximum antidiagonal");
+      return analyze_ratio_cube_bernstein(
+          support, depth_limit, maximum_antidiagonal);
     }
     if (
         argc == 2
