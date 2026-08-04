@@ -1038,7 +1038,14 @@ before any further construction.
    `(1-z-z^2)^(K-1)` Fibonacci reduction is nonnegative.  Its strict
    audit passes `5,138,212` hard suffixes through `K=j=60`.  A proof
    must therefore use the length-two backtrack tokens as well as
-   loops; loop-erased skeleton length alone is false.
+   loops; loop-erased skeleton length alone is false.  This stronger
+   Fibonacci-core suffix formulation is now bypassed for the minimal-label
+   leaf: Lemma 5A8H28AM proves parity Schur-branch monotonicity, which
+   yields the odd boundary-compound current, endpoint-ratio descent, and
+   every `q=2` full-prefix current (with Lemma 5A8H28AB handling `K=3`).
+   Thus the complete `q=2` global-payment leaf is proved uniformly; the
+   strict C++ replay `verify_su2_schur_branch_cone.cpp` checks the finite
+   local identities used by that proof.
 
    Diagonal signing of
    `C_2(N_q^2)`, positive spectral residues, and both tested spectral-tail

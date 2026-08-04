@@ -1034,7 +1034,8 @@ g++ -O3 -DNDEBUG -std=c++20 -fopenmp \
   -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror \
   character_ring_iter/search_su2_level_central_q3.cpp \
   -o /tmp/search_su2_level_central_q3
-THREADS="${THREADS:-$(nproc)}"
+# Choose THREADS as the largest safe OpenMP count after accounting for
+# available RAM and current machine load; there is no fixed thread cap.
 OMP_NUM_THREADS="$THREADS" /tmp/search_su2_level_central_q3 10 8
 ```
 
@@ -11717,6 +11718,60 @@ some other factorization, but the canonical Cholesky/`LDL^T` order
 does not supply it.  The audit finds `385` such failures among the
 `3,320` PSD profiles.  A proof cannot assign the global payment by
 successive natural-index orthogonalization.
+
+There is nevertheless an exact projection geometry special to an actual
+character square.  It makes precise that the full anchored cone is a
+pairwise-acuteness assertion, and records how one irreducible factor acts
+on that assertion.
+
+**Lemma 5A8H28UIA2CGLCPPG (factor-word projected-Gram form).**  Let
+`p` be the coefficient vector of a finite character word `P`, put
+
+```text
+M=N_p,                 d=p^2=M^2e_0,                 D=d_0=<p,p>,
+u_R=Pi_(p^perp)M e_R,                                  0<=R<=K,
+```
+
+where `Pi_(p^perp)` is orthogonal projection in the standard coefficient
+inner product.  Then
+
+```text
+A(d)_(R,S)=D<u_R,u_S>.                                (P5A.102AD5ALX1ZI)
+```
+
+If one appends the irreducible factor `V_Q`, then
+
+```text
+M'=N_QM,                 p'=N_Qp,
+u'_R=Pi_((p')^perp)M'e_R.                              (P5A.102AD5ALX1ZI1)
+```
+
+Consequently the full-cone insertion target is exactly the assertion that
+the pairwise acute family `{u_R}` remains pairwise acute after the
+transformation `(P5A.102AD5ALX1ZI1)`.
+
+**Proof.**  Since the fusion matrices are symmetric and commute,
+
+```text
+d_R=<p,Me_R>,             (N_d)_(R,S)=<Me_R,Me_S>.
+```
+
+Also `D=<p,p>` because the unit coefficient of `p^2` is the standard
+coefficient inner product.  Orthogonal projection therefore gives
+
+```text
+<u_R,u_S>
+ =<Me_R,Me_S>-<p,Me_R><p,Me_S>/D
+ =A(d)_(R,S)/D,
+```
+
+which proves `(P5A.102AD5ALX1ZI)`.  Multiplication of the word by `V_Q`
+replaces its multiplication matrix and coefficient vector by the two
+quantities in `(P5A.102AD5ALX1ZI1)`, proving the final statement.  QED.
+
+This is an exact reformulation, not an acuteness proof: the residual-ratio,
+ordered-`LDL^T`, and coordinatewise-Pluecker obstructions above show that
+the required preservation must still make a coupled global payment.
 
 There is an exact exterior-square expansion on the actual
 character-positive square orbit.  It gives a useful Gram

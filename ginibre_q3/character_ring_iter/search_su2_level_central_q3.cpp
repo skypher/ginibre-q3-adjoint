@@ -56,19 +56,108 @@ cpp_int q3_dynamic(
     const std::vector<int>& minus,
     const std::vector<int>& plus
 ) {
-    std::unordered_map<std::uint64_t, cpp_int> states;
-    states.emplace(pair_key(0, 0), 1);
+    // A signed step is N_label * state + sign * state * N_label.  Fusion by
+    // one label sums one parity class over an interval, so dense parity
+    // prefixes perform the whole update in O(level^2) exact additions.
+    const int dimension = level + 1;
+    const std::size_t matrix_size =
+        static_cast<std::size_t>(dimension)
+        * static_cast<std::size_t>(dimension);
+    const std::size_t prefix_stride =
+        static_cast<std::size_t>(dimension + 1);
+    std::vector<cpp_int> states(matrix_size, 0);
+    states[0U] = 1;
 
-    auto apply = [&states, level](int label, int sign) {
-        std::unordered_map<std::uint64_t, cpp_int> next;
-        for (const auto& [key, coefficient] : states) {
-            const auto [left, right] = decode_pair(key);
-            for_each_fusion_output(level, left, label, [&](int output) {
-                next[pair_key(output, right)] += coefficient;
-            });
-            for_each_fusion_output(level, right, label, [&](int output) {
-                next[pair_key(left, output)] += sign * coefficient;
-            });
+    const auto matrix_index = [dimension](int left, int right) {
+        return static_cast<std::size_t>(left)
+            * static_cast<std::size_t>(dimension)
+            + static_cast<std::size_t>(right);
+    };
+    const auto prefix_index = [prefix_stride](int line, int endpoint) {
+        return static_cast<std::size_t>(line) * prefix_stride
+            + static_cast<std::size_t>(endpoint);
+    };
+
+    auto apply = [&states, level, dimension, matrix_size, prefix_stride,
+                  matrix_index, prefix_index](int label, int sign) {
+        std::vector<cpp_int> row_even(
+            static_cast<std::size_t>(dimension) * prefix_stride,
+            0
+        );
+        std::vector<cpp_int> row_odd(row_even.size(), 0);
+        std::vector<cpp_int> column_even(row_even.size(), 0);
+        std::vector<cpp_int> column_odd(row_even.size(), 0);
+
+        for (int line = 0; line < dimension; ++line) {
+            for (int index = 0; index < dimension; ++index) {
+                const std::size_t next = prefix_index(line, index + 1);
+                const std::size_t previous = prefix_index(line, index);
+                row_even[next] = row_even[previous];
+                row_odd[next] = row_odd[previous];
+                column_even[next] = column_even[previous];
+                column_odd[next] = column_odd[previous];
+                if ((index & 1) == 0) {
+                    row_even[next] += states[matrix_index(line, index)];
+                    column_even[next] += states[matrix_index(index, line)];
+                } else {
+                    row_odd[next] += states[matrix_index(line, index)];
+                    column_odd[next] += states[matrix_index(index, line)];
+                }
+            }
+        }
+
+        const auto interval_sum = [&prefix_index](
+            const std::vector<cpp_int>& even,
+            const std::vector<cpp_int>& odd,
+            int line,
+            int lower,
+            int upper,
+            int parity
+        ) {
+            const std::vector<cpp_int>& prefix =
+                parity == 0 ? even : odd;
+            return prefix[prefix_index(line, upper + 1)]
+                - prefix[prefix_index(line, lower)];
+        };
+
+        std::vector<cpp_int> next(matrix_size, 0);
+        for (int left = 0; left < dimension; ++left) {
+            const int left_lower = std::abs(left - label);
+            const int left_upper = std::min(
+                left + label,
+                2 * level - left - label
+            );
+            const int left_parity = (left + label) & 1;
+            for (int right = 0; right < dimension; ++right) {
+                const int right_lower = std::abs(right - label);
+                const int right_upper = std::min(
+                    right + label,
+                    2 * level - right - label
+                );
+                const int right_parity = (right + label) & 1;
+                cpp_int value = interval_sum(
+                    column_even,
+                    column_odd,
+                    right,
+                    left_lower,
+                    left_upper,
+                    left_parity
+                );
+                const cpp_int right_value = interval_sum(
+                    row_even,
+                    row_odd,
+                    left,
+                    right_lower,
+                    right_upper,
+                    right_parity
+                );
+                if (sign > 0) {
+                    value += right_value;
+                } else {
+                    value -= right_value;
+                }
+                next[matrix_index(left, right)] = std::move(value);
+            }
         }
         states = std::move(next);
     };
@@ -79,8 +168,7 @@ cpp_int q3_dynamic(
     for (int label : plus) {
         apply(label, 1);
     }
-    const auto found = states.find(pair_key(0, 0));
-    return found == states.end() ? cpp_int(0) : found->second;
+    return states[0U];
 }
 
 cpp_int q3_two_minus_boundary(
