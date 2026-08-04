@@ -189,6 +189,112 @@ int verify_pair_power_two_formula(int maximum_level) {
     return EXIT_SUCCESS;
 }
 
+int verify_pair_power_three_formula(int maximum_level) {
+    std::size_t parameter_rows = 0U;
+    std::size_t coefficient_rows = 0U;
+    for (int level = 6; level <= maximum_level; level += 2) {
+        const int width = level + 1;
+        const auto index = [width](int first, int second) {
+            return static_cast<std::size_t>(first * width + second);
+        };
+        for (int label = 2; 2 * label < level; label += 2) {
+            ++parameter_rows;
+            const Matrix first = fusion_matrix(level, label);
+            const Matrix second = multiply(first, first);
+            const Matrix third = multiply(second, first);
+            const Matrix fourth = multiply(second, second);
+            const Matrix sixth = multiply(fourth, second);
+            const Integer return_two =
+                second[static_cast<std::size_t>(label)]
+                      [static_cast<std::size_t>(label)];
+            const Integer return_three =
+                third[static_cast<std::size_t>(label)]
+                     [static_cast<std::size_t>(label)];
+            const Integer return_four =
+                fourth[static_cast<std::size_t>(label)]
+                      [static_cast<std::size_t>(label)];
+            for (int source = 1; source <= level; ++source) {
+                std::vector<Integer> state(
+                    static_cast<std::size_t>(width * width)
+                );
+                state[index(source, 0)] = 1;
+                state[index(0, source)] = -1;
+                for (int step = 0; step < 3; ++step) {
+                    apply_square(level, label, state);
+                }
+                for (int target = 1; target <= level; ++target) {
+                    if ((target & 1) != (source & 1)) {
+                        continue;
+                    }
+                    ++coefficient_rows;
+                    Integer formula
+                        = sixth[static_cast<std::size_t>(target)]
+                                [static_cast<std::size_t>(source)]
+                        + 15 * fourth[static_cast<std::size_t>(target)]
+                                      [static_cast<std::size_t>(source)]
+                        + 20 * third[static_cast<std::size_t>(target)]
+                                      [static_cast<std::size_t>(source)]
+                        + 15 * return_two
+                            * second[static_cast<std::size_t>(target)]
+                                    [static_cast<std::size_t>(source)]
+                        + 6 * return_three
+                            * first[static_cast<std::size_t>(target)]
+                                   [static_cast<std::size_t>(source)];
+                    if (target == source) {
+                        formula += return_four;
+                    }
+                    if (target == label) {
+                        formula -= 6
+                            * fourth[static_cast<std::size_t>(source)]
+                                    [static_cast<std::size_t>(label)];
+                    }
+                    if (in_square_support(label, target)) {
+                        formula -= 15
+                            * third[static_cast<std::size_t>(source)]
+                                   [static_cast<std::size_t>(label)];
+                    }
+                    formula -= 20
+                        * second[static_cast<std::size_t>(source)]
+                                [static_cast<std::size_t>(label)]
+                        * second[static_cast<std::size_t>(target)]
+                                [static_cast<std::size_t>(label)];
+                    if (in_square_support(label, source)) {
+                        formula -= 15
+                            * third[static_cast<std::size_t>(target)]
+                                   [static_cast<std::size_t>(label)];
+                    }
+                    if (source == label) {
+                        formula -= 6
+                            * fourth[static_cast<std::size_t>(target)]
+                                    [static_cast<std::size_t>(label)];
+                    }
+                    const Integer& direct = state[index(target, 0)];
+                    if (direct != formula || direct < 0) {
+                        std::cout
+                            << "SU2_TERMINAL_BOUNDARY_PAIR_POWER_THREE"
+                            << " result=FAIL"
+                            << " level=" << level
+                            << " label=" << label
+                            << " source=" << source
+                            << " target=" << target
+                            << " direct=" << direct
+                            << " formula=" << formula
+                            << '\n';
+                        return EXIT_FAILURE;
+                    }
+                }
+            }
+        }
+    }
+    std::cout
+        << "SU2_TERMINAL_BOUNDARY_PAIR_POWER_THREE"
+        << " maximum_level=" << maximum_level
+        << " parameter_rows=" << parameter_rows
+        << " coefficient_rows=" << coefficient_rows
+        << " result=PASS_IDENTITY\n";
+    return EXIT_SUCCESS;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -202,11 +308,21 @@ int main(int argc, char** argv) {
             }
             return verify_pair_power_two_formula(maximum_level);
         }
+        if (argc == 3
+            && std::string(argv[1]) == "--verify-pair-power-three-formula") {
+            const int maximum_level =
+                parse_positive(argv[2], "maximum level");
+            if (maximum_level < 6) {
+                throw std::runtime_error("require maximum level>=6");
+            }
+            return verify_pair_power_three_formula(maximum_level);
+        }
         if (argc != 3) {
             throw std::runtime_error(
                 "usage: analyze_su2_terminal_boundary_block "
                 "MAXIMUM_LEVEL MAXIMUM_PAIR_POWER | "
-                "--verify-pair-power-two-formula MAXIMUM_LEVEL"
+                "--verify-pair-power-two-formula MAXIMUM_LEVEL | "
+                "--verify-pair-power-three-formula MAXIMUM_LEVEL"
             );
         }
         const int maximum_level =

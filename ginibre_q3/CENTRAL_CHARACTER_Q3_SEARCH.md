@@ -37442,6 +37442,190 @@ checks `(P5A.102CB8ZN2)` against direct exterior propagation in all
 it returns `PASS_IDENTITY`.  This is an implementation audit of the
 uniform calculation above.
 
+**Corollary 5A8H28UI7A3 (complete label-two paired boundary cone).**
+At every level `k>=2`, for the insertion label `q=2`, one has
+
+```text
+P_boundary A_2^r P_boundary>=0,                 r>=0. (P5A.102CB8ZN5)
+```
+
+In particular, in the open range `4<k`, every paired block satisfies
+
+```text
+R_n=P_boundary A_2^(2n)P_boundary>=0,            n>=0. (P5A.102CB8ZN6)
+```
+
+Thus the all-power boundary cone `(BBC)` is proved for the complete
+label-two ray, with no bound on the paired power.
+
+**Proof.**
+
+(1) Fusion by `V_2` preserves label parity and, on either one-parity
+chain, changes a label by at most one chain step.  Let
+
+```text
+E_(u,v)=e_u wedge e_v,                            u>v.
+```
+
+If `u,v` have the same parity, applying either summand of
+`A_2=N_2 tensor I+I tensor N_2` cannot reverse their order: when the
+two labels are adjacent in that chain, a move toward the other label
+first makes them equal, and that wedge is zero.  At an affine endpoint
+the unavailable move is simply absent.  Hence `A_2` preserves the
+standard nonnegative oriented-wedge cone on each same-parity sector.
+
+(2) If `u,v` have opposite parity, use instead the oriented basis
+
+```text
+B_(u,v)= E_(u,v)  if u is odd,
+          -E_(u,v) if u is even.                 (P5A.102CB8ZN7)
+```
+
+An order-preserving update has positive `B` sign.  A crossing reverses
+the wedge orientation and changes the parity of its larger endpoint,
+so it gives a second minus sign.  Thus `A_2` is entrywise nonnegative
+also in this opposite-parity `B`-basis.
+
+(3) Start from a boundary vector `E_u=e_u wedge e_0`.  If `u` is even,
+part (1) applies.  If `u` is odd, part (2) applies and every reachable
+boundary target has odd first label, hence
+
+```text
+B_(v,0)=E_(v,0).
+```
+
+In either case every boundary coefficient of `A_2^rE_u` is
+nonnegative.  This is exactly `(P5A.102CB8ZN5)`; taking `r=2n` proves
+`(P5A.102CB8ZN6)`.  QED.
+
+The strict C++ replay
+
+```text
+verify_su2_label2_wedge_cone 160 80
+```
+
+checks the one-step oriented cones on all ordinary labels through one
+hundred sixty and all finite levels through eighty; it returns
+`PASS`.  The unbounded proof is the one-step order argument above.
+
+**Lemma 5A8H28UI7A4 (paired-power-three boundary identity).**  Retain
+the open even setting, put `N=N_q`, and let
+
+```text
+a=(N^2)_(q,q),       b=(N^3)_(q,q),
+c=(N^4)_(q,q),       I=q star_k q.
+```
+
+For `u,v>0`, the coefficient of `E_v` in `P_boundary A_q^6E_u` is
+
+```text
+(N^6)_(v,u)+15(N^4)_(v,u)+20(N^3)_(v,u)
+ +15a(N^2)_(v,u)+6bN_(v,u)+c1_(v=u)
+ -6 1_(v=q)(N^4)_(u,q)
+ -15 1_(v in I)(N^3)_(u,q)
+ -20(N^2)_(u,q)(N^2)_(v,q)
+ -15 1_(u in I)(N^3)_(v,q)
+ -6 1_(u=q)(N^4)_(v,q).                          (P5A.102CB8ZN8)
+```
+
+Thus `R_3>=0` is exactly the nonnegativity of the coupled one-particle
+payment `(P5A.102CB8ZN8)`.  In particular, it cannot be replaced by
+separate positivity of boundary-to-interior excursions.
+
+**Proof.**
+
+(1) The binomial expansion gives
+
+```text
+A_q^6(e_u wedge e_0)
+ =sum_(r=0)^6 binom(6,r)
+    N^(6-r)e_u wedge N^r e_0.                    (P5A.102CB8ZN9)
+```
+
+As in `(P5A.102CB8ZN4)`, its `E_v` coefficient in the `r`th term is
+
+```text
+(N^(6-r))_(v,u)(N^r)_(0,0)
+ -(N^(6-r))_(0,u)(N^r)_(v,0).                    (P5A.102CB8ZN10)
+```
+
+(2) The unique edge `0 -> q` gives
+
+```text
+(N^2)_(0,0)=1,       (N^3)_(0,0)=1,
+(N^4)_(0,0)=a,       (N^5)_(0,0)=b,
+(N^6)_(0,0)=c,
+
+N_(v,0)=1_(v=q),
+(N^2)_(v,0)=1_(v in I),
+(N^3)_(v,0)=(N^2)_(v,q),
+(N^4)_(v,0)=(N^3)_(v,q),
+(N^5)_(v,0)=(N^4)_(v,q).
+```
+
+Substitution into `(P5A.102CB8ZN9)--(P5A.102CB8ZN10)`, with the
+binomial row `(1,6,15,20,15,6,1)`, proves
+`(P5A.102CB8ZN8)`.  QED.
+
+The strict C++ mode
+
+```text
+analyze_su2_terminal_boundary_block --verify-pair-power-three-formula 32
+```
+
+checks `(P5A.102CB8ZN8)` against direct six-step exterior propagation
+in all `16,184` parity-compatible entries through level thirty-two;
+it returns `PASS_IDENTITY`.  This is an exact identity audit and bounded
+positivity check, not an all-level proof of `R_3>=0`.
+
+**Proposition 5A8H28UI7A5 (leaf-loop all-power obstruction).**  The
+all-power boundary cone `(BBC)` does not follow from a distinguished
+root leaf and a loop at its unique neighbor alone.  Let the vertices be
+`0,1,2,3,4`, let `0` be adjacent only to `1`, and take the symmetric
+adjacency matrix
+
+```text
+N=
+[0,1,0,0,0]
+[1,1,1,1,0]
+[0,1,0,0,1]
+[0,1,0,1,0]
+[0,0,1,0,0].                                    (P5A.102CB8ZN11)
+```
+
+For `A=dGamma(N)`, the boundary coefficient is
+
+```text
+[e_4 wedge e_0]A^8(e_3 wedge e_0)=-61.          (P5A.102CB8ZN12)
+```
+
+**Proof.**
+
+(1) Matrix `(P5A.102CB8ZN11)` is symmetric, its root `0` is a leaf
+with unique neighbor `1`, and `1` has a loop.  It is also connected.
+
+(2) Direct exterior propagation from `e_3 wedge e_0`, read at
+`e_4 wedge e_0` after successive paired powers, gives
+
+```text
+r=1: 0,             r=2: 2,
+r=3: 11,            r=4: -61.
+```
+
+The final value is `(P5A.102CB8ZN12)`.  Hence a proof of `(BBC)` for
+the fusion matrices must use further SU(2) structure, in particular the
+reflected row-convex interval geometry retained in Target 5A8H28R6;
+the root-local leaf-loop mechanism is insufficient.  QED.
+
+The strict C++ replay
+
+```text
+probe_leaf_loop_boundary --replay-r4-obstruction
+```
+
+reconstructs all four displayed coefficients with exact integer
+arithmetic and asserts the final value `-61`.
+
 The nonnegative block does not extend to independently positive interior
 excursions.  Decompose the same two-step operator as
 
