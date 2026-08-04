@@ -32861,6 +32861,269 @@ and crossed products of two entries of `N_Q^2`; those local minors
 can still be negative.  Hence the remaining task is a Hall/payment
 argument across alternative windows, not mere bridge existence.
 
+The two-block existence statement cannot be transferred verbatim to an
+arbitrary ordering of a heterogeneous squared word.  The exact support
+criterion makes the lower-wall obstruction explicit.
+
+**Lemma 5A8H28UIA2RKCH0 (heterogeneous two-step support).**  For positive
+labels `p,q` and states `a,b>=0`,
+
+```text
+(N_p N_q)_(a,b)>0
+ iff |a-b|<=p+q and a+b>=|p-q|.                     (P5A.102CB8S3Z41H)
+```
+
+**Proof.**  Clebsch--Gordan gives
+
+```text
+N_p N_q=sum_(r=|p-q|)^(p+q)N_r.
+```
+
+The entry on the left is positive exactly when the interval
+`[|p-q|,p+q]` meets `[|a-b|,a+b]`.  The two displayed inequalities are
+precisely the nonautomatic endpoint comparisons for those intervals.
+QED.
+
+**Proposition 5A8H28UIA2RKCH1 (nonpalindromic heterogeneous bridge
+obstruction).**  Let the doubled factor word be
+
+```text
+w=(1,2,3,1,2,3).
+```
+
+After deleting the prepended boundary block of label `R=6`, take the
+returning and outgoing paths
+
+```text
+x=(6,7,5,6,5,3,0),
+u=(0,1,2,1,0,2,1).                                 (P5A.102CB8S3Z41HA)
+```
+
+They are valid for `w`, with outgoing endpoint `S=1`.  No exchange of
+tails across one macro-block, and no crossed bridge across two consecutive
+macro-blocks, is admissible.
+
+**Proof.**  At every one-block position, the proposed crossed edge
+`u_t -> x_(t+1)` is forbidden.  At the five two-block positions, one of
+the two crossed supports in Lemma 5A8H28UIA2RKCH0 fails respectively by
+
+```text
+|0-5|>1+2,   |7-1|>2+3,   |5-0|>3+1,
+|6-2|>1+2,   0+0<|2-3|.                            (P5A.102CB8S3Z41HB)
+```
+
+Thus this domain vertex has no edge in the heterogeneous one--two-block
+bridge graph.  The word is a genuine square word,
+`(chi_2 chi_4 chi_6)^2`; it is not the invalid unsquared two-label
+shortcut.  QED.
+
+Palindromy alone does not repair the bridge statement.  For the
+palindromic word
+
+```text
+w=(5,1,7,3,3,7,1,5),
+x=(1,4,3,4,1,2,5,5,0),
+u=(0,5,6,13,14,11,12,11,6),                         (P5A.102CB8S3Z41HD)
+```
+
+the same one--two-block graph again has an isolated domain vertex.  At the
+one-block positions, a crossed edge fails in the order
+
+```text
+(0,4;5), (5,3;1), (3,13;7), (13,1;3),
+(14,2;3), (2,12;7), (12,5;1), (11,0;5),             (P5A.102CB8S3Z41HE)
+```
+
+where `(a,b;q)` means that `a -> b` is forbidden at label `q`.  At the
+seven two-block positions, Lemma 5A8H28UIA2RKCH0 fails on one crossed pair
+by, in order,
+
+```text
+0+3<|5-1|,  |4-13|>1+7,  |3-14|>7+3,
+|13-2|>3+3, |1-12|>3+7, |2-11|>7+1, |12-0|>1+5.
+                                                               (P5A.102CB8S3Z41HF)
+```
+
+Thus even a palindromic ordering is not the invariant needed by the
+heterogeneous bridge lemma.  The square structure itself supplies the
+correct normal form: commute the factors so that equal copies are adjacent.
+
+**Lemma 5A8H28UIA2RKCH2 (paired-block bridge existence).**  Let
+
+```text
+w=(q_1,q_1,q_2,q_2,...,q_m,q_m),                    (P5A.102CB8S3Z41HC)
+```
+
+where every `q_i>0`.  Let `x` be a path for `w` from `R>0` to zero and
+let `u` be a path for `w` from zero to `S>0`.  Then some consecutive equal
+pair of blocks admits a crossed two-block bridge.  Consequently every
+domain vertex in the heterogeneous bridge graph for an arbitrary squared
+factor word has at least one candidate.
+
+**Proof.**  Put `Delta_t=x_t-u_t`.  Then
+
+```text
+Delta_0=R>0,                  Delta_(2m)=-S<0.
+```
+
+Let `t=2j` be the first even index for which
+`Delta_(t+2)<0`.  Thus `Delta_t>=0`, and the two intervening labels are
+both `Q=q_(j+1)`.  The step bounds give
+
+```text
+u_t-2Q<=x_(t+2)<=u_t+2Q,
+x_t-2Q<=u_(t+2)<=x_t+2Q.                            (P5A.102CB8S3Z41HG)
+```
+
+For the first line, use `x_t>=u_t`,
+`x_(t+2)<u_(t+2)`, and the two `Q`-step bounds; the second is symmetric.
+Lemma 5A8H28UIA2RKC2's support criterion `(P5A.102CB8S3Z39)` therefore
+supplies states `c,d` with
+
+```text
+u_t -> c -> x_(t+2),          x_t -> d -> u_(t+2).
+```
+
+Replace those two blocks by the crossed paths and exchange the remaining
+tails.  The result has the required returning and outgoing endpoints, so
+it is a bridge candidate.  QED.
+
+Every doubled ordinary factor word can be commuted into
+`(P5A.102CB8S3Z41HC)`.  Hence Lemma 5A8H28UIA2RKCH2 proves the singleton
+Hall inequalities for the arbitrary-factor bridge graph, not merely for a
+repeated factor.  It does not prove injectivity: the two internal input
+states must still be allocated across all bridge windows, and the
+pooled-capacity obstruction following `(P5A.102CB8S3Z42)` remains live.
+
+In fact the one--two-block graph is already insufficient in the first
+three-label paired word.  For
+
+```text
+w=(1,1,2,2,3,3),             (R,S)=(5,2),             (P5A.102CB8S3Z41HH)
+```
+
+its `25,102` domain vertices have `27,639` target vertices, but exact
+maximum matching has size `25,101`.  The alternating Hall set from an
+unmatched domain vertex has `20` left vertices and only `19` neighbours.
+Thus Lemma 5A8H28UIA2RKCH2 is sharp as a singleton statement: even after
+the correct paired-block ordering, a Hall proof cannot use only one- and
+two-block bridges.  It must admit genuinely wider bridge moves or another
+coherent ticket transport.
+
+The first wider move repairs this particular deficit.  If every crossed
+three-block path is added to the same graph, its `25,102` domain vertices
+have `27,750` images and an exact matching of all `25,102` vertices, using
+`9,369,776` incidences.  This is finite evidence that variable-width
+bridges can supply the missing ticket; it is not a proof that width three,
+or any fixed width, suffices uniformly.
+
+For this root the repair is complete: the only width-two failures among all
+`144` positive `(R,S)` instances are
+
+```text
+(R,S)=(5,2),(6,2),(7,2),(8,2),(9,2),                (P5A.102CB8S3Z41HI)
+```
+
+with matching deficits respectively `1,2,3,2,1`.  The width-three graph
+has a full matching in each of these five instances; the remaining `139`
+instances already match at width two.  Thus every positive `(R,S)` instance
+for the finite root word `(1,1,2,2,3,3)` is exactly covered by bridges of
+width at most three.  This remains a finite root calculation, not a
+uniform width-three theorem.
+
+The next separated root has the same repair.  For
+
+```text
+w=(1,1,2,2,4,4),
+```
+
+the width-two graph has thirteen Hall failures, with largest deficit `24`
+at `(R,S)=(7,2)`.  Adding every three-block bridge gives a complete matching
+in each of those thirteen instances.  The other `183` of the `196` positive
+`(R,S)` instances were already matched at width two.  Hence this entire
+root also has exact bridge matchings at width at most three.  This is a
+second finite root closure and evidence for the variable-width target; it
+does not prove a uniform width-three bound.
+
+The smallest remaining bridge statement is now explicit.
+
+**Target 5A8H28UIA2RKCH3 (paired three-block Hall payment).**  Put the
+doubled factor word in paired-block order
+
+```text
+w=(q_1,q_1,...,q_m,q_m),       q_i>0.
+```
+
+For fixed `R,S>0`, let the left vertices be pairs of paths
+
+```text
+x:R -> 0,                 u:0 -> S
+```
+
+through `w`, and let the right vertices be pairs
+
+```text
+y:0 -> 0,                 z:R -> S.
+```
+
+Join a left pair to a right pair when, at some consecutive window of one,
+two, or three macro-blocks, the two tails are exchanged and the intervening
+crossed paths are any valid fusion paths.  Prove every Hall inequality for
+this graph.
+
+The target implies
+
+```text
+W_(0,0) W_(R,S)>=W_(R,0) W_(0,S),
+W=N_(q_1)^2...N_(q_m)^2,                            (P5A.102CB8S3Z41HJ)
+```
+
+which is `(OCSP)` for the corresponding ordinary factor word.  Lemma
+5A8H28UIA2RKCH2 supplies all singleton Hall inequalities.  The preceding
+finite roots show that width two is false and width three repairs the first
+two complete heterogeneous chambers, but they do not establish the target.
+
+Nor can `(RKCH3)` be reduced to selecting one triple with nonnegative local
+capacity.  For the homogeneous triple `(1,1,1)`, with upper and lower
+incoming states `(1,0)` and outgoing states `(0,1)`, the two three-step
+path products are
+
+```text
+straight=9,                    crossed=6.             (P5A.102CB8S3Z41HK)
+```
+
+Thus the crossed local rectangle has a strict deficit even at the smallest
+label.  The strict C++ probe
+`character_ring_iter/probe_su2_three_block_capacity.cpp` exhausts this
+comparison and finds `(P5A.102CB8S3Z41HK)` first.  A proof of `(RKCH3)`
+must pool capacity between overlapping windows, not choose one locally
+nondeficient three-block bridge.
+
+The first width-two Hall obstruction already has a rigid product shape.  In
+the word `(1,1,2,2,3,3)` at `(R,S)=(5,2)`, the alternating Hall set is
+
+```text
+x_a=(5,6,7,5,a,3,0),       3<=a<=6,
+u_b=(0,1,2,0,2,b,2),       1<=b<=5.                 (P5A.102CB8S3Z41HL)
+```
+
+It is the full `4 by 5` rectangle `{(x_a,u_b)}` and has only nineteen
+one--two-block neighbours.  This exact extraction shows that the first
+deficit is not a scattered matching accident.  It suggests the next source
+reduction: prove a rectangular-compression theorem for Hall-critical path
+sets, then pay the resulting boxes by overlapping three-block windows.
+No such compression theorem is presently proved.
+
+The strict C++ probe
+`character_ring_iter/probe_su2_heterogeneous_two_block_bridge.cpp`
+independently reproduces both ordering obstructions above and exhausts the
+paired-block candidate condition in its selected finite scans.
+The separate exact matching diagnostic
+`character_ring_iter/probe_su2_heterogeneous_bridge_matching.cpp` constructs
+all one--two-block images and the alternating Hall set.  It has complete
+matchings for roots `(1,2)` and `(1,3)`, and returns the displayed
+twenty-versus-nineteen Hall obstruction for root `(1,2,3)`.
+
 Even choosing a window with enough local bridge capacity is false.
 For every `Q>=1`, take
 
