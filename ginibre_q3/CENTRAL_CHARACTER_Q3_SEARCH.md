@@ -9457,10 +9457,10 @@ prove_su2_t4_groups c5 --masks-only
 ```
 
 enumerates these masks directly over the unbounded Presburger domain.
-The engine already supplies direct exact rational certificates for the
-initial masks, but the full `601`-chamber certificate has not yet been
-completed.  Thus this is a finite exact reduction of the next anchored
-kernel, not a proof of `(P5A.102AC)` for `s=5`.
+The initial run supplied direct exact rational certificates only for a
+subset of the masks.  The remaining exact chamber certificates, including
+the two exceptional routes below, are now assembled in Theorem
+5A8H28UIA2C5.
 
 The first previously unresolved chamber has an exact unbounded-ray
 certificate.  At fan position `32` (activation mask
@@ -9492,7 +9492,7 @@ prove_su2_t4_groups c5 --position 32
 ```
 
 and returns `SU2_T4_GROUP_H_RAY_NEWTON ... rays=9 result=PASS_EXACT`.
-This resolves one chamber only; the full 601-mask statement remains open.
+This is one of the exact chamber certificates assembled below.
 
 The adjacent position `34` is a distinct exact bounded chamber.  Its
 irredundant inequalities are
@@ -9526,10 +9526,9 @@ certified=252,                 unresolved=349.
 ```
 
 Here `certified` means a standalone bounded enumeration or bounded-`(Q,Y)`
-Newton-ray certificate; `unresolved` means only that one of the direct or
-transport cone certificates is still required.  It is an exact scheduling
-partition, not a claim that the remaining 349 masks fail or that the full
-`C_5` theorem has been proved.
+Newton-ray certificate; `unresolved` records the state of this deliberately
+low-cost scheduling pass.  The later full per-chamber replay, recorded in
+Theorem 5A8H28UIA2C5, discharges those masks by the additional exact routes.
 
 The C++ certifier also has an exact congruence-lattice refinement for a square
 cone with equal pair sums or the exact one-unit offset.  Suppose nonnegative
@@ -9633,9 +9632,9 @@ result=PASS_EXACT_PARTITION.
 ```
 
 Thus the forced-equality construction supplies 29 additional exact chamber
-certificates.  As with the low-cost scan, this is a certified scheduling
-partition only: `unresolved=572` calls for another exact certificate route;
-it neither supplies a counterexample nor proves all of `C_5`.
+certificates.  This scan is a route census, not the final aggregation; the
+remaining masks are discharged by the other exact routes in Theorem
+5A8H28UIA2C5.
 
 There is a separate exact route for a chamber with one usable integral
 recession direction.  Let `P` be its exact integer polyhedron and suppose
@@ -9671,9 +9670,9 @@ The combined strict transcript is
 `bbb610ac638b84fc8b12b2b331cdec3bae474e8ae0379b78dd492341e3019aac`);
 the corresponding source SHA-256 is
 `efe4b7863b958d3b55fda013c435aa0af5c54e7b76b518cb9954e5f84fea5798`.
-The construction is attempted before the expensive integer pair-cut tree;
-it resolves these three chambers only and does not assert the full
-601-chamber `C_5` certificate.
+The construction is attempted before the expensive integer pair-cut tree.
+It supplies three of the certificates aggregated in Theorem
+5A8H28UIA2C5.
 
 **Proposition 5A.102AC5D (exact multi-ray recession-fan certificate).**
 Let `P` be an integer chamber in the `C_5` scheduler.  From every pair of
@@ -9719,9 +9718,69 @@ The QF-LIA descent check and all six three-variable exact basis checks return
 from source SHA-256
 `7db365009c9b4f07f1b009d06b4b9d30bd522d6f3d2a3336e07a65fdd6657da1`.
 The scheduler tries this fan before the unbounded direct-facet search, so
-the certified finite route is reached for position `431`; this adds one
-exact chamber certificate and does not assert the full 601-chamber `C_5`
-theorem.
+the certified finite route is reached for position `431`.  This is the
+second exceptional certificate used in Theorem 5A8H28UIA2C5.
+
+The remaining delayed chamber is position `32`, not a new obstruction.  Its
+irredundant inequalities force
+
+```text
+2<=Q<=4,                    0<=Y<=4,
+```
+
+so the complete integer chamber splits into nine rays in the remaining
+coordinate `H`.  The translated `K_5` polynomial has a nonnegative exact
+Newton expansion on each ray.  The source-matched replay is
+
+```text
+prove_su2_t4_groups c5 --position 32
+
+SU2_T4_GROUP_H_RAY_NEWTON position=32 Q_bound=4/1 Y_bound=4/1
+  rays=9 result=PASS_EXACT
+SU2_T4_GROUP target=c5 attempted=1 certified=1
+  result=PASS_EXACT_CERTIFICATE.
+```
+
+Its receipt is `certificates/su2_t4_c5_chamber_32.log`.
+
+**Theorem 5A8H28UIA2C5 (complete finite fifth anchored kernel).**
+For every `Q>=1`, `K>=2Q+1`, and `0<=Y<=K`,
+
+```text
+K_5(Y)=f_10 u_11(Y)-f_11 u_10(Y)>=0.
+```
+
+**Proof.**  The Kac--Walton activation fan has exactly `601` feasible
+integer chambers.  The per-chamber exact replays certify `599` chambers
+directly.  Position `32` is the nine-ray Newton certificate above, and
+position `431` is the three-ray recession-fan certificate recorded in
+`certificates/su2_t4_c5_recession_fan_431.log`.  Thus every chamber is
+covered by an exact finite enumeration, a univariate Newton expansion, or a
+multiray Newton expansion on its full integer recession cone.  The aggregate
+receipt checks all `601` terminal certificates against the source snapshot
+with SHA-256 `7db365009c9b4f07f1b009d06b4b9d30bd522d6f3d2a3336e07a65fdd6657da1`;
+it is `certificates/su2_t4_c5_complete.log`.  No bound on `K`, `Q`, or `Y`
+is used.  QED.
+
+The same exact generator exposes why this chamber-by-chamber method cannot
+be the sought uniform induction.  For the next kernel
+
+```text
+K_6(Y)=f_12u_13(Y)-f_13u_12(Y),
+```
+
+the unbounded Presburger census already has `98` affine hinges and `1,181`
+feasible activation masks:
+
+```text
+prove_su2_t4_groups c6 --masks-only
+SU2_T4_GROUP_MASKS target=c6 hinges=98 masks=1181
+  result=PASS_EXACT_CENSUS.
+```
+
+The receipt is `certificates/su2_t4_c6_masks.log`.  This is an exact fan
+census only—not a proof of `K_6>=0`—but it rules out treating the finite
+fan enumeration as a uniform all-power mechanism.
 
 The anchor in `(P5A.102AD)` is essential: the whole matrix `M` is not
 TP2.  At `(k,q)=(6,2)`, order the even half-labels as `0,1,2,3`.
@@ -10518,6 +10577,86 @@ A_(1,3)
 
 This pays the sole residual current; Lemma
 5A8H28UIA2CGLCPL4R proves every other anchored entry.  QED.
+
+**Lemma 5A8H28UIA2CGLCPL5C (half-level-five central current).**
+At `K=5`, under the positive-semidefinite and boundary hypotheses of Target
+5A8H28UIA2CGLCP, the central off-diagonal anchored current is nonnegative:
+
+```text
+A_(2,3)>=0.
+```
+
+**Proof.**  Write
+
+```text
+d=(a,b,c,ell,e,f),
+s=a+f,       t=b+e,       u=c+ell,
+g=a-f,       h=b-e,       i=c-ell.
+```
+
+In the orthonormal simple-current-even basis
+
+```text
+(e_0+e_5)/sqrt(2), (e_1+e_4)/sqrt(2),
+(e_2+e_3)/sqrt(2),
+```
+
+the positive-semidefinite block of `N_d` is
+
+```text
+E=[ s,       t,       u
+    t,       s+t+u, t+2u
+    u,       t+2u, s+2t+2u ].
+```
+
+The `R=5` boundary current is `a^2-f^2=sg>=0`; hence `g>=0`.  The
+`{0,2}` principal minor of `E` gives
+
+```text
+u^2<=s(s+2t+2u).                                (P5A.102AD5ALX1L5A)
+```
+
+Direct fusion expansion gives
+
+```text
+4A_(2,3)
+ =(s^2-g^2)+2(s+g)(t+u)-(u^2-i^2).             (P5A.102AD5ALX1L5B)
+```
+
+For `s>0`, normalize by `s^2` and put
+
+```text
+r=g/s,                 x=(t+u)/s,               y=u/s.
+```
+
+Nonnegativity gives `0<=r<=1` and `0<=y<=x`, while
+`(P5A.102AD5ALX1L5A)` gives `y^2<=1+2x`.  Dividing
+`(P5A.102AD5ALX1L5B)` by `s^2` and discarding its nonnegative final
+square gives
+
+```text
+4A_(2,3)/s^2>=1-r^2+2(1+r)x-y^2.                (P5A.102AD5ALX1L5C)
+```
+
+If `x>=r/2`, use `y^2<=1+2x` in `(P5A.102AD5ALX1L5C)` to obtain
+`r(2x-r)>=0`.  If `x<=r/2`, use `y<=x` instead; the lower bound is
+
+```text
+1-r^2+x{2(1+r)-x}>=0.
+```
+
+This proves the claim.  The case `s=0` forces `a=f=0`; positive
+semidefiniteness then forces the zeroth row `d` to vanish.  QED.
+
+Thus, after the zero row, the positive diagonals, and the four top-boundary
+entries are removed, the half-level-five PSD boundary-reduction problem has
+only the five residual currents
+
+```text
+A_(1,2), A_(1,3), A_(1,4), A_(2,4), A_(3,4).
+```
+
+No log-concavity inequality was used in the central-current payment.
 
 **Lemma 5A8H28UIA2CGLCPIL4 (half-level-four PSD boundary insertion).**
 At `K=4`, Target 5A8H28UIA2CGLCPI holds for every insertion label

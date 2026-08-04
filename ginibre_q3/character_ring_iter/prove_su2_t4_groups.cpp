@@ -75,8 +75,14 @@ GroupFormula make_group_formula(const std::string& target) {
         // not a low-group relaxation.
         f_powers = {10, 11};
         u_powers = {10, 11};
+    } else if (target == "c6") {
+        // This is the next anchored member
+        // f_12 u_13-f_13 u_12.  Its fan census is a feasibility
+        // diagnostic for a uniform anchored-kernel mechanism.
+        f_powers = {12, 13};
+        u_powers = {12, 13};
     } else {
-        throw std::runtime_error("target must be c5, g0, g1, or g2");
+        throw std::runtime_error("target must be c5, c6, g0, g1, or g2");
     }
 
     GroupFormula formula;
@@ -186,6 +192,9 @@ Polynomial group_margin(
     }
     if (target == "c5") {
         return block(10, 11);
+    }
+    if (target == "c6") {
+        return block(12, 13);
     }
     throw std::runtime_error("unknown group target");
 }

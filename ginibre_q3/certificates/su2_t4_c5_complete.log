@@ -1,0 +1,4 @@
+SU2_C5_AGGREGATE chambers=601 exact_pass=601 bad=0 missing=0
+certificate_source_sha256=7db365009c9b4f07f1b009d06b4b9d30bd522d6f3d2a3336e07a65fdd6657da1
+exceptional_chambers=(32:bounded_QY_H_rays,431:three_ray_recession_fan)
+result=PASS_EXACT_CERTIFICATE

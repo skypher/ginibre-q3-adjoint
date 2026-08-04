@@ -1,0 +1,3 @@
+SU2_T4_GROUP_MASKS progress=1000
+SU2_T4_GROUP_MASKS target=c6 hinges=98 masks=1181 result=PASS_EXACT_CENSUS
+source_sha256=a8649ba9e48ca8540034cc1b5ecc792b7b84e52001acf3143ebf505fabeedca1
