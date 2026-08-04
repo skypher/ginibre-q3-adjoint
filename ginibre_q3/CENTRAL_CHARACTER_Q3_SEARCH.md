@@ -44448,6 +44448,14 @@ two-colour highest-weight sources to only four distinct images.  Hence a
 crystal proof must switch the two colour carriers while retaining their
 separate boundary endpoints; ordinary unshuffle-and-forget is insufficient.
 
+In particular, the ordinary uncoloured type-`A_1` rigged-configuration
+bijection cannot repair this loss on its own.  It is a deterministic
+bijection-based re-encoding of an uncoloured crystal state, so any tag
+obtained solely from the unshuffled word is constant on the displayed
+collision fibres.  A viable rigged construction would have to retain a marked
+colour carrier (or equivalent extra boundary data) and prove its target
+capacity; uncoloured KKR data does not enlarge the four-image set.
+
 Adding only one local swap-energy candidate does not repair this loss.
 On every inversion resolved by the same type-`A_1` swap, record
 `min(d_left,label_right-d_right)` and retain its total together with the
@@ -57715,6 +57723,41 @@ Lemmas 23A9E and 23A9G and checks all support capacities in Proposition
 23A9F.  Its replay is
 `certificates/su2_boundary_support_monotone.log`.  The displayed fusion
 calculations, rather than its bounded search modes, prove the statements.
+
+The same diagnostic has a deterministic random falsification mode
+
+```text
+--random-two-import LEVEL FACTORS MAX_LABEL SAMPLES [SEED]
+```
+
+which tests every `q,a` isotypic flow of each sampled sorted word and prints
+the first exact Hall witness if one occurs.  The strict replay at
+`LEVEL=30`, `FACTORS=9`, `MAX_LABEL=30`, with the four seeds
+`20260804,...,20260807`, returned `PASS` in every case.  This is only a
+reproducible exact falsification probe for Target 23A9G2, not evidence for
+its arbitrary-word conclusion.
+
+For larger Boolean support lattices, the companion mode
+
+```text
+--random-two-import-pair LEVEL FACTORS MAX_LABEL SAMPLES [SEED]
+```
+
+samples one `q,a` isotypic flow at a time and resamples up to 256 times until
+the demand is nonzero and the unrestricted total capacity is sufficient.  It
+therefore never reports a vacuous zero-demand pair as a passing sample.  Its
+strict `cpp_int` replays returned
+
+```text
+PASS random_two_import_pair level=20 factors=12 maximum_label=20
+     samples=1 seed=20260901
+PASS random_two_import_pair level=30 factors=13 maximum_label=30
+     samples=2 seed=20260910.
+```
+
+Again these are exact, reproducible falsification probes only; they neither
+establish Hall for a sampled word outside the chosen isotypic pair nor prove
+Target 23A9G2.
 
 There is also a genuinely unbounded outer chamber in which the complete
 Hall allocation collapses to one support.  Assume all plus labels are

@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <iostream>
 #include <limits>
+#include <random>
 #include <queue>
 #include <string>
 #include <utility>
@@ -211,8 +212,13 @@ bool inspect_word(
     bool require_total_capacity = false,
     bool print_flow = false,
     bool print_topwall_diagnostics = false,
-    bool low_targets_only = false
+    bool low_targets_only = false,
+    int fixed_a = -1,
+    bool* tested = nullptr
 ) {
+    if (tested != nullptr) {
+        *tested = false;
+    }
     const int factors = static_cast<int>(labels.size());
     const int masks = 1 << factors;
     int high_target_mask = 0;
@@ -242,7 +248,9 @@ bool inspect_word(
         return true;
     }
     for (int q = first_q; q <= last_q; ++q) {
-        for (int a = 0; a <= level; ++a) {
+        const int first_a = fixed_a >= 0 ? fixed_a : 0;
+        const int last_a = fixed_a >= 0 ? fixed_a : level;
+        for (int a = first_a; a <= last_a; ++a) {
             std::vector<Count> demand(static_cast<std::size_t>(masks), 0);
             std::vector<Count> capacity(static_cast<std::size_t>(masks), 0);
             Count total_demand = 0;
@@ -296,6 +304,9 @@ bool inspect_word(
                           << " total_capacity=" << total_capacity
                           << " global_capacity_deficit\n";
                 return false;
+            }
+            if (tested != nullptr) {
+                *tested = true;
             }
 
             const int source = 2 * masks;
@@ -409,6 +420,78 @@ bool enumerate_words(
         if (!enumerate_words(
                 labels, position + 1, maximum_label, level, routing
             )) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool random_two_import_words(
+    int level,
+    int factors,
+    int maximum_label,
+    std::uint64_t samples,
+    std::uint64_t seed
+) {
+    for (std::uint64_t sample = 0U; sample < samples; ++sample) {
+        std::mt19937_64 generator(seed + sample);
+        std::vector<int> labels(static_cast<std::size_t>(factors));
+        for (int& label : labels) {
+            label = 1 + static_cast<int>(
+                generator() % static_cast<std::uint64_t>(maximum_label)
+            );
+        }
+        std::sort(labels.begin(), labels.end());
+        if (!inspect_word(labels, level, false, Routing::two_import)) {
+            std::cout << "RANDOM_TWO_IMPORT_FAIL sample=" << sample << '\n';
+            return false;
+        }
+    }
+    return true;
+}
+
+bool random_two_import_pairs(
+    int level,
+    int factors,
+    int maximum_label,
+    std::uint64_t samples,
+    std::uint64_t seed
+) {
+    for (std::uint64_t sample = 0U; sample < samples; ++sample) {
+        bool accepted = false;
+        for (std::uint64_t retry = 0U; retry < 256U; ++retry) {
+            std::mt19937_64 generator(seed + 256U * sample + retry);
+            std::vector<int> labels(static_cast<std::size_t>(factors));
+            for (int& label : labels) {
+                label = 1 + static_cast<int>(
+                    generator() % static_cast<std::uint64_t>(maximum_label)
+                );
+            }
+            std::sort(labels.begin(), labels.end());
+            const int q = 1 + static_cast<int>(
+                generator() % static_cast<std::uint64_t>(level)
+            );
+            const int a = static_cast<int>(
+                generator() % static_cast<std::uint64_t>(level + 1)
+            );
+            bool tested = false;
+            if (!inspect_word(
+                    labels, level, false, Routing::two_import, q, false,
+                    false, false, false, a, &tested
+                )) {
+                std::cout << "RANDOM_TWO_IMPORT_PAIR_FAIL sample=" << sample
+                          << " retry=" << retry << " q=" << q
+                          << " a=" << a << '\n';
+                return false;
+            }
+            if (tested) {
+                accepted = true;
+                break;
+            }
+        }
+        if (!accepted) {
+            std::cout << "RANDOM_TWO_IMPORT_PAIR_NO_ELIGIBLE_INSTANCE"
+                      << " sample=" << sample << '\n';
             return false;
         }
     }
@@ -625,6 +708,60 @@ bool enumerate_topwall_empty_reservoir_sum(
 }
 
 int main(int argc, char** argv) {
+    if ((argc == 6 || argc == 7)
+        && std::string(argv[1]) == "--random-two-import-pair") {
+        const int level = std::stoi(argv[2]);
+        const int factors = std::stoi(argv[3]);
+        const int maximum_label = std::stoi(argv[4]);
+        const std::uint64_t samples = std::stoull(argv[5]);
+        const std::uint64_t seed = argc == 7
+            ? std::stoull(argv[6])
+            : 20260804U;
+        if (level < 1 || factors < 1 || factors > 14
+            || maximum_label < 1 || maximum_label > level || samples == 0U) {
+            std::cerr << "usage: --random-two-import-pair LEVEL FACTORS "
+                         "MAX_LABEL SAMPLES [SEED]\n";
+            return 2;
+        }
+        const bool passed = random_two_import_pairs(
+            level, factors, maximum_label, samples, seed
+        );
+        if (passed) {
+            std::cout << "PASS random_two_import_pair level=" << level
+                      << " factors=" << factors
+                      << " maximum_label=" << maximum_label
+                      << " samples=" << samples
+                      << " seed=" << seed << '\n';
+        }
+        return passed ? 0 : 1;
+    }
+    if ((argc == 6 || argc == 7)
+        && std::string(argv[1]) == "--random-two-import") {
+        const int level = std::stoi(argv[2]);
+        const int factors = std::stoi(argv[3]);
+        const int maximum_label = std::stoi(argv[4]);
+        const std::uint64_t samples = std::stoull(argv[5]);
+        const std::uint64_t seed = argc == 7
+            ? std::stoull(argv[6])
+            : 20260804U;
+        if (level < 1 || factors < 1 || factors > 20
+            || maximum_label < 1 || maximum_label > level || samples == 0U) {
+            std::cerr << "usage: --random-two-import LEVEL FACTORS MAX_LABEL "
+                         "SAMPLES [SEED]\n";
+            return 2;
+        }
+        const bool passed = random_two_import_words(
+            level, factors, maximum_label, samples, seed
+        );
+        if (passed) {
+            std::cout << "PASS random_two_import level=" << level
+                      << " factors=" << factors
+                      << " maximum_label=" << maximum_label
+                      << " samples=" << samples
+                      << " seed=" << seed << '\n';
+        }
+        return passed ? 0 : 1;
+    }
     if (argc >= 5
         && (std::string(argv[1]) == "--two-import-outer-defect-word"
             || std::string(argv[1]) == "--two-import-outer-defect-word-flow"
