@@ -33045,6 +33045,46 @@ root also has exact bridge matchings at width at most three.  This is a
 second finite root closure and evidence for the variable-width target; it
 does not prove a uniform width-three bound.
 
+The first four-factor extension shows that the width-two collision is not
+confined to three-factor chambers, while its full alternating Hall family is
+again paid by three-block bridges.
+
+**Proposition 5A8H28UIA2RKCH3FOUR (four-factor pooled Hall repair).**  For
+
+```text
+w=(1,1,2,2,5,5,1,1),             (R,S)=(8,2),       (P5A.102CB8S3Z41HQ)
+```
+
+the one--two-block graph has
+
+```text
+domain=2,228,733,       image=2,423,320,
+matching=2,227,758,
+hall_left=69,015,        hall_right=68,040.         (P5A.102CB8S3Z41HR)
+```
+
+Thus its Hall deficit is `975`.  Let `H` be the displayed alternating left
+set.  Restricting the one--two--three-block graph to the `69,015` sources
+of `H` gives
+
+```text
+domain=69,015,           image=1,112,682,
+matching=69,015.                                      (P5A.102CB8S3Z41HS)
+```
+
+This is an exact finite pooled repair of the full four-factor deficient
+family.  It does not assert a matching for every root or every Hall subset,
+but it rules out an argument that localizes the need for pooling to a
+three-factor root.
+
+**Proof.**  The strict C++ diagnostic enumerates every source and every
+one--two-block bridge in the fixed instance, then extracts the alternating
+left set from its exact maximum matching.  Its `--repair-hall-three` mode
+rebuilds only the bridge graph on that displayed set, adding all crossed
+three-block paths before a second exact maximum matching.  The two matching
+outputs are `(P5A.102CB8S3Z41HR)` and `(P5A.102CB8S3Z41HS)`, respectively.
+QED.
+
 The smallest remaining bridge statement is now explicit.
 
 **Target 5A8H28UIA2RKCH3 (paired three-block Hall payment).**  Put the
@@ -33112,7 +33152,56 @@ one--two-block neighbours.  This exact extraction shows that the first
 deficit is not a scattered matching accident.  It suggests the next source
 reduction: prove a rectangular-compression theorem for Hall-critical path
 sets, then pay the resulting boxes by overlapping three-block windows.
-No such compression theorem is presently proved.
+The next root shows that this compression cannot assert that an alternating
+Hall set is itself one Cartesian box.
+
+**Proposition 5A8H28UIA2RKCH3BOXOBS (single-box Hall-compression
+obstruction).**  In the paired word
+
+```text
+w=(1,1,2,2,5,5),                 (R,S)=(8,2),       (P5A.102CB8S3Z41HM)
+```
+
+let `H` be the alternating Hall set returned by an exact maximum matching
+in the one--two-block bridge graph.  It has
+
+```text
+|H|=3,570,       |N(H)|=3,386,
+|pi_x(H)|=112,   |pi_u(H)|=76.                    (P5A.102CB8S3Z41HN)
+```
+
+In particular, `H` is not the product of its returning and outgoing path
+projections.  Indeed, the cross pair
+
+```text
+x=(8,7,6,8,6,5,0),       u=(0,1,2,0,2,3,2)        (P5A.102CB8S3Z41HO)
+```
+
+does not belong to `H`, whereas its two projections do occur in `H` through
+
+```text
+(x,(0,1,1,3,1,4,2)) in H,
+((8,7,7,7,5,5,0),u) in H.                         (P5A.102CB8S3Z41HP)
+```
+
+**Proof.**  The strict C++ matching diagnostic enumerates all `30,528`
+domain path pairs, constructs every one--two-block crossed image, and runs
+the alternating reachability extraction after an exact maximum matching.  Its
+`--summarize-hall` mode returns `(P5A.102CB8S3Z41HN)` and the three displayed
+pairs.  The two memberships in `(P5A.102CB8S3Z41HP)` put the two projections
+of `(P5A.102CB8S3Z41HO)` in `pi_x(H)` and `pi_u(H)`, while the explicit absent
+cross pair proves the asserted strict containment
+
+```text
+H proper_subset pi_x(H) times pi_u(H).
+```
+
+QED.
+
+Thus a viable Hall compression must be a shifting or pooled-neighbourhood
+statement; it cannot simply identify every critical family with one product
+of independent path sets.  No such stronger compression theorem is presently
+proved.
 
 The strict C++ probe
 `character_ring_iter/probe_su2_heterogeneous_two_block_bridge.cpp`
@@ -33122,7 +33211,10 @@ The separate exact matching diagnostic
 `character_ring_iter/probe_su2_heterogeneous_bridge_matching.cpp` constructs
 all one--two-block images and the alternating Hall set.  It has complete
 matchings for roots `(1,2)` and `(1,3)`, and returns the displayed
-twenty-versus-nineteen Hall obstruction for root `(1,2,3)`.
+twenty-versus-nineteen Hall obstruction for root `(1,2,3)`.  Its
+`--repair-hall-three` mode fixes one width-two Hall set and checks the
+complete one--two--three-block matching on that set; the four-factor replay
+returns `(P5A.102CB8S3Z41HS)` with progress output throughout the construction.
 
 Even choosing a window with enough local bridge capacity is false.
 For every `Q>=1`, take

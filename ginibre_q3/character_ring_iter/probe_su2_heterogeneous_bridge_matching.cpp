@@ -4,6 +4,7 @@
 #include <limits>
 #include <map>
 #include <queue>
+#include <set>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -441,6 +442,8 @@ struct Statistics {
     std::string witness;
     std::vector<std::string> failures;
     std::vector<std::string> first_hall_vertices;
+    std::vector<std::pair<Path, Path>> first_hall_pairs;
+    std::string first_three_block_repair;
 };
 
 void inspect_instance(
@@ -451,11 +454,14 @@ void inspect_instance(
     const std::vector<int>& labels,
     int maximum_blocks,
     bool print_hall,
+    bool summarize_hall,
+    bool repair_hall_three,
     Statistics& statistics
 ) {
     std::map<std::string, int> ids;
     std::vector<std::vector<int>> graph;
     std::vector<std::string> domain_keys;
+    std::vector<std::pair<Path, Path>> domain_pairs;
     for (const Path& long_path : long_paths) {
         for (const Path& short_path : short_paths) {
             std::vector<int> images;
@@ -477,6 +483,11 @@ void inspect_instance(
                 static_cast<unsigned long long>(images.size());
             graph.push_back(std::move(images));
             domain_keys.push_back(encode(long_path, short_path));
+            domain_pairs.emplace_back(long_path, short_path);
+            if (repair_hall_three && graph.size() % 100000U == 0U) {
+                std::cerr << "SU2_HALL_REPAIR_BUILD domain=" << graph.size()
+                          << '\n' << std::flush;
+            }
         }
     }
     if (graph.empty()) {
@@ -502,18 +513,202 @@ void inspect_instance(
             statistics.first_hall_left = matching.hall_left;
             statistics.first_hall_right = matching.hall_right;
             statistics.witness = failure;
-            if (print_hall) {
+            if (print_hall || summarize_hall) {
                 for (std::size_t index = 0U;
                      index < matching.hall_left_membership.size();
                      ++index) {
                     if (matching.hall_left_membership[index]) {
-                        statistics.first_hall_vertices.push_back(
-                            domain_keys[index]
-                        );
+                        if (print_hall) {
+                            statistics.first_hall_vertices.push_back(
+                                domain_keys[index]
+                            );
+                        }
+                        if (summarize_hall) {
+                            statistics.first_hall_pairs.push_back(
+                                domain_pairs[index]
+                            );
+                        }
                     }
                 }
             }
+            if (repair_hall_three) {
+                std::map<std::string, int> repair_ids;
+                std::vector<std::vector<int>> repair_graph;
+                repair_graph.reserve(matching.hall_left);
+                for (std::size_t index = 0U;
+                     index < matching.hall_left_membership.size();
+                     ++index) {
+                    if (!matching.hall_left_membership[index]) {
+                        continue;
+                    }
+                    const Path& returning = domain_pairs[index].first;
+                    const Path& outgoing = domain_pairs[index].second;
+                    std::vector<int> images;
+                    add_one_block_images(
+                        returning,
+                        outgoing,
+                        labels,
+                        images,
+                        repair_ids
+                    );
+                    add_two_block_images(
+                        returning,
+                        outgoing,
+                        labels,
+                        images,
+                        repair_ids
+                    );
+                    add_wide_block_images(
+                        returning,
+                        outgoing,
+                        labels,
+                        3,
+                        images,
+                        repair_ids
+                    );
+                    std::sort(images.begin(), images.end());
+                    images.erase(
+                        std::unique(images.begin(), images.end()),
+                        images.end()
+                    );
+                    repair_graph.push_back(std::move(images));
+                    if (repair_graph.size() % 10000U == 0U) {
+                        std::cerr << "SU2_HALL_REPAIR_BUILD selected="
+                                  << repair_graph.size()
+                                  << " images=" << repair_ids.size()
+                                  << '\n' << std::flush;
+                    }
+                }
+                const Matching repair_matching = maximum_matching(
+                    repair_graph,
+                    repair_ids.size()
+                );
+                std::size_t repair_width_two_targets = 0U;
+                for (const auto& entry : repair_ids) {
+                    if (ids.contains(entry.first)) {
+                        ++repair_width_two_targets;
+                    }
+                }
+                statistics.first_three_block_repair =
+                    "domain=" + std::to_string(repair_graph.size())
+                    + " image=" + std::to_string(repair_ids.size())
+                    + " width_two_targets="
+                    + std::to_string(repair_width_two_targets)
+                    + " three_block_only_targets="
+                    + std::to_string(
+                        repair_ids.size() - repair_width_two_targets
+                    )
+                    + " matching=" + std::to_string(repair_matching.size)
+                    + " result=" + (repair_matching.size == repair_graph.size()
+                        ? "PASS"
+                        : "FAIL");
+            }
         }
+    }
+}
+
+void print_hall_summary(const Statistics& statistics) {
+    if (statistics.first_hall_pairs.empty()) {
+        return;
+    }
+    std::set<Path> returning_paths;
+    std::set<Path> outgoing_paths;
+    std::set<std::string> hall_pair_keys;
+    for (const auto& paths : statistics.first_hall_pairs) {
+        returning_paths.insert(paths.first);
+        outgoing_paths.insert(paths.second);
+        hall_pair_keys.insert(encode(paths.first, paths.second));
+    }
+    const std::size_t product_size =
+        returning_paths.size() * outgoing_paths.size();
+    std::cout << " hall_returning_paths=" << returning_paths.size()
+              << " hall_outgoing_paths=" << outgoing_paths.size()
+              << " hall_cartesian_product_size=" << product_size
+              << " hall_is_cartesian="
+              << (product_size == statistics.first_hall_pairs.size()
+                  ? "YES"
+                  : "NO");
+    if (product_size != statistics.first_hall_pairs.size()) {
+        for (const Path& returning : returning_paths) {
+            bool found = false;
+            for (const Path& outgoing : outgoing_paths) {
+                if (hall_pair_keys.contains(encode(returning, outgoing))) {
+                    continue;
+                }
+                const auto returning_witness = std::find_if(
+                    statistics.first_hall_pairs.begin(),
+                    statistics.first_hall_pairs.end(),
+                    [&returning](const std::pair<Path, Path>& paths) {
+                        return paths.first == returning;
+                    }
+                );
+                const auto outgoing_witness = std::find_if(
+                    statistics.first_hall_pairs.begin(),
+                    statistics.first_hall_pairs.end(),
+                    [&outgoing](const std::pair<Path, Path>& paths) {
+                        return paths.second == outgoing;
+                    }
+                );
+                if (returning_witness == statistics.first_hall_pairs.end()
+                    || outgoing_witness == statistics.first_hall_pairs.end()) {
+                    throw std::runtime_error("missing Hall projection witness");
+                }
+                std::cout << " hall_missing_cross="
+                          << '[' << encode(returning, outgoing) << ']'
+                          << " hall_returning_projection_witness="
+                          << '[' << encode(
+                              returning_witness->first,
+                              returning_witness->second
+                          ) << ']'
+                          << " hall_outgoing_projection_witness="
+                          << '[' << encode(
+                              outgoing_witness->first,
+                              outgoing_witness->second
+                          ) << ']';
+                found = true;
+                break;
+            }
+            if (found) {
+                break;
+            }
+        }
+    }
+
+    const std::size_t path_size =
+        statistics.first_hall_pairs.front().first.size();
+    std::cout << " hall_returning_coordinate_ranges=";
+    for (std::size_t index = 0U; index < path_size; ++index) {
+        int minimum = statistics.first_hall_pairs.front().first[index];
+        int maximum = minimum;
+        std::set<int> values;
+        for (const auto& paths : statistics.first_hall_pairs) {
+            const int value = paths.first[index];
+            minimum = std::min(minimum, value);
+            maximum = std::max(maximum, value);
+            values.insert(value);
+        }
+        std::cout << '[' << minimum << ',' << maximum << ';';
+        for (const int value : values) {
+            std::cout << value << ',';
+        }
+        std::cout << ']';
+    }
+    std::cout << " hall_outgoing_coordinate_ranges=";
+    for (std::size_t index = 0U; index < path_size; ++index) {
+        int minimum = statistics.first_hall_pairs.front().second[index];
+        int maximum = minimum;
+        std::set<int> values;
+        for (const auto& paths : statistics.first_hall_pairs) {
+            const int value = paths.second[index];
+            minimum = std::min(minimum, value);
+            maximum = std::max(maximum, value);
+            values.insert(value);
+        }
+        std::cout << '[' << minimum << ',' << maximum << ';';
+        for (const int value : values) {
+            std::cout << value << ',';
+        }
+        std::cout << ']';
     }
 }
 
@@ -523,9 +718,22 @@ int main(int argc, char** argv) {
     try {
         int argument_end = argc;
         bool print_hall = false;
-        if (argc >= 2 && std::string(argv[argc - 1]) == "--print-hall") {
-            print_hall = true;
-            --argument_end;
+        bool summarize_hall = false;
+        bool repair_hall_three = false;
+        while (argument_end >= 2) {
+            const std::string flag{argv[argument_end - 1]};
+            if (flag == "--print-hall") {
+                print_hall = true;
+                --argument_end;
+            } else if (flag == "--summarize-hall") {
+                summarize_hall = true;
+                --argument_end;
+            } else if (flag == "--repair-hall-three") {
+                repair_hall_three = true;
+                --argument_end;
+            } else {
+                break;
+            }
         }
         bool fixed_instance = false;
         int fixed_boundary = 0;
@@ -537,7 +745,8 @@ int main(int argc, char** argv) {
                 || std::string(argv[6]) != "--paired-root") {
                 throw std::invalid_argument(
                     "instance mode requires --instance R S --maximum-blocks "
-                    "L --paired-root LABEL..."
+                    "L --paired-root LABEL... [--print-hall] "
+                    "[--summarize-hall] [--repair-hall-three]"
                 );
             }
             fixed_instance = true;
@@ -549,7 +758,8 @@ int main(int argc, char** argv) {
             throw std::invalid_argument(
                 "usage: probe_su2_heterogeneous_bridge_matching "
                 "--paired-root LABEL... or --instance R S --maximum-blocks "
-                "L --paired-root LABEL..."
+                "L --paired-root LABEL... [--print-hall] "
+                "[--summarize-hall] [--repair-hall-three]"
             );
         }
         std::vector<int> root;
@@ -557,9 +767,9 @@ int main(int argc, char** argv) {
         for (int index = root_start; index < argument_end; ++index) {
             root.push_back(parse_positive(argv[index], "root label"));
         }
-        if (root.size() > 3U) {
+        if (root.size() > 4U) {
             throw std::invalid_argument(
-                "the exact matching diagnostic accepts at most three root labels"
+                "the exact matching diagnostic accepts at most four root labels"
             );
         }
         std::vector<int> labels;
@@ -574,6 +784,16 @@ int main(int argc, char** argv) {
         }
         if (maximum_blocks > static_cast<int>(labels.size())) {
             throw std::invalid_argument("L exceeds the paired word length");
+        }
+        if (repair_hall_three && maximum_blocks != 2) {
+            throw std::invalid_argument(
+                "--repair-hall-three requires a width-two source graph"
+            );
+        }
+        if (repair_hall_three && !fixed_instance) {
+            throw std::invalid_argument(
+                "--repair-hall-three requires one fixed R,S instance"
+            );
         }
         const std::vector<Path> all_short_paths = paths_from(0, labels);
         Statistics statistics;
@@ -609,6 +829,8 @@ int main(int argc, char** argv) {
                         labels,
                         maximum_blocks,
                         print_hall,
+                        summarize_hall,
+                        repair_hall_three,
                         statistics
                     );
                 }
@@ -631,6 +853,13 @@ int main(int argc, char** argv) {
         std::cout << " hall_vertices=";
         for (const std::string& vertex : statistics.first_hall_vertices) {
             std::cout << '[' << vertex << ']';
+        }
+        if (summarize_hall) {
+            print_hall_summary(statistics);
+        }
+        if (repair_hall_three) {
+            std::cout << " three_block_hall_repair="
+                      << statistics.first_three_block_repair;
         }
         std::cout
                   << " result=PASS"
