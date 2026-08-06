@@ -230,8 +230,11 @@ int main(int argc, char** argv) {
         std::uint64_t h2_p3_upper_normal_form_entries = 0U;
         bool printed_negative_h2_p3_upper_low_rail = false;
         bool printed_negative_h2_p3_upper_core_rail = false;
-        std::map<std::pair<int, int>, std::vector<std::pair<int, Integer>>>
-            h2_lower_current_series;
+        std::map<
+            std::array<int, 3>,
+            std::vector<std::pair<int, Integer>>
+        > h2_lower_current_series;
+        std::uint64_t h2_lower_closed_current_audits = 0U;
         std::uint64_t negative_h2_p3_margin_residue_tails = 0U;
         int maximum_h2_payment_span = 0;
         bool has_maximum_h2_payment_span = false;
@@ -877,6 +880,9 @@ int main(int argc, char** argv) {
                         Integer tail = 0;
                         Integer even_tail = 0;
                         Integer odd_tail = 0;
+                        Integer closed_lower_tail = 0;
+                        const bool separated_lower =
+                            4 * target - (level - 1) > 7 * gap;
                         std::deque<Reserve> reserve;
                         int crossing = paired - 1;
                         while (crossing >= 0 && crossing % 4 != residue) {
@@ -895,6 +901,39 @@ int main(int argc, char** argv) {
                             tail += value;
                             even_tail += even_value;
                             odd_tail += odd_value;
+                            if (h2_lower_z_differences && separated_lower) {
+                                const int reflected_label =
+                                    level - 1 - 2 * crossing;
+                                const int g = reflected_label <= gap
+                                    ? gap + reflected_label
+                                    : 2 * reflected_label;
+                                const Integer h = Integer(reflected_label)
+                                        * reflected_label
+                                    + Integer(2 * gap + 4)
+                                        * reflected_label
+                                    + Integer(3 * gap * gap + 6 * gap + 2);
+                                const Integer d2 = 4 * q - g;
+                                const Integer d3 = 4 * Integer(q) * q
+                                    + Integer(4 * gap + 8) * q - h;
+                                const Integer p2 = minus_powers[2U][
+                                    static_cast<std::size_t>(crossing)
+                                ][static_cast<std::size_t>(target)];
+                                const Integer p3 = minus_powers[3U][
+                                    static_cast<std::size_t>(crossing)
+                                ][static_cast<std::size_t>(target)];
+                                const Integer p4 = minus_powers[4U][
+                                    static_cast<std::size_t>(crossing)
+                                ][static_cast<std::size_t>(target)];
+                                const int lower_label = 2 * crossing;
+                                const Integer m1 = -4 * Integer(q) * q
+                                    + 4 * Integer(q) * (
+                                        lower_label - 2 * gap - 2
+                                    )
+                                    + 2 * lower_label
+                                    + 4 * gap * gap + 4 * gap;
+                                closed_lower_tail += p2 * (f4 * d3 - f5 * d2)
+                                    + p4 * (2 * f4) + p3 * m1;
+                            }
                             ++h2_residue_tail_entries;
                             if (tail < 0) {
                                 ++negative_h2_residue_tails;
@@ -906,9 +945,19 @@ int main(int argc, char** argv) {
                                 const int first_lower = gap + 1
                                     + ((residue - (gap + 1)) % 4 + 4) % 4;
                                 if (crossing == first_lower) {
+                                    if (tail != closed_lower_tail) {
+                                        throw std::runtime_error(
+                                            "separated-lower closed-current mismatch"
+                                        );
+                                    }
+                                    ++h2_lower_closed_current_audits;
                                     const int y = level - 1 - 2 * target;
                                     h2_lower_current_series[
-                                        std::pair<int, int>{y, residue}
+                                        std::array<int, 3>{
+                                            y,
+                                            residue,
+                                            q % 4
+                                        }
                                     ].push_back(std::pair<int, Integer>{
                                         q,
                                         tail
@@ -1495,45 +1544,67 @@ int main(int argc, char** argv) {
         }
 
         if (h2_lower_z_differences) {
-            std::uint64_t fourth_differences = 0U;
-            std::uint64_t nonzero_fourth_differences = 0U;
+            std::array<std::uint64_t, 12U> differences{};
+            std::array<std::uint64_t, 12U> nonzero_differences{};
             for (const auto& [key, values] : h2_lower_current_series) {
                 for (std::size_t index = 0U;
-                     index + 4U < values.size();
+                     index < values.size();
                      ++index) {
-                    if (
-                        values[index + 1U].first != values[index].first + 1
-                        || values[index + 2U].first
-                            != values[index].first + 2
-                        || values[index + 3U].first
-                            != values[index].first + 3
-                        || values[index + 4U].first
-                            != values[index].first + 4
+                    std::vector<Integer> local;
+                    for (
+                        std::size_t cursor = index;
+                        cursor < values.size()
+                        && values[cursor].first
+                            == values[index].first
+                                + 4 * static_cast<int>(cursor - index);
+                        ++cursor
                     ) {
-                        continue;
+                        local.push_back(values[cursor].second);
                     }
-                    const Integer difference = values[index + 4U].second
-                        - 4 * values[index + 3U].second
-                        + 6 * values[index + 2U].second
-                        - 4 * values[index + 1U].second
-                        + values[index].second;
-                    ++fourth_differences;
-                    if (difference != 0) {
-                        ++nonzero_fourth_differences;
+                    for (
+                        std::size_t order = 1U;
+                        order <= differences.size()
+                        && local.size() > 1U;
+                        ++order
+                    ) {
+                        std::vector<Integer> next;
+                        next.reserve(local.size() - 1U);
+                        for (
+                            std::size_t cursor = 1U;
+                            cursor < local.size();
+                            ++cursor
+                        ) {
+                            next.push_back(
+                                local[cursor] - local[cursor - 1U]
+                            );
+                        }
+                        local = std::move(next);
+                        ++differences[order - 1U];
+                        if (local.front() != 0) {
+                            ++nonzero_differences[order - 1U];
+                        }
                     }
                 }
             }
             std::cout
                 << "SU2_SHELL_H2_LOWER_Z_DIFFERENCES"
                 << " series=" << h2_lower_current_series.size()
-                << " fourth_differences=" << fourth_differences
+                << " closed_current_audits=" << h2_lower_closed_current_audits
+                << " third_differences=" << differences[2U]
+                << " nonzero_third_differences=" << nonzero_differences[2U]
+                << " fourth_differences=" << differences[3U]
                 << " nonzero_fourth_differences="
-                << nonzero_fourth_differences
+                << nonzero_differences[3U]
+                << " eighth_differences=" << differences[7U]
+                << " nonzero_eighth_differences=" << nonzero_differences[7U]
+                << " twelfth_differences=" << differences[11U]
+                << " nonzero_twelfth_differences="
+                << nonzero_differences[11U]
                 << " result="
                 << (
-                    nonzero_fourth_differences == 0U
-                        ? "PASS_CUBIC_DIAGNOSTIC"
-                        : "FAIL_CUBIC_DIAGNOSTIC"
+                    nonzero_differences[2U] == 0U
+                        ? "PASS_QUADRATIC_DIAGNOSTIC"
+                        : "FAIL_QUADRATIC_DIAGNOSTIC"
                 ) << '\n';
         }
         if (

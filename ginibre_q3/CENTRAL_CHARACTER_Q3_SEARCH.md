@@ -30482,6 +30482,387 @@ At `V=(y+3d)/2`, half of the margin is at most
 All earlier `V>=d+1` have no larger margin.  Multiplication by the
 nonnegative terminal profile proves the suffix assertion. QED.
 
+The reflected even cluster has an equally short closed crossing form.  It
+removes the remaining matrix dependence from the lower current.
+
+**Lemma 5A8H28P3J (separated-lower reflected crossing formulas).**  Assume
+`Q-y>3d`, let `W` be `P_2`- or `P_4`-active in `(P5A.102BUK30)`, and put
+
+```text
+V=(ell-W)/2,
+g(W)=d+W+(W-d)_+,
+h(W)=W^2+(2d+4)W+3d^2+6d+2.
+```
+
+Then the three crossing weights at this reflected coordinate are
+
+```text
+d_1(V)=2,
+d_2(V)=4Q-g(W),
+d_3(V)=4Q^2+(4d+8)Q-h(W).                         (P5A.102BUK35)
+```
+
+Consequently the two lower-cluster margins are the explicit quadratics
+
+```text
+M_2(V)=(2g+4)Q^2
+       +(8d^2+2dg+4g+16d+8-2h)Q
+       -h-(2d^2+3d)g,
+
+M_1(L/2)=-4Q^2+4(L-2d-2)Q+2L+4d^2+4d.            (P5A.102BUK36)
+```
+
+Here the second formula is used only at the suffix labels `L>=2rho`.
+
+**Proof.**  An active reflected label obeys
+
+```text
+0<=W<=y+4d<=Q+d-1,
+K-Q-V=(d+W)/2+1.
+```
+
+Thus the three folded tensor tails in `(P5A.102BU)` have fixed endpoint
+order.  For powers one, two, and three, respectively, their elementary
+truncated-binomial telescopes give
+
+```text
+2,
+4Q-d-W-(W-d)_+,
+4Q^2+(4d+8)Q-W^2-(2d+4)W-3d^2-6d-2.
+```
+
+This is `(P5A.102BUK35)`.  Substitute it, `f_4=2Q+1`, and the active
+return formula `(P5A.102BUK17)` into the definitions of `M_2` and `M_1`.
+The cubic terms in `M_2` cancel, giving `(P5A.102BUK36)`. QED.
+
+For fixed `(d,y,r,Q mod 4)`, all terminal profiles and both label rails in
+`(P5A.102BUK30)` are fixed.  Hence Lemma 5A8H28P3J proves that its complete
+lower current is a quadratic polynomial in `Q` on each of the four
+`Q mod 4` branches.  This is a structural reduction only: positivity of
+those quadratics still requires a coupled profile certificate.
+
+The strict direct probe
+
+```text
+probe_su2_shell_lower_crossing Q d W
+```
+
+constructs the full level-`K=2Q+d+1` fusion row independently and checks
+`(P5A.102BUK35)`.  The common-source evaluator
+
+```text
+probe_su2_shell_h2_lower_current --scan 30 8
+```
+
+then checks `26,400` strictly separated values with `11<=d<=30`,
+`0<=y<=8d`, all four rails, and all four initial `Q mod 4` branches.  It
+finds no negative current and no negative four-step increment.  These are
+bounded diagnostics; neither replaces the remaining uniform coupled
+certificate.
+
+Independently, the fixed quotient-matrix evaluator now reconstructs the
+closed current from `(P5A.102BUK35)--(P5A.102BUK36)` before comparing it to
+the original `H_2` tail.  Its `d=11` row through `Q=100` checks `4,488`
+such identities and finds every third four-step difference zero.  This
+audits both the reflected-label convention and the quadratic reduction.
+
+The common-source profiles themselves have a single finite binomial form.
+
+**Lemma 5A8H28P3K (ordinary terminal-profile formula).**  For `1<=b<=4`,
+put
+
+```text
+r=(y+bd-W)/2.
+```
+
+If `W` has the wrong parity or `r<0`, then `(N_d^b)_(W,y)=0`.  Otherwise,
+
+```text
+(N_d^b)_(W,y)
+ =sum_(j=0)^b sum_(k=0)^1 (-1)^(j+k) binom(b,j)
+    binom(r-j(d+1)-k(y+1)+b-1,b-1)_+.             (P5A.102BUK37)
+```
+
+**Proof.**  The weight multiplicity at depth `r` in
+`chi_y chi_d^b` is the coefficient of `t^r` in
+
+```text
+(1+t+...+t^y)(1+t+...+t^d)^b.
+```
+
+Inclusion--exclusion gives the corresponding sum of degree-`b` truncated
+binomials.  Subtracting the preceding weight multiplicity gives the
+coefficient of `chi_W`; Pascal's identity lowers the binomial degree by
+one and gives `(P5A.102BUK37)`. QED.
+
+Thus, after `(P5A.102BUK35)--(P5A.102BUK37)`, every summand in the lower
+current is a truncated polynomial on an arithmetic progression with affine
+endpoints.  The remaining proof is therefore a finite residue-and-endpoint
+cone certificate, not an unbounded matrix problem.  The strict evaluator
+
+```text
+probe_su2_shell_h2_lower_current --profile-audit 40 8
+```
+
+checks `(P5A.102BUK37)` against ordinary path multiplication on `2,326,680`
+entries.
+
+The translation-stable part of the lower cone is now completely closed.
+
+**Lemma 5A8H28P3L (bulk separated-lower current).**  In the free band
+
+```text
+d>=11,                 Q-y>3d,
+y>=5d+8,               0<=r<4,
+```
+
+the fixed current `(P5A.102BUK30)` is nonnegative on rail `r`.
+
+**Proof.**  The three ordinary supports satisfy
+
+```text
+P_2: W>=y-2d>d,
+P_4: W>=y-4d>d,
+P_3: L>=y-3d>=2d+8>=2rho.
+```
+
+Thus `g(W)=2W`, the complete `P_3` profile belongs to the adverse suffix,
+and no lower-wall term (`k=1`) in `(P5A.102BUK37)` is active.  Put
+
+```text
+d=8a+delta,            y=8b+epsilon,
+z=Q-y-3d-1=4c+zeta,
+b=5a+C_(delta,epsilon)+v,
+
+C_(delta,epsilon)=ceil((5delta+8-epsilon)/8),
+```
+
+where `0<=delta<8`, `epsilon=delta (mod 2)`, `0<=zeta<4`, and `a` is
+shifted to its least value with `d>=11`.  On each fixed rail, the path-depth
+variable in `(P5A.102BUK37)` has one fixed class modulo four.  The `j`-th
+truncated term starts at an affine endpoint; its summand has degree at most
+three in that depth.  Exact Faulhaber summation therefore gives one rational
+polynomial in `(a,v,c)`.
+
+The strict source
+
+```text
+prove_su2_shell_h2_lower_bulk.cpp
+```
+
+performs those sums in `cpp_int` rational arithmetic, substitutes the four
+residue forms above, shifts `a` to its admissible minimum, and checks every
+monomial coefficient.  It exhausts
+
+```text
+8 * 4 * 4 * 4 = 512
+```
+
+residue cones, all of which have nonnegative coefficient expansion:
+
+```text
+SU2_SHELL_H2_LOWER_BULK cases=512 certified=512
+result=PASS_EXACT_FINITE_CONE_CERTIFICATE
+```
+
+This is an unbounded finite cone certificate.  The optional evaluation mode
+agrees with the independent common-source path evaluator, for example at
+`(d,y,z,r)=(16,88,0,0)`, where both give `279044260`. QED.
+
+The immediately adjacent finite-slope slab also admits an exact certificate.
+
+**Lemma 5A8H28P3M (high-slope separated-lower current).**  In the free
+band
+
+```text
+d>=12,                 Q-y>3d,
+4d<=y<=5d,             0<=r<4,
+```
+
+the fixed current `(P5A.102BUK30)` is nonnegative on rail `r`.
+
+**Proof.**  Put `s=5d-y`, so `0<=s<=d` and `s` is even.  The profiles are
+again ordinary and the `P_2` support lies above `d`; only the `P_3` depth
+range is truncated, at
+
+```text
+t<=(y+3d-2rho)/2.
+```
+
+Fix `d mod 8` and `s mod 8`, write
+
+```text
+s=8a+eta,              d-s=8b+lambda,
+```
+
+with the uniquely determined carry giving `d=8(a+b+carry)+delta`, and
+write `z=Q-y-3d-1=4c+zeta`.  For `d>=12`, every surviving
+truncated-binomial term in `(P5A.102BUK37)` has an affine depth interval;
+the possible endpoint value `-1` is the exact empty Faulhaber sum.  Summing
+the degree-at-most-three terms and substituting `(P5A.102BUK36)` produces a
+rational polynomial in `(a,b,c)`.
+
+`prove_su2_shell_h2_lower_high_slope.cpp` checks a nonnegative Newton/cone
+expansion on the `8*4*4*4=512` residue cones, including the finite
+`a+b` floor forced by `d>=12`:
+
+```text
+SU2_SHELL_H2_LOWER_HIGH_SLOPE cases=512 certified=512
+result=PASS_EXACT_FINITE_CONE_CERTIFICATE
+```
+
+For example, at `(d,s,z,r)=(15,4,3,2)` its optional evaluator and the
+independent path evaluator both give `153587096`. QED.
+
+**Lemma 5A8H28P3N (three separated-lower lips).**  For every `d>=11`, on
+each rail the current `(P5A.102BUK30)` is nonnegative when
+
+```text
+y=5d+2,                 y=5d+4,                 or y=5d+6.
+```
+
+**Proof.**  All terminal profiles are ordinary and `W>d`.  The only
+remaining `P_3` truncation is the fixed lip endpoint
+
+```text
+t<=3d+k/2-rho_shift,                 k in {2,4,6}.
+```
+
+Set `d=8a+delta` and `z=4c+zeta`.  Exact truncated-binomial/Faulhaber
+summation gives one polynomial in `(a,c)` per residue cone.  The strict
+`cpp_int` source `prove_su2_shell_h2_lower_lip.cpp` shifts `a` to the
+smallest value with `d>=11` and verifies all monomial coefficients in
+
+```text
+3 * 8 * 4 * 4 = 384
+```
+
+cones:
+
+```text
+SU2_SHELL_H2_LOWER_LIP cases=384 certified=384
+result=PASS_EXACT_FINITE_CONE_CERTIFICATE
+```
+
+At `(d,k,z,r)=(11,6,5,3)`, its evaluator agrees with the independent path
+calculation at `52979328`. QED.
+
+**Lemma 5A8H28P3O (the `d=11` high-slope row).**  The conclusion of Lemma
+5A8H28P3M also holds at `d=11` for
+
+```text
+45<=y<=55,                 y odd.
+```
+
+**Proof.**  There are six source labels, four rails, and four `Q mod 4`
+classes.  For each class, the exact formula `(P5A.102BUK36)` gives a
+quadratic in `Q=q_0+4c`, where `q_0` is the first strictly separated value.
+The strict `cpp_int` source
+`prove_su2_shell_h2_lower_d11_high.cpp` computes its three coefficients from
+the finite ordinary `N_11` profiles and checks each is nonnegative.  The
+complete `6*4*4=96` row certificate returns
+
+```text
+SU2_SHELL_H2_LOWER_D11_HIGH cases=96 certified=96
+result=PASS_EXACT_FINITE_ROW_CERTIFICATE
+```
+
+QED.
+
+**Lemma 5A8H28P3P (mid-high separated-lower current).**  In the free band
+
+```text
+3d+12<=y<4d,            Q-y>3d,            d>=12,
+```
+
+the fixed current `(P5A.102BUK30)` is nonnegative on every rail.
+
+**Proof.**  Put `t=y-3d`.  The `P_2` and `P_3` profiles are ordinary, with
+`P_2` supported above `d`.  At power four, `(P5A.102BUK37)` has exactly one
+active lower-wall correction,
+
+```text
+-binom(r-y+2,3)_+,
+```
+
+while every other `k=1` image is beyond the `W=0` endpoint.  The adverse
+`P_3` suffix is `r<=(y+3d-2rho)/2`.  Write `t=8b+lambda` and
+`d-t=8a+eta`; since `t>=12`, all nonempty depth intervals have affine
+endpoints.  Exact Faulhaber summation of the ordinary terms and this one
+correction yields a polynomial in `(a,b,z)`.
+
+`prove_su2_shell_h2_lower_mid_high.cpp` checks its shifted nonnegative
+coefficient expansion over all `8*4*4*4=512` residue cones:
+
+```text
+SU2_SHELL_H2_LOWER_MID_HIGH cases=512 certified=512
+result=PASS_EXACT_FINITE_CONE_CERTIFICATE
+```
+
+The independent path calculation agrees with its evaluator, for example at
+`(d,t,z,r)=(18,14,0,1)`, giving `213745324`. QED.
+
+**Lemma 5A8H28P3Q (six mid-slope lips).**  For `d>=12`, the current
+`(P5A.102BUK30)` is nonnegative on every rail when
+
+```text
+y=3d+t,                 t in {0,2,4,6,8,10}.
+```
+
+**Proof.**  The `P_2` and `P_3` paths are ordinary, `P_2` lies above `d`,
+and the `P_3` endpoint pattern is fixed by `(t,r)`.  The `P_4` profile has
+the same sole lower-wall image as in Lemma 5A8H28P3P.  With `d=8a+delta`
+and `z=4c+zeta`, exact truncated-binomial/Faulhaber summation gives a
+polynomial in `(a,c)` for each ray and residue class.
+
+`prove_su2_shell_h2_lower_mid_lips.cpp` shifts to `d>=12` and verifies the
+coefficient expansion on all
+
+```text
+6 * 8 * 4 * 4 = 768
+```
+
+cones:
+
+```text
+SU2_SHELL_H2_LOWER_MID_LIPS cases=768 certified=768
+result=PASS_EXACT_FINITE_CONE_CERTIFICATE
+```
+
+At `(d,t,z,r)=(18,4,3,2)`, the independent current is `168491336`, agreeing
+with the certificate evaluator. QED.
+
+**Lemma 5A8H28P3R (middle separated-lower current).**  In the free band
+
+```text
+2d<=y<=3d,             Q-y>3d,             d>=11,
+```
+
+the fixed current `(P5A.102BUK30)` is nonnegative on every rail.
+
+**Proof.**  Put `s=3d-y`.  The adverse `P_3` suffix contains only the first
+two ordinary binomial images; its third image begins below the suffix.
+`P_4` has exactly one lower-wall image, as in Lemma 5A8H28P3P.  Relative to
+the high-label formula `g(W)=2W`, the part of `P_2` supported on `W<=d`
+contributes the explicit correction
+
+```text
+(d-W){2Q^2+(2d+4)Q-(2d^2+3d)}.
+```
+
+Write `s=8a+eta`, `d-s=8b+lambda`, and `z=4c+zeta`; all remaining depth
+endpoints are affine.  The strict rational C++ summation in
+`prove_su2_shell_h2_lower_mid.cpp` verifies the finite `a+b` cone condition
+from `d>=11` and certifies all `512` residue cones coefficientwise:
+
+```text
+SU2_SHELL_H2_LOWER_MID cases=512 certified=512
+result=PASS_EXACT_FINITE_CONE_CERTIFICATE
+```
+
+At `(d,s,z,r)=(18,4,0,1)`, its value `123593406` agrees with the independent
+ordinary-path evaluator. QED.
+
 Thus `(P5A.102BUK30)` reduces on each rail to one fixed endpoint current:
 the complete even reserve plus the `P_3` suffix beginning at the first
 `V>=d+1` in that rail.  It has no remaining cutoff variable in the
