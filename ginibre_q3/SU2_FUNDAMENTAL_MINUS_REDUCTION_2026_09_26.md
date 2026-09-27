@@ -5506,3 +5506,156 @@ There is also a supplemental exact enumeration (`alpha, beta <= 7`,
       interior maximum, for `n >= 2`.
   - The `r = 3` two-power family therefore remains open on the grouped
     region `h >= 0, h+t >= 2`, or `h = -1, t >= 3`.
+
+### `r = 3` two-power family: proof plan after the sign-shape theorem (main agent, exact data)
+
+With `F = F_(d,n)` as in FM-T1-TR3r3/4 and `a = d+2n`, the family
+(`L_3 >= 0`) follows from four pieces:
+
+- (a) `Psi_3(1) > 0`, i.e. the last increment is positive.  This is a
+  polynomial inequality in `(d,n)`.  Data: `F(n+1) < F(n+2)` in every
+  case with `d, n <= 80`.
+- (b) At most two sign changes of the increments.  **Proved**
+  (FM-T1-TR3r4).  With (a), the maximum of `F` on `[0, n+2]` is at
+  `n+2`, at `0`, or at the unique interior local maximum `x_1`.
+- (c) `F(n+2) >= F(0)`, except at `(d,n) = (1,0)` (the grouped exception).
+  This is a closed-form endpoint comparison of FM54 type.  Data: no
+  other failure for `d, n <= 80`; equality at `(0,0)`.
+- (d) `F(n+2) >= F(x_1)`.  Data: the worst ratio is `11/18`, at
+  `(d,n,x) = (1,3,1)`.
+  - The interior maximum sits at `y_1 = n+2-x_1 ~ 2 sqrt(n)`: 6 at
+    `n = 8`, 13 at `n = 32`, about 16 at `n = 64`.
+  - There the binomial factor is about `5e-3` and the `R` factor about
+    30--90, so `F(x_1)/F(n+2)` tends to about 0.28 for fixed `d` as
+    `n -> infinity`.  It is small for large `d`.
+  - So an FM42-style certificate (a scaling-limit bound for large `n`
+    plus exact per-`n` polynomial checks in `d` for small `n`) is
+    feasible.
+
+**Refinement of piece (d) (main agent, exact and floating screens).**
+- *Binomial bound* (neptune, proved):
+  `C(m,n+2-y)/C(m,n+2) = prod_(i=1)^y (n+3-i)/(d+n+4+i) <= exp(-kappa w)`,
+  with `w = y(d+y+2)` and `kappa = 2/(d+2n+7)`.
+- `F(n+2-y)/F(n+2) = [binomial ratio] * P(w)`, where
+  `P(w) = R(t_0-w)/R(t_0)` is an explicit cubic in `w`.
+- Below the first sign change `y_-` of `Psi_3` (smaller root `z_-`), the
+  increments are positive, so `F(n+2-y) <= F(n+2)` by monotonicity.  In
+  885 of the screened pairs with `n >= 4` there is no sign change at
+  all.
+- For `y >= y_-` and `n >= 4`, `exp(-kappa w) P(w) <= 1` holds in every
+  screened case.  Maximum 0.931 at `(d,n,y) = (1,4,5)`; per `n`: 0.867
+  (`n = 5`), 0.75 (`n = 6`), about 0.5 (`n = 16`), about 0.335
+  (`n = 400`).
+- So piece (d), and piece (c) for `n >= 4`, reduce to a one-variable
+  estimate with at least 7% slack:
+  `exp(-kappa w) P(w) <= 1` for `w >= w_-(d,n)`.
+- For `n = 2, 3`, the Gaussian bound is too weak in five pairs.  Use the
+  exact binomial ratios instead: finitely many rational inequalities in
+  `d` for each `(n, y)`.
+- A Taylor-4 plus AM--GM certificate for `P(w) <= e^(kappa w)` on all
+  `w >= 0` fails at `d = 0`, since `kappa w` reaches about `n`.  A range
+  split in `w` is needed (FM42 style).
+
+**`r = 3` pieces (a), (c), and `R_8` (FM-T1-TR3-AC, luna_max_saturn; main-agent additions).**
+- **(a) PROVED: `Psi_3(1) > 0`, so the last increment is positive.**
+  - Via Lemma FM23 at `r = 3`, the last increment equals `b^2` times a
+    positive factor times `R^_8(d,n)`.  `R^_8` coincides with the
+    main agent's independent computation of `Psi_3(1)`.
+  - With `x = n - (d-5)(d+4)/10`,
+    `R^_8 = 8400x^4 + C_2 x^2 + C_1 x + C_0`, where
+    - `C_0 = (12/25) d^2(d-1)^2(d+4)^2(d+5)^2`;
+    - `C_1 = (16/5) d(d-1)(d+4)(d+5)(2d+3)(2d+5)`;
+    - `C_2 = 48(2d^4 + 16d^3 + 22d^2 - 40d - 175)`;
+    - `4C_0 C_2 - C_1^2 = (512/25) d^2(d-1)^2(d+4)^2(d+5)^2 (d^4 + 8d^3 - 89d^2 - 420d - 900)`.
+  - Cases: `d <= 8` directly (with a finite table for `x < 0`); for
+    `d >= 9` the last factor is positive (its largest real root is
+    8.815).
+- **`R_8(d,n) > 0` for all `d, n >= 0` (PROVED).**  The same method with
+  `x = n - (d-4)(d+3)/6`.  The discriminant factor
+  `d^4 + 4d^3 - 35d^2 - 78d - 72` has largest root 5.463; the cases
+  `d <= 5` are direct.
+- **(c) `F(n+2) >= F(0)`: PROVED for `d = 0` (all `n`), for `n <= 1` (all
+  `d`, except `(1,0)`), and for `n = 2, 3` (all `d`).**
+  - For `n = 2, 3` (main agent): with
+    `bracket = C(d+2n,n)(d+2n+1)(d+2n+2) R_8 - A_3 (n+1)(n+2)(n+3) prod_(i=1)^4 (d+n+i)`,
+    the bracket is a polynomial in `d` of degree 12 or 13.
+  - Its factored forms are `(d+3)(d+4)(d+5)^2(d+6) S_7(d)/2` and
+    `(d+3)(d+4)(d+5)(d+6)^2(d+7) S'_7(d)/6`.  Sturm: no root in
+    `[0, oo)`, and the value at `d = 0` is positive.
+  - Open for `n >= 4`, `d >= 1`; this is covered by the pending
+    certificate FM-T1-TR3-CERT at `y = n+2`.
+- Checks (main agent): the packet verifier passes (all symbolic
+  identities and boundary values), and the discriminant roots were
+  confirmed.  The crude bound `C(d+2n,n) >= C(d+2n,4)` leaves 33
+  negative coefficients, so it cannot close (c) for `n >= 4`.
+- **(c) and (d) for `n = 2, 3`: PROVED exactly (main agent).**
+  - For fixed `n`, every `F_(d,n)(x)` is a rational function of `d`.
+  - For `n = 2, 3` and every `x <= n+1`:
+    `F(n+2) - F(x) = num/den`, and Sturm gives no root of `num` or `den` in
+    `[0, oo)`, with a nonnegative value at `d = 0`.
+  - So `F(n+2) = max_x F(x)` for all `d` when `n <= 3`, using neptune's
+    `n = 0, 1` slices (with the grouped exception `(1,0)`).
+  - Verifier: `character_ring_iter/verify_r3_twopower_smalln.py 2 3`.
+  - The `r = 3` family is now open only for `n >= 4`.  That is exactly the
+    range where the Gaussian-plus-cubic bound has at least 7% slack
+    (FM-T1-TR3-CERT pending).
+- **(c) and (d) for `4 <= n <= 160` (all `d`) and for `n >= 161`, `d >= n`:
+  PROVED (FM-T1-TR3-CERT, luna_max_jupiter; verified by the main agent).**
+  - Normalised cubic: `P(w) = 1 + A_1 x + A_2 x^2 + A_3 x^3`, with
+    `x = 2w/D`, `D = d+2n+7`, `S = d+n+4`, `Q = R_8`,
+    `A_1 = D B_1/(2SQ)`, `A_2 = 2D^2 B_2/(SQ)`, `A_3 = 2D^3 B_3/(SQ)`, and
+    explicit `B_1, B_2, B_3`.
+  - Main agent: this equals the independent `R(t_0-w)/R(t_0)` in 8,625
+    cases.
+  - With the binomial bound (ratio `<= e^(-x)`) and `R_8 > 0`, it suffices
+    that `P <= e^x` (the case `P < 0` is trivial).
+  - Cones: `Q`, `C_1 = 2SQ - D B_1`, `C_2 = SQ - 4D^2 B_2` and
+    `C_3 = SQ - 12D^3 B_3` have all coefficients positive after
+    `n = 4+v, d = 3n+u` and after `n = 16+v, d = n+u`.  Hence
+    `A_1 <= 1`, `A_2 <= 1/2`, `A_3 <= 1/6`, and
+    `P <= 1 + x + x^2/2 + x^3/6 <= e^x`.
+  - Exact screen for the complementary `d`-ranges (`4 <= n <= 160`):
+    `P <= (1+x/K)^K <= e^x` for every `y` in `[1, n+2]`, with
+    `K = 512, 128`.  That is 1,406,802 exact Fraction comparisons.
+  - Verifier: `character_ring_iter/verify_r3_twopower_cert.py`, re-run
+    by the main agent: PASS.
+  - **Remaining region of the `r = 3` two-power family:** `n >= 161`,
+    `0 <= d < n`.
+  - Main-agent data there: `sup_(x>0) P(x) e^(-x) < 1` on a grid
+    (`n <= 10^4`, all `d/n`).  `A_1 < 1`; for small `d/n`, `A_2` is about
+    `-5.4` to `-5.9` and `A_3` about `1.35` to `1.53`; for
+    `d/n >= 0.3` it is coefficientwise.  So `P(x) <= e^x` should hold for
+    ALL `x >= 0` (no `y_-` needed).
+  - Degree-5 Taylor comparison: dividing by `x`, the requirement
+    `min_(x>0) [(1/2 - A_2)/x + x/24 + x^2/120] >= A_3 - 1/6` holds in the
+    limit (about 1.53 versus 1.36 at `d = 0`).
+
+### Direction note (main agent, after user review)
+
+The `r = 3` two-power slice was stopped at the user's direction.  The
+target is the FULL cone FM3, and per-family certificates (FM54, FM55,
+the `r = 3` slice) do not transfer to the next `r` or factor count.  The
+partial `r = 3` results above remain valid.  Its only open region was
+`n >= 161`, `d < n`, where a degree-5 Taylor comparison held on a
+13,013-point grid.  Work now targets SECTOR-level arguments (FM53 is the
+model).
+
+### FM-SEC1 (mars): the `r = 1` two-`hat S` sector -- screen and two kills
+
+- **Reformulation (checked).**  Using `hat S_q = 2h_q + 2h_(q-2) - h_(q-1)h_1`,
+  the sector is `A_p(h_kappa h_(q-1) h_1) <= 2A_p(h_kappa h_q) + 2A_p(h_kappa h_(q-2))`,
+  where `A_p(E) = sum_lambda c_lambda(E) B_p(lambda)`.
+  - Mars checked 2,224 cases (`|kappa| <= 10`, `2 <= p, q <= 5`): no
+    negative value, and every equality is a parity zero.
+  - The main agent independently matched the direct integral in 1,072
+    cases.
+- **Kill K27 (no one-hat decomposition).**  `hat S_2^2` is not a
+  nonnegative combination of FM53-type terms `hat S_r (x) E'` with `E'`
+  genuine.
+  - The functional `l = (1/4)[U_1U_1] + (1/2)[U_1U_3] - (1/2)[U_2U_2]` on
+    `SU(2) x SU(2)` characters is `>= 0` on all 46 admissible generators.
+  - But `l(S_2 S_2) = -1`.
+- **Kill K28 (no shape-preserving Pieri comparison).**  For `p = q = 2`,
+  the Schur coefficient of `hat S_2^perp F_2` at
+  `mu_d = (d+2, d+1, d+1, d)` equals `-1` for every `d >= 0`.  Any tableau
+  argument must aggregate across shapes.
