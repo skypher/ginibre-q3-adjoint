@@ -5659,3 +5659,3094 @@ model).
   the Schur coefficient of `hat S_2^perp F_2` at
   `mu_d = (d+2, d+1, d+1, d)` equals `-1` for every `d >= 0`.  Any tableau
   argument must aggregate across shapes.
+
+### Sector programme in the invariant-count (multigraph) model (main agent; user-approved FM3 direction)
+
+Let `I(kappa)` be the number of Sp(4)-invariants in
+`(x)_i Sym^(kappa_i) C^4`.  Equivalently, it is the number of loopless
+multigraphs on ordered vertices with degree sequence `kappa` and no
+3-nesting.  Main agent: the two counts agree in all 219 ordered degree
+sequences with at most 5 vertices and total at most 8.
+
+Write `tau_k` for "append a vertex of degree `k`".  Then
+`hat S_p = 2 tau_p + 2 tau_(p-2) - tau_(p-1) tau_1`, and the level step is
+`(x-y)^2 = 2S_2 + 4 - S_1^2`.  So every FM3 sector is a signed "append
+gadgets" inequality for `I`:
+
+- **FM53 (proved, via branching):**
+  `I(kappa + {p-1,1}) <= 2 I(kappa + {p}) + 2 I(kappa + {p-2})`.
+  - Checked in 695 cases with no nontrivial equality.
+  - The factor 2 is needed: coefficient 1 fails in 276 of 695 cases, and
+    the maximum of `I(kappa+{p-1,1}) / (I(kappa+{p}) + I(kappa+{p-2}))`
+    is 1.81.
+- **H-only `r = 2` sector (open):**
+  `3 I(kappa + {1,1}) <= 4 I(kappa + {2}) + 8 I(kappa)`, the fifth pass's
+  gadget formula.
+- **`r = 1`, two `hat S` (open):** the product of two FM53 gadgets.
+
+No Schur shapes appear.  So the shape obstructions K22, K27 and K28 do
+not apply to injections in this model.
+
+**Calibration step:** re-prove FM53 by an explicit injection, from these
+multigraphs into two copies of each target set.
+- **FM-MG1 (saturn): the naive calibration map fails; the inequality stands.**
+  - The rule "delete the leaf `v` if `uv` is an edge, otherwise merge `v`
+    into `u`" has fibres larger than 2 in 252 of 1,024 cases.  The smallest
+    is `kappa = (1,1,1)`, `p = 3`: three graphs merge to one star.
+  - The cardinal inequality holds in all 1,024 cases (ordered
+    compositions with sum `<= 8`, `p <= 5`).  The maximum ratio is 23/13,
+    at `kappa = (1,1,2,2,2)`, `p = 4`.
+  - Unused capacity: the second copy of the `p-2` targets.  Next design:
+    reroute colliding graphs there by rewiring `{vw, ux} -> wx`.  This
+    keeps every degree in `kappa` and lowers `u` to `p-2`.
+
+**Literature check, second pass (main agent, web, 2026-09-27).**
+- *"Graphical proof of Ginibre's inequality" (arXiv 2406.08944, J. Stat. Phys. 2024).*
+  - A combinatorial proof for XY (U(1)).  It uses the multigraph
+    representation of van Engelenburg--Lis (2023): edges coloured red/blue
+    and oriented, with divergence constraints `dr = f`, `db = g`.
+  - The bijection `{dr = f, db = g} -> {dr = f+g} x {db = -f+g}` reverses
+    and recolours the red edges.  It gives an exact product formula, from
+    which Ginibre's inequality follows.
+  - It depends on abelian currents (orientations and divergences); there is
+    no non-abelian extension.  For us it is the template, not a tool: the
+    Sp(4) 3-nesting-free multigraph model is the natural non-abelian
+    analogue, and a colour/orientation-type involution there is the kind of
+    mechanism to look for.
+- *Rubey--Westbury (arXiv 1504.02586).*  A combinatorial second
+  fundamental theorem for the defining representation of Sp(2n), via
+  `(n+1)`-noncrossing perfect matchings.  It covers the defining
+  representation only, not products of symmetric powers.  It is the
+  noncrossing counterpart of our nesting-free model.
+- No SU(2)/Sp(4) Ginibre mechanism was found, consistent with the first
+  pass.
+- **FM-MG2 (saturn) and the main-agent follow-up: calibration results.**
+  - *FM53 (known sector).*  With the vertex order `b_1, u, v, b_2, ...` and
+    the local moves (delete `v` if `uv`; merge `v` into `u`, two copies;
+    rewire `{vw, ux} -> wx`), a perfect matching exists in all 1,024 cases
+    (sum `kappa <= 8`, `p <= 5`).  Main agent: re-verified.
+    - Not yet a proof: the matching is algorithmic, and Hall's condition is
+      open.
+    - The move-graph components reach 524 sources, so Hall's condition is
+      not local.
+    - Uniform fractional spreading overloads the rewire targets (loads up
+      to 8/3).
+  - *`r = 2` H-only sector (open) with the analogous local moves* (delete
+    `v_1 v_2`; merge `v_1, v_2` into a degree-2 vertex; rewire
+    `{v_1 w_1, v_2 w_2} -> w_1 w_2`; plus moves through one extra base
+    edge).  Flow test: infeasible in 115 of 255 cases, and still in 59 of
+    255 with the richer moves.
+  - The failures are near-tight cases of the inequality: slack `L = 2`
+    against total `32` at `(1,1,1,3)` and `(2,2,2)`; `L = 10` against
+    `280` at `(1,1,1,1,1,3)`.
+  - **Conclusion.**  Local injections suffice (computationally) for the
+    known sector FM53 but not for the first open sector.  Because the
+    open inequality is nearly tight, a proof must be close to an exact
+    bijection.  The analogue is the exact product formula in the XY
+    graphical proof, not a lossy injection.
+
+### Euler-characteristic mechanism and the graded `r = 2` conjecture qFM3_2 (main agent, 2026-09-27)
+
+Notation: `h_k = chi(Sym^k W)` with `W = C^4`, so `H_(k+1) = h_k`.  Write
+`phi_r(kappa) = (1/2) E_(sc x sc)[(x-y)^(2r) prod_i h_(kappa_i)(x,y)]`.
+At `r = 2` this is `L(kappa)`.  The H-only sector at level `r` asks
+`phi_r(kappa) >= 0`.
+
+**(1) All-ones family: symmetric product (checked, `0 <= r <= 9`, `0 <= m <= 15`).**
+
+    phi_r(1^(2m)) = (2r)! (2r+2)! (2m)! (2m+2)! / ( 4 r!(r+1)! m!(m+1)! (r+m+1)!(r+m+2)! ).
+
+- It is symmetric in `r <-> m`, since `y -> -y` swaps `x+y` and `x-y`.
+- At `r = 2`: `L(1^(2m)) = 60 I(1^(2m)) / ((m+3)(m+4))`.
+- It is a single family and gives no sector information.
+
+**(2) Positivity on the whole multiplicative H-cone holds only at integer levels.**
+- Exact integer arithmetic: `phi_r(kappa) >= 0` for every partition `kappa`
+  with `|kappa| <= 16` (915 partitions) and every `1 <= r <= 6`
+  (`character_ring_iter/verify_phir_hcone.py 16 1,2,3,4,5,6`).  This includes more than `2r`
+  factors, so the statement is stronger than the H-only FM3 sector.
+- Gauss quadrature on a 400- and an 800-point semicircle grid: positivity
+  fails at every non-integer level tested.
+  - At `r = 1/2`, `kappa = (6,4)` gives value/(absolute mass) `= -0.143`.
+  - Failures also occur at `r = 0.25, 0.75, 1.5, 2.5`.
+  - The integer levels reproduce 0 to `1e-15`.
+- So no analytic interpolation in `beta = 2r` can prove the sector.  The
+  mechanism is algebraic.
+- A Newton (binomial) expansion `phi_r = sum_j a_j C(r,j)` has `a_1 < 0`
+  already at `kappa = (2,2)`, so it is not the mechanism either.
+
+**(3) Euler characteristic.**  Let `H = SU(2) x SU(2)`, `P = C^2 (x) C^2`
+(so `det(1 - h|P) = (x-y)^2`), and let `M = (x)_i Sym^(kappa_i) W`.
+- For ANY action of the abelian Lie algebra `a = P^(+r)` on `M` by
+  commuting `H`-equivariant operators, the Koszul complex gives
+
+      2 phi_r(kappa) = sum_k (-1)^k dim Hom_H(Lambda^k a, M).
+
+- So `phi_r >= 0` follows as soon as one such complex has `H`-invariant
+  cohomology in even degrees only.
+- Slot actions: let `n = Hom(B,A)` sit inside `gl(4)`, where `W = A + B`
+  and `A = C^2`, `B = C^2`.  Let `n^(i)` be its action on the `i`-th
+  tensor factor, and set `rho(p (x) e_j) = sum_i C_(ji) n^(i)(p)`.  These
+  operators commute because `n` is abelian.
+- `r = 1`, `C = (1,...,1)`: by Kostant's theorem for the `GL2 x GL2`
+  parabolic, the invariant cohomology sits in degrees 0 and 4 only, each
+  of dimension `I(kappa)`.  This recovers `phi_1 = I`.
+- `r = 2`, generic `C` (Vandermonde; `character_ring_iter/koszul_slot_cohomology.cpp`, rank mod
+  `2^31 - 19` over the four weights `(0,0),(2,0),(0,2),(2,2)`):
+  - The invariant cohomology is even in all 30 cases finished so far
+    (`|kappa| <= 8`).  Example: `(1^6)` gives `[6,0,5,0,18,0,5,0,6]`,
+    Euler characteristic `40 = 2 L`.
+  - SEE ITEM (17): this fails at size 10 (`(4,1^6)`), so evenness is not
+    a general mechanism.
+  - The pattern is palindromic in degree.
+- `r = 3`, generic `C`: odd cohomology appears.
+  - `(1,1)` gives `[1,0,4,0,11,6,8,6,11,0,4,0,1]`.
+  - It also appears at `(2,1,1)` and `(1,1,1,1)`.
+  - The slot-Koszul route fails at `r = 3` for small `kappa`, and at
+    `r = 2` from size 10 (item (17)).
+
+**Relation to earlier Koszul attempts.**
+- **K5** tensors `F` with `m` copies of the two-term complex `C^2_x -> C^2_y`,
+  using one `n`-action.  It found odd cohomology at `F = S_1^2`, `m = 2, 3`,
+  and showed that differentials preserving the `GL(4)`-isotypic splitting
+  are forced to fail at odd `m`.
+- **K9** shows that differentials natural in the `Sp(4)`-module `M` cannot
+  work, so the maps must use the symmetric-power (tensor-factor) structure.
+- **FM16** sketched the `r = 2` integral as `chi_y`-genera on `Gr_2(C^4)`.
+- The slot action in (3) is new relative to these:
+  - It uses `r` copies of `P`, one differential per copy, acting through
+    individual tensor factors (as K9 requires).
+  - It mixes `GL(4)`-isotypic components, which escapes the K5
+    obstruction.
+  - Its level is `m = 2r`, which is even.
+
+**(4) Conjecture qFM3_2 (graded `r = 2`).**  Let `U'` be the four
+short-root weights `+-e1+-e2` of `Sp(4)`, and let `K_(lambda,kappa)(t)` be
+the charge Kostka--Foulkes polynomial.  Then for every partition `kappa`,
+
+    Phi_kappa(t) := sum_(l(lambda) <= 4) K_(lambda,kappa)(t) Ehat_lambda(t)  lies in  N[t],
+
+    Ehat_lambda(t) = < S_lambda(C^4)|_Sp4 , det(1 - t g | U') >_Sp4
+                   = [5]_t        if lambda = (m,m,m,m),
+                     1 + t^4      if lambda = (a,a,b,b), a > b,
+                     t^2          if (lambda_1-lambda_2, lambda_3-lambda_4) in {(2,0),(0,2)},
+                     -(t + t^3)   if (lambda_1-lambda_2, lambda_3-lambda_4) = (1,1),
+                     0            otherwise.
+
+- The closed form was checked against the direct `Sp(4)` torus integral
+  for all 94 shapes with `|lambda| <= 10`.
+- At `t = 1`, `Phi_kappa(1) = L(kappa)`, so qFM3_2 implies the whole H-only
+  `r = 2` sector.
+- **Checked:** all 525 partitions with `|kappa| <= 16` give `Phi_kappa(t)`
+  in `N[t]` (`character_ring_iter/verify_qfm3_r2.py 16`, which builds
+  `character_ring_iter/kf_charge_sp4.cpp` to enumerate the SSYT with at
+  most 4 rows, with charge).
+- Equivalent forms:
+  - `Phi_kappa(t) = int_Sp4 Q'_kappa(g;t) det(1 - t g|U') dg`, where
+    `Q'_kappa` is the modified Hall--Littlewood function.
+  - The symmetric function `sum_lambda Ehat_lambda(t) s_lambda` is
+    Hall--Littlewood `P(x;t)`-positive.
+- **Origin.**  It is the graded Euler characteristic of the `r = 2`
+  Koszul complex for `a = n + n t` acting on the FUSION product of the
+  `Sym^(kappa_i)`, whose graded multiplicities are Kostka--Foulkes
+  polynomials.  Even `H`-invariant cohomology of that complex in each
+  degree would prove qFM3_2.  That evenness is FALSE (item (10)); the
+  complex is only bigraded-pure (item (16)).
+- The pairing is necessary: `sum_lambda K_(lambda,kappa)(1) Ehat_lambda(t)`
+  (ungraded Kostka, graded kernel) is NOT positive.  For example, at
+  `(2,1,1)` it equals `1 - t + 2t^2 - t^3 + t^4`.
+- **No `r = 3` analogue found.**  Replacing `det(1 - tg|U')` by `D_t^2`,
+  `D_t D_(t^2)`, `D_t D_1`, `D_t D_(-t)` or `D_t^3` gives negative
+  coefficients (for example at `(2,1,1)`).  So do the fusion gradings
+  with copy degrees `(0,1,2)`, `(0,1,3)`, `(0,2,3)`, `(0,1,4)`,
+  `(0,2,4)`, `(0,3,4)`, `(0,2,5)`, `(0,3,6)`.  At `r = 2`, the degrees
+  `(0,2)` and `(0,3)` also fail; only `(0,1)` works.
+
+- **No graded level step.**  Consider graded versions of the level
+  recursion,
+  `a(t) Phi_(kappa+{2}) + c(t) Phi_kappa - b(t) Phi_(kappa+{1,1})`, with
+  `a, b, c` nonnegative Laurent polynomials of degree range `[-6, 6]` and
+  `a(1) = 4`, `b(1) = 3`, `c(1) = 8`.  Linear programming (main-agent scratch LP)
+  finds no choice that is coefficientwise `>= 0` for all `|kappa| <= 6`.
+  So `r = 3` positivity is not a fixed-weight graded consequence of
+  qFM3_2.
+
+**(5) FM53 in two lines, via Kostant (main agent).**  Take `r = 1`, one plus
+label `p >= 1`, and any polynomial GL(4)-module `E` (not only products of
+symmetric powers).  Then
+
+    word = (1/2) int_H S_p chi_E det(1 - h|n)
+         = (1/2) sum_lambda c_lambda(E) sum_(w in W^P) (-1)^(l(w)) [ types_w(lambda) in {(p,0),(0,p)} ].
+
+- The second equality uses `det(1-h|n) chi_(V_lambda) = sum_w (-1)^(l(w)) chi_(L(w.lambda))`
+  (Kostant / Weyl).
+- `S_p = V_p (x) 1 + 1 (x) V_p` pairs only with the types `(p,0)` and
+  `(0,p)`.
+- The six types are:
+  - `l = 0`: `(a,c)`;
+  - `l = 1`: `(a+b+1, b+c+1)`;
+  - `l = 2`: `(a+b+c+2, b)` and `(b, a+b+c+2)`;
+  - `l = 3`: `(b+c+1, a+b+1)`;
+  - `l = 4`: `(c,a)`.
+- Both odd-length types have both coordinates at least 1, so they never
+  match.
+- Hence every term is `>= 0`.  This reproves FM53 without FM51 and
+  extends it to every GL(4)-module `E`.
+- The same bookkeeping explains why two `hat S` factors (or `r >= 2`) are
+  harder.  With two factors, `S_p S_q` contains the mixed types `(p,q)` and
+  `(q,p)`, which the odd types `(a+b+1, b+c+1)` can hit.  At `r = 2`, the
+  generic slot-Koszul cohomology has the types `(0,2)` and `(2,0)` in odd
+  degrees (`kappa = (1,1)`).
+- The `r = 1` two-`hat S` values are nonnegative in 344 cases
+  (`|kappa| <= 8`, `2 <= p <= q <= 5`).  Three tried gradings fail:
+  charge Kostka--Foulkes, and that combined with the Kostant length grading
+  in either direction (`(-t)^l` or `t^(4-l)`).
+
+**(6) Reduction of `r = 2` evenness to a five-term row complex (main agent).**
+Let `a = n + T`, where `T = sum_i c_i n^(i)` (generic slot action, or
+the `t`-action on the fusion product).  Use the Hochschild--Serre
+spectral sequence for the ideal `n` of `a`:
+
+    E_2^(p,q) = H^p( T ; H^q(n, M) ).
+
+`H^q(n, M)` is given by Kostant.  Its `l(w) = q` pieces have the types
+listed in (5).  The `H`-invariant `E_1^(p,q) = Hom_H(Lambda^p P, H^q(n,M))`
+matches types against `Lambda^p P`, whose types are:
+`(0,0)` for `p = 0, 4`; `(1,1)` for `p = 1, 3`; `(2,0) + (0,2)` for `p = 2`.
+
+- **Rows `q = 1, 2, 3`.**  They meet `Lambda^p P` only for
+  `lambda = (m,m,m,m)`, at `(p,q) = (1,1), (3,1), (2,2), (1,3), (3,3)`.
+  All of these have even total degree.
+- **Row `q = 0` (and its mirror `q = 4`).**  Here `H^0(n,M) = M^n`, and
+  the row is
+
+      X_0 -> X_1 -> X_2 -> X_3 -> X_4,
+      X_0 = X_4 = (+)_(lambda=(a,a,b,b)) Mult_lambda,
+      X_1 = X_3 = (+)_((a,c)=(1,1)) Mult_lambda,
+      X_2 = (+)_((a,c) in {(2,0),(0,2)}) Mult_lambda,
+
+  where `dim Mult_lambda = K_(lambda,kappa)`.  The maps come from `T`.
+  They move one box from row 3 or 4 to row 1 or 2 (Gaudin-type operators
+  on multiplicity spaces).
+- **Consequence.**  `H^odd = 0` for the `r = 2` complex follows from
+  `H^1(X) = H^3(X) = 0`.
+- **Euler characteristics.**  `2 L = 2 chi(X) + 6 sum_(m^4) K`, and
+  `chi(X) = 2 sum_(aabb) K - 2 sum_((1,*,1)) K + sum_((2,*,0),(0,*,2)) K`.
+  The necessary condition `chi(X) >= 0` holds for all 159 partitions
+  with `|kappa| <= 12`.
+- **`H^1(X) = 0` as a Poincare lemma for `T`.**  Every `H`-map
+  `phi : P -> M^n` with `T(p) phi(p') = T(p') phi(p)` has the form
+  `phi = T(.) v`, with `v` in `(M^n)^H`.
+- For `kappa = (1^n)`, the natural candidate model of the fusion product is
+  `(W^(x)n (x) R_n)^(S_n)`, where `R_n` is the coinvariant algebra, with
+  `T = sum_i n^(i) x_i`.  It has the right graded character
+  `sum_lambda s_lambda Ktilde_(lambda,1^n)(t)`.  The module isomorphism is
+  not yet checked.
+- This is the proposed attack on qFM3_2.  The graded version is the same
+  row complex, with `t`-graded multiplicity spaces and maps of degree `+1`.
+- **Correction (direct computation, main-agent scratch script `rowX.py`).**  The sufficient
+  condition `H^1(X) = H^3(X) = 0` is FALSE at `kappa = (1,1,1,1)`, where
+  `H(X)_inv = [2,0,1,1,1]`.
+  - The full `r = 2` complex there is still even:
+    `[2,0,1,0,6,0,1,0,2]`.  So the odd `E_2` class must be cancelled by a
+    higher differential from the `(m,m,m,m)` rows `q = 1, 2, 3`.
+  - `X` is exact at odd positions for the other 17 partitions with
+    `|kappa| <= 6`.
+  - A proof along these lines must therefore use the whole spectral
+    sequence, not the row `X` alone.
+  - `H(X)` is not palindromic, so `X` is not self-dual.
+
+**(7) FM-R3M (luna_max_neptune; main agent re-checked the classification
+logic): factor-wise actions at `r = 3`.**
+- For `kappa = (1,1,1,1)` at `r = 3`, the `H`-invariant cochain dimensions
+  are `[10,48,156,368,690,960,1080,960,690,368,156,48,10]` (Euler
+  characteristic 40).  An abstract complex with only even cohomology is
+  dimensionally possible, so dimensions give no obstruction.
+- **Classification.**  As an `H`-module,
+  `gl(4) = (V_00 + V_20) + (V_00 + V_02) + V_11 + V_11`.  So the `H`-maps
+  `P -> gl(4)` are spanned by `n_+ = Hom(B,A)` and `n_- = Hom(A,B)`.
+  Commutativity on the tensor product must hold factor by factor, and it
+  forces each factor to use only `n_+` or only `n_-`.  Hence every action
+  through `gl(4)^(+n)` on the tensor factors is an orientation pattern
+  `epsilon` in `{+,-}^n` together with a matrix `C`.
+- **Random `C`.**  For all-`+` orientation and random `C`, `(1,1,1,1)` at
+  `r = 3` gives `[2,0,6,0,10,4,12,4,10,0,6,0,2]`, identical to the
+  Vandermonde choice.  At `r = 2`, random and Vandermonde `C` agree on
+  `(2,1,1,1,1)`: `[3,0,2,0,6,0,2,0,3]`.
+- **Mixed orientations at `r = 2`** (main agent, `kzo.cpp`) do not help.
+  - `(1,1)` and `(2,2)` with `(+,-)` give cohomology only in degree 4.
+  - `(1,1,1,1)` with `(+,+,-,-)` gives `[1,0,0,1,12,1,0,0,1]` (odd).
+  - `(2,1,1)` with `(-,+,+)` gives `[0,0,0,1,6,1,0,0,0]` (odd).
+  - All-`+` stays even in every case computed here (sizes `<= 8`).  It
+    fails at size 10 (item (17)).
+- **Mixed orientations at `r = 3`, `kappa = (1,1,1,1)`** (main agent,
+  `kzo.cpp`; random `C`, at least two matrices per pattern, all
+  consistent):
+  - one `-` factor: `[0,1,1,0,21,3,4,3,21,0,1,1,0]`;
+  - two `-` factors: `[1,0,2,7,11,0,26,0,11,7,2,0,1]`;
+  - all `+`: `[2,0,6,0,10,4,12,4,10,0,6,0,2]`.
+  - With duality (all `-` is the dual of all `+`), every orientation
+    pattern has odd invariant cohomology.
+  - **Hence no factor-wise action (through `gl(4)^(+4)`) gives even
+    cohomology at `r = 3` for `W^(x)4`.**  An `r = 3` Koszul proof would
+    need actions that couple tensor factors, or a different module or
+    complex.
+
+**(8) The `y -> -y` duality (main agent).**  The semicircle is symmetric, so
+`U_n(-y) = (-1)^n U_n(y)` gives, under `y -> -y`:
+
+- `S_p -> S_p` for `p` even, and `S_p -> D_p` for `p` odd;
+- `D_q -> D_q` for `q` even, and `D_q -> S_q` for `q` odd.
+
+This maps FM3 words to FM3 words.
+- **Example.**  The `r = 2` H-only word with exactly four parts,
+  `D_(q_1) D_(q_2) D_(q_3) D_(q_4)` with `q_i = kappa_i + 1`, becomes
+  `prod_(q_i odd) S_(q_i) prod_(q_i even) D_(q_i)`.
+- **Consequence.**  qFM3_2, restricted to four parts with two odd and two
+  even `q_i`, implies the `r = 1` two-`hat S` words
+  `(1/2) E[S_p S_q D_(q_1) D_(q_2)]` with `p, q` odd and `q_1, q_2` even.
+  For example, `phi_2(2,2,1,1) = (1/2) E[S_3^2 D_2^2] = 4`.
+- So the H-only `r = 2` sector already covers part of the open `r = 1`
+  two-`hat S` sector.  Even plus labels are not reached this way.
+
+**(9) FM-QR2 (luna_max_saturn; main agent checked): boundary theorems and
+an independent screen for qFM3_2.**
+- **Proposition 1 (checked).**  Let `A_(lambda,kappa)(q)` be the number of
+  SSYT of shape `lambda` and content `kappa` with charge `q`.  Then
+  `[t^d] Phi_kappa` is a signed count of tableau-and-shift pairs, with
+  `sum_(j=0..4)` on `(m,m,m,m)`, shifts `0` and `4` on `(u,u,v,v)`,
+  shift `2` on `(2,*,0)` and `(0,*,2)`, and minus shifts `1` and `3` on
+  `(1,*,1)`.
+- **Propositions 2--4 (proved).**
+  - `Phi_(k) = t^2` for `k = 2`, and `0` for every other `k >= 1`.
+  - `Phi_(s,s) = 1 + t^3 + t^4`, `Phi_(s,s-2) = t^2`, and every other
+    two-part `Phi` is `0`.
+  - `Phi_kappa = 0` whenever `kappa_1 >= sum_(i>=2) kappa_i + 3`.
+    Proof: `Ehat != 0` forces `lambda_1 - lambda_2 <= 2` and
+    `lambda_1 >= kappa_1`, so `|kappa| >= 2 kappa_1 - 2`.
+- **Screen.**  Independent code (Python charge algorithm): all 272
+  partitions with `|kappa| <= 12` give coefficients `>= 0`, matching
+  `verify_qfm3_r2.py`.
+- **Open.**  A uniform injection from the negative pairs to the positive
+  pairs.  The simple charge-shifted inequalities
+  `A_c(1,*,1) <= B_(c+1) + D_(c+1)` and `A_c(1,*,1) <= C_(c+1)` fail in
+  200 and 164 of 294 partitions (main agent).  So the cancellation is
+  global, consistent with the higher spectral-sequence differentials in
+  (6).
+
+**(10) The fusion Koszul complex is NOT pure (main agent, scratch
+`fusion.py`).**
+- **Construction.**  `F_kappa = gr M` for the `t`-filtration generated by
+  the cyclic vector, at points `c_i = i + 2`.
+- **Character check.**  The graded dimensions match the cocharge
+  Kostka--Foulkes prediction.  For example, `(2,1,1)` gives
+  `[35,45,65,15]` and `(1,1,1,1)` gives `[35,45,65,60,35,15,1]`.
+- **Result.**  The invariant cohomology of `a = n + n t`, graded by the
+  internal degree `e = (t`-degree of output`) - (#n t` inputs`)`, has odd
+  classes for every partition tested with at least three parts.
+  Totals over `e`:
+  - `(2,1,1)`: `[1,1,2,1,1,0,1,0,1]`;
+  - `(1,1,1,1)`: `[3,3,4,2,7,0,1,0,2]`;
+  - `(3,2,1)`: `[1,1,2,1,1,0,1,0,1]`;
+  - `(2,2,2)`: `[1,2,4,2,1,0,1,0,1]`.
+- The one- and two-part cases are even.
+- **Why the Euler characteristic is still positive.**  The odd classes
+  come in pairs with an even class in the same `e`-block.  For example, at
+  `(2,1,1)` the blocks `e = 0` and `e = 2` contribute `1 - 1` each.  So the
+  per-`e` Euler characteristics still equal `2 Phi_kappa`.
+- **Consequence.**  qFM3_2 is not explained by purity of the fusion
+  complex.  The generic ungraded complex is even at these `kappa`,
+  consistent with semicontinuity (fusion is a special fibre).  A proof of
+  qFM3_2 needs either a different filtration or a cancellation argument.
+
+**(11) FM-R3C (luna_max_neptune): actions coupling two tensor factors at
+`r = 3`, `kappa = (1,1,1,1)`.**
+- **Space of maps.**  `dim Hom_H(P, End(W (x) W)) = 16`.  The pairwise
+  ansatz has a 240-dimensional map space: for each copy of `P`, 8
+  one-factor maps plus 12 coupled maps for each of the 6 pairs.
+  Commutativity is a quadratic system with 15,246 equivariant components,
+  and it was not solved.
+- **Conjugation gives nothing new.**  Conjugating a factor-wise action by
+  an `H`-equivariant invertible `S` (e.g. `S = I + 2 P_(Lambda^2 A)` on two
+  factors) gives genuinely coupled commuting actions.  But they are
+  isomorphic complexes, so the cohomology is unchanged (odd).
+- **Square-zero lemma (checked by the main agent).**  Suppose `a N` lies
+  in `K` and `a K = 0` (all products of action operators vanish).  Rank
+  bounds and the self-duality `a_(12-k) = a_k` force
+  `dim H_1 + dim H_11 >= c_1 - c_0 = 38`.  So such actions always have odd
+  cohomology.
+- **Verdict.**  Conditional; the pairwise variety is unresolved.  The main
+  agent stops this line: the search space is a large quadratic variety,
+  and every structured family found reduces to known cases.
+
+**(12) Sign pattern of the level-`r` Schur weights (main agent).**  Let
+`2 w_r(lambda) = sum_w (-1)^(l(w)) g_(r-1)(type_w(lambda))`, where
+`g_s(a,c) = sum_j (-1)^j C(2s,j) b(a, 2s-j) b(c, j)` is the multiplicity of
+`V_a (x) V_c` in `(x-y)^(2s)`, and `b` is the ballot number.  The types
+`(lambda_1-lambda_2, lambda_3-lambda_4)` carrying negative weights are:
+
+| `r` | negative types |
+|---|---|
+| 2 | `(1,1)` |
+| 3 | `(1,1)`, `(1,3)`, `(3,1)` |
+| 4 | odd-odd pairs with sum `<= 6`, plus some `(0,0)` shapes (7 types) |
+| 6 | 16 types |
+
+The negative region grows with `r`, so no fixed local domination pattern
+can serve all levels.
+
+**(13) Rational dependence on `r` (main agent, exact fits).**  For fixed
+`kappa` with `|kappa| = 2m`,
+
+    phi_r(kappa) / phi_r(emptyset) = N_kappa(r) / ( prod_(i=2)^(m+1) (r+i) * prod_(i=3)^(m+2) (r+i) ),
+
+with `N_kappa` a polynomial of degree `2m`.  The fit is exact for all 40
+partitions with `|kappa| <= 8`, checked at `r = 1..24`.  Here
+`phi_r(emptyset) = C_r C_(r+1) / 2`.
+
+- **Examples.**
+  - `N_(2) = 2r(r-1)`, `N_(4) = 3r(r-1)^2(r-2)`,
+    `N_(6) = 4r(r-1)^2(r-2)^2(r-3)`.
+  - `N_(2,1,1) = 24(r^2 - 3r + 12)`, which is positive for all real `r`.
+  - `N_(4,1,1) = 12 r(r-1)(3r^2 - 29r + 256)`.
+- **Why only integer levels are positive.**  The roots at small integers
+  (support-type vanishing) make the numerator negative between them.  This
+  explains item (2).
+- **No falling-factorial positivity.**  The expansion of `N_kappa` in
+  `C(r-1, j)` has negative coefficients for 11 of the 40 partitions (e.g.
+  `(4,1,1)`, `(2,2,1,1)`).
+- **Schur weights.**  The per-shape weights `w_r(lambda) / phi_r(emptyset)`
+  often factor into linear terms, but not always.  For example:
+  - `(1,1)`: `-2(r-3)(r+2) / den_1`;
+  - `(2,1,1)`: `-(r-1)(r+3)(r+4)(r+6) / den_2`;
+  - `(2,2)` contains the irreducible factor `r^2 - 5r + 9`;
+  - `(3,3)` contains a cubic factor.
+
+**(14) Twisted-trace form and a failed injection (main agent).**
+- **Twisted trace.**  After `y -> -y`,
+  `2 phi_r(kappa) = tr(z_M | V) = dim V^+ - dim V^-`.  Here
+  `V = (M_kappa (x) W^(x)2r)^H`, `z = (1,-1)` in `H` acts on the `M` part
+  only, and `V^+`, `V^-` split `V` by the parity of the `B`-degree of the
+  `M` part.  Checked: `dim V^+ - dim V^- = 2 phi_r` in all tests.
+- **Target.**  Positivity would follow from a natural `H`-equivariant odd
+  operator `V^- -> V^+` that is injective.
+- **Tested operator.**  Off-diagonal mixed Casimirs between `M` factors and
+  `W` factors, `sum E^(i)_(ab) E^(j)_(ba)` with `a` in `A`, `b` in `B`,
+  `i` an `M` factor and `j` a `W` factor.  With uniform weights and with
+  generic weights `c_ij` alike, the rank on `V^-` falls well short:
+
+| `kappa`, `r` | `dim V^-` | rank, uniform weights | rank, generic weights |
+|---|---|---|---|
+| `(2,1,1)`, `r = 2` | 152 | 87 | 126 |
+| `(1,1)`, `r = 3` | 280 | — | 240 |
+
+- So no quadratic two-factor operator gives the injection.
+
+**FM-CHK18 (luna_max_mercury, independent checker): items (3), (4), (5),
+(8), (9) — all ACCEPTED.**
+- **C1 (Euler identity and `r = 1` Kostant).**  Accepted.  Scope as
+  stated: the degree-0-and-4-only claim is for the standard diagonal
+  action.  An arbitrary action (e.g. the zero action) has invariant
+  cochains in other degrees.
+- **C2 (closed form of `Ehat`).**  Accepted.  All 53 shapes with
+  `|lambda| <= 8` were checked by independent exact constant terms, and
+  `Phi_kappa(1) = L(kappa)`.
+- **C3 (FM53 via Kostant, extension to all polynomial `GL(4)`-modules).**
+  Accepted.  Non-cone tests `S_(2,1)`, `S_(2,1,1)`, `S_(3,1,1)` with
+  `p = 1..4` give no negative value.
+- **C4 (`y -> -y` duality and the four-part consequence).**  Accepted.
+  Independently, `E[S_3^2 D_2^2] = 8`, so `phi_2(2,2,1,1) = 4`.
+- **C5 (Propositions 2--4).**  Accepted.
+
+**(15) FM-QR2c (luna_max_saturn): no identification with known positive
+families.**
+- **Tested families.**  Each was computed on the boundary `kappa` values:
+  - type-`C_2` Lusztig q-weight multiplicities after branching;
+  - Panyushev's generalized q-multiplicities for the positive short roots
+    `{e1-e2, e1+e2}`;
+  - Lecouvey's type-C tensor q-multiplicities: these specialize to
+    `I(kappa)`, not `L(kappa)`;
+  - Shimozono--Weyman parabolic Kostka polynomials for the `2+2`
+    parabolic, including the nilpotent-orbit case `X_(2,2)`.
+- **Result.**  None equals `Phi_kappa`; most fail already at `kappa = (2)`.
+- **Why the known theorems don't apply directly.**  The kernel
+  `prod_(alpha in U')(1 - t e^alpha)` is exterior (determinant) type, while
+  those theorems use symmetric-algebra factors `prod (1 - t e^alpha)^(-1)`.
+  In addition, `U'` contains opposite roots, so it lies in no open
+  half-space, violating Panyushev's hypotheses.
+- No counterexample to qFM3_2 was found.
+
+**(16) Bigraded purity of the fusion Koszul complex (main agent, scratch
+`fusion_s.py`).**
+- **Two gradings.**  The fusion complex for `a = n + n t` preserves `e`
+  (item (10)) and also `s = (A-degree of output) - (cochain degree)`,
+  since `n` and `n t` both raise the `A`-degree by one.
+- **Observation.**  In every `(e, s)` block, the invariant cohomology sits
+  in a single cohomological degree `k(e, s)`.  Checked for `(2,1,1)`,
+  `(1,1,1,1)`, `(3,2,1)`, `(2,2,2)`, `(3,1,1,1)`, `(2,2,1,1)`, with zero
+  exceptions.
+- **Where the odd classes cancel.**  The odd classes of item (10) are
+  whole blocks with odd `k(e, s)`.  They cancel against even blocks with
+  the same `e` and a different `s`.
+  - Example `(1,1,1,1)`, `e = 2`: `k = 4, 3, 1, 0` at `s = -2, 0, 2, 4`,
+    each with dimension 1, so the Euler characteristic in that degree is
+    `0`.
+  - `k(e, s)` is not a function of `s` alone.
+- **qFM3_2 in these terms:**
+
+      for every kappa and e:   sum_s (-1)^(k(e,s)) dim H_(e,s)  >= 0.
+
+  Proving it would need to describe the bigraded cohomology dimensions,
+  and a sign-reversing matching of odd blocks with even blocks in the same
+  `e`.
+
+**FM-CHK19 (luna_max_mercury, independent re-implementation over `Q`):
+items (10) and (13) — ACCEPTED.**
+- **D1 (fusion non-purity at `(2,1,1)`).**  Graded dimensions
+  `[35,45,65,15]`.  Invariant cohomology by `e`:
+  - `e = -2`: `[0,0,0,0,1,0,0,0,1]`;
+  - `e = -1`: `[0,0,1,0,0,0,1,0,0]`;
+  - `e = 0`: `[0,0,1,1,0,0,0,0,0]`;
+  - `e = 2`: `[1,1,0,0,0,0,0,0,0]`.
+  - The total is `[1,1,2,1,1,0,1,0,1]`, and the per-`e` Euler
+    characteristics match `2(t^4 + t^5)`.
+- **D2 (rational fits).**  `N_kappa(r) / den_m(r)` matches the exact values
+  at `r = 1..10` for `(2)`, `(2,1,1)`, `(4,1,1)`.  This is a finite check,
+  not an all-`r` identity.
+
+**(17) CORRECTION: the generic `r = 2` slot complex is NOT even in
+general (main agent, exact character computation, scratch
+`ugrade_fast.py`).**
+- **Refinement.**  Put `u` on the `A`-degree, i.e. the central `U(1)` of
+  `GL(2) x GL(2)`.  Every all-`+` slot action preserves
+  `s = (A-degree of output) - k`, so each `s`-block has its own Euler
+  characteristic.  These are the coefficients of
+
+      Phi^(r)_kappa(u) = (1/2) E[ prod_i h_(kappa_i)(x,y;u) det(1 - u^(-1) h|P)^r ],
+      h_k(x,y;u) = sum_(a+b=k) u^a U_a(x) U_b(y).
+
+- **Check.**  At `u = 1` these reproduce `phi_r` exactly.
+- **`r = 2`.**  All coefficients are `>= 0` for `|kappa| <= 8`, but two
+  partitions of size 10 are negative (both coefficients shown are `2 phi`):
+  - `(4,1,1,1,1,1,1)`:
+    `{-8:5, -6:1, -4:10, -2:-1, 4:-1, 6:10, 8:1, 10:5}`;
+  - `(3,1,1,1,1,1,1,1)`: negative coefficients at `u^(-2)` and `u^4`.
+- **`r = 3`.**  Already `(1,1)` has negative coefficients at `u^(-6)` and
+  `u^(-4)`.
+- **Consequence.**  EVERY all-`+` slot action (any `C`) has odd invariant
+  cohomology at `r = 2` for `kappa = (4,1^6)` and `(3,1^7)`.  The evenness
+  observed for `|kappa| <= 8` in item (3) does not persist.  Items
+  (3)--(6) remain correct as statements about the cases computed.  The
+  "generic `r = 2` evenness" conjecture is withdrawn.
+- **Unaffected.**  qFM3_2 is a different (Kostka--Foulkes graded)
+  statement, verified to `|kappa| <= 16`.
+
+**(18) FM-QR2d (luna_max_saturn; main agent checked the bookkeeping): the
+first page of the fusion spectral sequence.**
+- **Setup.**  Filter by the `n t`-cochain degree `q` and take
+  `n`-cohomology first (Kostant for the `2+2` parabolic).
+- **First page.**  The `E_1` dimensions are
+  `a_kappa(p,q;e,s) = sum_lambda Ktilde_(lambda kappa, e+q) * #{I : p(I) = p, Levi type in R_q, mu^I_1 + mu^I_2 - q = s}`.
+  Here `I` runs over the six shuffles, and `R_q` is the set of
+  `Lambda^q P` types.
+- **Euler identity.**  `2 Phi_kappa(t) = t^(N(kappa)) sum_e chi_kappa(e) t^(-e)`,
+  with `N(kappa) = sum (i-1) kappa_i`.
+- **Match with the data.**  Every reported cohomology block occurs in
+  `E_1` with the same dimension.
+  - The surplus `E_1` pairs cancel through `d_1`, and at least one `d_2`:
+    `E_2^(4,1)(3,-4) -> E_2^(3,3)(3,-4)` at `(1,1,1,1)`.
+  - The same `d_2` locations appear at `(2,2,1,1)`.
+  - Examples: `(1^4)` goes from 36 dimensions on `E_1` to 22 in `H`;
+    `(2,2,1,1)` from 40 to 22.
+- **Open.**  Uniform ranks of the higher differentials, or a same-`e`
+  matching of odd blocks to even blocks.  Verdict: conditional.
+
+**(19) Cyclage matchings do not give qFM3_2 (main agent, scratch
+`cyclage_match.py`).**
+- **Setup.**  The negative tableau-shift pairs are `(T, j)` with `T` of
+  type `(1,*,1)` and `j` in `{1,3}`.  They should match positive pairs
+  with the same `t`-exponent.  Edges are Lascoux--Schutzenberger cyclage
+  paths; `charge(cyc T) = charge(T) + 1` was checked in every case.
+- **Result.**  Even with up to 8 cyclage steps, and with tableaux of more
+  than 4 rows allowed as intermediate nodes, bipartite maximum matching
+  leaves 8 of the 40 partitions with `|kappa| <= 8` unmatched.  For example,
+  `(1^8)` matches 270 of 280 and `(2,2,2,2)` matches 18 of 20.
+- **Consequence.**  The cancellation in qFM3_2 is not local in the cyclage
+  graph.
+
+**(20) What `(PCP)` itself needs from the H-only analysis (main agent).**
+- By Corollary FM2, `(PCP)` at `m = 2r` minus labels needs `phi_r(kappa) >= 0`
+  only for `kappa` with at most `2r` parts `>= 2`.  Parts equal to 1 are
+  unlimited, since each plus label `1` gives `S_1 = h_1`.
+- The coefficient of `V_a` for `a >= 2` in `G_R` is a one-`hat S` word.
+- So `(PCP)` is weaker than the full H-cone statement of item (2).  But it
+  still requires every level `r`, and at each level it requires infinite
+  families together with the `hat S` words.
+- Restricting to `(PCP)` does not remove the `r >= 3` obstruction.
+
+**(21) The graded kernel is a Macdonald weight (main agent).**
+- **Reading.**  `det(1 - t g|U') = prod_(alpha short) (1 - t e^alpha)`.
+  Together with the `Sp(4)` Weyl density this is the `C_2`
+  Macdonald--Koornwinder weight
+  `prod_(long) (e^alpha; q)_1 prod_(short) (e^alpha; q)_2` at `q = t`
+  (so `k_long = 1`, `k_short = 2`).
+- So qFM3_2 pairs the Hall--Littlewood `Q'_kappa(.; t)` with the `C_2`
+  Macdonald weight at `q = t`.
+- **Level `r`.**  The natural analogue is `(e^alpha; q)_r` on short
+  roots, i.e. `prod_(j<r) D_(q^j)`.
+- **Test** (`|kappa| <= 10`, 82 partitions): Hall--Littlewood parameter
+  `t^b` against weight parameter `q = t^a`.
+  - `r = 2`: only `q = t^(+-1)` with `b = 1` is positive.  Every other
+    tested coupling fails, in 23--51 cases.
+  - `r = 3`: every tested coupling fails.  The least bad, `q = t` with
+    `b = 1`, fails in 21 cases (first at `(2,1,1)`).
+- So the exact coupling that makes `r = 2` work has no `r = 3` analogue in
+  this family.
+
+**(22) FM-R3X-B (luna_max_venus): combinatorial mechanisms for
+`r >= 3`.**
+- **Fusion-path identity (proved; exact at `r = 2, 3` for `(1,1)`,
+  `(2,1,1)`, `(1,1,1,1)`).**
+
+      2 phi_r = sum_(0 <= b_i <= kappa_i) (-1)^(sum b) sum_j C(2r, j)
+                mu(kappa - b, 1^j) mu(b, 1^(2r-j)),
+
+  where `mu` counts SU(2) fusion paths.  So `2 phi_r = |C^+| - |C^-|`.
+  Example: `(2,1,1)`, `r = 3`: `1520 - 1504`.
+- **Survivor.**  A sign-reversing involution on the colored fusion paths.
+  This is essentially the original Q3 combinatorics; no map is
+  constructed.
+- **Kill: Specht-block refinement of the twisted trace.**  Split by
+  `S_(2r)`-isotypic blocks of the auxiliary slots; some blocks have
+  negative differences.
+  - `r = 2`: `d_(2,1,1) = -2` at `(2,1,1)` and `-4` at `(1,1,1,1)`.
+  - `r = 3`: `d_(3,2,1) = -2` at `(2,1,1)` and `-4` at `(1,1,1,1)`.
+- **Kill: total positivity of the sign-adjusted kernel.**  Take the
+  kernel `(-1)^a g_r(a,b)` of `(x-y)^(2r)`.  Its 2x2 minor on labels
+  `{0,2}` is `-21` at `r = 2` and `-756` at `r = 3`.
+
+**(23) FM-R3X-A (luna_max_jupiter): representation-theoretic framings for
+`r >= 3`.**
+- **Two exact reformulations.**
+  - Dirac induction for `Spin(5)/Spin(4)`:
+    `<1, D-Ind(M_kappa (x) delta^(2r-1))>_G = <M_kappa, delta^(2r)>_H = 2 phi_r`,
+    with `delta = chi_(S^+) - chi_(S^-)` and `delta^2 = det(1 - h|P)`.
+  - An induced `osp(4|2r)` module, whose odd positive part restricts to
+    `P^(+r)`, with invariant superdimension `E - O = 2 phi_r`.
+- **Checks.**  `E, O` were computed exactly and agree with item (22):
+  - `r = 2`: `(38,32)`, `(156,152)`, `(300,288)`;
+  - `r = 3`: `(308,280)`, `(1520,1504)`, `(2792,2752)`.
+- **Assessment (main agent).**  Both are restatements of the Euler
+  characteristic of item (3), not positivity mechanisms: the needed
+  chirality or superdimension inequality is FM3 itself.  Also,
+  `osp(4|2r)` is of type II, so the "type-I Kac module" framing does not
+  apply literally; the underlying identity with `Lambda(P^(+r))` is
+  correct.
+
+**(24) Two cone kills in Proposition 13 coordinates (main agent).**
+
+In the coordinates `z = uv`, `w = u/v` of CENTRAL_CHARACTER_Q3_SEARCH
+Proposition 13, an H-only word at level `r` is
+
+    (1/4) sum_(a,b) k_ab(kappa) Delta_r(a,b),
+    Delta_r(a,b) = P_2(a) P_0(b) + P_0(a) P_2(b) - 2 P_1(a) P_1(b),
+    P_k(a) = CT[C_2(u)^k rho_r(u) u^a],   rho_r = (-1)^r (u - u^(-1))^(2r) >= 0 on |u| = 1.
+
+Here `k_ab >= 0` are the `(u,v)`-coefficients of `prod_i H_(q_i)`.  So `r`
+enters only through `Delta_r`, independently of `kappa`.
+
+- **Kill 1: coefficientwise positivity.**  `Delta_r(a,b) < 0` occurs only
+  for `a` and `b` both even (e.g. `(2,2)` at `r = 0`), for `r = 0..5`
+  with `|a|, |b| <= 12`.  But `k_ab` of H-only kernels is supported
+  exactly on that lattice: `a = b = |kappa|` mod 2, and `|kappa|` is even.
+  So coefficientwise positivity is unavailable.
+- **Kill 2: a log-concavity cone.**  Consider symmetric (including
+  `alpha <-> beta`) `SU(2)^2` weight arrays that are log-concave on the
+  lattice `{alpha + beta` even`}`.  This cone contains the tents `h_n` and
+  excludes `V_1 (x) V_1`.  Of 5,991 random examples, 108 give negative
+  values at `r = 1`, and there are negatives at every `r <= 5`.
+  - The `r = 1` value is the `Sp(4)`-invariant count of a virtual module,
+    so genuine `Sp(4)` (indeed `GL(4)`) structure is essential.  A cone
+    defined by weight-shape conditions alone cannot work.
+
+**(25) No positive expansion in standard bases (main agent).**
+- **Statement.**  H-only positivity at level `r`, for all `kappa`, says
+  that `F_r = sum_(l(lambda)<=4) w_r(lambda) s_lambda` is
+  monomial-positive.
+- **Sufficient conditions tested.**  A nonnegative expansion of `F_r` in
+  `h_mu`, `e_mu` or `p_mu` would suffice.
+- **Result.**  None holds.  At `r = 2` and `r = 3`, all three expansions
+  have negative coefficients by degree 4, and some already in degree 2.
+  - `r = 2`, degree 4: `h`-coefficient `-17` at `(2,1,1)`.
+  - `r = 3`, degree 4: `e`-coefficient `-38` at `(3,1)`.
+  - The number of negative coefficients grows with the degree.
+
+**(26) A no-go for positivity-only arguments, and the all-ones proof
+(main agent).**
+
+Setup: in Proposition 13 coordinates put `c = C_2(u) = 2 cos 2 theta` and
+`c' = C_2(v)`, both in `[-2, 2]`.  Then
+
+    (x-y)^2 = (2-c)(2-c'),   xy = c + c',   x^2 + y^2 - 4 = c c',
+
+and the `SU(2)^2` Haar density is `(1/4)(c - c')^2`.  Every H-only kernel
+factors as `sum_sigma A_sigma(u) A_sigma(v)`, so
+
+    phi_r(kappa) = sum_sigma (w_sigma / 2) det [[ l_sigma(g), l_sigma(c g) ], [ l_sigma(c g), l_sigma(c^2 g) ]],
+
+where `g = (2-c)^r` and `l_sigma` pushes `A_sigma(e^(i theta)) d theta`
+forward to `c`.
+
+- **All-ones family: a short proof, valid for every real `r >= 0`.**  Here
+  `h_1 = C_1(u) C_1(v)` is a single feature.  So `l` is the positive
+  measure `(2 cos theta)^(2m) |2 sin theta|^(2r) d theta` pushed to `c`,
+  and the determinant is `>= 0` by Cauchy--Schwarz.  This matches the
+  product formula of item (1).
+- **No-go.**  Consider the claim that `int_H chi_M f(c) f(c') >= 0` for
+  every polynomial `f >= 0` on `[-2, 2]`.
+  - That claim would extend by uniform approximation to
+    `f = (2-c)^s`, i.e. to `|x-y|^(2s)`, for non-integer `s`.  That is
+    false (item (2)).
+  - Hence no argument using only nonnegativity of the level weight (any
+    Cauchy--Schwarz or convexity argument with a positive weight) can
+    prove the integer levels.
+  - A proof must use the polynomial, representation-theoretic nature of
+    `(x-y)^(2r) = det(1 - h|P)^r`: the virtual `Sp(4)` character `Q_r`, a
+    Koszul complex, and so on.
+
+**(27) Which groups realize level `r` (main agent).**
+- **What is needed.**  A compact group `G` with a rank-2 regular
+  subtorus on which the roots restrict to `{+-2e_i}` once each and
+  `{+-e1+-e2}` exactly `r` times each.  That is `4 + 4r` roots.
+- **`r = 1`:** `Sp(4)`.
+- **`r = 2`:** `SU(4)`, as in FM16.
+- **`r >= 3`:** no simple group works.  At `r = 3` there are 16 roots,
+  and no simple group has exactly 16 roots.  Only products such as
+  `SU(4) x SO(4)^(r-2)` or `Sp(4) x SO(4)^(r-1)` arise.
+- **Consequence.**  The FM16 route (`chi_y`-genera on `Gr_2(C^4)`, with
+  Bott-type vanishing) would at `r >= 3` have to be carried out on
+  products of flag varieties, summed over a lattice of central
+  characters of rank `>= 3`.  That route is open, and is the only one in
+  this section that treats every `r` by one geometric mechanism.  Item
+  (28) shows its central-character pieces are not individually `>= 0`
+  even at `r = 2`, so it would need cancellation across characters.
+
+**(28) The FM16 central-character pieces are not individually
+nonnegative (main agent, scratch `grass_tau.py`).**
+- **The pieces.**  Expanding the `SU(4)` subtorus integral of FM16 in the
+  central character splits `phi_2` into pieces `tau_n`, the Laurent
+  coefficients of
+
+      F_kappa(c) = int_H prod_i h_(kappa_i)(cA, c^(-1)B) det(1 - c^2 h|P) det(1 - c^(-2) h|P) dh.
+
+  At `c = 1`, `F_kappa(1) = 2 phi_2(kappa)`.
+- **Results.**
+  - All coefficients are `>= 0` for the 41 partitions with
+    `|kappa| <= 8`.
+  - At size 10 they fail for `(4,1^6)`:
+    `{... -10:10, -6:-1, 6:-1, 10:10 ...}`, and for `(3,1^7)`.
+  - There are 7 failures among the 295 partitions with `|kappa| <= 14`.
+- These are the same `kappa`, with the same coefficient pattern, as the
+  `A`-degree refinement of item (17).
+- **Consequence.**  A per-`n` vanishing argument for the `chi_y`-genera of
+  FM16 cannot prove the `r = 2` sector.  The pieces cancel across `n`.
+  Of the refinements tested, only qFM3_2's Kostka--Foulkes grading has
+  survived every test.
+
+**(29) The bigraded Euler characteristic from characters, and no local
+matching (main agent, scratch `bigraded_chi.py`).**
+- **Formula.**
+
+      chi_kappa(e,s) = sum_lambda sum_d Ktilde_(lambda,kappa,d) sum_(a,b) (-1)^(a+b) m( Lambda^a P (x) Lambda^b P , V(lambda)_(A-deg = s+a+b) ) [e = d - b]
+
+  Here `m` is the multiplicity of the trivial `H`-type.  It needs only
+  Kostka--Foulkes numbers and the `A`-degree split of `V(lambda)`, with no
+  linear algebra.
+- **Check.**  It reproduces the computed fusion cohomology for `(2,1,1)`
+  and `(1,1,1,1)`, block by block, with signs `(-1)^(k(e,s))`.  So under
+  bigraded purity it determines the cohomology.
+- **Reformulation.**  qFM3_2 is `sum_s chi_kappa(e,s) >= 0` for every `e`.
+- **No local matching.**  The negative (odd) blocks pair with positive
+  blocks at `Delta s = +2`, `-2` or `-4` depending on the row.
+  - Example `(1,1,1,1)`, `e = 2`: the pattern is `+1, -1, -1, +1` at
+    `s = -2, 0, 2, 4`, so partial sums in `s` go negative from either
+    end.
+  - `e = 3`: `+1` at `s = -2`, `-1` at `s = 2`.
+  - No monotone or ballot-type rule in `s` proves qFM3_2.
+
+**(30) No safe irreducible functionals beyond `Sym^k` (main agent,
+scratch `safe_nu.py`).**
+- **Question.**  For which `Sp(4)` irreps `V_nu` is
+  `f_nu(M) = <M (x) V_nu, Q_2>` nonnegative on the whole H-cone?
+- **Result.**  Tested over `|kappa| <= 7` and `nu_1 <= 5`: only `nu = (k,0)`
+  (`Sym^k W`) is.  Every other `nu` goes negative, for example:
+  - `f_(1,1)(empty) = -3`;
+  - `f_(2,1)((1)) = -2`;
+  - `f_(2,2)((1^4)) = -3`;
+  - `f_(3,2)((1^7)) = -24`.
+- **Consequence.**  An inductive (Pieri) proof of the `r = 2` H-only
+  sector cannot close up on a family of individually safe irreducible
+  functionals.  An invariant cone would need combinations whose structure
+  is unknown.
+
+**(31) No Kostka--Foulkes refinement even for the proven one-`hat S`
+sector (main agent).**
+- **Test.**  At `r = 1`, write `hat S_p = 2h_p + 2h_(p-2) - h_(p-1) h_1` in
+  `GL(4)` terms, and grade each term by `Q'` with shifts:
+
+      2 I_t(kappa+{p}) + 2 t^a I_t(kappa+{p-2}) - t^b I_t(kappa+{p-1,1}),
+      I_t(mu) = sum_((a,a,b,b)) K_(lambda,mu)(t).
+
+- **Result.**  No shift pair `(a, b)` in `[-2, 4]^2` is coefficientwise
+  `>= 0` over the 40 partitions with `|kappa| <= 8`, for `p = 2, 3, 4`.
+  At `t = 1` this is FM53, which is proved.
+- **Consequence.**  The graded structure of qFM3_2 is specific to H-only
+  words at `r = 2`.  It gives no guidance for the `hat S` sectors.
+
+**(32) Integration-by-parts induction `r -> r+1` is impossible (main
+agent, scratch `stein_check.py`).**
+- **Stein identity (checked exactly for `r = 0..3`).**  For every
+  polynomial `Q`,
+
+      E_r[ (4-x^2)(x-y) Q_x + (2r+1)(4-x^2) Q - 3x(x-y) Q ] = 0,
+      E_r = weight (x-y)^(2r) rho(x) rho(y) on [-2,2]^2.
+
+  The same holds with `x` and `y` exchanged.
+- **Induction operator.**  So `phi_(r+1) = phi_r o Psi` for
+  `Psi F = (x-y)^2 F + T_x[aF] + T_y[a^sigma F]`, where `a` is an arbitrary
+  polynomial and `T_x`, `T_y` denote the two null expressions above.
+  An induction from `r = 0` would need `Psi` to map products of `h_k` into
+  nonnegative combinations of products of `h_k`.  That would also explain
+  integer-only positivity, since the base case fails at non-integer `r`.
+- **Obstruction.**  Every such null expression vanishes at
+  `(x,y) = (2,2)`: each term carries `(4 - x^2)` or `(x - y)`.  So `Psi F`
+  vanishes at `(2,2)` for every `F`.  But every nonzero element of the
+  H-cone is strictly positive there, since `h_mu(2,2)` is a dimension.
+- **Enlarging the cone does not help.**  Adding sums of squares fails,
+  because the Leibniz rule would need `phi_r(h_kappa G^2) >= 0`.  That is
+  false, since `h_kappa` changes sign.
+- **Consequence.**  No local integration-by-parts induction on the level
+  can prove the H-only sector.
+
+**(33) Tail positivity of the central-character refinement: true for
+`r <= 5`, killed from `r = 6` (main agent, scratch `grass_tau.py`,
+`tails2.py`, `tailmap.py`, `wgrade.py`, `adams_check.py`).**
+- **Setup.**  For exponents `e_1, ..., e_r` in `{+2, -2}` put
+
+      F^(r)_kappa(c) = int_H prod_i h_(kappa_i)(cA, c^(-1)B) prod_j det(1 - c^(e_j) h|P) dh = sum_n tau_n c^n.
+
+  Then `F^(r)_kappa(1) = 2 phi_r(kappa)`.  Item (28) is the case `r = 2`,
+  `(e_1, e_2) = (2, -2)`.
+- **The sign pattern only shifts.**  `P` is self-dual and `det(h|P) = 1`,
+  so `det(1 - c^(-2) h|P) = c^(-8) det(1 - c^2 h|P)`.  There is one
+  refinement per level.  After centring it is palindromic (swap `A`, `B`),
+  and only powers `c^n` with `n = N mod 4` occur.
+- **Meaning.**  In `Spin(6) = SU(4)` with Levi `L = S(U(2) x U(2))`, the
+  spaces `c^(+-2) P` are the two nilradicals of the parabolic of the Klein
+  quadric `Q^4 = Gr(2,4)`, and `c^2 = e^(e_1)`.  Other central weights fail
+  at once: `(1,-1)` and `(4,-4)` at `|kappa| = 2`, `(2,-2,0)` at size 8.
+- **`r = 2` identity.**  Weyl integration relative to `L` gives
+
+      tau_(2m)(kappa) = < h_kappa[W], psi^m(Lambda^2 W) >_(SU(4)),     psi^0 := 6,
+
+  where `psi^m` is the Adams operation and the `W`-orbit of `e_1` has 6
+  elements.  This was checked exactly for 12 partitions at every `m`
+  (`adams_check.py`, 0 mismatches).  Hence
+
+      2 phi_2(kappa) = sum_(m in Z) < h_kappa[W], psi^m(Lambda^2 W) >,
+
+  which is the `h_kappa`-weighted eigenvalue density of Haar `SO(6)` at
+  eigenvalue `1`.
+- **General level (derived by the same argument, not separately
+  checked).**
+
+      tau^(r)_(2m) = < M, sum_(w in W/W_L) w( e^(m e_1) prod_(alpha in n) (1 - e^(-alpha))^(r-2) ) >_(SU(4)).
+
+  By Atiyah--Bott this is `< M, chi(Q^4, O(m) (x) lambda_(-1)(Omega^(+(r-1)))) >`.
+- **Conjecture `T_r` (tail positivity).**  For every `kappa` and every
+  `n_0`, `sum_(n >= n_0) tau_n >= 0`.  By palindromy the lower tails
+  follow.
+  - The case `n_0 = min` is H-cone positivity at level `r`, so `T_r`
+    implies FM3's H-only sector at level `r`.
+  - Equivalent forms: `F(c) / (1 - c^(-4))` has nonnegative coefficients
+    in `c^(-1)`; or there is an injection from negative units to positive
+    units of weakly larger `c`-weight.
+- **Evidence (no failure anywhere).**
+  - `r = 2`: 526 partitions, `|kappa| <= 16`.
+  - `r = 3`: 295 partitions, `|kappa| <= 14`.
+  - `r = 4`: 160 partitions, `|kappa| <= 12`.
+  - `r = 5`: 83 partitions, `|kappa| <= 10`.
+  - Also `r = 1` (both signs) to size 14.
+  - The individual `tau_n` do go negative (item (28)).
+- **How strong it is.**
+  - At `r = 2` tails are nearly automatic.  Only 18 of 526 partitions
+    have any dip, and the deepest keeps 87.5% of the running maximum, at
+    `(4,1^6)`.
+  - At `r = 3` and `r = 4` the dips are deep.  At `(2,1,1)` the tail
+    falls to 33% (`r = 3`) and 20% (`r = 4`) of its running maximum.
+  - So for `r >= 3` it is a genuine strengthening.  The negative mass sits
+    at middle `c`-weights and is paid for from the extremes.
+- **KILLED for `r >= 6`.**  `T_r` holds at `r = 2..5`: sizes 22, 18, 16
+  and 14, that is 2,540, 911, 526 and 295 partitions, with no failure.
+  But it fails at `r = 6` from size 6 on.
+  - Example `r = 6`, `kappa = (2,2,1,1)`: the upper tails from the top are
+    `2, 63, 643, 2668, 5274, 5864, 4750, 2860, 970, -144, 446, ...`, with
+    total `5720`.
+  - Failures among the 41 partitions with `|kappa| <= 8`: 3 at `r = 6`, 6
+    at `r = 7`, 13 at `r = 8`, 15 at `r = 9`, 17 at `r = 10`.  The first
+    at `r = 7` is `(2,1,1)`.
+  - As `r` grows the Koszul degree dominates the `c`-weight, and partial
+    Koszul Euler characteristics alternate.
+- **The grading is forced but not enough.**  Take a general grading
+  `a (M-weight) + e (per P-factor)` and test `r = 2..9`, `|kappa| <= 8`.
+  Only `(a, e) = (1, 2)`, the geometric one, survives at any level, and
+  only through `r = 5`.  The choices `(1,0)`, `(0,2)`, `(2,2)`, `(1,1)`,
+  `(3,2)`, `(1,4)`, `(2,1)` and `(4,1)` fail at `r = 2` on `kappa = (2)`.
+- **Consequence.**  Tail positivity is a low-level phenomenon (`r <= 5`),
+  not a uniform mechanism.  It gives nothing for the full cone beyond the
+  levels where H-cone positivity is already checked directly.
+
+**(34) Real-level structure: the level polynomial and Conjecture LP (main
+agent, scratch `onepart.py`, `levelpoly*.py`, `lpscan.py`, `xcheck.py`,
+`wallach.py`, `genG.py`, `adamsG.py`).**
+- **Non-integer levels fail at every level, through one-part words.**  The
+  exact closed form, fitted to 10 digits for `m = 1..4` at seven real `r`
+  and matching every integer value, is
+
+      phi_r((2m)) = (m+1) Gamma(r) Gamma(2r+1) Gamma(2r+3) / [ 2 Gamma(r+2) Gamma(r+m+2) Gamma(r+m+3) Gamma(r-m) Gamma(r-m+1) ].
+
+  - So `phi_r((2m)) = 0` at the integers `r <= m`, and it is `< 0` on
+    every open interval `(j, j+1)` with `j < m`.
+  - Gauss quadrature counts of negatives among `|kappa| <= 12` are 45, 26,
+    14, 7, 3, 1, 0 at `r = 0.5, 1.5, ..., 6.5`.  The negatives all have a
+    large first part.
+- **Rational reduction (exact).**
+  - Put `x = 2cos a`, `y = 2cos b`, `u = (a+b)/2`, `v = (a-b)/2`.  The
+    weight is `|2 sin u|^(2r) |2 sin v|^(2r)`, and the Fourier mode
+    `e^(2iju)` has normalized mean
+
+        rho_j(r) = (-1)^j r(r-1)...(r-j+1) / ((r+1)...(r+j)).
+
+  - Hence, for every FM3 word `w` (`h_kappa` times `hat S_p` factors),
+    `phi_r(w) / phi_r(empty) = P_w(r) / Q_w(r)`, where `P_w` is a
+    polynomial and `Q_w = prod (r+i)^(e_i) > 0` for `r >= 0`.
+  - Checked against exact Catalan-moment evaluation on 395 (word, level)
+    pairs, with 0 mismatches.
+  - **FM3 at all levels for `w` is equivalent to `P_w(n) >= 0` for every
+    integer `n >= 1`.**
+- **Observed shape.**
+
+      P_w(r) = c_w r^e (r-1)^2 (r-2)^2 ... (r-d+1)^2 (r-d) G_w(r),     c_w > 0.
+
+  - The positive integer roots are exactly `1..d`: double, except `d`,
+    which is simple.  This is the support-region vanishing
+    (`d = kappa_1 - |kappa|/2` for H-only words), with a double zero.
+  - Examples, as `phi_r / phi_r(empty)`:
+    - `(2)`: `2r(r-1)/((r+2)(r+3))`;
+    - `(3,1)`: `60r(r-1)/((r+2)(r+3)^2(r+4))`;
+    - `(4)`: `3r(r-1)^2(r-2)/((r+2)(r+3)^2(r+4))`;
+    - `(2,2)`: `4(r^4+5r^2+54)/((r+2)(r+3)^2(r+4))`;
+    - `(2,1,1)`: `24(r^2-3r+12)/((r+2)(r+3)^2(r+4))`.
+- **Conjecture LP.**  For every FM3 word `w`, `G_w(r) > 0` for all real
+  `r >= 1`.
+  - LP implies FM3 for `w` at every level at once: the value is zero for
+    `r <= d` and positive after.  This includes the `hat S` sectors.
+  - The no-go of item (26) does not apply, because LP is a statement about
+    real `r`.  After the forced integer zeros are divided out, the
+    remainder is positive at non-integer levels as well.
+- **Evidence.**
+  - H-only, `|kappa| <= 10` (83 partitions): `G_kappa` has no positive
+    real root at all.
+  - Words with `hat S` factors, total degree `<= 10` (167 words, 12 plus
+    patterns): the same, with the canonical integer-root pattern in every
+    case.
+  - First stray root: `kappa = (6,1^6)`, size 12.  `G` has degree 6 with
+    real roots `0.537` and `0.766`, so it dips inside `(0,1)`, but it is
+    positive on `[1, oo)`.  Hence LP is stated on `[1, oo)`.
+  - Extended scan (`lpscan.py 12`): 407 words, namely H-only
+    `|kappa| <= 12` and plus labels `(2)`, `(3)`, `(4)`, `(2,2)`, `(3,2)`
+    to total degree 12.  No violation, and the only stray root is
+    `(6,1^6)`.
+  - H-only size 14 (`lp14.log`): 4 stray pairs, all inside `(0,1)`:
+    `(7,2,2,1^3)`, `(7,2,1^5)`, `(7,1^7)` and `(6,1^6)`.
+  - Boundary partitions `kappa_1 = |kappa|/2` of size 18 (all 30) and
+    hooks: stray roots again only inside `(0,1)`.
+- **Independent check (FM-LP-X, luna_max_mars).**
+  - The rational reduction was re-derived through the Beta recursion
+    `(r+j+1) I_(j+1) + (r-j) I_j = 0`, with 0 mismatches against exact
+    moments on 50 random (word, level) pairs.
+  - An exact Sturm scan covered 844 words: all H-only partitions of sizes
+    14 and 16, and `hat S` words with plus labels `(2)`, `(3)`, `(2,2)`,
+    `(4,2)`, `(3,3)`, `(2,2,2)` to total degree 14.  In every case the
+    zero pattern is canonical, `c_w > 0`, and `G_w` has no root in
+    `[0.99, oo)`.
+  - It also found the identity `hat S_p(x,y) = U_p(x) + U_p(y)`.
+- **KILLED: Conjecture LP is false (hooks, from `k = 14`).**
+  - `kappa = (14,1^14)`: `G` has positive real roots `0.00978`, `0.99961`,
+    `1.60500` and `1.78378`.  So `phi_r < 0` on `(1.605, 1.784)`, with
+    `phi_(1.7)/phi_(1.7)(empty) = -2.60`.
+  - The integer values are positive: `1`, `13.6`, `16` at `r = 1, 2, 3`.
+  - `(13,1^13)` is still positive at `r = 1.7` (`+13.5`).
+  - Found by FM-LP-B (luna_max_jupiter) and FM-LP-X2 (luna_max_mars)
+    independently; re-checked by the main agent.
+  - FM-LP-B also killed four certificate forms for `G_w`, all at degree
+    `<= 4`:
+    - coefficient positivity of `G_w(1+s)` in the monomial,
+      rising-factorial and binomial bases (first failure `(2,2)` or
+      `(2,1,1)`);
+    - nonnegative combinations of shifted Fourier atoms
+      `rho_i(r-1) rho_j(r-1)`, refuted at `(2)` by an exact separating
+      functional;
+    - a positive-semidefinite Fourier Gram matrix, which fails for the
+      empty word (`v^T C v = -8`);
+    - pointwise positivity of the word itself (`h_2(0, 1/2) = -7/4`).
+  - Two-part words have an exact finite alternating sum through item
+    (35).  `G` is even with nonnegative coefficients on all 28 pairs with
+    `alpha + beta <= 14`.  No uniform proof is known.  FM-LP-X2 reports the
+    same pair of roots in `(1,2)` for all hooks `k = 14..20`.
+  - By contrast, all 72 H-only boundary words of sizes 18 and 20, and 63
+    boundary words with one `hat S` factor, have no root in `[1, oo)`.
+  - Exact hook values: `phi_1((k,1^k)) = 1` and
+    `phi_2((k,1^k)) = (k^2 - 5k + 10)/2`.
+  - Exact check: `G_(14,1^14)(17/10) < 0`.
+  - The near-1 stray root stays below 1 through `k = 20`.  A fit gives
+    `G(1)/G'(1) ~ 2^(-k) (k/4 + 2)`.
+  - **Consequence.**  Positivity of `phi_r` is an integer-level phenomenon
+    even above `r = 1`.  No real-parameter argument (LP, Wallach-type
+    continuous part) can prove the cone.  The exact statements at integer
+    `r` survive: the rational reduction, the closed form of item (35), the
+    forced zeros, the stability of item (36), and the local transport.
+- **Stray roots occur only for boundary words `kappa_1 = |kappa|/2` (so
+  `d = 0`).**
+  - Hooks `(k,1^k)`: the upper stray root is 0.766, 0.932, 0.972, 0.987,
+    0.994 for `k = 6..10`.  It tends to `1` from below, where
+    `phi_1 = 1`.
+  - Boundary words behave as degenerations of the `d = 1` pattern
+    `r(r-1)`.  This is where LP is tight.
+- **Two-part `kappa`.**  `G_kappa` is an even polynomial with positive
+  coefficients, e.g. `(4,4)`:
+  `9r^8 + 426r^6 + 21441r^4 + 64524r^2 + 216000`.  So LP holds manifestly
+  there (checked `|kappa| <= 8`).  In general `G` is not
+  coefficient-positive, e.g. `(2,1,1)`: `24(r^2 - 3r + 12)`.
+- **Generalized weights (kills and one survivor).**
+  - The weight `prod_i |det(1 - zeta_i h|P)|^2` with unimodular
+    `zeta_i` not `+-1` fails.  For example `Re zeta = 4/5` fails at
+    `(4,1,1)`.
+  - Adams twists `(psi^m x - psi^m y)^2` fail for `m >= 3` at
+    `kappa = (2)`.
+  - The mixed weights `(x-y)^(2a) (x+y)^(2b)` survive: 7 pairs `(a,b)`,
+    160 partitions, no failure.
+- **What this gives the full cone.**  One real-parameter positivity
+  statement per word, LP, implies every level of FM3 at once.  Two things
+  remain open:
+  - the vanishing pattern (support region with double zeros), probably
+    from the Fourier support of `w` in `(u, v)`;
+  - positivity of `G_w` on `[1, oo)`, for example through a
+    positive-weight representation of `G_w`.
+
+**(35) Closed form of the FM12 weights, a real-level product formula for
+irreducible characters, and the forced zeros (main agent, scratch
+`sp4irr.py`; walk check inline).**
+- **Closed form (checked).**  Put `p = (a+b)/2` and `q = (a-b)/2` for an
+  `Sp(4)` weight `mu = (a,b)`, `a+b` even.  Then
+
+      N_(2r-1)(a+1, b) = (a+2)(b+1) C(2r+1, r-q) C(2r+1, r-1-p) / (2r(2r+1)).
+
+  - This matches the quarter-plane walk counts exactly for all 240 cases
+    with `r = 1..8`, `a < 2r`.  It is a Guy--Krattenthaler--Sagan type
+    formula (reflection/LGV).
+  - With Lemma FM12,
+
+        Q_r = sum_mu (-1)^b (a+2)(b+1)/(2r(2r+1)) C(2r+1, r-q) C(2r+1, r-1-p) V_mu.
+
+    This reproduces the displayed `r = 2, 3, 4` weight vectors (for
+    example `294, -378, 168, 189, -105, -35, 27, 21, -7, 1` at `r = 4`).
+- **Real-level product formula (proved from the above).**
+
+      phi_r(V_(a,b)) / phi_r(empty) = (-1)^b (a+2)(b+1)/2 * r(r-1)...(r-q+1) * (r-1)(r-2)...(r-p) / [ (r+2)...(r+q+1) * (r+3)...(r+p+2) ].
+
+  - Both sides are rational functions of `r` (item (34)) that agree at
+    every integer `r >= 1`, so they are equal.
+  - Checked directly for 15 irreducibles `(a,b)` with `a+b <= 8`.
+  - The one-part formula of item (34) is the case `(2m, 0)`.
+- **The forced zeros, explained.**
+  - For every `mu` in a word, `phi_r(V_mu)` carries
+    `r(r-1)...(r-q+1) (r-1)...(r-p)`.
+  - For an H-only word with `d = kappa_1 - |kappa|/2 >= 1`, every
+    `Sp(4)`-constituent `mu` of `h_kappa` has `p >= d` and `q >= d`.
+    Brauer--Klimyk: `mu = (kappa_1, 0) + nu'` with `|nu'_1| + |nu'_2|` at
+    most the rest of the degree, and reflections keep the bounds.
+    Checked directly (`pqcheck.py`, Racah--Brauer peeling) for all 159
+    `kappa` with `|kappa| <= 12`, with no exception.
+  - Hence `r(r-1)^2 ... (r-d+1)^2 (r-d)` divides `P_w`.  This is the
+    observed pattern of item (34), now derived.  The Brauer--Klimyk bound
+    with reflections still has to be written out.
+- **Full-cone screen through the closed form (main agent,
+  `fm3closed.py`).**
+  - The screen computes `m_mu(w)` by Racah--Brauer peeling of the weight
+    multiset (with `hat S_p` weights), then sums the closed form.
+  - Results: 14,251 FM3 words (H-only and 22 plus-label patterns up to
+    five `hat S` factors), total degree `<= 22`, levels `r = 1..20`.
+    That is 285,020 (word, level) pairs, with **0 negative values**.
+  - Validation (`xcheck_hi.py`): `phi_r(w) = (closed form)/(2r(2r+1))`
+    agrees exactly with direct Catalan-moment integration on 28 checks at
+    `r = 9, 12, 15, 20`, covering H-only words and words with one or two
+    `hat S` factors.
+  - This extends the earlier `hat S` evidence (item MP: `r <= 3`, size
+    `<= 11`) by far.
+- **FM3 in closed form.**  At level `r`, FM3 for a word `w` with
+  `Sp(4)` multiplicities `m_mu(w)` reads
+
+      sum_mu (-1)^b (a+2)(b+1) C(2r+1, r-q) C(2r+1, r-1-p) m_mu(w) >= 0.
+
+  In `i = r-q`, `j = r-1-p` (`0 <= j < i <= r`) the weight is
+  `(-1)^(i-j-1) (i-j)(2r+1-i-j) C(2r+1,i) C(2r+1,j)`.  This has the shape
+  of a non-intersecting pair of lattice paths (LGV), which is a natural
+  target for a sign-reversing involution.
+- **Local transport (observed).**  In `(p,q)` coordinates the diagonal
+  neighbours `(a+-1, b+-1)` are the four grid neighbours, and the sign is
+  `(-1)^(p+q)`.  So FM3 at level `r` says the checkerboard function
+  `F(p,q) = (-1)^(p+q) W_r(p,q) m_(p,q)(w)` has nonnegative sum.
+  - For all 159 `kappa` with `|kappa| <= 12` and `r = 1..7` (1,113 cases),
+    the odd-cell mass can be transported to adjacent even cells without
+    exceeding their mass.  This is linear-programming feasibility, and
+    Hall's condition holds with grid-neighbour moves only.
+  - Single-neighbour and two-neighbour greedy bounds fail (for example
+    `(1,1)` at `r >= 2`).  So an explicit transport rule has to share each
+    even cell among up to four odd neighbours.
+  - An explicit rule would be an injection proof of the H-only sector at
+    every level.
+  - Extended (`transport2.py`): H-only `|kappa| <= 12`, `r <= 9` (1,440
+    pairs) all feasible.  Words with plus labels `(2)` and `(2,2)` are
+    also feasible with grid-neighbour moves.
+  - Words with `hat S_3`, `hat S_4`, `hat S_5` are not.  For example
+    `h_1 hat S_3` at `r >= 3` has negative mass at `(a,b) = (2,2)` with no
+    positive neighbour.  Allowing moves of size up to 4 in `(a,b)` repairs
+    `hat S_3`, `hat S_4` and `hat S_3 hat S_2`, but not `hat S_5`: the
+    radius grows with the label.
+  - So the `hat S` sectors need a transport organized by
+    `hat S_p = V_(p,0) - V_(p-1,1) + V_(p-2,0)` itself, as FM53 does at
+    `r = 1`.
+  - **Exact confirmation (`exactscan.py`, integer max-flow).**  At high
+    `r` the floating-point linear program is unreliable in both
+    directions.  One float "infeasible" case, `(4,2,2,1^8)` at `r = 12`,
+    is exactly feasible.
+    - Exact integer max-flow: all 6,456 (word, level) pairs are feasible.
+      These are all H-only `|kappa| <= 16` (even) at `r <= 12`, plus hooks
+      `(k,1^k)` for `k <= 20`.
+    - The margin is tiny.  The ratio (FM3 total)/(negative mass) drops to
+      `1.5e-9`, at `(2,2,2,1^10)`, `r = 12`.  At each size up to 12 the
+      tightest word is the all-ones family, which item (26) proves.
+  - **Explicit greedy rule (FM-TR, luna_max_saturn).**  Take the odd
+    cells by increasing `p` (ties: decreasing `q`).  Each sends its demand
+    to `(p-1,q)`, `(p,q+1)`, `(p,q-1)`, `(p+1,q)` in that order, taking
+    whatever capacity remains.
+    - Independent main-agent check (`greedy.py`): it succeeds for all
+      30,740 cases with H-only `|kappa| <= 20` (even) and `r <= 20`.  The
+      minimum residual margin is 40.
+    - KILLED on hooks: it fails from `(13,1^13)`, `r = 4` (margin
+      `-144,144`), with 103 failures among hooks `k <= 24`.
+    - In every failing case exact max-flow is still feasible
+      (`hookflow.py`: hooks `k <= 24`, `r <= 20`), and FM3 is positive.
+    - Search over 96 greedy rules (8 source orders x 24 neighbour orders;
+      `greedysearch.py`): none works.  The best, sources by `a = p+q` with
+      order `(p-1, q-1, q+1, p+1)`, fails 6 times over 538 words x 16
+      levels.
+    - So the transport exists in all exact tests but needs a global
+      matching, not a one-pass rule.
+    - Saturn's Hall-set screen: minimum slack is positive (40) in all
+      requested cases, and a minimal-slack set is always an interval in
+      source order (staircase bands).
+  - All four grid directions are needed (`dirflow.py`).  Every
+    restriction to two or three directions in `(p,q)` fails; the best,
+    `{p-1, p+1, q+1}`, fails in 43 of 1,440 cases, first at
+    `(4,1^4)`, `r = 7`.  So there is no one-dimensional ballot rule.
+    Confirmed by exact integer max-flow (`exactdir.py`), with the same
+    counts and 0 failures for all four directions.
+  - **FM-LP-I (luna_max_venus).**  The concatenated walk model (Pieri path
+    `0 -> mu`, then a unit walk `(mu_1+1, mu_2) -> 0` of length `2r-1`,
+    sign `(-1)^(mu_2)`) matches exact moments on all 67 partitions with
+    `|kappa| <= 8` at `r = 2, 3`.  KILLED: any involution that changes
+    only the last Pieri edge and the last tail step.  Fibers with more
+    negatives than positives occur in 22 of 67 words at `r = 2` (first
+    `(2,1,1)`) and 26 of 67 at `r = 3` (first `(1,1)`).  A working move
+    must reach earlier Pieri history, which is consistent with the
+    four-direction transport above.
+- **Literature (FM-LP-L, luna_max_neptune).**
+  - The real-level product formula also follows from Kadell's Theorem 1
+    ("An integral for the product of two Selberg-Jack symmetric
+    polynomials", Compositio Math. 87 (1993)), the Selberg integral with
+    one Schur insertion.  Put `xi, eta = (1 - cos(theta +- phi))/2`; the
+    weight is `z^(r-1/2) (1-z)^(-1/2)` with Vandermonde exponent 1.
+    Checks: `E[xi+eta] = (2r+3)/(r+3)` and
+    `E[xi eta] = (2r+3)(2r+1)/(4(r+3)(r+2))`.
+  - The packet matched the weight to Remling--Rosler's compact real
+    Grassmannians.  The main agent has not verified this, and it looks off
+    by a convention.  Those spaces have long-root multiplicity `1/2`, or
+    an extra `2e_i` root in the complex case, whereas here
+    `(k_long, k_short) = (1, r)` exactly.
+  - No known theorem gives positivity on the word cone.  Verdict: no
+    progress on the positivity half.
+- **KILL: Heckman--Opdam expansion positivity (hypergroup route; main
+  agent, `hoexp.py`).**  Expand words in the Jacobi / Heckman--Opdam
+  polynomials `P_lambda` of `Sp(4)` at `k = (1, r)`, built by
+  Gram--Schmidt on Weyl-orbit sums with exact moments.
+  - At `r = 1` these are the Weyl characters, and all 66 H-only words with
+    `|kappa| <= 8` have nonnegative coefficients.
+  - At `r = 2` already the generator `h_2` has coefficient `-1/6` on
+    `P_(1,1)`.  Negative coefficients occur in 23 of 66 words at `r = 2`
+    and 36 of 66 at `r = 3`.
+  - So no positive-linearization argument (generators expand positively,
+    products stay positive) can prove FM3 at `r >= 2`.
+- **PROVED (FM-P35, luna_max_venus; reviewed by the main agent).**
+  - **(A) Closed form.**  Guy--Krattenthaler--Sagan, "Lattice paths,
+    reflections, & dimension-changing bijections", Ars Combin. 34 (1992)
+    3--15, give the quadrant reflection formula
+
+        N_n(A,B) = C(n,K)C(n,L) - C(n,K+1)C(n,L-1) - C(n,K+1)C(n,L+1) + C(n,K+2)C(n,L),
+        K = (n+A+B)/2,  L = (n+A-B)/2.
+
+    With `n = 2r-1` and `(A,B) = (a+1, b)`, algebra gives the closed form.
+    Exact checks: 240 endpoints, compared with dynamic programming.
+  - **(B) Real-level product formula.**  Put
+    `phi_r(empty) = Gamma(2r+1) Gamma(2r+3) / (2 Gamma(r+1) Gamma(r+2)^2 Gamma(r+3))`.
+    FM12 and (A) give the formula at every integer `r`.  Both sides are
+    rational in `r` (item (34)), so they agree for all real `r`.
+    Exact checks: 620 cases.
+  - **(C) Forced zeros for every FM3 word.**
+    - Define `d(w)` as in item (36), the minimum over the
+      `hat S_p = 2h_p + 2h_(p-2) - h_(p-1) h_1` expansions.
+    - In `(P,Q) = ((a+b)/2, (a-b)/2)` coordinates the `Sp(4)` Weyl group
+      acts by signed permutations and `rho = (3/2, 1/2)`.
+    - Every weight of the remaining factors has `|P|, |Q| <= N/2`.
+      Brauer--Klimyk then gives `p(mu), q(mu) >= d(w)` for every
+      constituent.
+    - Hence `r(r-1)^2...(r-d+1)^2(r-d)` divides `P_w`, the denominators
+      being products of `r+i` with `i > 0`.
+    - Exact scan: 299 words of total degree `<= 10`, 0 mismatches.
+- **What this gives the full cone.**
+  - LP (item (34)) becomes an explicit statement: positivity on `[1, oo)`
+    of `sum_mu (-1)^b m_mu(w) c_mu` times products of linear factors.
+  - The forced-zero half of LP is reduced to a Brauer--Klimyk bound.
+  - The positivity half is the open core.
+
+**(36) Forced zeros for `hat S` words, and reduction to boundary words
+(FM-LP-A, luna_max_saturn; main-agent checks `reduce_d.py`, stability
+check).**
+- **Defect for `hat S` words.**  Expand each
+  `hat S_p = 2h_p + 2h_(p-2) - h_(p-1) h_1` into label multisets `gamma`,
+  and put `delta(gamma) = max(0, gamma_1 - |gamma|/2)`.  Define
+  `d(w) = min` of `delta` over all choices.
+  - Example: `hat S_4` gives `d = 1`, matching its simple root at `r = 1`.
+  - `d(w)` reproduces the zero pattern of all 299 words of total degree
+    `<= 10`.
+- **Value zeros below `d` (proved).**
+  - `SU(2)` triangle inequalities give the Fourier support
+    `C_w(j,j') = 0` whenever `max(|j|,|j'|) < d(w)`.
+  - Since `rho_j(k) = 0` for `|j| > k`, this gives `P_w(k) = 0` for
+    integers `0 <= k < d(w)`.
+- **Double zeros at `1..d-1` and the zero at `d`.**
+  - On the Fourier side these are two explicit cancellation identities
+    (derivative and endpoint), unproved there.
+  - Item (35) gives them directly: each `Sp(4)` constituent contributes
+    `r(r-1)...(r-q+1) (r-1)...(r-p)` with `p, q >= d`.  The branching
+    bound `p, q >= d` is now PROVED for all words, `hat S` included
+    (item (35), FM-P35 (C)).
+- **Stability (exact, checked).**  Take `d >= 1` and
+  `kappa' = (|kappa| - kappa_1, kappa_2, ...)`, a boundary word with
+  `kappa'_1 = |kappa'|/2`.  Then `m_(a,b)(h_kappa) = m_(a-2d,b)(h_kappa')`
+  for all 75 partitions with `|kappa| <= 14` and `d >= 1`.
+- **Consequence via the product formula (exact).**  With `s = r - d`,
+
+      phi_r(h_kappa)/phi_r(empty) = Z_d(r) * sum_mu (-1)^b m_mu(h_kappa') [phi_s(V_mu)/phi_s(empty)] theta_mu(s),
+      Z_d(r) = r(r-d) prod_(i<d) (r-i)^2,
+
+  where
+
+      theta_mu(s) = [(a+2d+2)/(a+2)] (s+2)^(q, rising) (s+3)^(p, rising) / [ (s+d+2)^(q+d, rising) (s+d+3)^(p+d, rising) ] > 0.
+
+  - So every word with `d >= 1` is a positively reweighted copy of a
+    boundary word at level `r - d`.
+- **Observed (main agent, `reduce_d.py`).**  For all 45 `kappa` with
+  `d >= 1` and `|kappa| <= 12`,
+  `A_kappa(s) = R_kappa(s+d) / (Z_d(s+d) R_kappa'(s))` has no zero or
+  pole in `(0, oo)` and is positive.  So the reweighting never flips the
+  sign.
+  - If that holds in general, FM3 and LP for the H-only sector reduce to
+    words with `d <= 0` (interior and boundary).
+  - `A_kappa` is not a product in general.  For example `(4,1,1)` gives
+    `(s+2)(s+3)(3s^2 - 23s + 230) / (2(s+4)(s+5)^2(s+6)(s^2 - 3s + 12))`.
+
+**(37) Transport formulation of the full cone (FM-STR, luna_max_jupiter;
+main-agent exact checks `exactscan2.py`, `twolayer.py`).**
+- **Setup.**  For a word `w`, put `F(mu) = (-1)^b W_r(mu) m_mu(w)` with the
+  item (35) weights; FM3 at level `r` says `sum_mu F(mu) >= 0`.
+- **H-only sector: grid transport.**  Negative cells can be matched to
+  positive cells along the four grid neighbours `(a+-1, b+-1)`.
+  - Exact integer max-flow: 86,376 (word, level) pairs are feasible.
+    These are all H-only `|kappa| <= 24` (even) at `r <= 24`, plus hooks
+    `(k,1^k)` for `k <= 30`.
+  - The relative margin goes down to about `2e-15`, at the all-ones word
+    `1^20`, `r = 24`.
+  - No one-pass greedy rule works (item (35)).
+- **`hat S` sectors: direct grid transport fails.**
+  - Example: `h_1 hat S_3` at `r = 3` has cell values
+    `F(0,0) = 1470`, `F(2,0) = 588`, `F(2,2) = -420`, `F(4,0) = 42`.
+    The source `(2,2)` has no positive grid neighbour.
+  - The move radius needed grows with the label; radius 7 is required at
+    `kappa = (7)`, plus label 7, `r = 8`.
+- **`hat S` sectors: two-layer transport.**
+  - Expand
+    `prod hat S_(p_i) = sum_gamma c_gamma h_gamma` using
+    `hat S_p = 2h_p + 2h_(p-2) - h_(p-1) h_1`.
+  - Layer `P` carries `A_mu = sum_(c > 0) c G_gamma(mu)`.  Layer `N`
+    carries `-B_mu`, where `B_mu = sum_(c < 0) |c| G_gamma(mu)`.  Here
+    `G_gamma` is the cell function of `h_(kappa cup gamma)`.
+  - Allowed moves: the four grid neighbours inside each layer, and a
+    vertical edge between `(P, mu)` and `(N, mu)`.
+  - Exact max-flow is feasible in:
+    - all 13,120 `hat S` pairs with total degree `<= 14`, `r <= 10`
+      (FM-STR);
+    - all 19,788 pairs over 15 plus patterns with total degree `<= 16`,
+      `r <= 12` (main agent, independent code).
+  - This is not implied by the H-only transport.  Layer `N` has net
+    negative mass and must borrow across layers.
+- **Conjecture T (transport form of FM3).**  For every integer `r >= 1`,
+  every `kappa`, and every multiset of plus labels, the two-layer network
+  (a single layer when there are no plus labels) admits a flow saturating
+  all negative mass.
+  - T implies FM3, and hence PCP and Q3.
+  - T is a family of Hall inequalities: for every set `X` of negative
+    nodes, the mass of `X` is at most the positive mass adjacent to `X`.
+  - The Hall sets of smallest slack are staircase bands in the H-only
+    data (FM-TR); FM-HALL is characterizing them.
+- **Hall structure (FM-HALL, luna_max_saturn).**
+  - **Proved (standard):** Hall's condition only needs source sets that
+    are connected in the overlap graph, since slacks add over components.
+  - **Band-minimizer conjecture.**  Order the odd cells by `p`
+    increasing, `q` decreasing.  The minimum Hall slack is attained on a
+    fixed interval ("staircase band") of this order; zero-demand cells are
+    kept in the band.
+    - Exact min-cut screen: all 7,860 entries with positive demand
+      (H-only `|kappa| <= 16`, `r <= 16`, hooks `k <= 24`) agree.
+    - Minimum slack 40, at `(2,1,1)`, `r = 2`, `S = {(1,0)}`.
+    - The criterion is specific to FM3 arrays: it fails for arbitrary
+      capacities already at `r = 4`.
+  - The minimizing bands have sizes
+    `1, 2, 4, 6, 9, 12, 16, 20, 25, ... = floor(P^2/4)`, i.e. full
+    prefixes `{odd cells with p < P}`.
+  - KILL: band kernels `R_(r,B)` are not positive combinations of ordinary
+    level kernels.  Example: `r = 7`, `B = {(2,1), (3,2), (3,0)}` has a
+    `V_(6,2)` term but no `V_(0,0)` term.
+- **Single-cell Hall inequalities (FM-H1, luna_max_venus).**
+  - Cell `(p,q) = (1,0)`, i.e. `mu = (1,1)`:
+
+        m_11 <= (r+3)/(3(r-1)) m_00 + 2r/(3(r+2)) m_20 + 2(r-2)/(r+4) m_22.
+
+  - Cell `(2,1)`, i.e. `mu = (3,1)`:
+
+        m_31 <= 2(r+4)/(5(r-2)) m_20 + 6(r+2)/(5r) m_22 + 3(r-1)/(5(r+3)) m_40 + 9(r-3)/(5(r+5)) m_42.
+
+  - Exact screens show no failure: the first inequality for even
+    `|kappa| <= 24`, `r <= 60`, minimum slack 40; the second for
+    `|kappa| <= 18`, `r <= 30`.
+  - At `r = 2` the first inequality is exactly the open inequality T1
+    (Corollary FM13), `3 I(k+(1,1)) <= 8 I(k) + 4 I(k+(2))`.  So even the
+    first Hall cell contains the `r = 2` H-only core; no shortcut exists
+    there.
+- **Row-truncation positivity (main agent, `rowtrunc.py`).**  The prefix
+  band `P` has slack
+
+      sigma_P = sum_(p < P) F + sum_(p = P, p+q even) F,
+
+  and `sigma_r` is FM3 itself.
+  - `sigma_P >= 0` for every `P` in all 7,364 H-only pairs
+    (`|kappa| <= 16`, `r <= 14`).
+  - Also for all words with plus labels `(2)`, `(2,2)`, `(3,2)`.
+  - It fails for some `hat S_3` words (8, first `(1,1,1)`, `r = 7`,
+    `P = 3`) and `hat S_4` words (39).  Those sectors need the two-layer
+    structure.
+  - Plain truncation `sum_(p <= P) F >= 0` fails widely (2,831 H-only
+    pairs, first `(1^4)`, `r = 5`).
+  - As `r -> oo` with `P` fixed, `sigma_P` tends to the pure multiplicity
+    inequality
+    `sum_(p < P) (-1)^b (a+2)(b+1)/2 m_mu + (even row P) >= 0`.
+    For example, `P = 2` gives
+    `m_00 - 3 m_11 + 2 m_20 + 6 m_22 + 3 m_40 >= 0`, with coefficients
+    `C_(p,q) = (p+q+2)(p-q+1)/2`.  An earlier version printed `3 m_22`;
+    corrected by FM-H3.
+- **Positive-mixture identity (FM-H3, luna_max_saturn; proved).**
+  - Put `f_q(r) = prod_(i<q) (r-i)/(r+2+i)` and
+    `g_p(r) = prod_(j<p) (r-1-j)/(r+3+j)`.
+  - Let `beta_v` and `alpha_u` be the telescoping differences of `g` and
+    `f`.  They are nonnegative and each family sums to 1.
+  - For every fixed band `B`,
+
+        sigma_B(h_kappa, r) / W_r(0,0) = sum_(v,u) beta_v(r) alpha_u(r) R_(B;v,u)(kappa),
+
+    where `R_(B;v,u)` is the `r`-free clipped sum
+    `sum_(p <= v, q <= u, (p,q) in B) (-1)^(p+q) C_(p,q) m_(p+q, p-q)`.
+  - So every finite-level band slack is a probability mixture of `r`-free
+    clipped multiplicity sums.
+  - Screen: 656,360 exact row-prefix slacks (`|kappa| <= 20`, `r <= 40`),
+    none negative.  The normalized slack is not monotone in `r` (example
+    `(5,1)`, `P = 4`, `r = 9, 10, 11`).
+  - The clipped sums themselves can be negative (`(1,1)`: `1 - 3 = -2`),
+    and the `r = oo` limit inequalities do not imply the finite ones for
+    arbitrary multiplicity vectors (`V_(1,1) + V_(4,0)`).  The special
+    structure of `h_kappa` is essential.
+- **KILL: inductive decomposition of row bands (FM-H2,
+  luna_max_jupiter).**
+  - `Q_r^[1] = (W_r(0,0)/6) Q_1 + (W_r(2,0)/6) Q_1 h_2` for every `r`.
+  - The first nontrivial band `Q_3^[2]` is not a nonnegative combination
+    of `Q_s u` with `s in {1,2}` and `u` among the 140 characters `1`,
+    `h_k`, `hat S_p`, and products of two with index sum `<= 12`.
+  - Exact integer separating functional: value `-6300` on the band, and
+    `>= 0` on all 280 columns.
+  - So row-band positivity does not follow from FM3 at lower levels on
+    low-degree larger words.
+- **T1 via the `p = gl(4)/sp(4)` action (FM-INJ, luna_max_venus): no
+  progress.**
+  - The contraction `A: Hom(U,M) -> M^Sp4` and the commutator map
+    `B: Hom(U,M) -> Hom(Sym^2 W, M)` are jointly injective in the tested
+    cases.  That only gives `m_U <= m_1 + m_ad`, not T1.
+  - Any triple built from `A`, `A` composed with the Euler operator (which
+    acts by the scalar `|kappa|`), and `B` has rank at most 13 < 15 at
+    `(1^4)`.
+  - The degree-raising fusion injection behind `t G_11 <= G_20` fails in
+    the standard cyclic fusion grading at `(1,1)`.
+  - T1 slack is 0 at one-part words, trivially, since all the relevant
+    multiplicities vanish.
+- **T1 via slot-dependent maps (FM-INJ2, luna_max_venus): a proof
+  candidate.**
+  - For each tensor slot `i`, put
+    `A_i(f) = sum_a X_a^(vee,i) f(u_a)`, a map `Hom(U,M) -> M^Sp4`, and
+    `B_i(f)(u ^ v) = X_u^(i) f(v) - X_v^(i) f(u)`, a map
+    `Hom(U,M) -> Hom(Sym^2 W, M)`.
+  - The block map
+    `T: Hom(U,M)^(+3) -> (M^Sp4)^(+5) + Hom(Sym^2 W, M)` has entries
+    `T_(r,c) = sum_i i^(r+1+5c) A_i` for `r <= 4` and
+    `T_(5,c) = sum_i i^(5+c) B_i`.
+  - Its rank, certified modulo `1,000,003`, equals `3 m_U` in all seven
+    tested cases, so it is injective there:
+
+    | `kappa` | `(m_1, m_U, m_ad)` | rank |
+    |---|---|---|
+    | `(1^4)` | `(3,5,6)` | 15 |
+    | `(2,1,1)` | `(1,2,3)` | 6 |
+    | `(2,2)` | `(1,1,1)` | 3 |
+    | `(2,1^4)` | `(6,14,20)` | 42 |
+    | `(1^6)` | `(14,30,40)` | 90 |
+    | `(3,1,1,1)` | `(1,3,6)` | 9 |
+    | `(2,2,1,1)` | `(3,7,10)` | 21 |
+
+  - `(3,1,1,1)` is near-tight (slack 2).
+  - **If `T_kappa` is injective for every `kappa`, T1 follows**, and with
+    it the H-only `r = 2` sector.
+  - **Main-agent independent reproduction (`inj/slotT2.py` to
+    `slotT5.py`).**
+    - The code is new and works on weight-0 subspaces.  It asserts that
+      each `A_i(f)` is `Sp(4)`-invariant.
+    - The multiplicities and injectivity agree on all of venus's cases.
+    - **The specific power coefficients FAIL at the near-tight word
+      `(2,2,2)`**: rank 8 < `3 m_U` = 9.
+    - With random coefficients, `(2,2,2)` is injective for all three
+      seeds tried.  So the power choice was degenerate.
+    - At `(2,2,2)` the joint rank of all `A_i` is only `m_U = 3`, so the
+      `B_i` channel is essential.
+  - **Surviving candidate (generic-coefficient slot injection).**  For
+    generic coefficient tensors `a_(r,c,i)`, `b_(c,i)`, the map
+
+        T(f_0, f_1, f_2) = ( sum_(c,i) a_(r,c,i) A_i f_c )_(r = 0..4)  (+)  sum_(c,i) b_(c,i) B_i f_c
+
+    is injective.
+    - Exact mod-`p` screen with random coefficients: injective for every
+      even partition with `|kappa| <= 6`, and so far for all tested
+      size-8 words, including `(3,3,1,1)` (rank 21).  The run is
+      continuing.
+    - A uniform proof would need a transversality or rank argument for
+      the pair of joint slot maps `(A_1..A_s)` and `(B_1..B_s)`.
+    - FM-INJ3 (luna_max_venus, two primes) finds the fixed-power `T` of
+      full rank on 11 further words:
+      - `(2,2,2,2)` (45/45), `(3,3,1,1)`, `(4,2,1,1)`, `(4,1^4)`,
+        `(3,2,2,1)`, `(4,4)`, `(4,3,1)`;
+      - the near-tight `(3,1,1,1)` and `(3,1^5)` (90/90).
+      It confirms rank 8 < 9 at `(2,2,2)` modulo both primes.
+    - The joint `A` map alone cannot be the injection, since
+      `4 m_1 = 24 < 45` at `(2,2,2,2)`.
+    - Main-agent random-coefficient scan: `(3,2,2,1)` (27/27),
+      `(3,2,1,1,1)` (51/51), `(4,1^4)` (12/12) and `(4,2,1,1)` (9/9) are
+      injective.  No failure so far.
+- **Level-step transport (main agent, `levelstep.py`).**
+  - The exact level step is
+
+        phi_r(w) = 4 phi_(r-1)(w h_2) + 8 phi_(r-1)(w) - 3 phi_(r-1)(w h_1^2).
+
+    It comes from `(x-y)^2 = 3 hat S_2 + 2 - 2h_2` and matches Corollary
+    FM13.
+  - The three-layer network at level `r-1` has layers `4 w h_2`, `8 w`,
+    `-3 w h_1^2`, with grid moves in each layer and vertical moves between
+    layers.  Exact max-flow finds it feasible in all 1,440 cases (H-only
+    `|kappa| <= 12`, `r = 2..10`).
+  - So FM3 at level `r` has a transport certificate one level down.
+    Iterating bottoms out at `r = 1` in the `Sp(4)` invariant-count model.
+    This reorganizes FM3; it is not a proof.
+
+**(38) Generic slot injection: a linear lift of Conjecture T (main agent,
+2026-09-28; scripts `inj/slotHWg.py`, `hwscang.py`, `slotR.py`, `slotS.py`,
+`hallstats.py`).**
+- **Statement (Conjecture GSI).**  Fix `r` and a word.  For every cell `mu`
+  of `Q_r` put `H_mu = Hom_Sp4(V_mu, M)` and give it `|c_mu|` copies, where
+  `c_mu` is the `Q_r` coefficient (cleared of `2r(2r+1)`).  Negative cells
+  are sources, positive cells targets.
+  - Edge maps are the slot maps
+    `S_i^(mu->nu)(f) = [ V_nu -> U (x) V_mu -> M, u (x) v -> X_u^(i) f(v) ]`
+    for each tensor slot `i`, defined when `V_nu` is in `U (x) V_mu` (the
+    grid neighbours of item (37)).  Here `X_u^(i)` is the `p = gl4/sp4`
+    action on slot `i`.
+  - Every (source copy, target copy) block of `T` is an independent generic
+    combination of the available edge maps.
+  - GSI: `T` is injective.  Injectivity gives
+    `sum_neg |c_mu| m_mu <= sum_pos c_nu m_nu`, which is FM3 for the word at
+    level `r`.  At `r = 2` this is the T1 slot map of item (37).
+  - Conjecture T is the dimension shadow of GSI (subspaces `0` or all of
+    `H_mu`).  GSI is stronger: it needs the linear Hall condition
+    `sum_mu |c_mu| dim X_mu <= sum_nu c_nu dim(sum_(i, mu) S_i^(mu->nu) X_mu)`
+    for all subspaces `X_mu` of `H_mu`.
+- **`hat S` words: two-layer lift.**  Expand each `hat S_p` as
+  `2h_p + 2h_(p-2) - h_(p-1) h_1` as in item (37), one module per choice.
+  - Slot maps act inside each module.
+  - Vertical edges join modules that differ in one factor.  They use the
+    `G`-maps multiplication and `omega`-contraction
+    `Sym^(p-1) W (x) W -> Sym^p W, Sym^(p-2) W`, and in the other direction
+    polarization and `omega`-insertion.  Equivariance is checked for
+    `p <= 5`.
+  - **Kill (naive vertical lift).**  One map per vertical edge is not
+    enough.  At `r = 1`, `kappa = (1,1)`, label `2`, the rank is 2 < 3,
+    because the coefficient `2` in `2h_p` gives two copies but only one
+    natural map.
+  - **Repair (U-exchange).**  Add the composites
+    `sum_a X_(Y_a^vee)^(i) o V o Y_a^(t)`, which pass the `U`-quantum
+    between a tail slot `t` of the changed factor and any slot `i`.  These
+    are `G`-maps from weight `mu` to weight `mu`.
+- **Exact screens (mod 1,000,003; injectivity certified by full rank).**
+  - `r = 2`, H-only (T1): EVERY even `kappa` with `kappa_1 <= |kappa|/2`,
+    `|kappa| <= 12`, is injective, except `(1^12)` (out of memory range).
+    - The size-12 scan completed on 2026-09-29, with 113 of 114 words
+      done.  The last, `(2,1^10)`, reached rank 22770/22770 in 67,685 s
+      at peak 47 GB.  `(1^12)` was skipped: its dense stage needs
+      87.5 GB, over the 48 GB cap.
+    - Size 14: 87 of 105 words, all injective so far; still running.
+  - `r = 3`, H-only: all 40 partitions of size `<= 8`, e.g. `(1^8)` at rank
+    9100/9100.  The relative slack goes down to 9%, at `(2,1,1)` (80 vs 88).
+  - `r = 4`, H-only: all 35 words run (size `<= 8`, the ones with many
+    1s omitted), all injective.
+    - Sources are `(1,1) x 378`, `(3,1) x 105`, `(3,3) x 35` and
+      `(5,1) x 7`.
+    - Examples: `(2^4)` at 9604/9604; `(3,2,1,1,1)` at 11319/11319;
+      `(2,2,2,1,1)` at 17675/17675.  The last has slack 59, i.e. 0.3%.
+  - **Structural constraint (main agent).**  At `r = 2` a slot-built
+    `G`-map `Hom(U,M)^3 -> Hom(1,M)^5 + Hom(ad,M)` on the full `Hom`
+    spaces goes between spaces of equal dimension, since
+    `dim Q_2 = 5 - 15 + 10 = 0`.
+    - Injectivity on the full space would make it a `G`-isomorphism and
+      force `3 m_U = 5 m_1 + m_ad`.
+    - T1 also fails for `V_k (x) N` with `N` arbitrary, e.g.
+      `W (x) V_(2,1)` gives `-2`.
+    - So no Lemma-JB-type (whole-module, one-slot-local) argument can prove
+      GSI or T1.  A proof must use the invariant part, the fact that every
+      factor is a symmetric power, and the rank-two (Pfaffian) structure.
+  - `hat S` words, one label (U-exchange lift): labels `(2)`, `(3)`, `(4)`
+    with `|kappa| <= 6` at `r = 1` are injective in all 90 cases (odd total
+    degree is trivially zero).  `r = 2` passes on the cases run
+    (`kappa = (), (1,1), (2), (2,2), (1^4)`, label 2; e.g. rank 224/224).
+  - **KILL (two-label h-expansion lift).**  Labels `(2,2)` at `r = 1` fail.
+    Every failing word below is short of `need` by the stated amount:
+
+    | `kappa` | need | rank | short by |
+    |---|---:|---:|---:|
+    | `(2,1,1)` | 104 | 103 | 1 |
+    | `(1^4)` | 216 | 213 | 3 |
+    | `(2,2,2)` | 212 | 211 | 1 |
+    | `(2,2,1,1)` | 404 | 400 | 4 |
+    | `(2,1^4)` | 780 | 771 | 9 |
+    | `(1^6)` | 1536 | 1515 | 21 |
+
+    - Adding the `sp4` ("ad-exchange") composites
+      `sum_b (Z_b^vee)^(i) o V o Z_b^(t)` does not change any of these ranks.
+    - Diagnosis at `(2,1,1)`:
+      - every edge map has full image rank;
+      - multiplicity Hall holds with slack 4 (104 vs 108);
+      - every proper subset of the four negative modules
+        `(A,C), (C,A), (B,C), (C,B)` injects.
+      So the obstruction is a single global linear relation, not a missing
+      edge.  The likely source is that the two factors' vertical maps
+      commute (double-complex structure of `hat S_2 (x) hat S_2`).
+    - **The irreducible expansion fails the same way.**
+      - The lift uses `hat S_p = V_(p,0) - V_(p-1,1) + V_(p-2,0)`:
+        - `V_(p-1,1)` is realized as the joint kernel of multiplication and
+          contraction on `Sym^(p-1) W (x) W`;
+        - targets are projected by
+          `1 - polar o mult / p - insert o contr / lambda_p`;
+        - the vertical maps are the U-exchange `G`-maps.
+      - One label passes (e.g. `(1^4)`, label 2: 5/5).
+      - Labels `(2,2)` at `r = 1` fail:
+        - `(2,1,1)`: 17 of 18;
+        - `(1^4)`: 35 of 38;
+        - `(2,2,2)`: 35 of 36.
+      - These deficits (1, 3, 1) are the same as for the h-expansion lift.
+        So the obstruction is intrinsic to vertical edges that change one
+        factor at a time.
+    - The `hat S` sector therefore needs maps between layers that differ
+      in two or more factors.  The aggregated network of item (37) has
+      such edges, and a `G`-map lift of them would need `ad`-type
+      (two-quantum) exchange with `M`.
+    - **RETRACTION (main agent, 2026-09-29; FM-CHK21 upheld).**  The Hodge
+      and pair-map "repairs" below, and the evidence for Conjecture GSI-S,
+      are int64-overflow artifacts.  They are withdrawn.
+      - saturn's original FM-SLIFT script computed `proj @ mat @ F` with no
+        mod-`p` reduction in between.  The intermediate entries reach about
+        `3e19`, beyond the int64 range; the wrapped values act like random
+        entries and inflate the rank.
+      - Rerunning that exact script with the reduction inserted gives
+        103/104 at `(2,1,1)`, labels `(2,2)`, for three seeds (104/104
+        before the fix).
+      - The saved FM-SLIFT5 map code (`cert/gsis_maps.py`, correctly
+        reduced) run in the main harness also gives 103/104.
+      - The local Hodge/pair maps are equivariant and exactly proportional
+        between the two implementations (`cert/cmp_local.py`).  Only the
+        assembly was wrong.
+      - mercury's independent rebuild (FM-CHK21) found no repair in any of
+        the six cases (103/104, 213/216, 49/50, 98/100, 62/64, 95/100),
+        on two primes and two draws.
+      - Still valid: the baseline-lift ranks computed with `slotS.py` (e.g.
+        labels `(2,2)` at `r = 2` for `|kappa| <= 4`; labels `(2,2,2)` at
+        `r = 1` up to `(2,1,1)`), and the deficits at `r = 1` with two
+        labels.
+      - So the two-label hat S lift is unrepaired.
+      - **Recheck with the corrected harness, baseline lift only**
+        (`cert/recheck.sh`; slot maps plus one-factor U-exchange vertical
+        maps; no pair maps).
+        - Injective:
+          - `r = 2`: labels `(3,2)` for `kappa = (1), (3), (2,1), (1^3)`
+            (e.g. 1665/1665), and labels `(3,3)` for `kappa = (), (2),
+            (1,1)`;
+          - `r = 1`: labels `(4,2)` and `(4,4)` for `kappa = (), (2),
+            (1,1)`;
+          - pure words (`kappa = ()`): labels `(2,2)`, `(3,3)`, `(4,2)`,
+            `(4,4)`, `(5,3)` at `r = 1, 2, 3`, e.g. `r = 3`, `(3,3)`:
+            1392/1392.
+        - Not injective, all at `r = 1`:
+          - labels `(3,2)`: `(2,1)` 49/50, `(1^3)` 98/100;
+          - labels `(3,3)`: `(3,1)` 62/64, `(2,2)` 95/100;
+          - labels `(2,2)`: `(1^4)` 213/216.
+        - So the genuine hat S obstruction found so far sits at `r = 1`
+          with two labels and nonempty `kappa`.
+        - Rerunning with saturn's pair and `Gamma` maps added (correctly
+          reduced) gives identical ranks in every case, including the five
+          `r = 1` deficits.  These maps add no rank in any case tested;
+          every pass is already a baseline pass.
+      - **Full baseline screen (`inj/sscan.sh`, correctly reduced; all `kappa`
+        with `|kappa| <= 6`).**
+        - One label, `(2)`, `(3)` or `(4)`, at `r = 1, 2, 3`: injective in
+          every case (about 30 words per label and level; odd total degree
+          is trivially zero).
+        - Two labels at `r = 2`, `(2,2)` and `(3,2)`: injective in every
+          case.
+        - Two labels at `r = 1`: the only failures.
+          - Labels `(2,2)`: `(2,1,1)` 103/104, `(1^4)` 213/216, `(2,2,2)`
+            211/212, `(2,2,1,1)` 400/404, `(2,1^4)` 771/780, `(1^6)`
+            1515/1536.
+          - Labels `(3,2)`: `(2,1)` 49/50, `(1^3)` 98/100, `(3,2)` 67/68,
+            `(3,1,1)` 123/126, `(2,2,1)` 193/200, `(2,1^3)` 368/382,
+            `(1^5)` 711/738.
+        - Two labels at `r = 3`: not screened.  The run was stopped at
+          75 GB resident (it was forcing the size-12 and size-14 T1 scans
+          into swap) before any case was reported.  Single label `(4)` at
+          `r = 3`: every `|kappa| <= 6` except `(1^6)` is injective;
+          `(1^6)` was not run.
+        - So the hat S obstruction to the slot-map lift sits exactly at
+          level 1 with two or more labels.  At `r = 1`, FM3 is an
+          invariant count, so this sector may need a separate argument.
+      - **Level-1 two-label sector: exact reduction and a partial
+        certificate (main agent, `xmn/xpq_check.py`, `conetest*.py`;
+        check FM-CHK22 pending).**
+        - Identity (sympy, all `p <= 7`):
+          `hat S_p hat S_q = sum_(m = p-q, p-q+2, ..., p+q) hat S_m + X_pq`,
+          with `X_pq = U_p(x)U_q(y) + U_q(x)U_p(y)
+          = V_(p,q) + V_(p-2,q) - V_(p-1,q+1) - V_(p-1,q-1)`.  Here
+          `chi_(a,b) = (U_(a+1)(x)U_b(y) - U_b(x)U_(a+1)(y))/(x-y)` also
+          for non-dominant labels.
+        - So `phi_1(hat S_p hat S_q h_kappa) = sum_m B_m + D_pq`, where
+          `B_m = m_(m,0) + m_(m-2,0) - m_(m-1,1) >= 0` (FM53) and `D_pq`
+          is the diamond `m_(p,q) + m_(p-2,q) - m_(p-1,q+1) - m_(p-1,q-1)`
+          of `h_kappa`.  For a `GL(4)`-irreducible the `Sp(4)`
+          constituents fill a rectangle in `(P,Q)` coordinates (FM51), so
+          the diamond is a mixed second difference of a rectangle
+          indicator.  Corrected by FM-SEC2 (saturn): it takes values in
+          `{-1, 0, 1}` for `p - q >= 2`, is a first difference for
+          `p - q = 1`, and equals `2(R(q,q) - R(q-1,q-1))`, with values
+          in `{-2, 0, 2}`, on the diagonal `p = q`.
+        - FM-SEC2 exact screen: 7,588 cases (`|kappa| <= 12`,
+          `2 <= q <= p <= 8`), no negative total (3,761 zeros).  The
+          per-shape payment fails first at `(p,q) = (2,2)`,
+          `lambda = (2,1,1)` (combined coefficient `-1`).  A second
+          per-shape test (expand one label as `2h_q + 2h_(q-2) -
+          h_(q-1)h_1` and require a nonnegative coefficient on the FM51
+          support of the other) fails badly, e.g. `-20` on `(4,2,2,2)`
+          at `kappa = (1^8)` (main, `xmn/kostka_c.py`).
+        - **KILL (per-`(m,n)` positivity).**  The `SU(2) x SU(2)`
+          multiplicity array of `(x-y)^(2r) h_kappa` has a negative entry
+          for every `kappa` with `|kappa| <= 8` at `r = 1, 2, 3` (67 of
+          67 each; e.g. `(1,1)`: `-2` at `kappa = ()`).  So the diamonds
+          cannot be made positive one at a time; they need the `hat S_m`
+          terms.
+        - **FM53-cone certificate.**  By LP, with supports forced to add
+          because every generator restricts to a genuine
+          `SU(2) x SU(2)`-module:
+          - `hat S_p hat S_q` itself is not a nonnegative combination of
+            `hat S_m (x) S_lambda W` and `S_lambda W` for any
+            `p, q >= 2` (all `p + q <= 8`).
+          - `hat S_2 hat S_2 h_kappa` is such a combination (hence
+            `>= 0` by FM53) for every `kappa` with a part 1, and for
+            `(3,2)`, `(3,3)`, `(5,2)`, `(4,3)`, `(5,3)`, `(4,4)`,
+            `(2,2,2)`, `(4,2,2)`, `(3,3,2)`, `(2^4)`, `(3,2,2)`.
+          - It is not for `(k)`, `k = 2..8`, nor for `(2,2)`, `(4,2)`,
+            `(6,2)` (all partitions with parts `>= 2`, size `<= 8`).
+          - The certified set is closed under adding parts, but its
+            minimal elements look infinite (two-part words), so this
+            gives no uniform proof by itself.
+        - **Lemma BP (big part; PROVED by the main agent, formula checked
+          in `xmn/bigpart_proof_check.py`; ACCEPTED by FM-CHK-BP,
+          luna_max_mars).**  Let `p >= q >= 0` and
+          `k >= p + q - 1`.  Then `X_pq (x) Sym^k W` is genuine, with
+          `[X_pq (x) V_k : V_(a,b)] = mu(a-k, b) - mu(a-k, b+2)`.  Here
+          `mu(i,j) = [|i| <= p, |j| <= q, i = p, j = q mod 2] +
+          [|i| <= q, |j| <= p, i = q, j = p mod 2]` is the torus weight
+          multiplicity of `X_pq`.  For `q = 0`, `X_p0 = hat S_p`.
+          - Proof.
+            - The character `U_p(x)U_q(y) + U_q(x)U_p(y)` of `X_pq` has
+              torus weights `omega = (i,j)` with multiplicity
+              `mu(i,j) >= 0`.  Brauer--Klimyk for the irreducible factor
+              `V_(k,0)` gives `X_pq (x) V_k = sum_omega mu(omega)
+              chi_((k,0)+omega)`, with the alternant convention.
+            - Put `(A,B) = (k,0) + omega + rho`, `rho = (2,1)`.  For the
+              first rectangle, `A >= k - p + 2 >= q + 1 >= |B|`.  For the
+              second, `A >= k - q + 2 >= p + 1 >= |B|`.  So every point
+              lies in `A >= |B|`, `A > 0`.
+            - Points on the walls `B = 0`, `A = B` or `A = -B` contribute
+              zero.  Points with `B < 0` reflect by `B -> -B` with sign
+              `-1`, and no other Weyl element reaches the open chamber.
+              Hence the multiplicity of `V_(a,b)` is
+              `mu(a-k, b) - mu(a-k, -b-2) = mu(a-k, b) - mu(a-k, b+2)`.
+            - For fixed `i`, `mu(i, .)` is a sum of indicators of
+              symmetric intervals on one parity class, so it does not
+              increase with `|j|`.  The difference is `>= 0`.
+          - Check: the closed formula matches the direct decomposition
+            on 115,692 entries (`p <= 8`, `0 <= q <= p`,
+            `p+q-1 <= k <= p+q+7`), with no mismatch.
+          - **Corollary (all labels, `r = 1`).**  Take labels
+            `p_1, ..., p_l` and any `kappa` with some part
+            `k >= p_1 + ... + p_l - 1`.  Then
+            `phi_1(hat S_(p_1) ... hat S_(p_l) h_kappa) >= 0`.
+            - `prod_j (U_(p_j)(x) + U_(p_j)(y)) = sum_(m,n) c_mn
+              U_m(x) U_n(y)`, with `c_mn = c_nm >= 0` and
+              `m + n <= sum p_j`.  So the product is a nonnegative
+              combination of the `X_mn`.
+            - Each `X_mn (x) V_k` is genuine by Lemma BP, so the
+              product times `h_kappa` is genuine and has
+              `phi_1 = dim(invariants) >= 0`.
+            - FM53 is not needed here.
+          - So the level-1 part of FM3 (any number of `hat S` labels)
+            reduces to the small-part region: every part
+            `<= sum p_j - 2`.
+          - Equivalent `SU(2) x SU(2)` form (checked on 54 cases,
+            `xmn/su2sq.py`).
+            - Write `n_ab = [F : V_a (x) V_b]` for the restriction `F` of
+              the word.  Then `phi_1 = n_00 + n_20 - n_11`.
+            - Reason: `(x-y)^2 = sum_k (-1)^k Lambda^k p`, with
+              `p = C^2 (x) C^2` the isotropy module of `Sp(4)/Sp(2)^2`.
+            - So level-1 FM3 is the Euler characteristic of
+              `Hom_H(Lambda^. p, F)` being `>= 0`.
+            - With `hat S` factors, `F` is not a `g`-module, so no
+              Chevalley--Eilenberg differential is available.
+        - **Big-part screen (`xmn/xgen.py`, `xgen2.py`; FM-BIG1,
+          luna_max_mars).**  `X_pq (x) Sym^k W` is a genuine
+          representation whenever `k >= p + q - 1`.
+          - Main agent: all `1 <= q <= p <= 7`, `k <= 15`.  Mars: an
+            exact screen for `p <= 12` with no negative multiplicity above
+            the threshold.
+          - Below the threshold it fails in every tested case except
+            `(p,q,k) = (3,1,1)`, where `X_31 (x) W = V_41` (mars).  So the
+            statement is one-directional.
+          - Mars's explicit eight-term alternation of the stencil
+            `F_(p,q,k)` is in `agents/mars48.final.md`.  A proof for all
+            parameters is still open.
+          - The `q = 0` analogue, `hat S_p (x) Sym^k W` genuine for
+            `k >= p - 1`, holds on mars's screen `p <= 8`.  Below it, the
+            coefficient of `V_(p-1,k+1)` is `-1`.
+          - Consequence.  If some part of `kappa` is `>= p + q - 1`, then
+            `X_pq h_kappa` is genuine, and FM53 gives `B_m >= 0`.  So FM3
+            at `r = 1` holds for `hat S_p hat S_q h_kappa`.
+          - Conversely, among `|kappa| <= 10`, `X_pq h_kappa` fails to be
+            genuine only when every part is `<= p + q - 2`.  For `(2,2)`
+            these are 17 words: `(1^n)` for `n <= 8`, and words with at
+            most two 2s.  For `(3,2)` there are 48; for `(3,3)`, 90; for
+            `(4,2)`, 77.
+          - The same region is where the two-layer slot lift fails: every
+            baseline failure above has all parts `<= p + q - 2`.
+          - Proof route: Brauer--Klimyk with the pyramid weight function
+            `max(0, (k - |i| - |j|)/2 + 1)` of `Sym^k W`.  The diamond
+            stencil is a difference of two second differences, so it
+            vanishes away from the axes and the boundary.  The lemma
+            becomes a finite piecewise-linear case check; not yet written
+            out.
+        - **Case `(p,q) = (2,2)` (curried slot map, `xmn/Ek.py`).**
+          Here `X_22 = 2(V_(2,2) - V_(1,1))`.
+          - The curried map `E_k: Hom(U, V_k) -> Hom(V_(2,2), V_k)`,
+            built as in Lemma JB from `V_(2,2) = Sym^2_0 U`, has rank
+            16/20, 45/50, 100/100, 175/175, 280/280, 420/420, 600/600 for
+            `k = 1..7`.
+            - At `k = 1` it kills the `V_(1,0)` summand of `U (x) W`;
+              at `k = 2` it kills the `V_(1,1)` summand.
+            - For `k >= 3` it is injective (checked to `k = 7`; the
+              uniform proof is the `(2,2)` case of the big-part lemma).
+            - The JB map was recomputed alongside, and its ranks agree
+              with FM-CHK20.
+          - So `m_(1,1) <= m_(2,2)` for every product with a factor
+            `Sym^k W`, `k >= 3`.
+          - Together with the FM53-cone certificates for `h_1` and
+            `h_2^3`, and direct values at `()`, `(2)`, `(2,2)`
+            (`D = 0`), the level-1 sector with labels `(2,2)` reduces to
+            two exact rational LP identities plus the big-part lemma.
+          - The two identities, exact over `Q` (`xmn/exactcert.py`; both
+            sides as `SU(2) x SU(2)`-modules, where restriction is
+            injective):
+            - `hat S_2 hat S_2 h_1 = (1/10) hat S_1 s_31 + (1/5) hat S_1
+              s_211 + (9/10) hat S_2 s_3 + (3/5) hat S_3 + (1/10) hat S_5`;
+            - `hat S_2 hat S_2 h_2^3` is a combination of 20 terms
+              `hat S_m s_lambda` with coefficients in `{5/7, 34/21, ...}`,
+              all positive.
+      - **Net-cell GSI: one lift for every sector (main agent,
+        `inj/slotP.py`, `slotP2.py`, `slotPL.py`; FM-CHK23,
+        luna_max_mercury, independent code: all 13 listed ranks
+        reproduced at two primes and two coefficient draws, including
+        the three net decompositions).**
+        - Replace `Q_r` in Conjecture GSI by the net `Sp(4)`
+          decomposition of the test representation
+          `hat S_(p_1) ... hat S_(p_k) (x) Q_r`.  Slot maps act only on
+          the `h_kappa` factors, and the `hat S` factors live in the cell
+          weights.  Injectivity gives FM3 for the word.  With no labels
+          this is GSI itself.
+        - Example cells: `hat S_2 hat S_2 = 3V_00 - 3V_11 + 2V_20 +
+          2V_22 - V_31 + V_40`; `hat S_3 hat S_3 = 3V_00 - V_11 + 2V_20 -
+          2V_22 - V_31 + 2V_33 + 2V_40 - V_51 + V_60`.
+        - Screen (all `|kappa| <= 6`, mod 1,000,003):
+          - distance-1 edges (plain slot maps): injective for labels
+            `(2,2)`, `(3,2)`, `(4,2)`, `(5,2)`, `(6,2)`, `(2,2,2)`,
+            `(3,2,2)` at `r = 1`, and `(4,4)` at `r = 2`.  This includes
+            every word where the two-layer lift failed.
+          - distance-1 fails for `(3,1)`, `(5,1)`, `(4,3)`, `(5,3)`,
+            `(3,3)` at `r = 1` and for `(3,3)` at `r = 2`.  Cause: for
+            odd `q` the diamond `X_pq` has the opposite checkerboard sign
+            to the `hat S_m` cells.  So a negative cell such as `V_22` in
+            `hat S_3 hat S_3` has too few positive neighbours (at
+            `(2,2)`: `m_22 = 1`, `m_33 = 0`).
+          - distance-2 edges (composites of two slot maps): injective in
+            every one of those cases.
+          - distance-2 fails for `(4,4)` at `r = 1`: `(1^6)` 70/80,
+            `(2,1^4)` 38/44.  The negative cell `V_33` lies three grid
+            steps from every positive cell except `V_44`.
+          - In general the diamond of `X_pq` sits `q - 1` steps from the
+            `hat S_m` cells.  So with edges of bounded length, the
+            small-part region (all parts `<= p + q - 2`) at `r = 1` is
+            not covered for large `q`.
+      - Audit of the main agent's code for the same risk:
+        - in `slotR.py`, `c*(op@F1)` peaked at about `2e18`, below
+          `9.2e18`, and old vs fixed images agree entry for entry
+          (`cert/ovf_check.py`);
+        - it is now reduced first;
+        - `slotHWg.py` and `slotS.py` reduce every product.
+        So the H-only GSI screens are unaffected.
+    - **Partial repair (FM-SLIFT, luna_max_saturn) [WITHDRAWN, see
+      retraction above].**
+      - Use `A = V_20`, identified with `Lambda^2 U` for the orthogonal
+        5-space `U`, and the `Sp4`-map `phi: A (x) U -> A`,
+        `phi(w, u) = *(u ^ w)` (Hodge star).  It gives natural maps that
+        change both factors: `(A,C) -> (B,A)` and `(C,A) -> (A,B)`.
+      - With these added, the `(2,2)` h-expansion lift at `r = 1` is
+        injective for every even `kappa` with `|kappa| <= 6`, up to
+        `(1^6)` at 1536/1536.
+      - The irreducible-expansion lift with the same two maps is still
+        deficient at `(1^6)`: 265/270.
+      - The baseline kernel at `(2,1,1)` is a circuit through all four
+        source blocks; its coefficient-free form is not identified.
+      - Open: labels `(3,2)`, `(2,2,2)`, `r >= 2`, all `kappa`.  The analogue
+        for label `p` would use `V_(p,0) (x) U -> V_(p,0)`, which exists
+        for all `p >= 1`.
+    - **FM-SLIFT2 (saturn): mixed.**
+      - The baseline lift (slot maps plus one-factor U-exchange vertical
+        maps) passes:
+        - labels `(2,2)` at `r = 2` for every even `|kappa| <= 4`, up to
+          `(1^4)` at 3534/3534;
+        - labels `(2,2,2)` at `r = 1` for `|kappa| <= 4` except `(1^4)`,
+          which was not finished; e.g. `(2,1,1)` at 1824/1824.
+      - It FAILS at `r = 1` for labels `(3,2)` and `(3,3)`:
+        - `(3,2)`: `(2,1)` 49/50, `(1^3)` 98/100;
+        - `(3,3)`: `(3,1)` 62/64, `(2,2)` 95/100, `(2,1,1)` 178/188,
+          `(1^4)` 342/360.
+        As at `(2,2)`, every proper subset of source nodes injects, so each
+        deficit is a global circuit.
+      - A general shared-constituent two-tail channel family was built, with
+        equivariance checked.  It did not repair these, and it did not
+        reproduce the accepted Hodge-star rank 104/104 at `(2,1,1)`, labels
+        `(2,2)` (it gave 103).  It is not yet calibrated.
+      - The failures concentrate at `r = 1` with two or more labels.
+    - **FM-SLIFT3 (saturn).**
+      - Calibration fixed.  The discrepancy was a coordinate-ordering bug
+        in embedding the Hodge channel (`symbasis(1)` order).  After the
+        fix, the accepted 104/104 and 216/216 are reproduced.
+      - At labels `(3,2)`, `kappa = (2,1)`, `r = 1`, three independent
+        coefficient draws each give rank 49/50 with different kernel
+        lines.  So the deficit is a generic rank drop of this edge set,
+        not one fixed relation.
+      - Next candidate class (not yet built):
+        `Gamma_(i,j,Phi) = sum_a rho_M(Y^a)^(i) o (1 (x) Phi) o
+        rho_R(Y_a)^(j)`, i.e. a two-tail map `Phi` coupled to U-exchange
+        with a slot of `M`.
+    - **FM-SLIFT4 (saturn) [WITHDRAWN: overflow artifact, see retraction]: claimed repair on every screened case.**
+      - Pair maps:
+        - `Phi_32: A_3 (x) C_2 -> B_3 (x) A_2`, the composite
+          `A_3 (x) W (x) W -> A_3 (x) U` (by `P_U`)
+          `-> A_3` (Sym^3 action) `-> W (x) Sym^2 W` (polarization);
+        - `Phi_33`: flip composed with the contraction `C_3 -> B_3`.
+        Both pass the simple-root equivariance checks.
+      - Added the `Gamma_(i,j,Phi)` class.  All pass at `r = 1`:
+        - labels `(3,2)`, `|kappa| <= 3`, e.g. `(2,1)` 50/50 and `(1^3)`
+          100/100;
+        - labels `(3,3)`, `|kappa| <= 4`, e.g. `(3,1)` 64/64, `(2,2)`
+          100/100, `(1^4)` 360/360;
+        - the `(2,2)` regression for `|kappa| <= 6`.
+      - **Conjecture GSI-S** (saturn) [its evidence is WITHDRAWN; the statement stands only as a proposal].  Take node spaces
+        `H_(eps,mu) = Hom(V_mu, M_kappa (x) (x)_j R_(eps_j)(p_j))`,
+        where `R_A = Sym^p`, `R_B = Sym^(p-2)` and
+        `R_C = Sym^(p-1) (x) W`.
+        - Copies are `|2^(#A+#B) Q_r(mu)|`, signed by the node mass.
+        - Edges:
+          - slot maps;
+          - one-tail vertical maps (multiplication, contraction,
+            polarization, insertion) and their U-exchange composites;
+          - all two-tail shared-constituent maps `Phi`;
+          - the `Gamma` exchanges.
+        - Claim: a generic assembly has full source rank for every
+          `kappa`, labels and `r`.
+      - Pending independent check (FM-CHK21).  The ranks above come from
+        inline code that was not saved.
+    - **FM-SLIFT5 (saturn): GSI-S stress, two labels [pair-map ranks SUSPECT: to recheck with the corrected harness].**
+      - Pair maps:
+        - general `Phi^(AC)_(p,q) = Delta o mu o (1 (x) c_q)` and
+          `Phi^(CA)_(p,q)`, from symmetric multiplication and
+          comultiplication with symplectic contraction;
+        - contraction-then-flip for equal labels;
+        - the Hodge map at `p = 2`;
+        - the `Gamma` exchanges.
+      - All 35 two-label cases requested have full source rank:
+        - `r = 2`, labels `(2,2)`: `|kappa| <= 4`, up to `(1^4)` at
+          3534/3534;
+        - `r = 2`, labels `(3,2)`: `|kappa| <= 3`, up to `(1^3)` at
+          1665/1665;
+        - `r = 2`, labels `(3,3)`: `|kappa| <= 2`;
+        - `r = 1`, labels `(4,2)`, `(4,3)`, `(4,4)`: `|kappa| <= 2`.
+      - Labels `(2,2,2)` at `(1^4)` did not finish.
+      - The construction code is saved as `scratchpad/cert/gsis_maps.py`.
+- **Lemma JB (PROVED; FM-INJ4, luna_max_venus; main-agent check).**  For
+  every slot `i` with `kappa_i = k > 0`, the single map
+  `B_i: Hom_Sp4(U, M) -> Hom_Sp4(Sym^2 W, M)` is injective.
+  - Proof.
+    - Currying gives `B_i = D_k (x) id_N`, with
+      `D_k: Hom(U, V_k) -> Hom(Lambda^2 U, V_k)` and
+      `D_k(t)(u ^ v) = X_u t(v) - X_v t(u)`.
+    - `D_k` is `Sp4`-equivariant, and
+      `U (x) V_(k,0) = V_(k+1,1) + V_(k,0) + V_(k-1,1)` for `k >= 2`, and
+      `= V_(2,1) + V_(1,0)` for `k = 1`, is multiplicity free.  So `D_k` is
+      injective iff it is nonzero on each summand.
+    - Normalization (FM-CHK20 repair): take `U -> p` isometric,
+      `X_(v^w)(z) = [omega(v,z) w - omega(w,z) v]/sqrt 2`, with
+      Hilbert--Schmidt metrics.
+      - The cross-Casimir `K = (C_(U (x) V_k) - C_U - C_(V_k))/2` has
+        eigenvalues `k/2`, `-2`, `-(k+4)/2` on the three summands.
+      - `D_k^* D_k = K(K+1)` then has eigenvalues `k(k+2)/4`, `2` and
+        `(k+2)(k+4)/4`.
+      - Without the factor `1/sqrt 2` they double; injectivity is
+        unaffected.
+    - On the `V_(k,0)` summand `{(X_a v)_a}`, `D_k` sends `v` to
+      `([X_a, X_b] v)`.  This is nonzero for `v != 0`, because
+      `[p,p] = sp4` and `V_k` is a nontrivial irreducible module.
+    - `D_k (x) id_N` is injective on all of `Hom(U, V_k) (x) N`, hence on
+      the `Sp4`-invariant part.
+  - Main-agent check: `rank D_k = 5 dim V_k` (injective) for
+    `k = 1, ..., 10`, mod 1,000,003.  Independent check (FM-CHK20,
+    luna_max_mercury): ranks 20, 50, 100, 175, 280, 420 for
+    `k = 1..6` mod 1009.  ACCEPTED after the two repairs above.
+  - **Corollary.**  `m_(1,1)(M) <= m_(2,0)(M)` for every nonempty product
+    `M = (x) Sym^(kappa_i) W`.
+    - This strengthens the `m_(1,1) <= m_(2,0) + m_(0,0)` of FM51 for these
+      products.
+    - It holds in all 183 scanned words.
+  - It is not enough for T1 by itself.  `T1 - JB = 5 m_1 - 2 m_U` is
+    negative at `(2,2,2)` (`5 - 6`), so the `A` channel and at least two
+    slots must interact.
+- **Single-slot specialization (main agent, `sparse01.py`, `cyc.py`).**
+  Generic coefficients are not needed in the slot direction.
+  - Let each block of `T` use ONE slot with a generic scalar.  Then random
+    slot assignments are almost always injective (e.g. 255/300 at
+    `(2,2,2)`, 114/300 at `(2^4)`, 300/300 at `(1^6)`).
+  - The fixed **cyclic rule** `T_cyc` is injective on all 15 words tested,
+    up to `(1^8)` (rank 630/630), including `(2,2,2)`, `(2^4)`, `(3^4)`:
+
+        T_cyc(f_0,f_1,f_2) = ( sum_c lambda_(rc) A_((r+c) mod s) f_c )_(r=0..4)  (+)  sum_c mu_c B_(c mod s) f_c
+
+    with generic scalars `lambda`, `mu`.
+  - With all scalars `= 1` the cyclic rule loses rank on symmetric words
+    (`(2,2,2)`: 7/9; `(3^4)`: 81/90).  The scalars must break the slot
+    symmetry; the slot pattern can be fixed.
+  - **Reduction.**  By Lemma JB each `B_c` is injective.  Let
+    `beta_3 = dim(B_0 H + B_1 H + B_2 H)`.  Then `T_cyc` is injective if
+    (i) `3 m_U - beta_3 <= 5 m_1` and (ii) the five `A`-channels are
+    jointly injective on the kernel of `sum_c mu_c B_c`.
+    - At `(2,2,2)`: `beta_3 = 5`, and `9 - 5 = 4 <= 5`.
+    - Measured (`beta3.py`, 18 words):
+      - `beta_3 = m_ad` for most words and for every choice of three
+        slots;
+      - the exceptions are `(2,2,2)` (5/6), `(5,1^5)` (12/15), `(3,1^5)`
+        and `(2,2,2,1,1)` (1 short for some triples).
+      - (i) holds on all 18 words.
+    - But since `beta_3 ~ m_ad`, condition (i) is essentially T1 itself.
+      The split relocates the difficulty: it asks that the `B`-images of
+      three slots span nearly all of `Hom(ad, M)`.  It does not reduce it.
+- **KILL: crystal one-letter slot move (FM-INJ5, luna_max_venus).**
+  - Setup.
+    - Model `M` by the one-row KN crystals `B(kappa_1) (x) ... (x)
+      B(kappa_s)`.
+    - Move from a highest element of weight `mu`: change one letter of one
+      factor by a weight of `U`, then raise to the highest element of the
+      new component.  Keep the move if its weight `nu` is a positive
+      `Q_r`-neighbour.
+    - Give nodes their copy numbers and test Hall by exact max-flow.
+  - Results.  It passes `r = 3` for `|kappa| <= 6` and `r = 2` for
+    `|kappa| <= 6`.  It FAILS at `r = 2` on
+    - `(2,2,2)`: flow 8/9;
+    - `(3,3,2)`: flow 8/9;
+    - `(2^4)`: flow 40/45.
+  - The local-projection variant (keep only the `B(k)` component of
+    `B(U) (x) B(k)`) fails already at `(1,1)`.
+  - **Symmetry analysis (FM-SYM, luna_max_venus; corrects an earlier
+    main-agent guess).**
+    - Exact `S_kappa`-characters of `H`, `I`, `J`.  E.g. at `(2,2,2)`:
+      - `H = sgn + Std`;
+      - `I = sgn`;
+      - `J = 2 x 1 + 2 Std`.
+    - With trivial actions on copies and channels, an `S_kappa`-equivariant
+      `T` has
+      `rank <= sum_rho dim(rho) min(3 h_rho, 5 i_rho + j_rho)`.
+      - This equals 7 at `(2,2,2)`, which matches the unit-scalar cyclic
+        rank 7/9.
+      - It is 9 at `(3,3,2)`, i.e. no deficit.  So slot symmetry does NOT
+        explain the crystal failures (8/9 at `(2,2,2)` and `(3,3,2)`).
+        Those are limitations of the one-letter move itself.
+    - Scalars that depend on the slot alone still fail at `(2,2,2)` (8/9).
+- **Explicit non-generic map (FM-SYM, venus; main-agent screen
+  `expl.py`).**
+  - Take the cyclic slot pattern `i_(rc) = (r+c) mod s`, `j_c = c mod s`
+    with power scalars `lambda_(rc) = (i_(rc)+1)^(r+1+5c)` and
+    `mu_c = (j_c+1)^(5+c)`.
+  - This `T_exp` is injective on every word tested:
+    - all 26 words of size `<= 8` with `m_U > 0`, up to `(1^8)` at
+      630/630;
+    - all 59 words of size 10 and 12 with `kappa_1 <= |kappa|/2` and
+      `dim M_(1,1) <= 12000`, up to `(2,2,2,1^4)` at 729/729.
+    That is 85 words with no failure.
+  - It is a fixed, deterministic map.  Unlike GSI it can be attacked
+    directly: its matrix entries are explicit powers.
+  - **FM-EXP (venus).**
+    - Two slots, PROVED: `T_exp` is injective for every word `(a,b)` at
+      `r = 2`.
+      - `dim Hom(U, V_a (x) V_b) = delta_ab`, and the generator is
+        `F_a = omega(x,y)^(a-1) tr(Z C(x,y))`.
+      - `A_0 F_a = A_1 F_a = ((a+4)/2) omega^a`, which is nonzero.
+      - The first three `A`-rows then have coefficient matrix
+        `((a+4)/2) [[1,64,1],[4,1,4096],[1,256,1]]`, with determinant
+        `-785664 (a+4)^3/8`, which is nonzero.
+      - This is a template only: T1 for two factors is already known
+        (FM54).
+    - The level-3 deterministic scheme uses slot
+      `i(t,c) = (t+c) mod s` and exponent
+      `e(t,c) = 1 + binom(t+c+1, 2) + c`, which is distinct per block.
+      - It is injective on all 19 words of size `<= 6` at `r = 3`, up to
+        `(1^6)` at 1225/1225.
+      - The obstruction to the two-slot argument appears first at
+        `(2,1,1)`, where `m_(1,1) = m_(3,1) = 2`.
+    - **FM-EXP2 (venus): three slots, reduced but not closed.**
+      - For `kappa = (a,b,c)`, `H` is spanned by
+        `F_ij = omega_12^x12 omega_13^x13 omega_23^x23 C_ij`, with exponents
+        fixed by the degrees.  So `dim H <= 3`, and there is no Fierz
+        relation.
+      - `T_exp` is injective on all 216 triples with `a, b, c <= 6`
+        (45 of them with `dim H = 2`, 42 with `dim H = 3`).
+      - Remaining step: when `dim H = 3`, the five `A`-coordinates have
+        rank 5.  The `B`-coordinate must then be injective on the
+        4-dimensional kernel.  This is a polynomial identity in the
+        exponents, not yet proved.
+      - Generic GSI at `r = 3` holds on all 22 partitions of size 8.
+      - The deterministic level-3 map (main agent, `EXPLICIT=1 slotR.py`,
+        reproducing venus's size-6 ranks) is injective on all 22 words of
+        size 8, up to `(1^8)` at 9100/9100.  It is also injective on the
+        tightest size-10 words: `(2^4,1,1)` 6275/6275 (slack 0.64%),
+        `(3,2,2,1,1,1)` 4155/4155, `(2^5)` 3400/3400.
+    - **FM-EXP3 (venus): symbolic three-slot minors; partial.**
+      - Write `a = alpha + beta`, `b = alpha + gamma`, `c = beta + gamma`.
+        Then `m_U = [alpha>=1] + [beta>=1] + [gamma>=1]` and
+        `m_ad = 1, 3, 6` for `m_U = 1, 2, 3`.
+      - Cases `m_U = 1, 2`: PROVED (conditional on the normalization
+        check below).  The minors are nonzero multiples of
+        `((x+4)/2)^3`, or `(...)^2 P(...)` with `P` positive on the
+        feasible cone.
+      - Case `m_U = 3`: one explicit `9 x 9` minor
+        `D = -559872 alpha (alpha+beta+gamma+4) R` changes sign over the
+        positive reals.
+        - On the slice `(beta,gamma) = (4,1)`, a second minor survives at
+          the sign change (the gcd is `559872(alpha+9)`).
+        - There is no integer failure for `a, b, c <= 6`.
+        - The general proof (some maximal minor nonzero at every positive
+          integer triple) is open.
+      - **Normalization reconciled (FM-EXP4).**
+        - The screened map has endpoint coefficient `5/2`, so venus's
+          table `A_i(F) = (alpha+beta+4)/2 Omega` at incident slots is the
+          screened one.  FM-DEG1's `1/2` is corrected above.
+        - The `B`-coefficients were checked against the code at
+          `(2,1,1)`.
+        - So the `m_U = 1, 2` proofs apply to `T_exp`.
+    - **Theorem (three slots; FM-EXP5, luna_max_venus; certificate
+      verified by the main agent).**  `T_exp` is injective for every
+      three-factor word `kappa = (a,b,c)`.
+      - Proof of `m_U = 3`.  Take the three `9 x 9` minors `D_1, D_2, D_3`
+        (all five `A`-rows plus the `q`-rows `(11,12,22,23)`,
+        `(12,13,22,23)`, `(12,13,23,33)`).  They satisfy
+        `N D_1 - N_1 D_2 - N_2 D_3 = 559872 (alpha+beta+gamma+4)
+        Q(alpha-1, beta-1, gamma-1)`, where:
+        - `N = 1452003864120871163299950013`,
+          `N_1 = 59424888149555732881404736`,
+          `N_2 = 59440530383872825440470080`;
+        - `Q` has 51 terms, total degree 5, and every coefficient
+          positive.
+        So some minor is nonzero on `[1, oo)^3`.
+      - `m_U = 1, 2` are the boundary minors above.
+      - Main-agent checks:
+        - the verifier (`scratchpad/cert/s3_certificate.py`) reruns the
+          determinant identity, the positivity of every coefficient, and
+          the `6^3` grid;
+        - `crosscheck.py` compares the basis-independent ranks (A-part,
+          B-part, full, `m_U`, `m_ad`) of venus's symbolic matrix with the
+          screened code on 9 three-factor words, and all match.
+      - Scope.  T1 for three factors was already known (fifth pass,
+        few-factor rational generating functions).  This is the first
+        uniform injectivity theorem for the slot-map mechanism, and the
+        first with multiplicity `> 1`.
+      - Next instance: four slots, where Fierz relations appear, starting
+        with `(1^4)`.
+    - **Theorem T1-5 (main agent, 2026-09-29; verifiers
+      `character_ring_iter/verify_t1_four_factors.py` and
+      `verify_t1_five_factors.py`).**  T1, that is FM3 at `r = 2` in the
+      H-only sector, holds for every word with at most five factors.
+      This goes through the dimension inequality directly, not through
+      GSI.  FM-EXP7 (venus) supplied the four-factor multiplicity
+      formulas that suggested it.
+      - ACCEPTED by FM-CHK-T15 (luna_max_neptune, independent code).
+        - It cites Goodman--Wallach Thm 5.2.2, Cor 5.2.5 and
+          Thm 12.2.15 for the fundamental theorems, and
+          Buchsbaum--Eisenbud (Amer. J. Math. 99 (1977)) Thm 2.1 for
+          the resolution.
+        - Series re-checked on 1,001 four-part and 3,003 five-part
+          compositions (size `<= 10`).
+        - Both certificates re-expanded exactly.
+      - Step 1.  `T1 = 8 m0(kappa) + 4 m0(kappa,2) - 3 m0(kappa,1,1)`,
+        where `m0` counts invariants and `W (x) W = 1 + U + Sym^2 W`.
+      - Step 2 (fundamental theorems for `Sp(4)`).  The invariants of `n`
+        vectors are `C[omega_ij]/I_6`, with `I_6` the ideal of `6 x 6`
+        Pfaffians.
+        - `I_6 = 0` for `n <= 5`, and `I_6 = (Pf)` for `n = 6`.
+        - For `n = 7`, Buchsbaum--Eisenbud gives the resolution
+          `0 -> R(-(2^7)) -> (+)_l R(-(1^7) - e_l) ->
+          (+)_k R(-(1^7) + e_k) -> R`.
+        - Extract `t^2` from `n = s+1` and `t1 t2` from `n = s+2`, with
+          `Pi_s = prod_(i<j<=s) (1 - u_i u_j)^(-1)`.  This gives
+          `sum_kappa T1(kappa) u^kappa = N_s Pi_s`, with:
+          - `N_4 = 5 + p_2 - 2 e_2 + 3 e_4`;
+          - `N_5 = 5 + p_2 - 2 e_2 + 3 e_4 - e_1 e_5`.
+        - Checked against direct Weyl-character values of T1 on 922
+          four-part and 1,292 five-part compositions (size `<= 14` and
+          `<= 12`), with no mismatch.
+      - Step 3 (positive decomposition, found by LP and verified
+        exactly).  `N_s = sum_i c_i u^(m_i) prod_(e in F_i) (1 - u_e)`
+        with `c_i > 0` and `F_i` sets of edges of `K_s`.  So
+        `N_s Pi_s = sum_i c_i u^(m_i) prod_(e not in F_i)
+        (1 - u_e)^(-1)` has nonnegative coefficients.
+        - `s = 4`: nine terms, all with coefficient 1:
+          `N_4 = w12 + u1^2 w34 + w13 w14 + u3^2 w12 w24 + u4^2 w13 w23
+          + u2^2 w14 w34 + w12 w24 w34 + w13 w23 w24 + w14 w23 w34`,
+          where `wij = 1 - u_i u_j`.
+        - `s = 5`: 56 terms, `u`-degree `<= 8`, rational coefficients
+          with denominators 7, 19, 133 (listed in the verifier).
+          Degree 6 is infeasible.
+      - Scope.
+        - T1 for three factors was known.  Four and five factors are new,
+          for all degrees at once.
+        - The method is the same at every level `r` and in the `hat S`
+          sectors: a rational series in the factor variables whose
+          numerator needs a positive decomposition.  But the invariant
+          rings on `s + 2(r-1)` or more vertices carry the full Pfaffian
+          resolutions.
+        - From `s = 6` on, the Pfaffian ideal enters `m0(kappa)` itself.
+          A uniform-in-`s` decomposition is open.
+    - **Theorem T1-6 (main agent; verifier `verify_t1_six_factors.py`;
+      ACCEPTED by FM-CHK-T16, luna_max_neptune).**  T1 holds for every
+      word with at most six factors.
+      - The checker supplied the citation for the degree bound:
+        Bruns--Herzog, *On the computation of a-invariants*, Cor. 1.7
+        (`a = -rn` for Pfaffian ideals of size `2r+2`, `2r < n`), with
+        the Gorenstein property from Kleppe--Laksov.
+      - It re-derived `deg N_6 <= 26` and rechecked `N_6` on all 74,613
+        six-part compositions of size `<= 16`.
+      - `N_6 = 5 + p_2 - 2e_2 + 3e_4 - e_1e_5 - 4e_6 + e_2e_6 - e_6^2`.
+        It comes from exact T1 values of all 6-part compositions through
+        `u`-degree 26, with nothing above degree 12.
+        - Degree 26 is the a priori bound: the 8-vertex Pfaffian ring is
+          Gorenstein with `a = -2n`, so `K_8` has `x`-degree `<= 24`,
+          and the `t_1 t_2` extraction adds at most 2.
+        - The a-invariant formula matches `n = 6` (principal Pfaffian)
+          and `n = 7` (Buchsbaum--Eisenbud top term `x^(2^7)`).
+      - Cycle decomposition (exact):
+        `N_6 = (1/12) [ sum over the 60 Hamiltonian cycles C of K_6 of
+        prod_(e in C) (1 - u_e) + sum over vertices v and 5-cycles C
+        on the other vertices of u_v^2 prod_(e in C) (1 - u_e) ]`.
+      - So `12 T1(kappa) = sum_C G_(K_6 - C)(kappa) + sum_(v,C)
+        G_(K_6 - C)(kappa - 2e_v)`.  Here `G_X(kappa)` counts multigraphs
+        with edges in `X` and degree sequence `kappa`, so T1 is a count
+        of pairs (cycle, multigraph avoiding its edges).
+      - Five factors in the same form: `N_5 = (1/12) [ sum over
+        Hamiltonian paths P of prod_P (1 - u_e) + sum over (v, 4-vertex
+        path P off v) of u_v^2 prod_P (1 - u_e) ]`.  This comes from the
+        symmetric LP, as an alternative to the 56-term certificate.
+      - Seven factors: `N_7 = N_6 + e_7 (4e_1 - 3e_3 + 4e_5 - 5e_7)`.
+        It comes from exact T1 values through degree 22 (no terms in
+        degrees 16--22; the a priori bound is 38); it terminates
+        at degree 14, and its absolute coefficient mass by degree
+        (5, 49, 105, 175, 175, 105, 49, 5) is symmetric.  No positive
+        decomposition of this form exists with `u`-degree `<= 14`
+        (symmetric LP over 263,370 columns, infeasible).  Degree 16
+        (675,806 columns) is also infeasible.
+      - Direct T1 scans (Weyl character formula, `xmn/t1scan7.py`): all
+        7-part partitions of size `<= 30` and 8-part partitions of size
+        `<= 32`, no negative value.  The only zeros are the forced ones
+        (`d >= 2`), and every `d = 1` word has `T1 = 1`.
+      - **Observation (Schur form).**  In the Schur basis every `N_s`,
+        `4 <= s <= 7`, uses only shapes with at most two columns.
+        - `N_4`, `N_5`, `N_6` are exactly the truncations of `N_7` to
+          4, 5, 6 rows.  So there is one numerator
+          `N = sum c(a,b) s_(2^a 1^b)`, and `N_s` is its restriction to
+          `s` variables.
+        - Known coefficients:
+          - `c(0,0) = 5`, `c(1,0) = 1`, `c(0,2) = -3`, `c(0,4) = 3`,
+            `c(1,4) = -1`;
+          - `c(2,4) = 1`, `c(0,6) = -5`, `c(6,0) = -1`;
+          - `c(1,6) = 5`, `c(3,4) = -3`, `c(5,2) = 3`, `c(7,0) = -5`;
+          - all others with `a + b <= 7` are 0.
+        - These satisfy `c(7-a-b, b) = -c(a,b)`.
+        - If the two-column form holds in general, `N_s` has degree
+          `<= 2s`, and `N_7` has no terms above degree 14.
+        - **Correction (FM-GEN1, venus).**  The two-column form fails
+          at `s = 8`.
+          - Exact T1 data through degree 16 give coefficient `-5` at
+            `m_(3,1^7)` in `N_8`, and no Schur function with at most two
+            columns has that monomial.
+          - The degree-16 part of `N_8` also contains `55 m_(1^8)`,
+            `55 m_(2^8)` and `-20 m_(2^2,1^6)`.
+          - So the two-column form holds only through 7 rows.  Whether
+            `N_7` has terms above degree 22 is decided only by the
+            a priori bound (degree 38).
+      - Diagnostic (main agent, `xmn/posdec7K.py`).
+        - The 7-vertex Pfaffian K-polynomial
+          `K_7 = 1 - e_6 + e_1 e_7 - e_7^2` IS product-certifiable.
+          With all monomials at degree 14 the symmetric LP is feasible,
+          and it uses odd, edge-like monomials such as `u_3 u_5`.  This
+          is consistent with a Stanley decomposition from a shelling of
+          the 3-nesting-free complex.
+        - So the class is not too weak for Pfaffian rings as such.
+          `N_7` lies outside it at degree `<= 16` for a reason of its
+          own.
+        - A product-class certificate is the same as a lift of `N_7` to
+          edge variables `x_e` whose series over `prod (1 - x_e)` is
+          nonnegative edge by edge.  That is a nonnegative weight on
+          multigraphs summing to `T1(kappa)` over each degree class.
+          For `s = 7`, no lift of bounded degree `<= 16` exists.
+      - **Seven factors by slicing (main agent, `xmn/slice7.py`,
+        `posdec6p1.py`, `slice_exact.py`; slices `k = 1..4` ACCEPTED by
+        FM-CHK24, luna_max_mercury).**
+        - Mercury re-derived the slice formula and the symmetry
+          argument.
+        - It re-solved the four certificates exactly from their
+          supports: ranks 5, 29, 64, 130, zero residual, all
+          coefficients positive.
+        - The `u_7^k` coefficient of `N_7 Pi_7` is `N^(k) Pi_6`, with
+          `N^(k) = sum_(j <= 2) [u_7^j] N_7 * h_(k-j)(u_1..u_6)`.
+        - Each slice is a six-variable problem.  So the product class in
+          six variables, with a certificate that may depend on `k`, is
+          enough.
+        - Exact `S_6`-symmetric certificates:
+          - `k = 0`: this is `N_6`, the two cycle terms;
+          - `k = 1`: 5 terms at degree 15, all on the 5-cycle (vertex
+            factor `u_v`, `u_v^3`, `u_a u_b u_v^3`) or the Hamiltonian
+            6-cycle (`u_v`, `u_a u_b u_v`);
+          - `k = 2`: 29 terms at degree 18, rational, minimum `1/720`,
+            reconstructed exactly.
+          - `k = 3`: 64 terms at degree 19, rational, minimum
+            `29/108180`, reconstructed exactly with flint `fmpq_mat`
+            (`xmn/slice_exact_flint.py`; rank 64, no free parameter,
+            zero residual).
+          - `k = 4`: 130 terms at degree 20, reconstructed exactly
+            (rank 130, no free parameter).
+        - So T1 holds for every seven-factor word whose smallest part is
+          `<= 4`, by symmetry of T1 in the parts.
+        - FM-GEN3 (venus): `N^(k) = N_6 h_k + n_1 h_(k-1) + n_2 h_(k-2)`,
+          where
+          - `n_1 = -2E1 + 3E3 - E1E4 - 5E5 + E2E5 + 5E1E6 - 3E3E6 +
+            2E5E6`;
+          - `n_2 = 1 - E4 + E1E5 - E5^2 + E6(4 - 3E2 + 4E4 - 5E6)`;
+          - `E_j = e_j(u_1..u_6)`.
+          Venus re-derived the `k = 0, 1` certificates independently.
+          No family valid for all `k` was found, and `N_6 h_k` alone
+          fails at `k = 1` (its `u_6` coefficient is `-2`).
+        - The degree needed above the slice's own degree is 0, 2, 4, 4,
+          4 for `k = 0..4`.  `k = 3` is infeasible at degree 17 (phase-1
+          slack 0.0027).  The certificate size grows: 2, 5, 29, 64,
+          130 terms.
+        - `k = 5` is infeasible at degree 21 (1,241,232 columns, phase-1
+          slack 0.00015, 2.9 h).  So the gap exceeds 4 at `k = 5`, and
+          each higher slice costs more.
+        - As a route to all seven-factor words, slicing is exhausted:
+          it proves one slice at a time and has no uniform family
+          (FM-GEN3).
+        - KILL (main agent, `xmn/shift7.py`): a shifted-region
+          certificate.
+          - For the complement region (all parts `>= 5`), the shifted
+            series `sum_lambda T1(5*1 + lambda) u^lambda` times
+            `prod (1 - u_i u_j)` does not terminate.  Its absolute
+            coefficient mass grows from `8 * 10^4` at degree 1 to
+            `7 * 10^8` at degree 15.
+          - So there is no low-degree numerator to decompose.
+          - T1 is large there: the minimum is 1,563 over all 316 sorted
+            `lambda` with `|lambda| <= 15`.  This region needs a
+            lower-bound argument instead.
+          - For `k = 2` at degree 16 the slack is 0.00085.
+        - HiGHS returns status 15 on the plain formulation; the phase-1
+          slack formulation is reliable (the `k = 1` control has slack
+          0).
+      - **KILL (FM-COMB1, luna_max_venus): natural extensions of the
+        cycle count to `s >= 7`.**
+        - The count sums the 6-cycle and (vertex, 5-cycle) terms over
+          all 6-subsets of `[s]`, with `H` any multigraph on `K_s`
+          avoiding the cycle.  Normalization `c = 12` is fixed by
+          `s = 6`.
+        - It fails at `(2,1^6)`: 5,400 against `12 T1 = 480`.  At
+          `(1^8)` it gives 67,200 against 1,080.
+        - Requiring `H` 3-nesting-free, or `H + Gamma` 3-nesting-free,
+          fails already at `(1^6)` (224 and 168 against 240).
+        - The `s = 5` path control passes.  T1 itself is not falsified.
+      - **Conjecture EM2 (smallest-edge descent; main agent,
+        `xmn/mono.py`, `mono2.py`, `em2.py`).**
+        - Statement: for every partition `kappa` with at least two
+          positive parts, `kappa != (1,1)`,
+          `T1(kappa) >= T1(kappa - e_(s-1) - e_s)`, where `kappa_(s-1)`,
+          `kappa_s` are the two smallest positive parts.
+        - Evidence: no failure on all 3,737 partitions with `<= 12` parts
+          and size `<= 24`.  The minimum margin is 0, at `(3,1) -> (2)`.
+        - Other rules fail:
+          - removing the edge between the two largest parts fails 79
+            times in 444 words, first at `(2,1,1)`;
+          - removing the edge between the largest and smallest parts
+            fails on `(k+1,k,1)` for every `k`;
+          - monotonicity under adding an arbitrary edge fails in 202 of
+            1,980 cases.
+        - Consequences.
+          - EM2 plus the base cases (single parts, and `T1(1,1) = 3`)
+            gives T1 for every word by descent.
+          - Each step lowers the two smallest parts, so every word
+            descends to one with fewer factors.  Given Theorem T1-6, EM2
+            is needed only for words with `>= 7` positive parts.
+        - Equivalent form.  With `a >= b` the two smallest parts,
+          `h_a h_b - h_(a-1) h_(b-1) = D_(a,b) = sum_(j=0..b)
+          V_(a+b-j, j)`, a genuine module by Pieri.  So EM2 says
+          `<h_kappa' (x) D_(a,b), Q_2> >= 0` whenever every part of
+          `kappa'` is `>= a`.
+          - The small factors enter only through the genuine row
+            `D_(a,b)`.
+      - **Lemma D1 (FM-GEN1, venus; proved).**      - **Lemma D1 (FM-GEN1, venus; proved).**  `T1(kappa) = 1` for
+        every word with `kappa_1 = |kappa|/2 + 1`, for any number of
+        factors.
+        - At multidegrees `(kappa,2)` and `(kappa,1,1)` every multigraph
+          is a star at vertex 1.  The Pfaffian ideal has no component
+          there.
+        - So `m_00 = m_11 = 0`, `m_20 = 1` and `T1 = 1`.
+    - **Theorem S2-2 (main agent; verifier
+      `character_ring_iter/verify_shat_pair_two_factors.py`; S2-2 and
+      S2-3 ACCEPTED by FM-CHK-S2, luna_max_neptune, with independent
+      numerator derivation and Weyl checks on 1,820 + 6,188
+      compositions).**  FM3 at
+      `r = 1` holds for every word `hat S_p hat S_q h_a h_b`, for all
+      `p, q, a, b >= 0` at once.
+      - The labels are treated as variables:
+        `sum_p hat S_p t^p = (2 + 2t^2) H(t) - t H(t) h_1(z)`, where `z`
+        is an extra degree-1 vertex.  Only invariant rings on `<= 6`
+        vertices enter.
+      - This gives
+        `G(t1,t2,u1,u2) prod_(K_4)(1 - x_i x_j) = N`, with
+        `N = (2+2t1^2)(2+2t2^2) - t1(2+2t2^2) h1 - t2(2+2t1^2) h1 +
+        t1 t2 (h1^2 + 1 - e4)`.  The closed form matches exact
+        `phi_1` values through degree 14.
+      - `N` is a sum of ten terms `x^m prod_(e in F)(1 - x_e)`, all
+        with coefficient 1, so `G` has nonnegative coefficients.
+      - This covers the small-part region for these words.
+    - **Theorem S2-3 (main agent; verifier
+      `character_ring_iter/verify_shat_pair_three_factors.py`).**  FM3 at
+      `r = 1` holds for every word `hat S_p hat S_q h_a h_b h_c`, for all
+      `p, q, a, b, c >= 0`.
+      - The numerator uses invariant rings on `<= 7` vertices, so
+        Buchsbaum--Eisenbud enters:
+        `N = (2+2t1^2)(2+2t2^2) - t1(2+2t2^2)(e1 - e5) -
+        t2(2+2t1^2)(e1 - e5) + t1 t2 (e1^2 + 1 - e4 - e1 e5)`,
+        with `e_k` in `(t1, t2, u1, u2, u3)`.  It matches exact `phi_1`
+        values through degree 12.
+      - It has a positive decomposition with 64 terms, rational
+        coefficients (denominators dividing 45), and `x`-degree
+        `<= 12`.  Degrees 8 and 10 are infeasible.
+    - Level-1 two-label sector, current state: proved for words with at
+      most three `h`-factors (Theorems S2-2, S2-3), and for words with a
+      part `>= p + q - 1` (Lemma BP).  Open: four or more small parts.
+      - Four `h`-factors, closed form (8 vertices, via the `N_6`
+        extraction):
+        `N = (2+2t1^2)(2+2t2^2)(1-e6) - (t1(2+2t2^2) + t2(2+2t1^2))
+        (e1-e5) + t1 t2 (1 + e1^2 - e4 - e1e5 + e2e6 - e6^2)`, with
+        `e_k` in `(t1,t2,u1..u4)`.  It matches exact `phi_1` through
+        degree 14.
+      - No positive decomposition of the product class exists at
+        degree 14 (8,412 `S_2 x S_4`-symmetric columns), nor at degree
+        16 with monomials in `{0,2}^6` (15,489 columns).  This is the
+        same obstruction as T1 at `s = 7`.
+    - **Theorem R3-4 (FM-R3F, luna_max_mars; independently rerun by the
+      main agent, `xmn/r3check.py`).**  FM3 at `r = 3` holds for every
+      H-only word with at most four factors, for all degrees at once.
+      - `A_3(kappa) = <h_kappa, Q_2^2>`, with
+        `Q_3 = Q_2^2 = 64 + 64h_2 - 48h_1^2 + 16h_2^2 - 24h_2h_1^2 +
+        9h_1^4`.  This extracts invariant Hilbert series on up to
+        `s + 4` vertices.
+      - Numerators:
+        - `N^(3)_2 = 35 + 14m_2 - 21m_11 + m_4 - 4m_31 + 6m_22`;
+        - `N^(3)_3 = N^(3)_2 + m_211`;
+        - `N^(3)_4 = N^(3)_3 + 41m_1111 + 5m_3111 - 5m_2211`.
+      - For `s = 4` the extraction uses the 8-vertex ring.  Mars
+        determined the numerator through the a priori bound, degree 28.
+        The main agent re-derived all three numerators from its own
+        Weyl-character series (through degree 16, 14, 16).
+      - Positive decompositions, all verified exactly by the main
+        agent:
+        - `s = 2`: 9 integer terms;
+        - `s = 3`: 24 integer terms;
+        - `s = 4`: 19 `S_4`-symmetrized terms with rational
+          coefficients.
+      - Boundary values `A_3 = 20, 8, 20` at `(2,2)`, `(2,1,1)`,
+        `(1^4)`.  The forced zeros hold (`kappa_1 - |kappa|/2 >= 3`).
+    - **Theorem S1R2-4 (FM-S1R2, luna_max_mars; main agent independent
+      numerators and certificates, `xmn/s1r2_num.py`, `posdec_fix0.py`).**
+      FM3 at `r = 2` holds for every word `hat S_p h_kappa` with at most
+      four symmetric-power factors, for all `p` and all degrees.  This
+      is the open-core sector "`r = 2` with one `hat S`", up to four
+      factors.
+      - Numerator: `N_s = (2+2t^2)(8T(0) + 4T(2) - 3T(1,1)) -
+        t(8T(1) + 4T(1,2) - 3T(1,1,1))`, where `T(alpha)` extracts
+        auxiliary degrees `alpha` from the invariant Hilbert series.
+        - `N_1 = N_2 = B_s`, with
+          `B_s = 10 + 2m_2 - 4m_11 - 7t m_1 + 9t^2 - t m_3 + t m_21 +
+          3t^2 m_2 - t^2 m_11 - 3t^3 m_1 + t^4`.
+        - `N_3 = B_3 + 9t m_111 - 2t^2 m_211 + 4t^3 m_111`.
+        - `N_4 = N_3 + 6m_1111 - 4t m_2111 - t^2 m_1111 + t^2 m_3111 +
+          t^2 m_2211 - t^3 m_2111 - t^4 m_1111`.
+        - `N_4` comes from mars's exact extraction through the 8-vertex
+          degree bound 28.
+      - The main agent recomputed all four numerators from its own Weyl
+        values of `<hat S_p h_kappa, Q_2>`, through degree 16, 16, 16
+        and 14; they agree.
+      - The main agent found its own `S_s`-symmetric exact certificates
+        with 8, 14, 19 and 35 terms (`|m| <= 4`, all edge sets).  Each
+        full expansion equals the numerator.  Mars's certificate rows
+        for `s >= 2` were not printed, so the certificates are the
+        main agent's.
+    - **Level-1 small parts for fixed pairs (FM-SEC3, luna_max_saturn;
+      conditional, accepted).**
+      - For each fixed pair `(p,q)`, the words with `X_pq h_kappa` not
+        genuine form a finite set.
+        - Lemma BP bounds the parts by `p+q-2`.
+        - Pure-power genuine seeds `k^(n_k)` bound each multiplicity:
+          - `(2,2)`: `1^9`, `2^3`;
+          - `(3,3)`: `1^17`, `2^8`, `3^4`, `4^3`;
+          - `(4,4)`: `1^29`, `2^13`, `3^7`, `4^5`, `5^3`, `6^3`.
+      - With exact character identities (FM53-cone certificates for
+        `h_1`, `h_2^3`, `h_(1^3)`, `h_(1^4)`) and exhaustive finite
+        checks, the level-1 sector is proved for ALL words for pairs
+        `(2,2)`, `(3,2)`, `(4,2)`, `(3,3)`, `(4,3)`.
+      - `(4,4)` leaves 34,411 residual words, not evaluated.
+      - The all-ones seed threshold grows with the labels (9, 12, 15,
+        17, 22, 29), so this does not give uniformity in `(p,q)`.
+    - **Three labels times two symmetric powers at `r = 1` (FM-S3L1,
+      luna_max_saturn; conditional, accepted).**  These are the
+      Q3-relevant level-1 words with three plus labels `>= 2`.
+      - Exact numerator in `X = (t1,t2,t3,u1,u2)`:
+        `N = A1A2A3 - sum_i t_i prod_(j != i) A_j (e1 - e5) +
+        sum_(i<j) t_i t_j A_k C_2 - t1 t2 t3 C_3`, where:
+        - `A_i = 2 + 2t_i^2` and `C_2 = e1^2 + 1 - e4 - e1e5`;
+        - `C_3 = 3m_1 + 5m_111 + 3m_21 + m_3 - 11m_11111 - 2m_2111 -
+          m_22111 - m_31111` is the new 8-vertex term, taken through the
+          Bruns--Herzog bound;
+        - `N` has 98 terms and degree 10.
+      - The main agent confirmed `N` from its own Weyl values through
+        degree 12.
+      - The degree-10 product class is infeasible, with an exact
+        Farkas certificate using only rows of degree 0 and 2.  That
+        certificate breaks for edge sets with more than 5 `t`-edges,
+        so higher degree stays open.
+      - **Theorem S3-2 (main agent; verifier
+        `character_ring_iter/verify_shat_triple_two_factors.py`; ACCEPTED
+        by FM-CHK24, luna_max_mercury: independent Weyl values on 6,188
+        tuples, and exact re-expansion of the 70 terms).**
+        FM3 at `r = 1` holds for every `hat S_p hat S_q hat S_w h_a h_b`,
+        for all labels and degrees.
+        - Degree 12 is still infeasible (phase-1 slack 0.138).
+        - Degree 14 is feasible: 70 `S_3 x S_2`-symmetrized terms with
+          nonnegative rational coefficients, reconstructed and verified
+          exactly.
+        - The 8-vertex term `C_3` rests on FM-S3L1's extraction through
+          the degree bound.
+    - **Degree of `N_7` (FM-GEN2, luna_max_venus; proved).**
+      - Enumerate the Jozefiak--Pragacz--Weyman terms of `K_9`
+        (Thms 3.3, 3.14; 16 terms, maximal `|lambda| = 36`).
+      - This gives exactly
+        `N_7 = 5 + s_2 - 3s_11 + 3s_1^4 - 5s_1^6 - s_21^4 + 5s_21^6 +
+        s_2^21^4 - 3s_2^31^4 + 3s_2^51^2 - s_2^6 - 5s_2^7`, which is the
+        numerical formula.  So `deg N_7 = 14`.
+      - The positivity of `N_7 Pi_7` stays open.  No all-degree
+        separator for the product class was found.
+    - **Three factors at every level (FM-THREE, luna_max_jupiter;
+      conditional).**
+      - Explicit multiplicity formula (Pieri cells of
+        `Sym^a (x) Sym^b` times the `Sym^c` weight pyramid, alternated
+        over `W(C_2)`), matched on 9,007 slots.
+      - Exact screen: `a+b+c <= 40`, `r <= 40`; 47,320 even-degree
+        pairs.  There is no negative value, and zeros occur exactly in
+        the forced range.  Odd total degree gives 0 identically.
+      - Termwise positivity over Pieri cells fails, e.g. `(2,1,1)` at
+        `r = 2` has cell contributions `20, -40, 60`.  The aggregate at
+        `r >= 4` is open.
+    - **Theorem R3-5 (FM-R3F5, luna_max_mars; main agent reran the
+      numerator and certificate, `xmn/r3s5check.py`).**  FM3 at `r = 3`,
+      H-only, holds for every word with at most five factors.
+      - `N^(3)_5 = N^(3)_4 - 24m_21111 - m_41111 - m_32111 +
+        9m_22211 - 10m_22222`.
+        - The 9-vertex term uses the JPW bound: degree of `N <= 40`.
+        - Exact Weyl finite differences through degree 40 found no
+          further terms.
+        - The main agent matched it with its own series through degree
+          14.
+      - Positive certificate: 28 orbit-sum terms, verified exactly.
+      - `s = 6`: the numerator is checked through degree 28 (support up
+        to degree 14).  A restricted LP (`|m| <= 4`) is infeasible;
+        this is open.
+    - **Two-factor words at every level (FM-TWO, luna_max_jupiter;
+      partial, accepted).**  Here
+      `F(a,b;r) = 2r(2r+1) phi_r(h_a h_b)` is the alternating sum of the
+      item-(35) weights over the Pieri support.  Put `s = b`,
+      `d = (a-b)/2`, `N = 2r+1`, `M = r-1-d` and `k = max(0, M-s)`.
+      - Exact reduction:
+        `F = S_r(k,M) + N(N-1)(A_0 + (-1)^s A_1)`.
+        - `S_r(k,M) = sum_(m=k..M) C(N,m+1) C(2r,m)
+          (2(r-m)^2 + (2r-1)(r-m) - r)/(2r-1)` has positive terms.
+        - `A_0, A_1 > 0` are explicit binomial products, and vanish when
+          `k = 0`.
+      - Consequences:
+        - `F = 0` for `r <= d` (the forced zeros);
+        - `F > 0` for `r > d` whenever `b` is even, or `k = 0`, or
+          `A_1 <= A_0`.
+      - Checks: the reduction against the original sum on 2,028 triples,
+        and against direct Catalan moments.
+      - **Odd `b`: PROVED (FM-TWO2, luna_max_jupiter; verifier rerun by
+        the main agent).**
+        - The sum telescopes:
+          `S_r(k,M) = ((2r+1)/(2r-1)) (G(M+1) - G(k))`, with
+          `G(m) = m(2r-m) C(2r,m)^2/(2r)`.
+        - So `S_r - N(N-1)(A_1 - A_0)` is a positive factor times
+          `P(x) = A x^2 - B x - C`, where `x = C(2r,k+s+1)/C(2r,k)`.
+        - Jensen (convexity of `log((1+z)/(1-z))`) gives
+          `x >= x_2 = 1 + 2(u+1)delta + (u+1)(2u+1)delta^2`, where
+          `s = 2u+1` and `delta = 4(t+u)/(2k+2u+3)`, `t = r-k-s`.
+        - `P(x_2)` and `P'(x_2)` are rational functions whose numerators
+          have only positive coefficients (212 and 88 terms).  So
+          `P(x) > 0`.
+        - Main-agent independent check straight from the definition:
+          `F(a,b;r)` over 13,230 cases (`a, b <= 40`, `r <= 30`).  There
+          is no negative value, and `F = 0` exactly when `r <= d`.  `F`
+          is also proportional to `<h_a h_b, Q_2^(r-1)>` on samples at
+          `r = 2, 3, 4`.
+    - **Theorem TWO (FM-TWO + FM-TWO2).**  FM3 holds for every two-factor
+      H-only word `h_a h_b` at every level `r >= 1`.  It is `0` exactly
+      on the support region `r <= (a-b)/2`, and positive otherwise.
+    - **FM-EXP6 (venus): the Pieri-shift induction does not close.**
+      - For `M = M' (x) V_k`,
+        `Hom(U, M) = (+)_lambda E_lambda(M') (x) C_lambda(k)`,
+        with `lambda` in `U (x) V_k`, and `M^G = E_(k,0)(M')`.
+      - Old-slot maps become reduced slot maps of `M'` tensored with
+        recoupling (6j) coefficients.  Last-slot maps are block diagonal
+        in `lambda`.
+      - So injectivity for `M` is equivalent to a shifted statement: one
+        simultaneous injectivity over all Pieri cells `lambda` of `M'`.
+        It does not follow from GSI for `M'`.
+        - E.g. `M' = V_(2,0)`, `k = 2`: `Hom(U, M') = 0`, yet `M` has
+          `m_U = 1`.
+        - Several `lambda`-cells feed the same target, so cancellation
+          after recoupling must be excluded jointly.
+      - This is the linear analogue of the Pieri-induction obstruction of
+        item (30).  Four or more slots need a different argument.
+- **Rank-profile criterion (FM-INJ4, venus; proved).**
+- **Covariant model of the slot maps (FM-DEG1, luna_max_jupiter;
+  partial).**
+  - Covariants: `Hom(U, M) = (U (x) C[z_i])^Sp4`.  This is generated over
+    `R = C[omega_ij]/(Pf_6)` by `C_ij = X_(z_i, z_j) - omega_ij I / 2`.
+  - `A_i` and `B_i` are first-order operators given by the product rules
+    `D_X^(i) omega_rs = [i=r] omega(X z_r, z_s) + [i=s] omega(z_r, X z_s)`
+    and the analogue for `C_jk`.  Explicitly,
+    `A_i(c C_jk) = (1/2) sum_(l != i) (d c / d omega_(il)) tr(C_(il) C_jk)
+    + (5/2)([i=j] + [i=k]) c omega_jk`, using
+    `tr(C_ij C_kl) = 2(omega_ik omega_jl - omega_il omega_jk
+    - omega_ij omega_kl / 2)`.
+    - CORRECTED endpoint coefficient: `5/2`, not the `1/2` originally
+      printed by FM-DEG1.
+      - FM-EXP4 (venus) contracted exactly in `slotHWg.py`'s conventions
+        and got `A_0(F_12) = 3 omega^2` at `(2,2)`.
+      - Independently, with `1/2` all three `A_i` would be proportional on
+        `H` at `(2,1,1)`, giving joint-`A` rank 1.  The measured joint-`A`
+        rank there (`hallstats.py`) is `2 = m_U`.
+      - The `1/2` came from missing the `C`-factor contraction, which
+        contributes `5/2` rather than `1/2`.
+  - The naive covariant basis (3-nesting-free graphs with one marked edge)
+    overcounts.  It gives 6 vs `m_U = 5` at `(1^4)` (42 vs 30 at `(1^6)`),
+    because of the syzygy
+    `C12 w34 + C34 w12 - C13 w24 - C24 w13 + C14 w23 + C23 w14 = 0`.
+  - A module term order that makes `C14 w23` leading fixes `(1^4)`
+    locally.
+  - **FM-DEG2 (jupiter): module bases and graded maps.**
+    - Presentations: `(Sym^2 W (x) S)^G = R{q_ij = z_i z_j : i <= j}`.
+      - `U` relations are the Fierz syzygies
+        `w_kl C_ij + w_ij C_kl - w_jl C_ik - w_ik C_jl + w_jk C_il
+        + w_il C_jk = 0`.
+      - `Sym^2 W` relations are the five-vector relations
+        `sum_r (-1)^(r-1) Pf(w_(J \ j_r)) q_(j_r k) = 0`.
+    - Use the anti-diagonal order on edges (3-nesting-free invariant
+      basis) and position-over-term module orders.  The standard-monomial
+      counts then equal `m_U = 1, 2, 5, 3, 3, 7, 30` and
+      `m_ad = 1, 3, 6, 6, 6, 10, 40` on `(2,2), (2,1,1), (1^4), (2,2,2),
+      (3,1,1,1), (2,2,1,1), (1^6)`.  The relation ranks account for the
+      full kernels there.
+    - Graph moves: `gr A_i` consumes an edge `(i,l)` and the marked edge
+      `(j,k)`, and produces the reconnections `(i,j)(l,k)`, `(i,k)(l,j)`,
+      `(i,l)(j,k)` with coefficients `+1, -1, -1/2`.  There is also an
+      endpoint term, `(5/2) c w_jk` after the correction above (printed
+      `1/2` in FM-DEG2).  `gr B_i` gives a marked symmetric pair `q_ab`.
+    - The generic `3 -> 5 + 1` combination of the graded maps has full
+      column rank on all seven words.
+    - Open:
+      - a common flat (Rees) filtration showing that these leading terms
+        are the associated graded of `A_i`, `B_i`.  Semicontinuity then
+        gives injectivity of `T`.
+      - a uniform argument.  Hall on the support graph is not enough,
+        since coefficients are shared across rows; a non-cancelling
+        matching is needed.
+  - **FM-DEG3 (jupiter): obstruction to the naive Rees degeneration.**
+    - The slot-multidegree weight `w(omega_ij) = w(C_ij) = w(q_ij) =
+      e_i + e_j` preserves the full reconnection stencil, and `A_i`, `B_i`
+      are filtered for it.  But it has one level within each `kappa`, so
+      it degenerates nothing.
+    - Any scalar edge weight that ties the three pairings of every four
+      vertices has the form `w_ij = a_i + a_j`.  Such weights give all
+      Pfaffian terms equal weight and cannot select the anti-diagonal
+      (3-nesting) initial term.
+    - So a degeneration that realizes the standard-monomial basis must use
+      non-additive weights.  Then `A_i` is filtered only up to a shift
+      `delta`, and `gr A_i` keeps only the top-weight reconnection.
+    - Open: whether these partial graded maps stay injective.
+    - **KILL (FM-DEG4, jupiter): uniform-shift Rees degeneration.**
+      - Setup: weight `w(omega_ij) = (j-i)^2`, which makes the nested
+        matching the unique top term of each Pfaffian.  Module positions
+        are ranked by span, with strict position priority.
+      - `(2,2)` passes (3/3).
+      - At `(2,1,1)` the second source generator `omega_12 C_13` has every
+        image below the top gain.  So `gr A_i` and `gr B_i` kill it, and
+        the graded rank is 3/6.
+      - The original map is injective there (6/6), so this kills only the
+        degeneration route with this order and uniform shifts.  A working
+        degeneration would need source-dependent shifts, which is not a
+        single Rees family.
+    - Precise graph form of GSI at `r = 2`: generic combinations of the
+      `A_i` edge-switch and `B_i` marked-pair moves, from three copies of
+      the Fierz-reduced marked 3-nesting-free basis into five copies of
+      the invariant basis plus one symmetric-pair basis, are injective.
+- **Literature (FM-LIT4, luna_max_neptune): no known theorem closes T1.**
+  - Confirmed exactly: `8H(kappa) + 4H(kappa,2) - 3H(kappa,1,1) =
+    5m_00 - 3m_11 + m_20`, where `H` is the multigraded Hilbert function
+    of the rank-`<= 4` skew Pfaffian ring.
+    - Checked on `(1^4)`, `(2,2,2)`, `(3,1,1,1)`, `(1^6)`: margins
+      6, 2, 2, 20.  The free ring gives -15 at `(1^6)`.
+    - Gorenstein structure alone cannot give the inequality.
+    - **FM-PF1 (luna_max_jupiter): multigraph form, one class killed.**
+      - Put the two new vertices last.  The edge `{s+1, s+2}` can
+        neither nest nor be nested, so `H(kappa,1,1) = H(kappa) +
+        P11(kappa)`.  Here `P11` counts 3-nesting-free graphs with
+        pendant edges at `s+1` and `s+2`, and `H(kappa,2) = P2(kappa)`.
+        So T1 is `3 P11 <= 5 H + 4 P2`.
+      - Exact enumeration on all 139 partitions with `|kappa| <= 10`,
+        and on all 256 part orders of size `<= 8`, gives `H = m_(0,0)`,
+        `P11 = m_(1,1) + m_(2,0)` and `P2 = m_(2,0)`, independent of the
+        order.
+      - KILL (direct merge/slide maps).  At `(1^6)`, the two `P11`
+        graphs with old edges `(1,6), (2,5)` and pendant edges
+        `(3,7), (4,8)` or `(4,7), (3,8)` both slide to the 3-nesting
+        `(1,6), (2,5), (3,4)`.  Both also merge to the same `P2` graph.
+        So six source objects meet four target copies.
+      - A class with rerouting moves was not specified precisely enough
+        to test.
+  - Enright--Willenbring (Ann. Math. 159 (2004)):
+    - Thm 3(i) gives Howe duality `(Sp4, so*(2s))` on `P(M_(4 x s))` in
+      the full range.  So FM3 H-only at level `r` is weight-positivity of
+      `sum_mu c_mu(r) L_mu`.
+    - Their Thm 2 (generalized Verma resolutions of each `L_mu`) and Thm 5
+      (Hilbert polynomials) do not control the signed combination.
+  - Jonsson--Welker (math/0601335):
+    - Prop 3.1 is the 3-nesting-free Herzog--Trung basis.
+    - Thm 2.1 is a second term order (circular distance plus revlex), with
+      3-crossing-free long edges.  It has a different symmetry; relevant
+      to FM-DEG1.
+  - Ghorpade--Krattenthaler (Thm 4.1, Cor 4.3) and De Negri give ordinary
+    Hilbert series only.
+- **Kostka literature for MP_2 (FM-LIT5, neptune): no applicable theorem;
+  one local injection killed.**
+  - None of these supplies the signed shape sum:
+    - White / Fayers Prop 1.2 (monotonicity in content, fixed shape);
+    - Bender--Knuth and RSK (Knuth Thms 2, 7);
+    - LPP Thms 4--5 (Schur-positive outputs; `F_2` is not
+      Schur-positive: `F_(2,4) = 5s_(1^4) + 2s_(22) + s_(31) - 2s_(211)`);
+    - Lam--Pylyavskyy cell transfer Thm 3.6 (acts on pairs of tableaux);
+    - Johnston et al. Prop 3.5 (a different box move);
+    - Kirillov Thm 3.3.
+  - Exact Kostka screen: MP_2 holds for all 4,095 compositions of size
+    `<= 12`, with no negative value.
+  - **KILL (same-column-count local injection).**  Map `(k+1,k,1)+j^4` to
+    `2 x (k+1,k+1)+j^4`, `(k+2,k)+j^4` and `(k,k,2)+j^4`.
+    - This fails from degree 6.  At `(2,1^4)`, `k = 2`:
+      `2 K_(321) = 16 > 2 K_(33) + K_(42) + K_(222) = 6 + 6 + 2 = 14`.
+    - The full margin there is still 8.  The extra capacity comes from
+      shapes with one more full column, `(2,2,1,1)` and `(3,1,1,1)`.
+    - So a tableau injection must also move boxes into row 4, changing the
+      column count.
+- **Rank-profile criterion (FM-INJ4, venus; proved).**
+  - Generic `T` is injective if every profile stratum
+    `G_(d, alpha, beta)`, `1 <= d <= min(3, m_U)`, satisfies
+    `dim G + 3d - 1 < 5 alpha + beta`.
+    - Here `G` is the set of subspaces `H'` of `Hom(U,M)` with
+      `dim H' = d`, `alpha = dim sum_i A_i(H')` and
+      `beta = dim sum_i B_i(H')`.
+    - The proof is an incidence-dimension count.
+  - Checked by hand at `(2,2,2)` and `(3,1,1,1)`, from exact minors: joint
+    `A` injective, individual `B_i` of rank 3, pairwise `B` spans of 5.
+    So T1 holds there by this route as well.
+  - The global profile bound is open; it is equivalent in strength to
+    GSI at `r = 2`.
+- **Independent check of the GSI screens (FM-GSIX, luna_max_mars,
+  independent code).**
+  - Reproduced exactly, with no shared code:
+    - `r = 2`: `(2,2,2)` 9, `(3,1,1,1)` 9, `(1^4)` 15;
+    - `r = 3`: `(2,1,1)` 80, `(3,1,1,1)` 145, `(2^4)` 690;
+    - `r = 4`: `(2,1,1)` 966.
+  - New injective cases:
+    - `r = 3`: `(4,4,1,1)` 320/320, `(5,3,1,1)`, `(4,3,3)`, `(4,4,2)`,
+      `(5,4,1)`, `(5,3,2)`, `(5,5)`;
+    - `r = 5`: `(5,1)` 231/231.
+  - Main agent, the tightest cases found by mars's multiplicity screen:
+    - `r = 3`, `(2^4,1,1)`: 6275/6275, slack 40 (0.64%);
+    - `r = 3`, `(3,2,2,1,1,1)`: 4155/4155, slack 28 (0.67%);
+    - `r = 5`: `(3,1)` 1650/1650, `(4,2)` 1881/1881, `(4,1,1)` 3762/3762,
+      `(2,2)` 5808/5808, `(3,3)` 6963/6963, `(2,1,1)` 11616/11616 and
+      `(3,2,1)` 16302/16302, all injective.  The smallest relative slack
+      is 3.1% at `(2,1,1)`.
+  - A single-slot cyclic rule in edge order at `r = 3` is NOT injective at
+    `(2^4)`: 687/690 on two primes.  Single-slot patterns do not carry over
+    from `r = 2` automatically.
+- **Structure of the `r = 2` slot maps (`hallstats.py`, 17 words to size
+  12).**
+  - The joint map `(B_1, ..., B_s): Hom(U,M) -> Hom(ad,M)^s` is injective
+    in every case.
+  - The joint `A` map has a kernel only at `(2^4)`, `(3,3,2,2)`,
+    `(4,4,2,2)` (dimension 1) and `(3^4)` (dimension 3).
+  - `sum_i A_i(H) = M^Sp4` always.  `sum_i B_i(H) = Hom(ad, M)` except at
+    `(2,2,2)` (5 of 6).
+  - On `ker(joint A)`, the `B`-images span `4 dim ker`.  This is the linear
+    Hall condition there, with slack `dim ker`.
+- **Method note (lean certificate).**
+  - The dense stage is reduced to the kernel of one simple-root raising
+    operator, computed block by block:
+    - `e_(a1) = x0 d/dx1 - x3 d/dx2` preserves each slot's
+      `(e0+e1, e2+e3)`;
+    - `e_(a2) = x1 d/dx3` preserves `(e0, e2)`.
+  - Blocks are tensor products of `sl_2` modules.  The kernel has
+    dimension `dim M_mu - dim M_(mu+alpha)`, about `1/9` of `M_(1,1)` for
+    `alpha = alpha_1`.
+  - The multiplicities come from the Weyl character and are cross-checked
+    against the nullity.
+  - Images are compressed by sparse random projections.  These only lower
+    the rank, so full rank still certifies.
+  - The negative control reproduces the fixed-power failure at `(2,2,2)`.
+- **What this gives the full cone.**  For the H-only sector, GSI is one
+  uniform statement:
+  - it covers every level;
+  - it holds in every case tested (`r = 2, 3, 4`);
+  - it implies FM3 there.
+  For `hat S` words the lift works with one label and fails, as built,
+  with two (see the kill above).  So GSI does not yet cover the full cone.
+  The open step is a uniform proof of generic injectivity, and it must be
+  constructive.  Lemma JB (joint `B` injective) is a first structural
+  piece; FM-INJ4 (luna_max_venus) is assigned to it.
+- **Hall/rank analysis (FM-RADO, luna_max_saturn; main-agent check).**
+  - Proved: injectivity implies the linear Hall condition (LH).
+  - Proved: LH holds iff `T`'s block space has full non-commutative rank.
+    - Fortin--Reutenauer Thm 1 gives the shrunk-subspace formula.
+    - The deficiency `dim Z - dim A(Z)` is supermodular and invariant
+      under `prod GL(c_mu)`.  So a maximal shrunk subspace can be taken
+      to be `(+) X_mu (x) C^(c_mu)`.
+  - LH does not give commutative generic injectivity in general.  The
+    `3 x 3` skew-symmetric space at copy number 1 satisfies LH and has
+    rank 2.
+  - Derksen--Makam Thm 1.8 closes the gap only for uniform copy scaling
+    `c = d c^0` with `d >= m_0 - 1`.  That does not cover the T1 profile
+    `(3; 5, 1)`.
+  - **Consequence (main agent).**  FM3 is LH at `X_mu = H_mu`, and
+    Conjecture T is LH on `{0, H_mu}`.  So "LH implies injectivity" is no
+    route to FM3.  GSI helps only through a constructive injectivity proof,
+    for example:
+    - a coefficient specialization that is block-triangular for a
+      filtration of `Hom(V_mu, M)` (by slot support or by degree), with
+      injective graded pieces;
+    - an induction on the last tensor factor.
+    The screens show GSI is true, and LH with it, which rules out a
+    subspace obstruction in these cases.  They do not supply the proof.
+
+**Ledger for this section (2026-09-28).**
+
+- **Proved (checked by FM-CHK18).**
+  - FM53, reproved via Kostant and extended to every `GL(4)`-module `E`
+    (item (5)).
+  - The `y -> -y` duality of words (item (8)).
+  - qFM3_2 in these cases (item (9)): one part; two parts; the support
+    region.
+  - The all-ones product formula (item (1)).
+  - Item (35): the closed form of the FM12 weights (GKS reflection), the
+    real-level product formula for irreducible characters, and the
+    forced-zero divisibility for every FM3 word (FM-P35, reviewed).
+  - Item (38), each checked by FM-CHK20:
+    - Lemma JB (each `B_i` injective), hence `m_(1,1) <= m_(2,0)` for
+      every nonempty product;
+    - LH iff full non-commutative rank for copy-blown-up block spaces
+      (FM-RADO);
+    - the dimension-0 constraint, which rules out whole-module proofs of
+      T1.
+  - Item (38), added 2026-09-29:
+    - Theorems T1-5 and T1-6: T1 (FM3, `r = 2`, H-only) for every word
+      with at most six factors (T1-6 ACCEPTED by FM-CHK-T16).
+    - Theorems R3-4 and R3-5: FM3 at `r = 3`, H-only, for every word
+      with at most five factors (mars; main-agent rerun).
+    - T1 for seven-factor words whose smallest part is `<= 4` (main
+      agent, slicing, exact certificates).
+    - Theorem TWO: FM3 for every two-factor H-only word at every level
+      (jupiter FM-TWO, FM-TWO2; main-agent rerun and direct check).
+    - Theorem S1R2-4: FM3 at `r = 2` for one `hat S` label times at most
+      four symmetric powers, all labels (mars; main-agent independent
+      numerators and certificates).
+    - Theorem S3-2: FM3 at `r = 1` for three `hat S` labels times two
+      symmetric powers, all labels (Q3-relevant; main agent, exact
+      verifier).
+    - Level-1 two-label sector complete for the pairs `(2,2)`, `(3,2)`,
+      `(4,2)`, `(3,3)`, `(4,3)` (saturn FM-SEC3; exact identities and
+      finite checks).
+    - Theorems S2-2 and S2-3: FM3 at `r = 1` for `hat S_p hat S_q`
+      times at most three symmetric powers, for all labels (main agent;
+      exact verifiers; ACCEPTED by FM-CHK-S2).  The proof uses generating functions from the
+      `Sp(4)` fundamental theorems with the Buchsbaum--Eisenbud resolution,
+      plus an exact positive decomposition.  The verifiers are in
+      `character_ring_iter/`.
+    - Theorem (three slots, FM-EXP5): `T_exp` is injective for every
+      three-factor word, with a verified certificate.
+    - The level-1 identity `hat S_p hat S_q = sum_m hat S_m + X_pq`,
+      with `X_pq` a diamond of four irreducibles (FM-CHK22 accepted).
+    - Lemma BP and its corollary (main agent; ACCEPTED by FM-CHK-BP.  Mars
+      also shows the threshold cannot drop to `sum p_j - 2`: labels
+      `(2,2,2)` at `k = 4` give `-3, -3, -1` at `V_11, V_33, V_55`).  At
+      `r = 1`, FM3 holds for `prod_j hat S_(p_j) h_kappa` whenever some
+      part of `kappa` is `>= sum p_j - 1`.  This holds for any number of
+      labels.
+    - Labels `(2,2)` at `r = 1`: every `kappa`.  The ingredients are
+      Lemma BP, two exact FM53-cone identities (for `h_1` and `h_2^3`),
+      and direct values at `()`, `(2)`, `(2,2)`.
+- **Proved strata of FM3 (item (38) generating-function method and
+  related results; state at 2026-09-29 13:30).**
+
+  | level | sector | proved for |
+  |---|---|---|
+  | `r = 1` | H-only | all words (invariant count) |
+  | `r = 1` | one `hat S` | all words (FM53) |
+  | `r = 1` | any labels `p_1..p_l` | words with a part `>= sum p_j - 1` (Lemma BP) |
+  | `r = 1` | two labels | `<= 3` symmetric powers, all labels (S2-2, S2-3); all words for pairs `(2,2), (3,2), (4,2), (3,3), (4,3)` (FM-SEC3) |
+  | `r = 1` | three labels | two symmetric powers, all labels (S3-2) |
+  | `r = 2` | H-only (T1) | `<= 6` factors (T1-5, T1-6); 7 factors with smallest part `<= 4` (slicing); every `d = 1` word (Lemma D1) |
+  | `r = 2` | one `hat S` | `<= 4` symmetric powers, all labels (S1R2-4) |
+  | `r = 3` | H-only | `<= 5` factors (R3-4, R3-5) |
+  | all `r` | H-only | two factors (Theorem TWO) |
+
+  - Open: unbounded numbers of factors in every sector.  For T1, the
+    product-class certificate fails at seven factors (bounded degree);
+    slicing extends it slice by slice.
+  - Q3 at level `r` needs exactly `2r` symmetric powers from the minus
+    labels, plus `hat S` factors and `h_1`'s.  So the table covers:
+    - Q3 words at `r = 1` in three cases:
+      - one plus label `>= 2` and any number of plus 1s (FM53);
+      - two plus labels `>= 2` and at most one plus 1 (S2-2, S2-3);
+      - three plus labels `>= 2` and no plus 1 (S3-2);
+    - Q3 words at `r = 2` with no plus label `>= 2` and at most two
+      plus 1s, or one plus label `>= 2` and no plus 1;
+    - no Q3 words at `r = 3` (they have `>= 6` factors).
+- **Conjectured, with strong evidence.**
+  - Net-cell GSI (item (38)): slot maps with the net cells of
+    `prod hat S (x) Q_r`, with composite edges.  Distance 1 suffices for
+    labels `(2,2)`, `(p,2)` and `(2,2,2)`, `(3,2,2)` at `r = 1`.
+    Distance 2 suffices for `(3,3)`, `(p,1)`, `(4,3)`, `(5,3)`.  `(4,4)`
+    at `r = 1` needs length 3.  It covers the `hat S` sectors where the
+    two-layer lift fails.
+  - GSI (item (38)): generic slot injection, H-only.  Checked:
+    - `r = 2`: all words to size 12 except `(1^12)`, plus the size-14
+      scan;
+    - `r = 3`: size `<= 8`;
+    - `r = 4`: 35 words.
+    It implies FM3 in the H-only sector.
+  - qFM3_2 (graded `r = 2` H-only): all 910 partitions with
+    `|kappa| <= 18`.  Few-part screens (main agent), all with no negative
+    coefficient:
+    - at most 6 parts, `|kappa| <= 26`: 2,470 partitions;
+    - at most 5 parts, `|kappa| <= 34`: 4,690 partitions;
+    - at most 4 parts, `|kappa| <= 58`: 14,534 partitions.
+  - (WITHDRAWN, see item (17)) Even invariant cohomology of the generic
+    `r = 2` slot complex.  It holds for `|kappa| <= 8` but fails at
+    `(4,1^6)`.
+  - H-cone positivity at every integer `r`: all 1,597 partitions with
+    `|kappa| <= 18` at every `1 <= r <= 10`, with no negative value
+    (`verify_phir_hcone.py 18 1,...,10`).
+  - Conjecture T (item (37)), the transport form of FM3: exact max-flow
+    feasible on 86,376 H-only pairs and 19,788 + 13,120 `hat S` pairs.
+  - Full FM3 cone (H-only and `hat S` words up to five plus factors),
+    total degree `<= 22`, `r <= 20`: 285,020 (word, level) pairs, no
+    negative value (item (35), closed-form screen validated against exact
+    moments).
+
+
+- **Killed.**
+  - Analytic interpolation in `r`: non-integer levels fail.
+  - A binomial expansion in `r`.
+  - Factor-wise Koszul actions at `r = 3`: every orientation pattern at
+    `(1,1,1,1)` has odd cohomology.
+  - Graded fusion or split refinements at `r = 3`.
+  - Graded level steps (linear programming).
+  - A graded one-`hat S` refinement at `r = 2`: charge Kostka--Foulkes
+    times ungraded `hat S_p` has negative coefficients for `p = 1..5`.
+  - Local charge-shift injections for qFM3_2.
+  - Row-exactness of `X` alone (item (6)).
+  - Purity of the fusion Koszul complex (item (10)).
+  - Square-zero and conjugated coupled actions at `r = 3` (item (11)).
+  - Direct identification of `Phi` with the standard known-positive
+    q-analogues (item (15)).
+  - Evenness of any all-`+` slot complex at `r = 2` (item (17)), and the
+    `A`-degree refinement at `r = 2` (size 10) and `r = 3`.
+  - Cyclage-path matchings for qFM3_2 (item (19)).
+  - Coefficientwise and log-concavity cones in Proposition 13 coordinates
+    (item (24)).
+  - Positive `h`/`e`/`p` expansions of `F_r` (item (25)).
+  - Per-central-character positivity in the FM16 `Gr_2(C^4)` route
+    (item (28)).
+  - Local block matchings for the bigraded Euler characteristic (item
+    (29)), and safe irreducible functionals for a Pieri induction (item
+    (30)).
+  - Integration-by-parts (Stein) induction on the level (item (32)).
+  - Tail positivity of the central-character refinement as a uniform
+    mechanism (item (33)): true for `r <= 5` in the tested range, false
+    from `r = 6`.
+  - Conjecture LP (item (34)): false at the hook `(14,1^14)`, which is
+    negative on `(1.605, 1.784)`.  So no real-level positivity route
+    exists.
+  - Heckman--Opdam expansion positivity at `k = (1, r)` (item (35)):
+    `h_2` already has a negative coefficient at `r = 2`.
+  - Item (38), 2026-09-29:
+    - per-`(m,n)` positivity of the `SU(2) x SU(2)` array of
+      `(x-y)^(2r) h_kappa`;
+    - per-shape payment in the level-1 two-label sector (FM-SEC2), and
+      the per-shape `h`-expansion condition;
+    - direct merge/slide multigraph injections for T1, at `(1^6)`
+      (FM-PF1);
+    - net-cell GSI with edges of bounded length for all labels at
+      `r = 1`.
+      - Witness: labels `(q+1, q+1)`, `kappa = (q, q)`.  The net cell
+        `-2 V_(q,q)` has `m = 1`.  Within `q - 1` steps its only positive
+        cell is `V_(q+1,q+1)`, and `m = 0` there; every other positive
+        cell is `>= q` steps away.
+      - Checked at `q = 3`: length 2 gives rank 3/5, length 3 gives
+        5/5.
+
+**What this gives the full cone.**
+- A precise, checked statement (qFM3_2) whose proof would close the whole
+  `r = 2` H-only sector for every `kappa` at once.  Its remaining proof
+  routes:
+  - Kostka--Foulkes combinatorics (charge, cyclage);
+  - a sign balance between the bigraded-pure blocks of the fusion Koszul
+    complex (item (16)).
+  - A vanishing theorem is ruled out: the fusion complex is not pure
+    (item (10)), and slot complexes are not even (item (17)).
+- It does not yet reach `r >= 3` or the `hat S` sectors.  The mechanism
+  that makes integer levels positive at `r >= 3` is still unidentified.
+- **Update (items (34)--(36)).**  Conjecture LP was the live target, and
+  it is now KILLED (hooks `(14,1^14)`).  What survives, at integer `r`:
+  - the closed form of FM3 (item (35));
+  - the forced zeros;
+  - stability, which reduces words with `d >= 1` to reweighted boundary
+    words (item (36));
+  - the local transport, which is feasible in every tested H-only case.
+    An explicit transport rule is the current H-only target.
+- **Superseded LP summary (kept for the record).**  The live full-cone
+  target was Conjecture LP.
+  - For every FM3 word, `phi_r(w)/phi_r(empty)` is an explicit rational
+    function of `r`.
+  - Its numerator is a product of forced integer zeros `1..d` (double,
+    except `d`) and a factor `G_w`.
+  - LP asks that `G_w > 0` on `[1, oo)`.  That one statement per word gives
+    every level and every `hat S` sector at once.
+  - Checked for 250+ words to total degree 10, and H-only to size 14.
+  - It is tight on hooks `(k,1^k)`: the stray root tends to 1 from below.
