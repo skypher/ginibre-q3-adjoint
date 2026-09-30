@@ -10211,6 +10211,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `<= 12`).  `max 3 m_(1,1)/(m_(2,0) + 5 m_(0,0)) = 369/386 = 0.956`,
         at `kappa = (3,3,3,1,1,1)`.  No equality case except the 138
         odd-size partitions, where all three multiplicities vanish.
+      - The inequality is asymptotically sharp
+        (`fm39/mp2_ratio_families.py`).  The ratio tends to 1 along every
+        family tested: `(1^n)`, `(2^n)`, `(3^n)`, `(2,1^n)`, `(3^k,1^k)`,
+        `(4^k,2^k)`.  For `E = W^(x)2k`,
+        `1 - 3m_(1,1)/(m_(2,0)+5m_(0,0)) = 4/(k^2+3k+4)` exactly for
+        `k = 1..8`.
+        - Reason: `Q_2 = V_(2,0) - 3V_(1,1) + 5V_(0,0)` has virtual
+          dimension `10 - 15 + 5 = 0`, since `(x-y)^2` vanishes at the
+          identity.  As factors accumulate, the multiplicities approach
+          the ratio `1 : 5 : 10`, and `phi_2` is a second-order term near
+          the identity.  The same holds at every level
+          (`(x-y)^(2r)` vanishes to order `2r` there).
+        - Consequence for M5: every consumer value is a
+          dimension-zero functional, and FM3 is asymptotically tight as
+          factors are added.  A merge-stable hypothesis or invariant cone
+          must be exact at leading order, so crude bounds cannot close
+          it.  This is consistent with the kills recorded above.
     - FM-SEC52 (luna_max_neptune), level `r = 1` on the whole cone:
       exact screen of 676,368 words (2..6 `hat S` with labels `2..8`,
       at most two `h`, `a <= 10`), none negative, least positive value 1
