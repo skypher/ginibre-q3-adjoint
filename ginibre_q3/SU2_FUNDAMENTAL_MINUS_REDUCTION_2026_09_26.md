@@ -9917,6 +9917,29 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
     - These are window-by-window criteria, checked in floating point.  A
       uniform proof needs analytic conditions on the row under which one
       of them holds.
+    - *Newton certificates (main agent, `fm39/window_lp.py`).*
+      - Exact identities:
+        `P_1(x) = D_(x+1)[(1-z)P]` and `P_2(x) = D_(x+2)[(1-z^2)P]`.  So
+        Conjecture W holds uniformly for `C <= 2`, for every real-rooted
+        `P`.  `C = 2` is `w = 1`, where `h_w = h_1` can also be absorbed
+        into the suffix.
+      - For `C = 3, 4` the LP finds no nonnegative combination of Turan
+        determinants `D_k[R P]` with `R` in:
+        - `(1-z)^j (1+z)^l`, `j + l <= 6`;
+        - these times `(1 + t z)`, for 10 values of `t`.
+        Terms were allowed outside the window provided they cancel
+        (up to 1,834 columns); the LP was infeasible.
+      - So the genuine three-factor windows (`C >= 3`) need more of
+        real-rootedness than Newton's inequalities for real-rooted
+        multiples: Hermite/Bezout positivity, or the phase-polygon
+        geometry.
+      - Also killed (knob: an auxiliary induction device, no consumer
+        use): `G_C(s) = sum_x P_C(x) s^x` is not real-rooted
+        (`fm39/window_gf.py`).
+      - The two-label inequality (E) has the same status
+        (`fm39/e_lp.py`): with reciprocity imposed, 130 of 135 cases
+        (`N <= 12`) have no such certificate.  Multipliers up to degree 4,
+        including `(1 + t z)` factors, were tried.
 - **Four factors: split identity, closed form and Theorem LL4 (FM-SEC6,
   luna_max_venus; verified by the main agent, `mech/four_repro.py`,
   `mech/ll4_check.py`, `mech/four_explore.py`).**
