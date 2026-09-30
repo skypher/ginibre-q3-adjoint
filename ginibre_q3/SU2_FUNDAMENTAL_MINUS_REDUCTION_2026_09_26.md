@@ -10031,6 +10031,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       induction hypothesis.  M5 still needs a hypothesis that controls
       `C` from data with fewer labels, such as a quantitative bound or a
       positive-form structure.
+    - FM-SEC39 (luna_max_pluto): the 3-dimensional binary-form state is
+      killed as an induction device (knob: an auxiliary state, not used by
+      FM3).
+      - Definiteness fails for 47 of 1,152 random consumer words,
+        including the empty word.
+      - Multiplication by a generator does not descend to `Sym_2`:
+        `M_(0,2)(hat S_1 - hat S_3) = 0` while
+        `M_(0,2)(hat S_1 (hat S_1 - hat S_3)) = (1,2,0)`.  So a
+        merge-stable invariant needs a larger state whose kernel is
+        invariant under multiplication.
+      - The actual-vector half-space contained every sampled word, but
+        that half-space is FM3 itself.
     - FM-SEC31 (luna_max_pluto): the mixed term expands exactly through
       lower-label values, `C = A - B`, so the inductive step is
       `A <= R + B`.  Every term there has fewer labels, but positivity of
