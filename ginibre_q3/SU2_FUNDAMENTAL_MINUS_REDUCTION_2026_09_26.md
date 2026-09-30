@@ -10621,6 +10621,33 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           witness exactly.
         - Knob: trajectory separation.  A general rule must combine
           trajectories within a q-degree.
+      - **FM-MECH39 (astra_max_ceres; `fm39/mech39_hACq_general_repro.py`,
+        both parts rerun exactly): H_AC_q uniformly for all labels
+        `>= d`, and at `d = 3` with at most one label 1.**
+        - Lemma (general contraction formula): the coefficient
+          `K_d(mu) = [H_n] prod H_(mu_i)` is `sum over partial matchings M`
+          of the strands (`d` edges, none inside a block) of
+          `q^(cr(M) + cov(M))`.  Here `cov` counts unmatched strands
+          lying inside an edge.  Equivalently it is a product of
+          q-binomials and `[k]_q!` along the blocks.  So the free-strand
+          reading is exact: a summand of `g_q(S)` is a complete matching
+          on `S` and a partial matching on `S^c`, with `2d` contracted
+          strands in total.
+        - Theorem (uniform in `d`): if every non-distinguished label is
+          `>= d`, then
+          `g_q = ([d]_q!/2) Q(E) + (K_d - t [d]_q!/2) delta_0`, with `E` the
+          labels equal to `d`, and `K_d >= (L-1)[d]_q!`.  So H_AC_q, hence
+          FM3, holds on that region at every distance.
+        - Theorem (`d = 3`, at most one label 1): explicit factors
+          `B, V, T` (triples of 2's), `B + delta_e * V`.  The origin
+          residual is nonnegative by the recurrence (3) on `2^v` and the
+          append/grow identities (4), (5).
+        - KILL: origin-only transfers between averaged trajectories.  At
+          `(1^4, 2^3)`, `d = 3`, `q^0` the origin budget is 13 against
+          `4321/315`.  Four such lists occur in the `L <= 7` census.
+        - `(1^4, 2^2)` has a q-positive repair.
+        - Open: mixed `d = 3` with two or more labels 1, and general `d`
+          with labels below `d`.
       - **FM-SEC111 (luna_max_pluto; `fm39/sec111_bernstein_hAC_repro.py`,
         rerun exactly): conjecture BH, the Bernstein tables along `q = 0`
         are H_AC.**
