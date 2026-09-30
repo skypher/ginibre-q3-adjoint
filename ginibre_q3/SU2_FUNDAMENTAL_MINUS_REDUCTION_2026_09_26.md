@@ -9851,12 +9851,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         longer sweeps.  Longer sweeps occur: near `a = e` the rows turn by
         about `pi/2` per step.
     - **Theorem WS (Conjecture W for short sweeps; main agent,
-      `fm39/window_sweep.py`).**  Let `c` be a real sequence with
-      `D_k(c) >= 0` and `D_k(f) >= 0` for all `k`, where `f = (1-z)c`
-      (both hold when `c` is the row of a real-rooted polynomial, by
-      Newton).  If the phase polygon `g_x, ..., g_(x+C+1)` sweeps a total
-      angle `Theta = sum_k arg(g_k -> g_(k+1)) <= 2 pi` about `O`, then
+      `fm39/window_sweep.py`; repaired after FM-CHK34).**  Let `c` be the
+      row of a real polynomial of degree `N` with only real roots and
+      `c_0 c_N != 0`.  Let `0 <= x` and `x + C + 1 <= N + 1`.  If the phase
+      polygon `g_x, ..., g_(x+C+1)` sweeps a total angle
+      `Theta = sum_k arg(g_k -> g_(k+1)) <= 2 pi` about `O`, then
       `P_C(x) >= 0`.
+      - *Nondegeneracy.*
+        - Adjacent zero coefficients cannot occur.  A repeated zero of a
+          derivative of a real-rooted polynomial is a zero of the
+          polynomial itself, so iterating back would force `c_0 = 0`.
+          Hence every `g_k != 0` on `[0, N+1]`.
+        - The strict Newton factor `(1+1/k)(1+1/(N-k)) > 1` gives
+          `D_k(c) > 0` for `0 <= k <= N`.  The same holds for
+          `f = (1-z)c`, which is real-rooted with `f_0 = c_0 != 0`.
+        - So every step angle lies in `(0, pi)`, `Theta > 0`, every
+          vertex is a strict left turn, and no edge lies on a ray through
+          `O`.
+        - Without these hypotheses (only `D >= 0`) zero vectors can
+          occur, e.g. `c = (1,0,0,1)`, and the angles are undefined
+          there.
       - *Proof.*  Each step turns counterclockwise about `O`, since
         `g_k ^ g_(k+1) = D_k(c) >= 0`.  Each vertex is a left turn, since
         `(g_(k+1) - g_k) ^ (g_(k+2) - g_(k+1)) = f_(k+1)^2 - f_k f_(k+2)
@@ -9899,8 +9913,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         chord inside the last-pass fan if `rho_last(theta_x) >= |g_x|`.  In
         either case `T <= sum D_k`.
       - More generally it suffices that for some `theta* in I` both passes
-        are outside the chord.  Put `Z` on the inner pass at `theta*`, and
-        use the two triangles `O, g_x, Z` and `O, Z, g_end`.
+        are outside the chord.  Put `Z` on the nearer pass at `theta*`, so
+        both pass radii there are `>= |Z|`.  The same chord comparison on
+        the two shorter intervals contains the triangles `O, g_x, Z` and
+        `O, Z, g_end`, whose signed areas add to that of `O, g_x, g_end`.
+      - The radial-graph form `u = 1/rho` needs edges off the rays through
+        `O`, i.e. `D_k > 0`.  This holds under the nondegeneracy of
+        Theorem WS.
+      - FM-CHK34 (luna_max_venus, own code):
+        - ACCEPT: the phase-polygon and left-turn identities, the twist,
+          and the coverage figures (floating-point screen).
+        - REPAIR (applied above): the `Theta = 0` case, the zero-vector
+          and collinear conventions, and the radial-graph assumption.
+        - Structure of the uncovered words:
+          - 94 distinct windows, all at `r = 4..8`, with `T > 0` and
+            sweep `> 2 pi`;
+          - mostly near-equal top labels: `u - v = 0` (832 words),
+            `1` (292), `2` (135);
+          - window lengths `C` from 3 to 13.
       - The twist `c_k -> (-1)^k c_k` keeps every `D_k` and keeps
         real-rootedness, and sends each step angle `theta_k` to
         `pi - theta_k`.  It keeps `P_C` for even `C`.  For odd `C` it gives
