@@ -10041,6 +10041,43 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         function, and Theorem OL is its monotonicity.  W and (E) are both
         comparisons of this kind with slowly varying coefficients, which
         points to a Sturm/Sonin comparison proof.
+    - **W splits into two inequalities (main agent, `fm39/sonin_route.py`,
+      `fm39/sonin_route2.py`).**  Put `T_C(x) = T(x, x+C)`, so `T_0 = D`,
+      and `n = C+1`.
+      - (i) `|T_C(x)| <= n sqrt(D_x D_(x+C))`.
+      - (ii) `sum_(k=x..x+C) D_k >= n sqrt(D_x D_(x+C))`.
+      - Together they give W.  On base rows (`r <= 8`, `a < 40`) both held
+        in all 122,920 windows, of every length and every sweep.
+      - Random rows:
+        - (i) held on every real-rooted family: 22,251 windows with mixed
+          roots, 24,124 with positive coefficients, 26,564 reciprocal
+          (`|t| >= 2`).
+        - (ii) held on the positive and reciprocal families, and failed
+          once on a non-reciprocal mixed row (ratio 0.988, `C = 2`).
+      - At `C = 1`, (i) is the real-rooted cubic discriminant inequality
+        `4 D_k D_(k+1) >= T(k,k+1)^2`.  In the constant model it is
+        `|U_C| <= C+1`.
+      - Plucker recurrence (symbolic):
+        `T_(C-1)(x) T_(C-1)(x+1) = D_x D_(x+C) + T_C(x) T_(C-2)(x+1)`, with
+        `T_(-1) = 0`.  This is the analogue of
+        `U_(C-1)^2 - U_C U_(C-2) = 1`.
+      - (ii) follows from log-concavity of `D` along the window (AM--GM).
+        But `D` is not log-concave on 93 of 280 base rows.  The failures
+        are mild and spread over the flanks, e.g.
+        `(1299, 2937, 6655)` at `r = 3`, `a = 11`.
+      - For (E): `W = T_(s-1)(j) - T_(s-1)(j+1)` and
+        `D_j - D_i = T_0(j) - T_0(i)`, with `s = i-j`.
+    - **FM-SEC13 (luna_max_venus) on (E):**
+      - Proved: the `q = 0` boundary (`i = j+1`), where `W = D_j - D_(j+1)`.
+        This is Theorem OL, plus a centre computation for `N = 2m` with
+        `e` even:
+        `D_m - D_(m+1) = t^2 (4(m+1)^2 - delta^2)/(2(m+1)^2(m+2))`.
+      - Screen: (E) holds at all 438,221 pairs with `a, e <= 40`.  The
+        least slack in the open region is 4, at `(a,e,j,i) = (3,5,7,9)`.
+      - Kill (knob: using only positive semidefiniteness of `Gamma`, which
+        the consumer does not restrict to): PSD alone does not give the
+        Gram-path inequality, e.g. vectors `(1),(-1),(1)`.
+      - No movement on `q >= 1`.
 - **Four factors: split identity, closed form and Theorem LL4 (FM-SEC6,
   luna_max_venus; verified by the main agent, `mech/four_repro.py`,
   `mech/ll4_check.py`, `mech/four_explore.py`).**

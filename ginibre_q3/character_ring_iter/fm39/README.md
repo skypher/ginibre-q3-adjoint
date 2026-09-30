@@ -43,6 +43,7 @@ this directory, because several `exec` a sibling file.
 | gamma <= N branch: scan, mirror form | `gammaN_branch_scan.py`, `mirror_check.py` |
 | FM-MECH23 reproducer; long-sweep energy bound LE | `mech23_repro.py`, `uncovered_slack.py`, `long_energy.py`, `long_energy2.py`, `long_energy3.py` |
 | Constant-coefficient (Sonin) model of W and (E) | `const_coeff_check.py` |
+| W = (i) long discriminant + (ii) D-window mean | `sonin_route.py`, `sonin_route2.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
