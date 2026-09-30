@@ -10682,6 +10682,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `(1^8,6)`.
         - Open: a uniform merge rule, including the final step where B
           gives way to H_AC.
+      - FM-SEC118 (luna_max_venus; `fm39/sec118_BHq_repro.py`; the
+        `smallcert` and `boundary9` stages rerun exactly): conjecture BH_q.
+        - Statement: the Bernstein tables in `s` of the braided pair table
+          `f_(q,s)` are H_AC_q, with one q-independent dictionary.  This
+          contains FM3, H_AC, H_AC_q and BH.
+        - Census: all 545 ordered even-total lists of length `<= 6`,
+          labels `<= 3`, and 90 representatives under rotation and
+          reversal: 3,757 Bernstein tables, 63,986 q-coefficient vectors.
+          No negative entry or Fourier value, and every nonzero table is a
+          nonnegative sum of subgroup indicators.
+        - `(1^4, 2^3)`: subgroup sums throughout.  `(1^8,6)`: every table
+          is a subgroup sum except the last one at `q^0` and `q^1`, which
+          need the sphere: `3 delta_0 + (1/2) p_1*p_1` and
+          `21 delta_0 + (5/2) p_1*p_1`.
+        - So in the screened range, B (subspace mixtures) fails only at
+          the FM3 endpoint, in the lowest q-degrees.
       - FM-SEC117 (luna_max_pluto; `fm39/sec117_merge_rule_repro.py`): the
         Bernstein step as a merge.
         - KILL: local subgroup merges.  At `(1,2,1,2)`, `j = 1 -> 2`,
