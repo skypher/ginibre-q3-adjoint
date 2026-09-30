@@ -10674,6 +10674,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           subgroup sums.  A realization with `U_1..U_4` Walsh-nonnegative
           would prove FM3 for every word with labels `<= 4`.  This is
           FM-MECH42.
+        - Lemma (main agent; checked numerically on 300 random
+          coefficient vectors).  Let `X = sum a(gamma) chi_gamma` with
+          `a >= 0` and `sum a^2 = E X^2 = 1`.
+          - `U_2(X) = X^2 - 1` is automatically Walsh-nonnegative.
+          - So is `U_4(X)`: for `gamma != 0`, the three pair-splittings of
+            four positions give `a^(*4)(gamma) >= 3 (a*a)(gamma)` without
+            overlap.
+          - `U_3(X)` has coefficients `a^(*3) - 2a >= a(3 - 2a^2) - 2a`,
+            which is nonnegative wherever `a <= 1/sqrt 2`.
+          - The quantile realization fails at `U_3` only because
+            `sgn(X)` is a single character (the top dyadic digit), with
+            coefficient `E|X| = 8/(3 pi) > 1/sqrt 2`.  Every dyadic encoding
+            has this defect.
+          - So a semicircular realization with nonnegative Walsh
+            coefficients that are all `<= 1/sqrt 2` would give B, hence FM3,
+            for every list with labels `<= 4`.
+          - `U_5` and `U_6` cannot be automatic: B fails at `(1^7,5)` and
+            `(1^8,6)`.
       - **FM-MECH40 (astra_max_ceres;
         `fm39/mech40_insertion_obstruction_repro.py`, all assertions
         pass): no parent-preserving insertion.**
