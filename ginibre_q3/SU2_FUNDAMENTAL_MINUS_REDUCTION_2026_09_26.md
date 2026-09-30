@@ -10744,6 +10744,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             and `E Y^4 = 3`, but excludes a single subgroup
             (`|H| = (5 +- sqrt 5)/2`).  FM-SEC123 is mapping the
             admissible label sets.
+      - FM-SEC123 (luna_max_venus; `fm39/sec123_admissible_sets_repro.py`):
+        admissible label sets.
+        - Among {2,4}, {2,3}, {3}, {4}, {2,4,6}, {2,3,4}, the even labels and
+          the odd labels `>= 3`, only {2} is proved (by FM-MECH41).
+        - Law-level condition: if `sgn(X)` is a character, the `U_(2k+1)`
+          coefficient there is `8(-1)^k (k+1)/(pi(2k+1)(2k+3))`.  This is
+          negative for `n = 3 (mod 4)`, so a character sign is impossible
+          for any set containing 3 or 7.
+        - The quantile encoding has a negative `U_4` coefficient at
+          `sigma_1`, `sin(4 theta_0)/pi - 2 sin(6 theta_0)/(3 pi)`.
+        - B checks: `(2^a, 4^b)` for `a + b <= 6` and `(4^M)` for
+          `M <= 9` all pass (30 exact certificates).
+        - Open: `{2,4}`, which needs `b >= 0` and `b*b - b >= 0` off 0 for
+          the coefficients of `Y = U_2(X)` (with the disjoint-support
+          condition, `b*b = b` on `supp b`); and a non-character-sign
+          realization for 3.
       - FM-MECH43 (astra_max_ceres; `fm39/mech43_extra_label_repro.py`,
         rerun exactly): the {1,2} sector plus one extra label.
         - B certificates for eight lists `(1^a, 2^b, n)` with `n = 3, 4`.
