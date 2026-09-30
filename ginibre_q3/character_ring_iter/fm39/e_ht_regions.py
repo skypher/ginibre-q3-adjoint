@@ -16,8 +16,10 @@ def row(a,e):
 def ang(m,n,M): return math.atan2(math.sqrt(M)*n, m)
 AM=int(sys.argv[1])
 jobs=[tuple(int(y) for y in x.split(':')) for x in sys.argv[2].split(',')] if len(sys.argv)>2 else [(a,e) for a in range(5,AM+1) for e in range(3,a-1)]
+import os; HB=float(os.environ.get('HB','30'))
 st=Counter(); exI=[]; exO=[]; t0=time.time(); last=t0
 for n_,(a,e) in enumerate(jobs):
+    trow=time.time()
     c=row(a,e); N=a+e; V=(a+1)*(e+1); d=a-e; sg=N+2; C_=lambda k: c[k] if 0<=k<=N else 0
     D=[C_(k)**2-C_(k-1)*C_(k+1) for k in range(N+2)]+[0]
     Bv=[C_(k-1)+C_(k+1) for k in range(N+3)]; Av=[C_(k-1)-C_(k+1) for k in range(N+3)]
@@ -56,6 +58,6 @@ for n_,(a,e) in enumerate(jobs):
                 else:
                     st['outer: t=2V FAILS']+=1
                     if len(exO)<8: exO.append((a,e,j,i,i-j-1,round(x*x/(4*V),3),round(Xi2/(4*V),3)))
-    if time.time()-last>30: last=time.time(); print(time.strftime('%H:%M:%S'),'heartbeat rows %d/%d'%(n_+1,len(jobs)),dict(st),flush=True)
+    if time.time()-last>HB: last=time.time(); print(time.strftime('%H:%M:%S'),'heartbeat rows %d/%d done, last row (a,e)=(%d,%d) took %.2fs, elapsed %.0fs'%(n_+1,len(jobs),a,e,time.time()-trow,time.time()-t0),dict(st),flush=True)
 print(time.strftime('%H:%M:%S'),'done',dict(st),'elapsed %.1f'%(time.time()-t0))
 print('inner (b) failures (a,e,j,i,q,ratio):',exI); print('outer 2V failures (a,e,j,i,q,X_j^2/4V,X_i^2/4V):',exO)
