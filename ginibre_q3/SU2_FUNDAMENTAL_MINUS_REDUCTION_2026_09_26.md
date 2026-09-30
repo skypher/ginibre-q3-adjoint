@@ -10326,6 +10326,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - All-ones, `L = 8`, explicit (main agent):
         `f = 4 * 1_E + (1/6) sum_(|T| = 3) 1_(W_T) + (2/3) 1_0`, where
         `W_T` is the span of the pairs inside the triple `T`.
+      - **FM-SEC68 (luna_max_eris): Hypothesis B is FALSE** (knob:
+        subspace-mixture membership, stronger than the Fourier positivity
+        FM3 uses; `fm39/sec68_hypB_counterexample.py`, rerun exactly).
+        - `lambda = (1^8, 6)`.  With representatives having the label-6
+          bit zero, `f = 7 delta_0 + sum_(|x| = 2) delta_x` on `F_2^8`.
+        - Main-agent proof.  A subspace in the support of `f` has only
+          weight-2 nonzero vectors, so it is `{0, v}` or a triangle
+          `{0, e_ij, e_jk, e_ik}`.  Every subspace contributes to the
+          origin, whose budget is 7, and covers at most 3 of the 28
+          weight-2 vectors.  A decomposition would need total
+          coefficient `>= 28/3 > 7`.
+        - Eris's separator: `y` = `(3,-1,-1,3,3,-1,-1,3,3)` by weight has
+          `sum_(W) y >= 0` on all 417,199 subspaces, but
+          `sum y f = -7`.
+        - FM3 holds at this list: `F(u) = 3 + 2(4 - |u|)^2 >= 3`.
+        - So the sign-group action on the invariant space is not a
+          positive combination of permutation representations in general.
+          FM-MECH31's theorem for repeated odd labels stands, and FM-CHK42
+          accepted it.
       - **FM-MECH31 (astra_max_ceres): B is proved for every
         repeated odd-label list `(q, ..., q)`, all odd `q`, any length**
         (`fm39/mech31_hypB_oddlabels_repro.py`, rerun exactly).
@@ -10472,8 +10491,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `a + 6 >= Theta = u(u+4) + v(v+4) + (5/3)(P(P+2) + Q(Q+2))`, which
         leaves a finite window; four cores are certified completely.
         Open: `3 <= a < Theta - 6`, uniformly in the labels.
-    - **Theorem LS-hat (FM-SEC63, luna_max_jupiter; not yet checked
-      independently).**  For a fixed core `H = prod h_(kappa_l)`, maximum
+    - **Theorem LS-hat (FM-SEC63, luna_max_jupiter; ACCEPTED by FM-CHK42,
+      luna_max_vesta, own code).**  For a fixed core `H = prod h_(kappa_l)`, maximum
       `hat S` label `P`, and `k >= K(r, kappa, P)` factors `hat S`
       (explicit, very large), `phi_r(H prod hat S_(p_i) h_1^a) >= 0` for
       every `a`.  Proof: away from the four corners the product of `hat S`
@@ -11377,7 +11396,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             `S = 4 C_N^2 / N`.
           - Conclusion: the split (strips, fold, `q <= 1`, short arcs,
             case (c)) is complete, conditional on (HT) and on the
-            strictness repair.  That gives the two-label stratum and, through Theorem
+            strictness repair.
+          - FM-SEC64 (luna_max_saturn): the strictness repair is done, by a
+            flat-block lemma (`fm39/sec64_flatblock_repro.py`, resultant
+            rerun exactly).
+            - A zero `c_k` never gives a flat step in the upper half:
+              `delta_k = p(N-k+1) c_(k-1)^2/(k+1)^2 > 0`.
+            - There are never two consecutive flat steps.  The resultant
+              of the two flatness conditions is
+              `(p+2)^2 (k+2)^2 (N+2-d)(N+4-d)(N+2+d)(N+4+d) > 0`.
+            - By EQ1, an interior flat step is a repeated vertex and a
+              leading flat edge moves outward.  A trailing inward flat edge
+              (main agent) is also harmless, since
+              `W_ij = lambda W_(j,i-1)` with `lambda <= 1`.
+            - So the short-arc case of (E) is complete: (E) now rests
+              only on (HT) for case (c).
+            - Strict OL itself is proved for `e <= 3` and `3p >= N-2`, and
+              screened to `a, e <= 60`.  The band boundary `F = 0` has
+              infinitely many Pell-type tuples, e.g. `(e,N,p) = (2,49,1)`;
+              those in the box `e <= 100`, `N <= 1500` have ratio `!=` the
+              double root.  The consumer does not need that audit.  That gives the two-label stratum and, through Theorem
           G0E, the whole G0 branch at every level.  LD, RF and the binary
           forms are then not needed.
         - Heuristic (unproved).  `det Q_t = (4V-t)/t`.  If `D` behaved
