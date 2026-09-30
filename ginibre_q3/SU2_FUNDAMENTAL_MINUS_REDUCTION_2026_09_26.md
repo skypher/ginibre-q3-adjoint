@@ -10597,6 +10597,37 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - The printed code covers the q-table and the certificate check,
           not the dictionary and census driver.  An independent census
           rerun is FM-CHK49.
+      - FM-MECH36 (astra_max_ceres;
+        `fm39/mech36_insertion_candidates_repro.py`, all assertions
+        pass): insertion-stable strengthenings of H_AC.
+        - Distance-2 supports add nothing: every H_AC factor of an actual
+          table has them, since `f({i}) = 0`.
+        - KILL: a common Gram state across external spins.  At
+          `mu = (2)`, spins 1, 3, 5 give a non-PSD matrix (witness -1).
+        - KILL: translation lifts `C = sum theta tau_s f_j`.  They have a
+          proved insertion step, but the hypothesis fails at
+          `(1,1,1; h = 1, n = 2)` (budget 1 < 3) and at all three
+          boundaries.
+        - KILL: scalar channel shares `C_j = gamma_j C`.  At `(1^5, 2)`
+          the Walsh bound gives `gamma_1 + gamma_3 <= 29/30 < 1`.
+        - A subset-dependent allocation `C_1(S)` (1/3 or 7/9 of `C`)
+          repairs that witness, with 16 exact subspace terms.  Bounded
+          screen: 167 instances, 10 scalar and 112 translation failures,
+          every child Fourier-nonnegative.
+        - Open: an insertion-stable subset-dependent allocation.
+      - FM-SEC98 (luna_max_pluto; `fm39/sec98_all1_halfplane_repro.py`):
+        all-1 sector above the diagonal.
+        - Every even-`g` word through length 14 (10,922 words) is
+          certified on the whole admissible half-plane.  Claim R covers
+          `s <= q`.  Above the diagonal, the tensor Bernstein coefficients
+          in `(q, t)`, `s = q + (1-q)t`, are all `>= 0` (2,714,914
+          coefficients).
+        - Ordered `{1,2}` lists to 6 blocks (59,126 coefficients) and
+          `{1,2,3}` lists to 4 blocks also pass.
+        - Termwise arguments fail: `ffgg` has a crossing term
+          `(q-s)/2 < 0`, `T(fg-gf) = -s(fg-gf)`, and
+          `phi(W(ff)W(gg)) = (q-s)/2`.
+        - No proof for arbitrary length.
       - FM-CHK43 (luna_max_saturn, own code): ACCEPT FM-SEC66 (39 records,
         295 direct coefficients), FM-SEC69 (Riordan moments `>= 0`) and
         FM-MECH31 Proposition 3.  REPAIR FM-SEC67: the strict cutoffs hold
