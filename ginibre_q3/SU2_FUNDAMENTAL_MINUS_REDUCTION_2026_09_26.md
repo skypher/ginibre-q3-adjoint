@@ -10452,6 +10452,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             rule is known yet.  Since every list has `sum(mu) - n = 2d`
             with `n` its largest label, a construction uniform in `d` is
             H_AC for the full cone.
+      - FM-SEC76 (luna_max_eris): no FM3 counterexample in large-label
+        screens.
+        - Two hats: 53,760 full-suffix cases (labels `<= 20`, `r <= 4`) and
+          36,462 boundary-band cases (labels `<= 60`).
+        - Three hats `hat S_2^2 hat S_p` (`p <= 60`): 25,080 cases.  Also
+          `h`-cores with one or two factors to label 40.
+        - Tight normalized families (value 1 at `r = 1`):
+          `hat S_1 hat S_q` and `hat S_2 hat S_q` (rate `q^4 4^(-q)`),
+          `hat S_2^2 hat S_p`, `h_n`, `h_2 h_n`, `h_3 h_n`.  For
+          `hat S_n^2` the minimum is `3/(4(n+1)^2)`, at `a = 0`.
+        - Its first unresolved family,
+          `phi_1(hat S_p hat S_(p+1) h_1^(2p+1))`, is already proved
+          (FM-SEC78, accepted by FM-CHK44).
       - FM-CHK45 (luna_max_mercury, own code) on FM-MECH33:
         - ACCEPT: `B` is contained in H_AC, and the gluing control is
           outside it (support argument, origin mass `3 < 5`).
