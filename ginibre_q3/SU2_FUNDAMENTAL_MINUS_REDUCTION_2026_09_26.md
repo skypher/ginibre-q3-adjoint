@@ -10734,6 +10734,16 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - `(1,1,1,3)` is still B (`f = 1_<1111>`).
         - Knob: one common realization for all labels.  B and H_AC allow
           list-dependent decompositions, which FM3 needs anyway.
+        - Necessary condition (main agent).  In any realization where
+          `U_n` and `U_m` (`n != m`) both have nonnegative Walsh
+          coefficients, their supports are disjoint, because
+          `sum_gamma a_n(gamma) a_m(gamma) = E[U_n U_m] = 0`.
+          - For {1,2} this holds through the sign-charge parity.
+          - For {2,4}, with `Y = U_2(X)` having coefficients `c`, it forces
+            `c*c = c` on `supp(c)`.  That is consistent with `E Y^3 = 1`
+            and `E Y^4 = 3`, but excludes a single subgroup
+            (`|H| = (5 +- sqrt 5)/2`).  FM-SEC123 is mapping the
+            admissible label sets.
       - FM-SEC121 (luna_max_venus; `fm39/sec121_B_small_labels_repro.py`):
         B census for small labels.
         - Every even-total list with labels `<= 4` at `L = 7, 8, 9` (60, 85
