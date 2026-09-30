@@ -10259,6 +10259,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       So the G0 branch is proved on this grid.  Open: that the union of
       criteria is exhaustive for all `r` and `a` (sampled scan
       `fm39/w_residual_sample.py`; FM-SEC27).
+      - Sampled scan beyond the grid: 2,000 random rows (`r <= 40`,
+        `a <= 400`), 34,598,270 consumer windows.  Exactly one window is
+        uncovered: `(r,a,x,C) = (35,5,46,4)`, with `u = 3.93` just below
+        `C = 4`.  It has `S/T = 7.5` and (ii)-ratio 1.55.  `D` decreases
+        nearly geometrically there, and the crude bound `max + C min`
+        misses the LD bound by about 1%.  A sharper energy bound on the
+        decreasing side would cover it (FM-SEC27).
     - *Recurrence model (main agent, `fm39/const_coeff_check.py`).*
       - The base rows satisfy
         `(k+1) c_(k+1) = (a-e) c_k - (N-k+1) c_(k-1)`.  So
