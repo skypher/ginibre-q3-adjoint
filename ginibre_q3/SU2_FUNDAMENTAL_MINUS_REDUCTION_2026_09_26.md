@@ -10246,6 +10246,16 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - Open: the insertion step `(Ext)`.  FM-MECH31 seeks a canonical
         decomposition or a permuted basis.  FM-SEC68 (luna_max_eris)
         tries to break B at scale.
+      - Necessary condition, main agent (`fm39/hypB_necessary.py`).
+        Every subgroup indicator satisfies
+        `1_K(T_1+T_2) + 1_K(0) >= 1_K(T_1) + 1_K(T_2)`.  So B implies
+        `F(T_1+T_2) + F(0) >= F(T_1) + F(T_2)` for the sign-pattern values
+        `F`.  It holds on 12 random lists of length 6..9 with labels
+        `<= 7`, beyond FM-MECH30's range.
+      - All-ones lists: pairs of noncrossing matchings on `S` and `S^c`
+        give subspace indicators when their union is noncrossing, but
+        affine cosets (2-colourings of the crossing graph) when it is not.
+        So a canonical decomposition must re-pair crossing configurations.
     - **The H-only level-2 sector as one inequality (main agent,
       `fm39/mp2_kostka_check.py`, with FM-MECH28's evaluator
       `fm39/mech28_eval.py`).**
@@ -10294,6 +10304,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         counts walks in the `C_2` Weyl chamber, one Pieri step per factor.
         So `phi_2(E_kappa)` is a signed walk count, and a sign-reversing
         involution would be exact at leading order.
+      - FM-SEC62 (luna_max_venus): `(1^n)` is immediate, since the
+        integrand `(x-y)^4 (x+y)^n` is `>= 0` for even `n`.  A rematching
+        rule that changes only the last step of a walk fails at length 4
+        (Hall deficiency 2 at the prefix `(2,1),(3,1),(4,1),(4,2)`).  The
+        even-size zeros through size 16 are exactly
+        `kappa_1 > sum_(i>1) kappa_i + 2`.  General `Sym^k` factors need
+        the actual Pieri transitions.
       - Killed (main agent, `fm39/mp2_local_kostka.py`; knob: local
         matching, stronger than the global sum): the shape-by-shape route.
         Each negative shape `lambda = (k+b+2, k+b+1, k+1, k)` has the
