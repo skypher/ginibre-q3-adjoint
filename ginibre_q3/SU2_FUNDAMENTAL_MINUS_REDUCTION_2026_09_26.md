@@ -10215,6 +10215,37 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         duality on `Lambda(V (x) C^r)`, or a Lie superalgebra with even
         part `sl_2 + sl_2`.  FM-SEC58 (luna_max_mercury) is testing
         them.
+    - **FM-MECH30 (astra_max_ceres): Hypothesis B, the leading M5
+      candidate** (reproducer `fm39/mech30_hypB_repro.py`, rerun
+      exactly by the main agent).
+      - For a label list `lambda = (n_1, ..., n_L)` put
+        `m(S) = [U_0] prod_(i in S) U_(n_i)`, and on
+        `G_L = F_2^L / <(1,...,1)>` put `f_lambda([S]) = m(S) m(S^c)`.
+      - B: `f_lambda` is a nonnegative combination of indicators of
+        linear subspaces of `G_L`.
+      - B implies the whole EVEN statement, i.e. FM3 for every consumer
+        word at every level with any number of factors.  At an even
+        minus set `T`, the value is `2 sum_(W <= ker chi_T) a_W |W| >= 0`.
+      - Equivalently (main agent): the sign-group action on the invariant
+        space `Inv (x)_i (V_(n_i) (x) 1 + 1 (x) V_(n_i))` is a positive
+        rational combination of permutation representations.  So a basis
+        of invariants permuted by the sign flips would prove FM3.
+      - Screens: exact certificates (LP, then exact rational
+        reconstruction) for all sorted lists of length 2..7 with labels
+        `<= 4` (164), length 8 with labels `<= 3` (25), and
+        `(1,1,2^k)` for `k <= 12` (via binary-code weight enumerators).
+        The last family includes `hat S_2^9`, which killed H.
+      - Proved: merger restriction,
+        `f_(mu,a,b)|_(bit_a = bit_b) = sum_(d in CG(a,b)) f_(mu,d)`.
+      - Delimiting kills: (i) abstract gluing fails.  On `F_2^4`, a
+        function with nonnegative Fourier transform whose every
+        hyperplane restriction is in the subspace cone is not itself in
+        the cone.  So a proof must use the actual fusion tables.  (ii)
+        Intermediate-spin cutoffs `F_J` break Fourier positivity
+        (`(1,1,2)`, `J = 1`: value `-1`).
+      - Open: the insertion step `(Ext)`.  FM-MECH31 seeks a canonical
+        decomposition or a permuted basis.  FM-SEC68 (luna_max_eris)
+        tries to break B at scale.
     - **The H-only level-2 sector as one inequality (main agent,
       `fm39/mp2_kostka_check.py`, with FM-MECH28's evaluator
       `fm39/mech28_eval.py`).**

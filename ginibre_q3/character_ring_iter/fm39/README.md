@@ -69,6 +69,7 @@ this directory, because several `exec` a sibling file.
 | gamma <= N: FM-SEC45 certificate census; direct single-metric test (HT3) census | `gammaN_cert_lib.py`, `gammaN_cert_census.py`, `gammaN_metric_census.py` |
 | (E)/(HT): exact (m, n)-coordinate identities; the permanent form (HT*); drop lemma; rigorous per-pair chain (b); two-region plan (I)+(O); true HT margin via the permanent | `e_ht_mn.py`, `e_ht_drop.py`, `e_ht_sinsum.py`, `e_ht_regions.py`, `e_ht_perm_margin.py` |
 | M5 sectors: MP_2 Kostka weights = phi_2 on H-only words (any number of factors); FM-MECH28's exact evaluator | `mp2_kostka_check.py`, `mech28_eval.py` |
+| M5 Hypothesis B (FM-MECH30 reproducer); randomized exact FM3 screen across levels | `mech30_hypB_repro.py`, `fm3_random_screen.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
