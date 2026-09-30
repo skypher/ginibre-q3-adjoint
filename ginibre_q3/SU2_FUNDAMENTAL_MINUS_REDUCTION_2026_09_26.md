@@ -10530,6 +10530,37 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - No H_AC counterexample.  The CP case `(1^13, 3)` flagged by
           FM-SEC85 is among the 21 inner-range lists that FM-MECH34
           certified with two-sphere atoms.
+      - **FM-MECH35 (astra_max_ceres): H_AC at distance `d = 3` for
+        `t <= 3` or `v <= 1`** (`t, v` the counts of labels 1 and 2 in
+        `mu`).  Reproducers were extracted from the run log and rerun
+        exactly: `fm39/mech35_hAC_d3_repro.py` (1,012 lists, 519,830
+        entries), `fm39/mech35_hAC_d3_budget.py` and
+        `fm39/mech35_hAC_d3_witnesses.py`.
+        - The `d = 3` table is
+          `F_6 = D delta_0 + [C(L-2,2)-t+2] E_11 + (L-3) E_22 +
+          (L-4) E_112 + 2(L-5) E_1111 + E_33 + E_123 + E_1113 + E_222 +
+          2 E_1122 + 3 E_11112 + 5 E_111111`, with
+          `D = C(L+1,3) - t(L-1) - v`.
+        - For `t <= 3` the factors are built from `E, A, H` (singles,
+          pairs, triples of 1's), `B` (single 2's), `K` (single 3's),
+          `J = E*B`, and `R = (1/2) sum Q(delta_i + delta_(j+k))` over
+          triples of 2's.
+        - For `v <= 1` the key identity is
+          `Q(5H+6J+12K_0)/144 + Q(H+3J)/18 + Q(H+4K_0)/48`.
+        - The origin budgets are proved by polynomials with positive
+          coefficients.  The small cases (36 count patterns) are certified
+          exactly.
+        - Two restricted rules are killed, and H_AC holds at both
+          witnesses:
+          - factors supported on whole-cluster subsets of weight
+            `<= d + c`: `(2^4; n = 2)`, and `(q^5)` needs support radius
+            `>= 4d/3`;
+          - uniform weight-class factors: the Gram determinant is `-1/64`
+            at `(1^6, 2^2; n = 4)`.
+        - Open at `d = 3`: `(1^t, 2^v)` with `t >= 4`, `v >= 2`.  No rule
+          uniform in `d` yet.  Per `d` this is becoming a sequence of
+          separate certificates, so the ladder is paused in favour of an
+          insertion-stable hypothesis (FM-MECH36).
       - FM-CHK43 (luna_max_saturn, own code): ACCEPT FM-SEC66 (39 records,
         295 direct coefficients), FM-SEC69 (Riordan moments `>= 0`) and
         FM-MECH31 Proposition 3.  REPAIR FM-SEC67: the strict cutoffs hold
