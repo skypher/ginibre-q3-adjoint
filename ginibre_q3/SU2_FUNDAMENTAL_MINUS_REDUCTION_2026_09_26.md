@@ -10869,6 +10869,31 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - The `[U_n] g` identities (1,152 direct cases).  A fresh
             U-positivity screen with `k + a + 2b <= 40` (5,950 profiles)
             found no negative coefficient.
+      - FM-MECH46 (astra_max_ceres; `fm39/mech46_insertion_repro.py`, rerun
+        exactly): the uniform one-extra-label statement, the b-insertion.
+        - Exact recurrence (Prop. 1): with `g_b = g_(k,a,b)`,
+          `D = k + a + 2b`, `R_D = (D + 4 - x d_x)^(-1)` (acting as
+          `x^j -> x^j/(D+4-j)`):
+          `g_(b+1) = (x^2+2) g_b + 4 R_D[ b (x^2+2) g_(b-1) - (b+3) g_b ]`
+          (290 exact checks).
+        - Lemma 2: `R_D` preserves U-positivity (descending induction on
+          the U-coefficients).
+        - KILL (Theorem 3): no linear insertion `V_L -> V_(L+2)` sending every
+          `g_(k,L-k,0)` to `g_(k,L-k,1)` preserves the whole U-positive cone.
+          The map is forced to be `T_L = (x^2+2) - 12 R_L`, and
+          `T_3 U_3 = U_5 + U_3 - U_1`; for `L >= 4`,
+          `[U_(L-4)] T_L U_L = -(L-3)(L+2)/4`, at distance 3 for `L = 12`.
+          Knob: positivity on the whole cone, stronger than the consumer
+          (the actual children `g_(2,1,1)`, `g_(3,0,1)` are positive).
+        - Prop. 4: for two extra labels on the background
+          `F = d^k s^a Z^b`, positivity for both compatible signs is exactly
+          `R_(n,m) = sum_(j in CG(n,m)) c_(j,0) >= |c_(n,m)|`,
+          `c_(n,m) = E[F U_n(x) U_m(y)]` (6,480 exact checks, least slack 1).
+          At `b = 0` this is (E) of FM-MECH7.
+        - Open: the insertion inequality for the actual profiles,
+          `4(b+3) [U_n] R_D g_b <= [U_n](x^2+2) g_b
+          + 4b [U_n] R_D((x^2+2) g_(b-1))`, relevant for `n >= 7`,
+          `n <= D - 4`.
         - FM-SEC125 (luna_max_mars; `fm39/sec125_label4_moments_repro.py`,
           rerun exactly): the label-4 inequalities of FM-MECH44 in joint
           moments `mu_(m,k)`.  Proved for `b = 0, 1` by explicit
