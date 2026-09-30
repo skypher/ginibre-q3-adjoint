@@ -10279,6 +10279,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `S/((C+1) sqrt(D_x D_y))` lies between 3.2 and 29.  So W, and with
         it the G0 branch, now reduces to (ii) on windows with
         `1 < u < C`.
+      - Adding FM-SEC20's criteria (`e = 1`, and the reflection plateau)
+        and the G0E rows (`min(a,e) <= 2`, strips) leaves 4 of the
+        233,865 consumer windows (`fm39/w_residual2.py`,
+        `fm39/w_residual3.py`).  All four have `r = 4`, `a = 56..59`,
+        `C = 10, 11` and `u` just below `C`, and (ii)-ratios 3.3 to 4.0,
+        so rows with `a` far above `e`.  Open: that the union of criteria
+        is exhaustive beyond the grid.
     - **(E) at `q = 1` for exponent gaps 2 and 3 (FM-SEC17, luna_max_mars;
       verified by the main agent, `fm39/e_q1_repro.py`,
       `fm39/e_q1_route_kill.py`).**
