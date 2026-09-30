@@ -10916,6 +10916,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `al + ga >= 3` (not needed by FM3).  `al + ga <= 2` holds without
           the condition.
         - Pending: FM-CHK56 (independent checker).
+        - FM-SEC128 (luna_max_mercury; `fm39/sec128_ratio_induction_repro.py`,
+          rerun exactly): an induction on `al + ga` for the unconstrained
+          `b = 0` form.
+          - `al + ga <= 2` proved by explicit numerators, e.g.
+            `R_(1,1) = 4Q/D_2` with
+            `Q = p^4 + 6p^3 + 11p^2 + 6pq^2 + 12p + 4q^4 + 2q^2 + 18`,
+            `p = m+k`, `q = m-k`.
+          - The unnormalized table is reverse-TP2 on all 35,960 squares.
+            That alone cannot drive the recurrence: the constant array has
+            zero minors and a negative update.
+          - KILL: the ratio-monotonicity rules, both the coordinatewise
+            rule and the one oriented by the sign of `al - ga` (witness
+            `(m,k,al,ga) = (1,0,0,1)`); normalized TP2 fails (11,120
+            negative minors).  Knob: the direction of the ratio bounds.
+          - Superseded for FM3 by FM-MECH47; the unconstrained form with
+            `al + ga >= 3` stays open and is not needed.
       - FM-SEC127 (luna_max_mars; `fm39/sec127_q2plus_audit_repro.py`, rerun
         exactly): the q = 2 plus sign of (E), uniformly in the label.
         - With `x = c_j`, `y = c_(j+1)` and the Krawtchouk recurrence, the
