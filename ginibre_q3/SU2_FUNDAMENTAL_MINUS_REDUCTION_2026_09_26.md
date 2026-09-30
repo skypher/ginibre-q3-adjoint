@@ -10192,6 +10192,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         duality on `Lambda(V (x) C^r)`, or a Lie superalgebra with even
         part `sl_2 + sl_2`.  FM-SEC58 (luna_max_mercury) is testing
         them.
+    - **The H-only level-2 sector as one inequality (main agent,
+      `fm39/mp2_kostka_check.py`, with FM-MECH28's evaluator
+      `fm39/mech28_eval.py`).**
+      - `phi_2(h_(kappa_1) ... h_(kappa_n)) = sum_lambda K(lambda, kappa)
+        w(lambda)`, with no bound on `n`, holds with exact equality on all
+        137 partitions `kappa` of size 2..10.  Here `w` is the MP_2 weight.
+      - On Sp(4), `(x-y)^2 = s_2 - 3 s_(1,1) + 8`, so
+        `F_2 = (h_2^perp - 3 e_2^perp + 8) F_1`.  The sector is
+        `3 m_(1,1)(E) <= m_(2,0)(E) + 5 m_(0,0)(E)` for
+        `E = (x)_i Sym^(kappa_i) W`.  FM51 gives
+        `m_(1,1) <= m_(2,0) + m_(0,0)` for every polynomial module.  The
+        factor 3 fails for single Schur modules, so a proof must use the
+        product structure, as an invariant cone under `(x) Sym^k W`.  This
+        is M5 inside one sector with unboundedly many factors.
+        FM-SEC60 (luna_max_venus) is on it.
     - FM-SEC31 (luna_max_pluto): the mixed term expands exactly through
       lower-label values, `C = A - B`, so the inductive step is
       `A <= R + B`.  Every term there has fewer labels, but positivity of
@@ -11198,6 +11213,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             the Euclidean fan area of the `p`-curve over an outer
             half-turn is at least the product of the end radii.
             FM-SEC55 (luna_max_venus) is attacking it.
+            FM-SEC55 result: conditional.  Exact integer screens pass on
+            777,100 outer pairs: 471,319 with `a <= 60` (least ratio
+            `123904/23953`), large rows to `(2000,3)`, and `a = e+2` to
+            `e = 100`.  No uniform proof yet.
         - FM-SEC54 (luna_max_jupiter): the same drop lemma and an exact
           angular form, with a proof on the subregion "every step at most
           `pi/2` and `mu_j <= 4 mu_i`".  On the centre line, `(HT*)` is

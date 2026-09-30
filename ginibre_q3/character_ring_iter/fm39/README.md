@@ -68,6 +68,7 @@ this directory, because several `exec` a sibling file.
 | (E) two-case split: sweep >= pi pairs all closed by the single-metric bound (Conjecture HT); HT margin map; where t = 2V fails; killed HT routes | `e_sweep_split.py`, `e_sweep_split_t.py`, `e_ht_margin.py`, `e_ht_2v_fail.py`, `e_spiral_probe.py`, `e_ht_monotone.py` |
 | gamma <= N: FM-SEC45 certificate census; direct single-metric test (HT3) census | `gammaN_cert_lib.py`, `gammaN_cert_census.py`, `gammaN_metric_census.py` |
 | (E)/(HT): exact (m, n)-coordinate identities; the permanent form (HT*); drop lemma; rigorous per-pair chain (b); two-region plan (I)+(O); true HT margin via the permanent | `e_ht_mn.py`, `e_ht_drop.py`, `e_ht_sinsum.py`, `e_ht_regions.py`, `e_ht_perm_margin.py` |
+| M5 sectors: MP_2 Kostka weights = phi_2 on H-only words (any number of factors); FM-MECH28's exact evaluator | `mp2_kostka_check.py`, `mech28_eval.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
