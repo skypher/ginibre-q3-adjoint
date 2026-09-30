@@ -10463,6 +10463,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (p_(k-h) * p_(k-h))`.  Only `b_1 = (n-k+1)/(k(k+1))` can be
           negative, and it is `>= 0` exactly when `3n >= N-2`.
         - REPAIR: the Fourier normalization (applied above).
+      - FM-SEC89 (luna_max_mars; `fm39/sec89_hAC_census_repro.py`,
+        assert-only, reruns exactly): structured dictionaries.
+        - Class-profile Hamming spheres fail at `(1,1,1,1,2,2)`, mask 19.
+          Fusion-path factors `P_(j,k)(S) = m_j(S) m_k(S^c) +
+          m_k(S) m_j(S^c)` repair it, with coefficients `2, 1/2, 1/4` on
+          `P_(0,8), P_(1,7), P_(2,6)`.
+        - At `(2^6, 4)` spheres, path factors and point pairs all fail,
+          with an integer Farkas vector.  H_AC still holds there:
+          `f = 15 delta_0 + (1/8) sum_(O_1) 1_H*1_H +
+          (1/24) sum_(O_2) 1_H*1_H`, with subspace orbits of sizes 15 and
+          30.
+        - The gap-two insertion law is rechecked on 200 lists.
+        - No H_AC counterexample.  The CP case `(1^13, 3)` flagged by
+          FM-SEC85 is among the 21 inner-range lists that FM-MECH34
+          certified with two-sphere atoms.
       - FM-CHK43 (luna_max_saturn, own code): ACCEPT FM-SEC66 (39 records,
         295 direct coefficients), FM-SEC69 (Riordan moments `>= 0`) and
         FM-MECH31 Proposition 3.  REPAIR FM-SEC67: the strict cutoffs hold
