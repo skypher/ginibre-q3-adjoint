@@ -10489,6 +10489,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (matrix coefficients) on graphs with cycles.  The class-function
           Q3 here does not feed into them.  No conflict with FM3 is known,
           and no result on the SU(2) character cone was found.
+      - FM-CHK48 (luna_max_neptune, own code) on FM-MECH35: ACCEPT all
+        five items.
+        - The `d = 3` table is rederived and checked on 520 fusion
+          profiles.
+        - The `t <= 3` residual formulas and bounds are checked (exact
+          residual scan to `L = 100`).
+        - The `v <= 1` identity and budget polynomials are checked (279
+          profiles), as are the small cases.
+        - The checker's item-5 REPAIR (a `(q^5)` formula "false at
+          `q = 2`") is withdrawn.  It evaluated the six-label list
+          `(2^5, 4)`, where the table is `(15, 2, 1)`.  For `lambda = (2^5)`
+          the main agent confirms the stated `(6, 1, 1)`.
       - FM-CHK47 (luna_max_eris, own code, no imports of the
         reproducers).
         - ACCEPT: Claim R, including the Yang-Baxter check, the norm, the
