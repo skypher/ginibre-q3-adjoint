@@ -10847,6 +10847,31 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             inequalities.  The three-term recurrence alone does not give
             the decrease: the quadratic form in `(alpha_(m-1), alpha_m)` is
             indefinite.
+          - CORRECTION (main agent): both forms are already in the note.
+            `b = 0` is Lemma FM27, proved at every level by Theorem OL
+            (FM-MECH6).  The `i`-rows are the cyclotomic-multiple rows
+            `(1 + z^2)^i P` of the (E) analysis.  At `b = 1` the uniform-`n`
+            statement is exactly the two-label inequality (E) at `q = 2`:
+            the minus sign is proved (OL on `(1 - z^2) P`), and the plus sign
+            is the open FM-SEC35/38/44 item.  So the {1,2} sector plus one
+            arbitrary label contains that open item.
+          - Corollary of FM-MECH41/44/45 (main agent).  (E) at `q = 2` holds
+            with both signs for every label `p <= 6`, at every level and for
+            all `a, e`.  The words `hat S_p hat S_2 h_1^a` and
+            `h_(p-1) hat S_2 h_1^a` are the `b = 1` cases of those theorems.
+        - FM-SEC125 (luna_max_mars; `fm39/sec125_label4_moments_repro.py`,
+          rerun exactly): the label-4 inequalities of FM-MECH44 in joint
+          moments `mu_(m,k)`.  Proved for `b = 0, 1` by explicit
+          coefficientwise-positive numerators; 4,851 exact cases with
+          `A, E, b <= 20` are all `>= 0`.  Superseded by FM-MECH45 (all `b`);
+          kept as an independent corroboration.  The block expansion
+          alternates, so positivity only appears after summing.
+        - Main-agent screen (`fm39/sector123_moment_screen.py`): the
+          {1,2,3} sector.  `E[s^A d^E Z^b (Z+P)^al (Z-P)^ga] >= 0` in all
+          7,182 cases with `A, E` even and `A + E + 2b + 2al + 2ga <= 26`.
+          This includes 4,139 cases outside the FM3 constraints `al <= E`,
+          `ga <= A`, i.e. GKS2*-type words with extra `h_2` factors.
+          Delegated as FM-SEC126.
       - FM-SEC123 (luna_max_venus; `fm39/sec123_admissible_sets_repro.py`):
         admissible label sets.
         - Among {2,4}, {2,3}, {3}, {4}, {2,4,6}, {2,3,4}, the even labels and
