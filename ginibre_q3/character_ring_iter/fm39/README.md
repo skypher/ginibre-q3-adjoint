@@ -49,6 +49,7 @@ this directory, because several `exec` a sibling file.
 | Merge move, groupings, four-wedge correction | `merge_check.py`, `merge_best.py`, `cross_telescope.py` |
 | Four-factor double merge census | `merge4.py` |
 | Theorem G0B (G0 branch in a growing band) | `g0b_repro.py`, `g0b_check.py` |
+| Theorem LD (long discriminant (i), all real-rooted rows); residual of W | `ld_repro.py`, `ld_check.py`, `w_residual.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main

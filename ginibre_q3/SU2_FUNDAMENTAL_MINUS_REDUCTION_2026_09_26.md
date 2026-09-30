@@ -10184,6 +10184,46 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `(1299, 2937, 6655)` at `r = 3`, `a = 11`.
       - For (E): `W = T_(s-1)(j) - T_(s-1)(j+1)` and
         `D_j - D_i = T_0(j) - T_0(i)`, with `s = i-j`.
+    - **Theorem LD (inequality (i) for every real-rooted row; FM-SEC15,
+      luna_max_venus; verified by the main agent, `fm39/ld_repro.py`,
+      `fm39/ld_check.py`).**  For every real polynomial with only real
+      roots and every support window,
+      `|T_C(x)| <= (C+1) sqrt(D_x D_(x+C))`.
+      - *Local Jensen polynomial.*  With `n = C+2` and `m = x+C+1`,
+        `Q(t) = sum_(j=0..n) C(n,j) c_(x-1+j) t^j = [z^m] P(z)(z+t)^n` is
+        real-rooted.  For `t_i` in the upper half-plane,
+        `F = P(z) prod (z + t_i)` has all its `z`-roots in the closed lower
+        half-plane.  By Gauss--Lucas so does `d^m F/dz^m`.  Hurwitz at
+        `z -> 0` makes `d^m F/dz^m (0, t)` real stable, and its diagonal
+        `t_i = t` is real-rooted.
+      - *Coefficient inequality.*  If `q = sum C(n,j) a_j t^j` is
+        real-rooted, then
+        `|a_1 a_(n-1) - a_0 a_n| <= (n-1) sqrt((a_1^2 - a_0 a_2)(a_(n-1)^2 - a_(n-2) a_n))`.
+        Proof: by the root-sum identities, both factors and the left side
+        are sums over pairs of roots, and Cauchy--Schwarz compares them.
+        Degenerate cases follow by limits.
+      - With `a_j = c_(x-1+j)` this is exactly (i).  `C = 1` is the cubic
+        discriminant.
+      - *Checks.*  The agent script reruns: 778,800 base windows, with the
+        root-sum identities symbolic in degrees 2..8.  The main agent
+        found every one of 3,870 random real-rooted windows gives a
+        real-rooted `Q` (exact `real_roots`), and no violation of (i).
+    - **What remains of W** (main agent, `fm39/w_residual.py`).
+      - With the G0B energy bound `S >= max(D_x,D_y) + C min(D_x,D_y)`,
+        Theorem LD gives `S >= |T|` whenever `u = sqrt(D_max/D_min)` lies
+        outside `(1, C)`, since `u^2 + C >= (C+1) u` iff
+        `(u-1)(u-C) >= 0`.
+      - Consumer windows (`e` odd, `2x >= N-C`, `C >= 3`, `r <= 10`,
+        `a < 60`), 233,865 in all:
+        - `T <= 0`: 53.36%;
+        - LD plus energy: 36.33%;
+        - the G0B window region: 9.16%;
+        - Theorem WS: 0.82%;
+        - residual: 759 windows (0.32%).
+      - Every residual window has large slack in (ii): the ratio
+        `S/((C+1) sqrt(D_x D_y))` lies between 3.2 and 29.  So W, and with
+        it the G0 branch, now reduces to (ii) on windows with
+        `1 < u < C`.
     - **FM-SEC16 (luna_max_jupiter) on (ii):**
       - Proved: `C <= 1` (AM--GM), and centered windows `2x + C = N`.
         Centered windows follow from `D_(N-k) = D_k`, Theorem OL, and the
