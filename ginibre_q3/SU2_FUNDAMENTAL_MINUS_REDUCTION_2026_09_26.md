@@ -10990,6 +10990,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `(HT)`: some `t in (0, 4V)` has
           `4t(4V-t)(D_j - D_i)^2 >= F_j(t) F_i(t)`.
           - Grid `3 <= e <= a-2 <= 78`: 2,638,251 pairs, no exception.
+          - Grid `3 <= e <= a-2 <= 198` (19,306 rows): 108,537,108 pairs,
+            no exception, each closed at `t in {X_i^2, X_j^2, 2V}`.
           - 24 large rows, up to `(2000,20)`, `(500,498)`, `(1000,500)`:
             1,083,099 pairs, no exception.
           - With `a <= 60`, `t = 2V` alone covers 803,778 of the 812,334
@@ -11040,6 +11042,79 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - Monotonicity of the margin in `i`: `rho(j,i)` decreases in
             19,304 of 152,128 steps with `a <= 40`, e.g. `(6,3,5,9)`
             (`fm39/e_ht_monotone.py`).
+      - **Closed form of (HT): the permanent inequality (main agent,
+        `fm39/e_ht_mn.py`, exact on every row `a, e <= 30`).**
+        - Put `m_k = sigma c_k - d B_k/2`, `n_k = X_k A_k/2` (the
+          recurrence gives `d c_k - sigma B_k/2 = -X_k A_k/2`), and
+          `p_k = (m_k, n_k)`.  Then:
+          - `4V D_k = m_k^2 + mu_k n_k^2`, with `mu_k = 4V/X_k^2 - 1`.  So
+            `D` is a diagonal metric in `(m, n)` whose weight decreases in
+            `k` for `X_k > 0` and changes sign at the turning point
+            `X_k^2 = 4V`.
+          - `2V (D_k - D_(k+1)) = det(p_k, p_(k+1))`: the fan area of the
+            `p`-curve equals the drop of its own varying norm.
+          - `2V W_ij = m_j n_i - n_j m_i`, so (E) is
+            `2V (D_j - D_i) >= |m_j n_i - n_j m_i|`.
+        - `Q_t = (sigma f - d g)^2/(4V) + (d f - sigma g)^2 (1/t - 1/(4V))`,
+          so the family is all positive combinations of two fixed squares.
+          Minimizing the metric bound over `t` in closed form gives
+          `(HT*)`: `2V (D_j - D_i) >= |m_j n_i| + |n_j m_i|`.
+          This is (E) with the permanent of absolute values in place of
+          the determinant.  It is (HT) together with its limits
+          `t -> 0, 4V`.  On `a, e <= 30` the two differ only in 404
+          equality cases with one product zero (for example `i = j+1`).
+        - `(HT*)` is (E) together with
+          `(E^R)`: `2V (D_j - D_i) >= |m_j n_i + n_j m_i|`.
+        - Constant-metric model.  With `mu` fixed, the drop identity makes
+          `p` a log-spiral in the metric `diag(1, mu)`, and over a
+          half-turn `(HT*)` holds with a factor `pi` of room
+          (`sinh(pi/sqrt(mu)) >= 1/sqrt(mu)`).  The right radius is
+          `4V D_k`, which is monotone by OL.  The fixed-`Q_t` radius
+          killed above is not.  FM-SEC54 is making this exact with the
+          varying weight `mu_k`.
+      - **Drop lemma and a rigorous partial chain (main agent,
+        `fm39/e_ht_drop.py`, `fm39/e_ht_sinsum.py`).**  Take bulk
+        case-(c) pairs `0 < X_j < X_i`, `X_i^2 < 4V`, so
+        `mu_j >= mu_k >= mu_i > 0`, and put `rho_k^2 = 4V D_k`.
+        - `|m_j n_i| + |n_j m_i| <= rho_j rho_i / sqrt(mu_i)`.  So `(HT*)`
+          follows from the drop lemma
+          `(DL)`: `D_i/D_j <= r*(mu_i)^2`, where
+          `r*(mu) = sqrt(1 + 1/mu) - 1/sqrt(mu)`.
+          `(DL)` involves only `D` at the two ends and the half-turn.  It
+          holds on all 124,328 bulk case-(c) pairs with `a <= 40`.
+        - Per step, exactly: in the metric `diag(1, M)` with
+          `M >= mu_k, mu_(k+1)`, `2V delta_k = det(p_k, p_(k+1))` gives
+          `sinh(x_k - x_(k+1)) >= sin(dth_k^(M)) / sqrt(M)`, with
+          `x = log rho` and `dth^(M)` the elliptic angle step.  `sinh` is
+          superadditive and `x` decreases (OL).  So `(HT*)` holds whenever
+          `(b)`: `sum_k sin(dth_k^(mu_k)) / sqrt(mu_k) >= 1/sqrt(mu_i)`
+          (local metric at each step).  This chain is a proof for each
+          pair that meets `(b)`.
+        - `(b)` holds on 1,297,485 of the bulk case-(c) pairs with
+          `a <= 70`.  It fails on a thin set that persists at large `N`,
+          e.g. `(400,3,202..206,241)` (ratio 0.75).  The failures have
+          `X_i` near the turning point, where `mu_i -> 0` and the bound
+          `|n_i| <= rho_i / sqrt(mu_i)` degenerates.  There `t = 2V`
+          already closes `(HT)` on every tested pair.  So a proof can
+          split: `(b)`-type estimates in the bulk away from the turning
+          point, and the `t = 2V` bound near and past it.
+        - The split works on everything tested
+          (`fm39/e_ht_regions.py`, exact rows, float angles).  It covers
+          all 800,154 case-(c) pairs with `a <= 60` and 8 large rows up to
+          `(800,3)`, `(800,400)`:
+          - inner, `X_i^2 <= 2V`: `(b)` holds, or `(b')` holds: the same
+            chain with the exact ratio `perm/(rho_j rho_i)` in place of
+            `1/sqrt(mu_i)` (12 pairs, all `q = 2`).  `(b')` is also a proof
+            for its pair.  The centre `X_j = 0` has `n_j = 0`, and the first
+            step uses the metric `mu_(j+1)`.
+          - outer, `X_i^2 > 2V`: `(HT)` at `t = 2V`, i.e.
+            `D_j - D_i >= 2 sqrt(Dt_j Dt_i)`.
+        - So (E) reduces to two statements on case-(c) pairs.
+          - `(I)` (inner): `sum_(k=j..i-1) sin(dth_k^(mu_k)) / sqrt(mu_k)
+            >= (|m_j n_i| + |n_j m_i|) / (rho_j rho_i)`.  This is a discrete
+            phase-integral bound over a half-turn, and each term is an
+            explicit function of the consecutive ratio `c_(k+1)/c_k`.
+          - `(O)` (outer): `D_j - D_i >= 2 sqrt(Dt_j Dt_i)`.
       - *`q = 2` plus sign* (`fm39/e_q2plus_split.py`,
         `fm39/e_q2plus_ratiofree.py`).  For all `a, e <= 60` (106,982
         pairs), every pair has `W >= 0` (plus sign trivial) or a positive
@@ -11077,6 +11152,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         them in the grid `a, e <= 150` (1,681,577 `q = 2` pairs).
         Interior `t*` is needed, e.g. at `(a,e,j) = (5,181,112)`.  The
         70 earlier residuals all have `W > 0`.
+      - FM-SEC50 (luna_max_venus), `(HT)` at `q = 2`: conditional.  The
+        exact screen `3 <= e <= 150`, `e+2 <= a <= 150` gives 521,548
+        pairs with `W < 0`, all closed by the interior `t*`.  All of them
+        lie in the central regime `d^2 < 4(j+2)(N-j-1)`, where the
+        outer-interval lemma does not apply.  So a proof must control the
+        actual ratio there, plus a separate chart at `c_j = 0` (47 cases).
     - **Residual of (E) now** (`fm39/e_residual2.py`): 22,046 of 438,221
       pairs (5.03%), all with `q >= 2`: `q = 2` 8,364, `q = 3` 6,908,
       `q = 4` 3,948, `q = 5` 1,988, `q >= 6` 838.

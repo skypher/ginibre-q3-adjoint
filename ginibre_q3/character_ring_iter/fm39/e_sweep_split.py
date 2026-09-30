@@ -14,8 +14,10 @@ def row(a,e):
     return c
 AM=int(sys.argv[1])
 jobs=[tuple(int(y) for y in x.split(':')) for x in sys.argv[2].split(',')] if len(sys.argv)>2 else [(a,e) for a in range(3,AM+1) for e in range(3,a-1)]
+import os; HB=float(os.environ.get('HB','30'))
 st=Counter(); ex=[]; t0=time.time(); last=t0
 for n,(a,e) in enumerate(jobs):
+    trow=time.time()
     c=row(a,e); N=a+e; V=(a+1)*(e+1); C_=lambda k: c[k] if 0<=k<=N else 0
     D=[C_(k)**2-C_(k-1)*C_(k+1) for k in range(N+2)]+[0]
     Bv=[C_(k-1)+C_(k+1) for k in range(N+3)]; Av=[C_(k-1)-C_(k+1) for k in range(N+3)]
@@ -37,5 +39,6 @@ for n,(a,e) in enumerate(jobs):
             if ok: st['metric at some other t']+=1; continue
             st['NO METRIC']+=1
             if len(ex)<20: ex.append((a,e,j,i,q,x,y))
-    if time.time()-last>30: last=time.time(); print(time.strftime('%H:%M:%S'),'heartbeat %d/%d rows'%(n+1,len(jobs)),dict(st),flush=True)
+    rowcost=time.time()-trow
+    if time.time()-last>HB: last=time.time(); print(time.strftime('%H:%M:%S'),'heartbeat rows %d/%d done, last row (a,e)=(%d,%d) took %.2fs, elapsed %.0fs'%(n+1,len(jobs),a,e,rowcost,time.time()-t0),dict(st),flush=True)
 print(time.strftime('%H:%M:%S'),'done',dict(st),'elapsed %.1f'%(time.time()-t0)); print('no-metric examples (a,e,j,i,q,X_j,X_i):',ex)
