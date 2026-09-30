@@ -10636,6 +10636,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (`4 < 9/2`).  This kills only the radial dictionary: that list
           is B via non-radial subgroup orbits (FM-MECH31, FM-SEC113).
         - Comparison table of the `d = 1, 2, 3` factor families recorded.
+      - Main-agent screen (`fm39/twoM_block_codes_screen.py`): for
+        `(2^M)`, a radial B certificate over block-indicator codes plus
+        even-weight codes exists only for `M <= 6`, and is infeasible for
+        `M = 7..14`.  General subgroup orbits certify `M <= 10`
+        (FM-SEC88, FM-SEC113).  So the needed codes grow in complexity
+        with `M`.
       - **FM-MECH40 (astra_max_ceres;
         `fm39/mech40_insertion_obstruction_repro.py`, all assertions
         pass): no parent-preserving insertion.**
@@ -10696,6 +10702,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - `(1^4, 2^2)` has a q-positive repair.
         - Open: mixed `d = 3` with two or more labels 1, and general `d`
           with labels below `d`.
+        - FM-CHK52 (luna_max_eris, fresh code).
+          - ACCEPT: Lemma 1 (24 random lists, `d <= 4`).
+          - ACCEPT: Theorem 2, on 723 lists with `d = 1..6` and 15,294
+            entries.
+          - ACCEPT: Theorem 3, on 808 lists, including the exception
+            `(1,2,2,2)` via `(1,1,2,2)`.
+          - REPAIR, Propositions 4 and 5: the four transfer failures and
+            the `(1^4,2^2)` repair are verified, but the checker's own
+            census did not finish.  The main agent's rerun of the
+            reproducer's `--part transfers` did complete through
+            `L = 7` (`[20, 347, 4]`), so these four are the only failures
+            in that range.
       - **FM-SEC111 (luna_max_pluto; `fm39/sec111_bernstein_hAC_repro.py`,
         rerun exactly): conjecture BH, the Bernstein tables along `q = 0`
         are H_AC.**
