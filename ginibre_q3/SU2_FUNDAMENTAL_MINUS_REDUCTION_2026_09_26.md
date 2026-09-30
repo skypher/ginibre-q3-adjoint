@@ -10671,8 +10671,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - `D_j - D_i - W_ij = sum_(i0 < q/2) delta_(j+q)[z^i0 - z^(q-i0)]`;
       - `D_j - D_i + W_ij = sum_(i0 < q/2) delta_(j+q)[z^i0 + z^(q-i0)]`,
         plus `2 delta_(j+q)[z^(q/2)]` when `q` is even.
-      This is symbolic for `q = 1..7`; the general case is the same
-      telescoping as FM-MECH23's identity for W.
+      This is symbolic for `q = 1..7`.  For general `q` (FM-CHK39,
+      luna_max_jupiter), put `u = j+r`, `v = j+q-r`, `m = q-2r` for
+      `r < q/2`.  Then
+      `delta_(j+q)[z^r (1 - sigma z^m) P] = (psi_v - sigma psi_u) ^ (psi_(v+1) - sigma psi_(u+1))`.
+      Summing, the adjacent areas give every `delta_j..delta_(j+q)`
+      (except the middle one when `q` is even), and the cross terms
+      cancel in pairs to `W_ij`.  Each term lies beyond its row's OL
+      centre, since `2(j+q-r) - (N+m) = 2j + q - N >= q > 0`.
       - Each term is a one-label (OL) difference of the row
         `(1 -+ z^m) P`, `m = q - 2 i0`, beyond its centre.  So (E) follows
         from "Theorem OL for cyclotomic multiples `(1 -+ z^m)P`", the
@@ -10742,7 +10748,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - residual: 0 of 438,221.
         The binary-form tests are exact rational arithmetic.  The LD and
         metric coverage tests use floating point with relative tolerance
-        `1e-12` (to be rechecked exactly).
+        `1e-12`.  FM-CHK39 certified all 298,072 float-accepted decisions
+        on this grid by exact integer comparisons, with rationalized
+        square-root bounds.
+      - FM-CHK39 (luna_max_jupiter), own exact code: ACCEPT for Theorem
+        EQ1 (every boundary case), the multiplier identity (all-`q`
+        proof above), and the binary-form method (the recurrence holds at
+        `k = 0` and `k = N`, denominators are positive, and definiteness
+        implies the value at the actual seed).  No non-definite
+        three-factor form was found on rerun.
       - Systematic scan, every row with `3 <= a, e <= 80`: 6,329,895
         pairs, residual 0 (`fm39/e_residual_rows.py`).  Rows with
         `min(a,e) <= 2` or `|a-e| <= 1` are covered by earlier theorems.
