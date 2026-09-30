@@ -10692,6 +10692,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             for every list with labels `<= 4`.
           - `U_5` and `U_6` cannot be automatic: B fails at `(1^7,5)` and
             `(1^8,6)`.
+          - Necessary condition, depending only on the law: if `sgn(X)`
+            equals a character `chi`, the `U_3` coefficient at `chi` is
+            `E|X|^3 - 2 E|X| = -16/(15 pi) < 0` for every realization.  So
+            a `U_3`-nonnegative realization needs `sgn(X)` not to be a
+            character.
+          - For three signs, all 168 nonnegative-Walsh bijections onto the
+            dyadic grid have a character as sign.  So 'uniform, then
+            quantile' looks closed.
+          - Candidate shape: `X = G(Z)` with `Z = sum_j c_j sigma_j`.
+            `sgn(Z)` is majority-like and each single-sign coefficient
+            `c_j` is small.  `G` must be odd with positive Taylor
+            coefficients on the range of `Z`, hence convex on
+            `[0, max Z]`.
       - **FM-MECH40 (astra_max_ceres;
         `fm39/mech40_insertion_obstruction_repro.py`, all assertions
         pass): no parent-preserving insertion.**
