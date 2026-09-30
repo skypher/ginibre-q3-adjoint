@@ -9866,6 +9866,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         is also a regime `e >> a`.  With HT3, cross `<= 0` and the geometric
         condition, the `e = 3, 5`, `C = 3, 4` rows up to `a = 400` are
         covered (about 10.9M words).
+      - FM-SEC67 (luna_max_uranus): sharp radial theorems
+        (`fm39/sec67_radial_repro.py`, rerun by the main agent after one
+        sympy API patch, `coeffs()` for a multivariate polynomial).
+        - Exact joint moments: with `s = x+y`, `d = x-y`,
+          `E[s^(2m) d^(2k)] = 2 (2m)! (2m+1)! (2k)! (2k+1)! /
+          ((m!)^2 (k!)^2 (m+k+1)! (m+k+2)!)`.  So `phi_R(w h_1^e)` is an
+          explicit hypergeometric sum for any fixed core.
+        - Cutoffs (positive-coefficient numerators in
+          `xi = n - R - const`): `phi_R(hat S_3^3 h_1^e) > 0` for
+          `e >= 2R+3`, and `phi_R(h_3^3 h_1^e)`, `phi_R(h_5 hat S_3^2 h_1^e)`
+          `> 0` for `e >= 2R+1`.  LS needed `28R+41`, `(116R+169)/5` and
+          `36R+53`.
+        - Via the parity transform, 18 of the 31 `e >> a` failures are
+          covered.  The other 13 (`h_3^3` at `R = 17..21`) and the `a = 2`
+          misses are exact positive values.  So the whole screened
+          `gamma <= N` box (`e = 3..25` odd, `a <= 40`; 1,196,426 words) is
+          closed.
+        - Open: the short-suffix side `e < 2R + O(1)` and general cores.
+          For `hat S_5^3` the numerator coefficient `[xi^11] = -108(2R-9)`
+          turns negative for `R >= 5`.  FM-SEC75 seeks a sharp LS for
+          every word.
         At `e = 1` (level 2), `a <= 60`: 146,474 of 148,800 words
         satisfy (HT3), 767 have `U ^ V <= 0`, and 1,559 fail (all
         `phi > 0`, e.g. `(1,24,3,4,0,9)`).  Assigned as FM-SEC57.
