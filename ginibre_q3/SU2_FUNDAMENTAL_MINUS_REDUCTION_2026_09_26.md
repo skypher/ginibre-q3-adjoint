@@ -9880,6 +9880,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       against direct evaluation for `p <= 40`.  Open: `s >= 3` (the part
       outside LS is `10s < 7p^2+51p+202`), `q > 0`, `C >= 4`.  FM-SEC65
       continues.
+      FM-SEC65 (luna_max_mars): for `s >= 5` the same family factors
+      exactly (`fm39/e1_q0_closedform.py`) as
+      `phi_2 = B^2 (p+3)(p+4)(p+5)(p+s+8)(p+2s+4) Q(p,s) / (s^2 (s-4)^2
+      (s-3)^2 (s-2)^2 (s-1)^2 (s+1)^2 (s+2)^2 (s+3)^2 (s+4) (p+2s+3))`,
+      with `B = C(p+2s+3, s-5)` and `Q` an integer polynomial of degree 12
+      in `p` and 10 in `s`.  So the family reduces to `Q(p,s) >= 0` for
+      `p >= 0`, `s >= 5`.  `s = 3, 4` are checked directly (positive).
+      Main agent (`fm39/e1_q0_Qpositivity.py`): `Q(p, 5+S)` has 15 negative
+      coefficients, all at `p`-degree 3 and 4.  Its top homogeneous part is
+      `p^4 (10S^4 + 20S^3 p + 16S^2 p^2 + 6S p^3 + p^4)^2`, which vanishes on
+      the `S`-axis, so Polya multiplication cannot certify it.  On the
+      real grid `[0,60]^2` its minimum is `3.88e12`, at the corner.  An
+      AM-GM certificate with pairs alone is infeasible.  A version with
+      triangles is being searched.
     - Strict OL, empirically (`fm39/strict_ol_scan.py`): on every row
       `a, e <= 100`, all 512,600 steps with `2k > N` have `delta_k > 0`,
       so there are no flat steps.  FM-SEC64 is proving it.
