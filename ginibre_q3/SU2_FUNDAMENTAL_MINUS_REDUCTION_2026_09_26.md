@@ -10292,6 +10292,34 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `j = 17`).  On the actual row, `L - W = 93`.
       - It covers fixed gaps only; `|a-e| >= 4` at `q = 1`, and `q >= 2`
         across roots, remain open.
+      - *Row class of (E) (main agent, `fm39/e_class.py`).*  On
+        reciprocal rows `(1+z)^a (1-z)^e` times one extra factor, (E)
+        held:
+        - with real reciprocal pairs (`|t| >= 2`): 5,714 pairs, 0
+          violations;
+        - with complex root quadruples whose circle weight
+          `((x+al)^2 + be^2)` is log-concave on `[-2,2]`: 6,741 pairs, 0
+          violations.
+        It failed:
+        - without log-concavity: 637 violations in 248 of 400 rows;
+        - with unit-circle roots: 1,377 violations.
+        So (E) lives on the class of reciprocal rows with log-concave
+        circle weight, which is wider than real-rooted.  The three-factor
+        value tracks the same class.  This points to an analytic
+        (Prekopa--Leindler type) mechanism.
+      - *Fourier representation (main agent, `fm39/fourier_rep.py`,
+        machine precision, both parities).*  Let `F` be the real circle
+        weight of the row (a cosine series for even `e`, a sine series
+        for odd `e`), `m_k = k - N/2`, `u = t - p`, `v = t + p`.  Then
+        - `D_k = <F(t)F(p) cos(m_k u)(1 - cos v)>`;
+        - `T(x,x+C) = <F(t)F(p) cos(M u) 2 sin((C+1)v/2) sin(v/2)>`, with
+          `M = x + C/2 - N/2`.
+        For base rows `F(t)F(p)` is proportional to
+        `K(2 cos(u/2), 2 cos(v/2))`, the kernel itself, so this is a
+        Chebyshev-T re-expression.  In it, (E) compares `q+1`
+        consecutive unit decrements in `M` with `|U_q(cos(v/2))|` times
+        the middle one, averaged in `v`.  The pointwise version already
+        fails at `a = e = 1`, so a proof must use the `v`-average.
       - FM-SEC22 (luna_max_mars): no uniform proof.
         - Exact drift identity:
           `S(j,j+2) = d D_j/(j+1) + R_j`, with

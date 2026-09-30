@@ -52,6 +52,7 @@ this directory, because several `exec` a sibling file.
 | Theorem LD (long discriminant (i), all real-rooted rows); residual of W | `ld_repro.py`, `ld_check.py`, `w_residual.py` |
 | (E) at q = 1, gaps 2 and 3 (FM-SEC17) | `e_q1_repro.py`, `e_q1_route_kill.py` |
 | Theorem G0E4 (four factors from (E) on the support region) | `g0e4_check.py` |
+| Row class of (E) (log-concave weights); Fourier representation of D and T | `e_class.py`, `fourier_rep.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
