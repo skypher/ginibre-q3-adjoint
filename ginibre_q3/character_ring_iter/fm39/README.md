@@ -20,6 +20,18 @@ this directory, because several `exec` a sibling file.
 | FM3 kernel screen | `fm3kern.py`, `fm3screen.py` (`fm3screen*.log`, `fm3screen_*.json`) |
 | Theorem THREE | `parity_check.py`, `three_repro.py` |
 | EM2 at r >= 3, descents | `em2r.py`, `descent_r.py` |
+| Theorem LS, LR (large suffix / large r+a) | `radial_repro.py`, `ls_check.py` |
+| Theorem LR4 (additive quartic cutoff) | `lr4_repro.py`, `lr4_check.py` |
+| Theorem BW (balanced-wedge slice) | `wedge_repro.py` |
+| Coverage map and cancellation ratios | `band.py`, `band2.py` |
+| Theorem LL (three factors, large labels) | `ll_repro.py`, `ll_check.py` |
+| Three-factor closed form, Theorem T3R | `closed3_repro.py`, `closed3_check.py` |
+| Theorem DS (diagonal strip) | `ds_repro.py`, `ds_check.py` |
+| Theorem AS (adjacent strips) | `as_repro.py`, `as_check.py` |
+| Four factors, Theorem LL4 | `four_repro.py`, `four_explore.py`, `ll4_check.py` |
+| Theorem LLm, LLm-S (spread labels, any m, with hat S) | `llm_check.py`, `llms_check.py` |
+| Offset induction, inequality (P) | `pinduct_repro.py` |
+| Theorem G3 (positive next-row minors) | `g3_repro.py`, `g3_check.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main

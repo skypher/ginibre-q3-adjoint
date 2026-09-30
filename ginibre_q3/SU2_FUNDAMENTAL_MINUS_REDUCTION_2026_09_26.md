@@ -8785,7 +8785,11 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | H-only | two factors (Theorem TWO) |
   | all `r` | one label | `hat S_q h_1^a` and `h_s h_1^a`, all `q, s, a` (Theorem OL, item (39)) |
   | all `r` | two labels | all three sign patterns when the suffix `a` is `<= 2` or within 1 of the weight exponent `e` (item (39), strip of (E)) |
-  | all `r` | H-only | three factors, no suffix: `h_u h_v h_w` (Theorem THREE); any number of factors, all parts even, no suffix (item (39)) |
+  | all `r` | H-only | three factors, no suffix: `h_u h_v h_w` (Theorem THREE); three factors, any suffix, `min label >= a+2r-4` or `u-v+w >= a+2r-3` (Theorem LL); any number of factors, all parts even, no suffix (item (39)) |
+  | all `r` | H-only | three factors with `|a - (2r-3)| <= 1`, all labels (Theorems DS, AS); T3R regions (item (39)) |
+  | all `r` | H-only | any number `m <= 2r` of factors with spread labels: `lambda(S)+lambda(S^c) > a+2r-m` for every split (Theorem LLm; includes LL, LL4) |
+  | all `r` | every consumer word (h and hat S) | spread labels over every two-sided assignment (Theorem LLm-S) |
+  | all `r` | every word | suffix `a >= (2r+3) Lambda(w) - 2r - 4` (Theorem LS); `2r + a + t + 6 >= 7L(w)`, `L` an additive quartic in the labels (Theorem LR4) |
 
   - Open: unbounded numbers of factors in every sector.  For T1, the
     product-class certificate fails at seven factors (bounded degree);
@@ -9164,6 +9168,9 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
     - Fold to `a >= e >= 3`.  Put `n = N+2`, `X_k = 2k-N`, `z_k = X_k^2`,
       `b_k = C(n,k+1)`, `nu_l = l! (n)_l`, and
       `eta = e!/[4(n)_(e+2)]`.
+      Here `(n)_l = n(n-1)...(n-l+1)` is the falling factorial (FM-CHK26:
+      a rising reading breaks the identity, e.g. at `e = 1`, `a = 3`,
+      `(j,i) = (3,4)`).
     - Define the positive kernel
       `Gamma(u,v) = b_u b_v sum_(l <= e, l = e mod 2) K_l(X_u;n) K_l(X_v;n)/nu_l`.
     - Christoffel--Darboux in parity form gives
@@ -9282,7 +9289,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - If `a = t = 0`, the value is `(1/2) E[(x+y)^e prod hat S]`, a genuine
         character, so it is `>= 0`.  So every H-only consumer word with all
         parts even and no suffix is `>= 0`, for every `m <= 2r`.
-    - *Three factors.*  Two odd parts and one even part map to level 1 with
+    - *Level 1.*  `phi_1(h_u h_v h_w) = <h_u h_v h_w, 1>_Sp4 >= 0` directly, since
+      the transformed suffix `2r-3` would be negative there (FM-CHK26
+      repair).
+    - *Three factors, `r >= 2`.*  Two odd parts and one even part map to level 1 with
       one `hat S`: `phi_r(h_u h_v h_c) = phi_1(h_u h_v hat S_(c+1)
       h_1^(2r-3))`, which is `>= 0` by FM53.  Every other parity pattern is
       0 or all-even.
@@ -9300,6 +9310,481 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       fails there, not the consumer.
   - (E) screen, completed: every `e <= 120`, `a <= 400` (all index pairs,
     folded), no failure.
+- **Theorem LS (large suffix, the whole FM3 cone; FM-MECH12,
+  astra_max_ceres; verified by the main agent, `mech/radial_repro.py`,
+  `mech/ls_check.py`).**
+  - For every word `w`, a product of any `h_kappa` and `hat S_p`, every
+    level `r` and every `a >= 0`, put
+    `Lambda(w) = sum_(h) kappa(kappa+4)/5 + sum_(hat S) p(p+2)/3`.  Then
+    `phi_r(w h_1^a) >= dim(w) Z_(r,a) [1 - (2r+3) Lambda(w)/(a+2r+4)]`,
+    with `Z_(r,a) = (1/2) E[(x-y)^(2r) |x+y|^a]`, which equals
+    `phi_r(h_1^a)` for even `a`.  This corrects `Z = phi_r(h_1^a)`, which is
+    wrong for odd `a` (FM-MECH13).  The odd-`a` form was checked in 225
+    cases.
+  - The bound is stated for `deg(w) + a` even.  If `deg(w) + a` is odd,
+    `phi_r(w h_1^a) = 0` by the sign reversal `(x,y) -> (-x,-y)`.  FM-CHK26
+    rejected the version without this clause: `w = h_1`, `a = 0` gives
+    `phi = 0` against `2/3`.  With the clause and `Z = Z^+ =
+    int_(x+y>0) (x-y)^(2r) (x+y)^a`, the proof applies.
+  - So `a + 2r + 4 >= (2r+3) Lambda(w)` implies `phi_r(w h_1^a) >= 0`.
+    For each core and each level, only finitely many suffix lengths
+    remain.
+  - *Proof.*
+    - `w` is a genuine `SU(2) x SU(2)` character.  Its torus weights have
+      mean 0 and coordinate variance `V = Lambda/2`
+      (`kappa(kappa+4)/10` per `h_kappa`, `p(p+2)/6` per `hat S_p`).
+    - The bounds `1 - cos A cos B <= (1 - cos A) + (1 - cos B)` and
+      `1 - cos(I theta) <= I^2 (1 - cos theta)` give
+      `w/dim(w) >= 1 - V(4-s)/2`, with `s = x+y`.
+    - On `s > 0` (sign reversal), the law of `s` under
+      `(x-y)^(2r) s^a` has density `s^a (4-s)^(2r+2) g_r(s)`.  Here
+      `g_r(s) = int_0^1 z^(2r) sqrt(1-z^2) sqrt((4+s)^2 - (4-s)^2 z^2) dz`
+      is increasing.  Comparison with a Beta law then gives
+      `E[4-s] <= 4(2r+3)/(a+2r+4)`.
+  - *Checks.*
+    - The density was re-derived by the main agent (substitute
+      `d = (4-s)z`).
+    - The quantitative bound holds exactly in 1,760 cases with `h` and
+      `hat S` factors (`r <= 4`, `a < 40`).
+    - The mean bound holds numerically, worst ratio 0.988.
+- **Theorem LR (large `r + a`, H-only; FM-MECH12; verified).**  For
+  `w = prod h_(kappa_i)` with `t` odd parts, `d = (sum kappa - t)/2`,
+  `B = 4^(-t) prod C(kappa_i+3, 3)` and `K = 16 B sum_(j<=d) j^2`:
+  `phi_r(w h_1^a) >= phi_r(h_1^(a+t)) [1 - K/(2r+a+t+6)]`.
+  - *Proof.*
+    - Write `w = (x+y)^t F`, using
+      `h_(2j+1) = (x+y)[h_j + h_(j-1)](x^2-2, y^2-2)`.
+    - `F >= 1` on the boundary of `[-2,2]^2`, by
+      `h_(2j)(2,y) = sum (U_l + U_(l-1))^2` and
+      `h_(2j+1)(2,y) = (2+y) sum U_l^2`.  Also `|F| <= B`.
+    - Chebyshev coefficient bounds give `P_q(z) >= 1 - L(1-z)` in
+      sector coordinates `x = 2 sqrt z`, `y = 2q sqrt z`.
+    - Radial comparison with `Beta(N/2+1, 2)` gives
+      `E[1-z | q] <= 4/(N+6)`.
+  - The identities were checked symbolically for `j <= 4`, and the bound
+    was rerun in 315 cases.
+  - Consequence: for each H-only core, FM3 can fail at only finitely many
+    `(r, a)`, namely `2r + a + t + 6 < K`.  But `K` grows like a product
+    of dimensions, and the cores are unbounded.
+- **FM-CHK26 (luna_max_venus, independent checker, own code) on item (39):**
+  - OL: ACCEPT.  Every step was re-derived, with 61,900 recurrence
+    checks, 84,647 quadratic-identity checks and 2,929 root-bound checks.
+  - LR: ACCEPT (5,439 exact cases).
+  - RF: repaired (falling-factorial convention made explicit; 2,747
+    Christoffel--Darboux pairs and 195 root-free intervals checked).
+  - THREE: repaired (`r = 1` done directly; 6,020 parity checks).
+  - LS: the version without the parity clause was rejected.  It is
+    repaired above, and the large-suffix positivity consequence holds.
+  - LR4 was not in the checker's scope.
+- **FM-CHK27 (luna_max_venus, own code):** LS (repaired) ACCEPT; LR4 ACCEPT; BW ACCEPT, with the clarifications above.
+- **Theorem LR4 (additive quartic cutoff, every word; FM-MECH13,
+  astra_max_ceres; verified by the main agent, `mech/lr4_repro.py`,
+  `mech/lr4_check.py`).**
+  - Let `w` be any product of `h_k` and `hat S_p`, `t` its number of
+    odd labels, and `N = 2r + a + t`.  Put
+    - `l_H(k) = 2k^2(k+1)(k+3)/3` for even `k`, `(k-1)^2(k+2)(k+3)/6` for
+      odd `k`;
+    - `l_S(p) = 2p^2` for even `p`, `l_H(p-1)` for odd `p`;
+    - `L(w) = sum l`.
+  - Then `N + 6 >= 7 L(w)` implies
+    `phi_r(w h_1^a) >= phi_r(h_1^(a+t))/25 > 0` (with `a+t` even; for `a+t`
+    odd the value is 0).  Also `7L <= (14/3)(D^4 + 4D^3 + 3D^2)`, `D` the
+    label sum, independently of the number of factors.
+  - *Proof.*
+    - Each factor's radial polynomial `P_q` satisfies
+      `|P_q(z)/P_q(1) - 1| <= l (1-z)`.
+      - This combines Markov's inequality `||P'|| <= 2j^2 ||P||` with
+        dimension bounds.
+      - It also uses boundary lower bounds `P_q(1) >= (j+1)/4` (or
+        `(2j+1)/2`), from the pairing identity
+        `U_l^2 + U_(l-1)^2 - y U_l U_(l-1) = 1`.
+      - Odd `hat S` factors reduce via
+        `hat S_(2j+1) = (x+y) h_(2j)(x,-y)`.
+    - For the product,
+      `G >= 2 - exp(L(1-z))`.  Beta moments give
+      `E exp(L(1-z)) <= (1 - 2L/(N+6))^(-2) <= 49/25`.
+    - Normalization (FM-CHK27).  Keep the boundary product
+      `B(q) = prod P_i(1,q) >= 1` inside the expectation:
+      `E[B prod R_i] >= 2E[B] - E[B e^(L(1-z))] >= E[B]/25 >= 1/25`.
+  - *Checks.*
+    - Each step was re-derived by hand.
+    - The boundary bounds hold on a 200,001-point grid for labels `<= 30`
+      (worst margin x1.33).
+    - The cutoff conclusion holds exactly, and the agent verifier reruns.
+  - Example: the cutoff for `(3,3,2)` drops from 56,000 (LR) to 560.
+- **Remaining region (FM-MECH13).**  After THREE, LS, LS applied after the
+  parity transformation, LR and LR4, the uncovered H-only consumer
+  instances satisfy three strict inequalities (note entry of FM-MECH13).
+  The region is still infinite.  For example `phi_n(h_(2n+1)^2 h_(2n)
+  h_1^(2n))`, `n >= 4`, lies outside all criteria, while its exact values
+  are positive for `n = 4..7`.
+- **Theorem BW (a balanced-wedge slice; FM-MECH14, astra_max_ceres;
+  verified by the main agent, `mech/wedge_repro.py`).**  For `m >= r >= 2`:
+  `phi_r(h_(2m+1)^2 h_(2m) h_1^(2r)) > 0` and `phi_r(h_(2m)^3 h_1^(2r)) > 0`.
+  The other parity patterns of three labels from `{2m, 2m+1}` vanish.
+  - *Proof.*
+    - The word splits exactly into a one-label part `A >= 2 tau_1`, which
+      is nonnegative by Theorem OL, minus corrections `C(K)`.
+      Telescoping `W(p,q) = F_p(q) - F_p(q+2)` over the full fusion
+      intervals gives these corrections, with `K = 2r+m`.
+    - The corrections are bounded by `24 T_r^2` or `27 T_r^2`, a tail
+      binomial.
+    - `b_r / T_r > 3r/4` then gives
+      `2 tau_1 = 8(2r-1) b_r^2/r^2 > 27 T_r^2`.
+    - Definitions (FM-CHK27).
+      - `c_j = [z^j](1+z)^3(1-z)^(2r-3)` and `N = 4r-3`.
+      - `W(p,q) = B_i c_j - c_i B_j`, with `i = (N+p+q)/2+1` and
+        `j = (N+p-q)/2`.
+      - `F_p(q) = c_(i-1) c_j - c_i c_(j+1)`, `b_r = C(2r-3, r-1)` and
+        `T_r = C(2r-3, floor((3r+1)/2) - 1)`.
+      - The corrections are
+        `C_oo = c_K^2 - c_(K-1)^2 + 2 c_K (c_(K+1) - c_(K-1))` and
+        `C_ee = 3(c_K^2 - c_(K-1)^2)`, with `K = 2r+m`.
+    - Small levels, corrections as (two-odd, all-even):
+      - `r = 2`: `m = 2` gives `(-1, -3)`; `m >= 3` gives `(0, 0)`.
+      - `r = 3`: `m = 3` gives `(-14, -24)`, `m = 4` gives `(-1, -3)`;
+        `m >= 5` gives `(0, 0)`.
+      - `r = 5`: `m = 5..8` give `(-568, -1152)`, `(23, -21)`,
+        `(-14, -24)`, `(-1, -3)`; `m >= 9` gives `(0, 0)`.
+      - All are within the caps.
+  - The agent verifier reruns.  The main agent recomputed
+    `phi_4(h_9^2 h_8 h_1^8) = 4440` and
+    `phi_5(h_11^2 h_10 h_1^10) = 60434` directly.
+  - Scope: a two-parameter slice (specific labels, `a = 2r`), so a family
+    result under the full-cone rule.  It covers FM-MECH13's uncovered
+    family (`m = r = n`).
+  - Next comparison, for general labels at `a = 2r`:
+    `tau(U_A U_B U_C) >= W(U_A U_B, U_C) + W(U_A U_C, U_B) + W(U_B U_C, U_A)`.
+- **Theorem LL (three factors with large labels, every level and
+  suffix; FM-MECH15, astra_max_ceres; verified by the main agent,
+  `mech/ll_repro.py`, `mech/ll_check.py`).**
+  - If `min(u,v,w) >= a + 2r - 4`, or (sorted `u >= v >= w`)
+    `u - v + w >= a + 2r - 3`, then `phi_r(h_u h_v h_w h_1^a) >= 0`.
+  - *Proof.*
+    - With `e = 2r-3` (odd), `N = a+e`, `A,B,C = u+1, v+1, w+1`, the
+      divided-difference expansion gives
+      `phi = tau(U_A U_B U_C) - W(U_A U_B, U_C) - W(U_A U_C, U_B) -
+      W(U_B U_C, U_A)`.
+    - `tau(U_l) = phi_(r-1)(h_(l-1) h_1^a) >= 0` by Theorem OL, and the
+      Clebsch--Gordan multiplicities are `>= 0`.
+    - `W(p,q) = 0` for `p + q > N`.  Expand the weight, which is
+      homogeneous of degree `N`, in monomials `x^i y^(N-i)`.  `U_p(x)`
+      is orthogonal to `x^i` for `i < p`, and `U_q(y)` is orthogonal to
+      `y^(N-i)` for `N - i < q`.  So every monomial pairs to zero when
+      `p + q > N` (explicit form requested by FM-CHK28).  At the boundary, `W(p,N) = -[p=0]`, so each surviving
+      correction contributes `+1` when two labels match.
+  - *Level 1* (FM-CHK28 repair): `phi_1(h_u h_v h_w h_1^a)` is an
+    invariant multiplicity, so it is `>= 0`; the proof above is for
+    `r >= 2`.
+  - *Checks.*  The main agent re-derived the expansion and the support
+    lemma, reran the agent verifier, and checked the exact formula in 198
+    random large-label cases with its own kernel code, all agreeing.
+  - FM-CHK28 (luna_max_venus, own code): ACCEPT after these two repairs.
+    It ran 1,411 divided-difference identities and 492 region cases, and
+    confirmed that the leftover region is the exact complement.  It notes
+    that the case `w = 0` is a two-label word, where the strip and
+    Theorem RF of `(E)` apply.
+  - Left over, among three-factor words: `w <= a+2r-5`,
+    `u - v + w <= a+2r-4`, and below LR4's cutoff.  This region is still
+    infinite, since the two largest labels can grow together.
+- **Three-factor closed form and Theorem T3R (FM-MECH16,
+  astra_max_ceres; verified by the main agent, `mech/closed3_repro.py`,
+  `mech/closed3_check.py`).**
+  - *Closed form, all labels.*  Sort `A >= B >= C` (`= u+1, v+1, w+1`), and
+    put `e = 2r-3`, `N = a+e` and `alpha = (N+A-B-C)/2`,
+    `beta = alpha+C`, `gamma = alpha+B`, `delta = alpha+B+C`.  For
+    `r >= 2` and `a + u + v + w` even (odd parity gives 0; `r = 1` is an
+    invariant multiplicity, so it is `>= 0`; FM-CHK29 scope repair),
+    `phi_r(h_u h_v h_w h_1^a) = M - R`, where:
+    - `M = sum_(k=alpha)^beta D_k - sum_(k=gamma+1)^(delta+1) D_k >= 0`
+      (by Theorem OL, via the Clebsch--Gordan expansion of
+      `tau(U_A U_B U_C)`);
+    - `R = Q(c_alpha, c_beta, c_gamma, c_(delta+2))
+      - Q(c_(alpha-1), c_(beta+1), c_(gamma+1), c_(delta+1))`, with
+      `Q(x,y,z,t) = (x+t)(y+z) - xt - yz`.
+    - The three cross terms telescope via
+      `W(U_p, U_q) = F_p(q) - F_p(q+2)`.
+  - *Checks.*  Direct values match in 1,176 cases, and main/cross
+    separately in 10,890 (agent code, rerun).  The main agent's kernel
+    evaluator agrees in 297 random cases.
+  - **Theorem T3R (three new regions, every level).**
+    - (1) `a = 2r-3` with exactly one odd label.  The weight
+      `(x^2-y^2)^e` is even, so both remaining corrections vanish, and
+      each mixed two-label word is `>= 0` by the strip of `(E)`.
+    - (2) `a = 2r-3`, all labels odd, and the two smaller `== 1 mod 4`.
+      Ordered binomial magnitudes give `R <= 0`.
+    - (3) `u + v - w >= a + 2r - 3` together with `|a - (2r-3)| <= 1` or
+      `min(a, 2r-3) <= 2`.  The corrections vanish by support, and the
+      terms are proved cases of `(E)`.
+  - *Obstruction to an abstract proof.*  The artificial antisymmetric
+    sequence `(1,0,-1,0,1,0,-1,0,1,0,-1)` satisfies OL and every `(E)`
+    inequality, yet gives `M - R = -1` at `A = B = C = 4`.  So the band
+    needs structure specific to `(1+z)^a (1-z)^e`.  The knob violated is
+    abstractness, which the consumer does not need.
+  - Open: `M >= R` for the actual binomial coefficients on the rest of the
+    band.  The first residual is `a = e` with labels `== 3 mod 4`.
+  - FM-CHK29 (luna_max_venus, own code): ACCEPT after the scope repair.
+    - Identities checked: 1,764 closed-form/direct, 14,520 endpoint
+      sums, 7,645 telescoping, 3,360 separate main/cross.
+    - T3R regions checked: 1,176, 1,792 and 6,839 cases.
+    - The artificial-sequence obstruction is confirmed.
+- **Theorem DS (the full diagonal strip; FM-MECH17, astra_max_ceres;
+  verified by the main agent, `mech/ds_repro.py`, `mech/ds_check.py`;
+  independent check FM-CHK30 (luna_max_venus): ACCEPT).**
+  - `phi_r(h_u h_v h_w h_1^(2r-3)) >= 0` for every `r >= 2` and all
+    `u, v, w >= 1`.
+  - Also, for odd `u, v` and even `w`:
+    `phi_r(h_u h_v h_w h_1^(2r-2)) = phi_r(h_u h_v h_(w-1) h_1^(2r-3)) +
+    phi_r(h_u h_v h_(w+1) h_1^(2r-3)) >= 0`.
+  - *Proof, all-odd case* (the other parities are T3R(1) or zero).
+    - At `a = e`, `c_(2h) = (-1)^h C(e,h)` and the odd coefficients vanish.
+    - Ordered binomial magnitudes `x >= y >= z >= t` give `R <= Rbar`,
+      where `Rbar = I + J -+ K`, `I = xy - zt`, `J = xz - yt`,
+      `K = yz - xt`.
+    - Tail inequality: `b_(k-2) + b_(k+1) >= 2 b_k` for
+      `k >= (e+5)/2`.
+    - A scalar comparison lemma settles the base case `S = 1` (smallest
+      half-label 1).  The exceptional pair `(P,Q) = (2,1)` has the closed
+      form `C(2n+1,n)^2 * 8(n+1)(n^2+3n+9)/[(n+2)^2 (n+3)^2]`.
+    - Increment lemma: raising the two smaller half-labels together
+      cannot decrease `M - Rbar`.  The increment is factored exactly and
+      is bounded in two ratio ranges, with worst case `31/54`.
+  - *Checks.*
+    - Agent verifier (rerun): `R <= Rbar <= M` in 15,960 cases;
+      increment identities in 13,566; base identities in 2,394;
+      Catalan bridge in 420 cases.
+    - Main-agent kernel grid: 14,690 values on `a = 2r-3`
+      (`r <= 11`, labels `<= 25`) and 5,808 on the adjacent branch, none
+      negative.
+  - **Theorem AS (both adjacent strips; FM-MECH18, astra_max_ceres;
+    verified by the main agent, `mech/as_repro.py`, `mech/as_check.py`).**
+    - `phi_r(h_u h_v h_w h_1^a) >= 0` for `a = 2r-4` and `a = 2r-2`, every
+      `r >= 2`, all labels.  With DS, every three-factor word with
+      `|a - (2r-3)| <= 1` is proved.
+    - *Ingredients.*
+      - A binomial ratio monotonicity lemma, via the `tanh`/`atanh`
+        composition `F -> (F+c)/(1+c k^2 F)`.
+      - Pascal-identity forms of `I, J, K`, giving `I >= K >= 0` and
+        `J >= K`.
+      - A joint increment for all-even labels, a polynomial in the gaps
+        `q_i >= 0` whose 20 coefficients are all `>= 2`.
+      - The DS bound extended to both row parities, with three exceptional
+        base gaps in closed form.
+      - A transfer for two odd labels on the lower strip:
+        `D = D_0(k) + D_0(k-1)`, `M = M_- + M_+`, `R <= U_- + U_+`.
+    - *Checks.*
+      - The agent verifier reruns: 14,000 bounds, 5,691 increments, 2,548
+        transfers and 1,200 Catalan bridges.
+      - The main-agent kernel grid on both strips (`r <= 10`, labels
+        `<= 22`) gave 9,108 + 9,108 values, none negative.
+    - FM-CHK30 (luna_max_venus, own code): ACCEPT.
+      - Checks run: 87,125 ratio values, 4,608 + 4,608 Catalan/endpoint
+        cases, 2,860 DS bounds, 4,368 all-even cases, and 2,548 + 2,548
+        transfers.
+      - It also wrote out the `rho >= 3/2` step of the DS increment.
+    - Next: `a = e+2`, with `c_(2h) = (-1)^h [C(e,h) - C(e,h-1)]` and
+      `c_(2h+1) = 2(-1)^h C(e,h)`.  The comparison and the increment need
+      replacing when consecutive magnitudes differ.
+  - **Offset induction: the whole three-factor sector reduces to one
+    inequality (P) (FM-MECH19, astra_max_ceres; reproducer rerun by the
+    main agent, `mech/pinduct_repro.py`).**
+    - *Fold.*  Under `a <-> e`, `M` is invariant and `(R_C, R_B, R_A)`
+      picks up the signs `((-1)^C, (-1)^B, (-1)^(B+C))`.
+    - *Pascal increments.*  For `a >= e`, the quantities
+      `D_k = c_k^2 - c_(k-1) c_(k+1)`, `E_k = c_k c_(k-1) - c_(k-2) c_(k+1)` and
+      `H_k = c_k^2 - c_(k-2) c_(k+2)` are all `>= 0`.  This uses Newton's
+      inequalities for the real-rooted even and odd subsequences
+      `(1-w)^e sum C(d, 2j (+1)) w^j`.
+    - Under `q_k = c_(k-1) + 2c_k + c_(k+1)`, the effect of `a -> a+2`,
+      `D[q]_k - D[c]_k = L_k`, with
+      `L_k = D_(k-1) + D_k + D_(k+1) + 2E_k + 2E_(k+1) + H_k >= 0`.
+    - *Reduction.*
+      - With the consumer margin `G_(e,a) = M - R_(e,a)`, taken over the
+        physical orientation(s):
+        `G_(e,a+2) - G_(e,a) = sum_(k=alpha)^beta L_k -
+        sum_(k=gamma+1)^(delta+1) L_k - [R(q) - R(c)]`.
+      - So **(P)**, `R(q) - R(c) <= sum_(alpha..beta) L - sum_(gamma+1..delta+1) L`,
+        together with the base strips DS and AS, proves every three-factor
+        word at every level by induction in `a` (in steps of 2 on each
+        side).
+    - *Checks.*  (P) holds at all 40,950 tested steps (`e <= 16`,
+      `a <= e+17`, labels `<= 12`; agent code, rerun), with 1,488
+      independent orientation bridges.
+    - KILL (single-label Pascal step): `phi_3(h_4^2 h_6 h_1^4) = 60`, below
+      each neighbouring sum `62, 62, 66`.  The knob violated is a stronger
+      induction, which the consumer does not need.
+    - FM-CHK31 (luna_max_venus, own code): ACCEPT for the reduction
+      (fold, Newton/real-rootedness, Pascal identities, orientation
+      bookkeeping, base cases).
+      - Its independent (P) screen covered 250,250 triples (`e <= 10`,
+        `a <= e+40`, labels `<= 20`), with no failure; the minimum slack
+        is 0, so equality cases occur.
+      - It also ran 39,325 identity checks.
+    - FM-SEC10 (luna_max_venus): the support edge of (P).
+      - Zero slack occurs exactly when `alpha >= N+2` (both windows and
+        both corrections vanish).  Slack 1 occurs exactly when
+        `alpha = N+1`.
+      - (P) is proved for every `alpha >= N-1`; at `alpha = N-1` the
+        slack is an explicit positive polynomial in `N` and
+        `d = a - e`.
+      - In the interior `alpha <= N-2` the screened minimum slack is 7
+        (250,250 triples).
+    - FM-MECH20 (astra_max_ceres): no proof of (P); an exact form and a
+      stronger obstruction.
+      - *Square balance.*
+        - For each orientation `sigma`,
+          `2F_sigma = E(c) + X_sigma^2 - Y_sigma^2`.
+        - Here `E = sum_(alpha..beta) g_k^2 - sum_(gamma+1..delta+1) g_k^2`,
+          and `g_k = c_(k+1) - c_(k-1)` are the coefficients of
+          `(1+z)^(a+1)(1-z)^(e+1)`.
+        - `X_sigma`, `Y_sigma` are signed four-endpoint sums, and they
+          factor through shift operators.
+      - All three correction increments are telescoped sums of one
+        determinant kernel `J(i,j) = v_i q_j - q_i v_j`, with
+        `v = (T+1)^2 c`.
+      - KILL (abstract induction, strong form).
+        - The sequence `(3,0,-5,0,5,0,-5,0,5,0,-3)` satisfies all of:
+          `D, E, H >= 0` for `c` and `q`; right-half monotonicity; every
+          old `(E)`; every old three-factor margin `>= 0`.
+        - Yet the margin goes from 1 to -15 at `(3,3,3)`.
+        - The knob violated is abstractness.  A proof must use the
+          coefficient recurrence
+          `(k+1) c_(k+1) = (a-e) c_k - (N-k+1) c_(k-1)`, or the new-offset
+          `(E)`; the artificial `q` fails the latter.
+    - FM-SEC11 (luna_max_venus): (P) proved also when `alpha <= N-2` and
+      `beta >= N+2`; there every endpoint pair has an index `>= beta`,
+      so the corrections vanish by support.
+      - Window identity: the right side equals `sum_k w_k (L_k - L_(k+1))`
+        with explicit trapezoid weights `w_k`.
+      - Tightness: in 245,379 screened interior cases the correction
+        reaches 97.4% of the right side (minimum relative slack 2.6%,
+        at `(e,a;u,v,w) = (0,39;6,1,1)`), so a crude bound cannot
+        work.
+      - KILL (right-half log-concavity).  At `e = 2`, `a = 5`, the
+        coefficients `[1,3,1,-5,-5,1,3,1]` have non-unimodal right-half
+        magnitudes, although (P) holds there with slack 164.
+    - FM-SEC12 (luna_max_venus): symmetric unimodality of
+      `L_k = D[q]_k - D[c]_k`.
+      - Proved for `e = 0`, where the difference factors with a
+        positive quartic `P(s,k)`, and for `a = e`, where
+        `L_(2j+1) - L_(2j) = (b_(j+1) - b_j)(b_(j-1) + b_j + b_(j+1))`.
+      - Screened on 50,601 more rows, with no failure.
+      - Unimodality would make the right side of (P) nonnegative by
+        window ordering.
+      - The square-balance components have mixed signs in the residual
+        region, so termwise positivity fails there.
+    - Open: (P) for `alpha <= N-2`, `beta <= N+1`.
+  - **Theorem G3 (interior regions, directly, without (P); FM-MECH21,
+    astra_max_ceres; verified by the main agent, `mech/g3_repro.py`,
+    `mech/g3_check.py`).**
+    - Assume (G0): `C` is even, `0 <= alpha < beta <= N` and `gamma >= N+1`.
+      Then `R_B`, `R_A` and the far window vanish.  With `C = 2h` and
+      `g_k = c_(k+1) - c_(k-1)`:
+      `phi_r(h_u h_v h_w h_1^a) = sum_(1<=i<=j<=h) [g_(alpha+2i-1) g_(alpha+2j-1)
+      - g_(alpha+2i-2) g_(alpha+2j)]`.
+    - `g` is the coefficient row of the real-rooted
+      `(1+z)^(a+1)(1-z)^(e+1)`.  By Newton, on any block where `g` keeps one
+      sign every minor is `>= 0`, and the `i = j = 1` minor is `> 0`.  The
+      fold `a <-> e` preserves each summand.
+    - One-sign blocks come from `K_(m+1)(X; N+2)`, `m = min(a,e)`, having no
+      root in `(d, Y)`, where `d = A-B-C` and `Y = A-B+C`.  This holds in:
+      - the central region, `m` odd and `(m+1) Y^2 <= 2(N-m+3)`
+        (reciprocal-root bound);
+      - the outer region, `d >= 0` and `d^2 >= 4m(N-m+3)` (Jacobi-matrix
+        bound).
+    - It covers families outside all earlier cutoffs, e.g.
+      `phi_3(h_18^2 h_3 h_1^29) = 64,110,062,011,500`.
+    - *Checks.*  The agent verifier reruns.  The main agent's kernel
+      evaluator confirmed the minor identity in 300 random (G0) cases, and
+      positivity in the 16 of them inside `(GC)` or `(GO)`.
+    - Open: (G0) windows crossing a root of `K_(m+1)`; `C` odd or
+      `gamma <= N`.
+- **Four factors: split identity, closed form and Theorem LL4 (FM-SEC6,
+  luna_max_venus; verified by the main agent, `mech/four_repro.py`,
+  `mech/ll4_check.py`, `mech/four_explore.py`).**
+  - *Split identity.*  `e = 2r-4` is even, so `W` is symmetric.  With
+    shifted labels `L_i = kappa_i + 1`:
+    `phi_r = tau(U_L1 U_L2 U_L3 U_L4) - sum_i W(prod_(j != i) U_Lj, U_Li)
+    + sum_(3 pairings) W(U_Li U_Lj, U_Lk U_Ll)`.
+    - The 2|2 pairing terms enter with a plus sign.
+    - The main term is `>= 0`: `tau(U_l) = phi_(r-2)(hat S_l h_1^a)`, which
+      is `>= 0` by Theorem OL for `r >= 3`.  For `r = 2` it is direct,
+      from Catalan moments.
+  - *Support and boundary.*  `W(U_p, U_q) = 0` for `p + q > N`, and
+    `W(U_p, U_q) = c_q` for `p + q = N`.
+  - **Theorem LL4.**  Sort `L_1 >= L_2 >= L_3 >= L_4` and put
+    `mu_1 = L_4 + max(0, L_1 - L_2 - L_3)` and
+    `mu_2 = L_1 - L_2 + L_3 - L_4`.  If `mu_1 > N` and `mu_2 > N`
+    (`N = a + 2r - 4`), every cross term vanishes, and
+    `phi_r(h_u h_v h_w h_z h_1^a) >= 0` for every `r >= 2`, `a >= 0`.
+    It needs spread labels: four equal labels have `mu_2 = 0`.
+  - *Closed form.*  `phi_r = M_4 - R_31 + R_22`, where
+    `M_4 = sum_l (m_l - m_(l-2)) D_((N+l)/2)` and `R_31`, `R_22` are
+    telescoped endpoint products `F_p(q) - F_p(q+2)`.
+  - *Checks.*
+    - The agent verifier reruns: split and closed form against direct
+      Catalan values in 7,500 cases each, plus 1,792 kernel checks.
+    - The main agent checked LL4 in 250 random cases with its own kernel
+      evaluator, and the split identity in 141 large-label cases.
+    - In those 141 cases the 2|2 pairing sum was negative in 47, but its
+      magnitude was at most about `0.105 tau`.
+  - Open: `M_4 - R_31 + R_22 >= 0` outside LL4, including equal or
+    clustered labels.
+- **Theorem LLm (spread labels, any number of factors; FM-SEC7,
+  luna_max_venus; verified by the main agent, `mech/llm_check.py`).**
+  - For `m <= 2r` general parts with shifted labels `L_i`, suffix `a`,
+    `e = 2r - m` and `N = a + e`:
+    `phi_r = sum over unordered splits {S, S^c} of (-1)^|S^c| W(U_S, U_(S^c))`,
+    where `W(Q,P) = (-1)^e W(P,Q)`.
+  - The main term `tau(prod U_Li) >= 0`, since
+    - `tau(U_l) = phi_((e+1)/2)(h_(l-1) h_1^a)` (`e` odd), or
+    - `tau(U_l) = phi_(e/2)(hat S_l h_1^a)` (`e >= 2` even), both `>= 0` by
+      Theorem OL;
+    - for `e = 0` it follows directly from Catalan moments.
+  - Let `lambda(I)` be the least label `>= max(0, 2 max_I L - sum_I L)` of
+    the parity of `sum_I L`; this is the smallest constituent of
+    `prod_(i in I) U_(L_i)`.
+  - **Theorem.**  If `lambda(S) + lambda(S^c) > N` for every proper split,
+    every cross term vanishes by support, and `phi_r >= 0`.
+  - It reduces to Theorem LL at `m = 3` (the support branch; the boundary
+    branch adds the helpful `W(U_0, U_N) = -1`) and to Theorem LL4 at
+    `m = 4`.
+  - *Checks.*  The main agent checked it at `m = 5, 6` in 120 random
+    cases with its own kernel evaluator, all nonnegative.  The agent's
+    coverage count: 7.2% of the even-parity words on a small grid
+    (`m <= 6`, parts `<= 4`, `r <= 4`, `a <= 4`).
+  - Open: words with a split having `lambda(S) + lambda(S^c) <= N`, i.e.
+    clustered labels.
+- **Theorem LLm-S (spread labels, the whole consumer cone; FM-SEC8,
+  luna_max_venus; verified by the main agent, `mech/llms_check.py`).**
+  - Consumer words `w = prod_(i<=m) h_(kappa_i) prod_j hat S_(p_j) h_1^a` with
+    `m <= 2r` and any number of `hat S`.
+  - Absorb `(x-y)` into each `h`-factor, keep `hat S_p = U_p(x) + U_p(y)`,
+    and expand over assignments of the factors to `x` or `y`:
+    `phi_r = (1/2) sum_S (-1)^(|S^c cap H|) W(U_S, U_(S^c))`.
+  - The one-sided terms give the main term `tau(prod U) >= 0`, by Theorem OL.
+  - If `lambda(S) + lambda(S^c) > N` for every nontrivial assignment, every
+    two-sided term vanishes by support, so `phi_r >= 0`.
+  - It contains Theorem LLm.  At `r = 1`, FM53 and Lemma BP add cases it
+    misses.
+  - *Checks.*  The agent checked 5,580 words with one or two `hat S` against
+    direct Catalan values.  The main agent checked 150 random words with
+    1--4 `h` and 1--2 `hat S` factors satisfying the condition, with its own
+    kernel evaluator; all were nonnegative.
+- **Equal labels (FM-SEC9, luna_max_venus; checked by the main agent).**
+  - *Squares.*  If `w = f^2` for a real word `f` and `a` is even, then
+    `phi_r(w h_1^a) = (1/2) E[f^2 (x-y)^(2r) (x+y)^a] >= 0` pointwise.  If `a`
+    is odd and `deg w` even, the value is 0 by sign reversal.  In
+    particular `phi_r(h_k^m h_1^a) >= 0` for every even `m`.
+  - *`k = 2`, every `m`.*  `h_2 = H_3 = x^2 + xy + y^2 - 2`, so the family
+    is covered by the recorded FM18, FM20, FM22 and FM47.
+  - `k = 1` is item (26) (all-ones), and `m = 1` is Theorem OL.
+  - Open: odd `m >= 3` with `k >= 3`; the first case is
+    `phi_2(h_3^3 h_1) = 3`.
+- Direction-by-direction positivity fails.  For `(r,a,u,v,c) =
+  (2,0,1,1,8)`, the `q = 0` radial integral is `-5/2431`, while the word
+  is covered by Theorem THREE.  So only the full angular average can
+  work.
 - **FM-MECH2 open lead.**  The level step gives
   `phi_2(h_s h_t h_2 h_1^a) = [3 L_2(s,t,a+2) + L_3(s,t,a) - 8 L_2(s,t,a)]/4`,
   with `L_r(s,t,a) = phi_r(h_s h_t h_1^a)`.  With R3-TWO, the remaining
