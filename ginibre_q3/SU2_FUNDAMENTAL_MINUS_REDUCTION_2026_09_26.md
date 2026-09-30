@@ -10169,6 +10169,29 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       bookkeeping (any `r >= 0`, any word) is therefore a live option for
       M5.  Genuineness alone is not enough: `F = (h_2 - 1)^2` is a
       genuine `SU(2) wr Z_2` character, yet `phi_1(F hat S_4) = -1`.
+    - **Two exact frames for M5 (main agent).**
+      - EVEN form, exactly FM3.  For labels `n_i >= 1` and signs `eps_i`
+        with an even number of minus signs,
+        `E[prod_i (U_(n_i)(x) + eps_i U_(n_i)(y))] >= 0`.  Minus labels 1
+        are the level factors `x - y`, minus labels `L >= 3` are
+        `h_(L-1)` times one `x - y`, and plus labels are `h_1` and
+        `hat S_p`.  The value vanishes for an odd minus count, by the swap.
+        It is multiaffine in `eps`, so FM3 is equivalent to positivity on
+        the whole cube `[-1,1]^n`.  It is not real-stable (already
+        `1 + eps_1 eps_2` at `n = 2`).
+      - Super-dimension form (checked symbolically).  For `Spin(4)` with
+        torus `(u_1, u_2)`: `x - y = ch S^+ - ch S^-` (the half-spin
+        representations `V_1 (x) 1`, `1 (x) V_1`), and
+        `(x-y)^2 = sum_k (-1)^k ch Lambda^k V`, where `V = V_1 (x) V_1`
+        is the vector representation.  Hence
+        `phi_r(w) = (1/2) sdim Inv_Spin(4)(M_w (x) Lambda(V (x) C^r))`
+        for the genuine module `M_w` of the word.  In the EVEN form the
+        value is `sdim Inv((x)_i W_i)`, with
+        `W_i = V_(n_i) (x) 1 + Pi^[eps_i = -1] (1 (x) V_(n_i))`.  Candidate
+        mechanisms: an odd differential with even cohomology, skew Howe
+        duality on `Lambda(V (x) C^r)`, or a Lie superalgebra with even
+        part `sl_2 + sl_2`.  FM-SEC58 (luna_max_mercury) is testing
+        them.
     - FM-SEC31 (luna_max_pluto): the mixed term expands exactly through
       lower-label values, `C = A - B`, so the inductive step is
       `A <= R + B`.  Every term there has fewer labels, but positivity of
@@ -11053,15 +11076,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `kappa`.  That leaves a factor `pi` of room in the exponent.
         - FM-SEC47 (luna_max_jupiter, continuum route) and FM-SEC48
           (luna_max_neptune, discrete route) are attacking (HT).
-        - Margin map (`fm39/e_ht_margin.py`).  Put
-          `rho = max_t 4t(4V-t)(D_j - D_i)^2 / (F_j(t) F_i(t))`, so (HT)
-          is `rho >= 1`.  Over all 1,528,422 case-(c) pairs with
-          `a <= 70`: `min rho = 1.674`, at `(a,e,j,i) = (14,4,9,12)`.
-          The minimum for odd `e` is `4.02`.  On 14 large rows (up to
-          `(2000,3)`, `(2000,10)`, `(1000,998)`; 1,201,925 pairs):
-          `min rho = 2.14`.  Every class minimum sits at `q = 2` or at
-          `X_j = 0` (even `e`), the centre line where `t = 2V` is needed.
-          So (HT) holds with room, and the room is smallest at the centre.
+        - Margin map.  The true margin is `(2V(D_j - D_i)/perm)^2`, with
+          `perm = |m_j n_i| + |n_j m_i|` (closed form below;
+          `fm39/e_ht_perm_margin.py`).
+          - Over all 1,528,422 case-(c) pairs with `a <= 70` the minimum
+            is 2.783, at `(70,68,69,72)` (`q = 2`, `X_j = 0`, even `e`).
+            Off the centre line it is 4.63 for even `e` and 4.02 for odd
+            `e`.
+          - Along `a = e+2` the centre-line minimum tends to `25/9`
+            (2.7779 at `(400,398)`).  On large lopsided rows up to
+            `(1000,3)` and `(500,250)` it is at least 4.25.
+          - Correction (FM-SEC54, luna_max_jupiter).  An earlier value,
+            `1.674` from `fm39/e_ht_margin.py`, searched only finitely
+            many `t` and missed the limit `t -> 0` on the centre line.  It
+            understated the margin; the true value at `(14,4,9,12)` is
+            `(2843/132)^2`.
+          So (HT) holds with room.  The room is smallest on the centre
+          line near the diagonal, at `q = 2`.
         - `t = 2V` fails only on bulk pairs near the centre (all 4,271
           failures with `a <= 50` have `X_j^2 <= X_i^2 <= 2V`); there
           `t = X_i^2` or `X_j^2` works (`fm39/e_ht_2v_fail.py`).
@@ -11167,6 +11198,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             the Euclidean fan area of the `p`-curve over an outer
             half-turn is at least the product of the end radii.
             FM-SEC55 (luna_max_venus) is attacking it.
+        - FM-SEC54 (luna_max_jupiter): the same drop lemma and an exact
+          angular form, with a proof on the subregion "every step at most
+          `pi/2` and `mu_j <= 4 mu_i`".  On the centre line, `(HT*)` is
+          `V(D_j - D_i)^2 >= D_j n_i^2`.  It also found the margin error
+          corrected above.  FM-SEC59 continues on `(I)` with the
+          local-metric chain.
       - *`q = 2` plus sign* (`fm39/e_q2plus_split.py`,
         `fm39/e_q2plus_ratiofree.py`).  For all `a, e <= 60` (106,982
         pairs), every pair has `W >= 0` (plus sign trivial) or a positive
