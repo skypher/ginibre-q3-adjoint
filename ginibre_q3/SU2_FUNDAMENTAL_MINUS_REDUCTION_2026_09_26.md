@@ -9887,6 +9887,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           For `hat S_5^3` the numerator coefficient `[xi^11] = -108(2R-9)`
           turns negative for `R >= 5`.  FM-SEC75 seeks a sharp LS for
           every word.
+        - FM-SEC75/80 (luna_max_uranus): for general cores the explicit
+          affine cutoff is still Theorem LS's
+          `e >= (2 Lambda(w) - 2) R + 3 Lambda(w) - 4`.  At
+          `e = 2R + C(w)` the concentration point sits on an edge saddle
+          path, not at `s = 4, d = 0`.  The exact ratio formula closes the
+          whole suffix range for `h_3^3`.  At `q = R - n = 1` the numerator
+          is a positive sextic in `n`; for `q >= 2` it has positive
+          coefficients in `q - 2`.
         At `e = 1` (level 2), `a <= 60`: 146,474 of 148,800 words
         satisfy (HT3), 767 have `U ^ V <= 0`, and 1,559 fail (all
         `phi > 0`, e.g. `(1,24,3,4,0,9)`).  Assigned as FM-SEC57.
