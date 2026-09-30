@@ -10489,6 +10489,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (matrix coefficients) on graphs with cycles.  The class-function
           Q3 here does not feed into them.  No conflict with FM3 is known,
           and no result on the SU(2) character cone was found.
+      - FM-CHK46 (luna_max_saturn, own code): ACCEPT FM-MECH34 Theorem 1
+        (21,975 fusion cases; the `rho` minima `17/12, 5/3, 17/12`;
+        adjacency-free supports), the FM-SEC77 `q = 1` rotation theorem
+        (Hermite addition via the generating function; 300 random lists),
+        and the FM-SEC79 certificates (`a = 5, 6` against direct values).
+      - Level 1 as an operator statement (main agent).  For
+        `R = prod_k (V_(n_k) (x) 1 + 1 (x) V_(n_k))`, level 1 for every
+        word is `R[a][b] <= sum_(c in a (x) b) R[c][0]` for all
+        `a, b >= 1`.  Equivalently, `M_rho - K_R` has nonnegative entries
+        in the character basis, with `K_R` the integral operator with
+        kernel `R` and `rho = int R dh`.  Multiplying `R` by `S_n` gives
+        `M_(chi_n)(M_rho - K_R)`, which is `>= 0`, plus a term with
+        entries `sum_(c in a(x)b) R[c][n] - sum_(d in n(x)b) R[d][a]`.
+        These are antisymmetric under `a <-> n`, so a termwise induction
+        fails; this is the cross-term obstruction again.
       - FM-CHK45 (luna_max_mercury, own code) on FM-MECH33:
         - ACCEPT: `B` is contained in H_AC, and the gluing control is
           outside it (support argument, origin mass `3 < 5`).
