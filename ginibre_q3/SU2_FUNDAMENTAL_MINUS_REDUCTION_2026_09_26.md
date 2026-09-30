@@ -11009,6 +11009,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `kappa`.  That leaves a factor `pi` of room in the exponent.
         - FM-SEC47 (luna_max_jupiter, continuum route) and FM-SEC48
           (luna_max_neptune, discrete route) are attacking (HT).
+        - Margin map (`fm39/e_ht_margin.py`).  Put
+          `rho = max_t 4t(4V-t)(D_j - D_i)^2 / (F_j(t) F_i(t))`, so (HT)
+          is `rho >= 1`.  Over all 1,528,422 case-(c) pairs with
+          `a <= 70`: `min rho = 1.674`, at `(a,e,j,i) = (14,4,9,12)`.
+          The minimum for odd `e` is `4.02`.  On 14 large rows (up to
+          `(2000,3)`, `(2000,10)`, `(1000,998)`; 1,201,925 pairs):
+          `min rho = 2.14`.  Every class minimum sits at `q = 2` or at
+          `X_j = 0` (even `e`), the centre line where `t = 2V` is needed.
+          So (HT) holds with room, and the room is smallest at the centre.
       - *`q = 2` plus sign* (`fm39/e_q2plus_split.py`,
         `fm39/e_q2plus_ratiofree.py`).  For all `a, e <= 60` (106,982
         pairs), every pair has `W >= 0` (plus sign trivial) or a positive
