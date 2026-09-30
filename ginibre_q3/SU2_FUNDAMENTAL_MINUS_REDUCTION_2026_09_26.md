@@ -9850,6 +9850,31 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - so did the window-(E) bound `P_C(l) - P_C(l-A-1) >= |cross|`.
       By the basis LP, however, not every such word is a nonnegative
       combination of (E) forms.
+  - **Merge move and the four-wedge correction (main agent,
+    `fm39/merge_check.py`, `fm39/merge_best.py`, `fm39/cross_telescope.py`).**
+    - *Merge.*
+      `(U_X(x) - U_X(y))(U_Y(x) - U_Y(y)) = sum_(d in CG(X,Y)) (U_d(x) + U_d(y))
+      - [U_X(x) U_Y(y) + U_Y(x) U_X(y)]`.
+      So two general factors become a sum of `hat S_d` factors minus a
+      mixed term.  The same move applies inside any consumer word.
+    - *Three factors.*  For each choice of the singleton `Z` in
+      `{A, B, C}` (with `{X, Y}` the other two labels),
+      `phi = sum_(d in CG(X,Y)) [T - W](d, Z) - M_Z`, where
+      `M_Z = W(U_X U_Z, U_Y) + W(U_Y U_Z, U_X)`.  Each summand is a
+      two-label (E) value.
+    - *Telescoping.*  With `S(p,q) = g_p ^ g_q = c_p c_(q-1) - c_(p-1) c_q`,
+      `j(d) = (N+d-Y)/2` and `i(d) = (N+d+Y)/2 + 1`,
+      `W(U_X U_Z, U_Y) = S(j(|X-Z|), i(|X-Z|)) - S(j(X+Z)+1, i(X+Z)+1)`.
+      Checked in 1,963 cases.  So `M_Z` is a combination of at most four
+      phase-plane wedges.
+    - *Sign census* (`r <= 7`, `a < 30`, labels `<= 15`, 65,250 words).
+      Some grouping has `M_Z <= 0` in 56,458 words (87%), and then (E)
+      alone gives `phi >= 0`.  The best singleton is `C` in 29,019, `B` in
+      17,897 and `A` in 9,542.
+    - The other 8,792 words have every `M_Z > 0`, but small against
+      `phi`, e.g. `M = 33` against `phi = 53,119` for `h_9 h_4^2 h_1^11`
+      at `r = 2`.  The basis LP shows that a linear reduction to (E)
+      forms is impossible for some of them.
   - **GFM3: FM3 with extra nonnegative kernel factors (main agent,
     `fm39/recip_test.py`, `fm39/recip_bounds.py`, `fm39/recip_quartic.py`,
     `fm39/kernel_identity.py`, `fm39/general_row_words.py`).**
