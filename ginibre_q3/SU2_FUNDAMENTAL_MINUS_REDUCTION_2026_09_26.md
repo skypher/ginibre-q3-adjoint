@@ -10621,6 +10621,9 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           witness exactly.
         - Knob: trajectory separation.  A general rule must combine
           trajectories within a q-degree.
+        - FM-CHK51 (luna_max_eris, fresh code): ACCEPT all four items
+          (3,095 ordered lists with labels `<= 4`, total `<= 12`; `d = 1`
+          on 496,656 entries, `d = 2` on 496,584).
       - FM-SEC115 (luna_max_mercury; `fm39/sec115_hACq_d2_repro.py`, rerun
         exactly): an independent proof of H_AC_q at distance two.
         - Explicit table: `D_mu` at the origin, `alpha` on type 11,
