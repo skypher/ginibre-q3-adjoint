@@ -11070,6 +11070,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - Outer endpoint reduction: with `omega_2 >= 0`, it suffices to
             show `Q'(R_OL) <= 0` and `Q(R_OL) >= 0`, both in explicit
             `sqrt S` form.
+        - FM-SEC133 (luna_max_mars; `fm39/sec133_gap_repro.py`).
+          - Parametrize by `t`, with `d = 2n + k - 2t`.  Then
+            `D_out - D = 8nt + 4n + 4kt - 4k - k^2 - 4t^2 - 8`.
+          - A second central band family: `t = 3`, `n = 16q^2`, `k = q`.
+          - Coverage (a) is equivalent to `Delta_num(n,k,2n+k-2t) < 0` on
+            the gap
+            `(k^2 + 4k + 4t^2 + 8 - 4kt)/(8t+4) < n < (3t(k+1)^2 - k)/2`,
+            `t >= 3`.  This is screened for `3 <= t <= 7`, `k <= 15`;
+            it is not proved.
+          - Paused after three rounds (FM-SEC131..133) without closing a
+            uniform step.  It will be re-prioritized once FM-MECH49 states
+            the full-cone residual.
       - FM-MECH46 (astra_max_ceres; `fm39/mech46_insertion_repro.py`, rerun
         exactly): the uniform one-extra-label statement, the b-insertion.
         - Exact recurrence (Prop. 1): with `g_b = g_(k,a,b)`,
