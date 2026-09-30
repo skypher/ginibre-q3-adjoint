@@ -9949,6 +9949,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         (`3 <= C <= 12`, `p <= 15`, `q <= 8`, `s <= 20`), minimum 0
         (`fm39/e1_comparison_screen.py`).  If proved, it closes the whole
         `e = 1` branch.  FM-SEC81.
+      - FM-SEC81 (luna_max_mars) reduces the comparison to two step
+        inequalities, `Phi(C,p,q+1,s) - Phi(C,p,q,s) >= 0` and
+        `Phi(C+1,p,q,s) - Phi(C,p,q,s) >= 0`.  They are screened on 57,750
+        and 60,060 cases (minima 30 and 8) but not proved.  FM-SEC84.
     - Strict OL, empirically (`fm39/strict_ol_scan.py`): on every row
       `a, e <= 100`, all 512,600 steps with `2k > N` have `delta_k > 0`,
       so there are no flat steps.  FM-SEC64 is proving it.
@@ -10540,6 +10544,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       level has only finitely many words left (LS bounds `a`, LS-hat
       bounds `k`, `m <= 2r`).  Without a cap the residual is infinite,
       e.g. `phi_1(hat S_p hat S_(p+1) h_1^(2p+1))`.
+    - FM-SEC78 (luna_max_jupiter): that family is positive for every
+      `p >= 2`.  Merge `hat S_p hat S_(p+1)` into
+      `sum_j hat S_(2p+1-2j) + X_(p,p+1)`.  The one-`hat S` terms are
+      `>= 0` by Theorem OL, and the `hat S_1` term
+      `L_p = 12 C(2p+2,p+1)^2 (2p+3)/((p+4)(p+3)^2(p+2)^2)` dominates the
+      explicit cross term.  The next residuals are
+      `phi_1(hat S_p hat S_(p+2) h_1^(2p))` and
+      `phi_1(h_t^2 hat S_(t+2) h_1^(t+2))`.  Family certificates of this
+      kind are not pursued further; the full cone needs a mechanism.
     - FM-SEC31 (luna_max_pluto): the mixed term expands exactly through
       lower-label values, `C = A - B`, so the inductive step is
       `A <= R + B`.  Every term there has fewer labels, but positivity of
