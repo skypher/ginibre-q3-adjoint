@@ -9863,6 +9863,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           row.
         - So beyond three `h`'s the actual coefficient ratio must be used,
           e.g. through ratio bounds as in Theorem OL's steps 2-5.
+        - For the W windows (FM-SEC37, luna_max_neptune) PSD fails on the
+          `e = 3` support edge for every `a >= 21` at `C = 3` and every
+          `a >= 24` at `C = 4`.  The actual values are positive.  There
+          `D_C >= C^2`, so Theorem LD plus the energy bound covers the
+          tails via `(sqrt D_C - 1)(sqrt D_C - C) >= 0`.
         - Even for three `h`'s it fails at large `a` (FM-SEC40,
           luna_max_uranus; `fm39/eqlabel_definite_repro.py`).  The form is
           proved positive definite on the infinite families
