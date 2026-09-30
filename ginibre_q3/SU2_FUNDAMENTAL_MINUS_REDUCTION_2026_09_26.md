@@ -10275,6 +10275,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       `A_p((q-1,1); E) <= A_p((q); E) + 2 A_p((q-2); E)` in FM51's
       notation, for `E = Sym^u W (x) Sym^v W (x) W^(x)a`.  Assigned as
       FM-SEC61.
+    - FM-SEC61 (luna_max_neptune): coverage of the level-1 two-`hat S`
+      case.
+      - S2-2 and S2-3 prove it for `Sym^u (x) Sym^v` and
+        `Sym^u (x) Sym^v (x) W`, FM42 for `W^(x)a`, Lemma BP when a part is
+        `>= P+Q-1`, and fixed pairs `(P,Q)` for all `kappa`.
+      - It fails for single Schur modules: `S_(2,1,1)`, `P = Q = 2`, gives
+        `Delta = -1`.
+      - Screens: 43,316 consumer cases (`2 <= Q <= P <= 8`,
+        `u, v <= 12`, `a <= 16`) and 19,305 general products, none
+        negative, least positive value 1.
+      - Residual: `a + [u>0] + [v>0] >= 4` and
+        `2 <= max(u,v) <= P+Q-2`, outside the fixed pairs.
+      - FM-SEC66 extends the S2-2/S2-3 generating-function certificates
+        (positive numerator decompositions over the Sp(4) invariant rings)
+        to an unbounded suffix.
     - FM-SEC31 (luna_max_pluto): the mixed term expands exactly through
       lower-label values, `C = A - B`, so the inductive step is
       `A <= R + B`.  Every term there has fewer labels, but positivity of
