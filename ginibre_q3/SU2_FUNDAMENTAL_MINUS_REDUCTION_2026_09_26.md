@@ -10585,7 +10585,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           uniform in `d` yet.  Per `d` this is becoming a sequence of
           separate certificates, so the ladder is paused in favour of an
           insertion-stable hypothesis (FM-MECH36).
-      - FM-SEC113 (luna_max_venus; `fm39/sec113_hACq_L8_repro.py`):
+      - FM-SEC113 (luna_max_venus; `fm39/sec113_hACq_L8_repro.py`, rerun
+        exactly):
         extended H_AC_q screen.
         - All 25 even-total lists of length 8 with labels `<= 3`
           (including `(1,1,2,2,3,3,3,3)`, unresolved in FM-SEC101) have
@@ -10659,6 +10660,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           sphere factors at `(1^8, 2)`, where the radius-2 coefficient is
           `-q(1-q)(1-q^2)/30`; and the FM-MECH34 factors at `(1^4, 2)`,
           `n = 2`.
+      - FM-CHK50 (luna_max_uranus, own code): the distance-one H_AC_q
+        theorem and the `(1^N, n)` closed forms.
+        - ACCEPT: the identity, the support argument and the coefficient
+          signs (500 random ordered lists; all 48 chord/permutation cases
+          of `(1,2,2)`).
+        - ACCEPT: the continued fraction and Touchard-Riordan formulas,
+          with `M_q = [H_n] H_1^r`.  Raw moments carry an extra `[n]_q!`.
+        - REPAIR (conventions only):
+          - the per-matching crossing formula `inv(pi) + gap` needs
+            right-to-left ranks of the inserted-block legs;
+          - the `(1^8,2)` certificate is stated for the
+            coefficient-normalized table, and for the raw moment table
+            every coefficient is multiplied by `[2]_q! = 1 + q`.
+          The sphere-only `b_1` failure holds in both normalizations.
       - FM-SEC112 (luna_max_mars; `fm39/sec112_hACq_spheres_repro.py`,
         rerun exactly): the one-label family `(1^N, n)` under q.
         - Closed forms: `M_q` as a q-Motzkin path sum and continued
