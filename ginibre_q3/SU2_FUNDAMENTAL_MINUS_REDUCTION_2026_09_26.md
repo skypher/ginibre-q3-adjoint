@@ -9892,8 +9892,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       `p^4 (10S^4 + 20S^3 p + 16S^2 p^2 + 6S p^3 + p^4)^2`, which vanishes on
       the `S`-axis, so Polya multiplication cannot certify it.  On the
       real grid `[0,60]^2` its minimum is `3.88e12`, at the corner.  An
-      AM-GM certificate with pairs alone is infeasible.  A version with
-      triangles is being searched.
+      AM-GM certificate with pairs alone is infeasible, and so is one with
+      triangles (82,250 candidates).  Numerically `Q` is comfortably
+      positive: `Q / sum |coefficient * monomial| >= 0.1355` on a log grid
+      `p, S in [0, 1e4]` (minimum near `p ~ S^0.6`), with integer minimum
+      `3.88e12` at `(p,s) = (0,5)`.  So a decision-procedure certificate is
+      needed (discriminant / real-root isolation, or an SOS form in `p`).
+      Assigned as FM-SEC71.
     - Strict OL, empirically (`fm39/strict_ol_scan.py`): on every row
       `a, e <= 100`, all 512,600 steps with `2k > N` have `delta_k > 0`,
       so there are no flat steps.  FM-SEC64 is proving it.
