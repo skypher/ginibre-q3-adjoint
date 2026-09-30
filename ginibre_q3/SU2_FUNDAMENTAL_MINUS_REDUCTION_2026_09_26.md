@@ -9860,6 +9860,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         At `e = 1` (level 2), `a <= 60`: 146,474 of 148,800 words
         satisfy (HT3), 767 have `U ^ V <= 0`, and 1,559 fail (all
         `phi > 0`, e.g. `(1,24,3,4,0,9)`).  Assigned as FM-SEC57.
+      FM-SEC57 (luna_max_mars): exact closed forms on the slice `C = 3`,
+      `q = 0`, i.e. `phi_2(h_(p+2) h_2^2 h_1^(p+2s+2))`, via the explicit
+      row `c_k = C(a,k) - C(a,k-1)`:
+      - `s = 0`: `(p^6+3p^5+7p^4+9p^3+280p^2+996p+1296)/144`;
+      - `s = 1`: `(p+3)(p+4)(p^6+9p^5+35p^4-37p^3+348p^2+4972p+13680)/2880`;
+      - `s = 2`: `(p+3)(p+4)(p+5)(p^7+23p^6+217p^5+725p^4-866p^3+7892p^2
+        +175608p+580320)/86400`.
+      Each is positive for all `p >= 0`, and the formulas are checked
+      against direct evaluation for `p <= 40`.  Open: `s >= 3` (the part
+      outside LS is `10s < 7p^2+51p+202`), `q > 0`, `C >= 4`.  FM-SEC65
+      continues.
+    - Strict OL, empirically (`fm39/strict_ol_scan.py`): on every row
+      `a, e <= 100`, all 512,600 steps with `2k > N` have `delta_k > 0`,
+      so there are no flat steps.  FM-SEC64 is proving it.
     - *FM-SEC53 (luna_max_mars): suffix `a in {1,2}`.*  The G0 branch
       there follows from Theorem T3R (`min(a,e) <= 2`), and `r = 2, 3`
       follow from T1-5 and R3-5.  Under the parity transform the rest
