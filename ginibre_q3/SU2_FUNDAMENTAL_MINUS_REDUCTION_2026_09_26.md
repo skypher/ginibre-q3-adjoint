@@ -10615,6 +10615,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           free families, `x_a` commuting with `y_b` exactly when the edge
           `ab` is present, and edge probability `s`.  The complete graph
           gives FM3 and the empty graph the free value.
+        - FM-SEC93 (luna_max_uranus): no proof of Bernstein positivity.
+          - Slot reading: `F_(0,s)` is the expectation of the polarization
+            `sum_c a_c e_c(z)/C(d,c)` on `d` Bernoulli-`s` slots.  The
+            slots are abstract and are not identified with edges or
+            crossings.
+          - The monotone step fails: `b_1 - b_0 = -2` at `(1^4)`,
+            `T = {0,1}`.  The de Casteljau steps only propagate.
+          - Screens without failure: fixed-`q` Bernstein at
+            `q = 1/4, 1/2, 3/4, 1` (912 profiles each), and bivariate
+            Bernstein on the rotation region `|s| <= q` and on the
+            half-plane region `-q <= s <= 1` (544 profiles).
         - FM-SEC92 (luna_max_uranus): no transport proof along `s = 1`.
           - A block-product rotation is impossible for `q < 1`, since
             `Cov(U^2, V^2) = (q-1)/2`.
