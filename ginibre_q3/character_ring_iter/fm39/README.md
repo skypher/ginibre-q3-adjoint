@@ -61,6 +61,7 @@ this directory, because several `exec` a sibling file.
 | Recursive LP for (E) (kill) | `e_recursive_lp.py` |
 | Binary-form method for (E); (E) complete on a,e <= 40 | `e_q2_quadratic.py`, `e_binary_form.py`, `e_residual3.py` |
 | (E) coverage scans beyond the grid | `e_residual_sample.py`, `e_residual_sample2.py`, `e_residual_rows.py` |
+| (E): exact certification a,e<=80; uniform-regions-only residual (only q = 2 left) | `e_cert_rows80.py`, `e_uniform_residual.py`, `e_uniform_sample.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main

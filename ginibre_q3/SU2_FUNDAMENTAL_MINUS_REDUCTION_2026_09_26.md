@@ -10768,7 +10768,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         of which RF covers.
       - So the two-label stratum (all three sign patterns) holds at every
         level for all `a, e <= 80`, and through Theorem G0E so does the G0
-        branch, whose rows have `e` odd.  Open: all `a, e`
+        branch, whose rows have `e` odd.
+      - Exactness: all 5,274,886 floating-point LD/metric decisions of the
+        `a, e <= 80` scan are certified by exact integer comparisons
+        (`fm39/e_cert_rows80.py`, FM-CHK39's certifier).
+      - **Uniform regions alone** (`fm39/e_uniform_residual.py`,
+        `fm39/e_uniform_sample.py`).  Use only criteria stated for all
+        `a, e`: the strips, `min(a,e) <= 2`, `q <= 1` (EQ1), the outer
+        endpoint, the LD energy drop, metric chords, FM-MECH26's `(M_i)`
+        and `(M_j)`, and Theorem RF.
+        - On `3 <= a, e <= 40` they leave 0 pairs.
+        - On 600 random rows with `a, e <= 300` (7,176,773 pairs) they
+          leave 70 pairs, every one with `q = 2`.
+        - So the evidence reduces (E) to two statements:
+          - the uniform regions cover every pair with `q >= 3`
+            (exhaustiveness, FM-SEC41);
+          - (E) at `q = 2` with the plus sign (FM-SEC38).  The minus sign
+            there is OL on `(1-z^2)P`.  Open: all `a, e`
         (uniformity of the definite region in `(d, N, j)`, or ratio
         bounds as in Theorem OL's steps 2-5 for the non-definite pairs).
     - **Residual of (E) now** (`fm39/e_residual2.py`): 22,046 of 438,221
