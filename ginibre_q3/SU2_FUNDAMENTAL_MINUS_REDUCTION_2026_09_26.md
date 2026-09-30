@@ -10744,7 +10744,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             and `E Y^4 = 3`, but excludes a single subgroup
             (`|H| = (5 +- sqrt 5)/2`).  FM-SEC123 is mapping the
             admissible label sets.
-      - FM-SEC121 (luna_max_venus; `fm39/sec121_B_small_labels_repro.py`):
+      - FM-MECH43 (astra_max_ceres; `fm39/mech43_extra_label_repro.py`,
+        rerun exactly): the {1,2} sector plus one extra label.
+        - B certificates for eight lists `(1^a, 2^b, n)` with `n = 3, 4`.
+        - IBP lemma: with `s = x+y`, `d = x-y`, `Z = x^2+y^2-2`, `P = xy`,
+          `M_b = E[s^A d^E Z^b]` and `Q_b = E[s^A d^E P Z^b]`,
+          `(A+E+2b+6) Q_b = 4(A-E) M_b + 12 b Q_(b-1)`.  This follows from
+          `E[(4-x^2) d_x F] = 3 E[x F]` applied to
+          `V = y(4-x^2) d_x + x(4-y^2) d_y`, so `Q_b` is an explicit
+          positive combination of the `M_j`.
+        - Since `h_2 = Z + P + 1` and `hat S_3 = s(Z - P)`, the whole
+          extra-label-3 sector `phi_r(h_2 h_1^a hat S_2^b)`,
+          `phi_r(hat S_3 h_1^a hat S_2^b)` reduces to the single inequality
+          `M_(b+1) >= Q_b` for even `A > E >= 2`.  It passes 637 exact
+          checks; the boundary `E = 0` and the case `A <= E` are
+          immediate.
+        - KILL: deriving it from positivity of the `M_j` alone.  With
+          `M_j = 2^j` (the moments of `delta_2`) it fails by `-512/105`, so
+          the actual joint law is needed.
+      - FM-SEC121 (luna_max_venus; `fm39/sec121_B_small_labels_repro.py`,
+        rerun exactly):
         B census for small labels.
         - Every even-total list with labels `<= 4` at `L = 7, 8, 9` (60, 85
           and 110 lists) has an exact subgroup-orbit B certificate, with up
