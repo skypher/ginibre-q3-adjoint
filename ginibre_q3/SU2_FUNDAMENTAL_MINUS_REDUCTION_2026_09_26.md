@@ -10146,6 +10146,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `(1299, 2937, 6655)` at `r = 3`, `a = 11`.
       - For (E): `W = T_(s-1)(j) - T_(s-1)(j+1)` and
         `D_j - D_i = T_0(j) - T_0(i)`, with `s = i-j`.
+    - **FM-SEC16 (luna_max_jupiter) on (ii):**
+      - Proved: `C <= 1` (AM--GM), and centered windows `2x + C = N`.
+        Centered windows follow from `D_(N-k) = D_k`, Theorem OL, and the
+        plateau `D_(m-1) = D_m = D_(m+1)` at even `N`.
+      - Exact screen: the 122,920 base windows reproduce; equality occurs
+        only on centered `C = 2` plateaus with `a` odd.
+      - Candidate Pascal step `a -> a+2`: with
+        `D^(a+2)_(k+1) = D^(a)_k + L_k`, (ii) propagates if
+        `sum_(k=x..x+C) L_k >= (C+1)(sqrt(D^(a+2)_(x+1) D^(a+2)_(x+C+1))
+        - sqrt(D^(a)_x D^(a)_(x+C)))`.  Screened on 2,054,943 windows, no
+        failure, unproved.
+      - Killed (auxiliary criteria, no consumer use): log-concavity of the
+        increments `L`, and of the ratios `D^(a+2)_(k+1)/D^(a)_k`.
+      - *Consumer match.*  W at `C <= 2` is already proved by the
+        certificates.  So (ii) is needed only for `C >= 3`, and the
+        agent's first unresolved case `C = 2` is not consumed.
     - **FM-SEC13 (luna_max_venus) on (E):**
       - Proved: the `q = 0` boundary (`i = j+1`), where `W = D_j - D_(j+1)`.
         This is Theorem OL, plus a centre computation for `N = 2m` with
