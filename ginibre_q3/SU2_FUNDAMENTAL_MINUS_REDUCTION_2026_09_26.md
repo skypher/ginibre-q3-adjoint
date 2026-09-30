@@ -10641,6 +10641,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `(1^8,6)`.
         - Open: a uniform merge rule, including the final step where B
           gives way to H_AC.
+      - FM-SEC117 (luna_max_pluto; `fm39/sec117_merge_rule_repro.py`): the
+        Bernstein step as a merge.
+        - KILL: local subgroup merges.  At `(1,2,1,2)`, `j = 1 -> 2`,
+          `g_1 = 2 delta_0` has no nontrivial subgroup to merge, while
+          `g_2 = delta_0 + (1/2)(delta_1+delta_4)*(delta_1+delta_4)`.
+        - KILL: point-by-point origin borrowing.  At `(1^6)`, `j = 0` the
+          increment needs 6 units of origin mass against `g_0(0) = 5`.
+        - Grouped borrowing into two triangles fixes the increment, but
+          the old remainder `g_0 - 3 delta_0` has Walsh minimum -3.
+        - Scan of 3,212 Bernstein steps (length `<= 6`): every increment
+          is entrywise nonnegative and zero at the origin.
+        - Knob: locality of the step; old and new factors must be
+          reorganized together.
       - **FM-SEC110 (luna_max_mercury; `fm39/sec110_hACq_d1_repro.py`,
         rerun exactly): H_AC_q is PROVED at distance one, for every list.**
         - Let `n = sum(mu) - 2` and `t` the number of labels 1 in `mu`.
