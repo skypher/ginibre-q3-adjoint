@@ -11114,7 +11114,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             >= (|m_j n_i| + |n_j m_i|) / (rho_j rho_i)`.  This is a discrete
             phase-integral bound over a half-turn, and each term is an
             explicit function of the consecutive ratio `c_(k+1)/c_k`.
-          - `(O)` (outer): `D_j - D_i >= 2 sqrt(Dt_j Dt_i)`.
+          - `(O)` (outer): `D_j - D_i >= 2 sqrt(Dt_j Dt_i)`.  Since
+            `Q_(2V)(v) = ((sigma f - d g)^2 + (d f - sigma g)^2)/(4V)`,
+            one has `4V Dt_k = m_k^2 + n_k^2 = |p_k|^2` (checked at
+            30,752 points).  So `(O)` reads
+            `2V (D_j - D_i) = sum_k det(p_k, p_(k+1)) >= |p_j| |p_i|`:
+            the Euclidean fan area of the `p`-curve over an outer
+            half-turn is at least the product of the end radii.
+            FM-SEC55 (luna_max_venus) is attacking it.
       - *`q = 2` plus sign* (`fm39/e_q2plus_split.py`,
         `fm39/e_q2plus_ratiofree.py`).  For all `a, e <= 60` (106,982
         pairs), every pair has `W >= 0` (plus sign trivial) or a positive
