@@ -10585,6 +10585,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           uniform in `d` yet.  Per `d` this is becoming a sequence of
           separate certificates, so the ladder is paused in favour of an
           insertion-stable hypothesis (FM-MECH36).
+      - **FM-SEC111 (luna_max_pluto; `fm39/sec111_bernstein_hAC_repro.py`,
+        rerun exactly): conjecture BH, the Bernstein tables along `q = 0`
+        are H_AC.**
+        - Write `f_(0,s) = sum_j C(d,j) s^j (1-s)^(d-j) g_j`.
+        - Census: all 545 ordered even-total lists of length `<= 6`, labels
+          `<= 3`: 3,757 tables `g_j`.  All have exact subgroup-sum
+          certificates, with no negative entry and no negative Fourier
+          value.
+        - `(1^4, 2^3)`: every `g_j` is a subgroup sum.  `(1^8,6)`: `g_0..g_5`
+          are subgroup sums, and `g_6` (the FM3 table) is outside B (exact
+          separator over all 417,199 subspaces) but H_AC,
+          `3 delta_0 + (1/2) p_1*p_1`.
+        - The increments `g_(j+1) - g_j` are not H_AC (at `(1^4)`,
+          `g_1 - g_0 = delta_5`).
+        - The step is a subgroup merge: for `H cap K = {0}`,
+          `1_H + 1_K + 1_((H\0)+(K\0)) = 1_(H+K) + delta_0` (the Pluecker
+          triple).  It gives `g_0 -> g_1` at `(1^4)` and, with weights, at
+          `(1^8,6)`.
+        - Open: a uniform merge rule, including the final step where B
+          gives way to H_AC.
       - **FM-SEC110 (luna_max_mercury; `fm39/sec110_hACq_d1_repro.py`,
         rerun exactly): H_AC_q is PROVED at distance one, for every list.**
         - Let `n = sum(mu) - 2` and `t` the number of labels 1 in `mu`.
