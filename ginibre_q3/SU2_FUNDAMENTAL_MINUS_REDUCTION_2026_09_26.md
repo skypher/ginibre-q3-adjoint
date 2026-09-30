@@ -9797,6 +9797,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       `0.073, 0.019, 0.0048` at `a = 80, 160, 320` for `h_2^3`, `r = 2`.
       That range is inside Theorem LS.
     - Assigned as FM-SEC14 (luna_max_mars).
+    - *FM-SEC18 (luna_max_uranus): low-`s` layers.*  With `p = A - C`,
+      `q = B - C` and `s = N - gamma`, one has `N = C + p + q + 2s` and
+      `alpha = p + s`.
+      - For `s <= 2`, exactly `phi = P_C(p+s) + R_s`, with `d = a - e`:
+        - `R_0 = c_p + c_q`;
+        - `R_1 = d(c_(p+1) + c_(q+1)) - (c_p + c_q) - 1`;
+        - `R_2 = c_2 (c_(p+2) + c_(q+2)) - d(c_(p+1) + c_(q+1)) - 1 - (d^2+N)/2`,
+          where `c_2 = (d^2 - N)/2`.
+      - Conditional slice: under the listed (E) instances,
+        `phi_r(h_(C-1)^3 h_1^(C-e)) >= 2` for `C >= max(3, e)`.
+      - `R_s` can be negative, e.g. `(e,a,C,p,q) = (3,1,3,1,0)` has
+        `R_0 = -1`, `P = 11`, `phi = 10`.  So the branch needs a
+        quantitative lower bound on the window, not only W.
     - *Reduction to the basic inequalities, partial (main agent,
       `fm39/basis_lp.py`, `fm39/basis_lp2.py`).*
       - As quadratic forms on anti-reciprocal sequences, the LP tested
