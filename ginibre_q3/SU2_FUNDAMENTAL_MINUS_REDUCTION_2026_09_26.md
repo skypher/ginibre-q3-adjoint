@@ -9810,6 +9810,46 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `r = 2`.
       - So W, (E) and OL alone do not give the whole `gamma <= N` branch
         in this linear sense.
+  - **Theorem G0E: the G0 branch follows from the two-label inequality
+    (E) (main agent, `fm39/w_from_e.py`, `fm39/window_E.py`).**
+    - *Statement.*  Let `e = 2r-3`.  If `gamma >= N+1`, then
+      `phi_r(h_u h_v h_w h_1^a) = sum_(d in CG(A,B)) [tau(U_d U_C) - W(d,C)]`.
+      Each summand equals `D_j - D_i - W_ij` for the pair `(j,i)` of the
+      labels `(d, C)`, i.e. the two-label value.  So (E) at odd `e` implies
+      `phi >= 0` on the whole G0 branch, for every `r` and `a`.
+    - *Proof.*
+      - In the split identity `phi = tau(U_A U_B U_C) - W(U_A U_B, U_C) -
+        W(U_A U_C, U_B) - W(U_B U_C, U_A)`, the last two cross terms
+        vanish on G0 by support.
+      - Expanding `U_A U_B = sum_d U_d` and using
+        `tau(U_p U_q) = D_j - D_i` (telescoping of Theorem OL's one-label
+        values) gives the formula.
+      - For `d < C` the pair has `j < N/2 < i` with `i + j >= N+1`.  The
+        mirror `D_j = D_(N-j)`, `W_ij = (-1)^e W_(i,N-j)` (from
+        `c_(N-k) = (-1)^e c_k`) maps it to (E) at `(N-j, i)`, which lies in
+        (E)'s range since `N - j < i`.  QED.
+    - *Window form.*  Equivalently, the identity
+      `P_C(x) - P_C(x+1) = D_x - D_(x+C+1) - W_(x+C+1,x)` (symbolic)
+      telescopes to
+      `P_C(x) = sum_(y=x..N) [D_y - D_(y+C+1) - W_(y+C+1,y)]` for
+      `2x >= N - C`.  That is the consumer range of W, since `A >= B`.
+      Checked on 63,350 base windows, with every step `>= 0`; the mirror
+      identity was checked on 32,620 pairs.
+    - *Unconditional consequences.*  The G0 branch holds wherever every
+      needed pair `(d, C)`, `d in CG(A,B)`, lies in a proved (E) region.
+      These include `min(a,e) <= 2` (so `a <= 2` at every `r`), the strips
+      `|a-e| <= 1`, and the root-free intervals of Theorem RF.
+    - So (E) is the master inequality for the two-label stratum and the
+      G0 branch alike.  W's other routes (Theorem WS, (i)+(ii), the
+      long-sweep bound) prove W without (E).
+    - *`gamma <= N` branch.*  Here
+      `phi = sum_(d in CG(A,B)) [T - W](d,C) - W(U_A U_C, U_B) -
+      W(U_B U_C, U_A)`.  Two facts are recorded:
+      - the window monotonicity `P_C(l) >= P_C(l-A-1)`, a sum of (E)
+        steps, held on all 51,350 screened words;
+      - so did the window-(E) bound `P_C(l) - P_C(l-A-1) >= |cross|`.
+      By the basis LP, however, not every such word is a nonnegative
+      combination of (E) forms.
   - **GFM3: FM3 with extra nonnegative kernel factors (main agent,
     `fm39/recip_test.py`, `fm39/recip_bounds.py`, `fm39/recip_quartic.py`,
     `fm39/kernel_identity.py`, `fm39/general_row_words.py`).**

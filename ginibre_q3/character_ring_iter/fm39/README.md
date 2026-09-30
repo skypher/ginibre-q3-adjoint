@@ -45,6 +45,7 @@ this directory, because several `exec` a sibling file.
 | Constant-coefficient (Sonin) model of W and (E) | `const_coeff_check.py` |
 | W = (i) long discriminant + (ii) D-window mean | `sonin_route.py`, `sonin_route2.py` |
 | gamma <= N branch vs the cone of OL, W, (E) forms | `basis_lp.py`, `basis_lp2.py` |
+| Theorem G0E (G0 branch from (E)); window-(E) on gamma <= N | `w_from_e.py`, `window_E.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
