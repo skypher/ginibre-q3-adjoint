@@ -10240,6 +10240,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         counts walks in the `C_2` Weyl chamber, one Pieri step per factor.
         So `phi_2(E_kappa)` is a signed walk count, and a sign-reversing
         involution would be exact at leading order.
+      - Killed (main agent, `fm39/mp2_local_kostka.py`; knob: local
+        matching, stronger than the global sum): the shape-by-shape route.
+        Each negative shape `lambda = (k+b+2, k+b+1, k+1, k)` has the
+        positive neighbours `lambda + e_1 - e_3`, `lambda + e_2 - e_4` and
+        `lambda + e_2 - e_3` (weights 1, 1, 2).  Each positive shape of
+        weight 1 or 2 is the neighbour of exactly one negative shape.  But
+        the local inequality
+        `2K(lambda,kappa) <= K(lambda+e_1-e_3,kappa) +
+        K(lambda+e_2-e_4,kappa) + 2K(lambda+e_2-e_3,kappa)` fails in 217
+        of 461 cases with size `<= 14` (first at `lambda = (3,2,1)`,
+        `kappa = (2,1,1,1,1)`: `16 > 12`).  So the weight-5 shapes and the
+        global structure must take part.
     - FM-SEC52 (luna_max_neptune), level `r = 1` on the whole cone:
       exact screen of 676,368 words (2..6 `hat S` with labels `2..8`,
       at most two `h`, `a <= 10`), none negative, least positive value 1
@@ -11265,6 +11277,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `V(D_j - D_i)^2 >= D_j n_i^2`.  It also found the margin error
           corrected above.  FM-SEC59 continues on `(I)` with the
           local-metric chain.
+        - FM-SEC59 (luna_max_jupiter): each local step of `(b)` is exactly
+          `s_k = (D_k - D_(k+1)) / (2 sqrt(D_k (D_(k+1) +
+          (X_k+1) A_(k+1)^2 / X_k^2)))`.  `(b)` fails on inner `q = 2`
+          pairs (`(6,3,5,8)`, `(17,4,11,14)`, `(19,4,12,15)`,
+          `(27,6,17,20)`), while `(b')` passes there.  At `(6,3,5,8)` the
+          first local step turns by more than `pi/2` (det 1120,
+          dot `-2016`).  `(I)` stays open at the shortest half-turns.
       - *`q = 2` plus sign* (`fm39/e_q2plus_split.py`,
         `fm39/e_q2plus_ratiofree.py`).  For all `a, e <= 60` (106,982
         pairs), every pair has `W >= 0` (plus sign trivial) or a positive
