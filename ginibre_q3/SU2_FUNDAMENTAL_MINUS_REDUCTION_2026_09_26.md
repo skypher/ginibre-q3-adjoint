@@ -10906,7 +10906,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           7,182 cases with `A, E` even and `A + E + 2b + 2al + 2ga <= 26`.
           This includes 4,139 cases outside the FM3 constraints `al <= E`,
           `ga <= A`, i.e. GKS2*-type words with extra `h_2` factors.
-          Delegated as FM-SEC126.
+          Delegated as FM-SEC126 (screens, mechanisms) and FM-MECH47 (proof).
+          - On a ray, `Z +- P = (1 +- c) f +- 2c`, equal to
+            `2((1 +- q)^2 + q^2) > 0` at `f = B`.  So FM-MECH45 Prop. 3/7
+            give each fixed `(al, ga)` outside a finite box.  At `q = 0`
+            the criterion needs about `N + b + 3 >= 4(al + ga)`, so it
+            misses the words with many 3's.  Pure `(3^L)` is B by FM-MECH31.
+            What is open is the range in between, uniformly in the number
+            of 3's.
       - FM-SEC123 (luna_max_venus; `fm39/sec123_admissible_sets_repro.py`):
         admissible label sets.
         - Among {2,4}, {2,3}, {3}, {4}, {2,4,6}, {2,3,4}, the even labels and
