@@ -10391,6 +10391,34 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           positive combination of permutation representations in general.
           FM-MECH31's theorem for repeated odd labels stands, and FM-CHK42
           accepted it.
+      - **FM-MECH33 (astra_max_ceres): hypothesis H_AC, the new leading
+        M5 candidate** (`fm39/mech33_hAC_repro.py`, rerun exactly).
+        - No-go: any construction from subspace indicators by
+          nonnegative sums, tensor and pointwise products, linear pullbacks
+          and linearly constrained hidden variables stays inside B.  The
+          family `(1^N, N-2)`, with `f = (N-1) delta_0 + sum_(|S|=2)
+          delta_S`, kills all of them for `N >= 7`, including block-tensor
+          relaxations.
+        - H_AC: `f_lambda = sum_nu a_nu (p_nu * p_nu)` with `a_nu >= 0`,
+          `p_nu >= 0`, and `(p*q)(S) = sum_X p(X) q(S+X)`.  Equivalently,
+          the matrix `C(X,Y) = f(X+Y)` is completely positive,
+          `C = V V^T` with `V >= 0` entrywise.  Plain PSD of `C` is FM3
+          itself.
+        - H_AC implies FM3, since the Fourier transform of `p*p` is
+          `|p_hat|^2`.  It is strictly between Fourier positivity and B:
+          `1_W = |W|^(-1) 1_W * 1_W`, and the gluing control `g` on
+          `F_2^4` fails it.
+        - At `(1^8, 6)`: `f = (1/2) p*p + 3 delta_0`, with `p` the weight-1
+          indicator.
+        - Proved families:
+          - inserting the label `n = sum(mu) - 2` into any list `mu`:
+            `f = (1/2) p*p + (L - 1 - t/2) delta_0`;
+          - `(1^N, n)` with `3n >= N-2`, by sphere autocorrelations and an
+            explicit binomial identity.
+        - Open: the general insertion step.  It needs nonnegative,
+          pointwise-disjoint factors compatible across the fusion channels
+          `CG(h,n)`.  FM-MECH34 is attempting the proof, FM-SEC85
+          (luna_max_vesta) the falsification.
       - **FM-MECH31 (astra_max_ceres): B is proved for every
         repeated odd-label list `(q, ..., q)`, all odd `q`, any length**
         (`fm39/mech31_hypB_oddlabels_repro.py`, rerun exactly).
