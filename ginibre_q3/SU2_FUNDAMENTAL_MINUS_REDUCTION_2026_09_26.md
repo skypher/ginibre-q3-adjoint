@@ -10791,6 +10791,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - The whole `(1^6)` table is H_AC (15 subgroups).
         - Knob: grouping granularity.  Groups must be coarser than rooted
           families.
+      - FM-SEC100 (luna_max_uranus; `fm39/sec100_level1_census_repro.py`):
+        level 1 in the component model.
+        - Exact census of `P_T` (i, j on the same side) against `N_T`
+          (opposite sides): 5,844,840 ordered profiles (length `<= 9`,
+          labels `<= 4`).  `P_T > N_T` in all but 13, where equality holds
+          (the degenerate lists); none have `P_T < N_T`.
+        - The local one-crossing injection fails at `(1,2,1,2)`,
+          `T = {0,1}`, `M = (03)(15)(24)`, as in FM-SEC94.
+        - At `|T| = 4` two negative clusters can multiply to a positive
+          factor.
+        - Open: a nonlocal charging (Hall condition) at level 1.
       - FM-SEC85 (luna_max_vesta): no H_AC counterexample.  All 791 tables
         are doubly nonnegative.  Horn 5-cycle placements (374 tables
         exhaustively, 100,000 samples on four larger ones) and a copositive
