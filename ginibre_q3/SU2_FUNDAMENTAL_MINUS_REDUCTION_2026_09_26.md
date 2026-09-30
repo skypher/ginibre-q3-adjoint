@@ -10585,6 +10585,44 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           uniform in `d` yet.  Per `d` this is becoming a sequence of
           separate certificates, so the ladder is paused in favour of an
           insertion-stable hypothesis (FM-MECH36).
+      - **FM-SEC110 (luna_max_mercury; `fm39/sec110_hACq_d1_repro.py`,
+        rerun exactly): H_AC_q is PROVED at distance one, for every list.**
+        - Let `n = sum(mu) - 2` and `t` the number of labels 1 in `mu`.
+          With `p` the indicator of the single 1's,
+          `f_q = ([n]_q!/2) (p*p) + [n]_q! (A_mu(q) - t/2) delta_0`,
+          where
+          `A_mu(q) = sum_(i<j) q^(mu_(i+1)+...+mu_(j-1)) [mu_i]_q [mu_j]_q`.
+        - The factors are independent of `q`, and every coefficient is
+          nonnegative: `A_mu`'s coefficients count cross-block endpoint
+          pairs at fixed distance, with constant term `m - 1`.
+        - Counting reading: the exponent of `q` is the total crossing
+          number, `inv(pi)` plus the gap crossed by the extra chord, and
+          `[n]_q!` is the inversion enumerator.
+        - Exact census: 1,361 ordered lists.  At `(1^8,6)` this reproduces
+          FM-SEC102's `a(q), b(q)`.
+        - Fixed-factor failures (not failures of H_AC_q): the `q = 0`
+          sphere factors at `(1^8, 2)`, where the radius-2 coefficient is
+          `-q(1-q)(1-q^2)/30`; and the FM-MECH34 factors at `(1^4, 2)`,
+          `n = 2`.
+      - FM-SEC112 (luna_max_mars; `fm39/sec112_hACq_spheres_repro.py`,
+        rerun exactly): the one-label family `(1^N, n)` under q.
+        - Closed forms: `M_q` as a q-Motzkin path sum and continued
+          fraction; `C_q(j)` by Touchard-Riordan.
+        - The unique sphere coefficients `b_h(q)` fail coefficientwise
+          first at `(8,2,3)`, with `b_1 = -q(1-q)^2/30`.
+        - H_AC_q holds there by an exact repair: the sphere factors plus
+          28 fixed two-point factors `(delta_0 + delta_v)`, `|v| = 6`, with
+          weight `(q+q^3)/12`, re-expanded on all 256 masks.
+        - The `h >= 2` sphere coefficients are nonnegative for `n <= 12`,
+          `d <= n+1`.
+      - FM-SEC114 (luna_max_uranus; `fm39/sec114_even_repeated_repro.py`,
+        rerun exactly): repeated even labels `(2^M)`.
+        - A single radial square fails at `M = 5` (all eight sign
+          patterns).  B holds there: `f = (2/5) sum 1_(H_ij) +
+          (1/5) sum 1_(H_ijk)`.
+        - No uniform construction.  The first instance beyond the finite
+          certificates is `M = 11`, with profile
+          `(1585, 0, 232, 91, 108, 90)`.
       - FM-MECH37 (astra_max_ceres; `fm39/mech37_allocation_repro.py`,
         all assertions pass): channel allocations for the insertion step.
         - KILL: preserving the fusion channel of each noncrossing
