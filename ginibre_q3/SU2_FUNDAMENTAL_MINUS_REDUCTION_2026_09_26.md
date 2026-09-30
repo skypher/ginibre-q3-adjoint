@@ -9953,6 +9953,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         inequalities, `Phi(C,p,q+1,s) - Phi(C,p,q,s) >= 0` and
         `Phi(C+1,p,q,s) - Phi(C,p,q,s) >= 0`.  They are screened on 57,750
         and 60,060 cases (minima 30 and 8) but not proved.  FM-SEC84.
+      - FM-SEC84 (luna_max_mars): no proof of either step.  For
+        `s >= C+2`, normalizing by `B = C(N, s-C-2)` gives
+        `Phi = B^2 F(C,q;p,s)`, where `F = A_C(h) - A_C(l) - U ^ V` is an
+        explicit area form in the ratios `d_j`.  The steps become rational
+        brackets with exact binomial ratio factors.  No uniform positivity
+        decomposition was found, and the cases `s < C+2` are separate.
+        Screens rerun: 60,060 and 57,750 cases, minima 8 and 30.  The
+        `e = 1` branch stays open at the two steps.
     - Strict OL, empirically (`fm39/strict_ol_scan.py`): on every row
       `a, e <= 100`, all 512,600 steps with `2k > N` have `delta_k > 0`,
       so there are no flat steps.  FM-SEC64 is proving it.
@@ -10415,6 +10423,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             `f = (1/2) p*p + (L - 1 - t/2) delta_0`;
           - `(1^N, n)` with `3n >= N-2`, by sphere autocorrelations and an
             explicit binomial identity.
+        - KILL (main agent, `fm39/hAC_sqrt_test.py`): the canonical
+          one-term choice `p = WHT^(-1)(sqrt(f_hat))`, i.e. `C^(1/2) >= 0`
+          entrywise.  It is negative on 812 of 1,043 label lists (`L <= 10`,
+          labels `<= 6`); the worst entry is `-0.47` at
+          `(1,1,2,5,5,5,5,5,5,6)`.  Knob: a single symmetric factor, while
+          H_AC allows sums.  H_AC certificates must be genuine sums.
         - Open: the general insertion step.  It needs nonnegative,
           pointwise-disjoint factors compatible across the fusion channels
           `CG(h,n)`.  FM-MECH34 is attempting the proof, FM-SEC85
@@ -10574,6 +10588,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `a + 6 >= Theta = u(u+4) + v(v+4) + (5/3)(P(P+2) + Q(Q+2))`, which
         leaves a finite window; four cores are certified completely.
         Open: `3 <= a < Theta - 6`, uniformly in the labels.
+      - FM-SEC79 (luna_max_neptune; `fm39/sec86_two_hat_a6_repro.py`,
+        rerun exactly after a bracket typo fix).  The level-1 two-`hat S`
+        case holds for all labels at `a = 3, 4, 5, 6`.  The label
+        generating function is `N_a / D_4`, and each numerator has a
+        positive edge-orbit decomposition, re-expanded exactly: 43, 83,
+        116 and 183 terms at degrees 9 to 12.  At `a = 3, 4` the numerator
+        was checked against direct Catalan values on 1,001 label tuples
+        each.  Open: `7 <= a < Theta - 6`.  At `P = Q = n`, `u = v = 2` the
+        LS threshold is `Theta - 6 = 18 + (10/3) n (n+2)`, so no fixed
+        suffix cap suffices.  The extraction recurrence for `J_m` has a
+        subtraction and gives no positive map `N_a -> N_(a+1)`.
     - **Theorem LS-hat (FM-SEC63, luna_max_jupiter; ACCEPTED by FM-CHK42,
       luna_max_vesta, own code).**  For a fixed core `H = prod h_(kappa_l)`, maximum
       `hat S` label `P`, and `k >= K(r, kappa, P)` factors `hat S`
