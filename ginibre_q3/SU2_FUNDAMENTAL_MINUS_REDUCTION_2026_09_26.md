@@ -10869,6 +10869,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - The `[U_n] g` identities (1,152 direct cases).  A fresh
             U-positivity screen with `k + a + 2b <= 40` (5,950 profiles)
             found no negative coefficient.
+      - FM-SEC127 (luna_max_mars; `fm39/sec127_q2plus_audit_repro.py`, rerun
+        exactly): the q = 2 plus sign of (E), uniformly in the label.
+        - With `x = c_j`, `y = c_(j+1)` and the Krawtchouk recurrence, the
+          slack `E+ = D_j - D_(j+3) + W` is a quadratic form
+          `A x^2 + B xy + C y^2` whose coefficients depend only on
+          `(N, a - e, j)`.  `W >= 0` gives `E+ >= 0` by Theorem OL.
+        - Census `a, e <= 40`: 33,200 rows, no negative slack.  All 20,715
+          rows with `W < 0` have a positive definite quadratic.
+        - Main-agent extension (`fm39/sec127_pd_dichotomy_check.py`,
+          `a, e <= 70`, 175,175 rows).  The dichotomy "PD or `W >= 0`" holds
+          everywhere: 14,420 rows are not PD, and none of them has `W < 0`.
+          `A > 0` in every row.  Non-PD rows need `|a-e|/N >= 0.32` and
+          `2j - N >= 6` (label `>= 8`), apart from 6 rows at `2j = N`.  This
+          is the lopsided region where Theorem OL's outer-region ratio
+          bounds apply.
+        - So a uniform proof splits into (i) `A > 0` and an explicit
+          description of the region `B^2 >= 4AC`, and (ii) `W >= 0` there,
+          from the actual ratio `c_(j+1)/c_j`.  Delegated as FM-SEC129.
       - FM-MECH46 (astra_max_ceres; `fm39/mech46_insertion_repro.py`, rerun
         exactly): the uniform one-extra-label statement, the b-insertion.
         - Exact recurrence (Prop. 1): with `g_b = g_(k,a,b)`,
