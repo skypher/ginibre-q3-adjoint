@@ -10823,6 +10823,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `h_4` from `U_k(x) U_(4-k)(x)` and printed 25.  With
           `U_(4-k)(y)` it gives `phi_1(h_4 hat S_2^2) = 1`, which agrees
           with `mech28_eval.py`.  The census totals rerun exactly.
+      - FM-SEC104 (luna_max_vesta; `fm39/sec104_channel_transport_repro.py`,
+        rerun exactly).  Equal-label singlet-channel transports on the
+        tensor factors, in three variants (sum, signed sum, first pair),
+        all lose rank at `(1,1,1,1)`, `T = {0,1}` (rank 1 < 2, kernel
+        `(-1,1)`).  General channels need explicit recoupling
+        coefficients.  The linear-injection line is paused: its natural
+        maps fail on the smallest cases, like the local involutions
+        (knob: naturality and locality of the map).
       - FM-SEC85 (luna_max_vesta): no H_AC counterexample.  All 791 tables
         are doubly nonnegative.  Horn 5-cycle placements (374 tables
         exhaustively, 100,000 samples on four larger ones) and a copositive
