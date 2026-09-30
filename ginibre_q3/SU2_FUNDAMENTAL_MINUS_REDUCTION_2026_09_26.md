@@ -10778,6 +10778,55 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             small cases (576 parameter checks).
           - The recurrence (1,470 cases), the elimination (1,512), the
             closed forms for `n = 3..12`, and both ray counterexamples.
+      - **FM-MECH45 (astra_max_ceres; `fm39/mech45_extra_label_456_repro.py`,
+        rerun exactly): the {1,2} sector plus one label 4, 5 or 6 is
+        PROVED.  `phi_r(h_(n-1) h_1^a hat S_2^b) >= 0` and
+        `phi_r(hat S_n h_1^a hat S_2^b) >= 0` for `n = 4, 5, 6`, every
+        `r >= 1`, `a, b >= 0`.**
+        - Coordinates: `x = 2 sqrt z`, `y = 2 q sqrt z` (fold to
+          `x >= |y|`), `f = beta z - 2 = Z`, `P = c (f+2)`,
+          `c = q/(1+q^2)`, `beta = 4(1+q^2)`, `B = beta - 2`.  Write
+          `W = s^eps F(Z,P)`, `A = a + eps`, `E = 2r`, `N = (A+E)/2`.  The
+          consumer is `4^(N+1)/pi^2 int (1+q)^A (1-q)^E I_b(F) dq` with
+          `I_b(F) = int_0^1 z^N sqrt((1-z)(1-q^2 z)) f^b F dz`.
+        - Lemma 2 (radial moment bounds, `N >= 2`):
+          `0 <= B^j J_b - J_(b+j) <= 2 beta j B^(j-1) J_b/(N+b+3)`.  It
+          follows from the reflected-weight lemma and the radial IBP
+          identity of FM-MECH44.
+        - Proposition 3 (criterion for any polynomial `F`): if
+          `(N+b+3) F(q,B) >= 2 beta D(q)` on `[-1,1]`, with
+          `D >= sum_j j max(a_j,0) B^(j-1)`, then `I_b(F) >= 0` on that ray.
+        - Cutoffs `K` (criterion holds for `N + b >= K`, by exact degree-64
+          Bernstein certificates): `h_3` 6, `hat S_4` 12, `h_4` and
+          `hat S_5` 24, `h_5` 25, `hat S_6` 51.  `N = 1` is positive for
+          every label (a character argument).  The finite remainder
+          `2 <= N < K`, `b < K - N` is 28,946 exact Catalan evaluations:
+          all `>= 0`, with 10 zeros.
+        - Proposition 7: for every label `n` a finite cutoff `K_n^+-`
+          exists, because `F_n^+-(q,B) > 0` on `[-1,1]`.  So each fixed
+          label is proved outside a finite box.  The box grows with `n`
+          (`K - n/2` = 4, 10, 21.5, 22, 48 above), so this is not uniform
+          in `n`.
+        - Proposition 8 (KILL, raywise positivity inside the box): at
+          label 7, `phi_1(h_6 h_1^2 hat S_2^3)` and
+          `phi_1(hat S_7 h_1 hat S_2^3)` have ray values `-32/105` at
+          `q = -+1` and true value 4.  Knob: positivity before angular
+          integration.  Main-agent remark: both lists are at distance
+          `d = 1`, inside the proved H_AC_q region (FM-MECH38).
+        - Main-agent reformulation, uniform in the label.  By the `x <-> y`
+          symmetry, `phi_r(hat S_n h_1^a hat S_2^b) = [U_n] g_(2r,a,b)` and
+          `phi_r(h_(n-1) h_1^a hat S_2^b) = [U_n] g_(2r-1,a,b)` (384 direct
+          agreements, `n <= 8`), where
+          `g_(k,a,b)(x) = E_y[(x-y)^k (x+y)^a (x^2+y^2-2)^b]`.  So the whole
+          one-extra-label sector, for all `n` at once, is:
+          every `g_(k,a,b)` is a nonnegative combination of the `U_n`.
+          `fm39/extra_label_upositivity_screen.py`: 822 cases with
+          `k + a + 2b <= 24`, no negative coefficient.  Only 68 of them are
+          monomial-positive, so the ballot expansion of `x^m` alone does
+          not suffice.
+        - Also: the value vanishes unless `n <= 2(N+b) - eps`.  The
+          distance of the list is `d = N + b - (n+eps)/2` (`hat S_n`) or
+          `N + b - (n+1+eps)/2` (`h_(n-1)`), so only `d >= 3` is open.
       - FM-SEC123 (luna_max_venus; `fm39/sec123_admissible_sets_repro.py`):
         admissible label sets.
         - Among {2,4}, {2,3}, {3}, {4}, {2,4,6}, {2,3,4}, the even labels and
