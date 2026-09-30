@@ -10110,6 +10110,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - Correction-resistant words (still positive) include
         `h_2^2 hat S_4 h_1^4`, `h_3 hat S_3^2 h_1^3` and `hat S_2^3 h_1^2`
         at `r = 1`.  These lie outside an (E)-only proof.
+    - FM-SEC46 (luna_max_neptune): four factors beyond G0E4.
+      - For each pairing `pi`, `phi = M_pi - C_pi`, where `M_pi` is a sum
+        of (E) values (`d + d' <= N`) and one-sided OL terms.  So
+        `phi >= 0` whenever some `C_pi <= 0` and the consumed (E) calls
+        are proved.  This branch is not exhaustive: all three `C_pi > 0`
+        at `(r, a, L) = (2,3,(8,6,6,3))`, `(3,1,(7,6,3,3))`,
+        `(4,3,(9,9,8,3))` (shifted labels; `phi = 54, 18, 263`).
+      - A two-label telescope writes each correction as a signed wedge
+        sum (4,800 exact checks).  Bounding it by absolute values loses
+        the cancellations.
+      - Its first unresolved inequality, `C_pi <= M_pi` for some
+        pairing, is `phi >= 0` itself.  No reduction.
   - **GFM3: FM3 with extra nonnegative kernel factors (main agent,
     `fm39/recip_test.py`, `fm39/recip_bounds.py`, `fm39/recip_quartic.py`,
     `fm39/kernel_identity.py`, `fm39/general_row_words.py`).**
@@ -10828,9 +10840,70 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `a, e <= 300`.
         - So, on everything tested, (E) is covered by criteria each proved
           for all `a, e`.  What remains is exhaustiveness: that this union
-          of explicit inequalities covers every pair.  Two routes are open:
-          the finite-`q` reduction (FM-SEC41), and the `q = 2`, `W < 0`
-          plus sign (FM-SEC38, FM-SEC42).
+          of explicit inequalities covers every pair.  The finite-`q`
+          route is closed as posed (FM-SEC41 below); the `q = 2`, `W < 0`
+          plus sign is FM-SEC38, FM-SEC44.
+      - **FM-SEC41 (luna_max_jupiter): no finite `q0` for this menu.**
+        - Family: `e = 3`, `X_k = 2k - N`; `x_n` is the largest lattice
+          point below `sqrt(3N+4)` (the positive root of `K_3(X; N+2)`),
+          `y_n` the smallest with `16 y_n^2 >= 75N`, and
+          `(j, i) = ((N+x_n)/2, (N+y_n)/2)`.  Then
+          `q_n = (sqrt 3/8) sqrt N + O(1)`.
+        - Exact samples `(a, j, i, q)`: `(2000,1040,1050,9)`,
+          `(4000,2056,2070,13)`, `(8000,4078,4099,20)`,
+          `(16000,8111,8139,27)`.  LD, `(M_i)` and `(M_j)` fail (exact
+          integers, rerun by the main agent).  The window straddles a
+          Krawtchouk root, so RF does not apply.  (E) holds, with limiting
+          normalized slack `> 0.1664` (rational exponential bounds).
+        - Grid replay `a, e <= 60` (2,104,931 pairs): exact LD with
+          `(M_i)`/`(M_j)` leaves 232 pairs, all `q = 1` (EQ1).
+      - **Short `psi`-arcs cover the family (main agent,
+        `fm39/psi_arc_family.py`).**  All four samples have
+        `W_(j,k) > 0` for every `j < k <= i` (sweeps 3.086, 3.106, 3.134,
+        3.055 rad).  The polar angle of `psi` is monotone (Theorem OL), so
+        this is sweep `< pi`, and the convex-polygon argument from EQ1
+        gives (E), both signs.
+        - Membership is decided by the sign of `W_(j,k)` at the actual
+          row, as for `q = 2, W >= 0`.  So it is an explicit criterion,
+          not a region in `(a, e, j, i)`.
+      - **Extended menu (main agent, `fm39/e_extreme_residual.py`, exact
+        integers).**  Menu: `q <= 1`, outer endpoint, short `psi`-arc,
+        `q = 2` with `W >= 0`, LD, `(M_i)`, `(M_j)`, FM-MECH26's general
+        bound `4t(4V-t) W^2 <= F_j(t) F_i(t)` at `t = 2V`, RF.  No binary
+        forms and no float chords.
+        - Lopsided rows `a in {500, 1000, 2000}`,
+          `e in {3,...,8,10,12,16,20,30}`: 7,351,913 pairs, residual 0
+          (short arcs 78%, LD 21%).
+      - **Fixed-`e` limit of (E) and of the menu (main agent,
+        `fm39/e_continuum_limit.py`, `fm39/e_continuum_cover.py`,
+        `fm39/e_center_mt.py`).**
+        - With `X_k = t sqrt N` and `a -> infinity`, the row tends to
+          `F = D^e exp(-t^2/2)`, which solves `F'' + t F' + (e+1) F = 0`.
+          Then `D_k/S -> G = F'^2 + t F F' + (e+1) F^2` and
+          `W_ij/S -> th F'(th) F(et) - et F(th) F'(et)`.  Checked against
+          exact rows at `a = 4000, 16000` (3 decimals).
+        - So (E) tends to
+          `(E_inf,e)`: `G(th) - G(et) >= |th F'(th) F(et) - et F(th) F'(et)|`
+          for `0 <= th < et`.  This is the chord-versus-area inequality
+          for the curve `(F, -t F')`, the sheared limit of `psi`.
+        - Numerically `(E_inf,e)` holds for `e <= 40` and `e = 60, 80,
+          120`.  The ratio `|W| / (G(th) - G(et))` tends to 1 only on the
+          diagonal, where the minus sign has zero first-order slack (the
+          limit of EQ1).
+        - Limit of the menu.  LD drops out, since its factor `i - j` grows
+          like `sqrt N`.  Short arcs, `(M_i)`, `(M_j)` and RF cover every
+          grid point of `0 <= th < et <= 2 sqrt(e+1) + 3` (`e <= 30`)
+          except `th = 0`, `et >= 2 sqrt(e+1)`, `e` even.  There `(M_i)`
+          needs `X_i^2 < 4V`, and `(M_j)` needs `X_j != 0`.  (For odd `e`,
+          `c_(N/2) = B_(N/2) = 0`, so `W = 0` at `j = N/2`.)
+        - The general bound at `t = 2V` closes that line: in the limit for
+          every even `e <= 40`, and exactly at `j = N/2` on rows
+          `(500,4)`, `(1000,4)`, `(2000,6)`, `(2000,10)`, `(4000,4)`,
+          `(4000,20)` (5,964 pairs, no failure).
+        - So for fixed `e` no family escapes the extended menu in the
+          limit.  This is evidence, not a proof.  A proof needs error
+          bounds uniform in `a`, and the proportional regime `e ~ N` is a
+          different limit.
       - *`q = 2` plus sign* (`fm39/e_q2plus_split.py`,
         `fm39/e_q2plus_ratiofree.py`).  For all `a, e <= 60` (106,982
         pairs), every pair has `W >= 0` (plus sign trivial) or a positive

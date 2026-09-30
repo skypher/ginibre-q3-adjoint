@@ -63,6 +63,8 @@ this directory, because several `exec` a sibling file.
 | (E) coverage scans beyond the grid | `e_residual_sample.py`, `e_residual_sample2.py`, `e_residual_rows.py` |
 | (E): exact certification a,e<=80; uniform-regions-only residual (only q = 2 left) | `e_cert_rows80.py`, `e_uniform_residual.py`, `e_uniform_sample.py` |
 | (E) uniform criteria incl. the q = 2, W >= 0 case: residual 0 | `e_uniform_residual2.py`, `e_uniform_sample2.py` |
+| (E): FM-SEC41 family is short-psi-arc; extended menu on extreme and proportional rows (exact) | `psi_arc_family.py`, `e_extreme_residual.py` |
+| (E): fixed-e continuum limit, limiting menu coverage, the j = N/2 line via t = 2V | `e_continuum_limit.py`, `e_continuum_cover.py`, `e_center_mt.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
