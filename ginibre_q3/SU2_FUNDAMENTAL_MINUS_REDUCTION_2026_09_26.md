@@ -8800,6 +8800,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every word with labels `<= 2` | all (FM-MECH41, positive Walsh realization, B) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one label `n <= 6` | all (FM-MECH44, FM-MECH45) — added 2026-10-01 |
   | all `r` | every word with labels `<= 3` | all (FM-MECH47, exponential ray suppression plus one fixed box; FM-CHK56) — added 2026-10-01 |
+  | all `r` | every word with labels `<= 4` | all (FM-MECH48, uniform contraction lemma plus one box of 54,387,664 values; checker pending) — added 2026-10-01 |
+  | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
 
   - Finite-range rows.  The table rows restricted to finite `(r, a)` or
     finite `(a, e)` cover all labels there, since larger labels fall
@@ -10943,6 +10945,56 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             negative minors).  Knob: the direction of the ratio bounds.
           - Superseded for FM3 by FM-MECH47; the unconstrained form with
             `al + ga >= 3` stays open and is not needed.
+      - **FM-MECH48 (astra_max_ceres; `fm39/mech48_labels4_repro.py`, rerun
+        exactly with 32 threads: PASS): the labels `<= 4` sector is PROVED
+        at every level.  `phi_r(h_2^al h_3^m h_1^a hat S_2^b hat S_3^ga
+        hat S_4^n) >= 0` whenever `al + m <= 2r`, with `b`, `ga`, `n`
+        unrestricted.  So FM3 holds for every list with labels `<= 4`.**
+        - Uniform contraction lemma (every label).  With `t = sqrt z`,
+          `T = [[t, i sqrt(1-t^2)], [i sqrt(1-t^2), t]]`,
+          `Q = diag(e^(i phi), e^(-i phi))`, `q = cos phi`, and
+          `A_+- = I +- Re R_n(Q) >= 0` on `V_n`, one has
+          `tr(R_n(T) A_+-) = U_n(2t) +- U_n(2tq)` and
+          `tr A_+- = n + 1 +- U_n(2q)`.  So every normalized Chebyshev
+          pair has absolute value `<= 1` on the ray.  The diagonal
+          entries of `R(T)` give the strict margin
+          `theta_n(rho) = 1 - (1-rho)/(2 C_n)`,
+          `C_n = (n+1)(2n^2+4n+3)/3`.
+          - Main-agent check of the lemma: `TQ` and `TQ^(-1)` have trace
+            `2tq`, and `|tr(UA)| <= tr A` for `U` unitary and `A >= 0`.
+        - Schema (every fixed `k`).  Extract `d`, `ds`, `s` or nothing per
+          label type (radial resources 1/2, 1, 1/2, 0).  Then
+          `delta = 1/(2k^2)`, `rho = 1 - delta`, and Markov's inequality
+          gives `W >= 1 - 2k^2(1-z)` near the edge.  Suppression
+          (FM-MECH47 Lemma 3 with these constants) leaves an explicit
+          finite box `B_k`, and FM3 for labels `<= k` is equivalent to
+          positivity on `B_k`.  The constants give
+          `1 - theta = Theta(k^-5)` and `H_0 = O(k^5 log k)`.
+        - `k = 4` with sharper constants (`rho = 7/9`; `Z +- P`, `Z - 1`,
+          `hat S_4` bounds 7/10, 5/8, 2/3): all `H >= 37` nonbase factors
+          are covered.  The box has 37,276 records (`N <= 33`, `b <= 77`,
+          `H <= 36`): 54,387,664 exact values, one zero, least positive
+          value 2.  Also 2,240 shifted-moment bridges and 200 direct
+          Catalan checks.
+          - Main-agent check of the code: each word is an exact mpz
+            combination of table entries, with in-place transforms for
+            `Z - 1` and `hat S_4 = Z^2 + Z - 2P^2`.  Every value is
+            sign-checked.
+          - `fm39/mech48_random_words_check.py`: 400 random labels `<= 4`
+            words, evaluated independently, are all `>= 0`.
+        - Label 5 (`fm39/mech48_label5_rays_repro.py`, rerun: PASS).  Exact
+          ray certificates at `rho = 6/7` prove the labels `<= 5` sector
+          for all words with `H >= 71` nonbase factors.  The box below
+          that has 1,088,430 core count patterns and is not run.
+        - Edge obstruction.  With `z = 1 - sigma/M^2`,
+          `q = 1 - tau/(2M^2)`, `M = n + 1`, the normalized pair tends to
+          `E_+-(sigma,tau) = [F(sigma) +- F(sigma+tau)]/[1 +- F(tau)]`,
+          `F(t) = sin(sqrt t)/sqrt t`.  This is an average over the
+          uniform sphere in `R^3`, so `|E_+-| <= 1`, strictly at fixed
+          `sigma > 0`.  A label-independent quantitative margin, e.g.
+          `sup{|E_+-| : sigma >= 1/2} <= 99/100` and its finite-`n`
+          version, would make `H_0` logarithmic in `k`.
+        - Pending: FM-CHK57 (independent checker).
       - FM-SEC127 (luna_max_mars; `fm39/sec127_q2plus_audit_repro.py`, rerun
         exactly): the q = 2 plus sign of (E), uniformly in the label.
         - With `x = c_j`, `y = c_(j+1)` and the Krawtchouk recurrence, the
