@@ -10621,6 +10621,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           witness exactly.
         - Knob: trajectory separation.  A general rule must combine
           trajectories within a q-degree.
+      - FM-SEC115 (luna_max_mercury; `fm39/sec115_hACq_d2_repro.py`, rerun
+        exactly): an independent proof of H_AC_q at distance two.
+        - Explicit table: `D_mu` at the origin, `alpha` on type 11,
+          `1+q` on types 22 and 112, `2+q` on type 1111.
+        - Factors `E, A, B, P_j = A + (3v/2) delta_(e_j)`,
+          `Q_j = A + 3v delta_(e_j)`, `R_jk`.
+        - The residual `rho(q)` is coefficientwise nonnegative by an
+          append induction: `J_(nu a) = J_nu + [S][a]`,
+          `D_(nu a) = D_nu + J_nu [S-2][a] + [S][S-1][a choose 2]`.
+        - Census: 3,080 ordered lists, 496,584 entries.  This
+          corroborates FM-MECH38.
       - **FM-MECH39 (astra_max_ceres; `fm39/mech39_hACq_general_repro.py`,
         both parts rerun exactly): H_AC_q uniformly for all labels
         `>= d`, and at `d = 3` with at most one label 1.**
