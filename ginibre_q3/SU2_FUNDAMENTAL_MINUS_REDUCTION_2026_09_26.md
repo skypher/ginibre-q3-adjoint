@@ -10778,6 +10778,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `(1,-1,-1,1)`).
         - So no map factoring through `H` can be injective.  An injection
           must use the tensor factorization `Inv(S) (x) Inv(S^c)` itself.
+      - FM-SEC99 (luna_max_venus; `fm39/sec99_plucker_grouping_repro.py`,
+        rerun exactly).
+        - The coset identity `f = sum_M 1_(A_M + W_M)` is proved and
+          checked on the boundary atlases (e.g. 20,160 matchings at
+          `(1^8, 6)`).
+        - The canonical recursive Pluecker family (root plus all
+          descendants of first-crossing smoothings) is not H_AC-closed.
+          At `(1^6)` the root `(02)(14)(35)` has a 7-member family with
+          Fourier coefficient `-1`: 4 of the 10 rooted families there are
+          negative, and 7 of 659 at `(1^4, 2^3)`.
+        - The whole `(1^6)` table is H_AC (15 subgroups).
+        - Knob: grouping granularity.  Groups must be coarser than rooted
+          families.
       - FM-SEC85 (luna_max_vesta): no H_AC counterexample.  All 791 tables
         are doubly nonnegative.  Horn 5-cycle placements (374 tables
         exhaustively, 100,000 samples on four larger ones) and a copositive
