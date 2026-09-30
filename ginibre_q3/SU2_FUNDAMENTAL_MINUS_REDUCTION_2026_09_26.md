@@ -10923,6 +10923,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           pair-`T` profiles at `(1^8,6)`.
         - Knob: fan-in, i.e. locality of the canonical charge.  Only a
           global flow (Hall) remains on this line.
+      - FM-SEC109 (luna_max_jupiter; `fm39/sec109_gamma_star_repro.py`,
+        rerun exactly).
+        - KILL: charging to intermediate admissible configurations
+          (`Gamma*`).  First Hall failure at `(1,1,1,1,2,2)`,
+          `T = {1,2}`: the three weight `-2` configurations
+          `(02)(17)(34)(56)`, `(07)(13)(24)(56)`, `(07)(15)(26)(34)` have
+          the single positive neighbour `(07)(12)(34)(56)`, of weight 4.
+          Demand 6 against capacity 4; max flow 12 < 14.
+        - Zero-weight relays do not repair it.  `(2^6)` and `(1^8,6)`
+          pass (38/38, 30/30).
+        - With FM-SEC103 and FM-SEC108 this closes charging by Pluecker
+          straightening: terminal, canonical fractional and intermediate
+          targets all fail.  Knob: reachability by straightening moves.
       - FM-SEC106 (luna_max_uranus): recursive Pluecker charging at
         level 1.  Max flow meets demand on 1,450 ordered profiles
         (length `<= 5`, labels `<= 3`, all pairs `T`) and on the boundary
