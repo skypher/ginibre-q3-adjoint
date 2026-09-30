@@ -10244,8 +10244,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         real-rooted.  For `t_i` in the upper half-plane,
         `F = P(z) prod (z + t_i)` has all its `z`-roots in the closed lower
         half-plane.  By Gauss--Lucas so does `d^m F/dz^m`.  Hurwitz at
-        `z -> 0` makes `d^m F/dz^m (0, t)` real stable, and its diagonal
-        `t_i = t` is real-rooted.
+        `z -> 0` makes `d^m F/dz^m (0, t)` real stable or identically
+        zero, and its diagonal `t_i = t` is real-rooted.  The
+        identically-zero branch, e.g. `P = z^5`, `x = 0`, `C = 1`, makes
+        the inequality trivial.  (Repair from FM-CHK36.)
+      - FM-CHK36 (luna_max_jupiter): Theorem G0B ACCEPT on all five items,
+        and it covers every support window, not only the consumer range.
+        Theorem LD ACCEPT after the zero-branch repair above.
       - *Coefficient inequality.*  If `q = sum C(n,j) a_j t^j` is
         real-rooted, then
         `|a_1 a_(n-1) - a_0 a_n| <= (n-1) sqrt((a_1^2 - a_0 a_2)(a_(n-1)^2 - a_(n-2) a_n))`.
@@ -10334,6 +10339,58 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           both signs at both parities of `e` (`h h` and `hat S hat S` at
           even `e`; `h hat S` at odd `e`).  So the absolute-value form is
           exactly what is used.
+    - **(E) on an energy-drop region, uniformly (FM-SEC25, luna_max_mars;
+      verified by the main agent, `fm39/e_ld_region_repro.py`).**
+      - Since `W_ij = S(j,i) - S(j+1,i+1)`, and both chords are long Turan
+        determinants of window length `s-1` (`s = i-j`), Theorem LD and
+        Theorem OL give (E) whenever
+        `D_j - D_i >= s (sqrt(D_j D_(i-1)) + sqrt(D_(j+1) D_i))`.
+        A simpler sufficient condition is
+        `D_j/D_(i-1) >= (s + sqrt(s^2+1))^2`.
+      - This is uniform in `a`, `e` and `q`: 298,234 of 438,221 pairs
+        (`a, e <= 40`) lie in the region, with no failure.
+      - Outside it lies e.g. the root-crossing witness `(3,5,5,8)`.
+    - **Residual of (E)** (main agent, `fm39/e_residual.py`; RF omitted,
+      so this is conservative).  Over 438,221 pairs:
+      - LD energy drop: 58.27%;
+      - strips or `min(a,e) <= 2`: 12.90%;
+      - `q = 0`: 6.77%;
+      - `q = 1`, gaps 2 and 3: 0.69%;
+      - outer endpoint: 0.27%;
+      - residual: 92,468 pairs (21.10%), spread over every `q` and every
+        gap.
+    - **(E) as a polygon inequality for a second curve (main agent,
+      `fm39/psi_curve.py`, `fm39/psi_split.py`).**
+      - Put `psi_k = (c_k, B_k)`, `B_k = c_(k-1) + c_(k+1)`.  Then
+        `W_ij = psi_j ^ psi_i` and
+        `delta_k := D_k - D_(k+1) = psi_k ^ psi_(k+1)`, which is `>= 0` by
+        Theorem OL.  So (E) is exactly
+        `|psi_j ^ psi_i| <= sum_(k=j..i-1) psi_k ^ psi_(k+1)`, the
+        chord-versus-area inequality of Theorem WS and W, for the curve
+        `psi`.
+      - Left turns of `psi` are (E) at `q = 1` with the minus sign:
+        `(psi_(k+1)-psi_k) ^ (psi_(k+2)-psi_(k+1)) = D_k - D_(k+2) - W_(k+2,k)`.
+        So the convex-polygon argument gives (E) at every `q`, both signs,
+        on `psi`-windows sweeping `< pi`, from (E) at `q = 1`.  But only
+        8% of pairs sweep `< pi`; 74% sweep `> 2 pi`.
+      - Split, parallel to W's (i)+(ii):
+        - (i)-psi: `|W_ij| <= (i-j) sqrt(delta_j delta_(i-1))`.  It held
+          in 402,926 of 403,340 pairs with `q >= 1`; the failures are at
+          `a = 0`, which is already proved.
+        - (ii)-psi: `sum_(k=j..i-1) delta_k >= (i-j) sqrt(delta_j delta_(i-1))`.
+          It held in 400,915.
+        - Both held in 349,832 of 352,038 open-region pairs (99.4%).
+          (ii)-psi fails e.g. at `(4,6,5,8)`.
+    - **FM-SEC20 (luna_max_venus) on (ii):** proved at `e = 1` for every
+      window, and for the reflection-plateau subcase at every odd `e`.
+      - At `e = 1` `D` is log-concave, from the explicit form
+        `D_k = C(a,k)^2 (a+1) Q_k/((k+1)(a-k+1)^2(a-k+2))` with
+        `Q_k = (a-2k+1)^2 + a+1`.
+      - The plateau subcase covers windows crossing the centre with
+        `(N-2x+1) u >= 2x+C-N`.
+      - The local log-concavity route fails, e.g. at `e = 3`, `a = 11`,
+        `x = 8`, `C = 3`, where (ii) still holds.
+      - Reproducer: `fm39/ii_e1_plateau_repro.py`.
     - **FM-SEC16 (luna_max_jupiter) on (ii):**
       - Proved: `C <= 1` (AM--GM), and centered windows `2x + C = N`.
         Centered windows follow from `D_(N-k) = D_k`, Theorem OL, and the

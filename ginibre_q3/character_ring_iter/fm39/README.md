@@ -53,6 +53,7 @@ this directory, because several `exec` a sibling file.
 | (E) at q = 1, gaps 2 and 3 (FM-SEC17) | `e_q1_repro.py`, `e_q1_route_kill.py` |
 | Theorem G0E4 (four factors from (E) on the support region) | `g0e4_check.py` |
 | Row class of (E) (log-concave weights); Fourier representation of D and T | `e_class.py`, `fourier_rep.py` |
+| (E) LD energy-drop region; (E) residual; psi-curve form of (E); (ii) at e=1 and plateau | `e_ld_region_repro.py`, `e_residual.py`, `psi_curve.py`, `psi_split.py`, `ii_e1_plateau_repro.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
