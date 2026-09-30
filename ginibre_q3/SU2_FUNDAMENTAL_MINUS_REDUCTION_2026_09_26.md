@@ -10587,6 +10587,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         negative term is outweighed within the sum, e.g. `[-10, 40]`.
         Termwise OL for `m >= 3` is unproved: Theorem OL's proof is
         Krawtchouk-specific.
+      - Kills of linear routes (knob: linear certificates, which the
+        consumer does not require).
+        - The `q = 2` plus sign is not a nonnegative combination of OL
+          differences and proved `q = 1` or `q = 2` (minus) forms of
+          base-family rows (`fm39/e_recursive_lp.py`, multipliers of
+          degree `<= 6`).  Nor is `q = 3`.
+        - In word terms the row `(1 -+ z^m)P` inserts the virtual factor
+          `h_(m-1) - h_(m-3)` (or `hat S_m - hat S_(m-2)`).  The identity is
+          the Clebsch--Gordan telescoping of `U_q`, so termwise positivity
+          is not expected; the sum is what the consumer uses.
+      - What remains at `q = 2` is the plus sign,
+        `delta_(j+2)[(1+z^2)P] + 2 delta_(j+1)[P] >= 0`
+        (FM-SEC35, luna_max_venus).
     - **Residual of (E) now** (`fm39/e_residual2.py`): 22,046 of 438,221
       pairs (5.03%), all with `q >= 2`: `q = 2` 8,364, `q = 3` 6,908,
       `q = 4` 3,948, `q = 5` 1,988, `q >= 6` 838.
