@@ -10995,6 +10995,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `sup{|E_+-| : sigma >= 1/2} <= 99/100` and its finite-`n`
           version, would make `H_0` logarithmic in `k`.
         - Pending: FM-CHK57 (independent checker).
+        - FM-SEC130 (luna_max_mercury; `fm39/sec130_labels45_screen_repro.py`,
+          rerun exactly in 2 min): independent screens.
+          - Labels `<= 4` to total degree 40 (861,016 words) and labels
+            `<= 5` to degree 30 (295,668 words): no negative value.
+          - The factor catalogue through label 12 was verified, e.g.
+            `+5 = s(Z^2 - ZP - P^2 + 2P - 1)`; 512 Catalan bridges.
+          - Tightness versus the largest label `n`.
+            - One label `n`, the rest in {1,2,3}: the normalized minimum
+              is `2/mu(0, ceil(n/2))`, from the degree-boundary word
+              `(-1)^n (-+n)`, whose value is exactly 2 (distance 0, inside
+              H_AC_q).
+            - Two labels `n`: the minimum stays in `[2/5, 2/3]` through
+              `n = 12`.
       - FM-SEC127 (luna_max_mars; `fm39/sec127_q2plus_audit_repro.py`, rerun
         exactly): the q = 2 plus sign of (E), uniformly in the label.
         - With `x = c_j`, `y = c_(j+1)` and the Krawtchouk recurrence, the
