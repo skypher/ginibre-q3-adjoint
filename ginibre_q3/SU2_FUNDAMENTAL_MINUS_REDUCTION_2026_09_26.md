@@ -10831,6 +10831,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         coefficients.  The linear-injection line is paused: its natural
         maps fail on the smallest cases, like the local involutions
         (knob: naturality and locality of the map).
+      - FM-SEC103 (luna_max_jupiter;
+        `fm39/sec103_terminal_charging_repro.py`, rerun exactly after a
+        missing parenthesis was restored): terminal straightening charge.
+        - KILL: the charge to fully straightened (noncrossing) targets
+          fails.  First at `(1,1,1,1,2)`, `T = {0,2}`: `M = (03)(15)(24)`
+          (weight `-2`) straightens to four terms.  One is inadmissible
+          (a chord inside the label-2 block) and three have weight 0, so
+          the flow is 0.  All 10 failures in the census are permutations
+          of this list.
+        - At `(1^8, 6)`, `T = {0,1,2,3}` the max flow is 24 against a
+          demand of 30.
+        - A positive admissible intermediate, `(05)(13)(24)` of weight
+          2, exists.  Knob: terminal-only targets.
       - FM-SEC106 (luna_max_uranus): recursive Pluecker charging at
         level 1.  Max flow meets demand on 1,450 ordered profiles
         (length `<= 5`, labels `<= 3`, all pairs `T`) and on the boundary
