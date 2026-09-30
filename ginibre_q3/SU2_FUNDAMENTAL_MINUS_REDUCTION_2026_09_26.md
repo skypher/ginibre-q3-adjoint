@@ -10585,6 +10585,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           uniform in `d` yet.  Per `d` this is becoming a sequence of
           separate certificates, so the ladder is paused in favour of an
           insertion-stable hypothesis (FM-MECH36).
+      - **FM-MECH38 (astra_max_ceres; `fm39/mech38_hACq_d2_repro.py`,
+        rerun exactly): H_AC_q PROVED for `d <= 2`, uniformly**, i.e.
+        for every list with `2 max(lambda) >= sum(lambda) - 4`.
+        - Lemma: the coefficients of `H_(N-2)` and `H_(N-4)` in
+          `prod H_(mu_i)` are the q-positive sums
+          `J(mu) = sum_i [s_i][mu_i]` and
+          `K(mu) = sum_i [s_i choose 2]_q [mu_i choose 2]_q [2]! +
+          sum_(i<j) [s_i][mu_i][s_j - 2][mu_j]`, with `s_i` the prefix
+          sums.
+        - `f_q = [n]! g_q`.  At `d = 1`, `g_q = (1/2) E*E + (J - t/2)
+          delta_0`.  At `d = 2`, `g_q = G_0 + q G_1 +
+          (1/2) J_(>=2)(q) E*E + R_(>=2)(q) delta_0`, with explicit
+          q-independent factors and `R = K - (t/2)J` coefficientwise
+          nonnegative, proved by weighted q-integer comparisons.
+        - KILL: factorizing each aggregate fusion trajectory separately.
+          It fails at `(1^4)` with Fourier `q - 1`.  After averaging
+          over block orders it still fails, at `(1,1,1,1,2)` with
+          `-1/15`; 343 of 45,961 averaged tables fail.
+        - A minimal cross-trajectory transfer `delta_0/15` repairs that
+          witness exactly.
+        - Knob: trajectory separation.  A general rule must combine
+          trajectories within a q-degree.
       - **FM-SEC111 (luna_max_pluto; `fm39/sec111_bernstein_hAC_repro.py`,
         rerun exactly): conjecture BH, the Bernstein tables along `q = 0`
         are H_AC.**
