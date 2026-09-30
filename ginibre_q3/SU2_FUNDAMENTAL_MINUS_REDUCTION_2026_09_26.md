@@ -8788,6 +8788,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | H-only | three factors, no suffix: `h_u h_v h_w` (Theorem THREE); three factors, any suffix, `min label >= a+2r-4` or `u-v+w >= a+2r-3` (Theorem LL); any number of factors, all parts even, no suffix (item (39)) |
   | all `r` | H-only | three factors with `|a - (2r-3)| <= 1`, all labels (Theorems DS, AS); T3R regions (item (39)) |
   | all `r` | H-only | three factors in the G0 branch `gamma >= a+2r-2` under the one-sign-block, root-crossing (G3X) or odd-`C` (G3O) conditions, and parts of `gamma = N` (Theorems G3, G3X, G3O, item (39)) |
+  | all `r` | H-only | three factors, whole G0 branch when `(a-2r+2)^2 <= 8r-9` (Theorem G0B); whole G0 branch conditional on (E) (Theorem G0E) |
   | all `r` | H-only | any number `m <= 2r` of factors with spread labels: `lambda(S)+lambda(S^c) > a+2r-m` for every split (Theorem LLm; includes LL, LL4) |
   | all `r` | every consumer word (h and hat S) | spread labels over every two-sided assignment (Theorem LLm-S) |
   | all `r` | every word | suffix `a >= (2r+3) Lambda(w) - 2r - 4` (Theorem LS); `2r + a + t + 6 >= 7L(w)`, `L` an additive quartic in the labels (Theorem LR4) |
@@ -10099,13 +10100,45 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         is 1.48 over all 39,935 such windows (grid `r <= 8`, `a < 40`, any
         `C >= 2`).
       - Sufficient condition LE: `sum_(k=x..x+C) D_k >= |g_x| |g_(x+C+1)|`,
-        which implies `sum D >= T`.  On base rows it held in 39,746 of
-        39,746 windows (`C >= 3`), with least ratio 1.55.  On random
-        real-rooted rows: 6,211 windows, least ratio 2.49.  It fails at
-        `C = 2` (e.g. `a = 0`, ratio 0.056), where the certificate applies
-        instead.
+        which implies `sum D >= T`.  It held on the grid (39,746 windows,
+        `C >= 3`, least ratio 1.55) but is FALSE beyond it (FM-MECH24).
+        Examples: `a = 0`, `e = 21`, `x = 9`, `C = 4`.  The family
+        `a = 0`, `e = 2n+1`, `x = n-1`, `C = 4` has
+        `S/(|g_x||g_end|) ~ 5/n`.  Also `(a,e,x,C) = (4087, 9, 2003, 90)`.
+        Kill knob: LE drops the endpoint angle, which is strength the
+        consumer does not use; the target `sum D >= T` still holds there.
       - `|g_k|^2` is not unimodal on 209 of 280 base rows, so a radius
         monotonicity argument is not available.
+    - **Theorem G0B (the G0 branch in a growing band; FM-MECH24,
+      astra_max_ceres; verified by the main agent, `fm39/g0b_repro.py`,
+      `fm39/g0b_check.py`).**  If `(a - 2r + 2)^2 <= 8r - 9`, i.e.
+      `(a - e - 1)^2 <= 4e + 3`, then `phi_r(h_u h_v h_w h_1^a) >= 0` on the
+      whole G0 branch, uniformly in the three labels.  This includes
+      root-crossing windows and both parities of `C`.
+      - *Energy.*  `D` is symmetric and unimodal (Theorem OL and
+        anti-reciprocity; `D_n = D_(n+1)` when `N = 2n`).  So for
+        `S = sum_(k=x..y) D_k`, `y = x+C`:
+        `S >= max(D_x, D_y) + C min(D_x, D_y) >= 2 sqrt(C D_x D_y)`.
+      - *Chord.*  Put `d = a - e` and
+        `rho_k = |d| / (2 sqrt((k+1)(N-k+1)))`.  From the recurrence,
+        `D_x = p^2 - d p q/(x+1) + b q^2 >= (1 - rho_x)(p^2 + b q^2)`, with
+        `p = c_x`, `q = c_(x-1)`, `b = (N-x+1)/(x+1)`.  Likewise
+        `D_y >= (1 - rho_y)(v^2 + b' u^2)`, with `v = c_y`, `u = c_(y+1)`,
+        `b' = (y+1)/(N-y+1)`.  Since `b b' >= 1`, Cauchy--Schwarz gives
+        `T^2 = (p v - q u)^2 <= D_x D_y / ((1 - rho_x)(1 - rho_y))`.
+      - *Window region.*  If `rho_x, rho_y < 1` and
+        `4C(1 - rho_x)(1 - rho_y) >= 1`, then `S >= |T|`.
+      - *The band.*  `d^2 <= 2(N+1)` gives `rho <= 1/sqrt 2`, hence
+        `T^2 <= (6 + 4 sqrt 2) D_x D_y < 12 D_x D_y <= 4C D_x D_y <= S^2`
+        for `C >= 3`.  Windows with `C <= 2` are covered by the
+        certificates.
+      - *Checks.*  The agent verifier reruns (57,014 band windows, 27,276
+        of them long-sweep with `T > 0`).  The main agent's
+        definition-level evaluator found 393,947 band G0 words
+        (`r <= 13`, `a < 60`), none negative.  The main agent also
+        re-derived each step.
+      - *Open:* windows outside the region, in particular `a` far from
+        `e` (`rho` near 1).
     - *Recurrence model (main agent, `fm39/const_coeff_check.py`).*
       - The base rows satisfy
         `(k+1) c_(k+1) = (a-e) c_k - (N-k+1) c_(k-1)`.  So

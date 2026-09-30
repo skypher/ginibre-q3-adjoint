@@ -48,6 +48,7 @@ this directory, because several `exec` a sibling file.
 | Theorem G0E (G0 branch from (E)); window-(E) on gamma <= N | `w_from_e.py`, `window_E.py` |
 | Merge move, groupings, four-wedge correction | `merge_check.py`, `merge_best.py`, `cross_telescope.py` |
 | Four-factor double merge census | `merge4.py` |
+| Theorem G0B (G0 branch in a growing band) | `g0b_repro.py`, `g0b_check.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
