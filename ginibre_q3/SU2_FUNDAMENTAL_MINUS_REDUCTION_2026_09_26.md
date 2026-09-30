@@ -10678,18 +10678,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           coefficient vectors).  Let `X = sum a(gamma) chi_gamma` with
           `a >= 0` and `sum a^2 = E X^2 = 1`.
           - `U_2(X) = X^2 - 1` is automatically Walsh-nonnegative.
-          - So is `U_4(X)`: for `gamma != 0`, the three pair-splittings of
-            four positions give `a^(*4)(gamma) >= 3 (a*a)(gamma)` without
-            overlap.
+          - CORRECTION (FM-MECH42): `U_4(X)` is not automatic.  The
+            earlier 'three pair-splittings without overlap' count was
+            wrong.  There are six families (an equal pair plus a
+            complementary pair summing to `gamma`), and they overlap on
+            triples, giving only
+            `U_4 coefficient >= b(gamma)(3 - 8 max a^2)`.  The FM-MECH41
+            realization has a negative `U_4` coefficient at `sigma_1`.  The
+            numerical check had missed this (random vectors with small
+            max coefficient).
           - `U_3(X)` has coefficients `a^(*3) - 2a >= a(3 - 2a^2) - 2a`,
             which is nonnegative wherever `a <= 1/sqrt 2`.
           - The quantile realization fails at `U_3` only because
             `sgn(X)` is a single character (the top dyadic digit), with
             coefficient `E|X| = 8/(3 pi) > 1/sqrt 2`.  Every dyadic encoding
             has this defect.
-          - So a semicircular realization with nonnegative Walsh
-            coefficients that are all `<= 1/sqrt 2` would give B, hence FM3,
-            for every list with labels `<= 4`.
+          - (Superseded by FM-MECH42: no such realization exists.)
           - `U_5` and `U_6` cannot be automatic: B fails at `(1^7,5)` and
             `(1^8,6)`.
           - Necessary condition, depending only on the law: if `sgn(X)`
@@ -10705,6 +10709,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             `c_j` is small.  `G` must be odd with positive Taylor
             coefficients on the range of `Z`, hence convex on
             `[0, max Z]`.
+      - **FM-MECH42 (astra_max_ceres;
+        `fm39/mech42_realization_nogo_repro.py`, rerun): the
+        positive-Walsh realization route stops at {1,2}.**
+        - Theorem: every semicircle realization on a Boolean group with
+          nonnegative Walsh coefficients `a` has exactly one character
+          `gamma*` with `a(gamma*)^2 = p > 1/2`.  Its `U_3` coefficient
+          satisfies `b(gamma*) <= -(1-p)(2p-1)/sqrt p < 0`, and all other
+          `U_3` coefficients are `>= 0`.
+        - Proof: `b = a(1 - 2a^2) + R` with `R >= 0`.  Parseval gives
+          `sum a b = E[X U_3(X)] = 0`, hence `sum a^4 >= 1/2`.  If equality
+          held, `X` would be `(chi + eta)/sqrt 2`, which has `E X^6 = 4`, not
+          5.  Main-agent check of the proof: correct.
+        - So no common realization makes `U_1` and `U_3` both
+          Walsh-positive, whatever the encoding.  `U_4` is not automatic
+          either: `E[U_4(X) sigma_1] < 0` for the FM-MECH41 realization.
+        - `(1,1,1,3)` is still B (`f = 1_<1111>`).
+        - Knob: one common realization for all labels.  B and H_AC allow
+          list-dependent decompositions, which FM3 needs anyway.
       - **FM-MECH40 (astra_max_ceres;
         `fm39/mech40_insertion_obstruction_repro.py`, all assertions
         pass): no parent-preserving insertion.**
