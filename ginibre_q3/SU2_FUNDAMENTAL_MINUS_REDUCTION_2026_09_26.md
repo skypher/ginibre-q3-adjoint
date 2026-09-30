@@ -10585,6 +10585,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           uniform in `d` yet.  Per `d` this is becoming a sequence of
           separate certificates, so the ladder is paused in favour of an
           insertion-stable hypothesis (FM-MECH36).
+      - FM-MECH37 (astra_max_ceres; `fm39/mech37_allocation_repro.py`,
+        all assertions pass): channel allocations for the insertion step.
+        - KILL: preserving the fusion channel of each noncrossing
+          diagram.  At `(1,1,1; h = 1, n = 2)` channelwise CP forces
+          `2 d_i <= d <= 1`, so at least half of `(05)(14)(23)` must leave
+          its channel 3.
+        - The allocation polytope there is exact, with vertices
+          `0, (1/2,1/2,0), ...`, each certified by subspaces.
+        - KILL: normalized positive Pluecker terminal allocation, even
+          after averaging orders.  On `(1^L; 1, L-1)` its channel-`L`
+          budget is the harmonic sum `sum_(k<=L) 1/k > 1`.
+        - The q-boundary has a clean H_AC_q certificate:
+          `g_1(q) = (1+q) Q(p_4)/2 + q(1+q) delta_0`,
+          `g_3(q) = (1+q)(1+q+q^2) delta_0`.
+        - Unrestricted subset-dependent allocation and H_AC_q survive.
       - **FM-SEC102 (luna_max_mercury): H_AC_q, a unified strengthening.**
         - Conjecture: for every list `lambda`, the q-table
           `f_q(S) = m_q(S) m_q(S^c)` (q-Hermite moments, crossings
