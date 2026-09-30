@@ -10802,6 +10802,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - At `|T| = 4` two negative clusters can multiply to a positive
           factor.
         - Open: a nonlocal charging (Hall condition) at level 1.
+        - Reproducer repair (main agent): the printed consumer check built
+          `h_4` from `U_k(x) U_(4-k)(x)` and printed 25.  With
+          `U_(4-k)(y)` it gives `phi_1(h_4 hat S_2^2) = 1`, which agrees
+          with `mech28_eval.py`.  The census totals rerun exactly.
       - FM-SEC85 (luna_max_vesta): no H_AC counterexample.  All 791 tables
         are doubly nonnegative.  Horn 5-cycle placements (374 tables
         exhaustively, 100,000 samples on four larger ones) and a copositive

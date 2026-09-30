@@ -306,6 +306,8 @@ for k in range(1, 7):
 U = [1, x]
 for n in range(2, 5):
     U.append(expand(x * U[-1] - U[-2]))
-h4 = expand(sum(U[k] * U[4-k] for k in range(5)))
+# main-agent fix: the second factor must be in y (the printed version used x twice and gave 25)
+Uy = [expand(u).subs(x, y) if hasattr(expand(u), "subs") else u for u in U]
+h4 = expand(sum(U[k] * Uy[4-k] for k in range(5)))
 value = average((x-y)**2 * h4 * hat_s2**2)
 print("h4 hatS2^2", value / weyl_denominator)
