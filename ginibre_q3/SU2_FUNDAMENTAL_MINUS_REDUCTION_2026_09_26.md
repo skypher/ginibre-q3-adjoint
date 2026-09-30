@@ -8792,6 +8792,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | H-only | four factors on the outer-pairing support region, conditional on (E) (Theorem G0E4; strictly extends LL4) |
   | all `r` | H-only | three factors with equal largest labels in G0: `h_u^2 h_w h_1^a` for `2u >= a+2r+w-2` (centered-window theorem, FM-MECH25); the whole G0 branch for every `r <= 100`, `a <= 150` (every one of 130.9M windows covered by proved criteria) |
   | all `r` | two labels | (E) at `q = 1` (gap `i = j+2`) for all `a, e` (Theorem EQ1); `q = 2` with the minus-W sign (OL on `(1-z^2)P`) |
+  | all `r` | two labels (all three sign patterns) | every word with `a, e <= 40` in the kernel row (each (E) pair covered by a proved criterion; binary-form method) |
   | all `r` | H-only | any number `m <= 2r` of factors with spread labels: `lambda(S)+lambda(S^c) > a+2r-m` for every split (Theorem LLm; includes LL, LL4) |
   | all `r` | every consumer word (h and hat S) | spread labels over every two-sided assignment (Theorem LLm-S) |
   | all `r` | every word | suffix `a >= (2r+3) Lambda(w) - 2r - 4` (Theorem LS); `2r + a + t + 6 >= 7L(w)`, `L` an additive quartic in the labels (Theorem LR4) |
@@ -10600,6 +10601,32 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - What remains at `q = 2` is the plus sign,
         `delta_(j+2)[(1+z^2)P] + 2 delta_(j+1)[P] >= 0`
         (FM-SEC35, luna_max_venus).
+    - **Binary-form method for (E) (main agent, `fm39/e_q2_quadratic.py`,
+      `fm39/e_binary_form.py`, `fm39/e_residual3.py`).**
+      - The three-term recurrence (valid with zero extension at both ends)
+        writes every coefficient of the window `j-1..i+1` through
+        `(c_j, c_(j+1))`.  So each sign of (E) at `(j, i)` is an explicit
+        binary quadratic form in `(c_j, c_(j+1))`, with coefficients
+        rational in `(d, N, j)` and positive denominators.  If it is
+        definite (discriminant `< 0`, leading coefficient `> 0`), (E)
+        holds with no information on the ratio.  This is step 1 of
+        Theorem OL's proof, extended to every `q`.
+      - Definite fraction in the open region (`a, e <= 40`), `q = 1..6`,
+        both signs: from 96.5% (`q = 1`) up to 99.8% (`q = 6`), rising
+        with `q`.
+      - **Combined, (E) holds on every pair with `a, e <= 40`**:
+        - LD energy drop or metric chords: 68.02%;
+        - strips, `min(a,e) <= 2`, `q <= 1` (Theorem EQ1), outer
+          endpoint: 26.13%;
+        - definite binary forms: 5.85%;
+        - residual: 0 of 438,221.
+        The binary-form tests are exact rational arithmetic.  The LD and
+        metric coverage tests use floating point with relative tolerance
+        `1e-12` (to be rechecked exactly).
+      - So the two-label stratum, and through Theorem G0E the G0 branch,
+        holds for every level with `a, e <= 40`.  Open: all `a, e`
+        (uniformity of the definite region in `(d, N, j)`, or ratio
+        bounds as in Theorem OL's steps 2-5 for the non-definite pairs).
     - **Residual of (E) now** (`fm39/e_residual2.py`): 22,046 of 438,221
       pairs (5.03%), all with `q >= 2`: `q = 2` 8,364, `q = 3` 6,908,
       `q = 4` 3,948, `q = 5` 1,988, `q >= 6` 838.
