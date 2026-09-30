@@ -10904,6 +10904,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         (length `<= 5`, labels `<= 3`, all pairs `T`) and on the boundary
         cases.  No uniform Hall argument yet: the overlap of the
         recursively generated target families is uncontrolled.
+      - FM-SEC105 (luna_max_venus; `fm39/sec105_groupings_repro.py`,
+        rerun after dedenting).
+        - Straightening-target and block-partition groupings fail at
+          `(1^4)` (Fourier `-1`, or `-1/2` when normalized).
+        - The noncrossing-partition grouping factors,
+          `G_sigma(S) = prod_(B in sigma) f_B(S cap B)`, and passes the
+          screens, but its one-block group is `f` itself.
+        - Grouping lines closed.
+      - FM-SEC97 (luna_max_mars; `fm39/sec97_spheres_repro.py`, rerun after
+        two parenthesis fixes).
+        - The sphere expansion for `(1^N, n)` is reproved by Lagrange
+          inversion; it has no negative coefficient exactly when
+          `d <= n + 1`.
+        - Inner range: two-shell factors `p_a + t p_b` certify
+          `(1^13,3)`, `(1^16,4)`, `(1^20,2)` exactly.  A fixed ratio
+          `t = 1/4` is separated at `(1^28, 8)`; `t = 1/10` repairs it.
+        - REPAIR: the printed `(1^30, 2)` coefficients do not re-expand
+          exactly (close to the target; transcription).  It is skipped in
+          the reproducer.
+        - Mixed `d = 2` samples `(1^6,2,4)` and `(2^5,6)` pass.
+        - No uniform rule for `d >= n + 2`.
       - FM-SEC85 (luna_max_vesta): no H_AC counterexample.  All 791 tables
         are doubly nonnegative.  Horn 5-cycle placements (374 tables
         exhaustively, 100,000 samples on four larger ones) and a copositive
