@@ -10207,6 +10207,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         product structure, as an invariant cone under `(x) Sym^k W`.  This
         is M5 inside one sector with unboundedly many factors.
         FM-SEC60 (luna_max_venus) is on it.
+      - Sharpness (`fm39/mp2_ratio.py`, all 271 partitions of size
+        `<= 12`).  `max 3 m_(1,1)/(m_(2,0) + 5 m_(0,0)) = 369/386 = 0.956`,
+        at `kappa = (3,3,3,1,1,1)`.  No equality case except the 138
+        odd-size partitions, where all three multiplicities vanish.
+    - FM-SEC52 (luna_max_neptune), level `r = 1` on the whole cone:
+      exact screen of 676,368 words (2..6 `hat S` with labels `2..8`,
+      at most two `h`, `a <= 10`), none negative, least positive value 1
+      (e.g. `h_4 hat S_2^2`).  The merge correction can be negative
+      (`phi_1(X_22 h_1^2) = -2` while `phi_1(hat S_2^2 h_1^2) = 2`).  The
+      first open case, two `hat S`, is
+      `A_p((q-1,1); E) <= A_p((q); E) + 2 A_p((q-2); E)` in FM51's
+      notation, for `E = Sym^u W (x) Sym^v W (x) W^(x)a`.  Assigned as
+      FM-SEC61.
     - FM-SEC31 (luna_max_pluto): the mixed term expands exactly through
       lower-label values, `C = A - B`, so the inductive step is
       `A <= R + B`.  Every term there has fewer labels, but positivity of
