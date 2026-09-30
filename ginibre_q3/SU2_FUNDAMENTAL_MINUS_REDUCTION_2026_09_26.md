@@ -10744,6 +10744,33 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             and `E Y^4 = 3`, but excludes a single subgroup
             (`|H| = (5 +- sqrt 5)/2`).  FM-SEC123 is mapping the
             admissible label sets.
+      - **FM-MECH44 (astra_max_ceres; `fm39/mech44_label3_repro.py`, rerun
+        exactly): the {1,2} sector plus one label 3 is PROVED.
+        `phi_r(h_2 h_1^a hat S_2^b) >= 0` and
+        `phi_r(hat S_3 h_1^a hat S_2^b) >= 0` for every `r >= 1`,
+        `a, b >= 0`.**
+        - Theorem: `M_(b+1) >= |Q_b|` for all even `A, E`.
+        - Radial coordinates: `d = t s`, `z = s^2 (1+t)^2/16`, so that
+          `Z = beta z - 2` and `Z - P = alpha z - 2`, with
+          `beta = 8(1+t^2)/(1+t)^2 >= 4` and
+          `alpha = 4(1+3t^2)/(1+t)^2 >= 3`.
+        - Then `M_(b+1) - Q_b = (16^(N+1)/pi^2) int t^E/(1+t)^(2N+2)
+          int_0^1 z^N sqrt((1-z)(1-kappa z)) (beta z - 2)^b (alpha z - 2)
+          dz dt`.
+        - Every inner integral is `>= 0` by a positive radial IBP
+          identity (Lemma 3) together with a reflected-weight lemma for
+          `(beta z - 2)^k` (Lemma 2).  The small cases use genuine
+          characters.
+        - General extra label: the IBP recurrence for
+          `R_(k,b) = E[s^A d^E P^k Z^b]` eliminates every
+          `phi_r(W h_1^a hat S_2^b)`, `W in {h_(n-1), hat S_n}`, into an
+          explicit combination `sum_j c_j M_j` (uniform in `n`; 1,200
+          direct checks).  Its positivity is open.
+        - KILL: raywise positivity for the general label.  `h_3 h_1^3` has
+          ray value `-1/11` at `t = 1` (true value 1), and
+          `hat S_6 hat S_2` at `r = 2` has `-36/35` (true value 1).
+        - Next requirements: for `h_3`, `M_(b+1) - M_b >= 0` (A odd-shifted);
+          for `hat S_4`, `M_(b+2) + M_(b+1) - 2 R_(2,b) >= 0`.
       - FM-SEC123 (luna_max_venus; `fm39/sec123_admissible_sets_repro.py`):
         admissible label sets.
         - Among {2,4}, {2,3}, {3}, {4}, {2,4,6}, {2,3,4}, the even labels and
@@ -10769,7 +10796,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `E[(4-x^2) d_x F] = 3 E[x F]` applied to
           `V = y(4-x^2) d_x + x(4-y^2) d_y`, so `Q_b` is an explicit
           positive combination of the `M_j`.
-        - Since `h_2 = Z + P + 1` and `hat S_3 = s(Z - P)`, the whole
+        - Since `h_2 = Z + P` (FM-MECH44 correction: no `+1`) and
+          `hat S_3 = s(Z - P)`, the whole
           extra-label-3 sector `phi_r(h_2 h_1^a hat S_2^b)`,
           `phi_r(hat S_3 h_1^a hat S_2^b)` reduces to the single inequality
           `M_(b+1) >= Q_b` for even `A > E >= 2`.  It passes 637 exact
