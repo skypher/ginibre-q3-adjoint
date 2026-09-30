@@ -10914,6 +10914,41 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             misses the words with many 3's.  Pure `(3^L)` is B by FM-MECH31.
             What is open is the range in between, uniformly in the number
             of 3's.
+        - FM-SEC126 (luna_max_mercury; `fm39/sec126_sector123_screen_repro.py`,
+          rerun exactly in 10 s).
+          - Exact recurrences in `(b, al, ga)` over the joint moments
+            `mu(m,k)`.
+          - Census with total degree `<= 60`: 324,632 tuples (145,167
+            inside the FM3 constraints, 179,465 outside), no negative value.
+          - Eight zeros, among them `(A,E,b,al,ga) = (0,0,0,1,2)`,
+            `(0,0,0,2,1)` and `(0,0,1,1,1)`.  The minimum of value/`mu` is
+            1/5, at `(4,0,0,0,1)`.
+          - KILL: the moment-positive cone
+            `{G : E[s^A d^E G] >= 0 for all even A, E}` is not closed under
+            multiplication by `Z +- P`.  With `H = Z + P`, `G = (H-2)^2`:
+            `E[H G] = 8 - 12 + 0 = -4`.  Knob: the whole cone; the target
+            monomials stay positive.
+          - Main-agent test: the naive induction hypothesis "`F/mu` is
+            nondecreasing in `m` and `k`" fails (2,625 of 5,880 pairs).  So
+            a ratio induction needs direction-dependent weights.
+        - Main-agent reductions and sharpness
+          (`fm39/sector123_quadratic_bstar.py`).
+          - `Z = ((Z+P) + (Z-P))/2`, so in the unconstrained form the
+            `Z^b` factors are free: the target is
+            `E[s^A d^E (Z+P)^al (Z-P)^ga] >= 0`.
+          - Multi-affinity in the cross coefficients makes this equivalent
+            to `E[s^A d^E prod_i (x^2 + 2 b_i xy + y^2 - 2)] >= 0` for all
+            `b_i in [-1/2, 1/2]`.
+          - The critical half-width `B*` (largest `B` with every sign
+            vertex `>= 0`, `A, E <= 8`) is:
+            - exactly `1/2` for 3 factors at `A = E = 0`; this is the zero
+              `E[(Z+P)(Z-P)^2] = 0`;
+            - `0.6124` for 2 factors, and 0.5774, 0.5968, 0.6219 for
+              5, 7, 9 factors;
+            - larger for even factor counts.
+          - So `b = +-1/2` (the label-3 quadratics) sit exactly on the
+            boundary, and any proof of the unconstrained form must be
+            sharp at that zero.
       - FM-SEC123 (luna_max_venus; `fm39/sec123_admissible_sets_repro.py`):
         admissible label sets.
         - Among {2,4}, {2,3}, {3}, {4}, {2,4,6}, {2,3,4}, the even labels and
