@@ -10228,6 +10228,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           factors are added.  A merge-stable hypothesis or invariant cone
           must be exact at leading order, so crude bounds cannot close
           it.  This is consistent with the kills recorded above.
+      - FM-SEC60 (luna_max_venus): the sector screen reproduces (915
+        partitions of size `<= 16`, none negative, 464 zeros).  The shifted
+        cone `{L_(a,b) >= 0}` with
+        `L_(a,b) = m_(a+2,b) + 5m_(a,b) - 3m_(a+1,b+1)`, for
+        `(a,b) in {(0,0),(1,0),(1,1),(2,0)}`, contains every `Sym^k W` but
+        is not preserved: `L_(1,0)(E_(3,3,3,1) (x) W) = -1`, with 70
+        failures down to `-329` (knob: translated inequalities, a
+        strength the sector does not use).
+      - Next route (FM-SEC62).  By Weyl's formula `m_lambda(E_kappa)`
+        counts walks in the `C_2` Weyl chamber, one Pieri step per factor.
+        So `phi_2(E_kappa)` is a signed walk count, and a sign-reversing
+        involution would be exact at leading order.
     - FM-SEC52 (luna_max_neptune), level `r = 1` on the whole cone:
       exact screen of 676,368 words (2..6 `hat S` with labels `2..8`,
       at most two `h`, `a <= 10`), none negative, least positive value 1
