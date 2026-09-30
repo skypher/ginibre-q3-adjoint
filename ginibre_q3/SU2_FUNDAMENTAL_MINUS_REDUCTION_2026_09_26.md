@@ -10049,13 +10049,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       cases against Catalan moments.
     - *Support branch.*  Sort the labels `X >= Y >= Z` and put
       `alpha = (N+X-Y-Z)/2`, `gamma = (N+X+Y-Z)/2`.  If `gamma >= N+1`,
-      the value is `sum_(d in CG(X,Y)) [D_j - D_i +/- W](d, Z)`.  So (E)
-      implies positivity there, the analogue of Theorem G0E, with the
-      sign fixed by the pattern.  If also `0 <= alpha <= N - Z`, it
+      the value is `sum_(d in CG(X,Y)) [D_j - D_i + sigma W](d, Z)`.  So
+      (E) implies positivity there, the analogue of Theorem G0E.
+      - The sign depends on the roles of the labels, not only on the
+        pattern (repair from FM-CHK40).  Tag `h` labels `-` and `hat S`
+        labels `+`, and sort by decreasing label, `-` first on ties.
+        - `h h hat S`: `sigma = +1` if the top two tags are both `-`,
+          else `-1`.
+        - `h hat S hat S`: `sigma = -1` if the bottom tag is `-`, else
+          `+1`.
+        - `hat S hat S hat S`: `sigma = +1`.
+      - Witness: at `r = 1`, `a = 3`, `h_3 h_3 hat S_3` and
+        `h_3 h_2 hat S_4` share sorted labels `(4,4,3)` but need opposite
+        signs (values 15 and 13).  If also `0 <= alpha <= N - Z`, it
       telescopes to `S_Z(alpha) + sigma T_Z(alpha)`.
     - *Unconditional band* (G0B method).  The band is
       `(a-e)^2 <= 2(N+1)` when `Z >= 3`, and `(a-e)^2 <= N+1` when
       `Z = 2`.  In it, `S > |T|`.
+    - FM-CHK40 (luna_max_saturn, own exact code):
+      - ACCEPT: the closed forms (5,180 comparisons), the telescoped form
+        (1,307 windows) and the band (247,711 wide-band plus 9,818
+        `Z = 2` windows).
+      - REPAIR (applied above): the role-ranked sign rule.
     - *Checks.*
       - Agent screen: 48,552 words (`r <= 6`, `a <= 16`, labels
         `2..8`), none negative.
