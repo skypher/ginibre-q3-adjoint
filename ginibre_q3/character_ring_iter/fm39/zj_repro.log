@@ -1,0 +1,12 @@
+Z 1 terms 3 min 1
+Z 2 terms 5 min 1
+Z 3 terms 7 min 1
+Z 4 terms 9 min 1
+source c_1 at t=8: 1440768*v**4 + 84366336*v**3 + 1854690304*v**2 + 18204723200*v + 67534127104
+Z 5 terms 11 min 1
+Z 6 terms 13 min 1
+Z 7 terms 15 min 1
+both source and Gram formulas agree at t = 16
+both source and Gram formulas agree at t = 17
+source coefficient checks: 98
+Gram coefficient checks: 97

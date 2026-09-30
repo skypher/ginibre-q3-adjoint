@@ -1,0 +1,14 @@
+[07:33:14] FM3 kernel screen: 1000 cores (<= 4 labels <= 6), r <= 12, a <= 60
+[07:33:16] PROGRESS level r=1/12 done; evals 30524, negatives 0 [], zeros 32 (2s)
+[07:33:18] PROGRESS level r=2/12 done; evals 61048, negatives 0 [], zeros 39 (4s)
+[07:33:20] PROGRESS level r=3/12 done; evals 91572, negatives 0 [], zeros 40 (6s)
+[07:33:22] PROGRESS level r=4/12 done; evals 122096, negatives 0 [], zeros 40 (8s)
+[07:33:24] PROGRESS level r=5/12 done; evals 152620, negatives 0 [], zeros 40 (10s)
+[07:33:25] PROGRESS level r=6/12 done; evals 183144, negatives 0 [], zeros 40 (12s)
+[07:33:27] PROGRESS level r=7/12 done; evals 213668, negatives 0 [], zeros 40 (14s)
+[07:33:29] PROGRESS level r=8/12 done; evals 244192, negatives 0 [], zeros 40 (16s)
+[07:33:31] PROGRESS level r=9/12 done; evals 274716, negatives 0 [], zeros 40 (18s)
+[07:33:33] PROGRESS level r=10/12 done; evals 305240, negatives 0 [], zeros 40 (20s)
+[07:33:35] PROGRESS level r=11/12 done; evals 335764, negatives 0 [], zeros 40 (22s)
+[07:33:37] PROGRESS level r=12/12 done; evals 366288, negatives 0 [], zeros 40 (24s)
+DONE evals 366288 negatives 0

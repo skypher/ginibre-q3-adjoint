@@ -1,0 +1,167 @@
+[07:29:38] screen e<= 120, a in [e, 400]; restored rows []
+[07:29:42] PROGRESS e=0/120 done: 2767903 pairs, failures 0 [] (4.4s)
+[07:29:47] PROGRESS e=1/120 done: 2788400 pairs, failures 0 [] (4.6s)
+[07:29:52] PROGRESS e=2/120 done: 2809094 pairs, failures 0 [] (4.9s)
+[07:29:57] PROGRESS e=3/120 done: 2829780 pairs, failures 0 [] (5.2s)
+[07:30:03] PROGRESS e=4/120 done: 2850660 pairs, failures 0 [] (5.5s)
+[07:30:09] PROGRESS e=5/120 done: 2871528 pairs, failures 0 [] (6.1s)
+[07:30:15] PROGRESS e=6/120 done: 2892587 pairs, failures 0 [] (6.3s)
+[07:30:21] PROGRESS e=7/120 done: 2913630 pairs, failures 0 [] (6.4s)
+[07:30:28] PROGRESS e=8/120 done: 2934861 pairs, failures 0 [] (6.8s)
+[07:30:35] PROGRESS e=9/120 done: 2956072 pairs, failures 0 [] (7.0s)
+[07:30:38] HEARTBEAT e=10 a=302/400 pairs(row)=1326707 fails(row)=0
+[07:30:42] PROGRESS e=10/120 done: 2977468 pairs, failures 0 [] (7.1s)
+[07:30:50] PROGRESS e=11/120 done: 2998840 pairs, failures 0 [] (7.4s)
+[07:30:57] PROGRESS e=12/120 done: 3020394 pairs, failures 0 [] (7.6s)
+[07:31:05] PROGRESS e=13/120 done: 3041920 pairs, failures 0 [] (8.0s)
+[07:31:14] PROGRESS e=14/120 done: 3063625 pairs, failures 0 [] (8.3s)
+[07:31:22] PROGRESS e=15/120 done: 3085298 pairs, failures 0 [] (8.7s)
+[07:31:31] PROGRESS e=16/120 done: 3107147 pairs, failures 0 [] (9.0s)
+[07:31:38] HEARTBEAT e=17 a=361/400 pairs(row)=2338616 fails(row)=0
+[07:31:41] PROGRESS e=17/120 done: 3128960 pairs, failures 0 [] (9.3s)
+[07:31:50] PROGRESS e=18/120 done: 3150946 pairs, failures 0 [] (9.6s)
+[07:32:00] PROGRESS e=19/120 done: 3172892 pairs, failures 0 [] (10.1s)
+[07:32:11] PROGRESS e=20/120 done: 3195008 pairs, failures 0 [] (10.3s)
+[07:32:21] PROGRESS e=21/120 done: 3217080 pairs, failures 0 [] (10.7s)
+[07:32:32] PROGRESS e=22/120 done: 3239319 pairs, failures 0 [] (10.8s)
+[07:32:38] HEARTBEAT e=23 a=333/400 pairs(row)=1955030 fails(row)=0
+[07:32:43] PROGRESS e=23/120 done: 3261510 pairs, failures 0 [] (11.1s)
+[07:32:55] PROGRESS e=24/120 done: 3283865 pairs, failures 0 [] (11.3s)
+[07:33:06] PROGRESS e=25/120 done: 3306168 pairs, failures 0 [] (11.8s)
+[07:33:18] PROGRESS e=26/120 done: 3328632 pairs, failures 0 [] (12.1s)
+[07:33:31] PROGRESS e=27/120 done: 3351040 pairs, failures 0 [] (12.4s)
+[07:33:38] HEARTBEAT e=28 a=340/400 pairs(row)=2153291 fails(row)=0
+[07:33:43] PROGRESS e=28/120 done: 3373606 pairs, failures 0 [] (12.5s)
+[07:33:56] PROGRESS e=29/120 done: 3396112 pairs, failures 0 [] (12.9s)
+[07:34:09] PROGRESS e=30/120 done: 3418773 pairs, failures 0 [] (13.1s)
+[07:34:24] PROGRESS e=31/120 done: 3441370 pairs, failures 0 [] (14.5s)
+[07:34:38] PROGRESS e=32/120 done: 3464119 pairs, failures 0 [] (14.2s)
+[07:34:38] HEARTBEAT e=33 a=43/400 pairs(row)=7860 fails(row)=0
+[07:34:52] PROGRESS e=33/120 done: 3486800 pairs, failures 0 [] (14.0s)
+[07:35:06] PROGRESS e=34/120 done: 3509630 pairs, failures 0 [] (14.2s)
+[07:35:21] PROGRESS e=35/120 done: 3532388 pairs, failures 0 [] (15.1s)
+[07:35:37] PROGRESS e=36/120 done: 3555292 pairs, failures 0 [] (15.3s)
+[07:35:38] HEARTBEAT e=37 a=196/400 pairs(row)=541920 fails(row)=0
+[07:35:52] PROGRESS e=37/120 done: 3578120 pairs, failures 0 [] (15.5s)
+[07:36:08] PROGRESS e=38/120 done: 3601091 pairs, failures 0 [] (15.8s)
+[07:36:25] PROGRESS e=39/120 done: 3623982 pairs, failures 0 [] (17.0s)
+[07:36:38] HEARTBEAT e=40 a=368/400 pairs(row)=2910509 fails(row)=0
+[07:36:42] PROGRESS e=40/120 done: 3647013 pairs, failures 0 [] (17.6s)
+[07:36:59] PROGRESS e=41/120 done: 3669960 pairs, failures 0 [] (17.0s)
+[07:37:17] PROGRESS e=42/120 done: 3693044 pairs, failures 0 [] (17.5s)
+[07:37:35] PROGRESS e=43/120 done: 3716040 pairs, failures 0 [] (17.6s)
+[07:37:38] HEARTBEAT e=44 a=247/400 pairs(row)=1048118 fails(row)=0
+[07:37:53] PROGRESS e=44/120 done: 3739170 pairs, failures 0 [] (18.0s)
+[07:38:10] PROGRESS e=45/120 done: 3762208 pairs, failures 0 [] (17.9s)
+[07:38:29] PROGRESS e=46/120 done: 3785377 pairs, failures 0 [] (18.4s)
+[07:38:38] HEARTBEAT e=47 a=327/400 pairs(row)=2229115 fails(row)=0
+[07:38:47] PROGRESS e=47/120 done: 3808450 pairs, failures 0 [] (18.5s)
+[07:39:06] PROGRESS e=48/120 done: 3831651 pairs, failures 0 [] (18.9s)
+[07:39:25] PROGRESS e=49/120 done: 3854752 pairs, failures 0 [] (19.0s)
+[07:39:38] HEARTBEAT e=50 a=356/400 pairs(row)=2845903 fails(row)=0
+[07:39:45] PROGRESS e=50/120 done: 3877978 pairs, failures 0 [] (19.4s)
+[07:40:05] PROGRESS e=51/120 done: 3901100 pairs, failures 0 [] (20.6s)
+[07:40:27] PROGRESS e=52/120 done: 3924344 pairs, failures 0 [] (21.3s)
+[07:40:38] HEARTBEAT e=53 a=334/400 pairs(row)=2454340 fails(row)=0
+[07:40:48] PROGRESS e=53/120 done: 3947480 pairs, failures 0 [] (21.6s)
+[07:41:10] PROGRESS e=54/120 done: 3970735 pairs, failures 0 [] (21.5s)
+[07:41:31] PROGRESS e=55/120 done: 3993878 pairs, failures 0 [] (20.9s)
+[07:41:38] HEARTBEAT e=56 a=296/400 pairs(row)=1830771 fails(row)=0
+[07:41:53] PROGRESS e=56/120 done: 4017137 pairs, failures 0 [] (22.0s)
+[07:42:15] PROGRESS e=57/120 done: 4040280 pairs, failures 0 [] (22.2s)
+[07:42:37] PROGRESS e=58/120 done: 4063536 pairs, failures 0 [] (21.9s)
+[07:42:38] HEARTBEAT e=59 a=186/400 pairs(row)=575360 fails(row)=0
+[07:42:58] PROGRESS e=59/120 done: 4086672 pairs, failures 0 [] (21.6s)
+[07:43:21] PROGRESS e=60/120 done: 4109918 pairs, failures 0 [] (23.0s)
+[07:43:38] HEARTBEAT e=61 a=365/400 pairs(row)=3252612 fails(row)=0
+[07:43:45] PROGRESS e=61/120 done: 4133040 pairs, failures 0 [] (23.5s)
+[07:44:08] PROGRESS e=62/120 done: 4156269 pairs, failures 0 [] (23.0s)
+[07:44:31] PROGRESS e=63/120 done: 4179370 pairs, failures 0 [] (23.1s)
+[07:44:38] HEARTBEAT e=64 a=287/400 pairs(row)=1784048 fails(row)=0
+[07:44:54] PROGRESS e=64/120 done: 4202575 pairs, failures 0 [] (23.3s)
+[07:45:18] PROGRESS e=65/120 done: 4225648 pairs, failures 0 [] (23.8s)
+[07:45:39] HEARTBEAT e=66 a=382/400 pairs(row)=3768513 fails(row)=0
+[07:45:42] PROGRESS e=66/120 done: 4248822 pairs, failures 0 [] (24.0s)
+[07:46:07] PROGRESS e=67/120 done: 4271860 pairs, failures 0 [] (24.9s)
+[07:46:31] PROGRESS e=68/120 done: 4294996 pairs, failures 0 [] (24.1s)
+[07:46:39] HEARTBEAT e=69 a=281/400 pairs(row)=1744825 fails(row)=0
+[07:46:56] PROGRESS e=69/120 done: 4317992 pairs, failures 0 [] (24.6s)
+[07:47:20] PROGRESS e=70/120 done: 4341083 pairs, failures 0 [] (24.6s)
+[07:47:39] HEARTBEAT e=71 a=369/400 pairs(row)=3542047 fails(row)=0
+[07:47:45] PROGRESS e=71/120 done: 4364030 pairs, failures 0 [] (24.3s)
+[07:48:10] PROGRESS e=72/120 done: 4387069 pairs, failures 0 [] (24.9s)
+[07:48:35] PROGRESS e=73/120 done: 4409960 pairs, failures 0 [] (25.3s)
+[07:48:39] HEARTBEAT e=74 a=230/400 pairs(row)=1083005 fails(row)=0
+[07:49:00] PROGRESS e=74/120 done: 4432940 pairs, failures 0 [] (25.5s)
+[07:49:26] PROGRESS e=75/120 done: 4455768 pairs, failures 0 [] (25.5s)
+[07:49:39] HEARTBEAT e=76 a=327/400 pairs(row)=2671662 fails(row)=0
+[07:49:52] PROGRESS e=76/120 done: 4478682 pairs, failures 0 [] (25.8s)
+[07:50:18] PROGRESS e=77/120 done: 4501440 pairs, failures 0 [] (26.2s)
+[07:50:39] HEARTBEAT e=78 a=375/400 pairs(row)=3832280 fails(row)=0
+[07:50:44] PROGRESS e=78/120 done: 4524281 pairs, failures 0 [] (26.4s)
+[07:51:11] PROGRESS e=79/120 done: 4546962 pairs, failures 0 [] (26.8s)
+[07:51:38] PROGRESS e=80/120 done: 4569723 pairs, failures 0 [] (27.1s)
+[07:51:39] HEARTBEAT e=81 a=148/400 pairs(row)=343264 fails(row)=0
+[07:52:06] PROGRESS e=81/120 done: 4592320 pairs, failures 0 [] (27.9s)
+[07:52:35] PROGRESS e=82/120 done: 4614994 pairs, failures 0 [] (29.0s)
+[07:52:39] HEARTBEAT e=83 a=227/400 pairs(row)=1097635 fails(row)=0
+[07:53:03] PROGRESS e=83/120 done: 4637500 pairs, failures 0 [] (27.9s)
+[07:53:31] PROGRESS e=84/120 done: 4660080 pairs, failures 0 [] (28.1s)
+[07:53:39] HEARTBEAT e=85 a=278/400 pairs(row)=1856968 fails(row)=0
+[07:54:01] PROGRESS e=85/120 done: 4682488 pairs, failures 0 [] (29.7s)
+[07:54:33] PROGRESS e=86/120 done: 4704967 pairs, failures 0 [] (31.9s)
+[07:54:39] HEARTBEAT e=87 a=256/400 pairs(row)=1520990 fails(row)=0
+[07:55:03] PROGRESS e=87/120 done: 4727270 pairs, failures 0 [] (30.3s)
+[07:55:33] PROGRESS e=88/120 done: 4749641 pairs, failures 0 [] (29.9s)
+[07:55:39] HEARTBEAT e=89 a=254/400 pairs(row)=1504790 fails(row)=0
+[07:56:03] PROGRESS e=89/120 done: 4771832 pairs, failures 0 [] (30.6s)
+[07:56:35] PROGRESS e=90/120 done: 4794088 pairs, failures 0 [] (31.1s)
+[07:56:39] HEARTBEAT e=91 a=229/400 pairs(row)=1162237 fails(row)=0
+[07:57:06] PROGRESS e=91/120 done: 4816160 pairs, failures 0 [] (31.3s)
+[07:57:37] PROGRESS e=92/120 done: 4838294 pairs, failures 0 [] (30.7s)
+[07:57:39] HEARTBEAT e=93 a=196/400 pairs(row)=773032 fails(row)=0
+[07:58:08] PROGRESS e=93/120 done: 4860240 pairs, failures 0 [] (31.5s)
+[07:58:39] HEARTBEAT e=94 a=396/400 pairs(row)=4758740 fails(row)=0
+[07:58:41] PROGRESS e=94/120 done: 4882245 pairs, failures 0 [] (32.5s)
+[07:59:13] PROGRESS e=95/120 done: 4904058 pairs, failures 0 [] (32.6s)
+[07:59:39] HEARTBEAT e=96 a=374/400 pairs(row)=4151777 fails(row)=0
+[07:59:46] PROGRESS e=96/120 done: 4925927 pairs, failures 0 [] (33.3s)
+[08:00:20] PROGRESS e=97/120 done: 4947600 pairs, failures 0 [] (33.9s)
+[08:00:40] HEARTBEAT e=98 a=345/400 pairs(row)=3413100 fails(row)=0
+[08:00:52] PROGRESS e=98/120 done: 4969326 pairs, failures 0 [] (32.0s)
+[08:01:26] PROGRESS e=99/120 done: 4990852 pairs, failures 0 [] (33.4s)
+[08:01:40] HEARTBEAT e=100 a=310/400 pairs(row)=2624338 fails(row)=0
+[08:01:59] PROGRESS e=100/120 done: 5012428 pairs, failures 0 [] (33.5s)
+[08:02:33] PROGRESS e=101/120 done: 5033800 pairs, failures 0 [] (33.3s)
+[08:02:40] HEARTBEAT e=102 a=257/400 pairs(row)=1634542 fails(row)=0
+[08:03:06] PROGRESS e=102/120 done: 5055219 pairs, failures 0 [] (33.1s)
+[08:03:39] PROGRESS e=103/120 done: 5076430 pairs, failures 0 [] (33.5s)
+[08:03:40] HEARTBEAT e=104 a=136/400 pairs(row)=215775 fails(row)=0
+[08:04:13] PROGRESS e=104/120 done: 5097685 pairs, failures 0 [] (34.0s)
+[08:04:40] HEARTBEAT e=105 a=374/400 pairs(row)=4315770 fails(row)=0
+[08:04:47] PROGRESS e=105/120 done: 5118728 pairs, failures 0 [] (33.8s)
+[08:05:21] PROGRESS e=106/120 done: 5139812 pairs, failures 0 [] (34.4s)
+[08:05:40] HEARTBEAT e=107 a=335/400 pairs(row)=3289784 fails(row)=0
+[08:05:56] PROGRESS e=107/120 done: 5160680 pairs, failures 0 [] (34.5s)
+[08:06:30] PROGRESS e=108/120 done: 5181586 pairs, failures 0 [] (34.8s)
+[08:06:40] HEARTBEAT e=109 a=272/400 pairs(row)=1940448 fails(row)=0
+[08:07:06] PROGRESS e=109/120 done: 5202272 pairs, failures 0 [] (35.6s)
+[08:07:40] HEARTBEAT e=110 a=391/400 pairs(row)=4929736 fails(row)=0
+[08:07:43] PROGRESS e=110/120 done: 5222993 pairs, failures 0 [] (36.4s)
+[08:08:19] PROGRESS e=111/120 done: 5243490 pairs, failures 0 [] (36.0s)
+[08:08:40] HEARTBEAT e=112 a=344/400 pairs(row)=3588345 fails(row)=0
+[08:08:55] PROGRESS e=112/120 done: 5264019 pairs, failures 0 [] (36.2s)
+[08:09:31] PROGRESS e=113/120 done: 5284320 pairs, failures 0 [] (36.3s)
+[08:09:40] HEARTBEAT e=114 a=267/400 pairs(row)=1876028 fails(row)=0
+[08:10:08] PROGRESS e=114/120 done: 5304650 pairs, failures 0 [] (37.2s)
+[08:10:40] HEARTBEAT e=115 a=382/400 pairs(row)=4737168 fails(row)=0
+[08:10:46] PROGRESS e=115/120 done: 5324748 pairs, failures 0 [] (37.7s)
+[08:11:24] PROGRESS e=116/120 done: 5344872 pairs, failures 0 [] (37.9s)
+[08:11:40] HEARTBEAT e=117 a=311/400 pairs(row)=2820916 fails(row)=0
+[08:12:03] PROGRESS e=117/120 done: 5364760 pairs, failures 0 [] (39.2s)
+[08:12:40] HEARTBEAT e=118 a=398/400 pairs(row)=5316550 fails(row)=0
+[08:12:41] PROGRESS e=118/120 done: 5384671 pairs, failures 0 [] (38.1s)
+[08:13:20] PROGRESS e=119/120 done: 5404342 pairs, failures 0 [] (38.6s)
+[08:13:40] HEARTBEAT e=120 a=331/400 pairs(row)=3345466 fails(row)=0
+[08:14:01] PROGRESS e=120/120 done: 5424033 pairs, failures 0 [] (40.9s)
+DONE

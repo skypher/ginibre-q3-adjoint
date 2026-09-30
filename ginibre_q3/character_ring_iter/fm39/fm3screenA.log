@@ -1,0 +1,27 @@
+[07:34:57] FM3 kernel screen: 3002 cores (<= 5 labels <= 6), r <= 20, a <= 100
+[07:35:14] PROGRESS level r=1/20 done; evals 151646, negatives 0 [], zeros 32 (17s)
+[07:35:29] PROGRESS level r=2/20 done; evals 303292, negatives 0 [], zeros 39 (32s)
+[07:35:44] PROGRESS level r=3/20 done; evals 454938, negatives 0 [], zeros 40 (47s)
+[07:35:57] HEARTBEAT r=4/20 a=83/100 evals=581022 negatives=0
+[07:35:59] PROGRESS level r=4/20 done; evals 606584, negatives 0 [], zeros 40 (63s)
+[07:36:15] PROGRESS level r=5/20 done; evals 758230, negatives 0 [], zeros 40 (79s)
+[07:36:32] PROGRESS level r=6/20 done; evals 909876, negatives 0 [], zeros 40 (96s)
+[07:36:48] PROGRESS level r=7/20 done; evals 1061522, negatives 0 [], zeros 40 (112s)
+[07:36:57] HEARTBEAT r=8/20 a=54/100 evals=1144122 negatives=0
+[07:37:04] PROGRESS level r=8/20 done; evals 1213168, negatives 0 [], zeros 40 (128s)
+[07:37:20] PROGRESS level r=9/20 done; evals 1364814, negatives 0 [], zeros 40 (143s)
+[07:37:36] PROGRESS level r=10/20 done; evals 1516460, negatives 0 [], zeros 40 (160s)
+[07:37:52] PROGRESS level r=11/20 done; evals 1668106, negatives 0 [], zeros 40 (175s)
+[07:37:57] HEARTBEAT r=12/20 a=30/100 evals=1714682 negatives=0
+[07:38:08] PROGRESS level r=12/20 done; evals 1819752, negatives 0 [], zeros 40 (191s)
+[07:38:23] PROGRESS level r=13/20 done; evals 1971398, negatives 0 [], zeros 40 (207s)
+[07:38:39] PROGRESS level r=14/20 done; evals 2123044, negatives 0 [], zeros 40 (223s)
+[07:38:55] PROGRESS level r=15/20 done; evals 2274690, negatives 0 [], zeros 40 (238s)
+[07:38:57] HEARTBEAT r=16/20 a=13/100 evals=2295704 negatives=0
+[07:39:11] PROGRESS level r=16/20 done; evals 2426336, negatives 0 [], zeros 40 (254s)
+[07:39:27] PROGRESS level r=17/20 done; evals 2577982, negatives 0 [], zeros 40 (270s)
+[07:39:42] PROGRESS level r=18/20 done; evals 2729628, negatives 0 [], zeros 40 (285s)
+[07:39:57] HEARTBEAT r=19/20 a=92/100 evals=2869266 negatives=0
+[07:39:59] PROGRESS level r=19/20 done; evals 2881274, negatives 0 [], zeros 40 (302s)
+[07:40:15] PROGRESS level r=20/20 done; evals 3032920, negatives 0 [], zeros 40 (318s)
+DONE evals 3032920 negatives 0
