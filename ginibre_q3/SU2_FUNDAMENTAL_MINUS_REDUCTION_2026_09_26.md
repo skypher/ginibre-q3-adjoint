@@ -10022,6 +10022,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         instead.
       - `|g_k|^2` is not unimodal on 209 of 280 base rows, so a radius
         monotonicity argument is not available.
+    - *Recurrence model (main agent, `fm39/const_coeff_check.py`).*
+      - The base rows satisfy
+        `(k+1) c_(k+1) = (a-e) c_k - (N-k+1) c_(k-1)`.  So
+        `g_(k+1) = M_k g_k`, with `M_k = [[alpha_k, -beta_k],[1,0]]`,
+        `alpha_k = (a-e)/(k+1)` and `beta_k = (N-k+1)/(k+1)`.
+      - Then `D_k = H_k(g_k)`, where
+        `H_k(p,q) = p^2 - alpha_k p q + beta_k q^2`.  It is positive
+        definite in the oscillatory zone, and `H_k(M_k v) = beta_k H_k(v)`.
+      - If the coefficients were constant (`M` elliptic, rotation `omega`),
+        then `D_(x+j) = beta^j H` and
+        `T = beta^((n-1)/2) U_(n-1)(cos omega) H`, with `n = C+1`.  So W
+        is `sum_(j<n) beta^j >= beta^((n-1)/2) |U_(n-1)|`, which holds by
+        `|U_(n-1)| <= n` and AM--GM.
+      - In the same model, (E) with `s = i-j` and `beta < 1` becomes
+        `(1-beta^s) H >= |1-beta| beta^((s-1)/2) |U_(s-1)| H`, again true.
+      - Checked in 560,000 windows.  So `D_k` is a discrete Sonin
+        function, and Theorem OL is its monotonicity.  W and (E) are both
+        comparisons of this kind with slowly varying coefficients, which
+        points to a Sturm/Sonin comparison proof.
 - **Four factors: split identity, closed form and Theorem LL4 (FM-SEC6,
   luna_max_venus; verified by the main agent, `mech/four_repro.py`,
   `mech/ll4_check.py`, `mech/four_explore.py`).**
