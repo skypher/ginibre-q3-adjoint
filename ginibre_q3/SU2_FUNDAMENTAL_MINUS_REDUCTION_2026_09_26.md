@@ -10636,6 +10636,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (`4 < 9/2`).  This kills only the radial dictionary: that list
           is B via non-radial subgroup orbits (FM-MECH31, FM-SEC113).
         - Comparison table of the `d = 1, 2, 3` factor families recorded.
+      - **FM-MECH40 (astra_max_ceres;
+        `fm39/mech40_insertion_obstruction_repro.py`, all assertions
+        pass): no parent-preserving insertion.**
+        - Setting: insert a label `a` into `mu` with `n` fixed.  The child
+          slices are `A = sum_(j in CG(a,n)) A_j` and `C`, and the parent is
+          `P`.
+        - A construction `P = sum c Q(u)`, `A = sum c [Q(u) + Q(v)]`,
+          `C = 2 sum c u*v` must satisfy, for every character `T` and
+          q-degree `k`, `C_k(T)^2 <= 4 P_k(T) (A_k(T) - P_k(T))`.  This is
+          a Gram matrix bound, so it holds even for signed factors and
+          arbitrary partners.
+        - KILL: the bound fails at `(2^8; a = n = 2)`, i.e.
+          `(2^9) -> (2^10)`, at `q^4` (gap `-506,106,194,944`), and at
+          `q = 0` for `(2^15)`.  Asymptotically, tilting by `(Z+Z')^m`
+          (`Z = U_2`) gives ratio `-1`.
+        - Both tables are H_AC_q (83 control certificates).  Reorganizing
+          the fusion channels (each `(A_j, C_j)` H_AC_q with
+          `sum_j C_j = C`) passes the census: 47 insertion instances, 760
+          certificates, and a 24-term allocation at the obstructing `q^4`.
+        - Knob: preservation of the parent autocorrelation.  An induction
+          on labels must re-factorize the old half; no
+          'keep the parent, add partners' rule reaches the full cone.
       - FM-SEC115 (luna_max_mercury; `fm39/sec115_hACq_d2_repro.py`, rerun
         exactly): an independent proof of H_AC_q at distance two.
         - Explicit table: `D_mu` at the origin, `alpha` on type 11,
