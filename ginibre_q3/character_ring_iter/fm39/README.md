@@ -32,6 +32,10 @@ this directory, because several `exec` a sibling file.
 | Theorem LLm, LLm-S (spread labels, any m, with hat S) | `llm_check.py`, `llms_check.py` |
 | Offset induction, inequality (P) | `pinduct_repro.py` |
 | Theorem G3 (positive next-row minors) | `g3_repro.py`, `g3_check.py` |
+| Theorems G3X, G3O, decomposition (1) | `g3x_repro.py`, `g3x_check.py`, `g3x_region_check.py` (args: comma list of r, e.g. `26,27,...,90`) |
+| Direct three-factor split evaluator | `split3.py`, `split3_selftest.py` |
+| G0 branch scan, Conjecture W (real-rooted windows) | `g0_scan.py`, `window_explore.py`, `window_realrooted.py`, `window_f.py` |
+| GFM3 (kernel factors `Q_t`) and controls | `wformula_check.py`, `kernel_identity.py`, `recip_test.py`, `recip_bounds.py`, `recip_quartic.py`, `general_row_words.py` (args: seed, count), `general_row_words_ctrl.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main

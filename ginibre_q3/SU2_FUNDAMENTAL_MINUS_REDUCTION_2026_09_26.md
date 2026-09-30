@@ -8787,6 +8787,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | two labels | all three sign patterns when the suffix `a` is `<= 2` or within 1 of the weight exponent `e` (item (39), strip of (E)) |
   | all `r` | H-only | three factors, no suffix: `h_u h_v h_w` (Theorem THREE); three factors, any suffix, `min label >= a+2r-4` or `u-v+w >= a+2r-3` (Theorem LL); any number of factors, all parts even, no suffix (item (39)) |
   | all `r` | H-only | three factors with `|a - (2r-3)| <= 1`, all labels (Theorems DS, AS); T3R regions (item (39)) |
+  | all `r` | H-only | three factors in the G0 branch `gamma >= a+2r-2` under the one-sign-block, root-crossing (G3X) or odd-`C` (G3O) conditions, and parts of `gamma = N` (Theorems G3, G3X, G3O, item (39)) |
   | all `r` | H-only | any number `m <= 2r` of factors with spread labels: `lambda(S)+lambda(S^c) > a+2r-m` for every split (Theorem LLm; includes LL, LL4) |
   | all `r` | every consumer word (h and hat S) | spread labels over every two-sided assignment (Theorem LLm-S) |
   | all `r` | every word | suffix `a >= (2r+3) Lambda(w) - 2r - 4` (Theorem LS); `2r + a + t + 6 >= 7L(w)`, `L` an additive quartic in the labels (Theorem LR4) |
@@ -9678,7 +9679,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
     astra_max_ceres; verified by the main agent, `mech/g3_repro.py`,
     `mech/g3_check.py`).**
     - Assume (G0): `C` is even, `0 <= alpha < beta <= N` and `gamma >= N+1`.
-      Then `R_B`, `R_A` and the far window vanish.  With `C = 2h` and
+      In the three-factor closed form `phi = M - R`, the coefficients with
+      indices `gamma, gamma+1, delta+1, delta+2` vanish (`delta = gamma+C`,
+      `C >= 2`).  Hence the upper `D`-window is zero and
+      `R = c_alpha c_beta - c_(alpha-1) c_(beta+1)`; this endpoint product
+      stays in the formula (repair from FM-CHK32).  With `C = 2h` and
       `g_k = c_(k+1) - c_(k-1)`:
       `phi_r(h_u h_v h_w h_1^a) = sum_(1<=i<=j<=h) [g_(alpha+2i-1) g_(alpha+2j-1)
       - g_(alpha+2i-2) g_(alpha+2j)]`.
@@ -9699,6 +9704,92 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       positivity in the 16 of them inside `(GC)` or `(GO)`.
     - Open: (G0) windows crossing a root of `K_(m+1)`; `C` odd or
       `gamma <= N`.
+  - **Theorems G3X and G3O (root crossing, odd `C`, part of `gamma = N`;
+    FM-MECH22, astra_max_ceres; verified by the main agent,
+    `fm39/g3x_repro.py`, `fm39/g3x_check.py`, `fm39/g3x_region_check.py`).**
+    - *Decomposition, all three corrections present.*  Put
+      `A_x = c_x - c_(x+C)`, `B_x = c_(x-1) - c_(x+C+1)` and
+      `P_C(x) = sum_(k=x..x+C) D_k - c_x c_(x+C) + c_(x-1) c_(x+C+1)`.
+      Then, with `l = alpha` and `tau = gamma+1`,
+      `phi_r(h_u h_v h_w h_1^a) = P_C(l) - P_C(tau) - (A_l B_tau - B_l A_tau)`.
+      For `C = 2h`, `P_C(x)` is the minor sum `T_C(x)` of G3.  For every
+      `C` there is a boundary-free form in `f_k = c_k - c_(k-1)` (the row
+      of `(1+z)^a (1-z)^(e+1)`):
+      `P_C(x) = sum_(s=2..2C) [f_(x+floor(s/2)) f_(x+ceil(s/2))
+      - f_(x+max(0,s-C-1)) f_(x+min(s,C+1))]`.
+    - *Single-root lemma.*  If `F = (x - lambda) H` with `H > 0` and
+      `-kappa <= (log H)'' <= 0` on `[L, U]`, and
+      `kappa (lambda - L)(U - lambda) <= 1`, then every balanced product
+      dominates its outer product on `[L, U]`, across the root.
+    - **Theorem G3X.**  `C` even, `m = min(a,e)` even and `>= 2`,
+      `0 <= alpha < beta <= N`, `gamma >= N+1` and `3 m Y^2 <= N - m + 4`
+      (`Y = A - B + C`).  Then `phi > 0`; the window may cross the
+      central root of `K_(m+1)`.  Example: `(r,a;u,v,w) = (150,4;153,152,3)`.
+    - **Theorem G3O.**  `C` odd, `0 <= alpha < beta <= N`, `gamma >= N+1`
+      and `(e+1)(Y+1)^2 <= 2(a+2)`.  Then `phi > 0`.  Example:
+      `phi_3(h_18^2 h_2 h_1^30) = 147,831,720,921,000`.
+    - *`gamma = N`.*  There `phi = P_C(alpha) + c_alpha - c_beta`, and both
+      theorems extend: G3O when `r` is even, G3X when `alpha + m/2` is
+      even.
+    - *Checks.*  The agent verifier reruns.  The main agent's direct split
+      evaluator (definition-level ballot moments, cross-checked against
+      `fm3kern.py`) confirmed the decomposition in 400 random cases and
+      positivity in 9,513 (GX) words (every one with `d < 0`, so the window
+      crosses `X = 0`), 21,316 (GOdd) words and 282 `gamma = N` words.
+      Independent checker pass: FM-CHK33 (pending).
+    - Kill (knob: termwise sign of the minors, no consumer use): single
+      minors can be negative, e.g. `a = e = 3`, `(5,5,3)` gives minors
+      `24, -16, 24`.
+  - **The whole G0 branch reduces to one real-rootedness inequality
+    (main agent, `fm39/g0_scan.py`, `fm39/window_explore.py`,
+    `fm39/window_realrooted.py`, `fm39/window_f.py`).**
+    - On `gamma >= N+1`, `phi = P_C(alpha)`.  All 533,190 G0 words with
+      `r <= 8`, `a < 40` (both parities of `C`) are positive.
+    - Conjecture W: for every real polynomial `P = sum c_k z^k` with only
+      real roots (any signs) and every window, `P_C(x) >= 0`.  Screens:
+      523,745 windows of `(1+z)^a (1-z)^e`, `a, e <= 30`; 1,500 random
+      real-rooted rows (all windows); 95,659 windows in the `f`-form
+      `S(w) = sum_(j=1..M-1) w_j^2 + sum_(j=1..M-2) w_j w_(j+1)
+      - w_0 sum_(s=2..M) w_s - w_M sum_(s=1..M-2) w_s`, for arbitrary
+      real-rooted rows; no failure.
+    - Controls: one complex root pair gives negative windows in 138 of
+      300 rows; random integer rows in 197 of 300.  The `C`-increment
+      `P_(C+1) - P_C` and the shifted sums `sum_k T(k,k+s) - T(x,x+C+s)`
+      fail often.
+    - Conjecture W implies the entire G0 branch of the three-factor
+      stratum at every level.
+  - **GFM3: FM3 with extra nonnegative kernel factors (main agent,
+    `fm39/recip_test.py`, `fm39/recip_bounds.py`, `fm39/recip_quartic.py`,
+    `fm39/kernel_identity.py`, `fm39/general_row_words.py`).**
+    - *Identity.*  For `P = (1+z)^a (1-z)^e prod_i (1 + t_i z + z^2)` the
+      quadratic kernel formula `W_c(p,q) = B_i c_j - c_i B_j` equals
+      `E[K U_p(x) U_q(y)]` with
+      `K = (x+y)^a (x-y)^e prod_i Q_(t_i)`,
+      `Q_t = x^2 + t x y + y^2 + t^2 - 4`,
+      because `P(u/v) P(uv) = u^N K(u+1/u, v+1/v)`.  Checked in 8,692
+      cases, any real `t`.
+    - `Q_t = (x + t y/2)^2 + (t^2/4 - 1)(4 - y^2)` is `>= 0` on
+      `[-2,2]^2` iff `|t| >= 2`.  `Q_2 = (x+y)^2`, `Q_(-2) = (x-y)^2`, and
+      `Q_t / t^2 -> 1` as `t -> infinity`.
+    - *Screens* (none failed):
+      - the three-factor closed form, all `gamma` (including
+        `gamma <= N`), on anti-reciprocal real-rooted rows (`e` odd,
+        `|t_i| >= 2`): 342,495 tests;
+      - OL on these rows: 11,651 tests;
+      - (E) on reciprocal rows: 14,250 tests;
+      - the full split functional on 20,000 random consumer words
+        (2..6 general labels, 0..2 `hat S`, 1..3 factors `Q_t`,
+        `|t| >= 2`).
+    - *Controls* (failures found):
+      - `|t| < 2`: 102 of 3,000 words, and 1,291 three-factor failures;
+      - reciprocal complex root quadruples (a positive weight, but not
+        real-rooted): 17 failures;
+      - non-reciprocal real-rooted rows: 9 failures in 49,513.
+    - So FM3 appears to be the vertex case `t_i in {+-2}` of a
+      positivity statement on the whole family `Q_t`, `|t| >= 2`.  In
+      `s = 1/t in [-1/2, 1/2]`, `Q_t / t^2 = 1 + s xy + s^2 (x^2 + y^2 - 4)`.
+      The family deforms `(x+y)^2` (`s = 1/2`) through `1` (`s = 0`) to
+      `(x-y)^2` (`s = -1/2`).
 - **Four factors: split identity, closed form and Theorem LL4 (FM-SEC6,
   luna_max_venus; verified by the main agent, `mech/four_repro.py`,
   `mech/ll4_check.py`, `mech/four_explore.py`).**
