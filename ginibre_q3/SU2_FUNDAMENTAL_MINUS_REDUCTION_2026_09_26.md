@@ -8790,7 +8790,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | H-only | three factors in the G0 branch `gamma >= a+2r-2` under the one-sign-block, root-crossing (G3X) or odd-`C` (G3O) conditions, and parts of `gamma = N` (Theorems G3, G3X, G3O, item (39)) |
   | all `r` | H-only | three factors, whole G0 branch when `(a-2r+2)^2 <= 8r-9` (Theorem G0B); whole G0 branch conditional on (E) (Theorem G0E) |
   | all `r` | H-only | four factors on the outer-pairing support region, conditional on (E) (Theorem G0E4; strictly extends LL4) |
-  | `r <= 8` | H-only | three factors, both branches (`gamma <= N` included), for `a <= 40`, `w <= 14`, `u <= v+w+1` (positive definite binary forms, exact; 373,673 words) |
+  | `r <= 8` | H-only | three factors, both branches, `a <= 40`, `w <= 14`, `u <= v+w+1` (finite box; every word has a positive definite binary form) |
   | all `r` | H-only | three factors with equal largest labels in G0: `h_u^2 h_w h_1^a` for `2u >= a+2r+w-2` (centered-window theorem, FM-MECH25); the whole G0 branch for every `r <= 100`, `a <= 150` (every one of 130.9M windows covered by proved criteria) |
   | all `r` | two labels | (E) at `q = 1` (gap `i = j+2`) for all `a, e` (Theorem EQ1); `q = 2` with the minus-W sign (OL on `(1-z^2)P`) |
   | all `r` | two labels (all three sign patterns) | every word whose kernel row has `a, e <= 80` (each of 6.3M (E) pairs covered by a proved criterion: binary forms, LD/metric chords, RF, EQ1, strips); sampled to `a, e <= 300` with no gap |
@@ -8798,6 +8798,14 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every consumer word (h and hat S) | spread labels over every two-sided assignment (Theorem LLm-S) |
   | all `r` | every word | suffix `a >= (2r+3) Lambda(w) - 2r - 4` (Theorem LS); `2r + a + t + 6 >= 7L(w)`, `L` an additive quartic in the labels (Theorem LR4) |
 
+  - Finite-range rows.  The table rows restricted to finite `(r, a)` or
+    finite `(a, e)` cover all labels there, since larger labels fall
+    outside the support.  They are equivalent in strength to exact
+    evaluation.  Their added value is that every case lies in a uniform
+    criterion, which is evidence that the union of criteria is
+    exhaustive.  The uniform results of item (39) are those stated for
+    all parameters: EQ1, OL, LD, G0B, G0E, G0E4, the centered sector,
+    and the metric and energy-drop regions.
   - Open: unbounded numbers of factors in every sector.  For T1, the
     product-class certificate fails at seven factors (bounded degree);
     slicing extends it slice by slice.
@@ -9834,9 +9842,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `v <= u <= v+w+1`: all 373,673 words give a positive definite form
         (133,210 on the `gamma <= N` branch, 240,463 on G0).  The form
         reproduces `phi` exactly in the sanity checks.
-      - So `phi_r(h_u h_v h_w h_1^a) >= 0` holds with a ratio-free
-        certificate for every word in that box, including every
-        `gamma <= N` word there.
+      - Every word in that box therefore has a ratio-free certificate,
+        including every `gamma <= N` word there.  On a finite box this is
+        no stronger than exact evaluation of `phi`.  Its significance is
+        structural: it points to definiteness as a uniform mechanism.
+      - It is not universal beyond three `h` factors (FM-SEC36,
+        luna_max_uranus, and the main agent's `fm39/word_binary_census.py`).
+        - Three-label `hat S` patterns are definite or PSD on
+          FM-SEC36's grid (`r <= 4`, `a <= 6`, labels `<= 5`).  On a larger
+          grid there are non-PSD words, e.g. `hat S_2 hat S_3 hat S_9` at
+          `r = 5`, `a = 0`, and a few `h h hat S` words.
+        - Four-factor words have indefinite forms, e.g.
+          `h_2 hat S_2^3 h_1^4` at `r = 1`, yet `phi = 75 > 0` on the actual
+          row.
+        - So beyond three `h`'s the actual coefficient ratio must be used,
+          e.g. through ratio bounds as in Theorem OL's steps 2-5.
       - Open: definiteness for all parameters (FM-MECH27, FM-SEC37), and
         whether it extends to `hat S` patterns and four factors
         (FM-SEC36).
