@@ -15,7 +15,8 @@ def feasible(K,L,Z,T):
     return any(f(t)>=0 for t in cands)
 EMAX,AMAX=int(sys.argv[1]),int(sys.argv[2]); AMIN=int(sys.argv[3]) if len(sys.argv)>3 else 0
 st=Counter(); ex=[]; t0=time.time(); last=t0
-for e in range(3,EMAX+1,2):
+EMIN=int(sys.argv[4]) if len(sys.argv)>4 else 3
+for e in range(EMIN,EMAX+1,2):
     for a in range(AMIN,AMAX+1):
         N=a+e; V0=(a+1)*(e+1); c=c_row(a,e); d0,sigma=a-e,N+2
         for C in range(3,N+1):

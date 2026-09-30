@@ -9857,6 +9857,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         same pattern as (E): the metric alone misses an `e = 3`,
         large-`a` family, which for (E) the short-arc argument covers.
         FM-SEC51 looks for the geometric half of a split.
+        At `e = 1` (level 2), `a <= 60`: 146,474 of 148,800 words
+        satisfy (HT3), 767 have `U ^ V <= 0`, and 1,559 fail (all
+        `phi > 0`, e.g. `(1,24,3,4,0,9)`).  Assigned as FM-SEC57.
+    - *FM-SEC53 (luna_max_mars): suffix `a in {1,2}`.*  The G0 branch
+      there follows from Theorem T3R (`min(a,e) <= 2`), and `r = 2, 3`
+      follow from T1-5 and R3-5.  Under the parity transform the rest
+      maps to level-1 words with two or three `hat S` and `h_1^e`
+      (FM-SEC52's target), or to three-factor words at `e = 1` with a
+      long suffix (FM-SEC57).  Residual families on the `gamma <= N`
+      side: `phi_((e+3)/2)(h_e h_2^2 h_1)` (one short of T3R's spread;
+      63 at `e = 5`) and `phi_((e+3)/2)(h_2^3 h_1^2)` (59, 27144, 291108
+      at `e = 5, 11, 13`).
     - **Binary forms for three factors (main agent,
       `fm39/phi3_binary_form.py`, `fm39/phi3_binary_census.py`).**
       - Through the recurrence, `phi_r(h_u h_v h_w h_1^a)` is a binary
@@ -11139,6 +11151,9 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             step uses the metric `mu_(j+1)`.
           - outer, `X_i^2 > 2V`: `(HT)` at `t = 2V`, i.e.
             `D_j - D_i >= 2 sqrt(Dt_j Dt_i)`.
+        - At `a <= 120` (6,786 rows): all 13,634,429 case-(c) pairs pass,
+          7,797,535 outer by `t = 2V` and 5,836,894 inner by `(b)`, 34 of
+          them by `(b')`.
         - So (E) reduces to two statements on case-(c) pairs.
           - `(I)` (inner): `sum_(k=j..i-1) sin(dth_k^(mu_k)) / sqrt(mu_k)
             >= (|m_j n_i| + |n_j m_i|) / (rho_j rho_i)`.  This is a discrete
