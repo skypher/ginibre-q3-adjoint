@@ -10911,6 +10911,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           demand of 30.
         - A positive admissible intermediate, `(05)(13)(24)` of weight
           2, exists.  Knob: terminal-only targets.
+      - FM-SEC108 (luna_max_uranus;
+        `fm39/sec108_fractional_charge_repro.py`, run from the repo root,
+        reruns exactly).
+        - KILL: canonical fractional straightening charges, in three
+          normalizations.  At `(2^5)`, `T = {0,1}` four negative roots
+          (weight `-2`, coefficient `c_(M,N) = 2`) all charge
+          `N = (09)(12)(34)(56)(78)` (weight 2).  It receives
+          `14/3, 16/5, 3888/805`.
+        - Also overcharged: `(2^6)`, `T = {4,5}`, and 34, 9, 34 of the 36
+          pair-`T` profiles at `(1^8,6)`.
+        - Knob: fan-in, i.e. locality of the canonical charge.  Only a
+          global flow (Hall) remains on this line.
       - FM-SEC106 (luna_max_uranus): recursive Pluecker charging at
         level 1.  Max flow meets demand on 1,450 ordered profiles
         (length `<= 5`, labels `<= 3`, all pairs `T`) and on the boundary
