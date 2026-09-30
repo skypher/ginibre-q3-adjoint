@@ -10237,6 +10237,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `S/((C+1) sqrt(D_x D_y))` lies between 3.2 and 29.  So W, and with
         it the G0 branch, now reduces to (ii) on windows with
         `1 < u < C`.
+    - **(E) at `q = 1` for exponent gaps 2 and 3 (FM-SEC17, luna_max_mars;
+      verified by the main agent, `fm39/e_q1_repro.py`,
+      `fm39/e_q1_route_kill.py`).**
+      - For `a, e >= 3`, `|a-e| in {2,3}` and `i = j+2`, (E) holds.  This
+        includes root-crossing pairs, e.g. `(a,e,j,i) = (5,3,5,7)` with
+        `(L, W, slack) = (30, 10, 20)`.
+      - *Proof.*  Fold to `a = e + d`.  The coefficient rows are explicit
+        in `b_t = C(e,t)`, and `(L -+ W)/b_t^2` factors into products of
+        nonnegative terms (four symbolic cases, `d = 2, 3`, `k` even or
+        odd).
+      - The outer endpoint `(j,i) = (N-1, N+1)` holds for every `a, e`
+        with `N >= 2`.  There `D_(N-1) - D_(N+1) = (delta^2 + N)/2` and
+        `|W| = |delta|`.
+      - Kill (a proof route): allowing unrestricted recurrence starting
+        values makes the `L - W` form indefinite (`N = 18`, `a-e = -12`,
+        `j = 17`).  On the actual row, `L - W = 93`.
+      - It covers fixed gaps only; `|a-e| >= 4` at `q = 1`, and `q >= 2`
+        across roots, remain open.
     - **FM-SEC16 (luna_max_jupiter) on (ii):**
       - Proved: `C <= 1` (AM--GM), and centered windows `2x + C = N`.
         Centered windows follow from `D_(N-k) = D_k`, Theorem OL, and the
