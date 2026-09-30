@@ -9796,6 +9796,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       `0.073, 0.019, 0.0048` at `a = 80, 160, 320` for `h_2^3`, `r = 2`.
       That range is inside Theorem LS.
     - Assigned as FM-SEC14 (luna_max_mars).
+    - *Reduction to the basic inequalities, partial (main agent,
+      `fm39/basis_lp.py`, `fm39/basis_lp2.py`).*
+      - As quadratic forms on anti-reciprocal sequences, the LP tested
+        whether each three-factor value on this branch is a nonnegative
+        combination of:
+        - OL differences `D_k - D_(k+1)` (`2k > N`);
+        - W windows `P_C(x)`;
+        - the (E) forms `D_j - D_i +/- W_ij`;
+        - and all their twists.
+      - Result at `r <= 3`, `a <= 9`: 244 of 322 words are such
+        combinations, and 78 are not.  The first is `h_2^3 h_1^4` at
+        `r = 2`.
+      - So W, (E) and OL alone do not give the whole `gamma <= N` branch
+        in this linear sense.
   - **GFM3: FM3 with extra nonnegative kernel factors (main agent,
     `fm39/recip_test.py`, `fm39/recip_bounds.py`, `fm39/recip_quartic.py`,
     `fm39/kernel_identity.py`, `fm39/general_row_words.py`).**
