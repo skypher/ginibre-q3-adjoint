@@ -10859,6 +10859,16 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             with both signs for every label `p <= 6`, at every level and for
             all `a, e`.  The words `hat S_p hat S_2 h_1^a` and
             `h_(p-1) hat S_2 h_1^a` are the `b = 1` cases of those theorems.
+        - FM-CHK55 (luna_max_eris, fresh code): ACCEPT all six items.
+          - Lemma 1: normalization `4^(N+1)/pi^2` and the fold.
+          - Lemma 2: the IBP identity (5) coefficient by coefficient;
+            Prop. 3.
+          - The six polynomial identities and Bernstein minima; the finite
+            box is exactly the complement (28,946 values, 10 zeros).
+          - Prop. 7 endpoints and the label-7 ray values.
+          - The `[U_n] g` identities (1,152 direct cases).  A fresh
+            U-positivity screen with `k + a + 2b <= 40` (5,950 profiles)
+            found no negative coefficient.
         - FM-SEC125 (luna_max_mars; `fm39/sec125_label4_moments_repro.py`,
           rerun exactly): the label-4 inequalities of FM-MECH44 in joint
           moments `mu_(m,k)`.  Proved for `b = 0, 1` by explicit
