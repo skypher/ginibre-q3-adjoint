@@ -10630,6 +10630,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           free families, `x_a` commuting with `y_b` exactly when the edge
           `ab` is present, and edge probability `s`.  The complete graph
           gives FM3 and the empty graph the free value.
+        - FM-SEC95 (luna_max_mercury): falsification of the
+          strengthenings.
+          - `(1^7, 5)`, `T = {0,1}` gives
+            `F_(0,s) = 20 + 2s - 2s^3 - 4s^4 - 2s^5`, which is `-120` at
+            `s = 2`.  So the half-plane statement needs the bound
+            `s <= 1`; the mixed Fock space is defined only for
+            `|q|, |s| <= 1`.  Inside the square this profile is positive,
+            with Bernstein coefficients `(20, 102/5, 104/5, 21, 20, 14)`.
+          - q-positivity (Q): 35,456 more profiles on 41 targeted lists,
+            including `(1^N, N-2)`, `(1^N, N-4)` and lists of length 9-12,
+            plus the tight atlas.  No negative coefficient.
+          - Graph products (G): 1,632 values for selected `N = 3, 4`
+            graphs, none negative.
+          - Bernstein positivity (BP): no failure; the extended screen is
+            incomplete.
         - FM-SEC93 (luna_max_uranus): no proof of Bernstein positivity.
           - Slot reading: `F_(0,s)` is the expectation of the polarization
             `sum_c a_c e_c(z)/C(d,c)` on `d` Bernoulli-`s` slots.  The
