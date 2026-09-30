@@ -10274,6 +10274,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         nearly geometrically there, and the crude bound `max + C min`
         misses the LD bound by about 1%.  A sharper energy bound on the
         decreasing side would cover it (FM-SEC27).
+      - Systematic scans (main agent, `fm39/w_residual_rows.py`, `..._rows2.py`,
+        `..._rows3.py`).
+        - Without the twist, rows with small `a` (3..5) and large `e`
+          (`r >= 24`) leave 707 uncovered windows.  These rows alternate,
+          so the phase curve turns nearly `pi` per step.
+        - Adding Theorem WS on the twisted row (even `C`), the odd-`C`
+          twist test `T~ >= 0`, and the long-sweep pass criterion (direct
+          and twisted) leaves 0 of 2,020,802 windows for `r = 30..100`,
+          `a = 3..8`.  FM-SEC27 (luna_max_venus) also noted that the pass
+          criterion proves the four earlier grid windows
+          (`fm39/w_pass_four_repro.py`).
+        - Full scan `r <= 100`, `a <= 150`: running.
+      - Open: a uniform argument that the criteria are exhaustive.  The
+        clearest target is the decreasing-side strip `a >= e + 2`,
+        `x >= N/2`, `1 < u < C`.
     - *Recurrence model (main agent, `fm39/const_coeff_check.py`).*
       - The base rows satisfy
         `(k+1) c_(k+1) = (a-e) c_k - (N-k+1) c_(k-1)`.  So
@@ -10470,6 +10485,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         So the convex-polygon argument gives (E) at every `q`, both signs,
         on `psi`-windows sweeping `< pi`, from (E) at `q = 1`.  But only
         8% of pairs sweep `< pi`; 74% sweep `> 2 pi`.
+      - *Sibling rows (FM-SEC28, luna_max_mars).*  With
+        `F = (1+z)^(a+2)(1-z)^e` and `G = (1+z)^a (1-z)^(e+2)`, one has
+        `F - G = 4zP` and `F + G = 2(1+z^2)P`.  Hence
+        `W_ij = (f_(j+1) g_(i+1) - g_(j+1) f_(i+1))/4`, and `delta_k` is the
+        adjacent mixed determinant.  So (i)-psi is an LD-type bound for
+        the mixed curve of two real-rooted rows sharing the factor `1+z`
+        (for `a >= 1`).  The `a = 0` failures show that real-rootedness of
+        the two rows alone is not enough.  Reproducer:
+        `fm39/psi_sibling_repro.py`.
       - Split, parallel to W's (i)+(ii):
         - (i)-psi: `|W_ij| <= (i-j) sqrt(delta_j delta_(i-1))`.  It held
           in 402,926 of 403,340 pairs with `q >= 1`; the failures are at
