@@ -10127,6 +10127,36 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `P = 1` for even `a`, `t` for odd `a`, gives `4t^2 - 1`), so the
         proof must use compatibility of the actual arrays across `(r,a)`.
         FM-MECH29 (propagation) and FM-SEC49 (falsification) are on it.
+    - **FM-MECH29 (astra_max_ceres): H is false** (knob: Hurwitz
+      stability of the whole profile, while FM3 consumes only its constant
+      term).
+      - `w = hat S_2^9`, `r = 1`, `a = 0`:
+        `P = 4q(t^2)`, where
+        `q(z) = 128z^9 + 5184z^8 + 67968z^7 + 370944z^6 + 915264z^5 +
+        1050768z^4 + 573720z^3 + 170928z^2 + 42858z + 8279`.
+        The first seven Hurwitz determinants are positive, but
+        `Delta_8(q) = -8938654984643632236257554566691734683648`.
+        The consumer value is `phi_1(hat S_2^9) = 33116 > 0`.  The four
+        parent profiles of `hat S_2^8` pass H, and the insertion law
+        reproduces the child exactly.  Rerun by the main agent.
+      - Survives: every actual profile array satisfies `C P = 0`, with
+        `C = Pi(A,R) d/dt + 2T Pi(A,R) + 3 Pi_s(A,R)`,
+        `Pi(s,D) = s^4 - 2(D+16)s^2 + (D-16)^2` (the boundary of the
+        `(s, D)` support) and `(TP)_(r,a) = a P_(r,a-1)`.  It commutes with
+        `A + 2tI` and `R`, so every insertion preserves it.  It excludes
+        the artificial array `1 / t` but not `hat S_2^9`.
+      - Killed on the way: PSD of joint `(s, D)` moment matrices (`det
+        -16` for `hat S_2`, `r = 1`).
+      - FM-SEC49 (falsification of H) was stopped as moot.
+    - **Unconstrained screen (main agent).**  The bound `m <= 2r` on the
+      general `h` factors seems not to be needed.
+      `phi_r(w h_1^a) = (1/2) E[(x-y)^(2r)(x+y)^a w]` is `>= 0` on all
+      10,680 words with `r <= 3`, `2r < m <= 2r+3` general `h` (labels
+      `2..4`), `0..2` `hat S` and `a <= 3`.  This matches the note's MP
+      screens for general `kappa`.  A hypothesis without level
+      bookkeeping (any `r >= 0`, any word) is therefore a live option for
+      M5.  Genuineness alone is not enough: `F = (h_2 - 1)^2` is a
+      genuine `SU(2) wr Z_2` character, yet `phi_1(F hat S_4) = -1`.
     - FM-SEC31 (luna_max_pluto): the mixed term expands exactly through
       lower-label values, `C = A - B`, so the inductive step is
       `A <= R + B`.  Every term there has fewer labels, but positivity of
