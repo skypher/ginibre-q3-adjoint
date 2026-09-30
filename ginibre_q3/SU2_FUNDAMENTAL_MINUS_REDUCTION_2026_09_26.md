@@ -10624,6 +10624,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - FM-CHK51 (luna_max_eris, fresh code): ACCEPT all four items
           (3,095 ordered lists with labels `<= 4`, total `<= 12`; `d = 1`
           on 496,656 entries, `d = 2` on 496,584).
+      - FM-SEC119 (luna_max_mercury; `fm39/sec119_d3_radial_repro.py`,
+        rerun exactly): distance three, two or more labels 1.
+        - The `d = 3` table is `g_q(S) = m_q(mu_S) K_(3-k)(mu_(S^c))`.  The
+          low-side moments are listed by label type, and the append
+          recurrence is
+          `K_d(nu a) = sum_j K_j(nu) [S-2j choose d-j]_q
+          [a choose d-j]_q [d-j]_q!`.
+        - KILL: radial factors `aE + bH`, `A` on the 1-labels.  They force
+          `g(4) >= (9/10) g(6)`, which fails at `(1^7)`, `n = 1`
+          (`4 < 9/2`).  This kills only the radial dictionary: that list
+          is B via non-radial subgroup orbits (FM-MECH31, FM-SEC113).
+        - Comparison table of the `d = 1, 2, 3` factor families recorded.
       - FM-SEC115 (luna_max_mercury; `fm39/sec115_hACq_d2_repro.py`, rerun
         exactly): an independent proof of H_AC_q at distance two.
         - Explicit table: `D_mu` at the origin, `alpha` on type 11,
