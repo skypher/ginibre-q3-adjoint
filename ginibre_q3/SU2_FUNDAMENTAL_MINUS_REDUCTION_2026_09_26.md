@@ -10685,6 +10685,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           weight `(q+q^3)/12`, re-expanded on all 256 masks.
         - The `h >= 2` sphere coefficients are nonnegative for `n <= 12`,
           `d <= n+1`.
+      - FM-SEC116 (luna_max_mars; `fm39/sec116_spheres_q_d3_repro.py`,
+        rerun exactly): `(1^N, n)` under q, by distance.
+        - `d = 2`: spheres alone give coefficientwise nonnegative
+          `b_0, b_1, b_2`, for every `n >= 1` (closed forms in
+          `S_m = sum [k]_q` and `M_2`).
+        - `d = 3`: `b_0, b_1, b_2` are nonnegative for `n >= 3`; `b_3` is
+          open.  The case `(8,2,3)` has the two-point repair.
+        - Sphere-only census (`N <= 20`, `d <= n + 1`, 69 cases): the only
+          failures are at `b_1`, on the line
+          `(8,2,3), (11,3,4), (14,4,5), (17,5,6), (20,6,7)`, i.e.
+          `d = n + 1`.
+        - This is per-`d` progress on one family, so the line is paused
+          (full-cone rule).
       - FM-SEC114 (luna_max_uranus; `fm39/sec114_even_repeated_repro.py`,
         rerun exactly): repeated even labels `(2^M)`.
         - A single radial square fails at `M = 5` (all eight sign
