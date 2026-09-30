@@ -11133,7 +11133,29 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             is needed only at `X_j = 0`.
         - Since `4t(4V-t) W^2 <= F_j(t) F_i(t)` is proved, (HT) on case
           (c), with EQ1 and the convex-polygon argument, proves (E) for all
-          `a, e`.  That gives the two-label stratum and, through Theorem
+          `a, e`.
+        - FM-CHK41 (luna_max_saturn, own exact code).
+          - ACCEPT: the single-metric bound for every `t in (0,4V)`,
+            including `k = N+1` (zero extension: `(c,B,A,D) = (0,1,1,0)`)
+            and `X_k = 0`.
+          - REPAIR, open: the short-arc convexity argument needs strict
+            steps.  Weak conditions allow flat steps that backtrack along a
+            ray, e.g. the point chain `(1,0),(3,3),(1,1),(2,2),(4,4)`, whose
+            doubled area is `-1`.  This is not a row counterexample.  What
+            is needed is strict OL (`delta_k > 0` for `2k > N` whenever
+            `psi_k != 0`) or a flat-block lemma.  An isolated flat step with
+            strict neighbours is forced by EQ1 to be a repeated point, which
+            is harmless.  Assigned as FM-SEC64.
+          - REPAIR, applied.  Zero anchors form their own case: `psi_k = 0`
+            only at `N = 2k` with `e` odd, where `W_(k,i) = 0` and (E) is
+            OL.  The centre sign at even `N = 2m`:
+            `delta_m = c_m^2 (4(m+1)^2 - (a-e)^2)/(2(m+1)^2(m+2)) >= 0`
+            for even `e`, and `delta_m = 0` for odd `e`.  The fixed-`e`
+            normalization is `C_N = C(N, floor(N/2)) N^(-e/2)`,
+            `S = 4 C_N^2 / N`.
+          - Conclusion: the split (strips, fold, `q <= 1`, short arcs,
+            case (c)) is complete, conditional on (HT) and on the
+            strictness repair.  That gives the two-label stratum and, through Theorem
           G0E, the whole G0 branch at every level.  LD, RF and the binary
           forms are then not needed.
         - Heuristic (unproved).  `det Q_t = (4V-t)/t`.  If `D` behaved
