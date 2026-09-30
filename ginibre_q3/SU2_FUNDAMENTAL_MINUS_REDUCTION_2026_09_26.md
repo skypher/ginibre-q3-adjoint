@@ -8792,7 +8792,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | H-only | four factors on the outer-pairing support region, conditional on (E) (Theorem G0E4; strictly extends LL4) |
   | all `r` | H-only | three factors with equal largest labels in G0: `h_u^2 h_w h_1^a` for `2u >= a+2r+w-2` (centered-window theorem, FM-MECH25); the whole G0 branch for every `r <= 100`, `a <= 150` (every one of 130.9M windows covered by proved criteria) |
   | all `r` | two labels | (E) at `q = 1` (gap `i = j+2`) for all `a, e` (Theorem EQ1); `q = 2` with the minus-W sign (OL on `(1-z^2)P`) |
-  | all `r` | two labels (all three sign patterns) | every word with `a, e <= 40` in the kernel row (each (E) pair covered by a proved criterion; binary-form method) |
+  | all `r` | two labels (all three sign patterns) | every word whose kernel row has `a, e <= 80` (each of 6.3M (E) pairs covered by a proved criterion: binary forms, LD/metric chords, RF, EQ1, strips); sampled to `a, e <= 300` with no gap |
   | all `r` | H-only | any number `m <= 2r` of factors with spread labels: `lambda(S)+lambda(S^c) > a+2r-m` for every split (Theorem LLm; includes LL, LL4) |
   | all `r` | every consumer word (h and hat S) | spread labels over every two-sided assignment (Theorem LLm-S) |
   | all `r` | every word | suffix `a >= (2r+3) Lambda(w) - 2r - 4` (Theorem LS); `2r + a + t + 6 >= 7L(w)`, `L` an additive quartic in the labels (Theorem LR4) |
@@ -10623,8 +10623,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         The binary-form tests are exact rational arithmetic.  The LD and
         metric coverage tests use floating point with relative tolerance
         `1e-12` (to be rechecked exactly).
-      - So the two-label stratum, and through Theorem G0E the G0 branch,
-        holds for every level with `a, e <= 40`.  Open: all `a, e`
+      - Systematic scan, every row with `3 <= a, e <= 80`: 6,329,895
+        pairs, residual 0 (`fm39/e_residual_rows.py`).  Rows with
+        `min(a,e) <= 2` or `|a-e| <= 1` are covered by earlier theorems.
+      - Random scan, 600 rows with `a, e <= 300`: 7,885,359 pairs,
+        residual 0, with Theorem RF used on 113 pairs
+        (`fm39/e_residual_sample2.py`; D rescaled per row before the
+        floating-point LD/metric tests).  An earlier 150-row sample without
+        RF left 10 pairs in rows `(180,3)` and `(188,5)` (small `e`), all
+        of which RF covers.
+      - So the two-label stratum (all three sign patterns) holds at every
+        level for all `a, e <= 80`, and through Theorem G0E so does the G0
+        branch, whose rows have `e` odd.  Open: all `a, e`
         (uniformity of the definite region in `(d, N, j)`, or ratio
         bounds as in Theorem OL's steps 2-5 for the non-definite pairs).
     - **Residual of (E) now** (`fm39/e_residual2.py`): 22,046 of 438,221

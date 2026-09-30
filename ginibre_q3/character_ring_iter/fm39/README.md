@@ -60,6 +60,7 @@ this directory, because several `exec` a sibling file.
 | Theorem EQ1 ((E) at q=1 from OL); multiplier identity for (E); OL for cyclotomic multiples; residual | `e_q1_ol.py`, `e_ol_lp.py`, `e_multiplier_identity.py`, `e_multiplier_symbolic.py`, `ol_cyclotomic.py`, `e_via_olcyc.py`, `e_residual2.py` |
 | Recursive LP for (E) (kill) | `e_recursive_lp.py` |
 | Binary-form method for (E); (E) complete on a,e <= 40 | `e_q2_quadratic.py`, `e_binary_form.py`, `e_residual3.py` |
+| (E) coverage scans beyond the grid | `e_residual_sample.py`, `e_residual_sample2.py`, `e_residual_rows.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
