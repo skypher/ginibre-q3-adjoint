@@ -10827,6 +10827,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Also: the value vanishes unless `n <= 2(N+b) - eps`.  The
           distance of the list is `d = N + b - (n+eps)/2` (`hat S_n`) or
           `N + b - (n+1+eps)/2` (`h_(n-1)`), so only `d >= 3` is open.
+        - Main-agent exact formula (`fm39/extra_label_determinant_formula.py`,
+          9,790 entries with `k + a + 2b <= 22`, no mismatch).  With half
+          angles `X = p rho`, `Y = p/rho`:
+          `x - y = (rho - 1/rho)(p - 1/p)`, `x + y = (rho + 1/rho)(p + 1/p)`
+          and `Z = (p^2 + p^-2)(rho^2 + rho^-2) + 2`.  So
+          `d^k s^a Z^b = sum_i C(b,i) 2^(b-i) A_i(p) A_i(rho)` with
+          `A_i(t) = (t - 1/t)^k (t + 1/t)^a (t^2 + t^-2)^i`, and the Weyl
+          constant-term formula gives
+          `[U_n] g_(k,a,b) = sum_i C(b,i) 2^(b-i) (u_n v_(n+2) - u_(n+2) v_n)`,
+          where `u_j = [t^j] A_i` and `v_j = u_(j-2) + u_(j+2)`.
+          - Single-`i` terms can be negative (2,763 of 9,790), so for `b > 0`
+            the sum over `i` is needed.
+          - `b = 0`: with `alpha_m = [T^m](T-1)^k (T+1)^a` (a Krawtchouk
+            value), `D_m = alpha_m^2 - alpha_(m-1) alpha_(m+1)` and
+            `M = (k+a+n)/2`, the formula reads `[U_n] g_(k,a,0) = D_M - D_(M+1)`.
+            So `b = 0` says exactly that these Turan determinants decrease
+            away from the centre `m = L/2`.  They are `>= 0` by Newton's
+            inequalities.  The three-term recurrence alone does not give
+            the decrease: the quadratic form in `(alpha_(m-1), alpha_m)` is
+            indefinite.
       - FM-SEC123 (luna_max_venus; `fm39/sec123_admissible_sets_repro.py`):
         admissible label sets.
         - Among {2,4}, {2,3}, {3}, {4}, {2,4,6}, {2,3,4}, the even labels and
