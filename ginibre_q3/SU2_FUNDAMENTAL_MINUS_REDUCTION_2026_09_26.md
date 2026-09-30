@@ -10197,6 +10197,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - Killed on the way: PSD of joint `(s, D)` moment matrices (`det
         -16` for `hat S_2`, `r = 1`).
       - FM-SEC49 (falsification of H) was stopped as moot.
+    - **Randomized exact FM3 screen across levels (main agent,
+      `fm39/fm3_random_screen.py`, fusion-kernel evaluator
+      `fm39/fm3kern.py`).**  20,000 random consumer words with `r <= 8`,
+      `m <= 2r` general `h` (labels `2..10`), `0..6` `hat S` (labels
+      `2..8`), and suffix `a = 0..12`: 260,000 exact evaluations, none
+      negative (130,738 zeros, least positive value 1).
     - **Unconstrained screen (main agent).**  The bound `m <= 2r` on the
       general `h` factors seems not to be needed.
       `phi_r(w h_1^a) = (1/2) E[(x-y)^(2r)(x+y)^a w]` is `>= 0` on all
