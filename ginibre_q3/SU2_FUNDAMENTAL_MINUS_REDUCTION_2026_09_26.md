@@ -10573,6 +10573,30 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           uniform in `d` yet.  Per `d` this is becoming a sequence of
           separate certificates, so the ladder is paused in favour of an
           insertion-stable hypothesis (FM-MECH36).
+      - **FM-SEC102 (luna_max_mercury): H_AC_q, a unified strengthening.**
+        - Conjecture: for every list `lambda`, the q-table
+          `f_q(S) = m_q(S) m_q(S^c)` (q-Hermite moments, crossings
+          weighted `q`) equals `sum_nu c_nu(q) (p_nu * p_nu)`, with
+          factors `p_nu >= 0` independent of `q` and coefficients
+          `c_nu in R_(>=0)[q]`.
+        - It implies H_AC (at `q = 0`, hence FM3), q-positivity (Q) and
+          H_AC at `q = 1`.
+        - Screen: all 169 even-total lists with `L <= 7` and labels
+          `<= 4` have exact certificates: H_AC at `q = 1`, and
+          coefficientwise H_AC_q on 4,346 coefficient vectors (q-degree
+          up to 91), each list with one fixed dictionary.  The dictionary
+          has subspace-orbit squares, label-block spheres and fusion paths
+          `P_(a,b)`.
+        - Boundary certificates:
+          - `(1^4)`: `f_q = 1_E + (1+q) delta_0`.
+          - `(1,5,2,2)`: `f_q = [5]_q! delta_0`.
+          - `(1^8,6)`: `f_q = a(q) delta_0 + b(q) (p_7 * p_7)`, with
+            `a, b` having nonnegative coefficients and `b` palindromic of
+            degree 15.  The main agent re-expanded it exactly on all 256
+            elements.
+        - The printed code covers the q-table and the certificate check,
+          not the dictionary and census driver.  An independent census
+          rerun is FM-CHK49.
       - FM-CHK43 (luna_max_saturn, own code): ACCEPT FM-SEC66 (39 records,
         295 direct coefficients), FM-SEC69 (Riordan moments `>= 0`) and
         FM-MECH31 Proposition 3.  REPAIR FM-SEC67: the strict cutoffs hold
