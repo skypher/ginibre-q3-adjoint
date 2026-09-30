@@ -10831,6 +10831,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         coefficients.  The linear-injection line is paused: its natural
         maps fail on the smallest cases, like the local involutions
         (knob: naturality and locality of the map).
+      - FM-SEC106 (luna_max_uranus): recursive Pluecker charging at
+        level 1.  Max flow meets demand on 1,450 ordered profiles
+        (length `<= 5`, labels `<= 3`, all pairs `T`) and on the boundary
+        cases.  No uniform Hall argument yet: the overlap of the
+        recursively generated target families is uncontrolled.
       - FM-SEC85 (luna_max_vesta): no H_AC counterexample.  All 791 tables
         are doubly nonnegative.  Horn 5-cycle placements (374 tables
         exhaustively, 100,000 samples on four larger ones) and a copositive
