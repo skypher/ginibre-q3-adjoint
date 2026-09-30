@@ -11018,6 +11018,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `min rho = 2.14`.  Every class minimum sits at `q = 2` or at
           `X_j = 0` (even `e`), the centre line where `t = 2V` is needed.
           So (HT) holds with room, and the room is smallest at the centre.
+        - `t = 2V` fails only on bulk pairs near the centre (all 4,271
+          failures with `a <= 50` have `X_j^2 <= X_i^2 <= 2V`); there
+          `t = X_i^2` or `X_j^2` works (`fm39/e_ht_2v_fail.py`).
+          `Q_(2V)` has determinant 1, so `(HT)` at `t = 2V` reads
+          `D_j - D_i >= 2 sqrt(Dt_j Dt_i)`, with
+          `Dt_k = Q_(2V)(v_k) = D_k + (X_k^2 - 2V) A_k^2/(8V)`.
+        - FM-SEC48 (luna_max_neptune): exact reduction.  With
+          `P_k = 4D_k - A_k^2`, `Q_k = X_k^2 A_k^2`, `E = D_j - D_i`,
+          `(HT)` holds iff `L = 4E^2 + P_j P_i > 0`, `0 < b < 8LV` and
+          `b^2 >= 4 L Q_j Q_i`, where `b = 16VE^2 - P_j Q_i - P_i Q_j`
+          (or `L = b = Q_j Q_i = 0`).  At `X_j = 0` the last condition is
+          void.  Boundary families pass exactly.
+        - Killed routes (knob: auxiliary monotonicity that `(HT)` does
+          not use).
+          - The fixed-metric radial drop.  `R_k = Q_t(v_k)` is not
+            monotone along case-(c) arcs, and `R_i > R_j` occurs
+            (`fm39/e_spiral_probe.py`).  One step with `delta_k = 0` has
+            `R_k - R_(k+1) = -421/12` at `(a,e,k,t) = (5,3,4,48)`
+            (FM-SEC48).  So the log-spiral heuristic above is withdrawn.
+          - Monotonicity of the margin in `i`: `rho(j,i)` decreases in
+            19,304 of 152,128 steps with `a <= 40`, e.g. `(6,3,5,9)`
+            (`fm39/e_ht_monotone.py`).
       - *`q = 2` plus sign* (`fm39/e_q2plus_split.py`,
         `fm39/e_q2plus_ratiofree.py`).  For all `a, e <= 60` (106,982
         pairs), every pair has `W >= 0` (plus sign trivial) or a positive
