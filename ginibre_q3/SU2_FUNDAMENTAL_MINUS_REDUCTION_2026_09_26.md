@@ -9863,6 +9863,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           row.
         - So beyond three `h`'s the actual coefficient ratio must be used,
           e.g. through ratio bounds as in Theorem OL's steps 2-5.
+        - Even for three `h`'s it fails at large `a` (FM-SEC40,
+          luna_max_uranus; `fm39/eqlabel_definite_repro.py`).  The form is
+          proved positive definite on the infinite families
+          `u = v = w = 2`, `a = e +- 1`.  At fixed labels it fails first
+          at `r = 2`, `a = 272`, `(u,v,w) = (2,2,2)`, where `phi > 0`.
       - **Kill (FM-MECH27, astra_max_ceres; `fm39/binary_form_kill_repro.py`).**
         Uniform definiteness is false.
         - For `u = N + v + w - 1` (any `v >= w >= 2`) the form is
@@ -10820,7 +10825,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           for all `a, e`.  What remains is exhaustiveness: that this union
           of explicit inequalities covers every pair.  Two routes are open:
           the finite-`q` reduction (FM-SEC41), and the `q = 2`, `W < 0`
-          plus sign (FM-SEC38, FM-SEC42).  Open: all `a, e`
+          plus sign (FM-SEC38, FM-SEC42).
+      - *`q = 2` plus sign* (`fm39/e_q2plus_split.py`,
+        `fm39/e_q2plus_ratiofree.py`).  For all `a, e <= 60` (106,982
+        pairs), every pair has `W >= 0` (plus sign trivial) or a positive
+        definite plus-sign form (ratio-free); none has neither.  The
+        condition `W >= 0` is not ratio-free: `W`'s own form is never PSD
+        on the non-definite region.  So the actual ratio must be used
+        there.
+      - FM-SEC38 (luna_max_venus), Theorem OL's method on the `q = 2`
+        plus sign (`fm39/e_q2plus_ol_repro.py`).
+        - Proved: the terminal boundary and the definite region.
+        - On the non-definite outer region, a continued-fraction ratio
+          interval `n/d <= r <= R` plus three coefficient inequalities
+          would finish; these are screened on the folded grid (904 outer
+          cases pass), not proved.
+        - The first non-definite case is `(a,e,j) = (19,3,20)`, where the
+          form is indefinite but the actual value is 5614.  Open: all `a, e`
         (uniformity of the definite region in `(d, N, j)`, or ratio
         bounds as in Theorem OL's steps 2-5 for the non-definite pairs).
     - **Residual of (E) now** (`fm39/e_residual2.py`): 22,046 of 438,221
