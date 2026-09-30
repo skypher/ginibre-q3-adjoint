@@ -10433,6 +10433,60 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           pointwise-disjoint factors compatible across the fusion channels
           `CG(h,n)`.  FM-MECH34 is attempting the proof, FM-SEC85
           (luna_max_vesta) the falsification.
+      - **FM-SEC77 (luna_max_pluto): q-Gaussian deformation**
+        (`fm39/sec77_qgauss_repro.py`, rerun exactly).
+        - Replace `U_n` by the monic continuous q-Hermite `H_n(x|q)`
+          (`x H_n = H_(n+1) + [n]_q H_(n-1)`), with `x, y` independent
+          q-Gaussians.  Then `m_q(S)` sums `q^(crossings)` over the
+          matchings with no chord inside a block, and
+          `F_q(T) = sum_S (-1)^|S cap T| m_q(S) m_q(S^c)`.  At `q = 0` this
+          is FM3.
+        - Screens: all 132,788 even-sign profiles (exhaustive to length 6
+          and labels 4; `(1^8, 6)`; lists to length 16) have nonnegative
+          coefficients in `q`.
+        - `q = 1` is proved for every list.  Rotate
+          `X, Y = (G +- H)/sqrt 2`; the Hermite addition formula gives
+          `F_1(eps) = 2^(L - D/2) sum_(k: (-1)^(n_i-k_i) = eps_i)
+          prod C(n_i,k_i) W(k) W(n-k) >= 0`.  This agrees with the
+          `q`-polynomials on 264 patterns.
+        - The tight word `h_4 hat S_2^2` (labels `(1,5,2,2)`, value 1 at
+          `r = 1`) has `F_q / 2 = [5]_q!` exactly (main agent).
+        - Stronger than FM3: FM3 is the `q^0` coefficient.
+      - **Two-parameter braided family (main agent,
+        `fm39/qs_family_screen.py`).**
+        - Mixed q_ij-Gaussians with `q_11 = q_22 = q` and `q_12 = s`:
+          `F_(q,s)(T) = sum_S eps^S sum_(M_1, M_2) q^(cr(M_1)+cr(M_2))
+          s^(cr(M_1,M_2))`, with legs in linear order.  `s = 1` is Pluto's
+          line; `(q, s) = (0, 1)` is FM3; `(0, 0)` is free independence.
+        - `|s| <= q`, positive by rotation (sketch, to be written out).  In
+          the basis `f, g = (e_1 +- e_2)/sqrt 2` the braiding has entries
+          `(q+s)/2` (pass) and `(q-s)/2` (flip).  Also
+          `e_1^(x)n + eps e_2^(x)n = 2^(-n/2) sum_w (1 + eps (-1)^(#g)) w`.
+          So the braided Wick formula is a sum of nonnegative terms when
+          `|s| <= q`.
+        - `s = 0`, positive for `q >= 0`: colours are constant on the
+          components of the chord-and-crossing graph, which gives
+          `F_(q,0) = sum_M q^cr(M) prod_C (1 + eps^C)`.
+        - Screen: 544 profiles (length `<= 6`, labels `<= 3`, degree `<= 12`)
+          on a 41 x 41 grid.  There are no negatives with `q >= 0` and
+          `s >= -q`, and negatives exist just below `s = -q`, e.g. at
+          `q = 0`, `s = -0.05`.  So the region above the diagonal, which
+          contains FM3, is empirically positive, but the rotation does not
+          cover it: there the flip weight is negative.  Example:
+          `(1,1,1,1)`, `T = {0,1}` gives `F = 4 + 2q - 2s`.
+      - FM-SEC83 (luna_max_jupiter; `fm39/sec83_atlas_repro.py`, rerun
+        exactly).
+        - The noncrossing-matching model agrees with fusion counts on 3,003
+          lists.
+        - Atlas: 789,503 even-`T` cases (length `<= 10`, labels `<= 5`),
+          none negative.  Every non-parity zero (26) has empty support.
+          `F/2 = 1` in 190 cases.
+        - A single-cluster crossing switch fails already at `(1,1,1,1)`,
+          `T = {0,1}`, `S = {1,2}`: the chords `(1,2)` and `(0,3)` are nested.
+        - By hand (main agent): whole-component moves pair the nested
+          negatives with one-side positives.  The mutually crossing
+          negatives `S = {0,2}, {1,3}` need a crossing-resolution (skein)
+          move onto `S = {0,1}, {2,3}`.
       - **FM-MECH31 (astra_max_ceres): B is proved for every
         repeated odd-label list `(q, ..., q)`, all odd `q`, any length**
         (`fm39/mech31_hypB_oddlabels_repro.py`, rerun exactly).
