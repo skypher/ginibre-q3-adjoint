@@ -10256,6 +10256,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - Killed on the way: PSD of joint `(s, D)` moment matrices (`det
         -16` for `hat S_2`, `r = 1`).
       - FM-SEC49 (falsification of H) was stopped as moot.
+    - Large-level screen (main agent, `fm39/fm3_large_r_screen.py`).  At
+      large `r` the weight concentrates at the antipodal corners
+      `x = -y = +-2`, where every odd-label factor vanishes.  So words with
+      several odd labels are decided by local forms there.  All 1,819
+      words with up to 4 factors from `h_2..h_7`, `hat S_2..hat S_7`, at
+      `r = 10, 20, 30, 40` and `a <= 3`: 29,104 exact evaluations, none
+      negative.  (Per core, Theorem LR4 already leaves only finitely many
+      `(r, a)`.)
+    - FM-SEC82 (luna_max_uranus): level 1 as the exact coefficient
+      inequality `b_00 + b_20 >= b_11` for the symmetric `SU(2)^2`
+      expansion `F = sum b_mn U_m(x) U_n(y)` of the word.  The eigenvalue
+      assignment sum needs cancellation, so a termwise route fails.  No
+      proof.
     - **Randomized exact FM3 screen across levels (main agent,
       `fm39/fm3_random_screen.py`, fusion-kernel evaluator
       `fm39/fm3kern.py`).**  20,000 random consumer words with `r <= 8`,
