@@ -9780,6 +9780,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - the full split functional on 20,000 random consumer words
         (2..6 general labels, 0..2 `hat S`, 1..3 factors `Q_t`,
         `|t| >= 2`).
+      - a stress screen of 3,000 words with clustered small labels
+        (`base, base+1`, `base` in 3..5), 3..8 general factors, the
+        minimal `e` (the FM2 boundary), 0..3 `hat S` and 1..4 factors
+        `Q_t` (`fm39/gfm3_hard.py`): no negative value and no zero.
     - *Controls* (failures found):
       - `|t| < 2`: 102 of 3,000 words, and 1,291 three-factor failures;
       - reciprocal complex root quadruples (a positive weight, but not
@@ -9790,6 +9794,105 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       `s = 1/t in [-1/2, 1/2]`, `Q_t / t^2 = 1 + s xy + s^2 (x^2 + y^2 - 4)`.
       The family deforms `(x+y)^2` (`s = 1/2`) through `1` (`s = 0`) to
       `(x-y)^2` (`s = -1/2`).
+    - *What the positivity uses* (`fm39/window_ulc.py`,
+      `fm39/logconcave_test.py`):
+      - Positive rows: Conjecture W held on 600 ultra-log-concave rows
+        `C(n,k) u_k`, `u` log-concave, most of them not real-rooted.  Plain
+        log-concave rows fail (541 of 600).  So for positive rows Newton's
+        inequalities appear to suffice.
+      - Mixed signs: rows satisfying Newton's inequalities with signs fail
+        in 22 of 600 (random signs) and 7 of 600 (one sign change).  So the
+        mixed-sign case uses real-rootedness beyond Newton.
+      - The unit-circle weight of the row is `K(x,2)`, since
+        `P(u)^2 = u^N K(u+1/u, 2)`.  A factor `Q_t` contributes `(x+t)^2`.
+        For complex `t = al + i be`, the factor is `((x+al)^2 + be^2)`,
+        which is log-concave on `[-2,2]` iff `|al| - 2 >= be`.  Three-factor
+        screen: log-concave weight, 107,862 tests, 0 failures;
+        non-log-concave weight, 3 failures in 194,366.  The failures track
+        log-concavity of the weight in `x = 2 cos theta`.
+    - *Geometric form of Conjecture W* (`fm39/polygon_lemma.py`).  Put
+      `g_k = (c_k, c_(k-1))` in the plane.  Then `D_k = g_k ^ g_(k+1)`,
+      `T(x, x+C) = g_x ^ g_(x+C+1)`, and `P_C(x)` is twice the signed area of
+      the closed polygon `g_x, g_(x+1), ..., g_(x+C+1)`.
+      - `D_k >= 0` says the curve turns counterclockwise about `O`.
+      - `P_1(k-1) = D_(k-1) + D_k - T(k-1,k) >= 0` says it turns left at
+        `g_k` (local convexity).
+      - Planar screen: for left-turning counterclockwise polygonal arcs,
+        closing chords gave no negative area in 263,887 sub-arcs sweeping
+        at most `2 pi` about `O`, and 2 negative areas in 111,336 sweeping
+        more.
+      - So W splits into: Newton (`D >= 0`); the four-coefficient case
+        `C = 1`, which Rolle's theorem reduces to real-rooted cubics; a
+        convexity lemma for sweeps `<= 2 pi`; and a separate argument for
+        longer sweeps.  Longer sweeps occur: near `a = e` the rows turn by
+        about `pi/2` per step.
+    - **Theorem WS (Conjecture W for short sweeps; main agent,
+      `fm39/window_sweep.py`).**  Let `c` be a real sequence with
+      `D_k(c) >= 0` and `D_k(f) >= 0` for all `k`, where `f = (1-z)c`
+      (both hold when `c` is the row of a real-rooted polynomial, by
+      Newton).  If the phase polygon `g_x, ..., g_(x+C+1)` sweeps a total
+      angle `Theta = sum_k arg(g_k -> g_(k+1)) <= 2 pi` about `O`, then
+      `P_C(x) >= 0`.
+      - *Proof.*  Each step turns counterclockwise about `O`, since
+        `g_k ^ g_(k+1) = D_k(c) >= 0`.  Each vertex is a left turn, since
+        `(g_(k+1) - g_k) ^ (g_(k+2) - g_(k+1)) = f_(k+1)^2 - f_k f_(k+2)
+        = D_(k+1)(f) >= 0`.
+        - If `Theta < pi`, the polygon `O, g_x, ..., g_(x+C+1)` is
+          star-shaped from `O`, hence simple.  It turns left at every
+          vertex: at `g_x` and at the last vertex by `D >= 0`, and at `O`
+          because `T(x, x+C) = g_x ^ g_(x+C+1) > 0`.  So it is convex.  The
+          chord `g_x g_(x+C+1)` splits it into the triangle
+          `O, g_x, g_(x+C+1)` and the window polygon, both positively
+          oriented, so `P_C(x) >= 0`.
+        - If `pi <= Theta <= 2 pi`, then
+          `T(x, x+C) = |g_x| |g_(x+C+1)| sin Theta <= 0`, and
+          `P_C(x) = sum D_k - T >= 0`.  QED.
+      - *Consequence.*  On the G0 branch, Theorem WS proves
+        `phi_r(h_u h_v h_w h_1^a) >= 0` whenever the window at `alpha`
+        sweeps at most `2 pi`.  This is uniform in `r` and `a`, needs no
+        root bounds, and holds for every real-rooted row.
+      - *Coverage.*  79,442 of the 533,190 G0 words with `r <= 8`, `a < 40`
+        (14.9%).  The phase curve usually spirals several times around
+        `O`.
+      - *Obstruction to the naive extension* (knob: arbitrary
+        left-turning ccw curves, no consumer use).  Splitting at an
+        interior vertex gives `P = P_first + P_second + 2 Area(g_x, g_y,
+        g_end)`.  The triangle needs a vertex strictly right of the chord,
+        on the side away from `O`, and a contracting spiral can have none.
+        The random-curve failures are exactly of this kind.  Long sweeps
+        need a quantitative input from the row, for example Newton for
+        `(1 + t z) P` for every real `t`, or the recurrence of the base
+        rows.
+    - **Long sweeps: pass criterion (main agent, `fm39/window_passes.py`,
+      `fm39/window_cover.py`).**  Suppose `T > 0` and `Theta > 2 pi`, and
+      put `I = [theta_x, theta_x + beta]`, `beta = Theta mod 2 pi`.  Every
+      direction in `I` is crossed by the first pass (starting at `g_x`) and
+      by the last pass (ending at `g_end`).
+      - On each edge `u = 1/rho(theta)` is exactly sinusoidal, and left
+        turns give `u'' + u >= 0`.  On an interval shorter than `pi` the
+        maximum principle then puts the chord `g_x g_end` inside the
+        first-pass fan if `rho_first(theta_end) >= |g_end|`.  It puts the
+        chord inside the last-pass fan if `rho_last(theta_x) >= |g_x|`.  In
+        either case `T <= sum D_k`.
+      - More generally it suffices that for some `theta* in I` both passes
+        are outside the chord.  Put `Z` on the inner pass at `theta*`, and
+        use the two triangles `O, g_x, Z` and `O, Z, g_end`.
+      - The twist `c_k -> (-1)^k c_k` keeps every `D_k` and keeps
+        real-rootedness, and sends each step angle `theta_k` to
+        `pi - theta_k`.  It keeps `P_C` for even `C`.  For odd `C` it gives
+        `P_C = sum D + T~`.
+    - *Coverage of the 533,190 G0 words:*
+      - `T <= 0` (trivial): 56.36%;
+      - pass criterion: 41.55%;
+      - convex short sweep: 1.78%;
+      - twisted versions: 0.07%;
+      - uncovered: 1,259 words (0.24%), for example
+        `(r, a) = (4, 14)`, `alpha = 7`, `C = 5`.  These are
+        near-symmetric windows, where the first and last passes nearly
+        coincide and the middle full turn carries the area.
+    - These are window-by-window criteria, checked in floating point.  A
+      uniform proof needs analytic conditions on the row under which one
+      of them holds.
 - **Four factors: split identity, closed form and Theorem LL4 (FM-SEC6,
   luna_max_venus; verified by the main agent, `mech/four_repro.py`,
   `mech/ll4_check.py`, `mech/four_explore.py`).**

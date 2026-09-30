@@ -36,6 +36,9 @@ this directory, because several `exec` a sibling file.
 | Direct three-factor split evaluator | `split3.py`, `split3_selftest.py` |
 | G0 branch scan, Conjecture W (real-rooted windows) | `g0_scan.py`, `window_explore.py`, `window_realrooted.py`, `window_f.py` |
 | GFM3 (kernel factors `Q_t`) and controls | `wformula_check.py`, `kernel_identity.py`, `recip_test.py`, `recip_bounds.py`, `recip_quartic.py`, `general_row_words.py` (args: seed, count), `general_row_words_ctrl.py` |
+| GFM3 stress screen (clustered labels, minimal e) | `gfm3_hard.py` (args: seed, count) |
+| What W uses: ULC vs log-concave, signed Newton, log-concave weights | `window_ulc.py`, `logconcave_test.py` |
+| Phase-polygon form of W: Theorem WS, pass criterion, G0 coverage | `polygon_lemma.py`, `window_sweep.py`, `window_passes.py`, `window_cover.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
