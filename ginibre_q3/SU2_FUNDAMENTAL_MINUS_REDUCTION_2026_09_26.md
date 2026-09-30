@@ -9871,6 +9871,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       Some grouping has `M_Z <= 0` in 56,458 words (87%), and then (E)
       alone gives `phi >= 0`.  The best singleton is `C` in 29,019, `B` in
       17,897 and `A` in 9,542.
+    - *Four factors* (`fm39/merge4.py`).  Merging both pairs gives
+      `phi = sum_(d, d') phi(hat S_d hat S_d') - corr_pairing`, and each
+      `hat S hat S` value is `T + W >= 0` by (E).  In 756 random words
+      (`r <= 5`, labels `<= 9`), some pairing has `corr <= 0` in 491
+      (65%), and `corr = 0` exactly in 72.  Assigned as FM-SEC19.
     - The other 8,792 words have every `M_Z > 0`, but small against
       `phi`, e.g. `M = 33` against `phi = 53,119` for `h_9 h_4^2 h_1^11`
       at `r = 2`.  The basis LP shows that a linear reduction to (E)

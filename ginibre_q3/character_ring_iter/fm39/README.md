@@ -47,6 +47,7 @@ this directory, because several `exec` a sibling file.
 | gamma <= N branch vs the cone of OL, W, (E) forms | `basis_lp.py`, `basis_lp2.py` |
 | Theorem G0E (G0 branch from (E)); window-(E) on gamma <= N | `w_from_e.py`, `window_E.py` |
 | Merge move, groupings, four-wedge correction | `merge_check.py`, `merge_best.py`, `cross_telescope.py` |
+| Four-factor double merge census | `merge4.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
