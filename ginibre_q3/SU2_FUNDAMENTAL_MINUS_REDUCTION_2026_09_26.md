@@ -10734,6 +10734,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - `(1,1,1,3)` is still B (`f = 1_<1111>`).
         - Knob: one common realization for all labels.  B and H_AC allow
           list-dependent decompositions, which FM3 needs anyway.
+      - FM-SEC121 (luna_max_venus; `fm39/sec121_B_small_labels_repro.py`):
+        B census for small labels.
+        - Every even-total list with labels `<= 4` at `L = 7, 8, 9` (60, 85
+          and 110 lists) has an exact subgroup-orbit B certificate, with up
+          to 25 terms.
+        - Every list with labels `<= 3` at `L = 9` is certified, and five
+          samples at `L = 10`.  No Fourier-negative entry.
+        - So B for all lists with labels `<= 4` is consistent with the data.
+          By FM-MECH42 it cannot come from one common realization, so it
+          would need list-dependent structure.
+        - First unscreened case: `(1^6, 3^4)`.
       - **FM-MECH40 (astra_max_ceres;
         `fm39/mech40_insertion_obstruction_repro.py`, all assertions
         pass): no parent-preserving insertion.**
