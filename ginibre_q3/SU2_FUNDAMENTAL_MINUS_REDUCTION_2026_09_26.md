@@ -10715,8 +10715,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             degree 15.  The main agent re-expanded it exactly on all 256
             elements.
         - The printed code covers the q-table and the certificate check,
-          not the dictionary and census driver.  An independent census
-          rerun is FM-CHK49.
+          not the dictionary and census driver.
+        - FM-CHK49 (luna_max_eris, independent code): ACCEPT the census
+          (all 169 lists, 4,346 coefficient vectors) and all four boundary
+          certificates.
       - FM-MECH36 (astra_max_ceres;
         `fm39/mech36_insertion_candidates_repro.py`, all assertions
         pass): insertion-stable strengthenings of H_AC.
