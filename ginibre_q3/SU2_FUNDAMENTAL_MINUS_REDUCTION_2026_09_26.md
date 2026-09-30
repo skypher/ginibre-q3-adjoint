@@ -9962,6 +9962,34 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       induction hypothesis.  M5 still needs a hypothesis that controls
       `C` from data with fewer labels, such as a quantitative bound or a
       positive-form structure.
+  - **Three labels with `hat S` (M3; FM-SEC23, luna_max_neptune;
+    verified by the main agent, `fm39/sp3_repro.py`,
+    `fm39/sp3_band_check.py`).**
+    - *Patterns.*  At level `r`, with `e = 2r - m` (`m` = number of general
+      `h` factors), the three patterns are
+      `h_u h_v hat S_p` (`e = 2r-2`), `h_u hat S_p hat S_q` (`e = 2r-1`) and
+      `hat S_p hat S_q hat S_s` (`e = 2r`).  All are consumed at every
+      `r >= 1`.
+    - *Closed forms.*  Exact split formulas in `W_c`, checked in 5,180
+      cases against Catalan moments.
+    - *Support branch.*  Sort the labels `X >= Y >= Z` and put
+      `alpha = (N+X-Y-Z)/2`, `gamma = (N+X+Y-Z)/2`.  If `gamma >= N+1`,
+      the value is `sum_(d in CG(X,Y)) [D_j - D_i +/- W](d, Z)`.  So (E)
+      implies positivity there, the analogue of Theorem G0E, with the
+      sign fixed by the pattern.  If also `0 <= alpha <= N - Z`, it
+      telescopes to `S_Z(alpha) + sigma T_Z(alpha)`.
+    - *Unconditional band* (G0B method).  The band is
+      `(a-e)^2 <= 2(N+1)` when `Z >= 3`, and `(a-e)^2 <= N+1` when
+      `Z = 2`.  In it, `S > |T|`.
+    - *Checks.*
+      - Agent screen: 48,552 words (`r <= 6`, `a <= 16`, labels
+        `2..8`), none negative.
+      - Main agent: 3,115 band support words across the three patterns,
+        none negative.
+    - For `sigma = -1` the support value is exactly a W window, so W's
+      criteria apply.  For `sigma = +1` it is `sum D + T`, which is
+      automatic when `T >= 0`.  The remainder outside the support branch
+      is open.
   - **GFM3: FM3 with extra nonnegative kernel factors (main agent,
     `fm39/recip_test.py`, `fm39/recip_bounds.py`, `fm39/recip_quartic.py`,
     `fm39/kernel_identity.py`, `fm39/general_row_words.py`).**
@@ -10502,6 +10530,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           It held in 400,915.
         - Both held in 349,832 of 352,038 open-region pairs (99.4%).
           (ii)-psi fails e.g. at `(4,6,5,8)`.
+    - **Metric chords shrink the (E) residual (main agent,
+      `fm39/e_metric.py`).**  Bound each chord `T(j,i-1)` and `T(j+1,i)`
+      of `W_ij` by the smaller of Theorem LD and the FM-MECH25 metric
+      bound `sqrt(K D_x D_y / ((2 sqrt V - R_+)(2 sqrt V - R_-)))`.  Then
+      (E) holds whenever `D_j - D_i` exceeds the sum.  This proves
+      another 48,872 pairs.
+      - Residual of (E) on `a, e <= 40`: 43,596 of 438,221 pairs (9.95%,
+        down from 21.1%).
+      - The residual concentrates at the shortest gaps: `q = 1` 17,944,
+        `q = 2` 11,970, `q = 3` 6,908, `q = 4` 3,948, `q = 5` 1,988,
+        `q >= 6` 838.
+      - At `q = 1` the chords are single steps and separate absolute
+        bounds lose the cancellation.  So `q = 1` across all gaps is the
+        sharpest open core of (E).
     - **FM-SEC20 (luna_max_venus) on (ii):** proved at `e = 1` for every
       window, and for the reflection-plateau subcase at every odd `e`.
       - At `e = 1` `D` is log-concave, from the explicit form
