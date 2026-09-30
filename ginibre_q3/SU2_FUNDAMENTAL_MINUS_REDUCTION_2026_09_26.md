@@ -10415,7 +10415,9 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `C = V V^T` with `V >= 0` entrywise.  Plain PSD of `C` is FM3
           itself.
         - H_AC implies FM3, since the Fourier transform of `p*p` is
-          `|p_hat|^2`.  It is strictly between Fourier positivity and B:
+          `|p_hat|^2`.  Normalization (FM-CHK45 repair): with the
+          transform over `G = F_2^L/<1>`, the EVEN value is
+          `2 f_hat_G(T)`.  It is strictly between Fourier positivity and B:
           `1_W = |W|^(-1) 1_W * 1_W`, and the gluing control `g` on
           `F_2^4` fails it.
         - At `(1^8, 6)`: `f = (1/2) p*p + 3 delta_0`, with `p` the weight-1
@@ -10450,6 +10452,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             rule is known yet.  Since every list has `sum(mu) - n = 2d`
             with `n` its largest label, a construction uniform in `d` is
             H_AC for the full cone.
+      - FM-CHK45 (luna_max_mercury, own code) on FM-MECH33:
+        - ACCEPT: `B` is contained in H_AC, and the gluing control is
+          outside it (support argument, origin mass `3 < 5`).
+        - ACCEPT: the B-class no-go, with `C(N,2) <= 3(N-1)` failing for
+          `N >= 7`.
+        - ACCEPT: the boundary insertion `(L-1) delta_0 + sum delta_(e_i+e_j)
+          = (1/2) p*p + (L-1-t/2) delta_0` (300 lists).
+        - ACCEPT: the sphere certificate `f_(1^N,n) = sum_h b_h
+          (p_(k-h) * p_(k-h))`.  Only `b_1 = (n-k+1)/(k(k+1))` can be
+          negative, and it is `>= 0` exactly when `3n >= N-2`.
+        - REPAIR: the Fourier normalization (applied above).
       - FM-CHK43 (luna_max_saturn, own code): ACCEPT FM-SEC66 (39 records,
         295 direct coefficients), FM-SEC69 (Riordan moments `>= 0`) and
         FM-MECH31 Proposition 3.  REPAIR FM-SEC67: the strict cutoffs hold
@@ -10509,6 +10522,44 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           contains FM3, is empirically positive, but the rotation does not
           cover it: there the flip weight is negative.  Example:
           `(1,1,1,1)`, `T = {0,1}` gives `F = 4 + 2q - 2s`.
+        - Bernstein positivity along the free-to-tensor segment (main
+          agent, `fm39/qs_bernstein.py`, `fm39/qs_bernstein_fock.py`, and
+          the exact Fock-space evaluator `fm39/qs_fock.py`, checked against
+          enumeration on 260 values).  For `q = 0`, write
+          `F_(0,s) = sum_j b_j C(d,j) s^j (1-s)^(d-j)`, with `d` the degree
+          in `s`.  Then every `b_j >= 0` on 542 profiles (length `<= 6`)
+          and 2,512 profiles (60 random lists, length 5..8, labels `<= 4`).
+          This holds although `F_(0,s)` is not monotone (289 of 542
+          profiles increase somewhere).  `b_0` is the free value
+          (positive) and `b_d` is FM3.  So this is a strengthening of
+          FM3, with the other coefficients interpolating.
+        - Reading (main agent): `F_(0,s)` is the limit of averages over
+          random bipartite commutation graphs.  Take
+          `x = N^(-1/2) sum_a x_a` and `y = N^(-1/2) sum_b y_b`, with
+          free families, `x_a` commuting with `y_b` exactly when the edge
+          `ab` is present, and edge probability `s`.  The complete graph
+          gives FM3 and the empty graph the free value.
+        - FM-SEC92 (luna_max_uranus): no transport proof along `s = 1`.
+          - A block-product rotation is impossible for `q < 1`, since
+            `Cov(U^2, V^2) = (q-1)/2`.
+          - A termwise crossing flow fails at `(1,1,2,2)`,
+            `T = {0,2}`, which has two summands `-(1+q)` and total
+            `2(1+q)^3`.
+          - All 190 atlas cases with `F/2 = 1` factor exactly into
+            q-integers.
+          - Correction to the card: `(1,1,1,1)`, `T = {0,1}` has
+            `F_q = 2 + 2q` at `s = 1`.
+        - FM-SEC91 (luna_max_jupiter): local involutions fail.
+          - The component move is a sign-reversing involution where it
+            applies.
+          - First-crossing smoothing is not an involution: at
+            `(1,1,1,1)` it maps a negative atom to a positive state fixed
+            by both rules.
+          - At `(1,2,1,2)`, `S = {0,2}`, `D_1 = (03)`,
+            `D_2 = (15)(24)`, no smoothing keeps every cluster on one side.
+          - Knob: locality of the move.  The exact atlas has 9,586,981
+            even-`T` cases (length `<= 8`, labels `<= 4`, ordered), none
+            negative.
       - FM-SEC83 (luna_max_jupiter; `fm39/sec83_atlas_repro.py`, rerun
         exactly).
         - The noncrossing-matching model agrees with fusion counts on 3,003
