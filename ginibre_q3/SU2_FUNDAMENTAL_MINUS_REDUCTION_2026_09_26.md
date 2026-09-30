@@ -10978,6 +10978,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - Open, in closed form: `R_miss = R minus (outer union central)`
             is empty; `Omega >= 0` on `(0, R_OL]` over `R` intersect outer;
             `Omega >= 0` on the central ratio ranges.  Delegated as FM-SEC131.
+        - FM-SEC131 (luna_max_mars; `fm39/sec131_n1_slice_repro.py`).
+          - The `n = 1` outer slice is proved:
+            `Omega = (1 - d r)(omega_0 - omega_2 r/d)`, and
+            `Delta_num >= 0` forces `d^2 >= 3k + 16`.
+          - The `k = 0`, odd-`t` zero-coefficient boundary is handled.
+          - Open: the coverage step (a), and (b), (c) for `n >= 2`.
+        - Main-agent scan (`fm39/sec131_band_scan.py`).
+          - The band `R` minus the outer region is thin: the smallest `d`
+            with `Delta_num >= 0` is `>= 0.9475 d_out`.
+          - It occurs only at `k <= 8` for `n < 400` (9,619 points), with
+            `t` growing slowly (up to 15 at `n, k <= 300`).
+          - Every band point satisfies the central condition, with
+            `N/(3t(k+1)^2) >= 5` in the sample.
+          - So (a) should split into two steps: `R` lies inside the outer
+            region for `k >= K_0`, and the central condition holds on the
+            band for `k < K_0`.
       - FM-MECH46 (astra_max_ceres; `fm39/mech46_insertion_repro.py`, rerun
         exactly): the uniform one-extra-label statement, the b-insertion.
         - Exact recurrence (Prop. 1): with `g_b = g_(k,a,b)`,
