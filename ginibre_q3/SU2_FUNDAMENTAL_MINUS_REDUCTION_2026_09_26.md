@@ -10869,6 +10869,53 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - The `[U_n] g` identities (1,152 direct cases).  A fresh
             U-positivity screen with `k + a + 2b <= 40` (5,950 profiles)
             found no negative coefficient.
+      - **FM-MECH47 (astra_max_ceres; `fm39/mech47_sector123_repro.py`, rerun
+        exactly): the {1,2,3} sector is PROVED at every level.  Every FM3
+        list with labels `<= 3` satisfies FM3.  In consumer form,
+        `phi_r(h_2^al h_1^a hat S_2^b hat S_3^ga) >= 0` for all `r >= 1`,
+        `a, b, ga >= 0` and `al <= 2r`.**
+        - Theorem 1: if `A, E` are even and `A + E >= al + ga`, then
+          `M = E[s^A d^E Z^b (Z+P)^al (Z-P)^ga] >= 0`.  FM3 words satisfy
+          this, since `al <= E` and `ga <= A`.
+        - Ray form.  With `x = 2 sqrt z`, `y = 2q sqrt z`, one has
+          `Z +- P = lam_+- z - 2`, `lam_+- = 4(1 + q^2 +- q) >= 3`.
+          Normalize each factor by its value at `z = 1`
+          (`f = (beta z - 2)/B`, `h_+- = (lam_+- z - 2)/(lam_+- - 2)`),
+          and put `L = al + ga`, `N = (A+E)/2`.
+        - Lemma 3 (exponential suppression).
+          - On `z >= 2/3` every normalized factor is `>= 3z - 2 >= 0`, and
+            AM-GM gives `z >= (3z-2)^(1/3)`.  So the positive part is
+            `>= 1/[9(K+b)(K+b+1)]` with `K = L + N/3 + 1`.
+          - On `z <= 2/3`, `3z - 2 <= h <= z`, so `|h| <= 2` and
+            `sqrt z |h| <= theta = 4 sqrt 2/9 < 1` (maximum at `z = 2/9`).
+          - Since `N >= L/2`, each label-3 factor carries a `sqrt z`.  So
+            the negative part is at most
+            `4 theta^(L-2) (2/3)^(N-L/2) [1/(4(b+1)(b+2)) + (32/225)(5/9)^b]`.
+          - A second bound, (5), handles small `N` uniformly in `L`.
+        - Lemma 4: every ray integral is `>= 0` once `L >= 22`, `N >= 20` or
+          `b >= 42` (exact rational checks and monotonicity).
+        - Lemma 5: `L <= 1` is FM-MECH41/44.  `L = 2`, `N <= 1` follows from
+          character identities, e.g.
+          `Z^2 - P^2 = 1 + U_4(x) + U_4(y) + U_2(x) U_2(y)`.
+        - The remaining box is `2 <= L <= 21`, `max(2, ceil(L/2)) <= N <= 19`,
+          `b <= 41`.  All 1,848,168 exact values are positive; the least is
+          `M(2,2,0,1,1) = 2`.  Evaluation uses an IBP recursion for
+          `E[s^(2m) d^(2r) P^j Z^b]` (1,242 bridges) and 528 direct
+          consumer checks.
+        - Main-agent checks.
+          - Every analytic inequality re-derived by hand: `h >= 3z - 2`,
+            `f >= 2z - 1`, `w >= 1 - z` on `[2/3,1]`; the `theta`
+            maximum; `|f| <= 1 - 2z` on `[0,2/5]` and `|f| <= 5/9` on
+            `[2/5,2/3]` (using `beta in [4,8]`); the constant 481/50; the
+            monotonicity steps in `N`, `L` and `b`.
+          - `fm39/mech47_box_independent_check.py`: 400 random box entries
+            agree with an independent `(u,v)`-expansion evaluator.
+          - `fm39/mech47_ray_bounds_numeric.py`: bounds (4) and (5) hold on
+            3,000 random rays (numerical quadrature).
+        - Not claimed: the unconstrained form with `A + E < al + ga` and
+          `al + ga >= 3` (not needed by FM3).  `al + ga <= 2` holds without
+          the condition.
+        - Pending: FM-CHK56 (independent checker).
       - FM-SEC127 (luna_max_mars; `fm39/sec127_q2plus_audit_repro.py`, rerun
         exactly): the q = 2 plus sign of (E), uniformly in the label.
         - With `x = c_j`, `y = c_(j+1)` and the Krawtchouk recurrence, the
