@@ -10905,6 +10905,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `h_4` from `U_k(x) U_(4-k)(x)` and printed 25.  With
           `U_(4-k)(y)` it gives `phi_1(h_4 hat S_2^2) = 1`, which agrees
           with `mech28_eval.py`.  The census totals rerun exactly.
+      - FM-SEC107 (luna_max_vesta; strategist pass;
+        `fm39/sec107_strategist_screens_repro.py`, rerun exactly).
+        - Character defect domination:
+          `Delta_Q(a,b) = sum_(c in a(x)b) q_(c0) - q_(ab) >= 0` for
+          `Q = S_k F_T D_1^(t-2)` and all `a, b >= 1`.  Screened on
+          49,954 matrices, none negative.
+          - Main-agent reading: `Delta_Q(a,b) = (1/2) E[Q D_a D_b]`, the
+            EVEN value of the word with two more minus labels, which has
+            `2r + 2` general h.  So this is U-FM3 (the unconstrained cone
+            of FM-SEC56) with one extra pair, not a new mechanism.
+            `(a,b) = (1,1)` is the consumer value.
+        - KILL: a Lee-Yang root condition on the palindromic split counts.
+          `(1^4)`, `T = [4]` has roots `+-i` (237 of 3,711 fail).
+        - KILL: split-count descent `a_0 >= a_1 >= ...`.  `(1^4)`,
+          `T = {0,1}` gives `(3,4,3)` (1,396 fail).
+        - No new mechanism emerged.
       - FM-SEC104 (luna_max_vesta; `fm39/sec104_channel_transport_repro.py`,
         rerun exactly).  Equal-label singlet-channel transports on the
         tensor factors, in three variants (sum, signed sum, first pair),
