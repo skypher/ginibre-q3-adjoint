@@ -10877,6 +10877,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `(1,-1,-1,1)`).
         - So no map factoring through `H` can be injective.  An injection
           must use the tensor factorization `Inv(S) (x) Inv(S^c)` itself.
+      - FM-SEC101 (luna_max_saturn): primal CP search for H_AC.
+        - No counterexample or separator.  The boundary certificates are
+          re-verified: `(1^8,6)`, `(2^6,4)`, `(1^4,2^3)`, `(1^13,3)`.
+        - New: `(2^5,4)` has a clique-orbit certificate, with orbits of
+          `{0,3,5,6}` (10) and `{0,3,14}` (60).
+        - Of 494 multisets with `L <= 8`, labels `<= 4`: 245 have zero
+          targets, and 162 are certified by fusion-path, profile and
+          clique dictionaries.  87 are unresolved in those dictionaries,
+          which does not mean they fail.  The first is
+          `(1,1,2,2,3,3,3,3)`.
+        - The random `L = 9, 10` batch and a general rank-`|G|` search
+          were not run.
       - FM-SEC99 (luna_max_venus; `fm39/sec99_plucker_grouping_repro.py`,
         rerun exactly).
         - The coset identity `f = sum_M 1_(A_M + W_M)` is proved and
