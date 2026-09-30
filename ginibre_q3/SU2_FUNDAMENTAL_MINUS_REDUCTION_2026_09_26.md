@@ -10642,6 +10642,38 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `M = 7..14`.  General subgroup orbits certify `M <= 10`
         (FM-SEC88, FM-SEC113).  So the needed codes grow in complexity
         with `M`.
+      - **FM-MECH41 (astra_max_ceres; `fm39/mech41_B_12lists_repro.py`, all
+        assertions pass): B holds for every list with labels in {1, 2}.
+        So `phi_r(h_1^a hat S_2^k) >= 0` for all `r >= 1`, `a, k >= 0`.**
+        - The {1,2} sector is closed at every level with any number of
+          factors, including the odd-`k`, even-`a` branch left open by
+          FM-SEC69/72 and the repeated-2 sector.
+        - Lemma: the semicircle quantile `v(t)` has
+          `v(t) = sum_k A_k (pi t/2)^(2k+1)` with `A_k > 0`, by Lagrange
+          inversion of `int_0^w sqrt(1 - s^2/4) ds = w(1 - rho(w^2))`;
+          convergence on `[0,1]` by Picard iteration.
+        - Positive Walsh realization.  Take independent signs
+          `eps, sigma_1, sigma_2, ...`, `u = 1/2 + sum 2^(-j-1) sigma_j`
+          (uniform) and `X = eps v(u)` (semicircle).  Then `X` and
+          `U_2(X) = X^2 - 1` have nonnegative Walsh-Fourier coefficients
+          `a_1, a_2` on the Boolean group; `E[X^2] = 1` removes the
+          constant.
+        - Hence `f(S) = m(S) m(S^c) = sum over charge assignments gamma`
+          with `xor gamma_i = 0` of `(prod_i a_(n_i)(gamma_i))
+          1_(W_gamma)(S)`, where `W_gamma = {S : xor_(i in S) gamma_i = 0}`
+          is a subgroup.  This is a nonnegative subgroup mixture, hence
+          B, H_AC and FM3.  The construction is global (no insertion),
+          so FM-MECH40's obstruction does not apply.
+        - The canonical extension to other labels fails: `U_3(X)` has
+          Walsh coefficient `-(2/5) E|X|` at the sign `eps`, and the grouped
+          `E_4` coefficient at `(1,1,1,3)` is `< -1/25`.  That table is
+          still B, by a three-plane regrouping.
+        - Main-agent observation: B is known to fail only on lists with a
+          label `>= 5` (`(1^N, N-2)` for `N >= 7`; `(1^8,6)`), and the
+          `L = 8` certificates for labels `<= 3` (FM-SEC113) are all
+          subgroup sums.  A realization with `U_1..U_4` Walsh-nonnegative
+          would prove FM3 for every word with labels `<= 4`.  This is
+          FM-MECH42.
       - **FM-MECH40 (astra_max_ceres;
         `fm39/mech40_insertion_obstruction_repro.py`, all assertions
         pass): no parent-preserving insertion.**
