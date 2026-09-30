@@ -10489,6 +10489,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (matrix coefficients) on graphs with cycles.  The class-function
           Q3 here does not feed into them.  No conflict with FM3 is known,
           and no result on the SU(2) character cone was found.
+      - FM-CHK47 (luna_max_eris, own code, no imports of the
+        reproducers).
+        - ACCEPT: Claim R, including the Yang-Baxter check, the norm, the
+          one-colour q-Hermite recursion and the Wick positivity.
+        - ACCEPT: Claim Z, on 240 cases.
+        - ACCEPT: the component-model identity, on 1,088 subset counts.
+        - ACCEPT: the Fock evaluator (280 cases) and both Bernstein
+          screens.
+        - ACCEPT: the graph-product screens at `N = 2, 3`.
+        - REPAIR: the product-state convention in the cumulant reading,
+          and the sampled global minimum of the crossing-set kill (both
+          applied).  Also the self-test import in `qs_fock.py` (fixed).
       - FM-CHK46 (luna_max_saturn, own code): ACCEPT FM-MECH34 Theorem 1
         (21,975 fusion cases; the `rho` minima `17/12, 5/3, 17/12`;
         adjacency-free supports), the FM-SEC77 `q = 1` rotation theorem
@@ -10724,8 +10736,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           positivity under an arbitrary set `R` of allowed mutual-crossing
           positions.  `F_R` counts only pairs whose mutual crossings (as
           4-sets of legs) all lie in `R`.  `F_R` is negative for 6,712 of
-          688,872 pairs `(profile, R)` (legs `<= 8`).  The worst is `-6`, at
-          `(1,1,1,1,2,2)`, `T = {0,2}`, with an 8-element `R`.  Knob:
+          688,872 pairs `(profile, R)` (legs `<= 8`).  The witness `-6` at
+          `(1,1,1,1,2,2)`, `T = {0,2}`, with an 8-element `R` is exact.  It
+          is that profile's exact minimum over all `2^14` sets (FM-CHK47).
+          Profiles with more than 14 candidate sets were only sampled, so
+          `-6` is not established as the global minimum.  Knob:
           arbitrary crossing sets, which is stronger than any
           colour-based restriction.  So the Bernstein positivity is not
           explained by positivity of every `F_R`.
@@ -10742,7 +10757,9 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - Clusters do not cross each other, so this is the free
             moment-cumulant formula: `F = sum_(sigma in NC) prod w_T(K)`,
             where `w_T` is the free cumulant of the commuting variables
-            `W_i = U_(n_i)(x) + eps_i U_(n_i)(y)`.  It can be negative
+            `W_i = U_(n_i)(x) + eps_i U_(n_i)(y)`, with `x, y` commuting
+            and independent under the product state (FM-CHK47 repair: for
+            freely independent `x, y` the value at `(1^4)` is 4, not 2).  It can be negative
             (`-2` at `(1,1,1,1)`, `T = {0,1}`).
       - FM-SEC87 (luna_max_neptune; `fm39/sec87_even_gf_repro.py`):
         EVEN-form label generating functions at fixed length.

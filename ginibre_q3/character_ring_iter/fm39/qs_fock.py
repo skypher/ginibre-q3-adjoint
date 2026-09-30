@@ -50,6 +50,15 @@ def F(labels,T,q,s):
         vec={w:c for w,c in new.items() if c!=0}
     return vec.get((),0)
 if __name__=="__main__":
-    # cross-check with enumeration polynomials from qs.py on small lists
-    sys.path.insert(0,'.')
-    from qs import Fqs, ev
+    # self-check against the enumeration in qs_family_screen.py
+    src=open("qs_family_screen.py").read().split("import random")[0]
+    ns={}; exec(src, ns)
+    from fractions import Fraction as Fr
+    bad=0
+    for lab in [(1,1,1,1),(1,5,2,2),(1,1,2,2),(1,2,3)]:
+        for T in range(1<<len(lab)):
+            if bin(T).count("1")%2: continue
+            p=ns["Fqs"](lab,T)
+            for q,s_ in [(Fr(0),Fr(1)),(Fr(1,3),Fr(1,2)),(Fr(1,2),Fr(-1,5))]:
+                bad+= F(lab,T,q,s_)!=ns["ev"](p,q,s_)
+    print("self-check mismatches:",bad)
