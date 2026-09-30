@@ -10293,6 +10293,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         give subspace indicators when their union is noncrossing, but
         affine cosets (2-colourings of the crossing graph) when it is not.
         So a canonical decomposition must re-pair crossing configurations.
+      - All-ones, `L = 8`, explicit (main agent):
+        `f = 4 * 1_E + (1/6) sum_(|T| = 3) 1_(W_T) + (2/3) 1_0`, where
+        `W_T` is the span of the pairs inside the triple `T`.
+      - Killed (knob: a restricted subspace family): "B-lite", using
+        only the sub-cube subspaces
+        `W_T = {X subset T : |X cap Odd| even}`.  It is infeasible on 25
+        of 39 random lists (length 4..8, labels `<= 4`;
+        `fm39/hypB_lite.py`), so B needs richer subspaces.
+    - FM-SEC69 (luna_max_venus), the `{1,2}` sector
+      (`hat S_2^k h_1^a`, every level).
+      - Proved, with an explicit positive formula:
+        `phi_r(hat S_2^k) = (1/2) sum_(p,l) C(k,p) C(2r,2l)
+        A_(p,r-l) A_(k-p,l)`, with `A_(p,s) = E[X^(2s) U_2(X)^p] =
+        sum_l C(s,l) mu_(p+l) >= 0` and `mu_n = E[U_2^n]` the Riordan
+        numbers (noncrossing partitions without singletons), for all
+        `r, k`.  This is the parity mechanism made explicit.
+      - Even `k` with even `a` is pointwise positive; odd `a` gives 0.
+      - Open: odd `k >= 3` with even `a >= 2`, the first mixed-parity
+        case.  Separated moments have mixed signs there
+        (`(r,a,k) = (1,2,3)`: `7/2, -1/2, -1/2, 7/2`, total 4).
+        FM-SEC72.
     - **The H-only level-2 sector as one inequality (main agent,
       `fm39/mp2_kostka_check.py`, with FM-MECH28's evaluator
       `fm39/mech28_eval.py`).**
