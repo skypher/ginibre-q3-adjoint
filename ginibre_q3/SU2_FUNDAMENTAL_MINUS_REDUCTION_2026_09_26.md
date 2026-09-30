@@ -8789,6 +8789,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | H-only | three factors with `|a - (2r-3)| <= 1`, all labels (Theorems DS, AS); T3R regions (item (39)) |
   | all `r` | H-only | three factors in the G0 branch `gamma >= a+2r-2` under the one-sign-block, root-crossing (G3X) or odd-`C` (G3O) conditions, and parts of `gamma = N` (Theorems G3, G3X, G3O, item (39)) |
   | all `r` | H-only | three factors, whole G0 branch when `(a-2r+2)^2 <= 8r-9` (Theorem G0B); whole G0 branch conditional on (E) (Theorem G0E) |
+  | all `r` | H-only | four factors on the outer-pairing support region, conditional on (E) (Theorem G0E4; strictly extends LL4) |
   | all `r` | H-only | any number `m <= 2r` of factors with spread labels: `lambda(S)+lambda(S^c) > a+2r-m` for every split (Theorem LLm; includes LL, LL4) |
   | all `r` | every consumer word (h and hat S) | spread labels over every two-sided assignment (Theorem LLm-S) |
   | all `r` | every word | suffix `a >= (2r+3) Lambda(w) - 2r - 4` (Theorem LS); `2r + a + t + 6 >= 7L(w)`, `L` an additive quartic in the labels (Theorem LR4) |
@@ -9894,6 +9895,32 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       `phi`, e.g. `M = 33` against `phi = 53,119` for `h_9 h_4^2 h_1^11`
       at `r = 2`.  The basis LP shows that a linear reduction to (E)
       forms is impossible for some of them.
+  - **Theorem G0E4: four factors on their support region follow from (E)
+    (FM-SEC19, luna_max_jupiter; verified by the main agent,
+    `fm39/g0e4_check.py`).**
+    - *Merge form.*  For a pairing `XY|ZV` at `e = 2r-4`,
+      `phi = sum_(d in CG(X,Y), d' in CG(Z,V)) phi(hat S_d hat S_d' h_1^a) - corr`,
+      with
+      `corr = W(U_X U_Y U_Z, U_V) + W(U_X U_Y U_V, U_Z) + W(U_Z U_V U_X, U_Y)
+      + W(U_Z U_V U_Y, U_X) - W(U_X U_Z, U_Y U_V) - W(U_X U_V, U_Y U_Z)`.
+      Each `hat S hat S` value is `T + W >= 0` by (E).
+    - *Support region.*  Let `lambda(I)` be the least fusion constituent.
+      `corr` vanishes termwise exactly when:
+      - `X + lambda(Y,Z,V) > N`, and the same for each singleton;
+      - `|X-Z| + |Y-V| > N` and `|X-V| + |Y-Z| > N`.
+      For sorted labels and the outer pairing `12|34` this is
+      `s* = min_i (L_i + lambda(rest)) > N` and
+      `L_1 + L_2 - L_3 - L_4 > N`.  That strictly contains Theorem LL4's
+      region `mu_1 > N`, `mu_2 > N`; example `L = (6,5,4,3)`, `r = 2`,
+      `a = 2`.
+    - *Checks.*  1,366 words in the outer-pairing region (`r <= 5`,
+      `a < 9`, labels `<= 11`): `corr = 0` exactly and `phi >= 0` in
+      every one.  577 of them lie outside LL4.
+    - The correction telescopes into phase-plane wedges, which gives an
+      exact sign test but no universal sign rule.  Beyond four factors,
+      iterated merges leave products of three or more `hat S`, which (E)
+      alone does not control.  Those are the three-label plus words,
+      FM-SEC23.
   - **GFM3: FM3 with extra nonnegative kernel factors (main agent,
     `fm39/recip_test.py`, `fm39/recip_bounds.py`, `fm39/recip_quartic.py`,
     `fm39/kernel_identity.py`, `fm39/general_row_words.py`).**
