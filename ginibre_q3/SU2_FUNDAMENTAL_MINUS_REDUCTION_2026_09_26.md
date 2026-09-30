@@ -9782,6 +9782,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       fail often.
     - Conjecture W implies the entire G0 branch of the three-factor
       stratum at every level.
+  - **The `gamma <= N` branch (main agent, `fm39/gammaN_branch_scan.py`,
+    `fm39/mirror_check.py`).**
+    - *Mirror form.*  For anti-reciprocal rows, `P_C(tau) = P_C(l - A - 1)`
+      and
+      `phi = P_C(l) - P_C(l-A-1) - (g_l + g_(tau-A-1)) ^ (g_tau + g_(l-A-1))`,
+      with `l = alpha`, `tau = gamma+1`.  Checked in 730 cases.
+    - *Size and margin.*  Outside the strips (`|a-e| >= 2`, `a >= 1`),
+      `r <= 6`, `a < 30`: 50,370 words, all positive.  Throughout,
+      `phi / tau(U_A U_B U_C) >= 0.46`.  The tightest words are
+      `h_2^3 h_1^a` at `r = 2`.
+    - At fixed labels the ratio decays like `1/a^2`, e.g.
+      `0.073, 0.019, 0.0048` at `a = 80, 160, 320` for `h_2^3`, `r = 2`.
+      That range is inside Theorem LS.
+    - Assigned as FM-SEC14 (luna_max_mars).
   - **GFM3: FM3 with extra nonnegative kernel factors (main agent,
     `fm39/recip_test.py`, `fm39/recip_bounds.py`, `fm39/recip_quartic.py`,
     `fm39/kernel_identity.py`, `fm39/general_row_words.py`).**

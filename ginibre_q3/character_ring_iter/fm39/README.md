@@ -40,6 +40,7 @@ this directory, because several `exec` a sibling file.
 | What W uses: ULC vs log-concave, signed Newton, log-concave weights | `window_ulc.py`, `logconcave_test.py` |
 | Phase-polygon form of W: Theorem WS, pass criterion, G0 coverage | `polygon_lemma.py`, `window_sweep.py`, `window_passes.py`, `window_cover.py` |
 | Newton certificates for W (C <= 2) and their failure for C >= 3 and for (E) | `window_lp.py` (args: C, maxdeg, t-list, extension), `e_lp.py` (args: maxdeg, t-list), `window_gf.py` |
+| gamma <= N branch: scan, mirror form | `gammaN_branch_scan.py`, `mirror_check.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
