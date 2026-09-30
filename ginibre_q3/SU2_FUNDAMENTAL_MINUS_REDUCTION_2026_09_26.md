@@ -10544,6 +10544,42 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - At `q = 1` the chords are single steps and separate absolute
         bounds lose the cancellation.  So `q = 1` across all gaps is the
         sharpest open core of (E).
+    - **Theorem EQ1: (E) at `q = 1` for all `a, e`, from Theorem OL on the
+      neighbouring rows (main agent, `fm39/e_q1_ol.py`).**
+      - Put `psi_k = (c_k, B_k)`.  Then `psi_(k+1) - psi_k` is the
+        `psi`-vector of `f = (1-z)P` at `k+1`, and `psi_k + psi_(k+1)` is
+        that of `s = (1+z)P`.  Hence, exactly:
+        - `D_j - D_(j+2) - W_(j+2,j) = D^f_(j+1) - D^f_(j+2)`, with
+          `f = (1+z)^a (1-z)^(e+1)`;
+        - `D_j - D_(j+2) + W_(j+2,j) = D^s_(j+1) - D^s_(j+2)`, with
+          `s = (1+z)^(a+1)(1-z)^e`.
+      - Both rows are base rows of degree `N+1`, and `j >= N/2` gives
+        `2(j+1) > N+1`.  So Theorem OL makes both sides `>= 0`.  QED.
+        This replaces the fixed-gap factorizations of FM-SEC17 and proves
+        `q = 1` for every gap.  Checked on all 33,200 `q = 1` pairs
+        (`a, e <= 40`).
+    - **The multiplier identity for (E) (main agent,
+      `fm39/e_multiplier_symbolic.py`, `fm39/e_ol_lp.py`,
+      `fm39/e_via_olcyc.py`).**  With `delta_k[R] = D_k(RP) - D_(k+1)(RP)`,
+      - `D_j - D_i - W_ij = sum_(i0 < q/2) delta_(j+q)[z^i0 - z^(q-i0)]`;
+      - `D_j - D_i + W_ij = sum_(i0 < q/2) delta_(j+q)[z^i0 + z^(q-i0)]`,
+        plus `2 delta_(j+q)[z^(q/2)]` when `q` is even.
+      This is symbolic for `q = 1..7`; the general case is the same
+      telescoping as FM-MECH23's identity for W.
+      - Each term is a one-label (OL) difference of the row
+        `(1 -+ z^m) P`, `m = q - 2 i0`, beyond its centre.  So (E) follows
+        from "Theorem OL for cyclotomic multiples `(1 -+ z^m)P`", the
+        m = 1, 2 cases of which are base rows.
+      - Consequence: (E) at `q = 2` with the minus-W sign is Theorem OL for
+        `(1 - z^2)P`, so it is proved for all `a, e`.
+      - Termwise OL for the cyclotomic multiples holds in 686,420 of
+        704,076 open-region (pair, sign) cases (97.5%).  In the rest a
+        negative term is outweighed within the sum, e.g. `[-10, 40]`.
+        Termwise OL for `m >= 3` is unproved: Theorem OL's proof is
+        Krawtchouk-specific.
+    - **Residual of (E) now** (`fm39/e_residual2.py`): 22,046 of 438,221
+      pairs (5.03%), all with `q >= 2`: `q = 2` 8,364, `q = 3` 6,908,
+      `q = 4` 3,948, `q = 5` 1,988, `q >= 6` 838.
     - **FM-SEC20 (luna_max_venus) on (ii):** proved at `e = 1` for every
       window, and for the reflection-plateau subcase at every odd `e`.
       - At `e = 1` `D` is log-concave, from the explicit form

@@ -57,6 +57,7 @@ this directory, because several `exec` a sibling file.
 | W residual with all criteria | `w_residual2.py`, `w_residual3.py` |
 | FM-MECH25 (centered windows, metric chord bound); equal-label sector; W complete on grid; sampled exhaustiveness | `mech25_repro.py`, `eqlabel_check.py`, `w_residual4.py`, `w_residual_sample.py` |
 | Three labels with hat S (M3): closed forms, support band; (E) with metric chords | `sp3_repro.py`, `sp3_band_check.py`, `e_metric.py` |
+| Theorem EQ1 ((E) at q=1 from OL); multiplier identity for (E); OL for cyclotomic multiples; residual | `e_q1_ol.py`, `e_ol_lp.py`, `e_multiplier_identity.py`, `e_multiplier_symbolic.py`, `ol_cyclotomic.py`, `e_via_olcyc.py`, `e_residual2.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
