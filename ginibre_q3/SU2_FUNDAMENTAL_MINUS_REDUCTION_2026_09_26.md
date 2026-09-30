@@ -10994,6 +10994,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - So (a) should split into two steps: `R` lies inside the outer
             region for `k >= K_0`, and the central condition holds on the
             band for `k < K_0`.
+        - FM-SEC132 (luna_max_mars; `fm39/sec132_t3_family_repro.py`, rerun).
+          - KILL of the main-agent split (a1): for `t = 3`,
+            `d = 2n + k - 6`, one has `[n^10] Delta_num = 144`, and the band
+            persists at every `k` (e.g. `n = 1283`, `k = 9`).  These rows
+            are central, so the coverage claim (a) survives.  Knob: my
+            proposed intermediate, not the consumer.
+          - `omega_2 = k(j+4)(D - T_2) >= 0` on the whole outer region,
+            since `D_out - T_2 = 3(n-1)(n+k+2)`.
+          - Outer endpoint reduction: with `omega_2 >= 0`, it suffices to
+            show `Q'(R_OL) <= 0` and `Q(R_OL) >= 0`, both in explicit
+            `sqrt S` form.
       - FM-MECH46 (astra_max_ceres; `fm39/mech46_insertion_repro.py`, rerun
         exactly): the uniform one-extra-label statement, the b-insertion.
         - Exact recurrence (Prop. 1): with `g_b = g_(k,a,b)`,
