@@ -10434,6 +10434,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         is not preserved: `L_(1,0)(E_(3,3,3,1) (x) W) = -1`, with 70
         failures down to `-329` (knob: translated inequalities, a
         strength the sector does not use).
+      - Killed, tentatively (main agent, `fm39/mp2_qkostka.py`; knob:
+        coefficientwise `q`-positivity, a strength the sector does not
+        use): the Kostka-Foulkes strengthening.  Replacing `K(lambda,kappa)`
+        by `K_(lambda,kappa)(q)` (charge statistic) gives polynomials whose
+        values at `q = 1` match `phi_2` exactly, e.g. 2 at `(2,1,1)` and 6
+        at `(1^4)`.  But they have negative coefficients, e.g.
+        `-2 + 3q + q^2` at `kappa = (2,1,1)`.  Tentative because the
+        charge code is the main agent's own and has not been checked
+        independently.
       - Next route (FM-SEC62).  By Weyl's formula `m_lambda(E_kappa)`
         counts walks in the `C_2` Weyl chamber, one Pieri step per factor.
         So `phi_2(E_kappa)` is a signed walk count, and a sign-reversing
