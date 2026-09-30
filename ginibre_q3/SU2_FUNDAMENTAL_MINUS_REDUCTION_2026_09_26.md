@@ -10537,6 +10537,30 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           contains FM3, is empirically positive, but the rotation does not
           cover it: there the flip weight is negative.  Example:
           `(1,1,1,1)`, `T = {0,1}` gives `F = 4 + 2q - 2s`.
+        - FM-SEC90 (luna_max_pluto; `fm39/sec90_braided_repro.py`, rerun
+          exactly).
+          - Claim R is PROVED: `F_(q,s) >= 0` for `0 <= q <= 1`,
+            `|s| <= q`.  The braiding `T(e_i (x) e_j) = q_ij e_j (x) e_i`
+            satisfies Yang-Baxter (both sides carry `q_ij q_ik q_jk`) and
+            has norm `max(|q|,|s|)`.  In the basis `f, g` its entries
+            `(q +- s)/2` are nonnegative, and the signed blocks expand with
+            coefficients 0 or `2^(1-n/2)`.
+          - Claim Z is PROVED: `F_(q,0) = sum_M q^cr(M) prod_C (1 + eps^C)`
+            for `q >= 0`.
+          - The boundary is sharp: `(1,1,1,1)`, `T = {0,2}` gives
+            `F_(q,s) = 2(q+s)`, which vanishes on `s = -q`.
+          - Screens: no negative value in `q >= 0, s >= -q` on 544
+            profiles (41 x 41 grid), nor on all 512 masks of
+            `(1^8, 2, 2)` (651 grid points each).
+          - Further values: `(1,5,2,2)`, `T = {1,2}` gives
+            `F = 2 [5]_q!`, independent of `s`.  `(1^8,6)`,
+            `T = {0,1,2,3}` gives `F_(0,s) = 24 + 4s - 2s^2 - 8s^3 - 6s^4 -
+            4s^5 - 2s^6`, with Bernstein coefficients
+            `24, 74/3, 126/5, 126/5, 358/15, 58/3, 6`.
+          - No q <-> s duality exists (main agent: the profile sets of six
+            lists are not closed under the swap), so Claim Z does not
+            transfer to `(0,1)`.
+          - Open: positivity above the diagonal, which contains FM3.
         - Bernstein positivity along the free-to-tensor segment (main
           agent, `fm39/qs_bernstein.py`, `fm39/qs_bernstein_fock.py`, and
           the exact Fock-space evaluator `fm39/qs_fock.py`, checked against
