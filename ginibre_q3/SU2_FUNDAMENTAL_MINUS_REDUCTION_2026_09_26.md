@@ -9874,10 +9874,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           ((m!)^2 (k!)^2 (m+k+1)! (m+k+2)!)`.  So `phi_R(w h_1^e)` is an
           explicit hypergeometric sum for any fixed core.
         - Cutoffs (positive-coefficient numerators in
-          `xi = n - R - const`): `phi_R(hat S_3^3 h_1^e) > 0` for
-          `e >= 2R+3`, and `phi_R(h_3^3 h_1^e)`, `phi_R(h_5 hat S_3^2 h_1^e)`
-          `> 0` for `e >= 2R+1`.  LS needed `28R+41`, `(116R+169)/5` and
-          `36R+53`.
+          `xi = n - R - const`), for odd `e`: `phi_R(hat S_3^3 h_1^e) > 0`
+          for `e >= 2R+3`, and `phi_R(h_3^3 h_1^e)`,
+          `phi_R(h_5 hat S_3^2 h_1^e)` `> 0` for `e >= 2R+1`.  For even `e`
+          the value is 0 by parity (FM-CHK43 repair, e.g.
+          `phi_1(hat S_3^3 h_1^6) = 0`).  LS needed `28R+41`,
+          `(116R+169)/5` and `36R+53`.
         - Via the parity transform, 18 of the 31 `e >> a` failures are
           covered.  The other 13 (`h_3^3` at `R = 17..21`) and the `a = 2`
           misses are exact positive values.  So the whole screened
@@ -10423,6 +10425,39 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             `f = (1/2) p*p + (L - 1 - t/2) delta_0`;
           - `(1^N, n)` with `3n >= N-2`, by sphere autocorrelations and an
             explicit binomial identity.
+        - **FM-MECH34 (astra_max_ceres; `fm39/mech34_hAC_d2_repro.py`,
+          rerun exactly): H_AC for every list with a label
+          `n = sum(mu) - 4`**, for any number of mixed labels.
+          - The table is
+            `f = [C(L,2) - t] delta_0 + (L-3) E_11 + E_22 + E_112 +
+            2 E_1111`, where `t, v` count the labels 1 and 2 in `mu` and
+            `E_rho` indicates the subsets with label pattern `rho`.
+          - The factors are `E` (single 1's), `A` (pairs of 1's), `B`
+            (single 2's) and `A` plus weighted 2-points.  The certificate
+            is explicit in `(t, v, w)`, with every coefficient `>= 0`.
+          - Checked on 87,092 direct fusion entries in 400 lists.  With
+            FM-MECH33 this gives H_AC, hence FM3 at every level, for every
+            list with `2 max(lambda) >= sum(lambda) - 4`.
+          - Its factors are pointwise disjoint in the inserted bit, so they
+            also give the compatible insertion data for
+            `n = sum(mu) + h - 4`.
+          - Boundary screens: `(1^10,2)` and `(1^12,2)`; all 21 inner-range
+            `(1^N, n)` with `N <= 20` and `3n < N-2` (two-sphere atoms);
+            `(1^(2m),2,2)` for `m <= 6` (cycle-code atoms for `m = 5, 6`).
+          - Next distance: at `n = sum(mu) - 6` the table (checked on
+            22,016 entries) has six-strand patterns `E_111111`, `E_11112`,
+            `E_1122`, `E_222`, `E_1113`, `E_123`, `E_33`, and no factor
+            rule is known yet.  Since every list has `sum(mu) - n = 2d`
+            with `n` its largest label, a construction uniform in `d` is
+            H_AC for the full cone.
+      - FM-CHK43 (luna_max_saturn, own code): ACCEPT FM-SEC66 (39 records,
+        295 direct coefficients), FM-SEC69 (Riordan moments `>= 0`) and
+        FM-MECH31 Proposition 3.  REPAIR FM-SEC67: the strict cutoffs hold
+        for odd `e` only (applied above).
+      - FM-CHK44 (luna_max_uranus, own code): ACCEPT FM-SEC71 (the weighted
+        certificate covers every real `p >= 0`, `S >= 0`; margin pairs
+        rechecked), FM-SEC78 (`r_(p+1)/r_p < 1`, `r_2 = 11/14`), and the
+        counting proof that B fails at `(1^8, 6)`.
         - KILL (main agent, `fm39/hAC_sqrt_test.py`): the canonical
           one-term choice `p = WHT^(-1)(sqrt(f_hat))`, i.e. `C^(1/2) >= 0`
           entrywise.  It is negative on 812 of 1,043 label lists (`L <= 10`,
