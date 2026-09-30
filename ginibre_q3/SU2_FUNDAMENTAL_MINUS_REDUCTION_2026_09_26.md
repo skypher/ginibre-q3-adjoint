@@ -9981,6 +9981,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       induction hypothesis.  M5 still needs a hypothesis that controls
       `C` from data with fewer labels, such as a quantitative bound or a
       positive-form structure.
+    - FM-SEC31 (luna_max_pluto): the mixed term expands exactly through
+      lower-label values, `C = A - B`, so the inductive step is
+      `A <= R + B`.  Every term there has fewer labels, but positivity of
+      the lower words does not compare them.  A Cauchy balance and an LD
+      envelope were screened and are not enough.  The base would need
+      two-label results for the same kernel rows, not only Theorem OL.
   - **Three labels with `hat S` (M3; FM-SEC23, luna_max_neptune;
     verified by the main agent, `fm39/sp3_repro.py`,
     `fm39/sp3_band_check.py`).**
@@ -10009,6 +10015,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       criteria apply.  For `sigma = +1` it is `sum D + T`, which is
       automatic when `T >= 0`.  The remainder outside the support branch
       is open.
+    - FM-SEC34 (luna_max_neptune): exact merge forms off the support
+      branch.
+      - Census (`r <= 6`, `a <= 16`, labels `2..8`): 19,643 words, all
+        nonnegative.  Some grouping has a favourable correction sign in
+        about 75% of them.
+      - Correction-resistant words (still positive) include
+        `h_2^2 hat S_4 h_1^4`, `h_3 hat S_3^2 h_1^3` and `hat S_2^3 h_1^2`
+        at `r = 1`.  These lie outside an (E)-only proof.
   - **GFM3: FM3 with extra nonnegative kernel factors (main agent,
     `fm39/recip_test.py`, `fm39/recip_bounds.py`, `fm39/recip_quartic.py`,
     `fm39/kernel_identity.py`, `fm39/general_row_words.py`).**
@@ -10623,8 +10637,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           the Clebsch--Gordan telescoping of `U_q`, so termwise positivity
           is not expected; the sum is what the consumer uses.
       - What remains at `q = 2` is the plus sign,
-        `delta_(j+2)[(1+z^2)P] + 2 delta_(j+1)[P] >= 0`
-        (FM-SEC35, luna_max_venus).
+        `delta_(j+2)[(1+z^2)P] + 2 delta_(j+1)[P] >= 0`.
+        - FM-SEC35 (luna_max_venus) restated it via `(1+z^2)P = (F+G)/2`,
+          with `F = (1+z)^2 P` and `G = (1-z)^2 P`, as
+          `delta_(j+2)[F] + delta_(j+2)[G] >= 4 delta_(j+1)[P]`.  All
+          three rows are base rows; open for `a >= e+2`, `e >= 3`.
+        - The Cauchy--Schwarz bound on the cross term fails at
+          `(a,e,j) = (4,6,5)`.  No proof yet (FM-SEC38 is applying
+          Theorem OL's proof method).
     - **Uniform metric regions for (E) (FM-MECH26, astra_max_ceres;
       reproducer `fm39/e_metric_mech26_repro.py`).**
       - Put `sigma = N+2`, `A_k = c_(k-1) - c_(k+1)` and
