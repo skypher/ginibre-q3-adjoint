@@ -9984,6 +9984,44 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         (`fm39/e_lp.py`): with reciprocity imposed, 130 of 135 cases
         (`N <= 12`) have no such certificate.  Multipliers up to degree 4,
         including `(1 + t z)` factors, were tried.
+    - **FM-MECH23 (astra_max_ceres; reproducer rerun by the main agent,
+      `fm39/mech23_repro.py`).  No movement on W; three exact results.**
+      - Identity, for every `P`:
+        `P_C(x) = sum_(i=0..floor((C-1)/2)) D_(x+C)[(z^i - z^(C-i)) P]`.
+        For `C >= 3` some multipliers have roots on the unit circle.
+      - For `C = 3` the only covariance representing `P_3` as
+        `sum lambda D[R P]` is `G = I - J`.  It forces
+        `R = (1-z)(a + (a+b)z + a z^2)`, whose averaged discriminant is
+        `-2 < 0`.  So no fixed positive average of real-rooted multipliers
+        works.
+      - Degree induction:
+        `P_C(x; (1 + rho z)P) = P_C(x) + rho l_C(x) + rho^2 P_C(x-1)`, with
+        `l_C(x) = sum_(k=x..x+C) T(k-1,k) - c_x c_(x+C-1) + c_(x-2) c_(x+C+1)`.
+        So it closes iff `l_C(x)^2 <= 4 P_C(x) P_C(x-1)` (31,880 exact
+        checks, unproved).  Local Newton and cubic inequalities do not
+        suffice: the row `(4,-3,1,1,-2,-4)`, which has only one real root,
+        satisfies them and has `P_3(1) = -2`.
+      - Q_t deformation `F(s) = A + B s + C s^2`: endpoint positivity
+        controls the interior unless `C > 0` and `|B| < C`, where
+        `4AC >= B^2` is needed.  The shortcut `|B| <= 4A` fails on
+        `phi_3(h_21 h_4 h_2 h_1^15)`, with `(A,B,C) = (1843, 9097, 16813)`.
+    - **W reduces to a crude energy bound on long sweeps (main agent,
+      `fm39/uncovered_slack.py`, `fm39/long_energy2.py`,
+      `fm39/long_energy3.py`).**
+      - `C <= 2` is proved by the certificates, and sweeps `<= 2 pi` by
+        Theorem WS.
+      - What remains is `sum D_k >= T` on windows with `C >= 3`, `T > 0`
+        and sweep `> 2 pi`.  These carry large slack: the least `sum D/T`
+        is 1.48 over all 39,935 such windows (grid `r <= 8`, `a < 40`, any
+        `C >= 2`).
+      - Sufficient condition LE: `sum_(k=x..x+C) D_k >= |g_x| |g_(x+C+1)|`,
+        which implies `sum D >= T`.  On base rows it held in 39,746 of
+        39,746 windows (`C >= 3`), with least ratio 1.55.  On random
+        real-rooted rows: 6,211 windows, least ratio 2.49.  It fails at
+        `C = 2` (e.g. `a = 0`, ratio 0.056), where the certificate applies
+        instead.
+      - `|g_k|^2` is not unimodal on 209 of 280 base rows, so a radius
+        monotonicity argument is not available.
 - **Four factors: split identity, closed form and Theorem LL4 (FM-SEC6,
   luna_max_venus; verified by the main agent, `mech/four_repro.py`,
   `mech/ll4_check.py`, `mech/four_explore.py`).**
