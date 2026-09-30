@@ -8797,6 +8797,9 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | H-only | any number `m <= 2r` of factors with spread labels: `lambda(S)+lambda(S^c) > a+2r-m` for every split (Theorem LLm; includes LL, LL4) |
   | all `r` | every consumer word (h and hat S) | spread labels over every two-sided assignment (Theorem LLm-S) |
   | all `r` | every word | suffix `a >= (2r+3) Lambda(w) - 2r - 4` (Theorem LS); `2r + a + t + 6 >= 7L(w)`, `L` an additive quartic in the labels (Theorem LR4) |
+  | all `r` | every word with labels `<= 2` | all (FM-MECH41, positive Walsh realization, B) — added 2026-10-01 |
+  | all `r` | labels `<= 2` plus one label `n <= 6` | all (FM-MECH44, FM-MECH45) — added 2026-10-01 |
+  | all `r` | every word with labels `<= 3` | all (FM-MECH47, exponential ray suppression plus one fixed box; FM-CHK56) — added 2026-10-01 |
 
   - Finite-range rows.  The table rows restricted to finite `(r, a)` or
     finite `(a, e)` cover all labels there, since larger labels fall
@@ -10915,7 +10918,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Not claimed: the unconstrained form with `A + E < al + ga` and
           `al + ga >= 3` (not needed by FM3).  `al + ga <= 2` holds without
           the condition.
-        - Pending: FM-CHK56 (independent checker).
+        - FM-CHK56 (luna_max_eris, fresh code): ACCEPT all five items.
+          - The ray normalization.
+          - Every pointwise inequality; bounds (4) and (5) at 80-digit
+            precision on 48 rays, minimum slacks 0.00028 and 0.00103.
+          - The constants and monotonicity steps of Lemma 4.
+          - The character identities; 25,000 random box entries with an
+            evaluator independent of recursion (10), all positive; (10)
+            itself on 1,225 tuples.
+          - The consumer translation `A + E - (al + ga) = a + 2r - al >= 0`.
         - FM-SEC128 (luna_max_mercury; `fm39/sec128_ratio_induction_repro.py`,
           rerun exactly): an induction on `al + ga` for the unconstrained
           `b = 0` form.
