@@ -10296,6 +10296,33 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - All-ones, `L = 8`, explicit (main agent):
         `f = 4 * 1_E + (1/6) sum_(|T| = 3) 1_(W_T) + (2/3) 1_0`, where
         `W_T` is the span of the pairs inside the triple `T`.
+      - **FM-MECH31 (astra_max_ceres): B is proved for every
+        repeated odd-label list `(q, ..., q)`, all odd `q`, any length**
+        (`fm39/mech31_hypB_oddlabels_repro.py`, rerun exactly).
+        - General theorem.  Let `Z` be symmetric, `mu_j = E[Z^j]`,
+          `d_1..d_L >= 1`, `d(S) = sum_(i in S) d_i`, `D = d([L])` even.
+          Put `alpha = min(|Z|,|Z'|)` and `beta = max(|Z|,|Z'|)` for
+          independent copies.  Then
+          `mu_(d(S)) mu_(D-d(S)) = E[alpha^D] 1_(E_d) + (1/2) sum_(A != 0)
+          E[alpha^(D-d(A)) prod_(i in A)(beta^(d_i) - alpha^(d_i))]
+          1_(E_d cap C_A)`.
+          Here `E_d = {d(S) even}` and `C_A = {bits in A equal}`; all
+          coefficients are `>= 0`.  (Expand
+          `beta^(d_i) = alpha^(d_i) + (beta^(d_i) - alpha^(d_i))`.)
+        - With `Z = U_q(x)`, `q` odd, this gives B for `(q^L)`.
+          Insertion of two equal labels propagates positively inside the
+          sector.  Consumer content: FM3 for `h_(q-1)^(2r) hat S_q^k` at
+          every level (`q` odd).
+        - Obstruction: the equality-block family fails at `(1^6, 2)`
+          (separating functional, pairing `-15`).  Full B holds there:
+          `f = 2*1_0 + (9/2) Avg(1_(E_5)) + (5/2) Avg(1_(K_(2,3)))`, with
+          `K_(2,3)` the cycle code of `K_(2,3)`.
+        - First open insertion: one label 2 into an all-ones list,
+          `sum_(|S| even) y(S) Cat(|S|/2) [Cat(m-|S|/2+1) - Cat(m-|S|/2)]
+          >= 0` for every `y` in the dual subspace cone on `F_2^(2m)`.
+        - Screens: `(q^L)` for `q = 1,3,5`, `L <= 12`; `(2^k)` and
+          `(1,1,2^k)` for `k <= 12`; one label 3 with the rest in `{1,2}`,
+          length `<= 8`.  All have certificates.
       - Killed (knob: a restricted subspace family): "B-lite", using
         only the sub-cube subspaces
         `W_T = {X subset T : |X cap Odd| even}`.  It is infeasible on 25
@@ -10405,6 +10432,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - FM-SEC66 extends the S2-2/S2-3 generating-function certificates
         (positive numerator decompositions over the Sp(4) invariant rings)
         to an unbounded suffix.
+      - FM-SEC66 (luna_max_neptune) result
+        (`fm39/sec66_two_hat_a2_repro.py`, rerun exactly).  The suffix
+        `a = 2` case holds for all labels: the numerator
+        `N_2 = [z_1 z_2] N_4` over `D_4 = prod (1 - x_i x_j)` has a 39-term
+        positive orbit decomposition, checked against direct evaluation in
+        295 coefficients.  So the level-1 two-`hat S` case holds for all
+        labels at `a = 0, 1, 2`.  For each fixed core, LS covers
+        `a + 6 >= Theta = u(u+4) + v(v+4) + (5/3)(P(P+2) + Q(Q+2))`, which
+        leaves a finite window; four cores are certified completely.
+        Open: `3 <= a < Theta - 6`, uniformly in the labels.
+    - **Theorem LS-hat (FM-SEC63, luna_max_jupiter; not yet checked
+      independently).**  For a fixed core `H = prod h_(kappa_l)`, maximum
+      `hat S` label `P`, and `k >= K(r, kappa, P)` factors `hat S`
+      (explicit, very large), `phi_r(H prod hat S_(p_i) h_1^a) >= 0` for
+      every `a`.  Proof: away from the four corners the product of `hat S`
+      decays like `exp(-c_P k tau)`; near the corners every factor keeps
+      its corner sign; a positive patch near `(2,2)` gives the lower
+      bound; LS covers large `a`.  Consequence: with the labels capped, each
+      level has only finitely many words left (LS bounds `a`, LS-hat
+      bounds `k`, `m <= 2r`).  Without a cap the residual is infinite,
+      e.g. `phi_1(hat S_p hat S_(p+1) h_1^(2p+1))`.
     - FM-SEC31 (luna_max_pluto): the mixed term expands exactly through
       lower-label values, `C = A - B`, so the inductive step is
       `A <= R + B`.  Every term there has fewer labels, but positivity of
