@@ -10585,6 +10585,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           uniform in `d` yet.  Per `d` this is becoming a sequence of
           separate certificates, so the ladder is paused in favour of an
           insertion-stable hypothesis (FM-MECH36).
+      - FM-SEC113 (luna_max_venus; `fm39/sec113_hACq_L8_repro.py`):
+        extended H_AC_q screen.
+        - All 25 even-total lists of length 8 with labels `<= 3`
+          (including `(1,1,2,2,3,3,3,3)`, unresolved in FM-SEC101) have
+          coefficientwise certificates.  The dictionary is subgroup-orbit
+          squares, q-independent: 775 coefficient vectors, 2,844 terms.
+        - Structured lists of length 9-11 are certified:
+          `(1^8,2), (1^6,2^3), (1^10), (1^9,3), (1^10,4)`.
+        - The q-graded Fourier transforms are positive on 1,250,432
+          entries (lengths 8-10); the minimum is 2.
+        - `(1^8, 2^2)` at `q^4` lies outside the tested finite dictionary
+          (exact dictionary separator).  Its Fourier minimum is 814, so
+          it is not a counterexample.
       - **FM-MECH38 (astra_max_ceres; `fm39/mech38_hACq_d2_repro.py`,
         rerun exactly): H_AC_q PROVED for `d <= 2`, uniformly**, i.e.
         for every list with `2 max(lambda) >= sum(lambda) - 4`.
