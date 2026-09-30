@@ -10292,6 +10292,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `j = 17`).  On the actual row, `L - W = 93`.
       - It covers fixed gaps only; `|a-e| >= 4` at `q = 1`, and `q >= 2`
         across roots, remain open.
+      - FM-SEC22 (luna_max_mars): no uniform proof.
+        - Exact drift identity:
+          `S(j,j+2) = d D_j/(j+1) + R_j`, with
+          `R_j = c_(j-1)(d c_(j+1) - (N+2) c_j)/((j+1)(j+2))`.  So (E) at
+          `q = 1` reads
+          `D_j - D_(j+2) >= |d (D_j/(j+1) - D_(j+1)/(j+2)) + R_j - R_(j+1)|`.
+          Here `R_j - R_(j+1)` is the recurrence drift that the
+          constant-coefficient model omits.
+        - Screen: 33,200 `q = 1` pairs (`a, e <= 40`), no failure.  The
+          least open-slice slack is 4.
+        - Demand sheet re-derived at this stall: the consumer uses (E) with
+          both signs at both parities of `e` (`h h` and `hat S hat S` at
+          even `e`; `h hat S` at odd `e`).  So the absolute-value form is
+          exactly what is used.
     - **FM-SEC16 (luna_max_jupiter) on (ii):**
       - Proved: `C <= 1` (AM--GM), and centered windows `2x + C = N`.
         Centered windows follow from `D_(N-k) = D_k`, Theorem OL, and the
