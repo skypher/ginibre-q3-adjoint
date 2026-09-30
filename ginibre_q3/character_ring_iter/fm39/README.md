@@ -55,6 +55,7 @@ this directory, because several `exec` a sibling file.
 | Row class of (E) (log-concave weights); Fourier representation of D and T | `e_class.py`, `fourier_rep.py` |
 | (E) LD energy-drop region; (E) residual; psi-curve form of (E); (ii) at e=1 and plateau | `e_ld_region_repro.py`, `e_residual.py`, `psi_curve.py`, `psi_split.py`, `ii_e1_plateau_repro.py` |
 | W residual with all criteria | `w_residual2.py`, `w_residual3.py` |
+| FM-MECH25 (centered windows, metric chord bound); equal-label sector; W complete on grid; sampled exhaustiveness | `mech25_repro.py`, `eqlabel_check.py`, `w_residual4.py`, `w_residual_sample.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main

@@ -8790,6 +8790,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | H-only | three factors in the G0 branch `gamma >= a+2r-2` under the one-sign-block, root-crossing (G3X) or odd-`C` (G3O) conditions, and parts of `gamma = N` (Theorems G3, G3X, G3O, item (39)) |
   | all `r` | H-only | three factors, whole G0 branch when `(a-2r+2)^2 <= 8r-9` (Theorem G0B); whole G0 branch conditional on (E) (Theorem G0E) |
   | all `r` | H-only | four factors on the outer-pairing support region, conditional on (E) (Theorem G0E4; strictly extends LL4) |
+  | all `r` | H-only | three factors with equal largest labels in G0: `h_u^2 h_w h_1^a` for `2u >= a+2r+w-2` (centered-window theorem, FM-MECH25); the whole G0 branch on the grid `r <= 10`, `a < 60` (every window covered by proved criteria) |
   | all `r` | H-only | any number `m <= 2r` of factors with spread labels: `lambda(S)+lambda(S^c) > a+2r-m` for every split (Theorem LLm; includes LL, LL4) |
   | all `r` | every consumer word (h and hat S) | spread labels over every two-sided assignment (Theorem LLm-S) |
   | all `r` | every word | suffix `a >= (2r+3) Lambda(w) - 2r - 4` (Theorem LS); `2r + a + t + 6 >= 7L(w)`, `L` an additive quartic in the labels (Theorem LR4) |
@@ -9931,6 +9932,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       iterated merges leave products of three or more `hat S`, which (E)
       alone does not control.  Those are the three-label plus words,
       FM-SEC23.
+  - **FM-SEC24 (luna_max_pluto): candidates for a merge-closed
+    induction (M5).**
+    - Killed, with counterexamples:
+      - insertion of `Q_t` with `|t| < 2` (`Q_0` at `r = 1` gives `-1`);
+      - real-rootedness of the level generating polynomial
+        (`1, 5, 35, 294` is not log-concave);
+      - PSD Gram matrices of `hat S` insertions (`det = -1` for core
+        `h_3 h_1`);
+      - "some grouping has correction `<= 0`" (`h_2^3 hat S_3 h_1` at
+        `r = 3`: every grouping has `C = 8`, `R = 38`).
+      Each knob is strength that FM3 does not use.
+    - Survivor, screened: the kernel-closed bound `|C_ij| <= R_ij` for
+      every merge of two factors, with `Q_t` kernels (about 52,000 pair
+      instances, no failure).
+    - Main-agent classification: `R` and `C` are shared by the word with
+      the two general factors and the word with the matching two
+      `hat S` factors at the next lower level.  So `|C| <= R` holds
+      exactly when FM3 holds for both of those words.  The survivor is a
+      restatement of FM3 at the same label count, not a stronger
+      induction hypothesis.  M5 still needs a hypothesis that controls
+      `C` from data with fewer labels, such as a quantitative bound or a
+      positive-form structure.
   - **GFM3: FM3 with extra nonnegative kernel factors (main agent,
     `fm39/recip_test.py`, `fm39/recip_bounds.py`, `fm39/recip_quartic.py`,
     `fm39/kernel_identity.py`, `fm39/general_row_words.py`).**
@@ -10189,6 +10212,53 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         re-derived each step.
       - *Open:* windows outside the region, in particular `a` far from
         `e` (`rho` near 1).
+    - **Centered windows, a metric chord bound, and the equal-label sector
+      (FM-MECH25, astra_max_ceres; verified by the main agent,
+      `fm39/mech25_repro.py`, `fm39/eqlabel_check.py`).**
+      - *Sign-block bound.*  If the folded row (recurrence parameter
+        `delta = |a-e|`) has a block of `L` same-sign coefficients bounded
+        by opposite or zero signs, then
+        `delta^2 <= (N+1)^2 (1 - 4/(L+1)^2)`.  This follows from the
+        largest eigenvalue `(N+1) cos(pi/(L+1))` of the normalized
+        tridiagonal recurrence.
+      - *Theorem (centered windows).*  For every base row with `e` odd,
+        `2x + C = N` implies `P_C(x) >= 0`.  Wide windows
+        (`C^2 >= N+4`) follow from a quadratic in `t = c_x/c_(x-1)`;
+        narrow windows from Theorem WS or the sign-block bound.
+        Equivalently, the equal-largest-label sector is settled:
+        `phi_r(h_u^2 h_w h_1^a) >= 0` whenever `2u >= a + 2r + w - 2`, for
+        every `r >= 2`, `a >= 0`, `u >= w >= 1`.
+      - *Metric chord bound.*  With the quadratic form
+        `H(p,q) = ((e+1)(p+q)^2 + (a+1)(p-q)^2)/2` of determinant
+        `V = (a+1)(e+1)`, one has
+        `T^2 <= K D_x D_y / ((2 sqrt V - R_+)(2 sqrt V - R_-))`, where
+        `h = 2x+C-N`, `R_+ = C+h`, `R_- = |C-h|` and
+        `K = (N+2-C)^2 - h^2`.  With the energy bound `S^2 >= eta D_x D_y`
+        this proves W whenever `eta (2 sqrt V - R_+)(2 sqrt V - R_-) >= K`,
+        a region that includes arbitrarily large `|a-e|`.
+      - *Decomposition.*  A center-crossing window splits as
+        `2 P_C(x) = Z(l) + Z(x) - Delta(l,x)`, where
+        `Z(t) = P_(N-2t)(t)` is a centered window,
+        `Delta = (c_l - c_x)^2 - (c_(l-1) - c_(x-1))^2` and `l = x-h`.
+      - *Checks.*  The agent script reruns: 83,300 centered windows and
+        1,375,467 metric checks.  The main agent's evaluator found
+        223,715 equal-largest-label G0 words, none negative.
+    - **W on the grid is now complete** (main agent,
+      `fm39/w_residual4.py`).  With the centered theorem and the metric
+      criterion added, all 233,865 consumer windows (`r <= 10`, `a < 60`)
+      are covered by proved per-window criteria:
+      - `T <= 0`: 53.4%;
+      - metric criterion: 26.7%;
+      - LD plus energy: 9.8%;
+      - plateau: 5.7%;
+      - `e = 1`: 3.5%;
+      - centered: 0.8%;
+      - G0E rows: 0.1%;
+      - Theorem WS: 0.03%;
+      - residual: 0.
+      So the G0 branch is proved on this grid.  Open: that the union of
+      criteria is exhaustive for all `r` and `a` (sampled scan
+      `fm39/w_residual_sample.py`; FM-SEC27).
     - *Recurrence model (main agent, `fm39/const_coeff_check.py`).*
       - The base rows satisfy
         `(k+1) c_(k+1) = (a-e) c_k - (N-k+1) c_(k-1)`.  So
@@ -10332,6 +10402,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         consecutive unit decrements in `M` with `|U_q(cos(v/2))|` times
         the middle one, averaged in `v`.  The pointwise version already
         fails at `a = e = 1`, so a proof must use the `v`-average.
+      - FM-SEC26 (luna_max_uranus): Chebyshev-difference form of (E).
+        With `q = i-j-1` and `eta = (i+j-N)/2`,
+        `D_j - D_i -+ W_ij = <4K sin(eta u) sin(u/2) sin^2(v/2) [U_q(cos(u/2)) -+ U_q(cos(v/2))]>`.
+        The weight changes sign for `q >= 1`, so log-concavity alone does
+        not give a positive comparison.  No movement.
       - FM-SEC22 (luna_max_mars): no uniform proof.
         - Exact drift identity:
           `S(j,j+2) = d D_j/(j+1) + R_j`, with
