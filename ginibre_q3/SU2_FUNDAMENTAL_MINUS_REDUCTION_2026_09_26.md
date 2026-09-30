@@ -10950,6 +10950,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - So a uniform proof splits into (i) `A > 0` and an explicit
           description of the region `B^2 >= 4AC`, and (ii) `W >= 0` there,
           from the actual ratio `c_(j+1)/c_j`.  Delegated as FM-SEC129.
+        - FM-SEC129 (luna_max_mars; `fm39/sec129_q2plus_regions_repro.py`,
+          rerun exactly).  Fold to `a >= e`; put `d = a - e`, `n = N - j`,
+          `kappa = 2j - N`, `t = e`.
+          - (i) PROVED: `A = (kappa+2) alpha/H > 0` with explicit
+            positive `alpha`, `H = (n+1)(j+2)^2(j+3)^2(j+4)`.
+          - (ii) The non-PD region is
+            `R = {Delta_num = d^2 beta^2 - 4(kappa+2) alpha gamma >= 0}`, with
+            `beta`, `gamma` explicit (in the reproducer).
+          - `W = x^2 Omega(r)`, `r = c_(j+1)/c_j`, with `Omega` quadratic in
+            `r` (coefficients `omega_0`, `omega_1`, `omega_2` explicit).
+          - (iii) Box `a, e <= 70`: all 14,420 rows of `R` lie in Theorem
+            OL's outer region `d^2 >= 4(n-1)(j+2)` (14,394) or its central
+            region `N >= 3t(kappa+1)^2` (26 central-only).  `Omega >= 0` on
+            the OL outer ratio interval `0 < r <= R_OL` in every outer row.
+          - Open, in closed form: `R_miss = R minus (outer union central)`
+            is empty; `Omega >= 0` on `(0, R_OL]` over `R` intersect outer;
+            `Omega >= 0` on the central ratio ranges.  Delegated as FM-SEC131.
       - FM-MECH46 (astra_max_ceres; `fm39/mech46_insertion_repro.py`, rerun
         exactly): the uniform one-extra-label statement, the b-insertion.
         - Exact recurrence (Prop. 1): with `g_b = g_(k,a,b)`,
