@@ -10582,11 +10582,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             exactly semicircular.
           - The EVEN form `F_G(T)` is FM3 for the complete graph and the
             free value for the empty graph, checked on 84 values.
-          - `F_G >= 0` for all 7 graph classes at `N = 2` (2,632 profiles).
-            At `N = 3` no negative value appeared in the classes completed
-            so far.
+          - `F_G >= 0` for all 7 graph classes at `N = 2` (2,632 profiles)
+            and all 36 classes at `N = 3` (13,536 profiles; lists of
+            length `<= 6`, labels `<= 3`, degree `<= 10`).
           - Since `N = 1` with one edge is FM3 itself, this strengthening
             does not by itself reduce FM3.
+        - KILL (main agent, `fm39/crossing_set_restriction_kill.py`):
+          positivity under an arbitrary set `R` of allowed mutual-crossing
+          positions.  `F_R` counts only pairs whose mutual crossings (as
+          4-sets of legs) all lie in `R`.  `F_R` is negative for 6,712 of
+          688,872 pairs `(profile, R)` (legs `<= 8`).  The worst is `-6`, at
+          `(1,1,1,1,2,2)`, `T = {0,2}`, with an 8-element `R`.  Knob:
+          arbitrary crossing sets, which is stronger than any
+          colour-based restriction.  So the Bernstein positivity is not
+          explained by positivity of every `F_R`.
         - Component model (main agent, `fm39/component_model_check.py`,
           exact on 544 profiles).
           - Group the pairs `(S, M_1, M_2)` by the uncoloured matching
