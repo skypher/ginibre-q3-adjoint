@@ -8790,6 +8790,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | H-only | three factors in the G0 branch `gamma >= a+2r-2` under the one-sign-block, root-crossing (G3X) or odd-`C` (G3O) conditions, and parts of `gamma = N` (Theorems G3, G3X, G3O, item (39)) |
   | all `r` | H-only | three factors, whole G0 branch when `(a-2r+2)^2 <= 8r-9` (Theorem G0B); whole G0 branch conditional on (E) (Theorem G0E) |
   | all `r` | H-only | four factors on the outer-pairing support region, conditional on (E) (Theorem G0E4; strictly extends LL4) |
+  | `r <= 8` | H-only | three factors, both branches (`gamma <= N` included), for `a <= 40`, `w <= 14`, `u <= v+w+1` (positive definite binary forms, exact; 373,673 words) |
   | all `r` | H-only | three factors with equal largest labels in G0: `h_u^2 h_w h_1^a` for `2u >= a+2r+w-2` (centered-window theorem, FM-MECH25); the whole G0 branch for every `r <= 100`, `a <= 150` (every one of 130.9M windows covered by proved criteria) |
   | all `r` | two labels | (E) at `q = 1` (gap `i = j+2`) for all `a, e` (Theorem EQ1); `q = 2` with the minus-W sign (OL on `(1-z^2)P`) |
   | all `r` | two labels (all three sign patterns) | every word whose kernel row has `a, e <= 80` (each of 6.3M (E) pairs covered by a proved criterion: binary forms, LD/metric chords, RF, EQ1, strips); sampled to `a, e <= 300` with no gap |
@@ -9828,9 +9829,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         base point is an invertible linear change of variables.
         Definiteness implies `phi >= 0` for every solution of the
         recurrence, and in particular for the actual row.
-      - Census outside the strips and `a = 0`: every tested word is
-        definite, on both branches (the running census is recorded
-        below).  The form reproduces `phi` exactly in the sanity checks.
+      - Census, exact rational arithmetic, over the box `2 <= r <= 8`,
+        `1 <= a <= 40`, `|a-e| >= 2`, `2 <= w <= 14`, `w <= v <= N+2` and
+        `v <= u <= v+w+1`: all 373,673 words give a positive definite form
+        (133,210 on the `gamma <= N` branch, 240,463 on G0).  The form
+        reproduces `phi` exactly in the sanity checks.
+      - So `phi_r(h_u h_v h_w h_1^a) >= 0` holds with a ratio-free
+        certificate for every word in that box, including every
+        `gamma <= N` word there.
+      - Open: definiteness for all parameters (FM-MECH27, FM-SEC37), and
+        whether it extends to `hat S` patterns and four factors
+        (FM-SEC36).
     - *Reduction to the basic inequalities, partial (main agent,
       `fm39/basis_lp.py`, `fm39/basis_lp2.py`).*
       - As quadratic forms on anti-reciprocal sequences, the LP tested
