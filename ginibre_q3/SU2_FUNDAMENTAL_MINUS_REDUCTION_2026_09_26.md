@@ -9814,6 +9814,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - `R_s` can be negative, e.g. `(e,a,C,p,q) = (3,1,3,1,0)` has
         `R_0 = -1`, `P = 11`, `phi = 10`.  So the branch needs a
         quantitative lower bound on the window, not only W.
+    - *FM-SEC30 (luna_max_uranus).*  Proved uniformly on the
+      equal-label low-`s` regions, including every `s = 0`, `p = q = 0`
+      case, without (E).  Bounding the combined cross wedge by the
+      determinant of `H` loses too much in general, e.g. at
+      `(e,a,C,p,q,s) = (1,23,3,1,0,10)`, where `phi > 0`.
+    - **Binary forms for three factors (main agent,
+      `fm39/phi3_binary_form.py`, `fm39/phi3_binary_census.py`).**
+      - Through the recurrence, `phi_r(h_u h_v h_w h_1^a)` is a binary
+        quadratic form in two consecutive coefficients.  Its coefficients
+        are rational in `(a, e, labels)`.
+      - Definiteness is independent of the base point, since a change of
+        base point is an invertible linear change of variables.
+        Definiteness implies `phi >= 0` for every solution of the
+        recurrence, and in particular for the actual row.
+      - Census outside the strips and `a = 0`: every tested word is
+        definite, on both branches (the running census is recorded
+        below).  The form reproduces `phi` exactly in the sanity checks.
     - *Reduction to the basic inequalities, partial (main agent,
       `fm39/basis_lp.py`, `fm39/basis_lp2.py`).*
       - As quadratic forms on anti-reciprocal sequences, the LP tested
@@ -10541,6 +10558,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           It held in 400,915.
         - Both held in 349,832 of 352,038 open-region pairs (99.4%).
           (ii)-psi fails e.g. at `(4,6,5,8)`.
+        - Correction (FM-SEC29, luna_max_jupiter): (i)-psi also fails at
+          a few even-`e` pairs, e.g. `(4,36,20,22)` and its folds, not only
+          at `a = 0`.  Odd-`e` consumer pairs are unaffected.  FM-SEC29
+          proves (ii)-psi on several uniform subregions (span 2,
+          endpoint-imbalance, locally log-concave increments, `e = 1`).
+          Its odd-`e` open residual is 991 grid pairs, all positive with
+          least (E) slack 142.  Reproducer: `fm39/psi_ii_repro.py`.
     - **Metric chords shrink the (E) residual (main agent,
       `fm39/e_metric.py`).**  Bound each chord `T(j,i-1)` and `T(j+1,i)`
       of `W_ij` by the smaller of Theorem LD and the FM-MECH25 metric
@@ -10601,6 +10625,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - What remains at `q = 2` is the plus sign,
         `delta_(j+2)[(1+z^2)P] + 2 delta_(j+1)[P] >= 0`
         (FM-SEC35, luna_max_venus).
+    - **Uniform metric regions for (E) (FM-MECH26, astra_max_ceres;
+      reproducer `fm39/e_metric_mech26_repro.py`).**
+      - Put `sigma = N+2`, `A_k = c_(k-1) - c_(k+1)` and
+        `v_k = (c_k, B_k/2)`.  Then `d c_k - sigma B_k/2 = -X_k A_k/2` and
+        `D_k = c_k^2 - B_k^2/4 + A_k^2/4`.
+      - For `0 < t < 4V` the form `Q_t(f,g) = f^2 - g^2 + (d f - sigma g)^2/t`
+        is positive definite, and `Q_t(v_k) = F_k(t)/(4t)` with
+        `F_k(t) = 4t D_k + (X_k^2 - t) A_k^2`.  Since
+        `W_ij = 2 det(v_j, v_i)`, one metric bounds the whole W,
+        keeping the two-chord cancellation:
+        `4t(4V-t) W_ij^2 <= F_j(t) F_i(t)`.
+      - Taking `t = X_i^2` gives region `(M_i)`, and `t = X_j^2` region
+        `(M_j)`.  Each proves (E), both signs, for all `a, e`.
+      - It gives an independent proof of all `q = 1` pairs via an OL
+        identity (agreeing with Theorem EQ1), and makes the strict
+        short-`psi`-arc argument unconditional.
+      - The union closes 92,466 of the 92,468 earlier residual grid pairs.
+        Global coverage is not claimed.
     - **Binary-form method for (E) (main agent, `fm39/e_q2_quadratic.py`,
       `fm39/e_binary_form.py`, `fm39/e_residual3.py`).**
       - The three-term recurrence (valid with zero extension at both ends)
