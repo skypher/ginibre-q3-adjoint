@@ -10217,6 +10217,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       bookkeeping (any `r >= 0`, any word) is therefore a live option for
       M5.  Genuineness alone is not enough: `F = (h_2 - 1)^2` is a
       genuine `SU(2) wr Z_2` character, yet `phi_1(F hat S_4) = -1`.
+    - FM-SEC56 (luna_max_pluto), falsification of U-FM3.  No negative
+      value on about 1,015,000 exact profiles: exhaustive `H_2..H_4`
+      multisets with `m <= 2r+8` (`r <= 5`); up to four `H_2..H_8` with two
+      `S_2..S_8`; pure `S`; `H_2^M` for `M <= 20`; random high-label words.
+      Killed extensions (knobs not used by FM3):
+      - real exponents: `E[|x-y| H_2] = -1024/(1575 pi^2) < 0` at
+        `s = 1/2`, so the integrality of `2r` is essential;
+      - pointwise nonnegative kernel factors:
+        `E[H_2 Q_(-3)] = -1` at `r = 0`.
     - **Two exact frames for M5 (main agent).**
       - EVEN form, exactly FM3.  For labels `n_i >= 1` and signs `eps_i`
         with an even number of minus signs,
