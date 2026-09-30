@@ -10904,6 +10904,37 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           limit.  This is evidence, not a proof.  A proof needs error
           bounds uniform in `a`, and the proportional regime `e ~ N` is a
           different limit.
+      - **Two-case split of (E) and Conjecture HT (main agent,
+        `fm39/e_sweep_split.py`, `fm39/e_sweep_split_t.py`, exact
+        integers).**
+        - Rows with `a >= e+2`, `e >= 3` (the rest is proved or follows by
+          `a <-> e`), pairs with `q >= 2`.  Case (b): the `psi`-arc from
+          `j` to `i` sweeps `< pi`; proved by the convex-polygon argument
+          from EQ1.  Case (c): it sweeps `>= pi`.
+        - On every case-(c) pair tested, FM-MECH26's general bound closes
+          (E):
+          `(HT)`: some `t in (0, 4V)` has
+          `4t(4V-t)(D_j - D_i)^2 >= F_j(t) F_i(t)`.
+          - Grid `3 <= e <= a-2 <= 78`: 2,638,251 pairs, no exception.
+          - 24 large rows, up to `(2000,20)`, `(500,498)`, `(1000,500)`:
+            1,083,099 pairs, no exception.
+          - With `a <= 60`, `t = 2V` alone covers 803,778 of the 812,334
+            pairs, and `t = X_i^2` or `t = X_j^2` covers the rest.  `t = 2V`
+            is needed only at `X_j = 0`.
+        - Since `4t(4V-t) W^2 <= F_j(t) F_i(t)` is proved, (HT) on case
+          (c), with EQ1 and the convex-polygon argument, proves (E) for all
+          `a, e`.  That gives the two-label stratum and, through Theorem
+          G0E, the whole G0 branch at every level.  LD, RF and the binary
+          forms are then not needed.
+        - Heuristic (unproved).  `det Q_t = (4V-t)/t`.  If `D` behaved
+          like the square norm in one fixed metric, then over a half-turn
+          of `psi` it would shrink by `exp(-pi sqrt(kappa))`, with
+          `kappa = 4t/(4V-t)`.  At `t = X_i^2`, (HT) needs only
+          `D_i/D_j <= rho*`, where `(1-rho*)^2 = kappa rho*`: about
+          `1 - sqrt(kappa)` for small `kappa` and `1/kappa` for large
+          `kappa`.  That leaves a factor `pi` of room in the exponent.
+        - FM-SEC47 (luna_max_jupiter, continuum route) and FM-SEC48
+          (luna_max_neptune, discrete route) are attacking (HT).
       - *`q = 2` plus sign* (`fm39/e_q2plus_split.py`,
         `fm39/e_q2plus_ratiofree.py`).  For all `a, e <= 60` (106,982
         pairs), every pair has `W >= 0` (plus sign trivial) or a positive

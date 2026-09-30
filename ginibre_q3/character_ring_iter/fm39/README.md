@@ -65,6 +65,7 @@ this directory, because several `exec` a sibling file.
 | (E) uniform criteria incl. the q = 2, W >= 0 case: residual 0 | `e_uniform_residual2.py`, `e_uniform_sample2.py` |
 | (E): FM-SEC41 family is short-psi-arc; extended menu on extreme and proportional rows (exact) | `psi_arc_family.py`, `e_extreme_residual.py` |
 | (E): fixed-e continuum limit, limiting menu coverage, the j = N/2 line via t = 2V | `e_continuum_limit.py`, `e_continuum_cover.py`, `e_center_mt.py` |
+| (E) two-case split: sweep >= pi pairs all closed by the single-metric bound (Conjecture HT) | `e_sweep_split.py`, `e_sweep_split_t.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main
