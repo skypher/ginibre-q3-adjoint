@@ -9854,6 +9854,16 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       needed pair `(d, C)`, `d in CG(A,B)`, lies in a proved (E) region.
       These include `min(a,e) <= 2` (so `a <= 2` at every `r`), the strips
       `|a-e| <= 1`, and the root-free intervals of Theorem RF.
+    - FM-CHK35 (luna_max_saturn, own exact code): ACCEPT on all seven
+      items, conditional on (E).
+      - Consumed instances, for each `d in CG(A,B)` with `d + C <= N`:
+        `D_j - D_i - W_ij` at `(p,q) = (d, C)` when `d >= C`, and
+        `D_j - D_i + W_ij` at the sorted pair `(C, d)` when `d < C`.
+        Both come from (E)'s absolute-value form.
+      - Scope: the unconditional consequences need every required pair
+        to lie in a proved (E) region.  Root-free intervals do not always
+        suffice, e.g. `r = 4`, `a = 3`, `(A,B,C) = (7,5,2)`, `d = 4`, where
+        `(j,i) = (5,8)` crosses the root `X = 4` of `K_5`.
     - So (E) is the master inequality for the two-label stratum and the
       G0 branch alike.  W's other routes (Theorem WS, (i)+(ii), the
       long-sweep bound) prove W without (E).
