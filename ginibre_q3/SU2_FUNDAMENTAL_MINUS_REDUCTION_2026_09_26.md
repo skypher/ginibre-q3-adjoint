@@ -8790,7 +8790,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | H-only | three factors in the G0 branch `gamma >= a+2r-2` under the one-sign-block, root-crossing (G3X) or odd-`C` (G3O) conditions, and parts of `gamma = N` (Theorems G3, G3X, G3O, item (39)) |
   | all `r` | H-only | three factors, whole G0 branch when `(a-2r+2)^2 <= 8r-9` (Theorem G0B); whole G0 branch conditional on (E) (Theorem G0E) |
   | all `r` | H-only | four factors on the outer-pairing support region, conditional on (E) (Theorem G0E4; strictly extends LL4) |
-  | all `r` | H-only | three factors with equal largest labels in G0: `h_u^2 h_w h_1^a` for `2u >= a+2r+w-2` (centered-window theorem, FM-MECH25); the whole G0 branch on the grid `r <= 10`, `a < 60` (every window covered by proved criteria) |
+  | all `r` | H-only | three factors with equal largest labels in G0: `h_u^2 h_w h_1^a` for `2u >= a+2r+w-2` (centered-window theorem, FM-MECH25); the whole G0 branch for every `r <= 100`, `a <= 150` (every one of 130.9M windows covered by proved criteria) |
+  | all `r` | two labels | (E) at `q = 1` (gap `i = j+2`) for all `a, e` (Theorem EQ1); `q = 2` with the minus-W sign (OL on `(1-z^2)P`) |
   | all `r` | H-only | any number `m <= 2r` of factors with spread labels: `lambda(S)+lambda(S^c) > a+2r-m` for every split (Theorem LLm; includes LL, LL4) |
   | all `r` | every consumer word (h and hat S) | spread labels over every two-sided assignment (Theorem LLm-S) |
   | all `r` | every word | suffix `a >= (2r+3) Lambda(w) - 2r - 4` (Theorem LS); `2r + a + t + 6 >= 7L(w)`, `L` an additive quartic in the labels (Theorem LR4) |
@@ -10313,7 +10314,16 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `a = 3..8`.  FM-SEC27 (luna_max_venus) also noted that the pass
           criterion proves the four earlier grid windows
           (`fm39/w_pass_four_repro.py`).
-        - Full scan `r <= 100`, `a <= 150`: running.
+        - Full scan, every row with `r <= 100` and `a <= 150` (14,798 rows,
+          130,875,374 consumer windows): residual 0
+          (`fm39/w_residual_rows3.py`).  So the three-`h` G0 branch is
+          proved, for all labels, at every `r <= 100`, `a <= 150`.
+          At every `r` the band G0B, the centered-window (equal-label)
+          sector and the reduction G0E to (E) hold.
+        - FM-SEC32 (luna_max_venus): no uniform exhaustiveness argument.
+          The pointwise rotation bound `theta_k <= arccos rho_k` fails,
+          e.g. at `(a,e,k) = (56,5,36)` (88.3 degrees against 34.7).  So
+          the geometric criteria resist conversion into analytic ones.
       - Open: a uniform argument that the criteria are exhaustive.  The
         clearest target is the decreasing-side strip `a >= e + 2`,
         `x >= N/2`, `1 < u < C`.
