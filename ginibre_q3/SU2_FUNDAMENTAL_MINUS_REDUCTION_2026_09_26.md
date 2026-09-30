@@ -10668,6 +10668,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           Walsh coefficient `-(2/5) E|X|` at the sign `eps`, and the grouped
           `E_4` coefficient at `(1,1,1,3)` is `< -1/25`.  That table is
           still B, by a three-plane regrouping.
+        - FM-CHK53 (luna_max_eris, fresh code): ACCEPT all four items.
+          - Lemma 1: `A_k > 0` for `k <= 30`, and the inversion is checked
+            through degree 61.
+          - The Walsh construction and charge identity, including a
+            moment-matching finite model and 35 words with 1,792 entries.
+          - The consumer translation.
+          - The `(1,1,1,3)` bound and the three-plane repair.
         - Main-agent observation: B is known to fail only on lists with a
           label `>= 5` (`(1^N, N-2)` for `N >= 7`; `(1^8,6)`), and the
           `L = 8` certificates for labels `<= 3` (FM-SEC113) are all
