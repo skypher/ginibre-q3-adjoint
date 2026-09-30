@@ -10778,6 +10778,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - KILL: deriving it from positivity of the `M_j` alone.  With
           `M_j = 2^j` (the moments of `delta_2`) it fails by `-512/105`, so
           the actual joint law is needed.
+        - FM-SEC124 (luna_max_mars; `fm39/sec124_extra_label_sum_repro.py`).
+          Expanding in the joint moments gives inner blocks
+          `H_(m,k) = 2(m^2 - m + 5k^2 + 7k - 2mk) mu_(m,k)/((m+k+2)(m+k+3))
+          >= 0`, but the outer sum over `Z^b` alternates (termwise failure at
+          `(4,2,1)`; the true value is `+8`).  945 exact checks
+          (`A, E <= 20`, `b <= 20`), all positive.
+        - Main-agent restatement: `-P = (d^2 - s^2)/4`, so
+          `M_(b+1) - Q_b = E[s^A d^E Z^(b+1)] + (1/4) E[s^A d^(E+2) Z^b]
+          - (1/4) E[s^(A+2) d^E Z^b]`.  All three are {1,2}-sector EVEN
+          values, each `>= 0` by FM-MECH41.  So the gap is a comparison
+          between {1,2} values: two plus-1's cost at most one plus-2 plus
+          two minus-1's.
       - FM-SEC121 (luna_max_venus; `fm39/sec121_B_small_labels_repro.py`,
         rerun exactly):
         B census for small labels.
