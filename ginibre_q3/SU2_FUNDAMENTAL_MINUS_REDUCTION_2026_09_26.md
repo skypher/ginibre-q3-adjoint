@@ -10795,11 +10795,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - On `3 <= a, e <= 40` they leave 0 pairs.
         - On 600 random rows with `a, e <= 300` (7,176,773 pairs) they
           leave 70 pairs, every one with `q = 2`.
-        - So the evidence reduces (E) to two statements:
-          - the uniform regions cover every pair with `q >= 3`
-            (exhaustiveness, FM-SEC41);
-          - (E) at `q = 2` with the plus sign (FM-SEC38).  The minus sign
-            there is OL on `(1-z^2)P`.  Open: all `a, e`
+        - The 70 are all lopsided rows (`min(a,e)` in 3..10,
+          `max(a,e)` up to 293) with `W > 0`, where the plus sign is
+          trivial: `D_j - D_i + W >= D_j - D_i >= 0` by OL.  At `q = 2`
+          the minus sign is OL on `(1-z^2)P`, so every `q = 2` pair with
+          `W >= 0` is proved.
+        - Adding that criterion (`fm39/e_uniform_residual2.py`,
+          `fm39/e_uniform_sample2.py`) gives residual 0 on
+          `3 <= a, e <= 40` and on all 7,141,576 sampled pairs up to
+          `a, e <= 300`.
+        - So, on everything tested, (E) is covered by criteria each proved
+          for all `a, e`.  What remains is exhaustiveness: that this union
+          of explicit inequalities covers every pair.  Two routes are open:
+          the finite-`q` reduction (FM-SEC41), and the `q = 2`, `W < 0`
+          plus sign (FM-SEC38, FM-SEC42).  Open: all `a, e`
         (uniformity of the definite region in `(d, N, j)`, or ratio
         bounds as in Theorem OL's steps 2-5 for the non-definite pairs).
     - **Residual of (E) now** (`fm39/e_residual2.py`): 22,046 of 438,221

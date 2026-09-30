@@ -1,0 +1,30 @@
+# (E) residual after the UNIFORM regions only (no binary forms): strips, min<=2, q<=1 (EQ1), outer endpoint, LD energy drop,
+# metric chords (e_metric), FM-MECH26 regions (M_i), (M_j), and Theorem RF.  Distribution by q.
+exec(open('e_residual_sample2.py').read().split("A1,A2=")[0].split("seed,rows,AMAX=")[0])
+from collections import Counter
+st=Counter(); byq=Counter(); maxq=None
+for a in range(3,41):
+    for e in range(3,41):
+        if abs(a-e)<=1: continue
+        c=cv(a,e); N=a+e; d=a-e; V=(a+1)*(e+1); C_=lambda k: c[k] if 0<=k<=N else 0
+        Dint=[C_(k)**2-C_(k-1)*C_(k+1) for k in range(N+2)]; Dm=max(Dint); Dsc=[x/Dm for x in Dint]
+        Dd=lambda k: Dsc[k] if 0<=k<=N+1 else 0.0
+        Ak=lambda k: C_(k-1)-C_(k+1)
+        for j in range((N+1)//2,N+1):
+            for i in range(j+1,N+2):
+                q=i-j-1; s=i-j
+                if q<=1 or (j,i)==(N-1,N+1): continue
+                if q==2:
+                    Wv=(C_(i-1)+C_(i+1))*C_(j)-C_(i)*(C_(j-1)+C_(j+1))
+                    if Wv>=0: st['q=2, W>=0 (minus: OL on (1-z^2)P; plus: trivial)']+=1; continue
+                st['pairs']+=1
+                ld=s*(math.sqrt(Dd(j)*Dd(i-1))+math.sqrt(Dd(j+1)*Dd(i)))
+                b=min(ld, chord(j,i-1,Dd,N,V)+chord(j+1,i,Dd,N,V))
+                if Dd(j)-Dd(i)>=b*(1+1e-9): continue
+                x=2*j-N; y=2*i-N; Dl=Dint[j]-Dint[i]
+                Mi = y*y<4*V and (4*V-y*y)*Dl*Dl >= Dint[i]*(4*y*y*Dint[j]-(y*y-x*x)*Ak(j)**2)
+                Mj = 0<x*x<4*V and (4*V-x*x)*Dl*Dl >= Dint[j]*(4*x*x*Dint[i]+(y*y-x*x)*Ak(i)**2)
+                if Mi or Mj: st['metric M']+=1; continue
+                if rf_ok(a,e,j,i): st['RF']+=1; continue
+                st['RESIDUAL']+=1; byq[q]+=1
+print(dict(st)); print('residual by q:',sorted(byq.items()))
