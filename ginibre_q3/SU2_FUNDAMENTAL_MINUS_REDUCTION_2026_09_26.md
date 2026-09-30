@@ -10312,6 +10312,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - *Checks.*  The agent script reruns: 83,300 centered windows and
         1,375,467 metric checks.  The main agent's evaluator found
         223,715 equal-largest-label G0 words, none negative.
+      - FM-CHK38 (luna_max_saturn, own exact code): ACCEPT on all five
+        items:
+        - the sign-block bound (4,456 blocks);
+        - the centered-window theorem, every branch;
+        - the equal-label translation (717 identities);
+        - the metric chord bound (128,018 windows; the region reaches
+          arbitrarily large `|a-e|`, e.g. `a = 0`, `N = 5001`);
+        - the centered decomposition (16,880 windows).
     - **W on the grid is now complete** (main agent,
       `fm39/w_residual4.py`).  With the centered theorem and the metric
       criterion added, all 233,865 consumer windows (`r <= 10`, `a < 60`)
