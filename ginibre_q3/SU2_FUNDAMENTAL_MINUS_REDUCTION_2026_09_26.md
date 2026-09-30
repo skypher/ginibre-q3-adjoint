@@ -9720,7 +9720,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
     - *Single-root lemma.*  If `F = (x - lambda) H` with `H > 0` and
       `-kappa <= (log H)'' <= 0` on `[L, U]`, and
       `kappa (lambda - L)(U - lambda) <= 1`, then every balanced product
-      dominates its outer product on `[L, U]`, across the root.
+      dominates its outer product on `[L, U]`, across the root.  The proof
+      has three cases (repair from FM-CHK33):
+      - the outer pair does not cross `lambda`: concavity of `log|F|` on
+        that side;
+      - the outer pair crosses and the inner pair does not: signs;
+      - both pairs cross: the curvature estimate
+        `H(x+s) H(y-s) Delta [1 - kappa (lambda - x)(y - lambda)] >= 0`,
+        with `Delta = s(y-x-s)`.
+      The Gamma-interpolation bound `0 < -(log B_n)'' <= n/(n^2 - X^2)`
+      needs `|X| < n`.  G3X uses it only for `Y^2 <= n/6`.  The
+      reciprocal-root bound `sum xi^-2 <= s/(n-2s+2)` for the positive roots
+      of `K_(2s)` needs `n >= 2s`.
     - **Theorem G3X.**  `C` even, `m = min(a,e)` even and `>= 2`,
       `0 <= alpha < beta <= N`, `gamma >= N+1` and `3 m Y^2 <= N - m + 4`
       (`Y = A - B + C`).  Then `phi > 0`; the window may cross the
@@ -9728,15 +9739,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
     - **Theorem G3O.**  `C` odd, `0 <= alpha < beta <= N`, `gamma >= N+1`
       and `(e+1)(Y+1)^2 <= 2(a+2)`.  Then `phi > 0`.  Example:
       `phi_3(h_18^2 h_2 h_1^30) = 147,831,720,921,000`.
-    - *`gamma = N`.*  There `phi = P_C(alpha) + c_alpha - c_beta`, and both
-      theorems extend: G3O when `r` is even, G3X when `alpha + m/2` is
-      even.
+    - *`gamma = N`.*  There `phi = P_C(alpha) + c_alpha - c_beta`
+      (`c_N = -1`, `A_(N+1) = 0`, `B_(N+1) = -1`, `P_C(N+1) = 0`).  Both
+      theorems extend, with their other hypotheses kept: G3O when `r` is
+      even, G3X when `alpha + m/2` is even.  In the G3X branch `a = m`, so
+      `N` is odd; with `C` even and `alpha` integral, `A - B` is odd, hence
+      `A - B > 0`, which the sign argument uses.
     - *Checks.*  The agent verifier reruns.  The main agent's direct split
       evaluator (definition-level ballot moments, cross-checked against
       `fm3kern.py`) confirmed the decomposition in 400 random cases and
       positivity in 9,513 (GX) words (every one with `d < 0`, so the window
       crosses `X = 0`), 21,316 (GOdd) words and 282 `gamma = N` words.
-      Independent checker pass: FM-CHK33 (pending).
+    - FM-CHK33 (luna_max_venus, own exact code):
+      - ACCEPT: G3O, the reciprocal-root lemma, and the example families
+        and values.
+      - REPAIR (applied above): the Lemma 2 case split; the domains
+        `|X| < n` and `n >= 2s`; and the `A - B > 0` step in the
+        `gamma = N` G3X branch.
+      - Presentation repairs to the agent text: the square-balance
+        citation, and the expansion from `phi = M - R` to the
+        decomposition.
+      - Remaining after the repairs: `P_C(alpha) - P_C(gamma+1) >=
+        A_alpha B_(gamma+1) - B_alpha A_(gamma+1)` outside these regions.
     - Kill (knob: termwise sign of the minors, no consumer use): single
       minors can be negative, e.g. `a = e = 3`, `(5,5,3)` gives minors
       `24, -16, 24`.
