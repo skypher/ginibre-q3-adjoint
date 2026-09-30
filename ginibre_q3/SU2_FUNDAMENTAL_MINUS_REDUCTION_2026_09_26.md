@@ -9851,12 +9851,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `16t(4V-t) delta^2 >= F_U(t) F_V(t)`.
         Over `e` odd in `3..25`, `a <= 40`, all `C >= 3`, `p >= q >= 0`,
         `s >= 0`: 1,196,247 of 1,196,426 words satisfy (HT3), 124 more
-        have `U ^ V <= 0`, and 55 fail, all with `phi > 0`.  The
-        failures have `e = 3`, `a = 37..40`, `C = 3` (for example
-        `(e,a,C,p,q,s) = (3,37,3,15,0,11)`), or `a <= 2`.  This is the
-        same pattern as (E): the metric alone misses an `e = 3`,
-        large-`a` family, which for (E) the short-arc argument covers.
-        FM-SEC51 looks for the geometric half of a split.
+        have `U ^ V <= 0`, and 55 fail, all with `phi > 0`.  Correction
+        (FM-SEC51, luna_max_uranus): the failures fall into three groups.
+        - 7 with `e = 3`, `a = 37..40`, `C = 3`, e.g.
+          `(e,a,C,p,q,s) = (3,37,3,15,0,11)`.
+        - 17 with `a <= 2`.
+        - 31 with `a >= 3` and `e >= 17`, mostly `C = 3, 4`, `p = q = 0`
+          (words like `h_2^3 h_1^a` at high level), e.g.
+          `(17,4,3,0,0,9)`, which is `r = 10`, `h_2^3 h_1^4`.  An earlier
+          version of this entry omitted this group.
+        FM-SEC51's geometric condition covers exactly the `e = 3` group:
+        both W-window sweeps `<= 2 pi`, and short `psi`-arcs for the
+        adverse (E)-steps.  So the split is not yet exhaustive, and there
+        is also a regime `e >> a`.  With HT3, cross `<= 0` and the geometric
+        condition, the `e = 3, 5`, `C = 3, 4` rows up to `a = 400` are
+        covered (about 10.9M words).
         At `e = 1` (level 2), `a <= 60`: 146,474 of 148,800 words
         satisfy (HT3), 767 have `U ^ V <= 0`, and 1,559 fail (all
         `phi > 0`, e.g. `(1,24,3,4,0,9)`).  Assigned as FM-SEC57.
