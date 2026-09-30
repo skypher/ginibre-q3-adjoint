@@ -10560,6 +10560,40 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - Knob: locality of the move.  The exact atlas has 9,586,981
             even-`T` cases (length `<= 8`, labels `<= 4`, ordered), none
             negative.
+        - Graph-product family (main agent, `fm39/graph_product_screen.py`).
+          - Take free families `x_1..x_N`, `y_1..y_N` and a bipartite
+            graph `G`, with `x_a`, `y_b` commuting iff `ab` is in `G`.
+            Put `x = N^(-1/2) sum x_a` and `y = N^(-1/2) sum y_b`; both are
+            exactly semicircular.
+          - The EVEN form `F_G(T)` is FM3 for the complete graph and the
+            free value for the empty graph, checked on 84 values.
+          - `F_G >= 0` for all 7 graph classes at `N = 2` (2,632 profiles).
+            At `N = 3` no negative value appeared in the classes completed
+            so far.
+          - Since `N = 1` with one edge is FM3 itself, this strengthening
+            does not by itself reduce FM3.
+        - Component model (main agent, `fm39/component_model_check.py`,
+          exact on 544 profiles).
+          - Group the pairs `(S, M_1, M_2)` by the uncoloured matching
+            `M = M_1 u M_2`.  Its components are connected noncrossing
+            diagrams, and the colourings are the proper 2-colourings of
+            their crossing graph `Gamma`.  So
+            `F(T) = sum_(M: Gamma bipartite) prod_(K = (K_1,K_2))
+            (eps^(K_1) + eps^(K_2))`.
+          - A factor is negative exactly when both sides of a crossing
+            cluster are T-odd.
+          - Clusters do not cross each other, so this is the free
+            moment-cumulant formula: `F = sum_(sigma in NC) prod w_T(K)`,
+            where `w_T` is the free cumulant of the commuting variables
+            `W_i = U_(n_i)(x) + eps_i U_(n_i)(y)`.  It can be negative
+            (`-2` at `(1,1,1,1)`, `T = {0,1}`).
+      - FM-SEC85 (luna_max_vesta): no H_AC counterexample.  All 791 tables
+        are doubly nonnegative.  Horn 5-cycle placements (374 tables
+        exhaustively, 100,000 samples on four larger ones) and a copositive
+        `J - 2A` on a 7-vertex triangle-free graph (3,603,600 placements
+        for `(1,1,1,1,2)`) give no negative pairing; the tightest
+        normalized pairing is 1/2.  Open CP case below the sphere range:
+        `(1^13, 3)`.
       - FM-SEC83 (luna_max_jupiter; `fm39/sec83_atlas_repro.py`, rerun
         exactly).
         - The noncrossing-matching model agrees with fusion counts on 3,003
