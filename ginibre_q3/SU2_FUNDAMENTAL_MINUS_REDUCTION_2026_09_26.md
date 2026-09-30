@@ -10229,6 +10229,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         duality on `Lambda(V (x) C^r)`, or a Lie superalgebra with even
         part `sl_2 + sl_2`.  FM-SEC58 (luna_max_mercury) is testing
         them.
+      - FM-SEC58 (luna_max_mercury): exact skew Howe weights
+        (`SO(4) x O(2r)`).
+        - `s_r(a,b) = E[(x-y)^(2r) U_a(x) U_b(y)] = (-1)^b d_r(a,b)`, with
+          `d_r(a,b) >= 0` the multiplicities in `(x+y)^(2r)`.  So
+          `phi_r(w) = (1/2) E[(x+y)^(2r) chi_w(x,-y)]`.
+        - The unbounded positive family it yields, products of `hat S`
+          with even labels, is the known parity family.
+        - Killed: a differential acting on the exterior factor alone (the
+          channels have negative signed weight); a factorwise
+          superalgebra extension with the prescribed grading.
+        - The Howe formula is exact but not termwise positive
+          (`h_2^4`, `r = 2`: `2894 - 2880`).  No movement on the full cone.
     - **FM-MECH30 (astra_max_ceres): Hypothesis B, the leading M5
       candidate** (reproducer `fm39/mech30_hypB_repro.py`, rerun
       exactly by the main agent).
