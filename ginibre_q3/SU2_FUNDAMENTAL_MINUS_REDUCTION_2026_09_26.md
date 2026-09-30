@@ -10465,6 +10465,30 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Its first unresolved family,
           `phi_1(hat S_p hat S_(p+1) h_1^(2p+1))`, is already proved
           (FM-SEC78, accepted by FM-CHK44).
+      - FM-SEC88 (luna_max_venus; `fm39/sec88_hAC_12sector_repro.py`,
+        rerun exactly): H_AC on the `{1,2}` sector.
+        - The profile is `m(i,j) = Delta^j Cat_(i/2)` for even `i`.
+        - Bi-radial certificates exist for all even `N` with
+          `N + M <= 6` and for `(0,7), (2,5), (6,1)`.  They are exactly
+          ruled out at `(1^4, 2^3)` (separator `y . f = -1`), but full
+          H_AC holds there with a 29-subgroup (B-type) certificate.
+        - Subgroup-square certificates for `(1^10, 2)` and `(1^12, 2)`,
+          and a bi-radial certificate for `(2^10)`.
+        - No uniform rule for the sector.
+      - Literature check (main agent).  FM3 is Ginibre's single-site
+        condition Q3 for the cone of SU(2) characters (the O(4) zonal
+        functions `U_n`).
+        - Sylvester, "The Ginibre inequality", Commun. Math. Phys. 73
+          (1980) 105-114, shows that the multi-site Ginibre inequality
+          (positive definiteness of certain functions on the cycle group
+          of a graph) fails on some graphs for spin dimension `>= 3`.
+        - Herbst, arXiv:2209.11850, proves the Griffiths inequalities
+          for non-interacting rotors; Tokushige, J. Stat. Phys. 192
+          (2025) 25, gives a graphical proof for the XY model.
+        - The known failures concern O(N) interactions `sigma_i . sigma_j`
+          (matrix coefficients) on graphs with cycles.  The class-function
+          Q3 here does not feed into them.  No conflict with FM3 is known,
+          and no result on the SU(2) character cone was found.
       - FM-CHK45 (luna_max_mercury, own code) on FM-MECH33:
         - ACCEPT: `B` is contained in H_AC, and the gluing control is
           outside it (support argument, origin mass `3 < 5`).
