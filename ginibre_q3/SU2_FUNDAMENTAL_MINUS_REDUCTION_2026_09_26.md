@@ -9863,9 +9863,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           row.
         - So beyond three `h`'s the actual coefficient ratio must be used,
           e.g. through ratio bounds as in Theorem OL's steps 2-5.
-      - Open: definiteness for all parameters (FM-MECH27, FM-SEC37), and
-        whether it extends to `hat S` patterns and four factors
-        (FM-SEC36).
+      - **Kill (FM-MECH27, astra_max_ceres; `fm39/binary_form_kill_repro.py`).**
+        Uniform definiteness is false.
+        - For `u = N + v + w - 1` (any `v >= w >= 2`) the form is
+          `(p - dq/4)^2 + [8(N+2) - d^2] q^2/16` in `(p,q) = (y_(N-1), y_N)`.
+          It is indefinite once `(a-e)^2 > 8(a+e+2)`.
+        - It also fails without support truncation, e.g. at
+          `(r,a,u,v,w) = (2,36,26,2,2)` using only interior indices.
+        - Knob violated: positivity on every solution of the interior
+          recurrence, which the consumer never uses.
+        - The actual row satisfies the endpoint condition `y_1 = d y_0`,
+          which selects the actual row up to scale.  The boundary-aware
+          identity `F = ((d^2+N+2)/2) q^2 + (p - dq)(p + dq/2)` gives
+          `phi = (d^2+N+2)/2 > 0` there.
+        - These words have `u > v+w+1`, outside the census box, and lie in
+          the support region of Theorem LL.  Within
+          `u <= v+w+1` no failure is known.
+        - So definiteness is a sufficient device on part of the cone; a
+          uniform proof must keep the endpoint information.
     - *Reduction to the basic inequalities, partial (main agent,
       `fm39/basis_lp.py`, `fm39/basis_lp2.py`).*
       - As quadratic forms on anti-reciprocal sequences, the LP tested
