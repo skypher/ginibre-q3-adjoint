@@ -10744,6 +10744,40 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             where `w_T` is the free cumulant of the commuting variables
             `W_i = U_(n_i)(x) + eps_i U_(n_i)(y)`.  It can be negative
             (`-2` at `(1,1,1,1)`, `T = {0,1}`).
+      - FM-SEC87 (luna_max_neptune; `fm39/sec87_even_gf_repro.py`):
+        EVEN-form label generating functions at fixed length.
+        - For every `L`, `G_T = N_(L,T) / D_[L]` with
+          `N_(L,T) = sum_A (-1)^|T cap A^c| K_|A|(x_A) K_|A^c|(x_(A^c))
+          D_(A,A^c)`, where `K_m = H_m D_[m]` are the Pluecker numerators
+          (`K_4 = 1 - m_1111`; `K_5`, `K_6` explicit).
+        - Checked against fusion counts on label boxes for `L <= 6`.
+        - Exact positive edge-cone certificates for every even sign class
+          at `L = 4, 5`, with 5 to 72 orbit generators.  So FM3 holds for
+          every EVEN word of length `<= 5`, all labels (not new: the
+          factor axis `<= 6` was proved earlier in the repo).
+        - `L = 6` LPs are too large, and the certificates show no rule in
+          `L`.  This line is closed.
+      - FM-SEC94 (luna_max_jupiter; `fm39/sec94_charging_repro.py`, rerun
+        exactly): charging in the component model.
+        - Single-smoothing charging fails first at `(1,2,1,2)`,
+          `T = {0,1}`: every smoothing of `(03)(15)(24)` leaves an internal
+          crossing.
+        - Recursive Pluecker straightening reaches positive targets in
+          two steps.  Max flow meets the demand on the four boundary
+          cases, e.g. demand 38 against capacity 58 at `(2^6)`,
+          `T = {4,5}`.
+        - Open: the Hall-type capacity condition for the recursive rule.
+      - FM-SEC96 (luna_max_vesta; `fm39/sec96_linear_injection_repro.py`,
+        rerun exactly): linear injections.
+        - The meet identity `U_S cap U_S' = U_(S cap S')` fails at
+          `(1^6)` (intersection dimension 1 against 2).
+        - Single-flip projections, pair-flip projections and
+          `mu_+^* mu_-` all lose rank.  The first loss is at
+          `(1,1,1,1,2)`, `T = {0,1}` (rank 3 < 4), where the four negative
+          subspaces are linearly dependent inside `H` (kernel
+          `(1,-1,-1,1)`).
+        - So no map factoring through `H` can be injective.  An injection
+          must use the tensor factorization `Inv(S) (x) Inv(S^c)` itself.
       - FM-SEC85 (luna_max_vesta): no H_AC counterexample.  All 791 tables
         are doubly nonnegative.  Horn 5-cycle placements (374 tables
         exhaustively, 100,000 samples on four larger ones) and a copositive
