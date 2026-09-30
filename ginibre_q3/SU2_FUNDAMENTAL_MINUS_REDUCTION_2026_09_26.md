@@ -9920,6 +9920,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       `3.88e12` at `(p,s) = (0,5)`.  So a decision-procedure certificate is
       needed (discriminant / real-root isolation, or an SOS form in `p`).
       Assigned as FM-SEC71.
+      **FM-SEC71 (luna_max_mars): proved** (`fm39/e1_q0_Q_certificate.py`,
+      rerun by the main agent after restoring one closing parenthesis in
+      the printed code).
+      - Weighted-homogeneous certificate.  Group the monomials `p^i S^j`
+        by weight `w = i + 2j` (the scaling `p ~ S^(1/2)`).  Then
+        `Q(TY, 5+Y^2) = sum_w Y^w T^(w mod 2) H_w(T^2)`, and each `H_w` is
+        of one of three kinds:
+        - coefficientwise nonnegative;
+        - a positive quadratic (negative discriminant) plus a
+          nonnegative remainder;
+        - a bounded-margin case, checked exactly.
+      - The top class gives `100 S^8 (p^2 - 6S)^2 + 2400 S^10`, so
+        `Q(p,5+S) >= 2400 S^10 > 0`.  Also `Q(p,5)` has positive
+        coefficients.
+      - With the exact small-`s` forms, `phi_2(h_(p+2) h_2^2 h_1^(p+2s+2))
+        > 0` for all `p, s >= 0`.  This closes the `C = 3`, `q = 0` family
+        of the `e = 1` branch.
+      - Screen: `Phi(C,p,q,s) >= Phi(3,p,0,s)` on 22,680 cases
+        (`3 <= C <= 12`, `p <= 15`, `q <= 8`, `s <= 20`), minimum 0
+        (`fm39/e1_comparison_screen.py`).  If proved, it closes the whole
+        `e = 1` branch.  FM-SEC81.
     - Strict OL, empirically (`fm39/strict_ol_scan.py`): on every row
       `a, e <= 100`, all 512,600 steps with `2k > N` have `delta_k > 0`,
       so there are no flat steps.  FM-SEC64 is proving it.
