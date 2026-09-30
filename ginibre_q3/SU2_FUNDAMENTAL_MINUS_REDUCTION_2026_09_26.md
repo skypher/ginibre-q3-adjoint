@@ -9849,9 +9849,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - It is not universal beyond three `h` factors (FM-SEC36,
         luna_max_uranus, and the main agent's `fm39/word_binary_census.py`).
         - Three-label `hat S` patterns are definite or PSD on
-          FM-SEC36's grid (`r <= 4`, `a <= 6`, labels `<= 5`).  On a larger
-          grid there are non-PSD words, e.g. `hat S_2 hat S_3 hat S_9` at
-          `r = 5`, `a = 0`, and a few `h h hat S` words.
+          FM-SEC36's grid (`r <= 4`, `a <= 6`, labels `<= 5`).
+        - Larger grid (`r <= 5`, `a <= 20`, labels `<= 9`): 36,396 words,
+          of which 8 are not PSD.
+          - `h h hat S`: 6 of 14,976, all at `r = 1`, e.g.
+            `h_2^2 hat S_9 h_1^9`.
+          - `h hat S hat S`: 1 of 15,120, namely `h_8 hat S_3^2` at `r = 5`,
+            `a = 0`.
+          - `hat S^3`: 1 of 6,300, namely `hat S_2 hat S_3 hat S_9` at
+            `r = 5`, `a = 0`.
         - Four-factor words have indefinite forms, e.g.
           `h_2 hat S_2^3 h_1^4` at `r = 1`, yet `phi = 75 > 0` on the actual
           row.
