@@ -9916,7 +9916,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       + W(U_Z U_V U_Y, U_X) - W(U_X U_Z, U_Y U_V) - W(U_X U_V, U_Y U_Z)`.
       Each `hat S hat S` value is `T + W >= 0` by (E).
     - *Support region.*  Let `lambda(I)` be the least fusion constituent.
-      `corr` vanishes termwise exactly when:
+      By the strict support rule `W = 0` for `p + q > N`, `corr` vanishes
+      termwise exactly when:
       - `X + lambda(Y,Z,V) > N`, and the same for each singleton;
       - `|X-Z| + |Y-V| > N` and `|X-V| + |Y-Z| > N`.
       For sorted labels and the outer pairing `12|34` this is
@@ -9924,6 +9925,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       `L_1 + L_2 - L_3 - L_4 > N`.  That strictly contains Theorem LL4's
       region `mu_1 > N`, `mu_2 > N`; example `L = (6,5,4,3)`, `r = 2`,
       `a = 2`.
+    - FM-CHK37 (luna_max_saturn, own exact code):
+      - ACCEPT: the double merge (3,072 direct cases), LL4 containment
+        with its strict gain, and the consumed (E) instances (`T + W` at
+        pairs `(d, d')` with `d + d' <= N`).
+      - REPAIR (applied): the strict support rule.  At equality a
+        boundary `W` can be nonzero, e.g. `W(U_3,U_1) = 4` at `r = 2`,
+        `a = 4`, or vanish by accident.
     - *Checks.*  1,366 words in the outer-pairing region (`r <= 5`,
       `a < 9`, labels `<= 11`): `corr = 0` exactly and `phi >= 0` in
       every one.  577 of them lie outside LL4.
