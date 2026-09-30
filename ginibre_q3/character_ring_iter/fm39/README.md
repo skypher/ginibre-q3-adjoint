@@ -66,6 +66,7 @@ this directory, because several `exec` a sibling file.
 | (E): FM-SEC41 family is short-psi-arc; extended menu on extreme and proportional rows (exact) | `psi_arc_family.py`, `e_extreme_residual.py` |
 | (E): fixed-e continuum limit, limiting menu coverage, the j = N/2 line via t = 2V | `e_continuum_limit.py`, `e_continuum_cover.py`, `e_center_mt.py` |
 | (E) two-case split: sweep >= pi pairs all closed by the single-metric bound (Conjecture HT) | `e_sweep_split.py`, `e_sweep_split_t.py` |
+| gamma <= N: FM-SEC45 certificate census; direct single-metric test (HT3) census | `gammaN_cert_lib.py`, `gammaN_cert_census.py`, `gammaN_metric_census.py` |
 | QGSI | `qgsi.py`, `qscan.py` (these need `slotHWg.py` and python-flint), `qscan_*.results` |
 
 Files named `*_repro.py` are the agents' printed vetting code, rerun by the main

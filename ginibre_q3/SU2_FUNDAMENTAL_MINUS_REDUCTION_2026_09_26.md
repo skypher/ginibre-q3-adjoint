@@ -9828,6 +9828,35 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       case, without (E).  Bounding the combined cross wedge by the
       determinant of `H` loses too much in general, e.g. at
       `(e,a,C,p,q,s) = (1,23,3,1,0,10)`, where `phi > 0`.
+    - *FM-SEC45 (luna_max_uranus): one `Q_t` wedge for the cross term.*
+      - Notation: `N = C + p + q + 2s`, `U = g_(p+s) + g_(q+s)`,
+        `V = g_(N-s+1) + g_(s-C-1)`, `phi = delta - U ^ V`, with
+        `delta = P_C(p+s) - P_C(s-C-1) = sum_d (E + eps W)` over the
+        CG labels `d` (each step an (E) value).
+      - Certificate: bound each step below by `lambda_d` (`E` when
+        `eps W >= 0`, else `E - ceil(sqrt R)` from `(M_i)`/`(M_j)`), put
+        `Lambda = sum lambda_d`, and bound `|U ^ V|` by FM-MECH26's
+        metric: `16t(4V-t)|U ^ V|^2 <= F_U(t) F_V(t)`, with
+        `F_Y(t) = 4(Y_1^2 - Y_2^2) t + 4(d Y_1 - sigma Y_2)^2`.  If
+        `K = 16 Lambda^2 + alpha_U alpha_V > 0`,
+        `0 < L < 8VK` and `L^2 >= 4KZ` (explicit in the row), then
+        `phi >= 0`.  No (E) instance is assumed.  The boundary cases
+        rerun exactly.
+      - Main-agent census (`fm39/gammaN_cert_census.py`): `e <= 11`,
+        `a <= 20`: 33,308 of 33,480 words certified.  The failures have
+        `e = 1` (`r = 2`, covered by T1) or `a <= 2`.
+      - Direct form (`fm39/gammaN_metric_census.py`, exact).  At the row
+        `delta` is known, so test
+        `(HT3)`: some `t in (0, 4V)` has
+        `16t(4V-t) delta^2 >= F_U(t) F_V(t)`.
+        Over `e` odd in `3..25`, `a <= 40`, all `C >= 3`, `p >= q >= 0`,
+        `s >= 0`: 1,196,247 of 1,196,426 words satisfy (HT3), 124 more
+        have `U ^ V <= 0`, and 55 fail, all with `phi > 0`.  The
+        failures have `e = 3`, `a = 37..40`, `C = 3` (for example
+        `(e,a,C,p,q,s) = (3,37,3,15,0,11)`), or `a <= 2`.  This is the
+        same pattern as (E): the metric alone misses an `e = 3`,
+        large-`a` family, which for (E) the short-arc argument covers.
+        FM-SEC51 looks for the geometric half of a split.
     - **Binary forms for three factors (main agent,
       `fm39/phi3_binary_form.py`, `fm39/phi3_binary_census.py`).**
       - Through the recurrence, `phi_r(h_u h_v h_w h_1^a)` is a binary
@@ -10053,6 +10082,51 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         invariant under multiplication.
       - The actual-vector half-space contained every sampled word, but
         that half-space is FM3 itself.
+    - FM-SEC43 (luna_max_pluto): enlarged states.
+      - Raw cross-kernel table `M_w(p,q)` with entrywise positivity:
+        exact CG action, wrong cone (the empty word has entry `-1` at
+        `(1,1)`, `r = 1`).
+      - Finite level/suffix window: two words (`hat S_13`, `hat S_27`)
+        with identical states are separated by one more generator.
+      - GFM3 pointwise kernel cone: `Q_3 h_2 = -10` at `(0,0)`.
+      - The E-polarized two-point state
+        `lambda_w(P) = phi_(r + kappa(P))(w P)`, `P` in
+        `{H_i H_j, H_i S_j, S_i S_j}`, carries every generator action
+        exactly, but `H_2^3` has no finite positive expansion in pair
+        probes (exact separator on labels `<= 6`, degree argument).  A
+        closed unbounded completion is unsettled.
+    - **FM-MECH28 (astra_max_ceres): candidate H, Hurwitz positivity of
+      translation profiles.**
+      - For a word `w` (`m` general `h`, any `hat S`, degree `d`), every
+        `r >= max(1, ceil(m/2))` and `a >= 0`, put
+        `P^w_(r,a)(t) = (1/2) E[(x-y)^(2r) (x+y)^a w(x+t, y+t)]`
+        (suffix not translated).  Sign reversal gives
+        `P = t^eps G(t^2)`, `eps = d + a mod 2`.
+      - H: `G = 0`, or, after removing powers of `z`,
+        `q(z) = b_0 z^n + ... + b_n` has `b_0 > 0` and every Hurwitz
+        determinant `Delta_j(q) > 0`.  Since `Delta_n = b_n Delta_(n-1)`,
+        H implies `phi_r(w h_1^a) >= 0`.  H holds for `w = 1`.
+      - Exact insertion laws, uniform in the number of factors: with
+        `(AP)_(r,a) = P_(r,a+1)`, `(RP)_(r,a) = P_(r+1,a)`,
+        `L_t = A + 2tI` and
+        `B(xi) = I - L_t xi + [2I + (L_t^2 - R)/4] xi^2 - L_t xi^3 + I xi^4`,
+        `sum_k P^(w h_k) xi^k = B^(-1) P^w` and
+        `sum_p P^(w hat S_p) xi^p = (2I - L_t xi + 2I xi^2) B^(-1) P^w`.
+      - Screens: 3,904 profiles (single generators to label 40 and level
+        32, words with up to 14 `hat S`, `r = 2` words `h h hat S hat S`),
+        no failure; 420 insertion identities.  Rerun by the main agent.
+      - Kills on the way (knob: strength FM3 does not use): endpoint
+        deformations of `Q_t` (`phi_1(h_2 (4+xy)(4-xy)) = -1`), covariance
+        (`-169884`), and every cone defined by nonnegative kernel moments
+        (`F = (h_2 - 1)^2` is pointwise `>= 0` with nonnegative character
+        coefficients, yet `phi_1(F hat S_4) = -1`; `F` is not a consumer
+        word, and H excludes it).
+      - Open: preservation.  The first step is `hat S_2` insertion,
+        `Q = (1/2)[P_(r,a+2) + P_(r+1,a) - 4P_(r,a)] + 2t P_(r,a+1) +
+        2t^2 P_(r,a)`.  H on single profiles cannot suffice (the array
+        `P = 1` for even `a`, `t` for odd `a`, gives `4t^2 - 1`), so the
+        proof must use compatibility of the actual arrays across `(r,a)`.
+        FM-MECH29 (propagation) and FM-SEC49 (falsification) are on it.
     - FM-SEC31 (luna_max_pluto): the mixed term expands exactly through
       lower-label values, `C = A - B`, so the inductive step is
       `A <= R + B`.  Every term there has fewer labels, but positivity of
@@ -10829,7 +10903,7 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - On `3 <= a, e <= 40` they leave 0 pairs.
         - On 600 random rows with `a, e <= 300` (7,176,773 pairs) they
           leave 70 pairs, every one with `q = 2`.
-        - The 70 are all lopsided rows (`min(a,e)` in 3..10,
+        - The 70 are all lopsided rows (`min(a,e)` in 3..11 (FM-SEC42),
           `max(a,e)` up to 293) with `W > 0`, where the plus sign is
           trivial: `D_j - D_i + W >= D_j - D_i >= 0` by OL.  At `q = 2`
           the minus sign is OL on `(1-z^2)P`, so every `q = 2` pair with
@@ -10953,6 +11027,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           form is indefinite but the actual value is 5614.  Open: all `a, e`
         (uniformity of the definite region in `(d, N, j)`, or ratio
         bounds as in Theorem OL's steps 2-5 for the non-definite pairs).
+      - FM-SEC44 (luna_max_venus): outer-interval lemma.  With
+        `n = N-j`, `v = n-1`, `h = 2j-N+2`, `U = j+2`, the gap-3 `W` is
+        a binary quadratic `A + B r + C r^2` in `r = c_(j+1)/c_j`
+        (explicit coefficients).  If `d^2 >= 4Uv` and
+        `T = (h+1) d^2 - L - 3n(h-2)(h+v+3) >= 0`, then `W > 0` on
+        Theorem OL's outer ratio interval `n/d <= r <= R`, so the plus
+        sign is trivial there.  Proved.  The remaining step is the
+        polynomial implication "non-definite plus form => `d^2 >= 4Uv`
+        and `T >= 0`", screened on all 2,208 open non-definite cases with
+        `a <= 60` (least `T = 1348` at `(25,3,24)`), not proved.
+        Reproducer reruns exactly.
+      - FM-SEC42 (luna_max_saturn): exact `t`-optimization of the single
+        metric at `q = 2`.  `R(t) = F_j F_i - 4t(4V-t) Delta^2 =
+        alpha t^2 + beta t + gamma`; if `alpha > 0` the optimum is
+        `t* = -beta/(2 alpha)`.  Every `q = 2` pair with `W < 0` is closed
+        by `t*` or an endpoint: 49,657 in the 600-row sample, and all of
+        them in the grid `a, e <= 150` (1,681,577 `q = 2` pairs).
+        Interior `t*` is needed, e.g. at `(a,e,j) = (5,181,112)`.  The
+        70 earlier residuals all have `W > 0`.
     - **Residual of (E) now** (`fm39/e_residual2.py`): 22,046 of 438,221
       pairs (5.03%), all with `q >= 2`: `q = 2` 8,364, `q = 3` 6,908,
       `q = 4` 3,948, `q = 5` 1,988, `q >= 6` 838.
