@@ -10771,6 +10771,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `hat S_6 hat S_2` at `r = 2` has `-36/35` (true value 1).
         - Next requirements: for `h_3`, `M_(b+1) - M_b >= 0` (A odd-shifted);
           for `hat S_4`, `M_(b+2) + M_(b+1) - 2 R_(2,b) >= 0`.
+        - FM-CHK54 (luna_max_eris, fresh code): ACCEPT all four items.
+          - The identities and the consumer translation.
+          - Lemmas 2 and 3.
+          - The radial coordinates, Jacobian and normalization, and the
+            small cases (576 parameter checks).
+          - The recurrence (1,470 cases), the elimination (1,512), the
+            closed forms for `n = 3..12`, and both ray counterexamples.
       - FM-SEC123 (luna_max_venus; `fm39/sec123_admissible_sets_repro.py`):
         admissible label sets.
         - Among {2,4}, {2,3}, {3}, {4}, {2,4,6}, {2,3,4}, the even labels and
