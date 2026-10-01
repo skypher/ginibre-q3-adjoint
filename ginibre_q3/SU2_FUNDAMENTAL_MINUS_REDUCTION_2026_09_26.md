@@ -12320,7 +12320,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `(p - 2B)^2 >= 4(t-1)(N-t+2)` (3) gives both one-label families
           at every level and every `B`, including `p > N`.  Also the simpler
           linear-distance region `max(a,e) >= 15 min(a,e)`, `N >= 4d` (5).
-        - Open: region (10), `(N - 2d)^2 < 4(t-1)(N-t+2)`.  The needed
+        - Open: region (10), `(N - 2d)^2 < 4(t-1)(N-t+2)`.  (FM-MECH86/89
+          regions: FM-CHK77 ACCEPT.)  The needed
           inequality is `(p+1) T_B(k) + |V(k)|^2 - |V(k+1)|^2 >=
           2B F_(B-1)(k)`.  Individual chords can be negative there.
         - Main-agent note: adjacent chords are Turan drops,
@@ -12353,6 +12354,33 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           small-background class.  At distance 8 the `h` profile is
           202,835 / 72,325 / 48 for `h = 0 / 1 / 2`; the `h >= 1` lists are
           now covered by FM-MECH85.
+      - FM-CHK77 (luna_max_venus, fresh code) of FM-MECH86 and FM-MECH89:
+        ACCEPT all items.  These are the closed recurrence, the corrected
+        energy with its square decrement (and its sum-of-squares expansion),
+        FM-MECH86 regions (5) and (7), and FM-MECH89 criterion (3) with both
+        consequences.
+      - FM-MECH95 (astra_max_vulcan; `fm39/mech95_double_endpoint_repro.py`,
+        rerun: ALL CHECKS PASS): two sectors of the unsaturated `k >= 2`
+        region.
+        - Two non-distinguished labels equal to `delta`, any remaining
+          background: `F = H_delta + (eps_1 + eps_2) A + eps_1 eps_2`, with
+          `A = [z^delta] prod_B (1 + eps z^n)`.  The coefficient kernel gives
+          `c_delta >= A^2/(delta+1)`, so `F >= (A + eps(delta+1))^2/(delta+1)
+          >= 0`, or `F = H_delta - 1 >= delta` for opposite signs.  PROVED for
+          every such word.
+        - Quartet sector: with the four largest labels
+          `p >= n_3 >= n_2 >= n_1` and the rest of weight `D`,
+          `min(p, delta) - D + 1 >= 3 (floor(D/2) + 1)^2` implies FM3.  This
+          replaces FM-MECH87's exponential loss by a quadratic one.
+        - Open: the `k = 2` comparison (two cores `m <= n <= delta`, not both
+          `delta`, on a {1,2} background), and the complement (12) for
+          `k >= 3` (FM-MECH98).  Check: FM-CHK80.
+      - Main-agent screen (`fm39/sec144_unsaturated_screen.cpp`).  The
+          equivalent form is FM3(list) = `2 g_p`, with `g_p = [U_p(X)] E_y
+          prod (U_(n_i)(X) + eps_i U_(n_i)(y))` over the background; this is
+          checked against FM-SEC142's independent fusion DP on 200 random
+          lists.  An exact GMP screen of the unsaturated region is running
+          (see FM-SEC144).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
