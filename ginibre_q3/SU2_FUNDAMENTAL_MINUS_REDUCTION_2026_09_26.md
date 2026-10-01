@@ -13358,6 +13358,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           | 8 | 124 | 5,471,268 | 0 |
           | 9 | 104 | 1,463,154 | 0 |
           | 10 | 92 | 247,753 | 0 |
+          | 11 | 84 | 36,284 | 0 |
+          | 12 | 80 | 6,380 | 0 |
 
         - TopPair on ALL pair-free patterns, not only no-flip ones
           (`fm39/sec166_walsh_toppair_all_patterns.cpp`): monotone for every
@@ -13536,6 +13538,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Census: no-flip lists have at most 12 factors and at most one
           label 1 through `W = 44`.  None lies in these regions, so the
           theorems do not shrink the census remainder.
+      - FM-SEC168 (luna_max_pluto; `fm39/sec168_flip_pair_families.py`,
+        `fm39/sec168_noflip_channel_replacement.py`; both rerun by the main
+        agent with identical output, after fixing doubled regex backslashes
+        in the extracted copy).
+        - Every simple flip-pair family misses some flip-positive list in a
+          22-list exact screen (W = 40..200): pairs with `sigma p`, with a
+          smallest label, two copies of one label, opposite signs, (largest,
+          smallest), maximum gap.  Minimal covering unions have two
+          families, e.g. {pairs with `sigma p`, opposite-sign pairs}.  Small
+          screen; not a census.
+        - On ALL 1,904 no-flip lists at `W <= 36`, a same-sign channel
+          replacement (FM-MECH146) strictly lowers `g_p`; minimum relative
+          drop `352/429` at `B = (1,-2,3,3,-4,9,-10)`, `p = 12`
+          (`(-4,-10) -> S_6`).  So channel replacement also covers the
+          no-flip core there, next to TopPair.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
