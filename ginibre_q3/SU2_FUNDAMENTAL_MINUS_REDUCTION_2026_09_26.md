@@ -11412,6 +11412,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           different total-spin sectors.
         - Biggest unknown (shared with ADV-2, ADV-3): a uniform grouping
           that retains cross-sector cancellation.
+      - FM-SEC136 (luna_max_jupiter; `fm39/sec136_gram_part1..3.py`, rerun
+        exactly): the tridiagonal mixed Gram family for `H = 1`.
+        - With `c_n^M = sum_s rho_(n,s) xi^(n-2s)`, every tridiagonal (even/odd
+          block) Gram representation of `F_d(T, u, b)` lies in an affine
+          family with `d - 1` free off-diagonal entries `beta_j`.  The diagonal
+          `A_m(beta)` follows by a descending recurrence, using
+          `E_(m,m) = 1/(m!)^2`.
+        - Grid `4 <= T <= 60`, `3 <= b <= 20`, `6 <= d <= 20`, `p >= 7`: the
+          diagonal member `beta = 0` has a negative entry in 7,660 of 12,951
+          rows (first `(4,8,6)`, `M = -12`).  That row still has an exact mixed
+          certificate with positive Schur pivots in both blocks.
+        - With the finite slope menu `theta = +-2^s`, 574 of 595 rows are
+          covered (`T <= 20`, `b <= 12`, `d <= 10`).  The first uncovered row,
+          `(4,12,10)`, has a polynomial with all positive coefficients in
+          `u`.  The menu separator there is not an all-slope obstruction.
+        - Open: a uniform choice `beta(T, b, d)` with nonnegative Schur
+          pivots.
       - ADV-3 (astra_max_minerva, advisor: gap audit and red team;
         `fm39/adv3_onelabel_allb_search.py`, `fm39/adv3_cp_certificate_1422MM2.py`,
         both rerun exactly).
