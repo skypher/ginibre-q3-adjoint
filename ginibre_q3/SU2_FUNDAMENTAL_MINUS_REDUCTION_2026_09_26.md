@@ -8821,6 +8821,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | four largest labels `q + t_i` (pair-free quartet) over a word of weight `D` | `q >= D + M + 1`, `M` the quartet spread: reduced to fewer factors (FM-MECH142); all 7- and 8-factor such words; every all-minus word of 8 consecutive labels — added 2026-10-02 |
 | all `r` | EVERY list with at most seven factors | all labels, all signs (FM-MECH153 Theorems 2, 3 with Prop. 1C and Corollaries 23A9ZZ10, 5A7B51) — added 2026-10-02 |
 | all `r` | eight factors with no negative 3|5 term (e.g. every all-odd eight-factor list) | all (FM-MECH153 Lemma 4, Corollary 5) — added 2026-10-02 |
+| all `r` | eight factors: all labels `>= 3`, or all `>= 2` with an odd label | all (FM-MECH155 with FM-MECH153 and two-odd fusion) — added 2026-10-02 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -13659,6 +13660,34 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - a witness where every flip incident to a 1 is negative but
           `(+2,+2)` works, and one with multiplicity 5 where every
           equal-label flip is negative.
+      - TopPair margin on no-flip lists through `W = 48` (main agent,
+        `fm39/sec166_toppair_margin_noflip.py`, GMP evaluator, all 33,487
+        lists): the worst `g_p(B - TopPair)/g_p(B)` per weight is at most
+        0.0564 (`W = 27`) and at most 0.0414 for every `W >= 34`.  It does not
+        grow with weight: on no-flip lists TopPair cuts `g_p` by at least
+        94%.
+      - FM-MECH155 (astra_max_minerva; `fm39/mech155_eight_factor_sectors_repro.py`,
+        rerun with the census log: PASS).  Eight factors, three uniform
+        sectors:
+        - four odd labels, all labels `>= 2`;
+        - six odd labels, all labels `>= 2`;
+        - all-even labels, all labels `>= 4`.
+        - Together with FM-MECH153 and two-odd fusion, every eight-factor
+          word is covered if all labels are `>= 3`, or if all are `>= 2` and
+          one is odd.  The proof uses five-factor channel certificates
+          (722,142 endpoint cases, with an exact reduction of unbounded
+          intervals) plus four finite exceptions.
+        - Census: 306 of the 1,944 eight-factor no-flip lists, so 2,402 of
+          5,430 in all.  The rest contain a label 1 (or are all-even with a
+          2).  Open: `T_3^- <= (N_8 - T_4^-) + P + T_3^+ + T_4^+` there.
+      - FM-SEC170 (luna_max_pluto; `fm39/sec170_ratio_split_screen.py`,
+        rerun: same output).  Exact screens found no ratio-split failure
+        (117,147 + 10,346 + 2,211 random residuals; 1,808 targeted high-ratio
+        cases; 541 low-label flip checks).  Superseded by FM-MECH157, whose
+        12-factor even-label witness refutes (F*).  Exact TopPair failures
+        with flips: `W = 43` (ratio 1/3, `D_11 > 0`) and `W = 111` (ratio
+        10/51).  Pluto also bounds the census arithmetic: table norms at most
+        `2^125` through `W = 48`, so int128 is safe.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
