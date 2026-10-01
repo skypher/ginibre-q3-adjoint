@@ -12613,8 +12613,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           strip; uniform cutoffs `delta >= 32(t+2)` and `delta >= 64(t+3)`;
           an arbitrary-background resource theorem.  Also: `m_p(all)`
           admits no fixed positive relative margin even at `k = 2`.
-          Whether that family is pair-free (FM-SEC146 found 0.758 on
-          pair-free lists) is being checked (FM-MECH109).
+          Main-agent check: the family uses `(+1)^r (-1)^r (+2)^r` with
+          cores `(-6q, +7q; -13q)`, which is NOT pair-free (`+1` and `-1`
+          both occur).  So the pair reduction removes it, and it does not
+          conflict with FM-SEC146's pair-free minimum of 0.758.
         - FM-MECH101 (luna_max_mercury): the H = 1 insertion step in an
           exterior region.  Kill (knob: termwise channel positivity).
         - FM-MECH104 (luna_max_mars): an exact kernel sum with a ballot-walk
