@@ -13114,6 +13114,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `max_R (g_p(B) - g_p(B-R)) / g_p(B)` is `22449/25937` (about 0.866), at
         `B = (-1^8, -2^4, -3^2)`, `p = 6`, `R = (-1,-3)`.  Every residual
         parent value is positive.
+      - FM-CHK92 (luna_max_eris, fresh code).  ACCEPT FM-MECH130's
+        Rule W result for at most four factors, on the range
+        `p >= max(3, max |B_i|)` (state this restriction), and its three-
+        and four-core results and channel obstruction.  REPAIR (wording):
+        the `(-1,-4)` witness lies outside the consumer `p`-range.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
