@@ -13102,8 +13102,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           M) has failed at some larger weight.  The working removal moves
           between the smallest labels, the largest labels and the heaviest
           class.  (D) itself has never failed.  The lemma's exhaustive range
-          (zero failures through `W = 40` over all pair-free `(B,p)`) was far
-          below this witness.
+          (zero failures over all pair-free `(B,p)` through `W = 48`,
+          `fm39/sec160_WM_exhaustive48.py`, finished 04:35) is far below this
+          witness.  Finite exhaustive ranges therefore say little about these
+          selection lemmas.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
