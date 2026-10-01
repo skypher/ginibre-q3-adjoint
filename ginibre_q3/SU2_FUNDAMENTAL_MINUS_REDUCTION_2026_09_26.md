@@ -13319,6 +13319,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           entries are at most `4^44 * 2(p+1)`).  Of 66,116,748 residual cases,
           14,108 have no flip descent; on all of them (D) holds and TopPair
           is monotone.  No failure of (FT).
+        - Few-factor Walsh census (main agent,
+          `fm39/sec166_walsh_few_factor_census.cpp`).  For each label
+          multiset, one Walsh transform of `m(S) m(S^c)` gives `Phi` at every
+          sign pattern, so all flip tests are table lookups.  It reproduces
+          the DP census exactly at `W <= 40` (no-flip counts 499, 1597, 1944,
+          1066, 270 for 6..10 factors).  Total weight `T = W + p`; no (FT)
+          failure anywhere:
+
+          | factors | `T <=` | no-flip patterns | TopPair failures |
+          |---:|---:|---:|---:|
+          | 6 | 250 | 7,707,257 | 0 |
+          | 7 | 160 | 8,565,786 | 0 |
+          | 8 | 124 | 5,471,268 | 0 |
+          | 9 | 104 | 1,463,154 | 0 |
+          | 10 | 92 | 247,753 | 0 |
+
+        - TopPair on ALL pair-free patterns, not only no-flip ones
+          (`fm39/sec166_walsh_toppair_all_patterns.cpp`): monotone for every
+          list with 7..11 factors at `W <= 40`.  So at these weights TopPair
+          fails only from 15 factors on, while no-flip lists have at most 12.
         - Single fixed flips fail often.  For example, the flip of two equal
           labels `r` fails on 10% (`r = 1`) to 39% (`r = 4`) of lists with a
           repeated `r` at `W <= 36`.  So (F*) is an existence statement.
@@ -13410,6 +13430,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           the uniform separation theorem adds only 0.137%.  For comparison,
           flip descent (FM-SEC166) reduces all but 265 of these cases
           (99.96%).
+      - FM-MECH150 (astra_max_vulcan; `fm39/mech150_six_odd_FT_repro.py`,
+        rerun: PASS).  A uniform (FT) sector, proved: background of six odd
+        labels `a < b < c < d <= e <= f` (four smallest distinct), `p >= f`
+        even, `f <= delta`.  Then TopPair removes `e, f` and `g_p(B) -
+        g_p(B - TopPair) >= 4`, for every signing, all labels and
+        distances.  It covers all eight census no-flip lists without an even
+        label.
+        - Exact graph reduction for six odd background labels: `g_p(B) = M +
+          Q_A + s Q_W` (subsets of sizes 0, 2, 4 only), with explicit
+          formulas for all 21 flip quantities.  Summing the 15 background
+          flips gives `8(g_p - M)`, so a no-flip list there has `g_p < M`.
+        - Normalization: `sum_(u<v) (Phi - Phi^(uv)) = 2 sum_S chi(S) |S||S^c|
+          m(S) m(S^c)`.  This gives flip descent for pair-free lists with 2..5
+          factors.
+        - Knob for extending: unconditional TopPair monotonicity outside the
+          pattern, e.g. `B = (-1)^4 (-2)(-3)^8 (-4)`, `p = 6`: TopPair
+          `(-2,-4)` increases `g_6` from 996,550 to 1,077,706 (flip
+          `(-1,-1)` works there).  Open: repeated labels among the four
+          smallest, using the no-flip hypotheses.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
