@@ -13119,6 +13119,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `p >= max(3, max |B_i|)` (state this restriction), and its three-
         and four-core results and channel obstruction.  REPAIR (wording):
         the `(-1,-4)` witness lies outside the consumer `p`-range.
+      - FM-MECH144 (astra_max_juno; `fm39/mech144_many_ones_D_repro.py`,
+        rerun: ALL CHECKS PASS): (D) and FM3 on a uniform many-ones region.
+        - Reflect odd signs so the fundamentals are `+1`, and write
+          `B = (+1)^a C` with no label 1 in `C`.  Let `t` be the number of
+          minus factors in `C`, `l = ceil(t/2)`, `nu = 2l + 3`, and
+          `K = 1 + sum_(+n in C) 5n(n+2) + sum_(-n in C) 3(n-1)(n+3)` plus
+          `5p(p+2)` (`t` even) or `3(p-1)(p+3)` (`t` odd).
+        - If `Q(a) = 15 a^2 - K nu (2a + nu) - 15 >= 0`, then
+          `g_p((+1)^a C) >= g_p((+1)^(a-2) C)` and `g_p > 0`.  This holds
+          for arbitrary core labels, signs and factor count, and gives both
+          (D) and FM3 on that region.
+        - Also exact certificates that tell removable core pairs from
+          non-removable ones.  Open: the low-fundamental-count residual.
+          The W = 1283 witness lies outside the uniform bound; the verifier
+          prints its core threshold `a >= 276920`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
