@@ -12429,6 +12429,34 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: region (7), where some proper odd-gap chord in
           `[k-B, k+B+1]` is negative.  FM-MECH99 targets the tight corner of
           FM-SEC144 (`a = e`, `b ~ a`, small `p`).  Check: FM-CHK81.
+      - **FM-SEC145 (main agent): `+2` insertion monotonicity (conjecture,
+        exact screens).**
+        - Statement (M): for every signed background `B` and every
+          `p >= max(labels of B, 3)`, `g_p(B + {+2}) >= g_p(B)`.
+          Equivalently FM3(B, +2, p) >= FM3(B, p).  In the two-spin table
+          `G(s,t) = sum_S eps_S m_t(S) m_s(S^c)` of `B` it reads
+          `G(p-2, 0) + G(p+2, 0) + G(p, 2) >= 0`.  For H = 1, in FM-MECH82
+          notation, it reads `F_B(k-1) + F_B(k+1) + W_B(k-1, k+2) >= 0`.
+        - Consequence: removing the `+2` factors one at a time reduces every
+          list to its `b = 0` version, with the same distinguished label.
+          So (M) with Theorem OL proves the whole H = 1 layer, and (M) with
+          (E) (FM-MECH79, FM-CHK71) proves the whole two-core layer, at every
+          `b`.  It also reduces `k >= 2` to `b = 0` backgrounds.
+        - Exact screens, no violation:
+          - `fm39/sec145_h1_monotonicity_check.py 14 14`: H = 1,
+            `a, e, b <= 14`, all `p >= 3`, 43,218 checks.
+          - `fm39/sec145_z_insertion_monotonicity_screen.cpp` (GMP): random
+            backgrounds with up to 10 cores (labels up to 40), up to 50 `+-1`
+            and up to 12 `+2`, all `p >= max(labels, 3)`, 231,732 checks.
+          - The smallest relative increase is 0, attained only on degenerate
+            backgrounds (a single label equal to `p`).
+        - Corner data (`fm39/sec144_corner_scan.py 6 40`): at `a = e`,
+          `p = 6`, the minimum over `b` of `g_6/m_6(all)` is at `b = a + 3`
+          and decays like `0.73^a` (`2.2e-6` at `a = 40`).  So arguments that
+          perturb around the all-plus term cannot work there, while (M) is
+          exact.
+        - Delegated: FM-MECH100 (general proof) and FM-MECH101 (the H = 1
+          case).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
