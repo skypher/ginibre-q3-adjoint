@@ -11379,6 +11379,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           up to the turning point.  The endpoint-envelope obstruction
           `(48,8,29,33)` (actual `J >= 0`) shows the endpoint directions
           must stay correlated.
+      - FM-MECH59 (astra_max_ceres; `fm39/mech59_E_far_anchor_repro.py`,
+        rerun exactly in 46 s): the far-anchor branch of (E), CLOSED.
+        - Lemma 1 (a square decrement for `D`, Sonin-type): with an explicit
+          rate `rho(X_k)`, `D_(k+1) <= rho(X_k) D_k` on the right half.  This
+          is an exact identity whose remainder is a square, since
+          `(sigma - omega)(sigma + omega) = Delta^2`.
+        - Lemma 2: the decay rate combined with Theorem LD's chord bounds
+          gives (E) for every far-anchor interval of length `>= 5`, and for
+          length 4 when `5X_j >= 3 sigma`.
+        - Lemma 3: the remaining gap-4 region has PSD binary forms, by fixed
+          certificates (330 to 7,605 positive coefficients).
+        - Theorem 4 (PROVED): (E), both signs, for every far anchor
+          `2X_j > N + 2`, at every endpoint and every gap.  The other cases
+          use Theorem RF's outer region and 100 exact cases (least slack
+          719,376); the endpoint `i = N + 1` uses Newton's inequality.
+          Census: 170,240 pairs, all covered.
+        - Remaining for the two-label layer: unbalanced rows at central
+          anchors, `8e < 3N - 2`.
+        - KILL (knob: bounding the two chords separately): at
+          `(4000,4,2016,2051)` the LD bound exceeds the drop by a factor
+          above `sqrt 10`, while `J >= 0`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
