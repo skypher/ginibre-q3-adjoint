@@ -8847,6 +8847,11 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       `k >= 2` non-distinguished labels `>= 3`.  Pair-free lists with
       `k <= 1` are covered by OL, FM-MECH52, (E) and FM-MECH64 (FM-MECH64
       check FM-CHK82 pending).
+    - Update 23:10 (FM-MECH106): the whole cone follows from the two
+      insertion-monotonicity lemmas (M+) and (M-) on pair-free backgrounds
+      (conjectures with about 900,000 exact checks, no violation).  The two
+      open routes are (A) prove (M+) and (M-), or (B) prove the pair-free
+      `k >= 2` residual directly.
     - No counterexample has been found anywhere.
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
     finished.
@@ -12568,10 +12573,30 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Kill (knob: minus insertion into mixed backgrounds).  Adding
           `(-3,-3)` to the all-plus background `(1^12, 2^4, 4, 6, 6)` lowers
           `g_6`.  So plus labels must be stripped before minus labels.
-        - Consequence if (M+) and (M-) hold: every pair-free list descends
-          by monotone steps (same distinguished label) to a base list with
-          at most one minus label and single odd plus labels.  FM3 for the
-          cone would follow from those base lists.
+        - Also two distinct odd plus labels `(+n,+m)`: 78,933 checks, no
+          violation (`sec147_mono_plus_nm.py`).  C++ GMP stress test
+          (`sec147_monotone_screen.cpp`, both lemmas, up to 10 cores, labels
+          up to 30, many 1's): 389,874 checks, no violation.
+      - **FM-MECH106 (main agent; `fm39/mech106_monotone_reduction_check.py`,
+        PASS): FM3 for the whole cone follows from two insertion-monotonicity
+        lemmas on pair-free backgrounds.**
+        - (M+): for a pair-free background `B` and `p >= max(labels, 3)`,
+          adding plus labels (one even label, or two odd labels) keeping
+          pair-freeness never decreases `g_p`.
+        - (M-): for an all-minus background with at most one odd plus label,
+          adding two minus labels never decreases `g_p`.
+        - Descent: from a pair-free list (FM-MECH102 reduces every list to
+          these), strip even plus labels one at a time and odd plus labels
+          in pairs by (M+).  Then strip minus labels in pairs by (M-), keeping
+          `p`.  `p <= 2` is the proved {1,2} sector.
+        - The base lists have at most three factors and are `>= 0`: `(p)`
+          gives 0, `(+-n, +-p)` gives `2[n = p]`, and `(+o, -n, -p)` gives
+          `2 m(o,n,p)`.  The script checks 14,470 base values (labels
+          `<= 40`) and replays 1,180 descent steps on random pair-free lists.
+        - Status: (M+) and (M-) are conjectures (FM-SEC147: about 900,000
+          exact checks, no violation).  `+2` insertion (FM-SEC145, FM-MECH100,
+          FM-MECH101) is the `n = 2` case of (M+).  This route needs neither
+          H = 1 nor two-core results.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
