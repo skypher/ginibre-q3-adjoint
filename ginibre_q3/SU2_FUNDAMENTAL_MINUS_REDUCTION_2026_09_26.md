@@ -12921,7 +12921,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (multiplicity times label; ties go to the larger label).  If it has
           two or more copies, remove two.  Otherwise pair it with the largest
           other label of the same parity, or remove it alone if it is even.
-          Every removal has even weight.
+          Every removal has even weight.  REPAIR (FM-CHK89): if the heaviest
+          class is a single odd label with no odd partner, remove the
+          smallest even label (step W4).  Example: `B = (-3,-2)`.  The
+          exhaustive C++ sweep already used this fallback.
         - Evidence, no failure:
           - exhaustive over every pair-free background with `W <= 40`
             (81,808,160 `(B,p)` cases; `fm39/sec156_ruleW_exhaustive.py`,
@@ -12956,6 +12959,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `G_C`.
         Both are proved for all-plus `C`.  The knob is mixed-sign
         cancellation.
+      - FM-CHK89 (luna_max_neptune, fresh code): an adversarial search for
+        Lemma W violations up to `W = 200` (164 structured seeds and 32
+        hill-climb restarts, exact) finds none.  The smallest normalized
+        slack is 1, at `B = (-1)^32`, `R = (-1,-1)`, `p = 32` (support
+        edge: `g = 1` versus 0).  It also found the undefined branch
+        `B = (-3,-2)`, now repaired by step W4.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
