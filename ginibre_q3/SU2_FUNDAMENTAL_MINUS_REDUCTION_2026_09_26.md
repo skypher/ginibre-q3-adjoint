@@ -11004,8 +11004,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             boxes cannot finish the cone, and this one is impractical.
             The labels `<= 5` sector should come from the layer theorems
             (H = 1, H = 2, ...) plus the many-factor theorems.  The
-            constructor rerun (entry counts) is in progress; its certificate
-            checks print at the end.
+            constructor rerun reproduced the counts exactly (916,895 /
+            1,738,408 / 227,336,512,420) and its certificate checks: PASS.
         - Edge obstruction.  With `z = 1 - sigma/M^2`,
           `q = 1 - tau/(2M^2)`, `M = n + 1`, the normalized pair tends to
           `E_+-(sigma,tau) = [F(sigma) +- F(sigma+tau)]/[1 +- F(tau)]`,
