@@ -8805,7 +8805,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; FM-CHK61) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; FM-CHK67) — added 2026-10-01 |
-  | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; checks pending) — added 2026-10-01 |
+  | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK68; FM-CHK65 pending for 63) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
@@ -11659,7 +11659,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `A < 256` and `B < 2^17`).  That is, few large labels in weighted
           count and a background small against them.  Ordinary counts are
           not bounded (e.g. `m` copies of 5 plus one label `m`).
-          Independent check: FM-CHK68.
+        - FM-CHK68 (luna_max_neptune, fresh code): ACCEPT all five items.
+          - The minus-factor lemma, via the sine pairing and the
+            second-derivative bound (15,000+ exact profile checks).
+          - The resource selection.
+          - The radial constants (`81/524288`, `9/4096`, the `A < 256`
+            branch); `k = 0` is assigned to FM-MECH48.
+          - The exact residual (8).
+          - Four exact words at `B = 131073` are positive.
       - FM-CHK66 (luna_max_pluto, fresh code).
         - ACCEPT FM-MECH61: the (BE) failure family, the T3/T4 margins, the
           cubic identity of Lemma 3, and the `omega < 64` screen (1,105,010
