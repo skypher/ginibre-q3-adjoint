@@ -10989,6 +10989,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           ray certificates at `rho = 6/7` prove the labels `<= 5` sector
           for all words with `H >= 71` nonbase factors.  The box below
           that has 1,088,430 core count patterns and is not run.
+        - FM-SEC134/135 (luna_max_mercury; `fm39/sec135_labels5_constructor_repro.py`):
+          the labels `<= 5` box at `rho = 6/7` (`delta = 1/7`,
+          `tau = 17/21`, `J = 352/1225`).
+          - Per-type constants certified by 16x16 rational Bernstein
+            subdivisions, e.g. `|hat S_4 W| <= 85/147` on `[0, 6/7]`.
+          - The many-factor tail is covered for `H >= 68`.
+          - The box: 916,895 core profiles, 1,738,408 records,
+            227,336,512,420 entries (`N <= 71`, `b <= 1006`).
+          - A 32-thread calibration checked 406,203,451 entries (0.18% of
+            the box) in 6,838 s: no negative value, and 200 direct
+            Catalan matches.  The projected full run is about 44 days.
+          - Decision (main agent): the full box is NOT run.  Per-label-bound
+            boxes cannot finish the cone, and this one is impractical.
+            The labels `<= 5` sector should come from the layer theorems
+            (H = 1, H = 2, ...) plus the many-factor theorems.  The
+            constructor rerun (entry counts) is in progress; its certificate
+            checks print at the end.
         - Edge obstruction.  With `z = 1 - sigma/M^2`,
           `q = 1 - tau/(2M^2)`, `M = n + 1`, the normalized pair tends to
           `E_+-(sigma,tau) = [F(sigma) +- F(sigma+tau)]/[1 +- F(tau)]`,
