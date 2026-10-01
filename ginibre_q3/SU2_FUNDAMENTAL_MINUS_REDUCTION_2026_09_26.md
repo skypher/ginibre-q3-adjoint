@@ -8854,8 +8854,9 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       directly) is the main route.
     - Update 00:50 (FM-SEC148/151): a single conjectural lemma, LEMMA R
       (the Rule 1' removal never increases `g_p`), would give the whole cone
-      with FM-MECH102.  It survives an exhaustive sweep (W <= 32, for Rule 1)
-      and adversarial search to W = 140 (Rule 1').
+      with FM-MECH102.  It survives an exhaustive sweep of Rule 1' through
+      W = 40 (FM-SEC152: 81.8M cases, zero failures) and adversarial
+      search to W = 140.
     - No counterexample has been found anywhere.
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
     finished.
@@ -12860,6 +12861,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             core-census count omitted repeated core labels and
             double-counted the `a = 0` sign choice.  The proof does not
             depend on that count.
+      - **FM-SEC152 (luna_max_venus; `fm39/sec152_rule1p_exhaustive.py`,
+        rerun by the main agent: PASS): Rule 1' (Lemma R) is exhaustively
+        verified for every pair-free background with total weight
+        `W <= 40`.**  That is 6,011,040 backgrounds with `>= 2` factors and
+        81,808,160 admissible `(B,p)` cases, with zero failures (W <= 32:
+        8.8M cases; W <= 36: 27.8M).  Arithmetic is exact signed 128-bit
+        with the bound `prod 2(n_i+1) <= 4^W`.
+        - Smallest relative slack per branch: even-plus step 0 (trivially,
+          at `B = (+2,-3)`, `p = 3`); duplicate step 7/4 (at
+          `B = (-1^2, -2^2, -3)`, `p = 3`, removing `(-1,-1)`: 11 versus 4);
+          fallback 0 (trivially, at `B = (-2,-3)`).  No child value is
+          negative.
+        - The printed verifier had a duplicated struct block (a
+          transcription error).  The fm39 copy deletes the duplicate and
+          reproduces the published counts exactly.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
