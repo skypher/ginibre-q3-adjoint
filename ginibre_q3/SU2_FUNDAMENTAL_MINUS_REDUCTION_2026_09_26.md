@@ -8805,7 +8805,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; FM-CHK61) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; FM-CHK67) — added 2026-10-01 |
-  | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK68; FM-CHK65 pending for 63) — added 2026-10-01 |
+  | all `r` | EVERY list at list distance 5 or 6 | all (FM-MECH71; check pending); every distance `delta` once `max(t,b,k) >= (100 delta)^(300 delta^2)` (FM-MECH71) — added 2026-10-01 |
+  | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
@@ -11642,6 +11643,30 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           distance 3 (EVEN 168, `F_3 = 84`) to 4.  With this scope,
           `EVEN = 2 F_delta` matched on 2,000 random lists (8 to 11 factors,
           distinguished labels up to 125), and clipping on 240/240.
+      - **FM-MECH71 (astra_max_juno; `fm39/mech71_distance56_all_lists_repro.py`,
+        rerun exactly in 48 s): FM3 holds for EVERY list at distance
+        `delta <= 6`.  Also a tail theorem uniform in `delta`.**
+        - Prop. 1: exact distance-5 and distance-6 polynomials through the
+          core-multiset sums `C_(delta, sigma)` (formula (2) of the report).
+          They use the shifted Krawtchouk `P_j` (`M = t - 2b`) and the
+          multiplicities `M(q; sigma) = [U_0] U_1^q prod U_m`.
+        - Certificates: matrix/scalar grid certificates (`d = 5`: 103,796 and
+          4,520; `d = 6`: 1,405,291 and 112,523), and exact finite parts
+          (`d = 6`: 22,593,136 quadratics, 67,779,911 points, minimum 0, i.e.
+          support zeros only).  Also 1,101 small-list and 80 large-label
+          character bridges.
+        - Negative diagonal coefficients do occur, at positive words (136 at
+          `d = 5`, 400 at `d = 6`), so the certificates are genuinely mixed.
+        - Tail theorem (every `delta`):
+          `max(t, b, k) >= (100 delta)^(300 delta^2)` implies `F_delta >= 0`.
+          So every distance stratum is a finite exact computation.  The
+          threshold is very coarse.
+        - Independent check: FM-CHK69.
+      - FM-CHK65 (luna_max_eris, fresh code): ACCEPT all four items of
+        FM-MECH63: the pair bounds (exact rational grids at 4,356 small, 660
+        edge, 20,064 odd-label and 16,632 general edge points), the parity
+        extraction, the resource table, the radial tails, and six exact
+        words above the cutoff.
       - **FM-MECH69 (astra_max_vulcan; `fm39/mech69_many_labels_small_background_repro.py`,
         rerun exactly): any number of large labels on a labels-`<= 4`
         background.**  With `S = sum_i (n_i+1)^2` over the large labels
