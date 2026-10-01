@@ -13211,6 +13211,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Proved family: every all-minus word of eight consecutive labels
           `(-r)...(-(r+7))` (closed quintic polynomials with positive
           coefficients for `r >= 14`, exact values for `r <= 13`).
+      - FM-MECH145 (astra_max_vulcan; `fm39/mech145_delta_uniform_k34_repro.py`,
+        rerun: PASS).  Route B, delta-uniform regions of the pair-free
+        `k = 3, 4` layers below the linear cutoffs of FM-MECH121 (fundamental
+        signs reflected to `+1`; `a` ones, `b` twos; all core signs).
+        - `+2` background: `a >= 2 delta + 4`, `delta >= 2048`, every core
+          label `>= ceil(delta/2)` (`k = 3, 4`; exact Newton certificate
+          `X <= 1`, minimum core label of order `sqrt(delta log delta)` in
+          the integer form); `b >= 2 delta + 4` with core labels `>= 6`
+          (`k = 3`) or `>= 7` (`k = 4`), any `a`.
+        - `-2` background: `a + 2b >= 2 delta`, `delta >= 8192`, core labels
+          `>= ceil(delta/2)`; and for `k = 3`, `b >= 1`, `a <= 4b`,
+          `delta >= 65536`, core labels `>= ceil(delta/2)` with no further
+          count restriction (the balanced part of the finite boxes).
+        - Exact complement stated in the report (finite for each `delta`,
+          `O(delta^(k+2))` profiles).  Knobs: a fixed positive relative
+          margin cannot cover all core profiles (three `+3` cores at
+          `a = 2 delta + 4` have `F_delta/P_delta -> 0`); in the `-2` sector
+          the top mixed coefficient `2 Cat(delta-1) - Cat(delta)` is negative
+          (`-572` at `delta = 8`).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
