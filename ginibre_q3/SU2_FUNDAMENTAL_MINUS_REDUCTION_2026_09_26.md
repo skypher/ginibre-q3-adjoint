@@ -11650,6 +11650,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           count and a background small against them.  Ordinary counts are
           not bounded (e.g. `m` copies of 5 plus one label `m`).
           Independent check: FM-CHK68.
+      - FM-CHK66 (luna_max_pluto, fresh code).
+        - ACCEPT FM-MECH61: the (BE) failure family, the T3/T4 margins, the
+          cubic identity of Lemma 3, and the `omega < 64` screen (1,105,010
+          pairs, minimum 67).
+        - REPAIR (scope) FM-MECH66: the `e = 3` implication "(BE) at every
+          long endpoint" must be restricted to the long-arc branch
+          (`W < 0`).  At `(255,3,142,146)` the RF bracket is positive and
+          (BE) fails, but `W > 0` there, so it is a short arc, covered
+          separately.  Theorem 1 (`min(a,e) <= 3`) survives.  The checker
+          also verified the `e = 3` RF formula on 48,104 pairs, the `e = 7`
+          box, and a rational certificate for `theta/sin theta <= 11/8`.
       - FM-MECH70 (astra_max_ceres; `fm39/mech70_E_e456_repro.py`, rerun
         exactly in 27 s): (E), both signs, for every row with
         `min(a,e) <= 6` (PROVED), uniformly in the other exponent and both
