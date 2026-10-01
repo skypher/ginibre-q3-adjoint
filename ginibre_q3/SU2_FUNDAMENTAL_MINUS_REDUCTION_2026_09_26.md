@@ -12181,6 +12181,40 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: `b = 1` long arcs with `1 <= X_j < 2 + ((e-1)/(e+1)) omega`
           (a boxed sufficient criterion passes every exact test), and
           `b >= 2` (FM-MECH91).
+      - FM-MECH89 (astra_max_ceres; `fm39/mech89_h1_criterion_repro.py`,
+        rerun: PASS): `H = 1` from the actual channel relations.
+        - Substituting the relations gives a block-tridiagonal formula for
+          the insertion step, and an integer-only criterion (3), uniform in
+          `B`, that does not assume positivity at `B - 1`.  It includes
+          `n >= 5B` at `a = e` and `n >= 8B` with
+          `|a - e| <= min(p, n/4)`.  These regions lie outside FM-MECH86's
+          band, with unbounded backgrounds, labels and distances.
+        - Kill (knob: treating consecutive odd-channel pairs as
+          independent).  The unrestricted block Gram is false outside (3).
+        - Open: the block-tridiagonal expression on the actual sequences
+          outside (3), and the boundary range `p > N` (FM-MECH92).  Check:
+          FM-CHK77.
+      - FM-MECH90 (astra_max_vulcan; `fm39/mech90_h2_strata_repro.py`, rerun:
+        PASS): regions with unbounded background weight.
+        - Universal middle-distance identities, from 817 exact SOS identities
+          and 234 central-coefficient identities.  These include an `h = 1`
+          row: FM3 when the two largest labels have opposite signs and gap 0
+          or 2, and the second largest is saturated, over any background.
+        - A modulus tail certificate for every background.  Multiplying a
+          complete `+n/-n` pair keeps cancellations that FM-MECH87's
+          absolute bound discards.  The ellipse bound for `U_n(X)` is checked
+          at 864 rational complex points.
+        - Balanced backgrounds with `h = 2`: every `a, r >= 0` above an
+          explicit boundary near `D/2`.  This is analytic for `H >= 44`; the
+          990 profiles below that are checked exactly (116,589 inequalities,
+          two implementations).
+        - Kills (knobs: the modulus bound; individual-channel SOS).  At
+          `r = 15` the channel sum is -756 while the full value is
+          619,874,000,778.
+        - Open: `F_r = [q^r] P_r(q)/(1-q) >= 0` with
+          `P_r = E_eta[(G_3^2 - q^3 U_3^2)^r (G_4 + q^2 U_4)]`, and the
+          left-of-centre `h = 2` residual for unbounded `D` (FM-MECH93).
+          Check: FM-CHK78.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
