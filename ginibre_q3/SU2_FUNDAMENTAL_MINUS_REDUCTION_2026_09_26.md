@@ -11799,6 +11799,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `384 M^2` cutoff, with cutoff `O(p^2/log p)`.
         - No label-independent `D_0`; the `H = 1` layer stays open below these
           sectors.
+      - FM-MECH74 (astra_max_ceres; `fm39/mech74_E_larger_anchor_repro.py`,
+        rerun exactly).
+        - Theorem 1 (PROVED): (E), both signs, at every endpoint for
+          `3 omega/5 < X <= 7 omega/10` (`e >= 7`, `kappa >= 15`,
+          `omega >= 64`), including `J` at `max(i_0, K)`.
+          - A stronger crossing bound `kappa(y - x) > 2` on long arcs, from
+            frozen binomial-energy coordinates.
+          - (BE) at early long endpoints, by a (11,9) Bernstein certificate
+            with 120 positive coefficients.
+          - A checkpoint at `93 omega/100`, with margin 20691/160000.
+        - Exterior direction: the boundary `c_(N+1) = 0` fixes the ratio
+          `-u_k/v_k` for `X_k >= omega` through a monotone backward map.
+        - Parameter-only test: if `4 s S <= pi^2 Delta^2` (with `s = K - j`)
+          then the anchor has no long endpoint, so the short-arc theorem
+          finishes it.  This covers the control `(160,9,120,125)`.
+        - Remaining for (E), `q >= 3`: anchors `X > 7 omega/10` with
+          `omega/sigma < 5/7`, outside the no-long-endpoint test, actual long
+          endpoints only.  Sample positive residual: `(78,12,68,74)`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
