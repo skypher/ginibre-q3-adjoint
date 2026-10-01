@@ -11333,6 +11333,29 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           covered.  Gluing covers 115,682, opposite vertices 2,005, and the
           `J_ji >= 0` criterion alone all 117,471.  `R` is empty in this
           range.  Next target: prove `J_ji >= 0` on long arcs uniformly.
+      - FM-MECH57 (astra_max_ceres; `fm39/mech57_J_propagation_repro.py`;
+        default part and the `--large --threads 32` census both rerun exactly by
+        the main agent, about 2 minutes): the joint-energy criterion
+        `J_ji >= 0` on folded long arcs.
+        - Exact screens (folded `a >= e+2`, `e >= 3`, `i - j >= 4`) with
+          `R = ` normalized `J`, where `J >= 0` iff `R >= 1`.  No failure in
+          any of them:
+          - `a, e <= 200`: 104,658,739 long pairs, minimum `R = 2.0546`;
+          - 256 random rows up to 1000: 52,916,472 pairs, minimum `2.0694`;
+          - lopsided rows up to `a = 4000`: 1,654,937 pairs, minimum `1.9454`.
+          All pairs also satisfy (E).
+        - Proposition 2 (PROVED, uniform outer propagation): past the turning
+          point `X_i^2 >= C`, `J(j,i) >= 0` implies `J(j,h) >= 0` for every
+          later endpoint `h`.  Proof: a continued-fraction bound from the
+          boundary `c_(n+1) = 0`, the exact square decrement, and OL.
+        - Proposition 3 (KILL of the unfolded version; knob: folding): for
+          every `m >= 28` an explicit gap-4 long arc has `J < 0` before
+          folding, with `R -> 0`; after folding it is a short arc, already
+          covered.  Certificate: degree 16, all 17 coefficients positive.
+        - Corollary: for each folded row and anchor, the remaining work is
+          `J` at the endpoints from the first long crossing `i_0` up to the
+          turning point.  The forward increment was nonnegative in all
+          54,347,507 tested steps, but this is not proved.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
