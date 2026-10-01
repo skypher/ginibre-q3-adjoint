@@ -8819,6 +8819,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | every list with exactly two odd labels, any even background | reduced to lists with fewer factors (two-odd fusion, FM-MECH143); a minimal counterexample is pair-free with 0 or `>= 4` odd labels — added 2026-10-02 |
 | `r = 2` | `-a,-b` odd, `-c,-d` even, `+2^t`, even `+e_i >= 4` | `d >= a + b + sum e_i`, every `t` (FM-MECH143) — added 2026-10-02 |
 | all `r` | four largest labels `q + t_i` (pair-free quartet) over a word of weight `D` | `q >= D + M + 1`, `M` the quartet spread: reduced to fewer factors (FM-MECH142); all 7- and 8-factor such words; every all-minus word of 8 consecutive labels — added 2026-10-02 |
+| all `r` | EVERY list with at most seven factors | all labels, all signs (FM-MECH153 Theorems 2, 3 with Prop. 1C and Corollaries 23A9ZZ10, 5A7B51) — added 2026-10-02 |
+| all `r` | eight factors with no negative 3|5 term (e.g. every all-odd eight-factor list) | all (FM-MECH153 Lemma 4, Corollary 5) — added 2026-10-02 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -13485,6 +13487,55 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `(-2,-4)` increases `g_6` from 996,550 to 1,077,706 (flip
           `(-1,-1)` works there).  Open: repeated labels among the four
           smallest, using the no-flip hypotheses.
+      - FM-MECH153 (astra_max_minerva; `fm39/mech153_seven_eight_factors_repro.py`,
+        rerun with `--receipts --census-log`: PASS, 142 receipt hashes
+        match).  SEVEN FACTORS CLOSE; eight-factor 4|4 layer controlled.
+        - Theorem 2 (new): every pair-free seven-factor word with all labels
+          `>= 2` is nonnegative.  The largest negative 3|4 split `d` is paid
+          by `N_7 + P >= 20 d >= T_3^-`, using interval bounds for the
+          quartet's low channels (knob: ordinary fusion, no upper fusion
+          boundary).
+        - Theorem 3: every seven-factor word is nonnegative.  Words with a
+          label 1 come from Corollary 23A9ZZ10 (two minus positions, every
+          level) and Corollary 5A7B51 (the corrected shallow seven-factor
+          residual) of `ginibre_q3/CENTRAL_CHARACTER_Q3_SEARCH.md`; the
+          collector replays `PASS_EXACT_UNION` (308 tasks).
+        - Eight factors: `N_8 >= T_4^-` (the whole negative 4|4 layer) for
+          every pair-free word, so every eight-factor word with no negative
+          3|5 term is nonnegative, in particular every all-odd one.  Knob:
+          discarding the reserve `N_8 - T_4^-` fails at the no-flip list
+          `(-1,+2,+3,+4,-5,+6,+7,+8)` by 9 (reserve 487).
+        - Census: seven factors settle 1,597 of the 5,430 no-flip lists at
+          `W <= 40`, and with six factors 2,096 (38.6%).
+      - FM-MECH151 (astra_max_juno; `fm39/mech151_toppair_regions_repro.py`,
+        rerun with the census audit: ALL CHECKS PASS).  TopPair regions.
+        - Found that the W = 124 and 144 "TopPair failures" were signed-128
+          overflow (see the CORRECTION in FM-SEC166).
+        - Proved sufficient conditions for any same-parity removal:
+          - the correlated class-parity condition (3), from unsigned fusion
+            rows of submultisets;
+          - an explicit few-factor threshold (4) in the minimum-label slack
+            `h`, with an infinite nine-factor family;
+          - every removal when `N <= 4`;
+          - the whole boundary `w_TP = 2 delta`.
+        - Census audit: the union covers 5,280 of 5,430 no-flip lists and
+          none of the 126 TopPair failures.  The 150 left need signed block
+          structure.  A stronger absolute-block inequality passed all 5,430.
+      - FM-MECH152 (astra_max_ceres; `fm39/mech152_selected_flips_repro.py`,
+        rerun: PASS).  Selected flips, proved:
+        - Theorem 1, many fundamentals: `Lambda = (+1)^a C` with `a >= max(4r
+          + 4, 2 kappa - 2r - 4)` (`kappa = (2r+3) lambda`, `lambda` quadratic
+          in the core labels).  Flipping two `+1` is a descent, persisting
+          for larger `a`.  This is a quantitative case of (F1).
+        - Theorem 2: in `(-P)(-Q)(+q) prod(+h) (+2)^b` with `P >= sum h`, `q <
+          Q`, the flip `(+q,-Q)` is a descent for every `b` (ordered cone,
+          gap kept).
+        - Kills (knob: prescribed label-weighted averages of fundamental
+          flips, weights `n`, `n(n+2)`, `n-1`, `n^2-1`) at `W = 140` and
+          `W = 393`.  Each witness still has a flip.
+        - Census: no-flip lists have at most 12 factors and at most one
+          label 1 through `W = 44`.  None lies in these regions, so the
+          theorems do not shrink the census remainder.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
