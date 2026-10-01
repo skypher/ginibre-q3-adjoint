@@ -13553,6 +13553,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           drop `352/429` at `B = (1,-2,3,3,-4,9,-10)`, `p = 12`
           (`(-4,-10) -> S_6`).  So channel replacement also covers the
           no-flip core there, next to TopPair.
+      - FM-SEC165 (luna_max_mars; `fm39/sec165_D_census_w44_argmax.py`).
+        - (D) exhaustive through `W = 44`: 68,797,116 residual `(B,p)` (this
+          count includes the cases with `-sigma p` in `B`), 742,040,408
+          removal comparisons, no failure, all parents positive.
+        - Main-agent rerun capped at `W = 40` (the `W = 44` run needs about
+          two hours and is not resumable): 22,358,566 cases and 222,096,442
+          comparisons, matching FM-SEC164 exactly; no (D) failure.
+        - Argmax catalogue: the most frequent best removal is the maximum
+          label with its next same-parity label (45.5M of 70.3M argmax
+          terms).  Rule W and Rule 1' each come within half of the best drop
+          in every case through `W = 44`.  On the eight large witnesses, each
+          fixed selector fails somewhere, but one of Rule W, Rule M, Rule 1'
+          always works.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
