@@ -8845,8 +8845,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
     - Update 22:40 (FM-MECH102): by the pair reduction it suffices to
       prove FM3 for PAIR-FREE lists (one sign per label value) with
       `k >= 2` non-distinguished labels `>= 3`.  Pair-free lists with
-      `k <= 1` are covered by OL, FM-MECH52, (E) and FM-MECH64 (FM-MECH64
-      check FM-CHK82 pending).
+      `k <= 1` are covered by OL, FM-MECH52, (E) and FM-MECH64 (FM-MECH64:
+      FM-CHK83 ACCEPT; the reduction itself: FM-CHK82 pending).
     - Update 23:10 (FM-MECH106): the whole cone follows from the two
       insertion-monotonicity lemmas (M+) and (M-) on pair-free backgrounds
       (conjectures with about 900,000 exact checks, no violation).  The two
@@ -12597,6 +12597,29 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           exact checks, no violation).  `+2` insertion (FM-SEC145, FM-MECH100,
           FM-MECH101) is the `n = 2` case of (M+).  This route needs neither
           H = 1 nor two-core results.
+      - FM-CHK83 (luna_max_neptune, fresh code): FM-MECH64's strip theorem
+        is ACCEPTED, with one wording refinement.  `s` preserves the full
+        antisymmetric cone, while `Z` preserves its equal-parity subcone.
+        Items 2-4 (consumer, exact tests, scope) pass.  This confirms the
+        pair-free two-core `+2` component used in FM-MECH102.
+      - Returned at 23:10; partial, verifiers not yet rerun by the main agent
+        (recorded as claims).  The H = 1 and two-core items are now off the
+        critical path (FM-MECH102/106).
+        - FM-MECH99 (astra_max_ceres): balanced H = 1 for
+          `L >= s(s+1) + 1` (`a = e = b = L`, `p = 2s`).
+        - FM-MECH96 (astra_max_minerva): two cores, `b = 1`, both signs for
+          `3 omega/5 < X_j <= sigma/2` and for all `omega < 64`.
+        - FM-MECH98 (astra_max_vulcan): the complete `k = 2` first interior
+          strip; uniform cutoffs `delta >= 32(t+2)` and `delta >= 64(t+3)`;
+          an arbitrary-background resource theorem.  Also: `m_p(all)`
+          admits no fixed positive relative margin even at `k = 2`.
+          Whether that family is pair-free (FM-SEC146 found 0.758 on
+          pair-free lists) is being checked (FM-MECH109).
+        - FM-MECH101 (luna_max_mercury): the H = 1 insertion step in an
+          exterior region.  Kill (knob: termwise channel positivity).
+        - FM-MECH104 (luna_max_mars): an exact kernel sum with a ballot-walk
+          formula for all-minus backgrounds.  Kill (knob: termwise kernel
+          positivity); the aggregate stays positive.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
