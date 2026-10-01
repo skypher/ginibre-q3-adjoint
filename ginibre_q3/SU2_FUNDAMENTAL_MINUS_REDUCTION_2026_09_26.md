@@ -8804,7 +8804,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; FM-CHK61) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
-  | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1) — added 2026-10-01 |
+  | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
   - Finite-range rows.  The table rows restricted to finite `(r, a)` or
     finite `(a, e)` cover all labels there, since larger labels fall
@@ -11203,6 +11203,36 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Remaining `H = 1` box: `a, e >= 2`, `b >= 3`, `p >= 7`, and
           `4 <= d <= 4p^2 - (p+1)/2 - 3` (`p` odd) or about `2p^2` (`p`
           even).  The target is `F_d >= 0` there.
+      - FM-MECH53 (astra_max_ceres; `fm39/mech53_distance45_repro.py`, rerun
+        exactly in 13 s): the `H = 1` layer at distances 4 and 5, every
+        label and every `b`.
+        - Theorem (PROVED): `F_4, F_5 >= 0` on `a, e >= 2`, `b >= 3`.
+          - Large-`T` region (`T >= 7b - 3`, resp. `6b - 1`): a square
+            completion plus remainders with positive coefficients.
+          - Complementary region: Bernstein certificates in `v` for each
+            `[u^k] G_d`.
+          - Finite corners: 90 and 557 cases, all positive, least values
+            112 and 256.
+          - So `H = 1` is closed through distance 5; distance 6 holds for
+            `b >= 6`, `T >= (11b-1)/2` (a mixed-term square repair).
+        - Proposition 2: `G_d` is monic in `u` with an explicit penultimate
+          coefficient for every `d`.  This explains the boundaries near
+          `7b`, `6b`, `11b/2`.
+        - Proposition 3 (every `d`): the leading homogeneous part `L_d` is
+          `>= 0`, via
+          `sum_d L_d z^d = exp(Tz) E_y[exp((b - T/2) y^2 z) cosh(y sqrt(uz))]`
+          and, at `b = 0`,
+          `L_d(T,u,0) = (1/(d+1)!) sum_j T^(d-j) H_j(sqrt u; T)^2/j!` (monic
+          Hermite squares).  Also
+          `L_d(T,u,b) = sum_h (2b)^h/h! L_(d-h)(T - 2b, u, 0)`.
+        - KILLs.
+          - The square-remainder template fails at `d = 6`; the
+            `T = 11b/2` defect is `-(5005b^2 + 26100b - 1628)/4`.
+          - No fixed relative margin `F_d >= delta L_d`: a family below
+            the cutoff has `|F_d|/L_d -> 0`.
+          Knobs: coefficientwise positivity of a particular remainder,
+          and a fixed Gaussian margin.
+        - Open: `d >= 6` uniformly.  A per-`d` ladder would not finish.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
