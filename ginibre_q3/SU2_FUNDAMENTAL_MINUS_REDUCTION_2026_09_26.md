@@ -12840,6 +12840,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           through sum 30 and 80,212 through sum 40, all positive (680 roots
           after the pair-reduction tree in phase 0).  First pair-free
           example: `(-1)^6 (-5)^2 (-6)^2`, value 4146.
+      - FM-MECH121 (astra_max_vulcan; `fm39/mech121_linear_thresholds_repro.py`,
+        rerun: PASS): delta-uniform linear resource thresholds for PAIR-FREE
+        lists, at every `delta >= 2` and independently of the core labels
+        (`N = a + 2b + k`):
+        - `k = 3`: `N >= 22 delta - 2` implies FM3;
+        - `k = 4`: `N >= 36 delta - 1` implies FM3;
+        - a general-`k` version.
+        Also an explicit same-gap Krawtchouk identity, and mixed Newton
+        positivity at shifts `4 delta + 2` (`k = 3`) and `5 delta + 3`
+        (`k = 4`).  Open: the shift `2 delta + 4` and the boxes below the
+        thresholds, which grow with `delta`.  A fixed positive fraction of
+        `P_delta` is unavailable (exact endpoint family).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
