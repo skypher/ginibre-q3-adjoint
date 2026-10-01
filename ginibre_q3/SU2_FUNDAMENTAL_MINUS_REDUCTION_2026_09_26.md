@@ -12945,6 +12945,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - FM-SEC153 (luna_max_jupiter): the Rule 1' descent on all 80,212
           (sum `<= 40`) and 365,281 (sum `<= 44`) pair-free residual roots
           never fails, consistent with Rule 1' failing only above `W = 97`.
+      - FM-MECH132 (luna_max_mars): exact reductions of Lemma W's
+        single-copy branches (claim, not rerun).  With
+        `G_C(s,t) = sum_S eps_S m_s(C - S) m_t(S)` and fusion channels
+        `I(a,b)`:
+        - W3 (remove an even singleton `eps n`) is equivalent to
+          `sum_(s in I(p,n), s != p) G_C(s,0) >= |G_C(p,n)|`, for all labels
+          of `C` odd and every class weight of `C` at most `n`;
+        - W2 (remove `(eps m, eta n)`) is an explicit signed comparison in
+          `G_C`.
+        Both are proved for all-plus `C`.  The knob is mixed-sign
+        cancellation.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
