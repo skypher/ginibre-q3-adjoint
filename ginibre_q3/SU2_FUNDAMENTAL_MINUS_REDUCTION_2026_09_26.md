@@ -8803,6 +8803,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every word with labels `<= 4` | all (FM-MECH48, uniform contraction lemma plus one box of 54,387,664 values; checker pending) — added 2026-10-01 |
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49) — added 2026-10-01 |
+  | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; checker pending) — added 2026-10-01 |
 
   - Finite-range rows.  The table rows restricted to finite `(r, a)` or
     finite `(a, e)` cover all labels there, since larger labels fall
@@ -11043,6 +11044,43 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             (FM-SEC127..133).
           - First front by maximum label: `k = 5`, `2 <= H <= 70`, first
             core pattern `(3,5)`.
+      - **FM-MECH50 (astra_max_ceres; `fm39/mech50_q2plus_repro.py`, rerun
+        exactly in 36 s): Theorem Q2+, the q = 2 plus-W sign of (E), PROVED
+        uniformly.  For every `r >= 1`, `a >= 0`, `p >= 3`:
+        `phi_r(hat S_p hat S_2 h_1^a) >= 0` and
+        `phi_r(h_(p-1) hat S_2 h_1^a) >= 0`.  This closes the first front of
+        the FM-MECH49 residual and the FM-SEC35/38/44/127..133 item.**
+        - Residual statement: `min(a,e) >= 3`, list distance `n = N - j >= 3`,
+          `kappa = 2j - N >= 5` (label `p = kappa + 2 >= 7`).  The other cases
+          are the strips, H_AC_q (`d <= 2`) and FM-MECH45 (`p <= 6`).
+        - The slack times `H` is the quadratic form
+          `A c_j^2 - Delta beta c_j c_(j+1) + gamma c_(j+1)^2`, with
+          `A > 0` explicit (as in FM-SEC129).
+        - Coverage lemma.  The discriminant `J(xi)`, `xi = Delta^2`, is a
+          cubic with `[xi^3] = (kappa+3)^2 > 0`, positive `[xi^2]` and
+          `J(0) < 0`, hence convex on `xi >= 0`.
+          - For `n <= 2(kappa+1)^2`: `-J(4O)/4` has an explicit
+            positive-coefficient form, so `J < 0` below the outer
+            threshold `Delta^2 = 4O`.
+          - For `n >= 2(kappa+1)^2`: `-L^6 J(xi_c)`, with `L = 3(kappa+1)^2`
+            and `xi_c = N^2 (L-2)^2/L^2`, has 133 positive coefficients
+            after `n = n_0 + u`, `kappa = 5 + v`.  Outside the central
+            region, `Delta^2 < xi_c`.
+          - So every residual row is PD, outer or central.
+        - Outer lemma: the Bernstein coefficients of the form on
+          `[0, R_OL]` are certified positive after `z = O R^2/n^2`
+          (cubic certificates with 21 to 27 positive terms).
+        - Central lemma: the Bernstein coefficients on the OL central ratio
+          intervals (even `t`: `[0,1]`; odd `t`: `[l, (kappa+2)/kappa]`) are
+          certified positive (140 to 406 terms each).  The odd upper bound
+          `(kappa+2)/kappa` is new: it comes from the paired-root product
+          of `K_t(x)/x`.
+        - Also 819 Catalan bridges against direct consumer values.
+        - Main-agent check of the logic: the convexity, chord and region
+          arguments are as stated.  Pending: independent checker FM-CHK58.
+        - Next arbitrary-label background (Ceres):
+          `E[(x-y)^e (x+y)^a (x^2+y^2-2)^2 U_p(x)] >= 0`, i.e. two
+          `hat S_2` factors.
       - FM-SEC127 (luna_max_mars; `fm39/sec127_q2plus_audit_repro.py`, rerun
         exactly): the q = 2 plus sign of (E), uniformly in the label.
         - With `x = c_j`, `y = c_(j+1)` and the Krawtchouk recurrence, the
