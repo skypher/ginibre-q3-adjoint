@@ -8855,7 +8855,10 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
     - Update 00:50 (FM-SEC148/151): a single conjectural lemma, LEMMA R
       (the Rule 1' removal never increases `g_p`), would give the whole cone
       with FM-MECH102.  KILLED 01:15 (counterexamples at W = 128, 131; see
-      the KILL entry); only the existence form (D) survives.  It survives an exhaustive sweep of Rule 1' through
+      the KILL entry); only the existence form (D) survives.
+    - Update 01:45 (FM-SEC156): new candidate LEMMA W (Rule W, by class
+      weight), exhaustive through W = 40, structured families to W = 2030,
+      adversarial to W = 120, no failure.  It survives an exhaustive sweep of Rule 1' through
       W = 40 (FM-SEC152: 81.8M cases, zero failures) and adversarial
       search to W = 140.
     - No counterexample has been found anywhere.
@@ -12907,6 +12910,41 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (D): some even-weight removal is monotone for each `(B, p)`.  (D)
           is exhaustive for `W <= 32` (FM-SEC148), but no selection rule is
           known.
+      - **FM-SEC156 (main agent): Rule W, a weight-based descent rule (new
+        conjecture LEMMA W).**
+        - Diagnosis (`fm39/sec156_D_all_removals.cpp`).  In every Lemma R
+          witness (W = 97, 128, 131, 362) nearly every even-weight removal is
+          monotone for ALL `p` at once.  The rule's choice was one of the few
+          failing ones, always the duplicate of the SMALLEST label.  (D) also
+          holds on the structured families up to `W = 885`.
+        - Rule W.  Take the label class of largest total weight
+          (multiplicity times label; ties go to the larger label).  If it has
+          two or more copies, remove two.  Otherwise pair it with the largest
+          other label of the same parity, or remove it alone if it is even.
+          Every removal has even weight.
+        - Evidence, no failure:
+          - exhaustive over every pair-free background with `W <= 40`
+            (81,808,160 `(B,p)` cases; `fm39/sec156_ruleW_exhaustive.py`,
+            Venus's sweep with Rule W);
+          - every Lemma R witness and the structured families `F1`, `F2`
+            (odd runs with multiplicities 2, 3) up to `W = 2030`, every `p`
+            (`fm39/sec156_ruleW_single.cpp`);
+          - adversarial hill-climbing, 32 x 360 s at `W <= 120`, seeded
+            with flat multiplicities (`fm39/sec156_ruleW_adversarial.py`).
+            The smallest relative increase is 1.0.
+        - LEMMA W (conjecture): the Rule W removal never increases `g_p`.
+          With FM-MECH102 it would prove FM3 for every list.  Each step is
+          even-weight and lowers the number of labels, down to at most one
+          label.
+      - Returns 01:20 (claims; verifiers not rerun):
+        - FM-MECH127 (astra_max_vulcan): uniform comparison thresholds for
+          both small-label removals; new three- and four-core sectors with
+          large labels.
+        - FM-MECH123 (astra_max_ceres): (M+even) on two-minus backgrounds
+          (`+2` with `a >= b`; every even insertion on bare two-minus).
+        - FM-SEC153 (luna_max_jupiter): the Rule 1' descent on all 80,212
+          (sum `<= 40`) and 365,281 (sum `<= 44`) pair-free residual roots
+          never fails, consistent with Rule 1' failing only above `W = 97`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
