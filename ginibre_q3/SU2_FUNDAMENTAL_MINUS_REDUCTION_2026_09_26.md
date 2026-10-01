@@ -8818,6 +8818,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | labels `<= 4` plus saturated labels, `h >= 2` | `delta >= ceil(15D/16)`, or the count test `16^(D-delta-1) R_0/lambda <= 1` (FM-MECH87) — added 2026-10-01 |
 | all `r` | every list with exactly two odd labels, any even background | reduced to lists with fewer factors (two-odd fusion, FM-MECH143); a minimal counterexample is pair-free with 0 or `>= 4` odd labels — added 2026-10-02 |
 | `r = 2` | `-a,-b` odd, `-c,-d` even, `+2^t`, even `+e_i >= 4` | `d >= a + b + sum e_i`, every `t` (FM-MECH143) — added 2026-10-02 |
+| all `r` | four largest labels `q + t_i` (pair-free quartet) over a word of weight `D` | `q >= D + M + 1`, `M` the quartet spread: reduced to fewer factors (FM-MECH142); all 7- and 8-factor such words; every all-minus word of 8 consecutive labels — added 2026-10-02 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -13175,6 +13176,41 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open (first unresolved formula): four odd labels on an even
           background, `Phi = Q_1 + Q_2 + Q_3 - 2H`; this needs
           `Q_1 + Q_2 + Q_3 >= 2H`, which is equivalent to FM3 there.
+      - FM-MECH142 (astra_max_minerva; `fm39/mech142_separated_quartet_repro.py`,
+        rerun: PASS; coefficient stress test `fm39/mech142_hc_stress.py` by
+        the main agent: 608 boundary cases with `D < 60`, `M <= 15`, minimum
+        `h_c = 4`).  Separated-quartet descent (proved).
+        - Let `C` be any signed word of weight `D`, and append a pair-free
+          quartet `n_i = q + t_i`, `0 = t_1 <= ... <= t_4 = M`, with
+          `q >= D + M + 1`.  Then `Phi(C, quartet)` equals a sum of
+          `Phi(C, alpha_P a, beta_P b)` over the three pair partitions
+          `P = I|J`, `a in CG(n_I)`, `b in CG(n_J)`, `a, b > 0`, `a + b <= D`,
+          plus `sum_c h_c Phi(C, sigma c) + 2 h_0 Phi(C)`, with integer
+          `h_c = m_c + z_c - N_c >= 0`.  The 3|1 splits vanish by degree.
+          Every child has at least two fewer factors; children may have
+          mixed signs and pairs (FM-MECH102 repairs those).
+        - This proves every compatible pair-free 7- or 8-factor word that
+          satisfies the separation (with the six-factor sector), and in
+          general reduces separated words to shorter ones.  Knob: quartet
+          separation.
+        - Remark (main agent): the same degree argument for two labels gives
+          `Phi(C, e1 n1, e2 n2) = sum_(c in CG(n1,n2)) Phi(C, (e1 e2) c)`
+          whenever `n1 + n2 > D`.  With `n1 = p` and `n2 = max(B)` this is
+          exactly `max(B) > delta`, the proved `h >= 1` stratum.  So the
+          residual (`max(B) <= delta`) is exactly where the two-label
+          version fails.
+        - Kills (knob: unrestricted quartet translation, including a shift
+          by 2): lowering the quartet increases the value, at
+          `(-1)^12 (-6)^3 (-8)` (11,273,148 -> 12,382,358) and at
+          `(-1)^26 (-2)(-3)^2 (-4)(-7)^4` (shift 2).  FM3 is not affected.
+        - No uniform projected identity: an exact functional `L` is
+          nonnegative on every compatible word with at most three factors
+          after projection to `a + b <= 18`, but `L = -62,922` on
+          `V_7- V_8- V_9- V_10-`.  Knob: using only the degree bound of `C`.
+          Identities that use the actual coefficients of `C` remain open.
+        - Proved family: every all-minus word of eight consecutive labels
+          `(-r)...(-(r+7))` (closed quintic polynomials with positive
+          coefficients for `r >= 14`, exact values for `r <= 13`).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
