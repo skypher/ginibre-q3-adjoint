@@ -12308,6 +12308,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Missing supplier: a crossing/checkpoint estimate for the varying
           curve (6) (FM-MECH96).  The corrected energy alone gives no uniform
           endpoint bound at `b = 2`.
+      - FM-MECH92 (astra_max_ceres; `fm39/mech92_h1_walk_expansion_repro.py`,
+        rerun: PASS): an exact positive walk expansion for `H = 1`.
+        - With `psi_j = (c_j, c_(j-1) + c_(j+1))` and the base-row chords
+          `W(i,j) = det(psi_i, psi_j)`, the compatible channels are
+          `v_h = K^h c`, where `K` is the shift sum.  Then
+          `F_B(k) = [U_p] g_(e,a,B) = sum_(i<j) M_B(k;i,j) W(i,j)` with
+          nonnegative integer weights `M_B` (weighted walks on odd-gap
+          pairs), supported on `k - B <= i < j <= k + B + 1`.
+        - Theorem (PROVED): with `t = min(a,e) >= 2`, the condition
+          `(p - 2B)^2 >= 4(t-1)(N-t+2)` (3) gives both one-label families
+          at every level and every `B`, including `p > N`.  Also the simpler
+          linear-distance region `max(a,e) >= 15 min(a,e)`, `N >= 4d` (5).
+        - Open: region (10), `(N - 2d)^2 < 4(t-1)(N-t+2)`.  The needed
+          inequality is `(p+1) T_B(k) + |V(k)|^2 - |V(k+1)|^2 >=
+          2B F_(B-1)(k)`.  Individual chords can be negative there.
+        - Main-agent note: adjacent chords are Turan drops,
+          `W(l, l+1) = D_l - D_(l+1)`, and the proved (E) bounds each chord by
+          the drops between its endpoints.  A charging argument on the walk
+          counts `M_B` may therefore close `H = 1`.  This is delegated as
+          FM-MECH97.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
