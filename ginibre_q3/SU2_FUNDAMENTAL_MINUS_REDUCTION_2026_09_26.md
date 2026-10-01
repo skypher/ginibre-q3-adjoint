@@ -12408,6 +12408,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           smallest `p`.  It lies outside the exterior theorem (FM-MECH82/92,
           which needs `p` large) and outside FM-MECH89 (`b <= a/5` at
           `a = e`).
+        - Two-core scan (`fm39/sec144_two_core_margin_scan.py 8 16 9`,
+          exact and complete): one extra core `+-m`, `3 <= m <= 9`, on
+          `(+1)^a (-1)^e (+2)^b` with `a, e <= 16`, `b <= 8`, distance
+          `>= 8`, unsaturated, `p >= max(m, 6)`.  No negative value.  For
+          every `m` and sign, the minimum (0.015-0.018) is at balanced
+          `a = e`, the largest `b` and the smallest admissible `p`.  So the
+          hard corner is set by the background (balanced `+-1` with many
+          `+2`), not by the core.
       - FM-MECH97 (astra_max_ceres; `fm39/mech97_h1_restricted_charging_repro.py`,
         rerun: PASS).
         - Kill (knob: charging from (E) alone, even with reciprocity and
