@@ -8802,7 +8802,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every word with labels `<= 3` | all (FM-MECH47, exponential ray suppression plus one fixed box; FM-CHK56) — added 2026-10-01 |
   | all `r` | every word with labels `<= 4` | all (FM-MECH48, uniform contraction lemma plus one box of 54,387,664 values; FM-CHK57) — added 2026-10-01 |
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
-  | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; check pending) — added 2026-10-01 |
+  | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; FM-CHK61) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1) — added 2026-10-01 |
 
@@ -11210,8 +11210,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           with FM-MECH49, `|R_(n,+-)| <= (1 + (n+1)^2 (1-z)/4096)^(-1/2)`.
           Main-agent check: 120,000 random high-precision points, no
           violation.
-        - Proposition 2 (constant weighted cutoff; pending an independent
-          check).  With `T = sum_i (n_i+1)^2/(k+1)^2`, `T >= 2^21` implies
+        - Proposition 2 (constant weighted cutoff; independently checked,
+          FM-CHK61).  With `T = sum_i (n_i+1)^2/(k+1)^2`, `T >= 2^21` implies
           FM3, with any number of 1's and 2's.  So the plain count needed
           is `H = O(k^2)` instead of `O(k^2 log k)`.
         - Proposition 3: `Theta(k^2)` is optimal for any criterion that
@@ -11230,6 +11230,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `F(h, 6h-4) = (2h-1)(4h^2 + 26h + 6)/3` have unbounded `H` and
           values polynomial against exponential scales.  They give no
           lower bound on the FM3 threshold.
+        - FM-CHK61 (luna_max_pluto, fresh code): ACCEPT all four items.
+          - Lemma 1: 6,480 exact rational profile checks and 400
+            angle-formula checks at 150 digits.
+          - The product bound, from the chord inequality for `log(1+x)`.
+          - Proposition 2: the omitted-factor choice spelled out, and the
+            near/far constants recovered exactly.
+          - Proposition 3: the exact witness, with the all-`m` error bound
+            (7) re-derived.
         - Biggest unknown (all three advisors): a mechanism keeping the
           angular cancellation across mixed label scales, i.e. whether the
           angular average admits a constant ordinary-count `H*`.
