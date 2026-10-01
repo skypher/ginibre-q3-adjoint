@@ -13311,6 +13311,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           few-ones split are therefore NOT refuted.  The census numbers are
           unaffected: their entries are at most `4^44 * 2(p+1)` (DP) and
           `2^N (T/N + 1)^(2N)` (Walsh), far below `2^127`.
+        - Exact redo (GMP, `fm39/sec166_toppair_random_search_gmp.cpp`,
+          W = 40..200, about 520,000 random residual lists):
+          - The ratio split survives: every TopPair failure has `w_TP <=
+            0.267 delta` (census: `<= 0.429 delta`), against `>= 0.714 delta`
+            for every no-flip list at `W <= 40`.
+          - The few-ones split (T1) is FALSE, exactly: `B = (-1)(2)^14
+            (-3)^14 (-4)^2`, `sigma p = -11` (`W = 79`, 32 factors).  TopPair
+            `(-4,-4)` raises `g_11` from 27,248,166,782,859,060,970 to
+            34,145,565,434,211,036,460.  59 such failures have exactly one
+            label 1.
+          - Every failure checked has a flip descent (e.g. `(-1,-4)` here),
+            so (FT) survives.
         - (Withdrawn; overflow) KILLED at 05:45 (main agent random search,
           `fm39/sec166_toppair_random_search.cpp` and `..._few_ones.cpp`):
           - (T*) with `c = 1/2` is false.  TopPair increases `g_p` at `W = 124`,
