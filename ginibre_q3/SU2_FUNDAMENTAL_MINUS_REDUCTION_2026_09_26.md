@@ -12513,6 +12513,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `g_p >= 0.8 m_p(all)` in every case seen.  A uniform
           relative-margin argument is plausible there, and it is the only
           remaining target (FM-MECH102).
+      - FM-MECH94 (astra_max_juno; `fm39/mech94_two_core_band_repro.py`,
+        rerun: ALL CHECKS PASS): two cores, the band `n = delta - 1`
+        (`p + n = D - 2`).  PROVED for every {1,2} background and both
+        signs, so coverage extends to `p + n >= D - 2`.  The next band
+        (`p + n = D - 4`) needs a coupled estimate.  After FM-MECH102 the
+        two-core interior is no longer on the critical path.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
