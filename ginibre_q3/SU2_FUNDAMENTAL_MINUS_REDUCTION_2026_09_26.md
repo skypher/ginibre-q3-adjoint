@@ -13336,6 +13336,47 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           exact endpoint limit `4(a^2-1)/25`).  A cutoff linear in the
           remainder weight is open: the first unresolved formula asks for
           `a >= c(p + |C| + 1)`.
+      - FM-MECH148 (astra_max_ceres; `fm39/mech148_four_odd_dominance_repro.py`,
+        rerun: PASS, identical output).  Four-odd layer.
+        - For four odd labels on an even background `C`: `Phi = 2[H +
+          e3 e4 J_1 + e2 e4 J_2 + e2 e3 J_3]`, with `H` the all-`x` term and
+          `J_i` the three pairings.  The four values modulo odd reflection
+          are `2(H +- J_1 +- J_2 +- J_3)` with an even number of minus signs.
+          For the quartet (1,3,5,7) each of the three two-minus
+          arrangements is the unique global minimum for some even
+          background, e.g. (4,6,6), (2,6,8), (4,4,6).  So no minimizing
+          prescription from the order of the odd labels alone exists (knob:
+          background-independent sign order); 15 of 97 residual multisets
+          have no minimum with all even signs positive.
+        - Proved (Theorem 2): with `Psi_ij = U_i(x)U_j(y) - U_j(x)U_i(y)`,
+          `Phi(D_P D_Q prod_A S prod_B S S_2^t) >= 0` whenever `P >= sum A`,
+          `Q >= sum B` (same parity), for every `t`, nondecreasing in `t`.
+          For odd `a, b` in `A`, the parent is at least `(min(a,b)+1)` times
+          the child without `a, b`, with a nonnegative integer remainder.
+          With two-odd fusion this is a positive descent; it covers
+          residual sectors at levels 1 to 3 (e.g. `phi_3(h_7^2 h_2 h_4 h_6
+          hat S_2^t) >= 2 phi_2(h_7^2 h_2 h_4 hat S_2^t)` for every `t`).
+        - Kill (knob: removal of two odd labels only, including convex
+          averages followed by fusion): at `B = (-1)^2 (+3)^2 (+2)^69`,
+          `p = 18` (`W = 146`, `delta = 64`) every odd-pair removal increases
+          `g_18`; removing one `+2` works.  (D) and FM3 survive.
+        - Open: `H + min(J_1+J_2+J_3, J_1-J_2-J_3, -J_1+J_2-J_3, -J_1-J_2+J_3)
+          >= 0` outside the dominance condition.
+      - FM-MECH146 (luna_max_pluto; `fm39/mech146_channel_replacement_screen.py`,
+        rerun: same output).  Replacement moves.
+        - Same-sign channel replacement: replace two same-sign factors by
+          one `+k`, `k in CG(n,m)`, `k >= 1`, if `g_p` does not increase.
+          It is a valid descent and is implied by flip descent at that pair
+          (all channel children are `>= 0` by induction).  Exhaustive
+          through `W = 22`: 4,724 residual cases, no failure; least
+          relative drop `34002/51874` at `B = (+1)^8 (-2)^4 (+3)^2`, `p = 6`.
+        - Kills (knob: fixed selector): the smallest-duplicate selector at
+          `B = (-11)^3 (-2)^2 (+6)^8`, `p = 11` (444,227,708 -> 549,660,463;
+          `(-11,-11) -> S_2` works).  The same-sign correction-sign
+          shortcut fails at `B = (-1,-2,-3^2,-4^2,-5)`, `p = 6`.  Main-agent
+          note: that list still has a flip descent, but only through the
+          pair `(-4, -6)` with the distinguished `-6` (difference 2).  So
+          pairs that use `p` and opposite-sign pairs are needed.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
