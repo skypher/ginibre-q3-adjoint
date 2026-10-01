@@ -8806,11 +8806,11 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; FM-CHK67) — added 2026-10-01 |
   | all `r` | EVERY list at list distance 5 or 6 | all (FM-MECH71; FM-CHK69 item 1 accepted, items 2 and 3 repaired or withdrawn in FM-MECH80, check FM-CHK74 running); every distance `delta` once `max(t,b,k) >= (100 delta)^(300 delta^2)` (FM-MECH71) — added 2026-10-01 |
-  | all `r` | every list, any distance `delta` | `N >= 3200(delta+1)^3 + 760(delta+1)^2`, where `N = t + 2b + k` counts the non-distinguished factors after splitting non-distinguished `-2`; also the integer test (1), and `N >= 380(delta+1)^2` when the signed label-3 count is 0 (FM-MECH77; FM-CHK70 ACCEPT) — added 2026-10-01 |
+  | all `r` | every list, any distance `delta` | `N >= 432(delta+1)^2` (FM-MECH85; check FM-CHK76 running), or `k >= 40 delta` labels `>= 3` (FM-MECH85), or one non-distinguished label above `delta` with any smaller background (FM-MECH85); earlier `N >= 3200(delta+1)^3 + 760(delta+1)^2`, where `N = t + 2b + k` counts the non-distinguished factors after splitting non-distinguished `-2`; also the integer test (1), and `N >= 380(delta+1)^2` when the signed label-3 count is 0 (FM-MECH77; FM-CHK70 ACCEPT) — added 2026-10-01 |
 | all `r` | two core labels on a {1,2} background, `b = 1` copy of `hat S_2` | balanced backgrounds `a = e`, both signs, all labels (FM-MECH76 Thm 2; FM-CHK73); every `b`: the central band `4|Delta| <= sigma`, `sigma/4 + 2 <= n - m - 2b <= sigma/2`, `m >= 35 + 12b` (FM-MECH76 Thm 3) — added 2026-10-01 |
-| all `r` | two labels on the fundamental background ((E), `q >= 3`, both signs) | every row: the regions of FM-MECH55..61, 66, 70, 73, 74 and the last anchors `X > 7 omega/10` (FM-MECH79); union check FM-CHK71 running — added 2026-10-01 |
+| all `r` | two labels on the fundamental background ((E), `q >= 3`, both signs) | every row with anchor `j >= N/2` (the consumer's range): the regions of FM-MECH55..61, 66, 70, 73, 74 and the last anchors `X > 7 omega/10` (FM-MECH79); FM-CHK71 ACCEPT with that scope — added 2026-10-01 |
 | all `r` | one label `p <= 10` on any {1,2} background | all ratios and signs (FM-MECH78: Bernstein cutoffs plus 3,510,309 exact representatives; check FM-CHK72 running) — added 2026-10-01 |
-| all `r` | EVERY list at list distance 7 | all (FM-MECH80: exact distance-7 polynomial, tails `t >= 249` or `b >= 137` or `k >= 333`, Schur reduction, all-allocation finite part; check FM-CHK74 running) — added 2026-10-01 |
+| all `r` | EVERY list at list distance 7 | all (FM-MECH80: exact distance-7 polynomial, tails `t >= 249` or `b >= 137` or `k >= 333`, Schur reduction, all-allocation finite part; FM-CHK74 items 1-3 ACCEPT, the 580-row check FM-CHK74b running) — added 2026-10-01 |
 | all `r` | every word of length `L >= 4` | minimum label `>= 2^(L-2) - 3`, and more generally `beta <= 1` (FM-MECH83) — added 2026-10-01 |
 | all `r` | `h >= 2` non-distinguished labels above the distance `delta`, any smaller labels | background weight `D <= min(delta + h - 2, 2 delta + 2)` (FM-MECH83) — added 2026-10-01 |
 | all `r` | one label `p` on a balanced or adjacent background (`|a - e| <= 1`) with `b` copies of `hat S_2` | `b <= min(a,e)` and `s^2 >= 4b(min(a,e) + 2)`, `p = 2s + |a - e|` (FM-MECH82) — added 2026-10-01 |
@@ -11977,6 +11977,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `q >= 3`, both signs, at every row and level.  So the two-label
           sector on the fundamental background is proved at every level.
           The region union is being checked independently (FM-CHK71).
+        - FM-CHK71 (luna_max_eris, fresh code).
+          - Item 1 ACCEPT: the proof steps of FM-MECH79.
+          - Item 3 ACCEPT: the exact large-parameter spot checks.
+          - Item 2 REPAIR (scope wording): state the anchor range
+            `N/2 <= j`.  The consumer uses exactly this range (after folding,
+            `j >= N/2`), and with it the union of FM-MECH55..61, 66, 70, 73,
+            74 and 79 passes.  Adopted, so (E) holds at the consumer's
+            strength.
       - FM-MECH78 (astra_max_vulcan; `fm39/mech78_h1_label10_repro.py` and
         `fm39/mech78_h1_constants_repro.py`, both rerun: PASS): `H = 1`
         constants.
@@ -12024,6 +12032,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           outside the refined test) needs the two-depletion term.  Going one
           distance at a time does not reach the cone; what is needed is
           uniformity in `delta`.
+        - FM-CHK74 (luna_max_neptune, fresh code).
+          - ACCEPT items 1-3: the distance-6 gap identity, the distance-7
+            polynomial (C1), the tail certificates and the Schur reduction.
+          - Item 4 not yet established independently: the five-vertex
+            argument checks, but the checker has not reproduced the 580-row
+            set or its minima.  This is delegated as FM-CHK74b.  Until it
+            returns, distance 7 counts as proved with that check pending.
       - FM-MECH82 (astra_max_ceres; `fm39/mech82_h1_exterior_repro.py`,
         rerun: PASS): the `H = 1` consumer in combined rows.
         - `[U_p] g_(e,a,b) = T_b(k) - T_b(k+1)` with `k = (N+p)/2`.  The
@@ -12066,6 +12081,39 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           phase 0).  The rest are two cores with `b >= 1` (995 and 1,133).
           There are none with `h = 1` and none with labels `<= 5`.
         - FM-MECH77 matches nothing inside the atlas ranges.
+      - **FM-MECH85 (astra_max_juno; `fm39/mech85_quadratic_tail_repro.py`,
+        rerun: ALL CHECKS PASS): a quadratic tail at every distance.**
+        - Setting: `P(q) = E_eta prod_i (sum_(r <= n_i) q^r + eps_i q^(n_i/2)
+          U_(n_i)(eta)) = sum_j p_j q^j` over the non-distinguished labels,
+          so `EVEN = 2 F_delta` with `F_delta = p_delta - p_(delta-1)` (1).
+        - Prop. 1: `p_j > 0` for every signed background.  The coefficient
+          matrices are `I + eps D_n(c) J_n`, whose diagonal entries come
+          from `Sym^n` of a rotation.
+        - Theorems:
+          - `N >= 432 (delta+1)^2` implies `F_delta > 0`, unconditionally,
+            replacing FM-MECH77's cubic cutoff.
+          - `k >= 40 delta` implies `F_delta >= (15/16) p_delta`.
+          - One non-distinguished label above `delta` suffices, with any
+            smaller background.  This removes FM-MECH83's support condition.
+          - The general upper-band Gram/Schur formulas, and the complete
+            depletion expansion.
+        - Open (knob: an adjacent-coefficient comparison below the quadratic
+          threshold): `p_delta - p_(delta-1) >= 0` on the explicit
+          profiles (21)-(22), including the one-core layer `k = 0`
+          (FM-MECH88 for `k >= 1`, FM-MECH89 for `k = 0`).  Check: FM-CHK76.
+      - FM-MECH86 (astra_max_ceres; `fm39/mech86_h1_energy_repro.py`, rerun:
+        PASS): an `H = 1` energy for every `b`.
+        - The vector `V(k) = (v_0(k), ..., v_B(k))` satisfies a closed
+          recurrence `t V(k+1) = A V(k) - u V(k-1)` with a constant matrix
+          `A`.
+        - The corrected energy `E_B(k) = S(|V(k)|^2 + |V(k-1)|^2) -
+          2<V(k-1), A V(k)> + 4B T_(B-1)(k)` has the exact square decrement
+          `E_B(k) - E_B(k+1) = (2k - N) |V(k-1) - V(k+1)|^2`.
+        - The gap-three insertion step holds on an explicit region uniform
+          in `b`, with unbounded labels, distances and numbers of `+2`.
+        - Open: one comparison on the actual channel vectors.  Arbitrary
+          vector states fail (exact witness), so the proof must use
+          `v_(h+1)(k) = v_h(k-1) + v_h(k+1)`.  Delegated as FM-MECH89.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
