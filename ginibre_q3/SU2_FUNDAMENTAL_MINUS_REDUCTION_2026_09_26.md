@@ -12717,6 +12717,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         positive.  The filtered frontier starts at `delta = 8` with `k = 3`
         non-distinguished cores, and `k = 4` appears among the first 20.
         The verifier is a patched matcher run, not rerun by the main agent.
+      - FM-MECH113 (luna_max_mars): exact identity for even `n`,
+        `g_p(B + {+n}) - g_p(B) = G(p,n) + sum_(j=1..n/2) (g_(p-2j)(B) +
+        g_(p+2j)(B))`.  So (M+even) reduces to bounding the cross entry
+        `G(p,n)` by shifted coefficients.  Proved for backgrounds of length
+        `<= 1`, and screened exactly on signed (also non-pair-free)
+        backgrounds of length `<= 4` with labels `<= 4`.  Recorded as a
+        claim; the general estimate is open.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
