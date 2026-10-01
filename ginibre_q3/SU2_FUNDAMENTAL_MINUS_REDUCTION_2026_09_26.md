@@ -12328,6 +12328,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           the drops between its endpoints.  A charging argument on the walk
           counts `M_B` may therefore close `H = 1`.  This is delegated as
           FM-MECH97.
+        - Main-agent screens (`fm39/mech92_charging_screen.py`,
+          `fm39/mech92_sweep_screen.py`).  The walk expansion matches the
+          direct definition in 4,000 random cases (`a, e <= 40`, `B <= 8`),
+          and every value is positive.
+          - Kill (knob: using only the chord bounds from (E)).  The worst
+            case over `|W(i,j)| <= D_i - D_j` is negative in 2,831 of 3,331
+            right-half windows.
+          - Window sweep `< pi` (so every chord `>= 0`) covers only 363 of
+            4,364 right-half cases of region (10).  All chords are `>= 0` in
+            635 of them.
+          - So region (10) needs genuine cancellation between chords.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
