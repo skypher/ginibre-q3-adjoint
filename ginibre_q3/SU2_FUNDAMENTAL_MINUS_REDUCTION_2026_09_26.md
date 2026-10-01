@@ -12757,6 +12757,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Knob: fixed `delta`, since the boxes grow with `delta`.  This does
           not reach the cone by itself; FM-MECH121 asks for uniformity in
           `delta`.  Open next: `k = 5` at `delta = 8` and `(k, delta) = (3, 11)`.
+      - FM-MECH116 (luna_max_pluto; `fm39/mech116_prefix_screen.py`): the
+        toggle route.  Pick a minus factor `i`, let `R` be the rest, and let
+        `T_s` be the sum of the toggle terms over subsets `A` of `R` of size
+        `s`, so that FM3 is `sum_s T_s`.
+        - Kills: every layer `T_s >= 0` (at the `delta = 8` frontier
+          `T_2 = T_3 = -1`); every single toggle determinant `>= 0` (a `-1`
+          from `A = (-3,-4)`); and `(+1,+1)` insertion (`g_13` drops by
+          9,603,276,419).
+        - Surviving conjecture (P): every cumulative prefix
+          `sum_(s <= t) T_s` is `>= 0`.  It passes Pluto's screens, but has
+          not been tested adversarially (FM-MECH122).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
