@@ -11702,6 +11702,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           on one covered row only.
         - Remaining: two cores with `n + m < D`, `b >= 1`, distance `>= 6`.
           The adjacent layer `n + m = D - 2` is the first open one.
+      - FM-MECH72 (astra_max_vulcan; `fm39/mech72_minus4_scaling_repro.py`,
+        rerun exactly): a relative-error theorem in the residual, for a
+        narrow sector.
+        - Theorem: for one or two large labels `n_i >= 5` on a background of
+          `h` factors `-4`, FM3 holds whenever `h >= max(S/8, 2^37)`,
+          `S = sum (n_i+1)^2`.  The relative error against an explicit
+          edge-plus-interior Gaussian model is `< 512/625`.  The model has a
+          3D radial Gaussian at the edge and a 1D Gaussian at the interior
+          maximum `y = sqrt(3/2)` of `|U_4(x) - U_4(y)|`.
+        - Structural findings:
+          - large distance does not force concentration at the corners
+            `(+-2, +-2)`; edge and interior points both matter, and the model
+            must keep the exact interior character values;
+          - on FM-MECH53's no-margin family (`|F_d|/L_d -> 0`), the ratio to
+            the corner model stays in `(9/10, 1)`.  So that obstruction was
+            against the wrong model; a correctly scaled model may keep a
+            margin.
+        - Open: general labels-`<= 4` backgrounds in the residual (8).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
