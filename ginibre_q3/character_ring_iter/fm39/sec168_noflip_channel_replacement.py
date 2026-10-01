@@ -2,9 +2,10 @@ import os, re, subprocess, time
 from collections import defaultdict
 from functools import lru_cache
 
-BIN = ("/tmp/claude-1006/-home-yang-q3adjoint/"
-       "2d613d32-0be2-46ab-91e8-7dc4d59487ae/"
-       "scratchpad/flipdesc/flipx4")
+# Census binary: build it from fm39/sec166_regime_split_census.cpp
+#   g++ -O2 -std=c++17 -fopenmp -o flipx4 sec166_regime_split_census.cpp
+# and pass its path in FLIPX4_BIN.
+BIN = os.environ.get("FLIPX4_BIN", "./flipx4")
 
 @lru_cache(None)
 def profile(B):
