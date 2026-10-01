@@ -12250,6 +12250,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `P_r = E_eta[(G_3^2 - q^3 U_3^2)^r (G_4 + q^2 U_4)]`, and the
           left-of-centre `h = 2` residual for unbounded `D` (FM-MECH93).
           Check: FM-CHK78.
+        - FM-CHK78 (luna_max_eris, fresh code): ACCEPT items 1-5 of FM-MECH87
+          and FM-MECH90.  These are the two- and three-label kernels, the
+          reduction to the finite search, independent exhaustive reruns at
+          `D <= 40` (two labels) and `D <= 32` (three labels) with random
+          samples to 60, the saturation band and the count test, and the
+          FM-MECH90 strata.
       - **FM-SEC139 (main agent; `fm39/sec139_labels5_fast_repro.py`): the
         labels `<= 5` box is evaluated exactly.  All 227,336,512,420 entries
         are `>= 0` (3 zeros, least positive value 2).  With FM-SEC135, FM3
@@ -12434,6 +12440,16 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: region (7), where some proper odd-gap chord in
           `[k-B, k+B+1]` is negative.  FM-MECH99 targets the tight corner of
           FM-SEC144 (`a = e`, `b ~ a`, small `p`).  Check: FM-CHK81.
+        - FM-CHK81 (luna_max_neptune, fresh code).
+          - FM-MECH88: ACCEPT (reflection (2), endpoint certificate (6),
+            terminal reduction (9)).
+          - FM-MECH97 restricted charging: REPAIR (statement).  State the
+            identity for `B >= 1`, and handle `B = 0` separately by
+            `F_0(k) = D_k - D_(k+1) = W(k, k+1) >= 0`.  The region then
+            checks exactly.
+          - The global-charging counterfamily: ACCEPT.  The charging bound is
+            -9548 against the consumer value 5012.  An abstract row satisfies
+            every tested (E) inequality but has `F_7 = -567`.
       - **FM-SEC145 (main agent): `+2` insertion monotonicity (conjecture,
         exact screens).**
         - Statement (M): for every signed background `B` and every
@@ -12525,6 +12541,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         signs, so coverage extends to `p + n >= D - 2`.  The next band
         (`p + n = D - 4`) needs a coupled estimate.  After FM-MECH102 the
         two-core interior is no longer on the critical path.
+      - FM-MECH100 (luna_max_mars): `+2` insertion monotonicity (M) for
+        every signed background when `p >= ` the total background weight
+        (the weight-dominant H = 1 and two-core subregions).  The interior
+        `max(3, max n_i) <= p < sum n_i` is open.  No standalone verifier
+        was supplied, so this is recorded as a claim only.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
