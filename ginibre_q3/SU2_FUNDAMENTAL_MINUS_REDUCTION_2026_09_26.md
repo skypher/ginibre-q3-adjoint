@@ -8803,7 +8803,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every word with labels `<= 4` | all (FM-MECH48, uniform contraction lemma plus one box of 54,387,664 values; FM-CHK57) — added 2026-10-01 |
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49) — added 2026-10-01 |
-  | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; checker pending) — added 2026-10-01 |
+  | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
 
   - Finite-range rows.  The table rows restricted to finite `(r, a)` or
     finite `(a, e)` cover all labels there, since larger labels fall
@@ -11090,7 +11090,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           of `K_t(x)/x`.
         - Also 819 Catalan bridges against direct consumer values.
         - Main-agent check of the logic: the convexity, chord and region
-          arguments are as stated.  Pending: independent checker FM-CHK58.
+          arguments are as stated.
+        - FM-CHK58 (luna_max_venus, fresh code): ACCEPT all six items.
+          - The reduction: 252 direct cases, plus 75 parity zeros.
+          - The fold invariance.
+          - `A > 0`; the discriminant data, with the full factorization of
+            `J(0) < 0` and the five positive `p_h`; the 133-term
+            certificate.
+          - The OL continued-fraction bound at this index; the
+            Bernstein certificates.
+          - The new odd-`t` bound `rho < (kappa+2)/kappa`, from Krawtchouk
+            duality and the paired-root product (300 central rows checked).
+          - An independent screen of all 398,432 residual rows with
+            `a, e <= 120`: all positive, minimum slack 64.
         - Next arbitrary-label background (Ceres):
           `E[(x-y)^e (x+y)^a (x^2+y^2-2)^2 U_p(x)] >= 0`, i.e. two
           `hat S_2` factors.
