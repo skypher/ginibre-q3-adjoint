@@ -8804,6 +8804,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; FM-CHK61) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
+  | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; check pending) — added 2026-10-01 |
+  | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; checks pending) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
@@ -11602,6 +11604,52 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             `Y < omega/2`);
           - larger anchors (`kappa >= 15`, `3 omega/5 < X <= sigma/2`,
             `X^2 < 4(e-1)(a+4)`).
+      - **FM-MECH68 (astra_max_juno; `fm39/mech68_distance34_all_lists_repro.py`,
+        rerun exactly in 33 s): FM3 holds for EVERY list at list distance
+        `delta <= 4`, whatever its labels, signs, background and number of
+        factors.**  (`delta <= 2` is FM-MECH38.  This settles FM-MECH39's open
+        item "mixed d = 3 with two or more labels 1".)
+        - Prop. 1 (count reduction): with the maximum label distinguished,
+          `EVEN = 2 F_delta`,
+          `F_delta = sum_S eps_S m(mu_S) K_(delta - w(S)/2)(mu_(S^c))`,
+          with `K_j(nu) = [v^j](1-v) prod_i (1 + ... + v^(nu_i))`.
+          Non-distinguished labels `> delta` clip to `delta + 1`, and each
+          `-2` can be replaced by `+1, -1`.  So `F_delta` is a polynomial in
+          the signed counts `t, x` (labels 1, 2), `b` (`+2`), `k` (labels
+          `>= 3`), `c, y` (label 3), `f, z` (label 4).
+        - Prop. 2 (`delta = 3`): `F_3` equals
+          `P_3^2/4 + C_2 P_2^2 + C_1 x^2 + C_0 + y P_3 + (y^2 - c)/2`, with
+          explicit `C_i` and shifted Krawtchouk `P_j` (`M = t - 2b`).  A square
+          completion gives a lower bound whose coefficients are
+          positive-coefficient polynomials after `t -> t+11`, `b -> b+6` or
+          `k -> k+4`.  The remaining box has 7,869 count profiles, all
+          `>= 0`.
+        - Prop. 3 (`delta = 4`): the analogous exact `F_4` (via the auxiliary
+          `B_4 = sum a_j P_j^2`, `a_4 = 1/5`, `a_3 = (8b+5k+t-11)/20`, ...)
+          and a mixed-square identity (9).  The bounds become positive after
+          `t -> t+27`, `b -> b+11` or `k -> k+24`; the box minima are exact
+          (4,764,410 quadratic minima).
+        - Bridges: the atlas residual lists `(-1^5,+1,+1,-3,-3,-5)` (118) and
+          `(-1^4,-2,-3,-4,-5)` (142); 324 signed multisets with labels `<= 4`;
+          80 large-label lists.  Independent check: FM-CHK67.
+      - **FM-MECH69 (astra_max_vulcan; `fm39/mech69_many_labels_small_background_repro.py`,
+        rerun exactly): any number of large labels on a labels-`<= 4`
+        background.**  With `S = sum_i (n_i+1)^2` over the large labels
+        (`n_i >= 5`, any signs and any number `k`), FM3 holds whenever
+        `B >= max(384 S, 131072)`; also whenever `B >= 4096 S`.
+        - New lemma: `|R_(n,-)|^2 <= 32 z` for every `n >= 5`.  Even `n` use
+          `M - U_n(2q) >= (M/3)(1 - q^2)` and a second-derivative bound.  So
+          two minus factors supply the needed `z` at bounded cost.  The
+          stronger `|R/z| <= const` fails: `R_(4r,-)/z -> -(2r+1)`.
+          Main-agent check: 50,000 random high-precision points, no
+          violation (maximum ratio 0.19).
+        - Exact residual after this theorem and the weighted theorem
+          (`T >= 2^21`), with `Q = max(n_i + 1)` and
+          `W = S + 16 J_3 + 25 J_4`: `W < 2^21 Q^2` and (`B < 384 S`, or
+          `A < 256` and `B < 2^17`).  That is, few large labels in weighted
+          count and a background small against them.  Ordinary counts are
+          not bounded (e.g. `m` copies of 5 plus one label `m`).
+          Independent check: FM-CHK68.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
