@@ -8816,6 +8816,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | one label `p` on a balanced or adjacent background (`|a - e| <= 1`) with `b` copies of `hat S_2` | `b <= min(a,e)` and `s^2 >= 4b(min(a,e) + 2)`, `p = 2s + |a - e|` (FM-MECH82) — added 2026-10-01 |
 | all `r` | at most two labels `>= 5` (any size, any sign) on a labels-`<= 4` background of weight `D <= 60`; at most three for `D <= 48`; any number of saturated labels with `u <= 0, 1, 2` unsaturated for `D <= 60, 56, 48` | all (FM-MECH87: 5,285,147 + 1,388,843 profiles, 4.3e9 exact three-label kernels) — added 2026-10-01 |
 | all `r` | labels `<= 4` plus saturated labels, `h >= 2` | `delta >= ceil(15D/16)`, or the count test `16^(D-delta-1) R_0/lambda <= 1` (FM-MECH87) — added 2026-10-01 |
+| all `r` | every list with exactly two odd labels, any even background | reduced to lists with fewer factors (two-odd fusion, FM-MECH143); a minimal counterexample is pair-free with 0 or `>= 4` odd labels — added 2026-10-02 |
+| `r = 2` | `-a,-b` odd, `-c,-d` even, `+2^t`, even `+e_i >= 4` | `d >= a + b + sum e_i`, every `t` (FM-MECH143) — added 2026-10-02 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -8867,6 +8869,11 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       (FM-MECH137).  Only the existence statement (D) survives.  It survives an exhaustive sweep of Rule 1' through
       W = 40 (FM-SEC152: 81.8M cases, zero failures) and adversarial
       search to W = 140.
+    - Update 05:00 (FM-MECH143, FM-MECH144): lists with exactly two odd
+      labels reduce to fewer factors (two-odd fusion), so the open part is
+      pair-free lists with 0 or `>= 4` odd labels.  (D) and FM3 also hold on
+      a uniform many-ones region.  (D) is exhaustive on the residual through
+      W = 40 (FM-SEC164).
     - No counterexample has been found anywhere.
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
     finished.
@@ -13134,6 +13141,40 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           non-removable ones.  Open: the low-fundamental-count residual.
           The W = 1283 witness lies outside the uniform bound; the verifier
           prints its core threshold `a >= 276920`.
+      - FM-MECH143 (astra_max_ceres; `fm39/mech143_two_odd_fusion_repro.py`,
+        rerun: PASS).  Exact positive identities.
+        - TWO-ODD FUSION (proved).  Let `C` be any signed list of even
+          labels and `a, b` odd.  Then `Phi(C, eps a, eta b) = sum_(j in
+          CG(a,b)) Phi(C, (eps eta) j)`, where `+0` counts `2 Phi(C)` and
+          `-0` counts 0.  Reason: `C` is even in `x` and in `y` separately,
+          so the two cross terms integrate to zero.  Every child has fewer
+          factors.  With FM-MECH102, a minimal counterexample to FM3 (by
+          factor count) is pair-free and has either no odd labels or at
+          least four.
+        - Level-2 sector (proved): `Phi(-a,-b,-c,-d,+2^t,+e_1..+e_s) >= 0`
+          for odd `a, b`, even `c, d`, even `e_i >= 4`, every `t`, whenever
+          `d >= a + b + sum e_i`.  The proof uses an ordered antisymmetric
+          cone `A_ij = U_i(x)U_j(y) - U_j(x)U_i(y)` with the gap condition
+          kept (not the cone action rejected in FM-CHK86).
+        - Obstruction, knob "one block fusion with a nonnegative
+          remainder".  `Q_I = 2^(1-m) sum_(J subset I, |J| even)
+          Phi(Lambda^J)`, so a block fusion lowers the value exactly when a
+          sign flip inside the block does.  At `(-1,+2,+3,+4,-5,+6,+7,+8)`
+          (residual with `p = 8`, `W = 28`, `delta = 10`), `Phi = 956` is the
+          minimum over all even sign patterns, so all 247 block fusions
+          increase it (960..1310).  (D) holds there: `(-5,+7)` gives
+          `g_8 = 18 <= 478`.  This does not refute FM3 or (D).
+        - A context-free polynomial identity with nonnegative coefficients
+          into fewer factors or lower weight is impossible for an all-minus
+          product (lowest order in `h` at `x = z + h, y = z`).  Averaged
+          identities remain available.
+        - Consequence for minimal counterexamples: `Phi(Lambda) +
+          Phi(Lambda^(ij)) = 2 Q_(ij) >= 0` for every pair by induction.  So
+          a negative `Phi(Lambda)` forces every double flip to be at least
+          `|Phi(Lambda)|`.
+        - Open (first unresolved formula): four odd labels on an even
+          background, `Phi = Q_1 + Q_2 + Q_3 - 2H`; this needs
+          `Q_1 + Q_2 + Q_3 >= 2H`, which is equivalent to FM3 there.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
