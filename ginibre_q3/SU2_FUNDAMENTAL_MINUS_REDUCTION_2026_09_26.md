@@ -8819,6 +8819,31 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
+  - **Checkpoint 2026-10-01 21:30 (main agent).**  FM3 full cone: NOT
+    finished.  Proved (independent checks in brackets):
+    - every list at distance `<= 7` (FM-MECH68 [CHK67], FM-MECH71
+      [CHK69, repaired in FM-MECH80], FM-MECH80 [CHK74 items 1-3; 580-row
+      check pending]);
+    - every list with `N >= 432(delta+1)^2` or `k >= 40 delta` (FM-MECH85
+      [CHK76]);
+    - every list with a non-distinguished label above `delta` (`h >= 1`;
+      FM-MECH85 [CHK76], FM-MECH93);
+    - every word with labels `<= 5` (FM-SEC135 + FM-SEC139 [CHK79
+      pending]);
+    - (E) on the fundamental background (FM-MECH79 [CHK71]); H = 1 for labels
+      `<= 10` (FM-MECH78 [CHK72]); bounded small backgrounds (FM-MECH87
+      [CHK78 pending]); many strata of H = 1 and two cores (FM-MECH76/81/82/
+      84/86/89 [CHK73, CHK75, CHK77 pending]).
+    - Remaining cone, exactly: the unsaturated region `h = 0`.  All
+      non-distinguished labels are `<= delta`, with `delta >= 8`,
+      `N < 432(delta+1)^2` and `k < 40 delta`.  The consumer is
+      `p_delta >= p_(delta-1)` for the coefficients of
+      `P(q) = E_eta prod_i (G_(n_i)(q) + eps_i q^(n_i/2) U_(n_i)(eta))`.
+      By `k`:
+      - `k = 0`: the H = 1 layer (FM-MECH92);
+      - `k = 1`: the two-core layer (FM-MECH91, FM-MECH94);
+      - `k >= 2` (FM-MECH95).
+    - No counterexample has been found anywhere.
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
     finished.
     - Proved and independently checked:
@@ -12247,6 +12272,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           Kill-and-restart tests passed for both modes.  About 1.1 h at
           48 threads after the mirror restart.
         - Independent check: FM-CHK79.
+      - FM-MECH88 (astra_max_juno; `fm39/mech88_reflection_repro.py`, rerun:
+        ALL CHECKS PASS): a neutral-pair reflection (2), an endpoint
+        certificate (6) for arbitrary backgrounds, the families it gives at
+        unbounded distance, and a terminal restriction (9) on the
+        representatives.  A distance-30 example has a negative Gram pivot
+        but positive `F`.
+        - Open, `k = 1`: remove a non-distinguished core `n` of sign `eps`
+          from background `B`; then `F_delta = R + eps C` with
+          `R = b_delta - b_(delta-n-1)` and
+          `C = T_B[2 delta-n, n] - T_B[2 delta-n-2, n]`.  Needed:
+          `R >= |C|` on (9), starting at `n = delta - 1` (FM-MECH94).
+      - FM-MECH93 (astra_max_vulcan; `fm39/mech93_saturated_sector_repro.py`,
+        rerun: ALL CHECKS PASS): the saturated sector from FM-MECH85.
+        - Every signed background has `c_j in Z_(>= 1)` for `0 <= j <= D`.
+          The proof is an explicit positive-square construction, from
+          `A_(n,eps)(c) = I + eps D_n(c) J_n > 0` with `D_n` the diagonal of
+          `Sym^n` of a rotation.
+        - Hence every `h >= 1` word is positive, with any background (no
+          bound on `D`).  This includes `F_r >= r + 1` for FM-MECH90's
+          family, whose single channel is -756 at `r = 15`.
+        - What remains is the unsaturated case `h = 0`:
+          `p_delta - p_(delta-1) >= 0` for `m <= delta <= floor((W-m)/2)`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
