@@ -12996,10 +12996,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Averaged (D) with uniform weights over all even-weight removals:
           negative at some `p` for mixed backgrounds near `W = 140-160`
           (adversarial).
-        - Surviving: label-weighted, dimension-weighted
-          (`w_R = prod (n_i + 1)`) and dimension-squared-weighted averages
-          are nonnegative on every witness so far
-          (`fm39/sec159_weighted_averages.cpp`).  Adversarial test running.
+        - Label-weighted (`w_R = prod n_i`), dimension-weighted
+          (`w_R = prod (n_i + 1)`) and dimension-squared-weighted averages were
+          nonnegative on every earlier witness
+          (`fm39/sec159_weighted_averages.cpp`).  Adversarial search then
+          KILLS them too (`sec159_weighted_averages_adversarial.py`):
+          - dimension-weighted: negative at 3 `p` on
+            `(-1^2, 3, 4^5, 5^7, 6^7, 7^2, 8, 16^2)`;
+          - label-weighted: negative at 5 `p` on
+            `(-17^3, -5, -3^6, 1^2, 2^2, 4^7, 6^8, 12, 16^2)`.
+          Every rule and averaging scheme tried has failed.  The bare
+          existence statement (D) has survived every test, but it gives no
+          proof without a selection principle.
       - FM-CHK88 (luna_max_eris, fresh code): ACCEPT FM-MECH112 and
         FM-MECH121.
       - FM-MECH133 (luna_max_pluto): Rule W holds for all-plus backgrounds
