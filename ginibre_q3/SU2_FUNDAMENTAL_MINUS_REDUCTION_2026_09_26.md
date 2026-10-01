@@ -13283,6 +13283,46 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (FM-MECH143's witness), and TopPair alone misses 261,978 residual
           cases at `W <= 40` (FM-SEC163).  Proof attempt: FM-MECH150
           (astra_max_vulcan); falsification: FM-SEC167 (luna_max_venus).
+      - FM-SEC166 addendum (main agent; `fm39/sec166_regime_split_census.cpp`,
+        all residual `(B,p)` through `W = 40`).  The two halves of (FT) live
+        in separate regimes.  Let `w_TP` be the TopPair weight and `delta`
+        the distance.
+        - TopPair fails on only 126 cases, all with `w_TP <= 0.429 delta`,
+          max label `<= 0.286 delta` and at least 15 factors.  On the 5,430
+          no-flip lists, `w_TP >= 0.714 delta`, max label `>= 0.385 delta`,
+          and there are at most 12 factors.
+        - On the no-flip lists TopPair has a large margin:
+          `g_p(B - TopPair) <= 0.0564 g_p(B)` (median 0.0159).
+        - Split form of (FT), for a constant `c` in the gap (for example
+          `c = 1/2`):
+          - (T*) `w_TP >= c delta` implies TopPair is monotone;
+          - (F*) `w_TP < c delta` implies a flip descent.
+          Both hold on the whole census.  The gap narrows slowly with
+          weight: the no-flip minimum of `w_TP/delta` falls from 1.25
+          (`W = 23`) to 0.71 to 0.80 (`W = 38..40`), while the TopPair-failure
+          maximum stays at 0.375 to 0.429.  Larger-weight data is needed.
+        - Single fixed flips fail often.  For example, the flip of two equal
+          labels `r` fails on 10% (`r = 1`) to 39% (`r = 4`) of lists with a
+          repeated `r` at `W <= 36`.  So (F*) is an existence statement.
+      - FM-MECH147 (astra_max_juno; `fm39/mech147_repeated_class_thresholds_repro.py`,
+        rerun: ALL CHECKS PASS).  Exact terminating thresholds for
+        repeated-class removal.
+        - Exact numerator theorem for two `+1` or two `-2`: a translated
+          polynomial test whose success proves FM3 and the pair removal for
+          every larger multiplicity.  It cuts the FM-MECH144 thresholds
+          from 460..1112 down to 2 or 3 on the listed cores (8 for
+          `(-3)^64`).  Two `-2`: removal and FM3 hold for every multiplicity
+          `>= 2` on three families.
+        - Moment-ratio lemma: one successful exact test proves every larger
+          count.  Implemented for `+-3` (`C = (-4,-4)`, `p = 6`: every even
+          multiplicity `>= 494`) and `+2` (`C = (-3,+5)`, `p = 6`: `>= 266`).
+          It gives effective eventual thresholds for every fixed signed
+          label, with no uniform size bound.
+        - Kill (knob: a cutoff independent of the remainder): no constant
+          fundamental cutoff works (constant 4 is false on a residual word;
+          exact endpoint limit `4(a^2-1)/25`).  A cutoff linear in the
+          remainder weight is open: the first unresolved formula asks for
+          `a >= c(p + |C| + 1)`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
