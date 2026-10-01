@@ -8804,7 +8804,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; FM-CHK61) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
-  | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; check pending) — added 2026-10-01 |
+  | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; FM-CHK67) — added 2026-10-01 |
   | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; checks pending) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -11631,7 +11631,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (4,764,410 quadratic minima).
         - Bridges: the atlas residual lists `(-1^5,+1,+1,-3,-3,-5)` (118) and
           `(-1^4,-2,-3,-4,-5)` (142); 324 signed multisets with labels `<= 4`;
-          80 large-label lists.  Independent check: FM-CHK67.
+          80 large-label lists.
+        - FM-CHK67 (luna_max_venus, fresh code): ACCEPT Props. 2, 3 (all nine
+          and twelve certificates, the 7,869-profile box, the finite
+          reduction) and the coverage of every distance-3/4 list.
+        - REPAIR (scope) of Prop. 1: the `-2 -> (+1, -1)` replacement applies
+          only to NON-distinguished labels, and all counts refer to the
+          labels other than the distinguished maximum.  Splitting a
+          distinguished `-2` changes the distance: `(-2, -1, +1^7)` goes from
+          distance 3 (EVEN 168, `F_3 = 84`) to 4.  With this scope,
+          `EVEN = 2 F_delta` matched on 2,000 random lists (8 to 11 factors,
+          distinguished labels up to 125), and clipping on 240/240.
       - **FM-MECH69 (astra_max_vulcan; `fm39/mech69_many_labels_small_background_repro.py`,
         rerun exactly): any number of large labels on a labels-`<= 4`
         background.**  With `S = sum_i (n_i+1)^2` over the large labels
