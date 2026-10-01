@@ -8802,7 +8802,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every word with labels `<= 3` | all (FM-MECH47, exponential ray suppression plus one fixed box; FM-CHK56) — added 2026-10-01 |
   | all `r` | every word with labels `<= 4` | all (FM-MECH48, uniform contraction lemma plus one box of 54,387,664 values; FM-CHK57) — added 2026-10-01 |
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
-  | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49) — added 2026-10-01 |
+  | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; check pending) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; check pending) — added 2026-10-01 |
 
@@ -11049,6 +11049,18 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - (Residual-filter wording repaired by ADV-3: apply LS, LR4 and
           LLm-S to the whole non-fundamental word, and keep the original
           list.)
+        - FM-CHK59 (luna_max_eris, fresh code): ACCEPT items 1-3.
+          - Theorem 1: all scalar estimates, the sine certificate, the
+            rotation-energy lemma; 30,000 high-precision samples, worst
+            margin `0.00048`.
+          - Lemma 4.
+          - Theorem 5: the weighted count, the monotonicity in `N` and
+            `b`, and the recomputed `T_0`/`H_0` table.
+        - REPAIR item 4: Prop. 7's factor-count front predates Theorem Q2+
+          (FM-MECH50) and Theorem B2 (FM-MECH51).  `H = 1, b = 1` is now
+          covered, e.g. `phi_2(hat S_7 hat S_2 h_1^7) = 88`; the next open
+          slice is `b >= 3` (FM-MECH52).  The `(3,5)` maximum-label front
+          stands.
         - Proposition 7 (residual of the full cone).  The residual is the
           union over `k` of explicit finite sets `B_(k,new)`, minus the
           proved strata.  Necessary conditions for a residual word: list
