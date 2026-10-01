@@ -8807,7 +8807,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; FM-CHK67) — added 2026-10-01 |
   | all `r` | EVERY list at list distance 5 or 6 | all (FM-MECH71; FM-CHK69 item 1 accepted, items 2 and 3 repaired or withdrawn in FM-MECH80, check FM-CHK74 running); every distance `delta` once `max(t,b,k) >= (100 delta)^(300 delta^2)` (FM-MECH71) — added 2026-10-01 |
   | all `r` | every list, any distance `delta` | `N >= 3200(delta+1)^3 + 760(delta+1)^2`, where `N = t + 2b + k` counts the non-distinguished factors after splitting non-distinguished `-2`; also the integer test (1), and `N >= 380(delta+1)^2` when the signed label-3 count is 0 (FM-MECH77; FM-CHK70 ACCEPT) — added 2026-10-01 |
-| all `r` | two core labels on a {1,2} background, `b = 1` copy of `hat S_2` | balanced backgrounds `a = e`, both signs, all labels (FM-MECH76 Thm 2); every `b`: the central band `4|Delta| <= sigma`, `sigma/4 + 2 <= n - m - 2b <= sigma/2`, `m >= 35 + 12b` (FM-MECH76 Thm 3) — added 2026-10-01 |
+| all `r` | two core labels on a {1,2} background, `b = 1` copy of `hat S_2` | balanced backgrounds `a = e`, both signs, all labels (FM-MECH76 Thm 2; FM-CHK73); every `b`: the central band `4|Delta| <= sigma`, `sigma/4 + 2 <= n - m - 2b <= sigma/2`, `m >= 35 + 12b` (FM-MECH76 Thm 3) — added 2026-10-01 |
 | all `r` | two labels on the fundamental background ((E), `q >= 3`, both signs) | every row: the regions of FM-MECH55..61, 66, 70, 73, 74 and the last anchors `X > 7 omega/10` (FM-MECH79); union check FM-CHK71 running — added 2026-10-01 |
 | all `r` | one label `p <= 10` on any {1,2} background | all ratios and signs (FM-MECH78: Bernstein cutoffs plus 3,510,309 exact representatives; check FM-CHK72 running) — added 2026-10-01 |
 | all `r` | EVERY list at list distance 7 | all (FM-MECH80: exact distance-7 polynomial, tails `t >= 249` or `b >= 137` or `k >= 333`, Schur reduction, all-allocation finite part; check FM-CHK74 running) — added 2026-10-01 |
@@ -11931,6 +11931,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: `b = 1`, `m >= 4` (next:
           `T_1(j) - T_1(j+5) >= |A_j B_(j+5) - B_j A_(j+5)|`), and `b >= 2`.
           FM-MECH84 asks for a mechanism uniform in `m`.  Check: FM-CHK73.
+      - FM-CHK73 (luna_max_venus, fresh code) of FM-MECH76 and FM-MECH81.
+        - ACCEPT: the combined-row consumer (both signs reproduce
+          `2(R +- W_b)`; 80 direct Catalan cases, `b = 1, 2, 3`, labels up
+          to 60).  Also FM-MECH76 Thm 2 (176,851 intervals through `L = 100`),
+          FM-MECH81 Thm 1 (the 82-coefficient remainder rebuilt; the region
+          split has no omitted corner), and Corollary 6 for exactly one
+          `hat S_2`.
+        - FM-MECH76 Thm 3: REPAIR (local, supplied by the checker).
+          `omega >= 9 sigma/10` alone gives `25/(1296 sigma) > 1/(60 sigma)`.
+          The hypothesis `4|Delta| <= sigma` gives
+          `omega^2 = sigma^2 - Delta^2 >= 15 sigma^2/16`, which yields the
+          cross-term bound `E_j/(60 sigma)` and `|T_b(i)| <= E_j/(184320 sigma)`.
+          The stated margin follows, and the scope is unchanged.  All 826
+          band rows through `N = 120` pass, plus 200 large rows.
       - FM-SEC140 (luna_max_jupiter; `fm39/sec140_atlas_update_repro.py`,
         phase 0 rerun exactly): the coverage atlas with FM-MECH63..70
         and ADV-2 added.  Phase 0 (sum `<= 30`, labels `<= 30`): 1,114,614
