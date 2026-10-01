@@ -11383,6 +11383,35 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           tridiagonal mixed Gram matrices; (2) grouped Jacobi positivity
           from the midpoint formula; (3) a transfer-invariant cone for the
           `e`-induction.
+      - ADV-1c (astra_max_juno, advisor; `fm39/adv1c_part1.py`
+        (`--part small|kernels|large --block k`), `fm39/adv1c_part2.py`, rerun):
+        the midpoint identity for the whole cone.
+        - Identity (every list): with `C_n = R_n + R_n^*`,
+          `S_n = i(R_n - R_n^*)` (plus and minus features), the feature
+          tensor `T = tensor of F_i`, `M_0 = int T` and
+          `M_2 = int chi_2 T` (Haar), one has
+          `EVEN = 2^L (||M_0||^2 + <M_0, M_2>)` (Hilbert-Schmidt).
+          Checked exactly on all 6,470 even-minus classes with labels `<= 4`
+          and length `<= 8`, on 128 large-label cases, and by 243 quaternion
+          kernel integrals.
+        - It is a reformulation: with `A = ||M_0||^2` and `B = <M_0, M_2>`,
+          FM3 is exactly `B >= -A`.
+        - KILLs of the natural strengthenings (exact families):
+          - `|B| <= K A` fails for every `K`: `hat S_n hat S_1^n` has
+            `M_2 = n M_0`.
+          - Norm contraction fails (`hat S_2^3`).
+          - Positivity on the feature span fails, already inside the span of
+            `hat S_2^3`.
+          - Blockwise positivity in total spin fails: `hat S_2^3` has blocks
+            `1/8, -1/16, 3/16, 0`.
+          - Bare repeated tilting gives no decay.
+          The constant 1 is sharp: `D_1^(2m)` has
+          `M_2 = -m/(m+2) M_0`.
+        - Projector form: `tr[P_0 Pi_eps (P_0 + P_2/3)] >= 0`, with `Pi_eps`
+          built from partial time reversals.  A proof must combine
+          different total-spin sectors.
+        - Biggest unknown (shared with ADV-2, ADV-3): a uniform grouping
+          that retains cross-sector cancellation.
       - ADV-3 (astra_max_minerva, advisor: gap audit and red team;
         `fm39/adv3_onelabel_allb_search.py`, `fm39/adv3_cp_certificate_1422MM2.py`,
         both rerun exactly).
