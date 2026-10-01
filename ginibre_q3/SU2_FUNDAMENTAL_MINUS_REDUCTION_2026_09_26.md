@@ -11650,6 +11650,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           count and a background small against them.  Ordinary counts are
           not bounded (e.g. `m` copies of 5 plus one label `m`).
           Independent check: FM-CHK68.
+      - FM-MECH70 (astra_max_ceres; `fm39/mech70_E_e456_repro.py`, rerun
+        exactly in 27 s): (E), both signs, for every row with
+        `min(a,e) <= 6` (PROVED), uniformly in the other exponent and both
+        labels.
+        - New cases: folded `e in {4,5,6}`.  The anchor caps, the lower bounds
+          on `kappa` and the checkpoint constants are explicit for each `e`.
+        - Lemma 2: the initial crossing satisfies (BE).  From the exact RF
+          formula, a polynomial implication `G_e > 0 or V_e >= 0` is proved by
+          Bernstein subdivision (37 terminal boxes at most, depth `<= 10`),
+          with `S_8 <= exp`.
+        - Lemma 3: the checkpoint gives `J` through the turning point, using
+          the Sonin estimate and positive Taylor bounds.  Anchors beyond the
+          cap are RF, since `K_e` has no root there.
+        - Fixed box `sigma < 256`: 1,255,686 pairs, minimum about `4.8e13`.
+          Also 3,380 RF bridges, 273 Catalan bridges and 43,383 large
+          samples.
+        - Remaining for (E) with `q >= 3`, both at `e >= 7`
+          (`kappa >= 15`):
+          - very central anchors `omega X < 6(sigma+1)`, `Y < omega/2`;
+          - larger anchors `3 omega/5 < X <= sigma/2`,
+            `X^2 < 4(e-1)(a+4)`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
