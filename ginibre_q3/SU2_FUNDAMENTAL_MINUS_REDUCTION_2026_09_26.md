@@ -12494,6 +12494,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           lists decompose into such lists (reducing `(-2)(+2)` creates `-4`
           cores).  For example, FM-SEC144's tight corner `a = e`, `b ~ a`
           is not pair-free.
+      - FM-SEC146 (main agent; `fm39/sec146_pair_free_screen.cpp`,
+        `fm39/sec146_pair_free_adversarial.py 240`): margins of the pair-free
+        residual (`k >= 2` non-distinguished cores, unsaturated, distance
+        `>= 8`).
+        - Random exact screens: 50,000 lists.  No negative value; the
+          smallest `g_p / m_p(all)` is 0.94 with few 1's and 0.999 with many
+          single-sign 1's.
+        - Adversarial hill-climbing (32 restarts, 4 min each, weight
+          `<= 90`): no negative value; the smallest ratio is 0.805.  The
+          extremal shapes are nearly all-minus with many small cores and
+          `p` near the maximum, e.g. background
+          `(-8, -7^4, -6^2, -5^3, -4^2, -3^3, -2, -1)` with `p = 9`.
+        - Atlas residual shapes are far from tight.  For
+          `(22 x (-1), -8, -8; +22)`, `g_p / m_p(all) = 39,782`.
+        - Contrast: the non-pair-free H = 1 corner decays like `0.73^a`
+          (FM-SEC144).  So pair-free lists look robustly positive, with
+          `g_p >= 0.8 m_p(all)` in every case seen.  A uniform
+          relative-margin argument is plausible there, and it is the only
+          remaining target (FM-MECH102).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
