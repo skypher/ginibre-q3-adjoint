@@ -12738,6 +12738,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         (direct fusion gives `2 F_20`).  At `c = 99/100`, `K(c)` has 21
         positive pivots, but `K^Delta(c)` has a negative pivot at index 18.
         The integrated (over `c`) version is not excluded (FM-MECH120).
+      - FM-MECH115 (astra_max_vulcan; `fm39/mech115_pair_free_k34_repro.py`,
+        all six cases rerun: PASS): every PAIR-FREE list with three or four
+        non-distinguished cores at distance 8, 9 or 10, with any number of
+        single-sign 1's and 2's.
+        - `+2` sector: a Newton expansion
+          `F_delta(a,b) = sum C_ij C(a,i) C(b,j)`.  At `A = 2 delta + 4` the
+          verifier proves `Delta_a^i Delta_b^j F(A,0) >= 0` and
+          `Delta_b^j F(a,A) >= 0`, plus the finite box `a, b < A`.
+        - `-2` sector: `f_(2,-) = (1+z^2+eta z)(1+z^2-eta z)` reduces the
+          background to fundamentals.  An exact identity
+          `(2 delta)! F = sum_r D_r(t) K_floor(r/2) K_ceil(r/2)` with monic
+          Krawtchouk `K_j` and a coefficientwise dominance (4) beyond a
+          threshold, plus finite parts.
+        - Finite values (k, delta): (3,8) 154,036; (3,9) 308,474; (3,10)
+          586,806; (4,8) 545,216; (4,9) 1,175,300; (4,10) 2,433,900.  All
+          `>= 0`, with independent two-spin controls.
+        - Knob: fixed `delta`, since the boxes grow with `delta`.  This does
+          not reach the cone by itself; FM-MECH121 asks for uniformity in
+          `delta`.  Open next: `k = 5` at `delta = 8` and `(k, delta) = (3, 11)`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
