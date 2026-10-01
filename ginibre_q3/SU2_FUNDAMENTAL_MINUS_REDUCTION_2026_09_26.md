@@ -8804,6 +8804,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
+  | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; check pending) — added 2026-10-01 |
 
   - Finite-range rows.  The table rows restricted to finite `(r, a)` or
     finite `(a, e)` cover all labels there, since larger labels fall
@@ -11106,6 +11107,40 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Next arbitrary-label background (Ceres):
           `E[(x-y)^e (x+y)^a (x^2+y^2-2)^2 U_p(x)] >= 0`, i.e. two
           `hat S_2` factors.
+      - **FM-MECH51 (astra_max_ceres; `fm39/mech51_b2_repro.py`, rerun exactly
+        in 30 s): Theorem B2 PROVED.  `phi_r(hat S_p h_1^a hat S_2^2) >= 0`
+        and `phi_r(h_(p-1) h_1^a hat S_2^2) >= 0` for every `p`, `r`, `a`.
+        Also an explicit cutoff, uniform in the label and in `b`.**
+        - The `b = 2` slack is a quadratic form in `(c_j, c_(j+1))`
+          (degrees 6, 7, 8 in `Delta`), via the half-angle rows
+          `4 delta(c) + 4 delta(c^(1)) + delta(c^(2))`.
+        - The Q2+ three-region method applies with these changes:
+          - the discriminant is a quintic in `Delta^2`; coverage uses its
+            six Bernstein coefficients on `[0, 4O]` and on `[0, xi_c]`;
+          - the outer region is reparametrized by `x = q - sqrt S`,
+            `y = q + sqrt S`, with degree-3 Bernstein coefficients
+            (degree 2 has negative entries);
+          - the central intervals are those of Q2+, including the odd
+            bound `(kappa+2)/kappa`;
+          - `t = 0, 1` use explicit Krawtchouk vectors.
+          All certificates are fixed polynomials with positive
+          coefficients; 299 Catalan bridges.
+        - Lemma 4 (every `b`): with `w = z^nu sqrt((1-z)(1-q^2 z))` and
+          `f = beta z - 2`, one has
+          `int w |f|^b (1-z) <= 4 J_b/(nu + b - 2)`, by a reflection
+          pairing and IBP.  So
+          `int w f^b W >= [1 - 4 ||W'||/(nu+b-2)] J_b`.
+        - Theorem 5 (every `b`).  The FM-MECH49 trace bound gives
+          `|z W| <= 1`; Markov's inequality twice gives
+          `||W'|| <= 4 (p+1)^4`.  So both families are `>= 0` whenever
+          `nu + b >= 16 (p+1)^4 + 2`, with `nu = r + (a + eps)/2`; also
+          `nu = 1` by characters.  Main-agent check of the Markov chain:
+          correct.
+        - Remaining in the `H = 1` layer: `p >= 7`, `nu >= 2`,
+          `3 <= b <= 16(p+1)^4 + 1 - nu`, list distance `>= 3`.  This is a
+          finite `b`-range for each label, and the missing strength is
+          uniformity in `b` there.
+        - Independent check: not yet launched.
       - FM-SEC127 (luna_max_mars; `fm39/sec127_q2plus_audit_repro.py`, rerun
         exactly): the q = 2 plus sign of (E), uniformly in the label.
         - With `x = c_j`, `y = c_(j+1)` and the Krawtchouk recurrence, the
