@@ -11309,6 +11309,30 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: coverage of the complement (region (10) of the report)
           intersected with the failure sets of the short-arc, RF, LD and
           metric criteria.
+      - FM-MECH56 (astra_max_ceres; `fm39/mech56_E_propagation_repro.py`,
+        rerun exactly): (E) reduced to an explicit minimal-counterexample
+        set.
+        - Prop. 1 (direction-dependent propagation): if the edge
+          `psi_k -> psi_(k+1)` crosses the ray opposite `psi_j`, an exact
+          identity writes the parent slack as a weighted sum of the two
+          child slacks plus a correction `G_jki`.  So (E) on both shorter
+          intervals together with `G_jki >= 0` gives (E) on `[j,i]`.  This
+          is an induction on the gap, with OL, EQ1 and Q2+ as base cases.
+        - Prop. 2: an opposite vertex `psi_k = -lambda psi_j` cannot occur in
+          a minimal-gap counterexample.  The centre `j = N/2` is direct.
+        - Prop. 3: with FM-MECH55's energy and the actual drop `D_j - D_i`,
+          a scalar `J_ji >= 0` implies (E).
+        - KILLs (knob: replacing child margins by zero):
+          - `G_jki < 0` occurs on actual rows, e.g. `(31,19,26,28,39)`;
+          - the drop condition without `D_i` fails at a four-step crossing
+            `(172,45,110,114)`.
+        - Theorem 5: (E) is equivalent to (E) on an explicit set `R`
+          (folded, outside FM-MECH55, arc `>= pi`, no opposite vertex, every
+          crossing with `G < 0`, and `J < 0`).
+        - Census (main-agent rerun): 729 rows, 117,471 long-arc pairs, all
+          covered.  Gluing covers 115,682, opposite vertices 2,005, and the
+          `J_ji >= 0` criterion alone all 117,471.  `R` is empty in this
+          range.  Next target: prove `J_ji >= 0` on long arcs uniformly.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
