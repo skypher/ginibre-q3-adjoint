@@ -8843,6 +8843,11 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       - `k = 0`: the H = 1 layer (FM-MECH92);
       - `k = 1`: the two-core layer (FM-MECH91, FM-MECH94);
       - `k >= 2` (FM-MECH95).
+    - Update 22:40 (FM-MECH102): by the pair reduction it suffices to
+      prove FM3 for PAIR-FREE lists (one sign per label value) with
+      `k >= 2` non-distinguished labels `>= 3`.  Pair-free lists with
+      `k <= 1` are covered by OL, FM-MECH52, (E) and FM-MECH64 (FM-MECH64
+      check FM-CHK82 pending).
     - No counterexample has been found anywhere.
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
     finished.
@@ -12457,6 +12462,38 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           exact.
         - Delegated: FM-MECH100 (general proof) and FM-MECH101 (the H = 1
           case).
+      - **FM-MECH102 (main agent; `fm39/mech102_pair_reduction_check.py`,
+        PASS): the pair reduction.  FM3 for all lists follows from FM3 for
+        PAIR-FREE lists, where each label value occurs with one sign only.
+        Pair-free lists with at most one non-distinguished label `>= 3` are
+        already proved.**
+        - Identity:
+          `(U_n(x) + U_n(y))(U_n(x) - U_n(y)) = U_n(x)^2 - U_n(y)^2
+          = sum_(k=1..n) (U_(2k)(x) - U_(2k)(y))`.  So for every list with
+          `+n` and `-n`, `FM3(rest, +n, -n) = sum_k FM3(rest, -2k)`.  Each
+          summand has one factor fewer and the same minus parity; strong
+          induction on the number of factors gives the reduction.  Checked
+          symbolically for `n <= 12` and on 2,000 random lists.  Examples:
+          `(+1)(-1) = (-2)`, `(-2)(+2) = (-2) + (-4)`.
+        - Pair-free H = 1 (no non-distinguished core): the background is
+          `(+-1)^a (+-2)^b` with one sign per label.
+          - With `-2` present or no 2's, there is no `+2`, so Theorem OL
+            applies (the `-2 = ds` split is allowed).
+          - With `+2` present, the 1's share one sign, so `min(a,e) = 0` and
+            FM-MECH52 Thm 1 applies.
+        - Pair-free two cores (one non-distinguished core `m >= 3`):
+          - without `+2`, (E) on the fundamental background (FM-MECH79,
+            FM-CHK71);
+          - with `+2`, `min(a,e) = 0` and the FM-MECH64 strip theorem
+            (every distance, every `b`, all labels) applies.  FM-MECH64 has
+            been rerun but not yet independently checked; that check is
+            FM-CHK82.
+        - So the whole cone reduces to pair-free lists with at least TWO
+          non-distinguished labels `>= 3`, within the unsaturated region and
+          outside the other proved strata.  Non-pair-free H = 1 and two-core
+          lists decompose into such lists (reducing `(-2)(+2)` creates `-4`
+          cores).  For example, FM-SEC144's tight corner `a = e`, `b ~ a`
+          is not pair-free.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
