@@ -8804,7 +8804,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; check pending) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
-  | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL) — added 2026-10-01 |
+  | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1) — added 2026-10-01 |
 
   - Finite-range rows.  The table rows restricted to finite `(r, a)` or
     finite `(a, e)` cover all labels there, since larger labels fall
@@ -11171,6 +11171,38 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           Theorem OL.  The reflection, IBP and Markov steps are accepted
           (378 quadrature cases, least normalized slack 2.73; 66 exact
           reflection checks).
+      - FM-MECH52 (astra_max_ceres; `fm39/mech52_h1_layer_repro.py`, rerun
+        exactly): the `H = 1` layer, reduced to one polynomial family.
+        - Theorem 1 (PROVED): every `g_(e,a,b)` with `min(a,e) <= 1` is
+          U-positive, for every `b` and every label.  Proof: an
+          antisymmetric two-variable cone `Psi_(i,j)`, `i > j`, preserved by
+          multiplication by `Z = U_2(x) + U_2(y)` and by `x + y` (indices
+          reach the diagonal but never cross it).
+        - Theorem 3 (PROVED): the cutoff improves to quadratic.  Both
+          families are `>= 0` once `nu + b >= K`, with
+          - `K = 2p^2 + 2` for `hat S_p`, `p` even;
+          - `K = 2p^2 - 2` for `h_(p-1)`, `p` even;
+          - `K = 4p^2 - 2` for either family, `p` odd.
+          Ingredients: a weighted reflection lemma and the FM-MECH49 trace
+          bound with Markov's inequality.  E.g. 194 instead of 65,538 at
+          `p = 7`.
+        - KILLs (knob: extra growth under insertion, or raywise
+          positivity).
+          - A `U_2`-transfer bound fails by -6; doubling fails by 424,528.
+          - A negative ray at distance 4 (`-17093/495495`, consumer value
+            11128), and an unbounded negative-ray family at distance
+            `~ p^2` (limit via `sinc(sqrt y)` and density `y e^(-y/20)`).
+          So the remaining region needs angular cancellation.
+        - Exact distance formula (5): with `T = a + e`, `D = T + 2b`,
+          `p = D - 2d`,
+          `F_d = sum_(j+l <= d) c_(2j) C(b,l) mu_(j,l)
+          [C(D-2j-2l, d-j-l) - C(D-2j-2l, d-j-l-1)]`, where
+          `mu_(j,l) = E[y^(2j) (y^2 - 2)^l]`.  It is a polynomial of total
+          degree `<= d` in `T`, `(a-e)^2`, `b`, independent of the label.
+          Its leading coefficient in `((a-e)^2)^d` is `1/(d!(d+1)!)`.
+        - Remaining `H = 1` box: `a, e >= 2`, `b >= 3`, `p >= 7`, and
+          `4 <= d <= 4p^2 - (p+1)/2 - 3` (`p` odd) or about `2p^2` (`p`
+          even).  The target is `F_d >= 0` there.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
