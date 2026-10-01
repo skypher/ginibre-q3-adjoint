@@ -11425,6 +11425,31 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           entries in 0.6 s on 32 threads), which would put the box at
           roughly 40 minutes.  Delegated as FM-SEC139 (a port, run by the
           main agent with checkpoints).
+      - FM-MECH60 (astra_max_ceres; `fm39/mech60_E_unbalanced_repro.py`,
+        rerun exactly in 45 s): unbalanced rows at central anchors.
+        - Lemma 1: a joint local metric `Q_X` with `D_k = Q_(X_k)(psi_k)` and
+          `Q_X - Q_Y >= 0`, giving a smaller-root criterion for both signs
+          of (E).  It keeps `W` as one determinant.
+        - Lemma 2: the binomial-decay energy
+          `E_k = u_k^2 + V_(X_k) v_k^2 = D_k + 2(sigma - X_k) v_k^2`,
+          with `P_X = C - X^2` and `V_X = C + 2 sigma - X(X+2)`, decays by
+          exact factors `beta_(k+1)/beta_k`.  This gives the parameter-only
+          criterion
+          (BE) `(omega + Y) V_X beta_i <= (omega - Y) P_X beta_j`, `Y < omega`.
+        - Theorem 3 (PROVED): both signs of (E), at every endpoint including
+          past the turning point, in two regions:
+          - C1: `X_j <= omega/4` and `X_i >= omega/2`;
+          - C2: `X_j <= 2 omega/5` and `X_i >= 5 omega/8`.
+          The proof uses checkpoint constants, the Sonin identity and the
+          fixed energy.  The fixed remainder `omega < 64` has 490,037 pairs
+          on 1,494 rows, least slack 67.
+        - Audit: (BE) covers all 998,772 inner long arcs; the earlier Sonin
+          parameter bound misses 7 of them, all covered by (BE).
+        - Remaining for the two-label layer, three ranges:
+          - `0 < X <= omega/4` with `Y < omega/2`;
+          - `omega/4 < X <= 2 omega/5` with `Y < 5 omega/8`;
+          - `X > 2 omega/5`.
+          Plus `J` at the first turning endpoint outside C1, C2.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
