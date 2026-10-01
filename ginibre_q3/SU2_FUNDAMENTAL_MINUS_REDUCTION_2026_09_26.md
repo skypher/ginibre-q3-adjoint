@@ -8806,7 +8806,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; FM-CHK67) — added 2026-10-01 |
   | all `r` | EVERY list at list distance 5 or 6 | all (FM-MECH71; FM-CHK69 item 1 accepted, items 2 and 3 repaired or withdrawn in FM-MECH80, check FM-CHK74 running); every distance `delta` once `max(t,b,k) >= (100 delta)^(300 delta^2)` (FM-MECH71) — added 2026-10-01 |
-  | all `r` | every list, any distance `delta` | `N >= 432(delta+1)^2` (FM-MECH85; check FM-CHK76 running), or `k >= 40 delta` labels `>= 3` (FM-MECH85), or one non-distinguished label above `delta` with any smaller background (FM-MECH85); earlier `N >= 3200(delta+1)^3 + 760(delta+1)^2`, where `N = t + 2b + k` counts the non-distinguished factors after splitting non-distinguished `-2`; also the integer test (1), and `N >= 380(delta+1)^2` when the signed label-3 count is 0 (FM-MECH77; FM-CHK70 ACCEPT) — added 2026-10-01 |
+  | all `r` | every list, any distance `delta` | `N >= 432(delta+1)^2` (FM-MECH85; FM-CHK76 ACCEPT), or `k >= 40 delta` labels `>= 3` (FM-MECH85), or one non-distinguished label above `delta` with any smaller background (FM-MECH85); earlier `N >= 3200(delta+1)^3 + 760(delta+1)^2`, where `N = t + 2b + k` counts the non-distinguished factors after splitting non-distinguished `-2`; also the integer test (1), and `N >= 380(delta+1)^2` when the signed label-3 count is 0 (FM-MECH77; FM-CHK70 ACCEPT) — added 2026-10-01 |
 | all `r` | two core labels on a {1,2} background, `b = 1` copy of `hat S_2` | balanced backgrounds `a = e`, both signs, all labels (FM-MECH76 Thm 2; FM-CHK73); every `b`: the central band `4|Delta| <= sigma`, `sigma/4 + 2 <= n - m - 2b <= sigma/2`, `m >= 35 + 12b` (FM-MECH76 Thm 3) — added 2026-10-01 |
 | all `r` | two labels on the fundamental background ((E), `q >= 3`, both signs) | every row with anchor `j >= N/2` (the consumer's range): the regions of FM-MECH55..61, 66, 70, 73, 74 and the last anchors `X > 7 omega/10` (FM-MECH79); FM-CHK71 ACCEPT with that scope — added 2026-10-01 |
 | all `r` | one label `p <= 10` on any {1,2} background | all ratios and signs (FM-MECH78: Bernstein cutoffs plus 3,510,309 exact representatives; check FM-CHK72 running) — added 2026-10-01 |
@@ -8814,6 +8814,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | every word of length `L >= 4` | minimum label `>= 2^(L-2) - 3`, and more generally `beta <= 1` (FM-MECH83) — added 2026-10-01 |
 | all `r` | `h >= 2` non-distinguished labels above the distance `delta`, any smaller labels | background weight `D <= min(delta + h - 2, 2 delta + 2)` (FM-MECH83) — added 2026-10-01 |
 | all `r` | one label `p` on a balanced or adjacent background (`|a - e| <= 1`) with `b` copies of `hat S_2` | `b <= min(a,e)` and `s^2 >= 4b(min(a,e) + 2)`, `p = 2s + |a - e|` (FM-MECH82) — added 2026-10-01 |
+| all `r` | at most two labels `>= 5` (any size, any sign) on a labels-`<= 4` background of weight `D <= 60`; at most three for `D <= 48`; any number of saturated labels with `u <= 0, 1, 2` unsaturated for `D <= 60, 56, 48` | all (FM-MECH87: 5,285,147 + 1,388,843 profiles, 4.3e9 exact three-label kernels) — added 2026-10-01 |
+| all `r` | labels `<= 4` plus saturated labels, `h >= 2` | `delta >= ceil(15D/16)`, or the count test `16^(D-delta-1) R_0/lambda <= 1` (FM-MECH87) — added 2026-10-01 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -12071,6 +12073,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: `h = 2`, `D > delta` (and `h <= 1`) in the residual
           `N < C_delta`.  An exact `r = 9` witness shows that any further
           argument must keep the helpful proper partitions.
+        - FM-CHK75 (luna_max_venus, fresh code), together with FM-MECH82.
+          - FM-MECH83 Thm 1 ACCEPT on the FM3 domain (even number of minus
+            factors).  Odd-minus words vanish by `x <-> y`, and the `beta`
+            expansion is not claimed for them.
+          - FM-MECH83 Thm 2: REPAIR of the proof of (7), supplied by the
+            checker.  The stated reason (a single selected large `U_n`
+            vanishes by `eta`-degree) is false: background `U_2 U_2` has
+            `<U_4, U_2^2> = 1`.  Replacement (split support): a contributing
+            split `S` avoiding `p` has `w(S) <= 2 delta`, so it contains at
+            most one label above `delta`, and none, since a large label
+            would force `w(S) > 2 delta`.  The SU(2) coefficient formula
+            then gives (7).  Coefficient identity, central moments and
+            positivity pass.
+          - FM-MECH82: REPAIR (convention).  In (4), `(L)_h` is the falling
+            factorial `L (L-1) ... (L-h+1)`; with a rising factorial (4)
+            fails at `R = 2, h = 2, L = 4, l = 0`.  With it, the coefficient
+            bridge, the insertion identity, the exterior proof and the
+            screens pass.  The negative channel at `(10,10,3,12)` (drops
+            `[1575, 1400, 560, -546]` against a weighted total of 32214)
+            refutes channelwise positivity only, not the consumer.
       - FM-SEC141 (luna_max_jupiter; `fm39/sec141_atlas_distance7_repro.py`,
         phase 0 rerun exactly): the atlas with FM-MECH71 (flagged) and
         FM-MECH77.  Phase 0: 100,743 uncovered lists; phase 1: 9,823,286.
@@ -12101,6 +12123,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           threshold): `p_delta - p_(delta-1) >= 0` on the explicit
           profiles (21)-(22), including the one-core layer `k = 0`
           (FM-MECH88 for `k >= 1`, FM-MECH89 for `k = 0`).  Check: FM-CHK76.
+        - FM-CHK76 (luna_max_eris, fresh code): ACCEPT all four items (the
+          quadratic tail with its constants, `k >= 40 delta`, Prop. 1 and the
+          one-saturated-label statement, and exact tests at distances 8..14
+          near the thresholds).
       - FM-MECH86 (astra_max_ceres; `fm39/mech86_h1_energy_repro.py`, rerun:
         PASS): an `H = 1` energy for every `b`.
         - The vector `V(k) = (v_0(k), ..., v_B(k))` satisfies a closed
@@ -12114,6 +12140,47 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: one comparison on the actual channel vectors.  Arbitrary
           vector states fail (exact witness), so the proof must use
           `v_(h+1)(k) = v_h(k-1) + v_h(k+1)`.  Delegated as FM-MECH89.
+      - FM-MECH87 (astra_max_vulcan; `fm39/mech87_bounded_background_repro.py`
+        (rerun: PASS, 353 s and 631 s) and
+        `fm39/mech87_saturation_constants_repro.py` (rerun: PASS)): the
+        dominant residual on bounded small backgrounds.
+        - Reduction: with `T[a,j] = [z^a U_j(eta)] Q` and `c_i = T[2i,0]`,
+          two large labels give `F = R + eps C` with
+          `R = c_delta - c_(delta-n-1)`, `C = T[2 delta-n, n] - T[2 delta-n-2, n]`.
+          Three large labels give an exact four-sign kernel.  For
+          `delta >= D` positivity is analytic, and for `delta < D` the
+          labels can be clipped to `delta + 1`.  So the finite search is
+          `8 <= delta < D`, `max(5, 2 delta - D) <= m <= n <= delta + 1`,
+          uniformly in the size of the large labels.
+        - Certificates in exact 128-bit integers.  The absolute coefficient
+          sum is `<= 4^60 < 2^127`, so nothing can overflow.  Scalar
+          unimodality `c_0 <= ... <= c_(D/2)` holds for every background
+          with `D <= 60`.  Two-label kernels: 1,307,953,746 (`D <= 60`).
+          Three-label kernels: 4,321,391,262 (`D <= 48`).  No failure.
+        - This covers all of FM-SEC141 phase 1, and its continuations with
+          unbounded large labels.
+        - Unbounded backgrounds: for `h >= 2` saturated labels,
+          `delta >= ceil(15D/16)` suffices.  Also a count test
+          `E = 16^(D-delta-1) R_0/lambda <= 1` via `P(1) >= lambda A_0` and
+          absolute domination `sum |c_i| 16^-i <= A_0 R_0`, with an
+          `h > 2` version.
+        - Open: `h = 2`, `D > 60`, `delta < ceil(15D/16)` with `E > 1`, and
+          `h <= 1` below saturation (FM-MECH90).
+      - FM-MECH84 (astra_max_minerva; `fm39/mech84_two_core_short_arcs_repro.py`,
+        rerun: PASS): two cores, `b = 1`, uniformly in the gap.
+        - Index correction: the gap corresponds to `n = X + m` (the card's
+          `X + m + 1` has odd degree).  The interior consumer includes the
+          endpoints `i = N, N+1`.
+        - Theorem (PROVED): for unbalanced rows (`a, e >= 1`) and
+          `N/2 < j < i <= N+1`, if the polar sweep of `psi_j, ..., psi_i` is
+          `< pi`, then `T_1(j) - T_1(i) >= |det(psi_j, psi_i)|`, with no bound
+          on `i - j`.  The proof is a polygon argument from the one-label
+          `b = 1` theorem applied to `(1 +- z) P`.
+        - Also a normalized Sonin bound, an explicit root sector, and every
+          gap with `min(a,e) = 1`.
+        - Open: `b = 1` long arcs with `1 <= X_j < 2 + ((e-1)/(e+1)) omega`
+          (a boxed sufficient criterion passes every exact test), and
+          `b >= 2` (FM-MECH91).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
