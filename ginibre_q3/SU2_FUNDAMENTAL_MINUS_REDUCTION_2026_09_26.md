@@ -8860,7 +8860,10 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       weight), exhaustive through W = 40, structured families to W = 2030,
       adversarial to W = 120, no failure.  KILLED 02:40 (W = 427 and two
       more); Rule M and uniform averaging also killed.  Weighted averages of
-      (D) survive so far.  It survives an exhaustive sweep of Rule 1' through
+      (D) killed later.
+    - Update 03:45 (FM-SEC160): conjecture (S) killed; LEMMA WM (one of the
+      Rule W or Rule M removals is monotone on the residual) survives with
+      margin >= 0.648 adversarially to W = 700.  It survives an exhaustive sweep of Rule 1' through
       W = 40 (FM-SEC152: 81.8M cases, zero failures) and adversarial
       search to W = 140.
     - No counterexample has been found anywhere.
@@ -13047,9 +13050,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             `B = (-10, 7^12, 9^8)` (`W = 166`) at 2.  In both, Rule W alone is
             monotone at every `p` and (D) holds; Rule M's failure there is too
             large for the average.
-          - Remaining two-candidate statement: at least one of `R_W`, `R_M`
-            is monotone (never both failing).  No counterexample so far;
-            adversarial test running (`sec160_W_or_M_adversarial.py`).
+          - LEMMA WM (conjecture): on the residual, at least one of
+            `R_W`, `R_M` is monotone, i.e.
+            `max(g_p(B) - g_p(B - R_W), g_p(B) - g_p(B - R_M)) >= 0`.  With
+            FM-MECH102 and the proved strata, this gives FM3 for every list
+            by induction.  Evidence: never both failing exhaustively through
+            `W <= 40`, and on all seven known single-rule counterexamples.
+            Adversarial search finds the minimum of
+            `max(Delta_W, Delta_M) / g_p(B)` to be 0.648 (`W <= 260`) and
+            0.665 (`W <= 700`), with no violation
+            (`sec160_W_or_M_adversarial.py`, `..._large.py`).  The margin is
+            robust; a proof needs a criterion for which rule applies.
         - Context: Rule W alone fails only at large `W` (Minerva 427, Juno
           540, Ceres 869), and is clean through `W = 48` exhaustively
           (FM-SEC157, Venus) and on 1,368,356 residual roots (FM-SEC158,
