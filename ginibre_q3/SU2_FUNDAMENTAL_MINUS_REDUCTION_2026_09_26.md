@@ -11562,6 +11562,46 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - Insertion on the whole two-label moment cone: the abstract
             `G = 1 + U_3 U_3 - U_2 U_2` has every two-label inequality, but
             `ZG` has `R_(3,3) = 0 < 2 = c_(3,3)`.
+      - **FM-MECH63 (astra_max_vulcan; `fm39/mech63_one_label_small_background_repro.py`,
+        rerun exactly): one arbitrary label on ANY background of labels
+        `<= 4`, above a quadratic cutoff.**  For a word with one label `n >= 5`
+        (either sign) and any multiplicities and signs of the labels 1..4,
+        put `V = (c_1^+ + c_1^-)/2 + c_2^-`, `b = c_2^+`,
+        `J = c_3^+ + c_3^- + c_4^+ + c_4^-` and `B = V + b + J`.  Then FM3
+        holds whenever `B >= max(384(n+1)^2, 2^17)`.  Every normalized ray
+        integral is positive.
+        - Pair estimates on the ray, with `u = 1 - z`:
+          - `|R_3|, |R_4| <= 1 - u/3`;
+          - `R_3, R_4 >= 1 - 8u` for `u <= 1/4`;
+          - `|R_n| <= 4 sqrt z` for odd `n`;
+          - `R_n >= 1 - 2(n+1)^2 u`, by Markov's inequality.
+          Main-agent check: 160,000 high-precision samples, no violation.
+        - Key step: the consumer's parity constraints supply one factor `z`
+          uniformly in `n` for the whole product:
+          `z^V |R_n prod R_small| <= 12 z exp(-Cu/3)`, `C = V + J`.
+        - What it gives: one huge label against arbitrarily many 3s and 4s
+          is covered without the weighted many-factor threshold.  The
+          remainder is a finite set for each `n` (`B < 384(n+1)^2`).
+          Independent check pending (FM-CHK65).
+      - FM-MECH66 (astra_max_ceres; `fm39/mech66_E_e3_anchor_repro.py`, rerun
+        exactly in 8 s).
+        - Theorem 1 (PROVED): (E), all signs, for every row with
+          `min(a,e) <= 3`.  The `e = 3` branch is closed, using the exact RF
+          formula, (BE) before the T3 checkpoint, and T3.
+        - Lemma 2 (arc speed): a diagonal contraction turns a vector by a
+          bounded angle, so a long arc forces `kappa(y - x) > 7/5`, i.e.
+          enough binomial decay.  Constants come from rational Taylor
+          bounds.
+        - Theorem 3 (PROVED): both signs at every endpoint when `kappa >= 15`
+          and the anchor `X <= 3 omega/5` (outside the very central part),
+          including through the turning point.  An exact finite part of
+          seven `e = 7` rows (15,341 pairs, minimum slack about `1.38e13`).
+        - Remaining for (E) with `q >= 3`:
+          - `e in {4,5,6}` inside the FM-MECH61 residual;
+          - very central anchors (`kappa >= 15`, `omega X < 6(sigma+1)`,
+            `Y < omega/2`);
+          - larger anchors (`kappa >= 15`, `3 omega/5 < X <= sigma/2`,
+            `X^2 < 4(e-1)(a+4)`).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
