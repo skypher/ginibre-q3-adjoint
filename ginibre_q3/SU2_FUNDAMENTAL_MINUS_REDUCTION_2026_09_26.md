@@ -11400,6 +11400,31 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - KILL (knob: bounding the two chords separately): at
           `(4000,4,2016,2051)` the LD bound exceeds the drop by a factor
           above `sqrt 10`, while `J >= 0`.
+      - FM-SEC138 (luna_max_mercury; `fm39/sec138_coverage_atlas_repro.py`;
+        phase 0 rerun exactly in about a minute, and the `--match` interface
+        spot-checked): an exact coverage atlas of the proved strata.
+        - The matcher keeps the original signed list and returns every
+          matching theorem tag.  It is conservative: some proved criteria are
+          not encoded (parts of the (E) regions such as root-free, binary
+          form and LD/metric chords; the full EQ1 row; G0E4; the finite
+          H-only box).
+        - Phase 0 (labels and sum `<= 30`): 1,114,614 lists, 129,186
+          unmatched.  Phase 1 (at most 3 labels `>= 3`, labels `<= 40`, sum
+          `<= 60`): 78,037,215 lists, 10,189,015 unmatched.  Every unmatched
+          list has a positive exact value; the minimum is 32, at
+          `(+1,-2,+2,-3,-5,-5)`.
+        - The smallest unmatched lists have total label sum 18, always a
+          label 5 together with 3 or 4 (two to three core factors), at
+          distance 3 or 4, e.g. `(-1^8, +2, -3, -5)` (value 11014).  So the
+          labels `<= 5` front is the first real residual.
+        - Theorem LLm has the most matches, then LLm-S, H_AC_q (d <= 2) and
+          labels `<= 4`.
+        - Main-agent note: the FM-SEC135 labels `<= 5` box (227.3B entries)
+          was projected at 44 days with that evaluator.  The FM-MECH48
+          incremental C++ evaluator runs about 1,000 times faster (54.4M
+          entries in 0.6 s on 32 threads), which would put the box at
+          roughly 40 minutes.  Delegated as FM-SEC139 (a port, run by the
+          main agent with checkpoints).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
