@@ -8800,7 +8800,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every word with labels `<= 2` | all (FM-MECH41, positive Walsh realization, B) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one label `n <= 6` | all (FM-MECH44, FM-MECH45) — added 2026-10-01 |
   | all `r` | every word with labels `<= 3` | all (FM-MECH47, exponential ray suppression plus one fixed box; FM-CHK56) — added 2026-10-01 |
-  | all `r` | every word with labels `<= 4` | all (FM-MECH48, uniform contraction lemma plus one box of 54,387,664 values; checker pending) — added 2026-10-01 |
+  | all `r` | every word with labels `<= 4` | all (FM-MECH48, uniform contraction lemma plus one box of 54,387,664 values; FM-CHK57) — added 2026-10-01 |
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; checker pending) — added 2026-10-01 |
@@ -10996,7 +10996,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `sigma > 0`.  A label-independent quantitative margin, e.g.
           `sup{|E_+-| : sigma >= 1/2} <= 99/100` and its finite-`n`
           version, would make `H_0` logarithmic in `k`.
-        - Pending: FM-CHK57 (independent checker).
+        - FM-CHK57 (luna_max_eris, fresh code): ACCEPT items 1, 2, 3, 5.
+          - The trace lemma and margin (4,999 numeric trace comparisons).
+          - The `k = 4` constants and the `N = 1` identities.
+          - The consumer translation.
+          - The label-5 Bernstein controls.
+        - REPAIR (wording) of item 4: the box is a covering superset of
+          the analytically uncovered region, not its exact complement.
+          2,069 records include 84,415 entries the bound already covers,
+          e.g. record `(N,l,m,n,B) = (13,0,0,1,4)` at `b = 3`.  The proof is
+          unaffected, since every box entry is evaluated.  The checker
+          reproduced the record and entry counts and all cutoffs for
+          `H <= 6` plus 600 sampled records.  A fresh 20,000-entry direct
+          sample is positive (least value 32).  The full box was rerun by
+          the main agent: PASS.
         - FM-SEC130 (luna_max_mercury; `fm39/sec130_labels45_screen_repro.py`,
           rerun exactly in 2 min): independent screens.
           - Labels `<= 4` to total degree 40 (861,016 words) and labels
