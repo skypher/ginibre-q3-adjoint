@@ -8817,10 +8817,9 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       - one arbitrary label with `b <= 2` copies of `hat S_2` (OL, Q2+, B2:
         FM-MECH51, FM-CHK60).
     - Proved, rerun by the main agent, no independent check yet:
-      - the `H = 1` layer at distance 3 (ADV-1) and distances 4, 5
-        (FM-MECH53);
-      - `min(a,e) <= 1` for every `b`, and the quadratic cutoff
-        (FM-MECH52);
+      - (since checked by FM-CHK62: the `H = 1` layer at distance 3 (ADV-1)
+        and distances 4, 5 (FM-MECH53); `min(a,e) <= 1` for every `b`, and
+        the quadratic cutoff (FM-MECH52));
       - the (E) regions of FM-MECH55, 58, 59, 60 (balanced central
         anchors; far anchors; C1, C2) with outer propagation (FM-MECH57);
         FM-MECH55/56/57 are now independently checked (FM-CHK63).
@@ -11280,6 +11279,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           Knobs: coefficientwise positivity of a particular remainder,
           and a fixed Gaussian margin.
         - Open: `d >= 6` uniformly.  A per-`d` ladder would not finish.
+      - FM-CHK62 (luna_max_eris, fresh code): ACCEPT ADV-1 Lemma 1 (the
+        distance-3 identity and certificate), FM-MECH52 (antisymmetric cone,
+        weighted reflection bound, quadratic cutoff) and FM-MECH53 (distances
+        4, 5; the 90 and 557 corners, least values 112 and 256; the
+        distance-6 subregion; the penultimate coefficient; the Hermite-square
+        leading part).
       - FM-MECH54 (astra_max_ceres; `fm39/mech54_genfun_obstructions_repro.py`,
         rerun exactly): exact distance generating function; four KILLs.
         - Prop. 1: `F_d = [z^d] (1-z) E_y[(1+z-sqrt z y)^e (1+z+sqrt z y)^a
