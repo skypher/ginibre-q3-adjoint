@@ -8863,7 +8863,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       (D) killed later.
     - Update 03:45 (FM-SEC160): conjecture (S) killed; LEMMA WM (one of the
       Rule W or Rule M removals is monotone on the residual) survives with
-      margin >= 0.648 adversarially to W = 700.  It survives an exhaustive sweep of Rule 1' through
+      margin >= 0.648 adversarially to W = 700.  KILLED 04:25 at W = 1283
+      (FM-MECH137).  Only the existence statement (D) survives.  It survives an exhaustive sweep of Rule 1' through
       W = 40 (FM-SEC152: 81.8M cases, zero failures) and adversarial
       search to W = 140.
     - No counterexample has been found anywhere.
@@ -13086,6 +13087,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - Main-agent sweep (`fm39/sec160_WM_exhaustive48.py`, running):
         Lemma WM has zero failures over ALL pair-free `(B, p)` through
         `W = 40` (81,808,160 cases), not only on the residual.
+      - **KILL (04:25): LEMMA WM is FALSE** (FM-MECH137, astra_max_juno;
+        checked independently by the main agent with the pruned single-`p`
+        evaluator `fm39/sec162_gp_single.cpp`).
+        - `B = (-11)^5 (-54)(-2) A`, where `A` holds each positive odd label
+          `n` in `1..53` except 11 with multiplicity `floor(54/n)`.  Then
+          `W = 1283`, `p = 55`, 135 factors, `delta = 614`, `k = 80`, so
+          this is a residual case.
+        - Rule W uniquely picks `(-11,-11)` (weight 55), and Rule M picks
+          `(-54,-2)`.  Both increase `g_55`: from 8.4993e119 to 1.1488e120 and
+          to 1.3591e120.
+        - The removal `(+1,+1)` is monotone (5.33e118), so (D) holds.
+        - Pattern: every fixed candidate set (Rule 1', Rule W, Rule M, W or
+          M) has failed at some larger weight.  The working removal moves
+          between the smallest labels, the largest labels and the heaviest
+          class.  (D) itself has never failed.  The lemma's exhaustive range
+          (zero failures through `W = 40` over all pair-free `(B,p)`) was far
+          below this witness.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
