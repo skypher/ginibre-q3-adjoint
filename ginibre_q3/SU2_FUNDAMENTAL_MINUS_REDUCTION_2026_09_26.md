@@ -11682,6 +11682,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - very central anchors `omega X < 6(sigma+1)`, `Y < omega/2`;
           - larger anchors `3 omega/5 < X <= sigma/2`,
             `X^2 < 4(e-1)(a+4)`.
+      - FM-MECH67 (astra_max_minerva; `fm39/mech67_two_core_closed_forms_repro.py`,
+        rerun exactly in 26 s): two core labels at every distance, partial.
+        - Theorem (PROVED): both compatible signs for every two-core word
+          with `n + m >= D = a + e + 2b`, at every distance and every
+          `b >= 0`.
+        - Prop. 1: a closed finite-binomial formula
+          `A_k^(delta)(N,b) = sum_l V(delta,l) B(l,k)` for the diagonal
+          coefficients (91 coefficients checked symbolically through
+          `delta = 12`), and an explicit bilinear cross term (Prop. 3).
+        - KILL (knob: coefficientwise positivity of the diagonal):
+          - `A_(delta-2)^(delta)(2 delta - 2, 1) = -6(delta-4)/(delta(delta+1))
+            < 0` for `delta >= 5`;
+          - for every fixed `b`, the leading coefficient
+            `[z^r] G(z)^b`, `G = 1 + 2z - 6z^2 + 2z^3 + z^4`, is negative at
+            `r = 2b` (`b` odd) or `2b - 1` (`b` even), giving integer
+            counterexamples at arbitrarily large distance.
+          A Cauchy bound on the cross term also fails; a matrix repair works
+          on one covered row only.
+        - Remaining: two cores with `n + m < D`, `b >= 1`, distance `>= 6`.
+          The adjacent layer `n + m = D - 2` is the first open one.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
