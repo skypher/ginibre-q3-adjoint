@@ -11141,6 +11141,50 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           finite `b`-range for each label, and the missing strength is
           uniformity in `b` there.
         - Independent check: not yet launched.
+      - ADV-1 (astra_max_juno, advisor; `fm39/adv1_distance3_repro.py`, rerun
+        exactly).
+        - **Lemma 1 (PROVED; main-agent algebra check): the `H = 1` layer at
+          list distance 3, for every label and every `b >= 2`.**  With
+          `F = [U_n] E_y[(x-y)^e (x+y)^a Z^b]`, `t = a + e`, `u = (a-e)^2` and
+          `n = t + 2b - 6 >= 7`:
+          `144 F = u^3 + A u^2 + B u + C`, with
+          - `A = 30b - 3t - 20`,
+          - `B = 9t^2 - 36bt + 180b^2 - 6t - 300b + 64`,
+          - `C = 3(3t^3 + 6bt^2 - 18t^2 - 12b^2 t + 48bt + 40b^3 - 120b^2 + 32b)`.
+          Positivity:
+          - `B = 9(t - 2b - 1/3)^2 + 144(b-2)^2 + 264(b-2) + 15`;
+          - `C = 9(t-2)(t^2+16)` at `b = 2`, and `C/3` has a positive form
+            at `b = 3 + v`;
+          - if `A < 0`, integrality forces `t >= 10b - 6`, and then
+            `(4B - A^2)/9 > 0`, so `144F = u[(u + A/2)^2 + (4B - A^2)/4] + C`.
+          Main-agent checks: every decomposition recomputed with sympy; the
+          identity holds on 263 fresh random cases from
+          `extra_label_upositivity_screen.py` (both parities of `e`), on top
+          of the advisor's 2,830.
+        - Lemma 2 (saturation).  With `n = sum mu_i - 2d`, the q = 0 table
+          is `g(S) = m(mu_S) K_(d - w(S)/2)(mu_(S^c))`, where
+          `K_j(nu) = [z^j](1-z) prod_i (1 + ... + z^(nu_i))`.  Every
+          non-distinguished label `> d` can be clipped to `d + 1` without
+          changing the table.  So at fixed distance the arbitrary-label
+          dependence disappears, and the background enters as finite-degree
+          polynomials in its counts.
+        - Gaussian/Bessel limit.  With `X = U + V`, `Y = U - V` (`U`, `V` iid
+          isotropic Gaussians in `R^3`), every plus factor becomes a product
+          of two cosines and every minus factor minus a product of two
+          sines.  The limit is therefore an integral of squares for every
+          `H` and every sign pattern.  Finite-label errors look like
+          `O(1/a)` (diagnostics only).
+        - KILLs.
+          - Termwise cyclotomic-row positivity: the `b = 2` witness
+            `phi_2(hat S_7 h_1^5 hat S_2^2) = 44` has row contributions
+            4, 8, -4.
+          - Raw total positivity of the kernel.
+          - The canonical invariant-space operator `sum_S eps_S P_S`: it is
+            `diag(3, -1)` for four fundamental labels with two minus signs.
+        - Ranked recommendations: (1) fixed-distance scalar polynomials
+          with a recurrence in `d`; (2) a summed transfer invariant on the
+          actual Krawtchouk profiles; (3) the Gaussian squares with relative
+          finite-label corrections.
       - FM-SEC127 (luna_max_mars; `fm39/sec127_q2plus_audit_repro.py`, rerun
         exactly): the q = 2 plus sign of (E), uniformly in the label.
         - With `x = c_j`, `y = c_(j+1)` and the Krawtchouk recurrence, the
