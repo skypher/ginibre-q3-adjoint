@@ -12724,6 +12724,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `<= 1`, and screened exactly on signed (also non-pair-free)
         backgrounds of length `<= 4` with labels `<= 4`.  Recorded as a
         claim; the general estimate is open.
+      - FM-MECH118 (luna_max_mercury; `fm39/mech118_mplus_genuine_repro.py`,
+        rerun: PASS).  For an even insertion `2q <= p`,
+        `g_p(B (+2q)) - g_p(B) = sum_(j=1..q) (G_B(p-2j, 0) + G_B(p+2j, 0))
+        + G_B(p, 2q)`.  So (M+even) holds whenever `B` is a genuine
+        `SU(2) x SU(2)` character (all `G_B >= 0`), e.g. all-plus
+        backgrounds and the pair-free H = 1 slice.  Exact two-core screen:
+        no failure.  Open: the same two-core ordering as FM-MECH117.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
