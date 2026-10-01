@@ -12339,6 +12339,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             4,364 right-half cases of region (10).  All chords are `>= 0` in
             635 of them.
           - So region (10) needs genuine cancellation between chords.
+      - FM-SEC142 (luna_max_jupiter; `fm39/sec142_atlas_examples_check.py`
+        reruns the exact example values and the table arithmetic; the census
+        is a patched FM-SEC138 run).  The atlas with FM-MECH80 (flagged),
+        FM-MECH81, 82 and FM-MECH83 Thms 1, 2.  Residuals: 75,559 (phase 0)
+        and 9,583,360 (phase 1), all positive.  The smallest uncovered sum is
+        26, at distance 8.
+        - Not yet in this matcher: FM-SEC139 (labels `<= 5`), FM-MECH85
+          (`h >= 1`, the quadratic tail, `k >= 40 delta`) and FM-MECH87.
+          For example, the smallest witness `(14x(-1), +1, +2, -4, -5)` has
+          labels `<= 5`, so it is covered.  FM-SEC143 adds them.
+        - Distances 8-10: two cores with `b >= 1`, and the FM-MECH69
+          small-background class.  At distance 8 the `h` profile is
+          202,835 / 72,325 / 48 for `h = 0 / 1 / 2`; the `h >= 1` lists are
+          now covered by FM-MECH85.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
