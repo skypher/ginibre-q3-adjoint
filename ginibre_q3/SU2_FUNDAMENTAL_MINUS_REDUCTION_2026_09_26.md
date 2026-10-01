@@ -11616,6 +11616,31 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             spread over all `M`.
           - Per-row certificates do not finish the layer, so this route is
             parked as evidence.
+      - FM-MECH62 (astra_max_juno; `fm39/mech62_grouped_midpoint_kill_repro.py`,
+        rerun exactly): KILL of grouped positivity in the midpoint formula.
+        - Canonical Jacobi form: with `mu` the semicircle on `[-1,1]`,
+          Gegenbauer bases `C_n^(l+1)` and `J_l` = multiplication by `t`,
+          each fixed-`(j,l)` group is one selected coordinate of the positive
+          operator `J_l^2`, with Legendre weights `w_l >= 0` summing to 1.
+          The selected-coordinate form has a 2x2 principal minor with
+          negative determinant.
+        - Exact counterexamples on residual profiles below the cutoff:
+          - the balanced row `(e,a,b,p,d) = (2,2,15,22,6)` has negative
+            fixed-`j` groups `j = 9..12` and negative fixed-`l` groups
+            `l = 6, 8, ..., 16`, while `F = 504656`;
+          - `(23,2,3,19,6)` has fixed-`j` pieces
+            `129908066/2925, -55104044146/2925, -235766538154/2925,
+            1239529442878/975`, summing to 1171913728.
+        - What survives: summing over output labels gives a uniform square
+          identity, i.e. a positive average over core labels.  That is
+          weaker than the consumer.  Knob: freezing `j` or `l` at a fixed
+          output label.
+        - So the `H = 1`, `d >= 6` routes killed so far are: raywise
+          positivity, a fixed Gaussian margin, diagonal squares, the square
+          template, positive reductions to `b = 0`, Newton in `b`, and
+          grouped midpoint sums.  Remaining routes: per-row mixed Gram
+          (parked) and a transfer invariant for the `e`-induction
+          (FM-MECH65).
       - ADV-3 (astra_max_minerva, advisor: gap audit and red team;
         `fm39/adv3_onelabel_allb_search.py`, `fm39/adv3_cp_certificate_1422MM2.py`,
         both rerun exactly).
