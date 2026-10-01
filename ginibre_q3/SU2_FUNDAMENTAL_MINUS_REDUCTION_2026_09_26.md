@@ -11144,6 +11144,36 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           finite `b`-range for each label, and the missing strength is
           uniformity in `b` there.
         - Independent check: not yet launched.
+      - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
+        rerun exactly).
+        - Lemma 1 (decay beyond each label's edge scale):
+          `|R_(n,+-)| <= min(1, 4/X)` with `X = (n+1) sqrt(1-z)`; combined
+          with FM-MECH49, `|R_(n,+-)| <= (1 + (n+1)^2 (1-z)/4096)^(-1/2)`.
+          Main-agent check: 120,000 random high-precision points, no
+          violation.
+        - Proposition 2 (constant weighted cutoff; pending an independent
+          check).  With `T = sum_i (n_i+1)^2/(k+1)^2`, `T >= 2^21` implies
+          FM3, with any number of 1's and 2's.  So the plain count needed
+          is `H = O(k^2)` instead of `O(k^2 log k)`.
+        - Proposition 3: `Theta(k^2)` is optimal for any criterion that
+          needs every ray integral to be `>= 0`.  For
+          `F(h,n) = E[d^2 hat S_3^(2h) hat S_n]` with `h = m^2`, `n = 10m`,
+          the normalized `q = 1` ray tends to
+          `1F1(2; 3/2; -5) = -0.02067...`.  Exact witness: `F(4,20) = 406`
+          while the ray value is `-3277672/5980345`.  So a constant
+          ordinary-count threshold must use the angular average.
+        - Lemma 4 / Prop. 5: the Gaussian sphere model is positive for
+          every word (sum of squares after `A = (X+Y)/2`, `B = (X-Y)/2`),
+          with explicit finite-character errors.  An explicit
+          two-dimensional estimate restores positivity along the
+          negative-ray family.
+        - Distance-3 witnesses
+          `F(h, 6h-4) = (2h-1)(4h^2 + 26h + 6)/3` have unbounded `H` and
+          values polynomial against exponential scales.  They give no
+          lower bound on the FM3 threshold.
+        - Biggest unknown (all three advisors): a mechanism keeping the
+          angular cancellation across mixed label scales, i.e. whether the
+          angular average admits a constant ordinary-count `H*`.
       - ADV-3 (astra_max_minerva, advisor: gap audit and red team;
         `fm39/adv3_onelabel_allb_search.py`, `fm39/adv3_cp_certificate_1422MM2.py`,
         both rerun exactly).
