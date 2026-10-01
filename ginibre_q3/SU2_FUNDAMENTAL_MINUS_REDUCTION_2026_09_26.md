@@ -13343,6 +13343,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           entries are at most `4^44 * 2(p+1)`).  Of 66,116,748 residual cases,
           14,108 have no flip descent; on all of them (D) holds and TopPair
           is monotone.  No failure of (FT).
+        - (FT) exhaustive through `W = 48` (main agent, same code, 25 min).
+          Of 190,155,061 residual cases, 33,487 have no flip descent; on all of
+          them (D) holds and TopPair is monotone.  No failure of (FT).
+          - Structure of the no-flip lists:
+            - factor counts 6..13 and 15 (6 lists with 15 factors, at
+              `W = 45` and 48);
+            - label-1 count 0, 1 or 2 (6 lists with two 1's);
+            - label multiplicity at most 4.
+          - KILL of lemma (F1) "two 1's give a flip" (GMP-checked by
+            `fm39/sec166_flip_single.cpp` and the class-pattern tool
+            `fm39/sec166_class_pattern_flips.cpp`): `B = (+1,+1,-2,+3^4,-4^3,
+            +5^4)`, `sigma p = +8` (`W = 48`, `delta = 20`, 15 factors) has
+            all 19 class-pair flips strictly negative.  TopPair `(5,5)` works
+            (`g = 4,075,371`, child 160,741).
+          - The no-flip minimum of `w_TP/delta` keeps falling: 0.588
+            (`W = 41`), 0.556 (`W = 45`), 0.500 (`W = 48`, at this witness).
+            TopPair failures reach 0.429 at `W <= 40`.  So the ratio split at
+            `c = 1/2` sits at its edge and will likely break at larger
+            weight.  (FT) itself is unaffected.
         - Few-factor Walsh census (main agent,
           `fm39/sec166_walsh_few_factor_census.cpp`).  For each label
           multiset, one Walsh transform of `m(S) m(S^c)` gives `Phi` at every
