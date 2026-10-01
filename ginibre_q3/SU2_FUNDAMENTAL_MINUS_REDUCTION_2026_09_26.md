@@ -12537,10 +12537,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Atlas residual shapes are far from tight.  For
           `(22 x (-1), -8, -8; +22)`, `g_p / m_p(all) = 39,782`.
         - Contrast: the non-pair-free H = 1 corner decays like `0.73^a`
-          (FM-SEC144).  So pair-free lists look robustly positive, with
-          `g_p >= 0.8 m_p(all)` in every case seen.  A uniform
-          relative-margin argument is plausible there, and it is the only
-          remaining target (FM-MECH102).
+          (FM-SEC144).  So pair-free lists looked robustly positive, with
+          `g_p >= 0.8 m_p(all)` in every case seen.
+        - CORRECTED (00:10): there is NO uniform relative margin on
+          pair-free lists.  FM-MECH103 (Juno) and FM-MECH109 (Vulcan) give
+          explicit pair-free families, including full all-minus lists at
+          bounded weighted count, with `g_p / m_p(all) -> 0` (below
+          `1e-80`).  The adversarial search above did not reach them.
+          Arguments on the pair-free residual must therefore be exact.
         - Larger adversarial run (`sec146_pair_free_adversarial.py 420
           150`, weight `<= 150`): no negative value, and the smallest ratio
           is 0.758.  Structured all-minus families `(-3..-m)^r`
@@ -12663,6 +12667,56 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         sector and propagation from a valid seed), FM-MECH92 (H = 1 exterior
         sector including `p > N`) and FM-MECH95 (double-endpoint sector and
         quartets with (5)).
+      - FM-CHK82 (luna_max_eris, fresh code): FM-MECH102 ACCEPT (identity,
+        induction, and the `k <= 1` case analysis), with FM-MECH64 cited in
+        its equal-parity wording (FM-CHK83).  No negative value.
+      - FM-CHK84 (luna_max_neptune, fresh code): REJECT (M+) and (M-) as
+        stated.  The failures are exact, pair-free and consumer-compatible,
+        and agree with the 23:45 correction; none is a negative FM3 word.
+      - FM-MECH103 (astra_max_juno; `fm39/mech103_pair_free_no_margin_repro.py`,
+        rerun: ALL CHECKS PASS).
+        - Kill (knob: a uniform relative margin `g_p >= c m_p(all)` on
+          pair-free lists).  An explicit all-minus family with weighted
+          count `T < 903/400` has ratio below `1e-80` (at `q = 50`); an exact
+          finite example already beats 0.8.
+        - Also killed: scalar log-concavity of the coefficients, and
+          positivity of the quadratic form on arbitrary recurrence states.
+        - Open: the all-minus `k = 2` inequality `F_d >= 0` (8) on the actual
+          row `c_j = [z^j](1+z)^b (1-z)^(a+b)` (FM-MECH114).
+      - FM-MECH109 (astra_max_vulcan; `fm39/mech109_family4_repro.py`, rerun:
+        ALL CHECKS PASS).  FM3 for every word
+        `(-p)^2 (-6)(-8) prod_(j=1..10) (-2j)^(2 l r_j)` uniformly in `l`,
+        over its whole unsaturated range of `p`.  Also: no uniform positive
+        margin on pair-free lists, including strictly unsaturated lists
+        with weighted count below 3.
+      - FM-MECH105 (luna_max_pluto; `fm39/mech105_sign_budget_repro.py`,
+        rerun: PASS): a sign-counted maximum-label budget.  Sort
+        `3 <= n_1 <= ... <= n_L`; let `c_j` count the subsets `A` of `[j]`
+        with `j in A` and an odd number of minus labels, and
+        `C = sum_(j < L) c_j/(n_j + 1)`.  Then FM-MECH83's bound gives
+        `F >= M([L])(1 - C)`, so `C <= 1` proves FM3.  This covers every
+        list of at most four factors, all-plus lists, and the pure-core
+        pair-free region `C <= 1`.  Open: `C > 1`, via a toggle inequality
+        on lower lists (FM-MECH116).  Check: FM-CHK85.
+      - FM-MECH107 (astra_max_ceres; `fm39/mech107_mplus_dominant_minus_repro.py`,
+        rerun: PASS): (M+) on the dominant-minus-core class.  The
+        background is `s^a Z^b (U_n(x) - U_n(y)) prod_i (U_(m_i)(x) +
+        U_(m_i)(y))` with `n >= M` and `a >= eta` (4).  The proof is uniform
+        in the number and size of the plus cores and in `a, b`.  The
+        one-background-core `+2` step follows.  Open: the two-core ordering
+        `B = (+1)^a (+2)^b (-m, +n)`, `m < n` (FM-MECH117).
+      - FM-MECH110 (luna_max_mercury; `fm39/mech110_mplus_h1_repro.py`, rerun:
+        PASS): (M+) with `+2` for every pair-free H = 1 background
+        `(eps 1)^a (+2)^b`, and the stated character-valued core extensions.
+        The FM-MECH82/92 criterion needs `min(a,e) >= 2`, so this is a new
+        direct proof.  Open: arbitrary signed cores (FM-MECH118).  Check:
+        FM-CHK85.
+      - FM-SEC143 (luna_max_jupiter): the atlas with FM-SEC139, FM-MECH85
+        (`h >= 1`, tails) and FM-MECH87.  Phase 1 (sum `<= 60`, `h <= 3`)
+        is entirely covered.  Phase 0 (sum `<= 30`) leaves 1,203 lists, all
+        positive.  The filtered frontier starts at `delta = 8` with `k = 3`
+        non-distinguished cores, and `k = 4` appears among the first 20.
+        The verifier is a patched matcher run, not rerun by the main agent.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
