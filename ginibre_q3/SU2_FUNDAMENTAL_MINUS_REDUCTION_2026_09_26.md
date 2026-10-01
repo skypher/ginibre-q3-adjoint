@@ -11784,6 +11784,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - REMAINING for (E), `q >= 3`: larger anchors `3 omega/5 < X <= sigma/2`
           (forcing `omega/sigma < 5/6`), long arcs only, with
           `J >= 0` at `max(i_0, K)`.
+      - FM-MECH75 (astra_max_vulcan; `fm39/mech75_h1_scaling_sectors_repro.py`):
+        a relative-error theorem for the `H = 1` layer in two large sectors.
+        - Model: `G = (2M/sqrt pi) int h(y) A(y)^(-3/2) exp(-M^2/(4A(y))) dmu(y)`,
+          with `h(y) = (2-y)^e (2+y)^a (2+y^2)^b` and
+          `A(y) = e/(2-y) + a/(2+y) + 4b/(2+y^2)`.  One angle is Gaussian and
+          the other is integrated exactly; this keeps the quartic transition.
+        - Theorem: with `M = p + 1 >= 2^10` and `l = floor(log_4 M)`, the
+          bound `|F/G - 1| < 1/2` holds (so `F > 0`) in two sectors:
+          - `b <= a, e <= 4b`, `b >= 2^16`, `3M^2 <= 16 l b`;
+          - `r = min(a,e)`, `max(a,e) <= 4r`, `b <= r`, `r >= 2^22`,
+            `M^2 <= 2 l r` (fixed `b`, even `b = 3`, allowed).
+          These include words below the FM-MECH52 cutoff and the FM-MECH63
+          `384 M^2` cutoff, with cutoff `O(p^2/log p)`.
+        - No label-independent `D_0`; the `H = 1` layer stays open below these
+          sectors.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
