@@ -11284,6 +11284,31 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           integer `a, e >= 2`, both families), so nothing restates.
           Effort is split: an advisor on the `H = 1` strategy, and Ceres
           on the `H = 2` layer ((E) for `q >= 3`).
+      - FM-MECH55 (astra_max_ceres; `fm39/mech55_E_energy_repro.py`, rerun
+        exactly): (E) in two new regions, uniform in the gap `q`.
+        - Theorem: with `sigma = N + 2`, `Delta = a - e`, `X_k = 2k - N`,
+          `s = i - j >= 4`, `m = floor(s/2)` and `4|Delta| <= sigma`, both
+          signs of (E) hold, at every level and every `q`, in two regions:
+          - the band `sigma/4 <= X_j <= sigma/2`;
+          - the long interval `0 <= X_j <= sigma/2` with
+            `3m(X_j + 2m - 2) >= 16 sigma`.
+          Both signed slacks are positive definite there.
+        - Tools.
+          - A fixed quadratic energy `H` on consecutive coefficients, with
+            an exact square decrement on the right half.
+          - A rotation-then-contraction factorization of the recurrence
+            step, with two-step operator-norm bounds.
+          - An endpoint comparison.
+          - One fixed Bernstein certificate (bidegree (9,5), 60
+            coefficients, minimum 462163/32).
+          - 39,246 energy checks on 1,891 rows; the regions contain 34,034
+            row pairs, least slack 36; 705 Catalan reduction pairs.
+        - KILL (knob: separate optimization of the two endpoint directions):
+          the endpoint envelope fails at `(a,e,j,i) = (48,8,29,33)`
+          (squared deficit < 0), while the actual slack is positive.
+        - Open: coverage of the complement (region (10) of the report)
+          intersected with the failure sets of the short-arc, RF, LD and
+          metric criteria.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
