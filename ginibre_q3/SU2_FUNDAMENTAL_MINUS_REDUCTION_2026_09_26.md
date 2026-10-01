@@ -11531,6 +11531,37 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             before the checkpoint;
           - the larger R3 anchors with `e >= 4`, `omega >= 64`,
             `omega/2 < X <= sigma/2` and `X^2 < 4(e-1)(a+4)`.
+      - **FM-MECH64 (astra_max_minerva; `fm39/mech64_two_core_distance5_repro.py`,
+        rerun exactly in 6 s): two core labels on every {1,2} background,
+        through distance 5.**
+        - Combined half-angle identity: with `P_h = (1+z^2)^h P` and
+          `j = (N+n-m)/2`, `i = j + m + 1`,
+          `R_(n,m) = sum_h C(b,h) 2^(b-h) (D_(j+h)(P_h) - D_(i+h)(P_h))` and
+          `c_(n,m) = sum_h C(b,h) 2^(b-h) W_(i+h,j+h)(P_h)`.  At fixed list
+          distance `delta` these become polynomial in `b`, with
+          `R = T_delta - T_(delta-m-1)`.
+        - Theorem (PROVED): both compatible signs for two labels `n, m >= 3`,
+          every `b >= 1`, every level and all labels, at distances 3, 4, 5.
+          - Diagonal expansions `T_delta = sum_k A_k^(delta) q_k^2` in formal
+            Krawtchouk polynomials with `M = N - 2b`, e.g.
+            `A_delta = 1/(delta+1)` and
+            `A_(delta-1) = (N + 2 delta b - 2 delta + 2)/(delta(delta+1))`.
+          - Mixed square completions such as (9) at distance 5.
+          - 18 coefficient certificates; `b`-tails (12, 224, 1,944
+            polynomials); finite corners (376 and 13,368, minimum slacks 14
+            and 31); 16,746 character bridges.
+        - Theorem (PROVED): the strip `min(a,e) = 0`, every distance, every
+          `b`, all labels, via the antisymmetric cone (`s` and `Z` preserve
+          it).
+        - With H_AC_q (`d <= 2`), the two-core layer is closed through
+          distance 5 on every {1,2} background.  This removes the smallest
+          uncovered lists of the FM-SEC138 atlas (distances 3, 4).
+        - KILLs.
+          - Rank-one summand positivity: `(R,W) = (-1,0)` for the `P_1` part
+            of `P = (1-z^2)^2`, `n = m = 3`, against the total `(7,0)`.
+          - Insertion on the whole two-label moment cone: the abstract
+            `G = 1 + U_3 U_3 - U_2 U_2` has every two-label inequality, but
+            `ZG` has `R_(3,3) = 0 < 2 = c_(3,3)`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
