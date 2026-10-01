@@ -12812,6 +12812,34 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           Rule 1' removal has even weight and lowers the number of labels,
           Lemma R with FM-MECH102 would give FM3 for EVERY list: descend to
           a background with at most one label, where `g_p >= 0` trivially.
+      - Returns at 00:55 (verifiers rerun by the main agent: all PASS).
+        - FM-MECH112 (astra_max_minerva; `fm39/mech112_quartet_descent_repro.py`):
+          an exact quartet translation law, and a descent that preserves the
+          pair-free consumer (odd plus factors allowed in the fixed
+          background), with explicit infinite positive all-minus families.
+          Kill (knob: complete fusion-channel positivity).
+        - FM-MECH114 (astra_max_juno; `fm39/mech114_no1_subcone_repro.py`):
+          all-minus `k = 2` with no label-1 factor (`a = 0`) and at least one
+          odd non-distinguished core, by parity fusion and a binomial
+          certificate.  Also `delta = 8`, `k = 3` with maximum 6 or 7, by
+          exhaustive enumeration.  Kills: continuous relaxations of the
+          Krawtchouk row.
+        - FM-MECH117 (astra_max_ceres; `fm39/mech117_two_core_plus2_repro.py`):
+          the reversed two-core `+2` comparison for every `a, b >= 0` and
+          `3 <= m < n < p`, by exchanging the distinguished label with the
+          minus core before the dominant-minus argument; regions (8) for
+          even insertions with many plus cores.
+        - FM-CHK86 (luna_max_mercury): ACCEPT FM-MECH107 on its gap-restricted
+          cone (proof inequalities, parity and gap conditions, the finite
+          box).  The unrestricted cone action is false (exact
+          counterexample), so the statement keeps the gap restriction.
+        - FM-SEC150 (luna_max_mars): the FM-MECH115 method at `k = 3` through
+          `delta = 13`, with no failure.  Profile and box sizes grow
+          polynomially; the `-2` thresholds grow in steps.
+        - FM-SEC149 (luna_max_jupiter): the pair-free residual has 330 words
+          through sum 30 and 80,212 through sum 40, all positive (680 roots
+          after the pair-reduction tree in phase 0).  First pair-free
+          example: `(-1)^6 (-5)^2 (-6)^2`, value 4146.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
