@@ -11730,6 +11730,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             against the wrong model; a correctly scaled model may keep a
             margin.
         - Open: general labels-`<= 4` backgrounds in the residual (8).
+      - FM-MECH73 (astra_max_ceres; `fm39/mech73_E_central_anchor_repro.py`,
+        rerun exactly in 58 s): the very central anchors of (E), CLOSED,
+        uniformly in `e`.
+        - Lemma 2: the phase is fixed by reciprocity, using the centre
+          coefficient for even `N` and `c_(-1) = (-1)^e c_1` for odd `N`.
+          Each step turns by `theta` up to an error `arcsin(X_k/sigma)`.
+        - Lemma 3: anchor-dependent crossing bounds on long arcs
+          (`delta > 5/2` or `w > 13/5`, `53/20`, `21/10`, by range).  These
+          give (BE) through a fixed certificate (degrees (11,10), 132
+          coefficients, all `>= 0`), then Theorem C1 beyond.
+        - With FM-MECH66, every anchor `X <= 3 omega/5` is covered.  Census:
+          12,322 rows, 1,542,704 long pairs.
+        - KILLs (knob: an unnecessary strengthening):
+          - a uniform gap constant `delta >= 5/2` fails at
+            `(103,10,58,62)` (where (BE) and (E) hold);
+          - requiring `J(j,K) >= 0` at every larger anchor fails at
+            `(160,9,120,125)`, but all 50 later endpoints there are short
+            arcs satisfying (E).  So outer propagation needs a starting value
+            only on the long-arc branch.
+        - REMAINING for (E), `q >= 3`: larger anchors `3 omega/5 < X <= sigma/2`
+          (forcing `omega/sigma < 5/6`), long arcs only, with
+          `J >= 0` at `max(i_0, K)`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
