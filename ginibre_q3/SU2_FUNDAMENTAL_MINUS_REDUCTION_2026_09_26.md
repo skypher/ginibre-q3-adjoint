@@ -11724,6 +11724,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           grouped midpoint sums.  Remaining routes: per-row mixed Gram
           (parked) and a transfer invariant for the `e`-induction
           (FM-MECH65).
+      - FM-MECH65 (astra_max_juno; `fm39/mech65_transfer_cone_repro.py`,
+        rerun exactly): the transfer-cone route for the `H = 1` induction on
+        `e`.  Not closed.
+        - The exact two-component transfer `(m_0, m_1)` under `x - y`, with
+          the `b`-shift, was verified on 275 full U-coefficient vectors.
+        - KILLs:
+          - fixed-output Hankel positivity: uniform failure on required
+            seeds, with a negative leading coefficient at large labels for
+            every fixed shift of `b`;
+          - coupled block-Hankel: negative quadratic `-2680` on the actual
+            orbit into `(6,8,8)`;
+          - total positivity of the coefficient kernel;
+          - the one-step two-component order cone.
+          Knobs: the stated Hankel blocks and order conditions.
+        - Positive: the signed-character cone `C_-` is invariant under
+          `x - y` and `Z` and gives U-positivity.  But it contains only the
+          `a = 0` seeds (already known); `(x+y)` already has coefficient `-2`
+          at `(1,1)`.
+        - Status of `H = 1`, `d >= 6`: grouped midpoint false; transfer cone
+          only for `a = 0`; per-row mixed Gram parked.  What remains
+          unexcluded is a construction coupling output labels and `b`.
       - ADV-3 (astra_max_minerva, advisor: gap audit and red team;
         `fm39/adv3_onelabel_allb_search.py`, `fm39/adv3_cp_certificate_1422MM2.py`,
         both rerun exactly).
