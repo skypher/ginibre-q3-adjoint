@@ -11476,6 +11476,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `u`.  The menu separator there is not an all-slope obstruction.
         - Open: a uniform choice `beta(T, b, d)` with nonnegative Schur
           pivots.
+        - FM-SEC137 (luna_max_jupiter; `fm39/sec137_gram_census_repro.py`,
+          rerun exactly in 16 min).
+          - Bidiagonal LDL in each parity block: `P_r = A_r`,
+            `l_j = beta_j/P_j`, `P_(j+2) = A_(j+2) - beta_j^2/P_j`.
+          - On the 1,655-row grid (`T <= 30`, `b <= 12`, `6 <= d <= 14`):
+            - 1,146 rows are certified exactly (one-start search plus
+              rational LDL checks);
+            - 509 rows are unresolved by the search, not shown infeasible;
+              the first is `(5,12,11)`;
+            - no exact obstruction to a tridiagonal PSD member was found.
+          - No canonical closed-form `beta` was found.
+          - Main-agent check: 543 of the 1,655 rows have all coefficients
+            of `F_d` in `u` nonnegative, mostly for `M = T - 2b <= 6`.  Only
+            17 of the 509 unresolved rows are among them, leaving 492
+            spread over all `M`.
+          - Per-row certificates do not finish the layer, so this route is
+            parked as evidence.
       - ADV-3 (astra_max_minerva, advisor: gap audit and red team;
         `fm39/adv3_onelabel_allb_search.py`, `fm39/adv3_cp_certificate_1422MM2.py`,
         both rerun exactly).
