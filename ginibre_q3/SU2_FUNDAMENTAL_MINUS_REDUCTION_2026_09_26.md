@@ -13688,6 +13688,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         with flips: `W = 43` (ratio 1/3, `D_11 > 0`) and `W = 111` (ratio
         10/51).  Pluto also bounds the census arithmetic: table norms at most
         `2^125` through `W = 48`, so int128 is safe.
+      - FM-CHK94 (luna_max_neptune; `fm39/chk94_D_falsification.cpp`; main
+        agent reran `--mode check` and `--mode seeds` on the first seven
+        witnesses with the same per-witness counts; the `W = 1283` full scan,
+        about 4 h single-threaded, was not rerun).  No failure of (D) found:
+        - Every one of the eight ledger witnesses has a monotone removal
+          (1,037 removals scanned in full).  The removals are mostly
+          monotone: 35/36 at `W = 128`, 129/130 at `W = 427`, 161/162 at
+          `W = 540`, 135/136 at `W = 869`.  The smallest best margin is at
+          `W = 34` (`476553/498275`).
+        - Thirteen structured rows at `W = 500..3000` and eight one-step
+          mutants of the witnesses also pass.  Finite evidence only.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
