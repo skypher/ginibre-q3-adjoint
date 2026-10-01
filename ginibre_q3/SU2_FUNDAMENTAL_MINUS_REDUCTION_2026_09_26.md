@@ -13041,7 +13041,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - the four known single-rule counterexamples (`W = 34`, 427, 540,
             869), every `p`: the two rules never fail together and (S)
             holds (`fm39/sec160_WM_single.cpp`).
-          - Adversarial test in the residual: running.
+          - Adversarial test in the residual (`fm39/sec160_S_adversarial.py
+            600 260`): (S) is KILLED.  On `B = (-16, -13^6, -9^3, -7^3,
+            -3^3, -2, -1^11)` (`W = 164`), (S) fails at 9 residual `p`; on
+            `B = (-10, 7^12, 9^8)` (`W = 166`) at 2.  In both, Rule W alone is
+            monotone at every `p` and (D) holds; Rule M's failure there is too
+            large for the average.
+          - Remaining two-candidate statement: at least one of `R_W`, `R_M`
+            is monotone (never both failing).  No counterexample so far;
+            adversarial test running (`sec160_W_or_M_adversarial.py`).
         - Context: Rule W alone fails only at large `W` (Minerva 427, Juno
           540, Ceres 869), and is clean through `W = 48` exhaustively
           (FM-SEC157, Venus) and on 1,368,356 residual roots (FM-SEC158,
