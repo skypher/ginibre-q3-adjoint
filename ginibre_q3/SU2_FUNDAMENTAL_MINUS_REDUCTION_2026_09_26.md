@@ -8804,7 +8804,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; check pending) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
-  | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; check pending) — added 2026-10-01 |
+  | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL) — added 2026-10-01 |
 
   - Finite-range rows.  The table rows restricted to finite `(r, a)` or
     finite `(a, e)` cover all labels there, since larger labels fall
@@ -11157,7 +11157,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `3 <= b <= 16(p+1)^4 + 1 - nu`, list distance `>= 3`.  This is a
           finite `b`-range for each label, and the missing strength is
           uniformity in `b` there.
-        - Independent check: not yet launched.
+        - FM-CHK60 (luna_max_venus, fresh code): ACCEPT items 1-4 and 6.
+          - The `b = 2` reduction; the recurrence quadratic and `A > 0`.
+          - The quintic-discriminant coverage, all six plus six Bernstein
+            checks.
+          - The central and outer certificates (17,980 outer rows against
+            the continued-fraction interval) and `t = 0, 1`.
+          - An exact screen of all 231,624 folded residual rows with
+            `a <= 100`: positive, minimum 44.
+        - REPAIR item 5 (cutoff): Lemma 4 is stated for `b >= 1`, so
+          `b = 0` needs its own line.  Either IBP gives
+          `int w (1-z) <= 2 J_0/nu` and the same conclusion, or `b = 0` is
+          Theorem OL.  The reflection, IBP and Markov steps are accepted
+          (378 quadrature cases, least normalized slack 2.73; 66 exact
+          reflection checks).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
