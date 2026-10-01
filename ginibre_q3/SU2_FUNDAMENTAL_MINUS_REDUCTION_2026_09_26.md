@@ -8810,7 +8810,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | two core labels on a {1,2} background, `b = 1` copy of `hat S_2` | balanced backgrounds `a = e`, both signs, all labels (FM-MECH76 Thm 2; FM-CHK73); every `b`: the central band `4|Delta| <= sigma`, `sigma/4 + 2 <= n - m - 2b <= sigma/2`, `m >= 35 + 12b` (FM-MECH76 Thm 3) — added 2026-10-01 |
 | all `r` | two labels on the fundamental background ((E), `q >= 3`, both signs) | every row with anchor `j >= N/2` (the consumer's range): the regions of FM-MECH55..61, 66, 70, 73, 74 and the last anchors `X > 7 omega/10` (FM-MECH79); FM-CHK71 ACCEPT with that scope — added 2026-10-01 |
 | all `r` | one label `p <= 10` on any {1,2} background | all ratios and signs (FM-MECH78: Bernstein cutoffs plus 3,510,309 exact representatives; check FM-CHK72 running) — added 2026-10-01 |
-| all `r` | EVERY list at list distance 7 | all (FM-MECH80: exact distance-7 polynomial, tails `t >= 249` or `b >= 137` or `k >= 333`, Schur reduction, all-allocation finite part; FM-CHK74 items 1-3 ACCEPT, the 580-row check FM-CHK74b running) — added 2026-10-01 |
+| all `r` | EVERY list at list distance 7 | all (FM-MECH80: exact distance-7 polynomial, tails `t >= 249` or `b >= 137` or `k >= 333`, Schur reduction, all-allocation finite part; FM-CHK74 items 1-3 and FM-CHK74b ACCEPT) — added 2026-10-01 |
 | all `r` | every word of length `L >= 4` | minimum label `>= 2^(L-2) - 3`, and more generally `beta <= 1` (FM-MECH83) — added 2026-10-01 |
 | all `r` | `h >= 2` non-distinguished labels above the distance `delta`, any smaller labels | background weight `D <= min(delta + h - 2, 2 delta + 2)` (FM-MECH83) — added 2026-10-01 |
 | all `r` | one label `p` on a balanced or adjacent background (`|a - e| <= 1`) with `b` copies of `hat S_2` | `b <= min(a,e)` and `s^2 >= 4b(min(a,e) + 2)`, `p = 2s + |a - e|` (FM-MECH82) — added 2026-10-01 |
@@ -8823,7 +8823,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
     finished.  Proved (independent checks in brackets):
     - every list at distance `<= 7` (FM-MECH68 [CHK67], FM-MECH71
       [CHK69, repaired in FM-MECH80], FM-MECH80 [CHK74 items 1-3; 580-row
-      check pending]);
+      check, FM-CHK74b ACCEPT at 22:00]);
     - every list with `N >= 432(delta+1)^2` or `k >= 40 delta` (FM-MECH85
       [CHK76]);
     - every list with a non-distinguished label above `delta` (`h >= 1`;
@@ -12066,6 +12066,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             argument checks, but the checker has not reproduced the 580-row
             set or its minima.  This is delegated as FM-CHK74b.  Until it
             returns, distance 7 counts as proved with that check pending.
+          - FM-CHK74b (luna_max_neptune, fresh code): ACCEPT item 4.  The
+            regenerated residual set has exactly 580 rows and matches the
+            stated filter counts.  Direct enumeration of all admissible
+            clipped allocations gives minimum `24 F_7 = 0`, with no negative
+            row.  Distance 7 is closed and independently checked.
       - FM-MECH82 (astra_max_ceres; `fm39/mech82_h1_exterior_repro.py`,
         rerun: PASS): the `H = 1` consumer in combined rows.
         - `[U_p] g_(e,a,b) = T_b(k) - T_b(k+1)` with `k = (N+p)/2`.  The
@@ -12403,6 +12408,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           smallest `p`.  It lies outside the exterior theorem (FM-MECH82/92,
           which needs `p` large) and outside FM-MECH89 (`b <= a/5` at
           `a = e`).
+      - FM-MECH97 (astra_max_ceres; `fm39/mech97_h1_restricted_charging_repro.py`,
+        rerun: PASS).
+        - Kill (knob: charging from (E) alone, even with reciprocity and
+          shift compatibility).  A uniform counterfamily exists, so the actual
+          Krawtchouk recurrence is needed.
+        - Restricted charging theorem (5)-(6) (PROVED): when every proper
+          odd-gap chord in the window is `>= 0`, the outer chord is paid for
+          by two overlapping subwindows, each sweeping `<= pi`.  This gives a
+          new uniform H = 1 region for both parities, with no bound on `B`
+          or the extra label.
+        - Open: region (7), where some proper odd-gap chord in
+          `[k-B, k+B+1]` is negative.  FM-MECH99 targets the tight corner of
+          FM-SEC144 (`a = e`, `b ~ a`, small `p`).  Check: FM-CHK81.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
