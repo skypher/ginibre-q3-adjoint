@@ -13078,6 +13078,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         checks, including Juno's `(-1)^2 (+3)(+5)...(+47)`).  This is a small
         sample: the known Lemma W counterexamples (W = 427, 540, 869) were
         not in it, so it does not affect the kill.
+      - FM-MECH140 (luna_max_mars): Rule M is monotone on all-plus and
+        parity-aligned backgrounds, at every `p >= max`, by nonnegative
+        Clebsch-Gordan coefficients (claim, not rerun).  On mixed signs, Rule M
+        alone fails already at the max-class weight ratio
+        `rho = mult(max) max / max_v (v mult(v)) = 1/6`, where Rule W works.
+      - Main-agent sweep (`fm39/sec160_WM_exhaustive48.py`, running):
+        Lemma WM has zero failures over ALL pair-free `(B, p)` through
+        `W = 40` (81,808,160 cases), not only on the residual.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
