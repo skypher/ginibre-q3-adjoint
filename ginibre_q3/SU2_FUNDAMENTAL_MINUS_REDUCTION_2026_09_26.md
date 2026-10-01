@@ -11479,6 +11479,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - `omega/4 < X <= 2 omega/5` with `Y < 5 omega/8`;
           - `X > 2 omega/5`.
           Plus `J` at the first turning endpoint outside C1, C2.
+      - FM-MECH61 (astra_max_ceres; `fm39/mech61_E_checkpoint_repro.py`,
+        rerun exactly in 10 s).
+        - KILL of (BE) (knob: a parameter-only strengthening): for every
+          `h >= 4` an explicit long arc in R3 makes (BE) fail, and the
+          smaller-root condition also fails (at `h = 8`).  `J > 0` there.
+        - Theorem 2 (PROVED): `J(j,i) >= 0` at every endpoint, including
+          past the turning point, in two checkpoint regions, one for `e = 3`
+          (T3) and one for `e >= 4` with `X <= omega/2` (T4).  This covers
+          the whole infinite (BE)-failure family.  For `e = 3` with
+          `X^2 >= 3 sigma - 2`, RF gives (E) directly, so the turning
+          obligation is closed at `e = 3`.  Fixed remainder `omega < 64`:
+          1,105,010 pairs, least slack 67; 133,792 (T3) and 317,222 (T4)
+          instances.
+        - Lemma 3: on the inner endpoint lattice, the (BE)-successful
+          endpoints form one consecutive interval (a unimodality argument
+          via a cubic).  So R1 and R2 reduce to (BE) at the first long
+          endpoint `i_0`.
+        - Remaining for the two-label layer (b = 0):
+          - (BE), or a row-based bound, at the initial crossing `i_0`
+            before the checkpoint;
+          - the larger R3 anchors with `e >= 4`, `omega >= 64`,
+            `omega/2 < X <= sigma/2` and `X^2 < 4(e-1)(a+4)`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
