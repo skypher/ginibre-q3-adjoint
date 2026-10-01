@@ -11050,9 +11050,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           LLm-S to the whole non-fundamental word, and keep the original
           list.)
         - FM-CHK59 (luna_max_eris, fresh code): ACCEPT items 1-3.
-          - Theorem 1: all scalar estimates, the sine certificate, the
-            rotation-energy lemma; 30,000 high-precision samples, worst
-            margin `0.00048`.
+          - Theorem 1: all scalar estimates, the sine certificate (slack
+            3523329/167772160) and the rotation-energy lemma.  High-precision
+            checks: 6,000 random signed comparisons (1,400 edge-biased) and
+            1,788 removable endpoint limits, minimum sampled slack
+            `9.2e-122` (at the edge, where both sides tend to 1).
           - Lemma 4.
           - Theorem 5: the weighted count, the monotonicity in `N` and
             `b`, and the recomputed `T_0`/`H_0` table.
