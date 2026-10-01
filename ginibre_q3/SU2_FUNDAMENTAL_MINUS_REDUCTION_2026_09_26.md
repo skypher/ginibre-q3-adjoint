@@ -13382,6 +13382,34 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           note: that list still has a flip descent, but only through the
           pair `(-4, -6)` with the distinguished `-6` (difference 2).  So
           pairs that use `p` and opposite-sign pairs are needed.
+      - FM-CHK95 (luna_max_eris, fresh code; `fm39/chk95_D_census_random_screen.py`,
+        rerun: identical).  ACCEPT FM-SEC164 through `W = 36`: 1,530,800
+        residual backgrounds, 6,590,648 `(B,p)` (this count includes the
+        cases where `B` holds `-sigma p`), 59,919,062 removal comparisons,
+        no (D) failure, all parents positive, minimum margin `22449/25937`.
+        A random screen at `W = 100..400` (2,000 backgrounds, 99,533
+        `(B,p)`, at most 12 factors, so only the few-factor regime) found no
+        failure of (D), Rule W, Rule M or the most-frequent-pair rule.
+      - FM-MECH149 (astra_max_minerva; `fm39/mech149_general_block_repro.py`,
+        rerun with `--census`: PASS, table reproduced).  General even-block
+        elimination.
+        - Exact identity for any even block `I` (`|I| = 2k >= 4`, may contain
+          `p`): all splits are bought by two-factor children with an integer
+          correction `h_c`; `h_c >= 0` gives a positive descent.  Sufficient
+          separation bound for `r = 2k >= 6`; knob: no bound `q >= f(D, M)`
+          independent of `k` can make the correction coefficientwise
+          nonnegative (`Q_11/Q_00 -> -4`).
+        - Using the actual pure coefficients of `C` proves an infinite
+          all-minus family (degree-10 polynomial identities).
+        - Obstruction (knob: paying for every degree-permitted mixed channel,
+          even adaptively): at one `W = 22` residual word all 55 proper even
+          sub-blocks fail both tests; a mixed-sign rescue keeping the
+          favorable mixed coefficient resolves it.
+        - Coverage through `W = 30` (fully pair-free denominator 718,951):
+          two-odd fusion, quartet separation and block tests reduce 89.37%;
+          the uniform separation theorem adds only 0.137%.  For comparison,
+          flip descent (FM-SEC166) reduces all but 265 of these cases
+          (99.96%).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
