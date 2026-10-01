@@ -8875,6 +8875,13 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       pair-free lists with 0 or `>= 4` odd labels.  (D) and FM3 also hold on
       a uniform many-ones region.  (D) is exhaustive on the residual through
       W = 40 (FM-SEC164).
+    - Update 05:30 (FM-SEC166): FLIP DESCENT.  If some double sign flip
+      does not increase `Phi`, an exact positive identity reduces the list
+      to lists with one fewer factor.  Through `W = 40` only 5,430 of
+      21,364,508 residual cases lack one, and on all of them the fixed
+      TopPair removal is monotone.  New single conjecture (FT): flip
+      descent or TopPair.  It survives every known killer of the earlier
+      rules.
     - No counterexample has been found anywhere.
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
     finished.
@@ -13230,6 +13237,52 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `a = 2 delta + 4` have `F_delta/P_delta -> 0`); in the `-2` sector
           the top mixed coefficient `2 Cat(delta-1) - Cat(delta)` is negative
           (`-572` at `delta = 8`).
+      - FM-SEC163 (luna_max_venus; `fm39/sec163_selector_census.py`,
+        `fm39/sec163_witness_masks.py`, `fm39/sec163_min_selector_sets.py`;
+        witness masks rerun by the main agent and identical; the W <= 40
+        census not rerun, its (D) count agrees with FM-SEC164).
+        - Over all 22,358,566 residual `(B,p)` through `W = 40`, every case
+          has 1 to 19 monotone removals.  Of 12 fixed selectors only Rule W
+          covers the whole range; Rule M misses 142 cases, the largest
+          allowed pair 40, the top two compatible factors 261,978.
+        - With the eight large witnesses (W = 128, 131, 34, 427, 540 and its
+          reflection, 869, 1283) there are eight minimum two-selector
+          portfolios, e.g. {Rule W, duplicate most frequent}.  These are
+          finite-screen portfolios, not descent rules.
+      - FM-SEC166 (main agent; `fm39/sec166_flip_descent_census.cpp`,
+        `fm39/sec166_flip_single.cpp`).  FLIP DESCENT, a second exact
+        descent next to (D).
+        - For factors `u, v` of `Lambda` with `C = Lambda - u - v` and `A_ab(C)`
+          the character table of `C`: `Q_uv = (Phi(Lambda) +
+          Phi(Lambda^(uv)))/2 = sum_(c in CG(n_u,n_v)) Phi(C, eps_u eps_v c)`
+          (`c = 0` counts `(1 + eps_u eps_v) Phi(C)`), and `Phi(Lambda) -
+          Phi(Lambda^(uv)) = 4 eps_v A_(n_u n_v)(C)`.  So if `eps_v
+          A_(n_u n_v)(C) >= 0` for some pair, `Phi(Lambda) >= Q_uv >= 0` by
+          induction on the number of factors.  This is FM-MECH143's block
+          identity at block size 2, used as a descent; it fails exactly at
+          local minima of `Phi` under double sign flips.
+        - Census (exhaustive): `Lambda = B + (sigma p)`, `sigma = (-1)^(minus
+          count of B)`, so `FM3(Lambda) = 2 g_p(B)`.  Of the 21,364,508
+          pair-free residual `(B,p)` through `W = 40` (994,058 cases where
+          `B` holds `-sigma p` are excluded; they contain a pair), only 5,430
+          have no flip descent.  By weight: 2, 4, 30, 14, 34, 33, 82, 66,
+          146, 128, 274, 267, 416, 408, 686, 629, 1102, 1109 at
+          `W = 23..40`.
+        - On all 5,430, (D) holds, and the fixed rule TOPPAIR is monotone:
+          remove the two factors of `B` of equal parity with the largest
+          total label (ties: larger max label).  TopEven (the largest even
+          label) is monotone whenever `B` has an even label; 8 no-flip lists
+          have none, e.g. `B = (-1,3,5,7,9,11)`, `sigma p = -14`.
+        - All eight large selector killers have a flip descent: W = 34
+          (Rule M), 128, 131 (Rule 1'), 427, 540 and its reflection, 869
+          (Rule W), and 1283 (Lemma WM), e.g. `(-11,+3)` at W = 1283.
+        - CONJECTURE (FT): every pair-free residual `(B,p)` has a flip
+          descent or a monotone TopPair removal.  With FM-MECH102,
+          FM-MECH143 and the proved strata, (FT) gives the full FM3 cone.
+          Neither part works alone: flip descent fails at sign minima
+          (FM-MECH143's witness), and TopPair alone misses 261,978 residual
+          cases at `W <= 40` (FM-SEC163).  Proof attempt: FM-MECH150
+          (astra_max_vulcan); falsification: FM-SEC167 (luna_max_venus).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
