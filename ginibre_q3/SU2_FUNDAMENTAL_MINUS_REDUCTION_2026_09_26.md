@@ -11305,6 +11305,42 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Biggest unknown (all three advisors): a mechanism keeping the
           angular cancellation across mixed label scales, i.e. whether the
           angular average admits a constant ordinary-count `H*`.
+      - ADV-1b (astra_max_juno, advisor follow-up; `fm39/adv1b_test1.py`,
+        `fm39/adv1b_test2.py`, both rerun exactly): the `H = 1` layer at
+        `d >= 6`.
+        - Mixed squares survive.  With `c_j^M(xi)` the Krawtchouk-type
+          recurrence polynomials (`M = T - 2b`, `xi = a - e`), every requested
+          row has an exact rational identity
+          `F_d = sum alpha_j c_j^2 + sum beta_(j,nu) (c_j + theta c_(j+2))^2`
+          with nonnegative weights.  That covers 26 rows with `T in {13,14}`,
+          `b = 3..9`, `d = 6, 7`, plus six rows up to `d = 15`.  The Gram
+          matrices are tridiagonal within the even and odd blocks, and the
+          identities hold for every real `xi`.  The shift `M = T - b` alone
+          fails (negative constant weight at `(36,14,14)`).
+        - Exact finite SU(2) midpoint formula (Lemma 2).  If `U` is Haar and
+          `V` has density `chi_1(V)^2` with respect to Haar, then `UV` and
+          `UV^(-1)` are independent Haar elements.  (Main-agent check: the
+          tilted eigenangle density `~ sin^2 theta cos^2 theta` makes `V^2`
+          Haar.)  The EVEN form becomes `2^L (||M_0||^2 + <M_0, M_2>)`: a
+          square plus one explicit spin-2 coupling.  This is a group-level
+          refinement of the torus rotation M0 recorded earlier (whose form
+          `f_0^2 + f_0 f_2 - 2 f_1^2` is Lorentzian).
+          - For `H = 1` it gives an explicit channel sum over `(l, j)` with
+            nonnegative angular weights.  Individual channels can be
+            negative, but grouped sums over `l` at fixed `j` (or over `j`
+            at fixed `l`) were nonnegative in all 105 evaluated profiles
+            through `d = 12`; the four requested rows agree exactly.
+        - The pair induction on `e` closes algebraically as a
+          two-component transfer system in `(m_0, m_1)` with a `b`-shift.
+          Pair positivity alone is equivalent to the target, so an
+          invariant is still needed.  `(x-y)^3 = Psi_30 - 3 Psi_21 + 5 Psi_10`
+          shows why the antisymmetric cone does not extend directly.
+        - KILL (scoped): output reindexing within a common imbalance class;
+          separator `-346112/1155` at `(T,b,d) = (13,3,6)`.
+        - Recommendations: (1) a recursive (Schur-pivot) construction of the
+          tridiagonal mixed Gram matrices; (2) grouped Jacobi positivity
+          from the midpoint formula; (3) a transfer-invariant cone for the
+          `e`-induction.
       - ADV-3 (astra_max_minerva, advisor: gap audit and red team;
         `fm39/adv3_onelabel_allb_search.py`, `fm39/adv3_cp_certificate_1422MM2.py`,
         both rerun exactly).
