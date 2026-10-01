@@ -8822,7 +8822,9 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
         the quadratic cutoff (FM-MECH52));
       - the (E) regions of FM-MECH55, 58, 59, 60 (balanced central
         anchors; far anchors; C1, C2) with outer propagation (FM-MECH57);
-        FM-MECH55/56/57 are now independently checked (FM-CHK63).
+        FM-MECH55/56/57 are now independently checked (FM-CHK63), and
+        FM-MECH58/59/60 too (FM-CHK64; the FM-MECH59 terminal step was
+        repaired by an explicit identity).
     - Open:
       - (a) the `H = 1` layer at distance `>= 6` with `b >= 3`,
         `a, e >= 2` (per-row Gram certificates parked, FM-SEC136/137);
@@ -11492,6 +11494,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           - `omega/4 < X <= 2 omega/5` with `Y < 5 omega/8`;
           - `X > 2 omega/5`.
           Plus `J` at the first turning endpoint outside C1, C2.
+      - FM-CHK64 (luna_max_venus, fresh code).
+        - ACCEPT FM-MECH58: all certificates regenerated (K6, K8, the band,
+          gap 4/5).
+        - ACCEPT FM-MECH60 for the regions C1, C2.
+        - REPAIR FM-MECH59: Lemmas 1-3, the case division, the RF step and
+          the 100-case remainder are accepted.  But the terminal case
+          `i = N + 1` cited Newton's inequality, which does not apply
+          directly to a mixed-sign row.  Replacement (verified by the main
+          agent symbolically and on all integer rows with `a < 40`): with
+          `b = a - e >= 2`,
+          `4(N-2) D_3 - (N+1) c_3^2
+          = e(b+e)(b^4 - b^2 + 12b(e-1) + 12(e-1)^2)/3 > 0`.
+          By `c_(N-k) = (-1)^e c_k`, `D_(N+1) = 0` and integrality, this
+          gives `D_j >= |c_j|` at `j = N - 3`.  So the far-anchor theorem
+          stands with this step replaced.
       - FM-MECH61 (astra_max_ceres; `fm39/mech61_E_checkpoint_repro.py`,
         rerun exactly in 10 s).
         - KILL of (BE) (knob: a parameter-only strengthening): for every
