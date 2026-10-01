@@ -13314,6 +13314,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             many factors: at least 15 at `W <= 40`, and at least 26 in the
             random search over `W = 40..160`.  The open question is a split
             by factor count.
+        - (FT) exhaustive through `W = 44` (main agent,
+          `fm39/sec166_flip_descent_census_w48.cpp`, int128 safe since table
+          entries are at most `4^44 * 2(p+1)`).  Of 66,116,748 residual cases,
+          14,108 have no flip descent; on all of them (D) holds and TopPair
+          is monotone.  No failure of (FT).
         - Single fixed flips fail often.  For example, the flip of two equal
           labels `r` fails on 10% (`r = 1`) to 39% (`r = 4`) of lists with a
           repeated `r` at `W <= 36`.  So (F*) is an existence statement.
