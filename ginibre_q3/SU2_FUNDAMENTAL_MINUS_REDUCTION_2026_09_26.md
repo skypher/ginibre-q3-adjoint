@@ -8802,6 +8802,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every word with labels `<= 3` | all (FM-MECH47, exponential ray suppression plus one fixed box; FM-CHK56) — added 2026-10-01 |
   | all `r` | every word with labels `<= 4` | all (FM-MECH48, uniform contraction lemma plus one box of 54,387,664 values; checker pending) — added 2026-10-01 |
   | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
+  | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49) — added 2026-10-01 |
 
   - Finite-range rows.  The table rows restricted to finite `(r, a)` or
     finite `(a, e)` cover all labels there, since larger labels fall
@@ -11008,6 +11009,40 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
               H_AC_q).
             - Two labels `n`: the minimum stays in `[2/5, 2/3]` through
               `n = 12`.
+      - **FM-MECH49 (astra_max_ceres; `fm39/mech49_uniform_margin_repro.py`,
+        rerun exactly): a label-uniform many-factor theorem.**
+        - Theorem 1 (edge margin, every `n >= 3`, `M = n + 1`):
+          `|U_n(2 sqrt z) +- U_n(2q sqrt z)| / [M +- U_n(2q)]
+          <= 1 - min{M^2(1-z), 1/2}/125`.  In particular
+          `c = 249/250` on `z <= 1 - 1/(2M^2)`.
+          - Proof: the FM-MECH48 trace identity; middle weights of
+            `Sym^n` keep a fixed fraction of the mass of `A_+-` (rotation
+            energy of order `n^2`); scalar sine bounds for `X = M sin(alpha)
+            >= 4`.  No limiting approximation is used.
+          - Main-agent check: 120,000 random high-precision tests,
+            concentrated near the edge, with no violation.
+        - Lemma 4 (positive region): Markov's inequality gives
+          `W_n >= 1 - C M^2 (1-z)` near `z = 1`.
+        - Theorem 5.  Every consumer word with `H` factors of label `>= 3`
+          (signs free), at every level and with any number of 1's and 2's
+          (all `N`, `b`), satisfies FM3 once a weighted count `T` of those
+          factors reaches `T_0(k) = O(log k)`, `k` the largest label.  In
+          plain count `H >= H_0(k) = O(k^2 log k)`, e.g. `H_0(5) = 19,612`
+          and `H_0(10) = 78,848`.  If every label is `>= eps (k+1)`, then
+          `H >= T_0/eps^2` suffices.  (At `k = 5` the FM-MECH48 cutoff
+          `H >= 71` is stronger.)
+        - Proposition 7 (residual of the full cone).  The residual is the
+          union over `k` of explicit finite sets `B_(k,new)`, minus the
+          proved strata.  Necessary conditions for a residual word: list
+          distance `d >= 3` with some label below `d`; LS, LR4 and LLm all
+          fail; no OL or proved (E) region applies.
+          - First front by factor count: one label `n >= 7` with one
+            `hat S_2` and a fundamental suffix,
+            `phi_r(hat S_n hat S_2 h_1^a)` and `phi_r(h_(n-1) hat S_2 h_1^a)`
+            at `d >= 3`.  This is exactly the q = 2 plus-W sign of (E)
+            (FM-SEC127..133).
+          - First front by maximum label: `k = 5`, `2 <= H <= 70`, first
+            core pattern `(3,5)`.
       - FM-SEC127 (luna_max_mars; `fm39/sec127_q2plus_audit_repro.py`, rerun
         exactly): the q = 2 plus sign of (E), uniformly in the label.
         - With `x = c_j`, `y = c_(j+1)` and the Krawtchouk recurrence, the
