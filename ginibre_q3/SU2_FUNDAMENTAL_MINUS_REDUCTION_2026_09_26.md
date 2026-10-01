@@ -11046,6 +11046,9 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           and `H_0(10) = 78,848`.  If every label is `>= eps (k+1)`, then
           `H >= T_0/eps^2` suffices.  (At `k = 5` the FM-MECH48 cutoff
           `H >= 71` is stronger.)
+        - (Residual-filter wording repaired by ADV-3: apply LS, LR4 and
+          LLm-S to the whole non-fundamental word, and keep the original
+          list.)
         - Proposition 7 (residual of the full cone).  The residual is the
           union over `k` of explicit finite sets `B_(k,new)`, minus the
           proved strata.  Necessary conditions for a residual word: list
@@ -11141,6 +11144,47 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           finite `b`-range for each label, and the missing strength is
           uniformity in `b` there.
         - Independent check: not yet launched.
+      - ADV-3 (astra_max_minerva, advisor: gap audit and red team;
+        `fm39/adv3_onelabel_allb_search.py`, `fm39/adv3_cp_certificate_1422MM2.py`,
+        both rerun exactly).
+        - No positivity theorem is affected.  FM-MECH45, 46, 49 and 50
+          verifiers were rerun; the FM-MECH47/48 analytic cutoffs replayed.
+        - REPAIR (bookkeeping) of the FM-MECH49 Prop. 7 residual filter.
+          - (i) LS, LR4 and LLm-S must be applied to the WHOLE
+            non-fundamental word, `hat S_2` factors included (LS: each
+            `hat S_2` adds 8/3 to `Lambda`; LR4: adds 8 to `L`).  Testing
+            only the labels `>= 3` is invalid.  Witness:
+            `phi_2(hat S_8 hat S_2^5) = 560` with the nonzero cross term
+            `E[d^4 U_2(y) U_8(x) U_2(x)^4] = 33` (both recomputed by the
+            main agent).
+          - (ii) The displayed necessary conditions are not an exact
+            membership test: `phi_5(h_4^4 h_1^2) = 1600` satisfies them, but
+            its integrand is a square.
+          - (iii) Re-encoding `-2` as `-1, +1` can hide an exclusion: the
+            list `(-2,-2,+2,+7,+7)` is covered by FM-MECH39 (distance 3, no
+            label 1).  A coverage checker must keep the original list.
+        - Targeted exact counterexample searches found no negative and no
+          non-support zero:
+          - one large label at distances 3..6: 40,431 sign cases;
+          - mixed scales with 2..5 core factors: 116,710;
+          - labels up to 1,594: 12,090;
+          - one-label profiles over `b`: 86,838 U-coefficients, among them
+            58,654 residual candidates (`b >= 3`, `n >= 7`, distance `>= 3`),
+            least coefficient `[U_7] g_(3,4,3) = 32`;
+          - (E) rows: 1,075,304 inequalities.
+        - Proposition 1: every list `(1^4, 2^2, M, M+2)`, `M >= 4`, has an
+          explicit seven-atom H_AC certificate (nonradial, list-dependent
+          autocorrelations), and every FM3 value there is `>= 24`.  B fails
+          for `(1^7, 5)` while `f = (1/2) p*p + (5/2) delta_0` (H_AC).
+        - Controls.  The common-radius normalization has
+          `K^2 (1 - R^2) -> 17/10`, so it cannot give a label-independent
+          per-factor loss.  The generating polynomial is not stable
+          (`1 + z_1 z_2` vanishes at `z_1 = z_2 = i`).
+        - Ranked recommendations: (1) uniform-in-`b` positivity on the actual
+          one-label profiles; (2) list-dependent H_AC at q = 0 with
+          nonradial factors, starting from Prop. 1 at distance 3;
+          (3) exhaustiveness of the (E) criteria for `q >= 3`; (4) a
+          label-independent `H*` (low-medium confidence).
       - ADV-1 (astra_max_juno, advisor; `fm39/adv1_distance3_repro.py`, rerun
         exactly).
         - **Lemma 1 (PROVED; main-agent algebra check): the `H = 1` layer at
