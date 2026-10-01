@@ -12731,6 +12731,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `SU(2) x SU(2)` character (all `G_B >= 0`), e.g. all-plus
         backgrounds and the pair-free H = 1 slice.  Exact two-core screen:
         no failure.  Open: the same two-core ordering as FM-MECH117.
+      - FM-MECH119 (luna_max_mars).  Kill (knob: the POINTWISE shifted
+        coefficient kernel `K^Delta_ij(c) = K_ij(c) - K_(i-1,j-1)(c)` of
+        FM-MECH85).  For the pair-free all-minus `(-4)^20` with `p = 40`,
+        `delta = 20`, the value is `F_20 = p_20 - p_19 = 113,693,884,711`
+        (direct fusion gives `2 F_20`).  At `c = 99/100`, `K(c)` has 21
+        positive pivots, but `K^Delta(c)` has a negative pivot at index 18.
+        The integrated (over `c`) version is not excluded (FM-MECH120).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
