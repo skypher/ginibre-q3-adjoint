@@ -12768,6 +12768,16 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Surviving conjecture (P): every cumulative prefix
           `sum_(s <= t) T_s` is `>= 0`.  It passes Pluto's screens, but has
           not been tested adversarially (FM-MECH122).
+      - FM-MECH120 (luna_max_mars).  The c-integrated kernel
+        `bar K_ij = sum_h 2/(i+j-2h+2) C(i+j-2h, i-h) v_(i+j-2h,h)`
+        (measure `2c dc`) has `bar K_dd = p_d`, so the consumer is the corner
+        `(bar K - shift)_dd = p_d - p_(d-1)`.  Its shifted version is PSD on
+        `(-4)^20` and on the tight Jupiter and Juno backgrounds.
+        - Kill (knob: positivity on every feature direction).  On
+          `(-3)^5 (-5)^6` (`delta = 20`) the shifted kernel has a negative
+          pivot exactly at index 20, while `F_20 = 4,598,165 > 0`.  So a PSD
+          certificate of the shifted kernel is stronger than FM3 at the
+          consumer index itself.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
