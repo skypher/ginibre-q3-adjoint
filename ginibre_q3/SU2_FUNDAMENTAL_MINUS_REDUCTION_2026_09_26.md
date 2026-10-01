@@ -13603,6 +13603,62 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         positive flip: `B = (+2)^8 (-3)^8 (-5)^8 (-8)^10 (-12)^11`,
         `sigma p = -268`, flip `(+2,+2)` = 26,942,364.  Finite sample; not
         a census.
+      - TRIPLE-FLIP IDENTITY (main agent; `fm39/sec166_triple_flip_identity_check.py`,
+        198 random cases, any `p`, signs and same-parity pair).  For a
+        same-parity pair `(a, b)` of `B`, `C = B - a - b`, `Lambda = B +
+        (sigma p)`, and the flip values `D_uv = eps_v A_(n_u n_v)(Lambda - u
+        - v)`:
+          `g_p(B) = T_1 + (D_ab + D_ap + D_bp)/2`,
+          `T_1 = sum_(c in CG(a,b)) sum_(s in CG(p,c)) g_s(C)`.
+        - Proof: of the four channel blocks of `g_p(B)`, the both-in-`x`
+          block is `T_1`.  The other three blocks `T_2, T_3, T_4` satisfy
+          `D_ab = T_3 + T_4`, `D_ap = T_2 + T_4`, `D_bp = T_2 + T_3`, using
+          `G_C(t,s) = sigma_C G_C(s,t)`.
+        - For a single even label `e`: `g_p(B) = sum_(s in CG(p,e))
+          g_s(C) + D_(e,p)`.
+        - Since `s = p` occurs in every `CG(p,c)` (`c` even, `c <= 2p`):
+          `g_p(B) - g_p(B - R) = [T_1 - g_p(C)] + (D_ab + D_ap + D_bp)/2`,
+          with `T_1 - g_p(C) >= min(a,b) g_p(C) + (other g_s(C)) >= 0` by
+          induction.
+        - Consequences:
+          - a nonnegative triple sum `D_ab + D_ap + D_bp` makes that removal
+            monotone, and `D_(e,p) >= 0` makes the removal of `e` monotone;
+          - on a no-flip list, TopPair holds iff the same-side surplus
+            `T_1 - g_p(C)` pays `(|D_ab| + |D_ap| + |D_bp|)/2`.
+          So (FT) needs upper bounds on these three flips, not their signs.
+      - FM-MECH157 (astra_max_ceres; `fm39/mech157_ratio_split_kill_repro.py`,
+        rerun: PASS; witness cross-checked by the main agent with
+        `fm39/sec166_flip_single.cpp` and `sec162_gp_single.cpp`).  KILL of
+        the ratio split (knob: a fixed cutoff in `w_TP/delta` alone).
+        - (F*) at `c = 1/2` is false: `Lambda = (-40,+42,-44,+46,+48,+50,
+          +52,+54,+56,+58,+60,+62)`, `p = 62`, `W = 550`, `delta = 244`, `w_TP =
+          118 < 122`.  All 66 flips are strictly negative (max
+          -34,349,665).  TopPair works: `g_62 = 453,207,534,222,864`, child
+          179,646,349,605.
+        - Infinite no-flip family `n_i = 2(t+i)`, minus at indices 1, 2, `t >=
+          1024`: `w_TP/delta -> 2/5`.  All flips are negative and TopPair is
+          monotone there (degree-8 and degree-10 Newton certificates).
+        - With the census TopPair failure at ratio `3/7` (`B = (-1)^13
+          (-2)(-3)^5(-4)`, `p = 6`), no constant `c` splits the residual.
+          (FT) survives.
+      - FM-CHK97 (luna_max_mars, fresh code; `fm39/chk97_walsh_census_check.cpp`,
+        main-agent rerun of `N = 6, T <= 120` and `N = 8, T <= 100/84`:
+        identical).  ACCEPT the few-factor Walsh census: every requested count
+        matches (residual multisets, patterns, no-flip patterns, zero TopPair
+        failures, the all-pattern TopPair counts, the `W <= 40` no-flip
+        counts).  Multiplicities come from inclusion-exclusion, and 80 sampled
+        no-flip patterns pass a direct two-variable evaluation.
+      - FM-MECH154 (astra_max_vulcan; `fm39/mech154_F1_sectors_repro.py`,
+        rerun: PASS).  (F1) is false (the `W = 48` census witness).  What
+        stands:
+        - (F1) for at most six factors, and for a seven-factor sector (six
+          odd background labels with two 1's, even maximum `p`);
+        - (F_m) for at most six factors;
+        - the shifted-label recurrence `(T+4) D_11 = 4(r-2) Phi((+1)^(r-2) C)
+          + 4 sum_v (n_v+1) eps_v A_(1,n_v-1)((+1)^(r-2)(C-v))`;
+        - a witness where every flip incident to a 1 is negative but
+          `(+2,+2)` works, and one with multiplicity 5 where every
+          equal-label flip is negative.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
