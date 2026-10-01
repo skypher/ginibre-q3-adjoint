@@ -8847,11 +8847,11 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       `k >= 2` non-distinguished labels `>= 3`.  Pair-free lists with
       `k <= 1` are covered by OL, FM-MECH52, (E) and FM-MECH64 (FM-MECH64:
       FM-CHK83 ACCEPT; the reduction itself: FM-CHK82 pending).
-    - Update 23:10 (FM-MECH106): the whole cone follows from the two
-      insertion-monotonicity lemmas (M+) and (M-) on pair-free backgrounds
-      (conjectures with about 900,000 exact checks, no violation).  The two
-      open routes are (A) prove (M+) and (M-), or (B) prove the pair-free
-      `k >= 2` residual directly.
+    - Update 23:10 (FM-MECH106): reduction to two monotonicity lemmas (M+)
+      and (M-).  CORRECTED 23:45: both are false as stated (see the
+      correction entry; part of the screening was vacuous by parity).  Only
+      (M+even) and the T2 case survive.  Route B (pair-free `k >= 2`
+      directly) is the main route.
     - No counterexample has been found anywhere.
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
     finished.
@@ -12622,6 +12622,42 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - FM-MECH104 (luna_max_mars): an exact kernel sum with a ballot-walk
           formula for all-minus backgrounds.  Kill (knob: termwise kernel
           positivity); the aggregate stays positive.
+      - **CORRECTION (main agent, 23:45) to FM-SEC147 and FM-MECH106: route A
+        is killed as stated.**
+        - Screening error.  When an inserted or removed pair has odd total
+          weight, the smaller background has `g_p = 0` by parity at the same
+          `p`, so the comparison is trivially true.  It is also useless for a
+          descent, since it assumes what it should prove.  This made vacuous:
+          the `(-n,-m)` screen (`sec147_mono_minus_nm.py`) whenever `n + m`
+          was odd; mode 1 of `sec147_monotone_screen.cpp` likewise; and the
+          "two largest" test, which counted odd-sum removals.  The other
+          FM-SEC147 screens (`+even`, `(+odd, +odd)`, `(-n,-n)`) have even
+          weight and are not affected.
+        - Kills (exact, even-weight).
+          - (M-) as stated: inserting `(-2,-2)` into the all-minus
+            `(-5, -3^6, -1^5)` lowers `g_6` from 713,552 to 243,743.  Other
+            witnesses: `(-8,-2)`, `(-2,-4)`.
+          - (M+) for odd pairs: inserting `(+1,+1)` into
+            `(-9^5, 4^6, 12^3)` lowers `g_13`; also `(+3,+3)`, `(+1,+3)`,
+            `(+5,+1)`.  This holds even when the pair is the two largest odd
+            plus labels.
+          - Single even MINUS insertions: `-4` into
+            `(1^5, 2^5, 5^3, 12^4)` lowers `g_12`.
+          - The majority-by-weight removal rule on minus and odd-plus
+            backgrounds: removing `(-12, -2)` from
+            `(-12, -9^6, -5, -3^6, -2, -1^5)` raises `g_12`.
+        - Survivors, with even weight and adversarial search, no violation:
+          - (M+even), one even PLUS label (`fm39/sec147_mplus_adv.py ... even`);
+          - odd plus pairs into backgrounds with at most one minus label
+            (T2).
+        - Conjecture (D): for every pair-free `B` and admissible `p`, SOME
+          removal (one even label, or two labels of even total weight) does
+          not increase `g_p`.  It holds on 56,542 random backgrounds; an
+          adversarial test is pending.  Without a rule (D) does not give a
+          proof.
+        - FM-MECH106's logic (descent plus base lists) stays valid, but its
+          hypotheses (M+) and (M-) are false as stated.  Route B (pair-free
+          `k >= 2` directly) and possible rule-based descents remain.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
