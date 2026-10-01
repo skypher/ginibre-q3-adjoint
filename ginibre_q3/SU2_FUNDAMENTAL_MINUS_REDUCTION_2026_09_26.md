@@ -8852,6 +8852,10 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       correction entry; part of the screening was vacuous by parity).  Only
       (M+even) and the T2 case survive.  Route B (pair-free `k >= 2`
       directly) is the main route.
+    - Update 00:50 (FM-SEC148/151): a single conjectural lemma, LEMMA R
+      (the Rule 1' removal never increases `g_p`), would give the whole cone
+      with FM-MECH102.  It survives an exhaustive sweep (W <= 32, for Rule 1)
+      and adversarial search to W = 140 (Rule 1').
     - No counterexample has been found anywhere.
   - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
     finished.
@@ -12778,6 +12782,36 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           pivot exactly at index 20, while `F_20 = 4,598,165 > 0`.  So a PSD
           certificate of the shifted kernel is stronger than FM3 at the
           consumer index itself.
+      - **FM-SEC148 (luna_max_venus) and FM-SEC151 (main agent): a monotone
+        descent rule.**
+        - FM-SEC148, exhaustive: every pair-free background of total weight
+          `W <= 32` (835,218 backgrounds with `>= 2` factors; 8,839,302
+          admissible `(B,p)`; 67,964,688 comparisons).  Conjecture (D)
+          holds throughout.  Rule 1 has zero failures there: remove two
+          copies of a most frequent label (ties: smallest label); if all
+          multiplicities are 1, the largest same-parity pair; else the
+          smallest even label.  It does not depend on `p`.  Three
+          alternative rules fail, with smallest witness
+          `(-1)^15 (-2)^2` at `(W,p) = (19,3)`.
+        - FM-SEC151 (`fm39/sec151_rule1_counterexample.py`): Rule 1 FAILS at
+          `W = 97`.  For `B = (-1^2, 2^2, 6^2, 7^2, 8^2, 9^2, 10^2, 11)` and
+          `p = 11`, all multiplicities tie, so the rule removes `(-1,-1)`,
+          and `g_11` rises from 4,589,803,663 to 6,291,848,748.  Twenty-two
+          other removals are monotone there, including every single even
+          plus label.
+        - Rule 1' = remove an even plus label first (smallest), else Rule 1.
+          Adversarial hill-climbing finds no violation: 32 runs of 300 s at
+          `W <= 100` (`sec151_rule1p_adversarial.py 300 100
+          evenplus_first`), and 32 runs of 420 s at `W <= 140` biased to
+          backgrounds without even plus labels and with near-tied
+          multiplicities (`sec151_rule1p_partb_adversarial.py 420 140
+          partb`).  The only zeros are trivial backgrounds.
+        - LEMMA R (conjecture): the Rule 1' removal never increases `g_p`.
+          It splits into (R-a) = (M+even) and (R-b), the duplicate-first
+          removal on backgrounds without even plus labels.  Since every
+          Rule 1' removal has even weight and lowers the number of labels,
+          Lemma R with FM-MECH102 would give FM3 for EVERY list: descend to
+          a background with at most one label, where `g_p >= 0` trivially.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
