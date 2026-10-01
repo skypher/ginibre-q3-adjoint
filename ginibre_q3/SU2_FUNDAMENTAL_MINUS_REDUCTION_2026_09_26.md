@@ -8854,7 +8854,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       directly) is the main route.
     - Update 00:50 (FM-SEC148/151): a single conjectural lemma, LEMMA R
       (the Rule 1' removal never increases `g_p`), would give the whole cone
-      with FM-MECH102.  It survives an exhaustive sweep of Rule 1' through
+      with FM-MECH102.  KILLED 01:15 (counterexamples at W = 128, 131; see
+      the KILL entry); only the existence form (D) survives.  It survives an exhaustive sweep of Rule 1' through
       W = 40 (FM-SEC152: 81.8M cases, zero failures) and adversarial
       search to W = 140.
     - No counterexample has been found anywhere.
@@ -12876,6 +12877,36 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - The printed verifier had a duplicated struct block (a
           transcription error).  The fm39 copy deletes the duplicate and
           reproduces the published counts exactly.
+      - **KILL (01:15): LEMMA R (Rule 1') is FALSE as stated.**  Exact
+        counterexamples (FM-MECH124 astra_max_minerva, FM-MECH125
+        astra_max_juno; checked independently by the main agent with its own
+        two-spin recursion, `fm39/sec155_lemmaR_counterexamples.py`):
+        - `B = (-1)(-2)^2 (-3)^2 (-5)^2 ... (-15)^2` (all-minus, `W = 131`),
+          `p = 15`.  The rule removes `(-2)^2`; `g_15` goes from
+          703,572,078,442 to 1,087,917,863,463.
+        - `B = (-1)^2 (+3)^2 (+5)^2 ... (+15)^2` (`W = 128`), `p = 16`.  The
+          rule removes `(-1,-1)`; `g_16` goes from 214,784,436,431 to
+          296,201,364,755.  Reflecting the odd signs gives a witness with a
+          uniquely most frequent label, so it is not a tie artifact.
+        - Knob: the prescribed frequency-based selection.  In both witnesses
+          another removal is monotone (for example `(-15)^2` in the first),
+          so the existence form (D) is not refuted.  FM-SEC152's exhaustive
+          range `W <= 40` and the adversarial search to `W = 140` missed
+          these structured families (every label doubled, a run of odd
+          labels).
+        - FM-MECH122 (luna_max_pluto): REJECT conjecture (P) (cumulative
+          prefixes).  It fails for the pure-core `(4^24, -)` word at every
+          choice of the minus factor.
+        - FM-MECH126 (luna_max_mars): the distinct-label step of Rule 1'
+          (steps 3-4) is proved for lengths 2, 3 and 4 (claim, not rerun).
+        - FM-CHK87 (luna_max_mercury): ACCEPT FM-MECH114 (the parity-fusion
+          subcone and the `delta = 8`, `k = 3` frontier for maximum 6 or 7)
+          and FM-MECH117 (the reversed two-core `+2` comparison).
+        - Status: the cone is NOT proved.  It reduces (FM-MECH102) to
+          pair-free lists with `k >= 2`.  The open descent statement is now
+          (D): some even-weight removal is monotone for each `(B, p)`.  (D)
+          is exhaustive for `W <= 32` (FM-SEC148), but no selection rule is
+          known.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
