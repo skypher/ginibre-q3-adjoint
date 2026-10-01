@@ -8808,6 +8808,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | EVERY list at list distance 5 or 6 | all (FM-MECH71; FM-CHK69: item 1 accepted, two repairs pending in FM-MECH80); every distance `delta` once `max(t,b,k) >= (100 delta)^(300 delta^2)` (FM-MECH71) — added 2026-10-01 |
   | all `r` | every list, any distance `delta` | `N >= 3200(delta+1)^3 + 760(delta+1)^2`, where `N = t + 2b + k` counts the non-distinguished factors after splitting non-distinguished `-2`; also the integer test (1), and `N >= 380(delta+1)^2` when the signed label-3 count is 0 (FM-MECH77; check FM-CHK70 running) — added 2026-10-01 |
 | all `r` | two core labels on a {1,2} background, `b = 1` copy of `hat S_2` | balanced backgrounds `a = e`, both signs, all labels (FM-MECH76 Thm 2); every `b`: the central band `4|Delta| <= sigma`, `sigma/4 + 2 <= n - m - 2b <= sigma/2`, `m >= 35 + 12b` (FM-MECH76 Thm 3) — added 2026-10-01 |
+| all `r` | two labels on the fundamental background ((E), `q >= 3`, both signs) | every row: the regions of FM-MECH55..61, 66, 70, 73, 74 and the last anchors `X > 7 omega/10` (FM-MECH79); union check FM-CHK71 running — added 2026-10-01 |
+| all `r` | one label `p <= 10` on any {1,2} background | all ratios and signs (FM-MECH78: Bernstein cutoffs plus 3,510,309 exact representatives; check FM-CHK72 running) — added 2026-10-01 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -11901,6 +11903,51 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         value is `<= 0`.  The smallest uncovered sum is 20, all at maximum
         label 5 and distance 5, e.g. `(-1^3, +1^2, +2, -3, -5, -5)` with
         value 76.  FM-MECH71 (distance 5 and 6) was not in this matcher.
+      - **FM-MECH79 (astra_max_ceres; `fm39/mech79_E_last_anchors_repro.py`,
+        rerun: PASS): the last (E) anchors.**  Both signs of (E) for
+        folded rows with `a >= e+2`, `e >= 7`, `kappa >= 15`,
+        `omega >= 64`, `7 omega/10 < X_j <= sigma/2`, at every endpoint.
+        It includes `J(j,i) >= 0` at `i = max(i_0, K)`, which is the start
+        of outer propagation.
+        - Checkpoint estimate: `D_m <= r(x,z) D_j` with
+          `r = [(1+z)/(1+x)] exp(-kappa (z^2 - x^2))`.  If `r < 1/100` and
+          `w < 1/5`, the `J` margin is `>= 20691/160000`.
+        - Crossing bound `kappa (y - x) > 14/5` on inner long endpoints,
+          from the frozen binomial-energy coordinates.
+        - Compact range `7/10 < x <= 49/50`: 28 bins `(k, Q, G)`.  For
+          `kappa >= Q`, the bins use checkpoints at `G/10000` and a
+          polynomial (BE) certificate with 6,272 Bernstein coefficients,
+          all `> 1/25`.  For `kappa < Q`, a Jacobi-matrix root exclusion
+          that is uniform in `a`: the normalized entries decrease with `A`.
+        - Edge range `49/50 <= x < 1`: either `L = kappa h <= 11/(10 sqrt
+          h)`, when the FM-MECH74 test `4 s S <= pi^2 Delta^2` excludes every
+          long endpoint (`sS/Delta^2 < 12/5`); or a moving checkpoint
+          `delta_0 = 9/(4 tau)`, `tau = h^(1/4)`, with `w < 1/10`.
+        - With FM-MECH55..61, 66, 70, 73 and 74 this closes (E) for
+          `q >= 3`, both signs, at every row and level.  So the two-label
+          sector on the fundamental background is proved at every level.
+          The region union is being checked independently (FM-CHK71).
+      - FM-MECH78 (astra_max_vulcan; `fm39/mech78_h1_label10_repro.py` and
+        `fm39/mech78_h1_constants_repro.py`, both rerun: PASS): `H = 1`
+        constants.
+        - The whole `H = 1` layer for labels `p <= 10`, every ratio and
+          sign.  Bernstein-certified derivative bounds give the cutoffs
+          `nu + b >= 4L + 2`: 166 for label 7, 214 for 9, 170 for 10+.
+          Below them, 3,510,309 exact representatives remain after removing
+          `b <= 2` and `d <= 6`.  All are positive; the least values are
+          4,096 (7), 5,770 (8+), 4,850 (8-), 8,350 (9), 10,120 (10+) and
+          10,348 (10-).
+        - A positive-integral certificate valid for every ratio `a : e : b`
+          (without the FM-MECH75 ratio restrictions).  Also a moderate-size
+          `O(M^2/log M)` theorem on the quartic transition
+          (`a = e = 2b`, e.g. `M = 17`, `b = 16`).
+        - Kill (knob: a uniform relative-error margin of the FM-MECH75 model
+          over all large distances).  The model has no such margin, so
+          tightening its constants cannot finish `H = 1`.
+        - Open, escaping every current criterion:
+          `E[(x^2-y^2)^r (x^2+y^2-2)^3 (U_(2m^2)(x) - U_(2m^2)(y))] >= 0`,
+          `r = m^2 + m - 3`, `m >= 23` (distance `m`).  This is passed to
+          FM-MECH82.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
