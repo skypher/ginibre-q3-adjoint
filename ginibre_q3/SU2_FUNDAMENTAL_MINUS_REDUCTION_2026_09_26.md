@@ -13301,6 +13301,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           weight: the no-flip minimum of `w_TP/delta` falls from 1.25
           (`W = 23`) to 0.71 to 0.80 (`W = 38..40`), while the TopPair-failure
           maximum stays at 0.375 to 0.429.  Larger-weight data is needed.
+        - KILLED at 05:45 (main agent random search,
+          `fm39/sec166_toppair_random_search.cpp` and `..._few_ones.cpp`):
+          - (T*) with `c = 1/2` is false.  TopPair increases `g_p` at `W = 124`,
+            `B = (+25,+7, 1's and 2's; 66 factors)`, `sigma p = 54`, with
+            `w_TP/delta = 0.914`.
+          - The split "at most one label 1 implies TopPair" is false at
+            `W = 144` (`B = (-14, one 1, 2's and 3's; 56 factors)`,
+            `sigma p = -44`).
+          - Every such failure has a flip descent (e.g. `(+25,-1)`,
+            `(-14,+2)`), so (FT) survives.  All TopPair failures found have
+            many factors: at least 15 at `W <= 40`, and at least 26 in the
+            random search over `W = 40..160`.  The open question is a split
+            by factor count.
         - Single fixed flips fail often.  For example, the flip of two equal
           labels `r` fails on 10% (`r = 1`) to 39% (`r = 4`) of lists with a
           repeated `r` at `W <= 36`.  So (F*) is an existence statement.
