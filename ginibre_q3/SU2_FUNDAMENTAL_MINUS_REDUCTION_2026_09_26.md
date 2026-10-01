@@ -8805,11 +8805,15 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; FM-CHK61) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; FM-CHK67) — added 2026-10-01 |
-  | all `r` | EVERY list at list distance 5 or 6 | all (FM-MECH71; FM-CHK69: item 1 accepted, two repairs pending in FM-MECH80); every distance `delta` once `max(t,b,k) >= (100 delta)^(300 delta^2)` (FM-MECH71) — added 2026-10-01 |
+  | all `r` | EVERY list at list distance 5 or 6 | all (FM-MECH71; FM-CHK69 item 1 accepted, items 2 and 3 repaired or withdrawn in FM-MECH80, check FM-CHK74 running); every distance `delta` once `max(t,b,k) >= (100 delta)^(300 delta^2)` (FM-MECH71) — added 2026-10-01 |
   | all `r` | every list, any distance `delta` | `N >= 3200(delta+1)^3 + 760(delta+1)^2`, where `N = t + 2b + k` counts the non-distinguished factors after splitting non-distinguished `-2`; also the integer test (1), and `N >= 380(delta+1)^2` when the signed label-3 count is 0 (FM-MECH77; FM-CHK70 ACCEPT) — added 2026-10-01 |
 | all `r` | two core labels on a {1,2} background, `b = 1` copy of `hat S_2` | balanced backgrounds `a = e`, both signs, all labels (FM-MECH76 Thm 2); every `b`: the central band `4|Delta| <= sigma`, `sigma/4 + 2 <= n - m - 2b <= sigma/2`, `m >= 35 + 12b` (FM-MECH76 Thm 3) — added 2026-10-01 |
 | all `r` | two labels on the fundamental background ((E), `q >= 3`, both signs) | every row: the regions of FM-MECH55..61, 66, 70, 73, 74 and the last anchors `X > 7 omega/10` (FM-MECH79); union check FM-CHK71 running — added 2026-10-01 |
 | all `r` | one label `p <= 10` on any {1,2} background | all ratios and signs (FM-MECH78: Bernstein cutoffs plus 3,510,309 exact representatives; check FM-CHK72 running) — added 2026-10-01 |
+| all `r` | EVERY list at list distance 7 | all (FM-MECH80: exact distance-7 polynomial, tails `t >= 249` or `b >= 137` or `k >= 333`, Schur reduction, all-allocation finite part; check FM-CHK74 running) — added 2026-10-01 |
+| all `r` | every word of length `L >= 4` | minimum label `>= 2^(L-2) - 3`, and more generally `beta <= 1` (FM-MECH83) — added 2026-10-01 |
+| all `r` | `h >= 2` non-distinguished labels above the distance `delta`, any smaller labels | background weight `D <= min(delta + h - 2, 2 delta + 2)` (FM-MECH83) — added 2026-10-01 |
+| all `r` | one label `p` on a balanced or adjacent background (`|a - e| <= 1`) with `b` copies of `hat S_2` | `b <= min(a,e)` and `s^2 >= 4b(min(a,e) + 2)`, `p = 2s + |a - e|` (FM-MECH82) — added 2026-10-01 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -11682,6 +11686,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             depletion terms) are not constructed in the packet.
           - Both repairs are delegated to the author as FM-MECH80.  Until
             then, distance 5 or 6 counts as proved with a pending repair.
+          - Repairs (FM-MECH80, rerun: ALL CHECKS PASS).  Item 2: the exact
+            gap identity (A2), `6 F_6 - Q(i,j) = 6[(q* - q_f) A_F +
+            (q* - q_g) A_G + (q* - 1) A_H + q* A_L] >= 0`, holds for every
+            residual-pair allocation.  Item 3: the general-`delta` majorant
+            claim is withdrawn.  Nothing uses it: the tail statement now rests
+            on FM-MECH77 (FM-CHK70).  The FM-MECH80 check is FM-CHK74.
       - FM-CHK65 (luna_max_eris, fresh code): ACCEPT all four items of
         FM-MECH63: the pair bounds (exact rational grids at 4,356 small, 660
         edge, 20,064 odd-label and 16,632 general edge points), the parity
@@ -11974,6 +11984,74 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `E[(x^2-y^2)^r (x^2+y^2-2)^3 (U_(2m^2)(x) - U_(2m^2)(y))] >= 0`,
           `r = m^2 + m - 3`, `m >= 23` (distance `m`).  This is passed to
           FM-MECH82.
+        - FM-CHK72 (luna_max_neptune, fresh code): ACCEPT all three items:
+          the closure through label 10 (cutoffs, reflection estimate,
+          representatives), the ratio-free certificate, and the no-margin
+          witnesses.
+      - **FM-MECH80 (astra_max_juno; `fm39/mech80_distance7_all_lists_repro.py`,
+        rerun: ALL CHECKS PASS in 284 s): FM3 for EVERY list at distance
+        `delta <= 7`.**  It also repairs FM-CHK69 items 2 and 3 (recorded
+        under FM-MECH71).
+        - Prop. 3: an exact distance-7 polynomial with 39 nonempty kernels
+          `C_(7,sigma)`.  It includes the mixed depletion terms
+          `-(c_3 - 1) s_3 P_3 - (c_3 - 2) E_2(c_3, s_3)`: an unselected label
+          3 is depleted when one or two other 3's are selected.  Two unsigned
+          depletions first contribute at distance 8.
+        - Prop. 4: 24 polynomial tail certificates give
+          `t >= 249 or b >= 137 or k >= 333 => F_7 >= 0`, so `N >= 853`
+          suffices.  The Schur determinant `D = K(R + z) - y^2` of the
+          signed-count Gram matrix then removes 39,035 of the 39,615
+          remaining rows, leaving 580 rows with `N <= 33`.
+        - Prop. 5: in those rows the form is affine in the neutral-pair
+          allocation, so its minimum is at one of five simplex vertices.
+          8,157 small-corner allocations, 11,135,300 vertex quadratics and
+          45,853,270 candidate evaluations give minimum `24 F_7 = 0`.
+        - Knob: fixed `delta = 7`.  The next stratum `F_8` (`N < 2,394,360`
+          outside the refined test) needs the two-depletion term.  Going one
+          distance at a time does not reach the cone; what is needed is
+          uniformity in `delta`.
+      - FM-MECH82 (astra_max_ceres; `fm39/mech82_h1_exterior_repro.py`,
+        rerun: PASS): the `H = 1` consumer in combined rows.
+        - `[U_p] g_(e,a,b) = T_b(k) - T_b(k+1)` with `k = (N+p)/2`.  The
+          insertion identity is `T_(b+1)(k) - T_(b+1)(k+1) = T_b(k-1) -
+          T_b(k+2) + W_b(k-1, k+2)`, so adding a `+2` needs the plus-sign,
+          gap-three inequality on the previous background.  At `b = 0` this
+          is Q2+.
+        - Theorem (PROVED, uniform in `b`, `R` and `p`): `|a - e| <= 1`,
+          `R = min(a,e) >= 1`, `b <= R`, `p = 2s + |a-e|`,
+          `s^2 >= 4b(R+2)`.  Proof: every parity channel factors through
+          Krawtchouk polynomials whose zeros are `<= 2 sqrt(h(R+2))`.
+          This includes FM-MECH78's escaping family for every `m >= 4`.
+        - Open: the gap-three step
+          `T_b(k-1) - T_b(k+2) + W_b(k-1, k+2) >= 0` for `b >= 2` on
+          general backgrounds, where the channel terms can be negative.
+      - FM-MECH83 (astra_max_vulcan; `fm39/mech83_beta_saturation_repro.py`,
+        rerun: PASS): two uniform regions.
+        - Theorem 1: `F >= m(all)(1 - beta)`, with
+          `beta = sum 1/(1 + max_(i in S) n_i)` over the negative contributing
+          splits.  Proof: `U_a^2` contains every `U_(2j)`, `j <= a`, so
+          `m(all) >= (1 + max_S n_i) m(S) m(S^c)`.  Consequence: for
+          `L >= 4`, minimum label `>= 2^(L-2) - 3` gives FM3 at every
+          distance and label ratio, with relative error
+          `|V/2m(all) - 1| <= (2^(L-1) - L - 1)/(u+1)`.
+        - Theorem 2 (exact saturation): with `h >= 2` non-distinguished
+          labels above `delta` and the remaining background of weight
+          `D <= min(delta + h - 2, 2 delta + 2)`, the value is
+          `[q^delta] P(q)/(1-q)^(h-1) > 0`.  The proof uses the central
+          moments of `P`, which are even and nonnegative.
+        - Open: `h = 2`, `D > delta` (and `h <= 1`) in the residual
+          `N < C_delta`.  An exact `r = 9` witness shows that any further
+          argument must keep the helpful proper partitions.
+      - FM-SEC141 (luna_max_jupiter; `fm39/sec141_atlas_distance7_repro.py`,
+        phase 0 rerun exactly): the atlas with FM-MECH71 (flagged) and
+        FM-MECH77.  Phase 0: 100,743 uncovered lists; phase 1: 9,823,286.
+        All uncovered values are positive.  The smallest uncovered sum is
+        24, at distance 7, now covered by FM-MECH80.
+        - Uncovered at distance 7 and 8: mostly the FM-MECH69 residual (8),
+          i.e. few large labels on a small background (22,711 and 28,794 in
+          phase 0).  The rest are two cores with `b >= 1` (995 and 1,133).
+          There are none with `h = 1` and none with labels `<= 5`.
+        - FM-MECH77 matches nothing inside the atlas ranges.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
