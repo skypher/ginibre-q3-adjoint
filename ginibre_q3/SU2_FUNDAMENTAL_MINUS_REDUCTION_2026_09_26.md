@@ -13566,6 +13566,16 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           in every case through `W = 44`.  On the eight large witnesses, each
           fixed selector fails somewhere, but one of Rule W, Rule M, Rule 1'
           always works.
+      - FM-SEC169 (luna_max_venus; `fm39/sec169_many_factor_noflip_search.py`,
+        rerun: same output).  No no-flip residual list with many factors was
+        found: 112 exact sign assignments on seven repeated-label profiles
+        (20..80 factors, `W = 56..360`, multiplicity up to 30) plus random
+        local searches all have a flip descent.  Many of the working flips
+        have value exactly 0 (pair-creating flips on repeated labels;
+        preserving flips on distinct-label runs).  Example with a strictly
+        positive flip: `B = (+2)^8 (-3)^8 (-5)^8 (-8)^10 (-12)^11`,
+        `sigma p = -268`, flip `(+2,+2)` = 26,942,364.  Finite sample; not
+        a census.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
