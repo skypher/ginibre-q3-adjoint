@@ -8801,7 +8801,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | labels `<= 2` plus one label `n <= 6` | all (FM-MECH44, FM-MECH45) — added 2026-10-01 |
   | all `r` | every word with labels `<= 3` | all (FM-MECH47, exponential ray suppression plus one fixed box; FM-CHK56) — added 2026-10-01 |
   | all `r` | every word with labels `<= 4` | all (FM-MECH48, uniform contraction lemma plus one box of 54,387,664 values; FM-CHK57) — added 2026-10-01 |
-  | all `r` | every word with labels `<= 5` | all (FM-SEC135 suppression for `H >= 68` plus the exact box of 227,336,512,420 values, FM-SEC139; independent check FM-CHK79 running) — added 2026-10-01 |
+  | all `r` | every word with labels `<= 5` | all (FM-SEC135 suppression for `H >= 68` plus the exact box of 227,336,512,420 values, FM-SEC139; FM-CHK79 ACCEPT) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; FM-CHK61) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; FM-CHK67) — added 2026-10-01 |
@@ -8828,8 +8828,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       [CHK76]);
     - every list with a non-distinguished label above `delta` (`h >= 1`;
       FM-MECH85 [CHK76], FM-MECH93);
-    - every word with labels `<= 5` (FM-SEC135 + FM-SEC139 [CHK79
-      pending]);
+    - every word with labels `<= 5` (FM-SEC135 + FM-SEC139 [CHK79]);
     - (E) on the fundamental background (FM-MECH79 [CHK71]); H = 1 for labels
       `<= 10` (FM-MECH78 [CHK72]); bounded small backgrounds (FM-MECH87
       [CHK78 pending]); many strata of H = 1 and two cores (FM-MECH76/81/82/
@@ -12288,6 +12287,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           Kill-and-restart tests passed for both modes.  About 1.1 h at
           48 threads after the mirror restart.
         - Independent check: FM-CHK79.
+        - FM-CHK79 (luna_max_pluto, fresh code): ACCEPT all five items.
+          - The transform formulas and the mirror argument.
+          - A fresh exact screen of 3,105 stratified box words: 44 at each
+            `N = 2..71`, 21 large-factor records at `N = 20..40`, and four
+            `N = 2` words with `b = 1002..1005`.  No negatives.
+          - The three zeros `d^4 h_4`, `s^2 d^2 h_4` and `s d^2 S_5`, exact by
+            two methods.
+          - A code review found no indexing, dimension or overflow defect.
       - FM-MECH88 (astra_max_juno; `fm39/mech88_reflection_repro.py`, rerun:
         ALL CHECKS PASS): a neutral-pair reflection (2), an endpoint
         certificate (6) for arbitrary backgrounds, the families it gives at
