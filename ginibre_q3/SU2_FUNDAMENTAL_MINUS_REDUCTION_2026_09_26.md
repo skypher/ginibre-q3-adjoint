@@ -13339,6 +13339,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (`fm39/sec166_walsh_toppair_all_patterns.cpp`): monotone for every
           list with 7..11 factors at `W <= 40`.  So at these weights TopPair
           fails only from 15 factors on, while no-flip lists have at most 12.
+        - TopPair is monotone on EVERY residual pattern with 7 factors up
+          to `T = 120` (81,513,734 patterns) and with 8 factors up to
+          `T = 100` (121,763,604 patterns), not only on no-flip ones.
+        - Structure of no-flip patterns (`fm39/sec166_walsh_noflip_structure.cpp`;
+          757,869 with 8 factors at `T <= 100`, 46,037 with 10 factors at
+          `T <= 80`): never two or more labels 1 (0 or 1 always); label
+          multiplicity at most 4 (mostly 1 or 2); odd-label count 0, 4, 6, 8
+          or 10, never 2.  Candidate lemma (F1): a residual list with two
+          factors of label 1 always has a flip descent.
+      - FM-SEC167 (luna_max_venus; `fm39/sec167_FT_local_search.py`).  No (FT)
+        counterexample in 23 local-search starts at `W = 41..300` (every
+        terminal still had a flip descent).  Weak evidence: the main-agent
+        rerun did not finish, because one evaluator call exceeded the
+        script's own 60 s subprocess timeout on the loaded machine.
         - Single fixed flips fail often.  For example, the flip of two equal
           labels `r` fails on 10% (`r = 1`) to 39% (`r = 4`) of lists with a
           repeated `r` at `W <= 36`.  So (F*) is an existence statement.
