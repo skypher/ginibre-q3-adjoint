@@ -15,7 +15,7 @@ using Z = mpz_class;
 struct Res { double ratio; int delta, p; std::vector<int> lab; Z g, m; };
 static std::mutex mu;
 int main(int argc, char** argv) {
-  long samples = atol(argv[1]); int seed = atoi(argv[2]); int threads = atoi(argv[3]); int dmax = atoi(argv[4]);
+  long samples = atol(argv[1]); int seed = atoi(argv[2]); int threads = atoi(argv[3]); int dmax = atoi(argv[4]); int mode_arg = argc > 5 ? atoi(argv[5]) : -1;
   omp_set_num_threads(threads);
   std::atomic<long> done{0}, neg{0};
   std::vector<Res> best;  // smallest ratios
@@ -28,22 +28,30 @@ int main(int argc, char** argv) {
     for (long s = 0; s < samples; ++s) {
       // structure: delta in [8, dmax]; k cores (labels 3..delta), b twos, ones; random signs
       int delta = 8 + rng() % (dmax - 7);
-      int k = rng() % 6;                    // 0..5 non-distinguished cores
-      std::vector<int> lab;                 // signed labels
+      int mode = (mode_arg >= 0) ? mode_arg : (int)(rng() % 5);
+      int k = 0, b = 0;
+      if (mode == 0) { k = rng() % 6; b = rng() % 6; }
+      else if (mode == 1) { k = rng() % 6; b = rng() % 6; }
+      else if (mode == 2) { k = 3 + rng() % 13; b = rng() % 4; }
+      else if (mode == 3) { k = 0; b = 1 + rng() % 16; }
+      else { k = 1; b = 1 + rng() % 10; }
+      std::vector<int> lab;                 // labels (signs later)
       int maxn = 0, W = 0;
       for (int i = 0; i < k; ++i) { int n = 3 + rng() % (delta - 2); lab.push_back(n); maxn = std::max(maxn, n); W += n; }
-      int b = rng() % 6;
       for (int i = 0; i < b; ++i) { lab.push_back(2); maxn = std::max(maxn, 2); W += 2; }
-      // ones so that p = W - 2 delta >= maxn and p >= 1, with a random surplus
-      int need = 2 * delta + std::max(maxn, 1) - W;
-      int ones = std::max(0, need) + (int)(rng() % (delta + 1));
+      maxn = std::max(maxn, 1);
+      int need = 2 * delta + maxn - W;      // p = W - 2 delta >= maxn
+      int ones;
+      if (mode == 1) ones = std::max(0, need) + (std::max(0, need) % 2 != 0 ? 0 : 0);   // edge p = maxn (parity permitting)
+      else ones = std::max(0, need) + (int)(rng() % (delta + 1));
       for (int i = 0; i < ones; ++i) lab.push_back(1);
-      W += ones; maxn = std::max(maxn, 1);
+      W += ones;
       if (delta < maxn) { ++done; continue; }
       int p = W - 2 * delta;
       if (p < maxn) { ++done; continue; }
       std::vector<int> sg(lab.size());
-      for (auto& x : sg) x = (rng() & 1) ? 1 : -1;
+      { double bias = (rng() % 1000) / 1000.0;
+        for (auto& x : sg) x = ((rng() % 1000) / 1000.0 < bias) ? 1 : -1; }
       // DP over (s, t) spins, s, t <= W
       int S = W + 1;
       std::vector<Z> cur(S * S), nxt(S * S);

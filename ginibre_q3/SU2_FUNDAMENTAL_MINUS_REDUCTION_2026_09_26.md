@@ -12381,6 +12381,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           checked against FM-SEC142's independent fusion DP on 200 random
           lists.  An exact GMP screen of the unsaturated region is running
           (see FM-SEC144).
+      - FM-SEC144 (main agent; `fm39/sec144_unsaturated_screen.cpp`, run as
+        `gsearch SAMPLES SEED THREADS 30 MODE`, and
+        `fm39/sec144_h1_margin_scan.py B NMAX`): an exact screen of the
+        unsaturated region.
+        - 100,000 random exact values over five sampling modes, with
+          `8 <= delta <= 30`: mixed; the edge `p = max`; many cores
+          (`k <= 15`); H = 1 with many `+2`; two cores.  No negative value.
+          The smallest `g_p / m_p(all)` per mode: 0.033, 0.031, 0.081,
+          0.0055, 0.010.
+        - H = 1 margin scan, exact and complete on the scanned ranges
+          (background `(+1)^a (-1)^e (+2)^b`, distance `>= 8`, `p >= 6`):
+          - With `a, e <= 26` and `b <= 12`, the minimum is always at
+            `a = e = 26` and `p = 6`, falling smoothly by about 0.7 per extra
+            `+2`, from 0.18 at `b = 0` to 0.0025 at `b = 12`.
+          - At `a = e = 10` the minimum falls until `b` is about `a + 3`
+            (0.023 at `b = 13`), then rises: 0.19 at `b = 25`, 4.6 at
+            `b = 34`.
+          - No negative value anywhere.
+        - So the tight corner of H = 1 is balanced `a = e`, `b` near `a`,
+          smallest `p`.  It lies outside the exterior theorem (FM-MECH82/92,
+          which needs `p` large) and outside FM-MECH89 (`b <= a/5` at
+          `a = e`).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
