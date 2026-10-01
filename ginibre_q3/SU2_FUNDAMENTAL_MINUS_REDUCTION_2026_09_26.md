@@ -12658,6 +12658,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - FM-MECH106's logic (descent plus base lists) stays valid, but its
           hypotheses (M+) and (M-) are false as stated.  Route B (pair-free
           `k >= 2` directly) and possible rule-based descents remain.
+      - FM-CHK80 (luna_max_venus, fresh code): ACCEPT FM-MECH84 (`b = 1`
+        short arcs, root and minimum-label sectors), FM-MECH91 (`b = 1` tail
+        sector and propagation from a valid seed), FM-MECH92 (H = 1 exterior
+        sector including `p > N`) and FM-MECH95 (double-endpoint sector and
+        quartets with (5)).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
