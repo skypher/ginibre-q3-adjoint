@@ -8801,7 +8801,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | labels `<= 2` plus one label `n <= 6` | all (FM-MECH44, FM-MECH45) — added 2026-10-01 |
   | all `r` | every word with labels `<= 3` | all (FM-MECH47, exponential ray suppression plus one fixed box; FM-CHK56) — added 2026-10-01 |
   | all `r` | every word with labels `<= 4` | all (FM-MECH48, uniform contraction lemma plus one box of 54,387,664 values; FM-CHK57) — added 2026-10-01 |
-  | all `r` | labels `<= 5` | words with `>= 71` factors of label `>= 3` (FM-MECH48) — added 2026-10-01 |
+  | all `r` | every word with labels `<= 5` | all (FM-SEC135 suppression for `H >= 68` plus the exact box of 227,336,512,420 values, FM-SEC139; independent check FM-CHK79 running) — added 2026-10-01 |
   | all `r` | every word, all labels | weighted count of factors of label `>= 3` at least `T_0(k) = O(log k)`, `k` the largest label; any number of 1's and 2's (FM-MECH49; FM-CHK59); constant weighted cutoff `T >= 2^21` (ADV-2; FM-CHK61) — added 2026-10-01 |
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; FM-CHK67) — added 2026-10-01 |
@@ -12215,6 +12215,38 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `P_r = E_eta[(G_3^2 - q^3 U_3^2)^r (G_4 + q^2 U_4)]`, and the
           left-of-centre `h = 2` residual for unbounded `D` (FM-MECH93).
           Check: FM-CHK78.
+      - **FM-SEC139 (main agent; `fm39/sec139_labels5_fast_repro.py`): the
+        labels `<= 5` box is evaluated exactly.  All 227,336,512,420 entries
+        are `>= 0` (3 zeros, least positive value 2).  With FM-SEC135, FM3
+        holds for every word with labels `<= 5`.**
+        - Evaluator.  Per background `(N, a)`, one mixed table
+          `t[j][b] = E[s^(2a) d^(2(N-a)) P^j Z^b]`.  The core factors are
+          in-place transforms: `hat S_4 = Z^2 + Z - 2P^2`, `Z - 1`,
+          `h_4 = Z^2 + ZP - P^2 - 2P - 1`, `W_5 = hat S_5/s = Z^2 - ZP - P^2
+          + 2P - 1`.  The label-3 factors enter by the exact combination
+          `sum_j c_j t[j][b + l - j]`.  Everything is GMP integers, and
+          every value is sign-checked.
+        - Moments: an exact layer sweep up to degree 440.  The two long
+          `N = 2` columns (to `b = 1013`) use the independent formula
+          `sum_k c_k sum_i C(b,i) mu(k,i) mu(2N-k, b-i)`, and the two
+          methods agree on 42 overlap points.
+        - Checks in the run: 8 independent large-`b` moment values,
+          342,468 shifted-moment bridges, and the direct Catalan values
+          (300 polynomial words; the 181 in evaluated items all match).
+          Per-item entry counts are checked against an independent
+          enumeration, and the total against FM-SEC135's
+          227,336,512,420.
+        - Mirror symmetry.  `y -> -y` maps `s <-> d`, `P -> -P` and
+          `h_4 <-> W_5`, which pairs background `a` with `N - a` for
+          `1 <= a <= N-1`.  So only `a = 0` and `2a <= N` are evaluated, and
+          the mirror half is counted.  The entry-count symmetry is checked
+          exactly.  The values were checked directly on all 1,458 mirrored
+          `(N, a, n)` groups with `N <= 12` (entries, zeros, least value).
+        - Run: 384,374 work items `(N, a, n, v)`, at most 92 s each.  Each
+          item is appended with fsync, and a rerun skips finished items.
+          Kill-and-restart tests passed for both modes.  About 1.1 h at
+          48 threads after the mirror restart.
+        - Independent check: FM-CHK79.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
