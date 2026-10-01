@@ -8858,7 +8858,9 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       the KILL entry); only the existence form (D) survives.
     - Update 01:45 (FM-SEC156): new candidate LEMMA W (Rule W, by class
       weight), exhaustive through W = 40, structured families to W = 2030,
-      adversarial to W = 120, no failure.  It survives an exhaustive sweep of Rule 1' through
+      adversarial to W = 120, no failure.  KILLED 02:40 (W = 427 and two
+      more); Rule M and uniform averaging also killed.  Weighted averages of
+      (D) survive so far.  It survives an exhaustive sweep of Rule 1' through
       W = 40 (FM-SEC152: 81.8M cases, zero failures) and adversarial
       search to W = 140.
     - No counterexample has been found anywhere.
@@ -12965,6 +12967,46 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         slack is 1, at `B = (-1)^32`, `R = (-1,-1)`, `p = 32` (support
         edge: `g = 1` versus 0).  It also found the undefined branch
         `B = (-3,-2)`, now repaired by step W4.
+      - **KILL (02:40): LEMMA W is FALSE**, by three independent exact
+        counterexamples.  The main agent checked the first with
+        `fm39/sec156_ruleW_single.cpp`.
+        - FM-MECH128 (astra_max_minerva): the all-minus
+          `B = (-1)^10 (-8)^4 prod_(v = 3, 5, ..., 31) (-v)^floor(31/v)`
+          (`W = 427`).  Class 8 is uniquely heaviest (weight 32 against at
+          most 31), so the rule removes `(-8)^2`.  At `p = 31`, `g_31` rises
+          from 35,976,660,898,477,897,403,704,068,501,225,333,918,277,825 to
+          36,075,697,823,243,267,121,589,443,884,412,616,296,612,401.  This is
+          the only failing `p` of 199.
+        - FM-MECH129 (astra_max_juno): a mixed background with a unique
+          heaviest class, `A = (+1)^35 (+3)^11 (+5)^7 ...`, failing for both
+          signs of the selected odd label.
+        - FM-MECH131 (astra_max_ceres): a W1 decrease with a uniquely
+          heaviest class of eight `+9` (weight 72).
+        - (D) still holds on the `W = 427` witness: every pair containing
+          the maximum label `-31` is monotone for all `p`
+          (`fm39/sec156_D_all_removals.cpp`).
+      - KILLS (main agent) of other selection and averaging candidates:
+        - Rule M (by the maximum label: two copies if repeated, else with
+          the largest same-parity label, else alone if even, else the
+          smallest even label; `fm39/sec159_ruleM_exhaustive.py`).
+          Exhaustive through `W = 40`, it fails 234 times even in the
+          unproved region (`p >= 6`, `delta >= 8`, unsaturated); first at
+          `B = (-1)^22 (-2)^2`, `p = 6`, removing `(-2,-2)`.  Rule W handles
+          that case, and Rule M handles `W = 427`.
+        - Averaged (D) with uniform weights over all even-weight removals:
+          negative at some `p` for mixed backgrounds near `W = 140-160`
+          (adversarial).
+        - Surviving: label-weighted, dimension-weighted
+          (`w_R = prod (n_i + 1)`) and dimension-squared-weighted averages
+          are nonnegative on every witness so far
+          (`fm39/sec159_weighted_averages.cpp`).  Adversarial test running.
+      - FM-CHK88 (luna_max_eris, fresh code): ACCEPT FM-MECH112 and
+        FM-MECH121.
+      - FM-MECH133 (luna_max_pluto): Rule W holds for all-plus backgrounds
+        and for parity-aligned signs `eps_i = (-1)^(n_i)`.  Main-agent note:
+        the reflection `y -> -y` flips the signs of odd labels and leaves
+        `g_p` invariant, so the parity-aligned stratum is the mirror of the
+        all-plus one.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
