@@ -11356,6 +11356,29 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `J` at the endpoints from the first long crossing `i_0` up to the
           turning point.  The forward increment was nonnegative in all
           54,347,507 tested steps, but this is not proved.
+      - FM-MECH58 (astra_max_ceres; `fm39/mech58_J_central_repro.py`, rerun
+        exactly in 51 s): central-anchor coverage of `J`.
+        - Theorem 4 (PROVED): for every folded row with
+          `4|a - e| <= N + 2` and `2X_j <= N + 2`, `J(j,i) >= 0` at EVERY
+          endpoint `i >= j + 4`.  So both signs of (E) hold there, uniformly
+          in the gap `q`.  In two-label coordinates `X_j = p - q`.
+        - Ingredients:
+          - Lemma 2: two-step contraction bounds, uniform in the gap, for
+            `i - j >= 6` (with `X_i <= sigma/2`) and `i - j >= 8` (with
+            `X_j <= sigma/2`); fixed Bernstein certificates of degree
+            (6,3), 28 coefficients each.
+          - Lemma 3: gaps 4 and 5 by exact binary quadratic forms (diagonal
+            and determinant certificates with 660 to 3,750 positive
+            coefficients).
+          - The FM-MECH55 band.
+          - A fixed finite remainder of 475 cases (`N <= 53`), least ratio
+            182329/26550.
+          - Rerun: 100,867 region pairs, 48,573 of them beyond FM-MECH55.
+        - Open (Prop. 5): `J` on the folded long arcs with `4|a - e| > N + 2`
+          (unbalanced rows) or `2X_j > N + 2`, from the first long endpoint
+          up to the turning point.  The endpoint-envelope obstruction
+          `(48,8,29,33)` (actual `J >= 0`) shows the endpoint directions
+          must stay correlated.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
