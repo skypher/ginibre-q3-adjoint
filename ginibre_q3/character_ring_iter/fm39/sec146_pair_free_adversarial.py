@@ -66,12 +66,13 @@ def run(seed):
         if cur is None: continue
         for it in range(150):
             nb=mutate(bg, rng)
-            if sum(abs(v) for v in nb) > 90: continue
+            if sum(abs(v) for v in nb) > WMAX: continue
             sc=score(nb)
             if sc is None: continue
             if sc[0] <= cur[0]: bg, cur = nb, sc
         if best_global is None or cur[0] < best_global[0]: best_global=(cur[0], cur[1], cur[2], sorted(bg))
     return best_global
+WMAX=int(sys.argv[2]) if len(sys.argv)>2 else 90
 if __name__=="__main__":
     with Pool(32) as pool:
         res=pool.map(run, range(32))

@@ -12513,6 +12513,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `g_p >= 0.8 m_p(all)` in every case seen.  A uniform
           relative-margin argument is plausible there, and it is the only
           remaining target (FM-MECH102).
+        - Larger adversarial run (`sec146_pair_free_adversarial.py 420
+          150`, weight `<= 150`): no negative value, and the smallest ratio
+          is 0.758.  Structured all-minus families `(-3..-m)^r`
+          (`sec146_pair_free_families.py 7`, `m = 5, 6, 7`, `r <= 7`): ratios
+          0.95-1.26, settling as `r` grows, with the minimum at `delta = 8`.
+          The pair-free margin shows no sign of tending to 0.
       - FM-MECH94 (astra_max_juno; `fm39/mech94_two_core_band_repro.py`,
         rerun: ALL CHECKS PASS): two cores, the band `n = delta - 1`
         (`p + n = D - 2`).  PROVED for every {1,2} background and both
