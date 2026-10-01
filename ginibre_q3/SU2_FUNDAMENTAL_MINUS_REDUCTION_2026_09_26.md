@@ -12294,6 +12294,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           family, whose single channel is -756 at `r = 15`.
         - What remains is the unsaturated case `h = 0`:
           `p_delta - p_(delta-1) >= 0` for `m <= delta <= floor((W-m)/2)`.
+      - FM-MECH91 (astra_max_minerva; `fm39/mech91_two_core_outer_repro.py`,
+        rerun: PASS): two cores, `b = 1`, long arcs.
+        - Proved: uniform outer propagation of the `b = 1` criterion, and both
+          FM3 signs on an explicit binomial tail sector (3).
+        - Open: the inner long arcs `a > e >= 2`,
+          `1 <= X_j < 2 + ((e-1)/(e+1)) omega`,
+          `j + 5 <= i <= min(N+1, max(i_0, k_*))` with
+          `k_* = ceil((N + omega)/2)` and
+          `16 sigma^9 C(sigma, l+1) > C(sigma, j+1)`.  These need
+          `2E >= tau H_j H_i` and
+          `E^2 - tau H_j H_i E + C^2 (det Q)^2 H_j^2 H_i^2 >= 0`.
+        - Missing supplier: a crossing/checkpoint estimate for the varying
+          curve (6) (FM-MECH96).  The corrected energy alone gives no uniform
+          endpoint bound at `b = 2`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
