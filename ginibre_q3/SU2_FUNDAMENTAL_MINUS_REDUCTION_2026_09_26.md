@@ -12852,6 +12852,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         (`k = 4`).  Open: the shift `2 delta + 4` and the boxes below the
         thresholds, which grow with `delta`.  A fixed positive fraction of
         `P_delta` is unavailable (exact endpoint family).
+      - FM-CHK85 (luna_max_eris, fresh code).
+          - ACCEPT FM-MECH110's H = 1 (M+) proof.
+          - ACCEPT FM-MECH105: the budget theorem, the all-plus case and the
+            finite screens.
+          - REPAIR NEEDED (a side claim only): FM-MECH110's bounded
+            core-census count omitted repeated core labels and
+            double-counted the `a = 0` sign choice.  The proof does not
+            depend on that count.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
