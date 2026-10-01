@@ -11233,6 +11233,40 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           Knobs: coefficientwise positivity of a particular remainder,
           and a fixed Gaussian margin.
         - Open: `d >= 6` uniformly.  A per-`d` ladder would not finish.
+      - FM-MECH54 (astra_max_ceres; `fm39/mech54_genfun_obstructions_repro.py`,
+        rerun exactly): exact distance generating function; four KILLs.
+        - Prop. 1: `F_d = [z^d] (1-z) E_y[(1+z-sqrt z y)^e (1+z+sqrt z y)^a
+          (1+z^2+z y^2)^b]` for `d <= D/2` (1,410 Catalan checks).  This is
+          the half-angle determinant formula in generating-function form:
+          on `|w| = sqrt z`, `1 + z +- sqrt z y = |1 +- w|^2` and
+          `1 + z^2 + z y^2 = |1+w^2|^2 + 2|w|^2`.
+        - KILLs, all on actual integer consumer profiles:
+          - (Prop. 2) The finite background translation has alternating
+            Christoffel-weighted terms; the quotient by the shifted `b = 0`
+            series is `1 + 6z + 18z^2 - 46z^3` at `(e,a,b) = (3,11,3)`.
+            Even `d`-dependent weights over the same shifted basis need a
+            `-216` coefficient.
+          - (Prop. 3) No nonnegative reduction to `b = 0` profiles that
+            holds for all output labels `>= 7`: separating functional
+            value `-5608` at `g_(6,8,3)`.
+          - (Prop. 4) No diagonal Krawtchouk-square representation with
+            imbalance-independent weights (dual value `-2/5` at
+            `T = 13`, `b = 3`, `d = 6`).
+          - (Prop. 5) Newton positivity in `b` fails (`-32` at
+            `T = 14`, `u = 0`, `d = 6`).
+          Knobs: simultaneous-output reductions, a single shifted
+          background, diagonal squares, Newton growth.  Output-reindexed
+          reductions and mixed squares remain untested.
+        - Main-agent remark: the min(a,e) <= 1 cone (FM-MECH52 Thm. 1)
+          does not extend directly to `e >= 2`.  Multiplying by `d` maps
+          the antisymmetric cone to signed symmetric combinations, and
+          squares are not U-positive (`(U_1 - U_3)^2` has
+          `[U_4] = -1`).
+        - Stall: two rounds (FM-MECH53, 54) without a uniform-in-`d` step.
+          The demand sheet on this chain is exact (all `d`, `b >= 3`,
+          integer `a, e >= 2`, both families), so nothing restates.
+          Effort is split: an advisor on the `H = 1` strategy, and Ceres
+          on the `H = 2` layer ((E) for `q >= 3`).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
