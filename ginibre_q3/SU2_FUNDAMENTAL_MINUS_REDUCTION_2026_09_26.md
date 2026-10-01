@@ -8806,7 +8806,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | EVERY list at list distance `<= 4` | all (FM-MECH38 for `<= 2`; FM-MECH68 for 3, 4; FM-CHK67) — added 2026-10-01 |
   | all `r` | EVERY list at list distance 5 or 6 | all (FM-MECH71; FM-CHK69: item 1 accepted, two repairs pending in FM-MECH80); every distance `delta` once `max(t,b,k) >= (100 delta)^(300 delta^2)` (FM-MECH71) — added 2026-10-01 |
-  | all `r` | every list, any distance `delta` | `N >= 3200(delta+1)^3 + 760(delta+1)^2`, where `N = t + 2b + k` counts the non-distinguished factors after splitting non-distinguished `-2`; also the integer test (1), and `N >= 380(delta+1)^2` when the signed label-3 count is 0 (FM-MECH77; check FM-CHK70 running) — added 2026-10-01 |
+  | all `r` | every list, any distance `delta` | `N >= 3200(delta+1)^3 + 760(delta+1)^2`, where `N = t + 2b + k` counts the non-distinguished factors after splitting non-distinguished `-2`; also the integer test (1), and `N >= 380(delta+1)^2` when the signed label-3 count is 0 (FM-MECH77; FM-CHK70 ACCEPT) — added 2026-10-01 |
 | all `r` | two core labels on a {1,2} background, `b = 1` copy of `hat S_2` | balanced backgrounds `a = e`, both signs, all labels (FM-MECH76 Thm 2); every `b`: the central band `4|Delta| <= sigma`, `sigma/4 + 2 <= n - m - 2b <= sigma/2`, `m >= 35 + 12b` (FM-MECH76 Thm 3) — added 2026-10-01 |
 | all `r` | two labels on the fundamental background ((E), `q >= 3`, both signs) | every row: the regions of FM-MECH55..61, 66, 70, 73, 74 and the last anchors `X > 7 omega/10` (FM-MECH79); union check FM-CHK71 running — added 2026-10-01 |
 | all `r` | one label `p <= 10` on any {1,2} background | all ratios and signs (FM-MECH78: Bernstein cutoffs plus 3,510,309 exact representatives; check FM-CHK72 running) — added 2026-10-01 |
@@ -11873,6 +11873,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           positive, so this does not exclude a linear FM3 threshold.
         - Independent check: FM-CHK70.  Open: lists with `N < C_delta` at
           `delta >= 7` (FM-MECH80 starts with `delta = 7`).
+        - FM-CHK70 (luna_max_venus, fresh code): ACCEPT all four items.
+          - The cubic threshold, and the fact that it does not use FM-MECH71's
+            unconstructed general-`delta` majorants (FM-CHK69 item 3).  So
+            the tail statement now rests on FM-MECH77 alone.
+          - The integer criterion (1), including `sigma_3 = 0`.
+          - Exact stress tests in the two stated families.
+          - The finite representative description and the `delta = 7`
+            bounds (the family itself is not enumerated).
       - FM-MECH76 (astra_max_minerva; `fm39/mech76_two_core_b1_band_repro.py`,
         rerun: PASS): two cores on a {1,2} background with `b >= 1`,
         `n + m < D`.
@@ -11895,6 +11903,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: the short-gap four-step inequality
           `T_1(j) - T_1(j+4) >= |A_j B_(j+4) - B_j A_(j+4)|` (`b = 1`,
           `m = 3`, `a != e`), then general short gaps (FM-MECH81).
+      - FM-MECH81 (astra_max_minerva; `fm39/mech81_two_core_four_step_repro.py`,
+        rerun: PASS): the four-step inequality
+        `T_1(j) - T_1(j+4) >= |A_j B_(j+4) - B_j A_(j+4)|` for all `a, e >= 0`
+        and `2 <= X = 2j - N <= N - 10`.
+        - Lemma 2: with `p = c_j`, `q = c_(j+1)`, both signed slacks are
+          binary quadratic forms in `(p, q)`.
+        - Lemmas 3-5: uniform matrix regions, OL's central and outer ratio
+          intervals, and an exhaustiveness split with no finite corner.  The
+          two small folded levels use one polynomial with 82 positive
+          coefficients.
+        - Corollary 6: every two-core word with labels `n` and 3, exactly one
+          `+2`, and any {1,2} background.  It uses FM-MECH71 for distance
+          `<= 6` (two repairs pending) and FM-MECH67 for the boundary.
+        - Matrix-only witnesses show that the row-direction information
+          (Lemma 4) is needed.
+        - Open: `b = 1`, `m >= 4` (next:
+          `T_1(j) - T_1(j+5) >= |A_j B_(j+5) - B_j A_(j+5)|`), and `b >= 2`.
+          FM-MECH84 asks for a mechanism uniform in `m`.  Check: FM-CHK73.
       - FM-SEC140 (luna_max_jupiter; `fm39/sec140_atlas_update_repro.py`,
         phase 0 rerun exactly): the coverage atlas with FM-MECH63..70
         and ADV-2 added.  Phase 0 (sum `<= 30`, labels `<= 30`): 1,114,614
