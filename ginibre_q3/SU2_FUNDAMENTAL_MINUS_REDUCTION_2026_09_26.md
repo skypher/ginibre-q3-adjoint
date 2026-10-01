@@ -13106,6 +13106,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `fm39/sec160_WM_exhaustive48.py`, finished 04:35) is far below this
           witness.  Finite exhaustive ranges therefore say little about these
           selection lemmas.
+      - FM-SEC164 (luna_max_mars; `fm39/sec164_D_exhaustive.py`, rerun by
+        the main agent at `W <= 36`: PASS).  (D) is exhaustively verified on
+        the residual through `W = 40`: every residual `(B, p)` (22,358,566
+        pairs, 222,096,442 removal comparisons) has a monotone even-weight
+        removal.  The margin is large: the minimum over `(B,p)` of
+        `max_R (g_p(B) - g_p(B-R)) / g_p(B)` is `22449/25937` (about 0.866), at
+        `B = (-1^8, -2^4, -3^2)`, `p = 6`, `R = (-1,-3)`.  Every residual
+        parent value is positive.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
