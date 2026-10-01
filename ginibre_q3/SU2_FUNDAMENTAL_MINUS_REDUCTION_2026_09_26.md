@@ -13301,7 +13301,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           weight: the no-flip minimum of `w_TP/delta` falls from 1.25
           (`W = 23`) to 0.71 to 0.80 (`W = 38..40`), while the TopPair-failure
           maximum stays at 0.375 to 0.429.  Larger-weight data is needed.
-        - KILLED at 05:45 (main agent random search,
+        - CORRECTION 06:50 (found by astra_max_juno in FM-MECH151, confirmed
+          by the main agent with the GMP evaluator `fm39/sec162_gp_single.cpp`):
+          the two "kills" in the next bullet are WITHDRAWN.  The random search
+          used signed 128-bit integers without an overflow guard, and those
+          parents need 129..132 bits.  Exactly: TopPair is monotone on all
+          four printed lists (`W = 124, 125, 141, 144`), with child/parent
+          ratios 0.0000 to 0.0043.  The ratio split (T*)/(F*) and the
+          few-ones split are therefore NOT refuted.  The census numbers are
+          unaffected: their entries are at most `4^44 * 2(p+1)` (DP) and
+          `2^N (T/N + 1)^(2N)` (Walsh), far below `2^127`.
+        - (Withdrawn; overflow) KILLED at 05:45 (main agent random search,
           `fm39/sec166_toppair_random_search.cpp` and `..._few_ones.cpp`):
           - (T*) with `c = 1/2` is false.  TopPair increases `g_p` at `W = 124`,
             `B = (+25,+7, 1's and 2's; 66 factors)`, `sigma p = 54`, with
