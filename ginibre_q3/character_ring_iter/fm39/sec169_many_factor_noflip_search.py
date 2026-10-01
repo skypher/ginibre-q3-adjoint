@@ -1,3 +1,5 @@
+# WITHDRAWN (FM-SEC169): entry() and moment_A() below are WRONG - they move +n only on x and -n only on y
+# (one assignment), not the character table.  Kept only as the record of the withdrawn claim.
 from collections import Counter, defaultdict
 from itertools import product
 from math import comb

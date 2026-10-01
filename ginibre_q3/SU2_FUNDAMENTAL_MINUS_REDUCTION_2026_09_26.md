@@ -13566,7 +13566,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           in every case through `W = 44`.  On the eight large witnesses, each
           fixed selector fails somewhere, but one of Rule W, Rule M, Rule 1'
           always works.
-      - FM-SEC169 (luna_max_venus; `fm39/sec169_many_factor_noflip_search.py`,
+      - FM-SEC169 — WITHDRAWN 07:40 (main agent).  Its evaluator `entry`,
+        and the "independent" `moment_A`, move a `+n` factor only on `x` and
+        a `-n` factor only on `y`.  That is one assignment, not the
+        character table of `prod (U_n(x) + eps U_n(y))`.  Check: for `B =
+        (2..20)`, `p = 169`, the flip `(2,3)` is 243,634,987 by
+        `fm39/sec166_flip_single.cpp` logic and by an unpruned GMP full table;
+        FM-SEC169 printed 0.  Every value below is invalid; the search
+        neither supports nor refutes (FT).  (Original text kept for the
+        record.)  FM-SEC169 (luna_max_venus; `fm39/sec169_many_factor_noflip_search.py`,
         rerun: same output).  No no-flip residual list with many factors was
         found: 112 exact sign assignments on seven repeated-label profiles
         (20..80 factors, `W = 56..360`, multiplicity up to 30) plus random
