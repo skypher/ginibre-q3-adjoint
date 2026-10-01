@@ -13073,6 +13073,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         (luna_max_mercury): ACCEPT FM-MECH123; FM-MECH127 needs a repair
         (its uniform radial estimates are not derived).  FM-MECH134
         (luna_max_mars): W3 for `|C| <= 2` and an all-minus parity invariant.
+      - FM-CHK91 (luna_max_neptune, fresh `cpp_int` code): no Rule W violation
+        on 40 pair-free backgrounds with `208 <= W <= 600` (5,780 `p`
+        checks, including Juno's `(-1)^2 (+3)(+5)...(+47)`).  This is a small
+        sample: the known Lemma W counterexamples (W = 427, 540, 869) were
+        not in it, so it does not affect the kill.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
