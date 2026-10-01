@@ -12553,6 +12553,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         (the weight-dominant H = 1 and two-core subregions).  The interior
         `max(3, max n_i) <= p < sum n_i` is open.  No standalone verifier
         was supplied, so this is recorded as a claim only.
+      - FM-SEC147 (main agent; `fm39/sec147_mono_*.py`): insertion
+        monotonicity on pair-free backgrounds (conjectures, exact screens).
+        - (M+): adding a plus label to a pair-free background (even `n`
+          singly, odd `n` in pairs) never decreases `g_p`, for
+          `p >= max(labels, 3)`.  No violation: `+4`, `+6`, `+8` (16,538,
+          17,107, 18,775 checks), `(+1,+1)`, `(+3,+3)`, `(+5,+5)` (7,840,
+          14,379, 16,516 checks), plus FM-SEC145's `+2`.
+        - (M-): inside all-minus backgrounds (single odd plus labels
+          allowed), adding minus labels in pairs never decreases `g_p`.  No
+          violation: an existing class `(-n,-n)` (114,212 checks), a new
+          class `(-n,-n)` (118,597), two new distinct labels `(-n,-m)`
+          (95,755).
+        - Kill (knob: minus insertion into mixed backgrounds).  Adding
+          `(-3,-3)` to the all-plus background `(1^12, 2^4, 4, 6, 6)` lowers
+          `g_6`.  So plus labels must be stripped before minus labels.
+        - Consequence if (M+) and (M-) hold: every pair-free list descends
+          by monotone steps (same distinguished label) to a base list with
+          at most one minus label and single odd plus labels.  FM3 for the
+          cone would follow from those base lists.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
