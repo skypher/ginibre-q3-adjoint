@@ -13015,6 +13015,45 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         the reflection `y -> -y` flips the signs of odd labels and leaves
         `g_p` invariant, so the parity-aligned stratum is the mirror of the
         all-plus one.
+      - **FM-SEC160 (main agent): conjecture (S), a two-child averaging
+        inequality on the residual.**
+        - Residual region: pair-free `(B, p)` with `p >= max(labels)`,
+          `p >= 6`, `delta = (W - p)/2 >= 8`, unsaturated (`max(B) <= delta`)
+          and `k >= 2` labels `>= 3` in `B`.  Its complement is proved:
+          labels `<= 5` (FM-SEC139, FM-CHK79); distance `<= 7`
+          (FM-MECH68/71/80, checked); saturated `h >= 1` (FM-MECH85,
+          FM-CHK76); pair-free `k <= 1` (FM-MECH102, FM-CHK82/83); and
+          `p <= 2` (the {1,2} sector).
+        - (S): `2 g_p(B) >= g_p(B - R_W) + g_p(B - R_M)` on the residual.
+          Here `R_W` is the Rule W removal (FM-SEC156 with step W4) and
+          `R_M` the Rule M removal (the maximum label: two copies if
+          repeated, else with the largest other same-parity label, else
+          alone if even, else the smallest even label).
+        - Why it suffices: induct on the number of labels.  The children
+          have fewer labels and are either residual (induction) or proved,
+          so both are `>= 0` and `g_p(B)` is at least their average.  With
+          FM-MECH102 this would give FM3 for every list.
+        - Evidence:
+          - exhaustive over every pair-free background with `W <= 40`: zero
+            failures in 22,358,566 residual `(B, p)` cases
+            (`fm39/sec160_S_exhaustive.py`; the 132 raw failures all lie
+            outside the residual, e.g. `(-1)^17 (-2)` at `p = 3`);
+          - the four known single-rule counterexamples (`W = 34`, 427, 540,
+            869), every `p`: the two rules never fail together and (S)
+            holds (`fm39/sec160_WM_single.cpp`).
+          - Adversarial test in the residual: running.
+        - Context: Rule W alone fails only at large `W` (Minerva 427, Juno
+          540, Ceres 869), and is clean through `W = 48` exhaustively
+          (FM-SEC157, Venus) and on 1,368,356 residual roots (FM-SEC158,
+          Jupiter).  Rule M alone fails 142 times in the residual through
+          `W = 40` (first `B = (-1^4, -2, -3^8, -4)`, `p = 6`), but handles all
+          three large Rule W failures.
+      - Returns 03:10 (claims, not rerun): FM-MECH130 (astra_max_vulcan):
+        Rule W holds for every background with at most four factors and in
+        unsaturated three- and four-core regions.  FM-CHK90
+        (luna_max_mercury): ACCEPT FM-MECH123; FM-MECH127 needs a repair
+        (its uniform radial estimates are not derived).  FM-MECH134
+        (luna_max_mars): W3 for `|C| <= 2` and an all-minus parity invariant.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
