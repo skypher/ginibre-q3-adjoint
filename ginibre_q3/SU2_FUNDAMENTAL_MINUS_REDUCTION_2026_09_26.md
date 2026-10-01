@@ -8822,7 +8822,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
       - `min(a,e) <= 1` for every `b`, and the quadratic cutoff
         (FM-MECH52);
       - the (E) regions of FM-MECH55, 58, 59, 60 (balanced central
-        anchors; far anchors; C1, C2) with outer propagation (FM-MECH57).
+        anchors; far anchors; C1, C2) with outer propagation (FM-MECH57);
+        FM-MECH55/56/57 are now independently checked (FM-CHK63).
     - Open:
       - (a) the `H = 1` layer at distance `>= 6` with `b >= 3`,
         `a, e >= 2` (per-row Gram certificates parked, FM-SEC136/137);
@@ -11385,6 +11386,13 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `J` at the endpoints from the first long crossing `i_0` up to the
           turning point.  The forward increment was nonnegative in all
           54,347,507 tested steps, but this is not proved.
+      - FM-CHK63 (luna_max_pluto, fresh code): ACCEPT FM-MECH55 (energy,
+        contraction bounds, band and long-interval regions), FM-MECH56
+        (propagation identity, opposite-vertex elimination, `J` criterion,
+        reduction to `R`) and FM-MECH57 Props. 2, 3 (outer propagation, the
+        unfolded counterfamily).  The kill witnesses were reproduced.
+        Wording note: "necessary" in the FM-MECH57 corollary is relative to
+        that propagation scheme.
       - FM-MECH58 (astra_max_ceres; `fm39/mech58_J_central_repro.py`, rerun
         exactly in 51 s): central-anchor coverage of `J`.
         - Theorem 4 (PROVED): for every folded row with
