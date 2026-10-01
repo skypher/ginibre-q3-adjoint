@@ -8806,6 +8806,35 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
   | all `r` | two labels, one of them 2 | all labels, both signs: (E) at `q = 2` (FM-MECH50, Theorem Q2+; FM-CHK58) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
+  - **Checkpoint 2026-10-01 15:00 (main agent).**  FM3 full cone: NOT
+    finished.
+    - Proved and independently checked:
+      - labels `<= 2` (FM-MECH41); labels `<= 3` (FM-MECH47, FM-CHK56);
+        labels `<= 4` (FM-MECH48, FM-CHK57);
+      - the many-factor theorems (FM-MECH49, FM-CHK59; constant weighted
+        cutoff `T >= 2^21`, ADV-2, FM-CHK61);
+      - (E) at `q = 2`, both signs, all labels (Q2+, FM-MECH50, FM-CHK58);
+      - one arbitrary label with `b <= 2` copies of `hat S_2` (OL, Q2+, B2:
+        FM-MECH51, FM-CHK60).
+    - Proved, rerun by the main agent, no independent check yet:
+      - the `H = 1` layer at distance 3 (ADV-1) and distances 4, 5
+        (FM-MECH53);
+      - `min(a,e) <= 1` for every `b`, and the quadratic cutoff
+        (FM-MECH52);
+      - the (E) regions of FM-MECH55, 58, 59, 60 (balanced central
+        anchors; far anchors; C1, C2) with outer propagation (FM-MECH57).
+    - Open:
+      - (a) the `H = 1` layer at distance `>= 6` with `b >= 3`,
+        `a, e >= 2` (per-row Gram certificates parked, FM-SEC136/137);
+      - (b) (E) for `q >= 3` on the three ranges R1..R3 of FM-MECH60
+        (running: FM-MECH61);
+      - (c) two labels on a background containing `hat S_2` (`b >= 1`);
+      - (d) few large labels on a background of many small labels `>= 3`;
+      - (e) the labels `<= 5` box (227.3B entries; a fast port is running
+        as FM-SEC139, to be run by the main agent with checkpoints).
+    - The exact coverage atlas (FM-SEC138) puts the smallest uncovered
+      lists at label sum 18, all containing a 5 together with a 3 or 4.
+    - No counterexample has been found anywhere.
   - Finite-range rows.  The table rows restricted to finite `(r, a)` or
     finite `(a, e)` cover all labels there, since larger labels fall
     outside the support.  They are equivalent in strength to exact
