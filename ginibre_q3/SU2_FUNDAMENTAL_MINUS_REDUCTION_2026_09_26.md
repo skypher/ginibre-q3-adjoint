@@ -15154,6 +15154,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Theorem 5: `L_T` and `J_(T-1)` preserve nonnegative irreducible
           multiplicities; 14,516 prefixes checked; `Phi(d^4 chi_(1,1)) = -6`
           reproduced.
+      - FM-STR12d (main agent; `fm39/str12d_f1_directions_main.py`, run: PASS).
+        SECOND SCOPE CORRECTION.  Half-plane positivity fails in every
+        tested direction except the height, even on PAIR-FREE lists.  Only
+        HPP itself, the height `r + s <= T`, survives.
+        - On all 599 distinct splits of F1 (pair-free, `Phi = 8,150,742`):
+          the height passes every split.  These fail: `(1,0)` on 37 splits,
+          `(1,-1)` on 13, `(1,2)` on 5, `(1,3)` on 15, `(2,3)` on 5,
+          `(1,10)` on 35.
+          - `(1,0)`: `A = (3^3,5^4)`, `B = (-4^3,-2,1,1,3,8)`, prefix
+            -607,879 at `T = 5`.
+          - `(1,-1)`: `A = (3^3,5^4,8)`, `B = (-4^3,-2,1,1,3)`, prefix
+            -1,333,203 at `T = 1`.
+        - The small-box screens of FM-STR12b (labels `<= 6`, length `<= 7`)
+          were too small to see these failures.
+        - Remaining conjecture HPP: the plain height prefix for every split
+          of every list with an even number of minus factors (pairs
+          allowed).  Total degree is the filtration that the `Sp(4)` height
+          truncation `L_T` of FM-STR7d preserves, which is a plausible
+          reason it is singled out.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
