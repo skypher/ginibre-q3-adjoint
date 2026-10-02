@@ -14313,6 +14313,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           remnants into the `2 sum_c A_c0(C)` positive pure remnants, using
           `Phi = 2(sum_c A_c0(C) + D_uv)`.  It must change the channel and may
           move arbitrarily many plus factors.
+      - FM-STR6 (luna_max_neptune; `fm39/str6_noflip_census_laws.py`; main-agent
+        rerun in progress).  Census laws for the 75,532 no-flip lists at `W <=
+        52`:
+        - label multiplicity `<= 4`; at most two labels 1; the number of odd
+          factors is never 2 (that case is two-odd fusion);
+        - the minimizing signs are not determined by the labels (e.g. eight
+          no-flip signings of `(1..7,9,10,11)`);
+        - sign sequences are neither necessarily monotone nor alternating.
+        - None of these laws isolates no-flip lists: 120,743,304 residual
+          lists satisfy all of them.
+        - Its conjecture `D <= 10`, `L <= 16` (`D` distinct labels) is REFUTED by
+          FM-SEC177: `(-1, ..., -41)` with `sigma p = -43` is no-flip with
+          `D = 42` and `L = 42`.  The census bound is an artifact of `W <= 52`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
