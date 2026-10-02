@@ -14032,13 +14032,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         `A^2/13500` and `A^2/27440`).  So no certificate supported on small
         flips plus the TopPair triangle can prove (FT).
       - FM-SEC175 (luna_max_venus; `fm39/sec175_all_p_run_mixed_screen.py`;
-        main-agent rerun in progress).  Every admissible `p`, `W = 60..200`:
+        main-agent rerun: identical, 18,418 + 22,954 no-flip patterns).  Every admissible `p`, `W = 60..200`:
         - runs of 8..12 labels, and runs plus `1^a, 2, 3`: 17,323 runs and
           20,156,928 sign patterns;
         - 41,372 no-flip patterns, all TopPair-monotone, every
           child/parent ratio `< 1/16`, so (FT') holds there;
         - maxima cross-checked with `sec166_flip_single.cpp` and
           `sec162_gp_single.cpp`.
+      - FM-CHK101 (luna_max_neptune, fresh code; `fm39/chk101_mech158_mech159_check.cpp`,
+        rerun: ALL CHECKS PASS).
+        - ACCEPT FM-MECH158: the translated families, with their
+          stabilization, degree bounds and Newton certificates.
+        - ACCEPT FM-MECH159: the 7/8/9-factor thresholds.  This includes the
+          exhaustive box at `L = 9`: all 5,005 multisets at the threshold,
+          57,799 even signings, all positive.  The five-factor low-channel
+          estimate is not part of the accepted claim; it was later proved
+          as FM-MECH163 Theorem 1 and FM-MECH166 Lemma 1.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
