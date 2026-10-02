@@ -15775,6 +15775,34 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           also fails on `(+1)^2(+2)^3(-3)^14` and on the FM-SEC183 witness.
         - Main-agent reading: averaged over conjugation, the representation
           reduces to the Walsh form.  It adds no positivity of its own.
+      - FM-STR8k (vulcan thread on Luna; `fm39/str8k_lancaster_endpoints.sh`,
+        rerun: ALL EXACT CHECKS PASS).  Lancaster mechanisms, endpoint side.
+        - Exact Taylor data at `rho = +-1`: `A_k = (-1)^k sum_(j>=k) C(j,k) c_j`
+          and `B_k` similarly.  `D(1) = 0` if some factor is minus;
+          `D_(Lambda*)(rho) = D_Lambda(-rho)` under `eps_i -> (-1)^(n_i) eps_i`.
+          If the first nonzero `A_k > 0`, `D >= 0` on `[1 - delta, 1]` with an
+          explicit `delta`.  In a screen of 965 lists (labels `<= 3`, lengths
+          2..8) the first nonzero endpoint coefficient is positive at both
+          ends.
+        - Knobs: (a) a fixed-sign `dD/drho` fails, e.g. `(+1,-2,-3)` with `D =
+          2(1-rho)(1+rho)^2`; (b) no linear rotation of independent semicircles
+          keeps semicircle marginals (`E X^4 = 2 + 2a^2 b^2`); (c) the free
+          rotation makes free-Wick factors coefficientwise nonnegative, but
+          its trace differs from LC, e.g. `(+1,+2,-1,-2)` gives `4 - 4 rho^2`
+          against `2 - 2 rho^2`.
+      - FM-STR7o (minerva thread on Luna; `fm39/str7o_lancaster_walsh.sh`, rerun:
+        PASS).  Lancaster mechanisms, Walsh side.
+        - Knob (moment-sequence route): the sequence `W_j` has finite support,
+          so `W_0 W_(2d) - W_d^2 = -W_d^2 < 0`; no nonconstant `D` is a Hausdorff
+          moment generating function.
+        - Clebsch-Gordan transfer: `W_j(C + (n,eps)) = 2 sum_(p in CG(j,n))
+          f_C(p,j)`.  It needs off-diagonal coefficients, so it does not
+          close on the diagonal.
+        - LC proved for lists of at most three factors (explicit formula
+          `2 I (1 + eps_a rho^a + eps_b rho^b + eps_c rho^c)`), for
+          all-fundamental lists, and whenever the product is pointwise
+          nonnegative, e.g. when every non-fundamental signed class occurs
+          an even number of times.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
