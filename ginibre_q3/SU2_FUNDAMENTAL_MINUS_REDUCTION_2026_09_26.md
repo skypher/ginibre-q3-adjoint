@@ -15602,6 +15602,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `(-1,...,-22,+25)` (`W = 278`) passes with 143 of 253 pairs.
         - Reading: the tail-aware margins decline but stay well away from
           zero.  The raw decline reflects the size of the tails.
+      - STATUS UPDATE (main agent, 2026-10-02, 18:50).  The cone is still NOT
+        proved.  The lead is now LP (FM-STR13): some pair's interior cut has
+        every height layer `>= 0`.  It implies FM3 at once and concerns one
+        height at a time.
+        - Evidence, no failure:
+          - all 75,532 rows of the `W <= 52` census (FM-STR13b; TopPair 99.0%,
+            the rest rescued by another pair);
+          - the runs to `k = 32`;
+          - the FM-SEC181/183 witnesses, F1 and lists with pairs;
+          - adversarial searches to `W = 294` (FM-SEC185/186);
+          - a six-candidate pair menu that always succeeds (FM-STR9i).
+        - Mechanisms ruled out for LP:
+          - `Sp(4)` string monotonicity (passes on no cut, FM-STR7m);
+          - size-slice positivity (wrong for `(2,0)` allocations, FM-STR7l);
+          - genuine quotients (never occur on the census);
+          - inductive LP identities (FM-STR4f);
+          - Gaussian limits (FM-STR7g).
+          The cancellation runs across `Sp(4)` strings at a fixed height.
+          No condition simpler than LP itself captures it yet.
+        - Proved LP classes: genuine-quotient cuts, e.g. `(-n)(-m)(+q)(+1)^a`
+          with `q <= n` (FM-STR9i), and all-plus lists.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
