@@ -14048,6 +14048,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           57,799 even signings, all positive.  The five-factor low-channel
           estimate is not part of the accepted claim; it was later proved
           as FM-MECH163 Theorem 1 and FM-MECH166 Lemma 1.
+      - FM-MECH168 (astra_max_ceres; `fm39/mech168_label_ge2_region_repro.py`,
+        rerun: PASS).
+        - Lemma 1: `d(Lambda) >= Gamma_R d(Lambda')`, with `Gamma_R = sum_r
+          H_(Lambda')(r) >= b + 1`.  It keeps all parent-to-child fusion
+          channels via lower profiles `H_A(r)` (pairs, exact triple profile,
+          third-largest-label profile from FM-MECH166 Lemma 1, quartet
+          interval bound).
+        - Theorem 2: for pair-free lists with every label `>= 2`, an
+          explicit label-and-sign quantity `rho_R` satisfies `g_p(B) -
+          g_p(B - R) >= rho_R d(Lambda)`.  So `rho_R >= 0` gives removal
+          monotonicity and FM3 directly, with no shorter-list assumption.
+          Corollary 3: an explicit region with at most two labels below
+          `M` and arbitrarily many other factors.
+        - Census (no label 1, minimum label 2 or 3, `>= 9` factors, `W <= 48`):
+          798 of 832 covered, including all 736 with nine factors.  34
+          ten-factor lists remain.
+        - Kill (knob: locality): flips involving only the minimum labels
+          (2 or 3, even repeated) do not imply TopPair; exact residual
+          witnesses for both minima.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
