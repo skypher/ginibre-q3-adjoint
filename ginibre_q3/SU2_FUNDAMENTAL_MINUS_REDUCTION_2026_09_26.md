@@ -15734,6 +15734,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Lancaster version: with `v^2` following the SU(2) Poisson law of
           parameter `rho`, the same computation gives `D(rho)` of FM-STR15.
           There `c(+-j)` is replaced by `E_rho[cos(j alpha)]`.
+      - FM-SEC188 (luna_max_neptune; `fm39/sec188_lancaster_gmp.sh`,
+        `fm39/sec188_lancaster_laurent_check.sh`, both rerun by the main
+        agent).  Adversarial search against Lancaster-coupling positivity
+        (FM-STR15).  No failure.
+        - GMP scan: 11,761 distinct lists with `W <= 200` and up to 40
+          factors (6,595 with nonzero `D`).  Each was tested at 235 interior
+          rational values of `rho`, and exactly at `rho = +-1`.  Seeds: the
+          LP and hard witnesses, concentrated minus multiplicities, two
+          minus classes, runs, opposite-sign classes, large plus labels, and
+          600 random lists.
+        - Smallest normalized value about `8.5e-82`, at `rho = 1048575 /
+          1048576` for `(+50)(-3)^14(+2)^3(+1)^2`.  This is the endpoint zero,
+          since `D(1) = D(-1) = 0` there.  An independent Laurent evaluator
+          confirms the polynomial, and its Bernstein coefficients on
+          `[-1,1]` are all nonnegative.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
