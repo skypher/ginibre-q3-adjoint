@@ -14800,6 +14800,32 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           lists with `W <= 80`: 25 of 100 have `O > 0`, smallest margin 58.
         - Open (knobs: arbitrary factor count and label size): Hall on the
           actual support graphs, and `rank delta` = matching number.
+      - FM-STR8d (astra_max_vulcan; `fm39/str8d_complementary_pair_obstruction.py`,
+        rerun: PASS completed STR8d verifier, about 1 min).  Coordinate
+        triangular minors are impossible in general.  This does not refute
+        the correction itself.
+        - Proposition 1 (knob: one even vector per odd vector, scalar
+          triangularity): two retained odd vectors with complementary cuts
+          `S`, `S^c` are the same vector `v` after forgetting colours.  Their
+          columns are `kappa(S cap T) <t,v>` and `kappa(S^c cap T) <t,v>`, so
+          they have identical support, and no triangular minor contains
+          both.  Example `(-1,-1,-1,-2,+3,+4)`, `(E,O) = (22,2)`.  A dense 2x2
+          minor, determinant 2150, still gives `H(d) = (20,0)`.
+        - Proposition 2: the obstruction holds for every `(-1)^3(-2)^3(-a)^3
+          (-(a+1))^3`, `a >= 4` (for `a = 4`, `(E,O) = (60,756, 1,308)`).
+        - Box audit of the 531 corrected profiles: 263 have the
+          complementary-pair obstruction; 165 have a triangular minor
+          (modulo 1,000,003); singleton peeling stalls on 103.  Allowing 2x2
+          blocks covers 71 more.  `(-1)^3(-2)^3(-3)^3(-4)^3`, `(E,O) =
+          (16,650, 224)`, still stalls.  All runs k = 5..9 have the
+          obstruction (k = 9: 2,988 of 7,664 odd columns lie in
+          complementary pairs).
+        - Open: `rank(P_even J P_odd) = dim H_odd(d_0)` on the family of
+          Proposition 2, and in general.
+        - Main-agent note: FM3 needs only one square-zero correction.  For
+          any odd-to-even `J`, `delta = PJP` is square-zero and commutes
+          with `d_0`.  So generic position weights suffice.  FM-STR8e
+          follows this up.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
