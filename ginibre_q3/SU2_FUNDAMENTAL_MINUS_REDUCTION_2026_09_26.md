@@ -15432,6 +15432,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           recorded there apply: the monotone step fails (`b_1 - b_0 = -2`
           at `(1^4)`) and local involutions fail.  A proof would have to get
           past them.
+      - FM-SEC184 (luna_max_neptune; `fm39/sec184_interior_cut_rules.py`,
+        rerun: PASS).  Targeted adversarial search against the PLAIN
+        interior prefix.  No failure.
+        - Seeds and moves: all-minus heavy lists like the FM-SEC183 budget
+          witness, the segregated FM-SEC181 shapes, minus weight
+          concentrated in a few large labels, merges and splits.  `W <=
+          160`, at most 24 factors, pair-free and with pairs.
+        - Three cut rules: decreasing labels with ties to A (the default),
+          ties to B, and increasing labels.  None fails.  The rule changes
+          the margins: the `W = 32` all-minus witness has ratio `32465 /
+          35756` (default), `2941/4392` (ties to B) and 1 (increasing).
+        - Tightest default TopPair case: `(+1)^4(+2)(+3)^4(-4)^2(+5)^4(+6)`,
+          pair `(+5,+5)`, ratio `20,159,257 / 33,537,232` at `T = 21`.
+        - Main-agent repo rerun of `fm39/sec182_interior_scale.py`, now
+          reading the gzipped `W <= 52` census
+          `fm39/sec166_census_w52_noflip.log.gz`: PASS (2,000-row sample, runs
+          `k <= 40`, the 42-factor list).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):

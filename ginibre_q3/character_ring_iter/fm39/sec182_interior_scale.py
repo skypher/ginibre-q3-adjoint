@@ -59,8 +59,12 @@ os.fchmod(fd,0o700)
 binary=f"/proc/self/fd/{fd}"
 if len(sys.argv)>1:
  raise SystemExit(subprocess.run([binary]+sys.argv[1:],pass_fds=(fd,),env=env).returncode)
-log="/tmp/claude-1006/-home-yang-q3adjoint/2d613d32-0be2-46ab-91e8-7dc4d59487ae/scratchpad/flipdesc/fx6_52_noflip.log"
+import gzip, pathlib
+# W <= 52 no-flip census, stored gzipped next to this file; decompressed into a memfd for the C++ reader.
+_gz=pathlib.Path(__file__).resolve().parent/"sec166_census_w52_noflip.log.gz"
+lfd=os.memfd_create("census",0); os.write(lfd,gzip.decompress(_gz.read_bytes())); os.lseek(lfd,0,0)
+log=f"/proc/self/fd/{lfd}"
 for args in (["ip-witness"],["ip-census",log,"2000","182"],["ip-runs","40"],["ip-42"]):
  print("RUN",*args,flush=True)
- rc=subprocess.run([binary]+args,pass_fds=(fd,),env=env).returncode
+ rc=subprocess.run([binary]+args,pass_fds=(fd,lfd),env=env).returncode
  if rc:raise SystemExit(rc)
