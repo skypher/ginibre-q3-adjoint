@@ -14970,6 +14970,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Odd fraction on `(+1)^(2t)(-2)(+4)(-6)`: 17.8% at t = 12.
         - Knob: computational growth.  Hall at scale needs the full overlap
           matrix, so it is no cheaper than the rank.  No counterexample.
+      - FM-STR9d (ceres thread on Luna; `fm39/str9d_two_minus_prefix.py`,
+        rerun: PASS FM-STR9d exact verifier, 49 s).  The interior prefix for
+        two minus factors with a genuine plus background.
+        - Take the two minus factors as the pair and cut the plus factors
+          by the interior rule.  Then `F_A = G_A` and `F_B' = d^2 G_B K_n
+          K_m`.  If `G_A`, `G_B` (products of `S_a`) are genuine `Sp(4)`
+          characters, FM-STR7e Theorem 5 (r = 0) gives every plain prefix
+          `>= 0`.  This holds for `(-n)(-m)(+1)^a`, all `n, m, a`, since
+          `S_1 = h_1`.  The scalar FM3 values of that family already follow
+          from the `Sp(4)` form `2<K_n K_m, h_1^a>`.  The new content is the
+          prefix mechanism.
+        - Obstruction to the blockwise condition (knob: each block
+          genuine): `S_2 = chi_(2,0) - chi_(1,1) + chi_(0,0)` is virtual.
+          No negative prefix in 1,134 fundamental-background cases or in
+          16,170 bounded arbitrary-plus cases.
+        - Open: the plain prefix for every two-minus list, without
+          genuine blocks.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
