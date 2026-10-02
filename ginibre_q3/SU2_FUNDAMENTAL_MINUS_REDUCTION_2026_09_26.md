@@ -15363,6 +15363,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           witnesses.  The budget fails only for the pair `(-2,-4)` of the
           first witness (minimum -16,546,920).
         - No new class: the open statement is the interior prefix itself.
+      - FM-STR7k (minerva thread on Luna; `fm39/str7k_channel_domination.py`,
+        rerun: PASS).  `Sp(4)` channel bookkeeping for the interior cut.
+        - For a `(1,1)` cut, `Pi_T = 2 <G_A, J_(T-1) G_B'>`, and `J_(T-1)` keeps
+          `chi_(alpha,beta)` exactly when `alpha + beta <= T - 1`.  So the
+          prefix is a cumulative sum of the matched channel products `a_lambda
+          b_lambda` in the order `|lambda| = alpha + beta`.  The "domination
+          criterion" (positive matched mass up to `Q` covers negative matched
+          mass) is the prefix inequality written in the `Sp(4)` basis.  It is
+          a restatement, not a new condition.
+        - W1 TopPair cut: `G_A` has 53 negative coefficients out of 89 and
+          `G_B'` has one, `[chi_(16,16)] = -12`, which lies outside the support
+          of `G_A`.  Cumulative matched mass peaks at 63,176,962 at order 12
+          and then decreases slowly.  Early positive mass pays for later
+          negative mass.  The segregated split fails at `T = 11`.
+        - 890 interior cuts rechecked; no failure.  No uniform mechanism.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
