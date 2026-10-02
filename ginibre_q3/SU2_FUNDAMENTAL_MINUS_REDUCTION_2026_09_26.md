@@ -15734,6 +15734,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Lancaster version: with `v^2` following the SU(2) Poisson law of
           parameter `rho`, the same computation gives `D(rho)` of FM-STR15.
           There `c(+-j)` is replaced by `E_rho[cos(j alpha)]`.
+        - Main agent: averaging over conjugation gives `D(rho) = sum_j
+          rho^j sum_F eps_F m_j(F) m_j(F^c)`, with `m_j(S)` the multiplicity of
+          spin `j` in the product over `S`.  The inner sum is `f(j,j)`, checked
+          on all lists with labels `<= 3` and length 2..6.  So LC asks that
+          the spin-`j` Walsh forms, weighted by `rho^j`, have a nonnegative
+          sum for every `rho`; FM3 is the `j = 0` term.  Equivalently, `D(rho)
+          = E[P(x,y) K_rho(x,y)]`: FM3 with the extra positive weight
+          `K_rho`.
       - FM-SEC188 (luna_max_neptune; `fm39/sec188_lancaster_gmp.sh`,
         `fm39/sec188_lancaster_laurent_check.sh`, both rerun by the main
         agent).  Adversarial search against Lancaster-coupling positivity
