@@ -14130,6 +14130,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           boxes at `L = 9, 10` and large-label samples;
         - FM-MECH165 Theorem 5: the band `w_TP >= 2 delta - 2`, `>= 9`
           factors, under the shorter-word assumption.
+      - FM-STR3 (astra_max_juno; `fm39/str3_one_generation_obstruction.py`,
+        rerun: ALL EXACT CHECKS PASS).  Structural obstruction, knob: depth of
+        the fusion constraints.
+        - Root: an actual eleven-factor residual list, `p = 13`, `W = 55`,
+          `delta = 21`, TopPair `(+8,+10)`.  Lower `m(Lambda)` (222,024 ->
+          30,265) and the invariants of its 240 one-pair fusion children by
+          an exact integer certificate.
+        - What stays the same: all 55 flips (max -185), every parent scalar
+          and signed fusion identity (56,320 equations), nonnegativity of
+          every shorter signed value, and all multiplicities.
+        - Yet the TopPair difference becomes -758.
+        - So flips + shorter-list positivity + ALL one-generation fusion
+          relations do not imply TopPair.  The table violates a
+          child-to-grandchild fusion relation (defect 68,353), so an
+          identity must use recoupling consistency across common deleted
+          backgrounds, at least two generations deep.  Whether two suffice is
+          open.
+        - Stopped FM-MECH170 (band widening): the band `w_TP >= 2 delta - 2`
+          stands; the attempted extensions are unverified.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
