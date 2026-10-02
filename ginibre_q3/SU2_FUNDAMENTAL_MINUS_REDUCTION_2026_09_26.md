@@ -13280,6 +13280,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - All eight large selector killers have a flip descent: W = 34
           (Rule M), 128, 131 (Rule 1'), 427, 540 and its reflection, 869
           (Rule W), and 1283 (Lemma WM), e.g. `(-11,+3)` at W = 1283.
+        - CORRECTION 08:55 (found by luna_max_eris in FM-CHK96): for W = 131,
+          427 and 1283, `B` has an odd number of minus signs, so the
+          distinguished factor is `-p`.  The main agent had run
+          `fm39/sec166_flip_single.cpp` with `+p` there.  Rerun with the
+          correct sign, all three still have a flip descent, through
+          different pairs:
+          - W = 131, `sigma p = -15`: `(-1,-2)` = 18,354,066,022; the earlier
+            `(-1,-7)` is negative.
+          - W = 427, `sigma p = -31`: `(-1,-11)`.
+          - W = 1283, `sigma p = -55`: `(-11,+3)`, with a different value
+            from the earlier wrong-sign run.
+          W = 34, 128, 540 (both) and 869 have an even minus count and were
+          run correctly.  Other flip checks took `sigma p` from census logs
+          or by parity and are unaffected.
         - CONJECTURE (FT): every pair-free residual `(B,p)` has a flip
           descent or a monotone TopPair removal.  With FM-MECH102,
           FM-MECH143 and the proved strata, (FT) gives the full FM3 cone.
