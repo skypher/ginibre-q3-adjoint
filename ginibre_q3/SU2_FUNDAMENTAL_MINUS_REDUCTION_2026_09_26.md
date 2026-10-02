@@ -14881,6 +14881,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           and `Phi(d^4 chi_(1,1)) = -6`.
         - Open: for every no-flip residual, some pair (TopPair passed every
           test) has `B_T >= 0` for every `T`.
+      - FM-CHK112 (luna_max_eris, fresh code; `fm39/chk112_str9_independent_check.py`,
+        rerun: PASS, 2.5 min).  ACCEPT FM-STR9, items 1-4.
+        - Proposition 1: matches direct signed tables in 796 random cases.
+        - Theorem 2 proof read line by line (NS survival, orthogonality for
+          `n != m`, overlap `1/(q+1)`, the 2x2 Gram bound, Bertrand).  Energy
+          bound tested exactly on 6,158 TC+NS lists with labels `<= 12` and
+          length `<= 8`; 3,121 have nonzero `H_odd(d_0)`, and all pass.
+        - Corollary 3 checked for `(3,5,7), M = 18` and `(3,5,9), M = 20`, l =
+          2..6.  Proposition 4 dimensions reproduced.
+        - So FM3 holds, through the complex, on the TC+NS two-minus class,
+          which contains lists with unboundedly many factors.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
