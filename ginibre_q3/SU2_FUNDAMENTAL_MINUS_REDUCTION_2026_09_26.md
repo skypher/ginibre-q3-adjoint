@@ -13984,6 +13984,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Census: all 7,860 nine-factor no-flip lists are settled, so 28,911
           of 33,487 are proved outright.  4,576 remain, all with `>= 10`
           factors.
+      - FM-MECH165 (astra_max_juno; `fm39/mech165_cb_band_repro.py`, rerun:
+        ALL CHECKS PASS).
+        - Lemma 1: every flip is an adjacent difference of kernel moments of
+          its own deleted background.  So different flips use different
+          kernels, and treating them as one matrix loses compatibility.
+        - Theorem 5 (proved under shorter-word induction): every pair-free
+          residual word with at least nine factors and `w_TP >= 2 delta - 2`
+          satisfies (CB) with `k = 0`.  So TopPair is monotone there and
+          FM3 holds, uniformly in labels, with no flip hypothesis.  This uses
+          Lemma 3 (first two kernel diagonal rows) and Lemma 4 (Bernstein
+          bound for the degree-4 diagonal).
+        - Census: minimizing over every `k` in `0..2b`, all 33,487 pass; the
+          minimum relative margin is about 0.45.  The band covers 1,024 of
+          the 12,436 no-flip lists with at least nine factors.
+        - Witnesses (knob: the set of flip hypotheses): neither the
+          `p`-incident flips plus the TopPair flip, nor in addition all
+          opposite-parity flips, imply (CB).  The full all-flips hypothesis
+          is needed.
+        - Open: `w_TP <= 2 delta - 4` with all flips negative implies (CB).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
