@@ -1,4 +1,4 @@
-// Flip-descent and TopPair check for one (B,p).  Usage: flip_single p B...
+// Flip-descent check for one (B,p).  Usage: flip_single sigma_p B...   (sigma_p = (-1)^(minus count of B) * p; checked)
 // For each pair of factor classes (u,v) of Lambda = B + (+p): D_uv = eps_v * A_{n_u n_v}(Lambda - u - v)
 // (Phi(Lambda) - Phi(Lambda^{uv}) = 4 D_uv).  Flip descent holds iff some D_uv >= 0.
 #include <gmpxx.h>
@@ -18,6 +18,7 @@ static Z entry(vector<int> lab,int A,int Bt){ // A_{A,Bt}(lab) with pruning
   auto it=cur.find(key(A,Bt));return it==cur.end()?Z(0):it->second;}
 int main(int argc,char**argv){int p=atoi(argv[1]);vector<int> B;for(int i=2;i<argc;++i)B.push_back(atoi(argv[i]));
   vector<int> Lam=B;Lam.push_back(p);
+  {int neg=0;for(int z:Lam)if(z<0)++neg;if(neg%2){fprintf(stderr,"ERROR: Lambda = B + (p) has an odd number of minus signs; pass the distinguished factor as sigma*p with sigma = (-1)^(minus count of B)\n");return 2;}}
   vector<int> vals;for(int z:Lam)if(find(vals.begin(),vals.end(),z)==vals.end())vals.push_back(z);
   vector<pair<int,int>> prs;for(size_t i=0;i<vals.size();++i)for(size_t j=i;j<vals.size();++j){
     if(i==j&&count(Lam.begin(),Lam.end(),vals[i])<2)continue;prs.push_back({(int)i,(int)j});}
