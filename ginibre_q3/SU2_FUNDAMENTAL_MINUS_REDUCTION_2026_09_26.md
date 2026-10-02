@@ -8823,7 +8823,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | eight factors with no negative 3|5 term (e.g. every all-odd eight-factor list) | all (FM-MECH153 Lemma 4, Corollary 5) — added 2026-10-02 |
 | all `r` | eight factors: all labels `>= 3`, or all `>= 2` with an odd label | all (FM-MECH155 with FM-MECH153 and two-odd fusion) — added 2026-10-02 |
 | all `r` | nine factors with minimum label `>= 28` | all (FM-MECH159) — added 2026-10-02 |
-| all `r` | EVERY list with at most ELEVEN factors | all labels, all signs (FM-MECH173 with FM-MECH169; independent check pending) — added 2026-10-02 |
+| all `r` | EVERY list with at most ELEVEN factors | all labels, all signs (FM-MECH173 with FM-MECH169; independently checked: FM-CHK109, FM-CHK109b; finite box rerun by main agent) — added 2026-10-02 |
 | all `r` | EVERY list with at most TEN factors | all labels, all signs (FM-MECH169 with FM-MECH164; FM-CHK108 ACCEPT) — added 2026-10-02 |
 | all `r` | EVERY list with at most NINE factors | all labels, all signs (FM-MECH164 with FM-MECH160; FM-CHK106 ACCEPT) — added 2026-10-02 |
 | all `r` | ten factors with minimum label `>= 16` | all (FM-MECH164) — added 2026-10-02 |
@@ -14618,6 +14618,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: on F1, `Delta_TP + sum alpha D_uv = sum beta Phi(Q,eta) + sum
           gamma m(A)m(B) + sum rho R_J` with `alpha, beta, gamma >= 0`, where
           some `beta` is positive on a fused word with `11 <= |Q| <= 14`.
+      - FM-CHK109b (luna_max_eris, fresh code; `fm39/chk109b_prefix_budget_check.py`,
+        rerun: CHARGE PREFIX SCREEN PASS, 35 s with 24 threads).  ACCEPT
+        FM-MECH173 item 3, which closes the gap left by FM-CHK109.
+        - All 31,824 sorted seven-label prefixes were regenerated (8,191,650
+          feasible sign/category cases in mode 0, 27,090 in the all-even
+          mode).  31,802 satisfy the exact `2^40` charge bound.  Worst:
+          `(1,1,1,2,2,3,4)`, numerator 1,093,158,045,286, margin
+          6,353,582,490.
+        - The 22 exceptions and their exact maxima match the claimed list.
+          Each goes to the finite phase with cutoff `q <= 2D <= 44`.
+        - The eleven-factor strata row is now marked independently checked:
+          FM-CHK109 covers the reductions, profiles, cutoff and samples, and
+          FM-CHK109b covers the prefix budgets.  The finite box itself is the
+          main-agent rerun of the FM-MECH173 reproducer.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
