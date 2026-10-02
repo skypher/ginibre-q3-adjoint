@@ -14017,6 +14017,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           bounded-window descent checks;
         - FM-MECH162 Theorem 3 (locality obstruction) and Proposition 4
           (artificial-table obstruction).
+      - FM-MECH167 (astra_max_vulcan; `fm39/mech167_small_flip_obstruction_repro.py`,
+        rerun: ALL EXACT CHECKS PASS).  Obstruction, knob: support of the flip
+        hypotheses.  Families `(+1)^r (+2)^A (-3)^4 (-4)^2 (+(8-r))` and
+        `(+1)^r (-2)^2 (-3)^4 (+4)^A (-6)^2 (+(10-r))`, `r` in {1,2}.  In
+        both:
+        - every flip involving label 1 is negative, and in the second family
+          every flip involving label 1 or 2;
+        - the three TopPair/`p` flips are negative;
+        - yet `3/2 < g_p(B - TP)/g_p(B) < 2`, so TopPair fails.
+        A flip of two copies of the repeated class (`(+2,+2)`, `(+4,+4)`) is
+        positive, so (FT) holds.  Exact witnesses at `A = 128, 192`; the
+        signs hold for large `A` (corner asymptotics, ratio about
+        `A^2/13500` and `A^2/27440`).  So no certificate supported on small
+        flips plus the TopPair triangle can prove (FT).
+      - FM-SEC175 (luna_max_venus; `fm39/sec175_all_p_run_mixed_screen.py`;
+        main-agent rerun in progress).  Every admissible `p`, `W = 60..200`:
+        - runs of 8..12 labels, and runs plus `1^a, 2, 3`: 17,323 runs and
+          20,156,928 sign patterns;
+        - 41,372 no-flip patterns, all TopPair-monotone, every
+          child/parent ratio `< 1/16`, so (FT') holds there;
+        - maxima cross-checked with `sec166_flip_single.cpp` and
+          `sec162_gp_single.cpp`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
