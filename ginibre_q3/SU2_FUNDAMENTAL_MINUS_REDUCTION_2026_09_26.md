@@ -14220,6 +14220,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `G_2` and `T^2` fail as Haar models for `r >= 2`.
         - Ginibre torus: plus factors are positive definite; minus factors
           have coefficient -1 at `(n,-n)`.
+      - FM-SEC177 (luna_max_venus; `fm39/sec177_42_factor_noflip_check.py`;
+        main-agent rerun: all 861 flips negative, TopPair monotone;
+        independent check of the 18-factor member with
+        `sec166_flip_single.cpp`).  NO-FLIP LISTS HAVE UNBOUNDED FACTOR COUNT
+        (in all tested cases).
+        - The all-minus consecutive runs `B = (-1, ..., -k)` with `sigma p` near
+          `+-(k+1)` have no flip descent for every tested `k` from 17 to 41.
+          At `k = 41`, `sigma p = -43`: 42 factors, `W = 861`, `delta = 409`,
+          largest flip `-1.39e43`.
+        - TopPair is monotone on every one; the child/parent ratio is
+          `<= 0.0072` (the ratio rises slowly with `k`).
+        - So a factor-count closure, plus a many-factor flip theorem,
+          cannot cover the cone: hard lists exist at every factor count.
+          This confirms the reallocation to structural mechanisms.  Exact
+          class screens of doubled, tripled and quadrupled runs found no
+          no-flip pattern.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
