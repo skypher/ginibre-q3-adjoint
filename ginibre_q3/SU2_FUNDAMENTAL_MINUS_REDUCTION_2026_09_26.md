@@ -14352,6 +14352,33 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           identity-depth result (FM-STR3) all need TWO levels of recoupling.
           Open: a general multi-stage rule (e.g. along a fusion tree) for
           two-minus and `2r`-minus lists without condition PB.
+      - FM-STR6b (luna_max_neptune; `fm39/str6b_mechanism_survey_checks.py`,
+        rerun: same output).  Survey of known mechanisms for Ginibre /
+        GKS-II-type inequalities, translated to FM3.  Citations are from the
+        agent's memory, with DOIs as given; not checked against the
+        literature by the main agent.
+        - Mechanisms covered:
+          - Ginibre (CMP 16, 1970) duplicate variables / positive
+            definiteness;
+          - Sylvester (CMP 73, 1980), a counterexample to the
+            positive-definiteness inequality for `O(N)`, `N >= 3`, which is
+            not a counterexample to Griffiths inequalities or FM3;
+          - Dunlop-Newman (CMP 44, 1975); Dunlop (CMP 49, 1976);
+            Kunz-Pfister-Vuillermot (1975/76);
+          - Messager-Miracle-Sole-Pfister (CMP 58, 1978); Bricmont (JSP 17,
+            1977); Wells (bibliographic source UNCERTAIN);
+          - Newman (CMP 41, 1975), Lee-Yang;
+          - Simon-Griffiths, Aizenman, Brydges-Frohlich-Spencer/Sokal
+            (random currents and walks);
+          - Frohlich-Israel-Lieb-Simon (CMP 62, 1978), reflection
+            positivity.
+        - Exact checks: all 6,469 signed multisets with labels 1..4 and
+          length `<= 8` are nonnegative.  Factorwise positive definiteness
+          fails already at `(-1,-1)` (coefficient -2).
+        - Recommendation: (1) global SU(2) spin-network switching (current
+          switching with full fusion trees, nonzero channels and
+          multi-generation recoupling, consistent with FM-STR1b/3/7/8); (2) a
+          whole-word Gram or reflection-positive cut construction.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
