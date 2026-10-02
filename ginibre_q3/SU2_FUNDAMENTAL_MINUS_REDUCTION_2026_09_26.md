@@ -14453,6 +14453,30 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           valid for every table satisfying the constraints, are the
           meaningful kind.
         - The `W <= 36` census map was not completed.
+      - FM-STR7b (astra_max_minerva; `fm39/str7b_height_transport.py`, rerun:
+        FM-STR7b PASS).  Folding with a remainder.
+        - For `Lambda = H H R`: `Phi = sum_(u,v) r_H(u,v) r_(HR)(u,v)`, where `r` is the
+          signed half-path count, i.e. the two-colour table of the half-word.
+        - Proposition 2: after midpoint and same-height cancellation, a
+          channel-changing involution with only positive fixed points exists
+          IF AND ONLY IF the height prefixes `P_T = sum_(u+v <= T) r_H r_(HR) >= 0`
+          for every `T` (match each negative remnant to a positive one of
+          lower height).  This changes channels, heights and whole
+          half-paths.
+        - Exact obstructions (knobs: midpoint preservation, one-remainder-
+          per-side, height preservation, pooling two adjacent heights,
+          PSD on unrestricted half-vectors, "two remainders force a flip").
+          E.g. `H = (-6,-8,-10)`, `R = (-2,-4)` has `Phi = 8,226` and all 28 flips
+          negative.
+        - Induction on `|R|` needs repair: `|R| = 1` occurs (one unpaired even
+          plus label); restoring pair-freeness after fusion can raise `|R|`
+          from 2 to `k+1`.  Repair: allow all signed-class words as children
+          and postpone pair reduction.
+        - Census: every signed multiset with labels 1..4, `<= 10` factors, `|R| =
+          2` or 4 (1,860 + 280 pair-free; 5,940 + 6,270 all classes) has every
+          prefix `P_T >= 0`, and so do 6,000 seeded stress cases.
+        - Open: the prefix positivity `sum_(u+v <= T) r_H r_(H, eps a, eps b) >= 0`
+          for all `T` (its `T = infinity` case is FM3 for two remainders).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
