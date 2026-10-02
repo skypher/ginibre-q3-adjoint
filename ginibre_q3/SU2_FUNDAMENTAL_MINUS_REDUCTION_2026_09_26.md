@@ -15819,6 +15819,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         make every component expectation nonnegative.  What survives is the
         all-plus case, by positive definiteness, plus the fusion rule and the
         Lancaster reading of `D(rho)` already recorded.  No new closure.
+      - FM-SEC189 (luna_max_neptune; `fm39/sec189_fm3_hunt_w1000.sh`; claim
+        NOT rerun by the main agent; the agents were retired at the user's
+        request).  Hunt for a counterexample to FM3 itself at large
+        weight.  None found.
+        - 3,516 admissible candidates generated; 414 evaluated exactly with
+          GMP, up to `W = 992` and 60 factors.  Every case with nonzero
+          all-plus normalization has `Phi > 0`.  An independent Laurent
+          evaluator runs automatically on any negative candidate; none
+          occurred.  The pruned evaluator matched full fusion tables, e.g. on
+          `(+1)^30(-32)^30`.
+        - Smallest sampled `Phi / (all-plus value)` is about `1.1e-12`, on a
+          random pair-free list with `W = 526` and 57 factors.  The run and
+          opposite-sign families fall slowly with `W`; scaled sign minima tend
+          to 1.
+      - RETIREMENT (2026-10-02, about 22:45): goal cleared by the user, and all
+        agents retired.  Open: a uniform proof of FM3 for lists with more
+        than eleven factors.  Surviving strengthenings, both unproved: the
+        interior-cut prefix (IP, FM-STR5d/FM-STR14/FM-SEC187) and
+        Lancaster-coupling positivity (LC, FM-STR15/FM-SEC188).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
