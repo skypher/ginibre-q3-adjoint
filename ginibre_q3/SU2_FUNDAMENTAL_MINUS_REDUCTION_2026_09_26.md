@@ -13720,6 +13720,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           TopPair is monotone on every one; none was found at `W >= 100`.
         - The FM-SEC169 zeros came from the withdrawn evaluator, e.g. the
           true `A_22((+2)^28 (+3)^30 (+4)^20 (+214)) = 118,588,718,722`.
+      - FM-MECH156 (astra_max_juno; `fm39/mech156_moment_certificate_repro.py`,
+        rerun: ALL CHECKS PASS).  A proved rational removal certificate (E).
+        - Lemma 1: exact moments of the positive rotation kernel `M_c`
+          (positive semidefinite for `0 <= c <= 1`), checked on 19,855
+          identities.  Lemma 2: the four channel blocks of a same-parity
+          removal come from one endpoint matrix.
+        - Proposition 3: an explicit rational test (E) (Cauchy-Schwarz in the
+          kernel's Hilbert space) implies `g_p(B) >= g_p(B - R)` for any
+          same-parity pair `R`, uniformly in labels, signs, factor count and
+          distance.  If `w_TP >= delta`, it simplifies (no wraparound term).
+        - At `W <= 40`, (E) holds on all 5,430 no-flip lists (including the
+          150 missed by FM-MECH151) and rejects all 126 + 64 TopPair failures.
+        - Knob kills: discarding the favorable mixed block fails; so does
+          monotonicity under growth of the removed labels.
+        - Open: (T*) with `c = 1`, i.e. (E') `w_TP >= delta` implies TopPair.
+        - Main-agent audit at `W <= 48` (`fm39/mech156_certificate_audit_w48.py`):
+          (E) holds on 33,481 of the 33,487 no-flip lists.  It FAILS on the six
+          members of the (F1) family (`+-(1^2, 2, 3^4, 4^3, 5^4)`, `sigma p = 8`
+          at `W = 48`; with one more `-2`, `p = 6` at `W = 50`; with `+8`, `p = 8`
+          at `W = 56`), where TopPair is still monotone.  The 12-factor
+          FM-MECH157 witness (`W = 550`) exceeds the script's size limit and
+          was not tested.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
