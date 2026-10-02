@@ -15394,6 +15394,44 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           three FM-SEC181 witnesses.  No negative value, and no worsening
           trend with `W`.  Sampled minimum `20,159,257 / 33,537,232` at `W =
           52`, pair-free.
+      - FM-SEC182' (luna_max_mars; `fm39/sec182_failing_splits.py`,
+        `fm39/sec182_interior_scale.py`, both rerun: no failure of the
+        interior cut).  The report text contains leaked working notes.  It
+        flags a parity bug in its random controls: some random lists had an
+        odd minus count and pass trivially, with zero mass.  Those controls
+        are discarded.
+        - Every distinct split of the three FM-SEC181 witnesses: 2, 2 and 3
+          failing splits out of 839, 863 and 3,455.  All nine failing splits
+          put the four minus factors (total label 14) on one side and none
+          on the other.
+        - No balance invariant separates failing from passing splits.  F1's
+          passing split `(-2,-4^3) | (1^2,3^4,5^4,8)` has the same vector
+          (minus-count imbalance, minus-weight imbalance, total-weight
+          imbalance) = `(4, 14, 28)` as a failing split of the third
+          witness.
+        - Interior cut, TopPair: no failure on a 2,000-row sample of the `W
+          <= 52` census, on the runs `k = 5..40`, or on the 42-factor no-flip
+          list of FM-SEC177.  Also no failure on every pair of the three
+          witnesses.
+      - FM-STR8i (vulcan thread on Luna; `fm39/str8i_braided_height_prefix.py`,
+        rerun: PASS).  The braided deformation with the height grading.
+        - In the braided Fock model (`q_11 = q_22 = q`, `q_12 = s`), define
+          `Pi_T^(q,s)` by degree.  Proposition 1: `Pi_T^(q,s) >= 0` for every
+          split on the rotation region `|s| <= q`.  Proposition 2: at `(0,1)`
+          it equals the SU(2) height prefix.
+        - Along `(1,1) -> (0,0) -> (0,1)`, the segregated witness split has
+          `Pi_11` positive up to `s = 511/512` and negative at `s =
+          1023/1024`.  The TopPair interior cut has all `s`-Bernstein
+          coefficients of `Pi_11` positive (minimum 117,892,066), although its
+          monomial coefficient of `s` is -1,840,790.
+        - Exact small screen: nonnegative `s`-Bernstein coefficients for
+          all 336 prefixes of 144 TopPair interior cuts (labels `<= 3`,
+          length `<= 5`).
+        - Main-agent note: this is the height-graded version of the
+          Bernstein positivity of FM-SEC91 to FM-SEC93.  The obstructions
+          recorded there apply: the monotone step fails (`b_1 - b_0 = -2`
+          at `(1^4)`) and local involutions fail.  A proof would have to get
+          past them.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
