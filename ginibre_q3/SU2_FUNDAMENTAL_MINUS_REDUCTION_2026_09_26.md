@@ -8823,6 +8823,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | eight factors with no negative 3|5 term (e.g. every all-odd eight-factor list) | all (FM-MECH153 Lemma 4, Corollary 5) — added 2026-10-02 |
 | all `r` | eight factors: all labels `>= 3`, or all `>= 2` with an odd label | all (FM-MECH155 with FM-MECH153 and two-odd fusion) — added 2026-10-02 |
 | all `r` | nine factors with minimum label `>= 28` | all (FM-MECH159) — added 2026-10-02 |
+| all `r` | EVERY list with at most TEN factors | all labels, all signs (FM-MECH169 with FM-MECH164; independent check pending) — added 2026-10-02 |
 | all `r` | EVERY list with at most NINE factors | all labels, all signs (FM-MECH164 with FM-MECH160; independent check pending) — added 2026-10-02 |
 | all `r` | ten factors with minimum label `>= 16` | all (FM-MECH164) — added 2026-10-02 |
 | all `r` | EVERY list with at most EIGHT factors | all labels, all signs (FM-MECH160 with FM-MECH153, FM-MECH155, two-odd fusion; FM-CHK99 and FM-CHK102 ACCEPT) — added 2026-10-02 |
@@ -14067,6 +14068,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Kill (knob: locality): flips involving only the minimum labels
           (2 or 3, even repeated) do not imply TopPair; exact residual
           witnesses for both minima.
+      - FM-MECH169 (astra_max_minerva; `fm39/mech169_ten_factors_close_repro.py`,
+        rerun: FM-MECH169 PASS, identical counts, 221 s; independent check
+        pending).  TEN FACTORS CLOSE: FM3 holds for every list with at most
+        ten factors.
+        - Payment identity with the 3|7, 4|6 and 5|5 layers.
+        - Uniform low-channel profiles `H^(9)` and `H^(10)` (all-even), from a
+          finite tiling catalog of 8,930 and 6,336 shapes, covering
+          unbounded labels.
+        - Lemma 3 keeps actual `U_2` factors for the all-even payment.
+        - Finite box: 100,830,299 label patterns and 9,728,129,290 signings,
+          all nonnegative.
+        - Census: all 3,318 ten-factor no-flip lists at `W <= 48` are
+          settled; 32,229 of 33,487 are proved outright, and 1,258 with `>= 11`
+          factors remain.  Next: eleven factors (uniform payment with at most
+          six labels `<= 8`).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
