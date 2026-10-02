@@ -15584,6 +15584,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `K_n S_q h_1^((a+m)/2)`), so every layer is `>= 0`.  All-plus lists
           are trivial.
         - Open: why the menu always contains a working pair.
+      - FM-SEC186 (luna_max_neptune; `fm39/sec186_layer_positivity_gmp.py`;
+        the report text is truncated after the harness, with no verdict
+        section.  Main agent: the `--quick` run, 33 lists, reproduces the
+        `W = 212` values with no failure.  The full run is in progress.)
+        GMP adversarial search against LP to `W = 294` and 30 factors.
+        - 87 lists, every pair scanned: NO list where every pair has a
+          negative layer.
+        - Margins (best pair, exact):
+          - raw (min layer / positive mass): falls sharply with weight, to
+            `52,269,829 / 4.99e20` at `W = 214`, 30 factors;
+          - tail-aware (min layer / max neighbouring `|L|`): smallest
+            `381,225,286 / 6,782,171,881`, about 0.056, at `W = 252`;
+          - five-layer version: about 0.0056.
+          Tightest raw family: `(-14,14,-13,13,...,-1,1,1,1)`, with
+          opposite-sign classes, `W = 212`.  The pair-free run
+          `(-1,...,-22,+25)` (`W = 278`) passes with 143 of 253 pairs.
+        - Reading: the tail-aware margins decline but stay well away from
+          zero.  The raw decline reflects the size of the tails.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
