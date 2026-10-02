@@ -15284,6 +15284,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - These were found for the every-split HPP, which FM-SEC181 has since
           refuted.  Any uniform recurrence over all splits must fail on
           segregated splits.
+      - FM-CHK114 (luna_max_eris, fresh code; `fm39/chk114_hpp_screens_check.py`,
+        rerun: FM-CHK114 all exact screens PASS, 1.5 min).  ACCEPT the
+        main-agent HPP screens in their stated scopes.  This is not
+        acceptance of the universal claim, which FM-SEC181 refuted at `W =
+        60`.
+        - Tables validated against direct polynomial expansion (120 words).
+        - Reproduced exactly: FM-STR12 (79,842 and 60,553 splits),
+          FM-STR12d (F1: 599 splits, the six direction failure counts and the
+          witnesses), FM-STR12c (the pair counterexample).
+        - Extended without failure: labels `<= 5`, length 8, pairs allowed
+          (272,341 distinct splits), and all 55,376 distinct splits of 300
+          seeded `W <= 52` census rows.  The tightest normalized prefix was
+          `3/50`, at `A = (-1)^4`, `B = (+1)^4`.  That is again a segregated
+          split.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
