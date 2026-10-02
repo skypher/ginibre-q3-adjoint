@@ -8823,6 +8823,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | eight factors with no negative 3|5 term (e.g. every all-odd eight-factor list) | all (FM-MECH153 Lemma 4, Corollary 5) — added 2026-10-02 |
 | all `r` | eight factors: all labels `>= 3`, or all `>= 2` with an odd label | all (FM-MECH155 with FM-MECH153 and two-odd fusion) — added 2026-10-02 |
 | all `r` | nine factors with minimum label `>= 28` | all (FM-MECH159) — added 2026-10-02 |
+| all `r` | EVERY list with at most EIGHT factors | all labels, all signs (FM-MECH160 with FM-MECH153, FM-MECH155, two-odd fusion; independent check pending) — added 2026-10-02 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -13804,6 +13805,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         only sampled (time limits).
       - FM-SEC171 addendum: the main-agent rerun of the full 97-profile
         class-pattern scan finished: PASS.
+      - FM-MECH160 (astra_max_minerva; `fm39/mech160_eight_factors_close_repro.py`,
+        rerun: FM-MECH160 PASS, identical output; independent check pending).
+        EIGHT FACTORS CLOSE: with FM-MECH153/155 and two-odd fusion, FM3
+        holds for every list with at most eight factors.
+        - Remaining sectors: four or six odd labels with a label 1, and
+          all-even labels with a label 2.
+        - If the four smallest labels are all `<= 4`, the residual condition
+          and the FM-MECH142 separated-quartet descent (children with at
+          most six factors) leave a finite set: every label `<= 48`.  It is
+          checked exactly: 14,903 unsigned words, 517,426 signings, minimum
+          `Phi = 270` at `(1,1,1,-2,3,-8,-8,-8)`.
+        - Otherwise at most three labels are `<= 4`, so at most one triple
+          is all-small, and uniform triple-profile and fivefold
+          row certificates pay the 3|5 layer.  Tiles: 1,189,029 + 1,165,441
+          + 3,936,471 + 575,995 + 591,843 + 1,480,633, all passing.
+        - Open, nine factors: `T_(3|6)^- + T_(4|5)^- <= N_9 + P_9 +
+          T_(3|6)^+ + T_(4|5)^+`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
