@@ -14672,6 +14672,35 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: for `H = (+1)^h (-2)`,
           `<J_(T-1) V^(x)(h+1), V^(x)(h+1) d^2 K_a K_b>_Sp(4) >= 0` for every `T`
           and every `2 <= a < b` with `a = b mod 2`.
+      - FM-STR8c (astra_max_vulcan; `fm39/str8c_stress_and_tripled_classes.py`,
+        rerun: PASS completed verifier, about 3 min).  Stress test of the fixed FM-STR8b
+        correction, plus a uniform proof for two tripled classes.
+        - Box: all 4,521 pair-free profiles with labels `<= 4`, at most ten
+          factors, even minus count.  3,990 have `O = 0` already; the other
+          531 all have `rank delta = O` (269 matrices after odd reflection;
+          largest rank 4,918).  Ranks are certified by full-rank minors
+          modulo 1,000,003 with every denominator checked.
+        - Named lists, `H(d_0) -> H(d)`, all concentrated:
+          - `(-1,+2,+3,+4,-5,+6,+7,+8)`: `(1,172, 216) -> (956, 0)`;
+          - runs `(-1,...,-k, (-1)^k p)`: k = 5 `(40,4)`, k = 6 `(196,12)`,
+            k = 7 `(1,080,100)`, k = 8 `(7,256,822)`, k = 9
+            `(53,872, 7,664) -> (46,208, 0)`.
+        - Not completed (dimensions only): `(+1)^2(-2)(+3)^4(-4)^3(+5)^4(+8)`
+          with `(E,O) = (8,437,374, 286,632)`; the even run `(-40,+42,-44,+46,
+          +48,...,+62)` with `O = 2,445,554,811,680`.
+        - Proposition 2 (proved, all labels): for `(-a)^3(-b)^3`, `H_odd(d) =
+          0`.  `O = 2` exactly when `a, b` are even and `a < b <= 2a`, else
+          `O = 0`.  In the `O = 2` case the retained minor is diagonal with
+          `|det| = 6 U(s,t)^2 > 0` (Racah sum with a single index).  The
+          exchanges go across nonnested cuts through channel `a+b`.  These
+          words were already inside known FM3 strata; the new content is
+          the mechanism.
+        - Observation: the odd fraction `O/E` grows along the runs (10%, 6%,
+          9%, 11%, 14% for k = 5..9).  It is about 30% on the FM-STR9
+          fourteen-factor list.
+        - Open (knob: simultaneous control of several incompatible
+          channels): `ker(P_even J P_odd) = 0` for every pair-free
+          even-minus list.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
