@@ -14586,6 +14586,38 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: `<xi, J^* Q J xi> > 0` for every nonzero `xi` in `H_odd(d_0)`
           with `R J xi = 0`, where `R` projects to the pure-colour part of
           `H_even(d_0)` and `Q = P_even - R`.
+      - FM-STR3c (astra_max_juno; `fm39/str3c_fused_child_obstruction.py`,
+        rerun: ALL EXACT CHECKS PASS, 41 s).  Pair-normalized depth-one
+        identities for the TopPair difference.
+        - The four no-flip signings of labels 1..8 (negative sets `{1,5}`,
+          `{3,7}`, `{2,4,6,8}`, all eight) have exact identities
+          `Delta_TP = q + sum gamma m(A)m(B) + sum lambda R(A,B;i,j)` with
+          `gamma >= 0` and depth-one fusion relations `R`.  These need no
+          shorter FM3 values and no flip terms.  Example (all eight
+          negative): `Delta_TP = 472`, `q = 155`, 545 fusion terms, 155
+          product terms.  The coefficients come from rational dual
+          extraction; no closed formula yet.
+        - Depth ranges: eleven-factor root `Delta_TP = 191,001`, `1 <= k* <=
+          9`; F1 `Delta_TP = 3,914,630`, `1 <= k* <= 13`.  Depth zero fails
+          for both.
+        - Obstruction (knob: the shorter-form dictionary; pair
+          normalization and all shared-background depth-one recouplings
+          kept).  For F1 there is a nonnegative integer direction `v`
+          (1,090 nonzero entries, zero on unit, singletons and pairs) that
+          satisfies all 10,448 depth-one scalar fusion equations.  It has
+          `d_v D_uv <= 0` for every root flip, and `d_v Phi >= 0` on every
+          proper deletion child and every fused word with at most ten
+          factors (700,367 signed profiles, exact).  But `d_v Delta_TP =
+          -297,813`.  So any such identity for F1 must use a genuinely
+          fused child with 11 to 14 factors.  Example of an excluded
+          longer form: `(+1,+1,+2,-3^3,-4^3,-5^4,+11)` (channel
+          `(3,8) -> 11`), with `d_v Phi = -5,069,906`.
+        - What it gives the cone: no new stratum.  The induction behind
+          TopPair must consume positivity of long fused children, not just
+          products of invariant tables.
+        - Open: on F1, `Delta_TP + sum alpha D_uv = sum beta Phi(Q,eta) + sum
+          gamma m(A)m(B) + sum rho R_J` with `alpha, beta, gamma >= 0`, where
+          some `beta` is positive on a fused word with `11 <= |Q| <= 14`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
