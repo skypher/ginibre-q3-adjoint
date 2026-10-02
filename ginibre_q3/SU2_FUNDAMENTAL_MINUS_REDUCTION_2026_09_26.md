@@ -8824,7 +8824,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | eight factors: all labels `>= 3`, or all `>= 2` with an odd label | all (FM-MECH155 with FM-MECH153 and two-odd fusion) — added 2026-10-02 |
 | all `r` | nine factors with minimum label `>= 28` | all (FM-MECH159) — added 2026-10-02 |
 | all `r` | EVERY list with at most ELEVEN factors | all labels, all signs (FM-MECH173 with FM-MECH169; independent check pending) — added 2026-10-02 |
-| all `r` | EVERY list with at most TEN factors | all labels, all signs (FM-MECH169 with FM-MECH164; independent check pending) — added 2026-10-02 |
+| all `r` | EVERY list with at most TEN factors | all labels, all signs (FM-MECH169 with FM-MECH164; FM-CHK108 ACCEPT) — added 2026-10-02 |
 | all `r` | EVERY list with at most NINE factors | all labels, all signs (FM-MECH164 with FM-MECH160; FM-CHK106 ACCEPT) — added 2026-10-02 |
 | all `r` | ten factors with minimum label `>= 16` | all (FM-MECH164) — added 2026-10-02 |
 | all `r` | EVERY list with at most EIGHT factors | all labels, all signs (FM-MECH160 with FM-MECH153, FM-MECH155, two-odd fusion; FM-CHK99 and FM-CHK102 ACCEPT) — added 2026-10-02 |
@@ -14070,8 +14070,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           (2 or 3, even repeated) do not imply TopPair; exact residual
           witnesses for both minima.
       - FM-MECH169 (astra_max_minerva; `fm39/mech169_ten_factors_close_repro.py`,
-        rerun: FM-MECH169 PASS, identical counts, 221 s; independent check
-        pending).  TEN FACTORS CLOSE: FM3 holds for every list with at most
+        rerun: FM-MECH169 PASS, identical counts, 221 s; FM-CHK108
+        ACCEPT).  TEN FACTORS CLOSE: FM3 holds for every list with at most
         ten factors.
         - Payment identity with the 3|7, 4|6 and 5|5 layers.
         - Uniform low-channel profiles `H^(9)` and `H^(10)` (all-even), from a
@@ -14236,6 +14236,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           This confirms the reallocation to structural mechanisms.  Exact
           class screens of doubled, tripled and quadrupled runs found no
           no-flip pattern.
+      - FM-CHK108 (luna_max_eris, fresh code;
+        `fm39/chk108_ten_factor_check_part1.py` .. `part4.py`, all rerun:
+        PASS).  ACCEPT FM-MECH169 (ten factors) on all four items:
+        - the reductions;
+        - the profiles `H^(9)`, `H^(10)` (shape counts 8,930 and 6,336
+          reproduced);
+        - the payment tables (maxima below 15/16);
+        - the finite box, checked against its cutoff with a one-million-
+          signing exact sample (no negatives) and six boundary profiles, and
+          all 1,025,024 signings of ten-factor words with labels 1..5.
+        The full box itself was rerun by the main agent.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
