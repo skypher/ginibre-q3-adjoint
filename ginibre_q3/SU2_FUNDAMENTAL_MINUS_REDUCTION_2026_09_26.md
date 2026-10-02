@@ -15449,6 +15449,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           reading the gzipped `W <= 52` census
           `fm39/sec166_census_w52_noflip.log.gz`: PASS (2,000-row sample, runs
           `k <= 40`, the 42-factor list).
+      - FM-STR4f (luna_max_pluto; `fm39/str4f_interior_induction_lp.py`, rerun:
+        PASS).  LP search for an induction of the interior prefix through
+        children's own interior prefixes at every height.
+        - Over EVERY even signing of a multiset, exact separators rule out
+          such an identity.  This holds for the FM-STR4d obstruction list
+          (128 rows, 2,758 columns) and for the plain run `(1,...,8)` (128
+          rows, 1,591 columns).  The dictionary: one-fusion children at
+          their TopPair cuts at every height, parity-preserving pair
+          deletions at every cut, and the constant.
+        - On the small no-flip signing sets (2 to 6 rows) the LP finds
+          "identities", but they carry no structure.  Example:
+          `Phi = (3532/1855) m(empty) m(L)` on two rows that both have `Phi =
+          3532`.  With so few rows any positive values can be fitted, so
+          these are not evidence of a mechanism (main agent).
+        - Verdict: no uniform inductive identity for the interior prefix in
+          this dictionary.  The line pauses.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
