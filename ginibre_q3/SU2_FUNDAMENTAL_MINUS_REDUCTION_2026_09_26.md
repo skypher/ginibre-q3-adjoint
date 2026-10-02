@@ -14779,6 +14779,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           and the runs of length 5..12.
         - Open: the same identity with individually weighted channels
           `beta_(uvc eta) >= 0`.
+      - FM-STR10 (luna_max_neptune; `fm39/str10_support_graph_hall.py`,
+        rerun: PASS, about 4 min).  Channel support graph of the FM-STR8b
+        correction `delta`, and a Hall test.
+        - On 16 exact graphs (the 10 corrected screen profiles and six more
+          with labels `<= 5`), `rank delta` equals the multiplicity-weighted
+          matching number of the support graph `G` (odd channels with
+          capacity `-f_A f_B`, even channels with `f_A f_B`), and both equal
+          `dim H_odd(d_0)`.  So Hall holds on all of them.
+        - `G` is broad but not complete.  It is not local: `(+1)(-2)^2(+3)^5`
+          has an edge `(1,6) -> (7,0)` at distance 6, so no rule of radius
+          `<= 5` works.  The unsigned labels do not determine it:
+          `(+1,-2,-2,+3,-4,-4)` and `(+1,+2,+2,+3,-4,-4)` have the same
+          source capacities and different neighbourhoods.
+        - Without an edge rule, the large lists get only the total
+          dimension check, which is FM3 itself.  Runs: `O/E` is 6% at k = 6,
+          8% at k = 10, 14% at k = 11, 21% at k = 15 and 31% at k = 19
+          (`E = 5.43e15`).
+          `H_odd(d_0) = 0` for the runs with `k <= 20` not listed.  Random
+          lists with `W <= 80`: 25 of 100 have `O > 0`, smallest margin 58.
+        - Open (knobs: arbitrary factor count and label size): Hall on the
+          actual support graphs, and `rank delta` = matching number.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
