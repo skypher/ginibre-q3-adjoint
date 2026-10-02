@@ -14270,6 +14270,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           ingredient is transfers through nonzero intermediate fusion
           channels (recoupling with 6j coefficients) or exchanges across a
           cut.
+      - FM-STR4 (luna_max_pluto; `fm39/str4_channel_identity_mining.py`, rerun:
+        ALL CHECKS PASS).  First exact positive descent identities, found by
+        exact LP.
+        - For `B = (1,2,5,9,11,12)`, `p = 14` (TopPair `(9,11)`) and for `B =
+          (1,3,4,6,7,9)`, `p = 12` (TopPair `(7,9)`):
+          - the TopPair difference equals a NONNEGATIVE rational combination
+            of shorter channel-fusion children `Phi_((a,b)->c)` (two factors
+            replaced by one channel `c`), as an identity for all 64
+            signings;
+          - e.g. the first: `Delta_TP = (212/1331) Phi_((1,2)->3) + (271/1331)
+            Phi_((1,11)->10) + ...`, 7 terms, L1-optimal over 149 child
+            columns;
+          - so TopPair descends there, by induction, without any flip
+            hypothesis.
+        - Such an all-signing identity cannot exist where TopPair fails for
+          some signing (the 126 census failures): flip terms must enter.
+        - Knob: an aggregate-`Q` coefficient system is infeasible (Farkas
+          certificate), while the channel-resolved system succeeds.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
