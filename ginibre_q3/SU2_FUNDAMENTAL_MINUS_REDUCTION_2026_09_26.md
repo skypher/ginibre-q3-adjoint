@@ -14555,6 +14555,37 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open (knob: uniformity over labels and factor count):
           `rank(PJP : H_odd(d_0) -> H_even(d_0)) = dim H_odd(d_0)` for every
           pair-free list.
+      - FM-STR9 (astra_max_ceres; `fm39/str9_two_cut_injectivity.py`, rerun:
+        FM-STR9 PASS, 8 s).  Injectivity of the FM-STR8b correction
+        `delta = PJP` on a structural two-minus class.
+        - Proposition 1: for two-minus lists the unmatched odd channels are
+          given exactly by fusion operators `L_n, R_n` acting on the
+          unsigned two-colour table `G_C`.  One minus per half: both tables
+          antisymmetric, odd channels in reflected pairs.  Both minuses in
+          one half: odd channels are where `G_D > 0` and `f_A < 0`.
+        - Theorem 2: let `Lambda = (-n)(-m) prod (+a_i)`.  Assume (TC): only
+          one complementary pair of plus-block cuts couples, i.e.
+          `b_n(R) b_m(I - R) = 0` unless `R = P_0` or `R = Q_0`.  Assume (NS):
+          no nonempty sublist inside one half has an invariant.  Then
+          `delta` is injective on `H_odd(d_0)`, with the energy bound
+          `|PJP xi|^2 >= c |xi|^2`, where
+          `c = min_j (a_j - b_j)^2 / (2 + a_j^2 + b_j^2)` (an extra factor
+          `q/(q+1)` when `n = m = q`), and an explicit Gram determinant.
+          `a_j = b_j` is excluded by Bertrand's postulate.  The
+          certificate uses only the pure-colour targets `(t,0)` and `(0,t)`.
+        - Corollary 3: an explicit family `(-1)^2 (+u)(+v)(+w) H_l` with
+          `l + 5` factors for every `l`, and `dim H_odd(d_0) >= 2 r_0 (l - 1)
+          > 0`.  The correction is injective there, so FM3 holds on the
+          family by a positive-operator trace.  First uniform class with
+          unbounded factor count settled by the complex.
+        - Proposition 4 (knob: correction image restricted to pure-colour
+          targets): for `(+2)^3(+3)^2(-4)(+5)^4(+6)^2(+7)(-9)`,
+          `H(d_0) = (56,676,672, 17,240,634)`.  The pure targets have total
+          dimension 15,925,636, leaving a kernel of dimension at least
+          1,314,998.  This does not bound the full mixed-colour correction.
+        - Open: `<xi, J^* Q J xi> > 0` for every nonzero `xi` in `H_odd(d_0)`
+          with `R J xi = 0`, where `R` projects to the pure-colour part of
+          `H_even(d_0)` and `Q = P_even - R`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
