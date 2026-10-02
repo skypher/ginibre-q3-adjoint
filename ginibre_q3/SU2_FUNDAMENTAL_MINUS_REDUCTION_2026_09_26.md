@@ -15298,6 +15298,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           seeded `W <= 52` census rows.  The tightest normalized prefix was
           `3/50`, at `A = (-1)^4`, `B = (+1)^4`.  That is again a segregated
           split.
+      - FM-STR7j (minerva thread on Luna; `fm39/str7j_interior_cut_sp4.py`,
+        rerun: PASS).  `Sp(4)` reading of the interior cut.  No mechanism
+        found yet.
+        - Sufficient condition (a form of FM-STR7e Theorem 5): write `F_X =
+          d^(a_X) Q_X`, with `Q_X` the product of the `K_|z|` (minus factors)
+          and `S_|z|` (plus factors).  If there are `r_A + r_B = 2` with
+          `a_X - r_X` even and `d^(a_X - r_X) Q_X` genuine, every prefix is `>=
+          0`.  Matching each `S_a` to a distinct `K_n` with `a <= n` is
+          one way to check genuineness.
+        - The interior cut balances weight within the largest label.  On
+          the first FM-SEC181 witness the TopPair interior cut has weights
+          25 and 35 and passes, with minimum prefix 3,938,032 and `Phi =
+          120,541,550`.  But it fails the character condition: both residual
+          quotients are virtual, with `[chi_(5,5)] G_A = -433` and
+          `[chi_(16,16)] G_B = -12`.  So Theorem 5 plus weight balance does
+          not explain the success.
+        - 890 pair-dependent interior cuts checked: the witnesses, F1, the
+          census tight case and 14 runs with `k <= 10`.  No negative prefix.
+        - Open: prove `sum_(r+s <= T) [d^3 Q_A] [d Q_B']` `>= 0` for balanced cuts
+          whose quotients have negative multiplicities.  Or find a stronger
+          balance condition that the interior rule always meets.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
