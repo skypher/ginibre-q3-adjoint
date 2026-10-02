@@ -13905,6 +13905,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - maxima cross-checked with `sec166_flip_single.cpp` and
           `sec162_gp_single.cpp`.
         Finite search; `p` is sampled.
+      - FM-MECH163 (astra_max_vulcan; `fm39/mech163_removal_thresholds_repro.py`,
+        rerun with the census: PASS).
+        - Theorem 1, low-channel bound: if at least three labels of `A` are
+          `>= 2r`, then `mu_(2r)(A) >= (r+1) mu_0(A)`, with any number of
+          factors.  This proves the five-factor lemma of FM-MECH159.  Knob:
+          two large labels do not suffice (`A = (1,10,11)`, `r = 2`).
+        - Unconditional removal descent (any same-parity removal monotone,
+          given the shorter-list induction): for 7, 8, 9, 10, 11 factors
+          when the minimum label is `>= 3, 7, 11, 15, 21`; in general the
+          threshold is `O(2^(L/3))`.  These are descent sectors, not
+          standalone strata.
+        - Census: the label-based certificate covers 23,739 of the 33,487
+          no-flip lists at `W <= 48`.  The rest have small minimum labels.
+          Open: no flip descent implies the aggregate signed partition sum
+          is `>= g_p(B - TopPair)`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
