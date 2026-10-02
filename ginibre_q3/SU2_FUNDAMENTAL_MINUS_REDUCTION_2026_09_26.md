@@ -14514,6 +14514,30 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           the check, not a counterexample.
         - The strata row for eleven factors stays "independent check
           pending".
+      - FM-STR7c (astra_max_minerva; `fm39/str7c_fundamental_prefix_positivity.py`,
+        rerun: FM-STR7c PASS).  Height-prefix positivity, proved for
+        fundamental half-words.
+        - Lemma 2: the height-truncated fundamental row `Pi_T (x+y)^h` is the
+          restricted character of a GENUINE `Sp(4)` module `C_(h,T)`.  The E-basis
+          coefficients are nonnegative; the boundary layer `u+v = tau+1` needs
+          an explicit ballot inequality (it is not a highest-weight
+          truncation of the tensor power).
+        - Theorem 3: for `H = (+-1)^h` and every admissible remainder `(eps a, eps
+          b)`, `P_T >= 0` for every `T`.  With `eps = -1` the certificate is an
+          `Sp(4)` pairing of `C_(h,T)` with `V^(x)h (x) Sym^(a-1)V (x) Sym^(b-1)V`.
+          So the FM-STR7b involution is fully proved for all words
+          `(+-1)^(2h) (eps a)(eps b)`.  Their scalar FM3 was already known; the
+          new content is the mechanism.
+        - Proposition 4: the height cutoff is not the finite-level `SU(2)_k`
+          corner.  The exact relation keeps a projector; neither equality
+          nor a one-sided comparison holds (exact tables).  Knobs: equality,
+          one-sided comparison, commuting compressed generators.
+        - Proposition 5 (knob: positivity at each `Sp(4)` highest weight
+          separately): for general `H` the termwise certificate fails, e.g. `H
+          = (+2)`, `R = (-3,-5)`; cancellation between highest weights is
+          needed.  306,036 prefixes over 25,560 one-general-label inputs:
+          no negative prefix.
+        - Open: `H = (+1)^h (eta n)`, one general label.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
