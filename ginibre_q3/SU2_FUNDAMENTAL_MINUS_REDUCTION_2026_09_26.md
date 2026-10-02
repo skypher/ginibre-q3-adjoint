@@ -15536,6 +15536,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           kind of statement a Pieri rule can prove.
         - TopPair on W1, a `(1,1)` cut: negative layers at heights 15 to 25,
           minimum -2,405,294.
+      - FM-SEC185 (luna_max_neptune; `fm39/sec185_layer_positivity_adversarial.py`,
+        rerun: PASS after a one-character repair, a missing parenthesis on
+        line 128 of the printed verifier).  Adversarial search against LP.
+        No list where every pair fails.
+        - The full `W <= 40` census rescanned with two exact evaluators.
+          The tightest best-pair margin is `304/41763`, at
+          `(-1,-2,-3,-3,-4,-4,-5,-5,-6,-7,10)`, pair `(-6,10)`, with layers
+          1,870 ... 19,422 ... 608.  The minimum is the TOP layer, so the
+          small ratio is a tail effect.
+        - High-weight searches, which shrink the margins:
+          - pair-free, `W = 132`: best margin `86643/482670154`, with 74 of 78
+            pairs passing;
+          - with pairs, `W = 140`: best margin about `6.1e-6`, with 74 of 91
+            pairs passing.
+          The failing pairs on these lists are a few specific signed label
+          classes.
+        - All named hard lists pass.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
