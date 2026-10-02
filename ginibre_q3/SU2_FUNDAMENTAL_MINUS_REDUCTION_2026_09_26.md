@@ -14003,6 +14003,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           opposite-parity flips, imply (CB).  The full all-flips hypothesis
           is needed.
         - Open: `w_TP <= 2 delta - 4` with all flips negative implies (CB).
+      - FM-CHK105 (luna_max_mars, fresh code; `fm39/chk105_thresholds_obstructions_check.py`,
+        rerun: PASS).  ACCEPT, with no repair:
+        - FM-MECH163 Theorem 1 and the removal-descent thresholds, with
+          bounded-window descent checks;
+        - FM-MECH162 Theorem 3 (locality obstruction) and Proposition 4
+          (artificial-table obstruction).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
