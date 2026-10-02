@@ -14149,6 +14149,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           open.
         - Stopped FM-MECH170 (band widening): the band `w_TP >= 2 delta - 2`
           stands; the attempted extensions are unverified.
+      - FM-STR2 (astra_max_vulcan; `fm39/str2_haar_model_obstruction.py`, rerun:
+        PASS).  Structural no-go, knob: a common Haar pushforward with
+        positive-definite realizations.
+        - For every level `r >= 1` there are two actual pair-free word
+          integrands `A, B` with `Cov_(nu_r)(A, B) < 0` under the tilted measure
+          `nu_r = (x-y)^(2r) mu x mu / Z` (exact moments by integration by parts;
+          e.g. `Cov = -1` at `r = 1`, `Cov(S_1^2, S_2) = -7/25` at `r = 2`).
+          Real positive-definite functions on a compact group have
+          nonnegative covariance under Haar.  So NO compact group of any type
+          or rank, with any map pushing Haar to `nu_r`, makes all word
+          integrands positive definite.  This includes genuine characters and
+          nonnegative real combinations of characters, and spherical
+          functions on homogeneous spaces.
+        - A single literal character fails by integrality: for the pure-minus
+          word `(-3)(-1)^(2r-1)`, its `nu_r`-mean is strictly between 0 and 2
+          and never 1, for `r >= 2`.
+        - Ginibre-type angles `x = 2cos(alpha+beta)`, `y = 2cos(alpha-beta)`
+          make every `S_n` and `-D_n` a positive-semidefinite kernel.  But
+          the universal contraction is not a squared norm feature by
+          feature (`S_2` has feature contributions +2 and -2), and `(x-y)^(2r)`
+          has no measure-only Gram factorization (determinant -1).  A Gram
+          proof must use cancellation across the complete tensor product.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
