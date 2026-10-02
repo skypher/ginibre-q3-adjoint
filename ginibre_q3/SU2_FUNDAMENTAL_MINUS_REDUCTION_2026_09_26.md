@@ -15680,6 +15680,35 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           18, 22, 26, 28`.  The global minimum is about 0.857, at
           `(+1)^2(+2)^9(-3)^28`, `W = 104`, pair `(-3,-3)`, `T = 49`.  The two LP
           counterexamples pass IP with margins above 0.999.
+      - FM-STR15 (fresh Luna thread "fresh2", given only the problem
+        statement; `fm39/str15_lancaster_fresh2.py`, rerun.  Main-agent
+        screens: `fm39/str15_lancaster_main.py`).  NEW STRENGTHENING:
+        LANCASTER-COUPLING POSITIVITY.  Couple `x, y` by the positive kernel
+        `K_rho(x,y) = sum_r rho^r U_r(x) U_r(y)`, equal to `(1 - rho^2) /
+        ([1 - 2 rho cos(theta - phi) + rho^2][1 - 2 rho cos(theta + phi) +
+        rho^2])`, which has semicircle marginals.  Then `D(rho) =
+        E_rho[prod(U_n(x) + eps U_n(y))] = sum_r f(r,r) rho^r`.  Claim: `D(rho)
+        >= 0` for every `rho` in `[-1,1]`.
+        - `D(0) = Phi`, which is FM3.  `D(1) = 0` when some minus factor is
+          present.  `f(r,r) = [Phi(Lambda,+r,+r) - Phi(Lambda,-r,-r)]/4`.  The
+          couplings form a semigroup, `K_rho o K_sigma = K_(rho sigma)`.
+        - Hermite analogue PROVED for every `rho` (main agent).  With
+          independent Gaussians `G, H`, `a = sqrt((1+rho)/2)` and `b =
+          sqrt((1-rho)/2)`, put `X = aG + bH`, `Y = aG - bH`.  Then `He_n(X) +
+          eps He_n(Y) = sum_k C(n,k) a^k b^(n-k) (1 + eps(-1)^(n-k)) He_k(G)
+          He_(n-k)(H)` has nonnegative coefficients.  FM3 itself is the
+          45-degree case.
+        - No failure, each case certified by exact Bernstein coefficients:
+          - all 1,632 lists with labels `<= 4`, length `<= 7`;
+          - all 5,430 `W <= 40` census lists;
+          - 1,500 `W <= 52` census rows;
+          - all 7,684 pair-free lists with labels `<= 3` and up to 24 factors;
+          - the FM-SEC181/183 witnesses, the LP counterexample and the runs
+            `k <= 20`.
+        - Other strategies from the two fresh threads fail on small exact
+          cases: conditional positivity in one variable, label
+          monotonicity, coefficient-matrix PSD.  "Fresh1"'s survivor `c_(0s)
+          >= 0` is FM3 for `Lambda + (+s)`, i.e. the `g_p` form.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
