@@ -15192,6 +15192,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           minimum and the runs k = 1..7, with no common support rule.  On 300
           seeded lists: 144 identities, 103 infeasible, 53 time caps.
         - Open: the same with depth-two relations.
+      - FM-STR9f (ceres thread on Luna; `fm39/str9f_prefix_fusion_identities.py`,
+        rerun: PASS FM-STR9f verifier, 1 s).  Exact fusion identities for the
+        height prefix.  They are signed, so they give no positive induction.
+        - `F_a^e F_b^h = 2 sum_(u in C(a,b)) F_u^(eh) - F_a^(-e) F_b^(-h)`.  So
+          `Pi_T(Lambda) = 2 Q_T - Pi_T(Lambda^(uv))`, the prefix form of `Phi =
+          Q + 2D`.  The flipped list has the same size.
+        - Three-factor (`+4, -2, -1`) and four-factor (`+8, -4, -2, -1`)
+          expansions, and an exact formula for moving a factor across the
+          split.  The move only involves heights within `n` of `T`, and its
+          sign varies.
+        - Pair-free witness: `A = (-1,-1,-1)`, `B = (-2,-2,-1)`, `T = 3`, with
+          `28 = 2 . 40 - 52`.
+        - Main-agent reading: at `T = infinity`, `D_T` is the flip `D_uv`,
+          which does not depend on the split.  So any flip-type induction
+          for HPP meets the same no-flip lists as FM3.  A proof of HPP has to
+          be non-inductive at the top height, for example an `Sp(4)`
+          truncation positivity or an explicit height-graded matching.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
