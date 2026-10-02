@@ -15241,6 +15241,33 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           s`), the same rotation covers `|s| <= q`.  FM3 is the point `(q,s)
           = (0,1)`, off that region.  A deformation from the rotation region
           to `(0,1)` that preserves HPP would prove FM3.
+      - FM-SEC181 (luna_max_neptune; `fm39/sec181_hpp_counterexample.py`, rerun:
+        PASS, all three failures reproduced by an independent Laurent
+        evaluator; main agent reproduced the first).  HPP FOR EVERY SPLIT IS
+        FALSE.
+        - Pair-free witness: `A = (+1,-2,-4,-4,-4)`, `B = (+1,+3^6,+5^4,+6)`.
+          17 factors, `W = 60`, four minus factors.  The height layers are
+          206,613,818; 863,409,696; 452,240,438; -552,023,508; -663,275,890;
+          -331,660,464; 70,846,556; 74,390,904 (heights 1..15, odd).  So
+          `Pi_11 = -24,695,910`, while `Phi = 120,541,550`.
+        - Two more: a pair-free list at `W = 62`, and a list with a `+-4` pair
+          at `W = 60`.  All three use the same kind of split: every minus
+          factor, plus one `+1`, on one side, and only plus factors on the
+          other.  F1's tightest split, `(-2,-4^3) | rest`, ratio 0.145, has the
+          same shape.
+        - Main agent (`fm39/sec181_interior_survives_main.py`, PASS): on the
+          first list only 2 of 839 distinct splits fail, both segregated.  On
+          all three lists the INTERIOR CUT has nonnegative plain prefixes
+          for every pair (136, 136, 153 pairs).  The stronger interior BUDGET
+          fails only for the pair `(-2,-4)` of the first list.  The TopPair
+          passes everywhere.
+        - Status of the leads after FM-STR12c/d and FM-SEC181:
+          - the every-split HPP is refuted; segregated splits fail;
+          - the interior-cut prefix (FM-STR7e cut rule) survives every test;
+          - the Hermite analogue holds for every split (FM-STR12e), because
+            there the rotation applies.
+          So at q = 0 the cut must be balanced.  Positivity is a property of
+          a good split, not of all splits.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
