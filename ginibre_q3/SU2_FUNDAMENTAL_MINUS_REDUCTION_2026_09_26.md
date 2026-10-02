@@ -15118,6 +15118,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           303`, even though the Lindeberg ratio tends to 0.  Also, balanced
           weights do not give equal profiles: at k = 7 the blocks have minus
           counts 3 and 5.
+      - FM-STR12c (luna_max_mars; `fm39/str12c_pair_counterexample.py`; main
+        agent reproduced it).  SCOPE CORRECTION to FM-STR12b: half-plane
+        positivity in directions other than the height FAILS once `+-n`
+        pairs are allowed.
+        - Witness: `(-1,-1,+1,+1,+2)`, split `A = (-1,-1)`, `B = (+1,+1,+2)`.
+          `P = f_A f_B` is `(0,0): 4, (2,0): 3, (1,1): -8, (0,2): 3`, with `Phi = 2`.
+          The direction `(1,0)` has prefixes 7, -1, 2; `(1,2)` reaches -1 at
+          `T = 3`; `(1,-1)` reaches -1 at `T = 0`.  The height prefixes are 4
+          and 2.
+        - Main-agent recheck.  Pair-free lists, labels `<= 6`, length `<=
+          6`: all 56,698 splits pass `(1,0)`, `(1,-1)`, `(1,2)`, `(2,-1)` and
+          `(1,1)`.  With pairs, labels `<= 3`, length `<= 6`: `(1,0)`,
+          `(1,-1)`, `(1,2)` and `(2,-1)` fail on about 10 of 5,140 splits; the
+          height never fails.
+        - Corrected statements:
+          - HPP, the height direction: every list with an even number of
+            minus factors, pairs allowed.
+          - Half-plane positivity, `lambda_1 + lambda_2 >= 0`: PAIR-FREE
+            lists only.
+          Pair reduction (FM-MECH102) already reduces FM3 to pair-free
+          lists.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
