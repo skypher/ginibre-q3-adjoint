@@ -8824,7 +8824,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | eight factors: all labels `>= 3`, or all `>= 2` with an odd label | all (FM-MECH155 with FM-MECH153 and two-odd fusion) — added 2026-10-02 |
 | all `r` | nine factors with minimum label `>= 28` | all (FM-MECH159) — added 2026-10-02 |
 | all `r` | EVERY list with at most TEN factors | all labels, all signs (FM-MECH169 with FM-MECH164; independent check pending) — added 2026-10-02 |
-| all `r` | EVERY list with at most NINE factors | all labels, all signs (FM-MECH164 with FM-MECH160; independent check pending) — added 2026-10-02 |
+| all `r` | EVERY list with at most NINE factors | all labels, all signs (FM-MECH164 with FM-MECH160; FM-CHK106 ACCEPT) — added 2026-10-02 |
 | all `r` | ten factors with minimum label `>= 16` | all (FM-MECH164) — added 2026-10-02 |
 | all `r` | EVERY list with at most EIGHT factors | all labels, all signs (FM-MECH160 with FM-MECH153, FM-MECH155, two-odd fusion; FM-CHK99 and FM-CHK102 ACCEPT) — added 2026-10-02 |
 | all `r` | `L` = 9..16 factors with minimum label at least 8, 10, 13, 17, 22, 28, 35, 45 respectively | all larger labels, all signs (FM-MECH166, direct positivity) — added 2026-10-02 |
@@ -13977,7 +13977,7 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           covered ones have at most eight factors).  Open: the no-flip
           inequalities must recover the discarded cancellation.
       - FM-MECH164 (astra_max_minerva; `fm39/mech164_nine_factors_close_repro.py`,
-        rerun: FM-MECH164 PASS, identical; independent check pending).  NINE
+        rerun: FM-MECH164 PASS, identical; FM-CHK106 ACCEPT).  NINE
         FACTORS CLOSE: FM3 holds for every list with at most nine factors.
         - Layer identity `Phi/2 = N_9 + P_9 + T_(3|6)^+ - T_(3|6)^- + T_(4|5)^+ -
           T_(4|5)^-`.
@@ -14094,6 +14094,36 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           -9`.  Largest TopPair ratio 31/550.
         - So through `W = 52` every residual list has a flip descent or a
           (CB)-certified TopPair descent.  Open: the same for `W > 52`.
+      - FM-CHK106 (luna_max_mars, fresh code; `fm39/chk106_nine_factor_closure_check.py`,
+        rerun: PASS, the same finite census).  ACCEPT FM-MECH164 (nine
+        factors).  Repair: the separated-quartet children have at most
+        seven factors, covered by the proved results.  The independent
+        finite census reproduces 3,049,184 patterns, 160,310,765 signings
+        and the minimum 578.
+      - FM-MECH171 (astra_max_vulcan; `fm39/mech171_multiplicity_threshold_repro.py`,
+        rerun: ALL EXACT CHECKS PASS).
+        - For `Lambda = (eps n)^r C` with `t` other factors, largest label
+          `Q`, `q = Q + 1`: if `r >= 2 + 128 q^2 chi(n,eps)(t+3) ceil(log2 q)`
+          (`chi = 1` unless `eps = -1` and `n` is even, then `(n+1)^2`), the flip
+          of two copies of `eps n` is positive and `Phi(Lambda) > 0`.  This
+          holds uniformly in the other factors.
+        - Knob: the threshold depends on the remainder; an absolute
+          cutoff (multiplicity `>= 5`) is open.  The successful flip need
+          not involve a designated class of multiplicity five (exact
+          obstruction).
+      - REALLOCATION (user decision, 2026-10-02, 11:00).  Case-by-case
+        grinding stops: factor-count closures after eleven factors, census
+        extensions, and sector certificates from coefficient bounds.  The
+        agents work on structure:
+        - FM-STR1: an injection or positive-operator mechanism for the
+          involution trace `Phi = dim Inv^+ - dim Inv^-`;
+        - FM-STR2: a group or duplicate-variable change that makes the
+          level-`r` integrand a genuine character;
+        - FM-STR3 and FM-STR4: an exact identity "TopPair drop + sum
+          alpha D = manifestly nonnegative", which would give the no-flip
+          implication;
+        - FM-STR5: exact computational support;
+        - the bounded factor count of no-flip lists, and one checker.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
