@@ -8822,6 +8822,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | EVERY list with at most seven factors | all labels, all signs (FM-MECH153 Theorems 2, 3 with Prop. 1C and Corollaries 23A9ZZ10, 5A7B51) — added 2026-10-02 |
 | all `r` | eight factors with no negative 3|5 term (e.g. every all-odd eight-factor list) | all (FM-MECH153 Lemma 4, Corollary 5) — added 2026-10-02 |
 | all `r` | eight factors: all labels `>= 3`, or all `>= 2` with an odd label | all (FM-MECH155 with FM-MECH153 and two-odd fusion) — added 2026-10-02 |
+| all `r` | nine factors with minimum label `>= 28` | all (FM-MECH159) — added 2026-10-02 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -13747,6 +13748,38 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         sign pattern; 192 local-descent starts) found no no-flip list and no
         TopPair failure.  An independent Python check confirms the W = 550
         FM-MECH157 witness (all 66 flips negative, TopPair monotone).
+      - FM-MECH158 (astra_max_ceres; `fm39/mech158_translated_families_repro.py`,
+        rerun with the W <= 48 census: PASS).
+        - Proposition 1, a sufficient triple-flip bound: the same-side
+          surplus `T - g_p(C)` dominates an unsigned bound on the three
+          mixed blocks.  It implies TopPair monotonicity; no no-flip
+          hypothesis is needed.
+        - Theorem 2: TopPair monotone and FM3 on 350 uniform translated
+          families with arbitrary pair-free signs:
+          - `L` = 6..12 labels in arithmetic progression, step `q` in {1,2};
+          - at most one label perturbed by `+-2`;
+          - all translates `t >= 20` (`q = 1`) or `t >= 0` (`q = 2`).
+          This includes the whole FM-MECH157 family.  Proof: polynomial
+          certificates in `t`.
+        - Census audit (33,487 no-flip lists, `W <= 48`):
+          - Proposition 1 certifies 32,955;
+          - the signed bound `T - g_p(C) >= |X| + |Y| + |Z|` holds on ALL
+            33,487;
+          - 532 are left by the unsigned test.  Knob: replacing the signed
+            background by its unsigned table, first lost at `W = 29`.
+      - FM-MECH159 (astra_max_vulcan; `fm39/mech159_mixed_certificate_repro.py`,
+        rerun: PASS).  Mixed removal-plus-flip certificate.
+        - With `C_R = Delta_R + (1/(2L(L-1))) sum_(u<v) D_uv`, both `C_R` and
+          `Delta_R` are at least a positive multiple of `m(Lambda)` in these
+          cases: `L = 7` with minimum label `>= 12`, `L = 8` with `>= 22`,
+          `L = 9` with `>= 32`.  So every same-parity removal is monotone
+          there.  FM3 holds for `L = 8`, minimum label `>= 20`, and for `L = 9`,
+          minimum label `>= 28`.
+        - Low-channel lemma: `mu_(2r)(A) >= (r+1) mu_0(A)` for 3 or 4
+          factors, `2r <= min A`.  The 5-factor case (needed for `L = 10, 11`)
+          passed 9,268 checks and is open.
+        - Kill (knob: a constant-coefficient blend): every fixed blend of
+          TopPair with the uniform global flip sum fails somewhere.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
