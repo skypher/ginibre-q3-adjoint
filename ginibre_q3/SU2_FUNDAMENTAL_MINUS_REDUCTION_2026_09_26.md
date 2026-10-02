@@ -14247,6 +14247,29 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           signing exact sample (no negatives) and six boundary profiles, and
           all 1,025,024 signings of ten-factor words with labels 1..5.
         The full box itself was rerun by the main agent.
+      - FM-STR8 (astra_max_vulcan; `fm39/str8_block_transfer_complex.py`, rerun:
+        PASS).  A complex with Euler characteristic `Phi`; homology not yet
+        concentrated.
+        - Obstruction 1 (knob: the chain groups `C_k` graded by `|S cap M|` with
+          adjacent-degree maps only): at `(-1,-1,-2,-3,-3,-4)`, `C = (11,0,4,10,
+          4,0,11)` admits no even concentration, even after a parity shift.
+        - Construction (proved): order the minus positions.  For each block
+          `R` with `|R cap M|` odd, let `Q_R` project onto `Inv(V_R)` and move the
+          singlet block to the other colour, with exterior-contraction signs.
+          `d = sum_R c_R Q_R` is odd and `d^2 = 0` for any scalars `c_R`, so `Phi =
+          sum_k (-1)^k dim H_k`.
+        - Homology (with `c_R = 1`): `(1,0,1)` for `(-1,-1,+1,+1)`; `(6,0,4,0,4,0,6)`
+          at the word above; `(10,0,45,10,45,0,10)` for `(-2)^6`, with an explicit
+          surviving odd cycle.
+        - Theorem (knob: nested-cut singlet transfers only): on `(-2)^6`, every
+          square-zero odd differential built from scalar multiples of
+          nested-cut singlet transfers, in either direction, has `rank O +
+          rank I <= 10 < 20` (the triple-cut images span only 5 dimensions).
+        - Together with FM-STR1's single-stage obstruction: singlet transfers
+          alone cannot give an injection or a concentrated complex.  The next
+          ingredient is transfers through nonzero intermediate fusion
+          channels (recoupling with 6j coefficients) or exchanges across a
+          cut.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
