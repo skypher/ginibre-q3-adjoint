@@ -14288,6 +14288,31 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           some signing (the 126 census failures): flip terms must enter.
         - Knob: an aggregate-`Q` coefficient system is infeasible (Farkas
           certificate), while the channel-resolved system succeeds.
+      - FM-STR7 (astra_max_minerva; `fm39/str7_folded_involution.py`, rerun:
+        FM-STR7 PASS).  A sign-reversing involution on the diagram model.
+        - Model: signed diagram pairs = fusion paths in pairs of coordinates,
+          one Clebsch-Gordan step per factor; the noncrossing diagrams are
+          recovered by stack matching.
+        - Folded involution (proved): if every signed label has even
+          multiplicity, order the word as `H H`.  At each midpoint pair
+          half-paths of opposite sign lexicographically and reflect.  This
+          is sign-reversing with only positive fixed points, so `Phi >= 0`.
+          It covers every fundamental-only word, at every length.  It
+          changes the uncolored matching, so it is not the failed overlay
+          argument.
+        - The same construction realizes flip descent combinatorially.
+        - Obstructions:
+          - Preserving the intermediate channel fails on an actual no-flip
+            residual: every cut with `>= 2` factors per side has a negative
+            fiber.
+          - Recoloring a bounded number of factors cannot work (Hall: demand
+            8 > capacity 4, at every odd scaling); a uniform family forces
+            unboundedly many factor reassignments.
+          - Knobs: channel preservation; bounded recoloring.
+        - Open: for some pair, an injection from the `-2 D_uv` negative mixed
+          remnants into the `2 sum_c A_c0(C)` positive pure remnants, using
+          `Phi = 2(sum_c A_c0(C) + D_uv)`.  It must change the channel and may
+          move arbitrarily many plus factors.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
