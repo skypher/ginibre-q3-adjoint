@@ -15553,6 +15553,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           The failing pairs on these lists are a few specific signed label
           classes.
         - All named hard lists pass.
+      - FM-STR7m (minerva thread on Luna; `fm39/str7m_string_conditions.py`,
+        rerun: PASS).  The string conditions are far too strong.
+        - S1 + S2 (increments along strings `>= 0`, `B` tails `>= 0`) implies
+          every layer is `>= 0`, term by term.  But S1 + S2 passes on ZERO of
+          the candidate cuts: on the `W <= 40` census, `(2,0)` modes 0 of
+          37,452 and `(0,2)` modes 0 of 59,169; same on a 500-row `W <= 52`
+          sample.  Meanwhile 97% to 98% of the modes are layer-positive.
+        - The `(1,1)` slice test covers 97.5% of the census rows.  Genuine
+          quotients never occur.
+        - Knob (stringwise signs after the `d`-quotient): the all-minus list
+          `(-1,-2,-3^3,-4^2,-5^2,-6)` has no pair passing S1 + S2.  But 17 of 18
+          modes in each orientation are layer-positive; for example the pair
+          `(-2,-1)` has layers 360, 1,200, 2,408, 2,712, 1,504, 562, 242, 136, 30.
+          The needed cancellation runs across strings at a fixed height.
+          Allowing it gives back LP itself, so this route is closed.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
