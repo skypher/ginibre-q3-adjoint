@@ -14826,6 +14826,61 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           any odd-to-even `J`, `delta = PJP` is square-zero and commutes
           with `d_0`.  So generic position weights suffice.  FM-STR8e
           follows this up.
+      - FM-SEC178 (luna_max_venus; stopped by the main agent at k = 43 as
+        grinding).  The (CB) relative margin on the runs `(-1,...,-k) + (sigma
+        p)` rises from 0.98316 (k = 17) to 0.99127 (k = 43), exact rationals.
+        The TopPair child/parent ratio at k = 41, p = 43 is about 0.72.  The
+        largest flip there is about `-1.44e-4` times `g_p(B)`.
+      - FM-STR11 (luna_max_venus; `fm39/str11_compatible_split_census.py`,
+        rerun: ALL ASSERTIONS PASS, 8 min; main-agent check
+        `fm39/str11_noflip_split_kill.py`, rerun: FM-STR11 NO-FLIP SPLIT CHECK
+        PASS, 10 min).  Channel-compatible splits, `Phi = sum_alpha f_A f_B`.
+        - Census: all 19,018 pair-free profiles with labels `<= 5` and length
+          2..10 have a compatible nontrivial split; so do 300 random
+          profiles.
+        - Main agent: this is FM3 itself.  A one-factor peel `(eps n)` is
+          compatible exactly when `f_B(n,0) >= 0`, and `Phi(Lambda) = 2
+          f_B(n,0)` (the `g_p` form).  A two-factor peel `{u,v}` is
+          compatible exactly when `D_uv >= 0` and the fused children are
+          nonnegative, i.e. a flip descent.
+        - Kill (knob: channel compatibility of a split with both halves of
+          size `>= 2`): on ALL 5,430 no-flip lists of the `W <= 40` census, no
+          such split is compatible.  So compatible splits give nothing
+          beyond flip descent on the hard lists.  The route is closed.
+      - FM-STR7e (astra_max_minerva; `fm39/str7e_interior_budget.py`, rerun:
+        FM-STR7e PASS, about 1 min; reads `sec166_census_w40_noflip.log.gz`).
+        NEW LEAD: an interior height budget gives an explicit injection on
+        every tested no-flip list, multiplicity-free runs included.
+        - Lemma 1 (knob: grading by the final channel height only): the
+          endpoint grading is equivalent to `Phi >= 0` and adds nothing.
+        - Lemma 2: for two minus factors, the `Sp(4)` prefixes are
+          simultaneous label lowerings, `2<J_(a+b-2-2j) C, K_a K_b> =
+          Phi(C, -(a-j), -(b-j))`.  Individual layers can be negative on a
+          no-flip list: `(-1,...,-7,-12)`, pair `(-7,-12)`, top layer -4.
+        - Proposition 3 (the budget).  For a pair `(u,v)`, `C = Lambda - u -
+          v`, cut `C` by the deterministic interior rule: sort by decreasing
+          label, assign each factor to the lighter block (ties to A),
+          then swap so `weight(A) <= weight(B)`.  With `G_pure = U_a(x)U_b(x) +
+          eps_u eps_v U_a(y)U_b(y)` and `G_mix = eps_v U_a(x)U_b(y) + eps_u
+          U_a(y)U_b(x)`, put `P_t = sum_(r+s=t) r_A(r,s)[F_B G_pure]_(r,s)`
+          and `M_t` likewise with `G_mix`.  If `B_T = sum_(t <= T)[P_t +
+          min(M_t, 0)] >= 0` for every `T`, a downward height matching gives a
+          sign-reversing involution with `Phi(Lambda)` positive fixed points.
+          It may change channels and move many factors.  Since `B_infinity
+          <= Phi`, the budget is stronger than FM3 and needs no induction.
+        - Proposition 4: no failure in 3,541,270 prefix checks, for EVERY
+          pair, on the 5,430 no-flip lists at `W <= 40` (148,972 pairs).
+          Also on the runs `k <= 20` with `k+1 <= p <= k+10` (68 lists),
+          all 32 signings of F1, and the sign minimum of 1..8 (explicit
+          matching: 936 pure plus 20 mixed fixed points, total 956).
+        - Theorem 5 (proved): if a cut has `F_A = d^r G`, `F_B = d^(2-r) H`
+          with `G, H` genuine `Sp(4)` characters, `r` in {0,1,2}, every
+          interior prefix is nonnegative.  This gives a uniform class of
+          multiplicity-free words with unboundedly many factors.  It does
+          not reach the runs: `d^(2r-2) prod K_n` is not genuine for `r >= 2`,
+          and `Phi(d^4 chi_(1,1)) = -6`.
+        - Open: for every no-flip residual, some pair (TopPair passed every
+          test) has `B_T >= 0` for every `T`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
