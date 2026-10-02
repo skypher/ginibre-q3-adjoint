@@ -13864,6 +13864,47 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         implication (E) => monotone removal.  The induction fact used is
         only `g_p(C) >= 0`.  REPAIR of the count: (E) holds on 33,485 of
         33,487 at `W <= 48`.
+      - FM-CHK96 (luna_max_eris, fresh code; `fm39/chk96_flip_census_check.py`;
+        main-agent rerun in progress).
+        - ACCEPT the FM-SEC166 census at `W <= 40`: 22,358,566 raw cases,
+          994,058 exclusions, 21,364,508 residual; 5,430 without flip
+          descent, with the stated per-W counts; (D) and TopPair hold on all
+          of them; maximum TopPair ratio `31/550`.
+        - REPAIR (scope): the formula `Phi - Phi^(uv) = 4 eps_v A` needs even
+          total minus parity of `Lambda`, which every census list has.  In
+          general use `A = (1 + sigma_C eps_u eps_v) T_ab / 2`.
+        - REPAIR: the W = 131 pair `(-1,-7)` is not a descent (already
+          corrected at 08:55); `(-2,-3)` also works.
+      - FM-MECH162 (astra_max_ceres; `fm39/mech162_locality_obstructions_repro.py`,
+        rerun: PASS).  Obstructions to proving (FT) from partial data.
+        - Every flip is a signed cut sum of the subset expansion.  The three
+          TopPair/`p` flips do not imply TopPair (exact residual example,
+          drop -22,854,900).
+        - Theorem 3: no criterion using flips among any fixed number of the
+          largest factors implies TopPair.  Family `(+1)^A (-n_1)...(-n_2h)
+          (+p)`, `A` large: all flips among the cores and `p` are negative and
+          TopPair increases `g_p`, but `(+1,+1)` is a positive flip.  Exact
+          for `A >= 1024` via 13 polynomial certificates.  Knob: locality of
+          the flip hypotheses.
+        - Proposition 4: flips never see `m(Lambda)`.  Lowering it from 624
+          to 104 in an artificial table keeps all 28 flips negative, every
+          proper even-sign value nonnegative and every full Walsh value
+          positive, yet makes the TopPair drop negative (`S = -143`).  So
+          flip signs plus positivity of shorter lists cannot imply (FT); the
+          full-to-child Clebsch-Gordan relation must be used.  Knob:
+          forgetting that relation.
+        - Census: `S >= 0` on all 33,487 no-flip lists, with minimum
+          `S/g = 377/550`.  At the extremes the nearest-to-zero flip lies
+          outside TopPair and `p`.
+      - FM-SEC174 (luna_max_venus; `fm39/sec174_run_family_margin_screen.py`).
+        Runs of 8..16 labels (step 1 or 2, starts `s <= 200`, `W = 60..300`,
+        2..6 minus positions, sampled `p`):
+        - 967 no-flip sign patterns, all TopPair-monotone;
+        - worst ratio `84983/2125083` (about 0.04), at the `W = 50` (F1)-family
+          list, so no violation of (FT') "child <= parent/16";
+        - maxima cross-checked with `sec166_flip_single.cpp` and
+          `sec162_gp_single.cpp`.
+        Finite search; `p` is sampled.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
