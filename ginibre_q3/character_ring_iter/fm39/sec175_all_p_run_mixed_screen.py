@@ -279,4 +279,3 @@ for name in ("runs","mixed"):
     print("TOTAL",name,{key:sum(q[j] for q in summary[name].values())
           for key,j in (("p_runs",0),("patterns",1),("noflip",2),
                         ("TopPair_fail",3),("FTprime_fail",4))})
-PY
