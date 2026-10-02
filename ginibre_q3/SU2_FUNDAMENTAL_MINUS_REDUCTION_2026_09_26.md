@@ -14419,6 +14419,40 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           endpoint contributes `(P_v - N_v)^2` fixed pairs, so `Phi = sum_v (P_v
           - N_v)^2`.  Checked on all 495 even-multiplicity words with labels
           `<= 4` and length `<= 8`.
+      - FM-STR3b (astra_max_juno; `fm39/str3b_fusion_depth_lp.py`, rerun: ALL
+        EXACT CHECKS PASS).  Fusion depth by LP duality.
+        - Setup: product-variable LP `Y(A,B) ~ m(A)m(B)` closed under fusion to
+          depth `k` (a linear relaxation of the quadratic problem).
+        - With only unit/singleton invariants fixed, the tested depths are 1
+          or 2.  Fixing the pair values `m(a,b) = delta_ab` gives ONE generation
+          on every tested root: a six-factor root, a seven-factor root, and
+          all four strict no-flip signings of labels 1..8.
+        - Every extracted dual certificate has ZERO flip coefficients: it is
+          an unconditional positive TopPair identity there (e.g. three
+          shorter forms for the 1..8 signing A).
+        - Depth zero always fails: setting only the root invariant to zero
+          makes TopPair negative.
+        - The FM-STR3 one-generation obstruction is explained: it violates
+          the derivative of the pair normalization `m(n,n) = 1`.  So it does
+          not show a need for deep 6j recoupling.
+        - Undetermined: the (F1) root and the eleven-factor root (complete
+          recoupling bounds the depth by 14 and 10).
+      - FM-STR4b (luna_max_pluto; `fm39/str4b_depth_one_cone_tests.py`, rerun:
+        same output).
+        - Exact Farkas kill (knob: all-signing identities in the depth-one
+          channel dictionary without recoupling relations, even with any
+          flip terms): `B = (1,2,3^3,4^2,5^3)`, `p = 15` has TopPair positive on
+          all 32 signings but no such identity.  A dimension-, 6j- or
+          symmetric-weight normalization in that dictionary is therefore
+          impossible at all-signing strength.
+        - `B = (1^18, 2, 3^4, 4)`, `p = 6`: the minimum flip support is exactly
+          1 (`D_(1,1)`).
+        - Main-agent caveat: its "no-flip-only" identity on the first profile
+          (one child, two signings) is fitted pointwise and carries no
+          structural information.  Juno's product-variable certificates,
+          valid for every table satisfying the constraints, are the
+          meaningful kind.
+        - The `W <= 36` census map was not completed.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
