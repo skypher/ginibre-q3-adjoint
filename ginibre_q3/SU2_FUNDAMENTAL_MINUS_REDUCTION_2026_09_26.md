@@ -14410,6 +14410,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           every case, so `Phi = dim H_even` there.
         - Open (FM3 needs only this): `delta` restricted to `H_odd(d_0) ->
           H_even(d_0)` is injective for every pair-free residual word.
+      - FM-CHK110 (luna_max_neptune, fresh code; `fm39/chk110_structural_theorems_check.py`,
+        rerun: PASS).
+        - ACCEPT FM-STR1b Theorem 3 under PB, with both corollary families:
+          66 label pairs, `A_L` for `L = 2..8`, rank `8b`, the minor of
+          determinant 4, the Schouten and `delta`-contraction identities.
+        - ACCEPT FM-STR7 Proposition 2 (the folded involution).  Each
+          endpoint contributes `(P_v - N_v)^2` fixed pairs, so `Phi = sum_v (P_v
+          - N_v)^2`.  Checked on all 495 even-multiplicity words with labels
+          `<= 4` and length `<= 8`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
