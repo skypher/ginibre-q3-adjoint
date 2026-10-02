@@ -15319,6 +15319,39 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: prove `sum_(r+s <= T) [d^3 Q_A] [d Q_B']` `>= 0` for balanced cuts
           whose quotients have negative multiplicities.  Or find a stronger
           balance condition that the interior rule always meets.
+      - STATUS (main agent, 2026-10-02, 17:00).  The cone is NOT proved.
+        - Proved: FM3 for every list with at most eleven factors,
+          independently checked (FM-CHK109, FM-CHK109b).  Plus many uniform
+          strata and classes with unboundedly many factors (FM-STR9 TC+NS,
+          FM-STR7e Theorem 5, FM-STR9d/9e, FM-STR8f).
+        - Refuted today, with exact witnesses:
+          - the half-plane cutoffs in directions other than the height
+            (FM-STR12c with pairs; FM-STR12d on F1, pair-free);
+          - HPP for every split (FM-SEC181: segregated splits fail at `W =
+            60`, pair-free);
+          - compatible splits beyond flips (FM-STR11);
+          - the depth-one fusion-descent identity for `Phi` (FM-STR4d);
+          - complete-block and individual-channel TopPair identities on F1
+            (FM-STR3c, FM-STR3d);
+          - triangular minors for the channel correction (FM-STR8d);
+          - first-page filtrations (FM-STR9c).
+        - Surviving lead IP: the interior-cut height prefix of FM-STR7e,
+          `Pi_T(A, B + {u,v}) >= 0` with the deterministic weight-greedy cut
+          of `Lambda - u - v`.  Its `T = infinity` case is FM3.  No failure
+          on the census, the runs (TopPair to k = 34), F1, adversarial
+          search to `W = 120`, or the three FM-SEC181 witnesses (every
+          pair).  The stronger budget form fails for one pair on one
+          witness.
+        - Second lead: the FM-STR8b channel complex.  FM3 follows from
+          generic full rank of the correction (FM-STR8e).  Rank is full on
+          every tested case; no general argument yet.
+        - Why the height: in the Hermite analogue HPP holds for every split
+          by rotation (FM-STR12e).  At the SU(2) point only balanced cuts
+          work, so a proof must use the balance of the cut.
+        - Needed: a proof of IP for one pair per list (an `Sp(4)` domination
+          criterion, an explicit height-nonincreasing involution, or a
+          deformation from the rotation region), or generic full rank of
+          the channel correction.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
