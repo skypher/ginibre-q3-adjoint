@@ -13742,6 +13742,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           at `W = 56`), where TopPair is still monotone.  The 12-factor
           FM-MECH157 witness (`W = 550`) exceeds the script's size limit and
           was not tested.
+      - FM-SEC173 (luna_max_pluto; `fm39/sec173_w550_noflip_check.py`, rerun:
+        same values).  Exact screens at `W = 50..150` (61 multisets, every
+        sign pattern; 192 local-descent starts) found no no-flip list and no
+        TopPair failure.  An independent Python check confirms the W = 550
+        FM-MECH157 witness (all 66 flips negative, TopPair monotone).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
