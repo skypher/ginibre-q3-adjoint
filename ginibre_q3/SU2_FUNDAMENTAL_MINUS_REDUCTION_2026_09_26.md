@@ -14892,6 +14892,51 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           2..6.  Proposition 4 dimensions reproduced.
         - So FM3 holds, through the complex, on the TC+NS two-minus class,
           which contains lists with unboundedly many factors.
+      - FM-STR8e (vulcan thread, now on Luna; `fm39/str8e_generic_weights.py`,
+        rerun: PASS all checks).  Generic weights for the FM-STR8b
+        correction.
+        - Accepted reduction: for any odd-to-even `J`, `delta = PJP` is a
+          differential, so FM3 needs only that SOME weight vector gives
+          `rank delta = O`, i.e. generic rank.  The weights `w_i =
+          t^((O+1)^i)` keep every nonzero minor polynomial nonzero.
+        - Rank `O` at random weights and at `w_i = i+2` on all 268 box
+          jobs (the 103 stalled profiles included), the sign minimum (216),
+          `(-1)^3(-2)^3(-3)^3(-4)^3` (224), `Lambda_4` (1,308) and the runs
+          k = 5..9.  F1 was out of memory range.
+        - The separated-scale leading matrix (`e_i = 2^i`) has full rank on
+          258 of 268 box jobs.  It fails, for example, on
+          `(-1^5,-2,-3^3,-4)` (rank 448 of 490), because tied maximum-weight
+          assignments cancel.  32 exponent orders reach 222 of 268.
+        - Two-column minor for `Lambda_a`: `H(a)^2 (prod_S w - prod_(S^c) w)`,
+          `H(a) > 0`.  Cube condition: when the retained overlap matrix is
+          `c prod_(S cap T) w_i`, the leading matrix is a permutation.
+        - Knob (support-only matching): a retained 2x2 block with
+          proportional rows `(5 kappa(S), 5 kappa(S^c))`, `(5/2 kappa(S),
+          5/2 kappa(S^c))` has full support and determinant zero for every
+          `w`.  So rank = matching number cannot follow from support alone.
+      - FM-STR9c (ceres thread, now on Luna; `fm39/str9c_filtration_obstructions.py`,
+        rerun: PASS after a one-character repair in the printed verifier, `range(abs(b-n), a+n+1, 2)` ->
+        `b+n+1` in the y-fusion loop; the printed version fails its first
+        assertion).  Filtrations for an inductive proof of concentration.
+        - Obstructions to an even-concentrated `E_1` page:
+          - the `d_0`-first page: all 531 corrected box profiles have odd
+            `H(d_0)`;
+          - cut-size grading: negative graded Euler characteristic on 463
+            of 531, e.g. `(-1,-1,-1,-2,+3,+4)`, grade 3 Euler -6;
+          - total height: 44 profiles, e.g. `(+1)^5(-2)(+3)(-4)`;
+          - Casimir grading: 511 profiles;
+          - pair-colour cut: arrows go both ways.
+          Later pages can still cancel: the height example has `E_1 =
+          (156,6)` and `E_2 = (150,0)`.
+        - A separate mixed-colour piece would need nonnegative Euler
+          characteristic, but on `(-1,...,-8)` every pair has mixed Euler
+          between -130 and -16.
+        - Scalar-insertion obstruction (knob: only parent scalar
+          inequalities, associativity and nonnegative individual child
+          values): a genuine G-character `R` (not shown to come from a
+          signed word) has `F_R >= 0` and nonnegative one-fusion children,
+          but `F_(R S_2)(1,3) = -2`.  An induction must keep the
+          background's factorization and recoupling maps.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
