@@ -15638,6 +15638,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: a LOCAL exchange rule (one-factor transfers, or the
           position-weighted kernel of FM-STR8e) with full rank, i.e. Hall on
           the local support graph at each height.
+      - FM-STR5d (luna_max_mars; `fm39/str5d_lp_counterexample.py`, rerun: PASS;
+        main agent reproduced it).  LP IS FALSE.  For the pair-free list
+        `(+1)^2(+2)^3(-3)^14` (19 factors, `W = 50`, `Phi = 1,523,121,728`), all
+        six pair classes have a negative layer.  Four pairs give `L_19 =
+        -661,444`; the pairs `(+2,-3)` and `(-3,-3)` give `L_22 = -20,460`.  The
+        negative layers sit near the top, after about `1.5e9` of positive
+        mass.  The census of pair-free lists with labels `<= 3` and 2 to 20
+        factors has four LP failures, all at 19 factors:
+        `(+1)^2(+2)^3(-3)^14`, `(-1)^2(+2)^3(+3)^14`, `(+1)^2(+2)^7(-3)^10`,
+        `(-1)^2(+2)^7(+3)^10`.  FM3 for labels `<= 3` is already FM-MECH47.
+        - Main agent (`fm39/str5d_ip_labels3_main.py 24`): every pair-free list
+          with labels `<= 3` and up to 24 factors (7,640 lists) has a pair whose
+          interior PREFIXES are all `>= 0`, while 32 of them have no LP pair.
+          So the prefix form IP survives where LP fails.  A run to 32 factors
+          is in progress.
+        - Consequence: the per-height statement is too strong.  The lead
+          returns to IP, the plain interior prefix, for some pair.  Its `T =
+          infinity` case is FM3, and the extra content lies in absorbing
+          negative upper layers.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
