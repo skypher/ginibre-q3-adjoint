@@ -15008,6 +15008,39 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open: the runs budget uniformly in `k, p`, or the layerwise
           condition.  A supplier must handle higher powers of `d`, or allow
           cancellation between the two blocks.
+      - FM-STR12 (main agent; `fm39/str12_height_prefix_all_splits_main.py`,
+        run: FM-STR12 HEIGHT PREFIX ALL SPLITS PASS).  CONJECTURE (HPP):
+        height-prefix positivity for EVERY split.  For a signed list with
+        an even number of minus factors, every split `A | B` and every `T`,
+          `Pi_T(A,B) = sum_(r+s <= T) f_A(r,s) f_B(r,s) >= 0`.
+        - `Pi_infinity = Phi(A u B)` (FM3).  `Pi_0 = Phi(A) Phi(B)` when both
+          halves are even, else 0.  For `|B| <= 2` HPP reduces to FM3 of the
+          fused children (FM-STR7e Lemma 1).  So the content starts at `|A|,
+          |B| >= 3`.  In polynomial terms, `Pi_T` pairs the degree-`<= T`
+          orthogonal truncations of `F_A` and `F_B` under the product
+          semicircle measure.
+        - Evidence, no failure:
+          - every split of every pair-free list with labels `<= 4`, length
+            `<= 8` (79,842 splits);
+          - every split with labels `<= 6`, length `<= 7` (227,503);
+          - lists with `+-n` pairs allowed, labels `<= 3`, length `<= 8`
+            (60,553);
+          - every distinct split of 150 sampled no-flip census lists
+            (18,090);
+          - 800 random splits of the runs `k = 6..18`.
+          The interior-cut budget of FM-STR7e is the special case of the
+          interior cut.
+        - Shape: the weighted height `r + 2s <= T` also passes everywhere.
+          Box truncation `r <= R, s <= S`, the `max(r,s)` cutoff and the
+          diagonal band `|r - s| <= T` fail (108, 108 and 150 of 22,928
+          splits).  A pointwise twisted pairing `sum f_A f_B chi_alpha(k) /
+          dim alpha` can be negative.  So HPP is tied to the degree filtration.
+        - Consequence: HPP implies every `q`-weighted pairing `sum q^(r+s)
+          f_A f_B >= 0`.  That pairing is `<F_A, P_q F_B>` for the Chebyshev
+          (free Mehler) Poisson kernel, whose kernel is `(1-q^2)^2 /
+          det(1 - q g_1 (x) h_1) det(1 - q g_2 (x) h_2)`.
+        - Use: a proof needs only ONE split per list.  HPP says any split
+          works, so the prover may choose the most convenient one.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
