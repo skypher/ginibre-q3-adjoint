@@ -8827,7 +8827,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | EVERY list with at most NINE factors | all labels, all signs (FM-MECH164 with FM-MECH160; FM-CHK106 ACCEPT) — added 2026-10-02 |
 | all `r` | ten factors with minimum label `>= 16` | all (FM-MECH164) — added 2026-10-02 |
 | all `r` | EVERY list with at most EIGHT factors | all labels, all signs (FM-MECH160 with FM-MECH153, FM-MECH155, two-odd fusion; FM-CHK99 and FM-CHK102 ACCEPT) — added 2026-10-02 |
-| all `r` | `L` = 9..16 factors with minimum label at least 8, 10, 13, 17, 22, 28, 35, 45 respectively | all larger labels, all signs (FM-MECH166, direct positivity) — added 2026-10-02 |
+| all `r` | `L` = 9..16 factors with minimum label at least 8, 10, 13, 17, 22, 28, 35, 45 respectively | all larger labels, all signs (FM-MECH166, direct positivity; FM-CHK107 ACCEPT) — added 2026-10-02 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -14124,6 +14124,12 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           implication;
         - FM-STR5: exact computational support;
         - the bounded factor count of no-flip lists, and one checker.
+      - FM-CHK107 (luna_max_neptune, fresh code; `fm39/chk107_mech166_mech165_check.py`,
+        rerun: PASS).  ACCEPT, with no repair:
+        - FM-MECH166: Lemma 1, the closed forms, the thresholds, boundary
+          boxes at `L = 9, 10` and large-label samples;
+        - FM-MECH165 Theorem 5: the band `w_TP >= 2 delta - 2`, `>= 9`
+          factors, under the shorter-word assumption.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
