@@ -14499,6 +14499,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           65521).
         - Open: combine the cut maps `U_S` (with `sum_S U_S^* U_S = I`) inside the
           actual `I^+` for every two-minus list.
+      - FM-CHK109 (luna_max_eris, fresh code; `fm39/chk109_eleven_factor_partial_check.py`,
+        rerun: PASS).  FM-MECH173 (eleven factors), partial acceptance.
+        - Accepted:
+          - the payment identity and reductions;
+          - the profile catalogs (57,920,058 normal and 27,446,154 all-even
+            shapes);
+          - the finite-box cutoff;
+          - exact samples: 512 envelope profiles and boundary profiles, plus
+            all 745,472 signings of eleven-factor words with labels 1..4.
+        - REPAIR NEEDED (knob: seven-small-prefix budget coverage): the
+          universal charge bounds for the 31,802 claimed-good seven-label
+          prefixes were not independently regenerated.  This is a gap in
+          the check, not a counterexample.
+        - The strata row for eleven factors stays "independent check
+          pending".
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
