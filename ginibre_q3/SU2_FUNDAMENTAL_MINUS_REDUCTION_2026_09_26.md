@@ -15511,6 +15511,11 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `(-40,+42,...,+62)`, F1 (two pairs).
         - The all-split screens in this report predate FM-SEC181.  They
           covered only small lists, where segregated failures do not occur.
+      - FM-STR13b (main agent; `fm39/str13b_layer_positivity_w52_main.py`,
+        run: 349 s).  LP on the FULL `W <= 52` no-flip census.  All 75,532
+        rows have a pair whose interior cut has every layer `>= 0`.  The
+        TopPair works on 74,788 (99.0%), and another pair works on each of
+        the remaining 744.  No row fails.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
