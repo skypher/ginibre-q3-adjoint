@@ -14379,6 +14379,37 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           switching with full fusion trees, nonzero channels and
           multi-generation recoupling, consistent with FM-STR1b/3/7/8); (2) a
           whole-word Gram or reflection-positive cut construction.
+      - FM-STR8b (astra_max_vulcan; `fm39/str8b_channel_complex.py`, rerun: PASS,
+        481 profiles).  A complex using ALL intermediate channels; homology
+        concentrated on the whole test box.
+        - Setup: sort the factors by signed class and split alternating
+          positions into half-words `A, B`.  On each half's super-
+          representation, match odd to even copies of the same `SU(2) x SU(2)`
+          type, giving `d_A`, `d_B`.  Put `d_0 = d_A (x) 1 + Gamma_A (x) d_B`.  Then
+          `d_0^2 = 0`, and with `f_A(alpha) = e_A(alpha) - o_A(alpha)` (signed
+          multiplicity of type `alpha`):
+            `dim H_even = sum_alpha max(f_A f_B, 0)`,
+            `dim H_odd = sum_alpha max(-f_A f_B, 0)`,
+          so `Phi = sum_alpha f_A(alpha) f_B(alpha)`.
+        - Proved: concentration whenever `f_A, f_B` have compatible signs in
+          every channel, in particular for every doubled word `Gamma Gamma`
+          (`dim H_even = sum f^2`), uniformly in labels and factor count.
+        - On `(-2)^6`, the nonzero channel `(2,2)` supplies 18 of 20
+          cancellations, giving homology `(100,0)`.  This escapes the
+          FM-STR8 nested-singlet bound.
+        - Exchange correction: `delta = P J P`, with `J_TS = [prod_(i in S cap T)
+          (i+2)] i_T^* i_S` from odd to even cuts and `P` the projection onto
+          the unmatched channel spaces, fixed before testing.  Then `d = d_0 +
+          delta` has `d^2 = 0` and `dim H_odd(d) = dim H_odd(d_0) - rank delta`.
+        - Knob: channel preservation, e.g. `(-1)^3 (-2)^3 (+3)` leaves 4 odd
+          dimensions for any channel-preserving differential; the
+          correction removes them.
+        - Exact screen: all 481 pair-free signed multisets with labels `<= 3`,
+          `<= 8` factors, even minus count.  `d_0` already concentrates in 471;
+          the 10 others are fully corrected by `delta`.  `H_odd(d) = 0` in
+          every case, so `Phi = dim H_even` there.
+        - Open (FM3 needs only this): `delta` restricted to `H_odd(d_0) ->
+          H_even(d_0)` is injective for every pair-free residual word.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
