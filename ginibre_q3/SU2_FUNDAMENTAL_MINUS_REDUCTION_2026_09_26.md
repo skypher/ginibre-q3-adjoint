@@ -14477,6 +14477,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           prefix `P_T >= 0`, and so do 6,000 seeded stress cases.
         - Open: the prefix positivity `sum_(u+v <= T) r_H r_(H, eps a, eps b) >= 0`
           for all `T` (its `T = infinity` case is FM3 for two remainders).
+      - FM-STR1c (astra_max_ceres; `fm39/str1c_two_cut_injection.py`, rerun:
+        FM-STR1c PASS).
+        - Theorem 1 (structural no-go, knob: naturality under permutations
+          of equal signed factors): for a two-minus list with six plus
+          factors, no `S_2 x S_6`-equivariant injection `I^- -> I^+` exists, with
+          any channels, colourings or number of stages.  Exact character
+          calculation: a nine-dimensional `S_6` component is killed by every
+          equivariant map.  So any injection must break symmetry (an
+          ordering or a distinguished factor), as the lexicographic folding
+          of FM-STR7 does.
+        - Theorem 2 (proved): under a two-complementary-cut support
+          condition (TC), `T_A + T_B` is injective on `I^-`, with an exact energy
+          identity: an isometry if `n != m`, and if `n = m = q`, `det(J^*J) =
+          [q(q+2)/(q+1)^2]^(2b)`.  Corollary: an explicit family with `L + 5`
+          factors for every `L`.
+        - Obstructions: fixed-prefix first stages (rank `<= 2`); corrections made
+          only of plus-pair singlet transfers can annihilate whole source
+          channels.  Keeping a direct branch repairs the tested cases
+          (`3^6, 3^5 5, 3^4 5^2, 3^3 5^3`: rank 160/160, minors nonzero mod
+          65521).
+        - Open: combine the cut maps `U_S` (with `sum_S U_S^* U_S = I`) inside the
+          actual `I^+` for every two-minus list.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
