@@ -14937,6 +14937,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           signed word) has `F_R >= 0` and nonnegative one-fusion children,
           but `F_(R S_2)(1,3) = -2`.  An induction must keep the
           background's factorization and recoupling maps.
+      - FM-STR7e main-agent checks (`fm39/str7e_budget_runs_main.py K1 K2`,
+        `fm39/str7e_budget_census_stats_main.py`; exact Python integers).
+        - Runs `(-1,...,-k) + (sigma p)`, TopPair `(-(k-2), -k)`, `k+1 <= p <=
+          k+3` with even weight, k = 5..34: the budget holds in every case.
+          `Phi` agrees with FM-STR8c (184, 980, 6,434 for k = 6, 7, 8).
+          Profile (k = 16, p = 18): `P_t > 0` at every height, and `|M_t|`
+          is at most about 0.4% of `P_t`.  The minimum of `B_T / Phi` is small
+          only because the first heights carry little mass.
+        - Census (TopPair, 5,430 no-flip lists, `W <= 40`): the plain prefix
+          and the budget hold on all.  The heightwise version fails on 102,
+          and `P_t < 0` at some height on 36.  The largest ratio of negative
+          mixed mass to positive pure mass is 0.32, at `B =
+          (-1,-3,-3,-4,-5,-5,-6)`, `p = -7`.  So the census lists, not the
+          runs, are the tight cases for this mechanism.
+        - Consumer note: `Phi = B_infinity + sum_t max(M_t, 0) >= B_infinity`.
+          For FM3 alone the `T = infinity` case of the plain prefix suffices,
+          and that case is FM3.  The prefix conditions are what the
+          involution and the `Sp(4)` truncation method need.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
