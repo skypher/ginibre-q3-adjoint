@@ -14632,6 +14632,46 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           FM-CHK109 covers the reductions, profiles, cutoff and samples, and
           FM-CHK109b covers the prefix budgets.  The finite box itself is the
           main-agent rerun of the FM-MECH173 reproducer.
+      - FM-STR7d (astra_max_minerva; `fm39/str7d_sp4_truncation.py`, rerun:
+        FM-STR7d PASS, 27 s).  The `Sp(4)` height-prefix mechanism beyond
+        fundamentals.  Not closed for an arbitrary general label.
+        - Lemma 1: the height cutoff `Pi_T` sends every genuine `Sp(4)`
+          character `chi_(alpha,beta)` to a genuine one: zero if `T <
+          alpha - beta`, else `chi_(l+J,J)` with `l = alpha - beta`, `J =
+          min(beta, floor((T-l)/2))`.  For antisymmetric rows, `Pi_T(dB) = d
+          J_(T-1) B`.  This builds a new module; it is not a submodule
+          filtration of the original (`Pi_0(V (x) V) = 2 . 1`).
+        - Theorem 2: if the half-word row `F_H` lifts to a GENUINE `Sp(4)`
+          character `A`, then every prefix is nonnegative for either common
+          remainder sign: `P_T(H; -a, -b) = 2 <L_T A, A K_a K_b> >= 0`.  The
+          same holds for remainders `d^2 B` with `B` genuine.
+        - Corollary 3: prefix positivity for `(+-1)^h (+2)^r` with `h >= r`
+          (from `s S_2 = chi_(3,0) + chi_(1,0)`).  This gives the FM-STR7b
+          matching for `(+-1)^(2h) (+2)^(2r) (eps a)(eps b)`.  The scalar
+          values were already known.
+        - Proposition 4 (three stronger statements fail exactly):
+          - knob: a fixed number of fundamentals makes `S_n` genuine.
+            `[chi_(n-1,h+1)] s^h S_n = -1` for `n >= h + 2`.
+          - knob: arbitrary genuine `Sp(4)` multiplicities in place of the
+            actual tensor power.  `G = chi_(5,0) + 3 chi_(4,3)`, `F = G
+            S_5`, `R = D_2 D_4` gives `P_0 = -4`.
+          - knob: certify each constituent separately.  `chi_(3,2) D_3`
+            with `R = D_2 D_8` has `L_4 = -2`, while the actual word
+            `s^5 D_3` has `P_4 = 32,180`.  Cancellation between
+            constituents is needed.
+        - Proposition 5: an explicit quartic multiplier,
+          `[d^2 s^t : chi_(alpha,beta)] = m_(t+2)(alpha,beta) Q_t(A,B) / D_t`,
+          `Q_t = A^2 B^2 - (3t+13)(A^2+B^2) + 15t^2 + 120t + 241`.  It is
+          negative at the balanced top weight for every `t`, so `d^2 s^t` is
+          never genuine.
+        - Proposition 6 (knob: the fusion correction itself nonnegative):
+          the induction on the remainder size `|R|` still needs a signed
+          estimate.  `Phi(HH,-2,-4) = 30 - 10` for `H = (+1,+3)`.
+        - Screens: 408,776 prefixes on 4,955 one- or two-general-label
+          inputs, and 148,898 more with `h <= 200`.  No negative prefix.
+        - Open: for `H = (+1)^h (-2)`,
+          `<J_(T-1) V^(x)(h+1), V^(x)(h+1) d^2 K_a K_b>_Sp(4) >= 0` for every `T`
+          and every `2 <= a < b` with `a = b mod 2`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
