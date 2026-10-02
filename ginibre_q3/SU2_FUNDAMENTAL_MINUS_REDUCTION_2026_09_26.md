@@ -15587,7 +15587,8 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - FM-SEC186 (luna_max_neptune; `fm39/sec186_layer_positivity_gmp.py`;
         the report text is truncated after the harness, with no verdict
         section.  Main agent: the `--quick` run, 33 lists, reproduces the
-        `W = 212` values with no failure.  The full run is in progress.)
+        `W = 212` values with no failure.  The full run reproduces everything:
+        87 lists, `ALL_PAIR_FAILURES 0`, the same extremes.)
         GMP adversarial search against LP to `W = 294` and 30 factors.
         - 87 lists, every pair scanned: NO list where every pair has a
           negative layer.
