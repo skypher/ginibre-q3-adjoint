@@ -14956,6 +14956,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           For FM3 alone the `T = infinity` case of the plain prefix suffices,
           and that case is FM3.  The prefix conditions are what the
           involution and the `Sp(4)` truncation method need.
+      - FM-STR10b (luna_max_neptune; `fm39/str10b_edge_rule.py`, rerun: PASS,
+        about 6 min).  Edge rule for the support graph.  The line pauses.
+        - The exact edge rule is the retained-copy overlap formula itself:
+          `alpha -> beta` iff some overlap `sum_e c_(T,j)(e) c_(S,i)(e) / prod
+          binom(n_l, e_l)` is nonzero.  The four-block CG filter
+          `F(S cap T), F((S u T)^c), F(S - T), F(T - S)` sharing a spin is
+          necessary, not sufficient: in `(-1,-1,-1,-2,-2,-2,+3)`, 110 of 262
+          filtered pairs have zero overlap.
+        - On 46 small profiles, the `k = 6` run (44 edges, radius 10) and
+          `(+1)^6(-2)(+4)(-6)`: rank = capacitated max-flow = `dim H_odd(d_0)`,
+          and one-vertex Hall holds.
+        - Odd fraction on `(+1)^(2t)(-2)(+4)(-6)`: 17.8% at t = 12.
+        - Knob: computational growth.  Hall at scale needs the full overlap
+          matrix, so it is no cheaper than the rank.  No counterexample.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
