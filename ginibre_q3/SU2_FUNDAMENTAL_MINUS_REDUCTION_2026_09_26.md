@@ -15050,6 +15050,28 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         profiles, and two seven-factor profiles (rank 40).  Not finished:
         `(-2,-2,+5^4)`, with `dim I^- = 12`.  The report also records that a fixed
         four-minus composition can fail as an injection constructor.
+      - FM-STR12b (main agent; `fm39/str12b_halfplane_directions_main.py`, run:
+        PASS).  Sharper form of HPP: HALF-PLANE positivity.  For every split
+        and every linear functional `lambda` with `lambda_1 + lambda_2 >= 0`,
+          `sum_(lambda_1 r + lambda_2 s <= T) f_A(r,s) f_B(r,s) >= 0` for all `T`.
+        - No failure, every split of every pair-free list with labels `<= 4`
+          and length `<= 7` (22,928 splits), for 15 directions:
+          - `(1,1)`, `(1,2)`, `(1,3)`, `(2,3)`, `(1,10)`, `(10,1)`;
+          - the one-coordinate cutoffs `(1,0)` and `(0,1)`;
+          - the antidiagonal `(1,-1)`, `(-1,1)`;
+          - `(2,-1)`, `(3,-2)`, `(10,-9)`, `(-9,10)`, `(11,-10)`.
+        - Directions with `lambda_1 + lambda_2 < 0` fail.  `(-1,-1)`
+          (height suffixes) fails on 375 splits, `(-1,0)` on 121, `(1,-2)` on
+          68 and `(-1,-2)` on 545.  So do the non-half-plane cutoffs: box,
+          `max(r,s)`, the band `|r-s|`, the Casimir disk and `r^2+s^2`.
+          Smooth heat-kernel weights `exp(-t Casimir)` pass at the tested `t`.
+        - Reading: the product table `P = f_A f_B` is symmetric under `r <-> s`.
+          Every one-dimensional projection `alpha -> lambda . alpha` with
+          `lambda_1 + lambda_2 >= 0` has a nonnegative cumulative
+          distribution, and total mass `Phi`.  For `lambda = (1,0)` the
+          statement averages over `y` a one-variable problem.  For each fixed
+          `y`, `F_A(., y) = prod (U_n(x) + c_i)` with constants `c_i = eps_i
+          U_(n_i)(y)`, and the cutoff truncates the `x`-spin.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
