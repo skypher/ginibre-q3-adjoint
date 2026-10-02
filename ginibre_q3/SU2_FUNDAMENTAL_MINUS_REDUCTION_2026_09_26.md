@@ -8823,6 +8823,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | eight factors with no negative 3|5 term (e.g. every all-odd eight-factor list) | all (FM-MECH153 Lemma 4, Corollary 5) — added 2026-10-02 |
 | all `r` | eight factors: all labels `>= 3`, or all `>= 2` with an odd label | all (FM-MECH155 with FM-MECH153 and two-odd fusion) — added 2026-10-02 |
 | all `r` | nine factors with minimum label `>= 28` | all (FM-MECH159) — added 2026-10-02 |
+| all `r` | EVERY list with at most ELEVEN factors | all labels, all signs (FM-MECH173 with FM-MECH169; independent check pending) — added 2026-10-02 |
 | all `r` | EVERY list with at most TEN factors | all labels, all signs (FM-MECH169 with FM-MECH164; independent check pending) — added 2026-10-02 |
 | all `r` | EVERY list with at most NINE factors | all labels, all signs (FM-MECH164 with FM-MECH160; FM-CHK106 ACCEPT) — added 2026-10-02 |
 | all `r` | ten factors with minimum label `>= 16` | all (FM-MECH164) — added 2026-10-02 |
@@ -14171,6 +14172,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           feature (`S_2` has feature contributions +2 and -2), and `(x-y)^(2r)`
           has no measure-only Gram factorization (determinant -1).  A Gram
           proof must use cancellation across the complete tensor product.
+      - FM-MECH173 (astra_max_minerva; `fm39/mech173_eleven_factors_close_repro.py`,
+        rerun with 24 threads: FM-MECH173 PASS, identical counts, 520 s;
+        independent check pending).  ELEVEN FACTORS CLOSE: FM3 holds for
+        every list with at most eleven factors.
+        - The small-label cutoff moves from 8 to 12.
+        - A new four-large-label coefficientwise profile `H_4^(13)` (`H_4^(14)`
+          all-even) comes from a finite tiling reduction.
+        - Most seven-small-label prefixes are certified uniformly.
+        - Finite box: 326,484,586 label patterns and 47,094,362,366 signings,
+          all nonnegative.
+        - Census: 888 more no-flip lists at `W <= 48` are settled (370 with
+          `>= 12` factors remain), and 2,544 at `W <= 52` (1,330 remain).
+        - The factor-count route STOPS here by user decision (the finite boxes
+          grow too fast to reach every factor count).
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
