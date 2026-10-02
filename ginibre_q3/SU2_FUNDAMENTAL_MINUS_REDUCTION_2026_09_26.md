@@ -15516,6 +15516,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         rows have a pair whose interior cut has every layer `>= 0`.  The
         TopPair works on 74,788 (99.0%), and another pair works on each of
         the remaining 744.  No row fails.
+      - FM-STR7l (minerva thread on Luna; `fm39/str7l_layer_strings.py`, rerun:
+        PASS).  `Sp(4)` structure of the layers.
+        - `(1,1)` allocation: `L_(q+1) = 2 sum_(|lambda| = q) a_lambda b_lambda`.
+          So LP holds for every `(1,1)` cut whose two quotients are genuine.
+        - W1: the working pairs `(-4,-4)`, `(-4,+5)` and `(-4,+6)` all have
+          `(2,0)` allocations.  For `(-4,-4)` a size-slice dot is negative
+          (`q = 22`: -10,330), yet the layer is 432,908.  So the size-slice
+          test is not the right criterion for `(2,0)` allocations.
+        - Exact `(2,0)` layer formula.  With `A_(l,j) = a_(l+j, j)` and
+          `B_(l,j) = b_(l+j, j)`,
+            `L_T / 2 = sum_(l = T mod 2) (A_(l,J) - A_(l,J-1)) . sum_(j >= J) B_(l,j)`,
+          with `J = (T - l)/2`.
+          Single string terms can be negative.  At height 5 for `(-4,+5)`
+          the terms are -142,375, 1,342,660 and 8,538,543.
+        - SUFFICIENT for a `(2,0)` cut: `A` nondecreasing along each string
+          (`A_(l,j) >= A_(l,j-1)`) and every `B` tail sum nonnegative.  Both
+          are statements about `Sp(4)` multiplicities along strings, the
+          kind of statement a Pieri rule can prove.
+        - TopPair on W1, a `(1,1)` cut: negative layers at heights 15 to 25,
+          minimum -2,405,294.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
