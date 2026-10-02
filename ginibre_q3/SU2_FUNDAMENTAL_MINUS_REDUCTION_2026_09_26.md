@@ -15072,6 +15072,52 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           statement averages over `y` a one-variable problem.  For each fixed
           `y`, `F_A(., y) = prod (U_n(x) + c_i)` with constants `c_i = eps_i
           U_(n_i)(y)`, and the cutoff truncates the `x`-spin.
+      - FM-SEC180 (luna_max_neptune; `fm39/sec180_budget_adversarial.py`,
+        rerun: PASS after a one-line repair in the printed `score()`, which
+        indexed a `Fraction` as a tuple for the mixed objective).  Adversarial
+        search against the interior budget, `W <= 120`: no failure.
+        - Mutation moves: shift a class by +-1 or +-2, flip a sign class,
+          insert, delete, merge, split.  917 distinct TopPair profiles.
+        - Extremes: plain prefix `673/729` of positive mass, at
+          `(1,2,-3,4,4,5,7,-10,16)`.  Budget over pure mass `275/406`, and
+          negative-mixed over pure mass `131/406`, both at the census case
+          `(-1,-3,-3,-4,-5,-5,-6,-7)`.  The best pair over all pairs there
+          reaches `536/553`.
+        - The extremes do not grow with `W`.  The weakest normalized budget
+          over pure mass by weight bin: `275/406` (21-40), `761/1024` (41-60),
+          `442/497` (61-80), above 0.88 beyond.
+      - FM-STR9e (ceres thread on Luna; `fm39/str9e_two_minus_matching_class.py`,
+        rerun: PASS FM-STR9e verifier).
+        - Exact formula: `K_n S_a = sum_(j <= min(n,a)) h_(n+a-1-2j) +
+          chi_(n-1,a)` if `a < n`, `+ 0` if `a = n`, and `- chi_(a-1,n)` if `a >
+          n`.  So `K_n S_a` is genuine exactly when `a <= n`.
+        - Class proved (plain prefix for a chosen cut, hence FM3): two minus
+          labels `-n, -m`, any number of `+1` factors, and at most two
+          further plus labels that match distinct minus labels `>=` them.
+        - Knob (block genuineness with several labels): `K_3 S_2^2` has
+          negative multiplicities, `-2 chi_(1,1)`, `-chi_(3,3)`.
+      - FM-STR8f (vulcan thread on Luna; `fm39/str8f_four_minus_prefix.py`,
+        rerun: PASS).  Four minus factors.
+        - Equal halves: if `F_A = F_B'`, every prefix is `sum f_A^2 >= 0`.  This
+          covers `(-a)^2(-b)^2 prod (+n)^(2 m_n)`.  These are doubled words,
+          positive by FM-STR7, and the prefixes are squares.
+        - Knob (arbitrary genuine inputs): `<Pi_2(d^2), d^2 chi_(1,1)> = -6`.
+        - Screen: 1,139 four-minus no-flip census lists, 256 random lists
+          with four distinct minus labels, and 128 lists on `(-1,-2,-3,-4)`.
+          No negative cumulative prefix in 48,506 pairs and 1,220,494
+          prefixes.  Heightwise pure parts go negative 416 times.
+      - FM-STR7g (minerva thread on Luna; `fm39/str7g_frequency_scales.py`,
+        rerun: FM-STR7g verifier PASS).  Limit-theorem route.
+        - Proved: with a fixed number `r` of minus factors and Lindeberg
+          ratio `delta -> 0`, the normalized Fourier multiplier of a half-word
+          is `exp(-rho (x^2+y^2)/12) (y^2 - x^2)^r` on compact frequencies,
+          with explicit error bounds.  Equal profiles would give positive
+          layer densities.
+        - Obstruction (knob: Gaussian-scale control only): on the runs the
+          multiplier at a mesoscopic angle beats the Gaussian scale for `k >=
+          303`, even though the Lindeberg ratio tends to 0.  Also, balanced
+          weights do not give equal profiles: at k = 7 the blocks have minus
+          counts 3 and 5.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
