@@ -15659,6 +15659,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           returns to IP, the plain interior prefix, for some pair.  Its `T =
           infinity` case is FM3, and the extra content lies in absorbing
           negative upper layers.
+      - FM-STR14 (main agent; `fm39/str14_ip_labels4_main.py 10 22`, run: about
+        9 min, per-size output and heartbeat).  IP, the plain interior
+        prefix for SOME pair, on every pair-free list with labels `<= 4`
+        (16 sign patterns, all multiplicities) and 10 to 22 factors.  That is
+        67,552 lists, with NO list lacking an IP pair.  LP fails for every
+        pair on 46 lists at N = 19, 134 at N = 21 and 6 at N = 22, and on none
+        below 19.  Together with FM-STR5d (labels `<= 3` up to 32 factors), IP
+        is the surviving lead.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
