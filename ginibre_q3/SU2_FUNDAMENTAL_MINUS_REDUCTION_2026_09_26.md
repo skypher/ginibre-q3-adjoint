@@ -15465,6 +15465,37 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           these are not evidence of a mechanism (main agent).
         - Verdict: no uniform inductive identity for the interior prefix in
           this dictionary.  The line pauses.
+      - FM-STR13 (main agent; `fm39/str13_layer_positivity_main.py`, run:
+        FM-STR13 LAYER POSITIVITY (SOME PAIR) PASS).  NEW, MORE LOCAL
+        CONJECTURE: LAYER positivity of an interior cut for SOME pair.  For a
+        pair `(u,v)`, let `A | B` be the interior cut of `Lambda - u - v`, `B' = B
+        + {u,v}`, and `L_t = sum_(r+s=t) f_A(r,s) f_B'(r,s)`.  Then `sum_t L_t =
+        Phi`.  Claim: for every list some pair has `L_t >= 0` for EVERY height
+        `t`.  That implies FM3 at once, and each condition concerns a single
+        height.
+        - Consumer note.  For the TopPair interior cut on the 5,430 census
+          lists plus 6 hard lists, the layer sign pattern is all `+` on 5,357
+          and `+` then `-` on 79.  For a `+`-then-`-` profile the prefixes fall
+          after the sign change, so the smallest prefix is the final one,
+          which is FM3 itself.  So prefix positivity (IP) carries extra
+          information only through layers; the per-height statement is the
+          useful one.
+        - Evidence: on all 5,436 lists, including the three FM-SEC181
+          witnesses, F1, the FM-SEC183 budget witness and the sign minimum,
+          SOME pair has all layers `>= 0`.  So do the runs `k = 6..18`, where
+          the TopPair already works.  On the witnesses the TopPair fails but
+          9 to 17 other pairs work.
+        - Pair rules (all layers `>= 0`), out of 5,435:
+          - TopPair: 5,356;
+          - largest minus factor plus the largest other factor: 5,423;
+          - the two largest factors: 5,413;
+          - the two largest minus factors: 5,382;
+          - largest minus plus largest plus: 4,992 of 5,006.
+          No single tested rule always works.
+        - In `Sp(4)` terms (FM-STR7k), for a `(1,1)` cut the layer at height
+          `q+1` is `2 sum_(|lambda| = q) a_lambda b_lambda`.  That is the inner
+          product of the size-`q` slices of the two `Sp(4)` multiplicity
+          vectors.  So the conjecture is a slice-wise FM3.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
