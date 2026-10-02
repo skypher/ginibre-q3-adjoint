@@ -14538,6 +14538,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           needed.  306,036 prefixes over 25,560 one-general-label inputs:
           no negative prefix.
         - Open: `H = (+1)^h (eta n)`, one general label.
+      - FM-CHK111 (luna_max_neptune, fresh code; `fm39/chk111_str8b_independent_check.py`,
+        rerun: PASS, about 4 min).  Independent exact-rational check of the
+        FM-STR8b all-channel complex.  ACCEPT on the stated scopes.
+        - `d_0^2 = 0` (tensor differential identity) and the homology formula
+          for `d_0` are reproduced.  With the correction `delta = PJP`,
+          `delta^2 = 0` and `d_0 delta = delta d_0 = 0`, so `d^2 = 0`.
+        - Screen of 481 profiles: 88 have nonzero odd chains and 10 have
+          nonzero `H_odd(d_0)`.  All 10 correction matrices have full
+          column rank, so `H_odd(d) = 0` on the whole screen.  Largest
+          case: `+1,-2^2,+3^5`, `H_0 = (418,10)`, rank 10.
+        - Random profiles of length 9 (one with `H_0 = (638,2)`, rank 2) and
+          12 seeded samples each at lengths 9 and 10: all pass.
+        - Agrees with the FM-STR8c stress log (4,521 pair-free profiles,
+          labels `<= 4`, length `<= 10`; prime-field full-rank minors).
+        - Open (knob: uniformity over labels and factor count):
+          `rank(PJP : H_odd(d_0) -> H_even(d_0)) = dim H_odd(d_0)` for every
+          pair-free list.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
