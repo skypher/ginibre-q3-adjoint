@@ -15209,6 +15209,38 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           for HPP meets the same no-flip lists as FM3.  A proof of HPP has to
           be non-inductive at the top height, for example an `Sp(4)`
           truncation positivity or an explicit height-graded matching.
+      - FM-STR8g (vulcan thread on Luna; `fm39/str8g_poisson_correlation.py`,
+        rerun: PASS exact verifier).  The smoothed form.
+        - `Sigma_q(A,B) = sum q^(r+s) f_A f_B = E[F_A(g) F_B(g k)]`, with `k` from
+          the product of SU(2) Poisson measures `rho_q = (1-q^2)/(1 - 2q cos
+          theta + q^2)^2`.  Equivalently `<R F_A, R F_B>`, a cross inner
+          product.
+        - By summation by parts, `Sigma_q = (1-q) sum_T q^T Pi_T + q^H Pi_H`, so
+          HPP implies `Sigma_q >= 0`.
+        - Knob (fixed-sign evolution): `d/dq Sigma` at `q = 1` is +6 for
+          `A = B = (-3)` and -8 for `A = (-3)^4`, `B = (-1)^2(-2)^2`.  The
+          heat-time derivative also takes both signs on pair-free splits.
+          So no one-signed monotone evolution exists.
+      - FM-STR12e (main agent; `fm39/str12e_hermite_height_main.py`, run as
+        stated).  WHY THE HEIGHT: the Hermite (q = 1) analogue of HPP is a
+        theorem, and its proof only sees total degree.
+        - Replace `U_n` by `He_n`, with `x, y` iid standard Gaussians.  Every
+          split of every list with labels `<= 4` and length `<= 7`, pairs
+          allowed (71,508 splits): the height prefixes never fail; `(1,0)`,
+          `(1,-1)` and `(1,2)` fail on a few splits each.
+        - Proof for the height at q = 1.  Rotate: `G, H = (X +- Y)/sqrt 2`.
+          Then `He_n(X) + eps He_n(Y) = 2^(-n/2) sum_k C(n,k)(1 + eps
+          (-1)^(n-k)) He_k(G) He_(n-k)(H)`, with nonnegative coefficients.
+          Products of Hermite polynomials linearize with nonnegative
+          coefficients, so `F_A`, `F_B` have nonnegative coefficients in
+          the `(G,H)` Hermite basis.  The degree-`<= T` space is
+          rotation-invariant, so `Pi_T` is a sum of nonnegative terms.  This
+          is the FM-SEC77 `q = 1` rotation argument, graded by degree.
+        - Reading: the height is the filtration the rotation preserves.  In
+          the braided family of FM-SEC77/FM-SEC90 (`q_11 = q_22 = q`, `q_12 =
+          s`), the same rotation covers `|s| <= q`.  FM3 is the point `(q,s)
+          = (0,1)`, off that region.  A deformation from the rotation region
+          to `(0,1)` that preserves HPP would prove FM3.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
