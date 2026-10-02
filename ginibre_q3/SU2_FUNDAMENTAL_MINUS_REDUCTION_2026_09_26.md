@@ -15749,6 +15749,24 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           since `D(1) = D(-1) = 0` there.  An independent Laurent evaluator
           confirms the polynomial, and its Bernstein coefficients on
           `[-1,1]` are all nonnegative.
+      - FM-STR16b (fresh Luna thread "fresh3"; `fm39/str16b_uv_transport.py`,
+        rerun: all verifier assertions passed).  Transport for the FM-STR16
+        representation.
+        - Exact `E/F` relations: with `u_k = P w_k`, `sum_i alpha_i(s_i) u_(s+2e_i)
+          = 0` for every `s` with `sum s = -2`, and likewise for `F` and higher
+          powers.  Also `sum_l |<u_l,u_k>|^2 = ||u_k||^2`.
+        - A subset-intersection transport, `G~_eps(k) = sum_F eps_F ||(P_F (x)
+          P_(F^c)) w_k||^2 / ||P w_k||^2`, satisfies `Phi = sum_k ||P w_k||^2
+          G~_eps(k)`.  Summed over `k`, it is the Walsh form `sum_F eps_F m(F)
+          m(F^c)`.  Conjugation averaging turns the diagonal `c`-operator
+          into `P_F (x) P_(F^c)`.
+        - `G~ >= 0` holds only for the trivially positive classes: all plus
+          signs, and `eps_i = (-1)^(n_i)` (where every nonzero Walsh term has
+          sign +).  It fails pointwise elsewhere.  `(1,1,1,1)` with signs
+          `(+,+,-,-)` gives `G~ = -1`; the FM-STR16 witness gives `-14/3`; it
+          also fails on `(+1)^2(+2)^3(-3)^14` and on the FM-SEC183 witness.
+        - Main-agent reading: averaged over conjugation, the representation
+          reduces to the Walsh form.  It adds no positivity of its own.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
