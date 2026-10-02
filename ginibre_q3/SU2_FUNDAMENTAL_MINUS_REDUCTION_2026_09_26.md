@@ -15651,8 +15651,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Main agent (`fm39/str5d_ip_labels3_main.py 24`): every pair-free list
           with labels `<= 3` and up to 24 factors (7,640 lists) has a pair whose
           interior PREFIXES are all `>= 0`, while 32 of them have no LP pair.
-          So the prefix form IP survives where LP fails.  A run to 32 factors
-          is in progress.
+          So the prefix form IP survives where LP fails.  Extended with
+          `fm39/str5d_ip_labels3_range_main.py 25 32`: all 9,304 lists with 25
+          to 32 factors have an IP pair (no failure).  LP fails on 20, 4, 22,
+          8, 24, 8, 28 and 8 lists at N = 25..32.
         - Consequence: the per-height statement is too strong.  The lead
           returns to IP, the plain interior prefix, for some pair.  Its `T =
           infinity` case is FM3, and the extra content lies in absorbing
