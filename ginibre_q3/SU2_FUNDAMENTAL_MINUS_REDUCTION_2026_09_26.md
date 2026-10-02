@@ -15568,6 +15568,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `(-2,-1)` has layers 360, 1,200, 2,408, 2,712, 1,504, 562, 242, 136, 30.
           The needed cancellation runs across strings at a fixed height.
           Allowing it gives back LP itself, so this route is closed.
+      - FM-STR9i (ceres thread on Luna; `fm39/str9i_pair_menu.py`, rerun: ALL
+        CHECKS PASS).  A pair menu for LP.
+        - Six candidates, tried in order: the largest same-parity pair
+          (TopPair-like); the largest minus factor with the largest other;
+          the two largest factors; the two largest minus factors; the
+          minimum and maximum factors; the two smallest plus factors.  The
+          first candidate with all layers `>= 0` is accepted.  On 5,435
+          census and hard multisets the first successes are 5,401 / 29 / 0 /
+          2 / 1 / 2, so the menu always succeeds there.  It also succeeds on
+          the runs `k = 6..18`, 300 `W <= 52` rows and 300 lists with pairs.
+          The complete working-pair sets are recorded (SHA-256 `a8366fab...`).
+        - Proved class: `(-n)(-m)(+q)(+1)^a` with `q <= n`, `a >= m`, `a = m mod 2`,
+          pair `(-n,+q)`.  Both quotients are genuine (`K_m h_1^((a-m)/2)` and
+          `K_n S_q h_1^((a+m)/2)`), so every layer is `>= 0`.  All-plus lists
+          are trivial.
+        - Open: why the menu always contains a working pair.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
