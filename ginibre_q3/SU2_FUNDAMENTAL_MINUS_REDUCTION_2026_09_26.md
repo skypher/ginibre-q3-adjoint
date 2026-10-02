@@ -15803,6 +15803,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           all-fundamental lists, and whenever the product is pointwise
           nonnegative, e.g. when every non-fundamental signed class occurs
           an even number of times.
+      - FRESH4 (fresh Luna thread; literature framing: hypergroups,
+        positive-definite functions, Krein conditions, Lancaster systems).
+        No standard theorem in these frameworks implies FM3 or LC for
+        general even sign patterns.  The signed factors `U_n(x) - U_n(y)` fail
+        the positive-definiteness hypotheses.  A Lancaster mixture does not
+        make every component expectation nonnegative.  What survives is the
+        all-plus case, by positive definiteness, plus the fusion rule and the
+        Lancaster reading of `D(rho)` already recorded.  No new closure.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
