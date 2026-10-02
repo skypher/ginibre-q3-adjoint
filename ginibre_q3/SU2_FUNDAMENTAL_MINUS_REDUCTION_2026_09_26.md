@@ -13752,7 +13752,9 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           monotonicity under growth of the removed labels.
         - Open: (T*) with `c = 1`, i.e. (E') `w_TP >= delta` implies TopPair.
         - Main-agent audit at `W <= 48` (`fm39/mech156_certificate_audit_w48.py`):
-          (E) holds on 33,481 of the 33,487 no-flip lists.  It FAILS on the six
+          (E) holds on 33,485 of the 33,487 no-flip lists (count corrected
+          by Juno in FM-MECH161: four of the six failures are the W = 50/56
+          lists the main agent added).  It FAILS on the six
           members of the (F1) family (`+-(1^2, 2, 3^4, 4^3, 5^4)`, `sigma p = 8`
           at `W = 48`; with one more `-2`, `p = 6` at `W = 50`; with `+8`, `p = 8`
           at `W = 56`), where TopPair is still monotone.  The 12-factor
@@ -13822,6 +13824,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           + 3,936,471 + 575,995 + 591,843 + 1,480,633, all passing.
         - Open, nine factors: `T_(3|6)^- + T_(4|5)^- <= N_9 + P_9 +
           T_(3|6)^+ + T_(4|5)^+`.
+      - FM-MECH161 (astra_max_juno; `fm39/mech161_balanced_certificate_repro.py`,
+        rerun: ALL CHECKS PASS).  Balanced certificate (CB), proved.
+        - Lemma 1 keeps the wraparound term exactly: `X + Y = A - B_0`.
+        - Proposition 2: for any `0 <= k <= 2b`, a tilted Cauchy-Schwarz bound
+          `A^2 <= E_k` gives the rational test `Q >= 0`, `Q^2 >= min_k E_k`.
+          It implies `g_p(B) >= g_p(B - R)` for any same-parity pair `R`,
+          uniformly, with no no-flip hypothesis.  The `k = 0` case dominates
+          (E).  Knobs that (E) loses: unbalanced norm allocation and
+          charging the wraparound term with the adverse sign.
+        - Audit: (CB) holds on ALL 33,487 no-flip lists at `W <= 48`, on the
+          W = 50/56 (F1)-family lists and on the W = 550 FM-MECH157
+          witness.  It rejects all 190 recorded TopPair failures.
+        - Kill (knob: using only the three flips of the triple identity):
+          at a `W = 34` list all three are negative and TopPair fails, while
+          another flip is positive.
+        - Open: no flip descent implies `Q >= 0` and `Q^2 >= min_k E_k`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
