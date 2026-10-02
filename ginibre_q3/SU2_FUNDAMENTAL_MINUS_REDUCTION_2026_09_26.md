@@ -15173,6 +15173,25 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           allowed).  Total degree is the filtration that the `Sp(4)` height
           truncation `L_T` of FM-STR7d preserves, which is a plausible
           reason it is singled out.
+      - FM-STR4d (luna_max_pluto; `fm39/str4d_depth_two_rank.py`,
+        `fm39/str4d_depth_one_separator.py`, both rerun: same output).
+        The fusion-descent identity for `Phi` itself.
+        - Triage: the depth-two scalar system does NOT pin the invariant
+          table.  It leaves 78 free directions on `(2,3,5,7,8,9)`, 456 on
+          `(1,3,5,7,9,9,12)` and 375 on `(1,2,5,7,9,11,13)`.  So the FM-STR4c
+          depth-two certificates are not mere evaluations.
+        - Kill (knob: depth-one relations with nonnegative one-fusion
+          children, any pair, any channel, any sign).  `(+1,+4,-5,+6,+6,+8,
+          -9,+15)` is no-flip with `Phi = 3,532`.  An exact separating vector
+          (813 entries, denominators 4) is nonnegative on every product
+          coordinate, every one-fusion child and every relation, but pairs
+          to -1 with `Phi`.  So no identity `Phi = sum beta Phi(child) + sum
+          gamma m m + relations` exists there at depth one.  HPP holds on all
+          127 splits of this list, with margin 0.998.
+        - Exact identities exist for the anchor `(2,3,5,7,8,9)`, the sign
+          minimum and the runs k = 1..7, with no common support rule.  On 300
+          seeded lists: 144 identities, 103 infeasible, 53 time caps.
+        - Open: the same with depth-two relations.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
