@@ -14186,6 +14186,40 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `>= 12` factors remain), and 2,544 at `W <= 52` (1,330 remain).
         - The factor-count route STOPS here by user decision (the finite boxes
           grow too fast to reach every factor count).
+      - FM-STR1 (astra_max_ceres; `fm39/str1_block_injection_repro.py`, rerun:
+        FM-STR1 PASS).  A structural mechanism on a narrow class, plus
+        locality no-gos.
+        - Theorem 1: for two minus factors `-n, -m` with plus weight `P <=
+          n + m`, `I^- = 0` if `P < n + m`.  At `P = n + m` there is an explicit
+          `G`-equivariant, `tau`-odd block-transfer operator `J` (singlet
+          transfer of the block {`-m`, plus factors of weight `m`} between
+          colours) whose restriction `I^- -> I^+` is injective, with a unit
+          minor `(-1)^m I`.  Hence `Phi = tr` of an orthogonal projection on
+          `I^+`.  This is unbounded in labels and factor count, inside the
+          known positive region (part `>= sum - 1`).
+        - Proposition 2: every equivariant endomorphism supported on at most
+          two factors of a pair-free list commutes with `tau`.
+        - Theorem 2: for `(-n)^2 (+1)^(2n)`, the smallest support of a
+          `tau`-odd equivariant endomorphism is `ceil(n/2)`.  So no fixed
+          support bound works uniformly (knob: locality); an injection must
+          move blocks that grow with the labels.
+        - Obstructions to extending unchanged (knobs: maximal-spin channels
+          only; pure-colour targets; a single stage of singlet transfers).
+        - Open (first unresolved formula): for general two-minus lists,
+          all invariant channels and mixed-colour targets, `det((J(t)|I^-)^*
+          (J(t)|I^-)) != 0` for some weights `t`.
+      - FM-STR5 (luna_max_mars; `fm39/str5_representation_tests.py`, rerun: same
+        output).  Exact tests for the representation routes.
+        - Invariant bases are explicit as Clebsch-Gordan path pairs.  The
+          plain factor swap has equal eigenspaces; the relevant involution is
+          the sign-twisted one.
+        - Three canonical singlet transports have rank deficits, or vanish
+          on `(1^4, 2^2)`.
+        - Groups: in `Sp(4)`, `h_n` is genuine but `S_p = V_(p,0) - V_(p-1,1) +
+          V_(p-2,0)` (`p >= 2`).  `SO(5)`, `Sp(2r+2)`, `SO(2r+3)`, `SU(3)`,
+          `G_2` and `T^2` fail as Haar models for `r >= 2`.
+        - Ginibre torus: plus factors are positive definite; minus factors
+          have coefficient -1 at `(n,-n)`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
