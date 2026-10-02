@@ -13840,6 +13840,30 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           at a `W = 34` list all three are negative and TopPair fails, while
           another flip is positive.
         - Open: no flip descent implies `Q >= 0` and `Q^2 >= min_k E_k`.
+      - FM-CHK99 (luna_max_mars, fresh code; `fm39/chk99_seven_eight_factor_check.py`,
+        main-agent rerun with `--seven-max 16 --word-max 12 --eight-max 9`:
+        PASS).
+        - FM-MECH153 Theorem 2: REPAIR of scope only.  The payment
+          inequality `N_7 + P >= 20 d >= T_3^-` holds for even minus parity,
+          which is all the proof uses (odd-parity words vanish).  For all
+          signings it is false: `(-2)^7` has `N_7 = 36`, `P = 126`, `d = 3`,
+          `T_3^- = 105`, `Phi = 0`.  Census: 2,340,495 even-minus signings
+          with labels 2..16, no failure.
+        - FM-MECH153 Theorem 3: ACCEPT.  The reductions land in Corollaries
+          23A9ZZ10 and 5A7B51; the receipt replay passes.  All 2,035,800
+          signed seven-label multisets with labels 1..12 have `Phi >= 0`
+          (minimum 0 at `(1^6, 8)`).
+        - FM-MECH155: ACCEPT (tiling, channel bounds, bounded census with
+          labels `<= 9`).
+        - FM-MECH160 (the full eight-factor closure) came later and is not
+          covered by this check.
+      - FM-CHK100 (luna_max_pluto, fresh code; `fm39/chk100_certificate_E_check.py`,
+        main-agent rerun after fixing an indexing typo `mat[i,j]` ->
+        `mat[i][j]` in the extracted copy: ALL EXACT CHECKS PASS).  ACCEPT
+        FM-MECH156 Lemma 1 (kernel positivity, moment formula) and the
+        implication (E) => monotone removal.  The induction fact used is
+        only `g_p(C) >= 0`.  REPAIR of the count: (E) holds on 33,485 of
+        33,487 at `W <= 48`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
