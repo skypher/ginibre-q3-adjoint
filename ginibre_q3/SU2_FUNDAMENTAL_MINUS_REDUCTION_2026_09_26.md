@@ -13699,6 +13699,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `W = 34` (`476553/498275`).
         - Thirteen structured rows at `W = 500..3000` and eight one-step
           mutants of the witnesses also pass.  Finite evidence only.
+      - FM-CHK98 (luna_max_mars, fresh code; `fm39/chk98_triple_identity_mech157_check.py`,
+        `fm39/chk98_gmp_crosscheck.py`; both rerun by the main agent:
+        PASS).  ACCEPT:
+        - the triple-flip and single-even-label identities, with Mars's own
+          proof and 3,000 random exact checks each (both minus parities,
+          repeated labels, equal-label pairs, pairs with `p`'s label);
+        - FM-MECH157's 12-factor witness and its `t >= 1024` family
+          certificates;
+        - the ratio-3/7 TopPair failure, which has a flip descent in every
+          signing.
+      - FM-SEC171 (luna_max_venus; `fm39/sec171_class_profile_FT_screen.py`,
+        `fm39/sec171_F1_direct_check.py`; the direct check rerun by the main
+        agent: same values).  With the corrected evaluator:
+        - (F1) is refuted independently at the `W = 48` witness (all 19
+          flips listed).
+        - Exact class-pattern scan of 97 profiles (292 profile-`p` runs,
+          17,944 patterns, `W = 48..200`) finds six no-flip patterns at
+          `W = 48, 50, 56` (15 or 16 factors, `w_TP/delta` down to 5/11).
+          TopPair is monotone on every one; none was found at `W >= 100`.
+        - The FM-SEC169 zeros came from the withdrawn evaluator, e.g. the
+          true `A_22((+2)^28 (+3)^30 (+4)^20 (+214)) = 118,588,718,722`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
