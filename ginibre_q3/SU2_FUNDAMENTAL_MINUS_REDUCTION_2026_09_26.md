@@ -8823,7 +8823,7 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | eight factors with no negative 3|5 term (e.g. every all-odd eight-factor list) | all (FM-MECH153 Lemma 4, Corollary 5) — added 2026-10-02 |
 | all `r` | eight factors: all labels `>= 3`, or all `>= 2` with an odd label | all (FM-MECH155 with FM-MECH153 and two-odd fusion) — added 2026-10-02 |
 | all `r` | nine factors with minimum label `>= 28` | all (FM-MECH159) — added 2026-10-02 |
-| all `r` | EVERY list with at most EIGHT factors | all labels, all signs (FM-MECH160 with FM-MECH153, FM-MECH155, two-odd fusion; independent check pending) — added 2026-10-02 |
+| all `r` | EVERY list with at most EIGHT factors | all labels, all signs (FM-MECH160 with FM-MECH153, FM-MECH155, two-odd fusion; FM-CHK99 and FM-CHK102 ACCEPT) — added 2026-10-02 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
   | all `r` | labels `<= 2` plus one arbitrary label | `b <= 2` copies of `hat S_2` (OL, Q2+, B2), and every `b` once `nu + b >= 16(p+1)^4 + 2` (FM-MECH51; FM-CHK60, `b = 0` via OL), improved to `nu + b >= 4p^2 - 2` (FM-MECH52); `min(a,e) <= 1` for every `b` (FM-MECH52); distance 3 for every `b` (ADV-1); distances 4, 5 for every `b` (FM-MECH53) — added 2026-10-01 |
 
@@ -13808,7 +13808,7 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - FM-SEC171 addendum: the main-agent rerun of the full 97-profile
         class-pattern scan finished: PASS.
       - FM-MECH160 (astra_max_minerva; `fm39/mech160_eight_factors_close_repro.py`,
-        rerun: FM-MECH160 PASS, identical output; independent check pending).
+        rerun: FM-MECH160 PASS, identical output; FM-CHK102 ACCEPT).
         EIGHT FACTORS CLOSE: with FM-MECH153/155 and two-odd fusion, FM3
         holds for every list with at most eight factors.
         - Remaining sectors: four or six odd labels with a label 1, and
@@ -13865,7 +13865,7 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         only `g_p(C) >= 0`.  REPAIR of the count: (E) holds on 33,485 of
         33,487 at `W <= 48`.
       - FM-CHK96 (luna_max_eris, fresh code; `fm39/chk96_flip_census_check.py`;
-        main-agent rerun in progress).
+        main-agent rerun: identical totals, per-W counts and ratio 31/550).
         - ACCEPT the FM-SEC166 census at `W <= 40`: 22,358,566 raw cases,
           994,058 exclusions, 21,364,508 residual; 5,430 without flip
           descent, with the stated per-W counts; (D) and TopPair hold on all
@@ -13920,6 +13920,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           no-flip lists at `W <= 48`.  The rest have small minimum labels.
           Open: no flip descent implies the aggregate signed partition sum
           is `>= g_p(B - TopPair)`.
+      - FM-CHK102 (luna_max_mars, fresh code; `fm39/chk102_eight_factor_closure_check.py`,
+        rerun: same output).  ACCEPT FM-MECH160 on all three items:
+        - the reduction to two sectors;
+        - the cutoff `M <= D`, `q <= 2D`, `p <= 3D` (all labels `<= 48` when
+          `D <= 16`), with separated-quartet children of at most six
+          factors, and an independent finite census of 14,903 words and
+          517,426 signings with minimum 270;
+        - the uniform certificates, including the validity of the interval
+          cap at 41.
+        - Also exhaustive: all 6,435 label profiles `1..8` with all
+          1,647,360 signings are nonnegative; 300 random words with labels
+          up to 400 pass.
+      - FM-CHK103 (luna_max_pluto, fresh code; `fm39/chk103_balanced_certificate_check.py`,
+        rerun: ALL EXACT CHECKS PASS).  ACCEPT FM-MECH161:
+        - Lemma 1 (`X + Y = A - B_0`);
+        - Proposition 2 (tilted Cauchy-Schwarz; only `g_p(C) >= 0` is
+          used);
+        - the audit: all 33,487 no-flip lists certify, and all 190 TopPair
+          failures fail (CB) for every `k`;
+        - 638 random residual/pair cases, every (CB)-certified removal
+          monotone.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
