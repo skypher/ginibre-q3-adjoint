@@ -15709,6 +15709,31 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           cases: conditional positivity in one variable, label
           monotonicity, coefficient-matrix PSD.  "Fresh1"'s survivor `c_(0s)
           >= 0` is FM3 for `Lambda + (+s)`, i.e. the `g_p` form.
+      - FM-STR16 (main agent; `fm39/str16_uv_representation_main.py`, run:
+        FM-STR16 IDENTITY PASS).  A NEW EXACT REPRESENTATION OF FM3.  Take
+        `u` Haar in SU(2) and `v = diag(e^(i psi), e^(-i psi))` with `v^2`
+        Haar.  Then `X = tr(uv)` and `Y = tr(u v^(-1))` are independent
+        semicircles, because `E[chi_r(uv) chi_s(u v^(-1))] = delta_rs
+        E[chi_r(v^2)]/(r+1) = delta_rs delta_r0`.  Expanding `chi_n(uv) + eps
+        chi_n(u v^(-1)) = sum_k pi_n(u)_kk (e^(ik psi) + eps e^(-ik psi))` and
+        averaging over `u` gives
+          `Phi = sum_k ||P(e_(k_1) (x) ... (x) e_(k_N))||^2 . G_eps(k)`,
+        summed over weight vectors with `sum k_i = 0`.  Here `P` is the
+        projection onto invariants, and `G_eps(k) = sum_F eps^F c(sum_(i in F)
+        k_i)` with `c(0) = 1`, `c(+-2) = -1/2`, `c = 0` otherwise; the values
+        of `c` are the Haar averages of `cos(j alpha)`.  The weights are
+        nonnegative.
+        - Checked exactly on all 240 lists with labels `<= 3` and length
+          2..5.
+        - `G_eps` is sign-indefinite: it is negative on 78,244 of 527,158
+          weight vectors with labels `<= 4` and length `<= 6`.  The minimum is
+          -14, at labels `(1,1,1,1,2,2)`, signs `(+,+,+,+,-,-)`, `k =
+          (-1,-1,-1,-1,2,2)`.  So the termwise argument fails.  A proof would
+          need a transport of weight from negative-`G` to positive-`G`
+          weight vectors.
+        - Lancaster version: with `v^2` following the SU(2) Poisson law of
+          parameter `rho`, the same computation gives `D(rho)` of FM-STR15.
+          There `c(+-j)` is replaced by `E_rho[cos(j alpha)]`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
