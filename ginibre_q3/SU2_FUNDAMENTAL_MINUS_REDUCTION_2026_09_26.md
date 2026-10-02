@@ -13780,6 +13780,16 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           passed 9,268 checks and is open.
         - Kill (knob: a constant-coefficient blend): every fixed blend of
           TopPair with the uniform global flip sum fails somewhere.
+      - FM-SEC172 (luna_max_neptune; `fm39/sec172_run_family_FT_screen.cpp`;
+        main-agent rerun of `--check-only` and `--next-numeric-only`: identical,
+        9,857 profiles, 8 no-flip, 0 TopPair failures).  Runs of 8..20
+        consecutive labels (step 1 or 2) with 2/4/6 minus signs at all
+        positions: 31 no-flip lists found, TopPair monotone on all; the
+        worst child/parent ratio is 3343/190903 = 0.0175, at
+        `(-1,+2,+3,+4,-5,+6,+7,+8,+9,+10)`, `p = 11`.  Starts `s >= 20` are
+        only sampled (time limits).
+      - FM-SEC171 addendum: the main-agent rerun of the full 97-profile
+        class-pattern scan finished: PASS.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
