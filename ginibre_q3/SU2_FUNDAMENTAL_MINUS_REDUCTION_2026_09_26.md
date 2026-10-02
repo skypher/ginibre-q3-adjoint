@@ -15268,6 +15268,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             there the rotation applies.
           So at q = 0 the cut must be balanced.  Positivity is a property of
           a good split, not of all splits.
+      - FM-STR4e (luna_max_pluto; `fm39/str4e_prefix_identities.py`, rerun:
+        EXACT HPP LP CERTIFICATES PASS).  Local exact identities for the
+        height prefix `Pi_T(A,B)`, each holding for every even signing of
+        its multiset.  No uniform recurrence.
+        - `(1,1) | (1,1,2)`: fuse on the A side for `T = 0, 1`; for `T >= 2`,
+          move one factor across the split.
+        - `(1,4,5,6) | (6,8,9,15)` and the census split `(1,3,3,4) | (5,5,6,7)`:
+          identities through one-fusion children placed on either side, with
+          coefficients that change with `T`.
+        - Separator (knob: one-fusion children only, without split-transfer
+          children): at `(1,1) | (1,1,2)`, `T = 2`, a vector pairs to -12
+          with `Pi_2`, nonnegatively with every fusion child, and to 6 with
+          the constant.
+        - These were found for the every-split HPP, which FM-SEC181 has since
+          refuted.  Any uniform recurrence over all splits must fail on
+          segregated splits.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
