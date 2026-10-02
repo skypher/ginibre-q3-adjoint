@@ -14314,7 +14314,7 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `Phi = 2(sum_c A_c0(C) + D_uv)`.  It must change the channel and may
           move arbitrarily many plus factors.
       - FM-STR6 (luna_max_neptune; `fm39/str6_noflip_census_laws.py`; main-agent
-        rerun in progress).  Census laws for the 75,532 no-flip lists at `W <=
+        rerun: same counts).  Census laws for the 75,532 no-flip lists at `W <=
         52`:
         - label multiplicity `<= 4`; at most two labels 1; the number of odd
           factors is never 2 (that case is two-odd fusion);
@@ -14326,6 +14326,32 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Its conjecture `D <= 10`, `L <= 16` (`D` distinct labels) is REFUTED by
           FM-SEC177: `(-1, ..., -41)` with `sigma p = -43` is no-flip with
           `D = 42` and `L = 42`.  The census bound is an artifact of `W <= 52`.
+      - FM-STR1b (astra_max_ceres; `fm39/str1b_two_stage_injection.py`, rerun:
+        FM-STR1b PASS).  TWO-STAGE compositions of transfers.
+        - Proposition 1 (kill, knob: one stage of all-one-colour singlet
+          transfers): for `(-1)^2 (+3)^6`, every one-stage `J(t)`, with any
+          weights and all channels, has rank `<= 128` on the 160-dimensional
+          `I^-`.  An exchange-symmetry count (skew source 40 > skew target 34)
+          shows this before any computation.  FM3 holds there (`Phi = 786`).
+        - Proposition 2: a composition (block transfer, then a pair singlet
+          transfer, with endpoint weights) is injective on that example (an
+          80 x 80 minor nonzero mod the prime 65521).
+        - Theorem 3: for four minus labels 2 and a plus background with
+          `m_2(S) = 0` for every proper nonempty plus subset (condition PB),
+          the explicit two-stage operator `sum_(i<j) K_ij F_i` is injective on
+          `I^-` (`dim I^- = 8b`), via `SO(3)` identities on `V_2 = C^3` (a 4 x 4
+          minor of determinant 4; each `Psi_ij` an isometry).
+          - This covers every `(-2)^4 (+q)(+t)` with `q, t != 2`, and
+            `(-2)^4 (4, 8, ..., 2^L, 2^(L+1)-2)` for every `L`: unbounded
+            factor count.
+          - So `Phi = tr` of a positive projection there.
+        - Proposition 4: compositions also make `(-2)^6` injective (rank
+          20/20), escaping the FM-STR8 nested-singlet bound.  The second
+          transfer crosses the original colour cut.
+        - Convergence: injection (FM-STR1/1b), complex (FM-STR8) and the
+          identity-depth result (FM-STR3) all need TWO levels of recoupling.
+          Open: a general multi-stage rule (e.g. along a fusion tree) for
+          two-minus and `2r`-minus lists without condition PB.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
