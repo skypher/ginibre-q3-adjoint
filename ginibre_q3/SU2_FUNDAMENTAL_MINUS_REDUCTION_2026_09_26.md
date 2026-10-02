@@ -13382,6 +13382,14 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             TopPair failures reach 0.429 at `W <= 40`.  So the ratio split at
             `c = 1/2` sits at its edge and will likely break at larger
             weight.  (FT) itself is unaffected.
+        - (FT) exhaustive through `W = 52` (main agent,
+          `fm39/sec166_flip_census_resumable.cpp`: chunked, each finished chunk
+          fsynced and skipped on restart, kill-and-restart test passed; 99
+          min).  Of 516,000,611 residual cases, 75,532 have no flip descent; on
+          all of them (D) holds and TopPair is monotone.  No (FT) failure.
+          - Structure of the no-flip lists: factor counts 6..16 (13,282 with
+            `>= 10` factors); at most two labels 1; multiplicity at most 4.
+          - Minimum `w_TP/delta` = 5/11 (`W = 50`, the (F1) family).
         - Few-factor Walsh census (main agent,
           `fm39/sec166_walsh_few_factor_census.cpp`).  For each label
           multiset, one Walsh transform of `m(S) m(S^c)` gives `Phi` at every
