@@ -8823,6 +8823,8 @@ main-agent exact checks `exactscan2.py`, `twolayer.py`).**
 | all `r` | eight factors with no negative 3|5 term (e.g. every all-odd eight-factor list) | all (FM-MECH153 Lemma 4, Corollary 5) — added 2026-10-02 |
 | all `r` | eight factors: all labels `>= 3`, or all `>= 2` with an odd label | all (FM-MECH155 with FM-MECH153 and two-odd fusion) — added 2026-10-02 |
 | all `r` | nine factors with minimum label `>= 28` | all (FM-MECH159) — added 2026-10-02 |
+| all `r` | EVERY list with at most NINE factors | all labels, all signs (FM-MECH164 with FM-MECH160; independent check pending) — added 2026-10-02 |
+| all `r` | ten factors with minimum label `>= 16` | all (FM-MECH164) — added 2026-10-02 |
 | all `r` | EVERY list with at most EIGHT factors | all labels, all signs (FM-MECH160 with FM-MECH153, FM-MECH155, two-odd fusion; FM-CHK99 and FM-CHK102 ACCEPT) — added 2026-10-02 |
 | all `r` | `L` = 9..16 factors with minimum label at least 8, 10, 13, 17, 22, 28, 35, 45 respectively | all larger labels, all signs (FM-MECH166, direct positivity) — added 2026-10-02 |
 | all `r` | any large labels on a labels-`<= 4` background | `B >= max(384 sum (n_i+1)^2, 2^17)` (FM-MECH63/69; FM-CHK65, FM-CHK68) — added 2026-10-01 |
@@ -13905,7 +13907,10 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           list, so no violation of (FT') "child <= parent/16";
         - maxima cross-checked with `sec166_flip_single.cpp` and
           `sec162_gp_single.cpp`.
-        Finite search; `p` is sampled.
+        Finite search; `p` is sampled.  Main-agent rerun: all scan bands
+        identical (88/319/420 and 52/74/14 no-flip, shape scan 3).  The
+        script's final repository cross-check step crashed (TypeError,
+        apparently a rendering defect in the printed code).
       - FM-MECH163 (astra_max_vulcan; `fm39/mech163_removal_thresholds_repro.py`,
         rerun with the census: PASS).
         - Theorem 1, low-channel bound: if at least three labels of `A` are
@@ -13962,6 +13967,23 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           refined certificate leaves 29,096 census no-flip lists (the
           covered ones have at most eight factors).  Open: the no-flip
           inequalities must recover the discarded cancellation.
+      - FM-MECH164 (astra_max_minerva; `fm39/mech164_nine_factors_close_repro.py`,
+        rerun: FM-MECH164 PASS, identical; independent check pending).  NINE
+        FACTORS CLOSE: FM3 holds for every list with at most nine factors.
+        - Layer identity `Phi/2 = N_9 + P_9 + T_(3|6)^+ - T_(3|6)^- + T_(4|5)^+ -
+          T_(4|5)^-`.
+        - When at most four labels are `<= 6`, uniform five- and sixfold rows
+          come from coefficient inequalities: `U_(2s) prod_A U_n >= H^(7)_s
+          prod_A U_n` when three labels are `>= 7`, and `H^(8)` when all labels
+          are even and three are `>= 8`.
+        - With more small labels, the residual cutoff and separated-quartet
+          descent reduce to a finite check: 3,049,184 patterns and
+          160,310,765 signings, minimum `Phi = 578` at
+          `(1,1,1,1,-2,-2,8,8,8)`.
+        - Also: ten factors with minimum label `>= 16`.
+        - Census: all 7,860 nine-factor no-flip lists are settled, so 28,911
+          of 33,487 are proved outright.  4,576 remain, all with `>= 10`
+          factors.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
