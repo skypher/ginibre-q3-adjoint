@@ -14722,6 +14722,63 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           may mean the depth-two relations pin every invariant that enters.
           Then the certificate is only an evaluation.  FM-STR4d checks this
           first.
+      - FM-STR9b (astra_max_ceres; `fm39/str9b_mixed_colour_targets.py`,
+        rerun: PASS, about 15 s).  Mixed-colour targets for the FM-STR8b
+        correction.
+        - Proposition 1 (highest-weight slice Gram identity): projecting a
+          large label `V_n` to its highest-weight coefficient scales every
+          invariant Gram entry by the same factor `n+1`.  Gram
+          computations with one large label then live in a fixed finite
+          coordinate space, independent of `n`.
+        - Theorem 2 (uniform in `n`): for `Lambda_n = (+1)^5(-2)(+n)(-n-1)`,
+          `n >= 4`, `H(d_0) = (162, 22)`.  The pure-colour map has a
+          two-dimensional kernel; two retained mixed targets (half-channel
+          `(0, n-1)`) repair it, with `<xi, J^*QJ xi> >= |xi|^2` on `ker RJ`.
+          All Gram entries are identities in `Q(n)`.  Corollary 3: the same
+          for the odd reflections (six and eight minus factors).  These
+          words were already inside known strata.
+        - Proposition 4: `(+1)^7(-2)(+3)(-4)` has `H(d_0) = (1,678, 336)`, pure
+          rank 150, full rank 336.  Mixed targets repair a 186-dimensional
+          kernel (modulo 65521, denominators checked).
+        - Theorem 5 (target capacity; knob: a fixed number of mixed
+          targets).  On `Lambda_t = (+1)^(2t)(-2)(+4)(-6)` the odd fraction
+          `h_o/h_e` tends to a limit `rho` with `1/163 < rho < 1`, both of
+          order `16^t / t^5`.  The pure targets have dimension at most `210 .
+          4^t`, so `dim ker(RJ) / h_o -> 1`.  Method: the half-word tables
+          have Gaussian scaling limits, `f_A ~ Psi h`, `f_B ~ h`, with `h =
+          xy e^(-(x^2+y^2)/2)` and `Psi = (x^2-y^2)^2 - 4(x^2+y^2) + 12`.  The
+          limiting Euler characteristic is `int x^2 y^2 e^(-r^2) Psi = 3 pi /
+          16 > 0`.  Exact ratios: 0.06-0.07 (t = 4) up to 0.23-0.24 (t = 32).
+        - So the correction must handle mixed target spaces of growing
+          dimension, almost all of the odd homology on this family.
+        - Open: for `Lambda_t`, uniformly in `t >= 5`, `<xi, J_t^* Q_t J_t xi>
+          > 0` for every nonzero `xi` in `H_odd(d_0)` with `R_t J_t xi = 0`.
+      - FM-STR3d (astra_max_juno; `fm39/str3d_complete_block_obstruction.py`,
+        rerun: ALL EXACT CHECKS PASS, 9 s).  Complete fusion blocks are
+        insufficient for TopPair on F1.
+        - Lemma 1: `Q_(uv,eta) = (Phi(L,eta) + Phi(L,eta^(uv)))/2 = sum_c
+          Phi(L - {u,v}, eta_u eta_v c)`: a complete block has equal
+          weights over its CG channels and the inherited sign.
+        - Proposition 2 (knob: complete channel sums instead of individually
+          weighted channels).  For F1 = `(+1)^2(-2)(+3)^4(-4)^3(+5)^4(+8)`
+          there is an integer direction `v` (3,036 nonzero entries).  It
+          fixes all invariants with at most three factors and all
+          odd-weight invariants, and satisfies all 10,448 depth-one
+          scalar fusion equations.  Along `v`, `Delta_TP` has derivative
+          -77,799,242,809, every `4 D_uv` is negative, and every re-signed
+          complete block `2 Q_(uv,eta)` is `>= 0` (all 19,592 sign-count block
+          pairs).  So no depth-one identity with nonnegative complete-block
+          coefficients, any re-signings and any root flips exists.
+        - Proposition 3: an individual channel detects `v`.  The p-incident
+          top channel `(4,8) -> 12`, child `(+1)^2(-2)(+3)^4(+4)^2(+5)^4(-12)`,
+          has derivative -2,203,671,549,030, while its complete block has
+          +1,599,180,810,932.
+        - Proposition 4: fusion induction is well founded in the order
+          (total weight, factor count).  Finite TopPair checks pass on the
+          eight-label roots, the eleven-factor root, F1 multiplicities 2..6
+          and the runs of length 5..12.
+        - Open: the same identity with individually weighted channels
+          `beta_(uvc eta) >= 0`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
