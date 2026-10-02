@@ -14701,6 +14701,26 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Open (knob: simultaneous control of several incompatible
           channels): `ker(P_even J P_odd) = 0` for every pair-free
           even-minus list.
+      - FM-STR4c (luna_max_pluto; `fm39/str4c_depth_lp_coverage.py`, rerun:
+        same summary, about 10 min; reads the scratchpad census logs
+        `fx3_40.log`, `fx5_40.log`).  Coverage map of the pair-normalized
+        depth LP on the no-flip rows.  Finite screen, not a uniform result.
+        - The 5,430 no-flip rows group into 2,014 label-multiset domains.
+          Screened: all 153 six-factor domains and the first 323
+          seven-factor domains (1,476 signings).
+        - Depth one certifies 425 of 476 domains (89.3%).  Each of the other
+          51 has an exact depth-one separator (46 negative points, 5 negative
+          rays) and is certified at depth two.  No certificate needs flip
+          multipliers or shorter-list multipliers at depth two.  Example
+          `(2,3,5,7,8,9)`: depth-one optimum `-1`, actual drop 61, depth-two
+          bound 61.
+        - The 126 TopPair-failure rows (63 multisets, 976 pair-free signings)
+          have no no-flip signing, so the flip route applies to all of them.
+        - Untested: 1,538 domains (195 seven-factor, all with `>= 8` factors).
+        - Caution (main agent): a depth-two bound equal to the actual value
+          may mean the depth-two relations pin every invariant that enters.
+          Then the certificate is only an evaluation.  FM-STR4d checks this
+          first.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
