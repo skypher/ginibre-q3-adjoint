@@ -15624,6 +15624,20 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           No condition simpler than LP itself captures it yet.
         - Proved LP classes: genuine-quotient cuts, e.g. `(-n)(-m)(+q)(+1)^a`
           with `q <= n` (FM-STR9i), and all-plus lists.
+      - FM-STR8j (vulcan thread on Luna; `fm39/str8j_height_complex.py`, rerun:
+        PASS).  A height-preserving channel complex.  This is a restatement
+        of LP.
+        - Per height `t`: `d_0` from the half-word matchings has homology
+          `(E_t, O_t)` with `E_t - O_t = L_t`.  With an ARBITRARY odd-to-even
+          exchange `J_t` between the unmatched spaces, the generic rank is
+          `min(E_t, O_t)`.  So a concentrated height-preserving complex
+          exists for a cut exactly when every layer is `>= 0`.
+        - Checked: 10 FM-STR8b profiles, the three FM-SEC181 witnesses (good
+          pairs), runs `k <= 9`, F1.  All concentrate.  For example, W1 has
+          `H(d_0) = (150,956,716, 30,415,166)`.
+        - Open: a LOCAL exchange rule (one-factor transfers, or the
+          position-weighted kernel of FM-STR8e) with full rank, i.e. Hall on
+          the local support graph at each height.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
