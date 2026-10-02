@@ -15041,6 +15041,15 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           det(1 - q g_1 (x) h_1) det(1 - q g_2 (x) h_2)`.
         - Use: a proof needs only ONE split per list.  HPP says any split
           works, so the prover may choose the most convenient one.
+      - FM-STR5b (luna_max_mars; stopped by the main agent after about three
+        hours; claim NOT rerun: a finite rank scan for the superseded
+        FM-STR1 block-transfer route).  For two-minus lists, `J(t)|I^-` had
+        full rank `dim I^-` for unit and dimension-normalized weights on all
+        51 active six-factor profiles with distinct negatives (labels `<=
+        5`), all 6 active `(-1,-1)` profiles, 18 of 19 active `(-2,-2)`
+        profiles, and two seven-factor profiles (rank 40).  Not finished:
+        `(-2,-2,+5^4)`, with `dim I^- = 12`.  The report also records that a fixed
+        four-minus composition can fail as an injection constructor.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
