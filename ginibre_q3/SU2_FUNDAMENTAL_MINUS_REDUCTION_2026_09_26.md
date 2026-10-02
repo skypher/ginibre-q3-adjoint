@@ -15667,6 +15667,19 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         pair on 46 lists at N = 19, 134 at N = 21 and 6 at N = 22, and on none
         below 19.  Together with FM-STR5d (labels `<= 3` up to 32 factors), IP
         is the surviving lead.
+      - FM-SEC187 (luna_max_neptune; `fm39/sec187_ip_concentrated_gmp.sh`,
+        `fm39/sec187_ip_laurent_check.sh`, both rerun by the main agent:
+        SUMMARY `IP_failures=0`, with the reflection checks passing).
+        Structured search against IP, seeded by the LP counterexamples.
+        - 8,617 even-weight lists up to `W = 300` and 40 factors, every
+          distinct pair: no list without an IP pair.  Families covered:
+          `(+a)^x (+b)^y (-c)^z`, split minus multiplicities, extra large plus
+          labels, and parity-corrected reflections.
+        - The margin falls along the concentrated `(-3)^z` family, then
+          levels off: 0.9992, 0.953, 0.898, 0.868, 0.865, 0.857 at `z = 10, 14,
+          18, 22, 26, 28`.  The global minimum is about 0.857, at
+          `(+1)^2(+2)^9(-3)^28`, `W = 104`, pair `(-3,-3)`, `T = 49`.  The two LP
+          counterexamples pass IP with margins above 0.999.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
