@@ -15139,6 +15139,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
             lists only.
           Pair reduction (FM-MECH102) already reduces FM3 to pair-free
           lists.
+      - FM-CHK113 (luna_max_eris, fresh code; `fm39/chk113_str7e_independent_check.py`,
+        rerun: FM-STR7e independent screens PASS, 1.5 min).  ACCEPT FM-STR7e,
+        items 1-4.
+        - Identities `sum_t (P_t + M_t) = Phi` and `sum_t M_t = 2 D_uv` hold on
+          156,336 pairs and 250 random words.
+        - Proposition 3: the queue argument gives a definite pairing, and
+          swapping pairs is a sign-reversing involution with `Phi` fixed
+          points.  Explicit receipts: the sign minimum (936 pure + 20 mixed
+          = 956) and two census rows (73,052 and 27,324).
+        - Census (148,972 pairs, 2,935,278 prefixes) and runs `k <= 20` (7,364
+          pairs, 521,503 prefixes): zero budget and zero plain-prefix
+          failures.  Every census `Phi` recomputed.
+        - Theorem 5: `L_T` and `J_(T-1)` preserve nonnegative irreducible
+          multiplicities; 14,516 prefixes checked; `Phi(d^4 chi_(1,1)) = -6`
+          reproduced.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
