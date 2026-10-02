@@ -15352,6 +15352,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           criterion, an explicit height-nonincreasing involution, or a
           deformation from the rotation region), or generic full rank of
           the channel correction.
+      - FM-STR9h (ceres thread on Luna; `fm39/str9h_interior_queue.py`, rerun:
+        PASS).  The height queue for the interior cut.  This is a
+        restatement: chain Hall says a height-nonincreasing involution
+        exists exactly when the prefixes are nonnegative.  It is explicit,
+        and it may cross channels (example: `(-1,-1,-1,-2,+3)`, pair
+        `(-1,+3)`).
+        - Zero plain-prefix failures over every pair of every list with
+          labels `<= 4`, length `<= 7`, and every pair of the three FM-SEC181
+          witnesses.  The budget fails only for the pair `(-2,-4)` of the
+          first witness (minimum -16,546,920).
+        - No new class: the open statement is the interior prefix itself.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
