@@ -15496,6 +15496,21 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           `q+1` is `2 sum_(|lambda| = q) a_lambda b_lambda`.  That is the inner
           product of the size-`q` slices of the two `Sp(4)` multiplicity
           vectors.  So the conjecture is a slice-wise FM3.
+      - FM-SEC179 (luna_max_venus; `fm39/sec179_interior_budget_scale.py`,
+        main-agent rerun: PASS, about 40 min, after repairing a printed
+        regex with doubled backslashes, `r"...(\\d+)..."` -> `r"...(\d+)..."`;
+        the repo copy reads `fm39/sec166_census_w52_noflip.log.gz`).
+        Large-scale screen of the interior budget, which implies the plain
+        interior prefix.
+        - TopPair budget on EVERY row of the `W <= 52` no-flip census:
+          5,430 + 8,678 + 19,379 + 42,045 = 75,532 rows, no failure.
+        - Every pair on all 19,018 pair-free lists with labels `<= 5` and
+          length 2..10 (653,480 pair choices), no failure.  Every residual
+          cut with labels `<= 5`, length `<= 6` (128,200 cases), no failure.
+        - Named large lists pass: the runs to `k = 41`, the even run
+          `(-40,+42,...,+62)`, F1 (two pairs).
+        - The all-split screens in this report predate FM-SEC181.  They
+          covered only small lists, where segregated failures do not occur.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
