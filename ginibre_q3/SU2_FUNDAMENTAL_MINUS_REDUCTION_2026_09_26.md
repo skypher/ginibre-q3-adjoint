@@ -14942,8 +14942,9 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
         - Runs `(-1,...,-k) + (sigma p)`, TopPair `(-(k-2), -k)`, `k+1 <= p <=
           k+3` with even weight, k = 5..34: the budget holds in every case.
           `Phi` agrees with FM-STR8c (184, 980, 6,434 for k = 6, 7, 8).
-          Profile (k = 16, p = 18): `P_t > 0` at every height, and `|M_t|`
-          is at most about 0.4% of `P_t`.  The minimum of `B_T / Phi` is small
+          Profile (k = 16, p = 18): `P_t > 0` at every height.  Where `M_t <
+          0` it is at most about 1% of `P_t`; positive `M_t` reach about 12%
+          of `P_t` at the top heights.  The minimum of `B_T / Phi` is small
           only because the first heights carry little mass.
         - Census (TopPair, 5,430 no-flip lists, `W <= 40`): the plain prefix
           and the budget hold on all.  The heightwise version fails on 102,
