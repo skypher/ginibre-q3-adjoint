@@ -15378,6 +15378,22 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           and then decreases slowly.  Early positive mass pays for later
           negative mass.  The segregated split fails at `T = 11`.
         - 890 interior cuts rechecked; no failure.  No uniform mechanism.
+      - FM-SEC183 (luna_max_neptune; `fm39/sec183_interior_adversarial.py`,
+        rerun: PASS; main agent reproduced the witness).  Adversarial
+        search against the interior prefix.
+        - The TopPair BUDGET is refuted, pair-free, at `W = 32`:
+          `(-1)^6(-2)^3(-3)^3(-4)(-7)`, `p = -7`, TopPair `(-2,-4)`, cut `A =
+          (-7,-2,-2,-1,-1)`, `B = (-3^3,-1^4)`.  Budget prefixes 1,288; 12,052;
+          26,816; 4,964; -13,410; -17,714; -20,290 at heights 1..13.  The
+          plain prefixes are 1,288; 12,052; 26,816; 52,656; 71,512; 67,506;
+          64,930.  The explicit involution of FM-STR7e Proposition 3 is
+          therefore not universal for the TopPair.
+        - The PLAIN interior prefix survives: TopPair hill climbs to `W =
+          140` and up to 22 factors (about 1,500 lists, pair-free and with
+          pairs), best-pair scans on about 240 lists, and every pair of the
+          three FM-SEC181 witnesses.  No negative value, and no worsening
+          trend with `W`.  Sampled minimum `20,159,257 / 33,537,232` at `W =
+          52`, pair-free.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
