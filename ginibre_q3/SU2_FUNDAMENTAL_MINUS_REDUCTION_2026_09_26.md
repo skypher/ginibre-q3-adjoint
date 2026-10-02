@@ -14083,6 +14083,17 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           settled; 32,229 of 33,487 are proved outright, and 1,258 with `>= 11`
           factors remain.  Next: eleven factors (uniform payment with at most
           six labels `<= 8`).
+      - FM-CHK104 (luna_max_eris, fresh code; `fm39/chk104_cb_audit_w52.py`,
+        rerun: same output).  ACCEPT for the `W <= 52` census.
+        - All 75,532 no-flip lists pass the balanced certificate (CB) for
+          TopPair, so no other removal is needed.  TopPair is monotone on
+          all of them.
+        - 512 sampled lists were rechecked as no-flip with a fresh
+          evaluator.
+        - Worst integer (CB) margin 36, at `B = (-1,-3,-6,-7,-8)`, `sigma p =
+          -9`.  Largest TopPair ratio 31/550.
+        - So through `W = 52` every residual list has a flip descent or a
+          (CB)-certified TopPair descent.  Open: the same for `W > 52`.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
