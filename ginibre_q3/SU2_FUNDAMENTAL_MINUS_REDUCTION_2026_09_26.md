@@ -14702,8 +14702,9 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           channels): `ker(P_even J P_odd) = 0` for every pair-free
           even-minus list.
       - FM-STR4c (luna_max_pluto; `fm39/str4c_depth_lp_coverage.py`, rerun:
-        same summary, about 10 min; reads the scratchpad census logs
-        `fx3_40.log`, `fx5_40.log`).  Coverage map of the pair-normalized
+        same summary, about 10 min; reads the gzipped `W <= 40` census logs
+        `fm39/sec166_census_w40_noflip.log.gz` and `..._tpfail.log.gz`).
+        Coverage map of the pair-normalized
         depth LP on the no-flip rows.  Finite screen, not a uniform result.
         - The 5,430 no-flip rows group into 2,014 label-multiset domains.
           Screened: all 153 six-factor domains and the first 323

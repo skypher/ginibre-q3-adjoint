@@ -1,3 +1,4 @@
+import gzip
 import argparse
 import collections
 import contextlib
@@ -17,16 +18,9 @@ from scipy.optimize import linprog
 from scipy.sparse import coo_matrix, vstack
 
 
-NOFLIP_LOG = Path(
-    "/tmp/claude-1006/-home-yang-q3adjoint/"
-    "2d613d32-0be2-46ab-91e8-7dc4d59487ae/"
-    "scratchpad/flipdesc/fx3_40.log"
-)
-TPFAIL_LOG = Path(
-    "/tmp/claude-1006/-home-yang-q3adjoint/"
-    "2d613d32-0be2-46ab-91e8-7dc4d59487ae/"
-    "scratchpad/flipdesc/fx5_40.log"
-)
+# W <= 40 census logs of sec166_flip_descent_census.cpp, stored gzipped next to this file.
+NOFLIP_LOG = Path(__file__).resolve().parent / "sec166_census_w40_noflip.log.gz"
+TPFAIL_LOG = Path(__file__).resolve().parent / "sec166_census_w40_tpfail.log.gz"
 
 
 def stamp():
@@ -401,7 +395,8 @@ def negative_ray(M, c, U, lp_seconds):
 def read_groups(path, tag):
     groups = collections.defaultdict(set)
     rows = 0
-    for line in path.read_text().splitlines():
+    text = gzip.decompress(path.read_bytes()).decode() if path.suffix == ".gz" else path.read_text()
+    for line in text.splitlines():
         if not line.startswith(tag + " "):
             continue
         stop = "phi=" if tag == "NOFLIP" else "flip="
