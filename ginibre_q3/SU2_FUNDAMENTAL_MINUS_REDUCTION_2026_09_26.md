@@ -14987,6 +14987,27 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
           16,170 bounded arbitrary-plus cases.
         - Open: the plain prefix for every two-minus list, without
           genuine blocks.
+      - FM-STR7f (minerva thread on Luna; `fm39/str7f_run_budget_and_block_obstruction.py`,
+        rerun: FM-STR7f verifier PASS, 16 s).  The runs budget: no uniform
+        proof yet, plus an obstruction to the genuine-block method.
+        - Since `P_t + min(M_t,0) = min(P_t, P_t + M_t)`, the stronger LAYERWISE
+          condition `P_t >= 0` and `P_t + M_t >= 0` at every height suffices.
+          `P_t` is the average of the layers for the pair signs as given and
+          flipped.  It holds on the 10 residual runs with k = 7..10 (198
+          height checks).  The main-agent profile at k = 16 agrees.
+        - Obstruction (knob: at most two extracted `d` factors, and each block
+          separately genuine): for `(-1,...,-8)` (residual, `Phi = 980`, all 28
+          flips negative), after removing any pair, every block of 3 to 6
+          minus labels fails every parity-compatible `d^e G`, `e <= 2`, with
+          `G` genuine (210 blocks, 308 quotient checks).  Example: `D_1 D_2 D_3
+          / d = chi_(5,0) - chi_(4,1) - chi_(3,2) + 2 chi_(3,0) + 2 chi_(1,0)`.
+          The budget itself is positive there.
+        - Main agent: `K_n S_a` is genuine exactly when `a <= n` (checked for
+          `n <= 8`, `a <= 10`).  Among `S_a S_b` with `a, b <= 6`, only `(1,1)`
+          and `(1,2)` are genuine.
+        - Open: the runs budget uniformly in `k, p`, or the layerwise
+          condition.  A supplier must handle higher powers of `d`, or allow
+          cancellation between the two blocks.
       - ADV-2 (astra_max_vulcan, advisor; `fm39/adv2_constant_weighted_repro.py`,
         rerun exactly).
         - Lemma 1 (decay beyond each label's edge scale):
