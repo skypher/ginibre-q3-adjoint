@@ -14829,7 +14829,7 @@ astra_medium_ceres; main-agent check `mech/n0check.py`, `mech/n0scan.py`).**
       - FM-SEC178 (luna_max_venus; stopped by the main agent at k = 43 as
         grinding).  The (CB) relative margin on the runs `(-1,...,-k) + (sigma
         p)` rises from 0.98316 (k = 17) to 0.99127 (k = 43), exact rationals.
-        The TopPair child/parent ratio at k = 41, p = 43 is about 0.72.  The
+        The TopPair child/parent ratio at k = 41, p = 43 is about `7.2e-4`.  The
         largest flip there is about `-1.44e-4` times `g_p(B)`.
       - FM-STR11 (luna_max_venus; `fm39/str11_compatible_split_census.py`,
         rerun: ALL ASSERTIONS PASS, 8 min; main-agent check
