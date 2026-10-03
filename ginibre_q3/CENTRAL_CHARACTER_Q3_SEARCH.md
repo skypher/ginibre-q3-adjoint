@@ -92794,3 +92794,1455 @@ must return to (P62.9) on that original three-higher tuple, rather
 than identify its pins with the neighboring source tuples. All
 other full-function and group quantifiers remain active. No
 unrestricted (P62.13) or whole-goal completion is claimed.
+
+## A single positivity interval after two adjoint-plus insertions
+
+The one-adjoint proof in section 69 used a concave determinant. Composing
+its original added-factor transforms does not preserve that particular
+criterion: the next determinant is a quintic, and its second derivative
+need not be negative. The square coefficient in the direct comparison
+with the two base boundary energies also need not be positive. The
+following replacement is a structural statement about the entire
+homogeneous energy, with no label or defining-length cutoff in its
+stated supported range. It proves that its positive-semidefinite region
+is one interval, rather than assuming concavity or independent positivity
+of all source coefficients.
+
+**Self-double-check last before recording (main-agent self-review).**
+The original one-adjoint transform was independently substituted into
+the cleared coefficients below and their generic rational identity
+verified exactly. The twice-added energy was checked against the
+original Clebsch--Gordan product integral, using ballot Haar moments,
+at (L,m,q)=(3,1,0),(3,1,3),(4,2,4),(5,3,2),(8,1,6),(11,2,9).
+The values were respectively 456,16,78,5312,136,1566; these are identity
+checks, not a bounded sign supplier. Independently expanding the generic
+determinant directly from the composed energy verified the two
+coefficient-chain identities, their strictly positive coefficients,
+the leading determinant coefficients, and both factored diagonals at
+D=0. The endpoint polynomial was obtained both from that composed
+energy and by substituting into the generic determinant coefficients;
+the two exact expressions agreed. The proof below uses these algebraic
+identities at all parameters, not an extrapolation from the six tuples.
+The independent final proof review checked the determinant normalization,
+root multiplicity, continuity of the matrix inertia, all original sign
+patterns in the supplied family, and the original channel factor count.
+No computation script or certificate archive was added.
+
+**Lemma 70A (the original twice-added energy).** Let L>=3,m>=1,
+n=2m+L, D=n-2q, M=m+1, N=m+L+2, and let U,V initially be arbitrary
+real coefficient variables. Write E_(m,L) for the homogeneous energy
+of Lemma 65B and define
+
+    T=(D U-L V)/M,       S=((L+2)U+D V)/N,
+
+    G_(m,L)(D;U,V)
+      =sum_(e=+1,-1) E_(m+1,L)(D+2e;T+2eU,S+2eV)
+                         -4 E_(m,L)(D;U,V),
+
+    R_(m,L)(D;U,V)
+      =1/2 sum_(e=+1,-1) G_(m+1,L)(D+2e;T+2eU,S+2eV)
+                         -2 G_(m,L)(D;U,V).            (P70.1)
+
+Each occurrence of G in the last line uses its own degree parameters
+and its own added-factor map. For the actual integer count q=0,...,n,
+put U=K_m(q;n), V=K_(m-1)(q;n), and eta=(-1)^q. Then R is exactly
+
+    Psi_2=E[s^p d^q (chi_L(x)+eta chi_L(y))
+                              (chi_2(x)+chi_2(y))^2],
+    p=n-q, s=x+y, d=x-y.                               (P70.2)
+
+It is a homogeneous quadratic a(D)U^2+c(D)UV+b(D)V^2. Its two
+diagonal coefficients are even in D and its cross coefficient is odd.
+
+**Proof.**
+
+1. The first transform is exactly (P68.5), with the
+   homogeneous notation of Lemma 65B. Adding two
+   defining plus or minus factors multiplies the
+   generating polynomial by (1+z)^2 or (1-z)^2.
+   The coefficient recurrence gives precisely
+   (T+2eU,S+2eV) as the new adjacent coefficients,
+   at degree n+2 and parameter D+2e. This statement
+   holds on the full quadratic, without division by U.
+
+2. The actual adjoint-plus factor is
+
+       chi_2(x)+chi_2(y)=(s^2+d^2-4)/2.
+
+   Thus multiplying the first original adjoint-plus
+   integral by another such factor gives (P70.1).
+   Alternatively, the full expanded original integral is
+
+       Psi_2=1/2 [P_(m+2)(q;n+4)
+                    +2P_(m+2)(q+2;n+4)
+                    +P_(m+2)(q+4;n+4)
+                    -8P_(m+1)(q;n+2)
+                    -8P_(m+1)(q+2;n+2)
+                    +16P_m(q;n)].                     (P70.3)
+
+   This follows from Lemma 65A and the full square
+   (s^2+d^2-4)^2/4. The matching higher sign stays
+   unchanged when either two defining signs are added.
+   In particular R is the original integral, not an
+   unsigned or frequencywise substitute.
+
+3. For an explicit reconstruction of the coefficients,
+   at arbitrary degree parameters put A=m+1,B=m+L+2.
+   Then G=(g_a U^2+g_b V^2-g_c UV)/kappa_1, where
+
+       kappa_1=A^2(A+1)B^2(B+1),
+       g_a=2(L+2)[D^2 B(A(A+1)+L+1)
+                   +2m(B+1)A^2 B+L(L+2)(B+1)A^2],
+       g_b=2L[D^2((B+1)A^2+(L+1)AB)
+                   +(A+1)(L+2)L B^2
+                   +2AB^2((B+1)(A-1)+2(L+1))],
+       g_c=2D(L+1)[AB(D^2+L(L+2)+2AB+2A+2B-2)
+                                      +2L(L+2)(A+B)].  (P70.4)
+
+   Substitution in (P70.1) gives all coefficients of R
+   using only these polynomials. Pairing e=+1 and -1
+   shows the claimed even and odd symmetries. QED.
+
+**Lemma 70B (a coefficient chain and a unique positive determinant
+root).** For the homogeneous quadratic R of Lemma 70A define
+
+    A_2(D)=[[a(D),c(D)/2],[c(D)/2,b(D)]],
+    z=(L+1)^2,
+    d_2=M^2(M+1)^2(M+2)^2 N^2(N+1)^2(N+2)^2,
+    H_2(t)=4d_2 det A_2(D),   t=D^2.                  (P70.5)
+
+Then H_2 is a quintic polynomial. It has exactly one positive real
+zero theta, counted with multiplicity. In particular that zero is
+simple. For every real D,
+
+    A_2(D) is positive definite       if D^2<theta,
+    A_2(D) is positive semidefinite   if D^2=theta,
+    A_2(D) is indefinite              if D^2>theta.     (P70.6)
+
+The matrix at the endpoint has rank one. This assertion holds for
+every L>=3,m>=1; it makes no real-grid sign assertion beyond the
+stated interval.
+
+**Proof.**
+
+1. Use (P70.4) in (P70.1). A common denominator for
+   the entries of R is
+
+       kappa_2=M^2 N^2 (M+1)^2(M+2)(N+1)^2(N+2).
+
+   If its cleared diagonal and cross coefficients are
+   A_raw,B_raw,C_raw, the determinant normalization is
+
+       H_2(D^2)=(4A_raw B_raw-C_raw^2)
+                           /[M^2(M+1)^2 N^2(N+1)^2].
+
+   This is exactly 4d_2 det A_2. Cancellation gives a
+   polynomial sum_(j=0)^5 h_j t^j. Its leading terms are
+
+       h_5=-4z,
+       h_4=-4[(z+1)n^2+(22z+14)n+3z^2+52z+49].        (P70.7)
+
+   Hence both are strictly negative on the stated domain.
+
+2. At D=0, the cross coefficient vanishes. The two
+   diagonal coefficients simplify to
+
+       a(0)=2(L+2)F_a/[N^2(M+1)^2(N+2)],
+       b(0)=2L F_b/[M^2(M+2)(N+1)^2],
+
+       F_a=L^4+4(m+1)L^3+4(2m^2+4m+1)L^2
+              +8(m^3+4m^2+6m+4)L
+              +4(m^4+6m^3+16m^2+24m+16),
+       F_b=L^4+4(m+2)L^3+4(2m^2+8m+7)L^2
+              +8(m^3+6m^2+13m+8)L
+              +4(m^4+6m^3+20m^2+34m+19).             (P70.8)
+
+   All these displayed summands and denominators are
+   positive. Thus A_2(0) is positive definite and h_0>0.
+
+3. The middle determinant coefficients obey two exact
+   identities. Put w=z-16>=0 and define polynomials
+   P_23(n,w), P_12(n,w) by the coefficient table below.
+   Expansion of (P70.1) gives
+
+       h_2-2(n^2+z)h_3=P_23(n,z-16),
+       16h_1-7(n^2+z)h_2=P_12(n,z-16).               (P70.9)
+
+   The table gives the coefficient of n^j. Empty entries
+   are zero. Every nonzero displayed coefficient is a
+   polynomial with strictly positive coefficients in w.
+
+   | j | [n^j] P_23 | [n^j] P_12 |
+   |---|---|---|
+   | 8 | 0 | 10 |
+   | 7 | 0 | 184w+3156 |
+   | 6 | 10 | 20w^2+6308w+96070 |
+   | 5 | 88w+1620 | 504w^2+91932w+1304328 |
+   | 4 | 20w^2+2594w+37366 | 60w^3+6024w^2+687102w+9172238 |
+   | 3 | 288w^2+21576w+264936 | 744w^3+25772w^2+2510248w+33309780 |
+   | 2 | 40w^3+2862w^2+95436w+889774 | 60w^4+7324w^3+139950w^2+5470824w+66918322 |
+   | 1 | 232w^3+15204w^2+350912w+2489268 | 424w^4+34532w^3+728032w^2+11700628w+96517248 |
+   | 0 | 20w^4+1766w^3+61434w^2+962218w+5439202 | 20w^5+2734w^4+108470w^3+1769018w^2+16509710w+85576768 |
+
+   Consequently both right sides in (P70.9) are strictly
+   positive at every admissible n,z. This is a pair of
+   exact polynomial identities, not a coefficient search
+   over labels or an assumption about h_1,h_2,h_3 separately.
+
+4. Since n^2+z>0, the first chain gives
+
+       h_3>=0 implies h_2>0,
+
+   and the second gives
+
+       h_2>=0 implies h_1>0.
+
+   Therefore, after removing zero coefficients, the
+   sequence h_0,h_1,h_2,h_3,h_4,h_5 consists of positive
+   coefficients followed by negative coefficients.
+   It has exactly one sign change. Descartes' rule of
+   signs gives at most one positive zero, counting
+   multiplicity. Since H_2(0)>0 and its leading
+   coefficient is negative, continuity gives at least
+   one such zero. Thus theta exists and is simple;
+   H_2(t)>0 for 0<=t<theta and H_2(t)<0 for t>theta.
+
+5. The entries of A_2(D) are continuous polynomial
+   functions of D divided by fixed positive denominators.
+   Starting from its positive definite value at zero,
+   no eigenvalue can change sign before its determinant
+   vanishes. Thus it stays positive definite for
+   0<=D<sqrt(theta), and its limit at sqrt(theta) is
+   positive semidefinite. The matrix at that endpoint
+   cannot be zero: if all its entries vanished, their
+   analyticity would give a determinant zero of order
+   at least two in D, contrary to the simple zero in t
+   and sqrt(theta)>0. Its rank is therefore one.
+   For larger D the negative determinant makes it
+   indefinite. The even diagonals and odd cross term
+   identify A_2(-D) with its conjugate by diag(1,-1),
+   giving the same assertions for negative D. QED.
+
+**Corollary 70C (an endpoint supplier for the original integral).**
+For L>=3,m>=1,n=2m+L, if H_2(n^2)>=0, then the original tuple
+with one chi_L, two adjoint-plus factors, and n defining factors
+satisfies Q3 for every defining sign count and either higher sign.
+If H_2(n^2)>0, all matching-sign integrals are strictly positive.
+
+**Proof.**
+
+1. Lemma 70B makes the endpoint condition equivalent
+   to n^2<=theta. Every actual D=n-2q has D^2<=n^2,
+   so (P70.6) supplies its full energy. Substitute
+   the actual adjacent coefficients in Lemma 70A.
+
+2. If the endpoint is strictly positive, the entire
+   interval has positive definite matrices. The actual
+   U,V cannot both vanish, since the coefficient
+   recurrence would propagate their common zero to
+   K_0=1. Thus the matching-sign integral is positive.
+   The other higher sign has odd total minus count
+   and gives zero by exchange of g and h. QED.
+
+**Theorem 70D (two adjoints on an unbounded quadratic-length
+family, all original signs).** For every integer L>=3 set
+
+    n=(L+1)^2-3.
+
+One chi_L factor, two chi_2 factors, and n defining factors satisfy
+the original SU(2) Q3 integral for every sign pattern. When both
+adjoint signs are plus, every matching-sign integral is strictly
+positive. No bound on L, n, or the defining minus count is imposed.
+
+**Proof.**
+
+1. Put z=(L+1)^2>=16. Then
+
+       n=z-3,
+       m=(n-L)/2=(L-1)(L+2)/2>=1,
+
+   so these are admissible integer degree parameters.
+   Substitution into the exact determinant gives
+
+       H_2(n^2)=81z^10-702z^9+2574z^8-5568z^7
+                  +14777z^6-28474z^5+17472z^4-41120z^3
+                  +307200z^2-335872z-262144.           (P70.10)
+
+2. Group this entire polynomial as
+
+       z^9(81z-702)+z^7(2574z-5568)
+          +z^5(14777z-28474)+z^3(17472z-41120)
+          +307200z^2-335872z-262144.
+
+   Each parenthesis is positive for z>=16. For z>=2,
+   the final three terms are at least
+
+       (307200-167936-65536)z^2=73728z^2>0.
+
+   Thus H_2(n^2)>0 throughout the stated family.
+   Corollary 70C supplies all matching higher and
+   defining signs when both adjoints are plus.
+
+3. If an adjoint has minus sign, apply Proposition
+   67D's exact integrand identity. When exactly one
+   does, the remaining tuple has one arbitrary higher
+   character, one adjoint, and n+2 defining factors;
+   Theorem 69D supplies all their signs and counts.
+   When both do, two applications leave one higher
+   character and n+4 defining factors; Theorem 66D
+   supplies all their signs and counts. Every odd
+   total minus count gives zero automatically.
+   Hence all original patterns are covered. QED.
+
+**Corollary 70E (return to the original full channel).** Every
+original tuple supplied by Corollary 70C or Theorem 70D obeys
+
+    t_adj>=-3t_0
+
+in its original full isotypic spaces, including every multiplicity.
+
+**Proof.** Corollary 62F on the original tuple has N_original=n+3
+and gives
+
+    Psi_2=2^(n+3)(t_0+t_adj/3).
+
+The supplied scalar is precisely that original normalized
+product-Haar integral. Adjoint-minus replacements retain the
+original scalar and this original channel identity; they do not
+identify its pins with those of the longer defining tuple. QED.
+
+**Acceptance receipt and remaining original consumer.** The
+coefficient chain in Lemma 70B replaces concavity by a unique
+positive determinant root on the entire supported homogeneous
+family. It proves a single matrix positivity interval for all
+L>=3,m>=1 and consumes it on an unbounded family of original
+three-higher tuples, through every defining sign count and every
+original adjoint sign. This is an algebraic supplier and an
+original-channel return, not a certificate sweep.
+
+The endpoint condition of Corollary 70C is sufficient, not a new
+hypothesis of the full target. For arbitrary defining lengths the
+actual integer coefficients outside the matrix positivity interval
+still need a sign supplier. Indefiniteness there says nothing about
+the sign on those actual coefficients. The unsupported degree edges
+n=L-4,L-2,L are not silently included in Lemma 70B; the unrestricted
+two-adjoint consumer must handle them separately. Labels L<=2 with
+arbitrary low-label factors are already supplied by Proposition
+24B3, so they are not counted as new progress here.
+
+The full continuous-cone objective still requires several arbitrary
+higher characters and every higher-rank group. No assertion that
+one arbitrary continuous function is now covered with arbitrary
+adjoint-plus counts is made: the quadratic-length family ties the
+label to the number of defining factors, and cannot be applied
+termwise to an unrestricted expansion at a fixed length. The next
+structural question is whether the coefficient-chain mechanism
+extends under the added-factor transform, and whether a comparison
+on the actual integer coefficients supplies its exterior interval.
+The full original consumer (P62.13) remains open.
+
+## Isolation of the whole Haar cut on root-cone faces in every simple Lie type
+
+The standing objective remains the full real continuous central
+positive-definite cone, every compact connected group with simple Lie
+algebra, arbitrary tuple length, and every sign pattern. The following
+supplier returns to that original consumer in every Lie type. Unlike
+section 26, it places no restriction on the number of minus factors.
+Its hypothesis isolates the whole Haar cut: every proper assignment of
+factors to the two variables vanishes. On a proper root-cone face, the
+remaining multiplicity has an exact Levi realization. This does not
+assume a smaller-rank Q3 theorem.
+
+**Self-double-check last before recording (main-agent self-review).**
+The cut formula was derived afresh by expanding the distinguished
+factor first and exchanging the two Haar variables, keeping the
+product of all original signs. The root-face argument was checked
+using nonnegative simple-root coefficients of both the invariant
+subset and the complementary highest-weight defect. The Levi argument
+was independently checked at the weight-space level: a lowering
+monomial using an outside root cannot reach the specified face, and
+an outside simple raising operator has no possible target weight.
+The height argument was checked on every complex constituent of an
+actual real atom, using D-invariance of the height functional. Its
+continuous version retains the original absolute convergence bound.
+For the SU(3) specialization, the existing exact Gelfand--Tsetlin/Weyl
+Haar routine independently checked all nonempty distinguished cuts
+at (a_i;k)=((1,1,1);1),((1,2,1);2),((1,1,1,1);2). Each such cut
+vanished. The full real tensor multiplicities were 4,2,4 and the even
+signed integrals were 8,4,8, agreeing with the independent sl_2
+coefficient formula. Representative zero-, two-, maximal-even-, and
+one-minus patterns were checked as identity audits, not as a sign
+sweep. The final independent proof review checked simplicity of the
+Lie algebra, dual highest weights, the actual group lattice, root-face
+support, Levi central weights, the singleton invariant exclusion,
+strictness of the height inequality, real-atom orientations, trivial
+factor handling, and the original channel normalization. No script
+or certificate archive was added.
+
+Fix simple roots alpha_j and put Q_+=sum_j Z_(>=0) alpha_j,
+D lambda=-w_0 lambda. The order nu<=eta means eta-nu in Q_+.
+For a representation W write m(W)=dim W^G. All irreducibles below
+are representations of the actual compact connected group G, not
+merely of its simply connected cover. The Lie algebra is simple.
+Remove trivial factors first: a trivial minus factor makes the
+integral zero, and each trivial plus factor contributes a scalar two.
+
+**Lemma 71A (distinguished-cut formula with every original sign).**
+Let V_0=V_(lambda_0), V_i=V_(lambda_i), i in I, be nontrivial
+irreducibles, with arbitrary signs epsilon_i, including epsilon_0.
+Set
+
+    Lambda_T=sum_(i in T) lambda_i,
+    Lambda=Lambda_I,
+    delta=Lambda-D lambda_0,
+    M_T=m(V_T) mult_(V_(D lambda_0))(V_(I\T)),
+    V_T=tensor_(i in T) V_i,
+    epsilon_T=product_(i in T) epsilon_i.
+
+Empty products have their usual trivial-representation value. The
+original signed character integral satisfies the exact identity
+
+    Phi=(1+epsilon_0 epsilon_I)
+                         sum_(T subset I) epsilon_T M_T. (P71.1)
+
+If M_T>0, then
+
+    Lambda_T in Q_+,
+    delta-Lambda_T in Q_+.                              (P71.2)
+
+Consequently delta outside Q_+ makes the entire integral zero.
+
+**Proof.**
+
+1. First choose the distinguished character in the g
+   variable. Assign exactly the factors in T to h.
+   The corresponding normalized product-Haar term is
+
+       epsilon_T m(V_0 V_(I\T))m(V_T)=epsilon_T M_T.
+
+   Schur duality identifies the first invariant
+   multiplicity with the displayed constituent
+   multiplicity, including all its copies.
+
+2. For the term with the distinguished character in h,
+   exchange g and h. The coefficient of the same cut
+   becomes epsilon_0 epsilon_(I\T)
+   =epsilon_0 epsilon_I epsilon_T. Summing proves
+   (P71.1). In particular an odd total minus count
+   gives zero before any representation bound is used.
+
+3. All weights in V_T lie in Lambda_T-Q_+. A nonzero
+   invariant tensor has weight zero, hence the first
+   assertion in (P71.2). A constituent of highest
+   weight D lambda_0 in the complementary tensor
+   product gives the second assertion by the same
+   highest-weight support. Adding them gives
+   delta in Q_+, proving the final claim. QED.
+
+**Lemma 71B (every nonzero dominant weight meets every root
+coordinate).** If lambda is a nonzero dominant integral weight for
+a simple Lie algebra, all its coefficients in the simple-root basis
+are strictly positive real numbers. Integrality of these coefficients
+is not asserted.
+
+**Proof.**
+
+1. Every Weyl translate w lambda is a weight of V_lambda,
+   so lambda-w lambda belongs to Q_+. The Weyl average
+   of lambda is zero: it is fixed by every simple
+   reflection, so pairs to zero with every simple
+   coroot. Therefore
+
+       lambda=1/|W| sum_(w in W)(lambda-w lambda)
+
+   has nonnegative simple-root coefficients.
+
+2. Write lambda=sum_j c_j alpha_j, c_j>=0. If c_j=0,
+   dominance gives
+
+       0<=<lambda,alpha_j^vee>
+         =sum_(k!=j)c_k <alpha_k,alpha_j^vee><=0.
+
+   A neighbouring Dynkin node has a strictly negative
+   Cartan entry, so its coefficient must also vanish.
+   Connectivity propagates this to all coefficients,
+   contradicting lambda!=0. QED.
+
+The highest-weight support and duality used here are the standard
+facts in Corollary 25.9, Proposition 25.10, and Proposition 32.1 of
+[Etingof, *Lie Groups and Lie Algebras*](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf).
+Their use concerns the differentiated representations of the actual
+group; connectedness ensures that the invariant spaces agree.
+
+**Theorem 71C (whole-cut isolation on every proper root-cone face,
+all signs).** In Lemma 71A, suppose delta belongs to Q_+ and has
+at least one zero simple-root coefficient. Then every nonempty M_T
+vanishes, and the exact original integral is
+
+    Phi=(1+epsilon_0 epsilon_I)m(V_0 V_I)>=0.             (P71.3)
+
+There is no restriction on rank, highest weights, tuple length, the
+nonzero defect coordinates, or the number of minus factors. Together
+with Lemma 71A this supplies all defects outside Q_+ and all defects
+on its proper faces.
+
+**Proof.**
+
+1. A nonempty subset T has Lambda_T nonzero and
+   dominant, since all lambda_i are nonzero dominant
+   weights. By Lemma 71B its simple-root coefficients
+   are strictly positive at every node.
+
+2. If M_T>0, (P71.2) requires Lambda_T<=delta.
+   At a missing node of delta this contradicts the
+   strictly positive coefficient of Lambda_T.
+   Thus no nonempty cut contributes.
+
+3. The empty cut has M_empty=m(V_0 V_I). Substitute
+   in (P71.1). Its sign factor is either zero or two,
+   while the complete invariant dimension is
+   nonnegative. This gives exactly (P71.3). QED.
+
+For complex irreducible characters this is a real integer identity;
+the functions themselves need not be real. For an actual real atom
+R_lambda=chi_lambda or chi_lambda+chi_(D lambda), expand its one or
+two constituents by multilinearity. If each oriented constituent tuple
+has defect outside Q_+ or on a proper face, the same exact collapse
+holds for the original real-atom tuple, with its full tensor
+multiplicity. No orientation is discarded. A sign or a face condition
+on only one constituent is not sufficient for that conclusion.
+
+**Lemma 71D (exact Levi realization on the isolated face).** Keep
+the hypotheses of Theorem 71C. Let J be the support of delta in the
+simple roots, a proper subset of the Dynkin nodes. Let g_J be the
+semisimple Levi algebra generated by those nodes. For each i in I,
+let W_i be the irreducible g_J module generated by a highest-weight
+vector of V_i; its highest Dynkin coordinates at nodes j in J are
+<lambda_i,alpha_j^vee>. Let W_0 have coordinates
+<D lambda_0,alpha_j^vee>. Then
+
+    m(V_0 V_I)=mult_(W_0)(tensor_(i in I) W_i).          (P71.4)
+
+When J is a single node with delta=k alpha_j, put
+
+    a_i=<lambda_i,alpha_j^vee>,
+    B(z)=product_(i in I)(1+z+...+z^(a_i)),
+    b_k=[z^k]B(z),       b_(-1)=0.
+
+The formula becomes
+
+    m(V_0 V_I)=b_k-b_(k-1).                             (P71.5)
+
+For J empty the multiplicity is one.
+
+**Proof.**
+
+1. A highest vector generates V_i under negative-root
+   operators. PBW gives spanning monomials in these
+   operators, whose lowering degrees are nonnegative
+   sums of positive roots. To reach any weight
+   lambda_i-eta with eta supported on J, no monomial
+   can use a root with an outside coefficient: that
+   coefficient cannot be cancelled by another lowering
+   operator. Thus the entire face weight space lies
+   in U(n_J^-)v_i. This module is W_i. Complete
+   reducibility for g_J and its highest-vector
+   generator identify it with the single irreducible
+   of the displayed highest weight.
+
+2. In the full tensor product, consider weight
+   gamma=Lambda-delta=D lambda_0. The lowering
+   degrees in its individual factors add to delta,
+   so each is supported on J. Hence this whole
+   weight space agrees with the corresponding
+   weight space in tensor_i W_i. The Levi central
+   weights are fixed on each W_i; specifying gamma's
+   restriction to the semisimple Levi specifies the
+   same full weight on this face. This follows also
+   from nonsingularity of the Cartan matrix on J.
+
+3. A simple raising operator at a node outside J
+   would take this weight to gamma+alpha_j. Its
+   defect from Lambda is delta-alpha_j, which is
+   outside Q_+; the tensor product has no such weight.
+   All these raising operators therefore annihilate
+   the whole weight space. Being a highest vector
+   for the full Lie algebra is consequently exactly
+   being a highest vector for g_J there. Their
+   dimension is the two constituent multiplicities
+   in (P71.4), proving the identity. This counts all
+   highest vectors and does not delete multiplicities.
+
+4. For one node, each W_i is the sl_2 module of
+   highest weight a_i. The weight multiplicities
+   in their tensor product are the coefficients
+   of B. Subtracting the preceding weight
+   multiplicity gives b_k-b_(k-1) for its highest
+   weight sum_i a_i-2k. That weight is nonnegative
+   because gamma is dominant. This is an ordinary
+   sl_2 tensor multiplicity, hence nonnegative.
+   For J empty only the unique product of top
+   vectors occurs, giving multiplicity one. QED.
+
+PBW in this proof is Theorems 13.1--13.2 of the same
+[Etingof lecture notes](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf#page=75).
+The weight-space and Levi deductions above are proved here; a
+Ginibre theorem for a Levi subgroup is not being imported.
+
+**Theorem 71E (a scalar separation test for actual real atoms,
+all signs).** Let ell be a nonzero linear functional on the real
+weight space satisfying
+
+    ell(alpha_j)>=0 for every simple root,
+    ell(D nu)=ell(nu) for every weight nu.
+
+It is strictly positive on every nonzero dominant weight by
+Lemma 71B. For a tuple of nontrivial actual real atoms, choose
+one distinguished position 0 and write H_i=ell(lambda_i), where
+either dual representative indexes the atom. Suppose |I|>=2 and
+
+    sum_(i in I) H_i-H_0
+                          < min_(i!=j in I)(H_i+H_j).   (P71.6)
+
+Then its original Q3 integral, for every sign pattern, is exactly
+
+    Phi=(1+product_i epsilon_i)
+                           integral_G product_i R_i(g) dg>=0. (P71.7)
+
+The functional taking value one on each simple root always qualifies.
+
+**Proof.**
+
+1. Expand each actual real atom into its one or two
+   irreducible constituents. Every constituent has
+   the same H_i, since duality preserves ell.
+   It suffices to prove the collapse for each
+   oriented constituent tuple in Lemma 71A.
+
+2. If a nonempty M_T is nonzero, V_T has an invariant.
+   A singleton nontrivial irreducible has no invariant,
+   so T has at least two positions. Nonnegativity
+   of ell on Q_+ and (P71.2) give
+
+       sum_(i in T) H_i<=ell(delta)
+                          =sum_(i in I) H_i-H_0.
+
+   Positivity of the H_i gives a lower bound by
+   min_(i!=j)(H_i+H_j), contradicting (P71.6).
+   Every nonempty cut therefore vanishes.
+
+3. The remaining empty-cut invariant dimensions,
+   summed over the positive constituent expansion,
+   are exactly the full real tensor multiplicity,
+   namely integral product_i R_i. Formula (P71.1)
+   proves (P71.7) and its sign. QED.
+
+**Corollary 71F (a continuous cone with an unrestricted character
+tail).** Fix ell as in Theorem 71E and |I|>=2. Let f_0,...,f_n be
+real continuous central positive-definite functions on G. Assume
+their actual real-atom expansions from Lemma 28A are supported in
+
+    ell(lambda)>=a_0 at position 0,
+    a_i<=ell(lambda)<=b_i at positions i in I,
+    a_0>0, a_i>0, b_i<infinity,
+
+and suppose
+
+    sum_(i in I) b_i-a_0
+                          < min_(i!=j in I)(a_i+a_j).   (P71.8)
+
+Then for every sign pattern their original integral satisfies
+
+    Phi=(1+product_i epsilon_i)
+                           integral_G product_i f_i(g) dg>=0. (P71.9)
+
+No upper support bound or finite character expansion is required
+for the distinguished function f_0.
+
+**Proof.**
+
+1. Every atomic term in the expansions satisfies
+   (P71.6), by the upper bound on the left and lower
+   bound on the right in (P71.8). Apply Theorem 71E
+   to that original atomic tuple with its original
+   signs. Its mixed cuts vanish before integration.
+
+2. Lemma 28A bounds the sum of absolute original
+   product integrands by product_i 2f_i(e), which
+   is finite. Thus the entire product series is
+   uniformly absolutely convergent and may be
+   integrated over normalized product Haar measure.
+   The analogous single-Haar series is bounded by
+   product_i f_i(e). Summing the exact atomic
+   identities proves (P71.9).
+
+3. The single-Haar integral is a convergent
+   nonnegative sum of invariant dimensions with
+   nonnegative coefficients, hence nonnegative.
+   Zero functions cause no exception. The support
+   assumptions exclude trivial atoms; no omitted
+   constant term is silently absorbed into the
+   identity. QED.
+
+**Corollary 71G (an unbounded SU(3) real-atom family with exact
+values, all signs).** Choose any n>=2 and positive integers a_i,
+i=1,...,n. Put t=sum_i a_i and choose any integer
+1<=k<=floor(t/2). Take the actual real atom
+
+    R_0=chi_(t+k,t-2k)+chi_(t-2k,t+k),
+
+and the n self-dual atoms R_i=chi_(a_i,a_i). With
+
+    b_j=[z^j] product_i(1+z+...+z^(a_i)),
+
+the original SU(3) signed integral equals
+
+    Phi=2(1+product_(i=0)^n epsilon_i)
+                                      (b_k-b_(k-1)).   (P71.10)
+
+It is nonnegative for every sign pattern, with no restriction on
+n, t, k, or the individual labels beyond those stated. All these
+representations descend to PSU(3), where the same statement holds.
+
+**Proof.**
+
+1. In type A_2, alpha_1=2omega_1-omega_2 and
+   alpha_2=-omega_1+2omega_2. The background highest
+   weight is Lambda=t(omega_1+omega_2). For the
+   constituent of R_0 with highest weight
+   (t+k,t-2k), its dual highest weight is
+   (t-2k,t+k)=Lambda-k alpha_1. Its defect is
+   k alpha_1, on a proper face. The other
+   constituent has defect k alpha_2. These
+   cover both orientations of the selected real
+   atom; the other atoms are self-dual.
+
+2. Theorem 71C isolates the whole cut in both
+   constituent tuples. The simple-root Levi
+   labels of the background are a_i in either
+   case, so Lemma 71D gives b_k-b_(k-1) for
+   each full invariant multiplicity. Their sum
+   and the original sign factor give (P71.10).
+   Nonnegativity is that of the sl_2 highest
+   multiplicity at weight t-2k>=0.
+
+3. The central character of an SU(3) weight (p,q)
+   depends on p+2q modulo three. For (a_i,a_i)
+   this is 3a_i, and for (t+k,t-2k) it is
+   3(t-k); both vanish modulo three, as do their
+   duals. Thus every representation is one of
+   PSU(3) itself. Normalized Haar integration
+   of their pullbacks has the same values. QED.
+
+**Corollary 71H (original full-channel return and necessary
+interior conditions).** For every actual real-atom tuple supplied
+by Theorem 71E, or by Theorem 71C on all its constituent orientations,
+let N_original be its original number of factors, with no deleted
+trivial factors. On the nontrivial tuples of those theorems,
+Theorem 62D gives the exact identity
+
+    ||X_epsilon||_HS^2+sum_(lambda!=0)c_lambda t_lambda
+       =2^(-N_original)(1+product_i epsilon_i)
+                                        dim(R_full^G)>=0. (P71.11)
+
+The original full isotypic multiplicities are retained. The SU(3)
+family in Corollary 71G is among these original consumers.
+
+For an oriented nontrivial irreducible tuple to have a negative
+signed integral, every choice of distinguished factor i must have
+
+    delta_i=sum_(j!=i)lambda_j-D lambda_i in Q_+
+
+with strictly positive coefficients at every simple root. It must
+also fail (P71.6) for every distinguished factor and every qualifying
+functional ell. These are necessary interior conditions, not a
+positivity assertion for the remaining interior.
+
+**Proof.** The left side of (P71.11) is exactly the original integral
+divided by 2^N_original in Theorem 62D. The supplied cut collapse
+gives its right side. No Levi pin or neighboring tensor projector
+has been identified with the original ones. For the necessary
+conditions apply Lemma 71A, Theorem 71C, and Theorem 71E in turn at
+each possible distinguished position. For an oriented complex
+tuple, the same proof of the numerical test applies directly to
+its irreducibles; D-invariance of ell preserves the selected dual
+height. Each failed necessary condition supplies a nonnegative
+integral, contradicting negativity. QED.
+
+**Acceptance receipt and remaining full-scope consumer.** Sections
+70 and 71 now contribute different original suppliers. Section 70
+controls a rank-one matrix positivity interval; section 71 isolates
+whole cuts in every simple Lie type, without a two-minus restriction,
+and computes their multiplicities by a proper Levi algebra. It
+also supplies a continuous family with an unrestricted character
+expansion at the distinguished position, using the same actual
+cone and convergence lemma as the full objective. The SU(3) family
+has unbounded rank-two labels, defect, and tuple length and uses
+both constituents of the original real atom. None of these results
+is inferred from the bounded SU(3) search.
+
+The source is the exact distinguished-cut identity (P71.1); the
+consumers are the same original signed integral in (P71.3),
+(P71.7), (P71.9), and (P71.10), and its fixed full-channel return
+(P71.11). The Levi calculation supplies a tensor multiplicity;
+it does not turn the still-active interior cuts into a smaller-rank
+Q3 problem. Nonempty invariant subsets whose highest weights fit
+inside an interior defect are the first unsupplied terms of
+(P71.1). Their signed contribution still has to be paid by the
+whole-cut term or other positive cuts. All unrestricted functions,
+all arbitrary interior atom tuples, all sign patterns, and all
+groups in the original (P62.13) remain the active objective.
+No whole-goal completion is claimed.
+
+**Corollary 71I (consumption of the two-adjoint degree edges).** The
+three degree edges listed after section 70 are already supplied by
+Propositions 16--17. For one chi_L and two adjoints, L>=3, with n
+defining factors, the original Q3 integral is nonnegative for every
+sign pattern when
+
+    n=L-4>=0,       n=L-2,       or n=L.
+
+It is zero when n<L-4 or n-L is odd.
+
+**Proof.** The sum of all labels other than the selected largest
+label L is S=n+4. At the three edges L=S,S-2,S-4 respectively.
+Proposition 16 supplies the first two, and Proposition 17 supplies
+the third. In every case L>=3 is at least each remaining label
+(one or two), so the source's largest-label hypothesis is satisfied.
+If S<L, no assignment can pair the selected label to a complementary
+tensor product reaching it, so every Haar cut vanishes. If n-L is
+odd, simultaneous central negation of both SU(2) variables changes
+the whole integrand's sign, while preserving product Haar measure.
+These are equalities and bounds on the original tuple. Its original
+full-channel return still uses N_original=n+3. QED.
+
+**Final edge self-check and receipt.** The label sum S=n+4, its
+three defects, the largest-label condition, and the original factor
+count were independently checked before recording this corollary.
+This consumes older proved sources rather than claiming a new
+outer-layer theorem. Labels L<=2 are covered by Proposition 24B3.
+Any adjoint-minus factor is eliminated by Proposition 67D and then
+supplied by Theorem 69D or Theorem 66D. Consequently the remaining
+unrestricted two-adjoint-plus term from section 70 is exactly the
+matching-sign, supported family L>=3,n=2m+L,m>=1 on actual integer
+coefficients outside Lemma 70B's matrix positivity interval. The
+new all-type suppliers above do not assert a sign there.
+
+## Middle-weight witnesses inject the first interior pair channels
+
+The mixed cuts left in (P71.1) need not vanish. The next supplier
+constructs their joint injection into the whole-cut multiplicity space.
+It uses a coordinate outside the top weight bands of every complementary
+highest vector. This keeps all pair-channel multiplicities and all
+original signs. The resulting continuous family has no restriction
+relating tuple length to group rank, although it still imposes a level
+condition on the distinguished function. Section 73 gives a different
+supplier that removes that function condition in a stable-rank range.
+
+**Self-double-check last before recording (main-agent self-review).**
+The cut-size bound, possible complementary highest weights, and their
+multiplicities were derived using the defining weight sets and checked
+against Lemma 71D's one-node Levi formula. The proposed feature
+projections were checked on every pair map: they recover its entire
+highest-vector space and kill every other pair map, without an assertion
+of orthogonality. Independent finite-rank minuscule branching checked
+SU(4) counts (P,Q)=(4,2),(4,1) and SU(5) counts (3,2): whole/pair/total
+pair-source dimensions were (16,2,16),(8,2,8),(6,1,6). For USp(6) at
+n=4,6 and USp(8) at n=7 they were (6,1,6),(45,3,45),(84,4,84).
+These are exact multiplicity-identity audits, not a bounded sign
+supplier. The final independent proof review checked the excluded
+three-factor invariant, dominance of each displayed weight, the
+availability of the middle coordinate, complex constituent orientations,
+trivial factors, convergence, and the original channel count. No script
+or certificate archive was added.
+
+For SU(d), d>=4, let V be its defining d-dimensional representation and
+F=chi_V+chi_(V*). For the compact symplectic group USp(2r), r>=3,
+let V be its defining 2r-dimensional representation and F=chi_V.
+In either case define the level of a dominant weight by
+
+    ell(sum_j a_j omega_j)=sum_j a_j.                    (P72.1)
+
+This functional is D-invariant and nonnegative on the simple roots.
+In type A it is one at the end roots and zero at the other roots;
+in type C it is one at alpha_1 and zero at the other roots. It is
+strictly positive on nonzero dominant weights.
+
+**Lemma 72A (only pair cuts can remain in the first interior level
+band).** Take a nontrivial distinguished irreducible V_gamma* and
+k defining constituents, with ell(gamma)>=k-3. In the unitary case
+each defining constituent is either V or V*; in the symplectic case
+it is V. In (P71.1), every nonempty active cut T has exactly two
+positions. Its invariant multiplicity is one. For SU(d), its positions
+have opposite defining types; for USp(2r) every pair is of the same
+defining type. The complementary highest-vector space has level
+k-2 or k-3.
+
+**Proof.**
+
+1. Every defining constituent has level one. Thus
+   (P71.2) and nonnegativity of ell on Q_+ give
+
+       |T|<=ell(delta)=k-ell(gamma)<=3.
+
+   A singleton has no invariant.
+
+2. In SU(d), the center acts on a three-factor
+   defining tensor by a charge in {+3,+1,-1,-3}
+   modulo d. None is zero for d>=4. In USp(2r),
+   the central element -Id acts as minus one on
+   any odd number of defining factors. Hence
+   no three-factor cut has an invariant.
+
+3. In SU(d), two constituents have an invariant
+   exactly when they are V,V*, with a one-dimensional
+   evaluation line. In USp(2r), V tensor V has the
+   one-dimensional invariant symplectic line.
+   Schur's lemma gives both dimension statements.
+   The complementary product has k-2 factors and
+   maximum level k-2. If it reaches gamma, the
+   lower bound ell(gamma)>=k-3 leaves exactly
+   the two stated possible levels. QED.
+
+**Lemma 72B (the complementary top and one-excitation spaces).**
+For a product of P copies of V and Q copies of V* in SU(d), put
+K=P+Q. Its unique constituent of level K is the Cartan component
+of highest weight P omega_1+Q omega_(d-1), with multiplicity one.
+The only possible constituents of level K-1 have highest weights
+
+    (P-2)omega_1+omega_2+Q omega_(d-1),       P>=2,
+    P omega_1+omega_(d-2)+(Q-2)omega_(d-1),   Q>=2.       (P72.2)
+
+Their multiplicities are P-1 and Q-1 respectively. Highest vectors
+of the first kind use only e_1,e_2 in the V positions and e_d* in
+the V* positions; those of the second use e_1 in V positions and
+e_d*,e_(d-1)* in V* positions.
+
+For K copies of V in USp(2r), the level K constituent is K omega_1,
+with multiplicity one. The only possible level K-1 constituent is
+
+    (K-2)omega_1+omega_2,       K>=2,                    (P72.3)
+
+with multiplicity K-1. Its highest vectors use only e_1,e_2 in
+every position, where e_a has weight +e_a in the usual symplectic
+weight coordinates.
+
+**Proof.**
+
+1. For SU(d), the levels of the defining weights
+   e_1,e_2,...,e_(d-1),e_d are 1,0,...,0,-1;
+   those of the dual weights are their negatives.
+   A weight of level K therefore uses only e_1
+   in V and e_d* in V*. It is the unique top vector.
+
+2. A level K-1 weight uses precisely one internal
+   weight instead. Dominance in ordered coordinates
+   permits only e_2 in a V position or e_(d-1)*
+   in a V* position. These give (P72.2), with
+   lowering defect alpha_1 or alpha_(d-1) from
+   the complementary top weight. All other factors
+   stay on their top lines. Lemma 71D with this
+   one-node defect gives P-1 or Q-1: its coefficient
+   difference at degree one is P-1 or Q-1.
+
+3. For USp(2r), the defining weights are +/-e_a.
+   Their levels are 1,-1 at +/-e_1 and zero elsewhere.
+   Level K-1 uses exactly one of those zero-level
+   weights. The dominance inequalities
+   x_1>=x_2>=...>=x_r>=0 allow only +e_2.
+   Its defect is alpha_1 from the top weight.
+   Lemma 71D gives K-1. These weight arguments
+   describe every coordinate of the highest-vector
+   spaces, not only a selected basis. QED.
+
+**Theorem 72C (joint injection of all active pair channels).** In
+Lemma 72A, let H_gamma be the space of highest vectors of weight
+gamma in the full defining product. For each active pair T let
+H_gamma^(T) be its complementary highest-vector space. Tensoring
+with the invariant line on T gives a map
+
+    E_T:H_gamma^(T) -> H_gamma.
+
+The sum of these maps is injective on the direct sum of every active
+pair channel. Consequently, with M_T as in Lemma 71A,
+
+    M_empty>=sum_(T nonempty) M_T.                      (P72.4)
+
+All multiplicities are retained. It follows that the original signed
+integral is nonnegative for every sign pattern.
+
+**Proof.**
+
+1. In SU(d), use
+
+       Omega=sum_(a=1)^d e_a tensor e_a*
+
+   on each V,V* pair. For the complementary Cartan
+   space use the coordinate a=2; for the first
+   excitation in (P72.2) use a=3; for the second
+   use a=2. At d>=4 these coordinates are outside
+   the allowed complementary weight bands at both
+   pair positions, as listed in Lemma 72B.
+
+2. In USp(2r), order an unordered pair i<j and use
+
+       Omega=sum_(a=1)^r
+                   (e_a tensor f_a-f_a tensor e_a),
+
+   where f_a has weight -e_a. Use a=2 for the
+   complementary Cartan space and a=3 for (P72.3).
+   Rank r>=3 makes these available. Both selected
+   coordinate vectors lie outside the complementary
+   bands e_1 or e_1,e_2 respectively.
+
+3. Let Q_T contract the pair positions against the
+   selected two coordinate covectors, leaving the
+   complementary factors untouched. The coefficient
+   of that term in Omega is one, so
+
+       Q_T E_T=Id on H_gamma^(T).
+
+   For another pair T', at least one position of T
+   lies outside T'. At that position every vector
+   of H_gamma^(T') stays in its complementary
+   band and has zero selected coordinate. Hence
+
+       Q_T E_(T')=0,       T'!=T.
+
+   These equations give a left inverse for the
+   entire direct sum map. They recover every
+   highest vector in each source space, so prove
+   injectivity with all its multiplicities.
+
+4. Each image is a full G-highest vector of weight
+   gamma: the pair tensor is invariant and the
+   complementary vector is highest of that weight.
+   Therefore the target dimension is M_empty,
+   and the source dimension is the right side of
+   (P72.4). Substitute this bound into (P71.1):
+
+       sum_T epsilon_T M_T
+         >=M_empty-sum_(T nonempty)M_T>=0.
+
+   The remaining sign factor is zero or two.
+   This proves the original signed integral,
+   without asserting positivity of a stronger
+   compression or orthogonality of the images. QED.
+
+**Corollary 72D (continuous level-band supplier at arbitrary length).**
+For either group family above and any n>=4, let f_0 be any real
+continuous central positive-definite function supported, in its
+actual real-atom expansion, on weights of level at least n-3.
+Let the other n functions lie in cone{1,F}. Then Q3 holds for
+the original list with every sign pattern. No upper label or support
+bound and no rank-versus-length condition is imposed.
+
+**Proof.** Expand the actual atoms at every position using Lemma 28A.
+A trivial minus gives zero; trivial plus atoms give factors two
+and leave k<=n defining positions. A nontrivial constituent of f_0
+has the same level as its dual and level at least n-3>=k-3.
+In SU(d), expand each defining real atom F into V,V* and use
+Theorem 72C on each oriented tuple. In USp(2r) no such splitting
+is needed. Cases with no active pair cut reduce directly to the
+nonnegative whole cut in Lemma 71A. The uniformly absolute bound
+product_i 2f_i(e) permits summing these nonnegative original atomic
+integrals. This proves the continuous statement. QED.
+
+**Original-channel receipt and limitation.** On every original actual
+real-atom tuple supplied here, Theorem 62D gives
+
+    ||X_epsilon||_HS^2+sum_(lambda!=0)c_lambda t_lambda>=0
+
+with the original factor count and full isotypic spaces. Deleting
+trivial plus atoms changes the scalar by its factors two, rather
+than replacing the original channel projector. The middle-coordinate
+witness proves a multiplicity-preserving injection into the original
+whole-cut highest-vector space. At lower distinguished levels,
+more excitation bands and invariant cuts with four or more positions
+can contribute; this proof does not claim their joint injection.
+The missing coordinates at SU(3) or USp(4) also preclude importing
+this stronger injection there without a further argument.
+
+## Exact Gaussian Hermite supplier from the Young-lattice relation
+
+The next structural supplier treats one arbitrary full-cone function,
+without section 72's level restriction, in explicit stable-rank ranges.
+It follows from an exact creation/annihilation relation for tensor
+multiplicities. It is a finite-degree moment identity on the original
+group, not a Gaussian approximation or an assertion that Haar traces
+have Gaussian distributions. The representation rank and the tuple
+length remain explicit parameters of the supplier.
+
+**Self-double-check last before recording (main-agent self-review).**
+Finite-rank highest-weight branching through five defining factors
+was independently compared with the generic Young-lattice formulas
+for USp(10), SO(12), and SU(11). Every reached multiplicity agreed.
+For the partition (2,1), the first two groups' original one-variable
+signed sums at q=0,1,2,5 were 40,24,16,40, agreeing with the independent
+Hermite formula. For SU(11), the rational highest weight
+(2,0,...,0,-1) gave 120,72,48,120, with its separately checked factor
+1/16. Exact B_4 Weyl alternant calculations at highest coordinates
+(0,0,0,0),(2,1,0,0),(1,1,1,0) independently checked the zero-weight
+cancellation giving the orthogonal add/remove rule. Rank guards
+were checked against actual failures of the proposed moment identity:
+USp(4) has multiplicity 5, rather than the Gaussian value 6, for
+partition (1,1) in V^4; exact SU(3) Haar integration gives
+E[chi_(0,1) F^2]=1, whereas the Gaussian degree-one model gives zero.
+These are failures of an out-of-range supplier, not Q3 counterexamples.
+The final independent proof review checked the Young commutator,
+formal-series locality, finite-rank branching, determinant aliases,
+both Gaussian variances, Hermite normalization, actual paired atoms,
+unreachable irreducibles, original signs, convergence, and the full
+original-channel normalization. No script or certificate was added.
+
+**Lemma 73A (Young creation and annihilation).** Let the free vector
+space have orthonormal basis [alpha] indexed by all integer partitions.
+Define U by adding one addable box and D by removing one removable box,
+with coefficient one for each resulting partition. Let e=[empty]. Then
+
+    D e=0,       D U-U D=Id,
+    exp(t(U+D))e=exp(t^2/2)exp(tU)e.                    (P73.1)
+
+All series are formal in t. If f^alpha counts standard Young tableaux
+of shape alpha, then
+
+    [alpha]U^a e=f^alpha,       a=|alpha|.               (P73.2)
+
+For two independent partition coordinates the corresponding relation is
+
+    exp(t(U_1+D_1+U_2+D_2))(e tensor e)
+       =exp(t^2)exp(tU_1)exp(tU_2)(e tensor e).          (P73.3)
+
+**Proof.**
+
+1. Off the diagonal, adding then removing distinct
+   boxes is in bijection with removing then adding
+   those same boxes. On the diagonal, a partition
+   has exactly one more addable than removable
+   corner, including the empty partition. This
+   proves D U-U D=Id.
+
+2. From the commutator,
+
+       D exp(tU)=exp(tU)(D+t Id).
+
+   The right side of (P73.1) has initial value e
+   and derivative (U+D) times itself. Uniqueness
+   of the formal differential equation proves
+   (P73.1). Each coefficient involves finitely
+   many box paths, so there is no convergence
+   or unbounded-operator assumption.
+
+3. Pure box-addition paths are standard tableaux:
+   label each added box by its addition time.
+   This proves (P73.2). The two-coordinate
+   operators commute between coordinates; apply
+   (P73.1) twice to obtain (P73.3). QED.
+
+**Lemma 73B (exact defining multiplicities in explicit stable ranges).**
+Fix n>=0. Consider any of the following actual compact groups and
+actual real defining character F:
+
+    G=USp(2r), r>=n,          F=chi_V;
+    G=SO(2r+1) or Spin(2r+1), r>n, F=chi_V;
+    G=SO(2r) or Spin(2r), r>n and r>=3, F=chi_V;
+    G=SU(d), d>2n,           F=chi_V+chi_(V*).           (P73.4)
+
+The vector character on Spin is pulled back from its orthogonal
+quotient. Only groups with simple Lie algebra are being considered.
+For k<=n, the symplectic and orthogonal multiplicities are
+
+    m_alpha(k)=mult_(V_alpha)(V^tensor k)
+       =k! f^alpha/[L! 2^h h!],
+    L=|alpha|, h=(k-L)/2>=0 integer,                    (P73.5)
+
+and zero if this degree condition fails. Every reached irreducible
+is of this partition form. For SU(d), reached irreducibles have unique
+rational highest lifts
+
+    (alpha_1,...,alpha_a,0,...,0,-beta_b,...,-beta_1),
+
+where alpha,beta are partitions. With A=|alpha|, B=|beta|, L=A+B,
+the defining real tensor multiplicities are
+
+    m_(alpha,beta)(k)
+       =k! f^alpha f^beta/[A! B! h!],
+    h=(k-L)/2>=0 integer,                               (P73.6)
+
+and zero if this degree condition fails. Any irreducible not reached
+at some k<=n has zero multiplicity at all those degrees.
+
+**Proof.**
+
+1. For type C, the defining weights are +/-e_i.
+   Tensoring a dominant partition by the defining
+   module adds or removes one box, each with
+   multiplicity one. This is the minuscule tensor
+   rule. At every degree up through n, partitions
+   have at most n rows, so r>=n introduces no
+   discarded path before the final required degree.
+   The multiplicity vector is (U+D)^k e.
+   Extracting [alpha]t^k from (P73.1) gives (P73.5).
+
+2. For type D, the vector weights are again +/-e_i
+   and the vector is minuscule. The dominance
+   condition is x_1>=...>=x_(r-1)>=|x_r|. At the
+   required degrees, r>n leaves the last coordinate
+   zero in every reached highest weight. No middle
+   exterior split or signed-last-coordinate branch
+   is reached. The same U+D rule and (P73.5) apply.
+   Spin representations that are not tensorial are
+   not reached by powers of the vector module and
+   have zero multiplicity in this statement.
+
+3. For type B, the vector weights include zero
+   as well as +/-e_i, so a minuscule rule is not
+   assumed. Use the Weyl character alternant with
+   rho=(r-1/2,r-3/2,...,1/2). Multiplication by
+   the vector character sums the alternants at
+   lambda+rho+gamma for those weights gamma.
+   At every reached lambda with lambda_r=0,
+   the shift -e_r has last coordinate -1/2.
+   Reflection of that coordinate gives the negative
+   of the zero-shift alternant; they cancel.
+   Other non-dominant +/-e_i shifts have an equal
+   pair of shifted coordinates and vanish. The
+   remaining terms are exactly the addable and
+   removable boxes, each with coefficient one.
+   Since r>n keeps lambda_r zero throughout the
+   required range, this is again U+D and (P73.5).
+
+4. For SU(d), temporarily retain the integer rational
+   highest lifts for GL(d). Tensoring by V adds a
+   box to alpha or removes a box from beta;
+   tensoring by V* removes a box from alpha or
+   adds a box to beta. The defining modules are
+   minuscule, so these branches have multiplicity
+   one. At degree k<=n there are at most n nonzero
+   rows in the two partitions together. Thus d>2n
+   leaves a zero gap and no row-length truncation.
+   The operator for V direct_sum V* is
+   U_1+D_1+U_2+D_2. Formula (P73.3) gives (P73.6).
+
+5. Distinct rational lifts restrict to the same
+   SU(d) highest weight only if they differ by
+   c(1,...,1) with integer c. Reached lifts have
+   sum of absolute coordinates at most n, so
+   the difference has sum of absolute coordinates
+   at most 2n. But a nonzero constant shift has
+   that sum at least d>2n. Hence no such
+   determinant alias exists between any reached
+   lifts, even at different required degrees.
+   This proves uniqueness and allows the one
+   formula to be used for the same SU(d) character
+   at every degree k<=n. QED.
+
+The minuscule branching input is Corollary 30.7, and the Weyl
+alternant input is Theorem 26.4, in
+[Etingof, *Lie Groups and Lie Algebras*](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf).
+Sections 30.3--30.4 identify the defining minuscule modules in the
+used A,C,D cases. The B cancellation and the stable-range
+multiplicity formulas above are derived here.
+
+**Lemma 73C (the exact finite-degree Gaussian moment model).**
+Use any group in Lemma 73B. Put v=1 in its symplectic and orthogonal
+cases, and v=2 in its SU case. Let X be a centered real Gaussian
+of variance v, and let H_L(x;v) be defined by
+
+    exp(tx-vt^2/2)=sum_(L>=0) H_L(x;v)t^L/L!.
+
+For every reached irreducible character chi_lambda there is a
+positive constant c_lambda such that, for every k<=n,
+
+    integral_G chi_lambda(g)F(g)^k dg
+           =c_lambda E[H_L(X;v)X^k],
+    integral_G F(g)^k dg=E[X^k].                        (P73.7)
+
+The constants are
+
+    c_alpha=f^alpha/L!                    in (P73.5),
+    c_(alpha,beta)=f^alpha f^beta/(2^L A! B!) in (P73.6). (P73.8)
+
+Unreached characters have all the left moments zero. For an actual
+paired real atom, use the sum of the two constituent constants;
+they have the same L and constant. A self-dual atom is used once.
+
+**Proof.**
+
+1. Orthogonality identifies the first left moment
+   with the multiplicity of the dual representation
+   in the k-th defining real tensor power. That
+   tensor power is self-dual. The reached partition
+   representations in C,B,D are self-dual in this
+   range; in A duality swaps alpha,beta and keeps
+   the formula unchanged.
+
+2. The Gaussian generating function gives
+
+       E[H_L(X;v)exp(uX)]
+                  =(vu)^L exp(vu^2/2).
+
+   Consequently its k-th moment is zero unless
+   k=L+2h, h>=0, and otherwise is
+
+       E[H_L(X;v)X^k]=k! v^L(v/2)^h/h!.                (P73.9)
+
+   The constants (P73.8) turn this into precisely
+   (P73.5) or (P73.6). For the empty partition or
+   empty bipartition L=0 and c=1, which gives
+   the second moment identity in (P73.7).
+
+3. Linearity proves the actual paired-atom statement.
+   Unreached characters have no such dual
+   multiplicities and therefore every required
+   moment is zero. Only degrees up to n are
+   asserted. QED.
+
+**Lemma 73D (a nonnegative Hermite expression for every original
+sign count).** Let p,q>=0, p+q=n, and let chi_lambda be a reached
+character with the parameters of Lemma 73C. For independent Haar
+g,h put s=F(g)+F(h), d=F(g)-F(h). Then
+
+    A_lambda(p,q)=integral_(g,h) chi_lambda(g)s^p d^q
+       =c_lambda 2^(-L) sum_(j=0)^L binom(L,j)
+                     M_(p,j)(2v)M_(q,L-j)(2v)>=0,       (P73.10)
+
+where
+
+    M_(a,b)(w)=0                    if a<b or a-b odd,
+    M_(a,b)(w)=a! w^b(w/2)^((a-b)/2)/((a-b)/2)!
+                                            otherwise. (P73.11)
+
+For any sign eta at the distinguished position, its original
+integral is
+
+    Phi=(1+eta(-1)^q)A_lambda(p,q)>=0.                  (P73.12)
+
+The same assertion holds for every actual real atom, including
+trivial and paired atoms, and for every unreached atom.
+
+**Proof.**
+
+1. Expand s^p d^q into powers of F(g),F(h).
+   Each power is at most n, and exactly one Haar
+   variable contains the distinguished character.
+   Substitute the exact moments of (P73.7) term
+   by term. This gives
+
+       A_lambda=c_lambda
+           E[H_L(X;v)(X+Y)^p(X-Y)^q],
+
+   for independent centered Gaussians X,Y of
+   variance v. An unreached character instead
+   gives zero at every term of this expansion.
+
+2. S=X+Y and D=X-Y are independent centered
+   Gaussians of variance 2v. The generating
+   function gives the polynomial identity
+
+       H_L((S+D)/2;v)
+         =2^(-L) sum_(j=0)^L binom(L,j)
+                        H_j(S;2v)H_(L-j)(D;2v).
+
+   Independence and (P73.9) now give (P73.10).
+   Every summand is nonnegative. This supplies
+   all integer p,q without a recurrence-tail
+   or separate minus-count range.
+
+3. Exchanging g,h leaves s unchanged and sends
+   d to -d. Therefore the distinguished character
+   in h contributes (-1)^q A_lambda. This proves
+   (P73.12), whose prefactor is zero or two.
+   Paired real atoms sum their two supplied
+   constituent expressions. The L=0 formula
+   includes the trivial atom and makes a trivial
+   minus factor zero, as required. QED.
+
+**Theorem 73E (one unrestricted full-cone function and all defining
+mixtures in the stable ranges).** Fix n and any actual group and F
+in (P73.4). Let f_0 be any real continuous central positive-definite
+function on that group, with no support or level restriction. Let
+f_1,...,f_n lie in cone{1,F}. Then the original full list satisfies
+Q3 for every sign pattern. The ranks, tuple lengths, and labels
+are all unbounded, subject only to the explicit rank-versus-length
+conditions in (P73.4).
+
+**Proof.**
+
+1. Expand f_0 using the entire actual real-atom
+   expansion of Lemma 28A. Its expansion need
+   not be finite. Expand each remaining function
+   into its nonnegative trivial and F coefficients.
+   A trivial minus atom gives zero. A trivial
+   plus atom contributes two and removes that
+   defining position.
+
+2. A surviving atomic term has k<=n defining
+   positions. Every rank condition in (P73.4)
+   remains valid with k in place of n. Apply
+   Lemma 73D to its actual p,q, distinguished
+   atom, and original surviving signs. Every
+   original atomic integral is nonnegative.
+   Unreached atoms are accounted for by their
+   exactly zero required moments, rather than
+   truncating or assuming away the infinite tail.
+
+3. Lemma 28A bounds the whole absolutely expanded
+   integrand by product_(i=0)^n 2f_i(e), a finite
+   number. Uniform absolute convergence permits
+   exchanging the expansion with product-Haar
+   integration. Its nonnegative atomic integrals
+   sum to the desired original continuous Q3
+   integral. QED.
+
+**Corollary 73F (full original-channel return).** Every supplied
+actual real-atom tuple in Theorem 73E obeys
+
+    ||X_epsilon||_HS^2+sum_(lambda!=0)c_lambda t_lambda>=0
+
+in Theorem 62D's original full isotypic spaces. Its identity uses
+2^N_original with the original representation and number of factors,
+including any trivial positions. This is the same normalized
+product-Haar integral supplied in Lemma 73D and Theorem 73E; the
+Gaussian moment model does not replace its tensor projector.
+
+**Acceptance receipt and remaining full-scope consumer.** Section
+72 injects all first interior pair channels, including each source
+multiplicity, and consumes them at arbitrary length for SU(d>=4)
+and USp(2r>=6) with a distinguished level condition. Section 73
+removes that level condition in its explicit stable-rank ranges:
+one entire arbitrary real continuous central positive-definite
+function is supplied, with every defining sign count and every
+nonnegative defining mixture at the other positions. Its sources
+are the exact Young relation (P73.1), the actual tensor branching
+(P73.5)--(P73.6), and the nonnegative Hermite sum (P73.10). Its
+consumers are the original signed integral (P73.12), the uniformly
+convergent full character expansion in Theorem 73E, and the full
+original-channel return in Corollary 73F. No bounded sign search
+supplies any of these steps.
+
+The moment identities are restricted to one distinguished character
+and powers of the defining real character. They do not provide
+joint moment replacements for several arbitrary higher characters.
+In particular different irreducibles can have the same displayed
+Hermite degree without having the same mutual Haar inner products.
+A Gaussian substitution for several such characters would erase
+those distinctions and is not asserted. Nor can increasing group
+rank prove a fixed group's arbitrarily long tuples: the actual
+finite-rank branching walls and determinant aliases must be handled.
+The two out-of-range identity failures in the self-check make that
+missing supplier concrete. Exceptional groups and central quotients
+without these actual defining modules also remain under the full
+original objective. The unrestricted consumer (P62.13) is still open.
+
+**Band-consistency check for Theorem 72C.** In an oriented SU(d)
+tuple every active pair removes exactly one V and one V*. Thus the
+numbers P,Q in its complementary tensor product are the same for
+all active pairs. The fixed target gamma is consequently in the
+same Cartan or one-excitation case of Lemma 72B for all of them.
+In USp(2r), every active pair removes two V positions and the same
+assertion follows from the fixed complementary count. The selected
+middle coordinate in the left-inverse argument can therefore be
+chosen consistently across the entire direct sum. Its projection
+kills other pair images on their full complementary highest-vector
+spaces, rather than only on separately selected basis vectors.
