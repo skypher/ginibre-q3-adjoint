@@ -97067,3 +97067,929 @@ then the original (P62.13) and Lemma 28A. No general injection or original
 full-cone sign has been accepted from the finite tests. The full signed
 kernel at arbitrary auxiliary dimension, all remaining Lie types and
 spin sectors, and the all-group continuous central cone remain active.
+
+## The colour-routing map is injective in every rank-one overlap degree
+
+The selected hard statement is the generic injectivity of (P81.7), with
+(P80.6) as its exact consumer. This section supplies that statement for
+r=1 in every degree. It does not infer a uniform theorem from the finite
+rank tests in Section 81. Instead, it classifies the entire bad-support
+kernel on five vertices and separates its three exceptional relation
+lines by exact operator identities. A support lemma holds at every rank.
+The unresolved injectivity problem thereafter has r>=2; the full Q3
+objective, including arbitrary auxiliary dimension, is unchanged.
+
+**Independent self-double-check immediately before recording the assertions.**
+
+1. Rechecked the matching support on both sides of C_v. A maximal
+   cofactor matches every auxiliary slot except one in v. In any
+   input or output graph that can contribute, all components not
+   containing v have even total auxiliary dimension and the
+   component containing v has odd total auxiliary dimension.
+   Multiplication can join components but cannot introduce a second
+   odd-dimensional component. This uses auxiliary dimensions l_i,
+   not the character box degrees or the minus counts.
+2. Replayed the entire five-vertex bad-support classification. With
+   all five labels nonempty, every disconnected graph is a pair
+   and a triple. Its degree equations give at most one monomial
+   per pair. At two minus vertices there are at most six bad pairs;
+   at four minus vertices there are at most four. The equal-label
+   cases and the unequal-minus-label cases below exhaust them.
+3. Checked the independence mechanism without any degree cutoff.
+   Collinearity of two defining vectors either isolates one bad
+   monomial, separates two by a nonconstant ratio, or reduces to
+   X^k,Y^k,(X-Y)^k. These three powers are independent for every
+   integer k>=2; their sole relation at k=1 accounts precisely
+   for the exceptional lines below. Invalid triangle exponents
+   omit monomials rather than creating additional cases.
+4. Independently checked the full GL(5) decomposition in total
+   polynomial degree five. The even-column Cauchy series gives
+   S_(5,5)E, S_(4,4,1,1)E and S_(3,3,2,2)E, once each.
+   The rank-one quotient retains just S_(5,5)E. On highest
+   vectors x_12^3 q_5 and x_12 q_5^2, direct differentiation
+   gives the Gram scalars 6 and 10. Hence the inverse identity
+   used below follows on the actual ideal, not on its free module.
+5. A direct symbolic expansion checked C H=4H and C P=C Q=6
+   times the input, and checked the three Pluecker substitutions
+   identically. It checked the exact detector coefficients -2,
+   20 and 20 in (P82.6)--(P82.7). A separate sparse falling-factorial
+   differentiation implementation independently replayed the Q
+   detector; the earlier sparse implementation replayed the P
+   detector and C's inverse identity. These are exact identities
+   for the classified exceptional kernels, not a label sweep.
+6. Rechecked the perturbation argument. The endpoint operator
+   C+t C_v is invertible on the ideal over C(t), because C is
+   invertible at t=0. Its endpoint projection has exactly the
+   rotated bad-support line as kernel. In each degree-ten case
+   the stated proper-channel detector has derivative -1/18 on
+   that line, so it cannot vanish identically. No full-rank
+   numerical minor is needed for the injection conclusion.
+7. Replayed (P80.5): rank one forces l_i=1 and N=5 at the first
+   overlap. Product-GL(1) isotypic multiplicities are exactly the
+   vertex-degree dimensions used below. Scalar extension and
+   injectivity therefore supply (P80.6) for every nonempty label,
+   including unbounded first rows. This is a new uniform supplier
+   proof; the five-input scalar sign itself was already covered
+   by Theorem 48A. No new full-cone closure is claimed.
+
+**Lemma 82A (maximal cofactors are supported on one odd-dimensional component).**
+For every r and l in Lemma 80B, let E_v^odd be edge-degree projection
+onto graphs having exactly one component of odd auxiliary dimension,
+with that component containing vertex v. Auxiliary dimension of a
+component D means sum_(i in D) l_i; isolated vertices are counted.
+Then, on the full polynomial ring,
+
+    C_v=E_v^odd C_v E_v^odd.                           (P82.1)
+
+The actual ideal I_r is supported on graphs with exactly one
+odd-dimensional component. In particular, at any output edge degree n,
+only vertices in its unique odd-dimensional component can contribute
+to (P81.7). If that component has d vertices, the coefficient matrix
+across the component-colour copies has rank at most
+
+    min(d,2^(c(n)-1)).                                (P82.2)
+
+Graphs with more than one odd-dimensional component have zero output.
+This is a property of the proposed operator family, not a replacement
+of the full target U_M used by the consumer.
+
+**Proof.**
+
+1. A nonzero cofactor derivative on a monomial requires a matching
+   of all S-1 slots other than the omitted slot a. The matched
+   pairs lie inside components of the input support graph. Thus
+   every component not containing v(a) has an even number of
+   slots, and the component containing v(a) has one omitted
+   slot and an odd number. This proves the right projection
+   in (P82.1), term by term.
+2. A monomial of q_a has the same property for its own graph.
+   Multiplying it by another monomial only joins components;
+   unions of even components stay even, and the unique odd
+   component stays odd and contains v(a). This proves the
+   left projection and also proves the support assertion for
+   the entire generator ideal sum_a q_a R.
+3. Consequently P_n C_v=0 if v is outside the unique odd
+   component. The colour copies at n are linear combinations
+   of the remaining d polynomial outputs, with scalar entries
+   eta_(v,c). Their coefficient matrix has at most d columns
+   and 2^(c(n)-1) rows, giving (P82.2). QED.
+
+For the rest of this section r=1, so N=5 and all l_i=1. Write
+R=C[x_ij:1<=i<j<=5] and I=I_1. Let a=(a_1,...,a_5) be positive
+integer row labels. Let R_bad(a,M) be the span of all wholly bad
+edge monomials in that multidegree, and put
+
+    K(a,M)=I(a) intersect R_bad(a,M)
+          =ker(P_good:I(a) -> R_good(a)).             (P82.3)
+
+The rank-one Gram invariant theorem in Lemma 80A identifies I with
+the kernel of x_ij -> det(z_i,z_j), for arbitrary z_i in C^2.
+Thus K is computed by linear dependence of the bad monomials under
+this substitution, not by numerical integration.
+
+**Lemma 82B (all five-vertex bad-support relation lines).**
+Up to relabeling vertices and the minus set, K(a,M) is zero except
+for the following cases, in each of which it is one-dimensional:
+
+1. M={1,2}, a=(1,1,2,1,1), with vertex three plus. Its generator
+   is H=g_1-g_2 from Proposition 80D.
+2. M={1,2}, a=(2,2,2,2,2). Its generator is P from (P81.5).
+3. M={1,2,3,4}, a=(2,2,2,2,2). Its generator is
+
+       Q= x_15^2 x_23 x_24 x_34
+          -x_25^2 x_13 x_14 x_34
+          +x_35^2 x_12 x_14 x_24
+          -x_45^2 x_12 x_13 x_23.                    (P82.4)
+
+There are no other cases, with no bound on the a_i.
+
+**Proof.**
+
+1. Every nonempty-degree vertex has positive graph degree.
+   A disconnected graph on five such vertices must have
+   components of sizes two and three. The pair {i,j} requires
+   a_i=a_j=t and has monomial x_ij^t. On the remaining
+   vertices {b,c,d}, the unique possible edge exponents are
+
+       n_bc=(a_b+a_c-a_d)/2,
+       n_bd=(a_b+a_d-a_c)/2,
+       n_cd=(a_c+a_d-a_b)/2.
+
+   They must be nonnegative integers. The triple is connected
+   because each of its three vertex degrees is positive.
+   At even total minus count the graph is bad precisely when
+   its pair contains one minus vertex. This lists every bad
+   monomial, including triples that are two-edge stars.
+2. Each det(z_i,z_j) is an irreducible polynomial: regard it
+   as a primitive degree-one polynomial in one coordinate
+   of z_i, whose two coefficients are relatively prime.
+   Different unordered pairs give nonassociate irreducibles.
+   Unique factorization therefore makes two distinct edge
+   monomials nonproportional after substitution. Any set of
+   at most two bad monomials is linearly independent.
+3. We repeatedly use the following elementary calculation.
+   For algebraically independent X,Y, the functions
+   X^k,Y^k,(X-Y)^k are linearly independent for k>=2:
+   a mixed coefficient first forces the coefficient of
+   (X-Y)^k to vanish, and then the other two vanish.
+   At k=1 their relation space has dimension one, with all
+   three coefficients nonzero. The products of minors below
+   can realize independent X,Y by fixing z_1,z_2 as a basis
+   and varying two other vectors. Common factors are canceled
+   only in a polynomial domain on its nonempty open set.
+4. Take M={1,2}. A bad pair joins 1 or 2 to one of 3,4,5.
+   First suppose a_1=a_2=t. The number of possible bad
+   monomials is twice the number of plus labels equal to t.
+   Zero or two are dealt with by Step 2.
+5. If exactly two plus labels equal t, call their vertices
+   b,c, and let the third plus label be s!=t at d. Either
+   all four possible bad monomials vanish, or s=2k with
+   1<=k<=t. Put j=t-k. In minor notation the four are
+
+       B_1b=x_1b^t x_2c^j x_2d^k x_cd^k,
+       B_1c=x_1c^t x_2b^j x_2d^k x_bd^k,
+       B_2b=x_2b^t x_1c^j x_1d^k x_cd^k,
+       B_2c=x_2c^t x_1b^j x_1d^k x_bd^k.
+
+   Signs from reversing a minor do not affect independence.
+   If j>0, setting z_d=z_1 kills the last two. After
+   removing a common nonzero factor, the first two are
+   (x_1b x_2c)^j and (x_1c x_2b)^j, which are independent.
+   Hence their coefficients vanish. Setting z_d=z_2
+   then kills the remaining coefficients.
+6. If j=0, then s=2t. Setting z_b=z_2 kills B_2b.
+   The other three, after a common factor, are t-th powers
+   of X,Y,X-Y by the four-vector Pluecker identity.
+   For t>=2 they are independent by Step 3, and all four
+   coefficients vanish. At t=1, this specialization and
+   z_c=z_2 force the four coefficients to be proportional
+   to the single four-term Pluecker relation H. Equivalently
+   the first specialization ties B_1b,B_1c,B_2c with three
+   nonzero coefficients, and the second ties B_1b,B_1c,B_2b.
+   Their intersection is one line. H is explicitly nonzero,
+   has wholly bad support, and belongs to I by Proposition
+   80D. This is case 1, with d as its degree-two plus vertex.
+7. If all three plus labels equal t, all five labels equal t.
+   Bad monomials exist only for t=2k. Setting z_3=z_1
+   leaves exactly B_14,B_15,B_23. After a common factor
+   these are X^k,Y^k,(X-Y)^k. Setting z_3=z_2 leaves
+   B_24,B_25,B_13 with the same independence property.
+   For k>=2 these two triples exhaust all six coefficients
+   and force them to vanish. For k=1 each triple's relation
+   coefficients span one line. The specialization z_4=z_1
+   relates B_13,B_15,B_24 with all coefficients nonzero,
+   tying those two lines together. The resulting dimension
+   is at most one. P is a nonzero ideal element with just
+   this support by Proposition 81C, so the dimension is one.
+   This gives case 2.
+8. Still with M={1,2}, suppose a_1!=a_2. There are at most
+   three possible bad pairs. When all three plus labels
+   equal a_1=t and a_2=u, the possible monomials are
+
+       B_1b=x_1b^t x_2c^k x_2d^k x_cd^j,
+       k=u/2>0, j=t-k>=0,
+
+   with b ranging over the three plus vertices. Setting
+   z_2=z_b isolates B_1b and forces its coefficient to
+   vanish; do this for each b. The case with 1 and 2
+   interchanged is identical.
+9. The remaining three-pair case has plus labels t,t,u at
+   b,c,d, where a_1=t and a_2=u!=t. Validity requires
+   t=2k and u>=k. Its monomials are
+
+       B_1b=x_1b^t x_2c^k x_2d^(u-k) x_cd^k,
+       B_1c=x_1c^t x_2b^k x_2d^(u-k) x_bd^k,
+       B_2d=x_2d^u x_1b^k x_1c^k x_bc^k.
+
+   Setting z_b=z_2 kills B_1c. The ratio of the two
+   surviving functions is, up to a fixed nonzero sign,
+
+       [x_12 x_cd/(x_1c x_2d)]^k,
+
+   which is nonconstant on the generic vector configurations.
+   Their coefficients must both be zero, and the remaining
+   coefficient is then zero. Interchange 1 and 2 for the
+   other distribution. This exhausts unequal-minus labels.
+10. For M={1,2,3,4}, a bad pair is {5,b}, b minus, with
+    a_b=a_5=t. At most two monomials are handled by Step 2.
+    If exactly three minus labels equal t, let d be the
+    exceptional minus vertex of label u!=t. Validity gives
+    u=2k>0 and j=t-k>=0. The monomial for pair {5,b} is
+
+       B_5b=x_5b^t x_cd^k x_ed^k x_ce^j,
+
+    where c,e are the other two equal-label minus vertices.
+    Setting z_d=z_b kills the other two monomials and leaves
+    this one nonzero generically. All three coefficients
+    vanish, by using each b in turn.
+11. If all four minus labels equal a_5=t, all five labels
+    equal t=2k. Setting z_5=z_1 kills B_51. After a
+    common factor, B_52,B_53,B_54 are X^k,Y^k,(X-Y)^k.
+    They are independent for k>=2, leaving no relation.
+    For k=1 their coefficients have a one-dimensional
+    relation space with all coefficients nonzero. Setting
+    z_1=z_2 leaves only B_51,B_52, with a nonzero fixed
+    ratio, and determines the last coefficient. Thus the
+    dimension is at most one. The displayed Q satisfies
+    the Pluecker substitution identically (also C Q=6Q),
+    is nonzero and has wholly bad support. It spans that
+    line and gives case 3.
+12. At M empty all graphs are good. Even minus sets on five
+    vertices have sizes zero, two or four, so the cases
+    above are exhaustive. Total odd box degree gives an
+    empty polynomial sector and requires no additional case.
+    This proves the assertion in every degree. QED.
+
+**Lemma 82C (exact inverse and proper-channel detectors).**
+In multidegree (2,2,2,2,2), the total Gram operator on the actual
+ideal has the exact inverse
+
+    C^(-1)=(16-C)/60.                                 (P82.5)
+
+For H from Lemma 82B and the common endpoint C,
+
+    C H=4H,
+    res_(12|345)(C_4 H)=-2 x_12 x_34 x_35.            (P82.6)
+
+For the two degree-ten exceptional lines, the identities are
+
+    C P=6P,   C Q=6Q,
+    res_(125|34)[C_1 (16-C) C_3 P]
+        =20 x_12 x_15 x_25 x_34^2,
+    res_(12|345)[C_3 (16-C) C_1 Q]
+        =20 x_12^2 x_34 x_35 x_45.                    (P82.7)
+
+Both displayed cuts have even minus count on each side for their
+respective M. Each restricted multidegree space in these identities
+is one-dimensional and has good support.
+
+**Proof.**
+
+1. Here R=Sym(Lambda^2 C^5), without an internal-block quotient.
+   The global cofactor multiplication map and the Fock metric
+   make C commute with GL(5), by Lemma 81A's unitary argument.
+   In polynomial degree five, the even-column Cauchy identity
+   decomposes R as S_(5,5)E plus S_(4,4,1,1)E plus
+   S_(3,3,2,2)E. The rank-one quotient keeps S_(5,5)E:
+   the ordinary Cauchy decomposition of Sym(E tensor C^2)
+   has SL(2)-invariants precisely at its two-equal-row labels.
+   Lemma 80A identifies its kernel as I. Thus the latter
+   two summands are exactly the ideal in this degree.
+2. Put q_5=x_12 x_34-x_13 x_24+x_14 x_23.
+   Highest vectors of those two summands are x_12^3 q_5
+   and x_12 q_5^2. Only the cofactor omitting slot five
+   can differentiate them nontrivially. Directly,
+
+       q_5(partial)(x_12^3 q_5)=6x_12^3,
+       q_5(partial)(x_12 q_5^2)=10x_12 q_5.
+
+   Multiplication by q_5 gives Gram scalars 6 and 10.
+   By equivariance and the multiplicity-one decomposition,
+   (C-6)(C-10)=0 on I. Therefore C(16-C)=60 on I,
+   proving (P82.5), including its stated weight subspace.
+3. Apply the explicit operators q_v q_v(partial) to the
+   four-term H, the six-term P and the four-term Q.
+   Factoring their endpoint sums gives the three stated
+   eigen-identities. Restricting the displayed operator
+   chains gives respectively -2,20,20 times their stated
+   monomials. These finite polynomial identities were
+   independently expanded before recording, as described
+   above. They involve the actual ideal operators throughout.
+4. On a two-vertex side equal positive degrees force the
+   single edge; on each three-vertex side the degree
+   equations uniquely force the stated star or triangle.
+   Hence these restrictions have no omitted monomials.
+   The minus counts on the two components are even, so
+   these are actual target slots of (P81.7). QED.
+
+**Theorem 82D (uniform generic injectivity at rank one).**
+For r=1, l_i=1, N=5, every even M and every nonempty row-label tuple,
+the map T_eta in (P81.7) is injective on its actual ideal sector over
+C(eta). All labels and total degrees are unrestricted.
+
+**Proof.**
+
+1. If K(a,M)=0, choose all endpoint coefficients equal to
+   one and all other colour coefficients zero. The endpoint
+   map is P_good C. The operator C is invertible on I(a)
+   by Lemma 81A and P_good is injective there by (P82.3).
+   This specialization has full source rank, proving generic
+   injectivity for that sector. Empty ideal sectors are vacuous.
+2. In case 1 of Lemma 82B, the endpoint kernel is spanned
+   by C^(-1)H=H/4. Give the proper channel 12|345 only
+   coefficient C_4. Equation (P82.6) detects that line
+   with output -(1/2)x_12 x_34 x_35. The combined map
+   is injective on the entire ideal sector.
+3. In either degree-ten case put Z=P or Q. Choose endpoint
+   operator C+t C_v, with v=3 for P and v=1 for Q.
+   Over C(t) this operator is invertible: its determinant
+   on the finite ideal space is nonzero at t=0.
+   Since the good projection on I has precisely kernel
+   span{Z}, its endpoint kernel is exactly the line
+
+       w(t)=(C+t C_v)^(-1)Z.
+
+   At zero, w(0)=Z/6. Differentiating the exact inverse
+   gives
+
+       w'(0)=-(16-C)C_v Z/360.
+
+4. For P use proper channel 125|34 with operator C_1;
+   for Q use proper channel 12|345 with operator C_3.
+   The coefficient of the target monomial in the proper
+   output applied to w'(0) is -20/360=-1/18, by
+   (P82.7). Consequently that rational detector on w(t)
+   is not identically zero. The proper channel removes
+   the entire endpoint kernel, and the combined map is
+   injective over C(t). This is a specialization of the
+   independent eta variables in (P81.7), so some full-rank
+   minor is a nonzero polynomial in those variables.
+5. Relabeling the vertices relabels the cofactor Gram
+   operators and colour channels. Referring all colours
+   back to c_1=0 merely exchanges both colours when
+   necessary. Cofactor orientation signs cancel in C_v.
+   Therefore the same conclusions cover every permutation
+   of the exceptional configurations in Lemma 82B.
+6. Every positive row-label tuple either has zero bad kernel
+   or is one of these configurations. Thus every finite
+   sector is injective over the same formal coefficient
+   field, without a bound on first rows or box degree.
+   A common numerical specialization across all degrees
+   is not required or assumed. QED.
+
+**Corollary 82E (return to the unchanged first-overlap consumer).**
+At rank one and auxiliary dimension five, (P80.6) holds for every
+nonempty actual label and even M, by the injection in Theorem 82D.
+Hence (P80.5) is nonnegative in all those sectors. Odd M gives the
+original zero integral by exchanging g and h. These statements use
+the original normalized Haar moment and its exact component-colour
+multiplicities; no norm bound, free-generator injection or truncated
+character has entered.
+
+**Proof.** Product-GL(1) irreducibles are the vertex-degree weights.
+An injective map over C(eta) compares their finite multiplicities
+with constant one. Apply (P80.6) in (P80.5). The odd-sign symmetry
+and pullback to a central quotient are the same original operations
+used earlier. This supplies the rank-one part of the pending operator
+statement, while Theorem 48A already supplied the scalar five-input
+sign independently. QED.
+
+**Full-scope receipt and next direct proof step.** Generic injectivity of
+the actual-ideal map has now been supplied in every rank-one overlap
+degree, by a bounded bad-support classification and transverse colour
+detectors. This removes r=1 from the open (P81.7) family. The next
+hard statement is the same map's injectivity for r>=2, with all l_i<=r,
+sum l_i=2r+3, all full nonempty vertex labels and every even M. Its
+consumer remains (P80.6), then (P80.5), then (P62.13) and Lemma 28A.
+Lemma 82A restricts both ends of every C_v to the unique odd auxiliary
+component; the rank-one proof shows how endpoint-kernel rotations can
+make proper colours detect a relation that all unperturbed proper
+channels miss. At higher rank, bad components have internal degrees
+of freedom, so the pair-and-triple classification cannot be asserted
+there. The next direct construction must separate those actual
+bad-support relation spaces using the same matched target, retaining
+all block cofactor sums and their syzygies. The full signed kernel at
+arbitrary auxiliary dimension, other Lie types and spin sectors, and
+the all-group continuous central positive-definite cone stay active.
+
+The earlier edge-switch session 39470 has now completed its last exact
+rank calculation: rank 22 for its third-label four-minus case. It is
+terminal and was not restarted. Those finite switch tests are not used
+in the proof above. The protected symbolic session 71506 was confirmed
+live this turn and remains untouched.
+
+## An exterior source and coloured matchings absorb the first row-deficit wall
+
+The hard target remains the full original Q3 sign. Starting from the
+higher-rank colour-map problem, the present construction supplies an
+actual signed-moment budget with arbitrary tuple length and unbounded
+one-row labels. It is not a finite label certificate. At the first
+row-deficit wall, the complete relation space is an exterior power,
+independently of the label sizes. A uniform coloured-matching inequality
+absorbs it. The same construction supplies (P81.7) on the corresponding
+unbounded row face at the first auxiliary overlap.
+
+**Independent self-double-check immediately before recording the assertions.**
+
+1. Rechecked Sam--Snowden--Weyman, equation (3.3) and Remark 3.7,
+   directly in the source. With one-dimensional vertex alphabets,
+   Sym(E_i tensor V) consists of the actual one-row irreducibles,
+   and there are no internal Gram coordinates. The whole actual
+   moment ring is the polynomial skew Gram ring modulo all
+   size-(2r+2) Pfaffians, for every tuple length. No first-overlap
+   auxiliary-dimension bound is required in this application.
+2. Rechecked the source-degree test for every Pfaffian generator.
+   At row deficit below 2r no generator has an admissible residual
+   degree graph. At deficit exactly 2r only generators containing
+   the distinguished vertex contribute, and their residual graphs
+   are uniquely determined stars. A generator omitting that vertex
+   would require the larger deficit 2r+2.
+3. Re-derived the entire wall relation space by expansion along the
+   distinguished Pfaffian row. Normalizing its incident variables
+   formally gives the exterior boundary map, whose image is
+   Lambda^(2r) of the coordinate-sum kernel. A root-containing
+   generator basis is triangular against the root-free endpoint
+   subsets. This proves its dimension binom(m-1,2r), including
+   vanishing when m<2r+1, without assuming a generic resolution.
+   The normalization is inside a localized polynomial ring and
+   does not change Haar variables, functions, or measure.
+4. Checked every proper original cut. If its distinguished-side
+   universal moment is nonzero, the complementary total box count
+   is at most the full row deficit. At the wall it is <=2r, so
+   that complement is stable; the distinguished-side deficit is
+   strictly below 2r and is also stable. If the universal moment
+   vanishes, the actual moment vanishes by Lemma 80A. Hence only
+   the two endpoints supply a correction, with coefficient two
+   at even minus count.
+5. Rechecked the matching budget with arbitrary higher background
+   labels. A matching endpoint set containing a higher label
+   always has a good matching; its coefficient recovers that
+   exterior coordinate. The remaining source is the exterior
+   space on unit-label vertices. Its actual target has two colours
+   per isolated matching pair, even in the presence of higher
+   unpaired vertices in the distinguished component. The two
+   parts use disjoint monomials, so their budgets add.
+6. Rechecked the coloured-matching count and its induction for
+   all integer parameters. Its recurrence is obtained by pairing
+   a new vertex in the larger sign class, with two colour choices.
+   The induction comparison is exactly
+   2(n-1)>=(m-2)/(2r-1); the source increment is the corresponding
+   binomial coefficient. At m=2r+1 a same-sign matching leaving
+   one vertex from the odd class gives the required nonzero base.
+7. Independently audited the original consumer at USp(4) with
+   chi_(4) and eight defining atoms, beyond the first auxiliary
+   overlap. Finite-rank defining tensor walks gave full moment
+   175 and original integrals 1610 and 410 at zero and two minus
+   signs. The universal full moment is 210; the relation dimension
+   is binom(7,4)=35. The respective exact coloured targets have
+   dimensions 840 and 240, yielding precisely 2(840-35) and
+   2(240-35).
+8. A separate normalized full-Weyl-denominator audit at USp(4)
+   used chi_(3), chi_(2), and five defining atoms, with two of
+   the defining atoms minus. The universal/actual full moments
+   are 55/50 and the original signed integrals are 88/78.
+   The entire correction is -10=-2 binom(5,4). This checks a
+   genuinely higher background row label, not just defining
+   backgrounds. The Weyl normalization first gave integral one
+   for the constant and for the square of the defining character.
+9. Rechecked the first-overlap map application. Its only residual
+   bad line on this row face occurs at all unit background labels
+   and an even nonempty proper minus class with the distinguished
+   vertex plus. The minimum-degree cofactor Gram matrix is a
+   complete-graph Laplacian; a single proper colour detects the
+   line with coefficient +/-n_minus/(2r+2). An independent
+   rank-two four-minus expansion checked its syzygy, Gram matrix,
+   wholly bad partial sum, and proper-channel coefficient -12/18.
+10. Replayed the original normalized scalar expression throughout.
+    Row labels, all original signs, all proper cuts and both
+    endpoints are retained. Each supplied budget has constant one.
+    No positivity of individual compressed traces, numerical
+    truncation, or common degree-dependent coefficient hypothesis
+    is used. The full all-group central cone remains the objective.
+
+The only external invariant-ring input is the one already proved and
+consumed in Lemma 80A; its source is
+[Sam--Snowden--Weyman](https://arxiv.org/pdf/1209.3509), equation (3.3)
+and Remark 3.7. The exterior calculation, matching inequality and
+original cut budget below are derived here.
+
+Take G=USp(2r), r>=1, and a nontrivial one-row tuple with distinguished
+index zero and m background indices 1,...,m:
+
+    lambda_0=(a_0), lambda_i=(a_i),  a_i>=1.
+
+Write M for the minus set, and define its row deficit
+
+    d=sum_(i=1)^m a_i-a_0.
+
+Use R=C[x_ij:0<=i<j<=m] with vertex degrees, and I_r as in Lemma 80A
+at one-dimensional alphabets. Let U_M be the universal good-graph
+space with 2^(c(n)-1) copies per good edge degree, as in Lemma 80C,
+now without restricting the auxiliary dimension. Its dimension in
+this row-weight sector is the universal signed integral divided by
+two, at even M. We count isolated vertices when defining c(n), as
+always; all original row degrees in this section are positive.
+
+**Lemma 83A (all proper cuts are stable at the first row-deficit wall).**
+If 0<=d<=2r, every proper original cut contribution agrees with its
+universal contribution. If d<2r, the full joint moment is also stable.
+At d=2r and even M, the original signed integral is exactly
+
+    Phi_G(a;epsilon)=2[dim U_M(a)-dim I_r(a)].         (P83.1)
+
+No tuple-length or box-degree bound is imposed.
+
+**Proof.**
+
+1. A Pfaffian generator uses 2r+2 distinct vertices, with
+   degree one at each. If it includes zero, a residual
+   monomial requires
+
+       a_0-1 <= sum_i a_i-(2r+1),
+
+   so d>=2r. If it omits zero, it requires
+
+       a_0 <= sum_i a_i-(2r+2),
+
+   so d>=2r+2. These inequalities are necessary because
+   every residual edge incident to zero has its other end
+   at a background vertex. Thus I_r(a)=0 when d<2r.
+   The same argument applies to any subtuple containing zero.
+2. Consider a proper cut with zero on its first side, and
+   let t be the complementary background total. If that
+   first side has no universal degree graph, its universal
+   moment is zero and its actual moment is zero by (P80.2).
+   Otherwise a_0<=sum_background-on-first-side a_i, so t<=d.
+3. Its complement has total box count t<=2r and cannot contain
+   a size-(2r+2) Pfaffian relation. Its moment is stable by
+   Lemma 80A. The first side has deficit d-t<2r because
+   the complement is nonempty and every a_i>0. Step 1
+   proves stability there as well. This includes cuts
+   whose distinguished side is a singleton and hence zero.
+4. At even M the two endpoint cuts both have sign one.
+   Lemma 80A makes their whole difference -2 dim I_r(a).
+   Universal graph gluing gives Phi_*=2 dim U_M(a).
+   Combining with the unchanged proper cuts gives (P83.1).
+   When d<2r there is no endpoint defect either. QED.
+
+**Lemma 83B (the complete wall relation space is an exterior boundary).**
+Suppose d=2r and m>=1. Put E=C^m with basis e_1,...,e_m,
+let sigma:E->C have sigma(e_i)=1, and put H=ker sigma.
+The actual relation sector is naturally identified, as a vector space,
+with
+
+    I_r(a) ~= Lambda^(2r) H,
+    D:=dim I_r(a)=binom(m-1,2r).                      (P83.2)
+
+A binomial coefficient is zero when its lower index exceeds its
+nonnegative upper index. In particular the source is zero for m<2r+1.
+Its dimension is independent of all row lengths a_i.
+
+**Proof.**
+
+1. By Step 1 of Lemma 83A, only Pfaffians on {0} union B,
+   with |B|=2r+1, can contribute. Their residual multidegree
+   has distinguished degree a_0-1 exactly equal to its total
+   background degree. Every residual edge must therefore
+   meet zero: the unique residual monomial is
+
+       t_B=product_(i in B) x_0i^(a_i-1)
+             product_(i notin B) x_0i^(a_i).
+
+   These generators t_B Pf(X_(0 union B)) span the entire
+   ideal sector. When no such B exists, the source is zero.
+2. Invert the x_0i temporarily, set
+
+       t=product_i x_0i^(a_i),
+       y_ij=x_ij/(x_0i x_0j),
+
+   and expand the Pfaffian along its zero row. For B ordered
+   increasingly, this gives the exact polynomial identity
+
+       t_B Pf(X_(0 union B))
+         =t sum_(j=1)^(2r+1) (-1)^(j+1)
+                Pf(Y_(B without its jth vertex)).    (P83.3)
+
+   The final monomials have nonnegative exponents because
+   each a_i>=1 and a matching uses each endpoint only once.
+   Distinct background endpoint sets A of size 2r have
+   disjoint matching monomials in Pf(Y_A), so these
+   Pfaffian polynomials are linearly independent.
+3. Thus the coefficient vectors in (P83.3) are precisely
+   the image of contraction by sigma,
+
+       partial_sigma: Lambda^(2r+1) E -> Lambda^(2r) E.
+
+   Write E=C e_* direct-sum H with sigma(e_*)=1.
+   Contraction takes e_* wedge alpha to alpha for
+   alpha in Lambda^(2r)H, and kills Lambda^(2r+1)H.
+   Its image is exactly Lambda^(2r)H, proving (P83.2).
+4. Equivalently, fix a root background vertex *. The
+   root-containing B give a basis indexed by the 2r-subsets
+   A not containing *. Their expansions have a unique
+   root-free Pfaffian Pf(Y_A), proving independence.
+   Every root-free B expansion is an alternating sum of
+   these basis elements by partial_sigma^2=0. This also
+   checks spanning without an unresolved syzygy count. QED.
+
+For a source vector write its coefficient form as
+alpha in Lambda^(2r)H. On every background matching with endpoint
+set A, its polynomial coefficient is alpha_A times the matching's
+Pfaffian sign. This includes every source monomial: a relation at
+this wall has exactly r background edges, and they form a matching.
+All other original edges are in the distinguished star.
+
+**Lemma 83C (a uniform coloured-matching binomial budget).**
+Let n,p be nonnegative integers with m=n+p>=1. Let G_r(n,p) count
+r matchings on these two sign classes, with no mixed pair and two
+colour choices per pair. For r>=0,
+
+    G_r(n,p)
+      =sum_(k=0)^r (n)_(2k) (p)_(2r-2k)/(k!(r-k)!),
+    G_r(n,p)>=binom(m-1,2r).                          (P83.4)
+
+Falling factorials vanish when the number selected exceeds the class
+size. Unmatched vertices are allowed; there is no degree cutoff.
+
+**Proof.**
+
+1. Choose 2k vertices from the first class, match them in
+   (2k-1)!! ways, and do the same with 2r-2k in the
+   second class. Each of the r pairs has two colours.
+   The factor 2^r cancels the powers of two in the two
+   matching factorials and gives the displayed formula.
+2. At r=0 both sides are one. At m<=2r the right side
+   is zero. At m=2r+1, one class has odd size and the
+   other even size. Leave one vertex from the odd class
+   unmatched and match within both remaining classes.
+   This gives a matching, hence G_r>=1=binom(2r,2r).
+3. Induct on r and, for fixed r, on m. For m>=2r+2,
+   interchange the classes so n>=p. Pairing a distinguished
+   vertex of the first class, or leaving it unmatched,
+   gives the exact recurrence
+
+       G_r(n,p)=G_r(n-1,p)
+                    +2(n-1)G_(r-1)(n-2,p).
+
+   Here n>=2, so all parameters in the recurrence are valid.
+   The two induction hypotheses give the lower bound
+
+       binom(m-2,2r)+2(n-1)binom(m-3,2r-2).
+
+4. Since n>=m/2,
+
+       2(n-1)>=m-2>=(m-2)/(2r-1).
+
+   Use
+
+       binom(m-2,2r-1)
+         =(m-2)/(2r-1) binom(m-3,2r-2)
+
+   and Pascal's identity. The lower bound in Step 3 is
+   at least binom(m-1,2r), completing the induction. QED.
+
+**Lemma 83D (the exact wall source fits the original colour target).**
+At d=2r and even M,
+
+    dim U_M(a)>=binom(m-1,2r)=dim I_r(a).              (P83.5)
+
+More specifically, let U consist of the background vertices with
+a_i=1, write u=|U|, and let n_-,n_+ be its two sign-class sizes.
+Set H_U=ker(coordinate sum on C^U) when u>=1, and H_U=0 when u=0.
+The source subspace supported only on unit endpoint sets is
+Lambda^(2r)H_U. Its dimension D_U is binom(u-1,2r) for u>=1,
+and zero when u=0. The kernel of ordinary good-graph projection on
+I_r(a) is exactly
+
+    K_bad ~= direct-sum_(s odd)
+                 Lambda^s H_- tensor Lambda^(2r-s)H_+,
+                                                              (P83.6)
+
+where H_- and H_+ are the coordinate-sum kernels in the respective
+unit sign classes; an empty class contributes the zero space.
+These assertions are uniform in rank, tuple length and row sizes.
+
+**Proof.**
+
+1. A matching endpoint set A has original monomial
+
+       t product_({i,j} paired) y_ij.
+
+   If a_i>1, its original star edge x_0i still has positive
+   exponent even when i is a matching endpoint. Hence every
+   pair touching a higher-label vertex joins the distinguished
+   component. The isolated pairs are precisely those whose
+   two labels are one. A matching is good exactly when these
+   isolated pairs are same-sign: the remaining component has
+   even minus count because the full minus count is even.
+2. Every endpoint set A containing a higher-label vertex
+   has a good matching. Pair the unit vertices within their
+   two sign classes. If one class has an odd remaining
+   count, use one higher vertex to pair it; if both counts
+   are odd, use two higher vertices. In the latter case the
+   number of higher endpoints is positive and even, hence
+   at least two. Pair the remaining higher vertices among
+   themselves. Every mixed pair touches a higher endpoint
+   and therefore belongs to the distinguished component.
+3. Choose one such good matching for each A meeting a
+   higher-label vertex. Its coefficient reads +/-alpha_A.
+   The kernel of this coordinate observation is precisely
+   the source with all endpoint sets contained in U.
+   By Lemma 83B's contraction description, that source is
+   Lambda^(2r)H_U. Consequently these good monomials alone
+   supply at least D-D_U independent target coordinates.
+4. For endpoint sets wholly in U, all r matching pairs
+   are isolated, while the distinguished component contains
+   all remaining vertices. Good pairs are same-sign. With
+   the distinguished component colour fixed to zero, the
+   r pairs give exactly 2^r target copies. The dimension
+   of this part of the actual target is G_r(n_-,n_+).
+   Lemma 83C gives G_r>=D_U. When u=0 the statement is
+   vacuous; when 1<=u<=2r its source is zero.
+5. The target monomials in Steps 3 and 4 have distinct
+   endpoint-set types. Their budgets add, giving
+   dim U_M>=D-D_U+G_r>=D. Nonmatching good graphs may
+   supply still more target states but are not used.
+6. For completeness, a unit-only endpoint set A admits
+   a good matching if and only if its minus count is even.
+   Thus a bad-support source has alpha supported only
+   on odd-minus unit endpoint sets. Contraction by the
+   minus-class sum sends it to even-minus degree, and
+   contraction by the plus-class sum to odd-minus degree.
+   These cannot cancel. The source condition therefore
+   requires both contractions separately to be zero.
+   Splitting each nonempty sign class into its sum direction
+   and its zero-sum kernel identifies their joint kernel
+   with (P83.6). If a class is empty, the required odd
+   exterior degree on each class makes the kernel zero.
+   This proves the exact projection statement as well. QED.
+
+**Demand matching.** The budget (P83.5) uses the actual ideal sector
+from (P83.2), the full original component-colour target and constant
+one in (P83.1). Its quantifiers include every r>=1, every tuple length,
+all positive one-row labels at d=2r and every even M. The proof is
+coefficientwise because every vertex alphabet is one-dimensional;
+these dimensions are exactly the original product-Schur multiplicities.
+No vector-dimension comparison is asserted for higher-dimensional
+vertex alphabets. No operator norm, R-linear map or common numerical
+specialization is used. The row and deficit conditions are the stated
+scope of this supplied lemma, not a change to the full project goal.
+
+**Theorem 83E (original type C Q3 for dominant row tuples through the first wall).**
+For every compact connected type C_r group, every tuple of descending
+actual one-row character atoms with positive labels a_i, and every sign
+pattern, the original normalized double-Haar integral is nonnegative
+whenever some distinguished index satisfies
+
+    a_0>=sum_(i!=0) a_i-2r.                           (P83.7)
+
+Tuple length and all row sizes are unrestricted. At the boundary d=2r,
+for even M and at least one background vertex, the exact original
+correction is
+
+    Phi_G=Phi_*-2 binom(m-1,2r).                      (P83.8)
+
+**Proof.**
+
+1. Relabel the distinguished index as zero. Odd M gives
+   zero by the original exchange g,h. If d<0, every cut
+   side containing zero has zero universal moment by its
+   degree balance, and zero actual moment by Lemma 80A.
+   The original integral is zero. If d is odd, every cut
+   product has an odd-total-degree moment on at least
+   one side, also zero by the same graph quotient. Thus
+   those integrals are zero for every sign pattern.
+2. For even 0<=d<2r, Lemma 83A makes the entire original
+   signed expression universal. The good-component graph
+   formula (P74.5) proves its nonnegativity with all signs.
+3. For d=2r, apply (P83.5) in the exact original identity
+   (P83.1). This proves the sign and (P83.8) at once.
+   Empty ideal sectors, including m<2r+1, are included.
+   A single nontrivial atom has zero integral directly;
+   the empty product has integral one. Trivial factors
+   can be removed with their original factor two, or
+   give zero when assigned a minus sign, as before.
+4. Pullback along the simply connected covering preserves
+   the normalized Haar integral and every descending
+   character. This gives the assertion for the actual
+   type C central quotients as well. QED.
+
+This result supplies arbitrarily many genuinely higher one-row atoms,
+including outside every earlier box boundary. For example, at USp(4)
+the tuple chi_(3),chi_(2),chi_(1)^5 has ten boxes, while the earlier
+all-label boundary was eight. The tuple chi_(4),chi_(1)^8 has nine
+vertices, outside the first auxiliary overlap seven. Both are instances
+of the same all-rank construction, not additional theorem hypotheses.
+
+**Corollary 83F (the proposed map is injective on the unbounded dominant row face).**
+At N=2r+3 with all l_i=1, T_eta in (P81.7) is generically injective
+on every nonempty row-label sector satisfying (P83.7), for every even
+M. The r and row labels have no upper bounds.
+
+**Proof.**
+
+1. The source is zero for deficit below 2r. At the wall
+   m=2r+2 and the source dimension is 2r+1 by Lemma 83B.
+   If some background label exceeds one, u<=2r+1.
+   In (P83.6), two nonempty unit sign-class kernels have
+   combined dimension u-2<2r, so their degree-2r exterior
+   space is zero. An empty class also gives zero kernel.
+   Thus good projection is injective on the whole ideal.
+   Choose the common endpoint C and no proper colours;
+   Lemma 81A proves its injectivity, hence generic injectivity.
+2. If all background labels are one, a_0=2. Unless zero
+   is plus and both background sign classes are nonempty,
+   (P83.6) gives zero kernel again. In the remaining case
+   the minus class A and plus class B have positive even
+   sizes, and that kernel is a line.
+3. To exhibit its detector uniformly, for v!=0 put
+
+       g_v=x_0v q_v,
+       h_v=k_v g_v,
+       k_v=(-1)^(position(v)-1),
+
+   with positions in the ordered background list. Pfaffian
+   row expansion gives sum_v h_v=0. Write b_r=(2r-1)!!
+   and m=2r+2. These are all free generators in the weight
+   (2,1,...,1). Each g_v has (2r+1)!! monomials of
+   Fock norm one; for u!=v their common monomials have
+   the star neighbours u,v and a matching on the other
+   2r vertices. Their signed overlap is -b_r k_u k_v.
+   Consequently their exact Gram matrix is
+
+       G^*G=b_r[m Id-k k^T].
+
+   It has rank m-1, has just the stated row syzygy, and
+   makes C=G G^* scalar m b_r on the actual ideal.
+4. Put Z=sum_(v in A) h_v. Its squared norm is
+   b_r |A||B|>0. Its only surviving star pairs have one
+   neighbour from each sign class, hence odd minus count;
+   it has wholly bad support and spans the kernel line.
+   For v in the plus background class,
+
+       C_v Z=-b_r |A| k_v g_v.
+
+5. Choose two minus leaves u,u' and two plus leaves v,w.
+   A monomial of g_v can have star neighbours v,w,
+   the pair u,u', and same-sign pairs on all remaining
+   background vertices. This is a good graph. It respects
+   the proper cut {u,u'} | its complement, which has even
+   minus count on both sides. Give only C_v coefficient
+   one in that proper colour channel, and give all C_i
+   coefficient one at the endpoint. The endpoint kernel
+   is Z/(m b_r); the selected proper-colour coefficient
+   on it is +/-|A|/m, which is nonzero. Thus the combined
+   map is injective on the entire ideal sector.
+6. These are specializations of the original independent
+   eta variables; the full target, original degrees and
+   actual syzygy quotient are unchanged. Therefore the
+   generic map has full source rank in every stated
+   sector. Relabeling the distinguished vertex merely
+   relabels the colour channels, with global exchange
+   restoring the reference colour. QED.
+
+The same Gram construction proves that the common-endpoint projection
+has a nonzero kernel in the minimum-degree packet at every rank when
+the distinguished vertex is plus and the two leaf sign classes are
+nonempty. Its failed knob is detection by that projection alone.
+Neither the full component-colour map nor its original budget fails;
+Step 5 supplies the missing detector within the existing target.
+
+**Full-scope receipt and next direct proof step.** The new supplied
+scalar theorem is Theorem 83E: arbitrary type C ranks, arbitrary tuple
+lengths and unbounded one-row labels at deficit <=2r. Its consumer has
+been replayed on the full original signed integral. The complete first
+wall relation and its kernel are exterior spaces, and their coloured
+matching budget has constant one. Corollary 83F also removes this
+unbounded dominant row face from the pending (P81.7) family. The remaining
+first-overlap operator statement includes interior row tuples and full
+nonrow vertex labels. A concrete next unsupplied scalar budget occurs
+at row deficit 2r+2: extra residual edges and nonstable proper cuts enter,
+so (P83.1) cannot be carried there without their terms. The source is
+still the same all-rank Pfaffian quotient, and the construction to test
+is the next-degree exterior relation module with the unchanged whole
+cut target. No positivity beyond Theorem 83E or Corollary 83F is inferred.
+All other Lie types, spin sectors, nonrow character atoms and the original
+all-group real continuous central positive-definite cone remain active.
+The protected symbolic session 71506 was confirmed live this turn and
+has not been stopped or restarted.
