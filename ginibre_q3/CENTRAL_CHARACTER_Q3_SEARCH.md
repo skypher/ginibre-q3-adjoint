@@ -79078,3 +79078,5367 @@ fixed-background-feature cone, or induction by nonnegative feature shells
 cannot close it.  A successful induction must aggregate complete nested
 strings of background factors while permitting negative intermediate
 shells.
+
+## An extremal-weight injection in every Lie type
+
+The standing target remains Q3 for every finite list of real continuous
+central positive-definite functions on every compact connected group with
+simple Lie algebra, with arbitrary signs and arbitrary factor count.  The
+following is a structural supplier for the two-minus sector.  It extends
+the SU(2) Cartan-boundary mechanism recorded as FM-STR1 in
+`SU2_FUNDAMENTAL_MINUS_REDUCTION_2026_09_26.md`; it does not close the full
+target or the complete two-minus sector.
+
+**Demand and scope.**  This supplier targets an injection from the direct
+sum of the opposite-colour invariant channels into the pure-colour
+invariant space, a sufficient condition for the consumer.  The full
+consumer also permits mixed-colour positive targets.  The knobs below are
+the group, the irreducible highest weights,
+the number of plus factors, and the positive-root defect.  The supplier
+has no bound on rank, labels, or plus-factor count.  Its hypothesis is the
+separation condition `(P26.2)`; the case where this condition fails is
+explicitly left open.
+
+Fix positive roots for the complexified semisimple Lie algebra, let `Q_+`
+be the nonnegative integer span of its simple roots, and write
+
+```text
+D nu = -w_0 nu,       nu <= eta iff eta-nu belongs to Q_+.
+```
+
+Here `w_0` is the longest Weyl element.  The map `D` is an involution and
+permutes simple roots.  Let `A=V_alpha`, `B=V_beta` be the two minus
+representations and let `V_i=V_(lambda_i)`, `i in I`, be the plus
+representations.  All representations in this section are finite
+dimensional complex irreducibles of the actual group `G`.  A trivial minus
+factor makes Q3 zero.  A trivial plus factor multiplies it by two, so remove
+such factors first.  Put
+
+```text
+Lambda_S = sum_(i in S) lambda_i,
+delta    = Lambda_I - D alpha - D beta,
+d_i      = lambda_i - w_0 lambda_i = lambda_i + D lambda_i. (P26.1)
+```
+
+**Theorem 26 (separated extremal weights).**  Let `G` be compact and
+connected with semisimple Lie algebra.  Its two-minus signed character
+integral is nonnegative if either `delta` does not belong to `Q_+`, or
+
+```text
+delta belongs to Q_+, and d_i is not <= delta+D delta
+for every remaining plus factor i.                         (P26.2)
+```
+
+Characters need not be real for this local algebraic statement: the
+integral is nevertheless real because it is an integer combination of
+invariant dimensions.  For real characters it is directly a Q3 result.
+
+**Proof.**
+
+1. For a tensor product `W`, put `m(W)=dim W^G`.  The Haar average of its
+   representation is an idempotent with image `W^G`, so
+   `integral chi_W=m(W)`.  Expanding the four assignments of `A,B` to the
+   two group variables, and exchanging the variables in two assignments,
+   gives
+
+   ```text
+   J/2 = P-K,
+   P   = sum_(S subset I) m(A B V_S) m(V_(I\S)),
+   K   = sum_(S subset I) m(A V_S) m(B V_(I\S)),
+   N   = m(A B V_I),                    P >= N,              (P26.3)
+   ```
+
+   where juxtaposition denotes tensor product and an empty product is
+   the trivial representation.  The last inequality retains the `S=I`
+   term of a sum of nonnegative integers.  Thus it suffices to inject a
+   space of dimension `K` into a space of dimension `N`.
+
+2. We use the following precise highest-weight facts.  An irreducible
+   `V_lambda` has weights in `lambda-Q_+`, its highest-weight space is one
+   dimensional, and its dual has highest weight `D lambda`.  Its lowest
+   weight is `w_0 lambda` and all its weights lie in `w_0 lambda+Q_+`.
+   The first two facts follow from Corollary 25.9 and Proposition 25.10
+   of [Etingof, *Lie Groups and Lie Algebras*](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf#page=136);
+   the dual formula is Proposition 32.1, printed page 172.  The lowest
+   weight assertion also follows by applying the highest-weight facts to
+   the dual.  Compactness supplies complete reducibility by averaging a
+   Hermitian inner product.  Since `G` is connected, the differentiated
+   action has the same invariant subspaces as the group action.
+
+3. Write `T=I\S`.  The canonical invariant-tensor identification gives
+
+   ```text
+   (A V_S)^G = Hom_G(A^*,V_S),
+   (B V_T)^G = Hom_G(B^*,V_T).
+   ```
+
+   If both spaces are nonzero, the highest weights of these constituents
+   must be weights of the corresponding tensor products.  Consequently
+
+   ```text
+   gamma_S = Lambda_S-D alpha belongs to Q_+,
+   gamma_T = Lambda_T-D beta  belongs to Q_+,
+   gamma_S + gamma_T = delta.                               (P26.4)
+   ```
+
+   This proves `K=0` if `delta` does not belong to `Q_+`, settling that
+   alternative.  From now on assume `(P26.2)`.
+
+4. Choose a nonzero highest-weight vector `ell_A` in `A^*`, viewed as a
+   covector on the lowest-weight line of `A`; its weight is `D alpha`.
+   Choose a nonzero lowest-weight vector `ell_B` in `B^*`, viewed as a
+   covector on the highest-weight line of `B`; its weight is `-beta`.
+   Evaluation defines linear maps
+
+   ```text
+   e_A : Hom_G(A^*,V_S) -> V_S,       F -> F(ell_A),
+   e_B : Hom_G(B^*,V_T) -> V_T,       F -> F(ell_B).           (P26.5)
+   ```
+
+   Both are injective.  Indeed, a nonzero vector in an irreducible module
+   generates that module; an intertwiner vanishing on that vector
+   vanishes on its entire generated module.  The image weights in
+   `(P26.5)` are respectively `D alpha` and `-beta`.
+
+5. Equip each representation with an invariant Hermitian inner product.
+   Its distinct torus weight spaces are orthogonal.  Define
+
+   ```text
+   U_i^+ = sum_(eta in Q_+, eta <= delta)
+                  V_i[lambda_i-eta],
+   U_i^- = sum_(zeta in Q_+, zeta <= D delta)
+                  V_i[w_0 lambda_i+zeta].                   (P26.6)
+   ```
+
+   These sums are finite.  A common weight would imply
+   `d_i=eta+zeta <= delta+D delta`, contrary to `(P26.2)`.
+   Therefore `U_i^+` and `U_i^-` are orthogonal for every `i`.
+
+6. Every weight component of `e_A(F)` has factor weights
+   `lambda_i-eta_i`, `i in S`, with `eta_i in Q_+` and
+   `sum eta_i=gamma_S`.  Equation `(P26.4)` implies each `eta_i<=delta`.
+   Likewise every weight component of `e_B(F)` has factor weights
+   `w_0 lambda_i+zeta_i`, `i in T`, with
+
+   ```text
+   sum_(i in T) zeta_i = -beta-w_0 Lambda_T
+                       = D gamma_T <= D delta.
+   ```
+
+   Thus, after reordering the plus factors, the image of
+   `e_A tensor e_B` is contained in
+
+   ```text
+   Z_S = tensor_(i in S) U_i^+ tensor_(i in T) U_i^-.        (P26.7)
+   ```
+
+7. Let `H=(A B V_I)^G`.  Reordering tensor factors gives a concrete map
+
+   ```text
+   F_S : (A V_S)^G tensor (B V_T)^G -> H,
+         t tensor u -> reorder(t tensor u).
+   ```
+
+   The image lies in `H` because a tensor product of invariant tensors is
+   invariant under the diagonal group.  Define
+   `E:H -> V_I` by contraction with `ell_A tensor ell_B`.  Then
+   `E F_S` is precisely the reordered map `e_A tensor e_B`, hence is
+   injective on the entire channel, including all its multiplicities.
+
+8. For distinct subsets `S,S'`, some factor belongs to exactly one of
+   them.  In that factor the spaces in `(P26.7)` use the orthogonal pair
+   `U_i^+,U_i^-`; hence `Z_S` and `Z_(S')` are orthogonal.  It follows that
+   the sum of the maps `E F_S` is injective on the direct sum of all
+   opposite-colour channels.  The sum of the maps `F_S` is therefore an
+   injection into `H`.  Its domain dimension is exactly `K`, so `K<=N`.
+
+9. Substitute this dimension inequality into `(P26.3)`:
+   `J=2(P-K)>=2(N-K)>=0`.  This proves the second alternative.  Every sum
+   and vector space in the proof is finite; no limiting argument or
+   bounded enumeration enters.  The representations are representations
+   of `G` itself, so the argument also applies to central quotients without
+   changing their allowed highest-weight lattice.  QED.
+
+At `delta=0`, the nonzero opposite-colour channels are exactly the subsets
+with `Lambda_S=D alpha`, `Lambda_T=D beta`; each has dimension one because
+the Cartan component has multiplicity one.  Their images under `E F_S`
+are nonzero multiples of the pure tensors with highest vectors on `S`
+and lowest vectors on `T`.  This recovers the extremal boundary injection
+without a rank-one fusion rule.
+
+**Lemma 26A (full support of an extremal gap).**  For a simple Lie algebra
+and a nonzero dominant integral weight `lambda`, the vector
+`d=lambda+D lambda` has a strictly positive coefficient at every simple
+root when expanded in the simple-root basis.
+
+**Proof.**
+
+1. The lowest weight `w_0 lambda` is a weight of `V_lambda`, so
+   `d=lambda-w_0 lambda` belongs to `Q_+`.  The vector `d` is nonzero and
+   dominant because both `lambda` and `D lambda` are dominant.
+2. Write `d=sum c_j alpha_j`, `c_j>=0`.  If `c_j=0`, dominance gives
+   `0<=<d,alpha_j^vee>=sum_(k!=j) c_k <alpha_k,alpha_j^vee><=0`.
+   Each neighbouring node has a strictly negative Cartan entry, so every
+   neighbouring coefficient must also be zero.
+3. Connectivity of the Dynkin diagram propagates this vanishing to all
+   nodes, contradicting `d!=0`.  Thus every coefficient is positive.
+   QED.
+
+**Corollary 26B (whole root-cone faces).**  For a simple Lie algebra,
+Theorem 26 applies whenever `delta in Q_+` and `delta+D delta` has a zero
+coefficient at some simple root.  There is no bound on the other root
+coefficients or the plus-factor count.
+
+**Proof.**  By Lemma 26A, every `d_i` has a positive coefficient at the
+missing root.  Thus no `d_i` can be `<=delta+D delta`, which is exactly
+the supplier hypothesis `(P26.2)`.  QED.
+
+In particular, if `w_0=-1`, all proper faces of the positive-root cone
+are covered in the two-minus sector.  If `D` is nontrivial, the support
+of `delta` together with its image under `D` must miss a node.  No
+claim is made for a face whose union with its dual has full support.
+
+**Corollary 26C (small height defect, including real character atoms).**
+Let `ht` be the linear functional taking value one on every simple root.
+Since `D` permutes these roots, `ht(D nu)=ht(nu)`.  For any two-minus
+irreducible character tuple with at least one nontrivial plus factor, put
+
+```text
+h = sum_(i in I) ht(lambda_i) - ht(alpha) - ht(beta).
+```
+
+The integral is nonnegative if
+
+```text
+h < min_(i in I) ht(lambda_i).                              (P26.8)
+```
+
+The same assertion holds for real positive-definite character atoms
+`R_lambda=chi_lambda` when `lambda=D lambda`, and
+`R_lambda=chi_lambda+chi_(D lambda)` otherwise, using the same heights.
+
+**Proof.**
+
+1. If `delta` is outside `Q_+`, apply the first alternative of Theorem 26.
+   Otherwise `ht(delta)=h>=0`.  If some `d_i<=delta+D delta`, applying
+   `ht` gives `2ht(lambda_i)<=2h`, contradicting `(P26.8)`.
+   Thus the second alternative applies.
+2. Expand each `R_lambda` by multilinearity into its one or two
+   irreducible characters.  Dualizing any constituent preserves its
+   height, so every constituent tuple has the same `h` and satisfies
+   `(P26.8)`.  Step 1 applies to every term, proving the assertion for
+   the real atoms.  This is a finite sum with positive coefficients.
+   QED.
+
+For SU(2) labels `p_i` and minus labels `a,b`, `(P26.8)` becomes
+`sum p_i-a-b < min p_i`.  It includes positive defects, extending the
+Cartan-boundary case without imposing a factor-count bound.
+
+**Unresolved consumer.**  The construction fails to give an injection
+when extreme weight bands overlap: the images of different subset
+channels can then have linear relations.  The full two-minus consumer
+also contains the positive terms
+`sum_(S proper subset I) m(A B V_S)m(V_(I\S))` in `(P26.3)`.
+A next structural supplier must account for the relations using these
+additional same-colour channels, or use a different construction.  The
+separated-weight theorem does not assert that pure-colour targets suffice
+when its hypothesis is dropped.  Sectors with four or more minus factors
+remain separate obligations under the full target.
+
+**Previously launched diagnostic.**  The SU(3) GMP program
+`character_ring_iter/search_su3_full_central_q3_gmp.cpp` completed its
+`p+q<=10`, at-most-six-factor run over 35 nontrivial real character atoms:
+4,496,352 multisets and 132,663,132 even sign patterns, with no negative
+value.  This is bounded evidence only and supplies none of Theorem 26,
+its corollaries, or the outstanding full-cone theorem.  The current work
+priority is structural proofs rather than further certificate sweeps.
+
+## Intersections of invariant channels and arbitrary sign patterns
+
+The next supplier uses positive mixed-colour channels.  Its knob is the
+number of negative invariant cuts, not the number of factors or the size
+of the labels.  The ambient group is again compact and connected with
+semisimple Lie algebra.  It permits arbitrarily many minus factors and
+uses no weight-separation condition.
+
+**Lemma 27A (intersection equals common refinement).**  Let `L` be a finite
+set of representation factors and `W=tensor_(i in L) W_i`.  For a partition
+`pi` of `L`, let `H_pi` be the subspace fixed by an independent copy of `G`
+on each block, embedded in `W`.  Thus
+
+```text
+H_pi = tensor_(C in pi) (tensor_(i in C) W_i)^G.
+```
+
+If `pi wedge sigma` is the partition into nonempty intersections of their
+blocks, then
+
+```text
+H_pi intersection H_sigma = H_(pi wedge sigma).             (P27.1)
+```
+
+**Proof.**
+
+1. For `x` in the Lie algebra and `C subset L`, let `x_C` act by the sum
+   of `x` on factors in `C`.  Actions on distinct factors commute, so
+   `[x_C,y_D]=[x,y]_(C intersection D)`.
+2. A vector in `H_pi intersection H_sigma` is killed by `x_C` for each
+   block `C` of `pi` and by `y_D` for each block `D` of `sigma`.  It is
+   therefore killed by their commutators.  The Lie algebra is semisimple,
+   hence `[g,g]=g`; linear combinations of these commutators show it is
+   killed by every Lie algebra action on every cell `C intersection D`.
+   Connectedness then gives invariance under the corresponding copy of
+   `G`.  This proves containment in the right-hand side of `(P27.1)`.
+3. Conversely, invariance on all cells implies invariance on a block,
+   since its Lie algebra action is the sum of the actions on its cells.
+   Connectedness again gives the two required group invariances.  The
+   factorized expression for `H_pi` follows by Haar averaging independently
+   on its disjoint blocks.  QED.
+
+For a nonempty list of representation factors indexed by `L`, let
+`M subset L` be the minus positions.  When `|M|` is even, assign to an
+unordered cut `pi={S,L\S}` the sign `(-1)^(|S intersection M|)`.
+This sign is independent of the chosen side of the cut.  Include the
+empty/full cut, whose invariant space is `H=(tensor_(i in L) W_i)^G`.
+Empty blocks contribute a one-dimensional trivial factor.
+
+**Theorem 27 (at most two negative invariant cuts).**  For an arbitrary
+even number of minus factors, suppose that at most two unordered cuts
+have both negative sign and a nonzero invariant space:
+
+```text
+# { {S,L\S} : |S intersection M| odd,
+                m(W_S)m(W_(L\S)) > 0 } <= 2.               (P27.2)
+```
+
+Then the signed character integral is nonnegative.  Tensor
+multiplicities, factor count, and the even minus count are arbitrary.
+The conclusion applies to every Lie type and every connected central
+quotient.  As in Theorem 26, the finite character identity is valid without
+assuming that the individual characters are real.
+
+**Proof.**
+
+1. Pair complementary terms in the finite character expansion.  Since
+   `L` is nonempty, each unordered cut has exactly two orientations.  Put
+   `P_M=sum_(positive cuts pi) dim H_pi` and
+   `K_M=sum_(negative cuts pi) dim H_pi`.  Then
+
+   ```text
+   Phi = 2(P_M-K_M),       P_M >= dim H.                     (P27.3)
+   ```
+
+   The second assertion retains the positive empty/full cut.
+2. With no nonzero negative cut, `K_M=0`.  With one, its invariant-tensor
+   space embeds in `H`, so `K_M<=dim H<=P_M`.  Assume there are two
+   distinct nonzero negative unordered cuts `pi={S,L\S}` and
+   `sigma={T,L\T}`.
+3. Define the agreement set
+
+   ```text
+   R=(S intersection T) union ((L\S) intersection (L\T)),
+   tau={R,L\R}.                                            (P27.4)
+   ```
+
+   It has even minus parity.  Indeed, the disagreement set `L\R` is
+   the symmetric difference of `S,T`, so its minus parity is the sum
+   modulo two of the minus parities of `S,T`, namely zero.  The total
+   minus count is even, hence `R` also has even minus parity.  Thus `tau`
+   is a positive cut.  Distinctness of the two unordered cuts implies
+   `T!=S` and `T!=L\S`; consequently both `R` and `L\R` are nonempty.
+   Therefore `tau` differs from the empty/full cut.
+4. By Lemma 27A, `C=H_pi intersection H_sigma` is the tensor product of
+   the invariant spaces of the four intersection cells.  Each block of
+   `tau` merges two of these cells.  Combining invariant tensors on
+   those cells gives the natural inclusion `j:C -> H_tau`.  No loss of
+   multiplicity occurs.
+5. Let `Q_C` be the orthogonal projection in `H` onto `C`.  There is an
+   explicit linear injection
+
+   ```text
+   H_pi direct_sum H_sigma -> H direct_sum H_tau,
+   (t,u) -> (t+u, j(Q_C(t-u))).                             (P27.5)
+   ```
+
+   If its first component is zero, `u=-t` and `t` lies in `C`.  Its
+   second component is then `2j(t)`, which vanishes only when `t=0`.
+   The factor two is nonzero over the complex field.
+6. By the cut-count hypothesis, the source dimension is exactly `K_M`.
+   The target consists of two distinct positive summands, so its
+   dimension is at most `P_M`.  Thus `K_M<=P_M`, and `(P27.3)` proves
+   `Phi>=0`.  For an empty list the original integral is one directly.
+   An odd minus count gives zero by exchanging the group variables and
+   requires no cut-count hypothesis.  QED.
+
+**Two-minus consequence.**  With minus representations `A,B` and plus
+indices `I`, orient every negative cut by its side containing `A`.  It
+is uniquely specified by a plus subset `S` and has dimension
+`m(A V_S)m(B V_(I\S))`.  Therefore the two-minus integral is nonnegative
+whenever at most two such subsets have nonzero product.  This removes
+the no-singlet-subblock hypothesis from the two-cut sector for the scalar
+Q3 conclusion, with arbitrary multiplicities.  It does not assert that
+the specific corrected differential of FM-STR9 is injective without that
+hypothesis.
+
+For sums of conjugate characters, Theorem 27 applies by multilinearity
+when `(P27.2)` holds for every constituent tuple; a cut count for just one
+tuple does not establish the condition for the whole real atom.  It also
+applies directly to their finite direct-sum modules, using those modules'
+own invariant cut spaces, without separate constituent conditions.
+
+**Why pairwise intersections do not finish the many-cut case.**  The
+intersection identity determines relations between two channel spaces.
+It does not determine all relations among three or more spaces.  Already
+for four SU(2) fundamental modules, the three invariant pairing tensors
+
+```text
+epsilon_12 epsilon_34,
+epsilon_13 epsilon_24,
+epsilon_14 epsilon_23
+```
+
+have pairwise zero intersections but satisfy
+
+```text
+epsilon_12 epsilon_34 - epsilon_13 epsilon_24
+                         + epsilon_14 epsilon_23 = 0.       (P27.6)
+```
+
+Here `epsilon_ij` is the alternating two-dimensional invariant tensor
+on factors `i,j`.  Equation `(P27.6)` follows by expansion in a basis
+`e_0,e_1`, or equivalently by the rank-two determinant identity.  Each
+pairing line is nonzero.  Their pairwise intersections vanish by `(P27.1)`
+because the common refinement consists of single factors with no
+invariants.  Thus a direct-sum argument based solely on pairwise
+intersections cannot be extended to arbitrarily many channels.  This
+example concerns the general invariant-partition arrangement, not a
+negative Q3 example.
+
+The next unresolved mechanism is control of these higher linear
+relations, with compatible maps into the positive mixed-colour summands.
+Theorem 27 supplies such a map for the first nontrivial relation space,
+for any even minus count; it supplies no uniform construction with
+arbitrarily many nonzero negative cuts.
+
+## The remaining relation-space supplier for the full real cone
+
+The precise input modules for the full target are
+
+```text
+W_lambda = V_lambda                         if lambda=D lambda,
+W_lambda = V_lambda direct_sum V_(D lambda)  otherwise.
+R_lambda = chi_(W_lambda).                                   (P28.1)
+```
+
+Choose one representative of each dual orbit.  These characters are real
+and positive definite.  The trivial orbit is included.  This formulation
+allows a construction to mix the two irreducible components of a real
+atom.  Requiring positivity for every complex constituent tuple would be
+an extra requirement and is not part of the outstanding demand.
+
+**RC demand (an actual map on the relations).**  The input quantifiers are
+every compact connected `G` with simple Lie algebra, every nonempty
+finite list of the modules `(P28.1)` of that actual group, and every even
+set of minus positions.  There is no bound on labels, tuple length, or
+minus count.
+Use the unordered cuts and their signs from Theorem 27.  Define
+
+```text
+O       = direct_sum_(negative cuts pi) H_pi,
+H       = (tensor_i W_i)^G,
+F:O->H,   (t_pi)_pi -> sum_pi t_pi,
+Rel     = ker F,
+H_free  = (range F)^perp inside H,
+E_prop  = direct_sum_(positive cuts pi other than empty/full) H_pi.
+```
+
+Construct, from invariant tensors and their recouplings, an injective
+linear map
+
+```text
+L: Rel -> H_free direct_sum E_prop.                          (P28.2)
+```
+
+The unused pure-colour space `H_free` is retained: demanding that all
+relations embed in `E_prop` alone would be unnecessarily stronger.  A
+dimension assertion without a construction does not supply this map.
+For a pair of negative cuts, Theorem 27 gives it explicitly by projecting
+their difference onto their common invariant space and including that
+space in the positive agreement cut.  Under Theorem 26, the merge map
+`F` on the relevant two-minus irreducible channels is already injective,
+so `Rel=0`.
+
+**Proposition 28 (conditional consumer, with no loss of cone).**  If
+`(P28.2)` is supplied for every input just stated, the full real continuous
+central positive-definite Q3 target follows.
+
+**Proof.**
+
+1. All spaces for a fixed atom tuple are finite dimensional.  Orthogonally
+   decompose `O=Rel direct_sum Rel^perp`.  The restriction of `F` to
+   `Rel^perp` is injective.  Write `Lr=(L_0 r,L_1 r)` in the two target
+   summands of `(P28.2)`.  Then
+
+   ```text
+   r+x -> (F x+L_0 r, L_1 r),
+   Rel direct_sum Rel^perp -> H direct_sum E_prop             (P28.3)
+   ```
+
+   is injective.  The vectors `F x` and `L_0 r` are orthogonal in `H`;
+   vanishing of both output components forces `F x=0` and `Lr=0`, hence
+   `x=r=0`.
+2. Therefore `K_M=dim O<=dim H+dim E_prop=P_M`.  Formula `(P27.3)` proves
+   Q3 for every atom tuple with an even minus count.  An odd count vanishes
+   by exchanging the variables, and the empty tuple has integral one.
+3. By Lemma 28A below, each target function is a uniform limit of finite
+   nonnegative combinations of the real atoms `(P28.1)`.  For finite such
+   combinations, multilinearity expresses Q3 as a finite sum of atom
+   integrals with nonnegative coefficients.  Step 2 makes every term
+   nonnegative.
+4. For fixed tuple length, let `f_i^(k)->f_i` uniformly and choose finite
+   bounds `B_i>=sup_k ||f_i^(k)||_infinity, ||f_i||_infinity`.  Telescoping
+   the products of the signed factors bounds their uniform difference by
+
+   ```text
+   sum_j 2||f_j^(k)-f_j||_infinity product_(i!=j) (2B_i).
+   ```
+
+   It tends to zero.  Normalized product Haar measure has mass one, so
+   the integral differences tend to zero as well.  Taking this limit
+   proves Q3 for the full target functions.  No rank or group reduction
+   is used.  QED.
+
+**Lemma 28A (uniform positive real-atom expansion).**  On a compact
+connected group with semisimple Lie algebra, every real continuous
+central positive-definite function `f` has
+
+```text
+f = sum_(dual orbits [lambda]) b_[lambda] R_lambda,
+b_[lambda]>=0,
+sum_[lambda] b_[lambda] R_lambda(e) = f(e) < infinity,        (P28.4)
+```
+
+with uniform convergence.  Only representations of the actual group
+occur, including when the group is a central quotient.
+
+**Proof.**
+
+1. Positive definiteness makes `K(x,y)=f(x^(-1)y)` a positive semidefinite
+   kernel.  Give formal vectors `delta_x` inner product
+   `<delta_x,delta_y>=K(x,y)`, linear in the second argument, quotient out
+   its null space, and complete.  Left translation defines unitary
+   operators `pi(g)delta_x=delta_(gx)`.  With `v=delta_e`, their coefficient
+   is `<v,pi(g)v>=f(g)` and `||v||^2=f(e)`.  The orbit of `v` spans a dense
+   subspace by construction.
+2. The two-point positive-definiteness condition gives
+   `f(g^(-1))=conjugate(f(g))`.  Thus
+   `||delta_x-delta_y||^2=2f(e)-2 Re f(x^(-1)y)`.
+   Continuity of `f` proves strong continuity of `pi` first on the dense
+   span of these vectors and then on the completion by unitarity.  If
+   `f(e)=0`, every vector is null and `(P28.4)` is the zero expansion.
+3. For `f(e)>0`, average the rank-one positive operators on the orbit:
+
+   ```text
+   T = integral_G |pi(g)v><pi(g)v| dg.
+   ```
+
+   The rank-one orbit is continuous in trace norm, using
+   `|| |u><u|-|z><z| ||_1 <= (||u||+||z||)||u-z||`.
+   Its integral is therefore a positive trace-class, hence compact,
+   operator.  Haar invariance shows that `T` commutes with `pi`.
+   Its trace is `||v||^2`.
+   If `w in ker T`, the nonnegative continuous function
+   `|<pi(g)v,w>|^2` has integral zero; it vanishes everywhere because Haar
+   measure has full support.  (Translations of any nonempty open set
+   cover the compact group by finitely many translates, so that set
+   cannot have Haar measure zero.)  Cyclicity of `v` then forces `w=0`.
+4. The spectral theorem for positive compact operators (Theorem 36.3 of
+   [Etingof's notes, printed page 194](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf#page=195))
+   decomposes this Hilbert space as an orthogonal sum of the finite
+   dimensional positive eigenspaces of `T`; there is no kernel remainder
+   by Step 3.  These
+   eigenspaces are `pi`-invariant.  Each decomposes into irreducible
+   unitary representations by taking invariant orthogonal complements.
+   Consequently write `v=sum_j v_j` in irreducible copies, with
+   `sum_j ||v_j||^2=||v||^2`.  There are only countably many nonzero terms.
+5. The coefficient series
+   `f(g)=sum_j <v_j,pi_j(g)v_j>` converges uniformly absolutely, because
+   each term has modulus at most `||v_j||^2`.  Since `f` is central,
+   average this expression over `g -> k g k^(-1)`.  Uniform convergence
+   justifies exchanging the sum and integral.  Schur's lemma and the
+   trace determine the averaged irreducible operator as
+   `(chi_lambda(g)/dim V_lambda) Id`.
+6. Grouping the irreducible copies gives
+
+   ```text
+   f(g)=sum_lambda a_lambda chi_lambda(g),
+   a_lambda=sum_(j of type lambda) ||v_j||^2/dim V_lambda>=0,
+   sum_lambda a_lambda dim V_lambda=f(e).
+   ```
+
+   This is a uniform absolutely convergent expansion, since
+   `|chi_lambda(g)|<=dim V_lambda` for a unitary representation.
+7. Character orthogonality follows by Haar averaging on
+   `V_lambda tensor V_mu^*`: its invariant dimension is
+   `dim Hom_G(V_mu,V_lambda)`, which is one for equal irreducibles and
+   zero otherwise by Schur's lemma.  Thus the coefficients in Step 6
+   are unique.  Reality of `f` and
+   `conjugate(chi_lambda)=chi_(D lambda)` give
+   `a_lambda=a_(D lambda)`.
+8. Combining each dual pair into `R_lambda` proves `(P28.4)`.  For any
+   increasing finite exhaustion of its nonzero coefficient support, the
+   uniform tail is at most
+   `sum_(omitted [lambda]) b_[lambda] R_lambda(e)`, which tends to zero
+   by the finite total sum.  Every partial sum is real, central, and
+   positive definite: a character is a sum of diagonal unitary matrix
+   coefficients, and nonnegative linear combinations preserve positive
+   definiteness.  QED.
+
+The consumer and the continuity passage are now explicit.  The unsupplied
+part is `(P28.2)` for arbitrarily many negative cuts.  The Pluecker
+relation `(P27.6)` explains why Lemma 27A alone cannot supply it.  No
+full-cone completion is claimed by this conditional proposition.
+
+**Gate receipt (2026-10-03, main-agent self-review).**  Rechecked the four
+two-minus assignments in `(P26.3)`, the dual extreme weights in `(P26.5)`,
+the two root-defect budgets in `(P26.6)`, and injectivity on all channel
+multiplicities.  Rechecked the unordered-cut factor two, agreement-cut
+parity and distinctness, and the kernel calculation in `(P27.5)`.
+Rechecked that `(P28.2)` retains unused pure-colour targets and that its
+input modules are the real atoms, rather than imposing a stronger
+complex-constituent theorem.  Rechecked the cyclic compact-operator
+argument and both uniform tail estimates in the full-cone passage.
+Theorems 26 and 27 and Lemma 28A are local proved suppliers; Proposition
+28 is a proved conditional consumer.  The full Q3 goal remains open:
+the map `(P28.2)` has not been constructed for arbitrary negative-cut
+families.  The SU(3) bounded run is not credited toward that requirement.
+
+## Positive agreement projections detect self-dual recouplings
+
+This supplier uses the full positive agreement-cut space, including its
+nonzero intermediate channels.  It extends the two-negative-cut argument
+to three cuts in every target group, and to arbitrarily many cuts under
+the explicit agreement-distinctness and recoupling hypotheses below.
+The tuple length, labels, and even minus count remain arbitrary.  The
+input factors can be the real-atom modules `(P28.1)` themselves.  Work
+throughout with a compact connected group with semisimple Lie algebra.
+
+For a cut `pi`, let `Q_pi` be the orthogonal projection onto `H_pi` in
+the diagonal invariant space `H`.  For two distinct cuts `pi,sigma`, write
+`C=H_pi intersection H_sigma`, and let `Q_C` be its projection.
+The four cells of their common refinement, in row/column order, are
+
+```text
+A=S intersection T,    B=S intersection (L\T),
+C'=(L\S) intersection T,   D=(L\S) intersection (L\T).
+```
+
+The row cut is `AB | C'D`, the column cut is `AC' | BD`, and the
+agreement cut `tau` is `AD | BC'`.  The symbol `C'` is a cell, whereas
+`C` denotes the common invariant subspace.
+
+**Lemma 29A (exact two-cut overlaps).**  Decompose the representation on
+each cell into irreducibles with its full multiplicity space.  A cell
+isotypic component contributes to both `H_pi` and `H_sigma` exactly when
+its four irreducible labels have the pattern
+
+```text
+(V_lambda, V_lambda^*, V_lambda^*, V_lambda).                 (P29.1)
+```
+
+On this component, each cut has one singlet line tensored with the same
+multiplicity space.  The modulus of the overlap of its normalized
+singlet lines is `1/d_lambda`, where `d_lambda=dim V_lambda`.  The trivial
+label gives `C`; the nontrivial patterns give the other singular values
+of `Q_pi Q_sigma`.  In particular,
+
+```text
+||Q_pi Q_sigma-Q_C|| <= 1/d_min(G),                          (P29.2)
+```
+
+where `d_min(G)` is the smallest nontrivial irreducible dimension.
+The left side is zero when no nontrivial pattern `(P29.1)` occurs.
+
+**Proof.**
+
+1. All three cut averages commute with the four cell isotypic
+   projections: the cell action on an irreducible copy is
+   `rho_lambda(g) tensor Id` on its multiplicity space.  We may therefore
+   work separately on each irreducible quadruple and then take an
+   orthogonal direct sum.
+2. Row invariance requires the second label to be dual to the first and
+   the fourth to be dual to the third.  Column invariance requires the
+   third label to be dual to the first and the fourth to be dual to the
+   second.  These conditions give exactly `(P29.1)`.  The invariant
+   pairing for an irreducible and its dual is one dimensional by
+   Schur's lemma.
+3. In the model `E tensor E^* tensor E^* tensor E`, use an orthonormal
+   basis `e_a` and its dual basis `e^a`.  The normalized row and column
+   tensors are
+
+   ```text
+   r=d^(-1) sum_(a,b) e_a tensor e^a tensor e^b tensor e_b,
+   c=d^(-1) sum_(a,b) e_a tensor e^b tensor e^a tensor e_b.
+   ```
+
+   Their norms are one.  Their contraction has `d` matching terms of
+   size `d^(-2)`, giving modulus `1/d`.  Unitary identifications of
+   irreducible copies change only the choices of phases of these lines.
+4. The multiplicity spaces are spectators, so this calculation applies
+   to their entire tensor product, not just to a selected invariant
+   vector.  Connected semisimple groups have no nontrivial
+   one-dimensional representations: the differentiated character is zero
+   on `[g,g]=g`, and connectedness then makes the character trivial.
+   Thus the `d=1` block is precisely the four-cell invariant space `C`
+   from Lemma 27A.  Removing it proves `(P29.2)`.  QED.
+
+**Lemma 29B (a positive projection removes self-dual overlaps).**  Let
+`tau` be the positive agreement cut of two negative cuts.  If
+`x in H_pi` and `Q_tau x=0`, then for every `y in H_sigma`,
+
+```text
+|<x,y>| <= c_(pi,sigma) ||x|| ||y||,                         (P29.3)
+```
+
+where `c_(pi,sigma)` is the maximum of `1/d_lambda` over the non-self-dual
+labels occurring in the shared pattern `(P29.1)`, or zero if there are
+none.  In particular `c_(pi,sigma)<=1/3` for every connected semisimple
+group, and it is zero if all its irreducibles are self-dual.
+
+**Proof.**
+
+1. The agreement average also preserves every four-cell isotypic
+   component.  On a shared component `(P29.1)`, its two pairings require
+   `V_lambda tensor V_lambda` and its dual to have invariants.  This
+   happens exactly when `V_lambda` is self-dual.
+2. In the self-dual case, projection of the normalized row singlet onto
+   the agreement singlet has modulus `1/d_lambda`, so it is nonzero.
+   To see the constant, choose a matrix `J` for the invariant
+   nondegenerate bilinear form.  Its map to the unitary dual is an
+   intertwiner, so `J^*J` is a positive scalar by Schur's lemma;
+   rescaling makes `J` unitary.  The transpose form is another invariant
+   bilinear form, hence `J^t=epsilon J`; transposing again gives
+   `epsilon in {+1,-1}`.  The agreement singlet uses the normalized
+   tensors with coefficient matrices `J^(-1)` and `J`.  Its contraction
+   with `r` in Step 3 of Lemma 29A is
+
+   ```text
+   d^(-2) sum_(a,b) (J^(-1))_(ab) J_(ab)
+        = epsilon d^(-2) sum_(a,b) |J_(ab)|^2
+        = epsilon/d,
+   ```
+
+   up to conjugation according to the inner-product convention.  This
+   uses unitarity and `J^t=epsilon J`.  Its modulus is `1/d`.
+3. The row invariant line on that isotypic component is one dimensional
+   before tensoring the multiplicity space.  Thus `Q_tau x=0` forces
+   the entire shared self-dual component of `x` to vanish, including
+   its multiplicities.  The trivial component is removed as well.
+   Components not shared with `H_sigma` are orthogonal to `y`.
+4. The remaining overlaps are exactly the non-self-dual components of
+   Lemma 29A.  Taking their largest `1/d_lambda` and applying
+   Cauchy--Schwarz across the orthogonal components proves `(P29.3)`.
+5. An irreducible of dimension one is trivial as noted above.  Every
+   two-dimensional representation has trivial determinant for the same
+   reason.  Its alternating area form is therefore invariant and
+   nondegenerate, making it self-dual.  Consequently a non-self-dual
+   irreducible has dimension at least three.  QED.
+
+List all nonzero negative cut spaces as `H_1,...,H_k`.  For `i<j`, let
+`tau_ij` be their positive agreement cut and let `c_ij` be the bound from
+Lemma 29B.  Put `c_ji=c_ij`, `c_ii=0`, and denote this real symmetric
+nonnegative matrix by `A_c`.
+
+**Theorem 29 (distinct agreement cuts and controlled non-self-dual
+overlap).**  Suppose all the `tau_ij`, for unordered pairs `i<j`, are
+distinct, and
+
+```text
+lambda_max(A_c) < 1.                                       (P29.4)
+```
+
+Then the signed character integral is nonnegative.  More precisely, the
+RC map is supplied by the proper positive components of
+
+```text
+T: direct_sum_i H_i -> H direct_sum_(i<j) H_(tau_ij),
+T(t_1,...,t_k) = (sum_i t_i, (Q_(tau_ij) t_i)_(i<j)).       (P29.5)
+```
+
+For `k=0` no map is needed; for `k=1` the summation map is injective.
+
+**Proof.**
+
+1. Negative-cut parity is odd, so every agreement cut has even parity,
+   as in Theorem 27.  Distinct source cuts give a nonempty proper
+   agreement cut.  The distinctness hypothesis makes the target of
+   `(P29.5)` a direct sum of distinct positive summands of the actual
+   consumer.  It does not count the same positive channel more than once.
+2. Suppose all proper components of `(P29.5)` vanish.  For each `i<j`,
+   `Q_(tau_ij) t_i=0`, so Lemma 29B gives
+   `|<t_i,t_j>|<=c_ij ||t_i|| ||t_j||`.  With `a_i=||t_i||`, it follows
+   that
+
+   ```text
+   ||sum_i t_i||^2 >= a^t (Id-A_c) a
+                    >= (1-lambda_max(A_c)) sum_i ||t_i||^2. (P29.6)
+   ```
+
+   The second inequality is the Rayleigh-quotient bound for the real
+   symmetric matrix `A_c`; its constant is strictly positive by
+   `(P29.4)`.
+3. If `T(t)=0`, the first component vanishes as well, and `(P29.6)`
+   forces every `t_i=0`.  Thus `T` is injective.  On `Rel=ker F`, its
+   first component is zero, so its proper positive components alone
+   give an injective map `Rel -> E_prop`, a supplier of `(P28.2)`.
+4. Equivalently, comparing source and positive target dimensions gives
+   `K_M<=P_M`, and hence `Phi>=0` by `(P27.3)`.  No bound on factor count,
+   highest weights, or minus count entered the construction.  QED.
+
+**Corollary 29C (complete three-negative-cut sector, every Lie type).**
+Theorem 27's cut-count hypothesis can be enlarged from two to three.
+
+**Proof.**  With at most three distinct negative cuts, their pairwise
+agreement cuts are distinct: equality between two pairs sharing a cut
+would force their other cuts to coincide.  Lemma 29B gives `c_ij<=1/3`.
+Thus, for `k<=3`,
+
+```text
+a^t A_c a <= (k-1)/3 sum_i a_i^2 <= 2/3 sum_i a_i^2.
+```
+
+The first bound follows by summing `2a_i a_j<=a_i^2+a_j^2` over pairs.
+Hence `lambda_max(A_c)<=2/3<1`, and Theorem 29 applies.  The constant in
+`(P29.6)` is at least `1/3`.  This includes SU(2); its two-dimensional
+intermediate channels are self-dual and are detected by the positive
+agreement projections, so they do not contribute to `A_c`.  QED.
+
+**Corollary 29D (unbounded self-dual sector).**  If all shared
+four-cell recoupling labels are self-dual, `(P29.4)` is automatic with
+`A_c=0`.  Therefore Q3 holds for any number of negative cuts provided
+their pairwise agreement cuts are distinct.
+
+This includes every group with `w_0=-1`, in particular SU(2) and SO(3).
+It also includes tuples in other groups when their actual shared labels
+are self-dual.  No separate condition on the dimensions or multiplicities
+of those self-dual labels is needed.
+
+The distinctness condition has a concrete binary meaning.  Represent an
+unordered cut by its indicator vector in
+`B_L=F_2^L / span{all-ones}`.  The agreement cut of `pi,sigma` has class
+`pi+sigma`.  Distinctness of all pairwise agreements is equivalent to
+there being no four distinct negative cut classes summing to zero.
+Such a four-cut dependency is an obstruction to using `(P29.5)` with
+separate positive target copies for every pair; it is not a negative Q3
+example.
+
+For non-self-dual shared labels of minimum dimension `d`, one also has
+`lambda_max(A_c)<1` whenever `k<=d`, by the same pairwise norm bound.
+The group-theoretic minimum dimension is one sufficient bound; the
+definition of `A_c` permits the smaller actual overlap graph to be used
+without increasing the consumer's target multiplicities.
+
+## A Walsh construction for commuting negative-cut projections
+
+The next supplier permits agreement-cut collisions and arbitrarily many
+negative cuts.  Its hypothesis is pairwise commutation of the actual
+negative-cut projections.  It gives a map on all relations, preserving
+the merge map `F` in `(P28.2)`, and requires no factor-count cutoff.
+
+**Theorem 30 (commuting-cut relation map).**  If the projections onto all
+nonzero negative invariant cut spaces commute pairwise, there is an
+explicit injection
+
+```text
+T: O -> H direct_sum E_prop
+```
+
+whose pure-colour component is exactly `F`.  Its proper positive
+components restrict to an injective map `Rel -> E_prop`.  Thus the RC
+supplier is satisfied and the signed character integral is nonnegative.
+The even minus count, group rank, labels, and tuple length are arbitrary.
+
+**Proof.**
+
+1. For the finite negative-cut family `N`, the commuting orthogonal
+   projections decompose `H` orthogonally into joint eigenspaces
+
+   ```text
+   K_J = intersection_(pi in J) H_pi
+         intersection_(pi in N\J) H_pi^perp,   J subset N.
+   ```
+
+   This follows by multiplying the commuting projections `Q_pi` or
+   `Id-Q_pi`.  Those products are orthogonal projections, have pairwise
+   orthogonal ranges, and sum to `Id`.  Every source vector in `H_pi`
+   decomposes into the `K_J` with `pi in J`.  The component `J=empty`
+   occurs in no source cut.
+2. Use the binary cut space `B_L` defined above.  Evenness of the total
+   minus count makes
+
+   ```text
+   ell_M(pi)=|S intersection M| mod 2
+   ```
+
+   a well-defined linear functional on `B_L`: complementing a side
+   changes this parity by the even total minus count.  All cuts in
+   `N` have `ell_M=1`.
+3. Fix nonempty `J` with `K_J!=0` and let `B_J` be the binary span of
+   its cut classes.  Lemma 27A, iterated over the cuts in `J`, shows that
+   `K_J` is fixed independently on every cell of their common
+   refinement.  Any cut in `B_J` is a union of these cells, since its
+   indicator is a binary sum of their cut indicators.  Therefore
+
+   ```text
+   K_J subset H_sigma for every sigma in B_J.               (P30.1)
+   ```
+
+   This step uses semisimplicity and connectedness through Lemma 27A;
+   it does not follow merely from commutativity of arbitrary projections.
+4. Choose `pi_0 in J` and put `B_J^+=ker(ell_M|B_J)`.  The restriction of
+   `ell_M` is nonzero, so the odd classes in `B_J` are precisely the
+   coset `pi_0+B_J^+`.  In fact this coset is exactly `J`: any negative
+   cut in `B_J` fixes the nonzero space `K_J` by `(P30.1)`, so it belongs
+   to the full negative family `N`, and its joint eigenvalue on `K_J`
+   is one, forcing membership in `J`.  Choose a binary basis of
+   `B_J^+`, and denote by
+   `u dot v` the usual mod-two dot product of its coordinate vectors.
+   For the `K_J` part of the source, write `t_pi,J` for its component
+   belonging to cut `pi`.
+5. For each positive cut `u in B_J^+`, define
+
+   ```text
+   z_(u,J)=sum_(v in B_J^+) (-1)^(u dot v) t_(pi_0+v,J).
+                                                                  (P30.2)
+   ```
+
+   By `(P30.1)`, this vector lies in `K_J subset H_u`, so its target is
+   an actual positive cut space.  The matrix in `(P30.2)` is the Walsh
+   matrix of the finite binary vector space.  Its rows are orthogonal:
+   summing `(-1)^((u+u') dot v)` gives `|B_J^+|` for `u=u'` and zero
+   otherwise, by pairing terms along a coordinate where `u+u'` is one.
+   Its inverse is its transpose divided by `|B_J^+|`.  Thus the map is
+   injective on the whole source component, with no multiplicity loss.
+6. The output at `u=0` is exactly `sum_(pi in J) t_pi,J`.  It belongs to
+   the empty/full positive cut `H` and equals the `K_J` part of `F`.
+   The other outputs belong to distinct proper positive cuts.  If
+   `B_J^+` has dimension zero, there is just the pure-colour output;
+   its Walsh matrix is the one-by-one matrix `[1]`.
+7. Combine the outputs over all joint eigenspaces.  Different `K_J`
+   are orthogonal in `H`, hence also in every positive `H_u` containing
+   them.  When the same positive cut receives outputs from several
+   different `J`, their sum is orthogonal, so they cannot cancel.
+   Consequently the combined map to the single copy of each positive
+   cut is injective.  It does not duplicate target multiplicities.
+8. Its pure-colour output is `F`.  On `Rel`, that output vanishes;
+   orthogonality of the `K_J` makes each zero-frequency coefficient
+   vanish separately.  Walsh inversion then proves that the remaining
+   proper positive outputs are injective on `Rel`.  This explicitly
+   supplies `(P28.2)`, using no part of `H_free`.  Proposition 28's
+   finite consumer, or the signed dimension identity directly, proves
+   the stated nonnegativity.  QED.
+
+**Corollary 30A (compatible negative cuts).**  Theorem 30 applies when
+each pair of negative cuts has an empty cell in its common refinement.
+In particular it applies to a family of nested cut sides, or to a
+laminar family of sides chosen to avoid one fixed anchor position.
+
+**Proof.**  An empty cell carries the trivial representation.  Pattern
+`(P29.1)` then forces all four shared labels to be trivial.  Lemma 29A
+gives `Q_pi Q_sigma=Q_C`; reversing the factors gives the same projector,
+so the two projections commute.  This holds for every pair, satisfying
+the exact hypothesis of Theorem 30.  Nested sides have an empty
+difference cell; disjoint sides have an empty intersection cell.
+Those are the two cases in a laminar family.  QED.
+
+More generally, Theorem 30 applies when no pair has a shared nontrivial
+four-cell pattern, even if the underlying cut partitions cross.  This
+is a representation-dependent commutation condition, rather than a
+restriction to nested diagrams.
+
+**Lemma 30B (binary stabilizer of an individual invariant tensor).**
+For any nonzero `t in H`, the set
+
+```text
+B(t)={pi in B_L : t belongs to H_pi}
+```
+
+is a binary linear subspace, without any commutation assumption.  The
+number of positive cuts in `B(t)` minus the number of negative cuts in
+`B(t)` is either `|B(t)|` or zero, and is therefore nonnegative.
+
+**Proof.**
+
+1. The zero cut is the empty/full partition, so it fixes `t`.  If cuts
+   `pi,sigma` fix `t`, Lemma 27A makes it invariant independently on their
+   four intersection cells.  Their agreement cut merges these cells
+   and also fixes `t`.  Its class is `pi+sigma`, proving closure under
+   binary addition.
+2. Restrict the linear parity functional `ell_M` to `B(t)`.  If it is
+   zero, all its cuts are positive.  Otherwise its kernel and its odd
+   coset have equal size, giving equal positive and negative counts.
+   QED.
+
+This lemma is a property of every individual invariant tensor in the
+full target.  It does not produce a common orthonormal basis for
+noncommuting cut projections, so it cannot by itself be summed to obtain
+the signed dimension inequality.  The Walsh construction supplies that
+missing basis decomposition under its stated commutation hypothesis.
+
+**Next unresolved mechanism.**  For SU(2) and other groups with
+`w_0=-1`, Theorem 29 supplies the relation map for negative-cut families
+without four-cut binary dependencies.  Theorem 30 supplies it with
+dependencies when the negative projections commute.  The remaining
+case combines agreement-cut collisions with noncommuting recouplings;
+the separate outputs in `(P29.5)` must then be combined without charging
+one positive cut several times.  In groups with non-self-dual labels,
+one must also control the actual overlap matrix when `(P29.4)` fails.
+These are open construction requirements under the original full-cone
+quantifiers, not finite certificate targets.
+
+**Gate receipt (2026-10-03, main-agent self-review, structural extension).**
+Independently re-derived the four-cell label compatibility and normalized
+singlet contractions: the row/column overlap is `1/d`, while the
+self-dual row/agreement overlap is `epsilon/d` and cannot vanish.
+Checked that all three averages preserve each cell isotypic component,
+so agreement projection cannot hide a cancellation between different
+shared labels or their multiplicity spaces.  Rechecked the determinant
+argument excluding non-self-dual dimensions one and two, and hence the
+`1/3` residual overlap bound.  Rechecked that `(P29.5)` uses one actual
+positive summand per pair only under the stated distinctness hypothesis,
+and that `(P29.6)` is applied only after those proper components vanish.
+For the Walsh construction, rechecked the binary quotient and parity
+functional, closure under common-refinement invariance, the exact odd
+coset `J`, Walsh inversion, and orthogonality when different joint
+components share a positive target.  Both maps preserve `F` and are
+injective on `Rel` using proper positive targets, supplying the exact
+caller `(P28.2)` in their stated sectors.  Theorems 29 and 30 and their
+corollaries are accepted local structural suppliers after this check.
+The full goal remains open for the unresolved cases described above;
+no exhaustive run or factor-count cutoff is part of these proofs.
+
+## Removing the common eigenvectors without a commutation hypothesis
+
+The following decomposition makes the Walsh supplier usable inside a
+noncommuting arrangement. All spaces and projections below belong to
+the actual full negative-cut family of a fixed atom tuple from `(P28.1)`.
+There is no cutoff on the tuple or its labels.
+
+**Theorem 31 (maximal common-eigenvector part).** For every subset `J` of
+the full nonzero negative-cut family `N`, define
+
+```text
+K_J = intersection_(i in J) H_i
+      intersection_(i in N\J) H_i^perp,
+H_diag = direct_sum_J K_J,   H_mix = H_diag^perp inside H.
+U_i = H_i intersection H_mix.                               (P31.1)
+```
+
+These are reducing decompositions for every negative projection. There
+is an explicit Walsh isomorphism from the relations in the `H_diag`
+source to an allocated subspace of the proper positive target. The
+remaining RC demand is exactly an injection from the relations among
+the `U_i` into the unused target spaces.
+
+**Proof.**
+
+1. Every `Q_i` is either identity or zero on `K_J`, according as `i`
+   belongs to `J` or not. Selfadjointness makes `K_J` reducing for `Q_i`.
+   Two different `K_J` are orthogonal, since some `Q_i` has different
+   eigenvalues on them. Thus their sum and its orthogonal complement
+   reduce every `Q_i`. They need not exhaust `H` individually: it is
+   their sum together with `H_mix` that does so. A canonical formula
+   for the projector onto `K_J` is the zero-eigenspace projector of
+
+   ```text
+   A_J = sum_(i in J) (Id-Q_i) + sum_(i in N\J) Q_i.
+   ```
+
+   Indeed its quadratic form is a sum of squared projection norms.
+   Any reducing subspace on which all negative projections commute
+   decomposes into their simultaneous zero/one eigenspaces, so it is
+   contained in `H_diag`. There is no nonzero common zero/one
+   eigenvector in `H_mix`.
+2. For nonzero `K_J` with `J` nonempty, the common-refinement argument
+   in steps 3--4 of Theorem 30 needs no commutation assumption.
+   If `B_J` is the binary span of `J`, then `K_J subset H_sigma` for
+   every `sigma in B_J`, and
+
+   ```text
+   J = i_0 + B_J^+,  B_J^+=ker(ell_M|B_J),  i_0 in J.       (P31.2)
+   ```
+
+   To check the reverse inclusion, every odd cut of `B_J` fixes
+   `K_J!=0`, belongs to the full family `N`, and cannot have eigenvalue
+   zero on `K_J`. Hence it belongs to `J`.
+3. Allocate to each proper positive cut `tau` the subspace
+
+   ```text
+   Z_tau = direct_sum_(J nonempty, tau in B_J^+) K_J
+           subset H_tau.                                  (P31.3)
+   ```
+
+   Omit zero `K_J`. For each `J`, choose a binary basis of `B_J^+` and
+   use the Walsh matrix `(P30.2)` on its `|J|` source copies. Its
+   zero-frequency output is the `K_J` component of `F`. On the kernel
+   of this sum, its other `|J|-1` outputs give an isomorphism onto
+   one copy of `K_J` in each nonzero `tau in B_J^+`. Different `J`
+   have orthogonal images in a shared positive cut. Therefore
+
+   ```text
+   Rel_diag -> direct_sum_(proper positive tau) Z_tau       (P31.4)
+   ```
+
+   is an isomorphism, using one actual copy of each target cut.
+4. The source splits orthogonally into its common-eigenvector parts
+   and `direct_sum_i U_i`. The map `F` sends these two parts into
+   orthogonal subspaces of `H`, so
+
+   ```text
+   Rel = Rel_diag direct_sum Rel_mix,
+   Rel_mix = ker[(u_i)_i -> sum_i u_i],  u_i in U_i.
+   ```
+
+   Its diagonal range is precisely `direct_sum_(J nonempty) K_J`.
+   Consequently `H_free` is contained in `K_empty direct_sum H_mix`.
+   Define the unallocated proper target
+
+   ```text
+   E_rem = direct_sum_(proper positive tau) (H_tau orthominus Z_tau).
+                                                                  (P31.5)
+   ```
+
+   Any injection `Rel_mix -> H_free direct_sum E_rem`, combined with
+   `(P31.4)`, supplies `(P28.2)`. Conversely, if RC is possible, its
+   dimension inequality after subtracting the equal dimensions of
+   `(P31.4)` gives the corresponding residual dimension inequality.
+   The assertion here supplies the diagonal map; it does not assert
+   a construction for arbitrary `Rel_mix`. QED.
+
+## A relation map for residual paths and cycles
+
+The dimension-two boundary of the cut-angle inequality has a useful
+rigidity: the positive agreement projection stays inside the span of
+the two interacting negative spaces. This allows collisions between
+positive targets to be packed orthogonally.
+
+**Lemma 32A (saturated angle and its agreement image).** Let `i,j` be
+distinct negative cuts, let `C=H_i intersection H_j`, and let
+`tau=i+j` be their proper positive agreement cut. If
+
+```text
+x in H_i orthominus C,   y in H_j orthominus C,
+||x||=||y||=a,   <x,y>=-a^2/2,
+```
+
+then
+
+```text
+Q_tau x = Q_tau y = (x+y)/2,   ||Q_tau x||=a/2.              (P32.1)
+```
+
+In particular the agreement image belongs to `H_i+H_j`.
+
+**Proof.**
+
+1. If `a=0`, the conclusion is immediate. Otherwise apply the
+   four-cell orthogonal block decomposition of Lemma 29A. After
+   removing `C`, every shared block has row/column angle `1/d` with
+   `d>=2`; unshared components have zero overlap. Equality in the
+   bound `|<x,y>|<=||x||||y||/2` forces both vectors to lie entirely
+   in shared `d=2` blocks. Equality in Cauchy--Schwarz and the specified
+   negative phase identify their multiplicity vectors with opposite
+   signs. Thus on each such block they have the form `r tensor m`
+   and `-c tensor m`, where `r,c` are the normalized row and column
+   cups with `<r,c>=1/2`.
+2. A two-dimensional irreducible representation of a connected group
+   with semisimple Lie algebra has trivial determinant: its
+   determinant character has zero differential, hence is trivial by
+   connectedness. Its alternating form is therefore invariant. It is
+   self-dual with an alternating invariant form. In the notation of
+   Lemma 29A, the normalized agreement line is `s=r-c`. Explicitly,
+   after identifying the dual factors using that alternating form,
+   the difference of the two contractions is the alternating cup on
+   the first and fourth cells times the alternating cup on the second
+   and third cells. Also
+
+   ```text
+   ||r-c||^2=1,  <s,r>=1/2,  <s,-c>=1/2.
+   ```
+
+   The agreement projector on this carrier block is the projector
+   onto `s`, with identity on its multiplicity spaces.
+3. It follows blockwise that both agreement projections equal
+   `(r-c) tensor m/2`. The block decomposition is orthogonal and all
+   three cut projections preserve it, so the same identity holds
+   after summing all blocks. Finally
+   `||x+y||^2=2a^2+2 Re<x,y>=a^2`, proving the norm in `(P32.1)`.
+   QED.
+
+**Theorem 32 (paths and cycles with unrestricted target collisions).**
+Use the canonical residual spaces `(P31.1)`. Suppose
+
+```text
+U_i intersection U_j = 0 for all distinct i,j,              (P32.2)
+```
+
+and the graph with vertices the nonzero `U_i` and edges the pairs of
+nonorthogonal spaces has maximum degree at most two. Then an explicit
+injection `Rel -> E_prop` supplies RC. In particular the character Q3
+inequality holds for this class, with arbitrary rank, labels, tuple
+length, and even minus count. There is no distinct-agreement or
+commutation hypothesis.
+
+**Proof.**
+
+1. The projector onto `H_diag` commutes with each `Q_i`, so it preserves
+   each intersection `C_ij=H_i intersection H_j`. Its complementary
+   component of `C_ij` is `U_i intersection U_j`, which is zero by
+   `(P32.2)`. Thus `C_ij subset H_diag`. Every `u_i in U_i` is
+   orthogonal to `C_ij`, and Lemma 29A gives
+
+   ```text
+   |<u_i,u_j>| <= ||u_i||||u_j||/2.                         (P32.3)
+   ```
+
+2. For each graph component `D`, put `V_D=sum_(i in D) U_i`.
+   These spans are pairwise orthogonal, since all cross-component
+   pairs are orthogonal. A relation therefore splits into relations
+   on separate components. Each component is an isolated vertex,
+   a path, or a cycle.
+3. For one component relation `sum_i u_i=0`, set `a_i=||u_i||`.
+   Orthogonality on nonedges and `(P32.3)` imply
+
+   ```text
+   0 = ||sum_i u_i||^2
+     >= sum_i a_i^2 - sum_(ij edge) a_i a_j
+      = (1/2) sum_(ij edge) (a_i-a_j)^2
+        + sum_i (1-deg(i)/2) a_i^2.                        (P32.4)
+   ```
+
+   The right side is nonnegative. On an isolated vertex or path,
+   an endpoint term forces its norm to zero and the edge terms
+   propagate zero throughout the component. Such components have
+   no relations.
+4. On a cycle, equality forces every norm to be the same `a`. It also
+   forces every edge contribution to attain its lower bound:
+   `Re<u_i,u_j>=-a^2/2`. The modulus bound `(P32.3)` then forces
+   `<u_i,u_j>=-a^2/2` as a complex number. Lemma 32A applies to every
+   edge. Fix one edge `(i_D,j_D)` of each cycle once and for all and
+   define on its relation space
+
+   ```text
+   L_D(u)=Q_(i_D+j_D) u_(i_D)
+         =(u_(i_D)+u_(j_D))/2.                            (P32.5)
+   ```
+
+   This is linear and belongs to the actual positive cut
+   `tau_D=i_D+j_D`. Its norm is `a/2`. A zero output forces every
+   component norm to vanish, so `L_D` is injective.
+5. Crucially, `(P32.5)` also belongs to `V_D subset H_mix`. For a
+   positive cut receiving several cycles, sum their outputs inside
+   its single target space. The different `V_D` are orthogonal, so
+   this packing remains injective. Each output is orthogonal to
+   `Z_tau subset H_diag`; hence it lies in the unallocated target
+   `(P31.5)`. No additional copy of a positive cut is charged.
+6. Combine these cycle maps with the Walsh map `(P31.4)`. The images
+   are orthogonal in each proper target, and both maps are injective
+   on their respective relation summands. This gives the required
+   injection `Rel -> E_prop`, preserving all target capacities.
+   Proposition 28's finite consumer gives Q3 for the stated class.
+   This is a supplier on atom tuples satisfying the hypotheses;
+   it does not establish those hypotheses for every atom tuple.
+   QED.
+
+If the group has no nontrivial two-dimensional irreducible
+representations, a nonzero cycle relation in step 4 cannot attain the
+cut-angle bound. Thus in that case the residual merge map is already
+injective under `(P32.2)` and the degree condition. The dimension-two
+case above handles the critical cycles as well.
+
+## Self-dual reflection and automatic residual intersections
+
+For groups whose irreducibles are all self-dual, the degree condition
+alone implies `(P32.2)`. The argument uses a compressed projector
+identity, rather than a dimension count for individual cuts.
+
+**Lemma 33A (reflection of a compressed cut projector).** Suppose every
+irreducible representation of `G` is self-dual. Let `i,j,k` be cut
+classes, put `C=H_i intersection H_j`, and put `l=i+j+k` in the binary
+cut space. Then
+
+```text
+P_C Q_k P_C = P_C Q_l P_C.                                 (P33.1)
+```
+
+In particular `||Q_k x||=||Q_l x||` for every `x in C`.
+
+**Proof.**
+
+1. Lemma 27A identifies `C` with the tensors invariant separately on
+   the four intersection cells of `i,j`. Split each of these cells
+   into the part selected by `k` and its complement. Decompose the
+   representation on each of these eight parts into irreducibles
+   and multiplicity spaces. Every cut projector in `(P33.1)` and
+   `P_C` preserves these isotypic blocks: each group action on a cut
+   acts on a whole part, and its local isotypic projector commutes
+   with that action. Multiplicity spaces are spectators.
+2. A block contributes to `C` only when the two labels in each coarse
+   cell are dual. The invariant carrier space of that cell is its
+   one-dimensional normalized cup. Write the selected labels as
+   `E_1,...,E_4`, set `E=tensor_c E_c`, and set
+   `D=dim E=product_c dim E_c`. Reordering the tensor of the four
+   normalized cups gives the normalized coevaluation vector between
+   `E` and `E*`. If `m(E)=dim E^G`, its squared projection onto the
+   invariant subspaces on both sides is
+
+   ```text
+   m(E)/D.                                                (P33.2)
+   ```
+
+   Indeed choose an orthonormal basis whose first `m(E)` vectors
+   span `E^G`. The coevaluation is `D^(-1/2) sum_a e_a tensor e^a`;
+   projecting both sides retains precisely those first `m(E)`
+   terms. Since the coarse-cell carrier line is one-dimensional,
+   the compression `P_C Q_k P_C` on this block is `(P33.2)` times
+   identity on all its multiplicity spaces.
+3. Replacing `k` by `l=i+j+k` complements its selected portion in
+   some coarse cells and leaves it unchanged in the others. Thus
+   it replaces some `E_c` by `E_c*`. Self-duality preserves both
+   `m(E)` and `D`. The two compressed operators agree on every
+   orthogonal block, proving `(P33.1)`. Finally, for `x in C`,
+   `||Q_k x||^2=<x,Q_k x>=<x,Q_l x>=||Q_l x||^2`. QED.
+
+**Corollary 33 (degree-two supplier in all-self-dual types).** If every
+irreducible of `G` is self-dual and the residual overlap graph of
+Theorem 31 has maximum degree at most two, then RC is supplied by
+Theorem 32. This includes SU(2), SO(3), and all other actual compact
+connected simple groups whose irreducibles are self-dual.
+
+**Proof.**
+
+1. Suppose `0!=x in U_i intersection U_j`. Since `H_mix` has no
+   common zero/one eigenvector, there is a negative cut `k` distinct
+   from `i,j` with `Q_k x!=0`. Otherwise `Q_i x=Q_j x=x` and all
+   other negative projections kill `x`, putting it in `H_diag`.
+2. The space `H_mix` reduces each negative projection, so `Q_k x`
+   belongs to `U_k`. Also `<x,Q_k x>=||Q_k x||^2>0`. Hence there
+   are graph edges `ij,ik,jk`.
+3. Put `l=i+j+k`. Its parity is odd, and it is distinct from `i,j,k`:
+   equality with any of them would equate the other two. Lemma 33A
+   gives `Q_l x!=0`, so `H_l` is nonzero and `l` belongs to the full
+   negative family. Reduction again puts `Q_l x` in `U_l`; the
+   same norm identity gives edges `il,jl`. Vertex `i` now has the
+   three distinct neighbours `j,k,l`, contrary to the degree bound.
+   Thus every residual pair has zero intersection, as required by
+   `(P32.2)`. Apply Theorem 32. QED.
+
+**Remaining full-scope demand.** Theorems 31--33 supply actual relation
+maps, with no factor-count bound, for the sectors they specify. They do
+not bound the residual overlap degree for arbitrary atom tuples.
+Branching residual recouplings, with degree at least three, remain an
+open supplier demand. In types with non-self-dual irreducibles,
+`(P33.1)` is not asserted: partial dualization can change `m(E)`.
+Theorem 32 still applies there with its explicit pair-intersection
+hypothesis. The original full central positive cone remains the goal.
+
+**Gate receipt (2026-10-03, main-agent independent re-derivation).**
+Checked Theorem 31 without assuming commutation: scalar action on each
+`K_J` implies reduction by selfadjointness, and distinct scalar patterns
+imply orthogonality. Re-derived the exact odd coset using the full
+negative family and common-refinement invariance. Walsh inversion on
+the zero-sum source gives precisely `(|J|-1) dim K_J` allocated proper
+dimensions; shared allocations are orthogonal. Re-derived the residual
+intersection argument using reduction of both intersecting projections.
+Checked the energy identity `(P32.4)`, including endpoint coefficients
+and the factor `1/2`. Equality forces dimension-two blocks and negative
+real edge inner products. Independently expanded the two-dimensional
+cup difference: its coefficients are
+`(delta_ab delta_cd-delta_ac delta_bd)/2=epsilon_ad epsilon_bc/2`;
+it is the normalized agreement cup. Thus `(P32.1)` has exactly the
+stated factor and norm. Checked that cycle images stay in their mutually
+orthogonal component spans and in `H_mix`, protecting capacities both
+between cycles and against the allocated Walsh spaces. For `(P33.1)`,
+re-derived the compression on each eight-part isotypic block as the
+rank `m(E)` divided by `dim E`, with identity on multiplicities;
+self-duality is used only to identify the reflected carrier's invariant
+rank. Finally checked that `i+j+k` is a distinct nonzero negative cut
+and nonzero projection forces its membership in the full family, giving
+three distinct residual neighbours. After this check, Theorems 31--32,
+Lemma 33A, and Corollary 33 are accepted structural results in their
+stated scopes. The branching residual supplier remains open; no claim
+of completion of the full cone, and no certificate sweep, is made.
+
+## Residual spectral radius two, including branching recouplings
+
+The degree-two supplier can be strengthened in two ways. Branching
+components are permitted when their adjacency spectral radius is at
+most two. Pair intersections need not be assumed zero, even in types
+with non-self-dual irreducibles. The construction below uses the
+canonical residual spaces of Theorem 31 and the raw cut angle of
+Lemma 29A; it does not use the self-dual reflection identity.
+
+Write `Gamma` for the graph of nonzero residual spaces `U_i`, with an
+edge exactly when two spaces are nonorthogonal. Its adjacency matrix
+has entries zero or one. Define its spectral radius to be zero when
+there are no vertices. All group, label, tuple-length, and sign
+quantifiers remain those of `(P28.1)`--`(P28.2)`.
+
+**Lemma 34A (unequal-norm saturated angle).** For distinct negative cuts `i,j`,
+write `C=H_i intersection H_j` and `tau=i+j`. Suppose
+
+```text
+x in H_i orthominus C,  y in H_j orthominus C,
+||x||=a>0,  ||y||=b>0,  <x,y>=-ab/2.
+```
+
+Then
+
+```text
+Q_tau x = (x+(a/b)y)/2,   ||Q_tau x||=a/2.                 (P34.1)
+```
+
+**Proof.**
+
+1. Apply Lemma 32A to the equal-norm vectors `x/a` and `y/b`.
+   They have norm one and inner product `-1/2`; the same orthogonality
+   to `C` holds.
+2. Multiply its projection identity by `a`. This gives `(P34.1)`.
+   In particular its image stays in `H_i+H_j`, independently of
+   the ratio of the norms. QED.
+
+**Lemma 34B (a residual pair intersection forces a triangle).** If
+`U_i intersection U_j !=0`, the edge `ij` lies in a triangle of
+`Gamma`. If the adjacency spectral radius of `Gamma` is at most two,
+the connected component containing that triangle consists of exactly
+its three vertices.
+
+**Proof.**
+
+1. Choose `0!=x in U_i intersection U_j`. Some negative projection
+   `Q_k`, with `k` distinct from `i,j`, has `Q_k x!=0`. Otherwise
+   every negative projection acts on `x` as zero or identity, which
+   puts it in `H_diag`, contrary to `x in H_mix`.
+2. The nonzero vector `Q_k x` lies in `U_k`, since `H_mix` reduces
+   all negative projections. The identity
+   `<x,Q_k x>=||Q_k x||^2>0` gives both edges `ik,jk`. Thus `i,j,k`
+   form a triangle.
+3. A triangle has adjacency spectral radius two. If its connected
+   component has another vertex, some vertex outside the triangle
+   is adjacent to it. Take a test vector equal to one on the three
+   triangle vertices, equal to `delta` on that extra vertex, and zero
+   elsewhere. If the extra vertex has `r>=1` neighbours in the
+   triangle, its adjacency Rayleigh quotient is
+
+   ```text
+   (6+2r delta)/(3+delta^2)>2 for 0<delta<r.
+   ```
+
+   This contradicts the spectral-radius bound. QED.
+
+**Lemma 34C (one isolated triangle, including its pair relations).**
+For an isolated triangle component `D={1,2,3}` of `Gamma`, let
+`V_D=U_1+U_2+U_3`. There is an explicit injection of its relation space
+into its three positive agreement cuts. Every output lies in `V_D`.
+The construction is valid for every group in the full target.
+
+**Proof.**
+
+1. Set `C_ij=U_i intersection U_j`. The triple intersection is zero.
+   A vector in it is fixed by all three component projections and
+   orthogonal to every residual source outside this isolated
+   component. It is also orthogonal to `H_diag`, so every outside
+   negative projection kills it. It would therefore be a common
+   zero/one eigenvector in `H_mix`, which is impossible.
+2. Define the pair-relation boundary
+
+   ```text
+   partial: C_12 direct_sum C_13 direct_sum C_23
+             -> U_1 direct_sum U_2 direct_sum U_3,
+   partial(t_12,t_13,t_23)
+       =(t_12+t_13, -t_12+t_23, -t_13-t_23).              (P34.2)
+   ```
+
+   Its image `B` consists of relations. Its kernel is zero: the
+   three component equations force `t_12=-t_13=t_23` in the triple
+   intersection. Hence its inverse on `B` is the explicit map
+
+   ```text
+   L_B=(partial^* partial)^(-1) partial^* on B,
+   P_B=partial (partial^* partial)^(-1) partial^*.
+   ```
+
+   Here the inverse exists because `partial` is injective, and `P_B`
+   is the orthogonal projector onto `B`. If the edge source is zero,
+   both maps have zero source/range and no inverse is needed. Each
+   target `C_ij` is contained in the proper positive
+   `H_(i+j)` by common-refinement invariance. The three agreement
+   classes are distinct, because equality of any two would equate
+   two of the three negative classes. This routes every pair relation
+   to one actual positive target, with its image inside `V_D`.
+3. Decompose the component relation space orthogonally as
+
+   ```text
+   Rel_D = B direct_sum R,   R=Rel_D intersection B^perp.
+   ```
+
+   For `u=(u_1,u_2,u_3) in R`, orthogonality to the individual pair
+   boundaries gives
+
+   ```text
+   P_(C_ij) u_i = P_(C_ij) u_j = z_ij.                    (P34.3)
+   ```
+
+   The full intersection `H_i intersection H_j` reduces the
+   diagonal/residual decomposition and splits into its part in
+   `H_diag` and `C_ij`. Consequently `u_i-z_ij` and `u_j-z_ij`
+   are orthogonal to that full intersection. Lemma 29A implies,
+   with `a_i=||u_i||` and `b_ij=||z_ij||`,
+
+   ```text
+   Re<u_i,u_j>
+     >= b_ij^2 - (1/2) sqrt((a_i^2-b_ij^2)(a_j^2-b_ij^2))
+     >= b_ij^2 - (1/2) a_i a_j.                          (P34.4)
+   ```
+
+4. Since `sum_i u_i=0`, summing `(P34.4)` yields
+
+   ```text
+   0 >= (1/2)[(a_1-a_2)^2+(a_1-a_3)^2+(a_2-a_3)^2]
+        +2(b_12^2+b_13^2+b_23^2).                        (P34.5)
+   ```
+
+   Every term is nonnegative. Thus all norms are equal, all `z_ij`
+   vanish, and each pair attains its negative angle bound. A nonzero
+   relation has common norm `a>0` and inner products `-a^2/2`.
+5. Fix the edge `12`. Lemma 32A supplies the injection
+
+   ```text
+   R -> H_(1+2),  u -> Q_(1+2)u_1=(u_1+u_2)/2.           (P34.6)
+   ```
+
+   Its norm is `a/2`, so a zero image forces the relation to vanish.
+   It lies in `V_D`. It is orthogonal to the pair-relation target
+   `C_12`, since for `z in C_12 subset H_(1+2)`,
+   `<z,Q_(1+2)u_1>=<z,u_1>=0` by `(P34.3)`--`(P34.5)`.
+6. Route the `B` part by `partial^{-1}` and the `R` part by `(P34.6)`.
+   In their one shared target the images are orthogonal. The other
+   pair targets are distinct. This is an injection of `Rel_D` using
+   one copy of each agreement cut, with every image in `V_D`. QED.
+
+**Theorem 34 (spectral-radius-two relation map, all types).** If the
+adjacency spectral radius of the canonical residual overlap graph
+`Gamma` is at most two, an explicit injection `Rel -> E_prop` supplies
+RC. No additional pair-intersection, self-duality, commutation, or
+distinct-agreement hypothesis is imposed. In particular Q3 holds for
+every atom tuple with this graph condition, with no bound on rank,
+labels, tuple length, or even minus count.
+
+**Proof.**
+
+1. For each graph component `D`, set `V_D=sum_(i in D) U_i`.
+   Different `V_D` are orthogonal, so the residual relation space
+   splits into component relations. By Lemma 34B, any component
+   with a nonzero pair intersection is an isolated triangle.
+   Handle every triangle by Lemma 34C. Every remaining component
+   has zero pair intersections; as in Theorem 32, its vectors are
+   orthogonal to the full intersections of the corresponding cuts.
+2. Let `A_D` be the adjacency matrix of a remaining component and
+   let `u` be a component relation, with `a_i=||u_i||`. The raw cut
+   angle and orthogonality on nonedges give
+
+   ```text
+   0=||sum_i u_i||^2 >= a^t (Id-A_D/2) a >=0.             (P34.7)
+   ```
+
+   The last inequality uses the stated spectral-radius bound.
+   If that radius is less than two, the matrix is positive definite
+   and there are no component relations.
+3. If its radius equals two, choose a strictly positive eigenvector
+   `p` with `A_D p=2p`. The existence and uniqueness up to scaling
+   follow from the finite connected nonnegative-matrix argument:
+   a top Rayleigh vector can be chosen nonnegative; its eigenvector
+   equation propagates positivity along edges. If two eigenvectors
+   of eigenvalue two were independent, subtracting a suitable
+   multiple of this positive vector would give a nonzero
+   nonnegative eigenvector with a zero coordinate; the same
+   propagation would force it to vanish. Thus the top eigenspace
+   is one-dimensional.
+4. Equality in `(P34.7)` implies `a=s p` for some `s>=0`.
+   It also implies equality in every edge-angle lower bound,
+   since all the discarded terms are nonnegative. For a nonzero
+   relation `s>0`, and
+
+   ```text
+   <u_i,u_j>=-a_i a_j/2 for every edge ij.                 (P34.8)
+   ```
+
+   The real-part equality and the modulus bound force this complex
+   inner product to be negative real. Fix one edge `(i_D,j_D)`
+   of the component. Lemma 34A gives the linear map
+
+   ```text
+   L_D(u)=Q_(i_D+j_D)u_(i_D)
+         =(u_(i_D)+(p_(i_D)/p_(j_D))u_(j_D))/2.           (P34.9)
+   ```
+
+   The ratio is fixed by the graph, independently of the relation.
+   Its output has norm `a_(i_D)/2` and belongs to `V_D`. It is
+   therefore injective on the whole component relation space.
+5. All maps from triangle and other critical components have images
+   in their mutually orthogonal spaces `V_D subset H_mix`.
+   If several components use the same positive cut, sum their
+   outputs in that cut's single target space. Orthogonality makes
+   this packing injective. It also places every output orthogonally
+   to the allocated `Z_tau subset H_diag`. Combine these maps with
+   the Walsh map `(P31.4)`. The combined map is injective on `Rel`
+   into `E_prop`, supplies `(P28.2)`, and proves the claimed finite
+   character inequality by Proposition 28. QED.
+
+**An unbounded branching family.** Take a path with `m>=2` vertices
+and attach two leaves to each endpoint. Its two endpoints now have
+degree three. Give every path vertex weight two and every leaf weight
+one. The adjacency matrix sends this strictly positive vector to
+twice itself, so its spectral radius is two. For completeness, a
+positive vector with `A p=2p` bounds every eigenvalue in modulus by
+two: at a coordinate maximizing `|v_i|/p_i`, the eigenvector equation
+gives `|lambda| |v_i|<=sum_j A_ij |v_j|<=2 |v_i|`.
+Theorem 34 covers every atom tuple with such a residual graph,
+regardless of path length. It also covers the four-leaf star by taking
+the path to consist of one vertex, with the same weights. These are
+branching structural suppliers, with no finite tuple cutoff.
+
+**Next full-scope supplier.** Theorem 34 replaces the earlier boundary
+at residual degree three by the sharper boundary at residual adjacency
+spectral radius greater than two. Its construction is unconditional
+under the graph condition and works in all target types. It does not
+prove that every atom tuple satisfies that condition. For larger
+spectral radius, the energy form in `(P34.7)` may have negative
+directions; equality no longer forces a dimension-two agreement image
+inside a single component. A relation map controlling those directions
+with the actual positive target capacities remains open. The full
+central positive-definite cone objective is unchanged.
+
+**Return to the original consumer (an actual full-target tuple).** Take
+`G=SU(2)`, six copies of the fundamental module `V_1`, minus positions
+`1,2`, and plus positions `3,4,5,6`. The full negative-cut family has
+eight nonzero spaces, represented by the two-element sides
+
+```text
+{1,x}, {2,x},  x in {3,4,5,6}.                            (P34.10)
+```
+
+Indeed a negative side contains exactly one minus position, and a
+fundamental tensor product has invariants only for even factor count.
+Taking complements identifies four-element sides with the displayed
+two-element sides. Each displayed cut space has dimension
+`m(V_1^2)m(V_1^4)=1*2=2` by `V_1 tensor V_q=V_(q-1)+V_(q+1)`.
+
+For two sides sharing one position, the four cell sizes are `1,1,1,3`.
+Since `V_1^3=2 V_1+V_3`, their entire cut spaces have shared fundamental
+four-cell pattern, and every overlap singular value is `1/2`. For two
+disjoint displayed sides, the common refinement has cell sizes
+`0,2,2,2`; its invariant space is one-dimensional, so those cut spaces
+also have nonzero overlap. Hence the full negative overlap graph is
+`K_8`.
+
+For each displayed space, choose another side sharing one position.
+On the first space the other projection has norm exactly one-half on
+every vector and has zero kernel. A nonzero vector in the first space
+can therefore be neither a zero nor a one eigenvector of that other
+projection. No nonempty common-eigenvector pattern `K_J` can occur.
+Thus `H_diag=K_empty`, all `U_i=H_i`, and the canonical residual graph
+is still `K_8`, with adjacency spectral radius seven.
+
+This is the exact failed application of Theorem 34 to the original RC
+consumer: the available hypotheses are those of a genuine full-target
+atom tuple, while the supplier requires spectral radius at most two
+and the actual value is seven. This is not a negative Q3 example.
+No universal spectral bound is inferred from Theorem 34. The missing
+statement is still `(P28.2)` for every real-atom tuple, with its actual
+target multiplicities, including such dense residual arrangements.
+
+**Independent check before acceptance (2026-10-03, main agent).**
+Re-derived the projection identity `(P34.1)` by scaling both arguments
+of Lemma 32A and checked that its coefficient ratio is fixed on each
+critical component. Re-derived the triangle Rayleigh quotient and its
+strict inequality for every `0<delta<r`. Checked that the isolated
+triangle's triple intersection would be a forbidden common zero/one
+eigenvector. Solved all three equations in the kernel of `(P34.2)`,
+verified the explicit inverse and projector formulas, and re-derived
+`(P34.3)` by pairing against each individual boundary. Split the full
+intersection into diagonal and residual pieces before applying the
+cut-angle lemma. Recomputed the lower bound `(P34.5)`, including the
+coefficient two on each shared-component squared norm. Checked that
+the resulting critical image is orthogonal to the one pair target it
+shares. Re-derived the critical-component Rayleigh equality, positivity
+and uniqueness of its top eigenvector, and the fixed ratios in
+`(P34.9)`. Checked every output remains in its component span, so both
+cross-component target collisions and Walsh allocations preserve
+injectivity. Independently checked the two possible four-cell patterns
+in `(P34.10)`, the two-dimensional source spaces, the absence of
+nonempty common-eigenvector patterns, and the eigenvalue seven of
+`K_8`. After these checks, Lemmas 34A--34C and Theorem 34 are accepted
+structural suppliers in their stated scopes; the original full RC
+criterion is not discharged.
+
+**Execution gate return.** The locked package remains the full central
+positive-definite Q3 goal; its first unresolved universal statement is
+the actual injection `(P28.2)`. The last consumer attempt above fails
+the supplier's graph hypothesis on an explicit valid atom tuple.
+Counting the preceding turn's partial-scope suppliers and this turn's
+spectral supplier gives two consecutive batches without universal RC
+closure. No further auxiliary threshold or helper detour is authorized
+by those results. The next mathematical task returns directly to
+constructing `(P28.2)` for unrestricted residual relations and their
+actual positive targets. No agent is delegated and the full goal
+remains active.
+
+## Direct full-scope attempt: the signed cut operator is indefinite
+
+The current task is the unrestricted RC construction `(P28.2)`, with
+the full real-atom quantifiers. No additional spectral threshold or
+partial-scope supplier is selected here. One direct alternative to RC
+would prove positivity of the operator whose trace is the signed cut
+dimension difference. That alternative can be tested symbolically on
+a full-target input, without a certificate search.
+
+For four identical nontrivial real atoms `W` and minus positions `1,2`,
+set `H=(W^tensor4)^G`. Each singleton cut space is zero, since `W^G=0`.
+The three proper pair partitions have projections `Q_12,Q_13,Q_14`,
+where the subscript specifies one side. The signed cut operator is
+
+```text
+A = Id_H + Q_12 - Q_13 - Q_14.                            (P35.1)
+```
+
+The proposed direct argument would assert `A>=0` for every target tuple
+and then take its trace. The following uniform calculation falsifies
+that premise for every nontrivial real atom, including arbitrary labels
+and all group types. It does not falsify the full central Q3 objective.
+
+**Double-check before stating the result.** Independently contracted the
+three normalized self-dual cups in an orthonormal basis, obtaining
+overlaps `1/d, epsilon/d, 1/d`. After rephasing the third cup these are
+`alpha,alpha,epsilon alpha`, where `alpha=1/d`. Recomputed the
+alternating-type eigenvector and the symmetric-type Rayleigh quotient
+directly from those contractions; the latter is
+`-2(1+alpha-2alpha^2) alpha(1-2alpha)`. Checked that a nontrivial
+symmetric-type irreducible cannot have dimension one or two in a
+connected semisimple group. For a complex dual pair, independently
+contracted the two negative cups in the block `E,E,E*,E*`, and checked
+that the positive proper projector vanishes on that whole block.
+Finally expanded the actual four-factor integral as the square
+`(f(g)^2-f(h)^2)^2`. These checks establish the premises and signs of
+the statement below before its acceptance.
+
+**Proposition 35 (uniform obstruction to signed-cut operator positivity).**
+Let `G` be any compact connected group with simple Lie algebra and let
+`W` be any nontrivial real atom `(P28.1)`. The operator `(P35.1)` has a
+negative direction and has strictly positive trace. Consequently it is
+indefinite, although the exact target integral for this tuple is strictly
+positive. Thus operator positivity of the signed cut sum is unavailable
+as a full-scope proof mechanism, even on four identical atoms.
+
+**Proof.**
+
+1. First let `W=E` be an irreducible self-dual module of dimension `d`.
+   By Schur's lemma and unitarity, its invariant cup can be written
+
+   ```text
+   kappa = d^(-1/2) sum_(a,b) J_ab e_a tensor e_b,
+   J^*J=Id,   J^t=epsilon J,   epsilon in {+1,-1}.
+   ```
+
+   To justify normalization, the cup intertwines the unitary dual
+   with `E`; its adjoint times itself is scalar by irreducibility.
+   Rescale this scalar to one. Transposing the cup gives another
+   invariant cup, so Schur's lemma gives `J^t=epsilon J`, and a
+   second transpose gives `epsilon^2=1`.
+2. Let `r,c,s_0` be the products of cups on the pairs
+   `(12)(34),(13)(24),(14)(23)` respectively. They are unit vectors
+   spanning the three proper cut spaces. In coordinates their
+   coefficient arrays are respectively
+
+   ```text
+   d^(-1) J_ab J_cd,
+   d^(-1) J_ac J_bd,
+   d^(-1) J_ad J_bc.
+   ```
+
+   For `r,c`, contracting the first index gives
+   `sum_a conjugate(J_ab) J_ac=delta_bc`; the remaining contraction
+   is `sum_(b,d)|J_bd|^2=d`. Thus `<r,c>=1/d`.
+   For `r,s_0`, the first contraction gives `delta_bd`, leaving
+   `sum_(b,c) conjugate(J_cb) J_bc=epsilon d`. For `c,s_0`, it
+   gives `delta_cd`, leaving `sum_(b,c)|J_bc|^2=d`.
+   Set `s=epsilon s_0` and `alpha=1/d`. Therefore
+
+   ```text
+   <r,c>=<r,s>=alpha,   <c,s>=epsilon alpha,
+   A=Id+P_r-P_c-P_s.                                    (P35.2)
+   ```
+
+   Rephasing `s_0` does not change its line projector.
+3. If `epsilon=-1`, take `w=c-s`. Its squared norm is
+   `2(1+alpha)>0`, and it is orthogonal to `r`. Also
+
+   ```text
+   (P_c+P_s)w=(1+alpha)w,   Aw=-alpha w.                 (P35.3)
+   ```
+
+   This is an explicit negative eigenvector, valid also for the
+   two-dimensional fundamental module.
+4. If `epsilon=+1`, take
+
+   ```text
+   v=c+s-2alpha r,   t=1+alpha-2alpha^2.
+   ```
+
+   Then `<r,v>=0`, `||v||^2=2t`, and
+   `<c,v>=<s,v>=t`. Hence
+
+   ```text
+   <v,Av>=2t-2t^2=-2t alpha(1-2alpha).                  (P35.4)
+   ```
+
+   A connected semisimple group has no nontrivial one-dimensional
+   representation: its character differential vanishes on the
+   perfect Lie algebra, and connectedness makes the character
+   trivial. A two-dimensional representation has trivial determinant
+   by the same argument, and so has an invariant nondegenerate
+   alternating form. For an irreducible its invariant forms are
+   one-dimensional, so it cannot also be of symmetric type.
+   Thus in the present nontrivial symmetric case `d>=3`.
+   It follows that `0<alpha<=1/3`, `t>0`, and `(P35.4)` is strictly
+   negative.
+5. Now let `W=E direct_sum E*`, with `E` non-self-dual and irreducible
+   of dimension `d`. Each cut action preserves the factorwise
+   irreducible summands, so `(P35.1)` restricts to the invariant
+   subspace of the actual ordered block
+
+   ```text
+   E tensor E tensor E* tensor E* subset W^tensor4.
+   ```
+
+   On this block `Q_12=0`, since `E tensor E` has no invariant
+   vector by non-self-duality. The two negative cut spaces are the
+   normalized lines
+
+   ```text
+   r=d^(-1) sum_(a,b) e_a tensor e_b tensor e^a tensor e^b,
+   c=d^(-1) sum_(a,b) e_a tensor e_b tensor e^b tensor e^a.
+   ```
+
+   Their contraction has `d` matching terms, giving `<r,c>=1/d`.
+   Consequently the nonzero vector `w=r+c` satisfies
+
+   ```text
+   A w=(Id-P_r-P_c)w=-(1/d)w.                           (P35.5)
+   ```
+
+   This negative direction belongs to the full real atom's actual
+   invariant space. No positivity claim for separate complex
+   constituent tuples is imposed.
+6. Let `f=chi_W`, which is real. The original signed integral is
+
+   ```text
+   integral_(g,h) (f(g)-f(h))^2 (f(g)+f(h))^2
+     = integral_(g,h) (f(g)^2-f(h)^2)^2
+     = 2 Var_mu(f^2).                                   (P35.6)
+   ```
+
+   Character integration gives
+
+   ```text
+   Tr A=dim (W^tensor4)^G-[dim (W^tensor2)^G]^2
+       =Var_mu(f^2).                                    (P35.7)
+   ```
+
+   This also verifies the exact normalization `Phi=2 Tr A`.
+7. The variance is strictly positive. If the continuous function
+   `f^2` were constant, its value at the identity would force
+   `f(g)` to lie in `{dim W,-dim W}`. Connectedness and `f(e)=dim W`
+   would make `f` identically `dim W`. A unitary matrix of dimension
+   `dim W` with that trace has every eigenvalue equal to one, so the
+   representation would be trivial, a contradiction. Thus `f^2`
+   is nonconstant. Every nonempty open set has positive Haar measure
+   (finitely many of its translates cover the compact group), so its
+   Haar variance cannot vanish. Equations `(P35.3)`--`(P35.5)` give
+   a negative direction, while `(P35.7)` gives positive trace.
+   Therefore `A` is indefinite. QED.
+
+**Exact return to the unrestricted target.** The failed premise is
+operator positivity of the signed cut sum, not a deficient numerical
+margin. No sharper cut-angle bound can make that premise true:
+`(P35.3)`--`(P35.5)` give explicit negative directions for arbitrarily
+large representation dimensions. The full target uses the trace, and
+`(P35.6)` shows exactly why that trace can be positive despite those
+directions. This failure does not restrict the target cone or show
+that an RC injection is impossible. In the self-dual four-atom case,
+the merge map from the two negative lines is already injective because
+their angle is strictly less than one; `Rel=0` even though `A` has a
+negative eigenvalue. Hence the spectral sign of `A` cannot be treated
+as a missing-capacity test for `(P28.2)`.
+
+The selected full criterion stays open. This turn directly falsifies
+one full-scope proof mechanism and supplies an unbounded structural
+obstruction, rather than another partial-scope spectral supplier.
+The next construction must act on unrestricted relations using the
+actual positive targets, or prove the signed trace by a mechanism
+that permits the negative directions just exhibited. The auxiliary
+circuit breaker remains in force; no certificate sweep or delegation
+is part of this work.
+
+## Direct full-scope attempt: partial-swap shadow representations
+
+A second direct proof attempt is to apply quantum shadow inequalities
+to the exact invariant cut profile
+
+```text
+c(S)=m(W_S)m(W_(L\S)),  m(W)=dim W^G,
+Phi_M=sum_(S subset L) (-1)^|S intersection M| c(S).       (P36.1)
+```
+
+The shadow inequalities have precisely such a signed subset sum, but
+their coefficients are overlaps of positive reduced operators, not
+invariant multiplicities. The precise normalization and partial-swap
+interpretation are given in Shi--Guo--Zhang--Zhao,
+[Exploring quantum weight enumerators from the n-qubit parallelized
+SWAP test](https://arxiv.org/pdf/2406.18280), section II.C, equations
+(6)--(7), and Theorem 8. Local dimensions there need not be equal or
+two. The elementary trace identity below is also proved here, so the
+test does not depend on transferring an unverified theorem.
+
+**Candidate and caller.** If the profile `(P36.1)` were a nonnegative
+mixture of reduced-overlap profiles of positive operator pairs, its
+signed sums would be nonnegative by the partial-swap argument. This
+would prove the original full target on atom tuples, after which
+Lemma 28A would promote it to the full continuous cone. The proposed
+identification is a full-scope claim, not a smaller cone condition.
+We test that identification directly.
+
+**Double-check before stating the obstruction.** Expanded the local
+swap in matrix units and transposed its second leg, obtaining exactly
+`F_i^(T_2)=d_i P_(Omega_i)` with `Omega_i` normalized. Checked that
+these Bell projectors commute on different sites, so their product
+is dominated by each factor. Re-derived the partial-swap trace identity
+for two arbitrary operators by tracing the untouched sites first.
+Applied the projector domination inequality to a positive partial
+transpose; the resulting factor is the product of the other retained
+local dimensions, with no normalization omitted. Independently checked
+that the target has `c({i})=0` for a nontrivial atom and
+`c(L)=dim H>0` whenever the full tensor has invariants. These are the
+actual zero and positive values used in the proposition below.
+
+**Proposition 36 (uniform PPT obstruction to exact cut-profile shadows).**
+Let a full-target atom tuple have at least one nontrivial position `i`
+and a nonzero full invariant space `H`. Its cut profile `(P36.1)` cannot
+be represented as partial-swap moments of any positive operator with
+positive partial transpose across the two replica systems. This holds
+in arbitrary finite local dimensions, including arbitrary finite local
+ancillas. In particular it cannot be an exact nonnegative mixture of
+reduced-overlap profiles of positive pairs.
+
+**Proof.**
+
+1. Let the two replica spaces be
+
+   ```text
+   A=tensor_(j in L) A_j,  B=tensor_(j in L) B_j,
+   A_j=B_j=C^(d_j).
+   ```
+
+   The auxiliary dimensions `d_j` need not equal the dimensions of
+   the input modules. Let `F_j` exchange `A_j` with `B_j`, and let
+   `F_S=product_(j in S) F_j`. For arbitrary operators `M,N` on one
+   replica, direct contraction of the swapped matrix indices gives
+
+   ```text
+   Tr[(M tensor N) F_S]
+      =Tr[(Tr_(L\S) M)(Tr_(L\S) N)].                   (P36.2)
+   ```
+
+   The untouched indices are separately traced in `M` and `N`, while
+   the retained indices form their ordinary matrix-product trace.
+2. If `M,N>=0`, the operator `M tensor N` has positive partial
+   transpose on replica `B`, as does any nonnegative sum of such
+   operators. Also the shadow signed sum is nonnegative directly:
+
+   ```text
+   sum_S (-1)^|S intersection M_set| Tr[K F_S]
+     =Tr[K product_(j in M_set)(Id-F_j)
+            product_(j notin M_set)(Id+F_j)] >=0          (P36.3)
+   ```
+
+   for every `K>=0`. The swap factors commute and each `Id+/-F_j`
+   is positive, so their product is positive; the trace of its
+   product with `K` is nonnegative. This identifies the exact
+   candidate's consuming implication.
+3. Now suppose `K>=0` and `R=K^(T_B)>=0`. In a local orthonormal
+   basis the swap is `sum_(a,b) |a><b| tensor |b><a|`.
+   Transposing its second leg gives
+
+   ```text
+   F_j^(T_B)=sum_(a,b) |a,a><b,b|
+             =d_j P_j,
+   P_j=|Omega_j><Omega_j|,
+   Omega_j=d_j^(-1/2) sum_a |a,a>.
+   ```
+
+   Therefore its partial-swap profile `p(S)=Tr[K F_S]` satisfies
+
+   ```text
+   p(S)=d_S Tr[R P_S],
+   d_S=product_(j in S) d_j,  P_S=product_(j in S) P_j.   (P36.4)
+   ```
+
+   The trace identity under partial transpose follows by matrix-unit
+   contraction, and the projectors on different sites commute.
+4. For `i in S`, these commuting projectors obey `0<=P_S<=P_i`.
+   Taking their trace against `R>=0` in `(P36.4)` yields the exact
+   inequality
+
+   ```text
+   0<=p(S)<=[product_(j in S\{i}) d_j] p({i}).           (P36.5)
+   ```
+
+   In particular `p({i})=0` forces `p(S)=0` for every `S` containing
+   `i`, independently of how large the finite local dimensions are.
+5. For the input atom tuple, `W_i^G=0` at every nontrivial position.
+   Hence
+
+   ```text
+   c({i})=m(W_i)m(W_(L\{i}))=0,
+   c(L)=m(W_L)m(1)=dim H>0.                             (P36.6)
+   ```
+
+   These values contradict `(P36.5)` if `p=c`. A common positive
+   scaling of the profile does not change the contradiction.
+   Complement indexing also does not change it, since `c(S)=c(L\S)`.
+6. The same conclusion holds for nonnegative mixtures of positive-pair
+   profiles, even if their auxiliary dimensions differ between
+   summands. Each singleton coefficient is nonnegative. If their
+   sum at `{i}` is zero, every summand with positive weight has zero
+   singleton coefficient. Each therefore has zero full coefficient
+   by `(P36.5)`, contradicting `c(L)>0`. The argument also applies
+   to a convergent nonnegative series or integral of profiles.
+   Thus the proposed exact shadow identification is impossible. QED.
+
+The argument does not exclude limits with unbounded ancillary
+dimensions. It does exclude any approximation on bounded dimensions
+with convergence of both coefficients in `(P36.6)`: if
+`product_(j!=i) d_j<=D` uniformly, then `(P36.5)` gives
+`p(L)<=D p({i})`, which persists in the limit and contradicts those
+two target values. An unbounded-dimensional limit would require its
+own construction and convergence proof; none is supplied here.
+
+**Check that positivity itself was not excluded.** For two copies of
+any nontrivial real atom, put `k=m(W tensor W)>0`. The target profile
+is `c(empty)=c({1,2})=k`, `c({1})=c({2})=0`.
+Take auxiliary dimension two at each site, and let
+
+```text
+P_j^+=(Id+F_j)/2,  P_j^-=(Id-F_j)/2,
+K=(k/2)[(P_1^+/3) tensor (P_2^+/3)
+         +P_1^- tensor P_2^-].                         (P36.7)
+```
+
+Here each tensor factor is a local pair `A_j tensor B_j`;
+`Tr P_j^+=3` and `Tr P_j^-=1`. The two summands are positive,
+each has trace one before multiplication by `k/2`, and their swap
+eigenvalues are respectively `(+1,+1)` and `(-1,-1)`. Thus the four
+moments are exactly the target profile. This positive `K` necessarily
+has a nonpositive partial transpose. Explicitly, expanding `(P36.7)`
+gives
+
+```text
+K=k[(5/36)(Id+F_1 F_2)-(1/9)(F_1+F_2)].
+```
+
+After partial transpose, its eigenvalue on
+`range P_(Omega_1) tensor ker P_(Omega_2)` is
+`k(5/36-2/9)=-k/12`. This checks the distinction between a positive
+partial-swap construction and the PPT/separable construction ruled
+out in Proposition 36. This two-factor check is not a supplier for
+arbitrary tuples.
+
+**Return to the original full consumer.** The available cut profile
+has exactly the zeros `(P36.6)`; the missing identification with an
+ordinary quantum shadow profile is contradicted by `(P36.5)`, not
+merely unproved. The obstruction applies already to two copies of
+every nontrivial real atom and persists for all nonzero invariant
+tuples with a nontrivial position. This is a direct falsification of
+a proposed full-scope mechanism. It gives no counterexample to Q3
+and does not discharge the universal RC criterion `(P28.2)`.
+An exact partial-swap construction, if used instead, must permit
+nonpositive partial transpose across replicas; its actual construction
+for arbitrary atom tuples remains unsupplied. The next task stays on
+the original unrestricted relation/trace problem. No narrower target,
+additional auxiliary batch, certificate sweep, or delegation is selected.
+
+## Direct RC construction requires mixing dual constituent sectors
+
+The real-atom quantifiers in `(P28.1)` are essential to the actual
+construction. The following unbounded family forces an RC map to change
+external irreducible labels. Cut projections and ordinary recoupling
+within a fixed complex constituent tuple cannot supply the full target.
+After establishing that necessity, we construct an explicit transport
+which does change the labels and supplies RC on the test family.
+
+Let `N>=3` be odd, `G=SU(N)`, `E=C^N` its defining module, and
+`W=E direct_sum E*`. This is an actual real atom: the center distinguishes
+`E` and `E*`, and `chi_W=chi_E+conjugate(chi_E)` is real and positive
+definite. Take `2N` copies of `W`, all with minus signs.
+
+The representation-theoretic input used below is Schur--Weyl duality
+and the Frobenius dimension formula, in Etingof,
+[Lie Groups and Lie Algebras](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf),
+Theorems 27.3 and 29.1, printed pages 148 and 156. The determinant
+dimension computation and all map coefficients are derived below.
+
+**Double-check before the statements.** Applied the center charge to
+each constituent word and checked that its number of `E` factors can
+only be `0,N,2N`. For a pure word, re-derived the Frobenius determinant
+as `(2N)! det[1/(2-i+j)!]`, and evaluated it by scaling column `j` by
+`(j+1)!`: the resulting rows are monic falling factorials of degrees
+`0,...,N-1` at `2,...,N+1`. Their Vandermonde determinant gives
+`(2N)!/[N!(N+1)!]`. Checked that the determinant-product orbit spans
+the entire pure invariant space by irreducibility in Schur--Weyl
+duality. For a balanced word, checked all possible odd cut sizes and
+center charges: only its all-`E` versus all-`E*` partition contributes.
+Finally expanded both normalized volume tensors across one chosen
+factor and contracted their dualized product with the normalized cup;
+the positive-cut projection has norm exactly `1/N`. These are the
+dimension, surjectivity, and nonzero-map checks needed below.
+
+**Lemma 37A (pure constituent sector and its relations).** Put
+
+```text
+C_N=(1/(N+1)) binom(2N,N).
+```
+
+In the all-`E` constituent sector of the stated real-atom tuple, the
+full invariant space has dimension `C_N`, the negative cut source has
+dimension `binom(2N,N)/2`, and its merge map is surjective. Thus its
+relation space has dimension
+
+```text
+dim Rel_E=((N-1)/2) C_N>0.                               (P37.1)
+```
+
+Its proper positive target and its unused pure-colour target are both
+zero. The same assertions hold for the all-`E*` sector.
+
+**Proof.**
+
+1. The central element `omega Id`, with `omega` a primitive `N`th
+   root of unity, acts on `E^tensork` as `omega^k`. For
+   `0<=k<=2N`, invariants can occur only at `k=0,N,2N`.
+   Schur--Weyl duality identifies an `SL_N`-trivial polynomial module
+   with a partition whose `N` highest-weight coordinates are equal:
+   their consecutive differences must all be zero. At degree `N`
+   it is the determinant, with multiplicity one; at degree `2N`
+   it is determinant squared, with multiplicity space
+   `pi_(2,...,2)` for the symmetric group `S_(2N)`.
+   Compact `SU(N)` invariants agree with `SL_N(C)` invariants by
+   differentiating and complexifying the Lie algebra action.
+2. For completeness, apply the Frobenius formula at the identity
+   permutation. Expanding its Vandermonde gives
+
+   ```text
+   dim pi_(2,...,2)=(2N)! det_(1<=i,j<=N) [1/(2-i+j)!],
+   ```
+
+   where the entry is zero if its factorial argument is negative.
+   Multiply column `j` by `(j+1)!`. The entry becomes the falling
+   factorial `(j+1)_(i-1)`, a monic polynomial of degree `i-1`.
+   Row elimination against lower-degree rows gives the Vandermonde
+   determinant at the distinct integers `2,...,N+1`. Consequently
+
+   ```text
+   det[1/(2-i+j)!]
+      = [product_(k=1)^N (k-1)!]/[product_(j=1)^N (j+1)!]
+      =1/[N!(N+1)!],
+   dim (E^tensor(2N))^G=C_N.                            (P37.2)
+   ```
+
+3. Every proper nonzero invariant cut has `N` factors on each side.
+   Its two determinant spaces are one-dimensional. Since `N` is
+   odd and all signs are minus, every such cut is negative. There
+   are `binom(2N,N)/2` unordered cuts. Every proper positive cut
+   has even side size and therefore has zero pure-sector invariant
+   space, by step 1.
+4. Choose a nonzero normalized determinant-product tensor on any
+   one of the `N|N` partitions. Permuting the `2N` tensor positions
+   gives exactly the determinant-product lines of these cuts, up
+   to their internal ordering signs. The full invariant space in
+   `(P37.2)` is the irreducible `S_(2N)` module `pi_(2,...,2)` by
+   Schur--Weyl duality. Its nonzero orbit therefore spans the whole
+   space. This is precisely surjectivity of the pure-sector merge
+   map `F`.
+5. Surjectivity makes its `H_free` zero. Rank-nullity gives
+
+   ```text
+   binom(2N,N)/2-C_N=((N-1)/2)C_N,
+   ```
+
+   proving `(P37.1)`. Conjugating all modules gives the all-dual
+   assertions. QED.
+
+The signed integral for this *complex constituent tuple* is therefore
+
+```text
+integral_(g,h) [chi_E(g)-chi_E(h)]^(2N)
+  =2C_N-binom(2N,N)=-(N-1)C_N<0.                        (P37.3)
+```
+
+This is not an input to the real-function target. It shows why requiring
+each complex constituent tuple to satisfy Q3 would be false, rather
+than merely a stronger unsupplied hypothesis. At `N=3` the value is
+`-10` and `dim Rel_E=5`; these are substitutions into the uniform
+formula, not a certificate sweep.
+
+**Proposition 37B (factorwise-label preservation is impossible for RC).**
+For this actual real-atom tuple, no injective map `(P28.2)` can preserve
+every factorwise constituent sector `E/E*`. In particular a construction
+using only cut projections and recoupling within those fixed sectors
+cannot supply RC.
+
+**Proof.**
+
+1. The orthogonal projections onto `E` or `E*` at each position
+   commute with all cut averages. Thus the source, `F`, its kernel,
+   and the positive target split by the actual external constituent
+   word. The range of `F` also splits, so its orthogonal complement
+   `H_free` has this same sector decomposition.
+2. In the pure all-`E` sector, Lemma 37A gives a nonzero source
+   relation space and zero target in both summands of `(P28.2)`.
+   A sector-preserving map would kill this whole relation space.
+   It cannot be injective.
+3. Cut projections, their linear combinations and compositions, and
+   recoupling transformations with fixed external labels preserve
+   these sector projections. Hence they have the same obstruction.
+   Permutations of the identical factors preserve the pure sectors,
+   and global conjugation merely exchanges the two obstructed pure
+   sectors; neither operation by itself supplies a target for them.
+   Any full RC construction must permit transport to mixed dual
+   sectors on these inputs. QED.
+
+There is an explicit such transport. It uses a linear block map from a
+volume tensor to its dual volume tensor, followed by an actual positive
+cut projection. The block map is the ingredient missing from purely
+sector-preserving recoupling.
+
+**Theorem 37C (explicit cross-dual RC map on the SU(N) test family).**
+For every odd `N>=3`, `2N` copies of the real atom `E direct_sum E*`
+of `SU(N)`, all with minus signs, admit an explicit injection
+`Rel -> E_prop`. Its source relations lie in the two pure sectors and
+its images lie in mixed sectors with exactly `N` factors of each type.
+The construction uses one actual copy of each positive cut, even when
+many source cuts choose the same output cut.
+
+**Proof.**
+
+1. In a constituent word with `k` copies of `E` and `2N-k` of `E*`,
+   the center acts as `omega^(2k-2N)`. Since `N` is odd, this is one
+   only if `k=0,N,2N`. Thus the only possible full invariant sectors
+   are the two pure sectors and the balanced sectors with `N` of
+   each type.
+2. In a balanced sector, a proper cut with `r` factors of type `E`
+   and `s` of type `E*` must satisfy `r-s=0,N,-N` to have invariants.
+   A negative cut has odd side size, because all signs are minus.
+   The case `r=s` has even size. The other two cases, with
+   `0<=r,s<=N`, force respectively `(r,s)=(N,0)` and `(0,N)`.
+   They describe the same unordered cut: all `E` positions versus
+   all `E*` positions. Its cut space is a single nonzero product of
+   determinant lines. Its merge map is injective. Therefore every
+   relation of the actual real tuple lies in the two pure sectors;
+   no balanced sector has relations.
+3. Fix the standard unit volume tensor `epsilon in E^tensor N`
+   and its conjugate-dual unit volume `epsilon*`. For every source
+   cut `pi={A,B}` with `|A|=|B|=N`, orient it by `1 in A`, and
+   order each set increasingly. The pure source lines have unit
+   vectors
+
+   ```text
+   t_pi^+=epsilon_A tensor epsilon_B,
+   t_pi^-=epsilon*_A tensor epsilon*_B.
+   ```
+
+   Let `b` be the least element of `B`, and put
+   `tau_pi={{1,b}, L\{1,b}}`. This is a proper positive cut,
+   since its two-element side has even minus count.
+4. Define the complex-linear rank-one block maps
+
+   ```text
+   D_B^+=|epsilon*_B><epsilon_B|,
+   D_B^-=|epsilon_B><epsilon*_B|.                         (P37.4)
+   ```
+
+   They are zero off their indicated block source lines. Both their
+   source and target tensors are `G`-invariant, so the block maps
+   are `G`-equivariant. Applying identity on `A` and `D_B^+` on
+   `B` sends `t_pi^+` to the unit mixed tensor
+   `eta_pi^+=epsilon_A tensor epsilon*_B`. The minus version sends
+   `t_pi^-` to `eta_pi^-=epsilon*_A tensor epsilon_B`.
+   This is a linear map on the tensors, not an unsupported
+   factorwise partial complex conjugation.
+5. Across a distinguished factor, the unit volume has `N` equal
+   Schmidt coefficients `1/sqrt(N)`. Write its remaining vectors
+   as the orthonormal cofactor basis `u_r` of `wedge^(N-1) E`;
+   the dual volume gives the corresponding dual basis `u^r`.
+   For the two factors `{1,b}` versus the complement, the mixed
+   tensor consequently has the normalized expansion
+
+   ```text
+   eta_pi^+=(1/N) sum_(r,s)
+                (e_r tensor e^s) tensor (u_r tensor u^s),
+   ```
+
+   with the fixed tensor-position ordering and its volume signs
+   incorporated into the cofactor bases. The invariant projector
+   on `E tensor E*` is the projector onto
+   `N^(-1/2) sum_r e_r tensor e^r`. The remaining cofactor space
+   has invariant cup `N^(-1/2) sum_r u_r tensor u^r`.
+   Projecting both sides gives
+
+   ```text
+   Q_(tau_pi) eta_pi^+=(1/N) v_pi^+,
+   ||v_pi^+||=1.                                       (P37.5)
+   ```
+
+   Indeed the first cup contraction imposes `r=s` with coefficient
+   `1/sqrt(N)`; the remaining sum is `sqrt(N)` times its unit cup.
+   The same calculation gives a unit `v_pi^-` for `eta_pi^-`.
+6. Define on the two pure cut-source lines
+
+   ```text
+   L_pi^+(a t_pi^+)=N Q_(tau_pi)(Id_A tensor D_B^+)(a t_pi^+)
+                   =a v_pi^+,
+   L_pi^-(a t_pi^-)=N Q_(tau_pi)(Id_A tensor D_B^-)(a t_pi^-)
+                   =a v_pi^-.                          (P37.6)
+   ```
+
+   The plus image belongs to the balanced external sector with
+   `E` exactly on `A`. The minus image belongs to the sector with
+   `E*` exactly on `A`. Different oriented cuts have different
+   `A`; the plus/minus images are distinguished also by the type
+   at position one. Hence all these image lines belong to distinct
+   orthogonal external sectors.
+7. Sum the outputs in the single target `H_tau` whenever several
+   source cuts choose that same `tau`. The sector orthogonality in
+   step 6 makes this map injective on the direct sum of *all* pure
+   negative cut-source lines. No positive cut is duplicated.
+   Restrict it to the actual `Rel`, which lies entirely in those
+   source lines by steps 1--2. This is the required explicit
+   injection `Rel -> E_prop`, with no use of `H_free`.
+   Proposition 28 consumes it without any remaining demand on
+   this test family. QED.
+
+**Return to the original full criterion.** Proposition 37B applies to
+genuine real atoms in an unbounded family of compact connected simple
+groups. It disproves the proposed extra restriction that the universal
+RC map should preserve complex constituent words. Theorem 37C actually
+supplies that map on the obstructing family, using the explicit linear
+dualization `(P37.4)` and recoupling `(P37.5)`. Its acceptance is based
+on the entire real module and the actual target capacities, not on a
+false complex-constituent positivity assertion.
+
+The signed integral on this particular all-minus repeated-atom family
+is also pointwise nonnegative, since it is an even power of a real
+difference. The new content is the forced mixing and its actual RC
+realization. It is not a completion of the arbitrary-function,
+arbitrary-sign full target. In mixed sign patterns, balanced sectors
+can themselves contain relations and compete for these target lines;
+step 2 then no longer applies. For arbitrary modules and tuples one
+must construct the corresponding cross-dual transport with a coherent
+allocation to those remaining relations. That universal injection
+`(P28.2)` remains open; no narrower acceptance criterion is substituted.
+
+**Exact mixed-sign return input.** The scope failure already occurs for
+`SU(3)`, six copies of `W=E direct_sum E*`, with minus positions `{1,2}`.
+In the constituent word with `E` at `{1,2,3}` and `E*` at `{4,5,6}`:
+
+1. Identify its invariant space with `End_G(E^tensor3)`. Schur--Weyl
+   duality gives the six permutation operators as a basis: the symmetric
+   group action is faithful in degree three when `dim E=3`. Equivalently,
+   apply these operators to `e_1 tensor e_2 tensor e_3`; their six images
+   are distinct basis tensors, proving linear independence directly.
+   The commutant is unchanged on restricting from `GL_3` to `SU(3)`:
+   its scalar action is scalar in this fixed tensor degree, and
+   complexifying the `SU(3)` action gives `SL_3`. Thus `dim H=6` in
+   this word.
+2. The negative nonzero unordered cuts are exactly the six meson cuts
+   `{i,j}|complement`, with `i in {1,2}` and `j in {4,5,6}`. The
+   baryon cut `{1,2,3}|{4,5,6}` is positive. Each negative cut has
+   a one-dimensional cup on its two-element side and a two-dimensional
+   invariant space on the remaining two `E` and two `E*` positions.
+   Consequently `dim O=12` in this word.
+3. Each of the six matching tensors (the permutation-operator basis)
+   occurs in exactly two negative cut spaces: choose its matched edge
+   incident to position one or its matched edge incident to position
+   two. Hence `F` is surjective onto the six-dimensional invariant
+   space and `dim Rel=12-6=6`. In particular the map defined only on
+   pure sectors in Theorem 37C, extended by zero, kills this whole
+   nonzero balanced relation space. This is the failed input when
+   attempting to return that supplier to the universal Proposition 28.
+
+**Independent final double-check and acceptance.** Rechecked the pure
+source rank without using the Catalan dimension calculation: its orbit
+is a nonzero submodule of the irreducible rectangular Specht module,
+so is the whole invariant space. Rechecked the transport coefficient
+by taking the inner product of `eta_pi^+` with its two normalized cups:
+only `r=s` survives, giving `N/N^2=1/N`; the image remains in the
+cofactor submodule, whose invariant line is precisely that second cup.
+The distinguished factors are first in their ordered blocks, so the
+dual cofactor signs agree. Finally, an output word recovers its oriented
+source `A` and its plus/minus type from the type at position one. This
+proves injectivity even when output cuts coincide. Thus the stated
+family map is accepted and Proposition 28 consumes it for every member
+of that family. The independently computed six-dimensional relation
+space above prevents a universal return. The full goal remains active:
+the missing construction must allocate cross-dual images for mixed
+relations as well as pure relations on arbitrary actual atom tuples.
+
+## Algebraic Walsh packing and its assembly with dual transport
+
+The mixed-sign return input above does not require commuting cut
+projections. A common *linear* basis can pack the relation images,
+provided its incidences form the complete binary odd cosets. This gives
+an actual supplier for the previously failed input and assembles with
+cross-dual transport on an unbounded two-minus family. The full target
+and universal demand `(P28.2)` are unchanged.
+
+**Independent double-check before the statements.** In the Walsh map
+below the zero row is the actual merge map, without rescaling. Linear
+independence, rather than orthogonality, separates both that row and
+different outputs in a shared positive target. For the assembly, checked
+the center-charge alternatives, all balanced cut sizes, and the exact
+determinant expansion in the permutation-matching basis. With exactly
+two minus positions, a safe matching exists precisely when those two
+positions have opposite constituent types, and every safe matching pairs
+them to each other. A negative determinant cut has that same type
+pattern; its nonzero safe coefficients make its source independent of
+the span of negative matching sources. The target cut joining the two
+minus positions is absent from every unsafe matching's binary cut
+group. These facts verify the source decomposition and disjoint target
+allocation, not only a dimension bound.
+
+**Lemma 38A (algebraic Walsh packing).** Fix an actual real-atom tuple
+and an even minus set as in `(P28.1)`--`(P28.2)`. Let `b_t`, `t in T`,
+be finitely many linearly independent invariant tensors. For each `t`
+choose a binary subspace `B_t` of the unordered cut group `B_L` such
+that `ell_M|B_t` is nonzero and
+
+```text
+b_t belongs to H_pi for every pi in B_t.
+```
+
+Set `B_t^+=ker(ell_M|B_t)` and define the actual source subspaces
+
+```text
+D_pi=span{b_t : pi in B_t, ell_M(pi)=1},
+O_D=direct_sum_(negative pi) D_pi,
+F_D:O_D->H, (x_pi)_pi -> sum_pi x_pi.
+```
+
+There is an explicit map `T_D:O_D -> H direct_sum E_prop` whose
+`H` component is `F_D` and which is injective. Its restriction supplies
+an injection `ker F_D -> E_prop`. No orthogonality or commutation of
+cut projections is assumed.
+
+**Proof.**
+
+1. Express each `x_pi` uniquely as `sum_t a_(pi,t)b_t` using the
+   indicated source basis. For a fixed `t`, its source cuts are the
+   whole odd coset `i_t+B_t^+`, for any chosen `i_t in B_t` with
+   `ell_M(i_t)=1`. Choose a binary basis of `B_t^+` and use its
+   coordinate dot product.
+2. For every `u in B_t^+` put
+
+   ```text
+   c_(u,t)=sum_(v in B_t^+) (-1)^(u dot v) a_(i_t+v,t).
+                                                               (P38.1)
+   ```
+
+   Output `c_(u,t)b_t` in the actual cut `u`; for a shared target
+   cut sum these outputs over `t`. The condition on `B_t` ensures
+   each output lies in `H_u`. The zero cut output is exactly
+   `sum_t c_(0,t)b_t=F_D x`.
+3. If all outputs vanish, their linear independence at each target
+   gives every `c_(u,t)=0`. Walsh inversion, with inverse the
+   transpose divided by `|B_t^+|`, gives every `a_(pi,t)=0`.
+   Thus `T_D` is injective. On `ker F_D`, the zero row vanishes
+   separately for each `t`, so the proper rows alone are injective.
+   Every target is used once, even when different `B_t` overlap.
+   A zero-dimensional `B_t^+` causes no exception: it has one source
+   row and zero relations. QED.
+
+In particular, if all negative cut spaces are spanned by subsets of a
+common linear basis of `range F`, this lemma supplies the entire RC
+map. For a basis vector take `B_t` to be the binary span of the negative
+cuts containing it. Lemma 30B shows that its odd coset consists exactly
+of those cuts and that every cut of `B_t` contains the vector. Therefore
+`D_pi=H_pi`. The basis need not be orthogonal; this extends the actual
+construction beyond Theorem 30's commuting hypothesis. No assertion
+that every full-target tuple has such a basis is made.
+
+**Theorem 38B (dual transport and algebraic packing have disjoint targets).**
+For every odd `N>=3`, on `SU(N)`, take `2N` copies of the actual real
+atom `W=E direct_sum E*` and exactly two minus signs. There is an explicit
+injection `Rel -> E_prop`. The pure-sector relation images use only
+the positive cut joining the two minus positions; all balanced-sector
+relation images avoid that cut. This supplies `(P28.2)` for the whole
+actual real tuple, including all its mixed constituent sectors.
+
+**Proof.**
+
+1. Relabel the minus positions as `1,2`. The center-charge calculation
+   in Theorem 37C gives only the two pure sectors and balanced words.
+   Source, merge map, and relations split by those words.
+2. In a balanced word write `A` for its `N` positions of type `E`
+   and `B` for its dual positions. A nonzero proper cut either has
+   equally many `E` and `E*` positions on each side, or is the
+   determinant cut `A|B`. Indeed the center requires the side's
+   difference of type counts to be `0,N,-N`, and the extreme cases
+   force all positions of one type on that side.
+3. Call the equal-count cuts mesonic. The invariant space of the
+   balanced word has a linear basis `b_p` indexed by the `N!`
+   bijections `p:A->B`: each `b_p` is a product of normalized cups
+   along its matched edges. Identifying invariants with
+   `End_G(E^tensor N)`, Schur--Weyl duality gives the permutation
+   operators as a spanning set. They are linearly independent:
+   apply them to the tensor of the `N` distinct standard basis
+   vectors to obtain `N!` distinct basis tensors. This also proves
+   the matching assertion for every mesonic cut: at side degree
+   `r`, its two invariant spaces have bases of `r!` and `(N-r)!`
+   matchings, and their products are exactly the full matchings
+   with no edge crossing the cut. The compact/complex group
+   identification is as in Lemma 37A. Restriction from `GL_N` to
+   `SL_N` does not change this fixed-degree commutant, since the
+   scalar subgroup acts by a scalar.
+4. Let `B_p` be the binary group of cuts obtained by taking unions
+   of matched edges, modulo complement. It has dimension `N-1`.
+   Call `p` safe if positions `1,2` are matched to one another;
+   otherwise call it unsafe. On a safe matching `ell_M|B_p=0`.
+   On an unsafe matching the two minus positions lie on different
+   edges, so `ell_M|B_p` is nonzero. All negative mesonic source
+   incidences are exactly the odd cosets for unsafe matchings.
+   Lemma 38A therefore supplies an injection of their relations
+   into proper positive mesonic cuts, using one actual copy of
+   every target.
+5. A negative determinant cut occurs precisely when `1,2` have
+   opposite constituent types. In that case there are `(N-1)!`
+   safe matchings. Its unit tensor `eta=epsilon_A tensor epsilon*_B`
+   has a nonzero coefficient on every matching. More explicitly,
+   with increasing orders on `A,B`, its determinant expansion is
+
+   ```text
+   eta=(N^(N/2)/N!) sum_p sign(p) b_p.                  (P38.2)
+   ```
+
+   This follows by expanding the determinant of the Kronecker
+   pairing matrix; each `b_p` contains `N` normalized cups.
+   Negative mesonic sources span only unsafe basis vectors.
+   Consequently `eta` is not in their merge range. In a relation
+   the coefficient of the determinant source must be zero,
+   by examining any safe coordinate in `(P38.2)`. If the minus
+   positions have the same type, the determinant cut is positive
+   and contributes no source. Thus in every balanced word the
+   entire actual relation space is exactly the mesonic relation
+   space treated in step 4.
+6. Reserve the proper positive cut
+
+   ```text
+   tau_0={ {1,2}, L\{1,2} }.
+   ```
+
+   This cut never belongs to `B_p` for an unsafe matching, since
+   its side `{1,2}` is not a union of matched edges. Thus all the
+   balanced-sector maps in step 4 have zero `tau_0` output. This
+   is an actual summand reservation, not an orthogonality claim
+   about the nonorthogonal matching basis.
+7. In either pure sector the only proper invariant cuts have
+   `N` positions on each side, by Lemma 37A. Such a cut is negative
+   exactly when it separates positions `1,2`. Orient every negative
+   cut `pi={A,B}` by `1 in A`, so `2 in B`. Both distinguished
+   factors are first in the increasing orders of their blocks.
+   Use the linear block dualizations `D_B^+`, `D_B^-` in `(P37.4)`
+   and define
+
+   ```text
+   L_pi^+(a epsilon_A tensor epsilon_B)
+       =N Q_(tau_0)(Id_A tensor D_B^+)
+                    (a epsilon_A tensor epsilon_B),
+   L_pi^-(a epsilon*_A tensor epsilon*_B)
+       =N Q_(tau_0)(Id_A tensor D_B^-)
+                    (a epsilon*_A tensor epsilon*_B).    (P38.3)
+   ```
+
+   The cup/cofactor calculation `(P37.5)` makes each output a
+   unit vector times `a`. Distinct oriented source cuts and the
+   two pure types give distinct balanced output words, as in
+   Theorem 37C, so this is injective on the entire pure negative
+   source. In particular it is injective on its relations. Its
+   images use only `H_(tau_0)`.
+8. Combine `(P38.3)` on pure relations with the balanced maps of
+   step 4. Different balanced words have orthogonal constituent
+   sectors. Pure images cannot cancel balanced images because
+   steps 6--7 place them in different cut summands of `E_prop`.
+   Within a balanced target, Lemma 38A gives linear independence
+   without requiring orthogonality. Hence the combined map is
+   injective on the entire actual `Rel`. Proposition 28 consumes
+   it for every tuple stated here, without any unused capacity
+   assumption or duplication of positive cuts. QED.
+
+**Noncommuting return check.** On the `SU(3)` mixed word in the previous
+return input, the matching basis has six vectors. Each appears in exactly
+two negative sources, the edges incident to positions one and two.
+Their agreement is the positive cut given by its third edge. The Walsh
+map on these two source coefficients is their sum in `H` and their
+difference in that positive cut. On `Rel` the sums vanish. Each of the
+three possible positive third-edge cuts receives two distinct matching
+basis vectors, proving the required injection on the six-dimensional
+relation space with one copy of each cut.
+
+This is beyond the commuting projection supplier: the negative cut
+spaces for `{1,4}` and `{1,5}` have zero intersection by Lemma 27A,
+but their matching vectors with edges respectively
+`(1,4),(2,5),(3,6)` and `(1,5),(2,4),(3,6)` have inner product `1/3`.
+Contracting the normalized cups gives two free index loops instead of
+three, hence `3^2/3^3=1/3`. Commuting orthogonal projections onto spaces
+with zero intersection would have zero product and orthogonal ranges;
+these projections therefore do not commute.
+
+**Final independent check and full-consumer return.** Rechecked the
+Walsh construction coefficient by coefficient: its zero row is `F_D`,
+its inverse divides by the actual odd-coset size, and distinct matching
+vectors remain independent in a shared cut because they remain part
+of the full permutation basis. Separately rechecked `(P38.2)` on indices:
+the determinant has coefficient `1/N!` on each permutation contraction,
+and replacing contractions by unit cups contributes `N^(N/2)`.
+Its safe terms cannot be cancelled by mesonic negative sources. Finally
+rechecked that the pure map uses the first factor in each ordered block,
+has projection coefficient `1/N`, distinguishes all output words,
+and occupies only the target summand which the mesonic map omits.
+Theorem 38B is accepted as an actual RC supplier and repairs the entire
+previous `SU(3)` six-factor/two-minus failed input.
+
+The integral for a repeated real function at this even tuple length is
+also pointwise nonnegative for two minus signs. The new result is the
+explicit assembly of the two relation mechanisms on their actual
+target capacities; it is not a new proof of positivity for arbitrary
+distinct functions. Returning to universal `(P28.2)`, arbitrary atom
+tuples still lack a compatible matching basis or a replacement for it,
+and arbitrary even minus sets can produce negative determinant sources
+without safe matching coordinates. Those inputs are not discharged by
+the construction above. No universal common-basis assumption is inserted
+into the full target, and the full goal remains active.
+
+## A higher-relation transport with arbitrary spectator modules
+
+The common-basis mechanism cannot be a universal supplier, even for
+self-dual atoms. The obstruction below occurs for every nontrivial real
+atom, in every group of the full target. It also supplies an explicit
+transport of the obstructing higher relations, with arbitrary spectator
+modules and their full invariant multiplicities. This is direct work on
+actual relation spaces and positive targets; no certificate family or
+new universal common-basis hypothesis is introduced.
+
+**Input and consumer.** Fix a nontrivial actual atom `W` from `(P28.1)`,
+of complex dimension `d`. Let the tuple contain copies of `W` at positions
+`a_0,a_1,b_1,...,b_(d+1)`, and any list of actual atoms at other positions
+`X`. Write `A={a_1} union X` and
+
+```text
+R=(W_(a_1) tensor (tensor_(j in X) W_j))^G.
+```
+
+Assume `R!=0`. Put minus signs at `a_0,a_1`, plus signs at every `b_i`,
+and any signs on `X` with an even number of additional minuses. The
+cuts `pi_i={{a_0,b_i}, complement}` are actual negative cuts, and
+`tau={{a_0,a_1}, complement}` is an actual proper positive cut.
+These parity assumptions are exactly what makes the constructed maps
+land in the supplier target `(P28.2)`; no restriction on the labels,
+group rank, multiplicity of `R`, or number of spectator factors is used.
+
+**Independent double-check before the statements.** Normalized the
+invariant cup with a unitary coefficient matrix divided by `sqrt(d)`.
+Antisymmetrizing its other leg with a unit volume tensor on `d` positions
+over `d+1` positions is zero, giving the relation with alternating
+cofactor signs. Permuting those positions rephases the source vectors
+by the sign character; the unit diagonal and their zero sum give the
+off-diagonal Gram coefficient exactly `-1/d`. Finally contracted the
+two cups across their common first leg. Unitarity gives `Id/d`, so the
+positive-cut image is a relabeling of the whole spectator tensor,
+with norm exactly `||x||/d`. No assumption that its individual factor
+has a scalar reduced density matrix is required.
+
+**Lemma 39A (unit cup and invariant volume).** Every nontrivial real
+atom `W` admits a unit invariant cup
+
+```text
+c=d^(-1/2) sum_(r,s=1)^d U_(r,s) e_r tensor e_s,
+U* U=Id,                                                  (P39.1)
+```
+
+and a unit invariant volume tensor
+
+```text
+epsilon=(d!)^(-1/2) sum_(sigma in S_d) sign(sigma)
+                  e_(sigma(1)) tensor ... tensor e_(sigma(d)).
+                                                               (P39.2)
+```
+
+Moreover `W^G=0` and `d>=2`.
+
+**Proof.**
+
+1. An irreducible self-dual unitary module has a unitary intertwiner
+   `W* -> W`: normalize any invertible intertwiner using its polar
+   decomposition, which commutes with the group action. The
+   corresponding cup has the coefficient matrix in `(P39.1)`.
+   For a non-self-dual atom `E direct_sum E*`, the canonical
+   intertwiner swapping the two dual summands is unitary and gives
+   the same assertion. Thus both types of actual atom are covered.
+2. The derivative of `det rho_W` is `tr d rho_W`. This trace vanishes
+   on every Lie bracket. The semisimple Lie algebra is its own
+   bracket span, so the derivative is zero. Connectedness makes
+   `det rho_W=1` everywhere. Hence the top exterior power, and
+   therefore `(P39.2)`, is invariant.
+3. A nontrivial irreducible has no invariant vector. Neither
+   constituent of a nontrivial paired atom is trivial, so it also
+   has no invariant vector. A one-dimensional representation of
+   this connected group has zero Lie algebra derivative by the
+   same perfectness argument and is trivial. Thus `d>=2`. QED.
+
+For the increasingly ordered bank `B={b_1,...,b_(d+1)}`, define
+isometric source inclusions
+
+```text
+C_i:R -> H_(pi_i),
+C_i(x)=reorder(c_(a_0,b_i) tensor x_A tensor epsilon_(B\b_i)),
+s_i=(-1)^(i-1).                                           (P39.3)
+```
+
+The volume tensors are ordered by the remaining bank positions.
+
+**Theorem 39B (the entire determinant relation multiplicity).** The
+selected source `O_C=direct_sum_(i=1)^(d+1) C_i(R)` has merge kernel
+precisely
+
+```text
+R_det={ (s_i C_i(x))_i : x in R } subset Rel.              (P39.4)
+```
+
+Its dimension is `dim R`, while its merge rank is `d dim R`. With
+
+```text
+j(x)=(d+1)^(-1/2) (s_i C_i(x))_i,
+```
+
+`j:R->R_det` is an isometry. These assertions hold for arbitrary
+spectator atoms in the stated input.
+
+**Proof.**
+
+1. Put `beta_i=c_(a_0,b_i) tensor epsilon_(B\b_i)` with the fixed
+   position reorderings. Its norm is one. The alternating sum
+   `sum_i s_i beta_i` is zero: it is a scalar multiple of the
+   antisymmetrization over the `d+1` bank positions of a tensor
+   with one cup leg and an alternating `d`-tensor, and
+   `wedge^(d+1) W=0`. Tensoring this identity with `x_A` proves
+   that `(P39.4)` is contained in the actual merge kernel.
+2. Write `z_i=s_i beta_i`. A permutation `p` of the bank sends
+   `z_i` to `sign(p) z_(p(i))`. This follows from the cofactor
+   identity
+
+   ```text
+   sign(p)=(-1)^(i+p(i)) sign(p on B\b_i).
+   ```
+
+   Unitarity of factor permutations makes all off-diagonal inner
+   products of the `z_i` equal; interchanging their two indices
+   makes this common value real. Since `sum_i z_i=0` and
+   `||z_i||=1`, it equals `-1/d`. Thus their Gram matrix is
+
+   ```text
+   Gram(z_1,...,z_(d+1))=((d+1)/d) Id-(1/d) 11^t.          (P39.5)
+   ```
+
+3. The spectator tensor factors are the same for every source.
+   Consequently for `x_i in R`,
+
+   ```text
+   ||sum_i s_i C_i(x_i)||^2
+      =((d+1)/d) sum_i ||x_i||^2-(1/d)||sum_i x_i||^2
+      =(1/d) sum_(i<k) ||x_i-x_k||^2.                     (P39.6)
+   ```
+
+   The right-hand side vanishes exactly when every `x_i` is the
+   same vector. This proves equality in `(P39.4)` and the rank
+   assertion by rank-nullity. Orthogonality of different source
+   cut copies gives `||j(x)||=||x||`. QED.
+
+**Proposition 39C (no universal common linear basis).** For every
+nontrivial real atom `W`, there is an actual two-minus tuple of copies
+of `W` whose negative cut spaces cannot be spanned by subsets of any
+one linear basis of `H`, or of `range F`. Thus removing orthogonality
+from the Walsh construction does not make its common-basis condition
+valid on the full target, including the self-dual case.
+
+**Proof.**
+
+1. In the input above take `X` to be `d-1` further copies of `W`.
+   Then `R` contains the volume line `(P39.2)`, so it is nonzero.
+   The tuple has `2d+2` copies of `W`, all allowed actual atoms.
+2. For `i!=k`, the common refinement of `pi_i,pi_k` contains the
+   singleton positions `a_0,b_i,b_k`. Lemma 27A and `W^G=0`
+   give `H_(pi_i) intersection H_(pi_k)=0`.
+3. Coordinate subspaces of a common basis with zero pairwise
+   intersections use disjoint subsets of that basis. Their sum
+   must therefore be direct. But Theorem 39B supplies the nonzero
+   relation `(s_i C_i(x))_i`, with every coordinate nonzero for
+   `x!=0`. This contradicts directness and proves the assertion.
+   The same argument applies to a basis of `range F`, since all
+   these source images lie there. QED.
+
+**Knob comparison.** The falsified knob is the extra demand that all
+negative cut spaces have a common linear basis, as a proposed way to
+apply Lemma 38A universally. Proposition 28 never requires this knob;
+it requires an actual injection on relations. Proposition 39C therefore
+falsifies that proposed universal basis mechanism, not Q3 or RC. The
+construction below continues on the actual required relations.
+
+**Theorem 39D (one positive cut carries the full higher-relation family).**
+For the stated arbitrary-spectator input, the explicit map
+
+```text
+L_det:R_det -> H_tau subset E_prop,
+L_det(r)=d sqrt(d+1) Q_tau r_(pi_1)                       (P39.7)
+```
+
+is an isometry. It transports all `dim R` higher relations into one
+actual positive cut, without a common basis, constituent-word change,
+or additional target copies.
+
+**Proof.**
+
+1. Contract the cup on `{a_0,a_1}` against `C_1(x)`. Formula
+   `(P39.1)` gives, on the common first leg,
+
+   ```text
+   (1/d) sum_r conjugate(U_(r,s)) U_(r,t)=delta_(s,t)/d.
+   ```
+
+   The contraction therefore replaces the position `a_1` in
+   `x_A` by position `b_1`, with scalar coefficient `1/d`.
+   If `x'` denotes this position relabeling, then
+
+   ```text
+   Q_tau C_1(x)=(1/d) Z(x),
+   Z(x)=reorder(c_(a_0,a_1) tensor x'_(b_1,X)
+                              tensor epsilon_(B\b_1)),
+   ||Z(x)||=||x||.                                       (P39.8)
+   ```
+
+   Both remaining tensors are invariant, so averaging the
+   complement makes no further change. This verifies the full
+   cut projection `Q_tau`, rather than only a pair contraction.
+2. Since `s_1=1`, the first component of `j(x)` is
+   `C_1(x)/sqrt(d+1)`. Substituting `(P39.8)` into `(P39.7)`
+   gives `L_det j(x)=Z(x)`. Both `j` and `Z` are isometries,
+   so `L_det` is an isometry on the entire `R_det`. No coordinate
+   of the spectator multiplicity is discarded.
+3. The side `{a_0,a_1}` has two minus signs, making `tau` proper
+   and positive under the stated even total minus count. Its
+   complement contains the relabeled spectator invariant and
+   the actual volume tensor; these use exactly the original
+   factors. Thus `(P39.7)` uses precisely one actual summand of
+   `E_prop` from the original consumer. QED.
+
+**Final independent check and original-consumer return.** Checked the
+bank relation again as a coefficient identity: for each fixed first-leg
+index, its remaining expression is alternation of `d+1` vectors in a
+`d`-dimensional space, and is zero. Independently derived the norm
+identity `(P39.6)` from `sum_(i<k)||x_i-x_k||^2`, which confirms both
+the exact kernel and the normalization of its isometric inclusion.
+Checked the positive transport on basis indices using `U*U=Id`;
+the coefficient is `1/d`, regardless of the Frobenius--Schur type.
+The complement after relabeling has exactly `B union X`, so its
+invariance and its actual target multiplicity agree with Proposition 28.
+The higher-relation map is accepted on the stated full multiplicity
+space with arbitrary spectators.
+
+For the full RC consumer this explicitly allocates the subspace
+`R_det subset Rel` to `Z(R) subset H_tau`. It does not assert that
+all other relations can use that same target capacity. To assemble a
+full map on this tuple, the remaining relations must be transported
+into `H_free` and the proper positive targets with `Z(R)` removed
+from this one cut. Multiple overlapping determinant banks also require
+compatible allocation. Tuples without the stated bank are not reached
+by this map. Those are unsupplied inputs of universal `(P28.2)`;
+neither a common-basis hypothesis nor added factor copies are used to
+replace them. The full-cone goal remains active.
+
+## Packing overlapping banks by moving entire source cuts
+
+The single-cut isometries of Theorem 39D cannot be combined into one
+reserved cut for all overlapping banks. The following actual input
+shows the capacity defect. We then replace those separate maps by a
+cyclic permutation of entire source spaces, which also transports
+relations involving other source cuts. The remaining source and target
+spaces are kept inside the original universal RC demand.
+
+**Independent double-check before the statements.** For the capacity
+example, computed the invariant dimensions by the fundamental `SU(2)`
+fusion rule, and checked merge surjectivity by a cup identity, rather
+than assuming that all source dimensions subtract from the ambient
+dimension. For the cyclic map, checked that its transpositions exchange
+identical modules, send both sides of each actual cut to the indicated
+positive cut, and give distinct unordered target cuts even when the
+cycle has length three. For the full-relation peeling, its kernel is
+exactly the relations with zero coordinates in the selected source
+block; this includes relations mixing that block with the rest. Only
+the actual range in the positive target is reserved.
+
+**Lemma 40A (one reserved cut does not pack all bank relations).** Let
+`G=SU(2)` and take six fundamental modules at
+`a_0,a_1,b_1,b_2,b_3,b_4`, with minus signs at `a_0,a_1`. For the
+four negative cuts `pi_i={{a_0,b_i}, complement}`, the merge kernel
+has dimension three. It is spanned by overlapping determinant-bank
+relations from Theorem 39B. But
+
+```text
+dim H_{{a_0,a_1},complement}=2.                            (P40.1)
+```
+
+Thus all those relations cannot be injected into that one positive cut.
+
+**Proof.**
+
+1. For the fundamental `E`, the fusion recurrence gives
+
+   ```text
+   chi_E^2=chi_0+chi_2,
+   chi_E^4=2chi_0+3chi_2+chi_4,
+   dim (E^tensor4)^G=2,
+   dim (E^tensor6)^G=2+3=5.
+   ```
+
+   Each `H_(pi_i)` has dimension two, since its pair invariant is
+   a line and its complement has four fundamental factors. Thus
+   the selected star source has dimension eight. The target in
+   `(P40.1)` has the same two-dimensional complement invariant.
+2. Products of three fundamental cups span the six-factor invariant
+   space. Indeed Schur--Weyl identifies it with the irreducible
+   `S_6` module for partition `(3,3)`; the nonzero orbit of one
+   cup product spans that module. A cup product whose `a_0`
+   partner is a bank position is already in the star merge range.
+   If its partner is `a_1`, apply
+
+   ```text
+   epsilon_(a_0,a_1) epsilon_(b_i,b_j)
+      =epsilon_(a_0,b_i) epsilon_(a_1,b_j)
+       -epsilon_(a_0,b_j) epsilon_(a_1,b_i)
+   ```
+
+   to either of its two bank pairs. Both resulting products belong
+   to that range. Hence the merge is surjective and its kernel
+   has dimension `8-5=3`.
+3. Take the three banks
+
+   ```text
+   {b_1,b_2,b_3}, {b_1,b_2,b_4}, {b_1,b_3,b_4}.
+   ```
+
+   Each gives a one-dimensional determinant relation, with the
+   remaining bank position paired to `a_1` as its spectator
+   invariant. The first two relation vectors have, in source
+   `pi_2`, the two distinct cup-product lines on the four
+   complement positions. These lines are independent: their
+   normalized overlap has modulus `1/2<1`. The third relation
+   has zero `pi_2` coordinate. Consequently a relation among
+   these three bank relations first kills the first two
+   coefficients and then the third. They are independent and
+   therefore span the three-dimensional star merge kernel.
+   Equation `(P40.1)` now gives the claimed capacity defect. QED.
+
+The violated knob is a proposed *common single-cut allocation* for
+multiple banks. Theorem 39D asserts only one bank's multiplicity map,
+and Proposition 28 permits all actual positive cuts. Neither statement
+is contradicted. The next map uses those permitted cuts.
+
+**Theorem 40B (cyclic isometry on the entire common-anchor source).**
+Fix any actual atom tuple and any even minus set. Suppose a minus
+position `a` and `k>=3` plus positions `b_1,...,b_k` carry the same
+actual atom `W`. All other modules and signs are arbitrary. Define
+
+```text
+pi_i={{a,b_i}, complement},
+O_star=direct_sum_(i=1)^k H_(pi_i),
+tau_i={{b_i,b_(i+1)}, complement}, b_(k+1)=b_1.
+```
+
+There is an explicit isometry `V:O_star -> E_prop`. It uses one copy
+of each actual positive target `H_(tau_i)` and is onto their direct sum.
+In particular it simultaneously transports every relation among these
+source cuts, including the span of all overlapping determinant banks
+with this anchor and these leaves.
+
+**Proof.**
+
+1. Let `p_i` be the transposition of positions `a,b_(i+1)`. These
+   positions carry identical unitary modules, so the tensor
+   permutation is a well-defined unitary intertwiner on the
+   actual tensor product. It maps the independent-invariance
+   space `H_(pi_i)` onto `H_(tau_i)`, including all constituent
+   components and all multiplicities: it sends each block of
+   `pi_i` exactly to the corresponding block of `tau_i`.
+2. Both bank positions in `tau_i` have plus signs, so these cuts
+   are positive; the even total minus count ensures complement
+   parity agrees. They are proper because the complement
+   contains `a`. The unordered edges of a cycle of length
+   `k>=3` are distinct. Thus
+
+   ```text
+   (Vt)_(tau_i)=p_i t_(pi_i),                            (P40.2)
+   (Vt)_tau=0 at every other proper positive cut
+   ```
+
+   uses distinct summands of the actual `E_prop`.
+3. Unitarity of each `p_i` and orthogonality of distinct target
+   copies give `||Vt||^2=sum_i ||t_(pi_i)||^2`. The inverse on
+   its range applies the same transpositions. This proves both
+   the isometry and the claimed onto statement. Restricting
+   `(P40.2)` to any relation subspace retains injectivity, without
+   a separate choice of allocation for each bank. QED.
+
+This construction does not need an irreducible cup, a common linear
+basis, a determinant relation, or a bound on the number of leaves.
+The paired non-self-dual atoms and arbitrary spectator factors are
+included. Its maps permute original factors; no extra copies of an
+atom or a positive target are introduced.
+
+**Theorem 40C (transport of all mixed relations touching this source).**
+For the entire original source `O`, write
+
+```text
+O=O_star orthogonal_direct_sum O_rest,
+P_star:O->O_star,
+K=Rel intersection O_rest,
+Z=V(P_star Rel) subset E_prop.                            (P40.3)
+```
+
+Then `r -> V P_star r` on the full `Rel` has kernel exactly `K`.
+Its restriction to `Rel orthominus K` is an explicit injection into
+`Z`, onto `Z`. Thus every relation touching the selected star source
+is transported at once, including those coupled to arbitrary other
+negative cuts. The exact residual target in the original RC demand is
+
+```text
+H_free direct_sum (E_prop orthominus Z),                  (P40.4)
+```
+
+and the exact residual source is `K=ker(F|O_rest)`.
+
+**Proof.**
+
+1. Since `V` is injective, `V P_star r=0` holds if and only if
+   `P_star r=0`. For `r in Rel` this says exactly `r in K`.
+   Orthogonal decomposition of the finite-dimensional `Rel`
+   gives `Rel=K orthogonal_direct_sum (Rel orthominus K)`.
+   The restriction on the second summand is injective. It has
+   the same range as the full map because the first summand
+   maps to zero, proving that its range is exactly `Z`. The
+   projector `P_K` is explicitly the zero-eigenspace projector
+   of `(F|O_rest)^*(F|O_rest)`, extended by zero on `O_star`.
+2. These are actual finite-dimensional subspaces of the existing
+   source and target. In particular `Z` need not exhaust the
+   positive cut spaces used in Theorem 40B. Reserve only `Z`,
+   retaining its full orthogonal complement inside `E_prop`,
+   including combinations across the used cuts. No decomposition
+   of `Z` into separate cut summands is assumed.
+   The actual `H_free=(range F)^perp` is unchanged; it is not
+   replaced by the generally larger unused space for `F|O_rest`.
+3. If the remaining source `K` has an injection `L_rest` into
+   `(P40.4)`, combine it with the supplied map by
+
+   ```text
+   L(r)=V P_star r + L_rest P_K r.                       (P40.5)
+   ```
+
+   The two output ranges are orthogonal. Vanishing first gives
+   `P_star r=0`, hence `r in K`; vanishing second then gives
+   `r=0`. This is precisely the original supplier `(P28.2)`.
+   The assertion here supplies the first map, not an injection
+   for arbitrary residual `K`. QED.
+
+**Final independent check and full-consumer return.** Rechecked
+surjectivity in Lemma 40A by resolving a cup on the two minus positions
+against a bank pair; both resulting cups contain the minus anchor
+and a plus bank position. The three bank relations are independent
+in the indicated common source coordinate, so the single-cut defect
+concerns actual relations, not a redundant presentation. Rechecked
+Theorem 40B by applying each transposition to both blocks of its cut,
+and by reversing it; this confirms the exact target and all its
+multiplicities. Finally checked `(P40.5)` without assuming the source
+cuts split their merge ranges: the projection kernel on `Rel` is
+exactly `K`, even for relations coupling the star to the rest.
+The constructed map therefore supplies the whole `Rel orthominus K`
+part of the actual caller, using only its range `Z` as target capacity.
+
+For the preceding arbitrary-spectator determinant construction,
+Theorem 40B replaces all one-bank allocations at a common anchor
+with one simultaneous source-space isometry. That resolves the
+overlapping-bank issue in this family, and Theorem 40C also handles
+relations involving sources outside those banks. The universal
+remaining input is `K` with its actual target `(P40.4)`, or the full
+relation space in tuples lacking the repeated-atom star. Arbitrary
+atom tuples are not assumed to possess such a star. No injectivity
+claim for these remaining inputs has been supplied, so the full-cone
+goal is still active.
+
+## Full real-cone support reduction and the first short-length input
+
+Propositions 1 and 1B concern real irreducible characters. Their
+short-length conclusion extends to the full cone, including the paired
+atoms of groups with non-self-dual irreducibles. There is also a
+six-factor orthogonality statement for distinct actual atom types.
+These results supply actual finite inputs of the original theorem;
+they do not impose a length bound on the universal goal.
+
+**Independent double-check before the statements.** Checked that a
+square of a real atom has equal multiplicities on dual irreducible
+orbits, so its decomposition uses nonnegative coefficients of actual
+real atoms, without requiring positivity on complex constituent tuples.
+Each opposite-sign replacement lowers the length by one while keeping
+the number of minus signs. For at most five nontrivial atoms, every
+unordered cut has a side of size at most two, and an opposite-sign
+pair has zero invariant multiplicity after support reduction. For six
+distinct atoms, two distinct `3|3` cuts have opposite singleton cells
+in their four-cell refinement. The shared recoupling pattern requires
+the same irreducible constituent in these cells, which their distinct
+dual orbits exclude. Finally the uniform approximation is the actual
+positive atom expansion of Lemma 28A.
+
+**Proposition 41A (disjoint sign supports for every actual real atom).**
+On every group in the full target, it suffices to prove finite atomic
+Q3 for tuples in which no nontrivial atom type occurs with both signs.
+More precisely, an atomic integral of length `n` is a finite
+nonnegative combination of integrals of length at most `n` having
+that property. Trivial plus factors contribute scalar factors of two;
+a trivial minus factor makes the integral zero. Thus a shortest
+negative atomic input, if one exists, has nontrivial atoms and
+disjoint plus/minus supports.
+
+**Proof.**
+
+1. Every actual real atom `W` is self-dual as a module, including
+   `E direct_sum E*`. Its tensor square is a genuine finite
+   representation with nonnegative integer multiplicities.
+   Duality of the tensor square makes the multiplicities of
+   `V_lambda` and `V_(D lambda)` equal. Hence, in the notation
+   `(P28.1)`,
+
+   ```text
+   R_W^2=sum_[lambda] a_[lambda] R_lambda,
+   a_[lambda]>=0,                                        (P41.1)
+   ```
+
+   with finitely many nonzero coefficients.
+2. If `W` occurs at both signs, replace those two factors by
+
+   ```text
+   [R_W(g)-R_W(h)][R_W(g)+R_W(h)]
+      =sum_[lambda] a_[lambda]
+                       [R_lambda(g)-R_lambda(h)].        (P41.2)
+   ```
+
+   Every term has one fewer factor and the same number of minus
+   signs. Its trivial-atom term vanishes. Repeat on each resulting
+   term until the sign supports are disjoint. Length strictly
+   decreases at each replacement, so this is a finite terminating
+   expansion with nonnegative coefficients.
+3. For a shortest negative input any replacement produces only
+   shorter nonnegative inputs and cannot have negative sum.
+   Trivial factors are removed as stated. Thus that input already
+   has disjoint sign supports. Conversely, positivity for all
+   disjoint-support inputs gives positivity for all finite atomic
+   inputs by `(P41.2)`. Lemma 28A and Proposition 28's uniform
+   limit argument extend this implication to the full continuous
+   cone. QED.
+
+**Theorem 41B (the full continuous cone at lengths at most five).**
+For every group and every function in the original full-cone target,
+Q3 holds for tuple lengths `0<=n<=5`, with arbitrary sign patterns.
+This includes paired real atoms and arbitrary continuous nonnegative
+character mixtures, not only self-dual irreducible characters.
+
+**Proof.**
+
+1. The empty tuple has integral one. An odd number of minus signs
+   gives zero by swapping the integration variables. For even
+   minus parity, Proposition 41A reduces any atomic input of
+   length at most five to nontrivial atoms with disjoint sign
+   supports, still with length at most five.
+2. Choose one representative of each unordered cut, always with
+   a side of size at most two. Such representatives exist because
+   `n<=5`. With `m(S)=dim(tensor_(i in S) W_i)^G`, the exact
+   coefficient identity is
+
+   ```text
+   Phi=2 sum_(unordered cuts {S,S^c})
+                       (-1)^(|S intersection M|) m(S)m(S^c).
+                                                               (P41.3)
+   ```
+
+   This identity applies to nonempty tuples; the empty tuple was
+   treated separately. Complement parities agree since `|M|`
+   is even.
+3. The empty-side contribution is nonnegative. Every singleton
+   contribution vanishes because a nontrivial atom has no
+   invariant vector. For two atoms,
+
+   ```text
+   m({i,j})=integral R_i(g) R_j(g) dmu(g)=0
+   ```
+
+   when their dual-orbit types are distinct, by irreducible
+   character orthogonality. A negative pair has one position
+   of each sign, so disjoint supports force this vanishing.
+   All other pair contributions have positive sign. Every term
+   remaining in `(P41.3)` is therefore nonnegative.
+4. Expand finite nonnegative real-atom mixtures by multilinearity.
+   For general continuous functions, Lemma 28A supplies uniform
+   positive finite approximations. For fixed `n<=5` the product
+   difference bound in Proposition 28, step 4, tends to zero;
+   integration against normalized product Haar measure passes
+   to the limit. Thus the stated full-cone inputs are supplied.
+   QED.
+
+**Theorem 41C (six distinct atoms: orthogonal triple-cut spaces).**
+Take six nontrivial actual real atoms of pairwise distinct dual-orbit
+types, on any group in the full target. Every nonzero proper cut space
+has type `3|3`, and all such spaces are mutually orthogonal. Consequently
+
+```text
+sum_(all unordered 3|3 cuts pi) dim H_pi <= dim H,           (P41.4)
+```
+
+and Q3 holds for every sign pattern. The merge map on negative cuts
+is injective, so the original RC relation space is zero.
+
+**Proof.**
+
+1. Singletons have no invariants, and every two-element side has
+   zero invariant space by distinctness of the atom types. Thus
+   the only nonzero proper spaces can have sides of size three.
+2. For two distinct unordered `3|3` cuts choose sides `S,T` of
+   size three. Since the cuts are distinct, `|S intersection T|`
+   is one or two. Their four-cell sizes are respectively
+   `(1,2,2,1)` or `(2,1,1,2)` in the row/column convention of
+   Lemma 29A. The two singleton cells are at opposite corners.
+3. In the shared pattern `(P29.1)`, opposite corner labels must
+   be identical: it is `(lambda,D lambda,D lambda,lambda)`.
+   The singleton atoms have disjoint irreducible constituent
+   sets because their actual dual orbits are distinct. Hence
+   no shared isotypic block exists. Lemma 29A's exact row/column
+   decomposition then gives zero overlap of the two whole cut
+   spaces, including all multiplicities and both constituents
+   of any paired atom. This proves mutual orthogonality.
+4. The sum of all these cut spaces is therefore an orthogonal
+   subspace of `H`, proving `(P41.4)`. In particular the merge
+   map on any chosen negative subfamily is injective and has
+   `Rel=0`; its dimension is at most `dim H`. The pure target
+   alone dominates the negative source, and `(P27.3)` proves
+   Q3. This is the exact zero-relation supplier of `(P28.2)`.
+   QED.
+
+**Corollary 41D (six continuous functions with disjoint atom supports).**
+Q3 holds for six full-cone functions whose nontrivial dual-orbit
+supports in `(P28.4)` are pairwise disjoint. Their trivial coefficients
+are arbitrary and nonnegative.
+
+**Proof.** In each term of a finite positive expansion, a trivial atom
+reduces the length or kills a minus factor; Theorem 41B handles it.
+Without a trivial atom, the six types are distinct and Theorem 41C
+applies. Sum with the nonnegative expansion coefficients and use the
+same uniform approximation bound as in Theorem 41B. QED.
+
+**Final independent check and exact return.** Rechecked `(P41.1)` by
+dualizing the representation `W tensor W`, rather than merely using
+reality of its character. Rechecked termination and minus parity of
+each replacement in `(P41.2)`. For the five-factor result, directly
+paired each subset with its complement and verified that every negative
+representative with nonzero possible size has size two and opposite
+signs. For the six-factor result, rechecked both possible four-cell
+size patterns and the diagonal label equalities in `(P29.1)`; distinct
+paired atoms share no singleton constituent either. The orthogonal
+merge therefore acts on the actual real module, rather than demanding
+positivity on each complex constituent tuple. Finally applied the exact
+uniform product bound to the actual positive Fourier approximations.
+These proofs supply the stated full-cone short inputs and the stated
+six-function support inputs.
+
+Returning to arbitrary atom tuples, Theorem 41B removes all lengths
+below six. By Proposition 41A and Theorem 41C, a remaining six-factor
+input may be taken to have disjoint plus/minus supports and must
+contain a repeated type within one sign class. Its `3|3` cut spaces
+can interact and compete for positive target capacities; no map for
+all of those repeated-type inputs is supplied here. Arbitrary longer
+tuples remain included in the unchanged universal `(P28.2)` demand.
+No length restriction or support restriction replaces the full goal.
+
+## Repeated six-factor inputs with sparse cut interactions
+
+The distinctness condition of Theorem 41C can be relaxed. The exact
+four-cell geometry bounds the overlap graph in terms of repeated
+*actual atom types*. Applying the already constructed Theorem 34 map
+then supplies whole six-factor inputs, including their repeated-type
+relations and their agreement-cut collisions. No fusion multiplicity
+bound or enumeration is used.
+
+Work first with six nontrivial atoms having disjoint plus/minus supports,
+as permitted by Proposition 41A. Every repeated type therefore has one
+sign throughout. Every nonzero negative cut is `3|3`: singletons have
+no invariants, and an opposite-sign pair consists of distinct atom types
+and has no invariant. The following graph has all nonzero negative
+triple-cut spaces as vertices, with an edge when two spaces are
+nonorthogonal.
+
+**Independent double-check before the statements.** Reoriented any two
+distinct triple cuts to make their intersection have size two; the
+exchanged positions are the singleton cells in `(P29.1)`. A shared
+component requires those singleton atoms to have the same dual-orbit
+type. Counted the possible exchanges separately for a repeated pair
+and a repeated triple. For the additional four-minus cases, counted
+only negative cut orbits, using the actual parity of their type counts.
+The residual graph in Theorem 34 is a subgraph of this graph, because
+its source spaces are subspaces of the full cut spaces. Its spectral
+radius is therefore at most two whenever the full graph has maximum
+degree two. These checks match the actual hypothesis of that map.
+
+**Lemma 42A (an overlap requires one equal-type exchange).** Two
+distinct `3|3` cut spaces in the stated six-atom input can be
+nonorthogonal only when one cut is obtained from the other by
+exchanging two positions of the same actual atom type, one on each
+side. This is a necessary condition; the exchange need not yield a
+nonzero overlap.
+
+**Proof.** Choose sides `S,T` of size three. Their intersection has
+size one or two. Complement `T` if necessary, so the intersection has
+size two. Write `S\T={i}`, `T\S={j}`. The four-cell sizes are then
+`(2,1,1,2)`. The shared pattern `(P29.1)` requires the two singleton
+labels to be identical. Distinct actual dual-orbit types have disjoint
+constituent sets, so such a component can occur only if `W_i,W_j`
+are the same actual atom type. Changing `S` to `T` is precisely their
+exchange. All other four-cell components have zero overlap by Lemma
+29A. QED.
+
+**Theorem 42B (two repeated pairs or one repeated triple).** Six-factor
+atomic Q3 holds, for every target group and every sign pattern, when
+the nontrivial type multiplicities are any of
+
+```text
+(1,1,1,1,1,1), (2,1,1,1,1), (2,2,1,1), (3,1,1,1).       (P42.1)
+```
+
+If a type occurs with both signs, the result is supplied by the full
+shorter-length theorem. Otherwise the entire RC relation map is supplied
+by Theorem 34. All dimensions and tensor multiplicities are unrestricted.
+
+**Proof.**
+
+1. A trivial factor reduces to Theorem 41B or kills a minus factor.
+   An opposite-sign repeat reduces to a nonnegative sum of
+   at-most-five-factor inputs by `(P41.2)`, and Theorem 41B
+   applies. Odd minus parity vanishes. It therefore suffices to
+   consider the stated disjoint-support, even-parity input.
+2. With at most two repeated pairs, a cut has at most one possible
+   nontrivial exchange for each split pair. Lemma 42A therefore
+   bounds its overlap degree by two. Quotienting sides by
+   complement or deleting zero cut spaces cannot increase it.
+3. With one repeated triple and otherwise distinct types, let
+   `r` be the number of its positions on a chosen cut side.
+   The number of possible equal-type exchanges is `r(3-r)`,
+   which is zero or two for `r=0,1,2,3`. Again the full negative
+   overlap graph has maximum degree at most two.
+4. The canonical residual graph of Theorem 31 has no edge where
+   the full spaces are orthogonal. Its maximum degree is also
+   at most two. For its adjacency matrix `A` and any real vector
+   `v`,
+
+   ```text
+   |v^t A v|<=sum_(edges ij) 2|v_i v_j|
+             <=sum_i degree(i) v_i^2<=2||v||^2.
+   ```
+
+   Thus its adjacency spectral radius is at most two, the exact
+   hypothesis of Theorem 34. That theorem's component maps,
+   together with Theorem 31's allocated Walsh part, supply an
+   injection on the entire actual `Rel` into `E_prop`. Its
+   orthogonal component packing permits shared agreement cuts.
+   Proposition 28 consumes this map for the full stated tuple.
+   QED.
+
+**Theorem 42C (two further complete four-minus inputs).** In disjoint
+sign supports, atomic Q3 holds for both of the following six-factor
+patterns, with three pairwise distinct actual atom types `A,B,C`:
+
+```text
+A^-,A^-,B^-,B^-,C^+,C^+;
+A^-,A^-,A^-,B^+,B^+,C^-.                                (P42.2)
+```
+
+Here superscripts indicate signs, not duals. This covers the
+four-minus cases of multiplicity patterns `(2,2,2)` and `(3,2,1)`.
+
+**Proof.**
+
+1. In the first tuple, the four unordered cuts with one position
+   of each type on each side have even minus parity and are
+   positive. Every remaining triple cut has type counts
+   `(2,1,0)` on a side. For each choice of its single-occurring
+   type there is an orbit of two unordered cuts. Equal-type
+   exchanges can only interchange those two cuts: the double
+   and absent types are unsplit. The orbit is negative precisely
+   when its single-occurring type is `A` or `B`. Hence the
+   negative overlap graph is a subgraph of two disjoint edges.
+2. In the second tuple orient each triple-cut side to exclude
+   the singleton position of type `C`. Its counts of `A,B` are
+   `(3,0)`, `(2,1)`, or `(1,2)`. The first is one negative cut;
+   the middle six cuts are positive; the last three cuts are
+   negative. Among those last cuts only the choice of the one
+   `A` position changes. Their possible overlaps form a triangle.
+   The first cut is isolated, since an equal-type exchange
+   preserves these counts and cannot reach it from that triangle.
+3. In both cases there are no negative pair-cut spaces by
+   disjoint supports, so these are the entire negative families.
+   Their residual graphs have spectral radius at most two by
+   the same bound as in Theorem 42B. The actual Theorem 34
+   maps and Proposition 28 therefore prove the assertions.
+   QED.
+
+**Final independent check and original-consumer return.** Rechecked
+the overlap condition before counting any graph edge: it uses singleton
+constituents in `(P29.1)`, so it applies equally to irreducible real
+atoms and paired atoms, with no replacement of their full module by
+a stronger complex-constituent target. Rechecked the six-factor support
+reduction against `(P41.2)`, including trivial factors and unchanged
+minus parity. Independently listed the possible type counts in each
+of `(P42.1)`--`(P42.2)`, rather than bounding a graph containing positive
+cuts. Finally passed the residual adjacency bound to the exact existing
+Theorem 34 construction: its component outputs lie in orthogonal
+subspaces even when positive cut indices coincide, and its diagonal
+part uses the complementary allocated capacities from Theorem 31.
+That combined injection is consumed by Proposition 28 on every stated
+input. The new six-factor cases are accepted.
+
+The remaining six-factor inputs include the negative four-cut orbit
+with one position of each of three repeated-pair types on each side,
+and the negative six-cut orbit for counts `(2,1)` in a `(3,2,1)` tuple.
+Their possible overlap graphs are respectively `K_4` and the triangular
+prism, both of degree three, so Theorem 34's hypothesis is not supplied
+by this geometry. Larger same-sign multiplicities also remain.
+For the `(3,2,1)` prism the sign classes are the pair type minus and
+the triple/singleton types plus, or all types minus; the four-minus
+case has already been consumed above. For `(2,2,2)`, the central
+four-cut orbit is negative with two or six minus signs, while its
+four-minus case has already been consumed above. These are explicit
+remaining inputs, not a new bound on the original goal. Arbitrary
+longer tuples remain in the active universal demand `(P28.2)`.
+
+## Exact merge Gram matrix for four balanced triple cuts
+
+The degree-three four-cut input left by Theorem 42 has an exact
+factor-permutation Fourier decomposition. It concerns three arbitrary
+actual atoms doubled, not a common basis for the cut spaces. Irreducible
+reduced density matrices determine every Gram block, including the
+blocks of paired real atoms. The small-dimensional boundary has no
+antisymmetric multiplicity space. This supplies the four-cut merge
+injection and closes the entire six-factor `(2,2,2)` input.
+
+The elementary small-representation facts used to close that boundary
+are checked against Etingof,
+[Lie Groups and Lie Algebras](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf):
+Theorems 11.16 and 11.18 (printed pages 66 and 68), Theorem 21.10
+(page 113), Proposition 26.8 (page 143), and Schur--Weyl Theorem 27.3.
+The dimension and invariant computations needed here are given below.
+
+**Independent double-check before the statements.** Computed the
+single-factor swap compression by a partial trace on matrix units;
+it is a sum of constituent projectors divided by constituent dimensions,
+not a scalar inverse dimension of the reducible real atom. Computed
+two-factor compressions by multiplying the complementary single swap
+by the full swap. Checked the Fourier source normalization `1/2`
+and the ambient projection normalization `1/8`, giving merge Gram
+coefficients `1+sum eta_i k_i`. Checked separately the identical-word
+and different-word multiplicity spaces. At the reciprocal-dimension
+boundary, the only possible zero block has full-swap eigenvalue minus
+and is `wedge^2 R_u`; the small-representation argument below makes
+that space zero. Finally checked that distinct type-count orbits of
+triple cuts are orthogonal before assembling the six-factor input.
+
+**Lemma 43A (small constituent boundary).** On a compact connected
+group with simple Lie algebra:
+
+1. The existence of a nontrivial two-dimensional irreducible forces
+   the Lie algebra to be `su(2)`. Every actual atom is then an
+   irreducible self-dual module, and every triple invariant
+   multiplicity is at most one.
+2. A triple of three-dimensional irreducibles also has invariant
+   multiplicity at most one.
+
+**Proof.**
+
+1. The differentiated representation of a nontrivial irreducible
+   is nonzero and injective, since its kernel is an ideal in a
+   simple Lie algebra. It takes values in `su(d)`: the trace
+   vanishes on the perfect Lie algebra. For `d=2` its image is
+   a nonzero simple subalgebra of the three-dimensional `su(2)`.
+   A Lie algebra of dimension at most two is not simple, so the
+   image is all of `su(2)`. The classification and tensor rule
+   of `sl_2` give one irreducible of each dimension, self-duality,
+   and multiplicity at most one in a tensor product of two
+   irreducibles. Triple invariants have the same multiplicity.
+   Connectedness makes group representations determined by
+   their differentials; central quotients only restrict the
+   allowed labels.
+2. For `d=3` the same injection lands in `su(3)`, of dimension
+   eight. A Cartan torus is simultaneously diagonalizable in
+   this unitary representation, so the rank is at most two.
+   The simple rank-one algebra has dimension three. The
+   irreducible rank-two root systems `A_2,B_2,G_2` have six,
+   eight, and twelve roots, respectively, giving Lie algebra
+   dimensions `8,10,14`. Thus only `su(2)` or `su(3)` can occur.
+3. In the first case step 1's triple multiplicity bound applies.
+   In the second case the Weyl dimension formula is
+
+   ```text
+   dim V_(p,q)=(p+1)(q+1)(p+q+2)/2.
+   ```
+
+   Its only dimension-three solutions are `(1,0)` and `(0,1)`,
+   the defining module and its dual. The differentiated image
+   is all of `su(3)`, so invariants are computed for `SU(3)`.
+   Its central cube root of unity excludes a triple containing
+   one or two defining modules and the other factors dual.
+   Three defining modules have the one-dimensional determinant
+   invariant; three duals have its dual. This proves step 2.
+   QED.
+
+Let `A,B,C` be any three nontrivial actual real atoms, not necessarily
+distinct, and put
+
+```text
+R=(A tensor B tensor C)^G,
+H=(A_1 tensor B_1 tensor C_1 tensor A_2 tensor B_2 tensor C_2)^G,
+H_0=R tensor R subset H.
+```
+
+Let `S_1,S_2,S_3` exchange respectively the two copies of `A,B,C`.
+These are commuting unitary involutions on `H`. Their product `S_all`
+preserves `H_0` and acts there as the full flip `T` of the two copies
+of `R`. The four balanced unordered cuts have spaces
+
+```text
+H_g=g H_0,  g in Q={Id,S_1,S_2,S_3}.
+```
+
+Here `Q` is a representative set for the eight-element swap group
+modulo `S_all`; it is not asserted to be a subgroup.
+
+**Lemma 43B (single-swap compression including paired atoms).** Write
+`P_0` for the orthogonal projection onto `H_0`. For every irreducible
+constituent `lambda` of the `i`th atom, let `P_(i,lambda)` be its
+factorwise constituent projection restricted to `R`, and let
+`d_(i,lambda)` be its irreducible dimension. Then, on `R tensor R`,
+
+```text
+K_i=P_0 S_i P_0
+   =sum_lambda [P_(i,lambda) tensor P_(i,lambda)]/d_(i,lambda),
+P_0 S_i S_j P_0=T K_k,  {i,j,k}={1,2,3}.                  (P43.1)
+```
+
+The `K_i` commute with each other and with `T`.
+
+**Proof.**
+
+1. For `r,s in R`, trace `|s><r|` over the other two factors.
+   Its operator on the `i`th atom commutes with `G`. The atom
+   has either one irreducible constituent or two inequivalent
+   dual constituents, each of multiplicity one. Schur's lemma
+   therefore gives the block on `lambda` as
+
+   ```text
+   <r,P_(i,lambda)s> Id_(V_lambda)/d_(i,lambda),
+   ```
+
+   with no cross-constituent block. Its trace determines the
+   stated coefficient.
+2. For `r_1,r_2,s_1,s_2 in R`, the matrix element of a single
+   factor swap is the trace of the product of their two
+   reduced cross operators. Substituting step 1 gives
+
+   ```text
+   <r_1 tensor r_2, S_i(s_1 tensor s_2)>
+      =sum_lambda <r_1,P_(i,lambda)s_1>
+                   <r_2,P_(i,lambda)s_2>/d_(i,lambda).
+   ```
+
+   This is exactly the first operator identity in `(P43.1)`.
+3. Constituent projections on different factors commute and
+   preserve `R`, proving commutation of the `K_i`. Their
+   identical factors make them commute with `T`. Since
+   `S_i S_j=S_all S_k` and `S_all` preserves `H_0`, the second
+   compression identity follows. QED.
+
+**Theorem 43C (four balanced triple-cut merge is injective).** For any
+three nontrivial actual atoms `A,B,C` on every group in the full target,
+the merge
+
+```text
+F_4:direct_sum_(g in Q) H_g -> H,
+    (t_g)_g -> sum_g t_g                                 (P43.2)
+```
+
+is injective. All invariant multiplicities and all paired-atom
+constituent sectors are included.
+
+**Proof.**
+
+1. For `eta=(eta_1,eta_2,eta_3) in {+1,-1}^3`, let
+   `p=eta_1 eta_2 eta_3` and use the orthogonal swap-character
+   projection
+
+   ```text
+   Pi_eta=(1/8) product_(i=1)^3 (Id+eta_i S_i).
+   ```
+
+   Expanding and applying `(P43.1)` gives
+
+   ```text
+   P_0 Pi_eta P_0=(1/8)(Id+sum_i eta_i K_i)(Id+p T).
+                                                               (P43.3)
+   ```
+
+2. For `z in R tensor R` with `Tz=pz`, define a source vector
+   whose actual cut component is
+
+   ```text
+   (J_eta z)_g=(1/2) eta(g) g z,  g in Q,
+   eta(Id)=1, eta(S_i)=eta_i.
+   ```
+
+   This inclusion is isometric, because the source has four
+   orthogonal cut copies. Distinct `eta` have orthogonal source
+   images: when their products differ their `T` eigenspaces
+   are orthogonal; otherwise their quotient character sums
+   to zero over `Q`. The sum of their dimensions is
+   `4 dim(Sym^2 R)+4 dim(wedge^2 R)=4(dim R)^2`, so these
+   images exhaust the source. Moreover
+
+   ```text
+   F_4 J_eta z=2 Pi_eta z,
+   ||F_4 J_eta z||^2=<z,(Id+sum_i eta_i K_i)z>.             (P43.4)
+   ```
+
+   The first identity uses `S_all z=pz` in the eight-term
+   Fourier sum; the second uses `(P43.3)` and that `Pi_eta`
+   is an orthogonal projection. Different `eta` outputs lie
+   in orthogonal character spaces of the swap group.
+3. Split `R` into its orthogonal external constituent-word
+   spaces `R_u`. On
+   `R_u tensor R_v` and its flipped partner, the `K_i` are
+   scalar, with
+
+   ```text
+   k_i(u,v)=1/d_(i,u_i) if u_i=v_i, and 0 otherwise.
+   ```
+
+   Thus the merge Gram coefficient in that word-pair/parity
+   space is exactly
+
+   ```text
+   lambda_(eta,u,v)=1+sum_i eta_i k_i(u,v).                (P43.5)
+   ```
+
+4. If `u!=v` and these spaces are nonzero, the group cannot
+   have a two-dimensional irreducible: Lemma 43A would make
+   every atom irreducible self-dual, giving only one word.
+   All constituent dimensions are therefore at least three.
+   At most two indices are shared, so `sum_i k_i<=2/3` and
+   every coefficient in `(P43.5)` is at least `1/3`.
+5. If `u=v`, all three `k_i` are positive and at most `1/2`.
+   For `p=+1`, either all signs are plus or exactly two are
+   minus. In the latter case
+
+   ```text
+   1-1/d_i-1/d_j+1/d_k>=1/d_k>0.
+   ```
+
+   For `p=-1` with only one minus sign, the coefficient is
+   at least `1/2`. The only potentially nonpositive coefficient
+   is therefore `1-sum_i 1/d_i`, with all signs minus; its
+   source is `wedge^2 R_u`.
+6. If one `d_i=2`, Lemma 43A gives `dim R_u<=1`, so that
+   source is zero. Otherwise every `d_i>=3`, making the
+   coefficient nonnegative. It can be zero only when all
+   three dimensions are three; Lemma 43A again gives
+   `dim R_u<=1`, so its source is zero. In all other cases
+   the coefficient is strictly positive.
+7. Every occupied Gram block is thus strictly positive. Their
+   finite number gives a positive lower bound for the fixed
+   tuple, namely the minimum of the occupied values `(P43.5)`.
+   Equations `(P43.4)`--`(P43.5)` and orthogonality of different
+   swap characters show that `F_4` has zero kernel. If `R=0`
+   the source is zero and the assertion holds directly. QED.
+
+**Theorem 43D (the entire three-repeated-pair six-factor input).**
+For pairwise distinct actual nontrivial atom types `A,B,C`, Q3 holds
+for the six-factor tuple `A,A,B,B,C,C`, with every sign pattern and
+on every target group. In disjoint sign supports, its negative merge
+is injective and the original relation space is zero. In fact
+
+```text
+sum_(all unordered 3|3 cuts pi) dim H_pi <= dim H.           (P43.6)
+```
+
+**Proof.**
+
+1. The ten unordered triple cuts separate into the four balanced
+   cuts with one position of each type per side, and three
+   orbits of two cuts with counts `(2,1,0)` up to complement.
+   The four-cut merge is injective by Theorem 43C. In each
+   two-cut orbit the full intersection is zero by Lemma 27A:
+   the exchanged singleton factors are nontrivial atoms.
+   Hence its two-cut merge is injective as well.
+2. Different orbits have orthogonal cut spaces. By Lemma 42A
+   a nonzero overlap would require an equal-type exchange,
+   which preserves the type counts up to complement and
+   therefore stays in its orbit. Thus the three two-cut
+   merge ranges and the balanced four-cut merge range are
+   mutually orthogonal. Their direct-sum injection into `H`
+   proves `(P43.6)`.
+3. Odd minus parity vanishes. If either copy pair has opposite
+   signs, `(P41.2)` reduces to Theorem 41B. Otherwise each
+   repeated type has one sign throughout, and a negative pair
+   cut contains distinct types and has zero invariant space.
+   Singletons have no invariants either. All negative sources
+   are triple cuts, so step 2 makes their merge injective.
+   Its `Rel=0` supplies `(P28.2)`; Proposition 28 proves Q3.
+   This includes the two-minus and six-minus inputs not
+   previously covered by Theorem 42C. QED.
+
+**Final independent check and original-consumer return.** Recomputed
+the single-swap matrix element on four invariant vectors, tracing the
+swapped irreducible block rather than the full reducible atom. This
+confirms the constituent-dimension coefficient and the absence of
+cross-orbit terms. Independently expanded the eight-character projector
+and checked its zero/full-swap terms, its three single swaps, and its
+three complementary double swaps, giving `(P43.3)`. Checked the source
+Fourier normalization by the four-cut norm sum and by the dimension
+of all eight parity domains. Then checked every sign pattern in
+`(P43.5)`, including the empty antisymmetric domains at dimensions
+two and three. Finally partitioned all ten actual triple cuts and
+replayed their merge into the same full `H`; pair and singleton
+negative sources vanish only after the justified support reduction.
+The full `(2,2,2)` input is therefore supplied, not merely its
+four-cut subproblem.
+
+The degree-three triangular-prism orbit of `(3,2,1)` and higher
+multiplicity patterns remain unsupplied six-factor inputs, and arbitrary
+longer tuples remain in the original demand. The new construction
+uses commuting *factor permutations* to compute a noncommuting cut
+arrangement; it makes no assertion that the cut projections commute
+or that their signed sum is positive semidefinite. No length restriction
+replaces the full goal, which remains active.
+
+## Exact prism Gram matrix and the full triple-pair-single input
+
+The six-cut triangular prism remaining in Theorem 42 admits an exact
+Gram calculation from permutations of the three equal factors and
+the two equal factors. Its symmetric and antisymmetric multiplicity
+spaces have different triangle signs. Every occupied Gram block is
+strictly positive: the small-dimensional exceptions have no invariant
+source. This proves an injection for all ten triple cuts of the entire
+six-factor input `A,A,A,B,B,C`, for distinct actual atom types. The
+proof includes paired atoms and unrestricted invariant multiplicities.
+
+**Independent double-check before the statements.** Computed every
+off-diagonal prism block directly in one reference cut. A single
+`A` swap and a single `B` swap compress to `Id/d_a` and `Id/d_b`.
+The third horizontal edge compresses to the internal two-`A` flip
+divided by `d_a`. A simultaneous horizontal and vertical change has
+opposite singleton cells of types `A,C`, so its overlap is zero.
+Diagonalized the signed triangle separately in the two flip parities;
+its spectra are `{2,-1,-1}` and `{-2,1,1}`. Checked the possible
+nonpositive antisymmetric blocks against the actual small irreducibles,
+and checked constituent-word sectors before assembling the real atoms.
+Finally oriented all ten unordered cuts away from the unique `C`
+position, so their three type-count families are unambiguous.
+
+Fix irreducible constituents `a,b,c` of pairwise distinct nontrivial
+actual atom types `A,B,C`, respectively. Their dual orbits are disjoint.
+Write `d_a=dim a`, `d_b=dim b`, and label the six factors
+
+```text
+a_1,a_2,a_3,b_1,b_2,c.
+R=(a tensor a tensor b)^G,
+Q=(a tensor b tensor c)^G,
+H_0=R tensor Q
+    subset (a_1 tensor a_2 tensor b_1 tensor a_3 tensor b_2 tensor c)^G.
+```
+
+Permutations mean the canonical unitary permutations of equal
+representation factors. Let `P=(a_1 a_2)` act on `R`, and set
+
+```text
+R_epsilon={r in R:P r=epsilon r},  epsilon in {+1,-1},
+sigma_0=Id, sigma_1=(a_1 a_3), sigma_2=(a_2 a_3),
+tau=(b_1 b_2),
+H_(i,j)=sigma_i tau^j H_0,  0<=i<=2, 0<=j<=1.
+```
+
+These are exactly the six triple cuts whose side excluding `c`
+contains two `a` positions and one `b` position. The direct source
+copies are identified with `H_0` by `z -> sigma_i tau^j z`.
+
+**Lemma 44A (the exact uniform-word prism spectrum).** For the merge
+`F_prism` of these six spaces, its source Gram operator on the part
+with `R` parity `epsilon` is
+
+```text
+G_epsilon=Id_6 tensor Id_(R_epsilon tensor Q)
+          +(1/d_a) M_epsilon tensor Id_2 tensor Id_(R_epsilon tensor Q)
+          +(1/d_b) Id_3 tensor X tensor Id_(R_epsilon tensor Q),
+
+M_epsilon=[ 0  1        1       ],
+          [ 1  0        epsilon ],
+          [ 1  epsilon  0       ]
+X=[0 1; 1 0].                                             (P44.1)
+```
+
+Thus its eigenvalues, with `delta in {+1,-1}`, are
+
+```text
+epsilon=+1:  1+2/d_a+delta/d_b  (triangle multiplicity 1),
+             1-1/d_a+delta/d_b  (triangle multiplicity 2);
+epsilon=-1:  1-2/d_a+delta/d_b  (triangle multiplicity 1),
+             1+1/d_a+delta/d_b  (triangle multiplicity 2).   (P44.2)
+```
+
+Each multiplicity also has the factor `dim R_epsilon dim Q`.
+Every eigenvalue with a nonzero source is strictly positive.
+
+**Proof.**
+
+1. For invariant vectors in either `R` or `Q`, the reduced
+   cross operator on an irreducible `a` factor is its inner
+   product times `Id_a/d_a`, by Schur's lemma. Applying the
+   same partial-trace swap computation as Lemma 43B gives
+
+   ```text
+   P_0 sigma_1 P_0=P_0 sigma_2 P_0=Id_(R tensor Q)/d_a,
+   P_0 tau P_0=Id_(R tensor Q)/d_b.
+   ```
+
+   This uses arbitrary invariant vectors and hence preserves
+   all their multiplicity spaces. Since
+   `sigma_1 sigma_2=P sigma_1` and `P` preserves `H_0`, the
+   horizontal block between vertices 1 and 2 is `P/d_a`.
+   The reverse block is its adjoint and has the same value.
+2. For `i!=k` and `j!=l`, the cuts `(i,j)` and `(k,l)` have
+   opposite singleton refinement cells of types `A,C`, after
+   orienting their intersection to have size two. These have
+   disjoint irreducible constituent sets. Lemma 29A therefore
+   gives zero overlap. All equal-`j` horizontal blocks are
+   those of step 1, since `tau` commutes with the `sigma_i`.
+   The same-`i` vertical block is `Id/d_b`. This lists every
+   Gram entry, and it gives `(P44.1)` on the two eigenspaces
+   of `P`. There are no blocks between different `P` parities.
+3. The symmetric triangle matrix `M_+` has eigenvalues
+   `2,-1,-1`. The signed triangle `M_-` has eigenvalues
+   `-2,1,1`, as its characteristic polynomial or a diagonal
+   sign conjugation to `-M_+` shows. The independent two-vertex
+   matrix `X` has eigenvalues `delta=+1,-1`. The tensor sum
+   in `(P44.1)` therefore gives exactly `(P44.2)`.
+4. In the symmetric part the smallest candidate is
+   `1-1/d_a-1/d_b`. All nontrivial dimensions are at least
+   two. Equality could occur only at `d_a=d_b=2`, which is
+   impossible for distinct actual types: Lemma 43A makes
+   the Lie algebra `su(2)` and its dimension-two irreducible
+   unique. The other symmetric eigenvalue is larger.
+5. In the antisymmetric part, the second displayed eigenvalue
+   is at least `1+1/d_a-1/d_b>0`. The first has minimum
+   `1-2/d_a-1/d_b`. Check its possible boundary as follows.
+
+   If `d_a=2`, the determinant character is trivial on a
+   connected group with simple Lie algebra. Thus
+   `wedge^2 a=1` and `R_-=(wedge^2 a tensor b)^G=b^G=0`.
+   If `(d_a,d_b)` is `(3,2)` or `(4,2)`, the group has
+   Lie algebra `su(2)` by Lemma 43A. Write its irreducibles
+   as `V_k` of dimension `k+1`. The square of `V_2` or
+   `V_3` has only even highest-weight labels, whereas
+   `b=V_1` has odd label. The Clebsch--Gordan rule gives
+   `R=0`. If `(d_a,d_b)=(3,3)`, Lemma 43A's classification
+   permits only `su(2)` or `su(3)`, each having just one
+   dimension-three dual orbit. Distinct actual types again
+   exclude this case.
+
+   Every remaining case has a strict quantitative bound:
+
+   ```text
+   d_a=3, d_b>=4:   1-2/d_a-1/d_b >= 1/12;
+   d_a=4, d_b>=3:   1-2/d_a-1/d_b >= 1/6;
+   d_a>=5, d_b>=2:  1-2/d_a-1/d_b >= 1/10.
+   ```
+
+6. Consequently each occupied block in `(P44.2)` has positive
+   eigenvalue. There are finitely many blocks for the fixed
+   tuple, so their minimum is positive whenever the source
+   is nonzero. The merge has zero kernel. If `R` or `Q` is
+   zero, the assertion holds on its zero source. QED.
+
+**Theorem 44B (actual-atom prism merge is injective).** Replace the
+irreducible constituents in the preceding six-cut arrangement by
+the full actual atoms `A,A,A,B,B,C`. For pairwise distinct nontrivial
+types, the merge of all six spaces is injective, including paired
+atoms and arbitrary multiplicities.
+
+**Proof.**
+
+1. Project the six external factors onto their individual
+   irreducible constituents. These orthogonal word projections
+   preserve every cut space and commute with its invariant
+   projection. The merge preserves each word, so it suffices
+   to prove injectivity separately on every fixed external word.
+2. If its three `A` constituents agree and its two `B`
+   constituents agree, Lemma 44A applies with the word's
+   constituent of `C`. The source identifications by factor
+   permutations preserve this word, so `(P44.1)` is exactly
+   its full Gram operator.
+3. Otherwise, an edge changing the omitted `A` position can
+   have nonzero overlap only when the two exchanged `A`
+   constituents agree, by the singleton condition in Lemma 29A.
+   If the three labels are not uniform, they have pattern
+   two-plus-one: an actual atom has at most two constituents.
+   Each vertex then has at most one horizontal neighbor.
+   There is at most one vertical neighbor, and it occurs
+   only if the two `B` labels agree. Diagonal prism overlaps
+   are always zero because the opposite singleton types are
+   `A,C`. The nonzero-overlap degree is therefore at most two.
+4. If the `A` labels are uniform but the `B` labels differ,
+   every vertical overlap is zero, and there are at most two
+   horizontal neighbors. In either nonuniform case, at least
+   one actual atom is paired. Lemma 43A rules out all
+   two-dimensional irreducibles on such a group, so every
+   constituent has dimension at least three. Distinct triple
+   cuts have zero intersection, because their common refinement
+   has a nontrivial singleton cell. Lemmas 27A and 29A give
+   angle at most `1/3` on every possible edge in this word.
+5. For source vectors `t_v` in its six actual cut spaces,
+   the preceding bounds, including zero spaces, yield
+
+   ```text
+   ||sum_v t_v||^2
+     >=sum_v ||t_v||^2-(2/3)sum_(edges vw) ||t_v|| ||t_w||
+     >=sum_v [1-degree(v)/3]||t_v||^2
+     >=(1/3)sum_v ||t_v||^2.                              (P44.3)
+   ```
+
+   Thus these words also have injective merge. The orthogonal
+   direct sum over all external words proves the assertion.
+   No Q3 claim for a complex constituent tuple is used: the
+   word argument establishes only this actual-source injection.
+   QED.
+
+**Lemma 44C (the other three-cut orbit is injective).** In the same
+actual tuple the three triple cuts whose side excluding `C` contains
+one `A` and both `B` positions have injective merge.
+
+**Proof.**
+
+1. Again fix an external constituent word. If its three `A`
+   labels are not uniform, every vertex has at most one
+   neighbor and all shared angles are at most `1/3`, by the
+   same equal-singleton and paired-atom arguments as above.
+   The bound in `(P44.3)` applies, now with degree at most one.
+2. If the three labels agree, call their constituent `a`.
+   Let the other constituents be `b_1,b_2,c`, allowing the
+   two `B` labels to differ. In a reference cut put
+
+   ```text
+   R'=(a tensor a tensor c)^G,
+   Q'=(a tensor b_1 tensor b_2)^G.
+   ```
+
+   The two-`a` flip on `R'` gives its parities. Exchanging
+   the single `a` in `Q'` with either `a` in `R'` gives
+   the same horizontal compression calculation as Lemma 44A.
+   Hence the three-cut Gram on parity `epsilon` is
+
+   ```text
+   Id_3+M_epsilon/d_a,
+   ```
+
+   tensored with the full multiplicity space `R'_epsilon
+   tensor Q'`. If `d_a>=3`, its least possible eigenvalue
+   is `1-2/d_a>=1/3`. If `d_a=2`, its antisymmetric domain
+   is `(wedge^2 a tensor c)^G=c^G=0`, and the symmetric
+   eigenvalues are `2,1/2,1/2`. Every occupied block is
+   strictly positive. Summing the word sectors proves the
+   claimed merge injection. QED.
+
+**Theorem 44D (the entire triple-pair-single six-factor input).**
+For any three pairwise distinct nontrivial actual atom types `A,B,C`,
+Q3 holds for `A,A,A,B,B,C`, with every sign pattern and on every group
+in the full target. More strongly, the merge of all ten unordered
+triple-cut spaces is injective, so
+
+```text
+sum_(all unordered 3|3 cuts pi) dim H_pi <= dim H.           (P44.4)
+```
+
+In disjoint sign supports the full negative relation space is zero.
+
+**Proof.**
+
+1. Orient every triple-cut side to exclude the unique `C`
+   position. The possibilities for its `A,B` counts are
+   `(3,0)`, `(2,1)`, and `(1,2)`, giving respectively one,
+   six, and three cuts. The one-cut merge is injective;
+   Theorem 44B and Lemma 44C supply the other two merges.
+2. Different count families are orthogonal. By Lemma 42A a
+   nonzero overlap would require an equal-type exchange.
+   The singleton `C` cannot be exchanged with another `C`,
+   so orientation away from it is preserved. Such an exchange
+   preserves the `A,B` counts and cannot move between families.
+   The three merge ranges are therefore orthogonal. Their
+   assembled injection into the same full invariant space
+   `H` proves `(P44.4)`.
+3. Odd minus parity gives zero. If a repeated type has opposite
+   signs, Proposition 41A's nonnegative expansion lowers the
+   length to at most five, and Theorem 41B applies. Otherwise
+   every repeated type has one sign throughout. Nontrivial
+   singleton spaces vanish. A negative pair cut consists of
+   distinct types by the disjoint-support condition, so its
+   space also vanishes. The empty/full cut is positive.
+4. Thus the entire nonzero negative source consists of some
+   of the ten triple cuts. Their merge is injective by step 2,
+   giving `Rel=0`. The zero-space injection into the actual
+   `H_free direct_sum E_prop` supplies precisely `(P28.2)`;
+   Proposition 28 returns Q3 for the stated full atomic tuple.
+   This includes the formerly unsupplied two-minus and
+   six-minus prism cases, as well as all other sign patterns.
+   QED.
+
+**Corollary 44E (the remaining even-multiplicity six-factor patterns).**
+The patterns `(4,2)` and `(6)` also satisfy Q3 for every actual atom
+choice and sign pattern. More generally, at any length a disjoint-support
+tuple in which every actual type has even multiplicity has nonnegative
+integrand.
+
+**Proof.**
+
+1. In the disjoint-support case, write the multiplicity of
+   type `W` as `2k_W` and its common sign as `epsilon_W`.
+   The exact original integrand is
+
+   ```text
+   product_W [R_W(g)+epsilon_W R_W(h)]^(2k_W)>=0.
+   ```
+
+   Every factor is an even power of a real number. Integration
+   therefore proves the stated arbitrary-length input directly.
+2. For either stated six-factor pattern, opposite-sign repeats
+   reduce to at-most-five-factor inputs by Proposition 41A;
+   Theorem 41B supplies every term. Without those repeats,
+   step 1 applies. This proves every sign pattern. QED.
+
+**Final independent check and original-consumer return.** Recomputed
+the source block between the last two horizontal vertices using
+`(a_1 a_3)(a_2 a_3)=(a_1 a_2)(a_1 a_3)`, confirming `P/d_a`
+and its adjoint, rather than assuming three positive horizontal edges.
+Checked one simultaneous horizontal/vertical change by listing its
+four refinement cells: its opposite singletons are the retained `A`
+and `C`, whose different types force zero. This confirms every entry
+in `(P44.1)`. Independently diagonalized both signed triangles and
+checked all four eigenvalue formulas against the two possible vertical
+parities. At each nonpositive candidate, verified the vanishing of
+the actual antisymmetric source or the exclusion by distinct dual
+orbits; no dimension estimate was substituted for that vanishing.
+For nonuniform words, checked the horizontal equality graph and the
+vertical equality condition separately before applying the angle norm
+bound. Checked that the word projections preserve the actual spaces
+and that their outputs are orthogonal. Finally recounted all ten cuts,
+assembled their three orthogonal ranges, and replayed the original
+negative merge after the justified sign-support reduction. The entire
+`(3,2,1)` input is supplied through `Rel=0`, with all real-atom sectors.
+For Corollary 44E, independently regrouped the original factors by
+their actual types and checked that every exponent is even only after
+the justified common-sign reduction. Its unrestricted-length statement
+has disjoint sign supports; the arbitrary-sign extension uses the
+proved shorter inputs only for the stated six-factor patterns.
+
+This closes the triangular-prism gap. The still-unsupplied six-factor
+patterns include `(4,1,1)`, `(3,3)`, and `(5,1)` with distinct
+types between the parts; arbitrary longer tuples also remain in the
+universal demand. The proof provides exact injections on stated whole
+inputs, with no certificate search or assumption of commuting cut
+projections. The full-cone goal remains active.
+
+## Four equal factors: exact octahedron spectrum and determinant transport
+
+For the remaining six-factor pattern `A,A,A,A,B,C`, with distinct actual
+types, the six balanced triple cuts have an exact `S_4` class-sum Gram
+operator. Their merge is injective. The other four triple cuts can have
+relations, but their entire kernel consists of determinant Schouten
+relations in dimension three. A volume-to-dual-volume block map sends
+those relations isometrically to one actual positive pair cut. This
+supplies the original RC injection for the whole input, including
+paired atoms and every sign pattern.
+
+The finite-group background is checked against Etingof et al.,
+[Introduction to Representation Theory](https://math.mit.edu/~etingof/reprbook.pdf),
+Example 4.8.1 (the `S_4` character table, printed page 75) and
+Theorem 5.10.1 (Frobenius reciprocity, printed page 110). The character
+and induction calculations needed here are explicitly given below.
+The small Lie-group facts are those already verified in Lemma 43A.
+
+**Independent double-check before the statements.** Checked the
+single-factor swap compression on arbitrary invariant vectors. In the
+six-cut arrangement, adjacent cuts give `1/d` times the induced
+permutation map; opposite cuts have singleton types `B,C` and zero
+overlap. The diagonal contribution of the six-transposition class sum
+is the sum of the two internal flip parities. Independently computed
+its three possible induced-character spectra. Checked the dimensions
+two, three, and four on the actual invariant domains. For the other
+four cuts, checked that dimension three has exactly the determinant
+line as its triple invariant space, and computed the Schouten source
+Gram. Finally checked the pair projection after linear block dualization:
+its norm is `1/d`, not `1/sqrt(d)` or the inverse dimension of a paired
+atom. The resulting map below is on the entire original relation space.
+
+**Lemma 45A (determinant relation transport with arbitrary spectators).**
+Let `E` be a nontrivial irreducible of dimension `d>=2` on a target
+group, and let `W` be its actual real atom. Let `X` be any spectator
+representation and put `Q=(E tensor X)^G`. On `d+1` distinguished
+copies `W_1,...,W_(d+1)`, fix the word with every constituent equal
+to `E`. Choose a unit volume `epsilon in wedge^d E`, which is
+invariant because the determinant character is trivial. For each `i`
+consider the cut with distinguished positions other than `i` on one
+side, and position `i` together with `X` on the other side, and its
+subspace
+
+```text
+c_i(q)=epsilon_(A\{i}) tensor q_(i,X),  q in Q,
+B_i=c_i(Q),  A={1,...,d+1},
+s_i=(-1)^(i-1),
+J(q)=(s_i c_i(q)/sqrt(d+1))_(i=1)^(d+1).                  (P45.1)
+```
+
+Volumes are ordered by increasing distinguished position. The kernel
+of the merge of these bank subspaces is exactly `J(Q)`, and `J` is
+isometric. Fix `tau={{1,2},rest}`. There is a linear equivariant block
+map `D` replacing the volume on `A\{1}` by its dual volume in the
+actual `W` factors, such that
+
+```text
+L_bank(r)=d sqrt(d+1) Q_tau D r_1
+```
+
+is an isometry from `J(Q)` into `H_tau`. If `tau` is a positive cut
+and this bank kernel lies in the negative source, this is an actual
+RC output. When `E` is non-self-dual, the analogous all-`E*` bank can
+use the same single target cut: their image word spaces are orthogonal.
+
+**Proof.**
+
+1. A connected group with simple Lie algebra has no nontrivial
+   one-dimensional character, so `wedge^d E` is its invariant
+   unit-volume line. Alternating `d+1` vectors in dimension `d`
+   gives the exact Schouten identity `sum_i s_i c_i(q)=0`.
+   Direct contraction of two unit volume tensors gives
+
+   ```text
+   <s_i c_i(q),s_j c_j(q')>=-<q,q'>/d,  i!=j.
+   ```
+
+   Indeed the common `d-1` volume positions contract to
+   `(d-1)!/d!=1/d` times the identity on the remaining factor;
+   ordering the missing positions supplies the indicated sign.
+   This calculation includes all of `Q`, not a single vector.
+2. Consequently, for arbitrary `q_i in Q`,
+
+   ```text
+   ||sum_i s_i c_i(q_i)||^2
+       =(1/d) sum_(i<j) ||q_i-q_j||^2.                    (P45.2)
+   ```
+
+   Its kernel has all `q_i` equal. The orthogonal direct-source
+   norm of `J(q)` is `||q||`, proving `(P45.1)` and the full
+   asserted bank-kernel description.
+3. If `E` is paired, let `epsilon^vee` be the unit volume in
+   the other constituent `E*`, and on the `d` volume positions
+   define `D=|epsilon^vee><epsilon|`, zero off the indicated
+   source line. If `E` is self-dual, choose a unitary
+   intertwiner `E* -> E` and use it to realize the dual volume
+   in the same actual constituent. Use the same rank-one
+   formula. These maps are complex-linear and equivariant,
+   since both block vectors are invariant. They are extended
+   by identity on distinguished position 1 and on `X`.
+4. In either realization, the pair at positions 1,2 after
+   applying `D` is `E tensor E*`. Its unit invariant cup has
+   coefficient `1/sqrt(d)`. Across position 2 the dual unit
+   volume has `d` orthogonal cofactor vectors, each of norm
+   `1/sqrt(d)`. Contraction with the pair cup therefore gives
+
+   ```text
+   ||Q_tau D c_1(q)||^2=||q||^2/d^2.                     (P45.3)
+   ```
+
+   The remaining cofactor contraction is invariant together
+   with `X`; hence projection on the pair already lies in
+   the full cut space `H_tau`. This proves the norm formula
+   for the actual two-block cut projector. Applying `(P45.3)`
+   to `r_1=c_1(q)/sqrt(d+1)` proves that `L_bank J(q)` has
+   norm `||q||`; polarization gives the claimed isometry.
+5. For a paired atom, the all-`E` source maps to the word with
+   `E` at position 1 and `E*` at every other distinguished
+   position. The all-`E*` source maps to the opposite word.
+   These words are different and orthogonal. Both outputs
+   occupy subspaces of the same one copy of `H_tau`. Spectator
+   multiplicities are carried by the isometries already proved.
+   QED.
+
+Fix three pairwise distinct nontrivial actual types `A,B,C`, with
+distinguished `A` positions 1,2,3,4. For a fixed uniform constituent
+`a` in those positions, let `d=dim a`. The six balanced cuts have
+side containing `B` of the form two `a` positions together with `B`;
+the other side contains the remaining two `a` positions and `C`.
+At the reference cut put
+
+```text
+R=(a tensor a tensor B)^G,
+Q=(a tensor a tensor C)^G,
+R_epsilon={r:the two-a flip sends r to epsilon r},
+Q_zeta={q:the two-a flip sends q to zeta q}.
+```
+
+Here `B,C` are the full actual modules, allowing all their constituents
+and invariant multiplicities simultaneously.
+
+**Lemma 45B (uniform-word balanced six-cut merge is injective).** On
+each parity source, naturally
+
+```text
+Ind_(S_2 x S_2)^(S_4)(epsilon tensor zeta)
+    tensor R_epsilon tensor Q_zeta,
+```
+
+where the last two factors mean parity multiplicity spaces, the exact
+merge Gram is
+
+```text
+G_(epsilon,zeta)=Id+(Omega_4-(epsilon+zeta)Id)/d,
+Omega_4=sum_(1<=i<j<=4) U_(ij).                            (P45.4)
+```
+
+Its scalar spectra on the induced factor, with multiplicities, are
+
+```text
+(epsilon,zeta)=(+,+):  1+4/d [1], 1 [3], 1-2/d [2];
+(+,-) or (-,+):       1+2/d [3], 1-2/d [3];
+(-,-):               1+2/d [2], 1 [3], 1-4/d [1].          (P45.5)
+```
+
+Every occupied block is strictly positive for the distinct types
+`A,B,C`, including `d=2,3,4`. Thus the merge is injective.
+
+**Proof.**
+
+1. The group `S_4` permutes the four equal constituent factors
+   and acts naturally on the six-copy cut source. At the
+   reference cut its stabilizer is `S_2 x S_2`, acting by
+   the two internal flip parities. This gives the displayed
+   induced source. A single transposition exchanging one
+   `a` between the blocks compresses to `Id_(R tensor Q)/d`,
+   by the irreducible partial-trace calculation of Lemma 43B.
+   Internal permutations preserve the parity multiplicity
+   spaces, so all adjacent entries are `1/d` times their
+   induced permutation maps. Different parity sources have
+   zero Gram cross-blocks.
+2. Opposite vertices exchange both `a` positions. Their
+   refinement has opposite singleton cells `B,C`, of different
+   actual types. Lemma 29A makes this overlap zero. Of the
+   six transpositions, two fix a given cut and contribute
+   diagonal `epsilon+zeta`; the other four are exactly its
+   adjacent vertices. Subtracting this diagonal proves
+   `(P45.4)`, with no choice that makes all edge signs positive.
+3. For the five `S_4` irreducibles labelled by partitions, the
+   dimension and the two relevant characters are
+
+   ```text
+   partition lambda:   (4)  (3,1)  (2,2)  (2,1,1)  (1,1,1,1)
+   dim:                 1      3      2        3          1
+   chi((12)):           1      1      0       -1         -1
+   chi((12)(34)):       1     -1      2       -1          1
+   Omega_4 scalar:      6      2      0       -2         -6
+   ```
+
+   The last row is `6 chi((12))/dim`, by centrality and
+   Schur's lemma. Restriction to the four-element stabilizer
+   and its character projection gives induced multiplicity
+
+   ```text
+   [dim+(epsilon+zeta)chi((12))
+        +epsilon zeta chi((12)(34))]/4.
+   ```
+
+   Thus the occupied partitions are respectively
+   `(4),(3,1),(2,2)`; `(3,1),(2,1,1)`; and
+   `(2,2),(2,1,1),(1,1,1,1)`, each once. Substitution into
+   `(P45.4)` proves `(P45.5)`. Their dimensions sum to six
+   in each case, confirming exhaustion of the source.
+4. If `d=2`, Lemma 43A gives Lie algebra `su(2)` and the
+   defining module. Its square is `1 direct_sum V_2`, with
+   `V_2` the unique three-dimensional irreducible. Nontrivial
+   `B,C` of distinct types cannot both give invariants with
+   this square. Therefore `R tensor Q=0` in this case.
+5. If `d=3`, the determinant identity gives
+   `wedge^2 a isomorphic a*`. Since `B,C` are different
+   actual types from `A`, both `R_-` and `Q_-` vanish.
+   Only the plus-plus spectrum occurs, with least eigenvalue
+   `1-2/3=1/3`.
+6. If `d=4`, `wedge^2 a` has at most one nontrivial actual
+   dual-orbit type among its constituents. To check this
+   without a new Lie-algebra classification, two different
+   nontrivial constituent types would have total dimension
+   at most six, so at least one irreducible has dimension
+   two or three. Lemma 43A then gives `su(2)` or `su(3)`.
+   The `su(3)` Weyl dimension formula in that lemma has no
+   dimension-four solution. For `su(2)`, `a=V_3` and the
+   weights of `wedge^2 V_3` are `4,2,0,0,-2,-4`; they give
+   `wedge^2 V_3=V_4 direct_sum V_0`, containing just one
+   nontrivial type. Both possibilities contradict the proposed
+   two types. Thus distinct `B,C` cannot both have nonzero
+   `R_-,Q_-`. The minus-minus source is zero; all other
+   eigenvalues in `(P45.5)` are at least `1/2`.
+7. For `d>=5` even the smallest candidate, `1-4/d`, is at
+   least `1/5`. Every occupied Gram block is strictly positive
+   in all cases, proving injectivity. QED.
+
+**Lemma 45C (the complete actual triple-cut kernel).** In the actual
+tuple `A,A,A,A,B,C`, the six balanced triple cuts have injective merge.
+The other four triple cuts have merge kernel exactly the orthogonal
+sum of the banks `(P45.1)` for dimension-three constituents `a` of
+`A`, with `X=B tensor C`. The two count families have orthogonal
+merge ranges. There are no other triple-cut relations.
+
+**Proof.**
+
+1. Project only the four distinguished factors onto their
+   individual irreducible constituents. These orthogonal
+   word projections preserve each cut space and its merge.
+   Uniform words in the balanced family are covered by
+   Lemma 45B. For nonuniform words the actual atom is paired,
+   so Lemma 43A excludes all dimension-two irreducibles.
+   Their label counts are three-plus-one or two-plus-two.
+2. Adjacent balanced cuts can overlap only when their exchanged
+   singleton constituents agree. For a two-element side, the
+   number of such exchanges is at most two in either label
+   pattern: the repeated triple splits one-plus-two, or each
+   repeated pair splits one-plus-one. Opposite cuts always
+   have zero overlap by the different singleton types `B,C`.
+   All shared angles are at most `1/3`. The degree bound and
+   `(P44.3)` prove injectivity on every nonuniform word.
+   Orthogonal word assembly proves the full balanced assertion.
+3. In the other family, one side is three distinguished `A`
+   positions and the other is the remaining `A` with `B,C`.
+   For a uniform constituent `a` of dimension at least four,
+   every pair of cuts has zero intersection and angle at
+   most `1/d<=1/4`. Its four-vertex degree is three, giving
+   the exact norm bound
+
+   ```text
+   ||sum_i t_i||^2 >=(1-3/d)sum_i ||t_i||^2
+                    >=(1/4)sum_i ||t_i||^2.
+   ```
+
+   For a nonuniform word, equal-label exchanges form cliques
+   of sizes at most three, hence degree at most two. Again
+   every shared angle is at most `1/3`, and `(P44.3)` proves
+   injectivity on its actual source.
+4. In dimension two, `(a^tensor3)^G=0` by the `su(2)` tensor
+   rule, so this family has zero source. In dimension three,
+   `(a^tensor3)^G` has dimension at most one by Lemma 43A
+   and contains the determinant line, so it is exactly that
+   line. Its four cut spaces are precisely `B_i` of Lemma
+   45A with `d=3` and `X=B tensor C`. Equation `(P45.2)`
+   identifies their entire kernel as `J((a tensor B tensor C)^G)`.
+   Thus the asserted banks are exactly all kernel blocks.
+5. Orient each triple-cut side to exclude the unique `C`
+   position. Its counts of `A,B` are `(3,0)` or `(2,1)`.
+   Equal-type exchanges preserve those counts, so Lemma 42A
+   makes different families orthogonal. Therefore no relation
+   couples the four-cut and six-cut families. Word outputs
+   are orthogonal too, so their kernel descriptions assemble
+   to the claimed full triple-cut kernel. QED.
+
+**Theorem 45D (the entire four-repeat six-factor input).** Q3 holds
+for `A,A,A,A,B,C` with three pairwise distinct nontrivial actual types,
+on every target group and for every sign pattern. In disjoint supports
+there is an explicit isometry `Rel -> H_tau subset E_prop`, where
+`tau={{1,2},rest}` uses two of the four `A` positions.
+
+**Proof.**
+
+1. Odd minus parity vanishes. Opposite-sign occurrences of
+   `A` reduce to the proved at-most-five-factor inputs by
+   Proposition 41A and Theorem 41B. It suffices to take all
+   four `A` signs equal. Even parity also makes the signs of
+   the single `B,C` equal. Singletons have zero invariant
+   space; negative pairs have distinct types and zero space.
+   Thus all nonzero negative sources are triple cuts.
+2. If `A` is plus and `B,C` are minus, only the six balanced
+   triple cuts are negative. Lemma 45C makes their merge
+   injective, so `Rel=0`. If all signs are plus, `Rel=0`
+   as well. Proposition 28 consumes these zero relations.
+3. If `A` is minus, the four triple-`A` cuts are negative.
+   The balanced six are positive when `B,C` are plus and
+   negative when `B,C` are minus. In either case Lemma 45C
+   identifies the entire actual `Rel` as exactly the dimension-
+   three banks. The pair cut `tau` is proper and positive,
+   since its two distinguished positions both have minus sign.
+4. For each dimension-three constituent `a`, use the block
+   dualization `D_a` of Lemma 45A on positions 2,3,4, extended
+   by identity elsewhere. For `r in Rel`, let `r_(pi_1,a)`
+   be its component in the cut with volume at positions 2,3,4
+   and the uniform-`a` word. Define, in the single actual
+   target cut space,
+
+   ```text
+   L(r)=6 Q_tau sum_(a in constituents(A), dim a=3)
+                           D_a r_(pi_1,a).                (P45.6)
+   ```
+
+   This coefficient is `d sqrt(d+1)=3 sqrt(4)=6`.
+   Lemma 45A proves that each summand is isometric on its
+   whole bank relation space, including every `B,C` invariant
+   multiplicity. If `A` is paired, the two image word spaces
+   are respectively `a,a*,a*,a*` and `a*,a,a,a`; they are
+   orthogonal inside this one `H_tau`. A self-dual atom has
+   just one constituent bank. Consequently `||L(r)||=||r||`
+   on the entire actual `Rel`.
+5. Equation `(P45.6)` is the required injection `(P28.2)`,
+   using only `H_tau subset E_prop`. No target is duplicated,
+   and no relation is omitted or assigned to an unproved
+   residual map. Proposition 28 proves Q3 on the whole input.
+   This includes both four-minus and six-minus determinant
+   relations, as well as the two-minus balanced-cut case. QED.
+
+**Final independent check and original-consumer return.** Checked the
+class-sum formula by separating its two stabilizer transpositions
+from its four across-block transpositions at a reference cut. Recomputed
+the induced-character projection for all four parity choices and checked
+that each spectrum has source dimension six. Rechecked the only zero
+candidate at dimension four on its actual minus-minus multiplicity
+space, using the six-dimensional exterior square and the previously
+verified small-representation classification. For the other four cuts,
+checked the norm bound for all larger and nonuniform words, and used
+the exact determinant-line identity at dimension three instead of an
+unjustified positive Gram estimate. Independently contracted the
+dualized volume with the unit cup: both normalizations contribute
+`1/sqrt(3)`, giving projection norm `1/3`. A relation's selected cut
+component has norm `||q||/2`, so the factor six in `(P45.6)` gives
+exactly `||q||`. Checked the two paired image words and their common
+single target cut. Finally enumerated the four possible disjoint-support
+even sign patterns and passed their entire original negative merge,
+not an isolated bank, to Proposition 28. The full `(4,1,1)` input is
+therefore supplied by the accepted isometry or by `Rel=0` as appropriate.
+
+Among six-factor multiplicity patterns, only `(3,3)` and `(5,1)` with
+distinct types remain unsupplied by these full-real-cone arguments.
+Arbitrary longer tuples remain in the original universal demand; the
+determinant transport with spectators is a supplied structural component,
+not a claim that arbitrary relations decompose into such banks. The
+full-cone goal remains active.
+
+## Whole-source cup maps and the three-and-three input
+
+There is a useful supplier that maps the entire negative cut source,
+without first computing its relations. For a self-dual irreducible,
+projection onto a cross-cut cup is an isometry after multiplying by
+its dimension. Distinct actual positive pair cuts can therefore pay
+different negative sources. This supplies the whole `(5,1)` input
+when its repeated atom is self-dual. Separately, the `(3,3)` input has
+an exact product-of-triangles Gram operator with no occupied zero block,
+including paired atoms. Both are structural suppliers of the original
+consumer, not searches over certificates.
+
+**Independent double-check before the statements.** Recomputed the cup
+contraction using reduced cross operators on arbitrary invariant vectors
+in both source blocks. Both reduced operators are scalar divided by the
+irreducible dimension, giving squared norm `1/d^2`. Checked each edge
+of the ten-pair assignment below. For the nine-cut source, computed
+horizontal, vertical, and simultaneous changes separately; only the
+first two have overlap. Checked all four internal-flip parity choices,
+including the possible `(4,4)` antisymmetric boundary, and checked
+the weighted overlap graph in every nonuniform constituent word.
+
+**Lemma 46A (cup isometry and distinct-target assembly).** Suppose a
+cut `pi` has a copy of the same nontrivial self-dual irreducible `E`
+of dimension `d` at positions `i,j` on opposite sides. The remaining
+factors on each side may be arbitrary representations. Let
+`tau={{i,j},rest}`. On the entire actual cut space,
+
+```text
+T_pi=d Q_tau|_(H_pi):H_pi -> H_tau
+```
+
+is an isometry. If a family of negative cuts has an injective assignment
+to actual proper positive pair cuts of this form, their direct source
+has an isometric injection into `E_prop`. It restricts to the demanded
+map on their relation space when they are the whole negative family.
+
+**Proof.**
+
+1. Write a source tensor as `r tensor q`, where `r,q` are
+   invariant on the two cut blocks. For cross vectors, trace
+   all but the distinguished `E` on each side. Schur's lemma
+   gives reduced operators `Id_E <r,r'>/d` and
+   `Id_E <q,q'>/d`. Choose a unitary equivariant identification
+   `E* -> E` to realize the unit cup. Contraction with its
+   coefficient `1/sqrt(d)` therefore gives
+
+   ```text
+   <Q_tau(r tensor q),Q_tau(r' tensor q')>
+        =<r,r'><q,q'>/d^2.                               (P46.1)
+   ```
+
+   The cofactor tensor is invariant, since the original tensor
+   and the cup are invariant. Thus the pair projection is
+   already the full two-block cut projection `Q_tau`.
+2. Equation `(P46.1)` extends by linearity to all of `H_pi`
+   and proves the isometry. It also applies to quaternionic
+   self-dual irreducibles: the cup's swap sign does not change
+   its norm or this cross-operator identity. Different assigned
+   target cut indices are orthogonal copies in `E_prop`.
+   Summing their maps gives the asserted direct-source
+   isometry and its restriction. QED.
+
+**Theorem 46B (five self-dual copies and one arbitrary atom).** Q3
+holds for `A,A,A,A,A,B` when `A` is a nontrivial self-dual irreducible
+and `B` is any distinct nontrivial actual real atom, with every sign
+pattern on every target group. For the all-minus input the entire
+negative source has an isometric injection into `E_prop`.
+
+**Proof.**
+
+1. Opposite signs on copies of `A` reduce to at-most-five-factor
+   inputs by Proposition 41A and Theorem 41B. With disjoint
+   supports, the two type multiplicities are odd, so even
+   minus parity means either all plus or all minus. All plus
+   has no negative source; odd parity gives zero. In the
+   all-minus case, the entire nonzero negative source consists
+   of the ten triple cuts. Each has a side of three `A`
+   positions, and its complementary two `A` positions and `B`.
+2. Label the five `A` positions 1 through 5. Index these cuts
+   by the two-position complement `P`. Use the following
+   cyclic ordering of all ten pairs:
+
+   ```text
+   12 -> 13 -> 23 -> 24 -> 34 -> 35 -> 45
+      -> 14 -> 15 -> 25 -> 12.                            (P46.2)
+   ```
+
+   Assign the source indexed by `P` to the positive pair cut
+   whose pair is its successor. Consecutive pairs share exactly
+   one position. Thus the successor has one `A` on each side
+   of the source cut. Every target pair occurs exactly once.
+3. All assigned pairs are proper positive cuts, containing two
+   minus positions. Lemma 46A maps every full `H_pi`
+   isometrically to its assigned actual `H_tau`, without a
+   multiplicity restriction. The resulting whole-source
+   isometry restricts to all of `Rel` and supplies `(P28.2)`.
+   Proposition 28 proves Q3 for the whole stated input. QED.
+
+**Theorem 46C (the entire three-and-three six-factor input).** For
+distinct nontrivial actual types `A,B`, all ten triple-cut spaces in
+`A,A,A,B,B,B` have injective merge. Q3 therefore holds for this tuple
+on every target group and for every sign pattern, including paired
+atoms and arbitrary tensor multiplicities.
+
+**Proof.**
+
+1. One cut is `A^3|B^3`; the other nine have two `A` and
+   one `B` on a chosen side. The pure cut is orthogonal to
+   all nine: it admits no equal-type exchange across its sides,
+   and Lemma 42A applies. It remains to prove the nine-cut
+   merge injective. Fix a constituent word on all six factors.
+2. First take uniform constituents `a` at the three `A`
+   positions and `b` at the three `B` positions. At a reference
+   cut put `R=(a tensor a tensor b)^G` and
+   `Q=(a tensor b tensor b)^G`. Let `epsilon` be the two-`a`
+   flip parity of `R`, and `zeta` the two-`b` flip parity of
+   `Q`. A horizontal factor swap compresses to `Id/d_a`;
+   the third horizontal edge has the internal `a` flip,
+   exactly as in Lemma 44A. The vertical triangle likewise
+   has `Id/d_b` and the internal `b` flip. A simultaneous
+   horizontal and vertical change has opposite singleton
+   types `A,B`, so its overlap is zero. Thus the exact Gram is
+
+   ```text
+   G_(epsilon,zeta)=Id_9
+      +(1/d_a) M_epsilon tensor Id_3
+      +(1/d_b) Id_3 tensor M_zeta,                        (P46.3)
+   ```
+
+   tensored with the full multiplicity space `R_epsilon
+   tensor Q_zeta`. Here `M_+` has eigenvalues `2,-1,-1`
+   and `M_-` has eigenvalues `-2,1,1`. The Gram coefficients
+   are exactly `1+mu/d_a+nu/d_b`, for the indicated triangle
+   eigenvalues `mu,nu`.
+3. In the plus-plus part the minimum `1-1/d_a-1/d_b` is
+   positive. Equality would require two dimension-two
+   irreducibles of distinct actual types, impossible by
+   Lemma 43A. If `R_-` is nonzero, then `d_a>=4`:
+   dimension two gives `wedge^2 a=1`, and dimension three
+   gives `wedge^2 a=a*`; neither can pair with the different
+   nontrivial type `B`. Likewise `Q_-!=0` requires `d_b>=4`.
+4. In a minus-plus part the minimum is
+   `1-2/d_a-1/d_b`, with `d_a>=4`. It is strictly positive
+   except possibly `(d_a,d_b)=(4,2)`, where it is zero.
+   That case has Lie algebra `su(2)`, with `a=V_3,b=V_1`;
+   the even highest-weight labels in `a tensor a` exclude
+   `b`, so `R=0`. The plus-minus part has the reversed
+   argument. In the minus-minus part the minimum
+   `1-2/d_a-2/d_b` is nonnegative and can be zero only at
+   `(4,4)`.
+5. In fact `wedge^2 a`, for `dim a=4`, cannot contain a
+   dimension-four irreducible. Its dimension is six, and the
+   remaining two-dimensional summand would be either an
+   irreducible of dimension two or two trivial lines. The
+   first forces `su(2)`, where the weights give
+   `wedge^2 V_3=V_4 direct_sum V_0`, with no dimension-four
+   summand. The second contradicts Schur's bound
+   `dim(a tensor a)^G<=1`. These exhaust a semisimple
+   two-dimensional remainder, since there are no nontrivial
+   one-dimensional representations. Hence `R_-=0` at the
+   only remaining zero candidate. Every occupied uniform-word
+   coefficient in `(P46.3)` is strictly positive.
+6. For a nonuniform word, a nonuniform three-position type has
+   label counts two-plus-one and contributes at most one
+   neighbor per vertex in its triangle. A uniform type
+   contributes at most two. Shared horizontal and vertical
+   angles are at most `1/d_a` and `1/d_b`, respectively,
+   and all diagonal overlaps are zero. At least one type is
+   paired, so all dimensions are at least three. Moreover
+   `d_a=d_b=3` is excluded: Lemma 43A permits only `su(2)`
+   or `su(3)`, each with one dimension-three dual orbit.
+   Therefore the maximum weighted overlap row sum is at most
+
+   ```text
+   max(1/d_a+2/d_b,2/d_a+1/d_b)<=11/12
+   ```
+
+   if only one type is nonuniform; if both are nonuniform it
+   is at most `1/d_a+1/d_b<=2/3`. Expanding the merge norm
+   and using `2xy<=x^2+y^2` gives lower bound
+   `(1/12)sum_v ||t_v||^2`. These word merges are injective.
+7. Factorwise word projections preserve all actual cut spaces;
+   different words have orthogonal outputs. Thus steps 2--6
+   give the full actual nine-cut injection. Adding the
+   orthogonal pure cut proves injection of all ten, and in
+   particular `sum_pi dim H_pi<=dim H`.
+8. Opposite-sign repeats reduce to Theorem 41B. With disjoint
+   supports, even minus parity means all plus or all minus;
+   the other common-type sign choices have odd parity and
+   give zero. All plus has no negative source. All minus
+   has only the ten triple sources: singleton spaces vanish
+   and all pair cuts are positive. Their merge is injective
+   by step 7, so `Rel=0` supplies `(P28.2)`. Proposition 28
+   proves the full stated input. QED.
+
+**Final independent check and original-consumer return.** Checked the
+cross-cup norm on cross vectors and verified that the complement
+projection is automatic from global invariance. Checked all ten pairs
+and all ten distinct assigned targets in `(P46.2)` before applying the
+whole-source map. For `(P46.3)`, checked the two independent internal
+flips, the two signed triangle spectra, and all four least-eigenvalue
+expressions. Rechecked the six-dimensional exterior-square remainder
+argument, including the Schur bound on two hypothetical trivial lines.
+For nonuniform words, counted horizontal and vertical equality edges
+separately and checked the worst reciprocal-dimension bound `11/12`.
+Finally assembled the pure and mixed ranges in the original full `H`
+and replayed every disjoint-support sign choice into Proposition 28.
+These suppliers cover the whole self-dual `(5,1)` input and the whole
+actual `(3,3)` input, with all their original negative sources.
+
+The remaining six-factor input is `(5,1)` when the repeated actual
+atom is paired. Arbitrary longer tuples remain in the original full
+target. The cup-matching supplier permits arbitrary representations
+and multiplicities in its two source blocks, but no injective assignment
+for all longer negative families has been asserted. The full-cone goal
+remains active.
+
+## Universal real-atom cup isometry and the full five-and-one input
+
+The cross-cut cup supplier extends to every actual real atom, including
+paired atoms. Its target records both the orientation of the pair cup
+and the irreducible channel in the remaining first source block.
+For a paired atom these provide four orthogonal output subspaces for
+its four constituent source blocks. A linear unitary dualization on
+the second invariant block handles agreeing labels. This gives a
+whole-cut isometry with arbitrary self-dual spectator modules, at
+arbitrary length. The ten-pair assignment then supplies the entire
+`(5,1)` input uniformly, without a small-dimensional case split.
+
+**Independent double-check before the statements.** Split the source
+by its two distinguished constituent labels. Checked equality of the
+second-block invariant dimensions by representation duality, and fixed
+the resulting linear unitary on orthonormal invariant bases. Checked
+the contraction norms using Schur's reduced cross operators. Listed
+all four output cup orientations and cofactor channels, proving their
+orthogonality inside one actual target. Finally checked the distinct
+target assignment and self-duality of the original spectator modules.
+
+**Lemma 47A (paired-atom whole-cut isometry).** Let `W=E direct_sum E*`
+be an actual paired atom, with `E` irreducible non-self-dual of dimension
+`d`. Consider a cut whose two distinguished copies at positions `i,j`
+are on opposite sides, and write its full source as
+
+```text
+H_pi=R tensor Q,
+R=(W_i tensor U)^G,
+Q=(W_j tensor V)^G,
+```
+
+where `U` is arbitrary and `V` is self-dual. For
+`tau={{i,j},rest}` there is an explicit complex-linear isometry
+
+```text
+T_pi:H_pi -> H_tau.                                      (P47.1)
+```
+
+It uses cup projection, linear invariant-block dualization, and a swap
+of the distinguished `W` positions, with all multiplicities included.
+
+**Proof.**
+
+1. For `a in {E,E*}`, put
+
+   ```text
+   R_a=(a_i tensor U)^G,  Q_a=(a_j tensor V)^G.
+   ```
+
+   These give orthogonal decompositions of `R,Q`. Since `V`
+   is self-dual, dualizing invariant tensors gives
+   `dim Q_E=dim Q_(E*)`. A unitary equivariant identification
+   `V* -> V` and Hilbert duality give an antiunitary bijection
+   `C:Q_E -> Q_(E*)`. Choose an orthonormal basis `q_l` of
+   `Q_E`; the `Cq_l` form an orthonormal basis of `Q_(E*)`.
+   Define the *complex-linear* unitary and its inverse by
+
+   ```text
+   D_E q_l=Cq_l,
+   D_(E*)=D_E^(-1):Q_(E*) -> Q_E.                         (P47.2)
+   ```
+
+   Extend these maps by zero off their indicated invariant
+   source spaces in `W_j tensor V`. They are equivariant
+   since their source and target consist of invariant vectors.
+   This defines an actual linear map on a whole cut block.
+2. Write `a*` for the other constituent when `a` is one of
+   `E,E*`, and let `u_a` be the unit cup with label `a` at
+   `i` and `a*` at `j`. The two cup lines are orthogonal
+   in `(W_i tensor W_j)^G`. Define on opposite-label sources
+
+   ```text
+   A_a=d Q_tau|_(R_a tensor Q_(a*)).
+   ```
+
+   The irreducible reduced cross operators, as in `(P46.1)`,
+   give for arbitrary invariant cross vectors
+
+   ```text
+   <Q_tau(r tensor q),Q_tau(r' tensor q')>
+        =<r,r'><q,q'>/d^2.                               (P47.3)
+   ```
+
+   The cofactor tensor is invariant, so this is the full cut
+   projector. Thus `A_a` is isometric on its entire source,
+   with output cup line `u_a`.
+3. The remaining part `U` of any `r in R_a` lies in its
+   `a*` isotypic subspace `U_(a*)`: this is the correspondence
+   `R_a=Hom_G(a*,U)`. Cup contraction preserves that support.
+   Therefore
+
+   ```text
+   ran A_a subset C u_a tensor (U_(a*) tensor V)^G.        (P47.4)
+   ```
+
+   The two `U` channels are orthogonal, because `E,E*`
+   are inequivalent unitary irreducibles. This includes every
+   multiplicity space, not just chosen invariant lines.
+4. On the agreeing-label source `R_a tensor Q_a`, use
+   `Id tensor D_a` to reach `R_a tensor Q_(a*)`, apply
+   `A_a`, and swap the distinguished positions `i,j` only.
+   Their canonical factor swap `S_(ij)` preserves `H_tau`,
+   exchanges its two cup lines, and leaves cofactors fixed.
+   Set
+
+   ```text
+   T_pi|_(R_a tensor Q_(a*))=A_a,
+   T_pi|_(R_a tensor Q_a)=S_(ij) A_a (Id tensor D_a).
+                                                               (P47.5)
+   ```
+
+   Both restrictions are isometries. The latter has cup line
+   `u_(a*)` and still has `U` channel `a*`.
+5. All four output locations are consequently
+
+   ```text
+   source block              cup line       U channel
+   R_E tensor Q_(E*)         u_E            E*
+   R_E tensor Q_E            u_(E*)         E*
+   R_(E*) tensor Q_E         u_(E*)         E
+   R_(E*) tensor Q_(E*)      u_E            E.            (P47.6)
+   ```
+
+   Within one channel the cup lines are orthogonal; between
+   channels the cofactor spaces are orthogonal. Summing the
+   four restrictions therefore preserves the norm on the
+   entire `H_pi` and proves `(P47.1)`. QED.
+
+**Theorem 47B (universal actual-atom pair-matching supplier).** In a
+finite atomic input, suppose every negative cut with nonzero space
+has an assignment to a distinct actual proper positive pair cut.
+Require that the pair has the same actual atom type at both positions
+and crosses its source cut. Then there is an explicit isometry
+
+```text
+O -> E_prop,
+```
+
+and hence an injection on the entire original `Rel`. This supplies
+`(P28.2)` and Q3 for the whole input. There is no length, dimension,
+group, or multiplicity restriction beyond the stated actual assignment.
+
+**Proof.**
+
+1. Every actual real atom is self-dual as a representation,
+   including `E direct_sum E*`. The tensor product of the
+   other atoms on each source side is therefore self-dual.
+   At a self-dual irreducible pair, Lemma 46A gives the
+   whole-cut cup isometry. At a paired atom, Lemma 47A
+   applies with its self-dual spectator `V`; its block map
+   acts on all those actual second-side factors. Each map
+   lands in precisely the assigned actual `H_tau`.
+2. Distinct target cut indices are orthogonal copies in
+   `E_prop`. Thus their sum is an isometry on the full
+   negative source `O`, irrespective of how the cut spaces
+   intersect inside `H`. Restrict it to `Rel=ker F` and
+   include its range in `H_free direct_sum E_prop`. This
+   is the demanded `(P28.2)`. Proposition 28 proves Q3.
+   QED.
+
+**Theorem 47C (the entire five-and-one six-factor input).** For every
+target group, distinct nontrivial actual atom types `A,B`, and every
+sign pattern, Q3 holds for `A,A,A,A,A,B`. In the all-minus case the
+entire actual negative source maps isometrically to `E_prop`, including
+every paired-atom sector and all invariant multiplicities.
+
+**Proof.**
+
+1. Opposite-sign repeats reduce to Theorem 41B by `(P41.2)`.
+   With disjoint supports, common-type sign choices give
+   either all plus, all minus, or odd minus parity. All plus
+   has nonnegative cut coefficients; odd parity vanishes.
+   Only all minus requires the negative-source construction.
+2. Its entire nonzero negative source consists of the ten
+   triple cuts indexed by pairs `P` of the five `A`
+   positions, with sides `A\P` and `P union {B}`. Use
+   the ten-pair cyclic assignment `(P46.2)`. A successor
+   pair has one position on each side of its source cut,
+   with two copies of the same actual atom `A`. Every
+   successor is a proper positive cut with two minus
+   positions, and every target pair occurs exactly once.
+3. Theorem 47B supplies an isometry on the whole actual
+   negative source. Its restriction to the entire `Rel`
+   is the demanded map; Proposition 28 proves Q3. The same
+   assignment works for self-dual and paired atoms, and
+   step 1 supplies every other sign pattern. QED.
+
+**Final independent check and original-consumer return.** Recomputed
+`dim Q_E=dim Q_(E*)` by dualizing `E tensor V` and using self-duality
+of `V`. Checked that `(P47.2)` is linear and unitary, and its zero
+extension equivariant on the actual source block. Recomputed `(P47.3)`
+using both scalar reduced operators and the normalized cup. Checked
+that the first cofactor channel stays `a*` after second-block dualization,
+and that the pair swap changes only the cup orientation. Independently
+listed `(P47.6)` and checked every pair of output subspaces. Thus the
+capacity is supplied inside one actual positive cut, without requiring
+positivity on separate complex constituent inputs. Finally checked all
+ten distinct targets in `(P46.2)` and self-duality of all spectator
+tensor products, and applied the isometry to the full `O` before
+restricting to the full original `Rel`. Theorem 47C consumes the
+universal construction on the entire `(5,1)` input. No six-factor
+multiplicity pattern remains unsupplied by Theorems 41--47.
+
+The full objective still quantifies over arbitrary lengths. The universal
+cup map supplies every whole negative family with the stated pair
+assignment. It does not assert that every arbitrary negative family
+admits such an assignment; many have more source cut indices than
+positive pair targets. Their relation spaces still need a construction
+using the full remaining target capacities. The full-cone goal remains
+active.
+
+## Return to the full continuous cone through six factors
+
+All six-factor actual-atom patterns now have proved suppliers. This
+allows the original positive Fourier expansion and uniform approximation
+to return an unrestricted statement about the full continuous central
+cone at these lengths. The arbitrary-length objective remains unchanged.
+
+**Independent double-check before the statement.** Listed all eleven
+integer partitions of six and matched each to its whole-input theorem.
+Checked trivial atoms and opposite-sign repeats before using a pattern
+classification. Checked that paired atoms are included in every row,
+and that the Fourier expansion is nonnegative in actual real atoms,
+not a demand on complex constituent tuples. Finally recomputed the
+uniform product difference bound on normalized product Haar measure.
+
+**Theorem 48A (the full continuous central positive-definite cone at
+lengths at most six).** For every compact connected target group `G`
+with simple Lie algebra, normalized Haar measure `mu`, every
+`0<=n<=6`, every list of real continuous central matrix-positive-definite
+functions `f_1,...,f_n`, and all signs `epsilon_i in {+1,-1}`,
+
+```text
+integral_(G x G) product_(i=1)^n
+   [f_i(g)+epsilon_i f_i(h)] dmu(g)dmu(h) >= 0.             (P48.1)
+```
+
+This includes arbitrary functions in the full cone, with no restriction
+on their Fourier supports, their invariant multiplicities, or the
+presence of non-self-dual irreducibles.
+
+**Proof.**
+
+1. Lengths at most five, including the empty tuple, are supplied
+   by Theorem 41B. At length six, first take actual real atoms.
+   A trivial minus factor kills the integral; a trivial plus
+   factor contributes two and reduces the length. An
+   opposite-sign repeat expands by `(P41.2)` as a finite
+   nonnegative sum of at-most-five-factor inputs. Thus only
+   six nontrivial atoms with disjoint sign supports require
+   the pattern table.
+2. Classify them by multiplicities of their actual dual-orbit
+   types. The following list exhausts the partitions of six:
+
+   ```text
+   multiplicity pattern       whole-input supplier
+   (1,1,1,1,1,1)              Theorem 42B
+   (2,1,1,1,1)                Theorem 42B
+   (2,2,1,1)                  Theorem 42B
+   (3,1,1,1)                  Theorem 42B
+   (2,2,2)                    Theorem 43D
+   (3,2,1)                    Theorem 44D
+   (4,1,1)                    Theorem 45D
+   (3,3)                      Theorem 46C
+   (5,1)                      Theorem 47C
+   (4,2)                      Corollary 44E
+   (6)                        Corollary 44E.              (P48.2)
+   ```
+
+   Every row supplies all target groups and every sign pattern
+   for its entire actual tuple. Hence all six-factor atomic
+   integrals are nonnegative.
+3. For finite positive actual-atom expansions of each function,
+   multilinearity expresses the integral as a finite sum of
+   the proved atomic integrals with nonnegative coefficients.
+   Lemma 28A gives, for each continuous full-cone function,
+   finite nonnegative actual-atom expansions `p_i^(k)` converging
+   uniformly to `f_i`. This is the actual positive real Fourier
+   expansion; complex constituent functions are not required
+   to satisfy the inequality separately.
+4. Choose `M>=1` bounding all the functions and approximants
+   in sup norm, and set `delta_i^(k)=||f_i-p_i^(k)||_infinity`.
+   For fixed `g,h`, telescoping the product gives
+
+   ```text
+   |product_i [f_i(g)+epsilon_i f_i(h)]
+     -product_i [p_i^(k)(g)+epsilon_i p_i^(k)(h)]|
+       <=2(2M)^(n-1) sum_i delta_i^(k).                  (P48.3)
+   ```
+
+   For `n=6` this tends to zero uniformly. Normalized product
+   Haar measure has mass one, so the same bound holds for
+   the integral difference. The nonnegative approximating
+   integrals converge to `(P48.1)`, proving the theorem.
+   QED.
+
+**Final independent check and exact original-target return.** Recounted
+the eleven partitions in `(P48.2)`, including the two even-multiplicity
+patterns that close by the original pointwise integrand. Inspected the
+original RC source and target in each nontrivial supplier: sparse
+relations use Theorem 34, injective merges use `Rel=0`, and determinant
+or cup constructions use actual positive cut spaces with their outputs
+packed inside one copy of each target. In the paired five-and-one
+case, checked the orthogonal cup orientations and first-block isotypic
+channels, including the linear unitary on agreeing-label source blocks.
+Rechecked all trivial and opposite-sign reductions against the proved
+shorter-length input.
+Then replayed the actual uniform nonnegative Fourier approximation
+into the original double integral, with the explicit bound `(P48.3)`.
+Thus the full continuous-cone statement `(P48.1)` is proved for all
+lengths through six, not merely for atoms or finite Fourier support.
+
+The original objective quantifies over arbitrary finite lengths. Its
+remaining input starts at length seven and still includes all groups,
+all real continuous central positive-definite functions, and all sign
+patterns. The source-to-target cup matching and the dual-volume
+allocations above are established structural tools, but no theorem
+supplies the entire arbitrary-length relation space. Therefore the
+full-cone goal remains active and is not marked complete.
+
+## Partial cup matching and a seven-factor whole-input supplier
+
+The universal cup isometry can pay selected negative cuts while an
+injective merge handles the unpaid cuts. Projection of the *whole*
+relation space onto the paid source coordinates is then injective,
+including relations coupling the two source families. This extends the
+distinct-target supplier without requiring a match for every negative
+cut. A seven-factor input supplies a concrete use: for `A^6,B`, fifteen
+positive pair cuts pay fifteen negative cuts, and five balanced cuts
+have an injective merge. The dimension-three boundary is handled by
+an exact eight-cut factor-swap Gram calculation.
+
+**Independent double-check before the statements.** Checked the kernel
+of source-coordinate projection on the full `Rel`, rather than on
+relations internal to the paid family. Checked Hall's condition for
+every subset of fifteen chosen three-subsets of six positions. For
+the eight-cut Gram, computed all single, double, and triple swap
+compressions by reduced cross operators. Checked the standard and
+trivial `S_3` multiplicity spaces separately, then each nonuniform
+paired constituent word. Checked the small dimensions two and four
+against their actual triple invariant spaces. Finally replayed all
+seven-factor signs and the continuous seventh-function limit.
+
+**Lemma 49A (partial matching pays the entire coupled relation space).**
+Partition an atomic negative source into cut indices `I,J`. Suppose
+`I` has the distinct positive pair assignment of Theorem 47B, and
+the merge `F_J` is injective on the entire remaining source `O_J`.
+Let `T_I:O_I -> E_prop` be the supplied whole-source isometry. Then
+
+```text
+L=T_I P_I|_Rel:Rel -> E_prop                              (P49.1)
+```
+
+is injective and supplies `(P28.2)` for the whole original input.
+If `||F_J t||^2>=c||t||^2`, with `c>0`, its quantitative bound is
+
+```text
+||Lr||^2 >= [c/(c+|I|)] ||r||^2,  r in Rel.              (P49.2)
+```
+
+**Proof.**
+
+1. If `r in Rel` and `P_I r=0`, then `r` lies in `O_J`
+   and satisfies `F_J r=F r=0`. Injectivity of `F_J` gives
+   `r=0`. Thus coordinate projection is injective on the
+   entire `Rel`, irrespective of coupled relations between
+   the two families. Composing it with `T_I` proves `(P49.1)`.
+2. For the norm bound use `F_J r_J=-F_I r_I` and the
+   elementary merge estimate `||F_I t||^2<=|I| ||t||^2`.
+   Hence `||r_J||^2<=|I| ||r_I||^2/c`. The direct-source
+   norm gives `||r||^2<= (1+|I|/c)||r_I||^2`, whereas
+   `||Lr||=||r_I||`. This proves `(P49.2)`. Include the
+   range in `H_free direct_sum E_prop`; Proposition 28
+   consumes the injection on the original caller. QED.
+
+For the next input label six distinguished positions by
+`Aset={1,2,3,4,5,6}`, with a seventh position of distinct type `B`.
+The negative triple cuts of the six-minus input have sides
+`S` and `(Aset\S) union {B}`, where `|S|=3`. There are twenty.
+Their positive same-type pair targets are the fifteen pairs of `Aset`.
+
+**Lemma 49B (any fifteen triple sources admit distinct pair targets).**
+Any family `I` of at most fifteen three-subsets `S` of `Aset` has
+an injective assignment to pairs crossing `S`: one endpoint in `S`,
+one outside it.
+
+**Proof.** Form the finite bipartite eligibility graph and check Hall's
+condition. For a nonempty `X subset I`, if its neighbor set contains
+all fifteen pairs, then `|N(X)|=15>=|X|`. Otherwise some pair `{i,j}`
+is never separated by any `S in X`. There are exactly
+
+```text
+binom(4,1)+binom(4,3)=8
+```
+
+three-subsets having either both or neither of these endpoints.
+Thus `|X|<=8`. Any one three-subset has `3 times 3=9` crossing
+pairs, so `|N(X)|>=9>|X|`. The empty subset also satisfies Hall.
+An ordinary augmenting-path matching therefore supplies the assignment
+on all of `I`. It is an actual assignment of cut indices, independent
+of representation dimensions. QED.
+
+Fix the three position pairs `(1,2),(3,4),(5,6)`. Let `C8` be the
+eight triple cuts with exactly one distinguished position from each
+pair on their side excluding `B`. Choose any five as `J`.
+
+**Lemma 49C (five unpaid balanced cuts are uniformly independent).**
+For every nontrivial actual atom `A`, every distinct nontrivial actual
+atom `B`, and every target group, the merge of these five full actual
+cut spaces satisfies
+
+```text
+||F_J t||^2 >=(1/6) ||t||^2.                             (P49.3)
+```
+
+In particular it is injective. The bound includes paired atoms and
+all invariant multiplicities of the seventh factor.
+
+**Proof.**
+
+1. Let `d` be the dimension of an irreducible constituent of
+   `A`; paired atoms have two dual constituents of this same
+   dimension. For two different triple cuts, intersection of
+   their three-subsets has size zero, one, or two. If zero,
+   a refinement cell is empty and the opposite singleton is
+   `B`, so their cut spaces are orthogonal by Lemma 29A.
+   If one or two, a refinement cell is a singleton of type
+   `A`; the common intersection is zero by Lemma 27A, and
+   any shared irreducible label has dimension `d`. Thus
+   every nonzero shared angle is at most `1/d`.
+2. For `d>=5`, every five-cut merge consequently obeys
+
+   ```text
+   ||F_J t||^2 >=(1-4/d)||t||^2 >=(1/5)||t||^2.
+   ```
+
+   It remains to check dimensions two, three, and four.
+   For `d=2`, Lemma 43A gives the `su(2)` defining module,
+   whose triple has no invariant. Every source space is zero.
+3. For `d=4`, again `(A^tensor3)^G=0`. Here is the small
+   representation check, using the classified root systems
+   and Weyl product of Etingof, [Lie Groups and Lie Algebras](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf),
+   Theorem 23.7 and Proposition 26.8. The differential embeds
+   the simple Lie algebra in `su(4)`, with rank at most three
+   and dimension at most fifteen. Only `A_1,A_2,B_2,G_2,A_3`
+   occur at that bound. Type `A_2` has no dimension-four
+   irreducible by Lemma 43A's dimension formula. Type `G_2`
+   has dimension fourteen and cannot be a codimension-one
+   subalgebra of compact simple `su(4)`: its orthogonal
+   one-dimensional complement would be invariant and trivial,
+   making it an ideal of `su(4)`. For `A_1`, the module is
+   `V_3`, and the central element minus identity acts as minus
+   identity, excluding triple invariants.
+
+   For `B_2=C_2`, take positive roots `e_1-e_2,e_1+e_2,
+   2e_1,2e_2`, fundamental weights `e_1,e_1+e_2`, and
+   `rho=2e_1+e_2`. The Weyl product gives
+
+   ```text
+   dim V_(a,b)=(a+1)(b+1)(a+b+2)(a+2b+3)/6.
+   ```
+
+   Its only dimension-four label is `(1,0)`, the defining
+   symplectic module, and its central minus identity again
+   excludes triple invariants. These two modules are self-dual.
+   For `A_3`, the differential image is all of `su(4)` on
+   its four-dimensional defining space. The module is defining
+   or dual, and its actual atom is their pair. The central
+   charges of its triple words are `3,1,-1,-3`, none zero
+   modulo four, so the actual triple invariant space vanishes.
+   Invariants on any allowed central quotient equal those of
+   the differential. This proves the claim for all `d=4`.
+4. For `d=3`, Lemma 43A gives a self-dual irreducible with
+   its unit determinant as its entire triple invariant space,
+   or the defining `su(3)` module paired with its dual.
+   In the latter case center charges exclude mixed triple
+   words, and each pure triple invariant is its unit volume.
+   First fix a uniform six-position constituent word `a^6`.
+   In a reference balanced cut write
+
+   ```text
+   H_0=C epsilon tensor Q,
+   Q=(a^tensor3 tensor B)^G.
+   ```
+
+   Let `S_1,S_2,S_3` swap the two positions in each fixed
+   pair. They are commuting involutions, and their eight
+   images of `H_0` are exactly this word's balanced cut
+   spaces. On `Q`, let `P^-_(ij)` project to the minus
+   parity of swapping its corresponding `a` factors.
+5. The irreducible reduced cross operator of the unit volume
+   on one factor is `Id/3`. On two factors it is
+   `P_(wedge^2 a)/3`, because that exterior square has
+   dimension three. Therefore the reference compressions are
+
+   ```text
+   P_0 S_i P_0=Id_Q/3,
+   P_0 S_i S_j P_0=P^-_(ij)/3,
+   P_0 S_1 S_2 S_3 P_0=0.                               (P49.4)
+   ```
+
+   The double-swap identity traces the two-factor reduced
+   cross operator of `q` against the stated exterior-square
+   projector, which is exactly its minus-parity matrix element.
+   For the triple swap, projecting the three `a` factors of
+   `q` onto the invariant volume leaves an invariant in `B`;
+   `B^G=0`, giving the zero compression.
+6. Fourier decomposition of the eight source copies uses
+   characters `eta in {+1,-1}^3`. Its normalized source
+   component at `g` is `eta(g) g z/sqrt(8)`, and its merge
+   is `sqrt(8) Pi_eta z`, where
+   `Pi_eta=(1/8) product_i (Id+eta_i S_i)`. Expanding this
+   projector with `(P49.4)` gives the exact Gram on `Q`
+
+   ```text
+   G_eta=Id+(eta_1+eta_2+eta_3)Id/3
+            +(1/3)sum_(i<j) eta_i eta_j P^-_(ij).         (P49.5)
+   ```
+
+   Different characters have orthogonal source and output
+   spaces. This is an exact factor-permutation computation,
+   without commuting the cut projections.
+7. The internal `S_3` action on `Q` has no alternating part:
+   it would be `(wedge^3 a tensor B)^G=B^G=0`.
+   On its trivial part every `P^-` is zero, and the character
+   coefficients in `(P49.5)` are `2,4/3,2/3,0` for zero,
+   one, two, three minus character signs, respectively. The
+   zero space consists exactly of the all-minus Fourier
+   character tensored with this trivial part. Every such
+   source vector has equal component norms on all eight cuts.
+   A vector supported on five cuts has squared projection
+   onto that zero space at most `5/8` of its squared norm.
+   Thus its merge squared norm is at least
+   `(2/3)(1-5/8)||t||^2=(1/4)||t||^2` in this part.
+8. On a standard `S_3` component, its three transpositions
+   sum to zero, so `sum_(i<j) P^-_(ij)=(3/2)Id`.
+   In `(P49.5)` the all-plus and all-minus characters give
+   `5Id/2` and `Id/2`. A character with one minus gives
+   `5Id/6+(2/3)P^-` for the pair of plus indices. A
+   character with two minuses gives `Id/6+(2/3)P^-` for
+   the pair of minus indices. Every coefficient is therefore
+   at least `Id/6`, including all multiplicity copies. The
+   same bound holds on any five-source subspace.
+9. It remains to check nonuniform words for a paired `A`.
+   A balanced volume must select one label `a` in all three
+   fixed position pairs. If two homogeneous pairs have opposite
+   labels, there is no such source. Otherwise let `h` be
+   the number of homogeneous pairs of label `a`, the other
+   pairs being heterogeneous. Nonuniform words with `h>=1`
+   have only that volume label, and `h<=2`. Their possible
+   sources are exactly the `2^h` choices within homogeneous
+   pairs. For `h=1`, the single-swap coefficient gives Gram
+   `Id +/- Id/3`, with bound `2/3`.
+10. For `h=2`, the same volume partial traces give two-character
+    Gram
+
+    ```text
+    Id+(eta_1+eta_2)Id/3+eta_1 eta_2 P^-/3,
+    ```
+
+    where `P^-` is the minus projection on the two equal
+    `a` factors in the second block. For equal plus signs
+    the bound is `5/3`, for unequal signs `2/3`, and for
+    equal minus signs `1/3`. If `h=0`, all three pairs
+    are heterogeneous. There are at most two volume choices,
+    one for each label; their triples are complementary
+    subsets of the six positions. Their cut spaces are
+    orthogonal by step 1, giving bound one. These account
+    for every nonuniform word and all its multiplicities.
+11. Word projections preserve the actual cut spaces, and their
+    outputs are orthogonal. The bounds in steps 7--10 combine
+    to `1/6` on the five chosen full cut copies. With
+    steps 1--3 this proves `(P49.3)` for every actual atom.
+    QED.
+
+**Theorem 49D (six copies of one atom and an arbitrary seventh atom).**
+For every target group, every two distinct nontrivial actual atom
+types `A,B`, and every sign pattern, Q3 holds for `A,A,A,A,A,A,B`.
+In the six-minus disjoint-support case, there is an explicit map on
+the entire original relation space
+
+```text
+L:Rel -> E_prop,   ||Lr||^2 >=||r||^2/91.                (P49.6)
+```
+
+**Proof.**
+
+1. Opposite-sign occurrences of `A` expand by `(P41.2)` into
+   nonnegative sums of at-most-six-factor inputs, supplied
+   by Theorem 48A. With disjoint supports the six copies
+   have a common sign. If `B` is minus, the total minus
+   parity is one or seven and gives zero. If all signs
+   are plus, all cut coefficients are nonnegative. Only
+   `A` minus six times and `B` plus needs a new source map.
+2. In this case all singleton spaces vanish. A negative pair
+   contains `A,B` of different actual types, so its space
+   vanishes. Among the three-element sides, only the twenty
+   subsets of three `A` positions are negative; two `A`
+   positions and `B` have even minus parity. These twenty
+   are therefore the entire nonzero negative family.
+3. Choose any five balanced cuts as `J`, and let `I` be
+   the other fifteen. Lemma 49C gives injective merge on
+   all of `O_J`, with `c=1/6`. Lemma 49B assigns `I`
+   injectively to the fifteen actual `A` pair cuts crossing
+   their respective sources. These targets are proper and
+   positive, since each contains two minus positions.
+4. Theorem 47B supplies the whole-source isometry on `O_I`.
+   Lemma 49A applies to the full coupled `Rel` and gives
+   `L=T_I P_I`, using one actual copy of each assigned
+   positive target. Equation `(P49.2)` with `|I|=15`
+   and `c=1/6` gives `1/91`, exactly `(P49.6)`.
+   Proposition 28 consumes this injection for the entire
+   original seven-factor input. Together with step 1 it
+   proves every sign pattern. QED.
+
+**Corollary 49E (an arbitrary continuous seventh function).** Theorem
+49D extends to six nonnegative multiples of one actual atom character
+`R_A` and an arbitrary real continuous central positive-definite
+seventh function, with all seven signs. There is no Fourier-support
+restriction on that function.
+
+**Proof.** Zero scalar multiples kill the product; other multiples
+contribute their nonnegative scalar product. In a finite nonnegative
+actual-atom expansion of the seventh function, distinct nontrivial
+types use Theorem 49D. A trivial atom reduces to Theorem 48A or kills
+a minus factor. The same type `A` gives seven copies of one type:
+opposite signs reduce to six factors, all plus has nonnegative cut
+coefficients, and all minus has odd parity. These supply every term.
+Apply Lemma 28A's uniform positive approximation to the seventh
+function. Since `|R_A|<=dim A`, its integral difference is at most
+`2(2 dim A)^6` times the uniform approximation error. Passing to the
+limit proves the claim. QED.
+
+**Final independent check and original-consumer return.** Checked
+that the partial projection kernel is exactly the unpaid merge kernel
+when restricted to the full `Rel`; coupled relations have not been
+discarded. Recomputed Hall's count eight and each triple's nine crossing
+pairs. Checked the small-dimensional exclusions by the actual image
+Lie algebra and its center, including the codimension-one argument
+for `G_2`. Independently computed all eight Fourier Gram coefficients
+from the volume's one-factor and two-factor density operators and
+the zero triple compression. Rechecked the five-supported projection
+bound `5/8`, the standard-component lower bound `1/6`, and every
+heterogeneous-pair case. Finally replayed the twenty actual negative
+cuts, their fifteen actual pair targets, and the same original `Rel`
+into Proposition 28; the lower-bound denominator is `1+6 times 15=91`.
+The continuous seventh-function passage uses the actual positive real
+Fourier expansion and its stated uniform bound. This supplies whole
+seven-factor inputs beyond Theorem 48A.
+
+Arbitrary seven-factor inputs and arbitrary longer tuples remain in
+the original full-cone objective. Partial matching is now supplied
+with an exact coupled-relation map and an actual whole-input use.
+No assertion has been made that every remaining family has an
+injective unpaid merge or a sufficient distinct target assignment.
+The full-cone goal remains active.
