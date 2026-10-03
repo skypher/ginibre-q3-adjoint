@@ -84442,3 +84442,2290 @@ with an exact coupled-relation map and an actual whole-input use.
 No assertion has been made that every remaining family has an
 injective unpaid merge or a sufficient distinct target assignment.
 The full-cone goal remains active.
+
+
+## Dual-channel agreement transport and a full-scope detector test
+
+The selected demand is still the unrestricted actual relation injection
+`(P28.2)`. The next construction puts both kinds of shared channel into
+one actual positive agreement target. It includes non-self-dual
+intermediate labels, and does not assume that the atom constituents
+agree across the two source cuts. We then test a simultaneous allocation
+to the single copy of each positive cut. A fixed bilinear Walsh choice
+fails on an actual ten-factor input; a different coefficient choice
+repairs that failure and all commuting inputs. The unrestricted
+noncommuting allocation is not proved below.
+
+**Lemma 50A (one positive target detects both other sides of a cut
+triad).** Let `pi,sigma` be distinct negative cuts, and let
+`tau=pi+sigma` be their proper positive agreement cut. All original
+factors are actual real atoms. On `H_pi` put
+
+```text
+K_(pi,tau)=ran(Q_pi Q_sigma)+ran(Q_pi Q_tau).
+```
+
+There is an explicit complex-linear partial isometry
+
+```text
+T_(pi,tau):H_pi -> H_tau,
+T_(pi,tau)^* T_(pi,tau)=P_(K_(pi,tau)),                  (P50.1)
+```
+
+with the two exact properties
+
+```text
+T_(pi,tau)x=0 iff Q_sigma x=Q_tau x=0,   x in H_pi,
+T_(pi,tau)x=x,             x in H_pi intersection H_tau. (P50.2)
+```
+
+All cell multiplicities are included. In particular its kernel is
+orthogonal to `H_sigma`. No lower bound on intermediate dimensions
+or self-duality of intermediate irreducibles is assumed.
+
+**Proof.**
+
+1. Use the four common cells `A,B,C,D`, with cuts
+   `pi=AB|CD`, `sigma=AC|BD`, `tau=AD|BC`. Each cell
+   representation is a tensor product of actual real atoms,
+   hence is self-dual. Write its unitary isotypic decomposition
+   as `X=sum_lambda V_lambda tensor M_(X,lambda)`.
+   Self-duality gives equal dimensions of `M_(X,lambda)`
+   and `M_(X,lambda*)`. Fix a complex-linear unitary
+   between these multiplicity spaces by choosing orthonormal
+   bases. This does not identify inequivalent irreducible
+   representations: it identifies their multiplicity spaces.
+2. On a four-cell isotypic component, `H_pi` has a row
+   singlet line precisely for labels `(lambda,lambda*,mu,mu*)`.
+   Lemma 29A gives the following two kinds of its components
+   in `K_(pi,tau)`:
+
+   ```text
+   shared with sigma: (lambda,lambda*,lambda*,lambda),
+   shared with tau:   (lambda,lambda*,lambda,lambda*).     (P50.3)
+   ```
+
+   Each line is tensored with all four multiplicity spaces.
+   The overlap `1/d_lambda` is nonzero, so the ranges in the
+   definition of `K_(pi,tau)` include the entire indicated
+   row component. The two kinds coincide exactly when
+   `lambda=lambda*`; otherwise their cell supports are
+   orthogonal. Different first-cell labels are also orthogonal.
+3. On a component shared with `tau`, use
+   `d_lambda Q_tau` restricted to its row line and
+   multiplicity space. Lemma 29A makes this an isometry
+   into the agreement singlet with the same four labels.
+   This prescription includes every self-dual component
+   shared with `sigma`, without counting it twice.
+4. For non-self-dual `lambda`, map the component shared
+   with `sigma` into the agreement component with labels
+
+   ```text
+   (lambda,lambda,lambda*,lambda*).                     (P50.4)
+   ```
+
+   Replace its unit row singlet by a fixed unit agreement
+   singlet. On the multiplicity spaces, use the fixed
+   unitaries
+
+   ```text
+   M_(B,lambda*) -> M_(B,lambda),
+   M_(D,lambda)  -> M_(D,lambda*),
+   ```
+
+   and the identity on `A,C`. These are spaces in the
+   original cell representations; both requested labels
+   occur by self-duality. Their dimensions agree, so the
+   line replacement tensored with these unitaries is an
+   actual complex-linear isometry into `H_tau`.
+5. For a fixed non-self-dual first-cell label `lambda`, the
+   output of step 3 has `C` label `lambda`, whereas the
+   output of step 4 has `C` label `lambda*`. They are
+   orthogonal. Outputs with different first-cell labels are
+   orthogonal as well. Thus all the component maps combine
+   to one isometry from `K_(pi,tau)` into the single actual
+   target `H_tau`. Extend it by zero on the orthogonal
+   complement to obtain `(P50.1)`.
+6. For `x in H_pi`, orthogonality to `ran(Q_pi Q_sigma)`
+   is equivalent to `Q_sigma x=0`, by taking the adjoint;
+   the corresponding assertion holds for `tau`. This proves
+   the kernel statement in `(P50.2)`.
+7. Lemma 27A identifies `H_pi intersection H_tau` with
+   invariants independently on all four cells. This is
+   exactly the trivial-label component of step 3, where
+   `d_lambda=1` and `Q_tau` is the identity. Thus the map
+   fixes that intersection. QED.
+
+**Corollary 50B (distinct interacting agreements, with arbitrary
+intermediate labels).** Suppose the positive agreements of all unordered
+pairs of nonorthogonal negative cut spaces are distinct. Then
+
+```text
+r -> (T_(pi_i,pi_i+pi_j) r_i)_(i<j, Q_i Q_j!=0)        (P50.5)
+```
+
+is injective on the entire original `Rel`, and supplies Q3 on the
+whole actual input. There is no cut-count or spectral-radius bound.
+
+**Proof.** Each coordinate is an actual proper positive cut, counted
+once. If every coordinate vanishes, `(P50.2)` gives
+`<r_i,r_j>=0` for every interacting pair; the other pairs are already
+orthogonal. Thus `0=||F r||^2=sum_i ||r_i||^2`, and `r=0`.
+Include the target in `H_free direct_sum E_prop` and apply
+Proposition 28. Unlike Theorem 29, this argument imposes no
+non-self-dual overlap bound. QED.
+
+The corollary is one successful consumption of the new map. The
+unrestricted caller also includes collisions between agreement cuts.
+For that caller use the whole coefficient family below, rather than
+introducing multiple copies of a collided positive target.
+
+Let `B=F_2^L/span{all-ones}` and let `ell=ell_M` for a nonempty even
+minus set. Put `B^+=ker ell` and `N={pi:ell(pi)=1}`, including indices
+whose spaces are zero. Choose one negative class `pi_0`. For each
+proper positive `tau` and negative `pi`, set `sigma=pi+tau` and use
+Lemma 50A. With arbitrary complex scalar coefficients define
+
+```text
+A_0(r)=F r,
+A_tau(r)=sum_(pi in N) alpha_(tau,pi) T_(pi,tau) r_pi,
+                            tau in B^+\{0}.             (P50.6)
+```
+
+Every output uses precisely one original positive target. If the
+proper outputs are injective on `Rel`, they supply `(P28.2)`.
+This is a sufficient full-scope construction attempt. It is stronger
+than the original RC demand because it does not use `H_free`; failure
+of this family would not by itself disprove Q3 or the original RC map.
+
+**Proposition 50C (a fixed bilinear Walsh choice cannot be universal).**
+Take ten positions and minus set `{1,3}`. For every bilinear form
+`b:B^+ times B^+ -> F_2` fixed independently of the atom tuple, the
+choice
+
+```text
+alpha_(tau,pi)=(-1)^b(tau,pi+pi_0)                       (P50.7)
+```
+
+fails to be injective on `Rel` for some actual `SU(2)` atom tuple
+with this same position set and signs. This includes forms obtained
+from any fixed linear isomorphism of `B^+` with its dual. The
+counterexample concerns the proposed map, not the Q3 inequality.
+
+**Proof.**
+
+1. In `B^+`, let `C0` be the three-dimensional subspace
+   spanned by the pair indicators `{5,6},{7,8},{9,10}`.
+   These classes are independent modulo all-ones. On `C0`,
+   the function `q(u)=b(u,u)` is a polynomial of degree
+   at most two in three binary coordinates, with `q(0)=0`.
+   The sum of its values over all eight vectors is zero
+   modulo two: every degree-one or degree-two monomial
+   is one an even number of times. Consequently `q` cannot
+   be one on all seven nonzero vectors. Choose nonzero
+   `tau in C0` with `b(tau,tau)=0`.
+2. Represent this class by the union `Z` of its selected
+   pairs, put `Y={3,4}`, and let `X` be the remaining
+   positions. All three blocks have size at least two.
+   Their minus counts are respectively one, one, and zero.
+   Their block-union cut space has exactly two negative
+   classes, `pi_X,pi_Y`, and one proper positive class,
+   `tau=pi_Z=pi_X+pi_Y`.
+3. Construct a unit invariant in each block that excludes
+   every cut splitting that block. Here are explicit modules
+   and the required simultaneous exclusion. Write `V_k` for
+   the `SU(2)` irreducible of highest weight `k`. In a block
+   of size `m`, assign `m-1` small modules `V_s` and one
+   module `V_((m-1)s)`, where `s` is a positive integer.
+   Couple the small modules through their unique Cartan
+   component `V_((m-1)s)`, and take its unit invariant
+   pairing with the large module. Call the resulting unit
+   block invariant `v_block`.
+4. If a proper subset of that block contains `a` small
+   positions and does not contain the large one, its support
+   in `v_block` is the Cartan component `V_(as)`.
+   If the subset contains the large position, its support
+   is dual to the Cartan component of the complementary
+   small positions. Thus for every split block the selected
+   factors of its invariant have a single nonzero highest
+   weight between `s` and `(m-1)s`. This follows by factoring
+   the unique highest component of the small tensor product,
+   and then by Schur's lemma for the invariant pairing.
+5. Let the sizes be `m_X,m_Y,m_Z`. Choose
+
+   ```text
+   s_X=1,
+   s_Y=(m_X-1)s_X+1,
+   s_Z=(m_X-1)s_X+(m_Y-1)s_Y+1.                         (P50.8)
+   ```
+
+   If a cut splits any blocks, choose the split block with
+   largest scale. Its selected highest weight is strictly
+   greater than the sum of the largest possible selected
+   weights from the smaller-scale split blocks. Their tensor
+   product has no invariant: the product of the smaller
+   modules has highest weights at most their sum and hence
+   cannot contain the dual of the larger module.
+6. Put `v=v_X tensor v_Y tensor v_Z`, reordered into the
+   original ten positions. Whole blocks remain invariant
+   under either cut average. Step 5 proves
+
+   ```text
+   Q_pi v=v  if pi is a union of X,Y,Z,
+   Q_pi v=0  otherwise.                                (P50.9)
+   ```
+
+   These are actual cut projections, including all other
+   constituents and invariant channels of the ten modules.
+   Every module is a nontrivial self-dual actual `SU(2)`
+   atom; no added factors or external target spaces are used.
+7. Define a nonzero full-source relation by
+
+   ```text
+   r_(pi_X)=v,   r_(pi_Y)=-v,   r_pi=0 otherwise.
+   ```
+
+   Its merge is zero. For a proper positive class other
+   than `tau`, `(P50.9)` and `(P50.2)` give zero in
+   `(P50.6)`: neither that class nor its sum with either
+   source class fixes `v`. For `tau`, both partial
+   isometries fix `v`, so the output is
+
+   ```text
+   [(-1)^b(tau,pi_X+pi_0)
+     -(-1)^b(tau,pi_Y+pi_0)] v=0,                       (P50.10)
+   ```
+
+   because the ratio of the two signs is
+   `(-1)^b(tau,pi_X+pi_Y)=(-1)^b(tau,tau)=1`.
+   The pure output is also zero. This proves the stated
+   map failure on a valid full-target tuple. QED.
+
+This rules out only coefficients from a globally fixed bilinear
+Walsh form. It does not rule out coefficients chosen from the actual
+cut arrangement, or general scalar coefficients in `(P50.6)`.
+The first natural replacement can be tested without changing the
+source, target, or atom tuple.
+
+**Proposition 50D (one universal coefficient choice repairs all
+commuting arrangements).** Assign distinct positive real numbers
+`t_pi` to all negative cut indices. Assign distinct nonnegative integer
+exponents `k_tau` to all positive cut indices, with `k_0=0`. Use
+
+```text
+alpha_(tau,pi)=t_pi^k_tau.                              (P50.11)
+```
+
+If all negative cut projections commute, `(A_0,(A_tau)_(tau!=0))`
+is injective on the entire `O`; its proper outputs give RC on `Rel`.
+These same coefficients also detect the nonzero relation of
+Proposition 50C, whether or not the other negative projections commute.
+
+**Proof.**
+
+1. First check that on a commuting arrangement the triadic
+   maps reduce to common-intersection projections. Lemma 29A
+   shows that a shared nontrivial four-cell channel between
+   two commuting cuts is impossible: its two distinct singlet
+   lines have overlap modulus `1/d` strictly between zero
+   and one. Thus `ran(Q_pi Q_sigma)` is their common
+   four-cell invariant space.
+2. A nontrivial channel shared between `pi` and `tau`
+   would also supply a nontrivial shared channel between
+   `pi` and `sigma`: its multiplicity spaces have labels
+   `(lambda,lambda*,lambda,lambda*)`, and self-duality of
+   `C,D` supplies the alternative labels
+   `(lambda,lambda*,lambda*,lambda)` with the same nonzero
+   multiplicities. This would contradict step 1. Hence
+   `K_(pi,tau)` is just the common invariant space, and
+   Lemma 50A's map on it is the identity.
+3. Decompose `H` into the joint zero/one spaces `K_J` of
+   Theorem 30. For nonempty `J` with `K_J!=0`, that theorem's
+   refinement argument gives `J=pi_J+C_J`, where `C_J`
+   is the positive subspace of the binary span of `J`.
+   For a source in its `K_J` component, step 2 makes the
+   output at `tau` zero unless `tau in C_J`; if it is,
+   the output lies in the same `K_J` and is
+
+   ```text
+   sum_(pi in J) t_pi^k_tau r_(pi,J),  tau in C_J.        (P50.12)
+   ```
+
+   This includes `tau=0`, which is the corresponding part
+   of `F`. There are `|J|=|C_J|` source and target indices.
+4. The square matrix `(t_pi^k_tau)_(tau in C_J,pi in J)`
+   is invertible. To verify this without a determinant
+   assumption, a nonzero real polynomial with `m` nonzero
+   monomials has at most `m-1` distinct positive roots.
+   Divide by its lowest power of `t`; differentiation leaves
+   at most `m-1` monomials, and Rolle's theorem proves the
+   assertion by induction. A linear dependence between the
+   `m=|C_J|` rows would give such a polynomial vanishing
+   at the `m` distinct positive numbers `t_pi`, which is
+   impossible. The matrix is real, so this also proves its
+   invertibility over the complex field and on `K_J`-valued
+   coefficient vectors.
+5. Different joint spaces are orthogonal. Step 3 makes every
+   output preserve them, even where several joint spaces
+   use the same actual positive target. Thus their output
+   contributions cannot cancel. Step 4 proves injectivity
+   on all of `O`, using one copy of each positive cut.
+   On `Rel`, the zero output vanishes, leaving an injection
+   into `E_prop`. Proposition 28 supplies the whole input.
+6. On the explicit relation of Proposition 50C, the only
+   possibly nonzero proper output is still at its `tau`.
+   It is `(t_(pi_X)^k_tau-t_(pi_Y)^k_tau)v`, which is
+   nonzero because the two nodes are distinct positive
+   numbers and `k_tau>0`. Thus the replacement construction
+   passes the exact instance that killed `(P50.7)`. QED.
+
+**Proposition 50E (the same detector family contains the established
+partial cup matching suppliers).** Suppose `I,J` and the distinct
+positive crossing pair targets satisfy Lemma 49A. There are explicit
+coefficients in `(P50.6)` making its proper outputs injective on the
+entire coupled `Rel`. This includes the full seven-factor input
+`A^6,B` of Theorem 49D, with the bound `1/91`.
+
+**Proof.**
+
+1. If a positive pair `tau={i,j}` crosses `pi` and has
+   the same actual atom at its two positions, the two
+   off-diagonal cells `B,C` are those single positions.
+   For a self-dual atom their labels force every row
+   component into `(P50.3)`. For a paired atom, the two
+   single-position labels either agree, giving the first
+   kind of `(P50.3)`, or are dual, giving the second.
+   These are every row component, with arbitrary remaining
+   cell multiplicities. Consequently `K_(pi,tau)=H_pi`
+   and `T_(pi,tau)` is a whole-cut isometry.
+2. For each paid `pi in I`, put `alpha_(tau_pi,pi)=1`;
+   put all other coefficients equal to zero. Distinctness
+   of the targets gives the whole-source isometry on `O_I`
+   inside the actual positive direct sum. On `Rel`, its
+   kernel is the unpaid merge kernel, which is zero by
+   Lemma 49A. The same norm argument gives
+   `c/(c+|I|)`, and hence `1/91` for Theorem 49D.
+   This tests the new triadic maps on that entire original
+   input, including paired atoms and all coupled relations.
+   QED.
+
+**Proposition 50F (positive-node determinants implement partial
+matching, including a coupled noncommuting test).** In the setting of
+Proposition 50E, the coefficients can also have the positive-node form
+`(P50.11)`. There are orders of the nodes and exponents for which
+`t_pi=t^a_pi`, with distinct positive integer `a_pi`, makes the
+augmented map `(A_0,(A_tau))` injective for every sufficiently large
+real `t`. This holds on the entire `O`, not only separately on the
+paid and unpaid relation spaces.
+
+For six `SU(2)` fundamental modules with minus positions `1,2`, one
+explicit choice of orders works at `t=16!`. It detects the entire
+eleven-dimensional `Rel` of this noncommuting input.
+
+**Proof.**
+
+1. Discard zero source spaces when forming a matrix; their
+   indices can still receive distinct nodes. Order the
+   unpaid source indices first, and then the paid indices
+   `pi_1,...,pi_m`. Assign strictly increasing positive
+   integer exponents `a_pi` in that order. Put `k_0=0`
+   and `k_(tau_pi_j)=j`; give the unused positive targets
+   any other distinct positive integer exponents.
+2. Let `r_j=dim H_(pi_j)` and `D_J=dim O_J`.
+   Injectivity of `F_J` supplies `D_J` independent coordinate
+   functionals on `H` whose restriction to `F_J` is
+   invertible. From each assigned `H_(tau_pi_j)` choose
+   `r_j` independent coordinate functionals on the isometric
+   image of `T_(pi_j,tau_pi_j)`. These select a square
+   minor of the augmented map, of size
+   `D=D_J+sum_j r_j=dim O`.
+3. In a determinant term, each column from `H_pi` supplies
+   the factor `t^a_pi k_tau` when assigned to a row of
+   target `tau`. The `D_J` pure rows have exponent zero.
+   The maximal exponent is attained only when every unpaid
+   column goes to a pure row, and each paid source block
+   goes to its assigned target row block. To check this,
+   an inverted assignment of two unequal source exponents
+   to two unequal target exponents increases its exponent
+   after swapping, by the positive product of their two
+   differences. Sorting gives the claimed assignment;
+   the row-block sizes agree with the column-block sizes.
+4. The coefficient at this maximal power is, up to the
+   chosen determinant ordering, the nonzero determinant
+   of the selected `F_J` minor times the determinants of
+   the selected whole-cut isometries. All internal
+   permutations within equally weighted blocks sum to
+   exactly those determinants. Thus the selected minor
+   is a nonzero polynomial in `t`. Its leading term
+   dominates for all sufficiently large positive `t`.
+   The entire augmented map is then injective. On `Rel`,
+   its pure output is zero, so its proper outputs supply
+   the original RC demand.
+5. For the explicit six-factor instance, all eight negative
+   sources are pairs `1x,2x` with `x in {3,4,5,6}`.
+   Choose unpaid source `26` and the following seven
+   paid assignments, in the stated order:
+
+   ```text
+   source pi_j       positive target tau_pi_j
+   13                34
+   14                45
+   15                56
+   16                36
+   23                35
+   24                46
+   25                12.                               (P50.14)
+   ```
+
+   Each target has equal fundamental modules and crosses
+   its source. All seven proper positive pair targets are
+   used once. Proposition 50E makes their triadic maps
+   whole-cut isometries. The unpaid merge is the single
+   cut's isometric inclusion into `H`.
+6. The fundamental fusion rule gives
+   `dim Inv(V_1^tensor4)=2` and
+   `dim Inv(V_1^tensor6)=5`. Every source and target
+   pair-cut space has dimension two, so `dim O=16`.
+   The merge is surjective: cup products span the
+   six-fundamental invariant space, and a product using
+   cup `12` is rewritten with either other cup `xy`
+   by `epsilon_12 epsilon_xy=epsilon_1x epsilon_2y
+   -epsilon_1y epsilon_2x`. Every resulting product
+   belongs to a negative pair source. This is the same
+   invariant-tensor spanning argument checked in Lemma 40A.
+   Therefore `dim Rel=16-5=11`.
+7. Set `a_26=1`, `a_(pi_j)=j+1` and
+   `k_(tau_pi_j)=j` for `j=1,...,7`.
+   Choose the two pure rows as inner products with an
+   orthonormal basis of the unpaid image. Choose each
+   target's orthonormal basis to be the image of its
+   assigned source basis. The leading block matrices
+   of step 4 are all identities. The selected
+   sixteen-by-sixteen minor has leading coefficient one
+   and degree
+
+   ```text
+   E=2 sum_(j=1)^7 j(j+1)=336.                          (P50.15)
+   ```
+
+   Every matrix entry before its monomial factor has
+   modulus at most one: the pure maps are isometric
+   inclusions and the triadic maps are contractions.
+   The unique nonzero maximal-degree determinant term
+   is the identity block assignment. Each of the at
+   most `16!-1` other terms has degree at most `335`
+   and coefficient modulus at most one. Consequently
+
+   ```text
+   |det A_minor(t)|
+      >=t^336-(16!-1)t^335>0,   t>=16!.                 (P50.16)
+   ```
+
+   This gives the stated exact coefficient choice without
+   a certificate search.
+8. This is genuinely a noncommuting test. Negative cuts
+   `13` and `14` have four cells of sizes `1,1,1,3`.
+   Their shared fundamental channel has overlap modulus
+   `1/2` on every vector of their two-dimensional cut
+   spaces. Their projections therefore do not commute.
+   Nevertheless the determinant construction is injective
+   on all sixteen source dimensions and hence all eleven
+   relation dimensions at once. Proposition 28 consumes
+   this full actual input. QED.
+
+**Final independent double-check and original-consumer replay.** Checked
+both source patterns in `(P50.3)` directly from the three pairings.
+For the non-self-dual transport, flipped the `B,D` multiplicity
+labels, not the irreducible representations themselves; listed its
+output support against the ordinary agreement channel and confirmed
+orthogonality by the unchanged first-cell label and the two distinct
+`C` labels. Checked that self-dual patterns occur only once and that
+the trivial pattern is the literal common invariant tensor. Took
+adjoints to verify both directions of `(P50.2)`.
+
+For the fixed Walsh obstruction, recomputed the degree-two parity sum
+on all eight vectors of `C0`, the three block sizes and their minus
+parities. Independently checked the Cartan support on both sides of
+every split block and the strict domination constants `(P50.8)`.
+This gives the actual zero/one cut identities `(P50.9)`, and therefore
+a nonzero relation in the original ten-factor `Rel`, with every
+proper output zero in `(P50.10)`. Rechecked the corrected positive
+node difference on precisely that same relation.
+
+For the commuting supplier, used actual cell self-duality to exclude
+extra nontrivial agreement channels, checked the source/target coset
+cardinalities, and proved the square monomial matrices invertible
+by positive-root counting. Checked orthogonality inside a collided
+target before merging joint spaces. Finally checked that a crossing
+same-atom pair makes the triadic source support the entire cut,
+including both paired orientations, so Proposition 50E replays the
+full `A^6,B` consumer with the unchanged denominator ninety-one.
+Rechecked the positive-node determinant by the strict rearrangement
+inequality for unequal source and target exponents, including the
+whole unpaid block at exponent zero. Its leading coefficient is the
+unpaid merge minor times the paid isometry minors. For `(P50.14)`,
+checked all seven crossing pairs, the dimensions sixteen, five and
+eleven, the chosen identity blocks, and the degree 336. Independently
+bounded each of the other determinant terms by `t^335`, giving the
+explicit nonzero bound at `t=16!`. Checked noncommutation through
+the actual angle one-half, then returned the entire coupled relation
+space to the original consumer.
+Every accepted supplier lands in the original proper positive cut
+spaces. The finite-input step of Proposition 28 consumes each stated
+atomic supplier. Lemma 28A promotes a continuous input only when all
+its atomic terms are covered; no new unrestricted continuous-cone
+claim is obtained from that approximation here. The full arbitrary-
+length continuous-cone statement is not asserted.
+
+The active full-scope candidate is `(P50.6)` with scalar coefficients
+chosen using the actual triadic maps; `(P50.11)` is one fully specified
+choice that passes the commuting and two-cut tests. The first unproved
+formula on unrestricted actual atom tuples is
+
+```text
+for every 0!=r in Rel,
+sum_(tau in B^+\{0})
+  ||sum_(pi in N) t_pi^k_tau T_(pi,tau) r_pi||^2 > 0.     (P50.13)
+```
+
+The proof above does not establish `(P50.13)` when noncommuting
+recouplings and collided targets coexist. Nor is `(P50.13)` declared
+equivalent to the original demand: `(P28.2)` also permits `H_free`.
+The fixed-bilinear choice has an exact mathematical failure. The
+positive-node replacement has passed that same test, the commuting
+consumer, and an entire coupled noncommuting input. Proposition 50F
+also realizes every established partial matching supplier within this
+coefficient family. The next test is the unrestricted noncommuting
+relation space when no injective unpaid merge and distinct crossing
+pair assignment have been supplied. Arbitrary seven-factor inputs
+and arbitrary longer lists remain in the unchanged full-cone goal.
+
+
+## Multiplicity transport beyond the shared triadic channels
+
+The full-scope candidate `(P50.6)` must handle channels on which the
+triadic maps are zero. The next construction acts on such channels
+inside the original tensor product. It exchanges two different
+irreducible labels through their multiplicity spaces, instead of only
+exchanging a label with its dual. For fundamental `SU(2)` tensors the
+required multiplicity comparison is proved at arbitrary lengths.
+A twelve-factor test then uses this construction on a coupled relation
+space where allocation by whole triadic maps is provably insufficient.
+No certificate computation is used.
+
+**Lemma 51A (multiplicity transport into a positive agreement cut).**
+Use four cells with row cut `pi=AB|CD` and positive target
+`tau=AD|BC`. A row component has labels
+`(lambda,lambda*,mu,mu*)`. Suppose
+
+```text
+m_(A,mu) m_(C,lambda)
+   >=m_(A,lambda) m_(C,mu),                             (P51.1)
+```
+
+where `m_(X,nu)=dim M_(X,nu)`. Then that entire row component,
+including its `B,D` multiplicities, has an explicit isometric embedding
+into the agreement component with labels
+
+```text
+(mu,lambda*,lambda,mu*).                               (P51.2)
+```
+
+Components indexed by different ordered pairs `(lambda,mu)` have
+orthogonal output supports. Thus if `(P51.1)` holds for every occupied
+row component, the whole `H_pi` maps isometrically into the single
+actual `H_tau`.
+
+**Proof.**
+
+1. Both source and target have one invariant pairing line
+   on each side of their indicated cut. Fix unit vectors
+   in their tensor products of pairing lines. The source
+   multiplicity space, apart from the unchanged `B,D`
+   spaces, is `M_(A,lambda) tensor M_(C,mu)`.
+   The target is `M_(A,mu) tensor M_(C,lambda)`.
+2. Inequality `(P51.1)` permits a concrete linear isometry:
+   order orthonormal tensor bases of both spaces and send
+   the source basis to the first equally many target basis
+   vectors. Replace the unit source pairing tensor by the
+   unit target pairing tensor, and leave the `B,D` factors
+   unchanged. This defines an isometry on the entire source
+   component into an actual target component.
+3. The output's `A,B` labels recover `mu,lambda*`, so
+   different ordered pairs have orthogonal cell isotypic
+   supports. Their maps can therefore be summed inside
+   one copy of `H_tau`. This is a constructed linear map
+   between invariant tensors, not an intertwiner identifying
+   inequivalent irreducible cell representations. QED.
+
+**Theorem 51B (arbitrary-length fundamental transfer by two positions).**
+Let `G=SU(2)`, let every original factor be `V_1`, and let a source
+cut have sides of sizes `2r,2s`, with `2<=r<=s`. If an actual target
+side has size `2r-2` and intersects the source's `2r` side in one
+position, there is an explicit whole-cut isometry
+
+```text
+H_(2r|2s) -> H_((2r-2)|(2s+2)).                         (P51.3)
+```
+
+When this target is positive and the source is negative, it is an
+actual positive-target supplier for the original tuple. There is no
+upper bound on `r,s`. In particular this constructs the invariant-
+tensor version of `C_r C_s<=C_(r-1) C_(s+1)` for the Catalan invariant
+dimensions; it does not merely infer a map from that dimension inequality.
+
+**Proof.**
+
+1. Write the source side as `S` and the target side as `T`.
+   For the agreement-cell notation take
+
+   ```text
+   A=S\T,  B=S intersection T,  C=T\S,
+   D=all positions outside S union T.
+   ```
+
+   Then `pi=AB|CD` and `tau=BC|AD`, with sizes
+   `|A|=2r-1`, `|B|=1`, `|C|=2r-3`,
+   `|D|=2s-2r+3`. In particular `D` has at least three
+   positions. The singleton `B` forces the source's
+   `lambda` label to be `V_1`. The other row label is
+   some odd highest weight `k` occurring in both `C,D`.
+2. The fundamental fusion recurrence gives the multiplicity
+   of `V_k` in `q` fundamental factors as
+
+   ```text
+   m(q,k)=binom(q,(q-k)/2)-binom(q,(q-k)/2-1)
+         =(k+1)q! / [((q-k)/2)! ((q+k)/2+1)!],          (P51.4)
+   ```
+
+   for the allowed parity and `0<=k<=q`, and zero otherwise.
+   This is the walk count for steps plus or minus one
+   staying nonnegative; reflection at the first negative
+   step gives the two binomial terms. It is also obtained
+   directly by induction from `V_1 V_k=V_(k+1)+V_(k-1)`.
+3. Put `q=2r-3`. For every allowed `k` with `m(q,k)>0`,
+
+   ```text
+   m(q+2,k)/m(q,k)
+     =4(q+2)(q+1)/[(q+3)^2-(k+1)^2].                   (P51.5)
+   ```
+
+   The denominator is positive on this range. This ratio
+   increases with `k>=1`, so its value at `k` is at least
+   its value at one. Consequently
+
+   ```text
+   m(q+2,k)m(q,1)>=m(q+2,1)m(q,k).                     (P51.6)
+   ```
+
+4. This is precisely `(P51.1)` with `lambda=V_1`,
+   `mu=V_k`, `A=V_1^tensor(q+2)`, and
+   `C=V_1^tensor q`. Lemma 51A transports every row
+   component, including all its `D` multiplicities, into
+   an orthogonal component of the original target. It
+   therefore supplies `(P51.3)` on the whole source.
+   For `r=2`, only `k=1` is present; no division by a
+   nonexistent higher channel is used. QED.
+
+The construction uses cells of the original tuple. It does not add
+positions, replace the group by a product, or replace atomic character
+positivity by positivity on individual arbitrary complex constituents.
+Theorem 51B has `SU(2)` fundamental scope; Lemma 51A is a general
+conditional cell-channel construction for the original groups.
+
+**Proposition 51C (a twelve-factor obstruction to whole triadic
+allocation).** Take twelve fundamental `SU(2)` modules and minus
+positions `1,2`. No allocation consisting of distinct positive
+whole-cut maps from the family `T_(pi,tau)` of Lemma 50A, followed by
+an injective merge of the unpaid cuts, supplies this input. In fact
+its unpaid source has dimension at least 400, while `dim H=132`.
+This does not falsify `(P50.13)`, which permits several partial maps
+to act on one source, or the original RC demand.
+
+**Proof.**
+
+1. Odd-cardinality cut spaces vanish. Nonzero negative cuts
+   have exactly one minus position on either side. There
+   are twenty pair cuts, 240 cuts with a four-position
+   side, and 252 balanced six-position cuts. Their
+   respective dimensions are
+
+   ```text
+   C_1 C_5=42,   C_2 C_4=28,   C_3^2=25.               (P51.7)
+   ```
+
+   Thus `dim O=20*42+240*28+252*25=13860`, and
+   `dim H=C_6=132`.
+2. Proper positive cuts have 46 pair indices of dimension
+   42, 255 four-position indices of dimension 28, and
+   210 balanced indices of dimension 25.
+   A whole pair source cannot use a smaller-dimensional
+   target, so if `p` pair sources are paid, they consume
+   at least `p` of the 46 pair targets.
+3. A balanced negative source cannot use a four-position
+   target through a whole triadic map. If a target side
+   of size four meets its source side of size six in
+   `k` positions, the four agreement cells have sizes
+   `(6-k,k,4-k,2+k)`. All labels are self-dual; the
+   support `K_(pi,tau)` of Lemma 50A requires the two
+   row labels to agree. The fundamental fusion counts
+   give the following exact support dimensions:
+
+   ```text
+   k                   0   1   2   3   4
+   dim K_(pi,tau)     10  20  13  20  10.               (P51.8)
+   ```
+
+   For `k=0`, they are `5*2=10`. For `k=1`, they
+   are `5*(2*2)=20`, since the triple's fundamental
+   multiplicity is two and its `V_3` multiplicity is one.
+   For `k=2`, they are `2*2+3*3=13` from the
+   `V_0,V_2` channels. Complementing the source gives
+   the other two cases. Every value is below 25.
+4. Even granting all 210 balanced positive targets to
+   balanced sources, and granting them every pair target
+   not used in step 2, at most `210+46-p` balanced
+   sources can be paid. Hence the unpaid source dimension
+   is at least
+
+   ```text
+   42(20-p)+25[252-(210+46-p)]
+      =740-17p >=400,   0<=p<=20.                      (P51.9)
+   ```
+
+   A negative lower bound on the bracket for small `p`
+   is harmless: it only weakens the estimate. Ignoring
+   unpaid four-position sources also weakens it.
+   No such unpaid source injects by its merge into
+   the 132-dimensional `H`. QED.
+
+The next construction supplies the channels that cause this failure.
+For the `k=1` case in `(P51.8)`, the missing source channel has labels
+`(V_1,V_1,V_3,V_3)` and dimension five. The target has an unused
+channel `(V_3,V_1,V_1,V_3)` of dimension eight, because
+`m(5,3)m(3,1)=4*2>m(5,1)m(3,3)=5*1`. Lemma 51A
+maps those five dimensions into those eight. Together with the other
+20 dimensions, it supplies a whole source isometry. Thus the failure
+in Proposition 51C is repaired by an actual new invariant-channel
+transport, rather than a larger count or a tighter angle threshold.
+
+**Theorem 51D (the entire coupled twelve-factor input is supplied).**
+For these twelve fundamentals and the two-minus sign pattern, there
+is a constructed map on the full original relation space
+
+```text
+L:Rel -> E_prop,   ||Lr||^2>=||r||^2/512.                (P51.10)
+```
+
+Its domain has dimension 13728. The allocation uses actual positive
+cuts of sizes two, four, and six, with one source retained for the
+pure merge. The map does not count any target more than once.
+
+**Proof.**
+
+1. Construct a bipartite eligibility graph from all 512
+   nonzero negative cut indices to all 512 nonzero positive
+   indices, including the pure cut. A source is eligible
+   for that pure target by its original inclusion into `H`.
+   The pair `12` crosses every negative cut, so every
+   source is also eligible for that positive pair through
+   the whole-cut cup map.
+2. Call the remaining target types `P` (45 plus-only
+   pairs), `Q0` (45 four-position cuts with both minuses),
+   `Q1` (210 plus-only four-position cuts), and `R`
+   (210 balanced positive cuts). The source types have
+   sizes 20,240,252 as in Proposition 51C. Use the
+   following whole-map eligibility rules:
+
+   ```text
+   pair source -> P: the target pair crosses the source;
+   four source -> P: the target pair crosses the source;
+   balanced source -> P: the target pair crosses the source;
+   four source -> Q0 or Q1: one minus/plus position exchange;
+   balanced source -> R: one minus/plus position exchange;
+   balanced source -> Q0 or Q1: intersection size one or three.
+                                                                  (P51.11)
+   ```
+
+   Cup maps supply the first three rows. For a singleton
+   exchange, the source and target have the same size and
+   a tensor transposition is a whole-source isometry. It
+   can also be supplied by Lemma 50A: in its two row
+   patterns the two exchanged singleton labels are either
+   equal or dual, so its source support is the whole cut.
+   The last row is supplied by Theorem 51B with `r=s=3`;
+   when the intersection is three, complement the source
+   to make it one.
+3. Verify Hall's condition for an arbitrary source subset.
+   Let its counts in the three types be `p,q,b`, and put
+
+   ```text
+   x=p/20,  y=q/240,  z=b/252,   0<=x,y,z<=1.
+   ```
+
+   Count edges separately for each regular incidence
+   relation in `(P51.11)`. A lower bound on the number
+   of neighbors is source degree times the subset size
+   divided by the full target degree. The needed degrees
+   are as follows:
+
+   ```text
+   incidence                 source degree    target degree
+   pair -> P                       9                 4
+   four -> P                      21               112
+   balanced -> P                  25               140
+   four -> Q0                      3                16
+   balanced -> Q0                 20               112
+   four -> Q1                      7                 8
+   balanced -> Q1                100               120
+   balanced -> R                  10                12. (P51.12)
+   ```
+
+4. Here are direct checks of those degrees. A pair source
+   has one plus position, yielding nine incident plus pairs;
+   each plus pair has four negative pair sources. A four
+   source has one minus and three plus positions, so its
+   crossing plus pairs number `3*7=21`. A fixed plus
+   pair is separated by `2*binom(8,2)` triples in each
+   of the two minus families, giving 112. A balanced
+   source separates `5*5=25` plus pairs; a fixed plus
+   pair is separated by `2*binom(8,4)=140` balanced
+   sources.
+5. A four source's three plus positions have three two-
+   subsets, giving its `Q0` targets, and seven containing
+   four-subsets, giving its `Q1` targets. A `Q0` target
+   has eight containing triples in each minus family,
+   giving 16; a `Q1` target has four contained triples
+   in each family, giving eight. For a balanced source
+   with five selected plus positions, a `Q0` target is
+   eligible when its plus pair is contained in that set
+   or in its complement: `2*binom(5,2)=20`. A fixed
+   pair has `2*binom(8,3)=112` such balanced sources.
+   A `Q1` target is eligible when its four plus positions
+   have intersection one or three with the five-set:
+   the source degree is `2*5*binom(5,3)=100`, and
+   the target degree is `2*4*binom(6,4)=120`.
+6. A balanced source can exchange a minus position to obtain
+   a positive balanced side containing both minuses and
+   four plus positions selected either inside its five-set
+   or inside the complementary five-set. This gives
+   `2*binom(5,4)=10` targets. Conversely a given four-
+   set has six containing five-sets and six disjoint
+   five-sets, giving 12 sources. This checks the last row.
+7. For a nonempty source subset the two universal neighbors
+   from step 1 are present. The four other target types
+   are disjoint. Equations `(P51.12)` therefore give
+
+   ```text
+   |N(subset)|
+      >=2+45 max(x,y,z)+45 max(y,z)
+             +210 max(y,z)+210 z
+       =2+45 max(x,u)+255u+210z,
+   u=max(y,z).                                         (P51.13)
+   ```
+
+   Subtract the source size `20x+240y+252z`. Since
+   `y,z<=u`, the difference is at least
+   `2+45 max(x,u)-20x-27u`. If `x>=u`, this is at
+   least `2-2x>=0`; if `x<=u`, it is at least
+   `2-2u>=0`. Hall's condition follows for every subset;
+   the empty subset is immediate.
+8. Fix a perfect matching by an augmenting-path construction
+   with the cut indices ordered lexicographically. One
+   source is matched to the pure target. Denote it by `J`.
+   Match the other 511 sources to their distinct actual
+   proper positive targets, using the whole isometries
+   specified in `(P51.11)`. They form one whole-source
+   isometry `T_I:O_I -> E_prop`. The unpaid merge on
+   `O_J` is its original isometric inclusion into `H`.
+9. Lemma 49A's source-projection proof, which only uses
+   whole-source isometry and injective unpaid merge,
+   gives `L=T_I P_I|_Rel`. Its norm proof applies with
+   `c=1` and `|I|=511`, yielding `(P51.10)`. Thus all
+   coupled relations, including ones between the three
+   source cardinalities, are covered at once.
+10. Finally the merge is onto `H`. Cup products span the
+    fundamental invariant space by the same Schur--Weyl
+    argument as Lemma 40A. A product whose first minus
+    position is paired to a plus position belongs to a
+    negative pair source. A product containing cup `12`
+    is rewritten with any one of its plus cups `ab` by
+    `epsilon_12 epsilon_ab=epsilon_1a epsilon_2b
+    -epsilon_1b epsilon_2a`. Both terms belong to negative
+    pair sources. Hence the source range is all of `H`,
+    and its kernel dimension is `13860-132=13728`.
+    Proposition 28 consumes `(P51.10)` on that full
+    original relation space. QED.
+
+This test has both noncommutation and agreement collisions. Negative
+pair cuts `13,14` have angle one-half on their whole 42-dimensional
+spaces. Their agreement `34` is also the agreement of negative cuts
+`23,24`. Thus neither commuting-cut decomposition nor distinct
+interacting agreements supplies it. Proposition 51C also excludes
+whole-source matching through triadic maps alone. The new map in
+Lemma 51A is what fills the missing channels in this test.
+
+**Return to the positive-node construction.** The determinant proof
+of Proposition 50F uses only a distinct allocation of whole-source
+isometries and an injective unpaid merge. It does not require the
+proper targets to be pairs. Replace the triadic map by Lemma 51A's
+whole channel transport on the matched balanced-to-four coordinates,
+and keep the whole cup or singleton-exchange maps on the other
+matched coordinates. The new coefficient family consequently admits
+positive-node coefficients giving injectivity on the entire source
+of Theorem 51D: put the sole unpaid source first, order the 511 paid
+sources, and order their matched positive target exponents the same
+way. The leading determinant is again the unpaid inclusion minor
+times the paid isometry minors. This is a proof of the repaired
+allocation's injectivity, with no numerical certificate selection.
+It does not establish `(P50.13)` for the original triadic maps.
+
+**Final independent double-check and original-consumer replay.**
+Rechecked the target labels `(mu,lambda*,lambda,mu*)` and the
+unchanged `B,D` multiplicity factors. The source and target basis
+maps are explicitly linear, and different ordered label pairs have
+orthogonal target supports. Derived `(P51.5)` independently from
+the factorial form of `(P51.4)`; its denominator is
+`(q+3)^2-(k+1)^2>0`, and its reciprocal increases with `k`. Checked the endpoint `r=2` separately and
+included all `D` multiplicities. This proves an arbitrary-length
+transport in the stated fundamental scope.
+
+Recounted the twelve-factor cut indices and invariant dimensions.
+Checked every triadic support in `(P51.8)` and the lower bound 400
+against the ambient dimension 132. For the repaired allocation,
+recomputed every degree in `(P51.12)`, distinguishing the two types
+of positive four-position target and the two minus families of
+negative four-position source. Independently checked the normalized
+Hall inequality in both cases `x>=u` and `x<=u`, including the two
+universal targets. Checked that matching to the pure target leaves
+exactly one unpaid source, so its entire merge is injective, and that
+proper target images occupy distinct actual summands. The projection
+bound is exactly `1/(1+511)=1/512` on the full `Rel`; no relations
+internal to one cardinality have been substituted for the caller.
+Finally checked merge surjectivity and the dimension 13728, then
+replayed the constructed map into Proposition 28 on the original
+atomic tuple. Rechecked the determinant extension with the larger
+operator menu before claiming that the repaired scalar-coefficient
+family passes this test.
+
+The scalar integral for identical real characters with two minus
+and ten plus factors is already pointwise nonnegative. Thus Theorem
+51D does not enlarge the known continuous-cone positivity range.
+Its new evidence is the invariant-channel construction and the
+entire coupled allocation beyond the mechanisms excluded in
+Proposition 51C. Lemma 51A gives a general conditional construction;
+Theorem 51B supplies its comparison at unbounded fundamental lengths.
+No assertion is made that `(P51.1)` holds for arbitrary different
+cell representations or for every target group.
+
+For the original full-cone demand, the construction now has an
+explicit additional operator: transport a source `(lambda,mu)`
+channel into `(mu,lambda*,lambda,mu*)` whenever `(P51.1)` is
+supplied, retaining the other triadic operators and the permitted
+`H_free` target. The first unsupported term on general actual tuples
+is the allocation of these partly overlapping channel images in the
+single copy of each positive target. The attempted supplier is the
+scalar-coefficient map `(P50.6)` with these additional transports;
+its required test remains injectivity on the entire original `Rel`,
+not just on its separate recoupling blocks. The twelve-factor
+fundamental test above supplies that test with explicit multiplicity
+transport and a full Hall matching, but not for unrestricted inputs.
+The original arbitrary-group, arbitrary-function, arbitrary-length,
+arbitrary-sign objective remains active.
+
+
+## Mixed-cell transport by pooling two label channels
+
+The next full-scope test concerns the missing multiplicity comparison
+in Lemma 51A. Its fundamental specialization cannot be transferred
+unchanged to arbitrary mixed cell representations, even for `SU(2)`.
+A genuinely occupied counterexample below has a positive target and
+nonzero source and target multiplicities. The replacement pools both
+orders of a label pair, rather than requiring each order to fit its
+first target separately. On reflected cells this supplies a whole-cut
+isometry in every target group, with arbitrary reducible cell modules.
+
+**Proposition 52A (mixed tensor products fail the fundamental ratio
+comparison).** Let `C0=V_3^tensor3` and `U=C0 tensor V_1^tensor2`
+for `SU(2)`. For `lambda=V_1`, `mu=V_3`, the required comparison
+`(P51.1)` with `A=U,C=C0` fails by six:
+
+```text
+m(U,V_3)m(C0,V_1)-m(U,V_1)m(C0,V_3)
+   =13*2-8*4=-6.                                      (P52.1)
+```
+
+All four multiplicities are nonzero. In particular adding two
+fundamentals does not make the ratio `m(U,V_k)/m(C0,V_k)` minimal
+at `k=1` on arbitrary mixed tensor products.
+
+**Proof.** The Clebsch--Gordan rule gives
+
+```text
+V_3^tensor3=2V_1+4V_3+3V_5+2V_7+V_9,
+U=8V_1+13V_3+12V_5+8V_7+4V_9+V_11.                    (P52.2)
+```
+
+For example `V_3^tensor2=V_0+V_2+V_4+V_6`, and multiplication
+by `V_3` gives the first line. Multiplication by
+`V_1^tensor2=V_0+V_2` gives the second. The two ratios in question
+are `8/2=4` and `13/4`, in the wrong order. QED.
+
+This is a failure of that comparison on the stated modules, not a
+negative Q3 example and not an impossibility of other channel maps.
+The positive-target realization below makes it a test of the actual
+transport problem, rather than an absent-support counterexample.
+
+**Lemma 52B (pooled two-label transport).** Use actual self-dual cell
+representations `A,B,C,D`, with source cut `pi=AB|CD` and proper
+positive target `tau=AD|BC`. Fix two distinct irreducible labels
+`lambda,mu`. For short write
+
+```text
+a_nu=m_(A,nu), b_nu=m_(B,nu),
+c_nu=m_(C,nu), d_nu=m_(D,nu).
+```
+
+Self-duality of the cells makes these multiplicities equal at `nu`
+and `nu*`. Consider the source components with labels
+
+```text
+(lambda,lambda*,mu,mu*),
+(mu,mu*,lambda,lambda*),
+```
+
+and the two agreement target components
+
+```text
+(mu,lambda*,lambda,mu*),
+(lambda,mu*,mu,lambda*).                               (P52.3)
+```
+
+Put
+
+```text
+Delta_AC=a_lambda c_mu-a_mu c_lambda,
+Delta_BD=b_lambda d_mu-b_mu d_lambda.
+```
+
+If `Delta_AC Delta_BD<=0`, the sum of the two entire source
+components has an explicit isometric embedding into the sum of the
+two actual target components. Individual Lemma 51A comparisons need
+not hold in both directions.
+
+**Proof.**
+
+1. Their total source and target dimensions are
+
+   ```text
+   s=a_lambda b_lambda c_mu d_mu
+       +a_mu b_mu c_lambda d_lambda,
+   t=a_mu b_lambda c_lambda d_mu
+       +a_lambda b_mu c_mu d_lambda.
+   ```
+
+   Direct expansion gives the exact identity
+
+   ```text
+   s-t=Delta_AC Delta_BD.                              (P52.4)
+   ```
+
+   Thus the hypothesis gives `s<=t`, including zero
+   multiplicities and unequal component dimensions.
+2. Fix unit row pairing lines, unit agreement pairing
+   lines, and orthonormal tensor bases of their complete
+   multiplicity spaces. Concatenate the bases of the two
+   source components in the indicated order and do the
+   same for the targets. Send the `s` source basis
+   tensors to the first `s` target basis tensors. This
+   is an explicit complex-linear isometry. It can send
+   overflow from one source component to the other
+   agreement component; those tensors use the second
+   label-transport direction, on cells `B,D`.
+3. The two target supports are orthogonal by their distinct
+   first-cell labels. Targets from different unordered
+   label pairs are also orthogonal: the first two labels
+   recover the ordered pair, up to the reversal already
+   pooled. This holds also when `mu=lambda*` is a
+   non-self-dual pair. Thus the construction is compatible
+   with combining different pooled blocks inside the same
+   actual positive target. QED.
+
+**Theorem 52C (whole-cut reflection transport, all target groups).**
+Suppose in the four cells above
+
+```text
+A is unitarily equivalent to D,
+B is unitarily equivalent to C,                         (P52.5)
+```
+
+as representations of the actual group. The cell modules are actual
+self-dual tensor products; they need not be irreducible, identical
+factor lists, or fundamental modules. Then there is a constructed
+complex-linear isometry
+
+```text
+R_(pi,tau):H_pi -> H_tau.                              (P52.6)
+```
+
+It can be chosen to fix `H_pi intersection H_tau`. There are no
+bounds on tuple length, group rank, labels, or multiplicities.
+
+**Proof.**
+
+1. Identify the multiplicity dimensions of `A,D` as
+   `u_nu`, and those of `B,C` as `v_nu`. On diagonal
+   row components `lambda=mu`, source and target have
+   the same dimension `u_lambda^2 v_lambda^2`.
+   Use the normalized agreement projection
+   `d_lambda Q_tau`, or an equivalent fixed unit-line
+   replacement, to map that whole component isometrically.
+2. On an unordered pair of distinct labels the two source
+   component dimensions are both
+   `u_lambda u_mu v_lambda v_mu`. The two target
+   dimensions are `u_mu^2 v_lambda^2` and
+   `u_lambda^2 v_mu^2`. Their total surplus is
+
+   ```text
+   t-s=(u_mu v_lambda-u_lambda v_mu)^2>=0.              (P52.7)
+   ```
+
+   Equivalently `Delta_BD=-Delta_AC` in Lemma 52B.
+   Apply its pooled basis map on this entire source block.
+3. Source diagonal components and different unordered pairs
+   are orthogonal. Their target components are disjoint
+   cell isotypic supports, as checked in Lemma 52B.
+   Hence their maps sum to one isometry on all of `H_pi`
+   into the single `H_tau`. For a fixed finite-dimensional
+   cell representation there are only finitely many labels.
+4. The common invariant space consists of tensors invariant
+   independently on the four cells by Lemma 27A. It is
+   exactly the trivial diagonal component. In step 1 its
+   normalized projection is the identity, so the combined
+   map fixes the actual common space. QED.
+
+The theorem realizes the familiar dimension comparison
+`m(UV)^2<=m(U^tensor2)m(V^tensor2)` when the cells are `U,V,V,U`,
+but its proof supplies the actual map and its channel allocation.
+It does not assert that each ordered source channel fits its own
+first target; `(P52.7)` is precisely what permits that restriction
+to be removed. It also does not require all group irreducibles to
+be self-dual. The cell modules, rather than the intermediate labels,
+are self-dual throughout.
+
+**Corollary 52D (reflection targets can pay whole negative cuts).**
+In any original actual-atom input, selected negative cuts can be
+assigned to distinct proper positive cuts satisfying `(P52.5)`
+for their four agreement cells. Their direct source sum has an
+isometric map to those actual positive summands, supplied by
+Theorem 52C. If the unpaid merge is injective, source projection
+on the entire `Rel` followed by this map supplies `(P28.2)`.
+It can be combined with the established whole cup, singleton-
+exchange, and multiplicity transports when their target indices are
+distinct, or their images are proved orthogonal in every shared target.
+
+**Proof.** Distinct target indices make the whole-cut images
+orthogonal in `E_prop`. Lemma 49A's proof uses only that isometry
+and injectivity of the unpaid merge, so applies without change.
+If all sources are paid, restriction to `Rel` is already isometric.
+If `||F_J x||^2>=c||x||^2`, the bound remains
+`c/(c+|I|)`. Proposition 28 consumes the full coupled relation space
+in this stated scope. QED.
+
+**An occupied mixed-input test and the actual remaining capacity.**
+Set the four cells to
+
+```text
+A=D=U=(V_3^tensor3) tensor V_1^tensor2,
+B=C=C0=V_3^tensor3.                                   (P52.8)
+```
+
+This uses sixteen actual atoms of `SU(2)`: twelve `V_3` and four
+`V_1`. Choose one minus position in `B` and one in `C`, and all
+other positions plus. The row `pi=AB|CD` is negative and the
+agreement `tau=AD|BC` is positive. Thus every channel below lies
+in an original source or target permitted by the full objective.
+There are no trivial atoms or missing target multiplicities.
+
+For `lambda=V_1,mu=V_3`, the two ordered source channels each
+have dimension
+
+```text
+8*2*4*13=832.
+```
+
+Their agreement target channels have dimensions
+
+```text
+13^2*2^2=676,   8^2*4^2=1024.                          (P52.9)
+```
+
+The first individual transport would require 832 dimensions to fit
+in 676 and is impossible. Its multiplicity comparison is exactly
+the failure `(P52.1)`, tensored with the unchanged `B,D` factors.
+The pooled transport instead sends all 1664 source dimensions
+into the 1700 actual target dimensions. It can send the first 676
+basis tensors to the first target, its remaining 156 to the second,
+and the other source's 832 to the remaining part of that second
+target. The unused dimension is 36, the square in `(P52.7)`.
+
+This test also verifies the whole-cut assertion, rather than only
+one pooled channel. From `(P52.2)`, the multiplicity vectors are
+
+```text
+label             1   3   5   7   9   11
+u                 8  13  12   8   4    1
+v                 2   4   3   2   1    0.
+```
+
+Consequently
+
+```text
+m(UV)=124,
+dim H_pi=124^2=15376,
+dim H_tau=(sum u^2)(sum v^2)=458*34=15572.              (P52.10)
+```
+
+Theorem 52C maps all 15376 dimensions isometrically into the single
+original positive target, not merely the defective `V_1,V_3` block.
+Its target complement has dimension 196. These counts verify the
+construction's actual multiplicity capacity; the proof of its
+existence was the uniform square identity, not a certificate search.
+
+For the whole sixteen-factor consumer, other negative cuts are
+also present. If `F` is their original merge, define on the full
+original relation space
+
+```text
+L_paid=R_(pi,tau) P_pi|_Rel,
+ker L_paid={r in Rel:r_pi=0}=ker F_rest.                 (P52.11)
+```
+
+Here `F_rest` is the merge of all other negative coordinates, with
+the displayed kernel embedded by a zero `pi` coordinate. This is
+an exact peeling map on coupled relations. It does not claim that
+the unpaid merge is injective on this tuple. To finish this caller,
+only the actual image of `L_paid` is reserved in `H_tau`; its
+orthogonal complement has dimension at least 196. The original
+`H_free` and all other proper positive cuts remain available to a
+map on the remaining relations. Thus the construction supplies a
+new whole source transport in a genuine mixed tuple while retaining
+the unsupplied remainder of its full original RC obligation.
+
+**Final independent double-check and original-consumer replay.**
+Derived both lines of `(P52.2)` from the Clebsch--Gordan rule and
+recomputed the occupied failure `26-32=-6`. Checked that the
+sixteen-factor minus set has even size, its row cut is negative,
+and its agreement cut is positive. No positivity test for a
+forbidden complex constituent tuple was used.
+
+Independently expanded `(P52.4)`, keeping the signs of its two
+cross terms: source minus target is `Delta_AC Delta_BD`.
+For reflected cells these determinants have opposite signs, giving
+exactly the nonnegative square `(P52.7)`. Checked diagonal labels
+separately, the dual-pair case `mu=lambda*`, and orthogonality of
+all output supports before combining them in one actual target.
+The basis map is explicitly linear and norm preserving; the
+trivial diagonal block is the original common tensor itself.
+
+Recomputed the pooled capacities 1664 and 1700 and the allocation
+676,156,832 with remaining capacity 36. Checked the full vectors
+`u,v`, their dot product 124 and squared norms 458,34, hence the
+whole source and target dimensions 15376,15572. Finally applied
+source-coordinate projection to the full original `Rel`, verifying
+both equalities in `(P52.11)` including relations coupled to other
+negative cuts. Recorded only the actual image as used capacity.
+Corollary 52D returns a full original input when its unpaid merge
+is injective; that extra fact is not asserted for this mixed test.
+
+The next full-scope allocation can use reflected-cell pooling as a
+whole-cut operator in `(P50.6)`, alongside the triadic and directional
+multiplicity maps. A universal extension of the fundamental ratio
+claim has now been explicitly falsified; a replacement has been
+constructed and tested on the exact occupied mixed channels that
+cause that failure. The open term is still an injective map from
+the entire remaining relation space to the actual unused positive
+summands and `H_free`. No assertion has been made that every mixed
+tuple admits a reflection assignment, an injective unpaid merge,
+or determinant signs favorable for all its channels. The original
+full central continuous positive-definite objective stays active.
+
+
+## Shared-target operator packing and dense relation compression
+
+The selected full demand is the actual injection `(P28.2)`, including
+its allowed `H_free` target. The maps already constructed detect every
+nonzero relation when considered separately, but that statement alone
+does not permit their outputs to be added inside the single copy of
+each positive cut. This section supplies an exact operator-packing
+criterion and tests it on a dense noncommuting arrangement at unbounded
+lengths. The test achieves shared-target packing beyond distinct
+whole-source matching. Its remaining coupled relations are retained
+explicitly in the original consumer.
+
+**Lemma 53A (constructive packing by actual target row spaces).** Let
+`V` be a finite-dimensional complex Hilbert space, and let `E_j` be
+actual finite-dimensional target spaces with `d_j=dim E_j`. For each
+`j` fix a finite list of available linear maps `D_(j,a):V->E_j`.
+Write
+
+```text
+U_j=sum_a ran(D_(j,a)^*) subset V,
+K_T=intersection_(j in T,a) ker D_(j,a),   T subset targets.
+```
+
+There exist target endomorphisms `B_(j,a)` making
+
+```text
+L_j=sum_a B_(j,a) D_(j,a),
+L=(L_j)_j:V -> direct_sum_j E_j                       (P53.1)
+```
+
+injective if and only if
+
+```text
+dim K_T <=sum_(j outside T) d_j
+for every subset T of target indices.                 (P53.2)
+```
+
+The criterion uses one copy of each `E_j`, irrespective of the number
+of available maps into it. Its proof constructs independent row
+functionals and hence an actual linear map, not just a dimension
+comparison between the full source and full target.
+
+**Proof.**
+
+1. The allowable row functionals in output `E_j` are exactly
+   the duals of vectors in `U_j`. One direction follows
+   by taking rows of `(P53.1)`. Conversely every such
+   functional is a sum of rows of the available `D_(j,a)`.
+   Prescribe those sums independently for the `d_j` rows
+   of `E_j`; the corresponding row coefficients are the
+   rows of the endomorphisms `B_(j,a)`. Thus any at most
+   `d_j` rows from `U_j` can be realized in that target.
+2. Put `k=dim V`. Since `K_T` is the orthogonal complement
+   of `sum_(j in T) U_j`, condition `(P53.2)` is
+
+   ```text
+   dim(sum_(j in T) U_j)+sum_(j outside T)d_j>=k.         (P53.3)
+   ```
+
+   Necessity follows because an injective map must have
+   `k` independent rows, with at most `d_j` in each
+   `U_j`; the rows from `T` span at most the first
+   term in `(P53.3)`.
+3. Here is a proof of sufficiency. First, for a list of
+   spaces `W_1,...,W_s`, there is an independent choice
+   of one vector in each space if every sublist satisfies
+   `dim(sum W_i)>=number of indices`. Prove this by
+   induction on `s`. If a nonempty proper sublist is
+   tight, choose its independent vectors inductively;
+   they form a basis of its whole sum. Pass to the
+   quotient by that sum for the remaining indices; the
+   condition there follows by applying the original
+   condition to their union with the tight sublist.
+   Lift the resulting independent vectors. If no proper
+   nonempty sublist is tight, choose any nonzero vector
+   in the last space. Quotient by its line and remove
+   that index. Every remaining nonempty sublist had at
+   least one dimension of slack, so still satisfies the
+   condition. Induction again applies. The case of one
+   index is immediate.
+4. Replace each `U_j` by `d_j` slots of that same space,
+   and put `D=sum_j d_j`. Condition `(P53.3)` at the
+   empty set gives `D>=k`. For this proof alone introduce
+   a common auxiliary space of dimension `D-k` and
+   append it to every slot. For a nonempty slot sublist
+   having target types `T`, the summed space has dimension
+   `dim(sum_(j in T) U_j)+D-k`. Condition `(P53.3)`
+   makes this at least `sum_(j in T)d_j`, and hence at
+   least the number of slots in that sublist. Step 3
+   gives `D` independent vectors in the resulting
+   `D`-dimensional direct sum. Their projections to `V`
+   span `V`, and each projected vector belongs to its
+   assigned `U_j`. The auxiliary space is discarded;
+   it is only an induction device, not a physical factor
+   or target in `(P53.1)`.
+5. Choose `k` independent projected vectors and set the
+   unchosen rows to zero. There are at most `d_j`
+   chosen rows in any target. Step 1 realizes them by
+   actual `B_(j,a)`, giving an injective `(P53.1)`.
+   This proves sufficiency and the construction. QED.
+
+For the full RC consumer take `V=Rel` and let the `E_j` be `H_free`
+and the actual proper positive cut summands. Available operators may
+be source-coordinate projections followed by a triadic, directional,
+pooled, cup, or reflection transport, including any established maps
+into `H_free`. Endomorphisms of an invariant target space are linear
+operations on actual invariant tensors; they do not enlarge that
+space or change the input functions. Lemma 53A is therefore a genuine
+sufficient construction for the original RC map whenever `(P53.2)`
+is supplied for the available operators. It does not assert that this
+inequality is automatic on unrestricted tuples.
+
+**Lemma 53B (the uncombined triadic menu has no invisible relations).**
+For every original actual-atom input with nonempty even minus set,
+use all available maps
+
+```text
+D_(tau,pi)=T_(pi,tau) P_pi|_Rel,
+```
+
+of Lemma 50A, one list for each proper positive `tau`. Then
+`K_all_targets=0` in Lemma 53A, with no commutation, distinctness,
+or spectral-radius hypothesis.
+
+**Proof.** If all these operators kill `r`, take any distinct negative
+cuts `pi,sigma` and set `tau=pi+sigma`. Lemma 50A gives
+`Q_sigma r_pi=0`. Thus the source components of `r` are pairwise
+orthogonal, including zero or orthogonal cut spaces. Since `F r=0`,
+`0=||F r||^2=sum_pi ||r_pi||^2`, and `r=0`. The proof checks
+individual operator kernels; it does not charge an extra output copy
+for each operator. QED.
+
+The other target subsets in `(P53.2)` are still material. For example
+the six-fundamental star of Lemma 40A has a three-dimensional internal
+relation space. All its source coordinates admit whole isometries to
+the positive minus pair, so those operators separately have zero joint
+kernel. That single target has dimension two. No linear combination
+of them can inject the three-dimensional relation space into it.
+Thus absence of invisible relations cannot substitute for the
+intermediate capacity tests.
+
+**Lemma 53C (coordinate form of the criterion).** Suppose available
+operators into target `E_j` are whole-cut isometries from selected
+source coordinates `i`, restricted to a relation space `R subset
+O=direct_sum_i H_i`. Let `N(I)` be the targets eligible for at least
+one source index in `I`. Then Lemma 53A's condition is equivalent to
+
+```text
+dim(R intersection direct_sum_(i in I) H_i)
+    <=sum_(j in N(I)) d_j   for every source subset I.  (P53.4)
+```
+
+When `R=ker F`, the left side is exactly `dim ker F_I`, not the
+sum of whole source dimensions.
+
+**Proof.** Whole isometry makes each coordinate's available rows the
+full image of `P_i^*|R`. For target subset `T`, its joint kernel is
+`R` supported on source indices with no neighbor in `T`; call these
+indices `I_T`. Their neighbors lie outside `T`, so `(P53.4)` implies
+`(P53.2)`. Conversely an injective packed map sends vectors supported
+on `I` only to `N(I)`, proving `(P53.4)`. Lemma 53A supplies the
+map when its criterion holds, so these implications give equivalence.
+For `R=ker F`, supported relations are precisely `ker F_I`. QED.
+
+**Theorem 53D (shared-target packing of dense fundamental star
+relations at arbitrary lengths).** Let `n=2m`, `m>=3`, with all
+modules `V_1` of `SU(2)`. Put minuses at `a,c` and pluses at
+`b_1,...,b_p`, where `p=2m-2`. Use the star negative sources
+`pi_i={{a,b_i},rest}` and their internal relation space
+
+```text
+R_star=ker F_star,
+t=C_(m-1),  h=C_m,  dim R_star=pt-h,
+c0=floor(h/t),  q=p-c0.                               (P53.5)
+```
+
+Here `C_r` is the Catalan number. Thus `c0=2` for `m=3,4` and
+`c0=3` for `m>=5`. There is a constructed injection of the entire
+`R_star` into the following `q` actual proper positive pair targets:
+
+```text
+{a,c}, and {b_j,b_(j+1)} for 1<=j<=q-1.                (P53.6)
+```
+
+Its operators may sum contributions from several source coordinates
+inside one target. The number `q` is the smallest possible number
+of pair-cut targets for this internal relation space. For `m>=5`,
+whole-source matching with an injective unpaid merge cannot achieve
+this target count.
+
+**Proof.**
+
+1. Every pair source and every pair target has dimension
+   `t=dim Inv(V_1^tensor(2m-2))`. The star merge is onto
+   the `h`-dimensional full invariant space. Cup products
+   span it as in Lemma 40A. A cup product with the
+   `a` partner among the `b_i` is already in the star
+   range. If its `a` partner is `c`, resolve that cup
+   against any plus cup by the four-leg alternating
+   identity; both terms then lie in star sources.
+   Rank-nullity gives `(P53.5)`.
+2. Catalan factorials give
+
+   ```text
+   h/t=(4m-2)/(m+1)=4-6/(m+1).
+   ```
+
+   Therefore `c0` has the stated values, and
+   `q=ceil((pt-h)/t)`. Every pair target has dimension
+   `t`, so fewer than `q` cannot contain an injection
+   of `R_star`. This is a capacity bound for pair targets,
+   not a claimed minimum over arbitrary other targets.
+3. The pair `{a,c}` crosses every star source, so the
+   whole cup isometry gives all source coordinates as
+   eligible for it. The target `{b_j,b_(j+1)}` crosses
+   precisely the two incident star pair sources; retain
+   just their whole cup maps in the operator menu.
+   These are onto isometries because source and target
+   dimensions both equal `t`. Endomorphisms after them
+   realize the row functionals of Lemma 53A.
+4. Verify its target-subset criterion. A subset containing
+   the hub `{a,c}` has full row space `R_star^*`, so
+   its joint kernel is zero. For the empty subset,
+   the required capacity is `qt>=pt-h`, already checked.
+   Any other subset consists of `e>=1` edges of the
+   path on `b_1,...,b_q`. Their incident vertex count
+   `v` is at least `e+1`. The joint kernel consists
+   exactly of star relations supported on the remaining
+   `k=p-v<=p-e-1` source coordinates.
+5. Any one star source merges injectively. Any two do as
+   well: their four-cell intersection includes singleton
+   fundamental cells, so the common invariant space is
+   zero by Lemma 27A. Thus their merge rank is `2t`.
+   More generally for `k>=c0-1` selected sources their
+   merge rank is at least `(c0-1)t`, using one source
+   when `c0=2` and two when `c0=3`. Their kernel
+   dimension is therefore at most
+
+   ```text
+   [k-(c0-1)]t <=[p-c0-e]t=(q-e)t.                    (P53.7)
+   ```
+
+   If `k<c0-1`, there are at most one selected source
+   and its kernel is zero. The remaining target capacity
+   `(q-e)t` is nonnegative. This checks every subset.
+6. Lemma 53A now constructs the map using rows of the
+   actual whole cup operators into the targets `(P53.6)`.
+   For a chosen target, each row can use a linear
+   combination of its eligible source rows. This is
+   shared-target packing, not a duplicate target for
+   every contributing source.
+7. To check the last assertion, any three star sources
+   have a nonzero internal relation: use the alternating
+   four-fundamental pairing identity on `a` and those
+   three leaves, tensored with a nonzero invariant of
+   the other `2m-4` fundamental factors. Each coordinate
+   belongs to its original source. For `m>=5`, matching
+   whole source coordinates to only `q=p-3` targets
+   leaves at least three unpaid coordinates. Their merge
+   is therefore not injective. The row-space construction
+   succeeds on the entire internal relation space despite
+   this obstruction to the whole-source method. QED.
+
+These are noncommuting arrangements: any two different star pair
+cuts have nontrivial shared fundamental channel with angle one-half,
+so their projections do not commute. For instance at ten factors
+`p=8,t=14,h=42`, the construction packs all 70 internal relation
+dimensions into five actual pair targets of total dimension 70.
+Any whole-source matching using those five targets leaves a
+noninjective unpaid merge. At twelve factors it packs all 288
+internal relation dimensions into seven targets of total dimension
+294. The proof applies symbolically to every `m>=3`; no bounded
+certificate sweep supplies the assertions.
+
+**The full coupled consumer after this internal packing.** Theorem
+53D's domain is the internal `R_star`, not the whole `Rel` of the
+original tuple. That distinction is retained as follows. Normalize
+its constructed injection by its positive Gram square root to obtain
+an isometry `J_star:R_star->E_selected`. View `R_star` as an actual
+subspace of the full `Rel`, by extending it with zero other source
+coordinates. Put
+
+```text
+Z=J_star(R_star),
+L_paid=J_star P_(R_star)|_Rel,
+K=Rel intersection (R_star^perp direct_sum O_rest).      (P53.8)
+```
+
+The orthogonal projection is taken in the original source space.
+Its image of any full relation is again an internal relation, so
+`ker L_paid=K` exactly. Every internal relation occurs in the full
+source, hence `ran L_paid=Z` and `dim Z=pt-h`. The exact remaining
+original target is
+
+```text
+H_free direct_sum (E_prop orthominus Z).                (P53.9)
+```
+
+The selected target sum has unused dimension
+`qt-(pt-h)=h-c0 t`. Its unused space may involve combinations
+across target indices; it is retained as the actual orthogonal
+complement, not divided into fictitious extra copies.
+
+Here `F_star` is onto `H`, so the original `H_free` is zero.
+Its restriction from `R_star^perp` to `H` is invertible; write that
+inverse as `A`. The still-coupled kernel has the exact description
+
+```text
+K={(-A F_rest x,x):x in O_rest}.                       (P53.10)
+```
+
+Thus it is isomorphic to the entire other negative source. The
+internal packing has not silently paid these mixed relations.
+Any further injection of this actual `K` into `(P53.9)` combines
+orthogonally with `L_paid` to supply the original RC map. That further
+injection is not asserted here for arbitrary lengths or other atoms.
+
+**Final independent double-check and original-consumer replay.**
+Verified that arbitrary post-target endomorphisms realize precisely
+the available row spaces, with at most `d_j` rows in the single
+actual target. Checked necessity of `(P53.3)` and the independent-
+transversal induction in both the tight-sublist and strict-slack
+cases. Checked every slot sublist in the sufficiency construction,
+then discarded its proof-only auxiliary space before constructing
+`(P53.1)`. No ancilla remains in any invariant tensor map.
+
+Rechecked Lemma 53B using each original negative pair's agreement
+cut and the exact kernel of Lemma 50A; no sum inside a collided
+target was inferred injective merely from separate detection.
+Rechecked the coordinate criterion's supported-relation kernel
+against the original merge, including all source multiplicities.
+
+For the dense-star supplier, checked cup-product surjectivity, the
+Catalan ratio, both floor regimes, and the positive target signs.
+Checked that a path-edge subset covers at least `e+1` vertices and
+that one- and two-source merge ranks give precisely `(P53.7)`.
+Independently checked the three-source alternating relation with
+its arbitrary invariant spectators, proving the whole-source
+matching obstruction at the supplied target count. The map from
+Lemma 53A acts on every internal relation simultaneously, rather
+than on a separate determinant bank.
+
+Finally replayed the internal packing into the full original `Rel`
+by `(P53.8)`. Its image is exactly `Z`, its kernel is exactly the
+remaining coupled relations, and the original `H_free` is zero
+because the star merge is onto. Checked the inverse used in
+`(P53.10)` on the orthogonal source complement. No internal
+relation-space theorem has been credited as a full-tuple closure.
+
+For the arbitrary-group, arbitrary-function, arbitrary-length
+objective, Lemma 53A now supplies a concrete route to combine the
+available invariant-channel operators inside shared positive targets.
+The exact first remaining statement is `(P53.2)` for the full original
+`Rel` and the original available target spaces, using the selected
+triadic and multiplicity transports. Its all-target endpoint is
+proved by Lemma 53B, and its complete intermediate tests are supplied
+for the unbounded dense-star internal arrangement by Theorem 53D.
+They are not supplied for all original tuples. The remaining coupled
+source and target above are explicit, and the full-cone goal stays
+active without a completion claim.
+
+
+## A universal one-target capacity leaf and the first mixed cycle
+
+This turn tests `(P53.2)` directly, rather than introducing another
+allocation criterion. With all but one proper positive cut forbidden,
+the remaining coupled relation kernel can be identified exactly in
+every original target group and at every tuple length. Its map into
+the one available positive summand is an isometry. A two-target
+extension by the same boundary-only ansatz is then tested on its first
+noncommuting cycle, where it fails. The cycle is supplied by an explicit
+recoupling map, so the test retains the higher relation instead of
+stopping at that failure.
+
+**Exact scope of the empty-subset test.** When Lemma 53A is applied
+to the original `Rel` and to all actual RC target spaces, its empty
+subset inequality is not an earlier prerequisite: it is exactly the
+original atomic Q3 sign. Indeed, with `s=rank F`,
+
+```text
+dim(H_free direct_sum E_prop)-dim Rel
+  =(dim H-s)+dim E_prop-(dim O-s)
+  =dim H+dim E_prop-dim O=P_M-K_M=Phi_M/2.              (P54.1)
+```
+
+Thus a proof of operator visibility or of selected nonempty-subset
+bounds cannot be credited as a proof of the empty-subset inequality.
+The calculation is also why `H_free` must not be dropped from the
+original target merely to simplify the operator family. The actual
+new evidence below proves specific nonempty-subset bounds directly
+from invariant geometry, without assuming `(P54.1)` nonnegative.
+
+**Theorem 54A (exact kernel with one remaining proper positive cut).**
+Fix any original actual-atom tuple, any nonempty even minus set, and
+one proper positive cut `tau`. Use every triadic operator of Lemma
+50A into every other proper positive cut. Let their joint kernel on
+the entire original relation space be
+
+```text
+K_tau={r in Rel:
+       T_(pi,q) r_pi=0 for every negative pi
+                     and every proper positive q!=tau}.
+```
+
+Pair the negative cut classes by the involution `pi -> pi+tau`.
+Choose one representative `i_P` of each unordered pair
+`P={i_P,j_P}`, with `j_P=i_P+tau`. In the full invariant space put
+
+```text
+V_P=H_(i_P) intersection H_(j_P)
+        intersection (sum_(k not in {0,i_P,j_P,tau}) H_k)^perp.
+                                                                  (P54.2)
+```
+
+Here the sum includes both positive and negative cut spaces of the
+original tuple; zero spaces do not change it. Then
+
+```text
+K_tau=orthogonal_direct_sum_P
+       {(r_(i_P),r_(j_P))=(v,-v):v in V_P},             (P54.3)
+```
+
+with all other source coordinates zero. The `V_P` are mutually
+orthogonal subspaces of the single actual `H_tau`. In particular
+
+```text
+L_tau r=sqrt(2) sum_P T_(i_P,tau) r_(i_P)
+            =sqrt(2) sum_P r_(i_P),  r in K_tau,
+||L_tau r||=||r||,
+dim K_tau<=dim H_tau.                                 (P54.4)
+```
+
+This is an exact remaining-target capacity bound, without a group,
+rank, label, dimension, commutation, or cut-count restriction.
+
+**Proof.**
+
+1. Lemma 50A's kernel identity gives, for `r in K_tau`,
+
+   ```text
+   Q_q r_i=0 and Q_(i+q) r_i=0
+      for every proper positive q!=tau.                (P54.5)
+   ```
+
+   For any other negative class `k` outside `{i,i+tau}`,
+   its difference `q=i+k` is proper positive, nonzero,
+   and different from `tau`. Hence `r_i` is orthogonal
+   to all of `H_k`. This statement holds even if some
+   of the positive target spaces are zero: the exact
+   kernel identity still applies.
+2. Define `u_P=r_(i_P)+r_(j_P)` inside `H`. Components
+   from different pairs are orthogonal by step 1. Since
+   `F r=sum_P u_P=0`, orthogonality gives `u_P=0`
+   for every pair. Thus `r_(j_P)=-r_(i_P)= -v_P`
+   with `v_P in H_(i_P) intersection H_(j_P)`.
+3. Lemma 27A makes `v_P` invariant independently on their
+   four common cells, so `v_P in H_tau`. Equations
+   `(P54.5)` also make it orthogonal to every other
+   proper positive cut, and step 1 to every other
+   negative cut. These are precisely `(P54.2)`.
+4. Conversely any `v in V_P`, placed in the two source
+   coordinates as `(v,-v)`, has zero merge. For every
+   forbidden `q`, both `Q_q v` and `Q_(i_P+q)v`
+   vanish by `(P54.2)`; the latter negative class is
+   outside the pair. The same holds starting from `j_P`.
+   Lemma 50A therefore kills every forbidden operator.
+   Such pair relations and their sums lie in `K_tau`,
+   proving `(P54.3)` in both directions.
+5. For different pairs, a vector in `V_P` is orthogonal
+   to the other pair's source space containing `V_Q`.
+   Thus `V_P` and `V_Q` are orthogonal inside `H_tau`.
+   On their common invariant tensors Lemma 50A's
+   `T_(i_P,tau)` is the identity. The source norm in
+   `(P54.3)` is `2 sum_P ||v_P||^2`, and the squared
+   norm of the displayed output is the same. This
+   proves the isometry and capacity inequality. QED.
+
+The output in `(P54.4)` uses the original triadic operator family:
+its selected post-target coefficients are `sqrt(2) Id`, and its
+other coefficients are zero. No extra target copy is used for a
+pair. Each `V_P` is a joint zero/one space of all original cut
+projections: its nonzero vectors are fixed by the four classes
+`0,i_P,j_P,tau` and killed by all other cut projections. Thus this
+universal kernel leaf is entirely made of pair-boundary relations,
+even when the full original arrangement is noncommuting.
+
+**Corollary 54B (these original capacity tests are supplied).** For
+any available operator menu containing all triadic maps, condition
+`(P53.2)` holds for every target subset whose complement contains
+at most one proper positive summand, with `H_free` either included
+or excluded from that complement.
+
+**Proof.** With no remaining proper summand, the joint kernel is
+zero by Lemma 53B. With one remaining summand it is a subspace of
+`K_tau`, since extra available operators can only shrink the
+kernel. Theorem 54A bounds its dimension by `dim H_tau`, which
+is no larger than the remaining capacity even when `H_free` is
+also available. The construction acts on the full original `Rel`
+restricted by the specified operator kernels, not on an independent
+subfamily's relations. QED.
+
+**Proposition 54C (two remaining targets can contain a mixed higher
+relation).** Take `SU(2)` with four fundamental atoms at positions
+`1,2,3,4` and atom `V_2` at position `5`. Put minuses at `1,3`.
+The entire original `Rel` is one-dimensional and has no nonzero
+pair-boundary relation. Its only nonzero proper positive targets
+are `H_13,H_24`, each one-dimensional. Therefore forbidding all
+other proper positive operators leaves a nonzero kernel, whereas
+forbidding either of these two targets as well leaves zero kernel.
+In particular the two-target kernel is not the sum of its two
+one-target boundary kernels.
+
+**Proof.**
+
+1. The fundamental fusion rule gives
+
+   ```text
+   V_1^tensor4=2V_0+3V_2+V_4,
+   dim H=dim Inv(V_1^tensor4 tensor V_2)=3.
+   ```
+
+   Every singleton invariant space vanishes. A fundamental
+   pair has its one-dimensional cup, and the other two
+   fundamentals couple to `V_2` to pair with position 5;
+   so each of the six fundamental pair-cut spaces is a
+   line. A mixed pair `V_1,V_2` has no invariant. Since
+   every proper unordered cut at length five has a side
+   of size at most two, these exhaust the nonzero cuts.
+   The negative pairs are `12,23,34,14`; the positive
+   pairs are `13,24`.
+2. The permutation action on `H` is the standard
+   three-dimensional `S_4` module. For example Schur--Weyl
+   identifies the `V_2` multiplicity in four fundamentals
+   with shape `(3,1)`. Realize it unitarily as
+   `{z in C^4:sum_i z_i=0}`. The minus eigenspace of
+   transposition `(ij)` is its line
+
+   ```text
+   H_ij=C v_ij,  v_ij=(e_i-e_j)/sqrt(2).                (P54.6)
+   ```
+
+   This is the pair-cut line: antisymmetry of two
+   fundamentals is their singlet, and global invariance
+   supplies the complement. Choose these unit vectors as
+   source coordinates, rephasing the `14` line as `v_41`.
+3. The exact higher relation is
+
+   ```text
+   r_12=v_12, r_23=v_23, r_34=v_34, r_14=v_41,
+   v_12+v_23+v_34+v_41=0.                              (P54.7)
+   ```
+
+   Three of these vectors span the three-dimensional `H`,
+   so the merge has rank three and `dim Rel=4-3=1`.
+   Distinct pair lines have zero intersection, hence no
+   pair-boundary relations exist. Consecutive cycle
+   vectors have inner product `-1/2`, and opposite ones
+   are orthogonal. Their Gram is the four-cycle matrix
+   with diagonal one and adjacent entries `-1/2`.
+4. All other proper positive cut spaces are zero, and
+   consequently all operators into them are zero. Their
+   joint kernel is this full nonzero `Rel`. But the
+   positive pair `13` crosses each negative pair source
+   at equal fundamental positions, as does `24`.
+   Their whole-cut cup isometries have zero kernel on
+   each source line. Forbidding either target's whole
+   operator list therefore forces every source coordinate
+   to be zero. Both one-target kernels vanish.
+   This proves the failure of the stated boundary-only
+   extension to the two-target case. QED.
+
+This is a valid original mixed-atom input, not an arbitrary abstract
+subspace example. The operator kernels tested are those of the actual
+positive targets and the actual whole negative relation space.
+
+**Exact construction on the mixed cycle.** Its higher relation is
+nevertheless supplied by recoupling inside one original positive
+summand. In `(P54.6)`,
+
+```text
+Q_13 v_12=v_13/2,
+T_(12,13) v_12=2Q_13 v_12=v_13.                        (P54.8)
+```
+
+Thus on the full one-dimensional `Rel` define
+
+```text
+L=2 T_(12,13) P_12|_Rel : Rel -> H_13.                 (P54.9)
+```
+
+For a scalar multiple of `(P54.7)`, its squared source norm is
+`4|a|^2` and its squared output norm is also `4|a|^2`. This is an
+isometry into the single actual target. It handles the mixed cycle
+rather than replacing it by pair intersections. Equivalently all
+of Lemma 53A's two-target capacity tests are verified here: the
+full source dimension one fits the two-dimensional target, each
+one-target kernel is zero, and the all-target kernel is zero.
+The unused proper target `H_24` remains available. The merge is
+onto `H`, so the original `H_free` is zero. Proposition 28 consumes
+`(P54.9)` on this full five-factor tuple, including its mixed
+`V_1,V_2` atom types.
+
+**Final independent double-check and original-consumer replay.**
+Recomputed `(P54.1)` with the same original merge rank in both
+`Rel` and `H_free`; the empty-subset capacity is exactly the atomic
+sign and is not a new proof of it. For the universal kernel leaf,
+checked the translation pairing has no fixed points and that every
+other negative cut is reached by a forbidden proper positive
+difference. Checked orthogonality of the pair sums before inferring
+their separate vanishing. Used four-cell invariance to put each
+pair vector in the actual `H_tau`, and checked the reverse kernel
+inclusion with both source coordinates. The isometry factor is
+`sqrt(2)`: the source has two copies of each vector and the target
+has their orthogonal sum. This verifies `(P54.4)` with its exact
+constant and supplies the original nonempty-subset test at every
+length and in every group.
+
+For the mixed cycle, rechecked the fundamental decomposition,
+all singleton and pair invariant spaces, their signs, and the
+standard-module negative transposition lines. Computed the four
+vectors in `(P54.7)` directly, their rank, and their noncommuting
+angle one-half. Verified the two one-target kernels vanish without
+assuming commutation. Independently contracted `v_12` with `v_13`
+to obtain one-half, giving `(P54.8)` and the isometry factor two
+in `(P54.9)`. Returned that map to the full original relation
+space of the five-factor consumer. This example does not enlarge
+the already proved length-five positivity range; it supplies the
+first higher kernel mechanism that the boundary-only extension
+would miss.
+
+The full arbitrary-group, arbitrary-function, arbitrary-length
+objective is unchanged. The all-target and one-remaining-proper-
+target capacity leaves are now universally supplied. The attempted
+extension of their boundary decomposition to two remaining targets
+has an exact counterexample, and its first mixed cycle has an actual
+recoupling injection. Universal capacity bounds for larger kernels,
+including all higher cycles and the empty-subset sign `(P54.1)`,
+have not been established. The next construction must retain those
+mixed cycles when combining channel operators in their actual
+remaining positive targets and the original `H_free`. The goal
+remains active.
+
+
+## Two-target cyclic transport and the remaining intersection projection
+
+The selected hard leaf is the two-remaining-positive-target test in
+`(P53.2)` on the full original `Rel`. Theorem 54A identifies its
+one-target boundary kernels. Here the higher-cycle part is supplied
+uniformly on the subspace orthogonal to allowed pair intersections.
+That subspace is defined in the full coupled source, not by replacing
+it with a small tuple. The precise missing projection identity needed
+to combine boundaries and cycles is retained, and its first mixed
+cycle test is supplied with arbitrary spectator multiplicities.
+
+Fix distinct proper positive classes `tau_1,tau_2`, and put
+`tau_3=tau_1+tau_2`. Let `K_12` be the joint kernel on the original
+`Rel` of every triadic operator into every other proper positive cut.
+Thus only `tau_1,tau_2` are left in this definition. Write
+
+```text
+C_(i,j)=H_i intersection H_j,
+R_clean={r in K_12:P_(C_(i,i+tau_a)) r_i=0
+                     for every negative i and a=1,2}.  (P55.1)
+```
+
+This is an actual linear subspace of the original relation space.
+For every other negative `j`, the forbidden-target kernel already
+gives `Q_j r_i=0` unless `j=i+tau_1` or `i+tau_2`.
+
+**Lemma 55A (allowed intersection coordinates are opposite).** For
+`r in K_12` and `j=i+tau_a`,
+
+```text
+P_(C_(i,j)) r_i=-P_(C_(i,j)) r_j.                     (P55.2)
+```
+
+**Proof.** A third negative index `k` cannot have both differences
+`i+k,j+k` in `{tau_1,tau_2}`: their sum would give
+`i+j=tau_1+tau_2`, contradicting `i+j=tau_a`.
+Thus at least one difference is forbidden and its triadic kernel
+makes `r_k` orthogonal to `H_i` or `H_j`, hence to `C_(i,j)`.
+Project the original equality `sum_k r_k=0` onto that common space.
+Only the two displayed coordinates remain. QED.
+
+**Theorem 55B (all intersection-free two-target cycles are supplied).**
+There is an explicit isometry
+
+```text
+L_clean:R_clean -> H_(tau_1).                          (P55.3)
+```
+
+The same construction works with `tau_2`. In particular
+`dim R_clean<=min(dim H_(tau_1),dim H_(tau_2))`.
+The statement has all original group, label, multiplicity, and tuple-
+length quantifiers. If the actual group has no nontrivial
+irreducible of dimension two, then `R_clean=0`.
+
+**Proof.**
+
+1. The two distinct nonzero even classes are independent
+   over `F_2`. Partition the negative classes into cosets
+   `D` of `span{tau_1,tau_2}`. Each coset has four
+   indices. Different cosets are orthogonal on the
+   constrained coordinates: for `i,k` in different
+   cosets, `i+k` is a forbidden positive class, so
+   `r_i` is orthogonal to all of `H_k`.
+2. Within a coset, opposite indices differ by forbidden
+   `tau_3`; their source values are orthogonal as well.
+   Since the coset sums are mutually orthogonal in `H`,
+   `F r=0` forces `sum_(i in D)r_i=0` separately.
+   Coordinate restriction to a coset preserves all
+   defining operator kernels and the clean conditions.
+   Thus the source splits into these coset relations.
+3. Its allowed interactions form the four-cycle: edges
+   differ by `tau_1` or `tau_2`. By `(P55.1)` both
+   endpoint vectors are orthogonal to their full pair
+   intersection. Lemma 29A gives the bound one-half
+   for their normalized overlap. Put `a_i=||r_i||`.
+   On one coset relation the exact energy estimate is
+
+   ```text
+   0=||sum_(i in D)r_i||^2
+      >=sum_i a_i^2-sum_(ij edge) a_i a_j
+       =(1/2)sum_(ij edge)(a_i-a_j)^2>=0.              (P55.4)
+   ```
+
+   This uses the original source vectors and their actual
+   kernels, not a claim that all the original cut
+   projection spaces have a sparse interaction graph.
+4. Equality makes all four norms equal, say to `a`.
+   If any source value is zero then all four are zero.
+   Otherwise every edge must attain the exact lower
+   bound `<r_i,r_j>=-a^2/2`, including its phase.
+   The nontrivial shared labels are then all dimension
+   two: every larger-dimensional overlap is strictly
+   below one-half. These dimension-two irreducibles are
+   self-dual, as in Lemma 29B.
+5. Choose one index `i_D` in each coset, and its partner
+   `j_D=i_D+tau_1`. Lemma 32A supplies the actual
+   agreement projection
+
+   ```text
+   Q_(tau_1) r_(i_D)
+     =(r_(i_D)+r_(j_D))/2,
+   ||Q_(tau_1) r_(i_D)||=a/2.                          (P55.5)
+   ```
+
+   Define
+
+   ```text
+   L_clean r=4 sum_D Q_(tau_1) r_(i_D).                (P55.6)
+   ```
+
+   Each output from `D` equals twice a sum of two of
+   its original coordinates. It stays in their ambient
+   span. Outputs from different cosets are therefore
+   orthogonal inside the single actual `H_(tau_1)`.
+   Its squared norm on one coset is `4a^2`, exactly
+   the four-coordinate source norm. Summing proves
+   the isometry on all of `R_clean`.
+6. This also belongs to the established operator menu on
+   this domain. Saturation in step 4 puts the source
+   entirely in dimension-two self-dual shared components,
+   where Lemma 50A has `T_(i_D,tau_1)=2Q_(tau_1)`.
+   Thus `(P55.6)` is `2 sum_D T_(i_D,tau_1)r_(i_D)`.
+   If there is no such two-dimensional label, step 3
+   cannot have a nonzero saturated relation. QED.
+
+**The compatible boundary and cyclic images.** Put
+`B_1=K_(tau_1)` and `B_2=K_(tau_2)` from Theorem 54A, viewed as
+subspaces of `K_12`. Their vectors have the full joint zero/one
+patterns described there. Hence `B_1,B_2` are orthogonal in the
+source: values of a `B_1` vector are orthogonal to `H_(tau_2)`,
+where all values of a `B_2` vector lie. The clean space is
+orthogonal to each boundary space by its allowed-intersection
+conditions.
+
+Moreover the images from Theorem 54A and Theorem 55B pack in the
+actual targets without collisions. Every clean source coordinate is
+orthogonal to every boundary value: on that boundary's two indices
+this follows from `(P55.1)`; on the other indices it follows from
+the boundary's full joint pattern. The cyclic output in `(P55.6)`
+is a sum of clean source coordinates, so its image in `H_(tau_1)`
+is orthogonal to the `B_1` image there. The `B_2` image occupies
+the other actual target copy. Thus there is a constructed isometry
+
+```text
+B_1 orthogonal_direct_sum B_2 orthogonal_direct_sum R_clean
+           -> H_(tau_1) direct_sum H_(tau_2).          (P55.7)
+```
+
+This supplies these entire subspaces, including all their
+multiplicities and all clean cyclic components, simultaneously.
+It does not assume they exhaust `K_12`.
+
+**The precise remaining local construction.** Define
+
+```text
+D=K_12 orthominus (B_1 direct_sum B_2 direct_sum R_clean).
+```
+
+The attempted earlier identity that would remove this remainder is
+
+```text
+P_(C_(i,i+tau_a)) r_i belongs to V_( {i,i+tau_a} )
+   for every r in K_12, negative i, and a=1,2,         (P55.8)
+```
+
+where `V` is the full joint-pattern subspace `(P54.2)` for the
+one-target problem with `tau=tau_a`. The assertion is that the
+actual pair-intersection projection preserves all the other
+forbidden-cut kernel constraints. It is not just equality of
+unrestricted common invariant spaces.
+
+If `(P55.8)` holds, Lemma 55A makes each projected pair component a
+boundary relation. Boundary spaces for different pairs and different
+remaining targets are orthogonal by their full joint patterns.
+Subtracting those projections from `r` removes exactly its allowed
+intersection coordinates; it does not introduce new ones, since a
+joint-pattern boundary value is orthogonal to every other negative
+cut. What remains is clean. Consequently `(P55.8)` would prove
+
+```text
+K_12=B_1 direct_sum B_2 direct_sum R_clean,  D=0,        (P55.9)
+```
+
+and `(P55.7)` would supply the full two-target capacity leaf.
+Conversely the decomposition `(P55.9)` implies `(P55.8)` by the
+same joint-pattern and clean properties. Thus the projection identity
+is an exact, genuinely earlier construction test for this proposed
+two-target supplier. No unrestricted validity of `(P55.8)` is asserted.
+
+**The first cyclic test with arbitrary spectators.** Work with
+`G=SU(2)`, four physical fundamental atoms at `1,2,3,4`, and any
+nonempty set of
+spectator atoms whose tensor product is `X`. Put minuses at `1,3`
+and any even number of spectator positions; all other signs are
+plus. Leave the proper positive pair cuts `13,24` and forbid all
+others. Consider relations supported on the four original negative
+pair cuts `12,23,34,14`. Let `M_k` be the multiplicity of `V_k`
+in `X`; each is included in full.
+
+The fundamental four-factor decomposition gives the actual ambient
+invariant space and pair-source spaces as
+
+```text
+H=(C^2 tensor M_0) direct_sum (C^3 tensor M_2)
+                    direct_sum M_4,
+H_ij=(one line in C^2 tensor M_0)
+          direct_sum (one line in C^3 tensor M_2).      (P55.10)
+```
+
+The spectator cut `X|1234` is proper, positive, and distinct from
+`13,24`. Its projection is the identity on the `M_0` block and
+zero on the other two blocks. The forbidden-target constraint
+therefore kills every source coordinate's `M_0` component. No pair
+source has an `M_4` component. The remaining four source lines in
+the `M_2` block are exactly the standard-module cycle of Proposition
+54C, tensored with all of `M_2`. Their internal merge kernel is
+one copy of `M_2`. Any other forbidden cuts that split `X` may
+impose additional constraints, but cannot add source directions.
+
+Adjacent pair cuts in this face share a singleton fundamental and
+have zero common invariant space. Thus all its surviving relations
+are clean in the sense of `(P55.1)`. The uniform map
+
+```text
+2 T_(12,13) P_12 : cycle tensor M_2 -> H_13             (P55.11)
+```
+
+is isometric, with output in the original `M_2` block. It is the
+same normalization as `(P54.9)` on every spectator multiplicity.
+The source norm is four times the coefficient norm and the output
+norm is also four times that norm. On this entire supported face,
+`(P55.8)` holds because its allowed pair intersections vanish.
+This supplies the cyclic construction with arbitrary spectator
+representations, not merely a single spectator `V_2`.
+
+When several such faces occur inside the full two-target kernel,
+Theorem 55B's coset argument combines their clean images orthogonally.
+It does not independently allocate a new target copy to every face.
+Relations outside the clean or boundary subspaces remain in `D`.
+
+**Original-consumer remainder after the supplied part.** Let `Z`
+be the image of `(P55.7)` in the two actual target copies and
+reserve precisely `Z`. On the full `K_12`, orthogonally project
+to its supplied subspace and apply that isometry. Its kernel is
+exactly `D`. An injection of `D` into
+
+```text
+H_free direct_sum
+ ((H_(tau_1) direct_sum H_(tau_2)) orthominus Z)         (P55.12)
+```
+
+would finish this leaf. These are the original spaces; `H_free`
+is not enlarged by discarding other sources. If the target-subset
+criterion excludes `H_free` from the available remainder, its term
+is omitted from `(P55.12)`. The supplied projection identity would
+make `D=0`, but that implication has only the scope explicitly
+verified above. Larger remaining-target kernels and the original
+empty-subset sign are separate unsupplied obligations.
+
+**The exact operator freedom on the residual.** The sufficient
+projection identity `(P55.8)` is not a necessary condition for all
+possible two-target packings. On `K_12`, the joint kernel of the
+operators feeding `tau_1` is exactly `B_2`: imposing those operators
+as well leaves the one-target problem for `tau_2`. Thus the available
+row space for `tau_1` is `B_2^perp`. Likewise the row space for
+`tau_2` is `B_1^perp`. Since `D` is orthogonal to both boundary
+spaces, every functional supported on `D` is available through
+either target's operator list, and vanishes on the supplied part.
+
+The image `Z` splits into the boundary-plus-clean image in `tau_1`
+and the boundary image in `tau_2`. Post-target endomorphisms can
+therefore send independent `D` functionals into either actual
+orthogonal target complement without altering the supplied map.
+Consequently, for these two proper targets alone, the remaining
+operator packing exists if and only if
+
+```text
+dim D <=dim H_(tau_1)+dim H_(tau_2)
+            -dim B_1-dim B_2-dim R_clean,
+```
+
+or equivalently
+
+```text
+dim K_12<=dim H_(tau_1)+dim H_(tau_2).                  (P55.13)
+```
+
+This constructs the residual map whenever that bound is proved;
+it does not prove the bound on unrestricted inputs. The original
+`H_free` remains a separate possible target with its own required
+available maps. The already proved one-target capacity bounds supply
+the other nonempty-subset tests for this two-target operator menu.
+Thus no additional unspecified coefficient problem is hidden after
+`(P55.13)`; the unsupported mathematical term is that actual kernel
+size. Identity `(P55.8)` is one earlier sufficient way to supply it.
+
+**Final independent double-check and original-consumer replay.**
+Checked the allowed-edge difference argument in Lemma 55A, including
+all negative coordinates outside the four-cut coset. Rechecked the
+orthogonality of the coset sums before splitting the original merge
+relation. On clean coordinates, used the original pair intersections
+for the one-half angle bound; no compressed-subspace angle bound
+was substituted. Computed `(P55.4)` from the exact four-cycle degree
+two, including zero-coordinate cosets. Checked equality forces both
+the common norm and the real negative phase of every edge, and
+therefore a dimension-two shared channel.
+
+Applied Lemma 32A with its actual hypotheses, obtaining the norm
+one-half and factor four in `(P55.6)`. Independently compared
+its squared output `4a^2` to the four-coordinate source norm.
+Checked that outputs stay in the spans of their actual source
+coordinates, giving orthogonal packing across collided target
+indices. Rechecked the scalar factor two for the triadic version.
+
+Checked orthogonality of the two one-target boundary spaces, the
+clean space, and their target images. Verified both directions of
+the proposed decomposition equivalence with `(P55.8)` without
+asserting the unproved projection invariance. For arbitrary
+spectators, checked the three `X` isotypic sectors, the positive
+spectator-cut sign, and its elimination of the entire `M_0` source
+sector. Kept all `M_2` multiplicities and imposed additional
+forbidden spectator-splitting cuts only as restrictions. The same
+cycle injection acts on that whole surviving source.
+
+Finally returned `(P55.7)` to the full original `K_12`, retaining
+its exact kernel `D`, the actual used image `Z`, and the remaining
+target `(P55.12)`. Checked each target's joint kernel on `K_12`
+against the corresponding opposite one-target boundary space, so
+all supported `D` functionals are actual available rows. Rechecked
+that their output complements are in the original target copies
+and that `(P55.13)` has not been assumed or proved universally.
+No clean-subspace theorem has been credited as
+universal two-target closure. The original full-cone objective is
+unchanged and active; its next projection test and its remaining
+coupled source are explicit.
