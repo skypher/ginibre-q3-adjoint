@@ -94246,3 +94246,1876 @@ middle coordinate in the left-inverse argument can therefore be
 chosen consistently across the entire direct sum. Its projection
 kills other pair images on their full complementary highest-vector
 spaces, rather than only on separately selected basis vectors.
+
+## Joint character moments as positive graphs in the classical stable ranges
+
+This section supplies several arbitrary higher characters simultaneously.
+It retains their partition labels and joint invariant multiplicities. Its
+consumer is the original Q3 signed cut sum, followed by Lemma 28A's full
+continuous character expansion. No replacement of distinct characters by
+a common one-dimensional Hermite degree is made.
+
+Write ell(lambda) for the number of nonzero rows of a partition, and
+ell(empty)=0. Row lengths and total box numbers are unrestricted throughout.
+For alphabets A,B put
+
+    K(A,B)=product_(a in A,b in B)(1-ab)^(-1)
+          =sum_mu s_mu(A)s_mu(B).
+
+A coefficient in a Schur basis, rather than a monomial coefficient, is
+understood in the formulas below. Products of Schur functions have
+nonnegative integral Littlewood--Richardson coefficients, including
+iterated products and the empty product.
+
+**Source audit.** The primary sources used here are R. C. King,
+[Stretched Newell--Littlewood coefficients](https://alco.centre-mersenne.org/item/10.5802/alco.186.pdf),
+equations (2), (22)--(26), and Fauser--Jarvis--King,
+[The Hopf Algebra Structure of the Character Rings of Classical Groups](https://arxiv.org/pdf/0704.2029),
+equations (119) and the modification discussion immediately following it.
+They give the universal orthogonal/symplectic character Cauchy identities,
+the Newell--Littlewood product rule, and finite-rank specialization. The
+even orthogonal boundary ell(lambda)=r needs modification and is excluded
+in the argument below. The connected-component Q3 supplier and the
+continuous consumers below are derived here.
+
+**Lemma 74A (universal joint-moment kernel).** Let u_lambda be the
+universal orthogonal or symplectic character basis. Define the *linear*
+functional L(u_lambda)=1 for lambda=empty and zero otherwise. Then, for
+any number N of independent alphabets A_i,
+
+    sum_(lambda_1,...,lambda_N)
+       L(product_i u_(lambda_i)) product_i s_(lambda_i)(A_i)
+      =product_(i<j) K(A_i,A_j).                         (P74.1)
+
+In particular, this is a Schur-positive series in every vertex alphabet.
+
+**Proof.**
+
+1. The character Cauchy identity has the form
+
+       Z(x;A)=sum_lambda u_lambda(x)s_lambda(A)
+             =K(x,A)/D(A),
+
+   where D(A)=product_(a<=b)(1-ab)^(-1) in the
+   orthogonal case, and D(A)=product_(a<b)(1-ab)^(-1)
+   in the symplectic case. The order on an alphabet
+   is immaterial to these symmetric series.
+
+2. Applying L to this identity gives
+   L(K(x,A))=D(A), since L(Z(x;A))=1.
+   For A equal to the disjoint union of all A_i,
+   multiply the Z identities *before* applying L:
+
+       L(product_i Z(x;A_i))=D(A)/product_i D(A_i).
+
+   Only linearity is used. L is not assumed
+   multiplicative, either here or subsequently.
+
+3. In either definition of D, its factors with both
+   entries in one A_i cancel. The remaining factors
+   are exactly product_(i<j) K(A_i,A_j). Comparing
+   independent Schur coefficients proves (P74.1).
+   Every coefficient calculation has finite degree
+   in the auxiliary alphabets. QED.
+
+For a tuple lambda=(lambda_1,...,lambda_N), put a partition mu_ij=mu_ji
+on every unordered pair of distinct vertices; an empty partition means
+that edge is absent. Define
+
+    w_lambda(mu)=product_i
+        [s_(lambda_i)] product_(j!=i) s_(mu_ij).          (P74.2)
+
+This is a nonnegative integer. Its nonzero terms are finite: at each
+vertex, sum_(j!=i)|mu_ij|=|lambda_i|. Expanding each Cauchy kernel in
+(P74.1) gives
+
+    M_*(I):=L(product_(i in I) u_(lambda_i))
+           =sum_mu w_lambda(mu).                        (P74.3)
+
+For a subset J, use the same formula on its induced vertex set.
+
+**Lemma 74B (two-block finite-rank specialization).** Consider type C_r
+with compact simply connected group USp(2r), type B_r with Spin(2r+1),
+or type D_r with Spin(2r), with simple Lie algebra (r>=3 in type D).
+Use integer partition highest weights, tensorial in the orthogonal cases,
+and put
+
+    kappa=r for B,C;     kappa=r-1 for D.
+
+Suppose the positions admit a partition I=A disjoint-union B such that
+
+    sum_(i in A) ell(lambda_i)<=kappa,
+    sum_(i in B) ell(lambda_i)<=kappa.                   (P74.4)
+
+The actual irreducible characters chi_(lambda_i) are real. For *every*
+subset J of the original positions their joint Haar moment is exactly
+M_*(J) in (P74.3).
+
+**Proof.**
+
+1. The Newell--Littlewood product coefficient is
+
+       N_(mu,nu)^gamma
+         =sum_(alpha,beta,delta)
+              c_(alpha,beta)^mu c_(alpha,delta)^nu
+              c_(beta,delta)^gamma.
+
+   A nonzero coefficient has
+   ell(gamma)<=ell(mu)+ell(nu): the two first
+   coefficients imply beta is contained in mu
+   and delta in nu, while the last bounds the
+   length of gamma by their summed lengths.
+   Thus every intermediate partition in a
+   product over J intersect A has length at most
+   sum_(i in J intersect A)ell(lambda_i)<=kappa.
+   The same holds for J intersect B.
+
+2. Specialize those two products separately to
+   the actual group. Every intermediate universal
+   character is its actual irreducible character:
+   its partition length is <=r in types B,C and
+   <r in type D. No modification or even-orthogonal
+   splitting occurs inside either block. The
+   product coefficients remain the universal ones.
+
+3. All these actual irreducibles are self-dual,
+   and distinct allowed partitions label distinct
+   irreducibles. In type D their last Euclidean
+   highest-weight coordinate is zero, so duality
+   also fixes them. Consequently Haar integration
+   of the product of the two block expansions
+   pairs their coefficients by delta_(mu,nu).
+
+4. The universal pairing is the same:
+   L(u_mu u_nu)=delta_(mu,nu), directly from the
+   Newell--Littlewood rule by setting gamma=empty.
+   Pairing the two universal block expansions
+   therefore gives exactly the actual moment
+   of the product over J. This proves the joint
+   identity for all subsets, using the *same*
+   original block partition. QED.
+
+**Theorem 74C (component-parity formula for the original Q3 integral).**
+For any actual tuple in Lemma 74B and arbitrary signs epsilon_i, let
+M be the set of minus positions. For mu in (P74.2), let Gamma_mu be
+the graph of its nonempty edges, including isolated vertices. Then
+
+    Phi_G(lambda;epsilon)
+      =sum_mu w_lambda(mu)
+          product_(C component of Gamma_mu)
+                (1+(-1)^(|C intersect M|))
+      =sum_(mu: every component has even minus count)
+             2^(number of components) w_lambda(mu)>=0. (P74.5)
+
+Here Phi_G is the original normalized product-Haar integral of
+product_i[chi_(lambda_i)(g)+epsilon_i chi_(lambda_i)(h)].
+
+**Proof.**
+
+1. Its actual expansion is
+
+       Phi_G=sum_(J subset I) epsilon_J M_G(J)M_G(I\J),
+       epsilon_J=product_(i in J)epsilon_i,
+
+   with the convention that J is the set of
+   positions assigned to h. Lemma 74B identifies
+   every moment in this *joint* expression with
+   its universal moment.
+
+2. For a fixed J, the two graph expansions glue
+   to graphs on I having no nonempty edge between
+   J and I\J. Their weights multiply to the full
+   w_lambda(mu): an empty edge inserts s_empty=1
+   at either endpoint. The correspondence is a
+   bijection, retaining every vertex LR coefficient.
+
+3. A fixed graph occurs precisely when J is a
+   union of its connected components. Summing
+   epsilon_J over those choices independently
+   gives product_C(1+product_(i in C)epsilon_i).
+   This is (P74.5). Each factor is zero or two.
+   Trivial-character vertices are isolated, and
+   hence give their required plus factor two or
+   minus factor zero. Odd total minus count also
+   gives zero. QED.
+
+**Theorem 74D (several infinite continuous higher-character cones).**
+Let G be any compact connected central quotient of the groups in
+Lemma 74B. At each position i let f_i be real continuous central
+positive-definite, and suppose its actual character support consists
+of descending partition modules with ell(lambda)<=b_i. Suppose
+there is a partition of the positions into A,B with
+
+    sum_(i in A)b_i<=kappa,   sum_(i in B)b_i<=kappa.    (P74.6)
+
+Then the original list satisfies Q3 for every sign pattern. Each
+f_i may have infinitely many distinct characters of arbitrarily
+large box number and first row. No function is restricted to a
+mixture of trivial and defining characters.
+
+**Proof.** Expand all functions by Lemma 28A. Every surviving atomic
+term satisfies (P74.4); apply Theorem 74C. The expansions and their
+products converge uniformly absolutely, bounded by product_i 2f_i(e).
+Their nonnegative atomic Haar integrals therefore sum to the original
+integral. Pullback to the simply connected cover preserves the
+characters and normalized Haar moments, so the same proof applies
+to every stated quotient with its *actual* descending support. QED.
+
+**Corollary 74E (one entire full-cone function and arbitrary higher
+backgrounds).** In any of these actual groups or central quotients,
+let f_0 be any real continuous central positive-definite function,
+with no support restriction. Let the remaining functions satisfy
+the partition support conditions of Theorem 74D, with
+
+    sum_(i>=1)b_i<=kappa.                               (P74.7)
+
+Then the whole original list satisfies Q3 for every sign pattern.
+
+**Proof.**
+
+1. In an atomic background tuple, every product
+   over any subset of the other positions has
+   the exact stable expansion, with partition
+   lengths <=kappa. This follows from Step 1 of
+   Lemma 74B inside a single block.
+
+2. If a nontrivial distinguished irreducible
+   constituent is outside this partition class,
+   it is never dual to a constituent of any of
+   those products. Every Haar moment containing
+   it is zero; so its entire Q3 cut sum is zero.
+   This includes the orthogonal spin tails and
+   type D weights with nonzero last coordinate.
+   The partition class is closed under duality,
+   so both constituents of an outside real atom
+   have this property.
+
+3. Every distinguished constituent inside the
+   class has length <=kappa. Take it as one
+   block and all other positions as the second.
+   Lemma 74B and Theorem 74C apply. This accounts
+   for the entire distinguished support, rather
+   than truncating it to a fixed finite set.
+
+4. Apply Lemma 28A's uniform absolute expansion
+   to all functions, including the unrestricted
+   f_0, and integrate. The original bound is
+   product_i 2f_i(e). QED.
+
+In type C this permits every distinguished irreducible, including
+partitions of length r. For SO(2r+1) it permits the entire central
+positive-definite cone at that position. On Spin groups the moment
+argument in Step 2 handles the remaining spin modules as well.
+In particular, the other positions may all be arbitrary continuous
+nonnegative mixtures of *every* one-row higher character, at up to
+r such positions in B,C and r-1 in D, whenever those atoms descend
+to the specified actual group.
+
+**Independent self-double-check before acceptance.**
+
+1. Re-derived the kernel by combining Cauchy
+   series before applying L. No multiplicative
+   property of the trivial-coefficient functional
+   enters. The two-block proof uses true Schur
+   orthogonality only after each individual block
+   has been specialized without modification.
+   Subsets inherit the original block bounds.
+
+2. Re-derived the signed gluing directly from
+   the original h-position expansion. Every graph
+   with no crossing edge occurs once for that
+   cut; the original coefficient is epsilon_J,
+   not a sign assigned separately to its edges.
+   Isolated vertices, all-plus patterns, and odd
+   total minus count have the correct factors.
+
+3. A separate exact Weyl-density audit used the
+   actual defining eigenweights and the row
+   character identities h_a in type C and
+   h_a-h_(a-2) in types B,D. For four row labels
+   (2),(3),(1),(2), it gave M_G(I)=3 and Phi=6
+   for the four displayed minus sets empty,
+   {0,1}, {0,2}, and all positions, in USp(4),
+   SO(5), and SO(6). Independently enumerating
+   graph edge multiplicities gave the same
+   values. The block bounds here are 2+2.
+
+4. For labels (1,1),(1,1),(2),(2), the Weyl
+   audit in USp(6) and SO(7) gave M_G(I)=4 and
+   Phi=10,10,6,10 for those same four minus
+   sets. The non-row character was wedge^2 V-1
+   in type C and wedge^2 V in type B. The graph
+   count consists of one compatible double-edge
+   matching and three unit-edge four-cycles.
+   Its LR weights and component factors reproduce
+   those values. Each block has row-count sum 3.
+
+5. Checked the unrestricted-slot zero assertion
+   against *every* original cut: precisely one
+   Haar factor contains the distinguished module,
+   and all other modules in that factor have the
+   claimed actual partition expansion. The
+   outside distinguished module has no pairing.
+   The full continuous expansion bound remains
+   the original Lemma 28A bound. Accepted.
+
+## Directed joint graphs and an unrestricted slot in type A
+
+This is the type A analogue of the preceding structural supplier.
+Its vertices retain both partition labels of a rational character;
+it does not identify irreducibles with the same total degree.
+
+**Primary character input.** In
+[Fauser--Jarvis--King](https://arxiv.org/pdf/0704.2029), equations
+(106)--(112) define the universal rational characters R_(alpha,beta)
+and their specialization to the GL(d) highest weight
+
+    (alpha_1,...,alpha_a,0,...,0,-beta_b,...,-beta_1).
+
+The product part of equation (115) gives their rule through skew
+Schur products. Only these character identities are used, not a
+multiplicative counit claim. Put
+
+    t(alpha,beta)=ell(alpha)+ell(beta).
+
+Specializations used below always have t<d, so a zero coordinate
+is present and the rational character is the actual irreducible
+with the displayed highest weight. On SU(d), the dual interchanges
+alpha and beta.
+
+**Lemma 75A (directed universal joint-moment kernel).** Define the
+linear functional L_A(R_(alpha,beta))=delta_(alpha,empty)
+delta_(beta,empty). For independent alphabets X_i,Y_i,
+
+    sum_(alpha_i,beta_i)
+       L_A(product_i R_(alpha_i,beta_i))
+          product_i s_(alpha_i)(X_i)s_(beta_i)(Y_i)
+       =product_(i!=j) K(X_i,Y_j).                      (P75.1)
+
+Equivalently put a partition mu_ij on each *directed* edge i->j,
+i!=j, and define
+
+    w_(alpha,beta)(mu)
+      =product_i ([s_(alpha_i)] product_(j!=i)s_(mu_ij))
+                 ([s_(beta_i)] product_(j!=i)s_(mu_ji)). (P75.2)
+
+All these weights are nonnegative integers, and the universal
+joint moment is their finite sum.
+
+**Proof.**
+
+1. The skew definition
+
+       R_(alpha,beta)(x,y)
+         =sum_zeta (-1)^|zeta|
+             s_(alpha/zeta)(x)s_(beta/zeta')(y)
+
+   and the Schur Cauchy identities give
+
+       Z(x,y;X,Y)=sum_(alpha,beta)
+           R_(alpha,beta)(x,y)s_alpha(X)s_beta(Y)
+         =K(x,X)K(y,Y)/K(X,Y).
+
+   Apply L_A once to obtain
+   L_A(K(x,X)K(y,Y))=K(X,Y).
+
+2. Multiply all the Z identities before applying
+   L_A. Union the X alphabets and, separately,
+   the Y alphabets. The result is
+
+       K(union_i X_i,union_i Y_i)/product_i K(X_i,Y_i),
+
+   which is exactly (P75.1). The internal-vertex
+   factors cancel, leaving only directed edges
+   between distinct vertices.
+
+3. Expand each remaining K in its Schur basis
+   and collect coefficients at each vertex.
+   This is (P75.2). Its degree equations are
+   sum_(j!=i)|mu_ij|=|alpha_i| and
+   sum_(j!=i)|mu_ji|=|beta_i|, so the sum is finite.
+   As in Lemma 74A, no multiplicativity of L_A
+   is used. QED.
+
+**Lemma 75B (actual SU(d) joint specialization).** For any tuple of
+rational labels with
+
+    sum_i t(alpha_i,beta_i)<d,                          (P75.3)
+
+every joint Haar moment on SU(d), including every subset of its
+positions, equals the universal moment in Lemma 75A.
+
+**Proof.**
+
+1. The rational product rule expands products by
+   contracting skew partitions between the two
+   vertices and taking LR products of what remains
+   separately in the positive and negative labels.
+   Hence every output has positive partition
+   length <= the summed input positive lengths,
+   and negative length <= the summed input negative
+   lengths. Iterating gives t(output)<=sum_i t_i.
+
+2. Under (P75.3), every intermediate and final
+   rational character specializes to a genuine
+   GL(d) irreducible with a zero coordinate in
+   its displayed highest weight. Restriction to
+   SU(d) is irreducible. Such a restriction is
+   trivial precisely when its GL(d) weight is
+   constant. The zero coordinate forces that
+   constant to be zero, and then both partitions
+   are empty. Thus actual Haar integration is
+   exactly the universal trivial coefficient.
+
+3. All subsets retain the strict bound. Possible
+   determinant equivalences between *nontrivial*
+   rational labels cause no problem: the argument
+   requires that no output other than the empty
+   label specialize to the trivial representation.
+   That is exactly what the zero-coordinate
+   argument proves, jointly for all moments. QED.
+
+**Theorem 75C (directed component-parity Q3).** For the actual tuple
+in Lemma 75B and any signs, the original signed product-Haar integral
+has the formula
+
+    Phi_SU(d)=sum_mu w_(alpha,beta)(mu)
+                 product_(C weak component of Gamma_mu)
+                    (1+(-1)^(|C intersect M|))>=0.       (P75.4)
+
+A weak component ignores the directions of the nonempty edges.
+This assertion even holds for oriented complex irreducible
+characters; the integral itself is real by the moment formula.
+Consequently it holds for actual real atoms as well.
+
+**Proof.** Use Lemma 75B in the original cut expansion. A cut's two
+directed graph sums glue exactly when there is no directed nonempty
+edge crossing the cut. Valid h-position sets are therefore the unions
+of weak components. Their signed sum factors exactly as in Theorem
+74C. All vertex LR weights survive unchanged. For a real atom
+chi+chi*, expand its two oriented constituents with positive
+coefficients; duality preserves t, so every oriented tuple retains
+(P75.3). A self-dual atom and a trivial atom require no pairing
+expansion. QED.
+
+**Theorem 75D (several infinite higher-character cones in type A).**
+Let G be any compact connected group isogenous to SU(d). Suppose
+f_i are real continuous central positive-definite, and every actual
+irreducible in their supports admits a descending rational label
+with t<=b_i. Assume
+
+    sum_i b_i<d.                                       (P75.5)
+
+Then their original Q3 integral is nonnegative for every sign pattern.
+The degrees, first rows, number of distinct supported irreducibles,
+and hence finite versus infinite support are unrestricted. Expand
+all actual real atoms, choose those labels and their duals, apply
+Theorem 75C, and use Lemma 28A's uniform absolute bound to sum the
+nonnegative integrals. Haar pullback preserves the statement for
+every actual central quotient. QED.
+
+**Corollary 75E (one entire full-cone function in type A).** Let f_0
+be any real continuous central positive-definite function on any
+such actual group G, with no support restriction. Suppose the
+remaining functions satisfy the rational support conditions of
+Theorem 75D and
+
+    2 sum_(i>=1)b_i<d.                                 (P75.6)
+
+Then the whole original list satisfies Q3 for every sign pattern.
+
+**Proof.**
+
+1. Fix an oriented atomic background tuple, with
+   s=sum_(i>=1)t_i<=sum_(i>=1)b_i. Every product
+   over any subset of its positions has the
+   genuine rational irreducible expansion, with
+   output t<=s, by Step 1 of Lemma 75B.
+
+2. Fix a nontrivial oriented constituent chi of
+   the distinguished real atom. If no background
+   subset product has its dual as a constituent,
+   every cut has zero moment on the Haar factor
+   containing chi. Its whole contribution is zero.
+
+3. Otherwise choose a rational label of that dual
+   occurring in one such actual product. It has
+   t<=s. Interchange its two partitions to label
+   chi. Choose this label *once for the entire
+   atomic tuple*, not separately at different
+   cuts. The full tuple now has total t<=2s<d,
+   so Theorem 75C supplies its original integral
+   for every sign pattern simultaneously.
+
+4. The trivial distinguished constituent uses
+   t=0 and the same theorem. Both orientations
+   of any paired atom are covered independently.
+   Sum all actual atomic terms by Lemma 28A,
+   retaining the bound product_i 2f_i(e), including
+   the unrestricted distinguished support. QED.
+
+This allows arbitrary continuous mixtures of every descending
+one-row character and its dual at all background positions, rather
+than just the defining real character. The full-cone distinguished
+slot can contain any actual representation of the quotient.
+
+**Corollary 75F (return to the original full isotypic consumer).**
+Every real-atom tuple supplied by Theorems 74C, 74D, 75C, 75D and
+Corollaries 74E, 75E satisfies the original weighted trace bound
+
+    ||X_epsilon||_HS^2+sum_(lambda!=0)c_lambda t_lambda>=0
+
+in Theorem 62D's original representation spaces. The factor relating
+this quantity to the original Haar integral is 2^N_original, with
+all original positions retained. The graph expansions change the
+scalar evaluation of that Haar integral; they do not replace the
+full isotypic projectors or discard their multiplicities.
+
+**Independent self-double-check before acceptance.**
+
+1. Re-derived (P75.1) from the signed skew-Schur
+   definition. Each retained edge uses a positive
+   Cauchy expansion. The transpose in the skew
+   definition cancels the internal vertex kernel;
+   it does not transpose the directed edge label
+   on its incoming endpoint in (P75.2).
+
+2. Rechecked the exact rank consumer. Summed
+   *row counts*, not summed box numbers, bound
+   every product output. Under a strict total
+   <d, no nonempty output becomes a determinant
+   character on SU(d). The proof neither assumes
+   that all finite-rank rational labels are
+   independent nor ignores determinant aliases.
+
+3. An independent exact SU(7) Weyl-density audit
+   used four row bipartitions (2;1),(1;2),(1;0),
+   (0;1). Their characters were computed from
+   h_a(x)h_b(x^-1)-h_(a-1)(x)h_(b-1)(x^-1).
+   It used the determinant Weyl density (all
+   7! terms), including the SU constant-shift
+   condition. The full Haar moment was 3, and
+   the signed integrals for minus sets empty,
+   {0,1}, {0,2}, and all positions were 8,8,4,8.
+   A separate directed integer-flow enumeration
+   gave exactly these moments and component sums.
+   The total row count is 6<7.
+
+4. Rechecked the full-cone slot without assuming
+   finite support. For each atomic background,
+   a distinguished constituent is either absent
+   from *every* required dual support and has
+   zero original contribution, or has a single
+   actual rational label with t<=s usable at
+   every cut. Its full tuple satisfies 2s<d.
+   This choice is independent of the signs.
+   All limits use the original Lemma 28A bound.
+   Accepted.
+
+**Finite-rank correction and the still-full consumer.** These are
+joint higher-character structural suppliers. They prove exact
+positive graph formulas throughout their stated ranges and entire
+continuous character cones with no box-degree cutoff. They also
+upgrade the one-full-cone-function suppliers to higher-character
+backgrounds. They do not prove the full objective for fixed groups
+at arbitrary tuple lengths.
+
+In type C, every actual irreducible is a partition character, even
+outside (P74.4). Thus for any original atomic tuple, define
+
+    Delta_G(J)=M_G(J)-M_*(J),
+
+where M_G(J) is its actual Haar moment and M_*(J) is (P74.3), with
+no stable-range assumption. Direct expansion gives the exact identity
+
+    Phi_G=Phi_*+E_G,
+    E_G=sum_(J subset I)epsilon_J
+           [Delta_G(J)M_*(I\J)+M_*(J)Delta_G(I\J)
+             +Delta_G(J)Delta_G(I\J)],                 (P75.7)
+
+where Phi_* is the nonnegative graph sum (P74.5). The precisely
+matched missing type C supplier is E_G>=-Phi_*, not nonnegativity
+of each moment defect or of E_G separately. It would close that
+full Lie-type branch through Lemma 28A and Corollary 75F.
+
+**Demand sheet for this correction consumer.**
+
+- Actual group/rank and descending labels: all type C original atom
+  tuples, used in (P75.7) and the actual character expansion.
+- Length and signs: every finite original tuple and every epsilon,
+  used in the whole cut sum, including every source multiplicity.
+- Identity versus bound: (P75.7) is an identity; its consumer needs
+  exactly E_G>=-Phi_* with coefficient one.
+- Averaging and spaces: actual Haar moments in that signed sum,
+  used to return to (P62.13); no pointwise or termwise defect bound.
+- Uniformity: no constant depending on rank, tuple, label or sign
+  is available in this inequality; Lemma 28A consumes its exact sign.
+
+The rank condition is substantive. A separate exact Weyl audit in
+USp(4) for four copies of lambda=(1,1) gave moments of powers zero
+through four equal to 1,0,1,0,3. The universal graph moment of its
+fourth power is 6. For all-plus or all-minus signs the original
+Q3 value is 12, whereas the graph value is 18; hence E_G=-6.
+This violates a termwise-nonnegative correction condition stronger
+than the stated consumer, but satisfies the actual needed budget
+E_G>=-Phi_*. It neither disproves the full objective nor kills
+(P75.7)'s matched weighted supplier. Type A determinant corrections,
+the remaining orthogonal sectors, and all exceptional Lie types
+also remain under the unchanged full original objective (P62.13).
+
+## Absorbing the first finite-rank symplectic relation by edge switching
+
+The graph supplier also absorbs the first genuine finite-rank defect.
+This is an original Q3 sign-budget argument, not a stable-rank replacement
+or a bounded certificate. All ranks r>=1 are included, as are arbitrary
+actual partition labels and signs in the displayed degree ranges.
+
+**Primary finite-rank input.** Bump--Gamburd,
+[On the averages of characteristic polynomials from classical groups](https://arxiv.org/pdf/math-ph/0502043),
+equation (87), with the finite-length condition made explicit in (90),
+gives the Haar integral of an ordinary Schur polynomial on USp(2r): it
+is one for an even-column partition of length <=2r, and zero otherwise.
+Their equation (92) gives the unrestricted even-column Schur sum.
+Together with the character Cauchy identity already audited in Section
+74, these provide the following exact kernel at the actual rank.
+
+**Lemma 76A (full finite-rank joint kernel in type C).** Put
+
+    D(A)=product_(a<b in A)(1-ab)^(-1)
+        =sum_(nu: every column even) s_nu(A),
+    H_r(A)=sum_(nu: every column even,ell(nu)<=2r)s_nu(A).
+
+Take N disjoint auxiliary alphabets A_i, each with r variables, and
+A_J equal to the union over J. Then the series of *all actual joint
+irreducible Haar moments* is
+
+    sum_(lambda_i:ell(lambda_i)<=r)
+        M_G(I) product_i s_(lambda_i)(A_i)
+       =H_r(A_I)/product_i D(A_i).                      (P76.1)
+
+Consequently the series of their original Q3 signed integrals is
+
+    sum_lambda Phi_G(lambda;epsilon) product_i s_(lambda_i)(A_i)
+      =[sum_(J subset I)epsilon_J H_r(A_J)H_r(A_(I\J))]
+         /product_i D(A_i).                             (P76.2)
+
+These identities have no total degree, tuple length, or stable-range
+restriction. They concern normalized Haar measure on USp(2r); pullback
+also gives every actual descending tuple on its central quotients.
+
+**Proof.** For each A_i the specialized character Cauchy identity is
+K(g,A_i)/D(A_i)=sum_lambda chi_lambda(g)s_lambda(A_i).
+There are only r auxiliary variables, so partitions longer than r
+vanish and every surviving coefficient is an actual irreducible.
+Multiplying these identities and integrating gives (P76.1): ordinary
+Cauchy expands K(g,A_I) in ordinary Schur functions, whose Haar
+averages are the stated finite-rank zero-or-one values. For a cut,
+apply (P76.1) separately to its g and h positions. Their denominators
+multiply to the same product_i D(A_i). Sum with the original
+coefficient epsilon_J to obtain (P76.2). Everything is a coefficientwise
+formal identity, so no infinite analytic interchange is required. QED.
+
+**Lemma 76B (the exact first degree defect).** Let b=2r+2. For any
+actual type C tuple of total box number d=sum_i|lambda_i|<b,
+M_G(I)=M_*(I). At d=b the exact defect is
+
+    M_G(I)-M_*(I)=
+       -1 if every lambda_i is a column (empty allowed),
+        0 otherwise.                                   (P76.3)
+
+**Proof.**
+
+1. Compare H_r(A) with D(A). Among even-column
+   partitions excluded by ell(nu)>2r, the unique
+   one of smallest degree is (1^b). All others
+   have degree at least b+2. Thus
+
+       H_r(A)-D(A)=-e_b(A)+terms of degree >=b+2.
+
+2. Divide by product_i D(A_i), which has constant
+   term one and no terms of negative degree.
+   Comparing (P76.1) to (P74.1), the first joint
+   defect is precisely -e_b(A_I), in degree b.
+
+3. Expand e_b over the disjoint alphabets:
+
+       e_b(A_I)=sum_(a_i>=0,sum a_i=b)product_i e_(a_i)(A_i).
+
+   Its Schur coefficient is one when all vertex
+   partitions are the corresponding columns,
+   and zero otherwise. Columns of height >r
+   vanish in their own alphabet, as required by
+   the actual representation range. QED.
+
+**Lemma 76C (parity repair of a degree graph).** Let a_i be positive
+integers with even total T and max_i a_i<=T/2. Let M be any even-size
+set of vertices. There exists a loopless multigraph of vertex degrees
+a_i in which every connected component has an even number of vertices
+in M. Equivalently, there exist integers k_ij=k_ji>=0, k_ii=0,
+with sum_(j!=i)k_ij=a_i and the stated component parity.
+
+**Proof.**
+
+1. First realize the degree sequence without
+   parity conditions. Repeatedly join two vertices
+   with the largest positive remaining degrees
+   and decrement both. A remaining total T'
+   stays even. If its maximum equals T'/2, choosing
+   a largest vertex reduces that maximum to
+   T'/2-1; any other vertex still equal to T'/2
+   must be the second chosen one. If its maximum
+   is smaller, all unchanged degrees were already
+   <=T'/2-1. Thus the condition max<=T'/2 persists
+   at the new total T'-2. The process ends with
+   zero degrees, producing a graph without loops.
+
+2. An odd-minus component contains an edge:
+   every original degree is positive. The number
+   of such components is even, since |M| is even.
+   Take two odd-minus components and choose one
+   edge in each, counting individual parallel
+   edges. Delete those two edges.
+
+3. If at least one deleted edge was not a bridge,
+   reconnect the four endpoints across the two
+   original components. The result merges the
+   two components into one connected component.
+   Its minus count is even. Vertex degrees are
+   unchanged and no loop is introduced.
+
+4. If both edges were bridges, each original
+   component splits into an odd-minus piece and
+   an even-minus piece. Reconnect the endpoints
+   so the two odd pieces are joined to each other,
+   and the two even pieces are joined to each
+   other. This gives two even-minus components,
+   with the same degrees and no loops.
+
+5. Other components are untouched. Either switch
+   removes exactly two odd-minus components and
+   introduces none. Repeat until there are no
+   odd-minus components. QED.
+
+**Theorem 76D (the whole first finite-rank degree boundary).** For
+every actual type C group of rank r, every tuple of its real atomic
+irreducible characters with
+
+    sum_i |lambda_i|<=2r+2,                             (P76.4)
+
+and every choice of signs, the original Q3 integral is nonnegative.
+In particular this includes the first degree where universal and
+actual joint moments need not agree.
+
+**Proof.**
+
+1. Remove trivial plus positions, retaining their
+   original factor two. A trivial minus position
+   makes the integral zero. We can therefore
+   assume all vertex partitions are nonempty.
+   Odd total minus count gives zero by swapping
+   the two Haar variables, at the actual rank.
+   Hence consider even total minus count.
+
+2. Below degree b=2r+2 all subset moments equal
+   the universal graph moments by Lemma 76B.
+   The original graph sign sum (P74.5) is then
+   the actual integral and is nonnegative,
+   independently of the two-block condition.
+
+3. At degree b, every proper subset has degree
+   <b. If at least one vertex partition is not
+   a column, the full moment also agrees by
+   (P76.3), so the same argument applies.
+
+4. Suppose all partitions are columns (1^a_i).
+   Their full moment defect is -1; every proper
+   nonempty cut moment has zero defect. In the
+   two endpoint cuts the other Haar moment is
+   one. Thus, at even total minus count,
+
+       Phi_G=Phi_*-2.                                  (P76.5)
+
+5. For column vertex labels, a nonzero edge LR
+   coefficient forces every edge partition to
+   be a column. Write its height as k_ij. Each
+   vertex coefficient is one exactly when the
+   edge heights sum to a_i. Thus the universal
+   graphs are precisely the degree multigraphs
+   of Lemma 76C, each of weight one.
+
+6. Here 1<=a_i<=r and sum_i a_i=2r+2, so
+   max_i a_i<half the total. Lemma 76C supplies
+   at least one graph with all component minus
+   counts even. Its contribution to Phi_* is
+   2^(number of components)>=2. All other graph
+   contributions are nonnegative. Therefore
+   Phi_*>=2, which absorbs the *entire* defect
+   in (P76.5) and gives Phi_G>=0. QED.
+
+The same result applies to continuous functions with actual supports
+|lambda|<=d_i and sum_i d_i<=2r+2, by nonnegative multilinear expansion.
+No fixed rank or fixed tuple-length certificate enters the theorem.
+
+**Corollary 76E (an unrestricted slot beyond the stable degree range).**
+Let G have type C_r and let f_0 be any real continuous central
+positive-definite function on G. Suppose the remaining real continuous
+central positive-definite functions have actual character supports
+|lambda|<=d_i and
+
+    sum_(i>=1)d_i<=r+1.                                 (P76.6)
+
+Then the original whole list satisfies Q3 for all signs. In particular,
+where the defining module is actual, this permits f_0 unrestricted
+and up to r+1 other functions in cone{1,chi_V}.
+
+**Proof.**
+
+1. Fix an actual atomic background tuple of total
+   box number D<=r+1. Every constituent nu of
+   any subset product has |nu|<=D. Indeed its
+   highest weight is dominated by the summed
+   input highest weights. The sum-of-Euclidean-
+   coordinates functional is zero on the simple
+   roots e_i-e_(i+1) and two on 2e_r. It is
+   therefore nonnegative on the positive root
+   cone and gives this box-number bound.
+
+2. A nontrivial distinguished atom with |lambda|>D
+   has zero moment against every background
+   subset product; every original cut contribution
+   is zero. Type C irreducibles are self-dual.
+   An atom with |lambda|<=D produces a full tuple
+   of total box number <=2D<=2r+2 and is supplied
+   by Theorem 76D. The trivial distinguished
+   atom is supplied as well.
+
+3. Expand the entire unrestricted f_0 and all
+   backgrounds by Lemma 28A. Its original
+   product_i 2f_i(e) bound permits integration
+   of the uniformly absolutely convergent sum
+   of nonnegative original atomic integrals.
+   Pullback preserves Haar measure for every
+   actual central quotient. QED.
+
+**Lemma 76F (the next exact defect, retaining the first syzygy).**
+Still put b=2r+2. The rank correction series is
+
+    H_r(A)/D(A)=1-e_b(A)+s_(2,1^b)(A)
+                    +terms of degree >=b+4.            (P76.7)
+
+Consequently, at total box degree b+2, the actual joint moment defect
+for arbitrary actual labels is the Schur coefficient of
+
+    s_(2,1^b)(A_I)
+       -e_b(A_I) sum_(i<j)s_(1)(A_i)s_(1)(A_j).         (P76.8)
+
+For a nontrivial column tuple (1^a_i) of that total degree, with N
+positions and a_i<=r, this specializes to
+
+    Delta_G(I)=-binomial(N-1,2).                        (P76.9)
+
+At even total minus count the *entire original cut correction* in
+(P75.7), not just its full moment defect, is
+
+    E_G=-2[binomial(N-1,2)
+                +sum_(i<j:a_i=a_j=1)epsilon_i epsilon_j]. (P76.10)
+
+No sign conclusion at this next degree is inferred solely from
+(P76.7)--(P76.10).
+
+**Proof.**
+
+1. The excluded even-column partitions of degree
+   b+2 are exactly (1^(b+2)) and (2,2,1^(b-2)).
+   Since the degree-two term of D is e_2,
+   division gives the degree-(b+2) correction
+
+       e_b e_2-e_(b+2)-s_(2,2,1^(b-2))
+          =s_(2,1^b)
+
+   by the exterior Pieri rule. There are no odd
+   degrees. This proves (P76.7). Multiply by
+   the universal joint graph kernel; its degree-
+   two term is sum_(i<j)s_1(A_i)s_1(A_j), giving
+   (P76.8).
+
+2. For nonempty column labels, use
+   s_(2,1^b)=e_(b+1)e_1-e_(b+2). Its coefficient
+   is N-1: each of the N vertex choices for
+   e_1 gives coefficient one, and the subtracted
+   column gives one. Each of the binomial(N,2)
+   edge choices in the negative term of (P76.8)
+   also gives coefficient one. Their difference
+   is -binomial(N-1,2), proving (P76.9).
+
+3. In a proper cut a nonzero defect requires a
+   subset of degree b; its defect is -1. The
+   remaining total degree is two. Its Haar moment
+   is zero for one nontrivial degree-two atom,
+   and one for two degree-one defining atoms.
+   All other proper cut corrections vanish.
+   Two subsets cannot both reach degree b,
+   since b+2<2b for r>=1.
+
+4. The two endpoint corrections give twice
+   (P76.9). Every complementary defining pair
+   contributes -epsilon_i epsilon_j in either
+   orientation of the cut: total sign product
+   is one at even minus count. Summing gives
+   (P76.10), with every cut retained. QED.
+
+**Independent self-double-check before acceptance.**
+
+1. Re-derived the full finite-rank kernel using
+   exactly r variables at each vertex. This
+   removes virtual longer vertex characters
+   before extraction; the union alphabet still
+   retains every finite-rank relation. The
+   ordinary Schur average uses column parity
+   and length <=2r, with no stable restriction.
+
+2. Checked the first-defect degree and endpoint
+   cuts directly. After removing trivial vertices,
+   every proper subset has strictly smaller box
+   degree. The correction is -(1+epsilon_I),
+   hence -2 precisely in the even-minus sector.
+   The graph repair covers that full scalar
+   budget, not a termwise defect positivity claim.
+
+3. Independently checked both possible bridge
+   cases in the parity switch. With two bridges,
+   odd pieces join to odd pieces and even to
+   even; with a nonbridge the two entire odd
+   components merge. Degrees stay fixed, no
+   loop occurs, and the odd-component count
+   decreases by two. The initial greedy degree
+   construction preserves max<=half-total at
+   each decrement. No ordering or planarity
+   condition is imposed on the degree graphs.
+
+4. An exact USp(4) Weyl-density audit at the
+   first defect degree six gave:
+
+       column heights   M_* / M_G   Phi_* / Phi_G
+       (2,2,2)             1 / 0       2 / 0
+       (2,2,1,1)           3 / 2       8 / 6, 4 / 2
+       (1,1,1,1,1,1)      15 / 14    120 / 118, 24 / 22.
+
+   The displayed signs used empty, {0,1}, and
+   {0,2} minus sets. Separate degree-graph
+   enumeration reproduced the universal values;
+   actual moments came from the group eigenweights
+   and Weyl density. All defects and the tight
+   zero case agree with (P76.3)--(P76.5).
+
+5. Rechecked the next-degree kernel by exterior
+   Pieri, then by its original full cut expansion.
+   For four height-two columns in USp(4), (P76.9)
+   gives -3 and (P76.10) gives -6, agreeing with
+   the earlier actual 12 versus graph 18 check.
+   For eight defining columns in that same group,
+   the exact degree-eight Haar moment is 84
+   versus universal 105. For q=0,2,4 minus signs,
+   graph/actual Q3 values are 1680/1582, 240/190,
+   and 144/110. Their differences -98,-50,-34
+   agree with the *whole-cut* formula (P76.10).
+   These checks audit the identities; the
+   unbounded proofs above supply their ranges.
+
+6. Rechecked Corollary 76E's unbounded tail by
+   actual highest-weight dominance and the
+   nonnegative box functional, rather than by
+   a stable branching assumption at D=r+1.
+   Every outside distinguished atom has zero
+   original contribution; every inside atom
+   reaches (P76.4). The original continuous
+   convergence bound is unchanged. Accepted.
+
+**Consumer receipt.** Theorem 76D absorbs the complete first actual
+finite-rank correction and Corollary 76E consumes it with an entire
+unrestricted continuous-cone slot. Their original scalar signs return
+to Theorem 62D's full weighted trace inequality, exactly as in Corollary
+75F. Lemma 76A provides a full-rank joint kernel for the whole type C
+character cone; Lemma 76F retains the next relation and its compensating
+syzygy in the same original cut sum. Higher-degree correction budgets
+in (P75.7), arbitrary long tuples at each fixed group, and the other
+unsupplied Lie-type sectors remain under the full original objective.
+
+## Hook shape separation and a uniform tree budget for the next rank correction
+
+The next-degree kernel in Lemma 76F separates into only three nonzero
+shape classes. The one-hook and two-hook classes have structural sign
+budgets supplied below, for all ranks and all original sign patterns.
+The remaining next-degree consumer is the pure-column class; no
+termwise positivity of its moment defects is assumed.
+
+Put b=2r+2 and consider an actual type C tuple of total box degree b+2.
+Remove trivial positions first, with their original factors two or zero.
+For a>=1 write C_a=(1^a); for a>=2 write H_a=(2,1^(a-2)). The latter
+is the only hook shape used here. All actual vertex partitions have
+length <=r; thus a<=r for a column and a<=r+1 for such a hook.
+
+**Lemma 77A (complete next-degree shape separation).** Suppose all N
+vertex partitions are nonempty. At total degree b+2, the full moment
+defect from Lemma 76F is
+
+    Delta_G(I)=
+      -binomial(N-1,2)  if all labels are columns;
+      -(N-2)           if exactly one is H_a and the rest columns;
+      -1               if exactly two are H_a and the rest columns;
+       0               in every other shape case.       (P77.1)
+
+At even total minus count, every tuple containing a non-column label
+has whole-cut correction
+
+    E_G=2 Delta_G(I).                                   (P77.2)
+
+In particular all proper cut corrections vanish *after multiplication
+by the other cut moment*, not necessarily as individual moment defects.
+
+**Proof.**
+
+1. In (P76.8), use
+   s_(2,1^b)=e_(b+1)e_1-e_(b+2).
+   The second term contributes only to column
+   vertex labels. Multiplying a column by one
+   s_1 at a vertex can give only a column or
+   the stated H_a. Thus the positive hook term
+   has coefficient N-1 for all columns, one for
+   a single hook, and zero for two or more hooks
+   or any other non-column shape.
+
+2. The negative term is e_b times one s_1 at
+   each endpoint of an edge. Its coefficient is
+   binomial(N,2) for all columns, N-1 with one
+   specified hook, one with two specified hooks,
+   and zero in every other shape case. Each
+   allowed exterior Pieri coefficient is one.
+   Subtract to obtain (P77.1).
+
+3. A proper cut defect can first occur at degree
+   b, with all labels in that cut columns. Its
+   complement has degree two. The complementary
+   Haar moment is nonzero only for two degree-one
+   columns, when it is one; a single nontrivial
+   degree-two character has mean zero. If the
+   original tuple has a non-column label, the
+   former case leaves that label inside the
+   degree-b cut and hence its defect is zero.
+
+4. Two complementary nonzero defects are
+   impossible because b+2<2b. Hence only the
+   endpoint cuts survive. They have combined
+   sign 1+epsilon_I=2 in the even-minus sector,
+   giving (P77.2). QED.
+
+**Lemma 77B (hook weights on column-edge graphs).** At a column vertex
+C_a, a product of incident edge characters has nonzero LR coefficient
+only when every edge partition is a column. Its coefficient is one
+when their heights sum to a. If all incident edge partitions are
+columns at a hook vertex H_a, their coefficient is
+
+    number of distinct incident neighbors - 1,          (P77.3)
+
+provided their heights sum to a.
+
+**Proof.** A contributing edge partition must be contained in its
+vertex partition, so a column vertex forces column edges. For the
+column output the exterior Pieri rule gives coefficient one. For the
+hook output, transpose all partitions under the Hall isometry omega.
+The target becomes (a-1,1), with
+
+    s_(a-1,1)=h_(a-1)h_1-h_a.
+
+The edge factors become h_(k_1)...h_(k_s), where k_j>0 count the
+nonempty incident edges. Hall duality between h and monomial symmetric
+functions shows that their pairing with this Schur function is the
+coefficient of x_1^(k_1)...x_s^(k_s). The h_(a-1)h_1 term has coefficient
+s, and h_a has coefficient one. Their difference is s-1. These are the
+standard Hall identities in Fauser--Jarvis--King equation (9), used here
+only to derive this local LR multiplicity. QED.
+
+Let a_i>0 be a loopless degree sequence with total 2E, and let Gamma
+range over its loopless multigraphs. Denote the number of distinct
+neighbors of a vertex h by s_h(Gamma). For an even-size minus set M put
+
+    B_h(a;M)=sum_Gamma (s_h(Gamma)-1)
+        product_(C component of Gamma)(1+(-1)^(|C intersect M|)).
+                                                               (P77.4)
+
+A degree-positive vertex has s_h>=1, so every summand is nonnegative.
+
+**Lemma 77C (uniform one-hook tree budget).** For every N>=3, every
+positive integer sequence a with sum a_i=2E and max_i a_i<=E-1,
+every marked vertex h with a_h>=2, and every even-size M,
+
+    B_h(a;M)>=2(N-2).                                   (P77.5)
+
+The bound does not depend on the rank or on the individual degrees.
+
+**Proof.**
+
+1. First suppose E>=N-1, and put R=E-N+1.
+   We will build connected graphs by adding
+   one fixed residual graph to many trees.
+   Set caps
+
+       q_h=a_h-2,  q_i=a_i-1 for i!=h.
+
+   They are nonnegative, have sum 2R+N-3,
+   and each is at most E-2=R+N-3. If R>0,
+   sum_i min(q_i,R)>=2R. Indeed if at least
+   two caps reach R the assertion is immediate;
+   if precisely one cap exceeds R, all other
+   caps sum to at least R by the displayed
+   total and maximum; if none exceeds R the
+   original total is at least 2R. For R=0
+   choose zero residual degrees directly.
+
+2. Choose integers 0<=d_i<=min(q_i,R) with
+   sum d_i=2R. Their maximum is <=R, so the
+   greedy degree construction in Lemma 76C
+   supplies a fixed loopless multigraph K
+   with those degrees; for R=0 take it empty.
+   The remaining degrees c_i=a_i-d_i obey
+
+       c_i>=1, c_h>=2, sum_i c_i=2N-2.
+
+   They are therefore the degree sequence of
+   labelled trees. Put m=N-2 and v_i=c_i-1.
+   Pruefer coding gives exactly
+
+       m!/product_i v_i!
+
+   such trees: the code has length m and
+   contains vertex i exactly v_i times.
+
+3. Add K to each of these trees. The resulting
+   degree-a multigraphs are distinct, because
+   subtraction of the fixed edge multiplicities
+   of K recovers the tree. Every result is
+   connected and has s_h>=c_h. Its component
+   factor is two, since |M| is even. Hence
+
+       B_h>=2 v_h m!/product_i v_i!
+           =2m (m-1)!/
+                   [(v_h-1)! product_(i!=h)v_i!]
+           >=2m.
+
+   The last factor is a nonzero multinomial
+   integer. This proves the dense case.
+
+4. Now suppose E<=N-2 and put c=N-E>=2.
+   There are at least 2c degree-one vertices:
+   if their number is L, positivity gives
+   2E>=L+2(N-L), hence L>=2c. At least two
+   such leaves have the same minus status.
+   They can be reserved as a separate edge
+   component, with parity factor two, without
+   changing the marked vertex h.
+
+5. If c=2 and N>=6, delete a same-sign leaf
+   pair. The remaining N'=N-2 vertices have
+   total degree 2(N'-1) and marked degree >=2.
+   Apply the tree count directly, without any
+   residual graph and without a strict maximum
+   assumption on that remaining sequence.
+   Adding the reserved pair supplies
+
+       B_h>=4(N-4)>=2(N-2).
+
+   The only smaller possible case is N=5,
+   E=3: the marked degree is two and the four
+   others are leaves. At least two pairs among
+   these four leaves have the same status.
+   Taking each such pair as the separate edge
+   leaves a marked two-leaf star. These distinct
+   graphs each have hook weight one and two
+   even-minus components, hence contribute four.
+   Thus B_h>=8>=6 in this case too.
+
+6. If c>=3, positivity also gives
+
+       max_i a_i<=2E-(N-1)=E-c+1<=E-2.
+
+   After deleting a same-sign leaf pair, the
+   remaining sequence satisfies the strict
+   hypothesis for E'=E-1 and N'=N-2. Apply
+   induction on N to (P77.5). Adding the pair
+   multiplies its component factor by two,
+   preserves its hook weight, and gives
+
+       B_h>=4(N-4)>=2(N-2).
+
+   Here N>=2c+1>=7, since a_h>=2. Every
+   component minus count remains even after
+   deleting the pair. This completes the
+   sparse induction and the proof. QED.
+
+**Lemma 77D (parity repair preserving two hook weights).** For a
+positive degree sequence a with sum a_i=2E and max_i a_i<=E-1,
+mark at most two vertices, each of degree >=2. There is a degree-a
+loopless graph with at least two distinct neighbors at every marked
+vertex and even minus count in every component, for any even-size M.
+
+**Proof.**
+
+1. Start from a loopless degree graph using the
+   greedy construction of Lemma 76C. If a marked
+   vertex h has only one neighbor j, their edge
+   multiplicity is at least two. There must be
+   an edge k-l with both endpoints outside h,j.
+   Otherwise all edges would be incident with
+   j, forcing a_j=E, contrary to the hypothesis.
+
+2. Remove one unit of h-j and one unit of k-l,
+   and replace them by h-k and j-l. Vertex h
+   keeps its old neighbor and acquires a second.
+   If the other marked vertex has already been
+   protected, orient k,l to put it at k whenever
+   it is an endpoint of their edge. It then
+   acquires a new neighbor h as it loses at
+   most one old neighbor. If that protected
+   vertex is j, the remaining h-j edge prevents
+   loss of its old neighbor. Otherwise it is
+   untouched. Thus the second marked condition
+   can be imposed without undoing the first.
+
+3. Repair odd-minus components by Lemma 76C,
+   switching individual edge units across
+   distinct components. At each endpoint, a
+   removed unit can delete at most one neighbor,
+   while the new edge joins to a previously
+   nonadjacent vertex in the other component.
+   Its number of distinct neighbors never
+   decreases. The marked weights therefore
+   remain positive throughout parity repair.
+   Degrees and looplessness are preserved. QED.
+
+**Theorem 77E (complete non-column supplier at the second defect degree).**
+For every actual type C group of rank r, every real atomic character
+tuple with
+
+    sum_i |lambda_i|=2r+4
+    and at least one non-column vertex partition,       (P77.6)
+
+and every sign pattern, the original Q3 integral is nonnegative.
+
+**Proof.**
+
+1. Trivial positions are removed with their
+   original factors. If any were removed, the
+   non-column requirement still refers to a
+   surviving nontrivial position. Odd total
+   minus count gives zero, so suppose it even.
+
+2. If the shape class has no defect in (P77.1),
+   (P77.2) gives Phi_G=Phi_*>=0. This includes
+   any non-column shape other than H_a, and
+   tuples with three or more H_a vertices.
+
+3. With one H_a and all other labels columns,
+   every contributing edge partition is a
+   column, since it has a column endpoint.
+   Lemma 77B identifies the full universal
+   graph integral with B_h(a;M), where a_i
+   are the vertex box sizes. Their sum is
+   2E=2r+4. Hook length <=r implies a_h<=r+1;
+   the other sizes are <=r. Thus max a_i<=E-1
+   and a_h>=2. Lemma 77C gives Phi_*>=2(N-2).
+   This absorbs E_G=-2(N-2) from (P77.1)--(P77.2).
+
+4. With two H_a vertices, retain just the
+   universal graphs whose edges are columns.
+   Their weights are
+   (s_(h_1)-1)(s_(h_2)-1), by Lemma 77B.
+   The same degree maximum <=E-1 holds.
+   Lemma 77D gives one graph with weight >=1
+   and all component minus counts even. Its
+   contribution is at least two. All other
+   graph contributions are nonnegative. This
+   absorbs the entire E_G=-2. QED.
+
+Together with Theorem 76D, the same original sign conclusion holds
+at every total box degree <=2r+4 for tuples having at least one
+non-column label. The intermediate odd degree 2r+3 is zero: (P76.1)
+has only even total degrees in every joint moment, so one Haar
+factor in every original cut has zero moment at odd total degree.
+
+**Corollary 77F (one unrestricted slot and a higher background budget).**
+Let f_0 be any real continuous central positive-definite function on
+an actual type C_r group, with no support restriction. Suppose the
+other functions have actual supports |lambda|<=d_i, with
+
+    sum_(i>=1)d_i<=r+2,                                 (P77.7)
+
+and at least one background function is supported entirely on
+non-column irreducibles. Then the whole original list satisfies
+Q3 for all signs. Central quotients use their actual descending atoms.
+
+**Proof.** Fix an atomic background of box number D<=r+2. It contains
+at least one non-column atom. As in Corollary 76E, every background
+subset product has constituent box number <=D by actual dominance.
+A distinguished atom outside this bound has zero original contribution.
+Every inside atom gives total degree <=2D<=2r+4 and still has the
+non-column background position, so Theorems 76D and 77E, with the
+odd-degree zero argument, supply it. Lemma 28A's original uniform
+absolute bound integrates the full distinguished expansion. QED.
+
+**Independent self-double-check before acceptance.**
+
+1. Re-derived the shape separation from the
+   two endpoint Pieri insertions, keeping all
+   complementary cut moments. Proper degree-b
+   defects can exist, but their other moment
+   vanishes unless the removed positions are
+   two defining columns; in that case a retained
+   non-column makes the defect itself zero.
+   Thus (P77.2) is a whole-cut assertion.
+
+2. Checked the dense construction independently.
+   The cap total is 2R+N-3, its maximum at most
+   R+N-3, and truncation at R has capacity >=2R.
+   Residual degrees may be zero. The tree
+   degrees remain positive, their sum is
+   2N-2, and the marked degree is >=2. A fixed
+   residual graph preserves injectivity on
+   all degree-prescribed trees and cannot
+   reduce the marked number of neighbors.
+   The weighted Pruefer count is at least
+   N-2 by an exact multinomial identity.
+
+3. Checked the sparse induction's rank-independent
+   degree inequality and its base. Removing
+   two same-status leaves preserves even minus
+   count. At c>=3 the remaining maximum is
+   strictly below E'=E-1. At c=2 the remaining
+   graph is a tree, so no maximum hypothesis
+   is needed. The only exceptional small case
+   has four leaves and at least two admissible
+   separate leaf pairs, giving the required
+   bound directly.
+
+4. In the two-marked construction, both choices
+   of an already protected marked endpoint
+   retain two neighbors. Subsequent parity
+   switches use different components, so every
+   newly added neighbor is new. Local hook
+   weights stay positive, not just the graph's
+   unweighted degree sequence.
+
+5. An independent exact USp(4) Weyl-density
+   audit at total degree eight used chi_H2=
+   chi_V^2-chi_C2-1, chi_H3=(chi_C2-1)chi_V,
+   and chi_(2,2)=chi_C2^2+chi_C2-chi_V^2.
+   A separate graph computation used the exact
+   two-row GL Littlewood--Richardson rule at
+   every vertex, including non-column edges.
+   It gave the following graph/actual moments
+   and graph/actual Q3 values:
+
+       labels                   M_* / M_G   Phi_* / Phi_G
+       H2,C2,C2,C1,C1              8 / 5     20/14,16/10,16/10
+       H3,C2,C1,C1,C1              9 / 6     24/18,24/18,16/10
+       H2,H2,C2,C2                 4 / 3     10/8,10/8,6/4
+       H3,H2,C2,C1                 4 / 3     8/6,8/6,8/6
+       H2,H2,H2,C2                 3 / 3     6/6,6/6,6/6
+       (2,2),C2,C1,C1              1 / 1     2/2,2/2,2/2.
+
+   The three displayed sign choices are empty,
+   {0,1}, and {0,2} minus sets. All full-moment
+   and whole-cut defects agree with (P77.1)
+   and (P77.2). The tree and parity arguments,
+   rather than this bounded audit, supply
+   arbitrary rank, degree and tuple length.
+
+6. Replayed Corollary 77F with the actual
+   dominance box functional before expanding
+   the unrestricted slot. Its label choice
+   and outside-tail zero argument do not use
+   a stable branching assumption at D=r+2.
+   Every contributing inside tuple reaches
+   a proved original integral, and the
+   original Lemma 28A bound applies. Accepted.
+
+**Matched next consumer.** At total degree 2r+4 the only remaining
+shape family is the nontrivial all-column tuple C_(a_i), with
+1<=a_i<=r and sum_i a_i=2r+4. For even-size minus set M its required
+original scalar budget is exactly
+
+    sum_(degree-a graphs Gamma)
+      product_(C component of Gamma)(1+(-1)^(|C intersect M|))
+       >=2[binomial(N-1,2)
+            +sum_(i<j:a_i=a_j=1)epsilon_i epsilon_j].    (P77.8)
+
+This is (P76.10)'s *whole cut* correction and the same original
+integral, not a termwise nonnegativity condition.
+
+**Demand sheet for (P77.8).**
+
+- Parameters and labels: every actual r and the displayed a_i,
+  used by the exact next-degree defect (P76.9)--(P76.10).
+- Tuple and sign ranges: every finite N in this degree range and
+  every even-size M, used by the original Q3 expansion; odd M is zero.
+- Bound and constant: precisely the displayed right side with
+  coefficient two, used to absorb E_G in (P75.7).
+- Averaging/space: the entire graph component sign sum, with every
+  original cut and every LR weight; no sign-free graph-count bound
+  alone supplies this consumer.
+- Uniformity/order: r, labels and signs are fixed before constructing
+  any graph family; the inequality has no slack constant to choose.
+
+Theorem 77E removes all non-column cases from this next-degree
+consumer, and Corollary 77F consumes it with an unrestricted function
+slot when a non-column background is present. The original full trace
+consumer (P62.13) is supplied for all these tuples. Higher finite-rank
+correction degrees, (P77.8)'s column family, arbitrary long fixed-group
+tuples, and the other unsupplied Lie types remain under the unchanged
+full central positive-definite-cone objective.
+
+## The full column budget at the second symplectic defect degree
+
+The remaining consumer (P77.8) has a structural supplier. It combines
+connected tree families, isolated same-status leaf pairs, and a
+weighted double count. Both the original full-moment defect and its
+complementary defining-pair corrections are paid, for all ranks,
+column labels, tuple lengths in this degree, and sign patterns.
+
+Write E=r+2, so the degree is 2E=2r+4. After removing trivial positions,
+let a_i>0 be column heights, with max_i a_i<=E-2. Put
+
+    L=number of degree-one vertices,
+    u=N-L,
+    U=sum_(i:a_i=1)epsilon_i,
+    P=number of same-status pairs of degree-one vertices,
+    R_N=binomial(N-1,2)+(U^2-L)/2
+       =binomial(N-1,2)-binomial(L,2)+2P.                (P78.1)
+
+The leaf status is its original plus/minus sign, not the parity of its
+box number. Let Psi(a;epsilon) be the universal component-parity graph
+sum on the left of (P77.8). The required original budget is Psi>=2R_N.
+Throughout the proof total minus count is even.
+
+**Lemma 78A (same-status pair extension and its weight).** Suppose a
+set of L leaves has L>=2t+2, t>=1. Every same-status leaf pair extends
+to a matching of t disjoint same-status pairs. Hence the number F_t
+of such matchings satisfies
+
+    t F_t>=P.                                          (P78.2)
+
+If a graph reserves such pairs as isolated edge components, each
+contributes an original component factor two. Removing them leaves
+even total minus count.
+
+**Proof.** The number of pairs available within the two status sets
+is floor(L_plus/2)+floor(L_minus/2)>=(L-2)/2>=t. Reserving one
+same-status pair decreases this capacity by exactly one. Complete it
+to t pairs within the status sets. Counting matching/pair incidences
+gives t F_t>=P, since every such pair occurs in at least one matching.
+Each pair contains zero or two minus positions, proving the factor
+and parity assertions. QED.
+
+We also use the elementary bounds
+
+    2^(t+1)/t>=4,  2^(t+2)/t>=8   for t>=1,
+    P>=L/2                         for L>=4.            (P78.3)
+
+The first two follow from 2^(t-1)>=t by induction starting at t=1,2.
+The last follows from P=(L_plus^2+L_minus^2-L)/2>=L(L-2)/4.
+
+**Lemma 78B (the column budget with at most two nonleaves).** For
+u<=2 and N>=7, Psi(a;epsilon)>=2R_N.
+
+**Proof.**
+
+1. If u=0, every graph is a perfect matching.
+   N=2E is even and E>=4. Since total minus
+   count is even, both status sets have even
+   size. Every same-status pair extends to
+   a full same-status perfect matching. If F
+   is their number, EF>=P. Each matching has
+   component factor 2^E, so
+
+       Psi=2^E F>=(2^E/E)P>=4P.
+
+   Here R_N=2P-(N-1), and this pays the budget.
+
+2. If u=1, let alpha>=2 be the nonleaf degree
+   and put c=N-E. The maximum degree condition
+   implies c>=3. Every graph consists of the
+   nonleaf star and t=c-1 isolated leaf pairs,
+   with L=alpha+2t>=2t+2. Retain all same-status
+   pair matchings. Their stars automatically
+   have even minus count because the original
+   total does. Lemma 78A gives
+
+       Psi>=2^(t+1) F_t>=4P=2R_N.
+
+   The last equality uses L=N-1.
+
+3. Suppose u=2, with nonleaf degrees alpha,beta
+   and L=N-2. Then R_N=L+2P. First take the
+   dense case E>=N-1 and set rho=E-N+1>=0.
+   Define
+
+       p=alpha-rho-1,  q=beta-rho-1.
+
+   They obey p+q=L and 2<=p,q<=L-2, by the
+   maximum degree condition. Graphs without
+   leaf pairs join the hubs by rho+1 parallel
+   edges and attach p leaves to the first hub,
+   q to the second. All are connected and
+   their contribution is 2 binomial(L,p).
+
+4. Graphs with exactly one same-status leaf
+   pair instead join the hubs by rho+2 edges,
+   and attach p-1 and q-1 remaining leaves.
+   Their contribution is
+   4P binomial(L-2,p-1). These graph families
+   are disjoint. Thus
+
+       Psi>=2 binomial(L,p)
+               +4P binomial(L-2,p-1)
+            >=2L+4P=2R_N.
+
+5. For u=2 in the sparse case c=N-E>=2,
+   set t=c-1. Retain graphs with t same-status
+   isolated leaf pairs and one edge between
+   the two hubs. Their remaining leaf counts
+   at the hubs are alpha-1,beta-1, both >=1.
+   Here L=alpha+beta+2t-2>=2t+2. For each
+   matching there are
+   binomial(alpha+beta-2,alpha-1)>=2 attachments.
+   The hub component has even minus count,
+   and the pair components do too. Therefore
+
+       Psi>=2^(t+2) F_t>=8P
+            >=2L+4P=2R_N,
+
+   using Lemma 78A and (P78.3). QED.
+
+**Lemma 78C (three protected tree degrees in the dense case).** Suppose
+N>=7, u>=3 and E>=N-1. There is a fixed residual loopless graph K and
+a positive tree degree sequence c_i such that
+
+    c_i+degree_K(i)=a_i,
+    sum_i c_i=2N-2,
+    at least three c_i are >=2.                         (P78.4)
+
+The degree-prescribed tree family has at least (N-2)(N-3) members.
+
+**Proof.**
+
+1. Select the three largest degrees; they are
+   all >=2. Put rho=E-N+1>=0, and set caps
+   q_i=a_i-2 for these three positions,
+   q_i=a_i-1 at all other positions. The
+   cap sum is 2rho+N-5. Selected caps are
+   <=E-4=rho+N-5.
+
+2. For rho>0, their truncated capacity
+   sum_i min(q_i,rho) is >=2rho. If two
+   caps reach rho, this is immediate. If
+   none exceeds rho, it follows from their
+   sum. Otherwise suppose just one cap
+   exceeds rho and no second cap reaches it.
+   That cap must be selected: an unselected
+   a_i-1>rho would force all three selected
+   a_j-2>=rho. Its maximum is therefore
+   rho+N-5, and all remaining caps sum to
+   at least rho. Capping the single large
+   one still leaves capacity >=2rho.
+
+3. Choose residual degrees d_i<=min(q_i,rho)
+   of sum 2rho. Their maximum is <=rho, so
+   the greedy degree construction supplies K.
+   For rho=0 take K empty. Set c_i=a_i-d_i.
+   This gives (P78.4), retaining degree >=2
+   at the three selected positions.
+
+4. Put m=N-2 and v_i=c_i-1. The number of
+   degree-prescribed trees is m!/product_i v_i!.
+   There are at least three positive v_i,
+   of total m. The smallest such multinomial
+   is m(m-1), attained only at the pattern
+   (m-2,1,1), up to position. To see this,
+   merge extra positive categories first,
+   which only decreases the multinomial;
+   with three positive categories, transfer
+   units toward the largest until the two
+   others are one. Factorials show each
+   transfer only increases their denominator.
+   This proves the asserted count and its
+   equality case. QED.
+
+**Theorem 78D (complete original column correction budget).** For every
+r>=1, every positive column-height tuple a_i<=r of total 2r+4, and
+every even-size minus set, the exact consumer (P77.8) holds:
+
+    Psi(a;epsilon)>=2R_N.                               (P78.5)
+
+**Proof.**
+
+1. Induct on N. For N<=6 use the already proved
+   whole-input Theorem 48A on the actual group
+   USp(2r) and these actual column characters.
+   The exact original identity (P76.10) is
+   Phi_G=Psi-2R_N. Thus Theorem 48A supplies
+   (P78.5) at the induction base, retaining
+   every original cut and sign. No bounded
+   sign or label computation supplies this base.
+
+2. For N>=7 and u<=2, apply Lemma 78B. It
+   remains to treat u>=3. First suppose
+   E>=N-1. Apply Lemma 78C. Adding its fixed
+   K to every degree-prescribed tree gives
+   distinct connected degree-a graphs, each
+   with component factor two. Write m=N-2
+   and T for the number of these trees.
+   We have Psi>=2T and T>=m(m-1).
+
+3. If u>=4 then L<=m-2, so
+
+       R_N<=binomial(m+1,2)+binomial(m-2,2)
+            =m^2-2m+3<=m(m-1)<=T.
+
+   This gives the required budget. If u=3,
+   L=m-1 and R_N<=m(m-1)+1. Unless T equals
+   its minimum m(m-1), integrality again gives
+   T>=R_N.
+
+4. In that minimum case the tree degrees are
+   (m-1,2,2,1,...,1) on the three nonleaves
+   and the L leaves. K has support only on
+   those three nonleaves, since each original
+   leaf has degree one. If the leaves have
+   both statuses, at least one opposite-status
+   pair reduces their sign sum by two, so
+   R_N<=m(m-1)-1 and the trees suffice.
+
+5. If all leaves have the same status, choose
+   a leaf pair. Build another degree-c graph:
+   a triangle on the three nonleaves, all
+   remaining L-2 leaves attached to the large
+   nonleaf, and the chosen pair as its own
+   edge component. Add K. The graph still
+   has its separate pair component and a
+   connected main component. Both have even
+   minus count. It is outside the preceding
+   connected family and contributes four.
+   Thus Psi>=2m(m-1)+4>=2R_N. This completes
+   all dense cases.
+
+6. Suppose now c=N-E>=2 and u>=3. There are
+   L>=2c>=4 leaves. In fact max_i a_i<=E-3.
+   If a maximum were E-2, the excess degrees
+   outside that vertex would total
+
+       2E-(E-2)-(N-1)=3-c<=1.
+
+   At most one other position could be a
+   nonleaf, contrary to u>=3. Hence deleting
+   any same-status leaf pair leaves N'=N-2
+   positions and E'=E-1 satisfying
+   max a_i<=E'-2. The remaining tuple is in
+   the exact induction range, at actual rank
+   r'=E'-2=r-1. Its total minus count is even.
+
+7. For a deleted same-status pair of sign s,
+   denote its remaining budget by R'. The
+   original binomial and leaf signs give
+   exactly
+
+       R_N-R'=2N-8+2sU.                                (P78.6)
+
+   Adding the isolated pair to all induced
+   good graphs gives an injection with its
+   component factor two. Induction supplies
+   their original graph sum >=2R', so this
+   family contributes at least 4R'.
+
+8. If both leaf status sets have size >=2,
+   choose a pair in the minority status set,
+   so sU<=0. Then R_N-R'<=2N-8. Also
+
+       R_N>=binomial(N-1,2)-L/2
+            >=(N^2-4N+5)/2>=4N-16,
+
+   where L<=N-3 and the last difference is
+   ((N-6)^2+1)/2. Thus R'>=R_N/2, and the
+   one-pair family gives Psi>=4R'>=2R_N.
+
+9. Otherwise the minority leaf status set
+   has size zero or one. All same-status pairs
+   have the majority sign s, so |U|=L or L-2
+   and their remaining R' is the same. We
+   have R'>=R_N/3. Indeed, writing V=|U|,
+
+       2R_N-3(2N-8+2V)
+          =N^2-9N+26+V^2-6V-L.                        (P78.7)
+
+   At N=7, the bounds 4<=L<=N-3 force L=4,
+   and either V=4 or V=2 makes the expression
+   zero. At N>=8 the first part is >=18.
+   For integral L>=4 the last part is >=-12
+   when V=L, and >=-14 when V=L-2. Thus
+   (P78.7) is nonnegative in every case.
+
+10. Sum the one-pair image families over all
+    P same-status leaf pairs. Each contributes
+    >=4R'. A full graph can be in at most
+    floor(L/2) such families, because each
+    named pair must be an isolated leaf-edge
+    component, and those pairs are disjoint.
+    Its full component weight is identical
+    in each occurrence. Therefore
+
+        Psi>=4P R'/floor(L/2).
+
+    Here P>=binomial(L-1,2) and L>=4, so
+
+        2P/floor(L/2)>=2(L-1)(L-2)/L>=3.
+
+    Together with R'>=R_N/3 this gives
+    Psi>=2R_N. Every sparse case is supplied,
+    finishing the induction. QED.
+
+**Theorem 78E (the entire second finite-rank degree boundary in type C).**
+For every actual compact connected type C_r group, every atomic
+irreducible character tuple of total box number <=2r+4, and every
+sign pattern, the original Q3 integral is nonnegative.
+
+**Proof.** Below and at 2r+2 use Theorem 76D. At odd degree 2r+3 the
+original cut integral is zero, by the even-degree joint kernel in
+Lemma 76A. At degree 2r+4 use Theorem 77E for every tuple containing
+a non-column label, and Theorem 78D together with (P76.10) for the
+remaining all-column tuples. Trivial and odd-minus positions are
+handled with their original factors. Haar pullback supplies every
+actual descending tuple on any central quotient. QED.
+
+**Corollary 78F (an entire unrestricted slot and the second background
+budget).** Let f_0 be any real continuous central positive-definite
+function on a type C_r group, without any support restriction. Let
+the remaining functions have actual character supports |lambda|<=d_i,
+with
+
+    sum_(i>=1)d_i<=r+2.                                 (P78.8)
+
+Then the whole original list satisfies Q3 for every sign pattern.
+This removes the non-column background condition of Corollary 77F.
+Where the defining module is actual, it includes an unrestricted f_0
+and up to r+2 functions in cone{1,chi_V}.
+
+**Proof.** Repeat the actual dominance argument of Corollary 76E.
+For an atomic background of box number D<=r+2, every distinguished
+atom of box number >D has zero required moment against every
+background subset, and thus zero original integral. Every inside
+atom gives total degree <=2D<=2r+4 and is supplied by Theorem 78E,
+with no remaining shape condition. Lemma 28A's original uniform
+absolute bound integrates the entire f_0 expansion. Every central
+quotient uses its actual descending atoms. QED.
+
+The same finite degree theorem also applies to continuous functions
+in any actual character cones with summed box-support bounds <=2r+4.
+The original Theorem 62D trace consumer is nonnegative for every
+real-atom tuple supplied here, with its original multiplicities and
+factor 2^N_original, as in Corollary 75F.
+
+**Independent self-double-check before acceptance.**
+
+1. Re-derived the exact budget R_N from the
+   full-cut correction (P76.10). Leaf parity
+   refers to original signs, and U^2-L includes
+   every defining-pair cross term. The induction
+   base is the already proved Theorem 48A,
+   consumed on actual column modules and
+   the exact Haar identity; it does not depend
+   on any new graph claim or numerical audit.
+
+2. In the dense three-marked construction,
+   independently checked cap capacity when
+   precisely one cap exceeds rho. It cannot
+   be unselected because the three selected
+   degrees would then each reach rho. The
+   residual degrees may be zero. The fixed
+   K injection retains all labelled trees.
+   Multinomial minimization gives the stated
+   equality pattern; in that case original
+   leaves have zero K degree. The extra
+   triangle/pair graph stays disconnected
+   from the tree family after K is added.
+
+3. In every sparse u>=3 deletion, the remaining
+   heights are actual at r-1, not merely formal
+   labels. Recomputed (P78.6) directly from
+   binomial differences and U'=U-2s,L'=L-2.
+   Rechecked both status cases, including the
+   tight N=7,L=4 polynomial equalities. The
+   double count uses each graph's full 2^c
+   weight and at most floor(L/2) isolated pairs,
+   rather than counting component-free graphs.
+
+4. For u=1,2, checked all star and two-hub
+   degrees and the number of reserved pairs.
+   A prescribed same-status pair always
+   extends to the required matching, since
+   L>=2t+2. In the sparse two-hub case the
+   remaining alpha-1,beta-1 leaf counts are
+   positive, giving at least two attachments.
+   Perfect matchings use even size of both
+   status sets in the all-leaf case.
+
+5. Independent exact degree-graph enumeration
+   gave the following universal values and
+   required budgets (three displayed sign
+   patterns: empty, {0,1}, and the first two
+   leaf positions):
+
+       degrees                 graphs  Psi / 2R_N
+       (4,2,2,1,1,1,1)            66  236/42,208/42,108/26
+       (4,3,1,1,1,1,1)            55  260/50,260/50,92/26
+       (2,2,2,1,1,1,1)            93  456/42,264/42,152/26
+       (2,2,1,1,1,1,1,1)         195  1680/72,960/72,336/40
+       (3,1,1,1,1,1,1,1)         105  840/84,360/60,200/44.
+
+   These test the exceptional dense equality
+   family, two-hub families and both sparse
+   leaf mechanisms. They are checks of the
+   construction; the proof supplies all
+   original ranks, labels and signs.
+
+6. A separate actual USp(6) Weyl-density audit
+   for three height-two columns and four
+   defining columns gave full moment 78,
+   against the independently counted universal
+   moment 93. Its original Q3 values were
+   414,222,126 for the displayed sign patterns,
+   exactly 456-42,264-42,152-26. This checks
+   both endpoint defects and the signed
+   complementary defining-pair corrections
+   in an original seven-factor tuple.
+
+7. Replayed Theorem 78E's exhaustive shape
+   split, degree parity and constant factors.
+   Replayed Corollary 78F with actual highest-
+   weight dominance before using the new
+   boundary: its unbounded distinguished tail
+   is zero exactly where claimed, while all
+   inside labels reach the proved total
+   degree theorem. Lemma 28A provides the
+   original continuous convergence bound.
+   Accepted.
+
+**Full-scope receipt and remaining consumer.** Theorem 78D supplies
+(P77.8) uniformly, and Theorem 78E now pays both first finite-rank
+type C correction degrees, for all shapes and original sign patterns.
+Corollary 78F consumes that result with one entire arbitrary full-cone
+function and higher-character backgrounds at the second budget.
+The original weighted trace consumer (P62.13) is supplied for these
+actual tuples without replacing its full projectors. The exact joint
+kernel (P76.2) still quantifies over the entire type C cone; its
+higher-degree correction budgets remain unproved. These two completed
+correction degrees do not supply fixed rank with arbitrarily high
+total degree or arbitrary long tuples. All remaining type C inputs,
+the unsupplied other Lie types and spin sectors, and the original full
+continuous central positive-definite cone remain the unchanged goal.
