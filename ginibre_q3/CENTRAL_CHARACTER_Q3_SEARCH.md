@@ -91177,3 +91177,1620 @@ Q3 counterexample, because q counts defining minus factors.
    This turn is progress through a verified uniform energy
    estimate and its actual unbounded input family, with the
    full cone objective unchanged and active.
+
+
+## Integer-grid closure of the complete one-higher boundary energy
+
+The requested checkpoint committed sections 63--65 as 5d4ae55 and pushed
+that commit to main. The preceding substantive goal turn supplied the
+uniform identity (P65.1) and its energy-positive region, so it was progress.
+The present construction supplies the remaining integer grid for that
+same original one-higher integral. This is acceptance movement on a
+named scalar family of (P62.13); it does not change the full cone target
+or claim the unrestricted weighted channel inequality.
+
+The source is the exact actual-character identity in Theorem 65A, and
+the consumer is Corollary 62F followed by Lemma 28A. In this section all
+labels and factor counts are integers. Write
+
+    n=p+q=2m+L,       z=(L+1)^2,
+    N_1=m+L+1,       N_2=m+L+2,
+    a=(m+1)(L+2),    b=N_2 L,
+    D=n-2q,
+    Q_D(r)=a+b r^2-D(L+1)r.
+
+When L>=1,m>=1, Lemma 65B reads
+
+    P_m=U^2 Q_D(V/U)/[(m+1)N_2],
+    U=K_m(q;n), V=K_(m-1)(q;n),                     (P66.1)
+
+whenever U!=0. Its homogeneous version (P65.2) is used when no ratio
+is available. The energy-positive region is D^2<=T(n,z), where
+
+    T(n,z)=[(n+3)^2-z](z-1)/z
+          =4(m+1)N_2 L(L+2)/(L+1)^2.               (P66.2)
+
+The two new estimates below concern precisely the adjacent coefficients
+in (P66.1). One uses the integer minus count as a dual polynomial degree;
+the other bounds the original degree recurrence beyond its real zeros.
+Their combination with (P66.2) leaves no one-higher input unsupplied.
+
+**Self-double-check last before recording (main-agent self-review).**
+Reconstructed the Jacobi matrix of the monic coefficient recurrence and
+proved its real, simple, symmetric spectrum without a root-spacing
+assumption. Derived the four constant/linear/quadratic/cubic coefficient
+recurrences with their signs, and independently checked the two
+inverse-root-sum inductions, including degrees zero and one. Replayed
+binomial duality with its different adjacent binomial prefactors. Checked
+that all roots used in the small-count ratio lie strictly beyond L+2,
+that the odd-count tangent bound uses the actual derivative, and that
+its denominator is positive by an explicit margin. Recomputed the
+continued-fraction endpoint, its positive lower bound, and the
+continuity argument selecting the smaller quadratic root; no positivity
+between arbitrary real minus counts is asserted. All four boundary
+algebra identities, both exact endpoint energies, and both parameter
+split identities passed symbolic cancellation. Seven independent
+original Haar character expansions agree with P_m, including the
+energy-exterior cases (n,L,q)=(1000,4,4),(1000,4,5),(100,80,10),
+a zero at L=0, a highest-degree endpoint, and a count beyond n/2.
+Finally replayed (P62.9) on the same actual tuples and Lemma 28A with
+its uniform absolute bound. These finite checks audit the derivations;
+the proofs below supply the uniform grid. No computation script or
+certificate sweep is used as a universal sign supplier.
+
+**Lemma 66A (inverse-root sums at integer degree).** Fix integers n>=0
+and 0<=k<=n/2. Define the monic polynomials
+
+    F_j(t)=j! K_j((n-t)/2;n),
+    F_0=1, F_1=t,
+    F_(j+1)=t F_j-j(n-j+1)F_(j-1).                  (P66.3)
+
+Here K_j at a noninteger argument means the polynomial given by this
+recurrence; no positivity is assumed for that continuation. The roots
+of F_k are real and simple and invariant under negation. For odd k
+there is one zero root; for even k there is none. Let lambda_i be its
+positive roots and put S_k=sum_i lambda_i^(-2), with an empty sum zero.
+Then
+
+    S_k <= k/[2(n-k+2)]                if k is even,
+    S_k <= (k-1)/[4(n-k+3)]            if k is odd.  (P66.4)
+
+In particular the odd-degree estimate excludes its root zero, as
+required for the later factored ratio.
+
+**Proof.**
+
+1. Recurrence (P66.3) is the degree recurrence in Lemma 65B
+   after multiplying by j!. For j<=k it is the characteristic
+   polynomial recurrence for the j by j real symmetric tridiagonal
+   matrix with zero diagonal and off-diagonal entries
+
+       sqrt(i(n-i+1)),       i=1,...,j-1.
+
+   These entries are positive. An eigenvector is determined by
+   its first coordinate through the successive rows; if that
+   coordinate is zero all coordinates are zero. Thus every
+   eigenspace is at most one dimensional. Symmetric matrices
+   have real eigenvalues and are diagonalizable, giving real
+   simple roots. Negating alternating coordinates changes the
+   matrix to its negative, giving the root symmetry. The
+   recurrence also gives F_j(-t)=(-1)^j F_j(t).
+
+2. For the auxiliary indices used below set
+
+       E_i=(-1)^i F_(2i)(0),
+       O_i=(-1)^i [t]F_(2i+1)(t),
+       C_i=(-1)^(i-1) [t^2]F_(2i)(t),
+       G_i=(-1)^(i-1) [t^3]F_(2i+1)(t),
+
+   with E_0=O_0=1 and C_0=G_0=0. The recurrence gives
+
+       E_i=(2i-1)(n-2i+2) E_(i-1),
+       O_i=E_i+2i(n-2i+1) O_(i-1),
+       C_i=O_(i-1)+(2i-1)(n-2i+2) C_(i-1),
+       G_i=C_i+2i(n-2i+1) G_(i-1).                 (P66.5)
+
+   All coefficients multiplying E or O are positive at the
+   relevant indices, so E_i,O_i>0. Even degrees therefore
+   have nonzero constant term; odd degrees have nonzero linear
+   term and exactly one root zero. The necessary auxiliary
+   degree 2i+1 is <=n whenever i>=1 and i<=floor(k/2),
+   since n>=2k. The cases k=0,1 are immediate separately.
+
+3. Put R_i=O_i/E_i. By (P66.5),
+
+       R_i=1+c_i R_(i-1),
+       c_i=2i(n-2i+1)/[(2i-1)(n-2i+2)].
+
+   At i<=floor(k/2), n>=2k implies n-4i+2>=0.
+   Consequently 1<=c_i<=2i/(2i-1). Induction from R_0=1
+   gives
+
+       i+1<=R_i<=2i+1.                             (P66.6)
+
+4. Factoring the real symmetric root pairs gives
+
+       S_(2i)=C_i/E_i,
+       S_(2i+1)=G_i/O_i.
+
+   The third equation in (P66.5) gives
+
+       C_i/E_i=C_(i-1)/E_(i-1)
+                     +R_(i-1)/[(2i-1)(n-2i+2)].
+
+   Using R_(i-1)<=2i-1, sum these increments to obtain
+
+       S_(2i)<=sum_(j=1)^i 1/(n-2j+2)
+              <=i/(n-2i+2).
+
+   This proves the even assertion in (P66.4).
+
+5. The fourth equation in (P66.5) yields
+
+       S_(2i+1)=S_(2i)/R_i+(1-1/R_i)S_(2i-1).
+
+   Induct from S_1=0. Write delta=n-2i+2>0. The even
+   bound gives S_(2i)<=i/delta, and the odd bound at the
+   previous index gives S_(2i-1)<=(i-1)/(2delta).
+   Since R_i>=i+1 and 1-1/R_i>=0, it follows that
+
+       S_(2i+1) <= (i-1)/(2delta)+(i+1)/(2delta R_i)
+                 <= i/(2delta).
+
+   This is exactly (k-1)/[4(n-k+3)] at k=2i+1.
+   All statements concern the finite polynomials at the
+   actual integer degree k. QED.
+
+**Lemma 66B (small integer minus counts supply the boundary energy).**
+Let L>=1,m>=1,n=2m+L, and let q be an integer with
+
+    0<=q<=n/[3(L+1)^2].                            (P66.7)
+
+Then U!=0, V/U>0, and P_m>0 in (P66.1).
+
+**Proof.**
+
+1. Direct binomial counting gives the duality
+
+       K_m(q;n)/binom(n,m)=K_q(m;n)/binom(n,q).
+
+   Indeed multiplying either coefficient sum by the other
+   binomial coefficient gives the same summands, because
+
+       binom(n,q) binom(q,j) binom(n-q,m-j)
+        =binom(n,m) binom(m,j) binom(n-m,q-j).
+
+   Since n-2m=L, apply this identity also at m-1 to get
+
+       r=V/U=rho F_q(L+2)/F_q(L),
+       rho=m/N_1.                                 (P66.8)
+
+   The different factors binom(n,m-1)/binom(n,m)=rho
+   are retained. Condition (P66.7) implies q<=n/2,
+   so Lemma 66A applies to F_q.
+
+2. Put z=(L+1)^2>=4. From q<=n/(3z) and (P66.4),
+
+       S_q<=1/[2(3z-1)]       for even q,
+       S_q<=1/[4(3z-1)]       for odd q.
+
+   If positive roots exist, each satisfies lambda_i^2>=1/S_q.
+   The even lower bound is 6z-2, exceeding (L+2)^2 by
+   5L^2+8L>0. The odd lower bound is 12z-4, exceeding
+   (L+2)^2 by 11L^2+20L+4>0. Hence no nonzero root
+   meets [L,L+2]; the possible odd root zero is outside
+   it as well. Both denominator and numerator in (P66.8)
+   are nonzero and have the same sign. The same conclusions
+   hold for the empty-root cases q=0,1. Thus r>0 and U!=0.
+
+3. If q is even, the factorization into root pairs gives
+
+       F_q(L+2)/F_q(L)
+         =product_i [lambda_i^2-(L+2)^2]/[lambda_i^2-L^2]
+         in (0,1].
+
+   Therefore 0<r<=rho. Since D=n-2q<=n,
+   Q_D(r)>=Q_n(r). On [0,rho], Q_n is decreasing, because
+
+       n(L+1)-2b rho
+        =[2m^2+(L(L+1)+2)m+L(L+1)^2]/N_1>0.
+
+   Its endpoint is explicitly
+
+       Q_n(rho)=(L+1)(n+1)(n+2)/N_1^2>0.           (P66.9)
+
+   Hence Q_D(r)>0 and (P66.1) proves P_m>0 in this case.
+
+4. If q is odd, q>=1, and root factorization instead gives
+
+       r=r_max product_i(1-t_i),
+       r_max=rho(L+2)/L,
+       t_i=4(L+1)/(lambda_i^2-L^2) in (0,1).
+
+   For finitely many t_i in [0,1], induction gives
+   product_i(1-t_i)>=1-sum_i t_i. Moreover
+
+       sum_i t_i
+         <=4(L+1) S_q/(1-L^2 S_q)
+         <=4(L+1)(q-1)/H,
+       H=4(n-q+3)-L^2(q-1).                        (P66.10)
+
+   The first denominator is positive by step 2. The last
+   denominator is positive by step 5 below; the displayed
+   inequality also follows directly by substituting (P66.4)
+   into the increasing function S/(1-L^2 S). When q=1
+   there are no positive roots and both sums are zero.
+
+5. Define the positive number
+
+       B=n+2L+4+2q(L+1).
+
+   The exact algebraic margin is
+
+       H-2B=2n+(L-2)^2-q(L^2+4L+8)>=0.             (P66.11)
+
+   To prove its sign, note that L^2+4L+8<=6(L+1)^2
+   for L>=1, since the difference is 5L^2+8L-2>0.
+   Thus (P66.7) gives q(L^2+4L+8)<=2n. In particular
+   H>=2B>0, and (P66.10) is legitimate. Put
+   delta_0=4(L+1)(q-1)/H. Then
+
+       0<=r_max-r<=r_max delta_0,
+       B delta_0<=2(L+1)(q-1).                     (P66.12)
+
+6. The quadratic Q_D is convex, so its tangent at r_max
+   is a lower bound. Its derivative there obeys
+
+       Q_D'(r_max)
+        =2m-L(L+1)+2m(L+2)/N_1+2q(L+1)<=B.
+
+   Since r<=r_max, (P66.12) consequently gives
+
+       Q_D(r)>=Q_D(r_max)-B(r_max-r)
+               >=Q_D(r_max)-2(L+1)(q-1)r_max.
+
+   Finally, the exact endpoint identity is
+
+       Q_D(r_max)=Q_(n-2)(r_max)
+                            +2(q-1)(L+1)r_max,
+       Q_(n-2)(r_max)
+            =(L+1)(L+2)n(n+1)/(L N_1^2)>0.         (P66.13)
+
+   Therefore Q_D(r)>0 also for odd q. Equation (P66.1)
+   supplies the same original boundary increment. QED.
+
+**Lemma 66C (the nonoscillatory recurrence tail supplies the energy).**
+Let L>=1,m>=1,n=2m+L, and put
+
+    beta=(m-1)N_2,      E=sqrt(T(n,(L+1)^2)).
+
+Whenever D=n-2q satisfies
+
+    D>max(E,2sqrt(beta)),                           (P66.14)
+
+the actual coefficients obey U,V>0 and P_m>0. This lemma permits
+real D in its stated tail; it does not assert positivity on a full
+real continuation of the minus-count grid.
+
+**Proof.**
+
+1. Use the monic recurrence (P66.3) at t=D for degrees
+   up to m. Set
+
+       h=2/[D+sqrt(D^2-4beta)],     r_*=m h.
+
+   Then h>0 and D-beta h=1/h. For beta=0 (that is,
+   m=1), this is h=1/D. For 1<=j<=m-1 the coefficient
+   j(n-j+1) is <=beta: that quadratic increases through
+   j=m-1 since m<=n/2.
+
+2. Put g_j=F_(j-1)(D)/F_j(D). Starting with g_1=1/D<=h,
+   the continued fraction reads
+
+       g_j=1/[D-(j-1)(n-j+2)g_(j-1)].
+
+   Inductively its denominator is >=D-beta h=1/h>0.
+   Thus every F_j(D)>0 and 0<g_j<=h for j<=m.
+   Consequently U,V>0 and
+
+       0<r=V/U=m g_m<=r_*.                         (P66.15)
+
+3. The equation defining h gives
+
+       D=m/r_*+(beta/m)r_*.
+
+   Substitute it in the actual energy quadratic to obtain
+
+       Q_D(r_*)=N_2[1+(L+1-m)r_*^2/m]>0.           (P66.16)
+
+   If m<=L+1 the sign is immediate. If m>L+1, then
+   beta>0 and h^2<1/beta. Using the negative coefficient
+   of r_*^2 in (P66.16), its value is bounded below by
+
+       N_2-m(m-L-1)/(m-1)
+                =[2m(L+1)-L-2]/(m-1)>0.
+
+   The final sign holds because m>=2,L>=1.
+
+4. Since D>E, Q_D has two distinct positive roots
+   r_-(D)<r_+(D): its leading and constant coefficients
+   are positive, its discriminant is positive by (P66.2),
+   and the sum and product of its roots are positive.
+   All these roots and r_* are continuous on the connected
+   interval D>max(E,2sqrt(beta)). Their limits obey
+
+       D r_* ->m,
+       D r_- ->a/(L+1)>m          as D->infinity,
+
+   the latter strict inequality having difference
+   (m+L+2)/(L+1). The second limit follows, without
+   cancellation ambiguity, from
+
+       r_-=2a/[D(L+1)+sqrt(D^2(L+1)^2-4ab)].
+
+   Therefore r_*<r_- for all sufficiently large D.
+   This order holds throughout the connected interval:
+   an equality at any crossing would give Q_D(r_*)=0,
+   contradicting (P66.16). Thus Q_D(r)>0 throughout
+   0<=r<=r_* by (P66.15), and (P66.1) yields P_m>0.
+   This selects the smaller-root side of the quadratic;
+   positivity just at r_* alone would not suffice. QED.
+
+**Theorem 66D (complete one-higher SU(2) supplier, all integer labels,
+lengths, and signs).** For every p,q,L>=0 and eta in {+1,-1}, the
+original SU(2) independent-Haar tuple consisting of one chi_L factor
+of sign eta, p defining plus factors, and q defining minus factors
+satisfies Q3. Equivalently, P_m>=0 on the entire supported integer
+grid of Theorem 65A. No restriction on the minus count, label, or
+length remains in this one-higher statement.
+
+**Proof.**
+
+1. The automatic odd-minus, unsupported-degree, and parity
+   zeros follow from Lemma 63B. For L=0 the higher-minus
+   factor is identically zero; the higher-plus factor is two.
+   The remaining integral is E[s^p d^q]. Odd q gives zero
+   by exchange, odd p with even q gives zero by simultaneous
+   central negation, and even p,q gives a pointwise nonnegative
+   integrand. This supplies every trivial-higher case.
+
+2. Suppose L>=1 and n>=L with n-L even. If m=0,
+   Theorem 65A gives Phi=2 for the matching-sign case.
+   Otherwise m>=1 and it suffices to prove P_m>=0.
+   The identity A_L(p,q)=A_L(q,p) follows by changing
+   y to -y in the original semicircle expectation;
+   this exchanges s and d while retaining chi_L(x).
+   Since P_m=A_L by (P65.1), assume q<=n/2, and
+   hence D>=0, without changing the scalar sign problem.
+   The matching sign on the higher factor is restored
+   as eta=(-1)^q in each original input separately.
+
+3. If D^2<=T(n,z), Lemma 65B supplies P_m>=0 on the
+   homogeneous quadratic form, whether or not U vanishes.
+   Assume for the remaining cases that D^2>T(n,z).
+   Both L>=1 and m>=1 imply z>=4 and T(n,z)>0.
+
+4. First suppose z<=6n+9. The exact identity
+
+       T(n,z)-n^2(1-1/z)=(z-1)(6n+9-z)/z>=0
+
+   gives (n-2q)^2>n^2(1-1/z), and therefore
+   4q(n-q)<n^2/z. Since 0<=q/n<=1/2, it follows that
+
+       q/n <(1-sqrt(1-1/z))/2
+            =1/[2z(1+sqrt(1-1/z))]<1/(3z).
+
+   The last inequality uses z>=4. These are actual
+   integer counts, and Lemma 66B applies directly,
+   supplying P_m>0 throughout this exterior region.
+
+5. Now suppose z>6n+9. Since m<=n/2, this implies
+   z>(m+1)/2. The exact comparison with the recurrence
+   tail is
+
+       E^2-4beta=4N_2[2-(m+1)/z]>0,
+       E^2=T(n,z), beta=(m-1)N_2.
+
+   The assumed energy exterior gives D>E>2sqrt(beta).
+   Lemma 66C therefore applies to precisely this D and
+   supplies P_m>0. The two cases in steps 4--5 exhaust
+   all z outside the region supplied in step 3.
+
+6. Thus P_m>=0 everywhere on the supported integer grid.
+   Theorem 65A returns Phi=2P_m in the matching-sign
+   case; the other higher sign has odd total minus count
+   and gives zero. Reversing the harmless p,q symmetry
+   and adjoining the cases in steps 1--2 proves every
+   original input stated in the theorem. No real-grid
+   nonnegativity contrary to Proposition 65D was used.
+   QED.
+
+**Corollary 66E (original full-channel bound on all one-higher tuples).**
+For every actual SU(2) tuple of Theorem 66D, the full isotypic spaces
+of Theorem 62D satisfy
+
+    t_adj>=-3t_0.                                   (P66.17)
+
+**Proof.**
+
+1. Corollary 62F gives Phi=2^(p+q+1)(t_0+t_adj/3)
+   for exactly this tuple, with all its factors, signs,
+   and isotypic multiplicities retained. Theorem 66D
+   supplies the nonnegativity of that original Phi.
+   Since its power-of-two factor is positive, its sign
+   is exactly (P66.17). Nothing is imposed on individual
+   nontrivial channel signs or on the stronger compression
+   already rejected in Proposition 63A. QED.
+
+**Corollary 66F (one full-cone function, arbitrary defining mixtures).**
+On SU(2), the original Q3 integral is nonnegative for every finite
+list having one arbitrary real continuous central positive-definite
+function and all other functions in cone{1,chi_1}, with arbitrary
+signs and arbitrary length. There is no longer a restriction of
+three defining minus positions as in Corollary 63F.
+
+**Proof.**
+
+1. By Lemma 28A, the arbitrary function has a nonnegative
+   expansion sum_L a_L chi_L with
+
+       sum_L a_L(L+1)=f(e)<infinity,
+       |chi_L(g)|<=L+1.
+
+   All SU(2) irreducibles are self-dual, so these are its
+   actual real atoms. The expansion is uniformly absolutely
+   convergent, with tail at most the omitted identity-value
+   sum. Each other function has two nonnegative coefficients
+   in its stated cone.
+
+2. Expand the finite defining mixtures and the one convergent
+   character sum in the original product. A trivial-minus
+   term vanishes; a trivial-plus term contributes a factor
+   two and removes that position. Every remaining atomic
+   term is exactly a tuple of Theorem 66D, at some L>=0,
+   with unrestricted p,q and with the original higher sign.
+   Hence every atomic integral is nonnegative.
+
+3. The sum of absolute uniform product bounds is at most
+   product_i 2f_i(e), by multiplying the nonnegative
+   identity-value sums. This finite number justifies
+   uniform absolute convergence of the expanded product,
+   its integration against normalized product Haar, and
+   exchange of the sum with that integral. Thus the
+   original continuous-function integral is the convergent
+   sum of the nonnegative atomic integrals. This is a
+   consumption of the full cone at the designated arbitrary
+   position under Lemma 28A's existing hypotheses. QED.
+
+**Acceptance receipt and next original term.** The entire one-higher
+integer-grid obligation left in section 65 is now supplied, and its
+full-channel consumer has been replayed in Corollary 66E. The continuous
+consumer in Corollary 66F admits one arbitrary full-cone function with
+unrestricted signs and defining mixtures in the other positions. The
+structural evidence is the dual inverse-root-sum estimate and the
+nonoscillatory continued-fraction estimate on the actual adjacent
+coefficients; it is not a certificate enumeration.
+
+The unrestricted target (P62.13) still includes several arbitrary
+higher factors and every higher-rank group. In rank one, the next
+original term with two higher characters is explicitly
+
+    E[s^p d^q (chi_A(x)+eta chi_A(y))
+                   (chi_B(x)+xi chi_B(y))],          (P66.18)
+
+with x,y independent under the exact semicircle law, arbitrary
+A,B,p,q>=0, eta,xi in {+1,-1}, and even total minus count.
+This is the original integral, not an auxiliary positivity axiom.
+Theorem 64D supplies A=B=3; Theorem 66D supplies the cases where a
+higher factor is trivial or defining, but general A,B are retained.
+A concrete direct construction is to expand the two complete weight
+strings in the torus formula of Theorem 65A and keep their mixed
+boundary terms; a positivity assertion for individual frequencies is
+not supplied. Its first unresolved mixed-string case can be taken at
+A=2,B=3 with arbitrary defining counts and the permitted even-minus
+patterns. Any proposed extension must check that full integral, then
+return its sign to (P62.9) with both higher factors present. All other
+groups and arbitrary-function positions remain in the active full
+objective; no whole-goal completion is claimed.
+
+
+## Mixed low-label pairs and exact elimination of adjoint minus factors
+
+The first mixed original input named in (P66.18), A=2,B=3, is supplied
+below at every defining length and sign count. This is a direct return
+to that input, not a new auxiliary prerequisite. The same exact moment
+law also supplies A=B=2. Together with Theorem 64D, this gives all pairs
+of higher labels in {2,3}, with unrestricted defining spectators.
+A separate character identity removes any number of adjoint minus
+factors without an estimate. It can therefore be consumed with the
+full one-higher supplier rather than assuming positivity under squared
+polynomial tilts.
+
+Use the original s=x+y,d=x-y and set
+
+    u=s^2, v=d^2,
+    C=u+v-4, A=u+3v-8, B=3u+v-8.
+
+Their full signed characters are exactly
+
+    chi_2(x)+chi_2(y)=C/2,
+    chi_2(x)-chi_2(y)=s d,
+    chi_3(x)+chi_3(y)=s A/4,
+    chi_3(x)-chi_3(y)=d B/4.                        (P67.1)
+
+As in section 64, H_(a,b)=E[s^(2a)d^(2b)]>0 and E_(a,b)
+is the probability expectation tilted by this monomial, for integers
+a,b>=0. All uses of that tilt retain the same product-Haar law.
+
+**Self-double-check last before recording (main-agent self-review).**
+Recomputed (P67.1) directly from chi_2(x)=x^2-1 and
+chi_3(x)=x^3-2x. Reconstructed both new averages from the five exact
+first and second moments in section 64, and independently verified
+both sector decompositions of the asymmetric numerator. Replayed all
+four higher-sign assignments with their defining parity restrictions;
+the two occurrences of B require exchanging the tilt exponents, not
+just renaming a character. Nine direct original polynomial Haar
+integrals agree with the complete moment formulas, including every
+mixed-pair sign assignment, a parity zero, two same-label-minus
+factors, and the 42-factor opposite-sign label-two case p=11,q=29.
+Its original value is 1218902677200. The mixed p=34,q=5 plus/minus
+case has original value 1708574091246000. Checked the adjoint-minus
+replacement as an identity of full functions before any integration,
+including its change of factor count and unchanged minus parity.
+The final trace consumer uses the original factor count rather than
+the replacement tuple's count. Finite numerical checks are audits;
+the moment identities and factorizations below supply all stated
+parameters.
+
+**Lemma 67A (two coupled averages for the full quadratics).** For all
+integers a,b>=0 put r=a+b, delta=a-b and D_4=(r+2)(r+3)^2(r+4).
+Then
+
+    E_(a,b) C=4[r(r+3)+2delta^2]/[(r+2)(r+3)]>=0,   (P67.2)
+    E_(a,b) C A=32 Z_C(a,b)/D_4>0,                 (P67.3)
+
+where
+
+    Z_C(a,b)=3a^4-8a^3b+6a^3+22a^2b^2+14a^2b+9a^2
+             -16ab^3-22ab^2-14ab+6a
+             +15b^4+66b^3+105b^2+78b+36.
+
+The first average vanishes exactly at a=b=0. The same strictly
+positive conclusion holds for C B, with a and b exchanged.
+
+**Proof.**
+
+1. The normalized moment ratios in (P64.3) give
+
+       E_(a,b) u=4(2a+1)(2a+3)/[(r+2)(r+3)],
+       E_(a,b) v=4(2b+1)(2b+3)/[(r+2)(r+3)].
+
+   Subtract four from their sum. Its numerator is
+   4[3a^2-2ab+3b^2+3r]=4[r(r+3)+2delta^2].
+   This proves (P67.2), including its equality case.
+
+2. The three second moments in Lemma 64C give
+
+       E_(a,b) u^2=16(2a+1)(2a+3)^2(2a+5)/D_4,
+       E_(a,b) v^2=16(2b+1)(2b+3)^2(2b+5)/D_4,
+       E_(a,b) uv=16(2a+1)(2a+3)(2b+1)(2b+3)/D_4.
+
+   Multiply the entire polynomials to get
+
+       C A=u^2+4uv+3v^2-12u-20v+32.
+
+   Inserting these moment expressions and those of step 1
+   gives precisely 32 Z_C(a,b)/D_4. This is an equality
+   before any sign estimate, with the repeated (r+3)^2
+   from the actual coupled law retained.
+
+3. If a>=b, put c=a-b>=0. Direct regrouping gives
+
+       Z_C(b+c,b)
+         =16b^4+(16c+64)b^3+(16c^2+24c+100)b^2
+            +(4c^3+32c^2+4c+84)b
+            +3c^4+6c^3+9c^2+6c+36>0.
+
+   If b>=a, put c=b-a>=0 instead. The other regrouping is
+
+       Z_C(a,a+c)
+         =16a^4+(48c+64)a^3+(64c^2+168c+100)a^2
+            +(44c^3+176c^2+196c+84)a
+            +15c^4+66c^3+105c^2+78c+36>0.
+
+   In both exhaustive regions every summand is nonnegative
+   and the constant term is at least 36. Since D_4>0,
+   (P67.3) follows at every tilt order.
+
+4. The actual trace-pair law is invariant under s,d exchange
+   by y->-y. That exchange fixes C and sends A to B,
+   so E_(a,b) C B=E_(b,a) C A>0. This completes the
+   stated coupled averages without assuming pointwise
+   positivity or closure under polynomial-square tilts. QED.
+
+**Theorem 67B (mixed labels two and three, every defining sign count).**
+On SU(2), one chi_2 factor and one chi_3 factor, with any number of
+defining factors and arbitrary signs, satisfy the original Q3 integral.
+Every case having even total minus count and odd defining count has
+strictly positive integral.
+
+**Proof.**
+
+1. Let p,q count defining plus and minus factors, and let
+   eta,xi be the signs on chi_2,chi_3 respectively.
+   Odd total minus count gives zero by exchange. If p+q
+   is even, simultaneous central negation gives zero:
+   chi_2 is even, chi_3 is odd, so the entire product
+   then has odd parity. Assume the other cases below.
+
+2. For eta=xi=+1, q is even and p is odd. By (P67.1),
+
+       Phi=(1/8) E[s^(p+1)d^q C A]
+            =(1/8)H_(a,b) E_(a,b) C A>0,
+       a=(p+1)/2>=1, b=q/2>=0.
+
+   Lemma 67A supplies the last sign at every p,q.
+
+3. For eta=+1,xi=-1, q is odd and p is even. Now
+
+       Phi=(1/8) E[s^p d^(q+1) C B]
+            =(1/8)H_(a,b) E_(a,b) C B>0,
+       a=p/2>=0, b=(q+1)/2>=1.
+
+   The exchanged-tilt conclusion of Lemma 67A applies.
+
+4. For eta=-1,xi=+1, q is odd and p is even. The integral is
+
+       Phi=(1/4) E[s^(p+2)d^(q+1) A]
+            =(1/4)H_(a,b) E_(a,b) A,
+       a=(p+2)/2>=1, b=(q+1)/2>=1.
+
+   The exact first-quadratic average (P64.4) is
+
+       E_(a,b) A
+        =8[(a-b)(a-b-1)+2b(2b+3)]/[(a+b+2)(a+b+3)]>0.
+
+   Its first numerator term is nonnegative for integer a-b,
+   and its second is positive because b>=1.
+
+5. For eta=xi=-1, q is even and p is odd. Here
+
+       Phi=(1/4) E[s^(p+1)d^(q+2) B]
+            =(1/4)H_(a,b) E_(a,b) B,
+       a=(p+1)/2>=1, b=(q+2)/2>=1.
+
+   Exchange a,b in step 4's quadratic formula. Its
+   strictly positive second term now uses a>=1.
+   All four higher-sign assignments have been retained,
+   and together with step 1 they prove every input. QED.
+
+**Theorem 67C (two label-two factors, every defining sign count).**
+On SU(2), two chi_2 factors with arbitrarily many defining factors
+satisfy the original Q3 integral for every sign pattern.
+
+**Proof.**
+
+1. Odd total minus count gives zero. Both higher characters
+   are even under central negation, so p+q odd gives
+   zero as well. In the remaining cases p+q is even.
+
+2. If the two higher signs agree, their product is the
+   square of the corresponding sum or difference. Their
+   minus count is zero or two, so q is even and p is
+   even. Thus s^p d^q times that square is pointwise
+   nonnegative, giving the original sign immediately.
+
+3. If their signs disagree, q is odd and p is odd, with
+   p,q>=1. Equation (P67.1) gives the exact product
+   of the higher factors as s d C/2. Hence
+
+       Phi=(1/2)E[s^(p+1)d^(q+1) C]
+            =(1/2)H_(a,b) E_(a,b) C>0,
+       a=(p+1)/2>=1, b=(q+1)/2>=1.
+
+   Lemma 67A proves the last sign. All possible original
+   sign patterns have now been supplied. QED.
+
+**Proposition 67D (exact adjoint-minus elimination, arbitrary other
+factors).** In any original SU(2) tuple, every factor
+chi_2(g)-chi_2(h) can be replaced by the product of one defining
+plus factor and one defining minus factor, without changing the
+integrand or integral. Any finite number of such factors can be
+replaced simultaneously. This is valid for arbitrary other functions,
+not only defining spectators.
+
+**Proof.**
+
+1. For every g,h the actual character identity chi_2=chi_1^2-1
+   gives
+
+       chi_2(g)-chi_2(h)
+         =[chi_1(g)+chi_1(h)][chi_1(g)-chi_1(h)].     (P67.4)
+
+   Multiply this equality by all the other original factors.
+   Repeating it for k positions yields equality of complete
+   integrands. The replacement adds k defining plus and k
+   defining minus factors while deleting k adjoint-minus
+   factors; its factor count increases by k, and its total
+   minus count is unchanged. No positivity assertion or
+   change of measure is needed for this exact identity. QED.
+
+**Corollary 67E (actual channel return and enlarged mixture families).**
+The following SU(2) lists satisfy the original Q3 integral, at arbitrary
+length and with the signs stated:
+
+- At most two designated functions in cone{1,chi_1,chi_2,chi_3},
+  all other functions in cone{1,chi_1}, with arbitrary signs.
+- One arbitrary real continuous central positive-definite function
+  with either sign; every other plus position in cone{1,chi_1};
+  every other minus position in cone{1,chi_1,chi_2}. The number
+  of these adjoint-containing minus positions is unrestricted.
+
+For all atomic tuples supplied in Theorems 67B--67C and by applying
+Proposition 67D to Theorem 66D, the original full isotypic spaces obey
+t_adj>=-3t_0.
+
+**Proof.**
+
+1. For each original atomic tuple, Corollary 62F gives
+
+       Phi=2^N(t_0+t_adj/3),
+
+   using its original factor count N and its original tensor
+   representation. Theorems 67B--67C prove that exact Phi>=0.
+   When Proposition 67D is used, its replaced tuple has the
+   same Phi and is supplied by Theorem 66D, while the displayed
+   trace identity is still applied to the original tuple.
+   Thus t_adj>=-3t_0 in the original spaces, including all
+   multiplicities; the changed replacement count does not
+   identify two different pin projections.
+
+2. For the first mixture family expand the finite nonnegative
+   character coefficients. Trivial minus terms are zero;
+   trivial plus terms give factors two and remove positions.
+   Each surviving tuple has at most two higher factors of
+   labels two or three. The pair (2,2) is Theorem 67C,
+   (2,3) is Theorem 67B, and (3,3) is Theorem 64D.
+   A single higher factor is Theorem 66D. With no higher
+   factor, only s^p d^q remains, supplied by exchange,
+   central parity, or pointwise positivity of even powers.
+   Hence every atomic integral is nonnegative, proving
+   the finite mixture assertion.
+
+3. For the second family, expand the arbitrary full-cone
+   function using Lemma 28A and all other functions using
+   their stated finite nonnegative coefficients. Remove
+   trivial positions as above. Every adjoint factor that
+   occurs has a minus sign. Apply (P67.4) to all of them.
+   Each term becomes one arbitrary actual chi_L with its
+   original sign and an unrestricted number of defining
+   plus and minus factors. Theorem 66D supplies it.
+
+4. The absolute product bound is product_i 2f_i(e) by
+   Lemma 28A. Indeed each replacement in (P67.4) is an
+   equality of its original factor, whose uniform bound
+   remains 2chi_2(e); no summation over a replacement
+   coefficient is introduced. Thus the nonnegative atomic
+   integrals may be summed and integrated under the existing
+   uniform absolute convergence justification. This proves
+   the claimed continuous-function family as well. QED.
+
+**Acceptance receipt and the remaining signed term.** The first
+mixed-pair original input identified after section 66 has been consumed
+on its full parameter range, and both new pair suppliers have been
+returned to (P62.9). The exact adjoint-minus identity supplies an
+unbounded additional set of function positions alongside one arbitrary
+full-cone function. It is structural elimination inside the original
+integrand, not an inference from nonnegative individual channel traces.
+
+The full target still retains arbitrary higher characters with plus
+signs, several arbitrary full-cone functions, and every higher-rank
+group. In the same rank-one two-higher original term (P66.18), a plus
+adjoint factor remains, for arbitrary L and defining counts. If
+Phi_(L,eta)(p,q) denotes the original one-higher integral of Theorem
+66D, its full target with one additional adjoint-plus factor is exactly
+
+    Psi=(1/2)[Phi_(L,eta)(p+2,q)+Phi_(L,eta)(p,q+2)
+                                         -4Phi_(L,eta)(p,q)].
+
+This equality follows by multiplying the original integrand by C/2
+and using C=s^2+d^2-4. The additional minus version is supplied by
+Proposition 67D. In the supported matching-sign case the remaining
+plus expression, by (P65.1), is
+
+    Psi=P_(m+1)(q;n+2)+P_(m+1)(q+2;n+2)-4P_m(q;n),
+    n=p+q=2m+L.                                    (P67.5)
+
+Here each P is evaluated at its stated length and integer count.
+Theorems 67B--67C supply L=3 and L=2 in this expression, and trivial
+or defining higher labels are supplied by the earlier theorems. A
+uniform sign estimate for general L is still a direct original
+obligation. Nonnegativity of the separate terms from Theorem 66D
+does not discharge their signed difference; the factor four must be
+retained. This is the first term to attack within that original
+construction, with all other full-target quantifiers still active.
+No assumption about its sign, no squared-weight closure, and no
+whole-goal completion is asserted.
+
+
+## Exact adjoint-plus comparison and two uniform sign suppliers
+
+The preceding goal turn was progress: sections 66--67 supplied the full
+one-higher integer grid, the mixed low-label pairs, and exact elimination
+of adjoint minus factors, with their original weighted-trace consumers.
+The present turn attacks the remaining adjoint-plus input (P67.5).
+It derives an exact neighboring-energy comparison and supplies two
+uniform parameter families of that same original input. The full
+central positive-definite cone objective and (P62.13) remain unchanged.
+
+Let the actual SU(2) tuple have one chi_L factor of sign eta, one
+chi_2 plus factor, p defining plus factors, and q defining minus
+factors. Put n=p+q,D=n-2q. Write Psi for its original normalized
+product-Haar integral. In the matching case eta=(-1)^q and on
+n=2m+L>=L, the exact identity (P67.5) is
+
+    Psi=P_(m+1)(q;n+2)+P_(m+1)(q+2;n+2)-4P_m(q;n).  (P68.1)
+
+Every P is the boundary increment of Theorem 65A at its stated length.
+The subtraction by four is retained throughout. The general sign of
+this difference is not inferred from the separate signs in section 66.
+
+**Self-double-check last before recording (main-agent self-review).**
+Independently derived both added-factor coefficient transforms from
+(1+z)^2 and (1-z)^2 and retained their different D values D+2 and D-2.
+Recomputed the three neighboring-energy identity by clearing the
+positive denominators and checking free adjacent coefficients U,V;
+the negative coefficient is explicit below. Derived all three
+fixed-deficit formulas separately from the original coefficient
+recurrence, then recompleted the quadratic in D^2 in the third
+formula. For the second supplier, reconstructed the full two by two
+matrix, verified its first diagonal by a positive factorization,
+and verified the determinant's value at zero, second derivative,
+and quadratic-family endpoint by independent polynomial cancellation.
+Replayed strict concavity on the entire admissible interval, including
+D=0 and both all-same-sign endpoints. Ten direct original polynomial
+Haar integrals agree with the suppliers, including degree and parity
+boundaries, both higher signs, and q>n/2. The cases (L,n,q)=(4,22,15)
+and (4,22,11) give respectively Psi=999192 and Psi=165528. Finally
+replayed the original factor-count trace identity and the uniformly
+absolutely convergent full-cone expansion, retaining the variable
+number of active defining positions in mixtures. The completed
+cancellation audit supplies these checks; no unfinished symbolic
+inversion or numerical sweep is used as a proof prerequisite.
+
+**Proposition 68A (exact three-neighbor comparison with its negative
+coefficient).** For integers L>=2,m>=2,n=2m+L and 0<=q<=n, put
+
+    B_D=D^2+2Lm+3L+2m^2+8m+4.
+
+The original adjoint-plus integral satisfies
+
+    Psi= [2(L+2)/(m+L+3)] P_(m+1)(q;n)
+          +[2B_D/((m+2)(m+L+3))] P_m(q;n)
+          -[2L/(m+2)] P_(m-1)(q;n).                 (P68.2)
+
+Consequently the exact still-needed comparison on these actual
+coefficients is
+
+    L(m+L+3) P_(m-1)
+       <=(m+2)(L+2) P_(m+1)+B_D P_m.               (P68.3)
+
+Theorem 66D supplies each separate P on the right and left, but
+not their relative size. Equation (P68.2) is a signed identity,
+not a positive combination claim.
+
+**Proof.**
+
+1. Use the fixed-length coefficients K_j=K_j(q;n), and put
+   U=K_m,V=K_(m-1), M=m+1,N=m+L+2. Appending two
+   defining plus or two defining minus factors gives
+
+       K_j^+=K_j+2K_(j-1)+K_(j-2),
+       K_j^-=K_j-2K_(j-1)+K_(j-2).
+
+   Their length is n+2 and their D values are respectively
+   D+2,D-2. At the new degree m+1, the two adjacent pairs
+   are (T+2U,S+2V) and (T-2U,S-2V), where the fixed-length
+   degree recurrence gives
+
+       T=K_(m+1)+K_(m-1)=(D U-L V)/M,
+       S=K_m+K_(m-2)=((L+2)U+D V)/N.               (P68.4)
+
+2. Define the homogeneous energy expression
+
+       E_(j,H)(d;u,v)
+        =[(j+1)(H+2)u^2+(j+H+2)H v^2
+                              -d(H+1)uv]/[(j+1)(j+H+2)].
+
+   Lemma 65B identifies it with P_j on the actual adjacent
+   coefficients. Thus (P68.1) becomes
+
+       Psi=E_(m+1,L)(D+2;T+2U,S+2V)
+            +E_(m+1,L)(D-2;T-2U,S-2V)
+            -4E_(m,L)(D;U,V).                     (P68.5)
+
+   The three neighboring increments at fixed length n are
+
+       P_(m+1)=E_(m+1,L-2)(D;(D U-(m+L+1)V)/M,U),
+       P_m=E_(m,L)(D;U,V),
+       P_(m-1)=E_(m-1,L+2)(D;V,(D V-m U)/N).
+
+   All their labels are nonnegative and all denominators
+   are positive in the stated domain. In particular L=2
+   permits label zero for the first neighbor, whose
+   algebraic identity still holds.
+
+3. Substitute these three expressions and (P68.4) in the
+   right side of (P68.2). Collecting U^2,UV,V^2 gives
+   exactly (P68.5); equivalently the difference is the
+   zero quadratic polynomial. This is an identity before
+   any coefficient sign estimate, so it also holds at
+   D=0 or U=0. Multiplication by the positive factor
+   (m+2)(m+L+3)/2 gives (P68.3). The coefficient of
+   P_(m-1) is strictly negative for L>=2; hence the
+   proposed inference from positivity of the three
+   individual increments is not a supplied argument.
+   Only their actual comparison is demanded. QED.
+
+**Theorem 68B (all adjoint-plus inputs through degree deficit four).**
+For every L>=1 and every p,q>=0 with n=p+q<=L+4, the original
+one-chi_L, one-adjoint-plus tuple satisfies Q3 for either sign eta.
+On its supported matching-sign cases it is strictly positive.
+The label L and defining minus count q are unbounded in this family.
+
+**Proof.**
+
+1. Odd total minus count gives zero. Central negation gives
+   zero if n-L is odd. By the full one-higher formula
+   preceding (P67.5), Psi=0 if n<L-2. At the first possible
+   degree n=L-2, each raised one-higher integral has
+   degree L and value two by Theorem 65A, and the unraised
+   integral is zero. Thus Psi=2. This endpoint is reached
+   only at L>=2.
+
+2. On n=L,L+2,L+4 put t=D^2>=0. Direct use of the
+   coefficient recurrence gives respectively
+
+       Psi=n+t,                                  n=L,
+
+       Psi=[t^2+2t+3n(n-2)]/6,                   n=L+2,
+
+       Psi=[t^3+(10-3n)t^2+(9n^2-42n-56)t
+                    +9n^3-36n^2+108n-144]/72,    n=L+4.
+                                                        (P68.6)
+
+   To derive these formulas uniformly, start with
+
+       K_0=1, K_1=D,
+       K_2=(D^2-n)/2,
+       K_3=D(D^2-3n+2)/6,
+       K_4=[D^4-(6n-8)D^2+3n(n-2)]/24.
+
+   Their boundary increments are
+
+       P_0=1,
+       P_1=(D^2+n-2)/2,
+       P_2=[D^4-10D^2+3n(n-2)]/12,
+       P_3=[D^6-(3n+20)D^4
+                   +(9n^2-6n+64)D^2+9n^3-54n^2]/144.
+
+   For deficit 2m=0,2,4 insert P_(m+1) at (n+2,D+2)
+   and (n+2,D-2), and subtract four times P_m at (n,D),
+   exactly as in (P68.1). Cancellation gives (P68.6).
+   Thus these are original full-character integrals,
+   not estimates on separate frequencies.
+
+3. The first formula is positive because n=L>=1. In
+   the second formula n=L+2>=3, so its constant term
+   and denominator are positive and its other terms
+   are nonnegative.
+
+4. If n=L+4>=6, the numerator of the third formula has
+   the explicit decomposition
+
+       t[t-(3n-10)/2]^2
+           +(27/4)(n-6)(n+2)t
+           +9(n-2)(n^2-2n+8)>0.                  (P68.7)
+
+   The first two terms are nonnegative, and the last is
+   strictly positive, since n^2-2n+8=(n-1)^2+7.
+   If n=5,L=1, the higher character itself is defining;
+   absorb that signed factor into the defining list.
+   The resulting one-adjoint tuple is supplied by
+   Theorem 66D. Strictness here also follows from
+   Lemma 65B for the resulting label-two input at six
+   defining factors: its threshold is T(6,9)=64>36.
+
+5. Steps 1--4 cover every n<=L+4 with the relevant
+   parity. The nonmatching higher sign has odd total
+   minus count and gives zero. No continuation away
+   from the integer minus-count grid is required,
+   even though (P68.7) happens to be nonnegative for
+   all real t>=0 at its stated n. QED.
+
+**Lemma 68C (a concave determinant for the full adjoint-plus energy).**
+For L>=1,m>=1,n=2m+L let R_D(U,V) be the homogeneous quadratic
+on the right of (P68.5), with (P68.4) defining T,S. Write
+
+    R_D(U,V)=a_D U^2+c_D UV+b_D V^2,
+    A_D=[[a_D,c_D/2],[c_D/2,b_D]],
+    z=(L+1)^2, M=m+1,N=m+L+2,
+    H(t)=4M^2(M+1)^2 N^2(N+1)^2 det A_D, t=D^2.     (P68.8)
+
+Then a_D>0 for every real D. The expression H(t) is a cubic
+polynomial in t and satisfies
+
+    H(0)=(z-1)[(n+5)^2-z]
+             [n^2(n+4)^2+2(z+1)n^2+8(z+1)n+(z-1)^2]>0,
+
+    H''(t)=-8[(n+5)^2+2z^2-11z]-24zt<0,   t>=0.    (P68.9)
+
+If H(n^2)>=0, the original matching-sign Psi is nonnegative for
+every integer q=0,...,n. If H(n^2)>0, every such Psi is strictly
+positive. This condition is a proved sufficient supplier, not a
+new hypothesis of the full theorem.
+
+**Proof.**
+
+1. Expanding (P68.5) gives the first diagonal in the
+   explicitly positive form
+
+       a_D=2(L+2)/[(M+1)(N+1)]
+            *[D^2(M(M+1)+L+1)/(M^2 N)
+                      +2m(N+1)/N+L(L+2)(N+1)/N^2]>0.
+
+   Every denominator is positive, the first summand is
+   nonnegative, and the last two are positive. This
+   follows on the full homogeneous quadratic, without
+   dividing by the possibly zero coefficient U.
+
+2. Obtain b_D,c_D by the same expansion and compute
+   a_D b_D-c_D^2/4. Multiplication by the positive
+   denominator in (P68.8) gives a polynomial in D^2.
+   Its cubic coefficient is -4z, and its quadratic
+   coefficient is -4[(n+5)^2+2z^2-11z]. Its constant
+   coefficient is exactly H(0) in (P68.9). These
+   identities give the displayed second derivative;
+   the linear coefficient is not needed for the
+   concavity argument. Every statement is an identity
+   of the explicit quadratic (P68.5), not an estimate.
+
+3. Since L<=n, one has 4<=z<=(n+1)^2<(n+5)^2.
+   Every factor in H(0) is positive. Moreover
+
+       2z^2-11z=2(z-4)^2+5(z-4)-12>=-12.
+
+   Thus (n+5)^2+2z^2-11z>0 and H''(t)<0 on t>=0.
+   In particular H is strictly concave on [0,n^2].
+
+4. A concave function lies above the chord joining its
+   endpoint values. If H(n^2)>=0, H(t)>=0 throughout
+   [0,n^2], using H(0)>0. Hence det A_D>=0 whenever
+   |D|<=n. Together with a_D>0 this implies that the
+   real symmetric matrix A_D is positive semidefinite.
+   If H(n^2)>0, the same chord is strictly positive
+   everywhere, so A_D is positive definite on the
+   whole interval.
+
+5. Every actual minus count obeys |D|=|n-2q|<=n.
+   Substitute its actual U,V in (P68.5). The matrix
+   sign supplies that original Psi. In the definite
+   case U,V cannot both vanish: the degree recurrence
+   would propagate their common zero back to K_0=1.
+   Thus strict definiteness gives Psi>0. This applies
+   also at D=0 and the two interval endpoints. QED.
+
+**Theorem 68D (all signs with an adjoint on the quadratic-length
+family).** For every integer L>=3 put
+
+    n=(L+1)^2-3.
+
+One chi_L factor, one chi_2 factor, and n defining factors satisfy
+the original Q3 integral for every sign pattern. When the adjoint
+sign is plus, every matching-sign integral is strictly positive.
+The higher label, tuple length, and minus count are all unbounded.
+
+**Proof.**
+
+1. If the adjoint sign is minus, Proposition 67D replaces
+   it exactly by one defining plus and one defining minus
+   factor. Theorem 66D then supplies the entire original
+   integral at every sign count. If the adjoint sign is
+   plus and the total minus count is odd, exchange gives
+   zero. Thus only the matching plus-adjoint case remains.
+
+2. Here z=(L+1)^2>=16 and
+
+       n=z-3, m=(n-L)/2=(L-1)(L+2)/2>=1.
+
+   These are integers; n-L=(L-1)(L+2) is even. On this
+   family the endpoint of the explicit determinant in
+   Lemma 68C simplifies to
+
+       H(n^2)=4[9z^6-84z^5+317z^4-562z^3
+                                      +352z^2+160z-256]. (P68.10)
+
+   This is obtained by substituting n=z-3,t=(z-3)^2
+   in (P68.8). In particular no fitting from finitely
+   many labels is used.
+
+3. Its sign follows from grouping the whole polynomial as
+
+       H(n^2)/4
+          =z^5(9z-84)+z^3(317z-562)+352z^2+160z-256>0.
+
+   Each of the first two terms is positive for z>=16,
+   and the last three together are positive already
+   for z>=1. Thus Lemma 68C gives a positive definite
+   energy matrix for every |D|<=n, and the original
+   matching-sign Psi is strictly positive. Together
+   with step 1 this supplies all original signs.
+   The case L=2 of this length family is independently
+   supplied by Theorem 67C; it is not needed for the
+   endpoint estimate at z>=16. QED.
+
+**Corollary 68E (original channel consumer and a continuous family
+through nine defining positions).** Every actual tuple supplied by
+Theorems 68B and 68D satisfies t_adj>=-3t_0 in its original full
+isotypic spaces. Furthermore the original Q3 integral holds on SU(2)
+for lists consisting of:
+
+- one arbitrary real continuous central positive-definite function;
+- one function in cone{1,chi_1,chi_2}; and
+- at most nine functions in cone{1,chi_1};
+
+with arbitrary signs on every position. This is a full-cone consumer
+at the first function's position; the other positions retain their
+explicitly stated cones. No restriction to nine positions is imposed
+on the full project objective.
+
+**Proof.**
+
+1. Corollary 62F gives
+
+       Psi=2^(p+q+2)(t_0+t_adj/3)
+
+   on each original two-higher tuple. Theorems 68B and
+   68D supply this very integral and therefore its
+   original weighted channel bound. If an adjoint-minus
+   replacement is used, retain this original factor
+   count and tensor representation in the trace identity;
+   only its scalar integral is replaced by an equal one.
+   All original isotypic multiplicities remain present.
+
+2. Expand the finite mixtures and the arbitrary function's
+   actual nonnegative character series from Lemma 28A.
+   A trivial minus factor gives zero; a trivial plus
+   factor gives two and deletes that position. If the
+   second position contributes a trivial or defining
+   character, the remaining tuple is supplied by
+   Theorem 66D, at every label and count.
+
+3. If the second position contributes a chi_2 minus
+   factor, Proposition 67D again leaves a one-higher
+   defining tuple supplied by Theorem 66D. It remains
+   to treat an adjoint-plus term with some chi_L of
+   either sign and n<=9 active defining factors.
+
+4. For L=0 the higher-minus term is zero, and the
+   higher-plus term reduces to twice a one-adjoint
+   defining integral, supplied by Theorem 66D. For
+   L=1 absorb the higher factor into the defining list
+   and use the same theorem. For L=2,3 the full pair
+   supplier is respectively Theorem 67C or Theorem 67B.
+   For L>=5, n<=9<=L+4, so Theorem 68B applies.
+   For L=4, an odd n gives zero by central parity;
+   every remaining n is <=8=L+4 and is also supplied
+   by Theorem 68B. This exhausts every label in the
+   infinite character expansion, not a truncation.
+
+5. Lemma 28A bounds the absolute expanded product by
+   the summable majorant product_i 2f_i(e). It therefore
+   justifies uniform absolute convergence and interchange
+   of that sum with normalized product-Haar integration.
+   Every resulting atomic integral is nonnegative by
+   steps 2--4, so the original continuous-function
+   integral is nonnegative as well. QED.
+
+**Acceptance receipt.** The exact original difference (P67.5) is now
+supplied at all counts whenever n<=L+4, including its zero and
+highest-degree boundaries, and at all signs on the unbounded
+quadratic-length family with an additional adjoint factor. The
+continuous consumer in Corollary 68E exhausts all higher labels
+for its stated lists, using the same absolute expansion bound as
+Lemma 28A. These are sign suppliers for actual original tuples;
+they are not positivity assertions for individual frequencies or
+for an arbitrary function of the matrix entries.
+
+The proposed nonnegative combination of the three neighboring
+energies was replaced by its exact signed identity (P68.2).
+Its negative coefficient is a defect of that stronger proposed
+supplier, not a counterexample to Q3 and not a rejection of all
+possible comparisons. On the remaining adjoint-plus inputs,
+the first exact term is (P68.3) on the actual coefficient sequence.
+The supplied low-label pair theorems and Theorem 68B already cover
+L<=3 and m<=2; the quadratic-length inputs above are supplied as
+well. Outside those families the natural next construction is to
+bound the relative sizes of the neighboring boundary increments
+in (P68.3), retaining its factor L(m+L+3). The scalar energy matrix
+and its concave determinant are also explicit for those same
+inputs; the sufficient endpoint test is not presumed positive
+on the entire grid. All arbitrary higher-function tuples and
+all higher-rank groups remain quantifiers of the active objective.
+No unrestricted (P62.13) or whole-goal completion is claimed.
+
+
+## Full adjoint-plus supplier by square augmentation and a central overlap
+
+The preceding goal turn was progress: section 68 supplied the original
+adjoint-plus integral on two uniform families and consumed it on the
+continuous family through nine defining positions. The present turn
+supplies the entire remaining adjoint-plus integer grid. It does so
+by adding a square to the two already proved boundary energies, then
+using the determinant of section 68 only where the resulting middle
+coefficient is negative. The two regions overlap by an explicit
+parameter bound, so no minus-count or length restriction remains
+in this one-adjoint supplier.
+
+The source is the actual one-higher sign in Theorem 66D and the
+explicit homogeneous matrices of Lemmas 65B and 68C. The consumer
+is the original difference (P67.5), equivalently (P68.3), followed
+by the full original channel identity (P62.9) and Lemma 28A. None
+of these consumers is replaced by pointwise character positivity.
+
+For L>=3,m>=1,n=2m+L, put
+
+    M=m+1, N=m+L+2, N_1=m+L+1, D=n-2q, t=D^2,
+
+    C=L N^2+L M(n+5)+M^2>0,
+    J=(m+2)[(m+2)((n+2)^2+2L N)-L^2 N_1(n+2)],
+
+    A_*=L^4+4L^3(m+2)+L^2(6m^2+24m+23)
+           +L(4m^3+30m^2+56m+32)+16M^3>0.          (P69.1)
+
+These letters are coefficients of the homogeneous energy, not
+new free constants or adjoint spectral channels. In particular
+C in this section is not the polynomial C=s^2+d^2-4 from section 67.
+All thresholds below are derived from (P69.1).
+
+**Self-double-check last before recording (main-agent self-review).**
+Derived the square-augmented identity independently of the signed
+three-neighbor identity, using the explicit added-factor transforms
+and free U,V, then verified exact cancellation with the compact
+C,J,A_* expressions. Reconstructed the threshold-gap polynomial
+and checked each of its four coefficients for the entire L>=3
+range. Independently checked the strict bound below n^2 and the
+strict overlap with the lower-label energy threshold. At the
+central endpoint checked the determinant of the pullback map;
+its invertibility is necessary to transfer positive definiteness.
+Used only the homogeneous matrix algebra at that real endpoint,
+not an unproved real-minus-count extension of Theorem 66D.
+Replayed strict concavity with both endpoint determinants positive.
+In the outer region checked separately U!=0 and U=0, retaining
+the neighboring energy when the square vanishes. Eight original
+Haar character expansions agree with the construction, including
+both regions at n=1000,L=4, q=5 and q=500; an outer-region zero
+square at (n,L,q)=(26,20,13) has original value Psi=10270.
+The first previously unsupplied fixed-deficit inputs (10,4,3)
+and (11,5,4) give Psi=318 and Psi=342. These audits use actual
+Clebsch--Gordan multiplicities before the boundary conversion.
+Finally replayed (P62.9) on the original two-higher tensor tuple
+and the full continuous expansion at unrestricted length, including
+all adjoint-minus replacements. The unfinished older symbolic
+inversion is not used; the completed cancellation and original
+integral checks supply the verification reported here.
+
+**Lemma 69A (square-augmented comparison).** Let L>=3,m>=1,n=2m+L
+and let R_D(U,V) be the full homogeneous adjoint-plus energy in
+(P68.5). Define the two fixed-length homogeneous energies
+
+    E_0=E_(m,L)(D;U,V),
+    E_+=E_(m+1,L-2)(D;(D U-N_1 V)/M,U),
+
+using the explicit E_(j,H) from Proposition 68A. Then, for every
+real D and U,V,
+
+    R_D(U,V)=alpha(t) E_+ + beta(t) E_0 + sigma(t) U^2, (P69.2)
+
+where
+
+    alpha(t)=2(L+1)[A_*+M^2(n^2-t)]
+                            /[L N^2(N+1)(n+3)],
+
+    beta(t)=2(Ct-J)/[L(m+2)N(N+1)(n+3)],
+
+    sigma(t)=2(L+1)[(n+2)^2-t][(n+4)^2-t]
+                            /[L(m+2)N^2(N+1)(n+3)]. (P69.3)
+
+In particular alpha(t),sigma(t)>0 for 0<=t<=n^2. On the actual
+integer-count coefficients U=K_m(q;n),V=K_(m-1)(q;n), one has
+E_0=P_m(q;n) and E_+=P_(m+1)(q;n). Both are supplied as nonnegative
+by Theorem 66D. No such sign is presumed at noninteger q.
+
+**Proof.**
+
+1. By (P68.4), the two adjacent pairs after appending two
+   plus or two minus defining factors are
+
+       (T+2U,S+2V), (T-2U,S-2V),
+       T=(D U-L V)/M, S=((L+2)U+D V)/N.
+
+   Their D parameters are D+2 and D-2. Hence their
+   original signed difference is the explicit quadratic
+   R_D from (P68.5). The lower-label energy E_+ uses
+   the same fixed-length recurrence
+
+       K_(m+1)=(D U-N_1 V)/M.
+
+2. Substitute the displayed E_0,E_+,T,S in both sides
+   of (P69.2). Clearing the denominators, the coefficients
+   of U^2,UV,V^2 agree. The coefficient of E_0 factors
+   as 2(CD^2-J)/[L(m+2)N(N+1)(n+3)], with C,J as
+   in (P69.1). The square coefficient factors into
+   [(n+2)^2-D^2][(n+4)^2-D^2] as in (P69.3).
+   The remaining coefficient is alpha; its numerator
+   at D^2=n^2 is exactly the positive polynomial A_*
+   in (P69.1), and its slope in D^2 is -M^2.
+   This proves the identity of homogeneous quadratics,
+   including D=0 or U=0, before any sign assertion.
+
+3. All denominators are positive. For 0<=t<=n^2,
+   A_*+M^2(n^2-t)>0 and both factors in sigma are
+   positive. This proves their stated signs.
+
+4. The actual coefficient recurrence identifies E_0
+   and E_+ with the two boundary increments through
+   Lemma 65B. Their actual higher labels are L and
+   L-2>=1 at the same length n and integer count q.
+   Both supported parity differences are even. Thus
+   Theorem 66D supplies both signs with its existing
+   hypotheses. The square U^2 is an ordinary real
+   square. The only possibly negative coefficient
+   is beta, and it is treated next. QED.
+
+**Lemma 69B (uniform threshold overlap).** If J>0, the threshold
+
+    b=J/C
+
+satisfies
+
+    0<b<(m+2)N_1<n^2,
+    b<4(m+2)N_1 L(L-2)/(L-1)^2.                    (P69.4)
+
+These are uniform bounds for L>=3,m>=1. If J<=0, beta(t)>=0 on
+all t>=0, so no positive threshold is needed.
+
+**Proof.**
+
+1. A direct expansion of (P69.1) gives
+
+       [(m+2)N_1 C-J]/(m+2)
+          =3(L-1)m^3+(8L^2+9L-13)m^2
+               +(7L^3+20L^2+2L-17)m
+               +2L^4+9L^3+10L^2-6L-7>0.           (P69.5)
+
+   For L>=3 every coefficient in this polynomial in m
+   is positive. For the last coefficient, in particular,
+   10L^2-6L-7=10L(L-1)+4L-7>0; the remaining
+   quartic and cubic terms are positive. The other
+   coefficients are positive by the same elementary
+   bounds L>=3. Hence J<(m+2)N_1 C, and C>0 gives
+   b<(m+2)N_1 whenever J>0.
+
+2. The strict bound below n^2 is
+
+       n^2-(m+2)N_1
+          =3m(m+L-1)+(L-1)^2-3>0,
+
+   because m>=1,L>=3. Thus every positive threshold
+   lies inside the admissible squared-D interval.
+
+3. The lower-label energy threshold is
+
+       e_+^2=4(m+2)N_1 L(L-2)/(L-1)^2.
+
+   Since L(L-2)/(L-1)^2=1-1/(L-1)^2>=3/4,
+   e_+^2>=3(m+2)N_1>b. This is the strict overlap
+   in (P69.4). Finally, J<=0 makes Ct-J>=0 for
+   all t>=0 directly, proving the last assertion.
+   QED.
+
+**Theorem 69C (the full adjoint-plus energy on actual coefficients).**
+For all L>=3,m>=1,n=2m+L and integer q=0,...,n, the original
+matching-sign adjoint-plus integral is strictly positive. Equivalently,
+the difference (P68.1) is positive on this entire integer grid.
+
+**Proof.**
+
+1. Put U=K_m(q;n),V=K_(m-1)(q;n) and t=(n-2q)^2,
+   so 0<=t<=n^2. The exact original integral is
+   Psi=R_D(U,V) by (P68.5). The two source energies
+   in (P69.2) are nonnegative by Lemma 69A.
+
+2. First suppose Ct-J>=0. All three coefficients in
+   (P69.2) are now nonnegative, with alpha,sigma
+   strictly positive. If U!=0, the square term gives
+   Psi>0. If U=0, V cannot vanish as well, by backward
+   propagation through the degree recurrence to K_0=1.
+   Then the actual next coefficient is -N_1 V/M!=0,
+   and
+
+       E_+=L/N_1 *(-N_1 V/M)^2>0.
+
+   Hence alpha E_+ gives strict positivity also when
+   the square vanishes. This case covers every count
+   when J<=0, and all t>=b when J>0.
+
+3. Suppose J>0 and 0<=t<b=J/C. At the auxiliary real
+   endpoint D^2=b, beta is zero. By Lemma 69B,
+   b<e_+^2. The homogeneous matrix in the proof of
+   Lemma 65B, at degree m+1 and label L-2, is
+   therefore positive definite there. This assertion
+   is its explicit determinant test on a real matrix;
+   it does not invoke Theorem 66D at a noninteger q.
+
+4. The map from the original coefficient variables to
+   that endpoint energy's variables is
+
+       (U,V) -> ((D U-N_1 V)/M,U).
+
+   Its determinant is N_1/M>0. Thus its pullback E_+
+   is positive definite on all nonzero (U,V). Since
+   alpha(b)>0 and sigma(b)>0, (P69.2) at b shows
+   that R_D is positive definite as well. In particular
+   the determinant polynomial H of (P68.8) obeys
+   H(b)>0. Its denominator normalization is positive.
+
+5. Lemma 68C also gives H(0)>0 and strict concavity
+   on [0,b], which lies inside [0,n^2] by Lemma 69B.
+   The chord between these two positive endpoint
+   values gives H(t)>0 throughout that interval.
+   The first diagonal a_D>0 from Lemma 68C then
+   makes the full symmetric matrix of R_D positive
+   definite for every 0<=t<=b. On the actual U,V,
+   which are not both zero, this gives Psi>0.
+
+6. Steps 2 and 5 exhaust the entire admissible interval.
+   In the outer step the needed neighboring signs were
+   only used at the actual integer count. In the central
+   step only polynomial matrix identities were extended
+   to a real endpoint. No full real-grid Q3 positivity
+   contradicted by Proposition 65D is assumed. QED.
+
+**Theorem 69D (one arbitrary higher character, one adjoint, arbitrary
+defining length and all signs).** For every L,p,q>=0 and eta,xi in
+{+1,-1}, the original SU(2) tuple with one chi_L of sign eta,
+one chi_2 of sign xi, p defining plus factors and q defining minus
+factors satisfies Q3. There is no label, length, or minus-count
+restriction. In particular the entire adjoint-plus comparison
+(P68.3) on its stated actual inputs is supplied.
+
+**Proof.**
+
+1. If xi=-1, Proposition 67D replaces the adjoint-minus
+   factor exactly by one defining plus and one defining
+   minus factor. Theorem 66D supplies that equal original
+   integral for every higher label and higher sign.
+
+2. Suppose xi=+1. Nonmatching eta has odd total minus
+   count and gives zero. At L=0 a trivial higher-minus
+   factor is zero; a trivial higher-plus factor is two,
+   leaving a one-adjoint defining tuple supplied by
+   Theorem 66D. At L=1 absorb the higher factor into
+   the defining list and use the same theorem. At
+   L=2 use the full equal-adjoint pair Theorem 67C.
+
+3. It remains to treat L>=3, eta=(-1)^q. Central
+   negation gives zero if n-L is odd; the original
+   difference of one-higher integrals gives zero if
+   n<L-2. At n=L-2 and n=L, Theorem 68B supplies
+   the original integral. Otherwise the supported
+   count is n=2m+L with m>=1, supplied on its
+   entire grid by Theorem 69C. Thus every original
+   factor and sign pattern is covered. QED.
+
+**Corollary 69E (full original-channel return).** Every actual tuple
+of Theorem 69D satisfies t_adj>=-3t_0 in the original full isotypic
+spaces of Theorem 62D, including all multiplicities. No suppression
+constant smaller than three is used.
+
+**Proof.**
+
+1. Apply Corollary 62F to the original tensor tuple,
+   whose factor count is p+q+2. It gives
+
+       Psi=2^(p+q+2)(t_0+t_adj/3).
+
+   Theorem 69D proves the sign of exactly this original
+   normalized product-Haar integral. Its sign is therefore
+   the claimed bound in the original spaces. The source
+   neighboring energies in Lemma 69A have different
+   higher labels, but their scalar identities were fully
+   substituted in (P69.2); their pin projectors were not
+   identified with those of the consumer. If an adjoint
+   minus is replaced, equality of the original integral
+   is used and this trace identity still retains the
+   original count and representation. QED.
+
+**Corollary 69F (unrestricted defining length for the continuous
+one-adjoint consumer).** On SU(2), Q3 holds at arbitrary finite length
+and with arbitrary signs for a list containing one arbitrary real
+continuous central positive-definite function, one other function
+in cone{1,chi_1,chi_2}, and all remaining functions in cone{1,chi_1}.
+The nine-position restriction of Corollary 68E is removed.
+
+More generally, keep the first arbitrary function with either sign
+and the second function with either sign; allow every remaining
+plus function in cone{1,chi_1} and every remaining minus function
+in cone{1,chi_1,chi_2}. The number of those additional adjoint-containing
+minus positions is unrestricted.
+
+**Proof.**
+
+1. Expand the first function using Lemma 28A's actual
+   SU(2) characters with nonnegative coefficients and
+   finite identity-value sum. Expand all other functions
+   using their finite nonnegative coefficients. Trivial
+   minus factors give zero; trivial plus factors give
+   factors two and delete positions.
+
+2. In the first family, a trivial or defining atom at
+   the second position leaves a one-higher tuple supplied
+   by Theorem 66D. An adjoint atom leaves precisely a
+   tuple of Theorem 69D, with the original two signs
+   and an unrestricted number of defining factors.
+   Hence every atomic integral is nonnegative.
+
+3. In the enlarged family, every adjoint atom outside
+   the two designated positions has a minus sign.
+   Apply the exact identity (P67.4) to all those atoms.
+   This adds defining factors and preserves the complete
+   original integrand. There is still at most one
+   additional adjoint factor, namely at the second
+   position. Thus each term reduces to Theorem 66D
+   or Theorem 69D, at its unrestricted defining length.
+
+4. The sum of absolute original product bounds is at
+   most product_i 2f_i(e) by Lemma 28A. The adjoint-minus
+   replacements are identities, so no larger summability
+   demand is introduced by them. This finite bound
+   justifies uniform absolute convergence of the product
+   expansion and exchange with normalized product-Haar
+   integration. The convergent sum of nonnegative atomic
+   integrals proves both continuous-function assertions.
+   QED.
+
+**Acceptance receipt and the next original consumer.** The entire
+adjoint-plus supplier left in sections 67--68 is now consumed, without
+a degree window, label cap, length cap, or restricted minus count.
+The source supplies the exact signed difference (P67.5), and the
+return to its original full-channel inequality is Corollary 69E.
+The continuous consumer in Corollary 69F exhausts the arbitrary
+function's entire character expansion and removes the former nine
+position cap. This is progress by a proved square-augmented identity
+and a strict overlap of two supplied sign regions, not by a
+certificate sweep or a positivity assertion for a stronger matrix
+compression.
+
+The unrestricted full-scope consumer (P62.13) still includes several
+arbitrary higher characters and every higher-rank group. In the
+rank-one two-higher expression (P66.18), the complete class with one
+adjoint is now supplied; two arbitrary higher labels are retained
+as the next original signed term, including a label-three factor
+beside an arbitrary higher label. Another direct extension within
+that original construction is a second adjoint-plus factor:
+
+    E[s^p d^q (chi_L(x)+eta chi_L(y))
+                         (chi_2(x)+chi_2(y))^2].
+
+Its weight is (s^2+d^2-4)^2/4. Although that weight is a square,
+its product with the higher character is signed, so arbitrary
+squared-weight closure is not inferred from Theorem 69D.
+The natural construction is to compose the exact added-factor
+transforms and retain the resulting boundary energies and squares;
+its first unproved input has two adjoint-plus factors and one
+arbitrary chi_L, with unrestricted defining counts. Any supplier
+must return to (P62.9) on that original three-higher tuple, rather
+than identify its pins with the neighboring source tuples. All
+other full-function and group quantifiers remain active. No
+unrestricted (P62.13) or whole-goal completion is claimed.
