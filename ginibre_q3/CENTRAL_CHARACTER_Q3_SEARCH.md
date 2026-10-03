@@ -88591,3 +88591,1477 @@ all pair-graph cases, the small-length exception, and the exact
 return to `(P53.2)` without changing `H_free`. Accepted closure is
 all three-pair target capacity; generic larger-cut targets and the
 full atomic sign are not credited as supplied.
+
+
+## Capacity for larger cuts by forced tensor-product blocks
+
+The preceding checkpoint changed authoritative state: sections 56--59
+are committed and pushed as 380fcd2. Section 59 supplied the entire
+three-pair capacity class, including independent matching cubes.
+The full acceptance criterion remains (P28.2) for every actual
+real-atom tuple and every nonempty even minus set. The present hard
+consumer is still the original inequality (P53.2), now for remaining
+targets that can have arbitrarily large sides. Work below is closure
+of a larger-cut parameter class of that inequality, not a replacement
+of the full positive cone by a block-restricted cone.
+
+The exact failed application is this: Lemma 59A forces surviving
+source cuts to leave certain blocks unsplit, but Theorem 59F takes
+nontrivial actual atoms at its factor positions. A forced block
+carries a finite self-dual tensor representation, often with trivial
+constituents. Removing those constituents at the original integral
+does not justify removing them from this capacity kernel. The
+construction below retains them, proves the missing capacity cases,
+and then transports the resulting map to the same original targets.
+
+The source statement and return test are explicit. For the original
+allowed set A in (P58.1), form the connected components of its
+forbidden positive equal-atom pair graph. Let B be those targets in A
+that are unions of whole components. The return test is an injection
+from the entire original K_A into the actual target copies H_q for
+q in B, provided that B has at most two members, or has three members
+each represented by a union of two components. No additional source
+orthogonality to allowed targets in A without B is imposed.
+
+The first still-unsupplied general statement remains (P53.2) on all
+original target subsets. Its current three-target case allows arbitrary
+proper positive cuts, with the group, actual atoms, tuple length, and
+nonempty even minus set chosen before the kernel vector; its required
+space is the full original K_A and its capacity is the sum of the
+dimensions of the original remaining targets. The consumer uses an
+injective linear map, with constants allowed to depend on the finite
+input, and no enlargement of H_free. The bounds proved below are
+stronger quantitative conclusions of the construction, not new
+assumptions in that demand.
+
+**Double-check immediately before recording the supplier.** Recomputed
+the trivial-factor cases in the actual cut spaces: a trivial plus
+singleton has Q=Id; two trivial minus factors in the dependent
+six-position matching produce source spaces H,H,C,C and target spaces
+H,C,C; three trivial minus factors in the triangle produce four
+identical source spaces per coset. Checked the three normalized
+Hadamard rows against the zero-merge hyperplane, and the orthogonal
+C/C-perp splitting against its source norm. Rechecked that the
+independent cube's even and odd coordinate sums have equal squared
+norms, with no positive-membership argument needed when its target
+is H itself. Replayed the nontrivial-endpoint proofs of section 59
+with a trivial spectator, retaining every spectator invariant space.
+Independently checked the self-dual multiplicity decomposition,
+the two projector conditions in (P50.2) on each summand, and the
+exact equalities of original and grouped cut spaces. Finally checked
+that forbidding one remaining original target puts the grouped source
+in its corresponding smaller kernel, so that each output component
+factors through the original collected operators. The construction
+never uses a grouped H_free.
+
+**Lemma 60A (three-pair capacity includes trivial actual atoms).**
+For every actual-atom tuple, now including trivial atoms, and every
+nonempty even minus set, suppose A consists of three distinct proper
+positive pair classes. There is a linear map using the original
+triadic operators and target endomorphisms such that
+
+    L_A: K_A -> direct_sum_(q in A) H_q,
+    ||L_A r||^2 >= (1/4)||r||^2.                      (P60.1)
+
+Its component in H_q vanishes whenever every available triadic
+operator into that target vanishes on the input. Consequently this
+is the same available-map statement as Theorem 59F, without its
+nontrivial-factor restriction.
+
+**Proof.**
+
+1. A zero target has zero triadic maps. Removing it from the allowed
+   set changes no joint kernel, by (P50.2). If one of the three
+   targets is zero, use the zero-, one-, or two-target construction
+   of Lemma 53B, Theorem 54A, or Theorem 57C. Those statements
+   include trivial actual atoms: their proofs use the full four-cell
+   invariant decomposition, including the trivial label. Their
+   component kernel properties give the asserted implementation.
+   It remains to consider three nonzero targets.
+
+2. Suppose first that the number n of factor positions is at least
+   five. The singleton class of a trivial plus position is a proper
+   positive class and cannot be a pair class: its complement has
+   at least four positions. Its positive invariant space is the
+   entire H, so Q_singleton=Id_H. It is forbidden. The identity
+   (P50.2) therefore forces every original source coordinate to be
+   zero. Thus K_A=0 in this case.
+
+   We may henceforth suppose every trivial position has a minus
+   sign. Let t be their number. Distinct two-element sets give
+   distinct cut classes for n>=5. Any pair of trivial positions
+   is positive and has target space H and projector Id_H. If
+   t>=4 there are at least six such classes, more than three.
+   A forbidden one again forces K_A=0.
+
+3. If t=3, the same argument gives K_A=0 unless A consists exactly
+   of the three pairs between those positions. In this remaining
+   case all three actual target spaces are H. The allowed span
+   has rank two and the negative source indices split into
+   four-element cosets, as in Lemma 58A. Within a coset D, write
+   its indices as i_D and i_D+q for the three q in A.
+
+   Adding a pair of trivial positions changes no source invariant
+   space. The four spaces in D are therefore identical as
+   subspaces of H. Their original values sum to zero. Define
+
+       (L_A r)_q = sum_D r_(i_D+q),        q in A.      (P60.2)
+
+   The original coordinate spans from distinct cosets are
+   orthogonal by Lemma 58A. In one coset, put
+   b_D=sum_(q in A)||r_(i_D+q)||^2. The zero merge gives
+
+       ||r_(i_D)||^2
+           =||sum_(q in A)r_(i_D+q)||^2 <=3 b_D.
+
+   Thus the squared source norm is at most 4 b_D.
+   Sum over cosets to obtain (P60.1).
+   Each selected operator T_(i_D+q,q) fixes its source value,
+   since that whole source lies in H_q=H, by (P50.2).
+   This realizes (P60.2) in the original menu, with coefficient
+   Id on the selected operators and zero on the others.
+
+4. Suppose t=2, with trivial minus positions u,v. Their pair
+   q_0 must belong to A, or its forbidden identity target would
+   force K_A=0. The other two targets, q_1,q_2, cannot pair a
+   trivial and a nontrivial factor, since such a pair has no
+   invariant and the targets in this branch are nonzero. Thus
+   their endpoints are nontrivial and avoid u,v.
+
+   If the three classes are independent, label each negative
+   coset by g in F_2^3 using the three target generators, fixing
+   a base index once from the input. Even vertices have forbidden
+   pairwise differences, and so have mutually orthogonal original
+   values; the same holds for odd vertices. The zero merge gives
+   sum_even r_g=-sum_odd r_g and hence equality of the two sums
+   of squared coordinate norms. Consequently
+
+       L_A r=(sqrt(2) sum_D sum_(g even) r_(D,g), 0, 0)
+                 in H_(q_0) direct_sum H_(q_1)
+                                    direct_sum H_(q_2),
+       ||L_A r||^2=||r||^2.                           (P60.3)
+
+   Here H_(q_0)=H, and different coset outputs are orthogonal
+   on their original coordinate spans, exactly as in Lemma 58A.
+   The first component is a sum of the original operators
+   T_(i,q_0) with coefficients sqrt(2) or zero, since each
+   T_(i,q_0) fixes H_i. All other output components are zero.
+   This proves the available isometry in the independent case.
+
+5. If these three pair classes are dependent, their symmetric
+   difference is either empty or the entire position set.
+   The empty alternative is a physical triangle: a graph of
+   three distinct edges with every vertex of even degree must
+   be a triangle. That cannot contain q_0 and two edges avoiding
+   its endpoints. For the full-set alternative there are at most
+   six covered positions. Since n>=5 and the symmetric difference
+   of three pairs has even size, n=6 and all three edges are
+   disjoint. This is precisely the dependent matching case.
+
+   The negative singleton cut k={u} has H_k=H. Every index i
+   outside D=k+span(A) has i+k forbidden. Its original value
+   is orthogonal to H_k=H by (P50.2), hence zero. Thus the whole
+   K_A is supported on this one four-cut coset. In its order
+
+       k, k+q_0, k+q_1, k+q_2,
+
+   the source spaces are H,H,C,C, where
+
+       C=Inv(factors on q_1) tensor Inv(factors on q_2)
+          subset H.
+
+   The original target spaces for q_0,q_1,q_2 are H,C,C.
+   These equalities follow from the two trivial factors and
+   disjointness of the two remaining pairs, with no dimension
+   or multiplicity restriction on C.
+
+6. Construct an isometry on the whole local zero-merge space
+   H direct_sum H direct_sum C direct_sum C; restriction to
+   the actual K_A then suffices. Let P_C be the projection
+   onto C and write r_j=c_j+x_j, with c_j=P_C r_j.
+   We have x_3=x_4=0, x_2=-x_1, and sum_j c_j=0. Put
+
+       z_0=(c_1+c_2-c_3-c_4)/2 +(x_1-x_2)/sqrt(2),
+       z_1=(c_1-c_2+c_3-c_4)/2,
+       z_2=(c_1-c_2-c_3+c_4)/2.                     (P60.4)
+
+   The three coefficient rows on the c_j are an orthonormal
+   basis of the hyperplane perpendicular to (1,1,1,1).
+   Therefore sum_a||z_a||^2=sum_j||r_j||^2: the C-perp
+   contribution in z_0 is orthogonal to its C contribution
+   and has norm squared 2||x_1||^2, the full C-perp source
+   norm. The outputs lie in the original H,C,C targets.
+
+   Operators into q_0 are identities on all four source
+   spaces. Into q_1 or q_2 they are P_C on the two H sources
+   and identity on the two C sources. Indeed, on an H source
+   their positive and partner spaces both equal C, so (P50.1)
+   gives initial support C, and (P50.2) fixes C. On a C source
+   (P50.2) fixes the entire space. Hence every row of (P60.4)
+   is a sum of the original operators with target endomorphisms.
+   This supplies an available isometry, keeping every local
+   relation rather than assuming its additional kernels away.
+
+7. The cases t=0 and t=1 have only nontrivial target endpoints,
+   because a trivial/nontrivial pair target is zero. The proof
+   of Theorem 59F applies with arbitrary trivial spectators.
+   Here is the check of that extension at its actual suppliers.
+
+   The physical triangle argument of Theorem 58C uses absence
+   of invariants only for its three endpoint banks. Its outside
+   representation is unrestricted. Lemmas 59B--59C use only
+   the equal-atom endpoints of their forbidden pair detectors.
+   Their partner involutions and original cross-pair orthogonality
+   are unchanged by a spectator invariant.
+
+   In Lemma 59D, all dimensions and split flags concern the
+   three nontrivial endpoint atoms, not the spectators.
+   The single-cup and no-cup sector projectors preserve the
+   same original nonadjacent constraints. Its one- and
+   two-dimensional face estimates require only those endpoint
+   dimensions. In the fully split case the two spectator
+   modules U,V were explicitly arbitrary; the scalar
+   single-swap compression uses irreducibility of the endpoint
+   atom and leaves all of their invariant multiplicities.
+   A trivial spectator changes neither that calculation nor
+   the actual banded Gram on D_0^8. The critical cup projector
+   still concerns the chosen dimension-two endpoint pair.
+
+   The dependent matching of Lemma 59E has no spectators:
+   all six positions are endpoints. Thus it adds no case
+   requiring a nontrivial spectator. The canonical positive
+   splitting and component kernel factorization in Theorem
+   59F use only the commuting target pair projectors and the
+   original-coordinate form of their outputs. Those statements
+   also remain exact with a trivial spectator. These verified
+   applications give (P60.1) in both remaining cases.
+
+8. For completeness, if n<=3 there cannot be three distinct
+   proper positive pair classes with nonempty even minus set.
+   For n=4, such classes require four minus signs: with two
+   minus signs the two same-sign pairs are complements and
+   give only one class. Let t again count trivial factors.
+   A negative cut has a singleton side, so a nontrivial
+   singleton gives zero space and a trivial singleton gives H.
+
+   With t=0 or t=1 the merge is injective on its at most one
+   nonzero source. With t=3, H is the invariant space of a
+   single nontrivial atom and is zero. With t=2, the source
+   consists of two copies of H and its relation is (x,-x);
+   one positive partition puts the two trivial factors
+   together and has target H, while the two mixed partitions
+   have zero target. Send the relation to sqrt(2)x in that
+   original H target. Its selected triadic operator is identity.
+   With t=4 the source is four copies of H with zero sum
+   and the targets are three copies of H. The three normalized
+   contrast rows in (P60.4), without a C-perp part, give an
+   isometry; all triadic operators are identity. These exhaust
+   the small-length cases and prove (P60.1). QED.
+
+**Lemma 60B (capacity maps on finite self-dual block factors).**
+Replace the factor atoms by arbitrary finite-dimensional self-dual
+unitary representations R_1,...,R_s of the same compact connected
+group with simple Lie algebra. Give the factor indices any nonempty
+even minus set. Define H, all cut spaces, and the zero merge on these
+factors. For an allowed set B of proper positive factor-cut classes,
+define its kernel by the projector conditions
+
+    r in K_B(R) iff sum_i r_i=0, r_i in H_i(R), and
+       Q_q r_i=Q_(i+q) r_i=0
+       for all negative i and proper positive q not in B. (P60.5)
+
+If B has at most two members, there is an isometry into the original
+direct sum of its H_q(R). If B has three members and each is a pair
+class of factor indices, there is an injection into that same direct
+sum with squared norm at least one-quarter of the source squared norm.
+In either construction its component at q is zero whenever the
+additional conditions Q_q r_i=Q_(i+q)r_i=0 hold for every i.
+
+**Proof.**
+
+1. A finite-dimensional unitary representation is an orthogonal
+   sum of its irreducible isotypic spaces: choose an irreducible
+   subrepresentation, pass to its invariant orthogonal complement,
+   and induct on dimension. Self-duality equates the multiplicities
+   of each irreducible V_lambda and its contragredient V_lambda*.
+   Thus, after choosing unitary bases in the equal-dimensional
+   multiplicity spaces, there is a G-unitary decomposition
+
+       R_v=orthogonal_direct_sum_alpha W_alpha tensor D_(v,alpha),
+                                                                  (P60.6)
+
+   over actual real dual-orbit atoms W_alpha, including the
+   trivial atom when it occurs. Here D_(v,alpha) carries the
+   trivial action. For a paired orbit this combines the two
+   isotypic spaces V_lambda and V_lambda* with their equal
+   multiplicities; it does not identify the two inequivalent
+   irreducibles with one another. For a self-dual orbit it
+   retains its full multiplicity without a parity restriction.
+
+2. Tensor these decompositions. For an orbit-label tuple alpha
+   let M_alpha=tensor_v D_(v,alpha_v). The whole tensor space
+   becomes the finite orthogonal sum of
+
+       (tensor_v W_(alpha_v)) tensor M_alpha.
+
+   Every cut projector is diagonal in alpha and equals the
+   corresponding atomic projector tensor Id_(M_alpha).
+   This follows directly by Haar averaging the factor action
+   on each side of the cut. Consequently
+
+       H_q(R)=orthogonal_direct_sum_alpha
+                    H_q(W_alpha) tensor M_alpha,
+       K_B(R)=orthogonal_direct_sum_alpha
+                    K_B(W_alpha) tensor M_alpha.       (P60.7)
+
+   The second equality includes the original zero merge: it
+   too is diagonal in the same orthogonal tensor decomposition.
+   The two kernel conditions in (P60.5) are diagonal there
+   individually. It is those exact conditions, not a claim
+   that a transported output preserves each constituent word,
+   that proves the kernel decomposition.
+
+3. On each atomic tuple W_alpha use Lemma 53B for no allowed
+   target, Theorem 54A for one, Theorem 57C for two, or Lemma
+   60A for three pair targets. Tensor the resulting map with
+   Id_(M_alpha) and take their finite orthogonal direct sum.
+   Equations (P60.7) put its output in the single actual
+   target copy for each q. They also show its squared norm
+   bound is one or one-quarter respectively. No new target
+   is created for an orbit tuple or a multiplicity vector.
+
+4. If the extra conditions for target q hold, they hold on
+   every alpha component. On that component, (P50.2) makes
+   every atomic triadic operator into q vanish, so the
+   atomic map's q component vanishes by its verified menu
+   implementation. This proves the last assertion after
+   tensoring with all multiplicity spaces and summing them.
+   All inverse choices and maps are fixed from the finite
+   input before selecting the source vector. QED.
+
+This finite decomposition needs no Fourier limit or convergence
+argument. Its norm bound is a bound on the whole source, including
+all mixed orbit sectors and trivial constituents. It makes no use
+of the free invariant space of a grouped merge.
+
+**Theorem 60C (canonical coarsening supplies actual larger-cut
+capacity).** Fix any original actual-atom tuple, any nonempty even
+minus set M, and any allowed set A of proper positive cuts in (P58.1).
+Form the graph Gamma_A on original positions: an edge uv is present
+exactly when its pair class is proper positive, is forbidden
+(q=uv not in A), and its two positions carry the same actual atom.
+Let C_1,...,C_s be its connected components. Let C_cut be the
+subspace of unordered original cut classes represented by unions
+of these components and put
+
+    B=A intersection C_cut.                           (P60.8)
+
+There is an available injection into the original target copies
+
+    L_A:K_A -> direct_sum_(q in B) H_q
+                        subset direct_sum_(q in A) H_q            (P60.9)
+
+in each of the following cases:
+
+- B has at most two members, with an isometry;
+- B has three members and each has a representative that is the
+  union of two components C_v, with squared norm lower bound
+  one-quarter.
+
+The second condition is a pair-class condition in the component
+index space: a side complementary to exactly two components is
+equally permitted. The theorem does not restrict the cardinality
+of the original allowed set A. In particular it supplies every
+instance of (P53.2) whose remaining targets meet one of these
+conditions, keeping the original H_free whether it is present
+or absent in that remaining target.
+
+**Proof.**
+
+1. Lemma 59A makes the whole original coordinate r_i zero
+   whenever its cut separates the endpoints of an edge
+   of Gamma_A. The detector proof includes the trivial
+   actual atom: its four-cell label is then trivial and
+   the normalized cup map has dimension one. A cut that
+   is not constant on a connected component separates an
+   edge of a path in that component. Thus every nonzero
+   coordinate of any r in K_A has i in C_cut. This is
+   a proved constraint on the original kernel, not an
+   added block-compatibility hypothesis on its source.
+
+2. The map taking a subset of component indices to its union
+   of original positions is injective on unordered cut
+   classes: equality of the unions modulo complementation
+   is equality of the component subsets modulo the full
+   component set. It identifies C_cut with F_2^s/<1>.
+   Under it the induced parity functional has values
+
+       ell_v=|C_v intersection M| modulo 2,
+       sum_v ell_v=0.                                (P60.10)
+
+   If every ell_v=0, there are no negative component cuts
+   and step 1 forces K_A=0. The zero map has every claimed
+   property. Otherwise these ell_v define a nonempty
+   even minus set on component indices.
+
+3. Group the original factors into the actual representations
+
+       R_v=tensor_(u in C_v) W_u.
+
+   Each R_v is finite unitary and self-dual, since tensor
+   products preserve those properties. The canonical
+   unitary regrouping of tensor factors identifies the
+   original full H with H(R). For every coarse cut i
+   it identifies its original H_i with H_i(R) exactly:
+   both independently average over precisely the same
+   two subsets of original factors. The Hilbert norms
+   and normalized Haar measures are unchanged.
+
+   Step 1 therefore embeds the original source isometrically
+   into the whole grouped negative direct sum. Its merge
+   is the grouped merge on those surviving coordinates.
+   No projection or quotient of their values is taken.
+
+4. Every proper positive component cut q not in B is an
+   original proper positive cut not in A, by (P60.8).
+   For every surviving negative i, (P50.2) gives
+
+       Q_q r_i=Q_(i+q) r_i=0.
+
+   Their grouped projectors are exactly the same by step 3.
+   Thus there is an isometric source inclusion
+
+       K_A -> K_B(R).                                 (P60.11)
+
+   Targets in A without B need not have zero projection
+   on the surviving coordinates. They were allowed in
+   the original kernel and have not been forbidden here.
+   Equation (P60.11) uses only coarse forbidden cuts;
+   it does not assert inclusion in an original kernel
+   obtained by deleting those other allowed targets.
+
+5. Apply Lemma 60B to (P60.11). For at most two coarse
+   targets it gives the asserted isometry. For three
+   coarse pair classes it gives the one-quarter bound.
+   By step 3 its final spaces H_q(R) are precisely the
+   original H_q for q in B, with their full original
+   multiplicities. This proves (P60.9) and the norm
+   bound on the whole original K_A. The other original
+   targets in A are retained with zero output component.
+
+6. Check availability at the original consumer, rather
+   than substituting a grouped operator menu. For q in B
+   let A_q collect every original T_(i,q)P_i restricted
+   to K_A, where P_i is the source coordinate projection.
+   If A_q r=0, the identity (P50.2) gives the additional
+   conditions Q_q r_i=Q_(i+q)r_i=0 on every surviving
+   coarse coordinate. Lemma 60B's last assertion makes
+   the constructed component (L_A r)_q zero. Therefore
+
+       ker A_q subset ker (L_A)_q.
+
+   Invert A_q on the orthogonal complement of its kernel
+   within K_A and on its actual range. Compose with
+   (L_A)_q and extend by zero on the orthogonal complement
+   of that range in the collected operator direct sum.
+   This is a linear map from that direct sum of H_q
+   copies into the one final H_q. Its finitely many
+   blocks are endomorphisms B_(q,i) of the actual H_q,
+   giving the exact identity
+
+       (L_A)_q=sum_i B_(q,i) T_(i,q)P_i |_K_A.         (P60.12)
+
+   This factorization uses additional copies only as
+   domains of the collected operators. It creates no
+   extra final target capacity.
+
+7. Taking dimensions in (P60.9) yields
+
+       dim K_A <=sum_(q in B)dim H_q
+                  <=sum_(q in A)dim H_q.              (P60.13)
+
+   For a target subset in (P53.2), take A to be its
+   remaining proper positive summands. Its joint kernel
+   is a subspace of K_A, because the menu includes the
+   original forbidden triadic operators. Extra forbidden
+   available maps only shrink this kernel. If H_free
+   is remaining, its dimension adds capacity; if it is
+   forbidden, its operators only shrink the source.
+   Hence (P60.13) supplies either original test. Neither
+   case uses an enlarged free space from the grouping.
+   This is the exact replay of the stated consumer. QED.
+
+**Corollary 60D (an unbounded family of genuinely larger-cut
+capacity tests).** Choose six pairwise distinct actual atom types
+W_1,...,W_6 on a group in the full target. For each v take an odd
+number m_v>=3 of positions carrying W_v, and put a minus sign on
+every position. Denote these six blocks by C_v. Let the entire
+allowed set consist of the three original classes
+
+    tau_1=C_1 union C_2,
+    tau_2=C_3 union C_4,
+    tau_3=C_5 union C_6.                              (P60.14)
+
+On their whole original K_A there is an available map into the
+three original target spaces with squared norm at least one-quarter
+of the original source squared norm. Every side in (P60.14) has at
+least six original positions, and its complement has at least twelve.
+Thus these are not original pair classes. Tuple length is unbounded.
+
+**Proof.**
+
+1. The total minus count is even, since it is the sum of
+   six odd integers. Each tau_p is positive, since its
+   size is a sum of two odd integers. They are proper
+   distinct original cut classes with the displayed
+   lower bounds on both side sizes.
+
+2. Every pair within one C_v is a forbidden proper positive
+   equal-atom pair. No tau_p is a pair class, including
+   by complementation. These edges form a complete
+   connected graph on C_v. The six types are distinct,
+   so there is no equal-atom graph edge joining two
+   different blocks. Thus the canonical components of
+   Gamma_A are exactly the six displayed C_v.
+
+3. Every allowed target is a union of two such components.
+   Their grouped parity values are ell_v=1, and their
+   three classes are the dependent matching on the six
+   component indices. Theorem 60C applies to the entire
+   original source, not just to a hand-selected set of
+   block-unsplit cosets. It supplies the asserted map
+   and consumer capacity with all original target
+   multiplicities. QED.
+
+**Proposition 60E (trivial block channels occur in the stated
+larger-cut construction).** In Corollary 60D take G=SU(2),
+W_v=V_(2v) for v=1,...,6, and m_v=3. Here V_j denotes the
+SU(2) irreducible with highest weight j and dimension j+1.
+This gives eighteen nontrivial original factors, all with minus
+signs, and three allowed six-position cuts. Each grouped block
+R_v=V_(2v)^tensor3 contains the trivial representation exactly once.
+Theorem 60C retains these constituents and all mixed block choices.
+
+**Proof.**
+
+1. The SU(2) Clebsch--Gordan formula, in this notation, is
+
+       V_a tensor V_b
+          =direct_sum_(j=0)^min(a,b) V_(|a-b|+2j).
+
+   The exact primary statement verified here is Theorem 11.18,
+   printed page 68 of Etingof's
+   [MIT Lie Groups and Lie Algebras notes](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf).
+   Its character proof and the self-duality immediately following
+   it agree with the normalization of V_j used here.
+
+2. For a=b=2v this is the multiplicity-one sum of V_0,V_2,
+   ...,V_(4v). The term V_(2v) occurs exactly once, at j=v.
+   Every SU(2) irreducible is self-dual. The invariant
+   multiplicity in V_(2v)^tensor3 is therefore the
+   multiplicity of V_(2v) in its square, namely one.
+   This verifies the claimed trivial channel on the
+   actual grouped block.
+
+3. The six original types are nontrivial and pairwise
+   distinct, so Corollary 60D applies with all of its
+   hypotheses checked. The norm conclusion uses the
+   full decomposition (P60.7), including the trivial
+   channels just verified; their deletion was not
+   justified by an integral factor rule. This is a
+   structural test with no rank or certificate search.
+   It asserts capacity for the original three larger
+   targets, not completion of all capacity tests for
+   this eighteen-factor input. QED.
+
+**Consumed evidence and next original test.** Theorem 60C adds
+larger-cut instances of (P53.2), for arbitrary original lengths,
+labels and signs whenever their canonical forced-block geometry
+meets its stated target condition. Lemma 60A also supplies the
+trivial-atom cases of the three-pair capacity statement itself.
+The accepted maps act on the whole original joint kernel and
+factor through its existing operators. They are not a conditional
+replacement of (P28.2) and do not use a grouped H_free.
+
+The general three-target bound still has cases in which all three
+allowed coarse cuts survive but one has no two-component side,
+and cases with no useful forced grouping. For the original test
+take the canonical coarsening of Theorem 60C, retain the full
+K_B(R) and all original larger target copies, and test transport
+on its negative four-cut or eight-cut cosets. The first formula
+not supplied in that case is still
+dim K_A<=sum_(q in A)dim H_q, with the original defining kernels.
+It is not replaced by an assumption that every source cut respects
+a chosen additional bank partition. Higher remaining-target tests
+and the empty-forbidden-set inequality in (P53.2), which includes
+the full atomic Q3 sign, remain in the unchanged full-cone objective.
+
+
+## A uniform merge gap for three larger targets on distinct atoms
+
+The larger-cut construction in section 60 supplied original capacity
+tests through forced components. The next selected case has no
+forbidden equal-atom graph edges at all: eight pairwise distinct
+nontrivial actual atoms, with three independent four-position
+targets. Thus B=A and none of these targets is a pair of components.
+The construction below checks this first uncovered geometry directly
+on the original constrained source. It proves a positive merge gap
+and hence its exact three-target capacity inequality; it does not
+assume that further grouping is available.
+
+Index the eight positions by x in F_2^3. Put minus signs on all eight.
+For j=1,2,3 take the entire allowed set to be
+
+    q_j={x:x_j=1},             A={q_1,q_2,q_3}.        (P61.1)
+
+All three are proper positive four-position classes. As usual an
+unordered cut is taken modulo complementation.
+
+**Double-check immediately before recording the estimate.** Independently
+counted all 64 odd cut classes and the eight cosets of the allowed
+span; checked that their eight singleton classes occupy distinct
+cosets, so each coset has exactly one zero singleton source. Derived
+the seven remaining triples as p plus the nonzero points of ker g,
+and checked their unique shared position against the edge difference
+g+h=e_j. Rechecked all triple intersection sizes against Lemma 27A,
+including the disjoint-triple complement pair. Applied Lemma 29A
+with the shared singleton as its first cell, so that its dimension
+is that of the original atom, without a bound on unrelated fusion
+channels. Checked uniqueness of a dimension-two actual atom using
+Lemma 43A.
+
+For the dimension-two edge set, rederived the three possible
+intersection graphs of w-perp with the deleted-vertex cube, rather
+than bounding all three edges at every vertex by one-half. Computed
+the three Gram matrices and their eigenvalues exactly. An additional
+short symbolic check gave the characteristic polynomials
+(9t-7)(9t-1)^2/729,
+(9t-1)(54t^2-63t+10)/486, and
+(9t-1)(324t^2-333t+35)/2916,
+in the order used below. Checked every source cross term against
+the original forbidden-target kernels and checked cross-coset
+orthogonality before summing the gap. The accepted estimate is on
+the original constrained source, with its original merge.
+
+**Lemma 61A (the deleted cube overlap bound).** Delete vertex 0 from
+the three-dimensional cube, indexed by g in F_2^3. Give each edge
+weight one-third, except that an edge whose endpoints both lie in
+w-perp without 0 may have weight one-half, for one fixed nonzero
+w in F_2^3. Also permit the case with no exceptional edges. If W is
+this symmetric weighted adjacency matrix, then
+
+    ||W|| <=rho_* =sqrt((21+sqrt(201))/36) <1.          (P61.2)
+
+Here the norm is the Euclidean operator norm, not a numerical
+spectral estimate.
+
+**Proof.**
+
+1. The nonzero even vertices are 110,101,011 and the odd
+   vertices are 100,010,001,111. In this order the ordinary
+   cross-part matrix is
+
+       B_0=(1/3) [1 1 0 1
+                  1 0 1 1
+                  0 1 1 1].
+
+   Its Gram is (Id_3+2 J_3)/9, where J_3 is the all-ones
+   matrix. Its largest eigenvalue is 7/9. The full adjacency
+   is the block matrix with B_0 and B_0* off the diagonal,
+   so its norm is sqrt(7)/3.
+
+2. An edge in direction e_j has both endpoints in w-perp
+   precisely when w_j=0 and its endpoints lie in that plane.
+   There are three nonzero points in w-perp. If w has
+   Hamming weight three there are no exceptional edges.
+   If its weight is two there is one, joining a doubleton
+   vertex to 111. If its weight is one there are two,
+   joining one doubleton vertex to its two singleton
+   neighbors. Permuting the three coordinate axes reduces
+   each case to the displayed models below.
+
+3. In the two-edge case the cross-part matrix is
+
+       B_2=[1/2 1/2 0   1/3
+            1/3 0   1/3 1/3
+            0   1/3 1/3 1/3],
+
+   and its Gram is
+
+       B_2 B_2*=(1/18) [11 5 5
+                         5 6 4
+                         5 4 6].
+
+   The antisymmetric vector (0,1,-1) has eigenvalue 1/9.
+   On the orthonormal basis (1,0,0),(0,1,1)/sqrt(2),
+   its matrix is (1/18)[11,5sqrt(2);5sqrt(2),10].
+   Its other eigenvalues are (21+sqrt(201))/36 and
+   (21-sqrt(201))/36. Hence the largest one is
+   beta_*=(21+sqrt(201))/36. It is strictly less than
+   one since 201<225.
+
+4. In the one-edge case the cross-part matrix is
+
+       B_1=[1/3 1/3 0   1/2
+            1/3 0   1/3 1/3
+            0   1/3 1/3 1/3],
+
+   with Gram
+
+       B_1 B_1*=(1/36) [17 10 10
+                        10 12  8
+                        10  8 12].
+
+   Its eigenvalues are 1/9 and (37+/-sqrt(809))/72.
+   Its largest is less than 11/12 since sqrt(809)<29.
+   This is smaller than beta_*, which is greater than
+   35/36 since sqrt(201)>14. Also 7/9<35/36. Thus all
+   three cases have largest Gram eigenvalue at most
+   beta_*, and adjacency norm at most sqrt(beta_*).
+   This proves (P61.2). QED.
+
+**Theorem 61B (stable original merge on the eight-distinct-atom
+three-target source).** Let G be any group in the full target.
+At its eight positions take pairwise distinct nontrivial actual
+real atom types W_x, including paired types when they occur.
+Use all minus signs and the three targets (P61.1). Define the
+original constrained direct sum, before imposing zero merge, by
+
+    Z_A={v in direct_sum_(negative i) H_i:
+            T_(i,q)v_i=0 for every negative i
+                       and proper positive q not in A}.
+
+For the original merge Fv=sum_i v_i, one has the explicit bound
+
+    ||Fv||^2 >=delta_* ||v||^2,        v in Z_A,
+    delta_*=1-sqrt((21+sqrt(201))/36)>0.                (P61.3)
+
+In particular K_A=Z_A intersection ker F=0. This supplies the
+original three-larger-target tests of (P53.2) for this entire input
+class, with the original H_free either remaining or forbidden.
+
+**Proof.**
+
+1. Every nonzero linear combination of q_1,q_2,q_3 has a
+   four-position representative: it is the half-space
+   {x:g dot x=1} for a nonzero g in F_2^3. Thus the
+   three target classes are independent. Their span
+   has eight elements, and its nonzero elements have
+   size-four sides. Two distinct singleton cuts differ
+   by a size-two class and cannot lie in the same
+   span coset.
+
+   All minus signs make the negative cuts precisely the
+   odd classes. There are 2^6=64 such classes: among the
+   2^8 subsets, half are odd, and complementation pairs
+   them freely. There are therefore eight negative
+   cosets of this three-dimensional span. Their eight
+   singleton classes occupy all eight cosets, one each.
+   A singleton actual nontrivial atom has no invariant,
+   so that vertex's H_i is zero.
+
+2. In a coset with singleton vertex p, label its other
+   indices by g nonzero, by adding the half-space
+   q_g={x:g dot x=1} to {p}. A size-three representative
+   of that class is exactly
+
+       S_g={x!=p:g dot (x-p)=0}
+          =p+(ker g without {0}).                     (P61.4)
+
+   If p belongs to q_g, remove it from that half-space;
+   if not, complement the resulting five-position set.
+   These are the two possibilities proving (P61.4).
+   It has three positions because ker g has four.
+
+   Distinct nonzero g,h give triples whose intersection
+   is one position: ker g intersection ker h has
+   dimension one. Its unique nonzero vector w gives
+   their common position x=p+w. In particular, whenever
+   the coset vertices are adjacent, their shared position
+   satisfies g dot w=h dot w=0.
+
+3. These two triple-cut spaces have zero intersection.
+   Their common refinement includes the shared singleton
+   W_x, which has zero invariant, so Lemma 27A applies
+   to the full spaces and all their multiplicities.
+   More generally, for arbitrary distinct triples at
+   these positions, intersection size two gives a
+   singleton difference cell, size one gives the
+   singleton intersection cell, and size zero leaves
+   a two-position complement cell with two distinct
+   atom types and hence no pair invariant. Thus no
+   common-cut invariant has been retained inadvertently.
+
+   For adjacent vertices g,h, use the shared singleton
+   as the first four-cell entry in Lemma 29A. Its
+   irreducible label belongs to W_x; every constituent
+   of that actual atom has the same dimension d_x.
+   Hence that exact overlap calculation gives
+
+       |<v_g,v_h>| <= (1/d_x)||v_g|| ||v_h||.          (P61.5)
+
+   This keeps all other cell multiplicities. It does
+   not replace their tensor products by scalar cups.
+
+4. Nonadjacent vertices in a coset have difference outside
+   the three allowed classes, and vertices in different
+   cosets also have forbidden differences. By (P50.2),
+
+       Q_j v_i=0 whenever i+j is forbidden.
+
+   Their coordinate values are therefore orthogonal.
+   This argument uses only the defining constraints of
+   Z_A and does not require Fv=0. In particular the
+   ambient coordinate spans of distinct cosets are
+   orthogonal, so their merge outputs are orthogonal.
+
+5. Every nontrivial irreducible has dimension at least
+   two, as justified in Lemma 29A. Lemma 43A says that
+   a dimension-two irreducible forces Lie algebra su(2),
+   with one irreducible type of each dimension and
+   self-dual actual atoms. Connectedness preserves
+   uniqueness on the group; a central quotient can
+   remove a type but cannot duplicate it. Thus among
+   the eight distinct actual atom types there is at
+   most one with constituent dimension two. Every
+   other d_x is at least three.
+
+   If there is none, or that unique position is the
+   zero vertex p, (P61.5) is at most one-third on
+   every edge. Otherwise let w=x-p for its position.
+   The only edges whose shared atom could have
+   dimension two have both g,h in w-perp without 0,
+   by (P61.4). Their bounds are exactly the exceptional
+   edges of Lemma 61A. There are at most two, not a
+   whole cube of one-half overlaps.
+
+6. For one original coset put a_g=||v_g||, with a_0=0.
+   The nonadjacent cross terms vanish by step 4 and
+   the adjacent ones obey (P61.5). Using the bounding
+   weighted adjacency W of Lemma 61A gives
+
+       ||sum_g v_g||^2
+         >=sum_g a_g^2-2 sum_(edges gh) W_(g,h)a_g a_h
+          =a* (Id-W) a
+         >=(1-rho_*) sum_g a_g^2.
+
+   The entrywise bound is applicable because every a_g
+   is nonnegative. Additional zero triple spaces only
+   set additional coordinates to zero and do not
+   invalidate the same estimate. Step 4 gives
+   orthogonality of all original coset merge outputs.
+   Summing this inequality therefore proves (P61.3)
+   on the whole original Z_A, not just on a selected
+   face or a separately paid source part.
+
+7. If v lies in the original K_A, it is in Z_A and its
+   original merge is zero. Equation (P61.3) makes v=0.
+   Thus its capacity dimension is zero. In (P53.2),
+   extra forbidden maps restrict this already zero
+   source; including H_free adds target capacity.
+   All tests in the stated original parameter class
+   follow without changing that space. QED.
+
+For example take the eight types V_2,V_4,...,V_16 of SU(2), assigning
+them in any fixed order to F_2^3. All original factors are distinct,
+so the canonical graph Gamma_A has no edges and its components
+are eight singletons. Its remaining targets are four-component
+cuts, so section 60's pair-block supplier does not apply.
+Theorem 61B instead supplies this capacity directly. It also covers
+an input with one defining SU(2) atom and seven other distinct
+nontrivial types: the exceptional two-dimensional edges were
+included in the exact estimate.
+
+**Original criterion movement.** The new supplied term is the full
+three-larger-target kernel for (P61.1) on eight distinct nontrivial
+actual atoms in every group in the original scope. The stronger
+stable merge estimate (P61.3) is proved before returning to that
+kernel. Together with section 60 this gives both a forced-block
+supplier at unbounded lengths and a direct gap supplier when that
+grouping gives no reduction. Neither result is credited as the full
+Q3 sign or as all three-target capacity. The next unrestricted
+three-target construction must retain arbitrary allowed-cut geometry,
+repeated atom types, and all original source multiplicities; its
+exact consumer remains (P53.2), alongside the still-required full
+empty-forbidden-set inequality and all larger remaining-target tests.
+
+
+## Direct full-cone trace reduction to fixed Weyl-vector channels
+
+The previous goal turn was progress: sections 60--61 supplied actual
+capacity inequalities for larger-cut inputs. They did not supply the
+full atomic sign, which remains the unrestricted scalar consumer
+(P27.3), followed by the uniform cone passage of Lemma 28A. The
+selected work now attacks that sign directly. Its classification is
+reduction, with exact construction tests; no new certificate search,
+numerical cutoff, or narrower goal is substituted.
+
+The construction uses the square map with a proved measure correction.
+For each fixed group, it replaces the exponentially indexed signed
+cut trace by a Hilbert--Schmidt pairing involving a fixed finite list
+of representation channels. The list and its coefficients depend on
+the group alone, before choosing any input labels, tuple length, or
+sign pattern. The pairing's positivity is not assumed. The source
+identity, its normalization, and two unbounded or exact tests are
+proved below.
+
+**Double-check immediately before recording the reduction.** Independently
+derived the root-product identity for the Weyl-vector character and
+verified that its square descends to every actual central quotient.
+Checked the normalized Weyl integration formula on the actual torus,
+the square map's Haar pushforward on that torus, and centralization
+for a general continuous test function. Then checked the joint
+pushforward using g=u^(-1)v and g^(-1)h=v^(-2), rather than treating
+a nonabelian square map as an unweighted Haar homomorphism.
+
+Rechecked the complex-linear twisted transpose for symmetric,
+alternating, paired, and trivial actual atoms, including its
+Hilbert--Schmidt adjoint and square. Expanded the signed trace
+before either integral, retaining the conjugate in the
+Hilbert--Schmidt inner product. Recomputed every spectral coefficient
+by Schur averaging. For SU(2) an independent exact matrix calculation
+using the two- and four-fundamental Casimir projectors gave respectively
+
+    (t_0,t_adj,J,Phi)=(3/4,-3/4,3,2),
+    (t_0,t_adj,J,Phi)=(5/4,-15/8,20,10).
+
+These agree with the separate quaternion integral calculation below.
+Rechecked that its all-length ratio tends to zero and its adjoint
+ratio tends to minus three, without a limit interchange. Recomputed
+the conditional three-factor polynomial and its Haar-weighted
+average, so that its pointwise failure is not confused with failure
+of Q3. Finally checked absolute summability of the real-atom
+expansion in both measures and the stated zero-locus implication.
+
+**Lemma 62A (a fixed character weight corrects the square map).**
+Let G be any group in the full target, with rank r, positive roots
+R_+, and Weyl vector rho=(1/2)sum_(alpha in R_+) alpha. On its
+simply connected compact cover let V_rho be the irreducible of
+highest weight rho. The representation
+
+    S_G=V_rho tensor V_rho
+
+descends to G. Its character w_G is real, nonnegative, and has Haar
+integral one. On the actual maximal torus T,
+
+    w_G(t)=product_(alpha in R_+) |1+e^alpha(t)|^2,
+    w_G(t) D(t)=D(t^2),
+    D(t)=product_(alpha in R_+) |1-e^alpha(t)|^2.       (P62.1)
+
+For every continuous F on G, including noncentral F,
+
+    integral_G w_G(v) F(v^2) dv=integral_G F(v) dv.    (P62.2)
+
+**Proof.**
+
+1. The primary results used here are the actual-group weight lattice,
+   compact-cover, highest-weight, character, and integration statements
+   in Knapp, *Structure Theory of Semisimple Lie Groups*, Theorems
+   3.10--3.14, printed pages 18--20
+   ([source](https://www.math.stonybrook.edu/~aknapp/pdf-files/1-27.pdf)).
+   In particular the normalized central integration formula is
+
+       integral_G F = |Weyl group|^(-1) integral_T F(t)D(t)dt.
+
+   Both Haar measures have mass one. The character formula on the
+   simply connected cover and its denominator formula agree with
+   Etingof's Theorem 26.4 and Corollary 26.5, printed page 140,
+   already verified in section 56's source context. No formula
+   involving a nonintegral rho character on a central quotient
+   is being used.
+
+2. The dominant weight rho is integral on the simply connected
+   cover. In the Weyl character formula its numerator at highest
+   weight rho is the Weyl denominator with all weights doubled.
+   Factoring the ratio gives
+
+       chi_rho(t)=e^rho(t)
+                    product_(alpha in R_+)(1+e^(-alpha)(t)).
+
+   Every weight in this expression is integral on the cover;
+   no individual half-root character is required. This is a
+   character identity, first on regular torus points and then
+   everywhere by continuity. The dual
+   highest weight is -w_0 rho=rho, so V_rho is self-dual and
+   chi_rho is real. Its square is therefore nonnegative.
+
+3. All weights of V_rho are in rho minus the root lattice.
+   Thus all weights of S_G lie in 2rho plus that lattice,
+   which is the root lattice since 2rho is the sum of the
+   positive roots. Central elements of the cover lie in
+   its torus and act trivially under every root character,
+   because their adjoint action is trivial. Consequently
+   they act trivially on every weight space of S_G.
+   It descends even to the adjoint group, hence to every
+   G under consideration.
+
+   Squaring the product in step 2 gives the first identity
+   of (P62.1) in actual root characters. Multiplying by
+   D(t) and using |1+z|^2 |1-z|^2=|1-z^2|^2 for |z|=1
+   gives the second identity. It remains valid at singular
+   points without dividing by D(t).
+
+4. For central continuous F, apply the normalized Weyl
+   integration formula and (P62.1):
+
+       integral_G w_G(v) F(v^2) dv
+          =|Weyl group|^(-1) integral_T F(t^2)D(t^2)dt
+          =|Weyl group|^(-1) integral_T F(s)D(s)ds.
+
+   The second equality holds because squaring is a
+   surjective continuous homomorphism of the compact
+   torus, so it pushes its normalized Haar measure
+   forward to normalized Haar measure. The last
+   expression is integral_G F. Taking F=1 proves
+   integral_G w_G=1. Independently, that normalization
+   agrees with integral chi_rho^2=dim Inv(V_rho^2)=1.
+
+5. For arbitrary F replace it by its conjugation average
+   CF(x)=integral_G F(kxk^(-1))dk. Conjugation invariance
+   of w_G(v)dv and equivariance of squaring show that
+   the left side of (P62.2) is unchanged. Haar integration
+   of F is likewise unchanged. Apply step 4 to CF.
+   All integrands are bounded continuous on compact
+   spaces, so Fubini applies. This proves (P62.2). QED.
+
+**Corollary 62A1 (an actual exterior algebra description).** The
+actual G-modules obey
+
+    exterior algebra g_C = direct_sum_(1<=a<=2^r) S_G. (P62.3)
+
+**Proof.**
+
+1. The complexified adjoint representation has its r zero
+   weights and the roots as its other weights. The character
+   of its whole exterior algebra is therefore
+
+       chi_(exterior algebra g_C)(t)
+           =2^r product_(alpha in R_+)(1+e^alpha(t))(1+e^(-alpha)(t))
+           =2^r w_G(t).
+
+2. Both sides are characters of actual finite G-modules.
+   Torus conjugacy makes them equal on G, and character
+   orthogonality identifies every irreducible multiplicity.
+   Finite complete reducibility proves (P62.3). No positivity
+   theorem for Lie algebra cohomology was assumed. QED.
+
+**Lemma 62B (exact doubled-variable measure identity).** For any
+continuous H on G times G,
+
+    integral_(g,h) H(g,h) dg dh
+       =integral_(u,v) w_G(v)
+                     H(u^(-1)v,u^(-1)v^(-1)) du dv.    (P62.4)
+
+**Proof.**
+
+1. For fixed v, the change g=u^(-1)v preserves Haar measure.
+   Its second output is h=g v^(-2). Thus the right side is
+
+       integral_(g,v) w_G(v) H(g,g v^(-2)) dg dv.
+
+2. Lemma 62A and invariance of Haar under inversion say that
+   v^(-2) also has normalized Haar law under w_G(v)dv.
+   Substitute k=v^(-2) in the sense of that pushforward,
+   obtaining integral_(g,k) H(g,gk)dg dk.
+   For fixed g, left translation takes dk to dh.
+   This is the left side of (P62.4). Compactness
+   justifies both uses of Fubini. QED.
+
+**Lemma 62C (orthogonal transpose pins on actual real atoms).**
+For every actual real atom W_i, choose a unitary invariant
+nondegenerate bilinear form J_i, with J_i^t=eta_i J_i,
+eta_i in {+1,-1}. There is a complex-linear, self-adjoint unitary
+involution of its matrix space
+
+    theta_i(A)=J_i^(-1) A^t J_i.
+
+It satisfies theta_i(U_i(v))=U_i(v)^(-1). On
+End(R), R=tensor_i W_i, the commuting factor involutions define
+the Hilbert--Schmidt orthogonal projection
+
+    Pi_epsilon=product_i (Id+epsilon_i theta_i)/2.     (P62.5)
+
+For P_0=integral_G R(u)du, an odd minus count makes
+Pi_epsilon P_0=0.
+
+**Proof.**
+
+1. For a self-dual irreducible, an invariant bilinear form
+   gives an intertwiner with its unitary dual. Its
+   adjoint times itself is scalar by Schur's lemma;
+   normalize that scalar to one. Transposition gives
+   another invariant form, hence J_i^t=eta_i J_i,
+   eta_i^2=1. For the paired atom E direct_sum E*,
+   use its symmetric evaluation pairing, whose matrix
+   in dual unitary bases is [0,Id;Id,0]. For the
+   trivial atom take J_i=1. Thus every actual atom,
+   including alternating types and paired types,
+   has the stated form with no extra hypothesis.
+
+2. Invariance U_i(v)^t J_i U_i(v)=J_i proves the inverse
+   identity. Transpose and unitary conjugation preserve
+   the Hilbert--Schmidt norm. Moreover
+
+       theta_i^2(A)=J_i^(-1) J_i^t A J_i^(-t) J_i=A,
+
+   since J_i^t=eta_i J_i. A unitary involution is
+   self-adjoint. It also takes Hermitian matrices to
+   Hermitian matrices. Distinct factor maps commute,
+   so (P62.5) is an orthogonal projection on the
+   complex Hilbert space of matrices, with inner
+   product <A,B>=Tr(A*B).
+
+3. The full factor involution Theta=product_i theta_i
+   sends R(u) to R(u)^(-1). Haar inversion invariance
+   therefore gives Theta P_0=P_0. On the image of
+   Pi_epsilon it has eigenvalue product_i epsilon_i.
+   An odd minus count makes that eigenvalue -1,
+   so Pi_epsilon P_0=0. QED.
+
+**Theorem 62D (fixed-channel identity and its unweighted square).**
+For every full-target actual atom tuple and every sign pattern,
+put P_lambda for the projection onto the full lambda-isotypic
+subspace of R, including all its multiplicities. Set
+
+    c_lambda=m_lambda(S_G)/dim V_lambda,
+    C_G(R)=integral_G w_G(v)R(v)dv
+                 =sum_lambda c_lambda P_lambda,
+    X_epsilon=Pi_epsilon P_0,
+    t_lambda=Tr(X_epsilon P_lambda).
+
+The coefficient list has finite support depending only on G.
+It is chosen before the atom tuple, and obeys c_0=1 and
+0<=c_lambda<=1. The exact target integral is
+
+    Phi_epsilon
+       =2^n <Pi_epsilon P_0,Pi_epsilon C_G(R)>
+       =2^n [ ||X_epsilon||_HS^2
+                      +sum_(lambda!=0)c_lambda t_lambda ]. (P62.6)
+
+There is also the whole-scope positive square identity
+
+    J_epsilon
+       :=integral_(u,v) product_i
+          [chi_i(u^(-1)v)+epsilon_i chi_i(u^(-1)v^(-1))] du dv
+        =2^n ||X_epsilon||_HS^2 >=0.                  (P62.7)
+
+Every t_lambda is real. Neither positivity of the individual
+nontrivial t_lambda nor a positive uniform margin between Phi
+and J is asserted.
+
+**Proof.**
+
+1. Each signed character factor in (P62.4) is
+
+       Tr[U_i(u)* (U_i(v)+epsilon_i theta_i U_i(v))].
+
+   Multiplying these traces is the tensor-product trace.
+   Therefore the integrand is
+
+       2^n <R(u),Pi_epsilon R(v)>.
+
+   Haar averaging in u gives P_0. Averaging in v
+   with w_G gives C_G(R). Orthogonality of Pi_epsilon
+   then gives the first expression in (P62.6).
+   No expansion into separate complex constituent
+   tuples has been made: theta_i may mix the paired
+   atom's matrix sectors.
+
+2. Centrality of w_G makes its average on an irreducible
+   a scalar. Its trace is integral w_G chi_lambda.
+   By character orthogonality this equals the multiplicity
+   of the dual irreducible in S_G. That representation
+   is self-dual, so this is m_lambda(S_G).
+   The average is the identity on every multiplicity
+   space, giving the displayed coefficient c_lambda.
+
+   Finite dimensionality of S_G makes the support fixed
+   and finite, independent of n and of every input label.
+   These coefficients are nonnegative. Also w_G dv is
+   a probability measure and R(v) is unitary, so the
+   averaged operator has norm at most one. Applied to
+   the irreducible itself this proves c_lambda<=1.
+   The trivial multiplicity is one because V_rho is
+   an irreducible self-dual module, proving c_0=1.
+
+3. X_epsilon and P_lambda are Hermitian by Lemma 62C,
+   so t_lambda is real. For lambda=0,
+
+       t_0=Tr[(Pi_epsilon P_0)P_0]
+          =||Pi_epsilon P_0||_HS^2.
+
+   Inserting the finite spectral expansion in the first
+   expression of (P62.6) proves the second expression.
+   Here P_lambda=0 if that channel is absent from R.
+
+4. Repeat step 1 without w_G. The second average is
+   also P_0, and the resulting pairing is exactly
+   the squared norm in (P62.7). This proves it for
+   arbitrary tuple length and every actual atom.
+   Odd minus counts give zero by Lemma 62C, agreeing
+   independently with exchange of g,h in the target.
+   A trivial minus factor has theta_i=Id and kills
+   the projection; a trivial plus factor contributes
+   the correct factor two. QED.
+
+**Corollary 62D1 (the actual auxiliary projector).** Let Q be the
+Haar invariant projector on R tensor (exterior algebra g_C). Then
+
+    C_G(R)=2^(-r) Tr_(exterior algebra g_C) Q.          (P62.8)
+
+**Proof.**
+
+1. Write Q as the Haar average of the tensor representation
+   on those two spaces. Its ordinary auxiliary partial trace
+   is the average of R(v) times the character of the
+   exterior algebra representation.
+
+2. Apply Corollary 62A1 and the definition of C_G(R) in
+   Theorem 62D to get (P62.8). All spaces are finite and
+   the Haar integral is bounded, so the partial trace
+   commutes with it. QED.
+
+This positive ordinary partial trace does not establish positivity
+of its pairing after the transpose pins.
+
+**Corollary 62E (a full-cone zero criterion, without assuming Q3).**
+For any finite list of real continuous central positive-definite
+functions in the original full cone, define J by the unweighted
+coupled-variable integral in (P62.7). Then J>=0. If J=0, their
+original independent-Haar Q3 integral is exactly zero.
+
+**Proof.**
+
+1. On an atomic tuple, (P62.7) gives J>=0. If J=0 then
+   Pi_epsilon P_0=0, so (P62.6) gives Phi=0, even
+   without knowing the sign of that formula on other
+   atomic tuples.
+
+2. Expand the original functions in their actual real
+   atoms by Lemma 28A. Every coefficient is nonnegative.
+   For fixed n, the sum of the absolute integral
+   bounds for all product expansion terms is at most
+
+       product_i [2 sum_alpha b_(i,alpha) dim W_alpha]
+             =product_i [2 f_i(e)] <infinity.
+
+   This bound applies in both normalized probability
+   measures used here. Thus the product expansion and
+   both integrals interchange absolutely, including
+   every paired type and trivial factor.
+
+3. J is the convergent sum of its nonnegative atomic
+   values with nonnegative coefficients. If it is
+   zero, every atomic term with positive coefficient
+   has J=0, and hence Phi=0 by step 1. Their absolutely
+   convergent target sum is therefore zero. This is
+   an unconditional statement on the full cone,
+   rather than a closure claim for all positive J. QED.
+
+**Corollary 62F (the two fixed channel lists in ranks one and two).**
+For groups with Lie algebra su(2), the entire target (P62.6) is
+
+    Phi_epsilon=2^n(t_0+t_adj/3),                      (P62.9)
+
+where P_adj is the full three-dimensional isotypic projector.
+The square S_G=V_1^2=V_0 direct_sum V_2 descends even when
+V_1 itself is not a representation of the actual quotient.
+
+For groups with Lie algebra su(3), the fixed identity is
+
+    Phi_epsilon=2^n [
+       t_0+t_8/4+(t_10+t_(10*))/10+t_27/27 ].          (P62.10)
+
+All these auxiliary types are representations of the adjoint
+quotient and hence of every group in that Lie algebra scope.
+
+**Proof.**
+
+1. In rank one rho has highest-weight label one.
+   The Clebsch--Gordan rule gives V_1^2=V_0+V_2.
+   Their dimensions are one and three. This proves
+   (P62.9) using Theorem 62D on the actual group.
+
+2. In type A_2, rho has highest weight (1,1), so V_rho
+   is the eight-dimensional adjoint representation.
+   Its square decomposes as
+
+       8 tensor 8=1 direct_sum 2(8)
+                     direct_sum 10 direct_sum 10* direct_sum 27.
+
+   For an explicit derivation use 8=E tensor E* -1
+   in the representation ring. The square of E is
+   Sym^2 E direct_sum E*, and its dual square is
+   Sym^2 E* direct_sum E. Section 56's verified
+   symmetric-power and minuscule formulas give
+
+       6 tensor 6*=1+8+27,
+       6 tensor 3=10+8,     3* tensor 6*=10*+8,
+       3* tensor 3=1+8.
+
+   Subtracting 2(E tensor E*) and adding 1 gives
+   precisely the stated adjoint square. Divide its
+   multiplicities by dimensions, as in Theorem 62D,
+   to obtain (P62.10). All its highest weights are
+   in the root lattice, consistent with Lemma 62A.
+   QED.
+
+**Proposition 62G (the exact rank-one cancellation threshold has
+no stricter uniform margin).** On SU(2) take 2m copies of its
+defining actual atom, with all minus signs, for any integer m>=1.
+Then, in (P62.7) and (P62.9),
+
+    Phi_(2m)/J_(2m)=2/(m+2),
+    t_adj/t_0=-3m/(m+2),
+    J_(2m)=binom(2m+2,m+1)^2/[4(2m+1)]>0.             (P62.11)
+
+In particular no inequality t_adj>=-C t_0 with a constant C<3
+can hold uniformly on these full-target tuples. This concerns
+a stronger uniform-margin requirement; it does not invalidate
+the exact bound t_adj>=-3t_0 required by (P62.9).
+
+**Proof.**
+
+1. Write independent Haar SU(2) elements as unit quaternions
+
+       u=(a,A),  v=(b,B),  a^2+|A|^2=b^2+|B|^2=1.
+
+   Left multiplication acts orthogonally on the unit
+   three-sphere, so normalized sphere measure is Haar.
+   Its first coordinate has density
+   (2/pi)sqrt(1-a^2) on [-1,1]. Conditional on a,b,
+   the directions of A,B are independent uniform
+   on the two-sphere. Their dot product c is uniform
+   on [-1,1].
+
+   For the defining character the two arguments in
+   (P62.7) have difference
+   4 A dot B=4 sqrt(1-a^2)sqrt(1-b^2)c.
+   The fixed correction weight is w_G(v)=4b^2.
+
+2. Put B_m=E(1-a^2)^m. The even power is pointwise
+   nonnegative and its product factors in a,b,c.
+   Hence
+
+       J_(2m)=4^(2m) B_m^2/(2m+1),
+       Phi_(2m)/J_(2m)
+           =4 E[b^2(1-b^2)^m]/B_m.
+
+   To compute the ratio, integrate the derivative of
+   b(1-b^2)^(m+3/2) from -1 to 1. Its boundary
+   values vanish. The resulting identity is
+
+       integral (1-b^2)^(m+1/2) db
+          =(2m+4) integral b^2(1-b^2)^(m+1/2) db.
+
+   Thus the displayed ratio is 4/(2m+4)=2/(m+2).
+
+3. The same integration by parts gives
+   B_m/B_(m-1)=(2m+1)/(2m+2), with B_0=1.
+   Consequently
+
+       B_m=binom(2m+2,m+1)/(2*4^m).
+
+   Substitution proves the J formula in (P62.11).
+   Equation (P62.9) then gives
+   t_adj/t_0=3(Phi/J-1)=-3m/(m+2).
+   All these are finite exact calculations.
+
+4. For any C<3, choose an integer
+   m>max(0,2C/(3-C)). Then 3m/(m+2)>C, disproving
+   that proposed stricter constant on this actual
+   atomic tuple. Likewise Phi/J tends to zero as
+   m tends to infinity by its explicit rational
+   formula, so a positive uniform lower bound
+   Phi>=eta J is unavailable for any eta>0.
+   No limit of the integrals was interchanged.
+   The exact cancellation coefficient three is
+   retained, and this family satisfies Q3. QED.
+
+**Proposition 62H (conditional pointwise positivity is too strong).**
+Define the actual conditional integrand
+
+    H_epsilon(v)=integral_u product_i
+          [chi_i(u^(-1)v)+epsilon_i chi_i(u^(-1)v^(-1))]du.
+
+Its pointwise nonnegativity is not a valid general supplier, already
+for three all-plus actual factors of SU(2). Nevertheless the original
+weighted average is positive on the test below.
+
+**Proof.**
+
+1. Take the defining character twice and the three-dimensional
+   character once, all with plus signs. With the quaternion
+   notation above put z=A dot B. The defining traces are
+   x=2(ab+z), y=2(ab-z), and chi_2=x^2-1.
+   The conditional product is
+
+       (x+y)^2(x^2+y^2-2)
+          =16a^2 b^2 [8(a^2 b^2+z^2)-2].
+
+   For Haar u at fixed v,
+   E a^2=1/4, E a^4=1/8, and
+   E(a^2 z^2)=(1-b^2)/24. Thus
+
+       H_epsilon(v)=(8/3)b^2(4b^2-1).                (P62.12)
+
+2. This is negative when 0<b^2<1/4. At b^2=1/8 it
+   is exactly -1/6. Those v are actual SU(2) elements,
+   so the proposed pointwise supplier fails.
+
+3. The consuming operation is the weighted average,
+   not the pointwise sign. In characters,
+
+       H_epsilon=(2/3)(1+2chi_2+chi_4).
+
+   This follows from 4b^2=1+chi_2 and
+   chi_2^2=1+chi_2+chi_4. Pairing it with
+   w_G=1+chi_2 gives Phi=2 by character
+   orthogonality. Equivalently use the exact
+   coordinate moments E b^4=1/8 and E b^6=5/64
+   in integral 4b^2 H_epsilon(v).
+   Its unweighted average is J=2/3. Thus the
+   weaker weighted construction gives the correct
+   target sign on precisely the pointwise-failing
+   input. QED.
+
+**Open supplier test 62I (matched full-scope inequality; not assumed).**
+Equations (P62.6)--(P62.8)
+supply an exact new finite-channel construction of the original signed
+trace. Its positivity remains the required estimate
+
+    sum_(lambda!=0)c_lambda t_lambda >=-t_0,          (P62.13)
+
+for all actual tuples and sign patterns with even minus count.
+In rank one this is exactly t_adj>=-3t_0. This is openly an
+equivalent scalar requirement after the proved structural identity,
+not a claimed proof of Q3 or a new hypothesis in the project.
+The concrete reduction is that only channels of the one fixed
+representation S_G occur, even at unbounded lengths and labels.
+
+The demand sheet is matched to its consumer. Quantifiers: choose G,
+then its fixed S_G and c_lambda, then arbitrary actual atom tuple
+and signs, before constructing P_lambda and Pi_epsilon; this is
+the order used in Theorem 62D. Parameter ranges: every group in
+the original scope, every label, every finite length, every even
+minus set; odd counts and trivial factors were supplied above.
+Spaces: full actual R and all isotypic multiplicities, complex
+Hilbert--Schmidt norm; no constituentwise positivity is required.
+Constant and bound: coefficient one on t_0 in (P62.13), exactly
+as used in (P62.6), with no stricter uniform margin or per-channel
+sign. Averaging: the weighted pairing is used; Proposition 62H's
+pointwise sign is stronger than the consumer and is discarded.
+Uniformity: the auxiliary channel list is fixed for each G,
+while the input projection spaces retain arbitrary dimension.
+
+The next direct construction can use the actual projector Q in
+(P62.8) and the local involutions (P62.5), retaining their weighted
+cross-channel terms. Its first test is the sharp all-fundamental
+family (P62.11), so a suppression constant below the exact
+coefficient cannot be silently imposed. A successful supplier
+of (P62.13) would give the original atomic Phi>=0 by (P62.6),
+and Lemma 28A would immediately consume it on the full continuous
+cone with its existing uniform convergence hypotheses. Until that
+bound is constructed, neither the positive square (P62.7), positivity
+of C_G(R), nor a fixed list of auxiliary channels is credited as
+the full independent-Haar Q3 theorem.
