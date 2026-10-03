@@ -90065,3 +90065,1115 @@ cone with its existing uniform convergence hypotheses. Until that
 bound is constructed, neither the positive square (P62.7), positivity
 of C_G(R), nor a fixed list of auxiliary channels is credited as
 the full independent-Haar Q3 theorem.
+
+
+## Scalar suppliers for the weighted channel bound
+
+The preceding goal turn made authoritative progress by proving the exact
+identities and zero criterion in section 62; the requested checkpoint
+then committed and pushed sections 60--62 as 7a8db94. That progress did
+not supply (P62.13). The present turn tests an actual positivity
+construction and replaces its failed stronger demand by two proved
+scalar suppliers. Neither the full acceptance target nor its
+quantifiers are changed.
+
+The source and consumer are the full actual projections in Theorem 62D.
+For SU(2), the necessary and sufficient remaining scalar bound is
+
+    t_adj >= -3 t_0,                                  (P63.1)
+
+on every atom tuple and every even-minus pattern, with the exact
+coefficient three. The construction below supplies that bound on
+unbounded families of original tuples: one arbitrary higher character
+with at most three defining minus factors, and one highest-weight-three
+character with arbitrarily many defining factors of either sign. The
+second family retains an unbounded minus count. It is not a claim for
+several arbitrary higher characters, and not a reduction of the full
+project to these families.
+
+**Self-double-check last before writing.** Independently constructed the
+local transpose involutions on two actual defining factors, rather than
+inferring their pin projection from its trace, and recovered the singlet
+and triplet eigenvalues below. Recomputed the first three coefficient
+expectations from falling factorial moments of the stated finite
+probability distribution; symbolic cancellation verifies the displayed
+square formulas. Checked their factorial prefactor independently against
+nine direct character expansions, including a trivial higher-minus
+factor, exact degree boundaries, and opposite parity. For the separate
+integration-by-parts proof, derived its recurrence from both coordinate
+identities and checked seven distinct even moment pairs. Independently
+verified the normalized inequalities in all three parameter regions,
+including the exceptional strip m=n+2 and its n=0 endpoint. Seven direct
+original character integrals agree with the moment supplier, including
+zero and positive boundary cases. These checks validate the derivations;
+the proofs below, not a finite sweep or a list of certificates, supply
+the universal quantifiers stated in their respective lemmas. The full
+unrestricted inequality (P62.13) remains unsupplied.
+
+**Proposition 63A (positive compression is too strong for the trace
+consumer).** In Theorem 62D it is not generally true that
+C_G(R)^(1/2) X_epsilon C_G(R)^(1/2) is positive semidefinite.
+This fails on an actual two-factor SU(2) tuple whose target integral
+is positive.
+
+**Proof.**
+
+1. Let both factors be the defining V_1, and take both signs minus.
+   Write F for the tensor flip. The singlet and triplet projectors are
+   P_0=(Id-F)/2 and P_adj=(Id+F)/2. On a defining matrix use the
+   invariant alternating form J=[0,1;-1,0]. Its involution is
+   theta(A)=J^(-1) A^t J=Tr(A)Id-A. Applying it to either factor of
+   the singlet projector gives theta_1 P_0=theta_2 P_0=F/2;
+   applying both gives P_0. Therefore
+
+       X_epsilon=(P_0-theta_1 P_0-theta_2 P_0
+                            +theta_1 theta_2 P_0)/4
+                =(3/4)P_0-(1/4)P_adj.
+
+2. Corollary 62F gives C_G(R)=P_0+P_adj/3. The proposed positive
+   compression has the exact spectrum
+
+       C_G(R)^(1/2) X_epsilon C_G(R)^(1/2)
+                   =(3/4)P_0-(1/12)P_adj.
+
+   Its triplet eigenvalue is negative, with multiplicity three.
+   This contradicts the proposed matrix supplier on a full actual
+   tuple; discarding the triplet is not an allowed repair.
+
+3. Its trace is nevertheless 3/4-3/12=1/2. In the consumer,
+   t_0=3/4, t_adj=-3/4, and Phi=4(1/2)=2. Thus this test
+   rejects only the stronger matrix positivity requirement,
+   while (P63.1) and the original scalar target both hold.
+   The replacement below proves scalar inequalities directly. QED.
+
+For the following constructions let chi_L denote the actual SU(2)
+irreducible character of highest weight L>=0 and dimension L+1.
+In particular chi_1 is defining, and chi_3 has dimension four.
+For independent Haar g,h put x=chi_1(g), y=chi_1(h), s=x+y, d=x-y.
+Each coordinate has normalized density
+
+    dnu(x)=(1/(2 pi)) sqrt(4-x^2) dx,  -2<=x<=2.
+
+This is the defining-trace version of the quaternion Haar law used
+in Proposition 62G. The characters obey chi_0=1, chi_1=x,
+chi_(L+1)=x chi_L-chi_(L-1). Their orthogonality and the
+fundamental fusion rule are the actual SU(2) character identities,
+not a proposed replacement cone.
+
+**Lemma 63B (exact two-variable coefficient distribution).** For integers
+p,q,L>=0 define
+
+    A_L(p,q)=E[chi_L(x)(x+y)^p(x-y)^q],   n=p+q.
+
+For one chi_L factor of sign eta and p defining plus factors and
+q defining minus factors, the original independent-Haar integral is
+
+    Phi=[1+eta(-1)^q] A_L(p,q).                       (P63.2)
+
+If n<L or n-L is odd then A_L(p,q)=0. Otherwise put k=(n-L)/2,
+and define K_q(t;n) by
+
+    (1+z)^(n-t)(1-z)^t=sum_(j=0)^n K_j(t;n) z^j.
+
+Let S be an integer-valued random variable on 0,...,k with probabilities
+
+    Pr(S=a)=binom(k,a) binom(L+k+2,a+1)
+                                /binom(n+2,k+1).
+
+Then
+
+    A_L(p,q)=B_(p,q,L) E[K_q(2S;n)],
+    B_(p,q,L)=p! q! (L+1) binom(n+2,k+1)
+                                    /[k! (L+k+2)!]>0. (P63.3)
+
+Its falling factorial moments are
+
+    E(S)_j=(k)_j (L+k+1)_j/(n+2)_j,                  (P63.4)
+
+where (a)_j=a(a-1)...(a-j+1), (a)_0=1. We use (P63.4)
+only at j<=3 with n>=j, so no denominator vanishes.
+
+**Proof.**
+
+1. Exchange x,y in the term containing chi_L(y). The product of
+   fundamental signed factors becomes (-1)^q s^p d^q. This
+   proves (P63.2), including its automatic odd-minus zero.
+   In the even-minus case eta=(-1)^q the value is exactly 2A_L.
+
+2. Fundamental fusion gives the ballot multiplicity
+
+       E[chi_L(x) x^m]
+           =(L+1)m!/[r! (L+r+1)!],  m=L+2r, r>=0,
+
+   and zero for the other m. For completeness, the multiplicity
+   is the number of length-m nearest-neighbor walks on the
+   nonnegative label chain from 0 to L. Reflect paths which
+   first hit -1 to subtract binom(m,r-1) from binom(m,r);
+   the difference is the displayed factorial quotient. This
+   uses chi_1 chi_a=chi_(a+1)+chi_(a-1), with chi_(-1)=0.
+   Orthogonality identifies the walk multiplicity with the
+   integral. It also proves the degree and parity zeros.
+
+3. Consequently, with F_L(t)=E[chi_L(x)e^(tx)],
+
+       F_L(t)=(L+1) sum_(r>=0) t^(L+2r)/[r!(L+r+1)!].
+
+   Independence gives the generating identity
+
+       sum_(p,q>=0) A_L(p,q) a^p b^q/(p!q!)
+                            =F_L(a+b)F_0(a-b).
+
+   These are convergent entire series, since |x|,|y|<=2.
+   They can also be read degree by degree as formal series.
+   At total degree n=L+2k their coefficient is
+
+       (L+1) sum_(u+v=k)
+           (a+b)^(L+2u)(a-b)^(2v)
+                         /[u!(L+u+1)!v!(v+1)!].
+
+4. In the summand indexed by v=j, the coefficient of a^p b^q
+   is K_q(2j;n). The scalar weight of that summand is
+
+       1/[(k-j)!(L+k-j+1)!j!(j+1)!]
+          =binom(k,j)binom(L+k+2,j+1)
+                                      /[k!(L+k+2)!].
+
+   Vandermonde's identity sums its numerator to binom(n+2,k+1).
+   Multiplication by p!q!(L+1) proves (P63.3) and its strictly
+   positive prefactor on the supported degrees.
+
+5. This is the ordinary finite sampling distribution with
+   population n+2, k designated members, and sample size
+   L+k+1. Count ordered j-tuples of designated members in the
+   sample. Each fixed tuple is selected with probability
+   (L+k+1)_j/(n+2)_j; there are (k)_j such tuples. This
+   proves (P63.4), including zero when j>k. No asymptotic
+   approximation or unproved special-function positivity
+   has entered the construction. QED.
+
+**Theorem 63C (an arbitrary higher label with up to three defining
+minus factors).** For every p,L>=0 and q in {0,1,2,3}, the original
+SU(2) tuple with one chi_L factor and p defining plus factors and
+q defining minus factors satisfies Q3, for either sign on chi_L.
+The length p and label L are unbounded. For q=2 and q=3 this
+supplies, respectively, total minus counts two and four in the
+nonzero even-minus cases. The q=1 case also follows from the
+stronger fundamental-suffix result in Proposition 24A.
+
+**Proof.**
+
+1. Odd minus counts vanish by (P63.2), and unsupported degrees
+   vanish by Lemma 63B. On a supported degree put
+   z=L(L+2)>=0. The first three elementary coefficient
+   polynomials, with D=n-4S, are
+
+       K_1(2S;n)=D,
+       K_2(2S;n)=(D^2-n)/2,
+       K_3(2S;n)=[D^3-(3n-2)D]/6.
+
+   These follow by expanding the generating polynomial in
+   Lemma 63B. For q=0 its constant coefficient is one.
+
+2. Insert (P63.4). Use S^2=(S)_2+S and
+   S^3=(S)_3+3(S)_2+S. After simplifying, the exact
+   expectations are
+
+       E K_1 = z/(n+2),
+
+       E K_2 = [(z-n-2)^2+2(n-1)(n+2)]
+                                      /[2(n+1)(n+2)],
+
+       E K_3 = z[(z-3n-4)^2+6n^2-6n-16]
+                                      /[6n(n+1)(n+2)]. (P63.5)
+
+   Each expression is used only for n>=q. Thus all
+   denominators are positive in the relevant cases.
+
+3. The first expression is nonnegative. For q=2 one has
+   n>=2, so 2(n-1)(n+2)>0. For q=3 one has n>=3,
+   so 6n^2-6n-16>=20>0; the whole expression is
+   nonnegative, and zero at z=0. For q=0 the
+   expectation is one. Hence (P63.3) gives A_L>=0
+   in every stated case. The matching-sign integral
+   is 2A_L by (P63.2), proving the original target.
+   All full atomic factors and signs are retained. QED.
+
+The previous theorem does not assert positivity of every K_q
+expectation at arbitrary q. The next supplier instead treats all q
+at the actual higher label three by a different estimate. This
+retains arbitrary minus counts without extrapolating (P63.5).
+
+**Lemma 63D (a moment comparison at every even order).** For independent
+x,y with the actual defining-trace law above set
+
+    M_(m,n)=E[(x+y)^m(x-y)^n].
+
+For every even m>=2 and even n>=0,
+
+    M_(m+2,n)+3M_(m,n+2) >= 8M_(m,n).                (P63.6)
+
+Equality holds exactly at (m,n)=(2,0).
+
+**Proof.**
+
+1. The density obeys the integration-by-parts identity
+
+       E[(4-x^2) f'(x)]=3E[x f(x)]
+
+   for every polynomial f. Indeed the derivative of
+   (4-x^2) times the density is -3x times the density,
+   and its boundary values vanish. Apply this identity
+   conditionally in x to f=x s^m d^n, and in y to
+   f=y s^m d^n. Add the two results. The polynomial
+   identities
+
+       x^2+y^2=(s^2+d^2)/2,
+       x^3+y^3=(s^3+3s d^2)/4,
+       x^3-y^3=(3s^2 d+d^3)/4
+
+   give the exact recurrence
+
+       (m+3n+8) M_(m+2,n)+(3m+n+8) M_(m,n+2)
+                           =16(m+n+2) M_(m,n).       (P63.7)
+
+   Terms multiplied by n=0 are absent before differentiation;
+   no negative power needs to be integrated. The derivation
+   is valid also at m=n=0 for the later symmetric base.
+
+2. For even m,n, M_(m,n)>0: its integrand is nonnegative
+   and positive on an open subset of the square carrying
+   positive density. Normalize the two following moments by it,
+
+       S=M_(m+2,n)/M_(m,n)>0,
+       D=M_(m,n+2)/M_(m,n)>0,
+       u=m+3n+8, v=3m+n+8, R=16(m+n+2).
+
+   Then (P63.7) reads u S+v D=R, and
+
+       S+3D=R/u+(8n+16)D/u.                         (P63.8)
+
+   There are three exhaustive cases, because m,n are even.
+
+3. If m>=n+4, then
+
+       R/u-8=8(m-n-4)/u>=0.
+
+   The second term in (P63.8) is strictly positive.
+   Thus S+3D>8 in this region.
+
+4. If n>=m, the joint law of s,d is invariant under
+   exchanging them: change y to -y. Pairing the integrals
+   in this symmetry proves D>=S. More explicitly, the
+   symmetrized numerator of D-S is
+
+       (1/2) E[(d^2-s^2)(s^m d^n-d^m s^n)]>=0.
+
+   For even powers and n>=m, each pointwise product here
+   is nonnegative, since the larger of d^2 and s^2
+   receives the larger residual exponent. The recurrence
+   gives D>=R/(u+v). Therefore (P63.8) yields
+
+       S+3D>=4R/(u+v)=16(m+n+2)/(m+n+4)>8,
+
+   where strictness uses m>=2. This completes the second
+   parameter region without a pointwise claim about the
+   character integrand.
+
+5. The only remaining case is m=n+2. Start instead with
+   the symmetric probability law proportional to s^n d^n.
+   Write a for its expectation of s^2 (also of d^2),
+   and b for its expectation of s^2 d^2. Applying (P63.7)
+   at (n,n) gives
+
+       a=4(n+1)/(n+2).
+
+   Under the law proportional to s^(n+2)d^n,
+   the D in (P63.8) is b/a.
+
+6. Put Z=sd=x^2-y^2 and r_j=E[|Z|^(2j)]. Since n is
+   even, b=r_(n/2+1)/r_(n/2). Every r_j is positive.
+   Cauchy--Schwarz gives r_j^2<=r_(j-1)r_(j+1), so these
+   successive ratios are nondecreasing. Thus b>=r_1/r_0.
+   The actual semicircle moments E x^2=1 and E x^4=2
+   give r_1=2. Consequently
+
+       D=b/a >= (n+2)/[2(n+1)] >= 2/(n+2).
+
+   The last inequality is exactly (n+2)^2>=4(n+1),
+   whose difference is n^2. It is strict when n>0.
+
+7. At m=n+2, formula (P63.8) becomes
+
+       S+3D-8=[(8n+16)D-16]/(4n+10)>=0.
+
+   When n>0, step 6 makes it strict. When n=0,
+   a=2, b=2, D=1, and this difference is zero.
+   Multiplication by M_(m,n)>0 proves (P63.6),
+   with the asserted equality case. QED.
+
+**Theorem 63E (one dimension-four character, arbitrary defining
+factors and signs).** On SU(2), one chi_3 factor and arbitrarily many
+defining factors satisfy the original Q3 integral for every sign
+pattern. In particular the number of minus signs is unbounded.
+
+**Proof.**
+
+1. Write p,q for the numbers of defining plus and minus factors,
+   and eta for the sign of chi_3. Odd total minus counts vanish
+   by exchange; hence assume eta=(-1)^q. Simultaneous central
+   negation (x,y)->(-x,-y) gives zero if p+q is even, since
+   chi_3 is odd and the total integrand then has odd parity.
+   It remains to treat p+q odd.
+
+2. The character is chi_3(x)=x^3-2x. Its exact signed
+   polynomials in s,d are
+
+       chi_3(x)+chi_3(y)=s(s^2+3d^2-8)/4,
+       chi_3(x)-chi_3(y)=d(3s^2+d^2-8)/4.            (P63.9)
+
+   If q is even, eta=+1 and p is odd. The original
+   integral is therefore
+
+       (1/4) E[s^(p+1)d^q(s^2+3d^2-8)].
+
+   Here m=p+1 is even and at least two, and n=q
+   is even. Lemma 63D proves its nonnegativity.
+
+3. If q is odd, eta=-1 and p is even. The original
+   integral is
+
+       (1/4) E[s^p d^(q+1)(3s^2+d^2-8)].
+
+   Exchange s,d using the symmetry y->-y from Lemma 63D.
+   This is (1/4) E[s^(q+1)d^p(s^2+3d^2-8)].
+   Now m=q+1 is even and at least two, and n=p
+   is even. Apply the same lemma. These two cases cover
+   all even-minus sign patterns at every length. QED.
+
+**Corollary 63F (return to the full weighted channel spaces, and
+positive mixtures on the supplied families).** For every actual tuple
+covered by Theorem 63C or Theorem 63E, the original full isotypic
+projections and transpose pins satisfy (P63.1), including every
+multiplicity. In addition:
+
+- One arbitrary real continuous central positive-definite function
+  on SU(2), with all other functions in cone{1,chi_1}, satisfies
+  Q3 when at most three of those other positions have minus signs.
+- One function in cone{1,chi_3}, with all other functions in
+  cone{1,chi_1}, satisfies Q3 with arbitrary signs and length.
+
+These are consumers of actual scalar suppliers, not statements
+replacing the full cone objective.
+
+**Proof.**
+
+1. For an actual atomic tuple Corollary 62F reads
+
+       Phi=2^N(t_0+t_adj/3),   N=p+q+1.
+
+   The scalar integral in Theorems 63C and 63E is precisely
+   this original Phi, by (P63.2) and (P63.9). Its proved
+   nonnegativity is therefore t_adj>=-3t_0. There is no
+   constituentwise splitting, dimension truncation, or
+   removal of a negative channel. The group, actual tuple,
+   signs, and all multiplicities are those used in 62D.
+
+2. For the first mixture assertion, use Lemma 28A to expand
+   the one arbitrary full-cone function in nonnegative
+   actual SU(2) characters. Expand the other functions in
+   their two nonnegative coefficients. Any trivial minus
+   term is zero; every trivial plus term contributes a
+   factor two and deletes that position. The remaining
+   atom tuple has q<=3 and is supplied by Theorem 63C.
+   Every resulting term is nonnegative. The absolute bound
+   product_i 2f_i(e) from Lemma 28A justifies the sum and
+   its interchange with the normalized integral, including
+   an infinite character expansion at the arbitrary
+   function's position.
+
+3. For the second assertion the same finite expansion
+   leaves either the tuple of Theorem 63E or only defining
+   factors, after trivial positions are removed. For only
+   defining factors the target is E[s^p d^q]. Odd q gives
+   zero by exchange. If q is even and p odd, changing
+   (x,y) to (-x,-y) gives zero; if both are even the
+   integrand is pointwise nonnegative. Thus every term
+   in this finite nonnegative-coefficient expansion is
+   supplied as well. QED.
+
+**Acceptance boundary after the scalar construction.** The current goal
+turn is progress: the failed full-scope matrix supplier was tested on
+its actual pin construction, and a weaker supplier was proved and
+returned to the original weighted bound on two unbounded parameter
+families. No new computation script or certificate ledger was created.
+The integration-by-parts estimate handles unbounded minus count, and
+the finite sampling calculation handles unbounded higher labels with
+its explicitly stated minus-count range. Neither is credited as the
+whole supplier (P62.13).
+
+The first unrestricted obligation remains that scalar weighted bound
+for arbitrary actual atom tuples of every group in the full target.
+Even in rank one, Theorem 63E does not cover several chi_3 factors,
+and Theorem 63C does not cover arbitrary q at arbitrary L. A future
+extension of the moment argument must retain the signed higher
+polynomials, rather than claiming that their full products are
+pointwise nonnegative. A future extension of (P63.3) must establish
+its coefficient signs at all orders, rather than inferring them from
+(P63.5). In higher rank the fixed auxiliary channel list in Theorem
+62D remains exact, but the sum of its signed channel pairings has
+not yet been bounded. Those are live proof obligations of the
+unchanged full central positive-definite cone objective.
+
+
+## Orthogonal-frame factorization and complete higher-character pairs
+
+The previous goal turn made authoritative progress by supplying the
+scalar estimates in section 63 and returning them to the actual
+weighted channel bound. Its acceptance boundary explicitly excluded
+several higher characters. The present construction begins with an
+exact probability factorization for the whole original SU(2) trace
+pair, at all degrees. It then supplies a complete two-higher-character
+input, with arbitrary length and minus count. The original objective
+remains Q3 on the entire central positive-definite cone of every group
+in scope.
+
+The source and consumer remain (P62.6) and (P62.13). For the rank-one
+construction the source is the original product-Haar law of
+x=chi_1(g), y=chi_1(h), not the unweighted coupled law J of (P62.7).
+A positive auxiliary measure alone does not establish the sign of
+products of higher characters. The sign supplier below retains their
+complete signed polynomials and evaluates them under this exact law.
+
+**Self-double-check last before recording.** Independently derived the
+orthogonal frame from two unit quaternions and checked all scale
+factors: |g+h|=2 sqrt(R), |g-h|=2 sqrt(1-R), while defining traces
+have the additional factor two. Recomputed the beta and Dirichlet
+normalizations from sphere coordinates and independent squared
+Gaussians. Independently recovered the proposed moment formula from
+(P63.7) and the q=0 character-generating-function boundary: its ratios
+satisfy that recurrence identically, and a positive coefficient
+uniquely determines each next entry of a fixed total-degree row.
+Seven direct mixed moments agree as boundary checks. Recomputed the
+opposite-sign higher-character product before averaging, retained its
+factor 1/16, and verified the normalized quartic identity in both
+(a,b) and (a+b,a-b) coordinates. Five direct original character
+integrals agree with the resulting closed value, including a
+12-factor tuple. Finally checked the sign/parity cases and the return
+to the original full isotypic projections. The proved sign is an
+all-parameter positive polynomial; no finite list of calculations is
+credited as its proof.
+
+**Lemma 64A (exact independent frame and beta coordinates).** Let
+x=chi_1(g), y=chi_1(h) for independent Haar SU(2) elements, and set
+s=x+y, d=x-y. Their joint law has the exact representation
+
+    s=4 sigma sqrt(R P),
+    d=4 tau sqrt((1-R) Q),                            (P64.1)
+
+where the following objects are independent:
+
+- R has beta(3/2,3/2) density (8/pi)sqrt(R(1-R)) on (0,1).
+- (P,Q,1-P-Q) has Dirichlet(1/2,1/2,1) law, whose density in
+  (P,Q) is 1/[pi sqrt(P Q)] on P>0, Q>0, P+Q<1.
+- sigma,tau are independent signs, each uniform on {-1,+1}.
+
+Thus (P64.1) supplies the original joint law, including every moment
+and every continuous function of the two defining traces. It does not
+assert positivity of an arbitrary character product under that law.
+
+**Proof.**
+
+1. Identify the original independent elements with unit quaternions
+   g,h, independent uniform on the unit three-sphere in R^4, as in
+   Proposition 62G. Write T=g dot h and R=(1+T)/2. Conditional on
+   any fixed g, T is the first coordinate of a uniform sphere point.
+   Its density is (2/pi)sqrt(1-T^2). The change T=2R-1 gives
+   the stated beta density, of total mass one. Its endpoints have
+   probability zero.
+
+2. Away from those endpoints define the ordered orthonormal frame
+
+       E=(g+h)/(2 sqrt(R)),
+       F=(g-h)/(2 sqrt(1-R)).
+
+   The norm identities |g+h|^2=4R, |g-h|^2=4(1-R), and
+   (g+h) dot (g-h)=0 prove orthonormality. At fixed R the
+   original joint law is invariant under simultaneous orthogonal
+   rotations. The set of ordered orthonormal two-frames is one
+   compact homogeneous orbit, with its unique invariant probability
+   measure. The displayed change of variables is equivariant and
+   bijective at each fixed R. Consequently the conditional law
+   of (E,F) is this same invariant measure for almost every R;
+   the frame and R are independent.
+
+3. Complete the frame as the first two columns of a uniform
+   orthogonal matrix. Its first row is uniform on the unit
+   three-sphere. Hence the pair of first coordinates (E_0,F_0)
+   has the law of the first two coordinates of a uniform sphere
+   point. For a direct density construction, normalize four
+   independent standard real Gaussians by their Euclidean length.
+   Their direction is uniform on that sphere by rotational
+   invariance. The first two squared coordinates before
+   normalization are independent gamma variables of shape 1/2,
+   and the sum of the remaining two is gamma of shape one, all
+   with common rate 1/2.
+
+4. Change those three gamma variables to their sum and their
+   proportions. The density separates, and the proportions have
+   Dirichlet parameters (1/2,1/2,1). Its normalization is
+   Gamma(2)/[Gamma(1/2)^2 Gamma(1)]=1/pi, giving the
+   density in the statement. The two Gaussian signs remain
+   independent uniform signs and are independent of their squared
+   coordinates. Thus
+
+       E_0=sigma sqrt(P),   F_0=tau sqrt(Q).
+
+   All three auxiliary objects are independent as asserted.
+
+5. The defining character is twice the quaternion's first coordinate.
+   Therefore s=2(g_0+h_0)=4 sqrt(R) E_0 and
+   d=2(g_0-h_0)=4 sqrt(1-R) F_0. This proves (P64.1)
+   exactly for the original pair. The inverse relations are
+   x=(s+d)/2 and y=(s-d)/2. In particular it gives the
+   correct original product-Haar integrals for all continuous
+   central SU(2) functions of those traces. QED.
+
+**Lemma 64B (all even mixed moments in closed form).** For integers
+a,b>=0 put
+
+    H_(a,b)=E[s^(2a)d^(2b)],   r=a+b.
+
+Using [alpha]_j=alpha(alpha+1)...(alpha+j-1) for a *rising*
+factorial, with [alpha]_0=1, one has
+
+    H_(a,b)=16^r [1/2]_a [3/2]_a [1/2]_b [3/2]_b
+                                        /([2]_r [3]_r)
+           =2(2a)!(2a+1)!(2b)!(2b+1)!
+                       /[a!^2 b!^2 (r+1)!(r+2)!].   (P64.2)
+
+In particular these moments are strictly positive. The bracket notation
+here is distinct from the falling factorial notation in (P63.4).
+Any moment with an odd power of s or d is zero.
+
+**Proof.**
+
+1. In (P64.1), the signs immediately give the odd-power zeros.
+   For even powers independence gives
+
+       H_(a,b)=16^r E[R^a(1-R)^b] E[P^a Q^b].
+
+   Integrate the beta and Dirichlet densities of Lemma 64A,
+   or the normalized gamma densities in its proof. They give
+
+       E[R^a(1-R)^b]=[3/2]_a[3/2]_b/[3]_r,
+       E[P^a Q^b]=[1/2]_a[1/2]_b/[2]_r.
+
+   Multiplying proves the first equality of (P64.2).
+
+2. Use [1/2]_a=(2a)!/(4^a a!),
+   [3/2]_a=(2a+1)!/(4^a a!), [2]_r=(r+1)!,
+   and [3]_r=(r+2)!/2. This proves the second equality,
+   including a=b=0, where H_(0,0)=1.
+
+3. The two first normalized moments under the probability law
+   proportional to s^(2a)d^(2b) are consequently
+
+       E_(a,b) s^2=4(2a+1)(2a+3)/[(r+2)(r+3)],
+       E_(a,b) d^2=4(2b+1)(2b+3)/[(r+2)(r+3)].      (P64.3)
+
+   These expressions also provide an independent check against
+   the exact recurrence in (P63.7): substituting m=2a,n=2b
+   satisfies it identically. At b=0, the boundary formula is
+   H_(a,0)=C_a C_(a+1), where C_j=(2j)!/[j!(j+1)!]
+   is the Catalan number. This is also the q=0,L=0 case of
+   (P63.3). That boundary and (P63.7) determine each row
+   with fixed a+b uniquely by walking from b=0 to its next
+   entry; the coefficient of that next entry is positive.
+   Thus both constructions determine the same whole moment
+   table, rather than agreeing only at checked small values. QED.
+
+The new model first recovers the previous scalar supplier in a simpler
+discrete form. With u=s^2, v=d^2, delta=a-b, and
+
+    A=u+3v-8,   B=3u+v-8,
+
+formula (P64.3) gives
+
+    E_(a,b) A
+        =8[delta(delta-1)+2b(2b+3)]/[(r+2)(r+3)].     (P64.4)
+
+This is nonnegative at every nonnegative integer a,b: the integer
+product delta(delta-1) is nonnegative even when delta is negative.
+It gives the estimate of Lemma 63D, and also includes its omitted
+m=0 even-moment boundary. The actual chi_3 factor remains s A/4
+or d B/4; the next statement retains both complete factors.
+
+**Lemma 64C (the full opposite higher-pair polynomial has a positive
+average at all monomial orders).** For every integer a,b>=0 define
+r=a+b, delta=a-b, and
+
+    Z(r,delta)=r(r+1)(r+2)(r+3)+6(r+3)
+                               +2(3r+1)delta^2+4delta^4.
+
+Then the actual trace law satisfies
+
+    E[s^(2a)d^(2b) A B]
+         =H_(a,b) 64 Z(r,delta)
+                          /[(r+2)(r+3)^2(r+4)] > 0. (P64.5)
+
+This is an averaged statement: A B takes negative values on an open
+part of the actual trace-pair support.
+
+**Proof.**
+
+1. Put D_4=(r+2)(r+3)^2(r+4). From (P64.2), the
+   normalized second moments under the same tilt as (P64.3) are
+
+       E_(a,b) u^2=16(2a+1)(2a+3)^2(2a+5)/D_4,
+       E_(a,b) v^2=16(2b+1)(2b+3)^2(2b+5)/D_4,
+       E_(a,b) u v=16(2a+1)(2a+3)(2b+1)(2b+3)/D_4.
+
+   The repeated factor (r+3)^2 is essential: a second degree
+   increment increases both factorials in the denominator of
+   (P64.2). No independent-coordinate assumption has replaced
+   the exact coupled law.
+
+2. Multiply the complete quadratics:
+
+       A B=3u^2+10u v+3v^2-32u-32v+64.
+
+   Insert the preceding three expressions and (P64.3). The
+   numerator of E_(a,b) A B, after division by 64, is
+
+       5a^4-12a^3b+12a^3+30a^2b^2+12a^2b+13a^2
+       -12ab^3+12ab^2+18ab+12a
+       +5b^4+12b^3+13b^2+12b+18.
+
+   Regroup its homogeneous terms using r=a+b and delta=a-b.
+   The quartic part is r^4+4delta^4, the cubic part is
+   6r^3+6r delta^2, and the quadratic part is
+   11r^2+2delta^2. The remaining terms are 12r+18.
+   Their sum is exactly Z(r,delta). This proves (P64.5).
+
+3. Since r>=0, every term in the displayed expression for Z
+   is nonnegative, and 6(r+3)>0. The denominator and H_(a,b)
+   are positive. Hence the average is strictly positive at
+   every stated monomial order; no upper bound on a,b is used.
+
+4. This conclusion does not follow from pointwise positivity.
+   At u=6,v=1/4, one has A=-5/4, B=41/4, so
+   A B=-205/16. This pair is inside the actual support:
+   take s=sqrt(6),d=1/2, with |s|+|d|<4, and then
+   x=(s+d)/2,y=(s-d)/2 in (-2,2). Both original densities
+   are positive in a neighborhood of those coordinates.
+   The sign supplier is the exact moment comparison, retaining
+   the negatively contributing region. QED.
+
+**Theorem 64D (two dimension-four characters, arbitrary defining
+factors and all signs).** On SU(2), two chi_3 factors together with any
+number of defining chi_1 factors satisfy the original Q3 integral
+for every sign pattern. The length and minus count are unbounded.
+
+**Proof.**
+
+1. Let p,q be the numbers of defining plus and minus factors,
+   and let eta_1,eta_2 be the signs of the two chi_3 factors.
+   Odd total minus count gives zero by exchange of g,h. If
+   p+q is odd, simultaneous central negation of g,h gives
+   zero, since every character here is odd and the total
+   number of factors is p+q+2. It remains to consider p+q
+   even and total minus count even.
+
+2. If eta_1=eta_2, their product is the square of the corresponding
+   chi_3 sum or difference. The two higher factors contribute
+   either zero or two minus signs. Thus q is even, and p+q
+   even makes p even. The remaining product s^p d^q is
+   pointwise nonnegative, as is the square. This supplies
+   both same-sign cases.
+
+3. If eta_1=-eta_2, the higher pair contributes one minus sign,
+   so q is odd. Hence p is also odd, with p,q>=1. The
+   identities (P63.9), with both entire factors retained, give
+
+       [chi_3(x)+chi_3(y)][chi_3(x)-chi_3(y)]
+                                                =s d A B/16.
+
+   Put a=(p+1)/2, b=(q+1)/2. These are integers at least
+   one. The exact original integral is
+
+       Phi=(1/16) E[s^(2a)d^(2b) A B]
+            =4 H_(a,b) Z(a+b,a-b)
+                     /[(a+b+2)(a+b+3)^2(a+b+4)]>0.   (P64.6)
+
+   Lemma 64C proves this at every p,q in the opposite-sign
+   case. Swapping the order of the higher factors changes
+   no scalar product. Together with steps 1--2 this covers
+   the full two-higher input for every sign pattern. QED.
+
+**Corollary 64E (original channel bound and two designated mixture
+positions).** Every actual tuple supplied by Theorem 64D satisfies
+
+    t_adj >= -3 t_0
+
+in the original spaces of Theorem 62D, including all multiplicities.
+Moreover Q3 holds for any finite list on SU(2) with at most two
+positions in cone{1,chi_1,chi_3} and all other positions in
+cone{1,chi_1}, at arbitrary length and with arbitrary signs.
+
+**Proof.**
+
+1. Corollary 62F gives Phi=2^N(t_0+t_adj/3) on the full
+   actual tuple, here N=p+q+2. Theorem 64D supplies this
+   precise original Phi, so its nonnegativity is exactly
+   the claimed weighted trace bound. Neither individual
+   nontrivial channel positivity nor a positive matrix
+   compression is substituted for this scalar consumer.
+
+2. Expand the functions in their finite nonnegative character
+   coefficients. A trivial minus term is zero, while a trivial
+   plus term contributes a factor two and removes that position.
+   Every resulting atom tuple has at most two chi_3 factors.
+   The two-factor case is Theorem 64D; the one-factor case is
+   Theorem 63E. With zero chi_3 factors only s^p d^q remains:
+   odd q gives zero by exchange, odd p with even q gives zero
+   by central negation, and both even gives a pointwise
+   nonnegative product. Hence every term is supplied. Taking
+   their finite nonnegative sum proves the mixture statement.
+   The designated positions impose no change on the main
+   project's unrestricted function cone. QED.
+
+**Acceptance boundary after the frame construction.** This goal turn is
+progress: the exact independent auxiliary law covers the whole original
+rank-one trace pair, and the scalar supplier handles two complete higher
+characters with arbitrary defining signs and length. The return to the
+weighted trace bound is on the same actual tuple; no source dimension
+or signed region is discarded. All even mixed moments are available
+in the uniform formula (P64.2), with no order cap or coefficient
+certificate sweep.
+
+The auxiliary law itself is not credited as a Q3 proof. General
+character products are still signed polynomials in its coordinates,
+and their average requires a sign estimate. In particular, positivity
+of (P64.5) under monomial tilts is not an established closure under
+arbitrary squared polynomial weights. Products of several complete
+higher-character pairs therefore remain an obligation. Theorems 63E
+and 64D cover one and two chi_3 factors respectively; they do not
+assert closure of the full cone{1,chi_3}. Arbitrary higher labels and
+higher-rank groups are still included in the unchanged objective.
+The full remaining consumer is (P62.13), and no full-goal completion
+is claimed.
+
+
+## Complete-string boundary energy at unbounded labels and minus counts
+
+The previous goal turn made authoritative progress in section 64: the
+exact trace-pair law and its moment formula supplied two complete
+higher-character factors. The present turn addresses a different
+unrestricted parameter in the same consumer, allowing a single higher
+label L to grow without bound along with the length and minus count.
+The construction is a uniform boundary identity for the complete
+irreducible weight string, followed by a two-dimensional energy bound.
+It is not an extension of a coefficient table or an assertion that
+individual Fourier frequencies have positive contributions.
+
+The source is the original SU(2) product-Haar integral in (P63.2).
+The consumer remains the weighted trace bound in (P62.13), with its
+original coefficient three in rank one. The exact boundary identity
+below holds for every supported one-higher input. The sign supplier
+is proved on the explicitly stated energy-positive region, which
+includes unbounded labels, lengths, and every minus count on a
+quadratic-length family. Inputs outside that region are not silently
+removed from the full central positive-definite cone objective.
+
+**Self-double-check last before recording.** Recomputed the SU(2) Weyl
+weight, the degree-two torus covering, and the signed character sums
+before using any Fourier coefficient. Checked that both parity cases
+produce the same positive outer factor, and that the Fourier phase has
+squared magnitude 4^(-n). Independently telescoped both the norm and
+cross-product parts of the complete string, retaining its two endpoints
+and the k=0 term when present. Eight direct character expansions agree
+with the boundary expression, including a trivial higher-minus zero,
+a highest-degree endpoint, and unbounded-family examples. Derived the
+quadratic formula from the degree recurrence and verified its identity
+symbolically for free adjacent coefficients. Recomputed its determinant,
+the all-minus-count window, and the exact quadratic-length specialization.
+The continuous-argument countertest was checked exactly; its argument
+is not an admissible minus count. Finally verified the original factor
+two on a 23-factor input, where Phi=87120. These independent checks
+precede the assertions below; finite checks do not supply their
+universal parameter ranges.
+
+**Theorem 65A (the full one-higher integral is a boundary Turan
+increment).** For p,q,L>=0 integers, let n=p+q and use the actual
+SU(2) character chi_L with sign eta, together with p defining plus
+and q defining minus factors. Put
+
+    K_j= [z^j](1+z)^(n-q)(1-z)^q,
+    K_j=0 for j<0 or j>n.
+
+Odd total minus count gives zero. If n<L or n-L is odd, the integral
+also gives zero. Otherwise let m=(n-L)/2, and put
+
+    Delta_j=K_j^2-K_(j-1)K_(j+1),
+    P_m=Delta_m-Delta_(m-1)
+       =K_m^2-K_(m-1)^2+K_m K_(m-2)-K_(m-1)K_(m+1).
+
+In the even-minus case eta=(-1)^q, the exact original integral is
+
+    Phi=2P_m,       A_L(p,q)=P_m.                    (P65.1)
+
+In particular this identity is on complete actual characters, at
+all lengths and labels, and not on separate frequency atoms.
+
+**Proof.**
+
+1. Lemma 63B supplies the automatic minus-count, degree, and
+   parity zeros, and gives Phi=2A_L in the matching-sign case.
+   To calculate the latter value, use torus coordinates for SU(2):
+
+       chi_1=2cos(theta),
+       chi_L(theta)=sum_(k=-L,-L+2,...,L) e^(ik theta).
+
+   The normalized trace Haar law is integration in theta against
+   (1-cos(2theta))dtheta/(2pi), equivalently the semicircle law
+   of section 63. This is the usual rank-one Weyl integration
+   already used in the project.
+
+2. On the product torus set theta=alpha+beta, phi=alpha-beta.
+   This is a surjective group covering of degree two. Its
+   pushforward of normalized torus Haar is normalized Haar;
+   hence it makes the exact original change of integration
+   variables without an extra Jacobian factor. The product
+   Weyl weight becomes
+
+       (1-cos(2theta))(1-cos(2phi))
+                             =(cos(2alpha)-cos(2beta))^2.
+
+   Write C(t)=cos(2t), w(t)=cos(t)^p sin(t)^q. Then
+
+       x+y=4cos(alpha)cos(beta),
+       x-y=-4sin(alpha)sin(beta).
+
+3. Let I_L={-L,-L+2,...,L}. The two complete character
+   combinations are exactly
+
+       chi_L(theta)+chi_L(phi)
+                            =2 sum_(k in I_L) cos(k alpha)cos(k beta),
+       chi_L(theta)-chi_L(phi)
+                           =-2 sum_(k in I_L) sin(k alpha)sin(k beta).
+
+   When q is even the higher sign is plus. When q is odd it
+   is minus, and that displayed minus cancels the factor
+   (-1)^q from the defining differences. Define f_k(t) to
+   be w(t)cos(kt) in the former case and w(t)sin(kt) in the
+   latter. The resulting original value is therefore
+
+       Phi=2*4^n sum_(k in I_L)
+                   integral_(alpha,beta) (C(alpha)-C(beta))^2
+                                        f_k(alpha)f_k(beta).
+
+   These are finite sums of ordinary normalized torus integrals.
+
+4. Put a_k=integral f_k(t)dt/(2pi). Multiplication by C gives
+
+       integral C f_k=(a_(k-2)+a_(k+2))/2,
+       integral C^2 f_k=a_k/2+(a_(k-4)+a_(k+4))/4.
+
+   The identities hold also at k=0 and negative k, using the
+   ordinary cosine or sine parity. Independence of the two
+   torus variables makes the k summand in step 3 equal to
+   twice
+
+       T_k=a_k integral C^2 f_k-(integral C f_k)^2.
+
+   There is no pointwise or frequencywise sign assertion.
+
+5. Expand w using z=e^(it). Its finite Laurent polynomial
+   is 2^(-n)i^(-q)z^(-n)(1+z^2)^p(z^2-1)^q.
+   On the supported parity k congruent n modulo two,
+
+       a_k=c K_((n-k)/2),   c=(-1)^floor(q/2) 2^(-n).
+
+   Thus c is real and c^2=4^(-n). The coefficient reflection
+   K_(n-j)=(-1)^q K_j follows from the same finite polynomial.
+   Under j=(n-k)/2, the complete string I_L becomes precisely
+   the interval m<=j<=n-m.
+
+6. Four times T_k/c^2 is
+
+       2K_j^2-K_(j-1)^2-K_(j+1)^2
+          +K_j K_(j-2)+K_j K_(j+2)-2K_(j-1)K_(j+1).
+
+   Sum its first line over m<=j<=n-m. The interior norm
+   terms cancel, and reflection makes the result
+   2(K_m^2-K_(m-1)^2). For the second line put
+   R_j=K_j K_(j+2). It is R_j+R_(j-2)-2R_(j-1).
+   Summation leaves the two boundary differences; reflection
+   makes their sum 2(K_m K_(m-2)-K_(m-1)K_(m+1)).
+   Hence sum_(k in I_L) T_k=c^2 P_m/2.
+
+7. Step 3 and the factor two in step 4 now give
+   Phi=4*4^n sum T_k=2P_m. Combine with Phi=2A_L
+   from step 1. All endpoint conventions include m=0,
+   where P_0=1 and Phi=2. QED.
+
+**Lemma 65B (uniform adjacent-coefficient energy).** In the supported
+case of Theorem 65A with m>=1, set D=n-2q, U=K_m, V=K_(m-1).
+Then
+
+    P_m=[(m+1)(L+2)U^2+(m+L+2)L V^2-D(L+1)U V]
+                                      /[(m+1)(m+L+2)]. (P65.2)
+
+For L>=1, this expression is nonnegative whenever
+
+    (n-2q)^2 (L+1)^2
+             <=(n-L+2)(n+L+4)L(L+2).                (P65.3)
+
+When (P65.3) is strict the original matching-sign Phi is strictly
+positive. No assertion outside that parameter region is made by
+this energy estimate.
+
+**Proof.**
+
+1. Differentiating the finite coefficient generating polynomial
+   gives the degree recurrence
+
+       (j+1)K_(j+1)=D K_j-(n-j+1)K_(j-1).
+
+   At j=m-1 and j=m, respectively, solve it as
+
+       K_(m-2)=[D V-m U]/(n-m+2),
+       K_(m+1)=[D U-(n-m+1)V]/(m+1).
+
+   The denominators are positive since m<=n/2. Insert
+   these expressions in (P65.1) and use n=2m+L.
+   This proves (P65.2) by direct algebra.
+
+2. The numerator of (P65.2) is the quadratic form of the
+   symmetric matrix
+
+       [[(m+1)(L+2),       -D(L+1)/2],
+        [-D(L+1)/2,       (m+L+2)L ]].
+
+   For L>=1 both diagonal entries are positive. Its
+   determinant is nonnegative exactly when
+
+       D^2(L+1)^2<=4(m+1)(m+L+2)L(L+2).
+
+   Substituting 2m=n-L gives (P65.3). Thus the matrix is
+   positive semidefinite in that region, supplying the
+   scalar P_m>=0 and Phi>=0 via Theorem 65A.
+
+3. Under the strict inequality the matrix is positive definite.
+   U,V cannot both vanish: the same recurrence would then
+   force K_(m-2)=0, and continued backward substitution
+   would force K_0=0, contrary to K_0=1. Therefore its
+   quadratic form and Phi are strictly positive. This is
+   parameter-dependent strictness; it is not a uniform
+   positive margin on the full project target. QED.
+
+**Corollary 65C (all signs on an unbounded label-length window).**
+Let n>=L>=1 be integers with n-L even, and put z=(L+1)^2.
+The one-higher tuple satisfies Q3 for every choice of signs if
+
+    3n+5-2sqrt(2(n+1)(n+2)) <= z
+              <=3n+5+2sqrt(2(n+1)(n+2)).             (P65.4)
+
+In particular, for every integer L>=2, take
+
+    n=(L+1)^2-3
+
+copies of the defining character and one chi_L factor. This original
+(n+1)-factor tuple satisfies Q3 for every sign pattern; each
+matching-sign integral is strictly positive. Both the label and
+minus count are unbounded in this family.
+
+**Proof.**
+
+1. Since 0<=q<=n, one has |n-2q|<=n. Write the right
+   side of (P65.3), after dividing by (L+1)^2, as
+
+       T(n,z)=[(n+3)^2-z](z-1)/z.
+
+   If T(n,z)>=n^2, (P65.3) holds simultaneously for every
+   integer q. Equivalently,
+
+       z^2-(6n+10)z+(n+3)^2<=0.
+
+   Its two roots are the endpoints in (P65.4), proving
+   the window assertion by Lemma 65B. If m=0 the
+   conclusion instead follows directly from Phi=2 in
+   Theorem 65A. Odd total minus counts give zero.
+
+2. At n=(L+1)^2-3, one has z=n+3 and
+
+       T(n,z)=(n+2)^2>n^2.
+
+   The energy inequality is therefore strict for every q.
+   Also n>=L and n-L=(L+2)(L-1) is even. For L>=2
+   one has m>=1, so Lemma 65B gives strict positivity
+   in every even-minus matching-sign case. The remaining
+   patterns have odd minus count and give zero. QED.
+
+**Proposition 65D (real-variable continuation is an invalid stronger
+supplier).** Nonnegativity of the Turan increment in (P65.1) cannot
+be demanded at every real value of q, even with n,m fixed at
+admissible integer values. This failure does not give an original
+Q3 counterexample, because q counts defining minus factors.
+
+**Proof.**
+
+1. Take n=6,L=0,m=3 and continue the coefficient recurrence
+   formally to D=6-2q as a real variable. Its first terms are
+
+       K_0=1, K_1=D, K_2=(D^2-6)/2,
+       K_3=D(D^2-16)/6,
+       K_4=(D^4-28D^2+72)/24.
+
+   Their Turan increment is exactly
+
+       P_3=D^2(D^2-16)(D^2-22)/144.
+
+2. At q=3/4, D=9/2 and P_3=-1071/1024<0.
+   But q is not an integer in 0,...,n, so no original
+   signed tuple realizes this value. In particular the
+   finite coefficient reflection used in Theorem 65A
+   is only asserted at its actual integer counts. A
+   prospective supplier must retain that scope rather
+   than requiring positivity between the allowed grid
+   points. The L=0 original case is independently supplied
+   by its trivial character factor. QED.
+
+**Return to the full weighted trace consumer.**
+
+1. Theorem 65A calculates the original independent-Haar Phi of
+   the actual tuple, with all factors and signs retained.
+   Lemma 65B supplies its sign under (P65.3); Corollary
+   65C supplies every sign at the stated unbounded lengths
+   and labels. For those actual tuples Corollary 62F gives
+   Phi=2^(n+1)(t_0+t_adj/3). Thus the proved scalar sign
+   is exactly t_adj>=-3t_0 in the original full isotypic
+   spaces, including all their multiplicities.
+
+2. The construction has closed a parameter region of the
+   original supplier. It has not established that P_m>=0
+   on the entire integer grid n>=L, n-L even, 0<=q<=n.
+   In particular positivity of an individual Turan determinant
+   Delta_m would not imply positivity of its difference
+   Delta_m-Delta_(m-1). That difference, rather than a
+   stronger continuous-variable assertion, is the exact
+   still-needed one-higher estimate outside the supplied
+   region. Highest-degree tuples m=0, trivial higher factors,
+   and the earlier suppliers remain available without
+   assuming (P65.3).
+
+3. Several arbitrary higher characters and all higher-rank
+   groups remain explicit quantifiers of the main target.
+   The boundary energy here applies to one complete higher
+   weight string with defining spectators; it is not claimed
+   as a frequencywise positivity rule for general products.
+   Lemma 28A can consume a full atomic supplier when available,
+   but the full supplier (P62.13) has not been proved.
+   This turn is progress through a verified uniform energy
+   estimate and its actual unbounded input family, with the
+   full cone objective unchanged and active.
