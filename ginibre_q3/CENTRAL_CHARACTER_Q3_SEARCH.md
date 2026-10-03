@@ -96119,3 +96119,951 @@ correction degrees do not supply fixed rank with arbitrarily high
 total degree or arbitrary long tuples. All remaining type C inputs,
 the unsupplied other Lie types and spin sectors, and the original full
 continuous central positive-definite cone remain the unchanged goal.
+
+## A parity-compatible Pfaffian injection absorbs the entire first relation
+
+The hard consumer remains the original full type C kernel (P76.2), or
+its equivalent whole-cut correction budget (P75.7). The result here supplies
+its entire first auxiliary-dimension relation, with no box-degree cutoff.
+The supplier is an injective map of graded polynomial representations. It
+retains all vertex Littlewood--Richardson multiplicities and every original
+sign, instead of expanding successive correction degrees.
+
+**Independent self-double-check immediately before recording the assertions.**
+
+1. Rechecked Bump--Gamburd, equations (87), (90) and (92), against
+   ordinary, rather than symplectic, Schur functions: the retained
+   partitions have even columns and length <=2r. Their equation (16)
+   gives the full-column determinant shift. The universal character
+   Cauchy identity in Section 74 specializes to actual type C
+   characters in any auxiliary alphabet of size <=r, not only size r.
+2. Independently derived the exact identity H_r=(1-e_(2r+2))D when
+   the union alphabet has 2r+2 variables. An excluded partition then
+   has exactly that many rows. Removing its first column preserves
+   even column lengths, bijectively. Every proper nonempty cut has
+   fewer auxiliary variables and has no rank correction. Thus the
+   original endpoint correction is precisely -(1+epsilon_I)e_S K.
+3. Checked the map below on natural representations, not only scalar
+   coefficients. The off-diagonal projection and edge-degree
+   projections commute with product_i GL(E_i). A chosen Pfaffian
+   component is a nonzero determinant semi-invariant; multiplication
+   is injective because the ambient ring is a polynomial domain.
+   Adding any edge support to its spanning even-minus graph only
+   joins even-minus components. Its image therefore lies in the
+   specified invariant subspace for every polynomial degree.
+4. A separate symbolic six-coordinate block-Pfaffian audit, with
+   block dimensions (2,2,2), found eight distinct matching monomials,
+   all of triangular edge degree (1,1,1). It verified invariance under
+   a shear in each of the three blocks and determinant scaling in
+   each block. This checks the equivariance convention used below.
+5. An independent actual USp(6) audit used lambda_0=(2,2) and six
+   row labels (2). The character polynomial
+   h_2^2-h_3 h_1-h_1^2+h_2 was first checked by the exact Weyl
+   numerator identity A_rho chi_(2,2)=A_(rho+(2,2,0)), and has
+   dimension 90. Haar integration of that polynomial times h_2^k,
+   for k=0,...,6, gave 0,0,1,3,24,160,1275. The corresponding
+   h_2^k moments were 1,0,1,1,6,22,130.
+6. Independent degree-graph enumeration, including the LR coefficient
+   two for four single-row edges at the (2,2) vertex, gave universal
+   full moment 1320. The first-column-removed tuple has moment 45.
+   For minus sets empty, {0,1}, {1,2}, {0,1,2,3}, the universal
+   integrals were 3660,2820,2556,2532 and the actual integrals were
+   3570,2730,2466,2442. Each full original cut correction is -90.
+   This tuple has row count eight and box count sixteen; it is
+   outside the earlier type C degree boundary ten at rank three.
+7. Replayed the continuous consumer with the actual row-count bound,
+   including an unrestricted distinguished atom of length <=r.
+   No bounded first row, bounded box degree, or truncated distinguished
+   support is needed. Lemma 28A supplies the same original uniform
+   absolute bound product_i 2f_i(e). The assertions below are accepted
+   with exactly their stated row ranges; no full-cone closure is claimed.
+
+**Lemma 79A (the exact auxiliary-dimension correction in every degree).**
+Let G=USp(2r), and choose disjoint alphabets A_i with l_i variables,
+where 1<=l_i<=r. Put S=sum_i l_i and use D,H_r from Lemma 76A.
+The actual joint-moment and signed-cut kernels (P76.1)--(P76.2)
+hold with these alphabets and surviving labels ell(lambda_i)<=l_i.
+Moreover:
+
+    S<=2r+1:  H_r(A_I)=D(A_I);
+    S=2r+2:   H_r(A_I)=(1-e_S(A_I))D(A_I).             (P79.1)
+
+At the second boundary every proper nonempty cut has H_r=D.
+Write K_I=product_(i<j)K(A_i,A_j), and let F_* be the universal
+signed graph series from (P74.5). The entire actual signed series is
+
+    F_G=F_*-(1+epsilon_I)e_S(A_I)K_I,   if S=2r+2.     (P79.2)
+
+These are identities of formal Schur series in all degrees.
+
+**Proof.**
+
+1. In each alphabet only partitions of length <=l_i<=r survive.
+   Each coefficient of its specialized character Cauchy identity
+   is therefore an actual irreducible. The proof of Lemma 76A
+   applies verbatim to these smaller alphabets.
+2. Every even-column partition has an even number of rows.
+   When S<=2r+1, any excluded partition has length >=2r+2>S
+   and its Schur polynomial vanishes.
+3. When S=2r+2, the excluded partitions with nonzero Schur
+   polynomial have exactly S rows. Removing a column of height
+   S bijects them with all even-column partitions of length <=S:
+   the paired row lengths stay paired after subtracting one.
+   By the determinant-shift identity, s_nu=e_S s_(nu-(1^S)).
+   Summing their Schur polynomials gives D-H_r=e_S D.
+4. Every proper cut omits at least one nonempty alphabet, so its
+   size is <=2r+1. In the full cut kernel only the two endpoint
+   cuts differ from the universal kernel. Their original signs
+   are 1 and epsilon_I, respectively. Dividing by product_i D(A_i)
+   gives (P79.2), since D(A_I)/product_i D(A_i)=K_I. QED.
+
+**Lemma 79B (an injective determinant map into the parity-positive graphs).**
+Let l_i be positive integers with even sum S and max_i l_i<=S/2.
+For any even-size minus set M, take complex vector spaces E_i of
+these dimensions, and let
+
+    L=product_i GL(E_i),
+    R=Sym(direct-sum_(i<j) E_i tensor E_j),
+    delta= tensor-product_i det(E_i).
+
+Decompose R by its edge degrees n_ij>=0. Call an edge degree good
+when every component of its support graph, including isolated vertices,
+has even intersection with M. Let R_good be the direct sum of those
+edge-degree spaces. There is a homogeneous injective L-map
+
+    delta tensor R --> R_good.                         (P79.3)
+
+Consequently, coefficientwise in the product Schur basis,
+
+    ch_L(R_good)>=e_S(A_I) ch_L(R).                     (P79.4)
+
+The map and its degree shift depend only on l and M, not on any
+vertex partition or first-row length.
+
+**Proof.**
+
+1. Put E=direct-sum_i E_i. In Sym(Lambda^2 E), the natural
+   alternating map Lambda^S E -> Sym^(S/2)(Lambda^2 E)
+   takes an ordered top wedge to the Pfaffian polynomial q.
+   Explicitly, q is the signed sum over perfect matchings of
+   the S basis slots, with one factor e_a wedge e_b per pair.
+   It transforms by det(E). This follows directly from the
+   natural alternating construction, or from the top exterior
+   power identity for the Pfaffian under congruence.
+2. Project away the summands Lambda^2 E_i, retaining only
+   direct-sum_(i<j) E_i tensor E_j. This projection commutes
+   with L and gives the Pfaffian of the skew matrix having
+   zero diagonal blocks, as an element of R. Its decomposition
+   q=sum_k q_k into edge degrees is L-equivariant: each edge
+   summand is preserved by L. Every nonzero q_k transforms
+   by delta and has vertex degree l_i.
+3. Lemma 76C supplies a loopless degree graph k with degrees
+   l_i and with even minus count in every component. Partition
+   the basis slots at vertex i into sets of sizes k_ij. For
+   each edge, pair its two sets by any bijection. This constructs
+   a perfect matching of all slots with exactly those edge degrees,
+   using no within-block pair.
+4. Its Pfaffian monomial has coefficient +1 or -1. Different
+   slot matchings give different monomials: the monomial records
+   its unordered slot pairs. Therefore no other matching can
+   cancel this monomial, and q_k is nonzero.
+5. Multiplication by q_k defines the L-map in (P79.3). Since
+   R is a polynomial ring and q_k is nonzero, it is injective.
+   The support graph of every product with an edge-homogeneous
+   element of R is the union of k and that element's support.
+   The graph k includes every vertex, because every l_i>0.
+   Any newly added edges only merge its components. A union
+   of even-minus components still has even minus count.
+   The product hence lies in R_good.
+6. Each fixed vertex-degree space is finite dimensional, and
+   its polynomial L-representations are completely reducible.
+   An injective equivariant map compares their irreducible
+   multiplicities coefficientwise. The character of delta is
+   product_i e_(l_i)(A_i)=e_S(A_I). This proves (P79.4)
+   in every degree, without a finite-degree truncation. QED.
+
+The proof uses a selected nonzero Pfaffian edge component. It does not
+assume that the original full Pfaffian itself has good graph support,
+or that every finite-rank moment defect is nonnegative.
+
+**Theorem 79C (positive representation of the original first-relation kernel).**
+In Lemma 79A's boundary S=2r+2, the actual series F_G is Schur-positive
+for every sign pattern, in every degree. In the even-minus case, choose
+q_k from Lemma 79B and put Q=R_good/(q_k R). Then the following is
+an equality of graded L-characters:
+
+    F_G=2 ch_L(Q)
+          +sum_(n good) (2^(c(n))-2) ch_L(R_n).         (P79.5)
+
+Here c(n) counts all components, and R_n is the edge-degree-n space.
+Thus all terms on the right have nonnegative Schur coefficients.
+
+**Proof.**
+
+1. By the ordinary Cauchy identity on each E_i tensor E_j,
+   ch_L(R)=K_I. Decomposing its edge-degree spaces gives exactly
+   the edge-partition expansions and vertex LR multiplicities
+   of Lemma 74A. Their graph support is the edge-degree support.
+2. Original cut gluing from Theorem 74C is a formal identity for
+   this universal series, independently of actual stability.
+   It gives F_*=sum_(n good)2^(c(n))ch_L(R_n).
+3. At even total minus count, (P79.2) subtracts precisely
+   2 e_S K_I. Lemma 79B identifies e_S K_I with ch_L(q_k R),
+   an actual subrepresentation of R_good. Separating two copies
+   of R_good from F_* gives exactly (P79.5). All coefficients
+   2^(c(n))-2 are nonnegative since there is at least one vertex.
+4. At odd total minus count the original integral is zero by
+   swapping g and h. Equivalently every universal graph has
+   an odd-minus component, while 1+epsilon_I=0 in (P79.2).
+   This gives the zero series in that sector. QED.
+
+For any tuple having ell(lambda_i)=l_i at this boundary, write
+mu_i=lambda_i-(1^(l_i)), deleting zero final rows. The proof in
+particular supplies the exact original scalar budget
+
+    Phi_*(lambda;epsilon)>=2 M_*(mu),
+    Phi_G(lambda;epsilon)=Phi_*(lambda;epsilon)-2 M_*(mu)>=0
+                                                               (P79.6)
+
+at every even-minus pattern. The possibly large multiplicity M_*(mu)
+is absorbed at once; it is not replaced by a single graph or by a
+box-degree estimate. Formula (P79.5) also includes labels shorter than
+the chosen l_i, for which the determinant correction coefficient is zero.
+
+**Theorem 79D (all-degree type C Q3 through the first relation).**
+For every type C_r compact connected group, every tuple of actual atomic
+characters with
+
+    sum_i ell(lambda_i)<=2r+2,                          (P79.7)
+
+and every sign pattern, the original normalized product-Haar Q3 integral
+is nonnegative. Box numbers and individual first-row lengths are unrestricted.
+
+**Proof.** Remove trivial plus vertices with their original factor two;
+a trivial minus vertex gives zero. The empty list has integral one.
+For the remaining tuple choose l_i=ell(lambda_i). At sum <=2r+1,
+Lemma 79A makes every moment in every original cut the universal moment,
+and the component formula (P74.5) supplies its sign. At sum 2r+2,
+Theorem 79C supplies it, with max l_i<=r meeting Lemma 79B's bound.
+Each actual descending tuple on a central quotient pulls back to the
+same characters and the same normalized Haar integral. QED.
+
+**Corollary 79E (several infinite character cones and an entire unrestricted slot).**
+Let G be any compact connected type C_r group. At position i take any
+real continuous central positive-definite f_i whose actual character
+support has ell(lambda)<=b_i. If sum_i b_i<=2r+2, the original list
+satisfies Q3 for every sign pattern. Every position can contain infinitely
+many characters of unbounded first row and box number.
+
+In particular let f_0 be entirely unrestricted in that cone, and assume
+only the background support conditions above with
+
+    sum_(i>=1)b_i<=r+2.                                 (P79.8)
+
+Then the original whole list satisfies Q3. Wherever the one-row atoms
+descend, the backgrounds can be arbitrary continuous nonnegative mixtures
+of all one-row higher characters at up to r+2 positions.
+
+**Proof.** Each atom of an unrestricted f_0 has length <=r. Thus every
+atomic tuple in the second assertion meets (P79.7); the first assertion
+meets it by its summed support bounds. Apply Theorem 79D, then integrate
+Lemma 28A's uniformly absolutely convergent nonnegative atom expansions.
+The original domination is product_i 2f_i(e), with no dependence on
+background row lengths. Quotients use only their actual descending atoms.
+Trivial and zero functions retain their original factors. QED.
+
+**Corollary 79F (return to the original full-projector consumer).**
+Every real-atom tuple supplied by Theorem 79D satisfies (P62.13) with its
+original source representation, full isotypic projectors, coefficients
+c_lambda=m_lambda(S_G)/dim V_lambda, and original factor 2^N. In particular
+
+    ||X_epsilon||_HS^2+sum_(lambda!=0)c_lambda t_lambda>=0.
+
+**Proof.** Theorem 62D identifies its left side with 2^(-N) times the
+same original atomic product-Haar integral. Theorem 79D supplies that
+integral. No individual trace t_lambda is discarded or replaced. QED.
+
+**Full-scope receipt.** The first auxiliary-dimension Pfaffian correction
+in (P76.2) is now supplied in all degrees by a genuine equivariant injection
+and positive quotient character. This also supplies the unbounded-first-row
+backgrounds in (P79.8), strengthening the earlier box-support consumer
+(P78.8). The selected hard consumer remains the full signed kernel (P76.2)
+at arbitrary union dimension, with the exact demand sheet for (P75.7).
+Higher union dimensions involve overlapping relation modules and their
+syzygies, beyond this principal-relation injection. Arbitrarily long tuples
+at fixed rank, the unsupplied other types and spin sectors, and the full
+central continuous positive-definite cone remain the unchanged objective.
+
+## Actual type C moments as a Pfaffian quotient, and the first overlap packet
+
+The selected hard consumer is still the full signed kernel (P76.2).
+The present construction identifies its moment losses as actual relation
+representations in every rank and degree. At the first overlap it keeps
+both the component weights and the syzygies; an unweighted extension of
+Lemma 79B fails even in the smallest nontrivial sector.
+
+**Independent self-double-check immediately before recording the assertions.**
+
+1. Verified Sam--Snowden--Weyman, Homology of Littlewood complexes,
+   equation (3.3), Lemma 3.3 and Remark 3.7, with the natural E
+   representation convention. Their harmonic quotient has the actual
+   symplectic modules as coefficients, and their invariant Gram ring
+   is the quotient by the size-(2r+2) Pfaffians. Compact and complex
+   symplectic invariants agree on each finite-dimensional graded piece.
+2. Checked exactness of taking invariant quotients directly by Haar
+   averaging. The internal Gram coordinates are invariant generators,
+   so an invariant element of their ideal has invariant coefficients.
+   No flatness of the total Gram map is assumed.
+3. For the odd auxiliary dimension, verified all terms and maps of
+   Gruson--Sam--Weyman, Moduli of Abelian varieties, Vinberg theta-groups,
+   and free resolutions, Example 1.10. Its n is r+1 here. Rechecked
+   that the internal coordinates are a regular sequence on the Gram
+   invariant ring before specializing the resolution. This follows
+   from Lemma 3.3 on each separate vertex polynomial ring, tensor
+   product flatness over C, and exact invariant quotients. Thus the
+   specialized complex is exact, rather than only an Euler ansatz.
+4. Replayed every proper cut at union dimension 2r+3. The only
+   potentially nonstable proper cut leaves a single one-dimensional
+   alphabet on the other side. Its coefficient for a nontrivial
+   actual character has singleton Haar moment zero. Hence the
+   whole nontrivial-tuple correction is exactly twice the full
+   relation multiplicity, at even total minus count.
+5. An exact five-slot Plucker audit exhibited the nonzero polynomial
+   in Proposition 80D below, checked its bad support term by term,
+   and checked that it vanishes after substituting x_ij=a_i b_j-a_j b_i.
+   The four generator packets have rank three and exactly the stated
+   linear dependence. The graph and original SU(2) fusion dimensions
+   agree. A separate exact matrix calculation checked the rank-three
+   weighted quotient lift in Proposition 80E.
+6. Independent actual USp(4) Weyl-density audits gave moments of
+   h_2^k, k=0,...,7, equal to 1,0,1,1,6,22,115,611. For chi_(2,2)
+   times h_2^k, k=0,...,5, they gave 0,0,1,3,18,94. The latter
+   character has dimension fourteen and its Weyl numerator was
+   independently verified before integration.
+7. Independent graph/LR counts gave full moments 822 and 160 for
+   seven row-(2) labels and for (2,2) with five row-(2) labels.
+   The three resolution contributions were (315,105,1) and
+   (110,45,1), respectively: actual losses 211 and 66. The
+   column-center count in the second calculation excludes all three
+   forbidden double-edge graphs, not just one; the other four
+   single leaves have three pairings.
+8. For minus sets empty, {0,1}, {1,2}, {0,1,2,3}, the original
+   seven-row graph/actual integrals were
+   (2988,1628,1628,1548)/(2566,1206,1206,1126).
+   For the mixed-shape six-tuple they were
+   (400,328,304,312)/(268,196,172,180).
+   Every difference is twice the full relation loss, with no
+   omitted proper-cut correction. These audits check the new
+   all-degree identities; they do not prove the pending budget.
+
+**Primary sources.** The precise inputs are
+[Sam--Snowden--Weyman](https://arxiv.org/pdf/1209.3509),
+equation (3.3), Lemma 3.3 and Remark 3.7, and
+[Gruson--Sam--Weyman](https://arxiv.org/pdf/1203.2575),
+Example 1.10. The invariant-quotient application, cut analysis and
+weighted packet comparison below are derived here.
+
+**Lemma 80A (full-rank actual joint moments are a graph-ring quotient).**
+Let V be the defining symplectic representation of dimension 2r.
+Take any finite number of E_i with 1<=l_i=dim E_i<=r, and put
+
+    E=direct-sum_i E_i,
+    L=product_i GL(E_i),
+    A=Sym(Lambda^2 E),
+    W=direct-sum_i Lambda^2 E_i,
+    R=A/(W)=Sym(direct-sum_(i<j) E_i tensor E_j).
+
+Let J_r be the ideal in A generated by the size-(2r+2) Pfaffians
+of the generic skew matrix. Denote its image in R by I_r. Then
+
+    H=(tensor-product_i
+         [Sym(E_i tensor V)/(internal Gram coordinates)])^USp(2r)
+       is isomorphic as an L-algebra to R/I_r.          (P80.1)
+
+Its product Schur coefficients are exactly the actual joint moments:
+
+    ch_L(H)=sum_(lambda_i:ell(lambda_i)<=l_i)
+                M_G(lambda) product_i s_(lambda_i)(A_i).
+
+In particular, for every such actual tuple, in every rank and degree,
+
+    0<=M_G(lambda)<=M_*(lambda),
+    M_*(lambda)-M_G(lambda)=m_lambda(I_r).              (P80.2)
+
+Here m_lambda denotes an irreducible L-multiplicity. There is no
+summed-row, box-degree or tuple-length restriction in this lemma.
+
+**Proof.**
+
+1. Set B=Sym(E tensor V)=tensor-product_i B_i. The internal
+   coordinates W are the invariant symplectic pairings within
+   each vertex. If C_i=B_i/(Lambda^2 E_i), equation (3.3) gives
+
+       C_i=direct-sum_(ell(lambda)<=l_i)
+                       S_lambda(E_i) tensor V_lambda.
+
+   All surviving labels are admissible because l_i<=r.
+   Tensor these identities and take invariants. The coefficient
+   of tensor-product_i S_(lambda_i)(E_i) is the invariant
+   dimension of tensor-product_i V_(lambda_i), namely its
+   normalized joint Haar moment. Each homogeneous piece is
+   finite dimensional. Invariance under the compact group is
+   equivalent to invariance under its connected complexification:
+   the compact Lie algebra, and hence its complexification,
+   annihilates precisely the invariant vectors.
+2. Haar averaging on each finite graded piece is an exact
+   invariant projection. For invariant generators w_a of W,
+   an invariant p=sum_a w_a b_a has the presentation
+   p=sum_a w_a average(b_a). Consequently
+
+       (B/(W)B)^G=B^G/(W)B^G.
+
+   This also proves equality of the quotient kernels, not only
+   surjectivity of the invariant map.
+3. The Gram invariant theorem in Remark 3.7 gives B^G=A/J_r.
+   Apply Step 2 and then project away the internal coordinates:
+
+       H=A/(J_r+(W))=R/I_r.
+
+   This establishes the algebra and character identities.
+4. The ordinary edge Cauchy identity gives ch_L(R)=K_I, whose
+   multiplicities are exactly M_* from Lemma 74A. The kernel
+   I_r of the actual quotient is an L-subrepresentation in
+   every finite vertex-degree space. Complete reducibility
+   therefore gives (P80.2) coefficientwise in the Schur basis.
+   Pullback gives the same comparison for every descending
+   tuple on every actual type C central quotient. QED.
+
+Thus the full type C moment defect is always nonpositive. This does
+not assert a sign for the full *signed cut correction*: the signs in
+(P75.7) are still present. The defect has now been identified with an
+honest relation module rather than an alternating formal multiplicity.
+
+**Lemma 80B (the complete first-overlap resolution after removing internal pairs).**
+Suppose S=dim E=2r+3. With the same R,I_r as above and delta=det(E),
+there is an exact L-equivariant complex
+
+    0 -> delta^2 tensor R
+      -> delta tensor E tensor R
+      -> Lambda^(S-1) E tensor R
+      -> R -> R/I_r -> 0.                              (P80.3)
+
+The terms carry their natural auxiliary-weight degree shifts. The maps
+are the maximal-Pfaffian vector, the skew matrix with zero diagonal
+vertex blocks, and the signed maximal-Pfaffian vector. Consequently
+
+    ch_L(I_r)=[e_(S-1)(A_I)-e_S(A_I)h_1(A_I)
+                         +e_S(A_I)^2] K_I.             (P80.4)
+
+This is an exact identity in every degree, retaining the top syzygy.
+
+**Proof.**
+
+1. Example 1.10 with n=r+1 gives the exact generic complex
+   over A, with coefficient representations Lambda^(S-1) E,
+   det(E) tensor E, and det(E)^2. Its quotient is A/J_r.
+   Its middle matrix and signed cofactor maps are the ones
+   specified above before projecting away W.
+2. Lemma 3.3 says the internal Gram coordinates are a regular
+   sequence on B_i when l_i<=r. Concatenating those sequences
+   in tensor-product_i B_i stays regular: tensoring over C is
+   flat, and the successive quotients remain tensor products
+   of the corresponding vertex quotients.
+3. They are also regular on B^G=A/J_r. At each stage the
+   invariant quotient is the invariant subring of the
+   corresponding quotient of B, by Step 2 of Lemma 80A.
+   Multiplication by the next coordinate is injective there,
+   since it is injective on that entire quotient of B.
+   Positive grading also excludes a unit at each stage.
+4. Since W consists of polynomial variables of A, its Koszul
+   resolution computes Tor^A(A/J_r,R). Regularity in Step 3
+   makes every positive Tor group zero. Tensoring the generic
+   free resolution with R therefore preserves exactness.
+   The cokernel is the quotient in (P80.1), and the image
+   of the Pfaffian map is its actual ideal I_r. This proves
+   (P80.3) with no unsupported generic-specialization step.
+5. Take its character Euler identity in each finite degree.
+   The coefficient characters of the three nontrivial terms
+   are e_(S-1), e_S h_1 and e_S^2. Since ch_L(R)=K_I,
+   the resulting relation character is (P80.4). QED.
+
+**Lemma 80C (the matched first-overlap consumer keeps component colours).**
+Fix nontrivial actual vertex labels ell(lambda_i)<=l_i, an even-size
+minus set M, and S=2r+3. For a good edge degree n as in Lemma 79B,
+put c(n)=number of its components and define the positive L-representation
+
+    U_M=direct-sum_(n good) R_n^(direct-sum 2^(c(n)-1)).
+
+The original full integral is exactly
+
+    Phi_G(lambda;epsilon)
+       =2[m_lambda(U_M)-m_lambda(I_r)].                (P80.5)
+
+Hence its required budget is precisely
+
+    m_lambda(I_r)<=m_lambda(U_M),                     (P80.6)
+
+for these nontrivial labels, not the stronger unweighted budget
+m_lambda(I_r)<=m_lambda(R_good).
+
+**Proof.**
+
+1. The full universal cut integral is 2m_lambda(U_M), by
+   the exact component factors in (P74.5). The factor
+   2^(c-1) counts component-colour choices modulo simultaneous
+   exchange of the two Haar variables. It is an actual
+   nonnegative multiplicity in each finite degree.
+2. A proper cut of size <=S-2=2r+1 has actual stable moments
+   by Lemma 79A. A cut of size S-1 omits just one alphabet
+   of dimension one. Its complementary singleton character
+   is nontrivial and has Haar moment zero. Thus every
+   potentially nonstable proper-cut contribution is zero
+   in both actual and universal expressions.
+3. The two endpoint cuts have coefficient one at even total
+   minus count. Lemma 80A makes their total difference
+   -2m_lambda(I_r). Combining with Step 1 gives (P80.5).
+   This is the original whole cut sum, with both endpoints
+   and every proper cut accounted for. QED.
+
+**Demand sheet for the pending budget (P80.6).**
+
+- Quantifiers: every r>=1, all l_i<=r with sum 2r+3,
+  every nonempty actual lambda_i with ell(lambda_i)<=l_i,
+  and every even-size M; all are reached in (P80.5).
+- Parameter order: l,M determine the modules; labels are then
+  arbitrary Schur-coefficient consumers, with no labelwise
+  replacement of the original group or signed cut expression.
+- Strength: each irreducible L-multiplicity, with constant one;
+  total dimension in a degree does not supply the coefficientwise
+  inequality used by the real atomic expansion.
+- Weights: all 2^(c-1) copies in U_M are used by (P80.5).
+  Replacing them by one is a stronger, unused requirement.
+- Source: the actual ideal I_r, including its syzygy quotient,
+  is used by (P80.2). Its free generator module is overstrong.
+- Averaging: normalized Haar scalar sign via (P80.5), not a
+  pointwise bound, individual trace sign, or operator norm estimate.
+- Uniformity: no dependence on degree, first row, rank or tuple
+  is allowed in the budget; the original continuous consumer
+  subsequently uses Lemma 28A with its fixed domination.
+
+A possible supplier is an L-equivariant injection of the nontrivial-label
+sectors of I_r into U_M. R-linearity is not used by this consumer and
+is not imposed. The explicit weighted packet construction below checks
+the first instance, while the general inequality (P80.6) remains unproved.
+
+**Proposition 80D (the unweighted overlap injection fails).**
+Take r=1, five one-dimensional vertex alphabets, minus set {1,2},
+and labels (1),(1),(2),(1),(1). Then
+
+    m_lambda(R)=6,  m_lambda(I_1)=3,
+    m_lambda(R_good)=2,  m_lambda(U_M)=4,
+    Phi_SU(2)=2.                                     (P80.7)
+
+Moreover projection of I_1 to the unweighted good edge-degree spaces
+has a nonzero kernel in this nontrivial sector.
+
+**Proof.**
+
+1. Write x_ij=x_ji for the ten edge variables, and q_v for the
+   four-slot Pfaffian omitting v. Put
+
+       g_1=x_13 q_1, g_2=x_23 q_2,
+       g_4=x_34 q_4, g_5=x_35 q_5.
+
+   These are all free Pfaffian generators in the specified
+   vertex multidegree. Direct expansion gives the sole relation
+
+       g_1-g_2+g_4-g_5=0.
+
+   The first three are independent, as is seen in their
+   coefficients of the distinct bad-support monomials.
+   Thus this ideal sector has dimension three.
+2. There are six degree graphs: vertex three has degree two,
+   and the other four vertices have degree one. Choose its
+   two leaf neighbours, then pair the remaining two leaves.
+   Exactly two graphs are good:
+
+       A=x_13 x_23 x_45,
+       B=x_12 x_34 x_35.
+
+   Each has two even-minus components. Their unweighted
+   dimension is two and their component-colour dimension is
+   2+2=4. The original universal integral is 4+4=8.
+3. The nonzero relation polynomial p=g_1-g_2 is
+
+       -x_13 x_24 x_35+x_13 x_25 x_34
+       +x_14 x_23 x_35-x_15 x_23 x_34.
+
+   Every displayed graph separates vertices one and two,
+   so p has wholly bad support and its good projection is
+   zero. Since p is an ideal element, this also directly
+   exhibits the failure of that projection as an injection.
+4. The actual full moment is 6-3=3, by Lemma 80A, also
+   obtained independently from SU(2) fusion. Formula (P80.5)
+   gives 2(4-3)=2. The failed knob is the unweighted target
+   multiplicity: the original consumer instead uses four
+   component-colour slots. This neither disproves (P80.6)
+   nor alters Lemma 79B's principal-relation domain. QED.
+
+**Proposition 80E (an explicit weighted quotient map for the first packet).**
+For the sector in Proposition 80D there is an injective equivariant map
+from the three-dimensional relation sector to its four component-colour
+slots. Its cokernel has dimension one and accounts for the original
+integral two.
+
+**Proof.** Let F have the four formal basis vectors indexed by
+1,2,4,5 above, and let k=(1,-1,1,-1). The Pfaffian map identifies
+I_1's sector with F/span{k}. Give F its orthonormal basis inner product.
+Route its four basis vectors to A_0,A_1,B_0,B_1, the two component-colour
+slots of each good graph. Call this basis identification T_0. Then
+
+    [y] -> T_0 [ y-(k^T y)k/4 ]                       (P80.8)
+
+is well defined and injective: adding a multiple of k does not change
+the bracket, and its only kernel before quotienting is span{k}.
+All four source and target basis vectors have the same product-GL(1)
+weight lambda, so this is an equivariant map. Its image has dimension
+three, with one-dimensional cokernel. This checks the exact weighted
+consumer on this relation packet, rather than projecting the ideal's
+polynomial support. It is a construction test, not a uniform proof
+of (P80.6). QED.
+
+In contrast, at labels (2),(2),(2),(2),(2) on the same five-slot
+rank-one ring, the exact dimensions are
+
+    R:22,   R_good:16,   U_M:20,
+    free Pfaffian generators:30,
+    first syzygy term:15,   top term:1,
+    actual ideal:30-15+1=16,   actual moment:6,
+    original Phi=2(20-16)=8.                          (P80.9)
+
+Thus even the weighted target cannot hold an injection of the free
+30-dimensional generator sector. The syzygy quotient is essential;
+(P80.6) asks for its actual sixteen-dimensional relation space.
+These finite examples diagnose the proposed maps, not certify a
+range of the conjecture.
+
+**Full-scope receipt and next construction.** Lemma 80A establishes the
+actual quotient and nonpositive joint moment defect for the whole type C
+character cone, with arbitrary degree and tuple length. This does not yet
+supply the original signed trace consumer. Lemmas 80B--80C replace the
+infinitely many first-overlap degree corrections by one exact three-term
+relation resolution and the matched component-colour budget (P80.6).
+The unweighted injection is rejected only at its stronger target knob.
+The weighted quotient map passes its first packet test; the next direct
+construction is a graded equivariant routing of the Pfaffian generator
+packets modulo the skew-matrix syzygies into the full component-colour
+slots, with (P80.6) as its return test. It must retain the top syzygy in
+(P80.3); routing free generators alone already fails (P80.9). The full
+signed kernel at every auxiliary dimension, the unsupplied other Lie
+types and spin sectors, and the original all-group full continuous
+central cone remain the unchanged objective.
+
+## Pfaffian differential operators give a concrete component-colour routing candidate
+
+The live hard estimate is (P80.6), with its exact multiplicities and
+component-colour copies. The present work constructs a graded equivariant
+operator on the actual ideal, rather than a routing of the free generators.
+It passes nontrivial rank-two and two-row construction tests. Its uniform
+injectivity is not proved. A symmetric endpoint tagging rule has an explicit
+nonzero kernel, so that extra symmetry is not imposed on the candidate.
+
+**Independent self-double-check immediately before recording the assertions.**
+
+1. Re-derived the multiplication adjoint from the factorial Fock
+   inner product on monomials. With an orthonormal cofactor basis,
+   the adjoint of multiplying by q_a is q_a(partial). No unproved
+   choice of representatives modulo the skew-matrix syzygies enters.
+2. Rechecked equivariance on product unitary groups and their
+   connected complexifications. Cofactors belonging to the same
+   vertex block must be summed together before tagging. Tagging
+   the two individual omitted slots of a two-dimensional block
+   separately would not give the required GL(2)-equivariant map.
+3. Rechecked positivity of the *source* Gram operator only on the
+   actual ideal: its zero quadratic form is equivalent to being
+   orthogonal to all Pfaffian images, hence to being zero there.
+   This does not imply injectivity after good-graph projection.
+4. Derived the colour-cut cofactor factorization directly from
+   perfect matchings of a block-diagonal skew matrix. The omitted
+   slot must be in the odd-dimensional colour side. Derivatives
+   of the input are still taken before the cut restriction;
+   dropping the transverse derivatives is not justified.
+5. Independently expanded the six-term relation P in Proposition
+   81C. The total cofactor Gram operator is exactly 6P. For
+   minus set {1,2}, every good monomial in each separate C_v P
+   is connected. This proves a kernel for every common-endpoint
+   coefficient rule, irrespective of its other colour weights.
+   In particular, the cyclic rule is not rescued by its extra
+   proper-colour channels.
+6. Tested the unrestricted-colour operator with one fixed integer
+   coefficient table for each vertex count, chosen before labels
+   and used unchanged for all displayed minus patterns. Source
+   dimensions came from the exact resolution (P80.3), not from
+   a floating rank tolerance. A completed modular elimination
+   exhibited full source-rank integer minors at the displayed
+   specializations. The modulus 1000003 was independently verified
+   prime by trial division through its integer square root.
+7. At seven separate one-dimensional blocks, the actual ideal
+   sector has dimension 315-105+1=211. The operator achieved
+   rank 211 for both displayed even-minus patterns. At block
+   dimensions (2,1,1,1,1,1), the torus-weight-(2,2;2,2,2,2,2)
+   ideal sector has dimension 255-90+1=166. The operator achieved
+   rank 166 with the cofactor sum at the first block intact.
+   Its equivariance means this checks the (2,2) highest-weight
+   subspace as well, not merely a comparison of total dimensions.
+8. Replayed the exact consumer: full rank in an actual nontrivial
+   isotypic sector gives its original multiplicity budget with
+   constant one, hence the same scalar integral in (P80.5).
+   No claim of uniform full rank follows from these finite tests.
+
+Use the notation of Lemma 80B: S=2r+3, E=direct-sum E_v,
+R is the off-diagonal graph polynomial ring, and I_r is its actual
+maximal-Pfaffian ideal. Let q_a be the projected maximal Pfaffian
+omitting basis slot a, with a lying in vertex block v(a). The basis
+orientations and signs are those of the natural cofactor representation
+Lambda^(S-1)E; their signs cancel in the Gram operators below.
+
+Give each E_v its standard Hermitian inner product. On R use the
+factorial inner product
+
+    <x^alpha,x^beta>=indicator_(alpha=beta) product_e alpha_e!.
+
+This is the usual induced unitary-invariant polynomial inner product.
+All adjoints below are taken between finite vertex-degree spaces;
+no boundedness on an infinite Hilbert completion is asserted or needed.
+
+**Lemma 81A (actual-ideal cofactor Gram operators).** Put
+
+    C_v=sum_(a:v(a)=v) q_a(x) q_a(partial),
+    C=sum_v C_v.                                      (P81.1)
+
+Each C_v preserves vertex degree, commutes with L=product_v GL(E_v),
+and has image in I_r. On every nonzero finite-degree vector P in I_r,
+
+    <P,C P>=sum_a ||q_a(partial)P||^2>0.               (P81.2)
+
+In particular C is invertible on each nonzero ideal degree space.
+
+**Proof.**
+
+1. Let W_v=det(E) tensor E_v^*, the cofactor coefficient
+   representation for omitted slots in v, and let
+   G_v:W_v tensor R -> R be Pfaffian multiplication.
+   Its image lies in I_r, and the combined map G=sum_v G_v
+   is onto I_r. This is its actual generator map in (P80.3).
+2. For a monomial, factorial inner products give
+   multiplication by x_e adjoint to partial_(x_e).
+   By composition and linearity, the adjoint cofactor map
+   has entries q_a(partial), since their coefficients are
+   real. Hence C_v=G_v G_v^* and C=G G^*.
+3. Both G_v and its adjoint commute with product unitary
+   transformations. Their composite thus commutes with that
+   compact group. On each finite-degree complex representation
+   this also implies commutation with its complexified Lie
+   algebra and its connected group L. Equivalently the formal
+   derivatives contract the natural cofactor representation
+   with its dual. The sum over all slots in one vertex is
+   essential for this assertion.
+4. Multiplication and its differential adjoint have opposite
+   vertex-degree shifts, so their composite preserves those
+   degrees. The image assertion follows from the outer G_v.
+   Finally, the displayed quadratic identity is the adjoint
+   identity. If its sum vanishes for P in I_r, then P is
+   orthogonal to every image of G_v, hence to I_r itself.
+   Positive definiteness gives P=0. Each finite-degree C is
+   therefore injective there and hence invertible. QED.
+
+**Lemma 81B (colour cuts expose only the odd-side cofactors).**
+Let c assign colour zero or one to each vertex, with vertex one fixed
+to colour zero. Let E_0,E_1 be its two slot unions, and res_c set every
+cross-colour edge variable to zero. Exactly one union has odd dimension.
+If slot a lies in the even union, res_c(q_a)=0. If it lies in the odd
+union, then
+
+    res_c(q_a)=+/- Pf(X_even) Pf(X_(odd without a)).    (P81.3)
+
+The Pfaffian of the empty block is one. Consequently
+
+    res_c(C_v P)=0 when v lies in the even union.      (P81.4)
+
+**Proof.** After the restriction, the skew matrix is block diagonal.
+A Pfaffian matching uses only pairs inside each block. Omitting a slot
+from the even union leaves both block sizes odd, so no complete matching
+exists. Omitting a slot from the odd union leaves both sizes even, and
+the independent matching sums factor with the orientation sign from
+reordering the blocks. Multiply this restricted q_a by
+res_c(q_a(partial)P) and sum the slots in v to obtain (P81.4).
+The latter factor remains the restriction of the full derivative;
+no cross-colour derivative is removed in this argument. QED.
+
+The even-block factor can itself be zero if its internal zero-block
+pattern forbids a matching. Equation (P81.3) includes that case without
+an assumption of generic nonvanishing.
+
+**Proposition 81C (common endpoint coefficients leave a genuine relation invisible).**
+For five one-dimensional blocks, r=1 and minus set {1,2}, define
+
+    P= x_13^2 x_24 x_25 x_45
+       -x_14^2 x_23 x_25 x_35
+       +x_15^2 x_23 x_24 x_34
+       -x_23^2 x_14 x_15 x_45
+       +x_24^2 x_13 x_15 x_35
+       -x_25^2 x_13 x_14 x_34.                        (P81.5)
+
+Then P is a nonzero member of I_1 with labels (2),(2),(2),(2),(2),
+its support is wholly bad, and
+
+    C P=6P.                                          (P81.6)
+
+Every good-support monomial in any single C_v P is connected. Thus an
+operator that assigns the same coefficient to all five C_v at the
+endpoint colour c=0, and arbitrary coefficients at every other colour,
+annihilates P after routing to the good component-colour slots.
+
+**Proof.**
+
+1. The six monomials are distinct. Each consists of a doubled
+   edge joining one minus vertex to a plus vertex, together
+   with the triangle on the other three vertices. The two
+   components each contain one minus vertex, so each is bad.
+2. The maximal cofactors have three matching monomials each.
+   Differentiate the six displayed monomials by those pairs
+   of edges and multiply by the three cofactor matchings.
+   Comparing coefficients gives the polynomial identity
+   sum_v q_v q_v(partial)P=6P. This finite expansion also
+   proves P in I_1: divide the identity by six and use the
+   cofactor ideal generators. No membership inference from
+   mere scalar moment vanishing is needed.
+3. A cofactor derivative deletes at most one copy of the
+   doubled edge of each source monomial; its matching cannot
+   use a vertex twice. At least one such odd-pair edge remains.
+   A disconnected good output at these degrees would be a
+   doubled edge and a triangle. Its doubled component cannot
+   be the two minus vertices, since the retained odd-pair
+   edge would connect that component to a plus vertex.
+4. The other possible doubled good component consists of
+   the two plus vertices outside the retained odd-pair edge.
+   Creating its second copy requires a cofactor matching on
+   those four slots to use that plus-pair edge. Its other edge
+   is then the original odd pair. Among derivative matchings
+   supported by the source monomial, the only one on those
+   slots is the same pair of edges: the minus endpoint of
+   the doubled edge has no other neighbour. Differentiating
+   and multiplying that matching cannot create the stated
+   good component. Consequently no disconnected good output
+   occurs in any C_v P. All good outputs are connected.
+5. A connected graph admits only the endpoint colour after
+   fixing vertex one's colour. With common coefficient b
+   the entire output is b P_good(CP)=6b P_good(P)=0.
+   The other colour channels have no good output to detect.
+   This proves the kernel for that declared class of tags.
+   The extra equality of endpoint coefficients is not used
+   in (P80.6); dropping it preserves the original budget and
+   permits the unrestricted candidate below. QED.
+
+In particular the cyclic rule assigning C_v the colour sign of its
+predecessor vertex has this kernel: all its endpoint coefficients are
+one. Its rank in this sixteen-dimensional ideal sector is fifteen,
+as confirmed by a nonzero rank-fifteen minor and the explicit kernel.
+The positivity and invertibility of C on the ideal do not remove this
+projection defect.
+
+**Construction 81D (unrestricted Pfaffian--colour routing; injectivity unproved).**
+For an edge degree n let Col(n) consist of its component-constant colour
+assignments with c_1=0. For good n this has size 2^(c(n)-1), so the
+corresponding function space realizes exactly its copies in U_M.
+Introduce independent coefficient variables eta_(v,c) and put
+K=C(eta). Define the graded map into that *same* target by
+
+    (T_eta P)_(n,c)
+        =P_n [sum_v eta_(v,c) C_v P],
+        n good, c in Col(n).                           (P81.7)
+
+Here P_n is edge-degree projection; the formula has finitely many terms
+on every polynomial. For each colour, only vertices in its odd-dimensional
+slot union contribute by Lemma 81B. Negative-total-minus colour cuts have
+no good graphs and no target channel. Unused coefficients may be omitted.
+
+The map is L-equivariant, preserves vertex degrees, and is defined directly
+on I_r tensor K. These assertions are unconditional: every C_v has those
+properties by Lemma 81A, while edge-degree projections and colour-copy
+labels commute with L. Its construction uses the actual ideal source,
+so all skew-matrix and top syzygies are already quotiented. It is not an
+injection of the overlarge free cofactor module.
+
+The pending statement is that T_eta is injective on each nontrivial
+lambda-isotypic sector reached by (P80.5), for every r,l,M in that consumer.
+A successful proof would give (P80.6), because extension of scalars to K
+preserves the finite original irreducible multiplicities. This remains a
+candidate supplier, not an accepted general sign assertion.
+
+**Demand matching for this construction.** Its source and target are the
+actual modules in (P80.6), over the identical family l_i<=r, sum l_i=2r+3,
+all nonempty lambda_i with ell(lambda_i)<=l_i, and all even M. The consumer
+uses only full rank in each reached isotypic sector, with constant one.
+It uses neither an operator norm nor positivity of the eta coefficients,
+R-linearity, equality between endpoint coefficients, or a common numeric
+specialization valid for every label. Treating the eta as formal variables
+keeps the proposed rank test finite and algebraic in every sector. Any
+failure of a particular coefficient rule must be distinguished from
+failure of this unrestricted family, and from failure of (P80.6) itself.
+
+**Completed construction tests.** For these tests the coefficient table
+was filled in vertex order and colour-mask order c=0,2,...,2^N-2, by
+Random(20261004).randint(-5,5). Each table was fixed before selecting labels,
+and was reused for both displayed minus sets. The endpoint coefficients
+were (-3,-4,-5,-3,-5) at N=5, (-3,-5,-4,5,-4,-1,-3) at N=7, and
+(-3,-5,-5,-5,-4,3) at N=6. The remaining coefficients were fixed by the
+same stated recipe. This specifies a diagnostic specialization; it is
+not a new theorem hypothesis or a proposed universal numeric choice.
+
+    one-dimensional block labels     M                 ideal  U_M  rank
+    (1,1,2,1,1)                      {1,2}                 3    4     3
+                                     {1,2,3,4}             3    6     3
+    (2,2,2,2,2)                      {1,2}                16   20    16
+                                     {1,2,3,4}            16   24    16
+    (2,2,3,2,3)                      {1,2}                22   29    22
+                                     {1,2,3,4}            22   31    22
+    seven row-(2) labels, r=2         {1,2}               211  814   211
+                                     {1,2,3,4}           211  774   211
+
+For the two-row test at r=2, block dimensions are (2,1,1,1,1,1).
+The coordinate torus weight is (2,2;2,2,2,2,2). The source polynomial
+weight space has dimension 570, its free cofactor space dimension 255,
+and its actual ideal dimension 166. The target and map ranks were
+
+    M={1,2}: U_weight=588, rank=166;
+    M={2,3}: U_weight=540, rank=166.
+
+Both omitted slots in the first block were combined into C_1 with the
+same colour coefficient. The resulting equivariance and injectivity on
+the whole torus-weight space imply injectivity on its (2,2) highest-weight
+subspace, whose actual relation multiplicity is 66 in the preceding audit.
+This test retains the vertex Schur structure.
+
+Each full-rank check used a completed elimination modulo the verified
+prime 1000003. A full-rank residue minor is a nonzero integer minor,
+so it proves full rank at that rational specialization and proves that
+some generic-rank minor of (P81.7) is a nonzero polynomial in eta for
+that tested sector. Source rank was matched against (P80.3). No inference
+to unbounded degree or all sectors is made. These are tests of the proposed
+operator, not a sign-certificate sweep or a proof of the pending budget.
+
+The earlier dense rational edge-switch audit in session 39470 remains
+in flight on its last rank calculation; its completed third-label
+{1,2} calculation has rank 22. No pending output is used in the table
+above, which comes from the completed cofactor-operator minor audits.
+The protected earlier symbolic session 71506 remains untouched.
+
+**Full-scope receipt and next direct proof step.** The actual relation
+source, its equivariant differential Gram operators, the cut factorization,
+and the exact common-endpoint kernel are now established. The unrestricted
+colour map passes both scalar-row and nontrivial two-row tests at the
+first overlapping rank relation. The next hard statement is injectivity
+of (P81.7) in each reached sector; Lemma 81B identifies the precise
+odd-side cofactor and even-block Pfaffian data available for a triangular
+or source--sink proof. Its return test is exactly (P80.6), then (P80.5),
+then the original (P62.13) and Lemma 28A. No general injection or original
+full-cone sign has been accepted from the finite tests. The full signed
+kernel at arbitrary auxiliary dimension, all remaining Lie types and
+spin sectors, and the all-group continuous central cone remain active.
