@@ -97993,3 +97993,11222 @@ All other Lie types, spin sectors, nonrow character atoms and the original
 all-group real continuous central positive-definite cone remain active.
 The protected symbolic session 71506 was confirmed live this turn and
 has not been stopped or restarted.
+
+## Translation derivatives absorb every higher row-deficit layer above its background threshold
+
+The selected hard scalar statement is the next row-deficit budget at
+2r+2, with the original normalized signed integral as consumer. The
+previous goal proof turn supplied Section 83; the intervening user-requested
+checkpoint preserved Sections 82--83 in commit 3f0bfd7. The present direct
+construction supplies the higher-deficit source injection below for every
+rank and every layer, and checks all original proper cuts in its stated
+range. It also computes those proper cuts exactly at the next layer for
+arbitrary positive row labels. The objective remains the full all-group
+real continuous central positive-definite cone.
+
+**Independent self-double-check immediately before recording the assertions.**
+
+1. Replayed Lemma 80A at one-dimensional vertex alphabets. There are
+   no internal Gram coordinates, so R/I_r is an invariant subring
+   of a polynomial domain. In particular I_r is prime, and every
+   distinguished star variable has nonzero image. This justifies
+   saturation and the exact source identification after localization;
+   a localized ideal membership alone would not suffice.
+2. Rechecked the fixed-weight normalization. Every original graph
+   has k=d/2 background edges and star exponents a_i-deg_i(Y).
+   Thus the only cap conditions are deg_i(Y)<=a_i. No coordinate
+   change in the Haar integral is made.
+3. Re-derived the constant-basis and polynomial-congruence reduction
+   of the augmented skew matrix. An independent generic seven-slot
+   symbolic expansion checked its entire matrix identity and both
+   change-of-basis determinants, which are one. Exterior powers of
+   each invertible congruence, and its polynomial inverse, preserve
+   the Pfaffian ideals. The two-slot block makes the resulting ideal
+   exactly the size-2r Pfaffian ideal on ker sigma, not merely the
+   same rank variety.
+4. Rechecked the translation-degree bound in every homogeneous degree.
+   The reduced ideal has no nonzero homogeneous element below degree
+   r. Consequently a degree-k source has translation degree at most
+   k-r; all products of k-r+1 translation derivatives vanish.
+5. Rechecked every original generator at d=2r+2j. A generator
+   containing zero supplies an r-matching and j extra background
+   edges; one omitting zero supplies an (r+1)-matching and j-1
+   extras. Under a_i>=j+1, the only component away from zero
+   in the former case is an isolated pair of multiplicity j+1.
+   Its two labels must equal j+1 and it consumes all extra edges.
+   The latter case is connected. This uses j>=1 explicitly.
+6. Replayed the extraction on the entire bad-support polynomial,
+   including contributions from all other isolated pairs. Projecting
+   D_p^j D_q onto matchings avoiding p,q gives exactly
+   -(j+1)! times that pair's coefficient. Independent symbolic
+   expansions on six background vertices checked j=1,2,3, with
+   coefficients -2,-6,-24. The proof below covers every j.
+   The previously launched symbolic audit 3082 completed successfully
+   in this turn; it was neither stopped nor restarted.
+7. Rechecked every proper original cut at every higher layer. A
+   nonzero complementary moment requires at least two vertices,
+   hence total background degree >=2(j+1). The distinguished-side
+   deficit is then <2r. The complementary vertex count is <2r+2,
+   so that side has no Pfaffian generator at any row degree.
+   The two endpoint coefficients are one at even minus count.
+8. Independently evaluated the original full double-Haar cut sum
+   at USp(4) by the normalized full Weyl denominator, first checking
+   means one for the constant and for the defining square. For
+   chi_(6),chi_(2)^6 the universal/actual full moments are 485/415,
+   and the original integrals are 1050 and 810 with zero or two
+   background minus signs. The whole defect is -2*70. For
+   chi_(10),chi_(3)^6 the moments are 2655/2130 and the original
+   integrals are 4440 and 4248; the whole defect is -2*525.
+   These check two successive layers on the unchanged consumer.
+9. Rechecked the combined criterion using b=min_i a_i. The layer
+   j=(d-2r)/2 is derived from the tuple, and the criterion is
+   exactly j<=b-1 when d>2r is even. Negative and odd deficit
+   sectors vanish; the other sectors use the already supplied
+   first-wall proof. No adjustable project parameter is introduced.
+10. Rechecked both exceptional proper-cut classes at d=2r+2
+    without a background threshold. A two-unit complement leaves
+    a first-wall distinguished source; a 2r+2-unit complement has
+    a single minimal Pfaffian relation and a unique star on the
+    other side. Every other proper product is stable or zero.
+    Complementary cuts have equal signs at even M, giving the
+    factors two in (P84.10).
+11. Independently replayed (P84.10) with the same full-Weyl Haar
+    evaluation and an independent enumeration of its universal
+    good-component target. At rank two, distinguished/background
+    tuples (2;1^8) and (3;1^9) have source dimensions 120 and 435.
+    Their original integrals at zero/two background minus signs
+    are 6144/672 and 18042/2250, respectively. The mixed tuple
+    (6;1,1,2,2,2,2,2) has source dimension 176. Its original
+    integral is 1826 when its two unit labels are minus, and
+    1258 when one unit and one higher label are minus. Both
+    signed proper-cut terms in (P84.10) were retained.
+12. Replayed the first-overlap operator application on its actual
+    ideal and original colour target. The supplied projection is
+    injective on the ideal itself; composing with the existing
+    invertible C therefore gives a valid endpoint specialization
+    of T_eta. No injection of a free generator module is used.
+
+Use the actual type C row setup of Section 83: r>=1, m>=1,
+a_0,a_1,...,a_m positive integers, distinguished vertex zero,
+R=C[x_ij:0<=i<j<=m], and the entire size-(2r+2) Pfaffian ideal I_r.
+Let d=sum_(i=1)^m a_i-a_0. Write R_good(a,M) for the ordinary
+span of monomials whose components all have even minus count.
+The original universal target U_M(a) has 2^(c(n)-1) copies of each
+such monomial, including the same component convention as Section 83.
+All statements about a source sector concern I_r(a) itself, with all
+its generator relations already imposed.
+
+**Lemma 84A (exact rank reduction of the normalized row source).**
+Suppose d=2k>=0. Formally invert z_i=x_0i and set
+
+    t=product_i z_i^(a_i),
+    y_ij=x_ij/(z_i z_j),
+    E=C^m, sigma(e_i)=1, H=ker sigma.
+
+Let C[Y]_k^cap be the degree-k span of background monomials satisfying
+deg_i(Y)<=a_i for every background vertex. Let J_(r,sigma) be the ideal
+of all size-(2r+2) Pfaffians of the augmented matrix
+
+    T(Y)=[ 0     sigma ;
+          -sigma^T  Y ].
+
+Then the exact actual sector, before any dimension estimate, is
+
+    R(a)=t C[Y]_k^cap,
+    I_r(a)=t [J_(r,sigma),k intersect C[Y]_k^cap].      (P84.1)
+
+There are linear coordinates Z on Lambda^2 H and u on H such that
+
+    C[Y]=C[Z,u],
+    J_(r,sigma)=J_(r-1)(Z) C[Z,u],                   (P84.2)
+
+where J_(r-1)(Z) is generated by the size-2r Pfaffians of the generic
+skew matrix on H. If dim H<2r this ideal is zero; when r=1 it is the
+ideal of all entries of Z. The rank reduction and (P84.1) hold for
+all row labels and all even nonnegative deficits.
+
+**Proof.**
+
+1. For an original degree graph put n_ij on its background
+   edges. The star exponent at i is a_i-sum_(j!=i) n_ij.
+   The distinguished degree equation gives
+
+       sum_i a_i-a_0=2 sum_(i<j) n_ij=2k.
+
+   Therefore its monomial is exactly t product y_ij^(n_ij).
+   Nonnegative star exponents are precisely the stated caps.
+   This proves the first identity in (P84.1), with a bijection
+   of monomial bases.
+2. In the localized ring C[z_i^(+/-1),Y], diagonal congruence
+   by diag(1,z_1,...,z_m) transforms T into the original
+   skew matrix X. Its principal Pfaffians are multiplied by
+   units. Thus the extension of I_r is precisely the extension
+   of J_(r,sigma). Each fixed-weight localized element is t
+   times a homogeneous degree-k polynomial in Y.
+3. Lemma 80A with one-dimensional vertex alphabets gives
+   R/I_r=Sym(E_total tensor V)^USp(2r), a subring of a
+   polynomial domain. Hence I_r is prime. The image of
+   each x_0i is nonzero: take its two defining vectors to
+   have symplectic pairing one. The ideal is therefore
+   saturated under the product of all z_i. A capped tF
+   is in I_r exactly when its localization is. This proves
+   the second identity in (P84.1), with no denominator gap.
+4. Choose e_* with sigma(e_*)=1 and a basis of H. In the
+   constant basis e_0,e_*,H the augmented matrix is
+
+       [ 0  1   0 ;
+        -1  0   u ;
+         0 -u^T Z ].
+
+   Here Z is the restriction of Y to H. The remaining
+   coordinates u=Y(e_*,H), together with Z, are independent
+   linear coordinates on the entire background skew matrix.
+5. For each basis vector h of H replace h by h+u_h e_0.
+   This is a polynomial unipotent basis change with polynomial
+   inverse. Its congruence removes u and leaves
+
+       [0 1; -1 0] direct-sum Z.
+
+   Under any invertible congruence the coefficients of the
+   appropriate exterior power express every transformed
+   Pfaffian as a polynomial linear combination of the original
+   ones. Applying the inverse gives equality of the ideals.
+   This argument establishes ideal equality, not just equality
+   of the rank loci.
+6. A size-(2r+2) Pfaffian of this block matrix is a size-2r
+   Pfaffian of Z if it includes both first slots; it is zero
+   if it includes just one; if it includes neither, its
+   size-(2r+2) Pfaffian of Z expands into the ideal generated
+   by the size-2r Pfaffians of Z. Conversely every latter
+   generator is obtained by including both first slots.
+   This proves (P84.2) and its small-dimension cases. QED.
+
+The reduction in (P84.2) is an exact structural source description.
+The caps and original graph parity in (P84.1) are still expressed in Y.
+It therefore does not, by itself, identify a lower-rank Ginibre integral.
+Its next consequence supplies the specific derivative identity used here.
+
+**Lemma 84B (all homogeneous sources have bounded translation degree).**
+Define the commuting background translation derivatives
+
+    D_i=sum_(q>i) partial_(y_iq)
+              -sum_(p<i) partial_(y_pi),  1<=i<=m.
+
+For every F in J_(r,sigma),k and every product of k-r+1 such derivatives,
+if k>=r,
+
+    D_(i_1) ... D_(i_(k-r+1)) F=0.                   (P84.3)
+
+For k<r the source is zero. No cap assumption is required.
+
+**Proof.**
+
+1. The translations Y_pq -> Y_pq+s_p-s_q are generated
+   by the D_i. Their alternating form is s wedge sigma,
+   up to the fixed matrix convention, and restricts to zero
+   on H. Thus they fix Z and translate only the u coordinates
+   in (P84.2).
+2. Expand a homogeneous F of degree k as
+
+       F=sum_beta u^beta F_beta(Z).
+
+   Membership in the extended ideal (P84.2) implies that
+   every coefficient F_beta belongs to J_(r-1)(Z).
+   That homogeneous ideal is generated in degree r and has
+   no nonzero element of degree below r. Since F_beta has
+   degree k-|beta|, a nonzero coefficient requires
+   |beta|<=k-r. Therefore F has total u-degree at most k-r.
+3. The D_i are constant directional derivatives in u. Any
+   product of k-r+1 of them vanishes on this polynomial.
+   If k<r every coefficient is zero. This proves (P84.3).
+   Empty reduced ideals and the case m=1 are included. QED.
+
+**Lemma 84C (bad support at every higher background threshold).**
+Let j>=1, d=2r+2j, and a_i>=j+1 for all background vertices.
+For even M, every wholly bad source p in I_r(a) normalizes as
+
+    p=t F,
+    F=sum_(p<q: a_p=a_q=j+1, epsilon_p epsilon_q=-1)
+                   y_pq^(j+1) F_pq,                 (P84.4)
+
+where each F_pq is a matching polynomial of degree r-1 using no
+vertex p or q. These coefficient polynomials are uniquely determined.
+There is no restriction on r, m, j, or the larger row labels.
+
+**Proof.**
+
+1. Consider the multihomogeneous generator presentation of
+   the entire ideal sector. A Pfaffian containing zero
+   leaves a residual degree graph with exactly j background
+   edges. Expanding its zero row supplies an r-matching.
+   Hence every normalized monomial from it is an r-matching
+   times an arbitrary j-edge monomial. A Pfaffian omitting
+   zero instead supplies an (r+1)-matching times a residual
+   (j-1)-edge monomial. All other residual edges are stars.
+   These statements follow directly by subtracting the
+   generator's vertex degrees, as in Lemma 83A.
+2. In the second case the total background valence at any
+   vertex is at most 1+(j-1)=j<a_i. Every background vertex
+   therefore retains a positive star edge, and the original
+   graph is connected. At even M this graph is good.
+3. In the first case, let D be any original component away
+   from zero and v its number of vertices. Every original
+   degree in D is background degree and is at least j+1.
+   Matching edges contribute at most v to its degree sum;
+   all j extra edges contribute at most 2j. Thus
+
+       v(j+1)<=v+2j, so v<=2.
+
+   A one-vertex component is impossible because its label
+   is positive and loops are absent. Consequently v=2.
+4. Equality now forces both labels to be j+1, all j extras
+   to lie between these two vertices, and a matching edge
+   between them as well. The component is their isolated
+   (j+1)-fold edge. All other background edges form an
+   (r-1)-matching excluding them. Every remaining background
+   vertex has valence at most one and label at least two,
+   so it retains its star and lies in the component of zero.
+5. There are exactly two components in this case. At even
+   total minus count the graph is bad precisely when the
+   isolated pair has opposite signs. Its normalized form is
+   exactly the corresponding summand in (P84.4). The pair
+   is uniquely recovered as the only edge of multiplicity
+   j+1, while the other edges form a disjoint matching.
+6. An ideal vector is a linear combination of these generator
+   monomials. Cancellation can remove support but cannot
+   introduce a new monomial. A wholly bad vector must
+   therefore have exactly the support described above.
+   Grouping by its unique repeated pair proves (P84.4).
+   This support argument concerns the ideal's actual image,
+   not an assumed independence of its generators. QED.
+
+**Lemma 84D (the derivative identity forces good projection to be injective).**
+Under the hypotheses of Lemma 84C, for every even M,
+
+    P_good:I_r(a) -> R_good(a,M) is injective,
+    dim I_r(a)<=dim R_good(a,M)<=dim U_M(a).           (P84.5)
+
+**Proof.**
+
+1. If p is in the kernel, write its wholly bad normalized
+   form (P84.4). For a fixed repeated pair p<q let Pi_pq
+   be monomial projection onto degree-(r-1) matchings on
+   background vertices excluding p and q. Then
+
+       Pi_pq D_p^j D_q F=-(j+1)! F_pq.               (P84.6)
+
+   Indeed D_p(y_pq)=1 and D_q(y_pq)=-1, while neither
+   derivative acts on F_pq. Differentiating its (j+1)st
+   power gives precisely the stated coefficient.
+2. Check every other summand y_ab^(j+1) F_ab. If its
+   repeated pair contains p but not q, the j derivatives
+   at p leave at least one edge incident to p. The q
+   derivative cannot remove that edge, so Pi_pq kills it.
+   If p is outside its repeated pair and j>=2, the j
+   derivatives at p kill its matching factor, which has
+   valence at most one there.
+3. For j=1 and p outside the other pair, the p derivative
+   can only remove one matching edge. If q lies in that
+   pair, its subsequent derivative leaves an edge at q.
+   If q is also outside, the squared repeated edge remains
+   and prevents the result from being a matching. Either
+   output is killed by Pi_pq. These cases exhaust all
+   other summands, proving (P84.6) on the full polynomial.
+4. By Lemma 84A, F belongs to J_(r,sigma),r+j. Lemma 84B
+   annihilates it with any product of j+1 translations.
+   Thus the left side of (P84.6) is zero for every pair.
+   Every F_pq is zero, giving p=0. This proves injectivity
+   on the actual ideal sector, uniformly in all parameters.
+5. Every good original monomial has at least one colour
+   copy in U_M, since its number of components is >=1.
+   The two dimension comparisons in (P84.5) follow.
+   No comparison with a free Pfaffian module is made. QED.
+
+**Lemma 84E (every proper original cut is stable in the same higher-layer range).**
+Under the hypotheses d=2r+2j, j>=1, a_i>=j+1, every proper cut
+product agrees with its universal product. At even M,
+
+    Phi_G=Phi_*-2 dim I_r(a)
+         =2[dim U_M(a)-dim I_r(a)]>=0.               (P84.7)
+
+**Proof.**
+
+1. Put zero on the first side of a proper cut, and let t
+   be the sum of the complementary background labels. If
+   its universal product is zero, its actual product is
+   zero by Lemma 80A on the two sides. Hence consider a
+   nonzero universal product. Distinguished degree balance
+   then gives t<=d=2r+2j.
+2. The complementary side cannot be a singleton: a single
+   positive row atom has zero universal and actual mean.
+   It therefore has h>=2 vertices and t>=2(j+1). Its
+   distinguished-side deficit satisfies
+
+       d-t<=2r-2<2r.
+
+   Lemma 83A's generator test gives a stable joint moment
+   there, regardless of the other row sizes.
+3. On the complementary side,
+
+       h<=t/(j+1)<2r+2.
+
+   The strict inequality follows from
+   2r+2j<(2r+2)(j+1), for all r>=1,j>=1.
+   Its skew matrix has too few vertices for any generator
+   of I_r. Hence that side is stable in every degree.
+4. All proper products are unchanged. The full moment
+   loses dim I_r(a), and at even M both endpoints have
+   coefficient one. The universal signed graph expression
+   is 2 dim U_M(a), with its original colour multiplicities.
+   This proves the equalities in (P84.7). Lemma 84D supplies
+   their sign with the exact constant one. QED.
+
+**Theorem 84F (original Q3 through arbitrarily many row-deficit layers).**
+For every compact connected type C_r group, every tuple of descending
+nontrivial actual one-row character atoms with positive labels and at
+least two entries, and every sign pattern, the original normalized
+double-Haar integral is nonnegative whenever there is a distinguished
+index zero such that, with b=min_(i!=0) a_i,
+
+    a_0>=sum_(i!=0) a_i-2r-2(b-1).                   (P84.8)
+
+There are no upper bounds on rank, tuple length, row sizes, or the
+number of correction layers reached. For even d>2r the layer is
+j=(d-2r)/2, derived from the tuple, and (P84.7) is the exact integral.
+
+**Proof.**
+
+1. Odd minus count vanishes under the original exchange g,h.
+   Negative deficit and odd deficit sectors vanish by the
+   original degree and parity arguments of Theorem 83E.
+2. For even 0<=d<=2r apply Theorem 83E. For even d>2r,
+   (P84.8) gives j=(d-2r)/2<=b-1, hence every background
+   label is at least j+1. Lemma 84E proves the original
+   sign, including the entire source and every proper cut.
+3. Pullback from the simply connected group preserves the
+   normalized Haar integral and each descending character.
+   The result therefore holds on the actual type C central
+   quotients. The empty product has integral one; a singleton
+   nontrivial atom has mean zero; trivial plus atoms multiply
+   the integral by two and trivial minus atoms make it zero.
+   These original degenerate cases are unchanged. QED.
+
+**Demand matching for (P84.7)--(P84.8).** The supplied comparison uses
+actual one-dimensional product-Schur weight multiplicities, all even
+minus patterns, every r>=1 and arbitrary tuple lengths in precisely the
+stated row range. The original consumer uses dim I_r<=dim U_M with
+constant one; (P84.5) supplies it on the actual quotient kernel. No norm
+bound, positivity of an individual compressed trace, coefficient cutoff,
+or common specialization across infinite degrees is used. The background
+threshold is the proved range of this supplier, not a replacement of the
+full central-cone objective. Lemmas 84A--84B hold outside that threshold
+as well, and retain the original caps for the next construction.
+
+**Corollary 84G (higher-layer endpoint specialization of the overlap map).**
+At N=2r+3, all l_i=1, every nonempty row-label sector satisfying
+(P84.8), and every even M, T_eta from (P81.7) is generically injective.
+
+**Proof.** At d<=2r Corollary 83F applies, with zero sources at odd or
+negative deficits. In every even higher sector covered by (P84.8),
+Lemma 84D makes P_good injective on I_r(a). Give all C_v coefficient
+one in the endpoint colour and all proper colours coefficient zero.
+This specialization is P_good C. Lemma 81A makes C invertible on the
+same actual ideal sector, so the specialization is injective. Its
+nonzero full-rank minor proves generic injectivity over C(eta).
+Empty sources are vacuous. Original degrees and colour copies are
+retained throughout. QED.
+
+**Lemma 84H (all proper-cut defects at the next layer, with arbitrary rows).**
+Let d=2r+2, with no background threshold. Let U be the background
+vertices with a_i=1 and define the signed elementary sums
+
+    E_s(U;epsilon)=sum_(A subset U, |A|=s)
+                            product_(i in A) epsilon_i.
+
+Let B_m=binom(m-3,2r), interpreted as zero when m-3<2r.
+Then, for every even M and arbitrary positive row labels,
+
+    Phi_G/2=dim U_M(a)-dim I_r(a)
+                     -B_m E_2(U;epsilon)
+                     -E_(2r+2)(U;epsilon).           (P84.10)
+
+In particular the exact remaining sign statement at this layer is
+
+    dim U_M(a)>=dim I_r(a)
+                 +B_m E_2(U;epsilon)
+                 +E_(2r+2)(U;epsilon).               (P84.11)
+
+This formula supplies a reduction, not positivity outside Theorem 84F.
+Its source is exactly the capped degree-(r+1) piece in (P84.1), and
+all its second translation derivatives vanish by Lemma 84B.
+
+**Proof.**
+
+1. Again put zero on the first side of a proper cut, with
+   complementary background total t. A nonzero universal
+   product requires t<=2r+2. A zero universal product has
+   zero actual product by Lemma 80A and needs no correction.
+   A complementary singleton always has zero mean.
+2. The distinguished side can have a relation only if
+   its deficit d-t is >=2r, by Lemma 83A's generator test.
+   A nonzero complementary moment has t>=2, so the only
+   possibility is t=2. Positive row labels then force its
+   complement to be a pair of unit vertices. Its universal
+   and actual moment are one. The remaining distinguished
+   tuple has deficit 2r and m-2 background vertices, so
+   Lemma 83B gives source dimension binom(m-3,2r)=B_m.
+   Its actual product loses exactly B_m.
+3. The complementary side can have a Pfaffian relation
+   only if it has at least 2r+2 vertices. Since t<=2r+2
+   and all labels are positive, the only possibility is
+   precisely 2r+2 unit vertices. Its relation sector is
+   the single Pfaffian of their entire skew matrix, with
+   dimension one: all generators already have the full
+   multidegree, and residual degree is zero.
+4. For that second class, the distinguished-side deficit
+   is zero, hence it is stable. Its graph is uniquely its
+   star because a_0 equals the total of its remaining
+   background labels; its moment is one. At least one
+   such background remains, since a_0>0. Thus the cut
+   product loses exactly one.
+5. Every other proper product is stable on both sides or
+   zero. The two defect classes are disjoint for r>=1.
+   At even total minus count a cut and its complement
+   have the same coefficient, namely the product of
+   epsilon_i on its background-only side. Their paired
+   defects therefore sum to -2 B_m E_2 and -2 E_(2r+2).
+6. The two endpoints contribute -2 dim I_r(a), while
+   the universal signed integral is 2 dim U_M(a).
+   Adding these terms gives (P84.10), and rearranging
+   gives the exactly equivalent (P84.11). The source and
+   derivative assertions follow from Lemmas 84A--84B
+   at k=r+1, without any background restriction. QED.
+
+**Full-scope receipt and next direct construction.** This turn supplied
+Theorem 84F on the original scalar consumer and Corollary 84G on its
+actual overlap map. The proof uses an all-rank exact source reduction
+and a derivative identity, rather than a finite-label certificate.
+Every higher layer in the stated background range is included. The
+full theorem for arbitrary row tuples, nonrow atoms and all other Lie
+types remains unsupplied; the locked cone and quantifiers are unchanged.
+
+The next direct scalar target is (P84.11) on positive row tuples with
+unit backgrounds, at d=2r+2, uniformly in r,m,a and every even M.
+Its demand sheet is exactly: original capped source (P84.1), original
+full colour target U_M, both signed elementary corrections as written,
+constant one, no uniform operator norm or fixed numeric map needed.
+The natural construction is to apply the second-translation identities
+to the bad-support sector and allocate its residual unit-endpoint
+relations to the original component-colour copies, retaining the two
+proper-cut source classes from Lemma 84H. The smallest rank-two all-unit
+input at this layer has a_0=1,m=7; its original integral has already
+been independently replayed as 190 at two background minus signs.
+The genuinely higher distinguished row a_0=2,m=8 has original integral
+672 with those signs. These checks establish the cut reduction only;
+they do not supply the uniform allocation. The return test for the
+construction is precisely (P84.11), followed by (P84.10) and the
+original scalar integral. It is an unbounded source-budget problem,
+not a request for a label sweep. All remaining nonrow and other-type
+cases of the original full real continuous central cone remain active.
+
+## A stronger matching budget closes the entire unit-background next layer
+
+The previous goal turn made proof progress: Section 84 supplied a
+higher-layer source injection, replayed its scalar consumer, and retained
+the full proper-cut correction at deficit 2r+2. The selected hard statement
+here is (P84.11) with all background rows equal to one, uniformly in rank,
+distinguished row size, tuple length and every even minus pattern. The
+proof below supplies that original budget, rather than replacing it by
+ordinary good projection or discarding the signed cut terms. It also
+supplies a matching-target bound for arbitrary higher backgrounds.
+
+**Independent self-double-check immediately before recording the assertions.**
+
+1. Verified Bump--Gamburd directly in context: equations (8),
+   (87), (90) and (92) give the ordinary Cauchy expansion,
+   the exact symplectic Schur mean, the finite-rank retained
+   length bound, and the unrestricted even-column identity.
+   Equations (15) and (19) give the one-variable horizontal-strip
+   branching and the hook-content dimension formula. The
+   generating identity used below is rederived from (8) and
+   (87); it does not use the auxiliary N>l hypothesis of
+   Proposition 19. The number of vertex alphabets is arbitrary.
+2. Rechecked the complete source enumeration. With a=m-2k>=1,
+   k=r+1 and total degree 2a+2k, an even-column source shape
+   has length at least 2k and first two equal rows at least a.
+   Only the three shapes in the proof of Lemma 85B fit. Their
+   horizontal-strip branching gives exactly four squarefree
+   shapes, with the fourth omitted at a=1. No additional
+   partitions or generator multiplicities are counted.
+3. Re-derived the squarefree Schur coefficient from the leading
+   term of the hook-content formula, and computed the two
+   near-hook products explicitly. Their sum with the two
+   hooks gives the exact expression (P85.2), including a=1.
+4. Rechecked the stronger coloured-matching induction. The
+   base at m=2k+1 follows from the binomial-ratio bound proved
+   below. In the induction, the larger sign class gives
+   weighted degree >=m-2, exactly the factor used by Pascal's
+   identity. No asymptotic or balance assumption is used.
+5. Rechecked all three source-and-cut bounds in Lemma 85C.
+   The source ratio splits into terms with 1/(a+1) and
+   (a-1)/(a+1), whose maxima must be combined. The exact
+   difference A-2B=2(2k+1)/(2k-1)>0 gives the stated
+   constant. The two cut bounds retain their original
+   signs by bounding above, not by claiming positivity.
+6. Independently expanded the entire rank-one and rank-two
+   budgets as symbolic polynomials in m and z=p-n. Their
+   exact identities are (P85.6)--(P85.7). Independently checked
+   the rank-two shifts m=7+u and its completed square. All
+   identities are polynomial identities, not finite-sign tests.
+7. Independently evaluated the original normalized Haar cut
+   expression by the positive-root Weyl denominator, checking
+   mean one for the constant and the defining square. Cases
+   (r,a,m,n)=(1,3,7,3),(2,2,8,3),(3,2,10,5) have source
+   dimensions 91,120,280 and original colour targets 84,360,3600.
+   Their original integrals are 16,496,6700. In every case
+   the distinguished sign is minus, so these also check the
+   odd-background-minus patterns, which are part of even
+   total minus count. Independent hook-product counts agreed
+   with the source dimensions, and both proper-cut terms were
+   retained. The low-rank polynomial identities gave the
+   same original integrals.
+8. Rechecked the auxiliary-sign averaging in Lemma 85F. A
+   higher-label endpoint appears in at most one matching edge,
+   so its independent auxiliary sign choices factor edgewise.
+   The resulting weights equal the original component-colour
+   multiplicities exactly. Actual function signs and the
+   original Haar integral are never changed by this counting
+   identity.
+9. Replayed the full consuming application: (P85.2), the
+   original matching target, both elementary cut corrections,
+   and (P84.10) give the sign uniformly. Negative or odd
+   deficits and the lower deficits use their already checked
+   original identities. No operator norm, stronger ordinary
+   projection, numerical cutoff, or full-cone closure is claimed.
+
+The source used and checked above is
+[Bump--Gamburd](https://arxiv.org/pdf/math-ph/0502043), equations
+(8), (15), (19), (87), (90), (92). The matching comparisons and the
+signed scalar estimates below are derived here.
+
+**Lemma 85A (uniform matching budget with the full double-factorial factor).**
+For the same-sign, two-colour matching count G_k(n,p) of Lemma 83C,
+let m=n+p>=1 and c_k=(2k-1)!!, with c_0=1. For every k>=0,
+
+    G_k(n,p)>=c_k binom(m-1,2k).                      (P85.1)
+
+All sign-class sizes, ranks and tuple lengths are unrestricted.
+
+**Proof.**
+
+1. At k=0 both sides are one. At m<=2k the right side
+   is zero. At m=2k+1, one sign class is odd and the
+   other even. Write their sizes as 2l+1 and 2k-2l.
+   A same-sign k-matching leaves just one vertex in the
+   odd class. Its exact two-colour count is
+
+       G_k=(2l+1)! (2k-2l)!/[l!(k-l)!].
+
+   Dividing by c_k=(2k)!/(2^k k!) gives
+
+       G_k/c_k=(2l+1) 2^k binom(k,l)/binom(2k,2l).
+
+2. For 0<=l<=k, put R_l=binom(2k,2l)/binom(k,l).
+   Consecutive ratios satisfy
+
+       R_(l+1)/R_l=(2k-2l-1)/(2l+1).
+
+   Hence the maximum is attained at a middle l, where
+   binom(k,l) is a largest binomial coefficient. For such
+   l, Vandermonde's identity gives
+
+       binom(2k,2l)
+          =sum_j binom(k,j)binom(k,2l-j)
+          <=2^k binom(k,l).
+
+   The same upper bound for R_l follows for every l.
+   Therefore the base count in Step 1 is at least c_k.
+3. Induct on k and, at fixed k, on m. For m>=2k+2,
+   interchange classes so n>=p. Pairing a fixed vertex
+   in the first class or leaving it unmatched gives
+
+       G_k(n,p)=G_k(n-1,p)+2(n-1)G_(k-1)(n-2,p).
+
+   The two induction hypotheses give
+
+       G_k>=c_k binom(m-2,2k)
+              +2(n-1)c_(k-1)binom(m-3,2k-2).
+
+4. Since 2(n-1)>=m-2 and c_k=(2k-1)c_(k-1), the
+   second term is at least c_k binom(m-2,2k-1).
+   Pascal's identity proves (P85.1). All recurrence
+   parameters are nonnegative in the stated range. QED.
+
+Now take r>=1, k=r+1, m>=2k+1, and a=m-2k>=1. Consider the actual
+original tuple chi_(a),chi_(1)^m on USp(2r), with zero its distinguished
+index. Its row deficit is exactly 2r+2. Write D_k(m)=dim I_r(a,1^m).
+
+**Lemma 85B (the exact unit-background source dimension).**
+The entire actual source, including all its syzygies, has dimension
+
+    D_k(m)=binom(m,2k)
+          [1+4k(k-1)a/((m-1)(a+1))
+             +k(2k-3)a(a-1)/((m-2)(a+1))].           (P85.2)
+
+This is a positive integer, including a=1.
+
+**Proof.**
+
+1. By the ordinary Cauchy identity and the symplectic Schur
+   mean, the generating series of actual row moments is
+
+       sum_(lambda: lambda' even, ell(lambda)<=2r)
+                                           s_lambda(x_0,...,x_m).
+
+   The unrestricted even-column identity gives the universal
+   series with the length restriction removed. Their difference
+   is the source character, by Lemma 80A. Therefore D_k(m)
+   is the coefficient of x_0^a x_1...x_m in
+
+       sum_(lambda: lambda' even, ell(lambda)>=2k) s_lambda.
+
+   This coefficient identity has arbitrary numbers of alphabets.
+2. Branching in x_0 requires a horizontal strip of size a,
+   so lambda_1>=a. Even columns mean that its rows come
+   in equal pairs. The first pair contributes at least 2a
+   boxes; the other at least 2k-2 rows contribute at least
+   2k-2. Since |lambda|=a+m=2a+2k, only two boxes remain.
+   Consequently the complete list is
+
+       (a+1,a+1,1^(2k-2)),
+       (a,a,2,2,1^(2k-4))  when a>=2,
+       (a,a,1^(2k)).
+
+   These are the only ways to increase the first equal
+   pair, the next equal pair, or the even column height.
+3. The one-variable branching rule gives respectively
+
+       mu_1=(a+1,2,1^(2k-3)),
+       mu_2=(a+1,1^(2k-1));
+       mu_3=(a,2,2,1^(2k-4))  when a>=2;
+       mu_4=(a,1^(2k)).
+
+   One can check exhaustiveness by the interlacing inequalities
+   lambda_i>=mu_i>=lambda_(i+1) and |mu|=m. Each permitted
+   horizontal strip has coefficient one. At a=1 the third
+   shape is absent, while the other three remain distinct.
+4. Let f_mu be the coefficient of x_1...x_m in s_mu for
+   |mu|=m. Evaluate s_mu at L ones. The squarefree weights
+   contribute binom(L,m) f_mu. Every repeated-variable weight
+   uses at most m-1 distinct variables, hence contributes a
+   polynomial of degree at most m-1 in L. The leading
+   coefficient of the hook-content formula (19) is
+   1/product_(u in mu) h(u). Comparing leading terms gives
+
+       f_mu=m!/product_(u in mu) h(u).
+
+   This is a finite polynomial comparison, not a limiting
+   statement about the Haar functions.
+5. For mu=(L,2,1^s), the hook product is
+
+       (m-1)L(L-2)!(s+2)s!,  m=L+s+2.
+
+   Applying it to mu_1 gives
+
+       f_mu1=binom(m,2k-1) 2(k-1)a/(m-1).
+
+   The two hooks give f_mu2=binom(m-1,2k-1) and
+   f_mu4=binom(m-1,2k), whose sum is binom(m,2k).
+6. For mu=(L,2,2,1^s), the hook product is
+
+       2(m-2)(L+1)(L-2)!(s+3)(s+2)s!,
+       m=L+s+4.
+
+   Applying it to mu_3 gives
+
+       f_mu3=binom(m,2k)
+                 k(2k-3)a(a-1)/((m-2)(a+1)).
+
+   At a=1 this expression is zero, as required for the
+   omitted shape. Rewrite f_mu1 using
+   binom(m,2k-1)=2k binom(m,2k)/(a+1), and sum the
+   four contributions. This proves (P85.2). QED.
+
+For even total minus count let n be the number of background minuses,
+p=m-n, z=p-n, and E_s the signed elementary sum on these m unit
+backgrounds. The distinguished sign is necessarily (-1)^n.
+Every background graph is a k-matching; its a unmatched vertices
+join the distinguished star, and its k pairs are isolated. Thus the
+original target is exactly G_k(n,p), and Lemma 84H gives
+
+    Phi_G/2=G_k(n,p)-D_k(m)
+                -binom(m-3,2k-2)E_2-E_(2k),
+    E_2=(z^2-m)/2.                                   (P85.3)
+
+This is the complete original expression, including proper cuts.
+
+**Lemma 85C (the exact source and both proper cuts fit the matching target at all r>=3).**
+For k>=4 and m>=2k+1, the right side of (P85.3) is strictly positive.
+
+**Proof.**
+
+1. Put C_m=binom(m-1,2k)>0. Formula (P85.2) gives
+
+       D_k/C_m=m/a
+          +4k(k-1)m/((m-1)(a+1))
+          +k(2k-3)m(a-1)/((m-2)(a+1)).
+
+   Since m=a+2k and a>=1, m/a<=2k+1,
+   m/(m-1)<=(2k+1)/(2k), and
+   m/(m-2)<=(2k+1)/(2k-1).
+2. Define A=2(k-1)(2k+1) and
+   B=k(2k-3)(2k+1)/(2k-1). The last two terms in
+   Step 1 are bounded above by
+
+       [A+B(a-1)]/(a+1)
+        =B+(A-2B)/(a+1).
+
+   Here A-2B=2(2k+1)/(2k-1)>0. Its maximum over
+   a>=1 is A/2=(k-1)(2k+1). Consequently
+
+       D_k(m)<=k(2k+1)C_m.                            (P85.4)
+
+3. Every signed elementary sum satisfies
+   E_s<=binom(m,s). This is an upper bound, not a sign
+   assertion. Direct factorial cancellation gives
+
+       binom(m-3,2k-2)binom(m,2)/C_m
+          =k(2k-1)m/(m-2)<=k(2k+1),
+       binom(m,2k)/C_m=m/a<=2k+1.
+
+   Combining with (P85.4), the entire source and the
+   two signed proper corrections are bounded above by
+
+       (2k+1)^2 C_m.                                 (P85.5)
+
+4. Lemma 85A supplies G_k>=c_k C_m. At k=4,
+   c_4=105>81=(2k+1)^2. Inductively
+   c_(k+1)=(2k+1)c_k>(2k+1)^3>(2k+3)^2 for k>=4.
+   The last inequality follows for x=2k+1>=9 from
+   x^2(x-1)>4(x+1). Thus c_k>(2k+1)^2 at every
+   k>=4. Subtract (P85.5) from the matching budget to
+   obtain strict positivity in the original (P85.3). QED.
+
+**Lemma 85D (the two remaining ranks have positive uniform scalar identities).**
+The right side of (P85.3) is strictly positive also for k=2 and k=3,
+for every m>=2k+1 and every sign pattern of even total minus count.
+
+**Proof.**
+
+1. At k=2, direct substitution of (P85.2), the matching
+   formula of Lemma 83C, and
+
+       E_(2k)=sum_j (-1)^j binom(n,j)binom(p,2k-j)
+
+   into (P85.3), with n=(m-z)/2,p=(m+z)/2, gives
+
+       Phi_G/2=[z^4-10z^2+3m(m-2)]/12.               (P85.6)
+
+   This is an exact polynomial identity in m,z.
+   Its numerator is
+   (z^2-5)^2-25+3m(m-2). For m>=5,
+   3m(m-2)>=45, so the expression is strictly positive.
+2. At k=3 the same substitution gives
+
+       Phi_G/2=C_0(m)+C_2(m)z^2+C_4(m)z^4+7z^6/360,
+       C_0=m(m-6)(m-4)(m-2)(m^2-3m+32)/144,
+       C_2=(15m^4-315m^3+2415m^2-6690m+4888)/360,
+       C_4=(9m^2-123m+292)/144.                       (P85.7)
+
+   Both (P85.6) and (P85.7) were independently expanded
+   symbolically before recording; no range cutoff is involved.
+3. Write m=7+u with u>=0. Then
+
+       C_2=(15u^4+105u^3+210u^2+1395u+4363)/360,
+       C_4=(9u^2+3u-128)/144.
+
+   Therefore C_2>=4363/360 and C_4>=-8/9. With w=z^2,
+   the coefficient multiplying z^2 in (P85.7) satisfies
+
+       C_2+C_4 w+7w^2/360
+          >=[7w^2-320w+4363]/360
+           =[7(w-160/7)^2+4941/7]/360>0.
+
+4. C_0(m)>0 for every m>=7: its four linear factors
+   are positive and m^2-3m+32=(m-3/2)^2+119/4.
+   Thus (P85.7) is strictly positive for every real z,
+   in particular every integer sign-class difference.
+   Both remaining ranks satisfy the original budget. QED.
+
+**Theorem 85E (original Q3 for every unit-background tuple through the next wall).**
+For every r>=1, every a>=1 and m>=1, the original normalized integral
+for chi_(a) and m defining characters on USp(2r), with every sign
+pattern, is nonnegative whenever
+
+    a>=m-2r-2.                                       (P85.8)
+
+At the boundary a=m-2r-2>=1, the integral is strictly positive when
+the total minus count is even; at odd minus count it is zero. Rank,
+row size and number of defining backgrounds are unbounded.
+
+**Proof.** Relabel the distinguished row as zero. Odd total minus
+count vanishes by the original exchange. Negative or odd deficit
+vanishes by Theorem 83E; even deficit <=2r is supplied there. The
+only remaining deficit under (P85.8) is 2r+2. Its exact expression
+is (P85.3). Lemmas 85C--85D prove its strict sign for all r.
+Normalized Haar pullback gives the same conclusion on every central
+quotient to which the entire tuple descends. Trivial factors and
+empty/singleton products retain their original treatment. QED.
+
+**Lemma 85F (higher background labels preserve the stronger matching subtarget).**
+For arbitrary positive background row labels at even deficit 2k,
+with a_0>0 and even total minus count, let n,p be the two sign-class
+sizes of the unit background vertices and h the number of higher
+background vertices, so m=n+p+h. The part of U_M(a) supported on
+background k-matchings has dimension
+
+    H_k(n,p,h)=2^(-h) sum_(s=0)^h
+                 binom(h,s) G_k(n+s,p+h-s),
+    H_k(n,p,h)>=c_k binom(m-1,2k).                   (P85.9)
+
+This is an original-target counting identity and bound; auxiliary
+sign averaging makes no change to the actual signs or functions.
+
+**Proof.**
+
+1. Every such matching obeys the row caps because all labels
+   are positive. A matched higher-label vertex retains a
+   star, so any pair touching it joins the distinguished
+   component. The only isolated pairs have two unit
+   endpoints. The original graph is good exactly when
+   every such isolated pair is same-sign. Its target
+   multiplicity is two per isolated pair and one for
+   each pair touching a higher endpoint.
+2. Give the h higher endpoints independent auxiliary signs
+   of equal probabilities. Retain the actual signs on
+   the unit endpoints. A two-unit pair has the usual
+   weight two if same-sign, zero otherwise. A pair with
+   one or two higher endpoints has expected weight one:
+   it is same-sign with probability one half and then
+   has weight two.
+3. Distinct matching edges use disjoint higher endpoints,
+   so these expectations multiply. Summing over all
+   k-matchings gives exactly the original target weights
+   of Step 1. Group the auxiliary assignments by their
+   number s of minuses to obtain (P85.9)'s identity.
+   Apply Lemma 85A to each summand for its lower bound.
+   No integration or probabilistic assumption about Haar
+   functions is introduced. QED.
+
+**Full-scope receipt and next direct construction.** The supplied slot
+is the original next-layer budget (P84.11) for all unit-background
+rows, with no bound on r,m,a or signs. Its source, full colour target,
+and both proper-cut corrections have been consumed in (P84.10), giving
+Theorem 85E. This is a uniform proof, not a numerical label certificate.
+Lemma 85F is a target bound for mixed higher backgrounds; it alone
+is not a source-budget proof for them.
+
+The still-unsupplied next-layer statement is (P84.11) on mixed unit
+and higher backgrounds, followed by its original (P84.10) consumer.
+Its original source is the capped degree-(r+1) ideal from (P84.1),
+whose second translations vanish. The active construction is to split
+the source by matching versus nonmatching background monomials,
+use good nonmatching coordinates to detect their source part, and
+route the remaining unit relations into the matching-colour target
+(P85.9), keeping the signed cut sources of Lemma 84H. At the first
+auxiliary overlap m=2r+2, both proper-cut correction sums vanish for
+positive a_0: B_m=0, and E_(2r+2) would require every background
+label to be one and hence a_0=0. Thus the existing T_eta candidate
+(P81.7), with its actual cofactor Gram operators and all syzygies,
+is also a direct supplier on that mixed profile. Its smallest new
+rank-two profile has (a_0;a_1,...,a_6)=(2;2,2,1,1,1,1). The map's
+success criterion is actual source injectivity into the unchanged
+component-colour target, not a norm or injection of free generators.
+The next action is to construct and test this split on that profile,
+then prove or falsify its uniform identities. The complete objective
+still includes balanced arbitrary row tuples, all nonrow atoms,
+other Lie types and spin sectors, and the full continuous central cone.
+
+**Independent self-double-check immediately before the mixed construction test.**
+The source split was computed by exact rational elimination, with off-cap
+rows placed first so that intersection with the cap is imposed before
+any good-support projection. An independent normalized positive-root Weyl
+calculation on USp(4) then gave universal/actual full moments 93/81 and
+the original signed integral 128. Thus it independently checked the
+source dimension twelve and the full colour budget seventy-six, with
+both proper cuts unchanged. This is one explicit construction test,
+not an assertion of uniform mixed-profile injectivity.
+
+**Proposition 85G (the smallest new mixed split has a remaining bad line).**
+For r=2 and row tuple (a_0;a_1,...,a_6)=(2;2,2,1,1,1,1), with minus
+set {3,4}, the capped actual source has dimension twelve. Projection
+onto good nonmatching background monomials has rank ten. Adding good
+matching coordinates adds rank one, so ordinary good projection has a
+one-dimensional kernel. The original nonmatching and matching colour
+budgets are sixty-four and twelve, respectively; the original Q3
+integral is 128.
+
+**Proof.**
+
+1. In the six-background normalized skew ring, put
+
+       f_B=sum_(j=1)^5 (-1)^(j-1) Pf(Y_(B without B_j))
+       for every ordered five-subset B.
+
+   The whole degree-three ideal is spanned by the ninety
+   polynomials y_pq f_B and the single Pf(Y_(1,...,6)).
+   This follows from the augmented generators in Lemma 84A:
+   those containing zero have degree two, and the one
+   omitting zero has degree three.
+2. Exact rational column elimination gives rank seventy
+   for their full image. Place all monomials violating
+   the caps (2,2,1,1,1,1) before the permitted ones in
+   the pivot order. The off-cap coordinate rank is
+   fifty-eight, leaving a twelve-dimensional intersection
+   with the permitted sector. This is an intersection
+   computation; discarding off-cap generator terms would
+   incorrectly replace the source.
+3. Next place good nonmatching monomials, then good matching
+   monomials, then the remaining bad monomials in the pivot
+   order. Their additional pivot counts are ten, one, one.
+   Thus the stated split and bad line are on the actual
+   source, with its syzygies already imposed.
+4. Independently enumerate capped three-edge background
+   graphs, restore each star exponent a_i-deg_i(Y), and
+   keep precisely the graphs with even minus count in
+   every component. Weight each by 2^(c-1). Separating
+   nonmatchings and matchings gives budgets sixty-four
+   and twelve. The same graph enumeration without parity
+   gives universal full moment ninety-three.
+5. The independent Weyl evaluation described immediately
+   above gives actual full moment eighty-one and original
+   integral 128, checking the source and the full consumer.
+   Since m=6=2r+2 here, Lemma 84H has no proper-cut defects;
+   hence the graph budget also gives 2(76-12)=128. QED.
+
+**Updated next-construction receipt.** The proposed source split has now
+been tested on the stated smallest mixed input. Its ordinary uncoloured
+projection fails the injectivity knob; the actual consumer requires only
+the full coloured multiplicity budget, which does not fail. The exact
+remaining object for this construction is
+
+    K_nm=I_r(a) intersect ker(P_good,nonmatching).
+
+The natural map to test is the existing actual-ideal cofactor routing
+(P81.7), restricted to K_nm, retaining the matching colour copies and
+proper channels rather than identifying them with ordinary monomials.
+On the tested profile K_nm has dimension two, the ordinary matching
+projection has rank one, and the remaining line is the detector target.
+The full cap intersection, the constant-one budget and all original
+proper-cut sources stay in place. The uniform statement (P84.11) for
+mixed profiles is not supplied by these finite ranks. The next proof
+step is an exact detector on this residual line followed by its
+all-rank unit-endpoint construction; no label sweep has been launched.
+
+## Unit cofactor symmetry detects the mixed next-layer line in every rank
+
+The previous goal turn made proof progress: Section 85 supplied the
+complete unit-background next-layer budget and tested the first mixed
+source split. The selected hard statement here is the remaining detector
+on that mixed source, with (P80.6) and the original (P80.5) as consumers.
+The construction below supplies the detector uniformly in rank and then
+supplies the entire generic map on the corresponding unbounded mixed
+row family. It retains the exact original component-colour target and
+all actual source relations. The full central-cone objective is unchanged.
+
+**Independent self-double-check immediately before recording the assertions.**
+
+1. Replayed the original generator degree equations at the first
+   auxiliary overlap. Three degree-two vertices and 2r unit
+   vertices give three higher cofactor generators and three
+   generators per unit vertex. For arbitrary b,c>=2 with
+   a_0=b+c-2, every residual generator is multiplied by the
+   same original star monomial s=x_01^(b-2)x_02^(c-2).
+   This proves equality of actual source sectors, rather
+   than only an inclusion or a localized presentation.
+2. Checked the orientations in the three Pfaffian row identities.
+   With signed cofactors Q_v=(-1)^v Pf(X_without_v), the
+   cyclic generators below satisfy sum_u G_(u,v)=H_w-H_z.
+   Summing their three identities gives sum_u g_u=0.
+3. Independently expanded the smallest rank-two generators and
+   checked all three identities exactly. Checked the signs
+   of a five-vertex higher path: its three contributing
+   coefficients are b_(u,v), -b_(u',z), h_w, up to one
+   common nonzero sign. The general proof derives the
+   same relation from the Pfaffian row identities.
+4. Replayed the full source presentation and all sign cases.
+   Swapping the two unit endpoints of a good higher path
+   forces delta_v+delta_z=0 for each of three higher pairs.
+   At odd unit minus count this joins both sign classes;
+   at even count it joins each class separately. Comparing
+   the two nonempty even classes leaves precisely the
+   common contrast line. A good pair of higher paths
+   detects that line when two higher vertices are minus.
+5. Checked that the remaining line is wholly bad when all
+   three higher vertices are plus. Each contributing graph
+   has one odd-length higher path, and its coefficient is
+   the difference of its two unit-endpoint indicators.
+   Nonzero support therefore has opposite-sign unit endpoints
+   on that component. This verifies the entire polynomial,
+   not just one bad monomial.
+6. Rechecked the larger-row application. Multiplication by s
+   merges components, so it preserves every originally good
+   coefficient. If s has a positive exponent, one added
+   star joins two originally odd higher-path components of
+   the contrast line. Their merged component is even, and
+   the remaining unit pairs are even. Thus a nonzero good
+   coefficient detects the line for every larger row size.
+7. Rechecked the differential symmetry argument on the actual
+   minimum source. Higher cofactor derivatives kill its unit
+   zero-sum subspace. A unit derivative has alternating
+   degree-one dependence on the three higher vertices and
+   that unit, hence is a scalar multiple of their Pfaffian.
+   Permutation equivariance makes the scalar vector a multiple
+   of the original zero-sum vector. The original positive
+   Gram identity makes its common scalar nonzero. Its value
+   cancels in C_v C^(-1), so no uncomputed norm constant is used.
+8. Independently expanded the rank-two line P=g_3+g_4:
+   C P=24P, higher C_v P=0, and the four unit outputs
+   are respectively 12g_3,12g_4,-12g_5,-12g_6. Its
+   selected proper-channel coefficient on C_5 C^(-1)P
+   has magnitude 1/2. Exact rational good-projection ranks
+   are eleven in the exceptional sign case and twelve
+   in the odd-unit, mixed-higher, and added-star cases.
+9. An independent rank-three expansion checked the whole
+   row identity and all higher/unit operator identities.
+   On P=g_3+g_4, C has scalar 144 and the selected
+   proper good-path coefficient has magnitude 1/3.
+   Neither of these finite eigenvalue observations is
+   used as an all-rank formula.
+10. Independently replayed the original scalar at USp(4) for
+    the larger-row tuple (3;3,2,1,1,1,1), with minus set
+    {3,4}. A normalized positive-root Weyl calculation gave
+    universal/actual full moments 107/95, source twelve,
+    original colour target ninety, and original integral
+    156=2(90-12). This checks the larger-star source identity
+    and the full original consumer. The minimum tuple's
+    128=2(76-12) was independently checked in Section 85.
+11. Replayed generic injectivity and the scalar application.
+    The endpoint operator is the original invertible C on
+    the actual ideal; its only possible kernel after good
+    projection is the stated inverse image of one line.
+    The proper colour detects it with coefficient n/(2r),
+    on an actual good original monomial. Thus the supplied
+    rank gives the constant-one multiplicity budget. No
+    free generator rank, norm bound, or common specialization
+    across infinite sectors is substituted for this caller.
+
+Take N=2r+3, r>=1, with one-dimensional vertex alphabets and the
+original generic skew matrix on vertices 0,...,2r+2. Put
+
+    A={0,1,2}, U={3,...,2r+2}, L=|U|=2r,
+    a=(b+c-2,b,c,1,...,1),  b,c>=2,
+    s=x_01^(b-2)x_02^(c-2),
+    a_min=(2,2,2,1,...,1).
+
+All are actual one-row type C atoms. The distinguished row deficit is
+2r+2. Let Q_v=(-1)^v Pf(X_without_v), and use oriented variables
+x_ji=-x_ij for the formulas below. These signs do not change
+C_v=Q_v Q_v(partial), the original operator of Lemma 81A.
+For each cyclic higher triple (v,w,z)=(0,1,2),(1,2,0),(2,0,1), define
+
+    H_v=Q_v x_vw x_vz,
+    G_(u,v)=Q_u x_vu x_wz,    u in U,
+    g_u=sum_(v in A) G_(u,v)
+        =Q_u Pf(X_(A union {u})).
+
+**Lemma 86A (the entire mixed source has a uniform zero-sum presentation).**
+The actual source sectors satisfy
+
+    I_r(a)=s I_r(a_min),
+    dim I_r(a)=6r.                                    (P86.1)
+
+Every minimum-source polynomial has the unique form
+
+    F=sum_(v in A) h_v H_v
+             +sum_(u in U,v in A) b_(u,v) G_(u,v),
+    sum_(u in U) b_(u,v)=0 for each v.                (P86.2)
+
+For every cyclic (v,w,z),
+
+    sum_(u in U) G_(u,v)=H_w-H_z,
+    sum_(u in U) g_u=0.                              (P86.3)
+
+**Proof.**
+
+1. Every size-(2r+2) generator here omits one vertex. At
+   a_min, a generator omitting a higher vertex leaves
+   residual degrees two at that vertex, one at the other
+   two higher vertices, and zero at every unit. Its unique
+   residual graph is the corresponding two-edge star H_v.
+   Omitting a unit u instead leaves four residual degrees
+   one, on A union {u}; the three matching monomials give
+   exactly G_(u,v), v in A. Hence these 6r+3 generators
+   span the entire actual source sector.
+2. At a=(b+c-2,b,c,1^L), the same residual degree test
+   multiplies every one of these graphs by s. For a
+   unit omission there is exactly one residual background
+   edge, among 12,1u,2u; its remaining degrees force all
+   stars. For omissions 0,1,2 there is respectively the
+   unique original higher-star residual graph. Their
+   exponents exceed the minimum exponents by b-2 at
+   01 and c-2 at 02. Therefore the generator images
+   span exactly s I_r(a_min), proving the first identity
+   in (P86.1) without clearing denominators.
+3. The signed cofactor column obeys XQ=0. To check this
+   identity, append to the odd skew matrix a copy of its
+   vth row and column. The resulting even Pfaffian is
+   zero; expansion along the appended row gives
+   sum_j x_vj Q_j=0. Multiply by x_wz. The terms at
+   w and z are -H_w and H_z, and the unit terms are
+   G_(u,v). This proves (P86.3). It permits subtraction
+   of each coefficient column's unit mean, transferring
+   that mean into the h coefficients. Thus (P86.2) spans.
+4. Fix distinct units u,u' and a cyclic higher order v,w,z.
+   Consider the original graph with path
+
+       u -- v -- w -- z -- u'
+
+   and any matching on the remaining L-2 units. Each
+   displayed edge has multiplicity one. The coefficient
+   of this monomial in (P86.2), up to a common sign, is
+
+       b_(u,v)-b_(u',z)+h_w.                          (P86.4)
+
+   Only G_(u,v),G_(u',z),H_w can supply its residual
+   graph. Their individual coefficients are nonzero with
+   magnitude one. The two row identities in (P86.3)
+   give the relative signs in (P86.4).
+5. If F=0, use (P86.4) for u,u' and for u',u.
+   With delta_v=b_(u,v)-b_(u',v), subtraction gives
+   delta_v+delta_z=0 for each of the three higher
+   endpoint pairs. These three equations force every
+   delta_v=0. Thus b_(u,v) is constant in u and its
+   zero-sum condition makes it zero. Equation (P86.4)
+   now gives every h_w=0. This proves uniqueness.
+   Its dimension is 3(L-1)+3=3L=6r, proving the
+   remaining identity in (P86.1). QED.
+
+**Lemma 86B (the full minimum bad-support kernel is a single explicit line).**
+Let total minus count be even, and let n be the number of minus units,
+p=L-n. Ordinary good projection on I_r(a_min) is injective except
+when all three higher vertices are plus and 0<n<L with n even.
+In that case its kernel is exactly
+
+    span{P},  P=sum_(u in U_minus) g_u.                (P86.5)
+
+There are no restrictions on r or on the two sign-class sizes apart
+from those explicitly written.
+
+**Proof.**
+
+1. Let F in (P86.2) have wholly bad support. The product
+   of the three higher signs is (-1)^n, because the
+   total minus count is even. A graph in Step 4 of
+   Lemma 86A is good precisely when its two endpoint
+   unit signs have product (-1)^n and the remaining
+   unit pairs are same-sign. Such a remaining matching
+   always exists for the endpoint choices considered next.
+2. If n is odd, both unit sign classes are odd and
+   nonempty. Any opposite-sign pair u,u' is admissible;
+   removing its endpoints leaves even class sizes. The
+   two good-path equations (P86.4) give
+   delta_v+delta_z=0 for all three higher pairs, hence
+   b_(u,v)=b_(u',v) for every mixed unit pair. These
+   pairs connect all units. The zero-sum conditions give
+   b=0, and the same good paths then give h=0.
+3. If n is even, the two unit classes are even. Every
+   distinct same-sign unit pair is admissible. The same
+   equations make each b coefficient column constant
+   on each sign class. This holds also when a class
+   has size two; all three higher-pair equations are
+   still available. If one class is empty, b=0 and h=0.
+4. When both even classes are nonempty, their sizes are
+   at least two. Write b_(u,v)=t_v on minus units and
+   s_v on plus units, with n t_v+p s_v=0. Good paths
+   in each class give
+
+       t_v-t_z+h_w=0,
+       s_v-s_z+h_w=0.
+
+   Hence t_v-s_v is the same for every v. The zero-sum
+   equations then make t_v=t and s_v=s independent
+   of v, and h=0. The only remaining possibility is
+   a multiple of P in (P86.5), using sum_u g_u=0.
+5. Such an even n makes the higher sign product plus.
+   If two higher vertices are minus, choose one minus
+   higher vertex v; its other two higher vertices w,z
+   have opposite signs. Choose distinct units u,t minus
+   and u',t' plus. The two original paths
+
+       u -- v -- u',    t -- w -- z -- t'
+
+   and same-sign matching pairs on the remaining units
+   form a good graph. Its coefficient in P is +/-1:
+   only the two endpoints of its odd-length higher path
+   contribute, with opposite signs as in (P86.3).
+   Thus P is detected and F=0 in this sign case.
+6. It remains to check P when all higher signs are plus.
+   A monomial of g_u is a matching cofactor times a
+   matching on A union {u}. Its unique odd-dimensional
+   component is a path with one or three higher vertices,
+   starting at u and ending at another unit u'. Every
+   other component is a unit pair, a two-higher path,
+   or a doubled higher pair. There is no higher triangle
+   in a g_u term, since its unit endpoint is incident
+   to a higher vertex in the residual matching.
+7. For such a graph, exactly g_u and g_u' can contribute
+   and their coefficients are opposite, each of magnitude
+   one; this also follows from sum_u g_u=0. Therefore
+   its coefficient in P is +/-[1_(U_minus)(u)-
+   1_(U_minus)(u')]. Nonzero support has opposite-sign
+   endpoints on its odd-length higher path. Since all
+   higher signs are plus, that component has odd minus
+   count. Hence every nonzero monomial is bad.
+8. P is nonzero: choose opposite-sign unit endpoints on
+   a path through all three higher vertices and match
+   the remaining units arbitrarily. Its coefficient is
+   +/-1. This proves the exact kernel and all cases. QED.
+
+**Lemma 86C (adding either higher-row star detects the minimum bad line).**
+For a=(b+c-2,b,c,1^L), b,c>=2, ordinary good projection on I_r(a)
+is injective whenever (b,c)!=(2,2). Its only possible failure is
+therefore precisely the minimum line of Lemma 86B.
+
+**Proof.**
+
+1. Multiplication by s identifies the actual source with
+   the minimum source by (P86.1). An added star edge
+   only joins original components. If they all had even
+   minus count, every joined component still does. Thus
+   a wholly bad source at a pulls back to a wholly bad
+   minimum source: distinct monomial coefficients remain
+   distinct under multiplication by s.
+2. Lemma 86B therefore leaves at most sP, in its stated
+   exceptional sign case. Both unit classes have at least
+   two vertices there. Choose minus units u,t and plus
+   units u',t'. Form a minimum graph with paths
+
+       u -- 0 -- u',    t -- 1 -- 2 -- t'
+
+   and same-sign pairs on the remaining units. The
+   coefficient of P is +/-1 by Lemma 86B, Step 7.
+   Both displayed components have odd minus count.
+3. If b>2, the added 01 star joins those two components;
+   if c>2, the added 02 star does. Any further copies
+   change no component. The joined component has two
+   minus units and even minus count, as do all remaining
+   pairs. Hence the coefficient of sP is now good and
+   nonzero. It cannot lie in the good-projection kernel.
+   This proves injectivity for every larger b or c. QED.
+
+**Lemma 86D (unit cofactor symmetry gives an exact inverse-Gram detector).**
+For the minimum source let c=(c_u)_(u in U) satisfy sum_u c_u=0 and put
+P_c=sum_u c_u g_u. The original operators of Lemma 81A satisfy
+
+    C_v C^(-1) P_c=0                    for v in A,
+    C_v C^(-1) P_c=c_v g_v              for v in U.  (P86.6)
+
+The inverse is on the finite actual ideal sector. No explicit spectral
+constant or norm bound is required.
+
+**Proof.**
+
+1. The map c->P_c is injective on the zero-sum space:
+   the higher-path coefficient is c_u-c_u', so a zero
+   polynomial forces all c_u equal and hence zero.
+   Permuting the units transforms signed cofactors by
+   the permutation determinant and permutes their indices.
+   The residual four-slot Pfaffian simply follows its
+   unit index. Thus the P_c space transforms as the
+   determinant twist of the unit zero-sum representation.
+2. For a higher v, Q_v(partial)P_c has residual degrees
+   two at v and one at the other two higher vertices,
+   with no unit degree. Its residual space is a single
+   original star monomial. Unit-permutation signs from
+   Q_v and P_c cancel, so its coefficient is an invariant
+   linear functional of c. Such a functional is a
+   multiple of sum_u c_u and vanishes. Therefore every
+   higher C_v kills P_c.
+3. Permuting the three higher vertices fixes P_c: the
+   two Pfaffian factors acquire the same sign. For a
+   unit v, Q_v(partial)P_c is consequently alternating
+   in the three higher vertices. Its residual degree
+   is one on A union {v} and zero elsewhere. The three
+   matching monomials on those four vertices have a
+   unique alternating line, their Pfaffian. Hence
+
+       Q_v(partial)P_c=kappa_v(c) Pf(X_(A union {v})).
+
+4. The vector-valued linear map c->kappa(c) is equivariant
+   under all unit permutations. Its matrix, extending
+   P_c by the same formula to all c, has one common
+   diagonal coefficient and one common off-diagonal
+   coefficient. On sum_u c_u=0 it is therefore scalar:
+   kappa_v(c)=lambda_r c_v. Multiplying by Q_v and
+   summing gives C P_c=lambda_r P_c. The higher terms
+   vanish by Step 2.
+5. The scalar lambda_r is the eigenvalue induced by the
+   already-defined C, not a chosen parameter. The exact
+   positivity identity (P81.2), on nonzero P_c in the
+   actual ideal, gives lambda_r>0. Its value cancels:
+   C^(-1)P_c=P_c/lambda_r and the individual unit
+   outputs give (P86.6). This proves all identities
+   with the original operator and normalization. QED.
+
+**Theorem 86E (generic colour-map injection on the unbounded two-higher-row packet).**
+For every r>=1, b,c>=2 and even M, the original map T_eta in (P81.7)
+is generically injective on the actual row sector
+
+    (b+c-2,b,c,1^(2r)).                               (P86.7)
+
+Rank and higher row sizes are unrestricted.
+
+**Proof.**
+
+1. When ordinary good projection is injective, set every
+   endpoint coefficient to one and all proper-colour
+   coefficients to zero. This is P_good C and is
+   injective by Lemma 81A. Lemmas 86B--86C cover every
+   sector except the one minimum sign case in (P86.5).
+2. In that remaining case put n=|U_minus|, L=2r and
+   c_u=1_(U_minus)(u)-n/L. Then P=P_c by (P86.3).
+   The common endpoint has exactly the kernel line
+   span{C^(-1)P}. Choose two minus units u,u' and
+   two plus units v,w, possible since n,p>=2.
+3. Use the proper colour assigning u,u' colour one and
+   every other vertex colour zero, with the higher
+   reference vertex in colour zero. Give only C_v
+   coefficient one in that proper channel. Equation
+   (P86.6) gives
+
+       C_v C^(-1)P=-(n/L)g_v.
+
+4. There is a good monomial of g_v with path
+
+       v -- 2 -- 1 -- 0 -- w,
+
+   the pair u,u', and same-sign pairs on all other units.
+   The residual four-slot Pfaffian must use v2 and 01;
+   the cofactor must use 12 and 0w plus the remaining
+   unit pairs. These matchings are unique for this
+   monomial, so its coefficient in g_v is +/-1.
+   Every component has even minus count and respects
+   the chosen proper colour. Its detector coefficient
+   on the endpoint kernel is therefore +/-n/(2r),
+   which is nonzero.
+5. The endpoint and that one proper channel are injective
+   on the entire actual ideal. They are specializations
+   of the existing independent eta variables, within
+   their original colour target. A full-rank minor is
+   therefore a nonzero polynomial in eta, proving the
+   generic injection. No cofactor generator independence
+   or common degree-dependent specialization is assumed. QED.
+
+**Theorem 86F (the original scalar Q3 consumer on the same packet).**
+For every compact connected type C_r group on which the tuple descends,
+every r>=1,b,c>=2 and every sign pattern, the original normalized
+integral for
+
+    chi_(b+c-2), chi_(b), chi_(c), chi_(1)^(2r)
+
+is nonnegative. At even total minus count its exact expression is
+
+    Phi_G=2[dim U_M(a)-6r]>=0.                        (P86.8)
+
+**Proof.** The total auxiliary dimension is exactly 2r+3 and all
+original labels are nonempty. Hence Lemma 80C applies on its exact
+original consumer, with no alteration of proper cuts or endpoints.
+Equivalently, in Lemma 84H here B_m=0 and the unit count 2r is
+less than 2r+2, so both proper correction sums vanish. Theorem 86E
+supplies dim I_r(a)<=dim U_M(a), with constant one; Lemma 86A
+makes the source dimension 6r. This gives (P86.8). Odd minus count
+vanishes under the original exchange. Normalized Haar pullback
+preserves each descending atom and the integral. QED.
+
+**Demand matching and full-scope receipt.** The supplied injection uses
+the actual ideal at N=2r+3, one-dimensional vertex alphabets, every
+r>=1, arbitrary b,c>=2, all even signs, and the same component-colour
+copies and scalar extension as (P81.7). Its returned budget is exactly
+(P80.6) on this row family, not a free-module or ordinary-projection
+replacement. The full original (P80.5) and signed integral have been
+replayed in Theorem 86F. The finite tests establish their explicit
+identities only; the uniform proof is Lemmas 86A--86D and the original
+generic-map specialization.
+
+The first mixed detector from Section 85 is now supplied in every rank,
+and increasing either higher row is handled without a degree cutoff.
+The still-unsupplied first-overlap next-layer family has at least three
+higher background rows, as well as the nonrow sectors in (P81.7).
+For the row family, the unchanged next target is the actual source
+budget (P84.11); at this first overlap its two proper corrections
+are zero, so its return test is exactly (P80.6), then (P80.5).
+The smallest next profile at rank two is
+
+    (a_0;a_1,...,a_6)=(3;2,2,2,1,1,1).
+
+The natural construction is the same actual cofactor routing, with the
+unit zero-sum source separated from the higher-vertex source. A unit
+cofactor derivative still has only its own unit variable in the
+residual polynomial; the higher derivatives have no unit variable.
+The remaining structural task is to detect the resulting higher
+coefficient space in proper-colour channels, preserving all its
+syzygies. The first test is the actual capped source and kernel on
+this displayed profile, followed by exact proper-channel identities;
+no uniform injection is inferred before those identities are proved.
+Arbitrary balanced rows beyond this layer, nonrow atoms, other Lie
+types and spin sectors, and the original continuous central cone
+remain active parts of the unchanged full objective.
+
+**Independent self-double-check immediately before the next construction receipt.**
+Exact rational elimination used all twenty-eight original cofactor residual
+generators on (3;2,2,2,1,1,1); no capped generator terms were deleted.
+It gave source rank twenty-two, connected-tree rank nineteen, and full
+good-projection rank twenty-two at minus set {4,5}. An independently
+normalized positive-root Weyl calculation gave full universal/actual
+moments 160/138 and original integral 248=2(146-22). This checked the
+actual source and original colour budget rather than a free module.
+
+**Proposition 86G (the next source has a three-dimensional connected-tree kernel).**
+For r=2, a=(3;2,2,2,1,1,1), the actual source has dimension twenty-two.
+Connected-tree coefficient projection has rank nineteen. At minus set
+{4,5}, the full good projection has rank twenty-two, so the common
+endpoint P_good C is already injective in this particular sign sector.
+The original colour budget is 146 and its original integral is 248.
+
+**Proof.**
+
+1. The original cofactor residual degree spaces have dimensions
+   1,3,3,3,6,6,6 for omissions 0,...,6. Residual degree
+   graphs are stars for omission zero, three graphs of
+   degree pattern (2,2,1,1) for each higher background
+   omission, and six graphs of pattern (2,1,1,1,1)
+   for a unit omission. Multiplying each by its actual
+   signed cofactor gives the entire twenty-eight-column
+   source presentation.
+2. Exact rational elimination gives image rank twenty-two.
+   This also agrees with the exact resolution in Lemma 80B:
+   the first syzygy weight sector has dimension six,
+   three at omitted zero and one at each other higher
+   vertex. Unit syzygies violate their degree-one caps;
+   the top syzygy sector is empty for the same reason.
+   Thus twenty-eight minus six is the actual ideal dimension.
+3. In these original weights a connected degree graph has
+   seven vertices and six edges, hence is a tree. Restricting
+   the twenty-eight generator columns to its connected
+   monomials gives exact rank nineteen. Thus connected
+   projection has a three-dimensional kernel on the source.
+4. Restricting instead to all original good monomials at
+   minus set {4,5} gives exact rank twenty-two. Lemma
+   81A's invertible C then makes the endpoint injection
+   valid on this finite source sector. Adding the tested
+   proper colour 45|01236 with C_6 retains the same full
+   rank, but is not needed for this particular sign case.
+5. Independent original Haar and graph calculations give
+   universal/actual full moments 160/138, source twenty-two,
+   colour budget 146 and integral 248, as recorded above.
+   All proper original products are unchanged at this
+   first auxiliary overlap, so 2(146-22)=248 also replays
+   the scalar consumer directly. QED.
+
+**Updated full-scope receipt.** Theorem 86F is the new uniform scalar
+supplier; its original map obligation is supplied by Theorem 86E.
+The next three-higher-background construction has now been tested on its
+smallest new rank-two input. The failed restricted knob is connected-tree
+projection alone, whose source kernel has dimension three. The consumer
+(P80.6) uses the full component-colour budget; that budget and the full
+cofactor candidate have not failed. In the tested sign pattern even
+ordinary disconnected good coefficients supply all three remaining
+dimensions.
+
+The exact next object is I_r(a) intersect ker(P_connected) on the
+three-higher-background family, followed by its original good-colour
+projection, not a new norm or connected-only target. The natural
+construction remains the original cofactor operators on its unit
+zero-sum and higher-vertex coefficient spaces, now retaining disconnected
+paths and cycles. The first required identity is the proper-colour
+detection of that residual coefficient space for every sign pattern;
+the displayed rank-two source presentation and three-dimensional
+connected kernel are the concrete starting instance. No all-rank or
+all-sign conclusion is inferred from its finite projection ranks.
+The original all-group central positive-definite cone remains active.
+
+## 87. Triangle deletion closes the first-overlap next-wall row budget
+
+This section supplies the remaining row-profile obligation at N=2r+3,
+d=sum_(i!=0) a_i-a_0=2r+2. The new supplier is ordinary good-coefficient
+injection when at least three background labels exceed one. Together with
+Sections 83 and 86 it returns the original component-colour budget for
+every positive row profile at this wall. It does not settle deeper balanced
+row sectors, nonrow labels, arbitrary lengths outside the stated range,
+other Lie types, or the full continuous central cone.
+
+**Matched demand sheet.**
+
+- Actual source: I_r(a) in the polynomial Gram ring from Lemma 80A,
+  with one-dimensional vertex alphabets; used by (P80.5)--(P80.6).
+- Parameters: every r>=1, N=2r+3, positive integer row labels with
+  d=2r+2; these are exactly the first-overlap next-wall sectors.
+- Signs: every even total minus set M, with its original graph-component
+  parity and colour copies; used by Lemma 80C and (P81.7).
+- Required bound: dim I_r(a)<=dim U_M(a), constant one. Ordinary good
+  injection is constructed in the h>=3 subcase and implies this bound;
+  no ordinary injection is demanded in the exceptional h=1,2 subcases.
+- Choice order: graph witnesses may depend on the fixed labels and signs;
+  generic eta injection is sectorwise, as in (P81.7). No one numerical
+  eta specialization is asserted to serve infinitely many sectors.
+- Original consumer: Phi_G=2[dim U_M(a)-dim I_r(a)], with normalized Haar
+  and all original cuts, by (P80.5). No individual compressed trace sign
+  is required.
+
+Set m=2r+2. Let H be the h background vertices whose labels exceed one,
+and U the L=m-h unit backgrounds. Relabel H={1,...,h}, with distinguished
+vertex zero and U={h+1,...,h+L}. At the wall,
+
+    a_0=h+sum_(i in H)(a_i-2).
+
+In particular h>=1. Write
+
+    a_min=(h;2^h,1^L),
+    s=product_(i in H) x_0i^(a_i-2),
+    Q_v=(-1)^v Pf(X with vertex v omitted).
+
+All edge variables below are x_ij with i<j; an unordered edge written
+in the opposite order means the same polynomial variable. Skew-matrix
+entries themselves retain X_ij=x_ij for i<j and X_ji=-x_ij. Thus the
+signed cofactor vector satisfies XQ=0.
+
+**Independent self-double-check immediately before recording.**
+The following checks were made against the complete actual source.
+First, independently of the coefficient witnesses, the exact resolution
+(P80.3) was specialized to a_min: its middle weight spaces are precisely
+the h higher-row syzygies and binom(h,2) row-zero syzygies listed below;
+unit-row and top-syzygy weight spaces vanish for L>0. Their unit columns
+are distinct constant columns, which proves the unique zero-sum
+presentation without assuming generator independence. Second, the forest
+witnesses below were rechecked by their missing root edges: the three-edge
+branch leaves only two B terms, the two-edge branch leaves exactly A, B,
+K, and the doubled-edge cycle leaves exactly one J after the other
+coefficients vanish. The parity selection proof allows every prescribed
+pair needed by those witnesses. Third, triangle extraction was checked
+on each generator type: survivors have the common signed-cofactor factor
+(-1)^(i+j-1), only K_ij,K_ji additionally map to the lower H_0, and every
+other generator meeting a deleted higher vertex vanishes. This proves
+that the lower zero-sum coordinates remain zero-sum and that no hidden
+syzygy can mix the surviving coefficients.
+
+As finite diagnostics, exact integer polynomial expansion checked all
+triangle-generator identities at (h,L)=(3,3),(4,2),(5,1),(5,3), respectively
+84,270,660,960 identities. Forest and cycle coefficient supports were
+checked at (3,3),(4,4). A separate perfect-matching implementation using
+crossing parity, rather than recursive Pfaffian signs, checked every
+cofactor, every row syzygy below, and every original multidegree at
+(3,3),(4,2),(5,1),(6,2). Source/good ranks modulo 1000003 were respectively
+22/22,35/35,51/51,81/81,112/112 at (3,3),(4,2),(5,1),(5,3),(6,2) with the
+displayed diagnostic minus choices from the run. These ranks are tests,
+not the uniform proof. An initial audit assertion reversed the expected
+relative A/K sign; the explicit row-i identity corrected that assertion
+before recording. All audit processes used here terminated. The proofs
+below use the exact resolution, coefficient identities, and parity
+argument, not finite ranks or any degree/rank cutoff.
+
+**Lemma 87A (the actual next-wall source and its complete presentation).**
+For every r>=1 and every wall profile just specified,
+
+    I_r(a)=s I_r(a_min).                              (P87.1)
+
+For L>0 put W=h(h+1)/2. Define the higher generators
+
+    H_0=Q_0 product_(ell in H) x_0ell,
+    K_ij=Q_i x_0i x_ij product_(ell notin {i,j}) x_0ell,
+                   i,j in H, i!=j,
+    J_i,jk=Q_i x_0i^2 x_jk product_(ell notin {i,j,k}) x_0ell,
+                   i in H, {j,k} subset H\{i}, j<k,
+
+and the unit generators
+
+    A_i(u)=Q_u x_iu product_(ell!=i) x_0ell,
+    B_jk(u)=Q_u x_0u x_jk product_(ell notin {j,k}) x_0ell.
+
+Every F in I_r(a_min) has a unique presentation in H_0, all K, all J,
+and all A,B, with each of the W unit coefficient columns having sum zero
+over u in U. In particular
+
+    dim I_r(a_min)
+       =(L-1)h(h+1)/2+1+h binom(h,2)
+       =1+h[(2r-1)h+(2r+1)]/2.                       (P87.2)
+
+**Proof.**
+
+1. A maximal cofactor Q_v has degree one at every vertex except v.
+   For omission zero, the residual centre degree equals the sum of
+   the residual background degrees, so all residual edges are root
+   stars. For omission at a higher vertex or unit, the background
+   residual-degree sum exceeds the centre residual degree by two.
+   Hence the residual graph has exactly one background edge and
+   all its other edges are root stars. At a_min, listing that one
+   edge gives exactly the generators above. For a general profile,
+   subtracting its endpoint degrees reduces each higher root-star
+   exponent by at most one from its residual background degree.
+   Its remaining exponent is therefore at least a_i-2. Dividing
+   by s gives exactly the minimum residual list, and multiplying
+   that list by s reverses the construction. This proves (P87.1)
+   directly in the polynomial ring, with no localization.
+2. Specialize the full exact resolution (P80.3) to a_min. Its middle
+   summand at row v has degree one at every vertex and one extra
+   degree at v. Unit rows have no residual weight space. Row i in
+   H has the single residual monomial product_(ell!=i) x_0ell.
+   Row zero has residual centre degree h-2 and higher degrees one,
+   hence precisely one background edge jk and stars at all other
+   higher vertices. There are binom(h,2) such monomials. The top
+   summand has degree two at each unit and therefore vanishes.
+   Thus all relations among the displayed generator images are
+   exactly these W middle relations.
+3. Written with the stated edge convention, they are
+
+       sum_u A_i(u)-H_0
+          +sum_(j!=i) sign(j-i) K_ji=0,
+       sum_u B_jk(u)+K_jk+K_kj
+          +sum_(i notin {j,k}) J_i,jk=0.             (P87.3)
+
+   These also follow directly from rows i and zero of XQ=0.
+   Their unit coefficient columns are respectively the constant
+   all-one A_i column and the constant all-one B_jk column, and
+   no other unit columns. Subtracting a column's unit mean using
+   its corresponding relation produces zero-sum coefficients.
+   Any relation between two zero-sum presentations would, by
+   Step 2, be a combination of (P87.3). Its constant unit columns
+   can have sum zero only if every combination coefficient is
+   zero, since L>0. This proves uniqueness.
+4. There are W zero-sum columns of dimension L-1. The higher
+   generators number 1+h(h-1)+h binom(h-1,2)=1+h binom(h,2).
+   Counting the unique coordinates and using h+L=2r+2 gives
+   (P87.2). QED.
+
+**Lemma 87B (forest and cycle witnesses when 3<=h<=L).**
+For every even M and 3<=h<=L, ordinary good-coefficient projection
+is injective on I_r(a_min).
+
+**Proof.**
+
+1. The following elementary selection fact supplies all signs.
+   From two unit sign classes, a subset of size t leaving even
+   class sizes exists whenever t is at least the number o of
+   odd-sized classes, t has the same parity as L, and t<=L.
+   Choose one unit from each odd class and add pairs from the
+   remaining even class sizes. The same statement applies
+   after prescribed units have been removed. Here L and h have
+   the same parity. Consequently: every prescribed pair extends
+   to a size-h subset; every prescribed singleton extends to a
+   size-h subset; and size-h and size-(h-2) subsets exist.
+   For the pair assertion use t=h-2 on L-2 remaining units:
+   when h=3 both are odd and o=1, and when h>=4, t>=2>=o.
+   The singleton assertion uses t=h-1>=2 on L-1 units.
+   The last assertion with h=3 uses odd L and o=1.
+2. Take F in its unique presentation and assume its support is
+   wholly bad. A graph with all higher vertices and zero in
+   one connected component, a selected set of unit leaves in
+   that component, and same-sign matching pairs on the remaining
+   units is good: the pairs are even, and even total minus count
+   makes the distinguished component even as well.
+3. Fix j,k and choose a third higher vertex i. Form a tree
+   rooted at zero with long branch
+
+       0 -- i -- j -- k -- u,
+
+   two short unit branches 0--v,0--w, and one branch
+   0--ell--u_ell for every other higher vertex ell. Its h
+   unit leaves may include any prescribed distinct v,w by
+   Step 1; pair the remaining units within sign classes.
+   Among all source generators, this monomial occurs only
+   in B_jk(v),B_jk(w), each with coefficient magnitude one.
+   Indeed the absent root edges 0j,0k exclude all A and H_0;
+   the two short branches exclude higher-cofactor omissions;
+   and the other possible background edge ij would require
+   the absent root edge 0k. There is no doubled root edge
+   for a J generator. Their relative coefficients are opposite
+   by the second identity in (P87.3), since no other term in
+   that identity contributes to this monomial. Its vanishing
+   good coefficient forces b_jk(v)=b_jk(w). The prescribed
+   pair was arbitrary, so every B column is constant and its
+   zero-sum condition makes it zero.
+4. Fix ordered i!=j and any unit u. Use the long branch
+   0--i--j--u, one short branch 0--w, and branches
+   0--ell--u_ell for all remaining higher vertices. Choose
+   h leaves containing u by Step 1. The only contributing
+   generators are A_j(u),B_ij(w),K_ij, with nonzero unit
+   coefficients. The B column is already zero. Their
+   remaining relative sign is fixed by the first identity
+   in (P87.3); it depends on i,j, not on u or the matching.
+   Thus b_j(u) is a fixed signed multiple of the K_ij
+   coefficient for every u. Its zero-sum condition makes
+   this column zero and then makes K_ij zero. Vary i,j to
+   eliminate every A column and every K coefficient.
+5. Take branches 0--i--u_i for all h higher vertices, with
+   an admissible size-h leaf set and same-sign remaining
+   pairs. Only H_0 and A terms can contribute. The A terms
+   vanish, so its good coefficient makes H_0 zero. The
+   remaining F is a combination of the J generators.
+6. To detect J_i,jk, take doubled edge 0i, path
+   0--j--k--u, and branches 0--ell--u_ell for all
+   ell outside {i,j,k}. Choose an admissible size-(h-2)
+   set of unit leaves and same-sign remaining pairs.
+   This graph is good by Step 2. Its only doubled root
+   edge is 0i and its only background edge is jk, so
+   among J generators it occurs only in J_i,jk, with
+   coefficient magnitude one. Its coefficient therefore
+   vanishes. All J coefficients vanish. QED.
+
+**Lemma 87C (triangle extraction preserves the actual source and signs).**
+Assume h>=3,L>0. For i<j in H, let T_ij retain precisely monomials whose
+edges incident to i or j are x_0i,x_0j,x_ij, each once; remove those
+three edges and vertices i,j. Then
+
+    T_ij I_r(a_min) subset I_(r-1)(h-2;2^(h-2),1^L).
+                                                               (P87.4)
+
+On the retained vertex set, replace the distinguished sign by
+
+    epsilon'_0=epsilon_0 epsilon_i epsilon_j,
+
+and retain all other signs. A selected original graph is good if and
+only if its extracted graph is good for epsilon'. Thus T_ij maps a
+wholly bad polynomial to a wholly bad polynomial. Total minus parity
+remains even.
+
+In the presentations of Lemma 87A, T_ij multiplies each generator whose
+higher indices avoid i,j by the common scalar alpha=(-1)^(i+j-1) and
+maps it to the identically named lower generator after relabeling.
+Also
+
+    T_ij K_ij=-alpha H'_0,
+    T_ij K_ji= alpha H'_0.                            (P87.5)
+
+Every other generator having a higher index in {i,j} maps to zero.
+In particular the retained unit columns remain zero-sum.
+
+**Proof.**
+
+1. If a cofactor omits a retained vertex v, selection forces
+   its matching to pair i,j. The coefficient of x_ij in
+   Q_v, after deleting i,j and relabeling, is alpha Q'_v.
+   For a direct sign check, when v<i, i<v<j, or v>j,
+   the Pfaffian expansion sign and the change from (-1)^v
+   to the lower cofactor sign each give the same alpha.
+   A residual generator avoiding i,j contains root stars
+   0i,0j exactly once, so it yields exactly the asserted
+   lower generator and scalar. H_0 obeys the same rule.
+2. A unit A term with a deleted higher index has a forbidden
+   higher-unit edge. A B term meeting exactly one deleted
+   index has a forbidden background edge; B_ij instead
+   would require its cofactor to contain both 0i and 0j,
+   impossible in a matching. The same edge tests kill
+   K terms meeting just one deleted index. For K_ij,
+   the cofactor omits i and must pair zero with j; its
+   expansion gives -alpha Q'_0. For K_ji it must pair
+   zero with i and gives alpha Q'_0. The residual factors
+   give H'_0, proving (P87.5).
+3. A J whose omitted higher index is deleted has a doubled
+   selected root edge, which is forbidden. A J whose
+   background pair meets exactly one deleted index has
+   a forbidden crossing edge. If that pair is {i,j},
+   the cofactor would have to pair zero with both i and
+   j, again impossible. These exhaust the J cases and
+   prove the generator claims. By Lemma 87A the images
+   lie in the entire lower actual ideal, proving (P87.4).
+4. The triangle joins i,j to the component containing zero,
+   and no other component changes. The product of its
+   three signs is exactly epsilon'_0. Component parity
+   is therefore preserved. Extraction is a bijection on
+   the selected monomials, so no coefficient cancellation
+   can create a good output from bad input. The common
+   alpha in Step 1 preserves every retained column's
+   zero-sum condition. QED.
+
+**Theorem 87D (uniform ordinary injection for all h>=3 wall profiles).**
+For every r>=1, every h>=3,L>=0 with h+L=2r+2, and every even M,
+ordinary good projection is injective on I_r(h;2^h,1^L). It is also
+injective on I_r(a) for every larger wall profile with these higher
+background positions.
+
+**Proof.**
+
+1. If L=0, all background labels are at least two and the
+   deficit is 2r+2. Lemma 84D with j=1 gives the claimed
+   ordinary injection. Suppose henceforth L>0. Cases
+   3<=h<=L are supplied by Lemma 87B.
+2. For h=3 the only remaining case is L=1,r=1. The row
+   profile (3;2,2,2,1) belongs to none of the three
+   exceptional profiles in Lemma 82B, even after any
+   relabeling. Thus that lemma gives injection for all M.
+3. For h=4 the only remaining case is L=2,r=2. Every
+   triangle extraction has lower profile (2;2,2,1,1).
+   Lemma 86B supplies ordinary injection there: its sole
+   exception would need two nonempty even unit classes,
+   each of size at least two, impossible with L=2.
+   Hence every T_ij F vanishes when F is wholly bad.
+   Use the unique lower presentation. For each A column
+   choose i,j outside its one higher index; for each B
+   column and K coefficient choose the complementary
+   higher pair. Their surviving lower coordinates force
+   every A,B,K coefficient of F to vanish. Equation
+   (P87.5) then forces H_0 to vanish as well. Only J
+   coefficients remain. The doubled-edge witness in
+   Step 6 of Lemma 87B uses both unit leaves here and
+   is connected on all seven vertices, hence good for
+   every even M. It individually detects each J, so F=0.
+4. Induct on h for h>=5. Triangle extraction lowers h
+   by two and r by one, retains L>0, and has positive
+   lower centre label h-2. The lower rank is at least
+   one. By induction and Lemma 87C, every T_ij F is
+   zero for a wholly bad F. In its unique lower
+   presentation, an A coordinate survives whenever
+   the deleted pair avoids its one higher index; a B
+   or K coordinate survives whenever it avoids its
+   two indices; and a J coordinate survives whenever
+   it avoids its three indices. Such a pair exists
+   for every coordinate because h>=5. No generator
+   touching the deleted pair contributes to those
+   coordinates, by Lemma 87C. Thus every A,B,K,J
+   coefficient of F is zero. The remaining H_0
+   survives every extraction with nonzero scalar,
+   so its coefficient is zero too. This proves
+   injection for every h,L and even M.
+5. Finally I_r(a)=s I_r(a_min) by Lemma 87A. Multiplying
+   a good graph monomial by root stars only joins
+   components with even minus counts, so preserves
+   goodness. Multiplication by the fixed monomial s
+   is injective on monomials and their coefficients.
+   Consequently a nonzero minimum-source polynomial
+   has a nonzero good coefficient whose image remains
+   good and nonzero. This proves the last assertion.
+   QED.
+
+**Theorem 87E (the original first-overlap next-wall integral for all rows).**
+For every compact connected type C_r group, every descending nontrivial
+actual row-character tuple with N=2r+3 positive labels, and every sign
+pattern, the original normalized double-Haar integral is nonnegative
+whenever some distinguished label satisfies
+
+    a_0>=sum_(i!=0) a_i-2r-2.                         (P87.6)
+
+In particular this supplies every row profile at the next wall, with no
+bound on rank or row labels and no restriction on its unit/higher split.
+
+**Proof.**
+
+1. Odd total minus count vanishes under the original exchange
+   g,h. Negative or odd deficit sectors vanish by the degree
+   and parity arguments already used in Theorem 83E. At even
+   deficit 0<=d<=2r that theorem supplies the original sign.
+   The only other even deficit permitted by (P87.6) is 2r+2.
+2. At that wall h>=1. If h=1, write its higher label as
+   b>=2. Then a_0=b-1 and there are 2r+1 unit backgrounds.
+   Distinguishing b instead gives deficit 2r, so Theorem
+   83E supplies the original integral. If h=2, the tuple
+   is (b+c-2;b,c,1^(2r)), supplied by Theorem 86F.
+3. If h>=3, Theorem 87D supplies
+
+       dim I_r(a)<=dim R_good(a)<=dim U_M(a).
+
+   The second inequality retains all original component
+   colour copies, each with multiplicity at least one.
+   The first-overlap consumer (P80.5), including every
+   original cut and endpoint, therefore gives
+
+       Phi_G=2[dim U_M(a)-dim I_r(a)]>=0.             (P87.7)
+
+   No source generators were counted as independent and
+   no signed proper correction was discarded.
+4. Normalized Haar pullback from USp(2r) preserves the
+   integral and every descending atom, yielding the
+   stated result on actual type C central quotients.
+   QED.
+
+**Corollary 87F (the existing generic routing map through the whole next wall).**
+At N=2r+3, all l_i=1, every nonempty row-label sector satisfying (P87.6),
+and every even M, the original T_eta in (P81.7) is generically injective.
+
+**Proof.** For d<=2r use Corollary 83F. Empty source sectors are vacuous.
+At d=2r+2,h=1, relabel the higher background as distinguished and again
+use Corollary 83F; h=2 is Theorem 86E. For h>=3, give every C_v coefficient
+one in the endpoint channel and zero in all proper channels. This is
+P_good C. Lemma 81A makes C invertible on the actual source sector, and
+Theorem 87D makes its subsequent projection injective. A nonzero maximal
+minor at this specialization proves generic injection over C(eta).
+Every channel and label is the one used by the original map. QED.
+
+**Original-consumer receipt and unchanged full scope.**
+The formerly missing h>=3 first-overlap next-wall row profiles now return
+(P80.6) with constant one and all signs, and Theorem 87E replays the
+original scalar integral. The new rank induction uses the actual
+Pfaffian source, the exact middle syzygies, and component parity; finite
+ranks are only diagnostics. The exceptional ordinary-projection kernels
+at h=1,2 were handled by the already proved original colour routing, not
+silently excluded from the target.
+
+This closes the row-profile split at d=2r+2,N=2r+3. Remaining obligations
+include deeper balanced rows at that same overlap, unrestricted nonrow
+sectors, the original signed proper-cut corrections at arbitrary tuple
+length, and an adequate structural supplier for the other simple Lie
+types. The final objective remains the full real continuous central
+positive-definite cone on all compact connected groups with simple Lie
+algebra; no full-cone completion is claimed.
+
+## 88. Paths and cycles supply a uniform balanced-row and column budget
+
+The first-overlap consumer requires an irreducible multiplicity inequality,
+not injectivity of a particular proposed routing map. This section supplies
+that inequality directly for all tuples whose actual atoms are the defining
+character, the adjoint row character, and the second fundamental column
+character. The proof is uniform in rank and the numbers of each atom. It
+includes deeper balanced rows and nonrow sectors outside Section 87's wall.
+The local shapes are restricted to (1),(2),(1,1); the full central cone is
+not declared complete.
+
+Write h for the number of row-(2) atoms, c for the number of column-(1,1)
+atoms, and L for the number of row-(1) atoms. Choose auxiliary dimensions
+one at row vertices and two at column vertices. Assume
+
+    S=h+2c+L=2r+3,                                    (P88.1)
+
+with r>=1 and c=0 when r=1. Thus every auxiliary dimension is at most r,
+as required in Lemmas 80A--80B. Put q=h+c, the number of vertices with
+box degree two. The actual characters are
+
+    chi_(1)=Tr V,
+    chi_(2)=Tr Sym^2 V  (the adjoint character),
+    chi_(1,1)=Tr Lambda^2 V-1,
+
+with the last one nontrivial for r>=2. All are real central positive-
+definite atoms. Denote their product auxiliary Schur label by lambda,
+and retain the original even minus set M and target U_M of Lemma 80C.
+
+**Matched demand sheet.**
+
+- Source: the individual product-Schur multiplicity m_lambda(I_r),
+  not the total dimension of an auxiliary degree space; (P80.5) uses it.
+- Target: the same m_lambda(U_M), including all 2^(kappa(n)-1)
+  component-colour copies; the budget (P80.6) uses constant one.
+- Range: every h,c,L satisfying (P88.1), all admissible actual atoms
+  above, every rank, and every even M. Counts of the atoms are unbounded.
+- Method: compute the exact actual source multiplicity with every
+  resolution term; exhibit a positive path or cycle subtarget whose
+  multiplicity is larger. An explicit T_eta injection is not used by
+  the scalar consumer and is not asserted here.
+- Original integral: the complete normalized double-Haar expression
+  in (P80.5), with all endpoints and proper cuts retained.
+- Odd cases: odd total minus count vanishes by exchange; odd L vanishes
+  by the original central involution. Neither is removed from the theorem.
+
+**Independent self-double-check immediately before recording.**
+The source calculation was independently rederived vertex by vertex in
+(P80.3). In particular an omitted two-slot column vertex contributes one
+copy of det(E_v) in (det(E_v) tensor E_v^*) tensor E_v, not two copies;
+its middle term has box degree three and its top term degree four, both
+larger than the target degree two. The path calculation was separately
+checked by decomposing its edge-degree module into E_v tensor E_v at
+internal vertices; the column multiplicity is one there. Component
+colour weights were counted as 2^(L/2-1), rather than dropping those
+copies. The numerical inequalities below were rechecked with the two
+small exceptional configurations treated separately. A second enumeration
+of marked unit perfect matchings verified the formula (P88.4) for every
+unit sign split at L=2,4,6. These are bookkeeping checks; its all-L proof
+is given below.
+
+Independent Weyl constant-term calculations used
+chi_(2)=[chi_(1)^2+chi_(1)(g^2)]/2 and
+chi_(1,1)=[chi_(1)^2-chi_(1)(g^2)]/2-1. A separate graph-component count
+excluded doubled edges between unlike degree-two shapes and gave the
+following universal/actual full moments and their source differences:
+
+    (r,h,c,L)        M_*       M_G       difference
+    (1,5,0,0)        22         6          16
+    (2,1,0,6)        45        40           5
+    (2,5,0,2)       252       207          45
+    (2,7,0,0)       822       611         211
+    (3,5,0,4)      3306      3231          75
+    (2,3,1,2)        37        28           9
+    (2,5,1,0)       100        70          30
+    (2,1,2,2)         8         5           3
+    (3,5,1,2)      1412      1352          60
+    (3,3,1,4)       447       432          15
+    (3,3,2,2)       198       186          12
+    (3,1,4,0)        18        15           3.
+
+The original integral was independently evaluated as 362 at
+(r,h,c,L)=(2,5,0,2) with one adjoint minus and one defining minus, and
+1206 at (2,7,0,0) with two adjoint minus signs. These diagnostics agree
+with the actual source and original normalization. They are not the
+uniform supplier; the exact resolution and the path/cycle inequalities
+below supply it. Every process used in this audit terminated.
+
+**Lemma 88A (exact source multiplicity for degree-two rows and columns).**
+Suppose L is even. Then h is odd, and for (-1)!!=1,
+
+    D:=m_lambda(I_r)
+      =h[(h-3)/2+L+c](h-2)!!+indicator_(L+c=0).
+                                                               (P88.2)
+
+In particular D=L+c-1 when h=1. The final indicator is the complete
+contribution of the top syzygy, not an approximation.
+
+**Proof.**
+
+1. The cofactor coefficient representation in (P80.3) is
+   det(E) tensor E^*, decomposed by omitted vertex. For an
+   omitted row-(2) vertex, its residual target degrees are
+   two at that vertex, one at the other h-1 row-(2) vertices,
+   and zero at all column and unit vertices. A residual graph
+   therefore consists of a two-edge star at the omitted row
+   vertex and a matching on its other h-3 row vertices.
+   For h>=3 its number is
+
+       binom(h-1,2)(h-4)!!=(h-1)(h-2)!!/2.
+
+   Each has the required product-Schur multiplicity one.
+   At h=1 no such residual exists, agreeing with the zero
+   value of the expression on the right. There are h
+   possible omitted row-(2) vertices.
+2. For an omitted unit vertex, residual degrees are one at
+   that unit and at all h row-(2) vertices, zero elsewhere.
+   There are h!! perfect matchings and each contributes one.
+   For an omitted column vertex the residual degree is one
+   at that column and at those same h row vertices. Its
+   local coefficient is det(E_v) tensor E_v^*; multiplying
+   its residual E_v gives det(E_v) with multiplicity one.
+   Every other column contributes its determinant already
+   in det(E), with no residual degree. Thus there are h!!
+   contributions per omitted column as well. The combined
+   free-generator multiplicity is
+
+       h(h-1)(h-2)!!/2+(L+c)h!!.
+3. In the middle representation det(E) tensor E, column
+   vertices have degree three if selected, exceeding their
+   degree-two targets. Unit vertices have degree two if
+   selected, exceeding their degree-one targets. Only a
+   selected row-(2) vertex remains. Its residual degree is
+   zero there and one at the other h-1 row vertices, giving
+   (h-2)!! matchings. Its total multiplicity is h(h-2)!!.
+4. The top representation det(E)^2 has degree four at a
+   column and degree two at a unit, so its target sector
+   is empty if L+c>0. When L=c=0 its residual degree is
+   zero at all vertices and its multiplicity is exactly one.
+5. Apply the exact character Euler identity (P80.4), taking
+   this individual product-Schur coefficient. Subtract
+   Step 3 from Step 2 and add Step 4. Since h!!=h(h-2)!!,
+   the result is (P88.2). No generator independence or
+   replacement of the actual ideal was assumed. QED.
+
+**Lemma 88B (a positive spanning-path subtarget with its full colour weight).**
+Let L>=2 be even, let n,p=L-n be the two unit sign-class sizes, and let
+q=h+c. For every even total minus count,
+
+    m_lambda(U_M)>=2^(L/2-1) q! K(L,n),              (P88.3)
+
+where
+
+    K(L,n)=(L/2)(n-1)!!(p-1)!!     if n,p are even,
+    K(L,n)=n!! p!!                 if n,p are odd,
+    K(L,n)>=L/2.                                    (P88.4)
+
+**Proof.**
+
+1. Use a single simple path whose internal vertices are all
+   q degree-two vertices and whose endpoints are two units.
+   Pair all remaining units within their sign classes. For
+   a fixed unordered endpoint pair, ordering the q internal
+   vertices gives q! distinct undirected paths: start at
+   the smaller fixed endpoint to remove reversal ambiguity.
+   The number K counts choices of that endpoint pair and
+   of the remaining same-sign unit matching.
+2. If n,p are even, a full unit matching within each class
+   has (n-1)!!(p-1)!! choices. Mark any of its L/2 pairs
+   as the path endpoints, giving the first formula. If n,p
+   are odd, choose one endpoint in each class and match
+   the remaining units inside their classes. Its count
+   is np(n-2)!!(p-2)!!=n!!p!!. These exhaust the choices
+   leaving even remaining class sizes. In the even case
+   the double factorials are at least one. In the odd
+   case n!!p!!>=np>=n+p-1=L-1>=L/2. This proves the bound.
+3. Every remaining component is a same-sign pair and is
+   good. Since the original total minus count is even,
+   the component containing all higher vertices and the
+   two endpoints is good as well. The graph has L/2
+   components, giving exactly 2^(L/2-1) colour copies.
+4. Every edge in this graph has multiplicity one. Its
+   edge-degree representation reorganizes at an internal
+   vertex as E_v tensor E_v and at an endpoint as E_v.
+   The prescribed row-(2) or column-(1,1) at each internal
+   vertex has multiplicity one in that tensor square;
+   a unit label has multiplicity one at its endpoint.
+   Thus each graph supplies one product-Schur copy before
+   the colour multiplicity. All graphs counted in Steps
+   1--2 have distinct edge degrees, hence distinct target
+   summands. This proves (P88.3). QED.
+
+**Lemma 88C (the connected-cycle subtarget).**
+If L=0, the target contains at least (q-1)!/2 copies of the prescribed
+product label, supplied by simple cycles through all q=h+c vertices.
+All such cycles are good at even total minus count.
+
+**Proof.** Each valid case of (P88.1) with L=0 has q>=3. On q fixed
+vertices, fixing a starting vertex and identifying the two traversal
+orientations gives (q-1)!/2 simple cycles. Each is connected, hence good
+at even total minus count. Its local tensor factors are E_v tensor E_v,
+so the same row/column multiplicity-one calculation as in Lemma 88B
+applies. It has one component and its colour multiplicity is one. QED.
+
+**Lemma 88D (the path/cycle budget is strictly sufficient in every valid case).**
+Under (P88.1), even L, and even total minus count,
+
+    m_lambda(U_M)>D.                                 (P88.5)
+
+**Proof.** Write h=2k+1 when h>=3, and set B_k=2^(k-1)k!. Two elementary
+bounds used below are
+
+    B_k>=k+1             (k>=2),
+    B_k>=2k^2-k          (k>=3).                     (P88.6)
+
+The first starts at B_2=4>=3 and follows from
+B_(k+1)=2(k+1)B_k. For the second, B_3=24>=15, while the polynomial
+P_k=2k^2-k satisfies P_(k+1)<2P_k for k>=3: their difference is
+2k^2-5k-1>0. The same recurrence proves the bound for every k.
+
+1. Suppose L>=2 and h>=3. Since (h+c)!>=(c+1)h!, Lemma
+   88B and h!/[h(h-2)!!]=2^k k! give, with w=2^(L/2-1),
+
+       m_lambda(U_M)/[h(h-2)!!]>=w L(c+1) B_k.
+
+   The source divided by the same factor is k-1+L+c.
+   If k>=2, the first inequality in (P88.6) gives a
+   strict surplus, since
+
+       L(c+1)(k+1)-(k-1+L+c)
+          =k(L-1)+1+c[L(k+1)-1]>0.
+
+   If k=1, so h=3, and c>=1, then
+   L(c+1)-(L+c)=c(L-1)>0. If h=3,c=0,L>=4, then w>=2,
+   again giving a strict surplus. The only remaining
+   case here is h=3,c=0,L=2. Its path contribution is
+   at least 3!=6 and its source is D=6. Among the
+   three higher vertices choose a same-sign pair.
+   Its doubled edge is a good component; the remaining
+   higher vertex on a path between the two units is
+   also good, by even total minus count. This distinct
+   graph has two colour copies. Therefore the target
+   is at least eight and is strictly larger than D.
+2. Suppose L>=2 and h=1. Here D=L+c-1. If L>=4,
+   Lemma 88B gives m_lambda(U_M)>=L(c+1)!>=L(c+1),
+   strictly exceeding D. If L=2, (P88.1) gives r=c.
+   Validity rules out c=0 and c=1, so c>=2; the
+   bound (c+1)!>c+1=D proves the claim.
+3. Suppose L=0 and c>0. For h=1 validity implies
+   r=c-1>=2, so c>=3. Lemma 88C gives c!/2>c-1=D,
+   starting at c=3 and growing by a larger factor
+   than the linear right side. For h=3, validity
+   gives c>=2; its bound (c+2)!/2>3c=D starts at
+   c=2 and similarly propagates. For h>=5, set
+   k=(h-1)/2>=2. At c=1 the cycle bound is
+   h!/2=h(h-2)!! B_k and the source is
+   hk(h-2)!!. The first bound in (P88.6) makes
+   the cycle bound strictly larger. Increasing c
+   multiplies the cycle count by h+c, whereas it
+   multiplies D by (k+c)/(k-1+c)<2. Thus strict
+   sufficiency holds for all c>=1.
+4. Finally L=c=0, so h=2r+3>=5. For h>=7 use
+   k=(h-1)/2>=3 and d=(h-2)!!>=15. The cycle
+   count is d B_k and the source is
+   h(k-1)d+1. Since 2k^2-k=h(k-1)+1, the
+   second bound in (P88.6) gives surplus at
+   least d-1>0. When h=5, D=16 and there are
+   twelve simple five-cycles. Among five signs
+   there are at least four same-sign pairs.
+   Each pair supplies a good doubled edge,
+   and its complementary triangle is good by
+   even total minus count. Each such graph
+   has two copies. Hence m_lambda(U_M)>=20>16.
+
+These are all valid cases. QED.
+
+**Theorem 88E (the original integral for the three smallest atoms at first overlap).**
+For every compact connected type C_r group and every descending tuple
+with h copies of chi_(2), c copies of chi_(1,1), and L copies of chi_(1)
+satisfying (P88.1) and the stated admissibility rules, the original
+normalized double-Haar integral is nonnegative for every sign pattern.
+More precisely it is strictly positive when L and the total minus count
+are both even, and it is zero otherwise.
+
+**Proof.**
+
+1. Odd total minus count vanishes by the original exchange
+   g,h. If L is odd, simultaneous multiplication of g,h
+   by the central -I in USp(2r) negates each defining
+   character and preserves each row-(2) and column-(1,1)
+   character. It therefore negates the whole integrand.
+   Haar invariance gives integral zero, independently
+   of the sign choices.
+2. Otherwise L is even and (P88.1) makes h odd. The
+   exact source is D by Lemma 88A, and Lemma 88D
+   proves its strict budget in the original target.
+   All atoms are nontrivial and all auxiliary widths
+   are admissible. Thus the full consumer (P80.5),
+   including endpoints and every proper cut, gives
+
+       Phi_G=2[m_lambda(U_M)-D]>0.                   (P88.7)
+
+   This is a coefficientwise proof for the prescribed
+   individual product-Schur label. A total auxiliary
+   dimension bound was never substituted.
+3. Pullback from USp(2r) preserves normalized Haar
+   integrals and every descending atom, proving the
+   statement on actual type C central quotients.
+   QED.
+
+**Corollary 88F (these atoms through the first overlap).**
+The same atomic lists satisfy original Q3 whenever their minimal summed
+row length h+L+2c is at most 2r+3.
+
+**Proof.** Equality is Theorem 88E. A smaller sum is supplied by the
+all-degree type C result of Theorem 79D. Actual quotients and original
+signs are already included in both suppliers. QED.
+
+**Original-consumer receipt and full-scope boundary.**
+The formerly unsupplied balanced binary-row family now returns (P80.6)
+in every rank; e.g. h=5,L=2 and all-adjoint h=2r+3 lie beyond the wall
+in Theorem 87E. The new comparison also returns individual nonrow
+multiplicities with any number of column-(1,1) vertices, e.g.
+(r,h,c,L)=(3,5,1,2),(3,3,1,4),(3,3,2,2). Equation (P88.7) consumes them
+in the original scalar integral. The positive subtarget consists of
+paths or cycles whose local multiplicities are known exactly, and the
+source count retains both middle and top syzygies. No generic injection
+of the particular T_eta map is inferred from this dimension budget.
+
+Arbitrary higher row labels, larger nonrow shapes, unrestricted auxiliary
+length, and other simple Lie types remain part of the unchanged full
+central positive-definite cone objective. This theorem supplies uniform
+balanced and column sectors; it does not replace that objective with a
+cone generated by three atoms.
+
+## 89. One arbitrary row against defining, adjoint, and column backgrounds
+
+This section supplies the original first-overlap budget with an unbounded
+row degree at one distinguished position. Every background atom may be
+(1),(2), or (1,1). The new supplier is a connected graph count compared
+with the exact individual relation multiplicity. The continuous consumer
+is then replayed for one arbitrary continuous one-row-supported function.
+The distinguished position is not asserted to contain arbitrary nonrow
+characters, and unrestricted lengths and other Lie types remain open.
+
+Let the distinguished character be chi_(A), A>=1. Among the backgrounds
+let h have label (2), c have label (1,1), and L have label (1). Take
+auxiliary dimension one at the distinguished and other row vertices,
+and two at each column vertex. Assume
+
+    1+h+2c+L=2r+3,                                   (P89.1)
+
+with r>=1 and c=0 if r=1. Put q=h+c and V_*=L+c. Here V_* is a scalar
+count, not the defining representation. Let lambda be the full product
+Schur label and D=m_lambda(I_r). The exact consumer remains
+
+    Phi_G=2[m_lambda(U_M)-D]                           (P89.2)
+
+for every even minus set M, by Lemma 80C.
+
+**Matched demand sheet.**
+
+- Actual source: individual product-Schur multiplicity at the prescribed
+  labels in the actual Pfaffian ideal from Lemma 80A; used by (P89.2).
+- Range: all A>=1, all ranks and nonnegative h,c,L satisfying (P89.1),
+  with each auxiliary dimension <=r. No degree cutoff is permitted.
+- Target: the original U_M with its component-colour multiplicities;
+  the required comparison is D<=m_lambda(U_M), constant one.
+- Signs: all even original minus sets; odd minus and central-parity cases
+  are supplied by the original invariances, not dropped.
+- Construction: double root spokes only use row-(2) vertices; every
+  column vertex lies on a simple path or simple cycle, where its local
+  multiplicity is one. A total-dimensional bound is not used.
+- Continuous replay: one-row-supported positive-definite expansions use
+  Lemma 28A and its original domination product_i 2f_i(e). Background
+  support widths remain in the stated range through the first overlap.
+- No claim of generic injectivity of the particular T_eta is needed
+  or inferred; the scalar consumer only uses the exact multiplicities.
+
+Odd A+L gives zero by simultaneous central -I multiplication of the
+original two Haar variables. Since h+L is even in (P89.1), the remaining
+cases satisfy A,h,L of the same parity. All comparisons below are on
+these remaining cases and even total minus count.
+
+**Independent self-double-check immediately before recording.**
+The source formula was separately recomputed by residual-star enumeration
+in each free and middle summand of (P80.3). In particular omitted columns
+contribute once, not twice, and a top term is absent for A>=3: even with
+no unit/column vertices its distinguished residual degree A-2 is positive
+while every other residual degree is zero. The graph families were then
+rechecked without the source formulas. Their doubled spokes are all at
+row vertices; local determinants at columns are supplied only by two
+simple incident edges. The odd family has 2^((L-1)/2) colour copies, the
+even cycle family 2^(L/2), and the even two-endpoint family 2^(L/2-1).
+Their fixed unordered unit endpoints remove traversal duplication. The
+numerical inequalities were independently reviewed at their actual base
+indices, including k=1,j=1 for odd degree, k=2,j=1 for even degree, and
+the four boundary configurations treated below. The first-wall case
+A=h+2 was counted separately rather than substituting negative factorials.
+
+As finite diagnostics, direct off-diagonal graph enumeration, excluding
+mixed-shape doubled edges, and independent actual Weyl constant terms
+gave the following universal/actual full moments and source losses:
+
+    (r,A,h,c,L)       M_*       M_G       D
+    (2,3,5,0,1)       540       425      115
+    (2,4,6,0,0)      1005       765      240
+    (2,5,3,1,1)        27        23        4
+    (2,3,1,2,1)         9         6        3
+    (2,3,1,1,3)        21        17        4
+    (2,4,2,1,2)        24        20        4
+    (2,4,4,1,0)        96        71       25
+    (3,3,5,1,1)      3400      3240      160
+    (3,4,6,1,0)      6945      6600      345
+    (3,5,5,0,3)      5860      5779       81
+    (3,6,6,0,2)      8810      8698      112
+    (3,7,7,0,1)     12635     12487      148
+    (3,8,6,1,0)       855       849        6
+    (2,6,2,1,2)         4         4        0.
+
+A separate residual-star implementation checked the closed source
+formulas on eleven of these sectors, including each boundary form.
+The unbounded-degree proof below uses exact factorial identities and
+inequalities, not these checks. All diagnostic processes terminated.
+
+**Lemma 89A (exact arbitrary-row source against the three small backgrounds).**
+Suppose A>=3 and the remaining parity condition holds. If A>h+2, then
+D=0. If A=h+2, then
+
+    D=h+V_*-1.                                       (P89.3)
+
+If A<=h, use the following two formulas. For odd A=2k+1 and h=A+2j,
+with k>=1,j>=0, set
+
+    C_o=2(j+1)[j+2k-1+1/(2k+1)]+4k(k-1),
+    Q_o=(2k)! 2^(j+1)(j+1)!.
+
+Then
+
+    D=h! [C_o+V_*(h+1)]/Q_o.                         (P89.4)
+
+For even A=2k and h=A+2j, with k>=2,j>=0, set
+
+    C_e=(j+1)/k+2(j+1)(j+2k-2)+(2k-1)(2k-3),
+    Q_e=(2k-1)! 2^(j+1)(j+1)!.
+
+Then
+
+    D=h! [C_e+V_*(h+1)]/Q_e.                         (P89.5)
+
+**Proof.**
+
+1. In a free cofactor summand omitting zero, the residual
+   graph has degree A at zero and degree one at the h
+   adjoint vertices, zero elsewhere. Its count is
+
+       f_0=binom(h,A)(h-A-1)!!.
+
+   In a summand omitting an adjoint vertex i, its residual
+   graph has degrees A-1,2 at zero,i, and degree one at
+   the other h-1 adjoint vertices. Write f_i for this
+   graph count; it is independent of i. Omitting a unit
+   or column instead leaves degree A-1 at zero and degree
+   one at that vertex and the h adjoint vertices, giving
+
+       f_u=binom(h+1,A-1)(h-A+1)!!.
+
+   At an omitted column the local factor
+   (det E_v tensor E_v^*) tensor E_v contains det E_v
+   once. All other column factors are already determinants
+   in the cofactor coefficient representation. Thus the
+   combined free multiplicity is f_0+h f_i+V_* f_u.
+2. Middle summands at zero and at an adjoint i have
+   residual counts
+
+       g_0=binom(h,A-2)(h-A+1)!!,
+       g_i=binom(h-1,A-1)(h-A-1)!!.
+
+   Columns and units have no middle target space by
+   degree, as in Lemma 88A. The top target space is
+   empty for A>=3. If there is a unit or column its
+   degree is already too large; otherwise the only
+   positive residual degree is A-2 at zero, which
+   cannot be supplied by an off-diagonal graph.
+   Exactness of (P80.3) therefore gives
+
+       D=f_0+h f_i+V_* f_u-g_0-h g_i.                (P89.6)
+
+   Invalid residual degrees contribute zero in this
+   counting expression; they are not negative factorials.
+3. Every free residual requires A<=h+2, so D=0 beyond
+   that range. At A=h+2 only all-root-star residuals
+   survive: there is one for each omitted adjoint,
+   unit, or column. The middle root summand contributes
+   one and every other middle summand contributes zero.
+   This gives h+V_*-1, proving (P89.3).
+4. For A<=h, the residual with two special vertices is
+   counted by t=0,1,2 edges between them, whenever
+   t<=A-1. Choose A-1-t unit-degree adjoint neighbours
+   of zero, then 2-t disjoint neighbours of i, and
+   match the remaining adjoint vertices. This supplies
+   f_i and the other counts in (P89.6).
+5. For odd A=2k+1, divide every term by h! and use
+   d! =2^s s!(d-1)!! for d=2s. Multiplying by Q_o,
+   the contributions to (P89.6) are respectively
+
+       f_0:       2(j+1)/(2k+1),
+       h f_i:     2j(j+1)+4k(j+1)+(2k)(2k-1),
+       V_* f_u:   V_*(h+1),
+       -g_0:      -2k,
+       -h g_i:    -2(j+1).
+
+   The t=0 term of f_i is zero at j=0, agreeing with
+   its factor j. Summing gives (P89.4).
+6. For even A=2k the same calculation with Q_e gives
+
+       f_0:       (j+1)/k,
+       h f_i:     2j(j+1)+2(2k-1)(j+1)
+                                      +(2k-1)(2k-2),
+       V_* f_u:   V_*(h+1),
+       -g_0:      -(2k-1),
+       -h g_i:    -2(j+1).
+
+   This sums to (P89.5). All counts are product-Schur
+   multiplicities in the complete exact resolution.
+   QED.
+
+**Lemma 89B (positive doubled-spoke families for arbitrary root degree).**
+At odd A=2k+1, assume h>=k and L odd. Let u,v be the odd and even sizes
+of the two unit sign classes, and put
+
+    J=u!!(v-1)!!>=1,   w_o=2^((L-1)/2).
+
+Then for every even total minus count,
+
+    m_lambda(U_M)>=w_o J binom(h,k)(h+c-k)!.         (P89.7)
+
+At even A=2k, assume h>=k-1 and h+c-k+1>=2. Then
+
+    m_lambda(U_M)>=2^(L/2)
+                 binom(h,k-1)(h+c-k+1)!/2.           (P89.8)
+
+**Proof.**
+
+1. In the odd case select k adjoint vertices for doubled
+   root spokes. Connect every remaining degree-two
+   vertex in one ordered simple path from zero to a
+   unit endpoint. Match remaining units within their
+   sign classes. There are binom(h,k)(h+c-k)! choices
+   for the higher graph, and u(u-2)!!(v-1)!!=J choices
+   for its endpoint and remaining matching. All columns
+   occur on the simple path. The distinguished component
+   contains all higher vertices and the endpoint; the
+   other components are same-sign pairs. Even total
+   minus count makes the distinguished component good.
+   There are (L+1)/2 components and hence w_o copies.
+2. In the even case with even unit sign-class sizes,
+   select k-1 adjoint vertices for doubled spokes and
+   place every remaining degree-two vertex on a single
+   simple cycle through zero. Its number is
+   binom(h,k-1)(h+c-k+1)!/2. The cycle has at least
+   two background vertices by hypothesis, and is
+   distinguished from all doubled spokes. Pair units
+   within sign classes. All components are good;
+   their 1+L/2 components give 2^(L/2) copies.
+3. If the two unit classes are odd instead, select the
+   same spokes, but place the remaining degree-two
+   vertices on two paths from zero to opposite-sign
+   unit endpoints. For a fixed unordered endpoint
+   pair, ordering these vertices and choosing where
+   to split the list gives
+
+       binom(h,k-1)(h+c-k+1)!(h+c-k+2)
+
+   higher graphs. The endpoint/matching count is
+   n!!p!!>=1. The graph has L/2 components and hence
+   2^(L/2-1) copies. Comparing with (P89.8), its
+   surplus factor is (h+c-k+2)n!!p!!>=1. Thus the
+   bound holds for both unit parity cases, including
+   L=0 in Step 2.
+4. All doubled edges join row vertices, and every
+   column lies on a simple path or cycle. At each
+   column the local E_v tensor E_v contains its
+   determinant once. Row vertices, including zero,
+   have one-dimensional auxiliary spaces and their
+   prescribed powers occur once. Therefore every
+   counted graph contributes exactly one copy of
+   this individual product label before colour
+   multiplication. The spokes and the remaining
+   path/cycle are recoverable from the graph, so
+   there is no duplication. QED.
+
+**Lemma 89C (the doubled-spoke budget in the balanced interior and generic wall).**
+Suppose A<=h and A>=3. The inequalities in Lemma 89B are strictly
+larger than D except possibly at A=h=3 or A=h=4. For odd A this claim
+includes k>=2,j>=0 and k=1,j>=1. For even A it includes k>=2,j>=1
+and k>=3,j>=0.
+
+**Proof.** Let F_j=2^j(j+1)!. Then F_(j+1)/F_j=2(j+2)>=4.
+
+1. For odd degree put T_k=(2k)!/k!. For k>=2,
+   T_k>=2k^2+k+1: it starts at 12>=11 and its
+   recurrence T_(k+1)=(4k+2)T_k dominates the
+   corresponding quadratic recurrence. Write
+   b=h+1=2(k+j+1). The source constant satisfies
+
+       C_o+b<P_j,
+       P_j=2j^2+(4k+4)j+4k^2+2k+2.
+
+   At j=0, P_0<=2T_k and b<=T_k. Directly
+   P_(j+1)<4P_j, while the linear b grows by
+   a smaller factor. Thus P_j<=2T_k F_j and
+   b<=T_k F_j for every j>=0. Since V_*>=1,
+
+       C_o+V_* b<(V_*+1)T_k F_j,
+       D<h!(V_*+1)/(2 k!).                           (P89.9)
+
+   For k=1,j>=1, use the exact expression
+   C_o+b=2j^2+(20/3)j+20/3. At j=1 it is
+   46/3<16=2T_1 F_1, and b=6<8=T_1 F_1.
+   Its successive ratios are below four, so
+   the same inequalities and (P89.9) follow.
+2. The odd target in (P89.7) can be written
+
+       w_o J [h!/k!] R_o,
+       R_o=(h+c-k)!/(h-k)!>=c+1.
+
+   Also w_o>= (L+1)/2 and J>=1. Therefore
+   it is at least h!(L+1)(c+1)/(2 k!), which
+   is at least h!(V_*+1)/(2 k!). It strictly
+   exceeds D by (P89.9).
+3. For even degree put T'_k=(2k-1)!/(k-1)!.
+   For k>=2, T'_k>=k^2+1, starting at 6>=5
+   with the same recurrence factor 4k+2. The
+   source constant is strictly below
+
+       P'_j=2j^2+(4k-1)j+4k(k-1).
+
+   At j=1, P'_1=4k^2+1<4T'_k=T'_k F_1,
+   and 2(h+1)=4k+6<=T'_k F_1. Both propagate:
+   P'_(j+1)<4P'_j, whereas F_j grows by at
+   least six from this starting index.
+   For k>=3 the estimates also start at
+   j=0, since T'_k>=4k^2 (base 60>=36,
+   followed by its factorial recurrence),
+   P'_0<4k^2, and 2(h+1)=4k+2<=4k^2.
+   Consequently in all stated even cases
+
+       C_e<T'_k F_j,
+       2(h+1)<=T'_k F_j,
+       D<[1+V_*/2] h!/[2(k-1)!].                    (P89.10)
+
+4. The even target (P89.8) is
+   2^(L/2) R_e h!/[2(k-1)!], with
+   R_e=(h+c-k+1)!/(h-k+1)!>=c+1.
+   Since 2^(L/2)>=1+L/2 and
+   (1+L/2)(c+1)>=1+(L+c)/2, this is
+   strictly larger than D in (P89.10).
+   QED.
+
+**Lemma 89D (the two remaining walls with column backgrounds).**
+At A=h=3 or A=h=4, the original budget D<=m_lambda(U_M) holds for
+all admissible parameters and signs.
+
+**Proof.** With c=0 use Theorem 87E, whose criterion here is exactly
+A>=h; its original consumer gives the required budget. Suppose c>=1.
+
+1. At A=h=3, the source formula gives D=4+6(L+c).
+   The odd family has 3(c+2)! graphs per endpoint.
+   Its weighted count is at least
+   3(c+2)!(L+1)/2. At c=L=1 this is 18>16.
+   Increasing odd L by two increases the bound
+   by at least eighteen and D by twelve.
+   Increasing c multiplies the bound by c+3>=4
+   while increasing D by six. Thus it strictly
+   supplies the budget for every c>=1, odd L>=1.
+2. At A=h=4, D=15+10(L+c). If L=0, the even
+   cycle family has 2(c+3)! graphs. At c=1,
+   48>25, and the factorial increase preserves
+   the strict budget for every c>=1.
+3. If A=h=4 and L>=2, the two-endpoint family
+   in Step 3 of Lemma 89B can be used for
+   either unit parity pattern by taking endpoint
+   pairs counted by K(L,n) from Lemma 88B.
+   Its higher-graph count is
+
+       24[(c+3)!/3!](c+4)>=96(c+1).
+
+   Its component weight is at least one and
+   K(L,n)>=L/2. Hence the target is at least
+   48L(c+1)>15+10(L+c), for every even L>=2.
+   This covers all remaining parameters. QED.
+
+**Lemma 89E (the first wall A=h+2 with column backgrounds).**
+The exact source in (P89.3) is bounded by the original positive target
+for every admissible h,c,L and every even M.
+
+**Proof.** When c=0, distinguishing A gives deficit 2r; Theorem 83E
+and the same consumer supply the bound. Assume c>=1, and write
+D=h+L+c-1.
+
+1. For odd h>=3, put k=(h+1)/2, so A=2k+1.
+   The odd family in Lemma 89B is available.
+   Its count h!/k! is at least h, since its
+   factorial product includes h. Its column
+   factor R_o is at least c+1. Thus the
+   target is at least h(c+1)(L+1)/2. Subtracting
+   D gives
+
+       (h-2)(L-1)/2+c[h(L+1)/2-1]>=0.
+
+   This supplies all odd h>=3 cases.
+2. For odd h=1, A=3 and D=L+c. If c>=3,
+   the odd family has c! graphs per endpoint.
+   Its bound c!(L+1)/2 strictly exceeds L+c:
+   at L=1, c!>c+1, and its linear slope
+   c!/2 is greater than one.
+3. At h=1,c=2, use all lassos through the
+   three higher vertices. The doubled row
+   cycle with a two-column tail gives two;
+   simple triangles with a one-vertex tail
+   give three; the simple four-cycle with
+   a direct unit tail gives three. Thus
+   there are eight per endpoint, all with
+   allowed local shapes. Their weighted
+   count is at least 4(L+1)>L+2.
+4. At h=c=1 validity requires L>=3. There
+   are two lassos per endpoint, giving at
+   least L+1=D copies. Choose three unit
+   endpoints leaving even remaining class
+   sizes, possible for every odd L>=3.
+   Put both higher vertices on one of the
+   three simple root paths to these units.
+   This is a further good graph, distinct
+   from all lassos, and supplies the budget
+   strictly. Every other component is a
+   same-sign pair.
+5. For even h>=4, put s=h/2 and k=s+1.
+   The even family is available. Its row
+   count h!/(2s!) is at least h, and its
+   column factor is at least c+1. Its
+   weighted count is therefore at least
+   (1+L/2)h(c+1), strictly exceeding D:
+   their difference is
+
+       c(h-1)+L[h(c+1)/2-1]+1>0.
+
+6. For even h=2,c>=2, its cycle count is
+   (c+1)!>=2(c+1). Weighting it gives at
+   least (L+2)(c+1)>L+c+1=D. At h=2,c=1,
+   validity requires L>=2. Use two unit
+   endpoints and one doubled row spoke.
+   Its higher-graph count is twelve;
+   K(L,n)>=L/2 and its colour weight is
+   at least one. The target is at least
+   6L>L+2=D for all even L>=2.
+7. If h=0 then A=2 and all atoms belong
+   to Section 88. That theorem supplies
+   this remaining case. QED.
+
+**Theorem 89F (original Q3 with one arbitrary row and three-atom backgrounds).**
+For every compact connected type C_r group, every descending tuple
+chi_(A) with h copies of chi_(2), c copies of chi_(1,1), and L copies
+of chi_(1) satisfying (P89.1), and every sign pattern, the original
+normalized double-Haar integral is nonnegative. A is unrestricted.
+
+**Proof.**
+
+1. Odd total minus count vanishes by exchange. If A+L
+   is odd, simultaneous multiplication by central -I
+   negates the entire integrand, so its integral is
+   zero. Otherwise A,h,L have the same parity.
+2. For A=1 or A=2, relabel the distinguished vertex
+   as another defining or adjoint vertex and apply
+   Theorem 88E. These cases include all admissible
+   boundary values with h=0.
+3. For A>=3 use Lemma 89A. If A>h+2 its actual
+   source is zero and the positive U_M directly
+   supplies (P89.2). If A=h+2, Lemma 89E supplies
+   the exact source budget. Otherwise parity gives
+   A<=h. Lemma 89C supplies its strict budget
+   except at A=h=3,4, supplied by Lemma 89D.
+   These are all possible degrees and parameters.
+4. In each case the individual multiplicity inequality
+   is consumed by (P89.2), with every proper cut and
+   both endpoints retained. No generic-map rank or
+   total auxiliary dimension is substituted.
+5. Normalized Haar pullback preserves every descending
+   atom and the integral on actual type C central
+   quotients. QED.
+
+**Corollary 89G (one continuous infinite row cone through first overlap).**
+Let G be a compact connected type C_r group. At position zero let f_0
+be any real continuous central positive-definite function supported on
+actual one-row characters, with no bound on row degree. At each other
+position let f_i be any real continuous central positive-definite
+function supported on the actual atoms 1,chi_(1),chi_(2),chi_(1,1).
+Let b_i be one if the support contains no column atom, and two otherwise;
+require b_i<=r for nontrivial column support. If
+
+    1+sum_(i>=1) b_i<=2r+3,                           (P89.11)
+
+then the original whole list satisfies Q3 for every sign pattern.
+
+**Proof.** Expand each f_i in its nonnegative actual character coefficients
+as in Lemma 28A. Remove trivial plus atoms with their original factor two;
+a trivial minus atom makes the term zero. At summed nontrivial row length
+<=2r+2 use Theorem 79D. At sum 2r+3, a nontrivial distinguished atom is
+one-row and every background is one of the three specified atoms, so
+Theorem 89F applies with the exact minimal auxiliary dimensions. If the
+distinguished atom is trivial, its removal leaves summed background
+length <=2r+2 and the same old supplier applies. The nonnegative atomic
+expansion is uniformly absolutely dominated in the original double-Haar
+integrand by product_i 2f_i(e); therefore summation and normalized Haar
+integration commute by Lemma 28A. This proves the continuous statement,
+including zero functions and actual central quotients. QED.
+
+**Original-consumer receipt and full-scope boundary.**
+This closes the first-overlap budget for one arbitrary one-row label
+against the three smallest background atoms, uniformly in its unbounded
+first row and all ranks. It includes higher-degree balanced profiles
+such as (r,A,h,c,L)=(2,3,5,0,1),(2,4,6,0,0),(3,3,5,1,1),(3,4,6,1,0),
+which are outside Sections 87--88. Equation (P89.2) returns the original
+scalar sign, and Corollary 89G consumes the supplier for a continuous
+infinite one-row cone at one position. The source formulas are actual
+Schur multiplicities of the complete resolution, and the target is the
+original component-colour module. Finite tests played only an audit role.
+
+The distinguished function is not unrestricted in the full central cone:
+its nonrow shapes are still missing. Multiple independently unbounded
+higher-row positions, larger background shapes, unrestricted summed
+auxiliary length, and the other simple Lie types remain obligations of
+the unchanged full real continuous central positive-definite goal.
+
+## 90. Arbitrary distinguished shapes against fundamental-column backgrounds
+
+The selected hard comparison is the original multiplicity budget (P80.6).
+This section supplies it for an arbitrary actual distinguished shape and
+fundamental-column backgrounds, uniformly in rank and the distinguished
+first row. The new mathematical evidence is an exact classification of the
+actual relation coefficient, rather than a weaker required target budget.
+A separate extremal-degree identity supplies an unrestricted continuous
+slot with arbitrary background shapes of total box-support budget r+3.
+Neither statement asserts the full-cone theorem for unrestricted lists.
+
+**Independent self-double-check immediately before recording.**
+
+1. Recomputed the complete free, middle and top terms of (P80.3) at
+   column backgrounds. A root omission leaves positive root-only residual
+   degree, impossible in the off-diagonal ring. A background omission
+   forces one residual root box. Its root representation is det(E_0)
+   tensor E_0, so only the stated hook survives. Each of m backgrounds
+   contributes one; the middle term subtracts one; the top term is zero.
+2. Independently extracted actual multiplicities from the type C Weyl
+   numerator times products of e_a-e_(a-2) on the defining torus weights.
+   For (r,root;backgrounds)=(3,(2,1,1);3,3),
+   (3,(3,2,1);1,2,3), (2,(2,1);1,2,2),
+   (3,(2,1,1);1,2,3), the actual joint moments are respectively
+   0,1,2,2. The first example retains a zero integral possibility;
+   no strict positivity is claimed. These checks do not supply the proof.
+3. Replayed (P80.5). The exceptional hook has total box degree 2r+4,
+   and Theorem 78E supplies its original integral independently of the
+   pending (P80.6). Every other distinguished shape has zero source.
+4. Replayed the original cut formula at distinguished degree equal to
+   total nontrivial background degree. Every proper cut vanishes; the
+   original endpoint coefficients are one and product epsilon. For
+   smaller distinguished degree and even total, the gap is at least two.
+   The remaining total degree is therefore at most 2r+4 when D<=r+3.
+5. Checked actual central-quotient Haar pullback, trivial factors, odd
+   minus count, the central parity argument, and Lemma 28A's original
+   product_i 2f_i(e) domination before the continuous applications.
+
+**Lemma 90A (the exact source coefficient with column backgrounds).**
+Let G have type C_r. At vertex zero choose a nonempty actual partition
+lambda of minimal length b=ell(lambda)<=r. At the other m vertices
+choose nontrivial fundamental-column labels (1^a_i), with 1<=a_i<=r.
+Use the minimal auxiliary dimensions dim E_0=b and dim E_i=a_i, and
+suppose
+
+    b+sum_(i=1)^m a_i=2r+3.
+
+In the actual ideal I_r of Lemma 80A, the product-Schur multiplicity is
+
+    m_(lambda,(1^a_1),...,(1^a_m))(I_r)
+      = m-1  if lambda=(2,1^(b-1)),
+        0    otherwise.                              (P90.1)
+
+**Proof.** Put delta_i=det(E_i), delta=product_i delta_i, and
+ t=|lambda|-b>=0. Background target representations are delta_i.
+The exact source character is the alternating character of the three
+nonzero free terms of Lemma 80B.
+
+1. The cofactor representation Lambda^(S-1)E=delta tensor E^* splits
+   into root and background omissions. For the root omission its root
+   degree is b-1 and its background degrees are exactly a_i. Any
+   coefficient reaching the target would require residual R-degree
+   t+1 at the root and zero at every background. Every variable of R
+   joins different vertices. No positive root-only degree exists, so
+   this entire contribution is zero.
+2. For omission in background i, the cofactor root representation is
+   delta_0, the i-th representation is delta_i tensor E_i^*, and all
+   other backgrounds already consume their whole target degrees.
+   The residual R degrees must be t at the root, one at i, and zero
+   elsewhere. Only the root--i edge can occur. It forces t=1 and has
+   representation E_0 tensor E_i. At the root, delta_0 tensor E_0 is
+   the single irreducible (2,1^(b-1)). At background i the coefficient
+   of delta_i in delta_i tensor E_i^* tensor E_i is one, by the scalar
+   endomorphisms of E_i. Thus the first free term contributes m for
+   the displayed hook and zero for every other root shape.
+3. In the middle term delta tensor E tensor R, a selected background
+   summand already has degree a_i+1, exceeding its target; it cannot
+   contribute. A selected root summand has all background degrees
+   consumed. R must be constant, so it contributes one for precisely
+   delta_0 tensor E_0 and nothing otherwise. The last term delta^2
+   tensor R exceeds every nonempty background degree and contributes
+   zero. There is a background vertex since b<=r<2r+3.
+4. The exact Euler character (P80.4), including both syzygy terms,
+   is therefore m-1 on the hook and zero elsewhere. This is an
+   actual ideal multiplicity by the exact resolution, not the number
+   of free Pfaffian generators. QED.
+
+**Theorem 90B (arbitrary root and fundamental backgrounds through first overlap).**
+For any actual compact connected type C_r group, a nonempty arbitrary
+root label lambda and fundamental-column backgrounds (1^a_i) satisfy
+original Q3 for every sign pattern whenever
+
+    ell(lambda)+sum_i a_i<=2r+3.                       (P90.2)
+
+There is no box-degree or first-row bound on lambda.
+
+**Proof.** At summed length <=2r+2 apply Theorem 79D. At equality 2r+3,
+odd minus count gives zero. At even minus count Lemma 80C gives the
+original identity Phi_G=2[m_lambda(U_M)-m_lambda(I_r)]. If the root is
+not the hook of Lemma 90A, its second term is zero and its first term
+is a nonnegative multiplicity. For the hook, its box number is b+1,
+so the full tuple has total boxes b+1+sum a_i=2r+4. Theorem 78E supplies
+its original scalar integral. In particular (P80.5) then supplies the
+exact required budget m_lambda(U_M)>=m-1; Theorem 78E is independent of
+the pending general first-overlap budget. These cases exhaust every
+root. Actual descending labels on any central quotient pull back to
+the same normalized Haar integral. QED.
+
+**Corollary 90C (continuous arbitrary-root column-background cones).**
+Let f_0 be a real continuous central positive-definite function on a type
+C_r group with actual support ell(lambda)<=b<=r. Let each f_i, i>=1,
+have support in the trivial character and fundamental-column characters
+of height at most d_i<=r. If b+sum_i d_i<=2r+3, the original list
+satisfies Q3 for every sign pattern. In particular f_0 may range over
+the entire central positive-definite cone when sum_i d_i<=r+3.
+
+**Proof.** Apply Lemma 28A's nonnegative actual character expansions.
+A trivial minus factor gives zero; a trivial plus factor gives two
+and is removed. A remaining nontrivial root reaches Theorem 90B.
+If the root is trivial, its removal leaves background summed length
+<=2r+2 (take b>=1), reaching Theorem 79D. Zero functions give zero.
+The original absolute domination product_i 2f_i(e) commutes the
+nonnegative atomic sum with normalized double-Haar integration. QED.
+
+**Lemma 90D (the extremal distinguished-degree endpoint identity).**
+For a nontrivial type C root chi_lambda of box number A and nontrivial
+background characters of total box number D, let M_G(full) be their
+actual joint Haar moment. Then for original signs epsilon:
+
+    A>D  implies Phi_G=0;
+    A=D  implies Phi_G=(1+product_i epsilon_i)M_G(full). (P90.3)
+
+The product here includes the root sign. The identities hold on every
+actual central quotient and are valid without a first-overlap hypothesis.
+
+**Proof.** Every constituent of any background subset tensor product
+has box number at most the summed boxes of that subset. This follows
+from highest-weight dominance with the functional sum of Euclidean
+coordinates: it is zero on e_j-e_(j+1) and two on 2e_r, as checked in
+Corollary 76E. Type C irreducibles are self-dual. Consequently a root
+of larger box number than a given subset has zero joint moment with
+that subset. Every original cut has the root on one side. If A>D,
+all such moments vanish. If A=D, a proper cut leaves at least one
+nontrivial background on the other side, so the subset on the root
+side has strictly smaller total box number and again its moment
+vanishes. Only the two endpoints survive, with original coefficients
+one and product_i epsilon_i; the other Haar moment is one at either
+endpoint. This proves (P90.3), with all cuts and normalizations intact.
+Pullback to the simply connected group preserves it for descending
+actual labels. QED.
+
+**Theorem 90E (an unrestricted distinguished atom at background box budget r+3).**
+For any type C_r group, any arbitrary actual root label, any nontrivial
+actual background shapes of total box number D<=r+3, and every sign
+pattern, the original Q3 integral is nonnegative.
+
+**Proof.** If the root is trivial, a minus factor gives zero and a plus
+factor gives twice the background integral, of total boxes D<=2r+4,
+supplied by Theorem 78E. Otherwise set A=|lambda|. If A>D use Lemma 90D's
+zero identity; if A=D use its endpoint identity and the nonnegative
+invariant dimension M_G(full). If A<D and A+D is odd, the integral is
+zero: simultaneous multiplication of both Haar variables by the central
+-I on the simply connected symplectic cover multiplies the integrand
+by (-1)^(A+D). Haar pullback gives the same conclusion for a quotient.
+If A<D and A+D is even, A<=D-2 and hence A+D<=2D-2<=2r+4; Theorem 78E
+applies to all shapes and signs. Trivial backgrounds can first be
+removed with their original factors. QED.
+
+**Corollary 90F (the full distinguished continuous cone at box budget r+3).**
+Let G be any compact connected type C_r group, and f_0 any real continuous
+central positive-definite function on G, with no support restriction.
+Let the remaining such functions have actual supports |lambda|<=d_i
+and sum_(i>=1)d_i<=r+3. Then their original whole list satisfies Q3
+for every sign pattern.
+
+**Proof.** Expand all functions in Lemma 28A's nonnegative actual atoms.
+Each atomic background has total boxes at most the stated support sum;
+Theorem 90E supplies every root atom, including its entire unbounded
+tail. Trivial factors have their original effects. The uniformly
+absolutely convergent integrand expansion is dominated by the same
+product_i 2f_i(e), so its integration commutes with summation. All
+integrated terms are nonnegative, proving the assertion. QED.
+
+**Original-consumer receipt.** Lemma 90A eliminates every nonhook root
+source against column backgrounds at first overlap; Theorem 90B supplies
+the exact original budget in the sole hook exception using the already
+proved total-degree boundary. Corollary 90C consumes that supplier for
+continuous functions. Independently, Lemma 90D supplies the original
+extremal-degree endpoints and Theorem 90E consumes them together with
+Theorem 78E; Corollary 90F removes all root support restrictions at the
+new arbitrary-background budget. This is new mathematical evidence and
+its original scalar application, not a numerical certificate or a
+conditional restatement of (P80.6). The unrestricted multi-position
+comparison (P80.6), larger auxiliary dimensions and proper-cut relation
+corrections, and all unsupplied other Lie types remain obligations of
+the unchanged full all-group central positive-definite-cone target.
+
+## 91. Two residual root boxes are absorbed by star representations
+
+The hard target is the same coefficientwise relation budget, now including
+an actual second-overlap family. The new suppliers count the full local
+Schur representations on explicit positive graphs. Their proofs are
+uniform in rank and signs; they do not enumerate a certificate range.
+
+Does this produce new mathematical evidence for the missing prerequisite,
+or only reduce the amount still needed? It produces evidence: Lemma 91B
+computes the actual first-overlap relation coefficient for one-hook
+backgrounds and constructs its positive star comparison; Lemma 91C
+bounds the actual second-overlap ideal by its generator image and supplies
+that bound with component-coloured stars, after checking every original
+proper cut. The unrestricted-slot corollary consumes those two suppliers.
+
+**Independent self-double-check immediately before recording.**
+
+1. Independently derived both Schur coefficients in Lemma 91A by
+   Jacobi--Trudi and monomial coefficients. Direct SSYT enumeration
+   agreed at eight selected compositions, including zeros after their
+   removal, repeated entries, and the smallest shapes used below.
+2. Recomputed all three terms of the first-overlap exact resolution.
+   The losses in Lemma 91B are m-1 and m-2+indicator_(a>=2), rather
+   than an uncorrected count of free cofactors. The root omission has
+   residual root degree three against total background degree one.
+3. Recomputed the second-overlap generator module by removing two
+   slots. Root omissions cannot match the residual degrees. Distinct
+   background omissions contribute one in each root shape; two slots
+   in one background contribute only to the exterior-root shape.
+   The ideal is an image, so this is a coefficientwise upper bound.
+4. Replayed every second-overlap proper cut: complements of total
+   auxiliary dimension one, or a singleton of dimension two, have
+   zero moment. Two dimension-one background vertices leave a
+   first-relation correction with positive root-only residual degree,
+   whose coefficient is zero. No proper-cut correction is discarded.
+5. Independently checked the star local Pieri factors, transpose
+   shapes, connectedness, and weights one or two. The sign estimate
+   E>=m(m-2)/2 retains the original signs of every isolated unit pair.
+   The two final inequalities reduce to 3(m-2)>=m-1 and
+   2(m-2)>=m+1 for m>=6. Smaller lists reach Theorem 48A.
+6. An independent type C Weyl-numerator audit gave universal/actual
+   full moments 45/35 and 30/21 for rank-two roots (3,1),(2,2)
+   against six defining backgrounds; the losses are 10 and 9.
+   At rank three, roots (3,1,1),(2,2,1) against one (2) and five
+   defining backgrounds gave 60/55 and 45/41; the losses are 5 and 4.
+   For minus sets empty,{0,1},{1,2},{0,1,2,3}, direct original cut sums
+   were respectively (160,100,64,52),(102,62,38,30),
+   (170,170,122,98),(122,122,90,74). All agree with twice the original
+   coloured-star multiplicity minus the actual loss. These audits
+   diagnose the proof mechanisms; they are not theorem suppliers.
+7. Replayed the unrestricted-root degree split. Its only new even
+   degree has background D=r+4 and root A=r+2. Summed auxiliary
+   dimension is <=2r+4. Its first-overlap cases are exactly the
+   column case of Theorem 90B and the one-hook case of Lemma 91B;
+   its second-overlap case is exactly Lemma 91C. All other degrees
+   reach Lemma 90D or Theorem 78E. Trivial factors, parity, quotient
+   Haar pullback and Lemma 28A's domination retain their old values.
+
+**Lemma 91A (two residual-box Schur coefficients).**
+Let alpha be a list of nonnegative integers summing to n>=4, with
+k positive entries and u entries at least two. For k>=2, the Schur
+coefficients of the product of complete symmetric functions are
+
+    [s_(n-2,1,1)] product_j h_(alpha_j)=binomial(k-1,2),
+    [s_(n-2,2)] product_j h_(alpha_j)=u+k(k-3)/2.        (P91.1)
+
+Zero entries mean h_0=1 and are omitted. These are local representation
+multiplicities, not total dimensions.
+
+**Proof.** In the Hall pairing, h_alpha is dual to the monomial symmetric
+function m_alpha. The required coefficient is therefore the coefficient
+of one monomial x^alpha in the stated Schur function. Jacobi--Trudi gives
+
+    s_(n-2,1,1)=h_(n-2)(h_1^2-h_2)-h_(n-1)h_1+h_n,
+    s_(n-2,2)=h_(n-2)h_2-h_(n-1)h_1.
+
+The coefficients of x^alpha in h_n and h_(n-1)h_1 are one and k.
+In h_(n-2)h_2 the two boxes assigned to h_2 may occupy two distinct
+positive entries or twice an entry >=2: its coefficient is binomial(k,2)+u.
+In h_(n-2)h_1^2 these choices have coefficients two and one respectively:
+its coefficient is 2binomial(k,2)+u. Substitution gives (P91.1).
+The Hall pairing assertion follows directly from its dual bases:
+<s_lambda,h_alpha>=<s_lambda,sum_beta [x^beta]s_lambda m_beta>
+interpreted as the coefficient pairing, equivalently
+<s_lambda,h_alpha>=[m_alpha]s_lambda. Orthogonality of Schur functions
+identifies it with [s_lambda]h_alpha. QED.
+
+**Lemma 91B (two-box root at first overlap with one hook background).**
+Let r>=2, let the root auxiliary dimension be r, and take root label
+
+    lambda_H=(3,1^(r-1)) or lambda_V=(2,2,1^(r-2)).
+
+Among m nontrivial backgrounds take one hook nu=(2,1^(a-1)), 1<=a<=r,
+and m-1 columns (1^c_i), 1<=c_i<=r, with
+
+    a+sum_i c_i=r+3.
+
+Thus S=2r+3, root boxes are r+2, and background boxes are r+4.
+For every sign pattern the original Q3 integral is nonnegative. At even
+minus count, its actual relation coefficients are
+
+    D_H=m-1,
+    D_V=m-2+indicator_(a>=2),                         (P91.2)
+
+and its original target multiplicities satisfy m_lambda(U_M)>=D_H,D_V,
+respectively.
+
+**Proof.** If m<=5, the original tuple has at most six positions and
+Theorem 48A supplies it. For the uniform comparison construction below
+assume m>=6; the exact source calculation itself does not use this bound.
+Write the root as det(E_0) tensor S_tau(E_0), tau=(2) or (1,1).
+
+1. In Lambda^(S-1)E tensor R, a root omission has residual root
+   degree three and background total degree one. Every root edge
+   requires background degree, so it contributes zero. An omission
+   in a column background requires root degree two, hook degree one
+   and omitted-background degree one. Its two root edges yield
+   E_0 tensor E_0 and supply each tau once. Local determinant and
+   hook targets each have coefficient one. There are m-1 such omissions.
+2. Omission in the hook background leaves root degree two and hook
+   degree two. The single root--hook edge space has second symmetric
+   power
+
+       Sym^2(E_0 tensor E_h)
+         =Sym^2 E_0 tensor Sym^2 E_h
+           direct-sum Lambda^2 E_0 tensor Lambda^2 E_h.
+
+   To reach the hook target, its cofactor det(E_h) tensor E_h^*
+   needs residual representation Sym^2 E_h or Lambda^2 E_h.
+   The coefficient of E_h in E_h^* tensor Sym^2 E_h is one,
+   and in E_h^* tensor Lambda^2 E_h is one when a>=2, zero otherwise.
+   This follows by the tensor adjunction and the two distinct summands
+   of E_h tensor E_h. Hence this omission contributes one for tau=(2)
+   and indicator_(a>=2) for tau=(1,1).
+3. In det(E) tensor E tensor R, a selected root summand leaves one
+   root box and one hook box; their edge contributes each tau once.
+   A selected column background overshifts its target. A selected
+   hook background consumes its own target and leaves positive
+   root-only degree, impossible. Thus the middle contribution is one
+   in both cases. The top determinant-square term exceeds a column
+   target; there is a column background in this family. The exact
+   resolution of Lemma 80B now gives (P91.2).
+4. For each column background i, make a graph with one background
+   edge h--i and all other edges incident to the root. The root--hook
+   edge has multiplicity a; root--i has c_i-1; other root--j edges have
+   c_j. Total root degree is a+sum c_i-1=r+2. All vertices belong to
+   one connected component, even when c_i=1: i then connects through
+   h, and h has a>=1 root edges. Every such graph is good for every
+   even original minus set, with one component-colour copy. The
+   m-1 graphs are distinct by their unique background edge.
+5. At the hook vertex the local Pieri coefficient permits root--hook
+   edge partitions (1^a) and (2,1^(a-2)) when a>=2, each once.
+   For a=1 it permits only (1). At every column vertex the incident
+   edge partitions are columns and the local coefficient is one.
+   Apply the ordinary symmetric-function involution omega at the
+   root. The sum of its hook-edge factors becomes
+
+       h_a+s_(a-1,1)=h_(a-1)h_1  if a>=2,
+       h_1                      if a=1.
+
+   Other factors are h_(c_j-indicator_(j=i)). The transposed root
+   shapes are (r,1,1) and (r,2). There are at least m-1 positive
+   factors, since the hook supplies at least one, and at most one
+   column factor becomes zero. Lemma 91A shows that each graph has
+   horizontal coefficient >=6 and vertical coefficient >=5 when
+   m>=6. The original target therefore has at least 5(m-1) copies
+   in either sector, exceeding the losses (P91.2).
+6. Lemma 80C consumes this exact target comparison, giving
+   Phi_G=2[m_lambda(U_M)-D]>=0 with every original proper cut.
+   Odd minus count is zero. Actual central quotients use the same
+   descending labels and normalized Haar pullback. QED.
+
+**Lemma 91C (two-box root at second overlap with all-column backgrounds).**
+Let r>=2, use the same two root labels and root auxiliary dimension r,
+and let m nontrivial backgrounds be columns (1^a_i), 1<=a_i<=r, with
+sum_i a_i=r+4. Thus S=2r+4. Set u=#{i:a_i>=2}. On every even-minus
+pattern the original whole integral is exactly
+
+    Phi_G=2[m_lambda(U_M)-m_lambda(I_r)],              (P91.3)
+
+and the actual relation coefficients have bounds
+
+    m_(lambda_H)(I_r)<=binomial(m,2),
+    m_(lambda_V)(I_r)<=binomial(m,2)+u.               (P91.4)
+
+For m>=6, explicit component-coloured star graphs supply both bounds.
+For all m and all signs, original Q3 is nonnegative.
+
+**Proof.**
+
+1. The universal integral is 2m_lambda(U_M), by Lemma 74A's original
+   component formula. For a proper cut with auxiliary dimension at
+   most 2r+1 its moment is stable, by Lemma 79A. Every larger proper
+   cut leaves complement dimension one or two. A singleton complement
+   has zero moment, regardless of whether its dimension is one or
+   two. If the complement is two dimension-one vertices, they must
+   be background columns: r>=2 excludes the root from such a pair.
+   The large side has dimension 2r+2 and its only relation source is
+   its determinant times R, as in Lemma 79B. Every remaining column
+   target consumes that determinant. The root target leaves residual
+   degree two with no background degree; its R coefficient is zero.
+   Thus this large-side defect is zero as well. These exhaust proper
+   cuts. The two endpoints contribute -2m_lambda(I_r) by Lemma 80A,
+   proving the exact original identity (P91.3).
+2. The actual ideal is the image of its Pfaffian generator map
+
+       Lambda^(2r+2)E tensor R -> I_r.
+
+   Since S=2r+4, its coefficient representation is det(E) tensor
+   Lambda^2 E^*. This remains a surjection after removing internal
+   pairs: I_r is defined as the ideal generated by those images.
+   Complete reducibility in each finite degree bounds every actual
+   ideal multiplicity by the corresponding free-source multiplicity.
+3. If one of the two removed slots is in the root, its residual
+   degree is at least three while the total residual background
+   degree is at most one, impossible. Removing slots in two distinct
+   backgrounds leaves root residual degree two and one at each of
+   those backgrounds. Their two root edges supply each tau once;
+   each background contraction supplies its determinant once.
+   This gives binomial(m,2). Removing two slots in one background
+   i gives cofactor det(E_i) tensor Lambda^2 E_i^*. Its two-edge Cauchy
+   decomposition in Step 2 of Lemma 91B can reach the determinant
+   only from Lambda^2 E_i, and therefore only with root tau=(1,1).
+   It contributes one precisely when a_i>=2. This proves (P91.4),
+   without counting syzygies as independent relations.
+4. For each background pair i<j, put one edge between them and all
+   other edges incident to the root. The root edge multiplicities
+   are a_t-indicator_(t in {i,j}); they sum to r+2. If at least one
+   of a_i,a_j is >=2, the graph is connected, so it is good with
+   colour weight one for every even minus set. If both equal one,
+   their pair is isolated and the rest forms a root-star component.
+   This graph is good exactly when their original signs agree,
+   and then its original colour weight is two.
+5. Write l=#{i:a_i=1}, l_+,l_- for the two sign counts among those
+   vertices, and P=binomial(l_+,2)+binomial(l_-,2). The total good
+   graph colour weight of this family is
+
+       E=binomial(m,2)-binomial(l,2)+2P
+         =binomial(m,2)+[(l_+-l_-)^2-l]/2
+         >=m(m-2)/2.                                (P91.5)
+
+   This includes arbitrary root sign: for an isolated same-sign
+   pair, even total minus count also makes the other component even.
+6. At all column vertices the edge partitions are columns. After
+   omega at the root, its local product is
+   product_t h_(a_t-indicator_(t in {i,j})). At least m-2 factors are
+   positive. If m>=6, Lemma 91A gives horizontal coefficient >=3
+   and vertical coefficient >=2. Thus
+
+       m_(lambda_H)(U_M)>=3E>=3m(m-2)/2>=binomial(m,2),
+       m_(lambda_V)(U_M)>=2E>=m(m-2)
+                                >=binomial(m,2)+m
+                                >=binomial(m,2)+u.   (P91.6)
+
+   The scalar inequalities hold for every m>=6: they reduce to
+   3(m-2)>=m-1 and 2(m-2)>=m+1. The distinct background-edge graphs
+   give direct summands; their actual local Schur coefficients and
+   component colours give the displayed multiplicities.
+7. Combine (P91.4)--(P91.6) with the original consumer (P91.3).
+   If m<=5, use Theorem 48A on the original tuple of at most six
+   positions instead. Odd minus count gives zero. Normalized Haar
+   pullback supplies all actual descending tuples on central
+   quotients. QED.
+
+**Theorem 91D (arbitrary distinguished atom at background box budget r+4).**
+For any compact connected type C_r group, any arbitrary actual root atom,
+any actual background shapes of total box number D<=r+4, and every sign
+pattern, original Q3 is nonnegative.
+
+**Proof.** Remove trivial backgrounds with their original factors. A
+trivial root is supplied by Theorem 78E on total background degree
+D<=r+4<=2r+4, or is a zero minus factor. For a nontrivial root put
+A=|lambda|. At A>D or A=D use Lemma 90D. Odd A+D gives zero by central
+parity on the symplectic cover. If A<=D-4, total boxes are <=2D-4<=2r+4,
+so Theorem 78E applies. The only remaining even gap is A=D-2. When
+D<=r+3 Theorem 90E already supplies it. Hence only
+
+    D=r+4, A=r+2                                    (P91.7)
+
+is new. If there are at most five nontrivial backgrounds use Theorem
+48A; otherwise m>=6 and necessarily r>=2.
+
+Set b=ell(lambda)<=r and T=sum_i ell(nu_i)<=r+4, so S=b+T<=2r+4.
+At S<=2r+2 apply Theorem 79D. At S=2r+3, either b=r-1,T=r+4 or
+b=r,T=r+3. In the first case every background is a column and Theorem
+90B applies to the arbitrary root. In the second case the backgrounds
+have exactly one box beyond their total row lengths: precisely one is
+(2,1^(a-1)) and the rest are columns. The root has r rows and r+2 boxes,
+so subtracting its first column leaves (2) or (1,1). These are exactly
+the two roots of Lemma 91B, which supplies the original integral.
+At S=2r+4, b=r,T=r+4; every background is a column and the root is one
+of the same two shapes. Lemma 91C supplies this original second-overlap
+integral. The dimension alternatives exhaust (P91.7). All signs,
+constants and quotient Haar measures have already been consumed by
+the cited original-integral suppliers. QED.
+
+**Corollary 91E (full distinguished continuous cone at box budget r+4).**
+Let G be any compact connected type C_r group. Let f_0 be any real
+continuous central positive-definite function on G, without a support
+restriction. Let the remaining such functions have actual character
+supports |lambda|<=d_i, with
+
+    sum_(i>=1)d_i<=r+4.                               (P91.8)
+
+Then their original whole list satisfies Q3 for every sign pattern.
+
+**Proof.** Lemma 28A expands all functions in uniformly absolutely
+convergent nonnegative actual atom coefficients. Each atomic background
+has D<=r+4 and reaches Theorem 91D for every root atom, including its
+unbounded first row and arbitrary higher-row shape. The original
+integrand is absolutely dominated by product_i 2f_i(e). Exchange the
+sum and normalized double-Haar integration under that bound; every
+summand integral is nonnegative. Actual central quotients, trivial
+factors and zero functions retain the original hypotheses and factors.
+QED.
+
+**Original-consumer receipt and scope.** Lemmas 91B--91C supply two new
+uniform relation-to-positive-graph comparisons, including an actual
+second-overlap proper-cut replay. They compare each required Schur
+multiplicity and retain every component-colour copy. Theorem 91D and
+Corollary 91E consume them for a full unrestricted distinguished function
+with arbitrary background shapes at (P91.8). This is a structural proof
+and its original continuous application, not an extension of a checked
+finite certificate range. The general first-overlap comparison (P80.6)
+with independently arbitrary higher-row positions, unrestricted summed
+auxiliary dimension and its proper-cut corrections, and the other
+unsupplied simple Lie types remain obligations of the unchanged full
+all-group central positive-definite-cone objective.
+
+**Correction 91F (the Hall-duality line in Lemma 91A).**
+The last paragraph of Lemma 91A contains a malformed displayed equality
+pairing s_lambda with its entire own monomial expansion. That equality
+is false: its right side would be <s_lambda,s_lambda>=1, whereas the
+left side can be a Kostka number larger than one. For example the
+left side is three for lambda=(2,1,1), alpha=(1,1,1,1). Because this
+ledger preserves historical bytes, this correction supersedes that
+paragraph rather than editing it. The correct replacement is:
+
+**Proof of the duality step.** Let alpha^+ be alpha with zero entries
+removed and its positive entries sorted. Schur orthonormality gives
+[s_lambda]h_alpha=<h_alpha,s_lambda>. The Hall pairing is symmetric,
+and <h_mu,m_beta>=indicator_(mu=beta) for partitions mu,beta.
+Writing s_lambda=sum_beta K_(lambda,beta)m_beta therefore gives
+
+    [s_lambda]h_alpha
+      =<s_lambda,h_(alpha^+)>
+      =sum_beta K_(lambda,beta)<m_beta,h_(alpha^+)>
+      =K_(lambda,alpha^+)
+      =[m_(alpha^+)]s_lambda
+      =[x^alpha]s_lambda.
+
+The last equality holds because every monomial in the same exponent
+permutation orbit has the same coefficient in a symmetric function,
+and m_(alpha^+) has coefficient one on each such monomial. This is
+the precise duality used in the preceding Jacobi--Trudi coefficient
+calculation. It proves Lemma 91A as stated with no false intermediate
+equality. For alpha=(1,1,1,1), the two resulting coefficients are three
+and two, consistent with the independent SSYT check. Lemmas 91B--91C
+use only (P91.1), whose formulas and proof after this replacement are
+unchanged; their graph multiplicities, Theorem 91D and Corollary 91E
+retain the checked original-consumer proofs. QED.
+
+## 92. Arbitrary residual partitions: vanishing sectors and a sign-free star comparison
+
+The hard target remains (P80.6). This section supplies every first-overlap
+sector with a sufficiently unbalanced residual box profile, and reduces
+one of its unbounded balanced faces to an explicit Schur inequality.
+The reduction permits arbitrary residual partitions; it is not a finite
+box-degree extension. The inequality on that balanced face is not proved
+here beyond the suppliers already accepted in Sections 90--91.
+
+**Independent self-double-check immediately before recording.**
+
+1. Recomputed free cofactor residual degrees as t_i+indicator_(i=j).
+   Every root degree in the off-diagonal ring is at most the sum of
+   the other vertex degrees. A tail larger than all other tails plus
+   one violates this for every omitted vertex j, so the actual ideal
+   coefficient vanishes without a syzygy estimate.
+2. On the critical face of Lemma 92B, rechecked root length r,
+   background summed length r+3, tail degrees q+1 and q. A root
+   omission needs root degree q+2 against total background degree q.
+   Each background omission has equal root and background residual
+   degrees q+1 and hence only root edges. Tensor adjunction gives
+   exactly the length-truncated add-one Pieri operator. Only the
+   root middle term survives. The top term has root residual degree
+   exceeding total background residual degree by four, so it is zero.
+3. Rechecked all graph degrees: background boxes exceed root boxes
+   by two, forcing exactly one background edge. Only two defining
+   backgrounds can make that edge an isolated component. Their
+   weights are two at equal signs and zero at opposite signs; all
+   other graphs are connected with weight one. Every unit pair has
+   identical root Schur coefficient B.
+4. Independently minimized the unit-pair sign sum. Its minimum is
+   -floor(l/2), attained by balancing the signs on the l unit vertices.
+   The root sign can always be chosen to make total minus count even.
+   Thus the minimum is reached by actual consumers, not just a bound.
+5. For rank three with one row-(q+1) background and five defining
+   backgrounds, independent Weyl-numerator extractions at q=2,3
+   gave actual moments 55 for root (q+2,1,1) and 56 for root
+   (q+1,2,1). Independent skew-tableau star counts gave F_0=60 in
+   all four cases; source losses are five and four. The unit-pair
+   coefficients B are three and two, and the exact minimum coloured
+   targets are 54 and 56. These diagnose the identities, not prove
+   the remaining arbitrary-partition inequality.
+6. Replayed the original first-overlap identity and its normalized
+   Haar constants, every proper cut, odd minus parity, and actual
+   central quotients. The reduction keeps coefficientwise constant
+   one; no total-dimension estimate or generic-rank assumption is used.
+
+**Lemma 92A (a uniform residual-degree support condition for the ideal).**
+In the minimal first-overlap setting of Lemma 80C, set
+
+    l_i=ell(lambda_i),
+    t_i=|lambda_i|-l_i>=0,
+    sum_i l_i=2r+3.
+
+If for some vertex v
+
+    t_v>sum_(i!=v)t_i+1,                             (P92.1)
+
+then m_lambda(I_r)=0 and the original Q3 integral is nonnegative for
+every sign pattern. Thus only residual-degree profiles satisfying
+ t_v<=sum_(i!=v)t_i+1 for every v can have a nonzero relation loss.
+
+**Proof.** The actual ideal is an image of Lambda^(S-1)E tensor R,
+as in Lemma 80B. In its omitted-vertex j summand the cofactor has
+vertex degrees l_i-indicator_(i=j). To reach lambda, R would need
+vertex degrees d_i=t_i+indicator_(i=j). For every monomial of R,
+ d_v<=sum_(i!=v)d_i because every edge incident to v also contributes
+one degree to another vertex. If j=v, the necessary inequality is
+ t_v+1<=sum_(i!=v)t_i; if j!=v, it is
+ t_v<=sum_(i!=v)t_i+1. Both fail under (P92.1). The entire free-source
+coefficient is therefore zero, and so is its actual ideal image.
+For even minus count the original identity (P80.5) becomes
+Phi_G=2m_lambda(U_M)>=0; odd minus count gives zero. QED.
+
+**Lemma 92B (exact relation coefficient on the arbitrary-tail star face).**
+Let the root auxiliary dimension be r. Choose background dimensions
+1<=l_i<=r with sum_(i=1)^m l_i=r+3, and arbitrary partitions mu_i of
+length <=l_i. Set q=sum_i |mu_i| and
+
+    nu_i=(1^l_i)+mu_i,
+    lambda=(1^r)+tau,
+    ell(tau)<=r, |tau|=q+1,                          (P92.2)
+
+where addition pads each residual partition with zeros to the stated
+length. These are minimal-length actual vertex labels at S=2r+3.
+Define the length-truncated Pieri polynomial
+
+    P_i=sum_(eta/mu_i one box, ell(eta)<=l_i) s_eta.
+
+The actual relation coefficient on this face is exactly
+
+    D=m_(lambda,nu_1,...,nu_m)(I_r)
+      =[s_tau]{sum_i P_i product_(j!=i)s_(mu_j)
+                         -h_1 product_j s_(mu_j)}.   (P92.3)
+
+Schur coefficients can be taken in an r-variable alphabet; every label
+on the right that contributes to s_tau has length <=r.
+
+**Proof.** Use the complete exact resolution (P80.3), not only its free
+image. A root omission leaves root residual degree q+2 and background
+residual total q, impossible in R. A background omission i leaves
+root residual degree q+1 and background residual total q+1. Equality
+forces every residual edge to be incident to the root: a background
+edge would consume two background degrees without root degree.
+
+Factor out the determinants. At an unomitted background j, the root
+edge partition is exactly mu_j, by edge Cauchy and the target determinant
+shift. At omitted i, its cofactor is det(E_i) tensor E_i^*. The multiplicity
+of S_(mu_i) in E_i^* tensor S_eta is the multiplicity of S_eta in
+ E_i tensor S_(mu_i), by tensor adjunction. The one-box Pieri rule
+therefore gives exactly P_i, with the length bound imposed by E_i.
+The root coefficient of its product with the other tails is the i-th
+free-source term in (P92.3).
+
+In the middle term det(E) tensor E tensor R, a root summand leaves
+residual root degree q and background total q. Its pure root-edge
+product is product_j s_(mu_j), and the selected root E supplies h_1.
+A selected background summand leaves root residual q+1 and background
+total q-1, impossible. In det(E)^2 tensor R, nonnegative residual
+degrees, if any, would be q+1-r at the root and q-(r+3) in total at
+backgrounds. The root exceeds the backgrounds by four, again impossible.
+The exact alternating character is precisely (P92.3). QED.
+
+**Lemma 92C (the full positive target on this face and its minimum over signs).**
+Use (P92.2), and put p_i=s_(nu_i) and d_i=h_1^perp p_i, where
+ h_1^perp is the Hall adjoint of multiplication by h_1. Equivalently
+ d_i=sum_(eta:nu_i/eta one box) s_eta. Let l be the number of defining
+backgrounds nu_i=(1). Define
+
+    F_0=[s_lambda] sum_(i<j) d_i d_j product_(k!=i,j)p_k,
+
+    B=[s_lambda] h_1^(l-2) product_(nu_i!=(1))p_i  if l>=2,
+      0                                                   if l<2.
+
+Then for every even original minus pattern,
+
+    m_lambda(U_M)
+       =F_0+B sum_(i<j:nu_i=nu_j=(1)) epsilon_i epsilon_j.
+
+Its minimum over all even original minus patterns is exactly
+
+    min_M m_lambda(U_M)=F_0-floor(l/2)B.              (P92.4)
+
+**Proof.** The total background degree is r+3+q and the root degree is
+r+1+q. If x is the number of background--background edges, summing
+vertex degrees gives background degree minus root degree =2x.
+It follows that x=1. Thus every universal graph consists of root edges
+and exactly one background edge i--j, whose partition is (1).
+The local one-box Pieri rule at its endpoints gives d_i,d_j;
+other endpoints contribute p_k. Edge Cauchy and the root Schur
+coefficient give exactly the corresponding summand of F_0, with its
+full local representation multiplicities.
+
+Unless both endpoint labels are (1), the graph is connected: at least
+one background-edge endpoint still has a root edge, and every other
+vertex has positive root degree. It is therefore good with colour weight
+one for any even minus pattern. If both labels are (1), their pair is
+isolated and the remaining root-star component is nonempty. Its original
+colour weight is 1+epsilon_i epsilon_j, namely two at equal signs and
+zero at opposite signs. Subtracting the unweighted copy already counted
+in F_0 adds epsilon_i epsilon_j times its root coefficient. Since the
+labels at every defining background coincide, that coefficient is the
+same B for every such pair. This proves the target identity.
+
+For l unit vertices the pair sign sum is
+ [(sum_unit epsilon_i)^2-l]/2. The minimum square is zero for even l
+and one for odd l, so the minimum sum is -floor(l/2). It is attained
+by balanced unit signs. Signs at other backgrounds can be arbitrary;
+choosing epsilon_0 equal to their full sign product makes the original
+total minus count even. Thus this minimum is attained in the actual
+consumer family, proving (P92.4). QED.
+
+**Corollary 92D (the exact sign-free comparison on the arbitrary-tail face).**
+For the full family (P92.2), original Q3 for every sign pattern is
+equivalent to the single coefficient inequality
+
+    F_0-floor(l/2)B
+      >=[s_tau]{sum_i P_i product_(j!=i)s_(mu_j)
+                            -h_1 product_j s_(mu_j)}. (P92.5)
+
+This equivalence is proved; the general inequality is the open supplier.
+
+**Proof.** For even minus count, Lemma 80C gives Phi_G=2(U-D) with its
+original proper cuts and normalization. Lemmas 92B--92C compute D and
+the exact minimum of U. Since that minimum is attained, nonnegativity
+for all even patterns is equivalent to (P92.5). Odd patterns are zero.
+All labels are actual type C characters and Haar pullback preserves
+the original integral on central quotients. QED.
+
+**Demand sheet and next supplier for (P92.5).**
+
+- Quantifiers: all r>=1, every finite list l_i<=r with sum r+3,
+  arbitrary residual mu_i of length <=l_i, and every tau with
+  length <=r and degree sum_i |mu_i|+1. This is exactly the face
+  reached by Lemma 92B, not all of (P80.6).
+- Uniformity: residual degrees, first rows and shapes are unbounded;
+  no degree-dependent margin or fixed numeric specialization is used.
+- Strength: the displayed individual Schur coefficients and constant
+  one are consumed by Phi_G=2(U-D). Total homogeneous dimensions or
+  an unweighted graph comparison are stronger/different requirements.
+- Signs: only the attained balanced-unit-sign minimum is needed; the
+  other background signs and root sign have been consumed exactly.
+- Spaces and source: r-variable ordinary Schur coefficients, the actual
+  first-overlap relation ideal including both syzygy terms, and the full
+  component-colour target are retained in (P92.3)--(P92.4).
+- Application: proving (P92.5) would supply this entire arbitrary-tail
+  face of the original atomic integral. It would not alone supply
+  other balanced residual profiles, larger auxiliary dimensions, or
+  the other simple Lie types.
+
+At q=0, (P92.5) is consumed by Theorem 90B; at q=1 it is consumed by
+Lemma 91B (and Theorem 48A for short lists). The next direct supplier is
+a uniform Schur comparison for arbitrary residual partitions q>=2.
+The explicit one-background-edge formula removes graph enumeration,
+all sign patterns, and the relation resolution from that supplier's
+remaining algebraic task. No generic routing-rank claim is assumed.
+
+**Original-consumer receipt.** Lemma 92A supplies unbounded arbitrary-shape
+first-overlap sectors satisfying (P92.1). Lemmas 92B--92C and Corollary
+92D are an accepted exact reduction of a balanced arbitrary-tail face,
+not its general closure. The sign-free Schur inequality (P92.5) remains
+explicitly unproved outside the existing suppliers. The unchanged full
+all-group central positive-definite-cone target remains active.
+
+## 93. Tensor-path detours supply the entire arbitrary-tail star comparison
+
+The selected hard supplier is (P92.5), with all residual partitions and
+unbounded degree. It is supplied below. The mechanism is an injection of
+branching paths in actual tensor products, followed by the original cut
+sum. It also supplies a two-step dominant tensor-length region for any
+compact group and any nontrivial self-dual irreducible tensor generator.
+For type C this covers arbitrary root and background shapes with no
+auxiliary-dimension restriction. This does not supply the full cone for
+roots arbitrarily far below total background degree.
+
+**Independent self-double-check immediately before recording.**
+
+1. Rechecked intrinsic tensor length: dual invariance follows from
+   self-duality of T; product subadditivity follows by tensoring actual
+   embeddings. Reciprocal T branching multiplicities are equal, so an
+   edge changes length by at most one in either direction. Grade one
+   contains only T, since T is irreducible and nontrivial.
+2. At a top endpoint reached in l-2 tensor steps, every starting
+   constituent has maximal allowed grade D_0 and every step increases
+   grade by one. For l>=3 a detour can be inserted along each of those
+   l-2 existing edges. The unique grade-decreasing step records the
+   insertion position. Deleting the detour recovers every original
+   path and branching label. For l=2, the actual invariant in T^2
+   gives the required injection. No geodesic continuation at the
+   endpoint is assumed in the general compact-group argument.
+3. Checked the latter distinction on C_2 with its sign representation:
+   root grade one and three sign backgrounds give M=B=1 and balanced
+   original integral zero. The stronger factor l-1 would be false
+   there. The general factor max(1,l-2) and its original consumer pass.
+   For S_3, a sign root and four standard two-dimensional backgrounds
+   give M=3,B=1 and balanced original integral two. The endpoint has
+   no higher-grade neighbour; the existing-edge construction still works.
+4. For type C the first-row add/delete detour also exists at the
+   endpoint. Independent complete path enumeration gave
+   (up paths,detour images,total paths)=(1,4,5),(2,10,21),
+   (2,8,25),(6,30,135),(12,60,330) for the five selected rank/endpoint
+   examples in the terminal audit. Every image was decoded by its
+   unique downward step, including full-height starting partitions.
+5. Independently extracted actual USp(4) Weyl multiplicities for root
+   (4,2), one row-(2) background and six defining backgrounds. The
+   full and pair-removed moments are M=99 and B=6. Direct original
+   eight-factor cut sums for minus sets empty,{0,2},{2,3},{0,2,3,4}
+   were 378,258,186,162, exactly 2[M+B times the defining-pair sign sum].
+   The summed auxiliary dimension is nine, beyond the first-overlap
+   dimension seven. These are mechanism audits, not theorem suppliers.
+6. Verified the primary minuscule input in Etingof Corollary 30.7 and
+   Sections 30.4,31.1, and independently re-derived the type C rule
+   from Weyl alternants at every equality and zero-coordinate wall.
+7. Replayed every original cut when root grade is D-2. Its complementary
+   background total grade must be at most two. Nontrivial singleton
+   moments are zero; the only remaining nonempty complement is two
+   grade-one copies of T, whose invariant multiplicity is one.
+   The pair sign sum is bounded below by -floor(l/2). The injection
+   factor meets that exact bound for every l>=2.
+8. Checked the original Haar/Schur bridge for (P92.5). At equal root
+   and background box degree, every size-(2r+2) Pfaffian generator
+   leaves residual root degree exceeding total background degree;
+   the actual ideal coefficient is zero. Pure root-star Cauchy then
+   identifies its Schur coefficient B with the actual pair-removed
+   moment. Lemma 80A gives F_0-D as the actual full moment. Thus the
+   actual multiplicity injection supplies the original displayed
+   Schur inequality for every q, not just the audited degrees.
+9. Checked odd minus cancellation, complex irreducible characters,
+   dual labels, zero multiplicities, finite branching spaces, and
+   normalized Haar pullback on every actual type C central quotient.
+
+**Primary input.** The minuscule tensor rule is
+[Etingof, Corollary 30.7, printed page 160](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf#page=161).
+Sections 30.4 and 31.1 identify the type C defining module with this
+minuscule representation. The general compact-group argument below uses
+only tensor reciprocity; the detour injection and original cut comparison
+are derived here. The type C specialization is also checked directly
+from Theorem 26.4's Weyl character formula.
+
+**Lemma 93A (intrinsic tensor length and its branching graph).**
+Let G be any compact group and T a nontrivial self-dual irreducible
+finite-dimensional unitary representation. Let C_T consist of irreducibles
+occurring in T^(tensor n) for some n>=0. For alpha in C_T define
+
+    d(alpha)=min{n>=0: V_alpha occurs in T^(tensor n)}.
+
+Then d(alpha^*)=d(alpha), d(1)=0, and d(alpha)=1 precisely for V_alpha=T.
+Every constituent beta of a product of C_T representations has d(beta)
+at most the sum of their d-values. Write
+
+    N_(alpha,beta)=multiplicity of V_beta in V_alpha tensor T.
+
+These multiplicities satisfy N_(alpha,beta)=N_(beta,alpha). If this number
+is positive, |d(alpha)-d(beta)|<=1. Tensoring a finite representation U
+by T repeatedly is counted by paths in this graph, with each edge alpha--beta
+carrying N_(alpha,beta) separate branching labels.
+
+**Proof.** Self-duality of T identifies the dual of T^(tensor n) with the
+same tensor power, up to reversing factors; this proves equality of dual
+lengths. Its zeroth power is trivial and its first power is the irreducible
+T, proving the grade-zero and grade-one assertions. Tensoring the embeddings
+V_(alpha_i) into T^(tensor d(alpha_i)) proves product subadditivity.
+Tensor adjunction and T^*=T give
+
+    dim Hom(V_beta,V_alpha tensor T)
+      =dim Hom(V_beta tensor T,V_alpha)
+      =dim Hom(V_alpha,V_beta tensor T),
+
+where the last equality uses adjoints for unitary representations. Hence
+branching is symmetric, and each direction gives the one-step length bound.
+Choose an irreducible decomposition and a basis of each finite branching
+multiplicity space. Iterating tensor decompositions counts copies by the
+resulting labelled paths, with a label for each starting copy in U.
+All spaces and path sets at a fixed length are finite: they lie in finite
+products of finite-dimensional representations. QED.
+
+**Lemma 93B (detours along existing increasing edges are injective).**
+In the graph of Lemma 93A, let U_k(alpha,beta) be the set of labelled
+length-k paths all of whose steps increase d by one. For k>=1 there is
+an injection
+
+    {0,...,k-1} times U_k(alpha,beta)
+          -> P_(k+2)(alpha,beta),                     (P93.1)
+
+where P denotes all labelled branching paths. Every image has precisely
+one degree-decreasing step. A fixed positive branching label in each
+direction of every used undirected edge suffices for the inserted detour.
+
+**Proof.** Write a path as alpha_0,...,alpha_k, including its edge labels.
+For j<k use its existing edge alpha_j--alpha_(j+1), whose reverse is
+available by Lemma 93A. Replace the segment starting at alpha_j by
+
+    alpha_j -> alpha_(j+1) -> alpha_j -> alpha_(j+1),
+
+using fixed labels for the first two edges and retaining the original
+label on the third. The remaining original edges and labels are unchanged.
+All original steps increase degree by one; the second inserted step is
+the sole degree decrease. Its position identifies j. Deleting the first
+two inserted edges and their intermediate vertices leaves the original
+path with its original edge label still on the retained third edge.
+Thus both j and the original labelled path are recovered uniquely.
+No upward edge beyond the endpoint beta is needed. QED.
+
+**Lemma 93C (actual multiplicity growth at a top tensor-length endpoint).**
+Let U be a finite-dimensional unitary representation whose constituents
+belong to C_T and have d<=D_0. Let l>=2 and d(beta)=D_0+l-2. Put
+
+    B=mult_beta(U tensor T^(tensor(l-2))),
+    M=mult_beta(U tensor T^(tensor l)).
+
+Then
+
+    M>=max(1,l-2) B>=floor(l/2) B.                   (P93.2)
+
+**Proof.** For l=2 the invariant line in T tensor T exists and has
+multiplicity one, by self-duality and Schur's lemma. Tensoring its
+embedding by U gives U as a subrepresentation of U tensor T tensor T,
+so M>=B. If l>=3, set k=l-2. A path counted by B starts at a constituent
+alpha of U, with d(alpha)<=D_0, and reaches degree D_0+k in k steps.
+Lemma 93A bounds every increase by one. Thus it must start at degree
+D_0 and every step must increase by one. For each starting copy, Lemma
+93B injects k disjoint copies of these paths into the length-l paths
+counted by M, with the starting-copy label retained. This gives M>=kB.
+Finally max(1,l-2)>=floor(l/2): check l=2,3 directly, and for l>=4 use
+l-2>=l/2. These are individual irreducible multiplicities. QED.
+
+**Lemma 93D (the exact original cut consumer at tensor-length gap two).**
+With the same G,T,d, take a nontrivial irreducible root alpha and
+nontrivial background irreducibles beta_i in C_T. Suppose alpha is
+in C_T and
+
+    d(alpha)=D-2, D=sum_i d(beta_i).
+
+Let l be the number of backgrounds equal to T; let U be the tensor product
+of all other backgrounds. Write
+
+    M=integral chi_alpha product_i chi_(beta_i),
+    B=integral chi_alpha chi_U chi_T^(l-2)  if l>=2,
+      0                                   if l<2.
+
+For every even original minus count, the original whole integral is
+
+    Phi_G=2[M+B sum_(i<j:beta_i=beta_j=T)epsilon_i epsilon_j]. (P93.3)
+
+This identity is valid for complex irreducible characters as well: its
+integrated value is the displayed real integer cut sum.
+
+**Proof.** Choose from each complementary cut pair the side containing
+alpha. At even total minus count, the two cut coefficients agree.
+If its complementary background subset J has total grade >2, then the
+root-side background product has constituent grades strictly less than
+D-2. Since d(alpha^*)=D-2, its joint moment with chi_alpha is zero.
+Thus only complements of grade <=2 can contribute. A singleton
+nontrivial complement always has Haar moment zero, irrespective of its
+grade. All nontrivial background grades are positive integers. The only
+remaining nonempty complement therefore consists of two grade-one
+representations, both T by Lemma 93A. Their Haar moment is one, since
+T is self-dual irreducible. The root-side moment is the same B for
+every such pair. Its original coefficient is epsilon_i epsilon_j.
+The empty complement supplies M with coefficient one. Doubling the
+complementary pairs gives (P93.3), with every original cut accounted for.
+Character Haar moments are invariant dimensions, also for complex
+characters; self-duality is needed for T, not for alpha or other
+background labels. QED.
+
+**Theorem 93E (two-step dominant tensor-length Q3 for arbitrary compact groups).**
+Let G,T,d be as in Lemma 93A. For nontrivial background irreducibles
+beta_i in C_T, put D=sum_i d(beta_i). Let alpha be any nontrivial
+irreducible root. If alpha is outside C_T, its original Q3 integral is
+zero. If alpha is in C_T and
+
+    d(alpha)>=D-2,                                   (P93.4)
+
+then original Q3 is nonnegative for every sign pattern, every finite
+list and every choice of these irreducible labels. There is no rank,
+tensor-degree or tuple-length cutoff in this assertion.
+
+**Proof.** Every root-side background subset is in the tensor-generated
+category. If alpha is outside C_T, so is alpha^*, and all its root-side
+moments vanish. If A=d(alpha)>D, they again all vanish by subadditivity.
+For A=D or D-1, a nonzero complementary background subset can only have
+grade zero or at most one, respectively. The latter consists of a
+nontrivial singleton with zero moment. Thus only the endpoints survive:
+at even minus count Phi_G=2M>=0. Odd minus count always gives zero by
+swapping the two Haar variables.
+
+It remains to treat A=D-2 at even minus count. Use Lemma 93D. If l<2,
+its pair sum is empty and Phi_G=2M>=0. For l>=2 set
+D_0=sum_(beta_i!=T)d(beta_i), so A=D_0+l-2. Actual self-dual reciprocity
+identifies M and B with multiplicities of alpha^* in U tensor T^l
+and U tensor T^(l-2). Every constituent of U has grade <=D_0 by Lemma
+93A. Lemma 93C therefore gives M>=floor(l/2)B. For arbitrary signs
+among the l copies of T,
+
+    sum_(i<j)epsilon_i epsilon_j
+       =[(sum_i epsilon_i)^2-l]/2>=-floor(l/2).
+
+Consequently (P93.3) is nonnegative. This consumes the same actual
+Haar moments and all original signs, including equality cases. QED.
+
+**Lemma 93F (type C tensor length is box number, and endpoint detours exist).**
+On the simply connected compact symplectic group of rank r>=1, let
+V be its defining representation. For every partition alpha with
+ell(alpha)<=r, the actual tensor rule is multiplicity-free:
+
+    V_alpha tensor V
+       =direct-sum_(beta=alpha plus or minus one box, ell(beta)<=r)
+                    V_beta.                          (P93.5)
+
+Every irreducible belongs to C_V and d_V(alpha)=|alpha|. If U has only
+constituents of box number <=D_0, l>=2 and |beta|=D_0+l-2, then the
+stronger individual-multiplicity bound is
+
+    mult_beta(U tensor V^l)
+       >=(l-1) mult_beta(U tensor V^(l-2)).            (P93.6)
+
+**Proof.** Corollary 30.7 of the primary source gives (P93.5), since
+V has minuscule weight e_1 and weights +/-e_i, each once. To check its
+finite-rank walls directly, put rho=(r,r-1,...,1), a=alpha+rho, and
+A_a=sum_w det(w)x^(w a). Weyl's formula and Weyl invariance of the
+weight set give
+
+    chi_V A_a=sum_(nu in {+/-e_i}) A_(a+nu).
+
+The coordinates of a are strictly decreasing positive integers. A
+one-unit change either stays in that strict chamber or reaches a
+wall where two adjacent coordinates agree or the last coordinate
+is zero. In the latter cases the alternant is zero by the reflection
+fixing that weight. It cannot cross such a wall in one step. The
+remaining terms are exactly the dominant alpha+nu, with coefficient
+one. These are precisely the valid one-box additions and removals
+within r rows, proving (P93.5) in every rank and at every wall.
+
+Each actual constituent of V^n has box number <=n, by the highest-weight
+dominance functional of Corollary 76E. Conversely fill any prescribed
+partition row by row. This is a valid path of |alpha| successive box
+additions, staying within r rows, so repeated (P93.5) puts V_alpha in
+V^|alpha|. Thus tensor length equals box number.
+
+For the last assertion, every path counted in the shorter tensor power
+starts at box number D_0 and only adds boxes, as in Lemma 93C. At every
+vertex of such a path, including its endpoint, add one box to the first
+row and immediately remove it. This is always a valid two-step detour
+within rank r. There are l-1 insertion positions on a path of length
+l-2. The unique removal step identifies the insertion position, and
+deleting that detour recovers the path and its starting-copy label.
+This is an injection of l-1 copies into the longer tensor power. It
+also works when l=2, when the original path has length zero. QED.
+
+**Theorem 93G (all-degree, all-length type C Q3 at box gap at most two).**
+For every actual compact connected type C_r group, any nontrivial actual
+root character chi_alpha and nontrivial actual background characters
+of total box number D, original Q3 is nonnegative for all signs whenever
+
+    |alpha|>=D-2.                                    (P93.7)
+
+In particular the entire face |alpha|=D-2 is supplied for arbitrary
+root shape, background shapes, degree and summed auxiliary dimension.
+
+**Proof.** Pull back to the simply connected symplectic group and use
+Lemma 93F to identify its defining tensor length with box number.
+Theorem 93E supplies the original actual integral. Normalized Haar
+pushforward gives the same integral on every central quotient, using
+its actual descending labels. The defining representation is used on
+the cover for the proof; it is not assumed to descend to the quotient.
+Trivial backgrounds can be removed with their original factor two,
+or give a zero minus factor. Odd minus count remains zero. QED.
+
+**Lemma 93H (the actual extremal moment equals its pure-star Schur coefficient).**
+For type C_r, take any actual root alpha and background labels beta_i,
+with |alpha|=sum_i |beta_i|. Then
+
+    integral chi_alpha product_i chi_(beta_i)
+      =[s_alpha] product_i s_(beta_i)                 (P93.8)
+
+in an r-variable ordinary Schur alphabet.
+
+**Proof.** Apply Lemma 80A with root auxiliary dimension r and background
+dimensions ell(beta_i), omitting trivial background labels. Let the
+common degree be d. The actual ideal is generated by the image of
+Lambda^(2r+2)E. In any generator summand let a be its root degree.
+Necessarily a<=r. A coefficient reaching the root and background targets
+would require residual R degrees d-a at the root and
+ d-(2r+2-a) in total at the backgrounds. Their difference is
+2r+2-2a>=2. This is impossible: every root-incident edge of R also
+contributes to background degree. Thus the full free generator image
+has zero coefficient at these targets, and so does the actual ideal.
+The actual moment equals the universal moment by (P80.2).
+
+In the universal graph sum, equal total root and background degrees
+force zero background--background edges. All graphs are pure root
+stars. At each background its edge partition is exactly beta_i, and
+the root coefficient is the ordinary coefficient in product_i s_(beta_i),
+by edge Cauchy. This proves (P93.8), without a stable-range assumption.
+If all labels are trivial the identity is one; if a degree is absent
+the same degree argument or empty product applies. Haar pullback gives
+all actual central quotients. QED.
+
+**Theorem 93I (the entire sign-free arbitrary-tail comparison (P92.5)).**
+For every parameter choice of (P92.2), with arbitrary residual partitions,
+the inequality (P92.5) holds. More precisely, put L for the actual ideal
+multiplicity D in (P92.3), retaining F_0,B,l from Lemma 92C. If l>=2,
+then
+
+    F_0-floor(l/2)B-L
+       >=[l-1-floor(l/2)]B>=0.                       (P93.9)
+
+If l<2, B=0 and F_0-L is a nonnegative actual joint moment.
+
+**Proof.** The background total boxes exceed root boxes by two.
+Lemma 92C's unweighted star coefficient F_0 is therefore exactly the
+universal full joint moment. Lemma 80A gives its actual value
+M=F_0-L. For l>=2, removing a defining pair leaves total background
+boxes exactly |lambda|. Lemma 93H identifies its actual moment with
+precisely the ordinary Schur coefficient B defined in Lemma 92C.
+Set U to the product of the nondefining backgrounds and D_0 to their
+total boxes. Every actual constituent of U has boxes <=D_0 by highest-
+weight dominance, and |lambda|=D_0+l-2. Lemma 93F supplies M>=(l-1)B.
+Substitution yields (P93.9). For l<2 the actual full moment is nonnegative
+and B is defined to be zero. This proves (P92.5) for all q, all shapes,
+all ranks and all original signs through Corollary 92D.
+
+The same conclusion also follows from Theorem 93G directly on the
+original whole integral. The Schur/actual-moment bridge above checks
+that this direct proof supplies the exact previously named inequality,
+rather than replacing it with a nearby consumer. QED.
+
+**Original-consumer receipt and next hard comparison.** Theorem 93I
+supplies the previously open (P92.5) for arbitrary residual partitions;
+no q cutoff remains on that face. Theorem 93G supplies the larger
+all-auxiliary-dimension region (P93.7), and Theorem 93E supplies its
+intrinsic tensor-length counterpart for any compact group with a
+self-dual irreducible tensor generator. These are actual multiplicity
+injections followed by the original whole cut integral. They do not
+claim full Q3 for independently arbitrary low-degree roots and high-
+degree backgrounds.
+
+The next unconsumed type C sectors have every possible distinguished
+root at least four boxes below its complementary background total;
+odd total degree is zero, and (P93.7) handles any root nearer the top.
+At gap four, proper complements can contain larger nontrivial invariant
+products, not only a defining pair, so the one-detour count alone does
+not supply the full signed correction. The full comparison (P80.6)
+outside the supplied faces, larger-rank-relation cut budgets and all
+other unsupplied real-atom tuples remain obligations of the unchanged
+all-group full continuous central positive-definite-cone target.
+
+## 94. Row-capacity vanishing and the exact four-box cut budget
+
+The selected hard target is original Q3 at distinguished box gap four.
+The previous one-detour theorem supplies smaller gaps. This section
+supplies every gap-four tuple with a root of at most r-2 rows, and every
+gap-four tuple with at most one defining background. More generally it
+supplies a rank/row strip of arbitrary box gap. The remaining gap-four
+consumer is the whole positive-versus-negative cut budget below, retaining
+positive degree-two pair cuts as well as defining-pair cuts.
+
+**Independent self-double-check immediately before recording.**
+
+1. Re-derived each size-(2r+2) Pfaffian generator's root degree a<=b.
+   The residual root degree exceeds the total residual background
+   degree by 2r+2-(D-A)-2a. Under the strict bound in Lemma 94A this
+   is positive for every generator summand. Thus the actual ideal
+   image has zero coefficient, without counting generators or syzygies.
+2. Replayed every original cut under that bound. A nonzero root-side
+   universal moment forces the complementary degree <=D-A<2r+2.
+   Its actual moment is stable. The same generator bound removes
+   the root-side defect at every cut. Hence the entire signed integral
+   is exactly the nonnegative universal component-colour sum.
+3. Independently computed actual USp(8) Weyl-numerator moments and
+   GL(2) root-edge Schur coefficients for root (4,2), backgrounds
+   (2,1),(1,1) and five defining atoms. Actual and universal full
+   moments are both 699. The defining-pair-removed moment is 30,
+   the C,V,V-removed top moment is three, and the four-V-removed
+   top moment is one. Original cut integrals for minus sets empty,
+   {0,2},{0,3},{3,4},{0,2,3,4} were 2088,1968,1512,1272,1296,
+   each exactly twice its component-colour target. Summed auxiliary
+   dimension is eleven, beyond the all-degree first-relation limit ten.
+   These are diagnostics of the uniform row-capacity proof.
+4. Rechecked the complete gap-four complement classification. Odd
+   box degree has zero Haar moment. The remaining nonempty invariant
+   complements are two defining atoms; two equal degree-two atoms;
+   a degree-two atom and two defining atoms; four defining atoms.
+   Distinct two-factor irreducibles and nontrivial singletons vanish.
+5. Rechecked V^2=1+H+C, with C absent at rank one. Thus H,V,V and
+   C,V,V have moment one, while V^4 has moment three, or two at rank
+   one. All degree-four-removed root moments are actual extremal
+   moments, matched to ordinary Schur coefficients by Lemma 93H.
+6. Replayed the at-most-one-V induction under opposite-sign fusion.
+   Background squares have only even-degree constituents, so cannot
+   create V. Their total degree never increases. A root/background
+   repeat leaves background degree at most four, consumed by Theorem
+   91D for every replacement root. After disjoint-support reduction,
+   no negative gap-four complement survives when there are <=1 V's.
+7. A separate explicit rank-two Laurent coefficient calculation gave
+   the counterconsumer in Proposition 94E: M=9, defining-pair-removed
+   B=0, each of three negative triple coefficients one, and each of
+   three positive equal-C pair coefficients one. Its original integral
+   is eighteen. This rejects only an overstrong assignment to B alone;
+   the exact whole budget retains the cancelling positive pair terms.
+8. Checked original signs, even-minus restriction, roots matching
+   background atom types, trivial factors and actual central-quotient
+   Haar pullback. No additional sign freedom is assumed in the pending
+   comparison, and no total-dimension estimate replaces its coefficients.
+
+**Lemma 94A (root-row capacity excludes a finite-rank relation).**
+Let G have type C_r, let alpha be a nontrivial actual root label with
+A=|alpha| and b=ell(alpha)<=r, and let nontrivial actual backgrounds
+have total box number D. In the actual quotient of Lemma 80A,
+
+    D-A<2(r+1-b)  implies m_(alpha,beta)(I_r)=0.       (P94.1)
+
+The statement has no summed auxiliary-dimension, degree or length bound.
+
+**Proof.** Use minimal root auxiliary dimension b and minimal background
+dimensions. The ideal is the image of its generator map
+Lambda^(2r+2)E tensor R -> I_r. In any summand of this exterior coefficient
+representation let a be the number of selected root slots. Then a<=b;
+the other 2r+2-a selected slots are backgrounds. A coefficient reaching
+the specified targets would require residual R-degree A-a at the root
+and total residual degree D-(2r+2-a) at the backgrounds. Their difference
+is 2r+2-(D-A)-2a, positive under the displayed hypothesis. But every
+root-incident edge of R also contributes one background degree, so the
+root degree of any monomial is at most its total background degree.
+This contradiction excludes every free generator summand and hence
+every coefficient of its actual ideal image. Negative residual degrees
+also cannot contribute. QED.
+
+**Theorem 94B (the original integral agrees with the universal model in the root-row strip).**
+For every type C_r group, root and backgrounds as above satisfy original
+Q3 for every sign pattern if D-A<2(r+1-b). In that range every original
+cut product agrees with the universal cut product and
+
+    Phi_G=Phi_*=2 m_(alpha,beta)(U_M)>=0               (P94.2)
+
+at even minus count. In particular, allowing total-degree parity and
+Theorem 93G, a sufficient all-degree criterion is
+
+    A+2 max(1,r-b)>=D.                               (P94.3)
+
+Thus every gap-four tuple with b<=r-2 is supplied, with arbitrary
+background shapes and tuple length.
+
+**Proof.** For any original cut, take its side containing the root,
+and let D' be the total background degree on that side. If D'<A,
+its universal moment is zero: root degree exceeds total background
+edge degree. Its actual moment is then zero by Lemma 80A's quotient
+comparison, so both cut products vanish. Otherwise the complementary
+background degree is D-D'<=D-A<2(r+1-b)<=2r. The complementary moment
+has total degree less than 2r+2 and no Pfaffian-generator coefficient,
+so is actual-stable by Lemma 80A. The root-side ideal coefficient
+vanishes by Lemma 94A, since D'-A<=D-A. Thus both moments agree on
+this cut. This includes the two endpoints and every proper cut.
+The universal component formula of Lemma 74A proves (P94.2), with its
+original colours and normalization. Odd minus count is zero.
+
+For (P94.3), an odd total box number gives zero by simultaneous central
+-I translation on the symplectic cover. At even total, D-A is even.
+If r-b>=1, the displayed integer inequality gives D-A<=2(r-b), which
+is strictly less than 2(r+1-b), reaching the proved strip. If r-b=0,
+it gives D-A<=2, supplied by Theorem 93G. For b<=r-2 the gap-four
+case lies in the strict strip. Haar pullback proves these statements
+for all actual descending labels on every central quotient. QED.
+
+**Lemma 94C (the exact original cut formula at box gap four).**
+Let the root alpha be nontrivial with A=D-4. Among nontrivial backgrounds
+let l be the number of V=(1), h the number of H=(2), and c the number of
+C=(1,1); C is absent at rank one. Let R be the ordinary Schur product
+of all other background labels, each of degree >=3. Write M for the
+actual full joint moment and, if l>=2, B for the actual moment after
+removing two V backgrounds. Set B=0 if l<2. Define the following ordinary
+r-variable Schur coefficients, setting any term with insufficient
+available backgrounds to zero:
+
+    T_H =[s_alpha] R h_1^(l-2) h_2^(h-1) e_2^c,
+    T_C =[s_alpha] R h_1^(l-2) h_2^h e_2^(c-1),
+    T_HH=[s_alpha] R h_1^l h_2^(h-2) e_2^c,
+    T_CC=[s_alpha] R h_1^l h_2^h e_2^(c-2),
+    T_4 =[s_alpha] R h_1^(l-4) h_2^h e_2^c.
+
+Let P_2,P_4 be the elementary sign sums over pairs and quadruples of
+V positions; S_H,S_C the sign sums on H,C positions; Q_H,Q_C the pair
+sign sums within H,C positions. Set k_r=2 at r=1 and k_r=3 at r>=2.
+At every even original minus pattern the whole integral is
+
+    Phi_G/2=M+P_2 B+Q_H T_HH+Q_C T_CC
+                     +P_2(S_H T_H+S_C T_C)+k_r P_4 T_4. (P94.4)
+
+Every symbol here is an individual actual moment or a matched Schur
+coefficient, not a total representation dimension.
+
+**Proof.** Choose the root-containing side in each complementary cut pair.
+A nonzero root-side moment requires its background total degree at least
+A, by highest-weight dominance as in Corollary 76E. Hence its complementary
+background subset has total degree at most four. Nontrivial singletons
+have zero moment. Odd-degree subsets have zero moment by central -I.
+At degree two, only two V labels give a nonzero moment, equal to one.
+At degree four, two equal degree-two labels give moment one; a degree-two
+label and two V labels give moment one; four V labels give moment k_r.
+All other possibilities vanish: two distinct irreducibles are orthogonal,
+and a degree-three label paired with V is distinct from V.
+
+The small moments follow from the actual decomposition V tensor V=1+H+C,
+where C is omitted at rank one, by Lemma 93F. Thus H,V,V and C,V,V each
+have invariant multiplicity one, and V^4 has multiplicity 1+1+1 or 1+1.
+The empty complement gives M. Two V's leave the same actual moment B.
+Every nonzero degree-four complement leaves background degree exactly A,
+so Lemma 93H identifies its root-side moment with the listed ordinary
+Schur coefficient. Summing the original complement sign products yields
+precisely P_2,Q_H,Q_C,P_2 S_H,P_2 S_C,P_4. Complementary cut coefficients
+agree at even minus count, giving the original factor two. This proves
+(P94.4) with all cuts, constants and rank-one cases included. QED.
+
+**Theorem 94D (four-box dominance with at most one defining background).**
+For every actual compact connected type C_r group, a nontrivial arbitrary
+root and arbitrary nontrivial backgrounds satisfy original Q3 for all
+signs whenever
+
+    A>=D-4,
+    number of backgrounds equal to V <=1.            (P94.5)
+
+Degrees, shapes and tuple lengths are unrestricted. In particular all
+gap-four tuples on a type C central quotient to which V does not descend
+are supplied, regardless of root row length.
+
+**Proof.** Use strong induction on the original number of positions.
+Odd minus count or odd total box number gives zero. At A>=D-2 use Theorem
+93G; the only remaining even degree case is A=D-4. Remove trivial factors
+with their original effects, as usual.
+
+If an atom occurs with both signs in two background positions, use
+Proposition 41A's finite nonnegative fusion replacement (P41.2). Each
+replacement atom eta has |eta|<=2|beta|, so the new background total D'
+never exceeds D, and A>=D'-4. Moreover every constituent of a tensor
+square has even box parity, since central -I acts trivially on that
+square. It cannot be V. Thus the number of defining backgrounds cannot
+increase. A trivial replacement is a zero minus factor; every other
+replacement has fewer positions and meets the induction hypotheses.
+
+If the root itself occurs with the opposite sign in a background,
+apply the same replacement to that pair and regard its replacement
+atom as the new distinguished root. The remaining backgrounds have
+box total D-A<=4. Theorem 91D supplies their original integral for every
+new root atom and every sign, since 4<=r+4. Trivial replacements again
+have their original effect. This handles the root/background repeat
+without assuming the induction condition on the new root degree.
+
+It remains to consider disjoint plus/minus atom supports. Each H type
+then has one common sign, and likewise C. Since there are at most one
+V background, P_2=P_4=0. The pair sums Q_H=binomial(h,2) and
+Q_C=binomial(c,2) are nonnegative. Formula (P94.4) therefore consists
+only of M and nonnegative Schur coefficients. This proves the inductive
+step; the endpoint/empty background cases are already supplied by
+Theorem 93G or a zero nontrivial root moment. Actual quotient labels
+pull back to the same characters and normalized Haar integral. On a
+quotient without the defining module, no such actual background can
+occur, so the final assertion follows. QED.
+
+**Proposition 94E (one positive pair term cannot absorb all negative triples).**
+The stronger proposed gap-four assignment
+
+    B>=sum_(degree-two minus backgrounds i) T_i        (P94.6)
+
+fails even on an actual disjoint-support even-minus input. At rank two,
+take root Z=(2,2) minus, three C=(1,1) backgrounds minus, and two V
+backgrounds plus. Its values are
+
+    M=9, B=0, T_C=1, T_CC=1,
+    Phi_G=2[9+0+3-3]=18.                              (P94.7)
+
+The failed knob is assigning the entire negative-triple budget to B
+alone. The original consumer also has the positive equal-C pair terms;
+those terms cancel the three negative triples here. This is not a
+counterexample to Q3 or to the whole budget below.
+
+**Proof.** On the USp(4) defining torus put u=x+x^(-1), v=y+y^(-1).
+Then chi_V=u+v and chi_C=1+uv, from V^2=1+H+C or the primitive exterior
+square character. Use the rank-two Weyl alternant with rho=(2,1) and
+Z+rho=(4,3). For the four polynomials needed here, no exponent of x
+has absolute value six or more. Their Z multiplicity is therefore
+
+    p_(2,2)-p_(2,4)-p_(3,1)+p_(3,5)+p_(5,1)-p_(5,5),
+
+where p_(a,b) is the Laurent coefficient at x^a y^b. The two remaining
+Weyl terms have x-exponent six and are zero. Direct binomial expansion
+of (1+uv)^j(u+v)^k gives the exact coefficient table
+
+    polynomial       (2,2) (2,4) (3,1) (3,5) (5,1) (5,5)  Z multiplicity
+    C^3                  3     0     3     0     0     0        0
+    C^2                  1     0     0     0     0     0        1
+    C V^2                2     0     1     0     0     0        1
+    C^3 V^2             62    11    46     1     3     0        9
+
+Thus the actual B is zero, each C-removed top moment is one, each
+C-pair-removed top moment is one, and the full moment is nine. The
+root has four boxes, backgrounds eight, so this is exactly gap four.
+There are four minus positions and disjoint signs for the atom types
+Z,C,V. Formula (P94.4) has P_2=1,S_C=-3,Q_C=3 and no quartet term,
+giving (P94.7). This proves the specific failed stronger assignment
+and checks its exact whole-cut consumer. QED.
+
+**Matched remaining gap-four supplier.** After the terminating fusion
+reduction in Proposition 41A (with the degree-preserving induction check
+of Theorem 94D), the remaining input has disjoint sign supports. Write
+h_-,c_- for the counts of minus H,C backgrounds, and h_+,c_+ for the
+plus counts. Within each of those atom types at most one sign count
+is nonzero; all V backgrounds also have one common sign. Formula
+(P94.4) reduces the remaining original integral to the single budget
+
+    M+binomial(l,2)B
+      +binomial(h,2)T_HH+binomial(c,2)T_CC
+      +k_r binomial(l,4)T_4
+      +binomial(l,2)[h_+ T_H+c_+ T_C]
+        >=binomial(l,2)[h_- T_H+c_- T_C].             (P94.8)
+
+This is the actual whole cut budget; its general supplier remains unproved.
+Theorems 94B--94D already supply any case with b<=r-2 or l<=1.
+
+**Demand sheet for (P94.8).**
+
+- Labels: every r>=1, nontrivial root A=D-4 of length b in {r-1,r}
+  (omit b=0), arbitrary actual background shapes, and l>=2. These are
+  the gap-four cases not yet supplied by the row strip or sparse-V proof.
+- Degree and tuple uniformity: all first rows, box degrees and lengths;
+  no finite auxiliary-dimension or certificate range is used.
+- Signs: precisely disjoint-support even-minus patterns actually reached
+  by the original reduction. Root/background equal types must retain
+  their common sign; unused independent sign choices are not imposed.
+- Constant and coefficients: the individual moments and Schur coefficients
+  in (P94.4) with the displayed binomial factors. The consumer needs
+  exactly (P94.8), not the stronger term assignment (P94.6), not a
+  free-generator injection and not total homogeneous dimensions.
+- Rank cases: c=0,k_r=2 at rank one; otherwise k_r=3. These constants
+  are the actual V^4 moments consumed in the original cut formula.
+- Return test: substitute a supplier in (P94.4), retaining every positive
+  pair/quartet term, then apply the degree-nonincreasing fusion induction
+  for arbitrary original sign supports. No new norm or pointwise positivity
+  assumption is needed.
+
+**Original-consumer receipt.** Lemma 94A is new uniform evidence excluding
+relations by root-slot capacity, and Theorem 94B consumes it on every
+original cut. Theorem 94D is a new uniform original-integral supplier
+for arbitrary root rows at at-most-one-V background support. Lemma 94C
+is an exact reduction of the remaining gap-four case, not its closure.
+Proposition 94E explains why the natural individual-term assignment
+fails at a knob stronger than the consumer uses; the positive equal-C
+pair terms in the actual budget remain active. The next direct task is
+to construct a supplier of (P94.8), including those terms, for the
+remaining full-height roots and l>=2. The full all-group central
+positive-definite-cone target remains unchanged and active.
+
+## 95. Central parity supplies four-step dominance for real atoms beyond type C
+
+The sparse-generator supplier of Theorem 94D has an intrinsic tensor-length
+proof. This section supplies it directly for actual real dual-orbit atoms,
+including paired complex irreducibles, whenever a self-dual irreducible
+generator has a central element acting by minus one. It then consumes that
+supplier on types B,C,E7 using their unique nonzero minuscule modules.
+The four-step dominance and sparse-generator hypotheses remain explicit;
+this is not full-cone closure for arbitrary atomic lists.
+
+**Independent self-double-check immediately before recording.**
+
+1. Re-derived the parity of every T-generated constituent from T(z)=-Id.
+   Its tensor length has the same parity as its central sign. Dual
+   irreducibles have the same grade and central sign, so a paired real
+   atom has one scalar sign on both summands. Its square has even grade
+   constituents and can never produce the unique grade-one atom T.
+2. Checked that each paired real atom of grade a embeds in T^a: the
+   two distinct irreducibles occur there with equal multiplicities.
+   Product grade bounds therefore apply to the actual real-atom modules,
+   not an imposed positivity statement for unrelated complex inputs.
+3. Replayed the complete grade-four complement list with <=one T.
+   Odd complements vanish, singletons vanish, and a grade-one/grade-three
+   pair is orthogonal. Only two equal grade-two dual-orbit atoms can
+   survive. Their invariant multiplicity is one or two, and their sign
+   is positive after disjoint-support reduction.
+4. Replayed both fusion cases. Background repeats never increase total
+   grade or create T. A root/background repeat leaves at most four
+   nontrivial background positions because their summed grade is <=4.
+   Theorem 41B supplies every replacement root without a grade assumption.
+   The two-step region uses Theorem 93E on each actual complex constituent,
+   with the same dual-orbit grades; the intervening three-step gap is odd.
+5. Independently checked the faithful-generation bridge using matrix
+   coefficients. The tensor-power algebra is self-adjoint, contains one
+   and separates points. Uniform Stone--Weierstrass density and Schur
+   orthogonality exclude a missing irreducible. No finite tensor cutoff
+   is asserted by this argument.
+6. Verified Etingof Section 30.4, Proposition 30.16 and Corollary 43.5:
+   B,C,E7 each have one nonzero minuscule weight, P/Q has order two,
+   and its nonzero class is the nontrivial central character. Duality
+   preserves minuscule weights, so uniqueness makes the module self-dual.
+   Its central minus action excludes the kernel of the simply connected
+   representation, making it faithful. All quotient applications use
+   actual descending labels and normalized Haar pushforward.
+
+**Lemma 95A (central parity on actual real atoms and fusion squares).**
+Let G be a compact connected group with simple Lie algebra, T a nontrivial
+self-dual actual irreducible module, and z a central element with T(z)=-Id.
+Use C_T and d from Lemma 93A. For a real atom W of (P28.1) whose constituents
+belong to C_T, put d(W)=d(alpha) for its dual-orbit label. Then W is a
+subrepresentation of T^d(W), z acts on W by (-1)^d(W), and every real atom
+in W tensor W has even grade at most 2d(W). Grade one has only the atom T.
+
+**Proof.** Dual lengths are equal by Lemma 93A. In a self-dual tensor power,
+the multiplicities of an irreducible and its dual are equal. Thus if the
+atom is paired, both summands occur in the same minimal tensor power,
+with at least one copy of each; the atom itself embeds. An unpaired atom
+embeds by definition. On T^n the central element acts by (-1)^n, hence
+on every constituent by that scalar. This forces the parity of all
+occurrence lengths, including the minimum, and gives the central action
+on either real-atom summand. W^2 has central action plus one, so each
+constituent's grade is even. Its embedding in T^(2d(W)) gives the upper
+bound. No grade-one atom can occur in the square, and the only grade-one
+irreducible or real atom is T by Lemma 93A. QED.
+
+**Theorem 95B (four-step dominant real-atom Q3 with at most one generator background).**
+With G,T,z as in Lemma 95A, take nontrivial background real atoms W_i
+in the tensor-generated category, put D=sum_i d(W_i), and assume at
+most one background atom is T. For a nontrivial real root atom W_0:
+if its dual orbit is outside C_T, its original integral is zero; if
+it is inside and
+
+    d(W_0)>=D-4,                                     (P95.1)
+
+then its original whole Q3 integral is nonnegative for every sign pattern.
+All degrees, ranks and tuple lengths in this assertion are unrestricted.
+
+**Proof.** A root orbit outside C_T has both irreducibles outside, by
+Lemma 93A's dual closure. Every root-side background product has its
+constituents inside C_T, so the joint moment with that root is zero.
+For a root inside, use strong induction on the number of nontrivial
+positions. Odd minus count is zero. Odd total grade is zero by simultaneous
+translation of both Haar variables by z: each real atom contributes its
+scalar sign from Lemma 95A.
+
+When A=d(W_0)>=D-2, expand each paired real atom into its two genuine
+irreducible characters. Every component has its atom's same grade.
+Theorem 93E supplies each original component integral, with nonnegative
+expansion coefficients and unchanged signs. This supplies the real-atom
+integral. After odd total grade has been removed, the only remaining
+case under (P95.1) is A=D-4.
+
+If opposite signs occur for the same atom in two background positions,
+apply (P41.2). Lemma 95A bounds every replacement atom's grade by twice
+the original grade and makes that grade even. Thus D'<=D and A>=D'-4,
+while no new T atom is created. Trivial minus replacements give zero;
+all other replacements have fewer positions and meet the same induction
+hypotheses. If instead the repeat is between root and background, make
+the same replacement and use the replacement atom as the distinguished
+root. The remaining backgrounds have summed grade D-A<=4. All their
+nontrivial grades are at least one, so there are at most four remaining
+backgrounds. Including the arbitrary replacement root gives at most
+five positions. Theorem 41B supplies every such original real-atom
+integral; trivial replacements again have their original effects.
+
+We can therefore assume disjoint plus/minus dual-orbit supports. Choose
+root-containing representatives of the complementary cut pairs. A
+nonzero root-side moment requires the grade of its background product
+at least A, because both irreducible summands of the root dual orbit
+have grade A. Thus the complement has grade <=4. A nontrivial singleton
+has no invariant. Odd complement grade has no invariant by z-parity.
+At grade two, a nonsingleton would require two copies of the grade-one
+atom T, impossible under the hypothesis. At grade four, the only possible
+nonsingleton grade partitions are 1+3,2+2,1+1+2,1+1+1+1. The first has
+zero moment by dual-orbit orthogonality, since the two grades differ;
+the last two require at least two T backgrounds. Hence the only surviving
+nonempty complement is a pair of grade-two real atoms of the same dual
+orbit. Disjoint sign supports make their sign product positive, and
+their Haar moment is one for a self-dual atom or two for a paired atom.
+Every root-side moment is a genuine invariant dimension and nonnegative.
+The endpoints are nonnegative as well. The original complementary-cut
+sum therefore has only nonnegative terms. This proves the inductive step
+with the original factor two and normalized Haar. QED.
+
+**Lemma 95C (a faithful self-dual tensor generator reaches every irreducible).**
+If T is a faithful finite-dimensional self-dual unitary representation of
+a compact group, every irreducible representation belongs to C_T. Tensor
+length may be arbitrarily large; no uniform finite bound is asserted.
+
+**Proof.** Let A be the span of matrix coefficients of all T^n, n>=0.
+Multiplication of coefficients is a coefficient of a tensor product,
+so A is an algebra containing the constants. Self-duality implies that
+complex conjugates of coefficients are again coefficients of an equivalent
+tensor power. Thus A is self-adjoint. Faithfulness makes its matrix
+coefficients separate group points. The complex Stone--Weierstrass theorem
+therefore gives uniform density in C(G), and hence density in L^2 of
+normalized Haar measure. If an irreducible sigma were absent from every
+T^n, Schur orthogonality would make each of its matrix coefficients
+orthogonal to A. A nonzero irreducible matrix coefficient has positive
+L^2 norm; it cannot be orthogonal to a dense subspace. This contradiction
+proves the assertion. QED.
+
+**Lemma 95D (the unique nonzero minuscule module is a faithful parity generator).**
+For the simply connected compact group of type B_r (r>=2), C_r (r>=1),
+or E7, let T be the unique nonzero minuscule module: respectively the
+spin module of dimension 2^r, the defining module of dimension 2r, or
+the minuscule module of dimension 56. Then T is self-dual and faithful;
+its centre has order two and its nonidentity element acts on T by -Id.
+Consequently its tensor length is finite on every irreducible.
+
+**Proof.** The classification in
+[Etingof, Section 30.4](https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf#page=165)
+gives the unique nonzero minuscule module and the stated dimensions.
+Proposition 30.16 identifies minuscule weights bijectively with P/Q.
+There are precisely two, counting zero, so P/Q has order two and the
+nonzero minuscule weight represents its nontrivial class. The dual of
+a minuscule module is minuscule, since its weights are the negative of
+a single Weyl orbit; uniqueness forces T^*=T. Corollary 43.5 and its
+central-character identification give centre dual P/Q. Its nontrivial
+central element therefore acts on T by -Id.
+
+The derivative of a nontrivial representation of a connected group
+with simple Lie algebra is nonzero and has ideal kernel, hence is
+injective. The group kernel is consequently discrete, finite by
+compactness, normal, and central: conjugation on a finite normal subgroup
+is constant on the connected group. Since the centre has order two and
+its nontrivial element does not act trivially, the kernel is trivial.
+Thus T is faithful. Lemma 95C now supplies every irreducible. QED.
+
+**Corollary 95E (the original four-step region for types B,C,E7, including quotients).**
+Let G be any compact connected target group of one of the types in
+Lemma 95D. Evaluate the tensor lengths of its actual real dual-orbit
+atoms after pullback to the simply connected compact cover, using the
+module T of Lemma 95D. For nontrivial background atoms put D=sum_i d(W_i).
+If at most one of those pullbacks is T and d(W_0)>=D-4, then original
+Q3 is nonnegative for every sign pattern. On a quotient to which T does
+not descend, the at-most-one hypothesis holds automatically with zero
+such backgrounds.
+
+**Proof.** Every actual irreducible pulls back irreducibly under a
+surjective central cover, and dual-orbit grouping is unchanged. Lemma
+95D supplies finite grades, self-duality of T and the central minus
+element on that cover. Theorem 95B applies to the entire original real-
+atom tuple there. Pushforward of normalized Haar under a compact group
+surjection is normalized Haar, so the original double integral on G
+is exactly the cover integral. T is a proof generator on the cover;
+its descent to G is not imposed. This proves every stated quotient
+case with the same constants and signs. QED.
+
+**Original-consumer receipt.** Theorem 95B supplies actual real-atom
+integrals with paired complex irreducibles through the four-step region
+(P95.1), rather than demanding positivity on an unrelated complex
+constituent family. Lemmas 95C--95D discharge the generator and finite-
+grade prerequisites, and Corollary 95E consumes them on actual B,C,E7
+labels and every central quotient. These are new scalar theorem regions
+for the unchanged all-group goal. General roots further below background
+grade, multiple generator backgrounds at the four-step gap, and groups
+without the supplied parity generator remain unproved. The active type C
+comparison (P94.8) still requires its entire positive pair and quartet
+terms; no new conditional wrapper is offered as its supplier.
+
+**Boundary supplement 95F (trivial distinguished atom in Corollary 95E).**
+Corollary 95E does not require its distinguished atom to be nontrivial,
+whereas its cited Theorem 95B does. Its trivial-root boundary is supplied
+as follows, completing that caller application.
+
+**Proof.** The trivial atom has tensor length zero. Its stated bound
+0>=D-4 forces D<=4. Every nontrivial background has integer tensor length
+at least one, so there are at most four backgrounds. A trivial minus root
+makes the original integral zero. A trivial plus root contributes two
+times a background integral of length at most four, supplied by Theorem
+41B on the actual group, including all signs. This preserves the original
+normalization and scalar factor. Nontrivial roots are already supplied
+by the proof of Corollary 95E. Thus that corollary holds exactly as stated,
+with no extra root hypothesis. QED.
+
+## 96. Graded invariant insertions supply the four-box budget with two defining backgrounds
+
+The selected hard consumer is the remaining whole cut budget (P94.8),
+not an individual negative term. This section supplies its entire l=2
+case by an injection in actual representation multiplicity spaces.
+It consequently raises the at-most-one defining-background theorem to
+at most two, with arbitrary root rows, background shapes and degrees.
+No finite-rank relation generators are counted or assumed independent.
+
+**Independent self-double-check immediately before recording.**
+
+1. Rechecked the actual harmonic quotient used in Lemma 80A against
+   Sam--Snowden--Weyman equation (3.3). Under V=X plus X^*, its
+   internal Gram generators have circle weight zero and degree two.
+   In degree d their ideal has weights between -(d-2) and d-2.
+   Consequently both extreme degree-d Schur spaces survive unchanged.
+2. Re-derived the insertion map on the actual Hom spaces, with a
+   fixed ordering of tensor factors. Its coevaluation is invariant,
+   so every output is an actual group intertwiner. On the root's
+   highest circle-weight space each source map has all remaining
+   factors at their maximal weights, because their maxima sum exactly
+   to the root maximum. This equality is the hypothesis used below.
+3. Independently checked the separating projections. For position i,
+   prescribe weight q<d at that Z position, weight -q at the auxiliary
+   Z position, and maximal weight at every other background position.
+   Every insertion at j!=i has weight d at position i and is killed.
+   The i insertion survives as its source map tensor a nonzero
+   coevaluation component. Vanishing on the root's maximal-weight
+   space forces an intertwiner from that irreducible to be zero.
+   Thus the entire direct sum of source Hom spaces injects.
+4. Replayed the precise l=2 specialization: after removing the two
+   V backgrounds the product has degree A+2. Taking Z=H or C leaves
+   degree A after deleting any one matching background. Lemma 93H
+   identifies those source dimensions with exactly T_H or T_C.
+   The decomposition V tensor V=1 plus H plus C also contributes B.
+   Hence the resulting inequality is M>=B+h T_H+c T_C, retaining
+   actual multiplicities rather than auxiliary dimensions.
+5. Independent exact rank-two Weyl-numerator calculations gave
+   M-B-h T_H-c T_C equal to 6,25,10,17,12,118,139,38 for respectively
+   (h,c,alpha)=(0,3,(2,2)),(3,0,(2,2)),(1,2,(2,2)),
+   (2,1,(2,2)),(0,4,(3,3)),(3,2,(4,4)),(2,3,(5,3)),
+   (3,1,(6)). All four common H/C sign substitutions in the exact
+   cut formula passed the lower bound below. These are diagnostics;
+   the all-degree supplier is the injective map in Steps 2--3.
+6. Checked rank one: H has nonzero weights two and minus two, while
+   C is absent. No zero-weight-space or rank-at-least-two hypothesis
+   is needed for the separation. Root length is unrestricted up to r.
+7. Replayed the original fusion induction. A background square has
+   only even box parity, never creates V, and never increases total
+   box degree. A root/background repeat at gap four leaves background
+   degree four, hence at most four nontrivial positions; Theorem 41B
+   supplies every replacement root. Trivial factors, odd-minus
+   cancellation and normalized Haar pullback preserve their original
+   constants. Thus the new inequality is consumed by (P94.4) and
+   (P94.8), not left as a conditional representation comparison.
+
+**Primary input.** The harmonic quotient's actual irreducible coefficients
+are [Sam--Snowden--Weyman, equation (3.3), printed page 7](https://arxiv.org/pdf/1209.3509#page=7),
+already used in Lemma 80A. The grading argument and insertion map below
+are derived here. The symplectic decomposition V tensor V=1 plus H plus C
+and the exact original cut formula are Lemmas 93F and 94C.
+
+**Lemma 96A (the extreme circle grades of every actual type C module).**
+Let V be the defining complex module of USp(2r). Choose a Lagrangian
+splitting V=X plus X^*, and the circle acting by t on X and t^(-1)
+on X^*, with |t|=1. For every actual irreducible V_beta, put d=|beta|.
+Its circle grades lie between -d and d, and its two extreme spaces are
+
+    V_beta[d]=S_beta(X),
+    V_beta[-d]=S_beta(X^*).                          (P96.1)
+
+Both are nonzero for ell(beta)<=r. In particular its maximal grade is
+exactly its box number, including the trivial representation at d=0.
+
+**Proof.** Use the single-vertex harmonic quotient in Lemma 80A, taking
+an auxiliary alphabet of dimension ell(beta), or one for the trivial
+label. Its polynomial degree d comes from Sym^d(E tensor V). Every
+circle grade there lies in [-d,d]. The degree-d space of grade d is
+Sym^d(E tensor X), and the grade -d space is Sym^d(E tensor X^*).
+The ordinary Cauchy decomposition gives S_beta(E) coefficient spaces
+S_beta(X) and S_beta(X^*), respectively.
+
+Each internal Gram generator has polynomial degree two and circle
+weight zero: the symplectic bivector pairs X with X^*. Therefore every
+degree-d element in their ideal has circle grade in [-(d-2),d-2].
+For d<2 that ideal component is zero. No extreme space is removed.
+Equation (3.3), as consumed in Lemma 80A, identifies the harmonic
+coefficient with the actual V_beta. This proves (P96.1) and the grade
+bounds. The two Schur spaces are nonzero because their labels have at
+most dim X=r rows. QED.
+
+**Lemma 96B (invariant insertions at distinct positions are independent at a maximal-grade endpoint).**
+Let K be any compact group with a fixed circle subgroup. For a finite
+irreducible K-module W, let W[a] denote its circle-weight-a space and
+d(W) its maximal weight. Let Z be a nontrivial self-dual irreducible
+with d(Z)=d and with a nonzero weight space Z[q] for some q<d.
+Take irreducible backgrounds W_1,...,W_m, write
+
+    Y=tensor-product_i W_i,
+    J={i:W_i is isomorphic to Z},
+    Y_i=tensor-product_(j!=i) W_j,
+
+and let L be an irreducible with maximal circle weight
+
+    d(L)=sum_j d(W_j)-d.                            (P96.2)
+
+There is an injection of finite multiplicity spaces
+
+    direct-sum_(i in J) Hom_K(L,Y_i)
+                     -> Hom_K(L,Y tensor Z).        (P96.3)
+
+Consequently
+
+    mult_L(Y tensor Z)>=sum_(i in J) mult_L(Y_i).    (P96.4)
+
+There is no bound on m, dimensions or circle weights.
+
+**Proof.** Fix an identification W_i=Z at each i in J, a tensor-factor
+ordering, and a nonzero invariant coevaluation Omega in Z tensor Z.
+Self-duality identifies this coevaluation with an invertible map from
+Z^* to Z. Circle invariance and invertibility imply that its component
+
+    Omega_(q,-q) in Z[q] tensor Z[-q]
+
+is nonzero: the invariant nondegenerate pairing pairs weight q with
+weight -q nondegenerately. For f_i in Hom_K(L,Y_i), insert Omega into
+position i and a new final Z position, and put f_i into the other
+background positions. This defines a linear K-intertwiner J_i(f_i)
+from L to Y tensor Z.
+
+For v in L[d(L)], f_i(v) has circle weight d(L). By (P96.2), that
+weight equals the sum of the maxima of all factors in Y_i. Thus
+
+    f_i(v) belongs to tensor-product_(j!=i) W_j[d(W_j)].
+
+Indeed every factor has weight at most its maximum, so an equality
+of the sums forces equality in every factor.
+
+Define a linear projection Pi_i in the target by prescribing weight q
+at background i, weight -q at the final Z, and weight d(W_j) at every
+other background j. For j!=i, the factor W_i occurs inside Y_j and
+therefore has weight d on J_j(f_j)(v). Since q<d, Pi_i kills this
+output. On the i output it gives, with the fixed factor ordering,
+
+    Pi_i J_i(f_i)(v)=Omega_(q,-q) tensor f_i(v).
+
+If sum_i J_i(f_i)=0, applying Pi_i to every v in L[d(L)] forces
+f_i(v)=0 for every such v, because Omega_(q,-q) is nonzero. That root
+weight space is nonzero. The kernel of f_i is K-invariant, and L is
+irreducible, so f_i=0. This holds for every i, proving injectivity of
+the sum map in (P96.3). All multiplicity spaces are finite because the
+modules are finite-dimensional. Taking dimensions gives (P96.4). QED.
+
+**Lemma 96C (the whole negative triple budget with exactly two defining backgrounds).**
+In the setting and notation of Lemma 94C, assume l=2. Then, for every
+rank r and arbitrary actual root and background shapes,
+
+    M>=B+h T_H+c T_C.                               (P96.5)
+
+C and its terms are omitted at r=1. No sign or root-row hypothesis is
+needed for this multiplicity inequality.
+
+**Proof.** Work on the simply connected symplectic cover. Let Y be the
+tensor product of all backgrounds except the two V positions. Its
+total box degree is D-2=A+2. Decompose the selected defining pair:
+
+    M=B+mult_(V_alpha)(Y tensor H)
+                         +mult_(V_alpha)(Y tensor C). (P96.6)
+
+The C summand is absent at rank one. Actual joint Haar moments are
+these multiplicities since all type C irreducibles are self-dual.
+
+Apply Lemma 96B with L=V_alpha and Z=H. By Lemma 96A all background
+maximal grades are their box numbers, d(H)=2, and H[-2] is nonzero.
+Thus q=-2<2 supplies its separating component and (P96.2) reads
+A=(A+2)-2. Deleting any one of the h H positions leaves total boxes A.
+Lemma 93H identifies the resulting multiplicity with exactly T_H.
+Therefore mult_(V_alpha)(Y tensor H)>=h T_H.
+
+For r>=2 the identical argument with Z=C uses d(C)=2 and its nonzero
+space C[-2]=Lambda^2(X^*). Deleting a C position has the actual extremal
+moment T_C, giving mult_(V_alpha)(Y tensor C)>=c T_C. Empty position
+sets contribute zero. Substituting both inequalities into (P96.6)
+proves (P96.5) with coefficient one and the original B term. QED.
+
+**Theorem 96D (four-box dominance with at most two defining backgrounds).**
+For every compact connected type C_r group, take an arbitrary root
+atom and nontrivial background atoms of total box number D. If
+
+    |alpha|>=D-4,
+    number of backgrounds equal to V <=2,            (P96.7)
+
+the original normalized double-Haar Q3 integral is nonnegative for
+every sign pattern. Shapes, ranks, first rows and tuple lengths are
+unrestricted under these hypotheses. The defining atom is counted
+only when it is an actual descending atom of the group.
+
+**Proof.** Trivial plus backgrounds contribute their original scalar two;
+a trivial minus background gives zero. A trivial root has |alpha|=0,
+so (P96.7) forces D<=4 and at most four nontrivial backgrounds. Its
+minus sign gives zero; its plus sign gives twice an original integral
+with at most four inputs, supplied by Theorem 41B. We may therefore
+take a nontrivial root.
+
+Use strong induction on the number of nontrivial positions. Odd minus
+count gives zero by swapping the Haar variables. Odd total box number
+gives zero by simultaneous central -I translation on the symplectic
+cover. At even total, |alpha|>=D-2 is supplied by Theorem 93G. The only
+remaining gap under (P96.7) is A=|alpha|=D-4.
+
+For a repeated background atom at opposite signs, apply Proposition
+41A. Each replacement constituent has at most twice the original box
+number and even box parity. Thus total background degree does not
+increase and no V atom is created. The number of defining backgrounds
+stays at most two, while the tuple length decreases. A trivial minus
+replacement contributes zero; every other term meets the induction
+hypotheses with its original nonnegative fusion coefficient.
+
+For an opposite-sign repeat involving the root, use the same identity
+and regard its replacement as the new root. The remaining backgrounds
+have total boxes D-A=4 and therefore at most four nontrivial positions.
+Theorem 41B supplies every replacement tuple, including its arbitrary
+root, with no new degree assumption. This handles both fusion cases.
+
+The reduced input has disjoint plus/minus atom supports. The cases
+l<=1 are supplied by Theorem 94D. For l=2 the two defining signs are
+equal, so P_2=1 and P_4=0 in (P94.4). Every H has a common sign and
+every C has a common sign, so Q_H=binomial(h,2) and Q_C=binomial(c,2).
+Using h_+,h_-,c_+,c_- as in (P94.8), its exact original cut sum is
+
+    Phi_G/2=M+B+binomial(h,2)T_HH+binomial(c,2)T_CC
+                    +(h_+-h_-)T_H+(c_+-c_-)T_C.
+
+Lemma 96C and h=h_++h_-, c=c_++c_- give the explicit lower bound
+
+    Phi_G/2>=2B+binomial(h,2)T_HH+binomial(c,2)T_CC
+                           +2h_+ T_H+2c_+ T_C>=0.   (P96.8)
+
+Every term is a nonnegative actual multiplicity or ordinary Schur
+coefficient. This is precisely the whole budget (P94.8), with its
+positive pair terms retained; no separate assignment to B is made.
+All ranks are included, since no quartet term survives at l=2 and C
+is simply omitted at rank one. This completes the induction.
+
+For a central quotient, pull every actual label back to the compact
+symplectic cover. Haar pushforward preserves normalization, and the
+original two-variable integral is unchanged. If V does not descend
+there are zero such backgrounds. Thus the theorem applies with the
+stated actual-label convention on every target type C quotient. QED.
+
+**Original-consumer receipt and remaining hard comparison.** Lemma 96B
+is a uniform actual-multiplicity injection, not a finite certificate.
+Lemma 96C consumes it with the exact Schur coefficients of (P94.4),
+and Theorem 96D supplies every original four-box tuple with at most
+two defining backgrounds, including root/background fusion and all
+actual quotients. The previous unsupplied l=2 leaf of (P94.8) is now
+supplied. Combined with Theorem 94B, the remaining gap-four cases have
+root row number b in {r-1,r} (omit b=0) and l>=3.
+
+The next direct supplier must retain independence, or compensate its
+loss using the positive pair/quartet terms, when insertions use different
+defining pairs. Lemma 96B distinguishes background positions, but does
+not distinguish multiple choices of a defining pair at the same position;
+no binomial(l,2) strengthening of (P96.5) is asserted. The original
+consumer remains (P94.8), with the unchanged all-group full continuous
+central positive-definite cone as the goal. Larger box gaps, unsupplied
+first-overlap sectors and other Lie types remain unproved.
+
+**Three-pair supplement: independent self-double-check immediately before recording.**
+
+1. Re-derived the invariant in Z tensor V tensor V for Z=H,C by
+   symmetrizing or alternating the two symplectic pairings. In the
+   degree-zero part of Z, the off-diagonal basis element indexed by
+   a!=b has coefficient f_a tensor e_b when the first V is negative
+   and the second is positive. The primitive projection for C changes
+   only diagonal terms. Reversing the two V positions preserves H's
+   invariant and negates C's invariant.
+2. With three V positions, rechecked the source maximum as
+   |alpha|=sum_(non-V backgrounds other than i)|beta|+1. Each source
+   Hom map at the root's top grade therefore has all other backgrounds
+   at top grade and its remaining V in X. Projecting background i to
+   grade zero kills insertions at every other background position.
+3. For rank at least two, projection with V_1 negative leaves precisely
+   the pair-12 and pair-13 maps. Their off-diagonal coefficients give
+   e_b tensor u_12+u_13 tensor e_b=0 for every basis vector e_b.
+   Two independent e_b force u_12=u_13=0. Projection with V_2 negative
+   then forces u_23=0. Applied after every functional on the other
+   factors, this proves injectivity for arbitrary multiplicity spaces.
+4. At rank one C is absent. The three scalar H projections give the
+   coefficient matrix with rows (1,1,0),(1,0,1),(0,1,1), whose determinant
+   is -2. Thus this boundary is also injective. Exact symbolic audits
+   of the local projection matrices gave ranks 3,6,6,9,9 for respectively
+   rank/type (1,H),(2,H),(2,C),(3,H),(3,C). No rank cutoff is used in
+   the two-independent-basis-vectors argument.
+5. Independent exact Weyl-numerator diagnostics gave
+   M-3(h T_H+c T_C)=21,28,10,179,102 at rank two for
+   (h,c,alpha)=(2,0,(3)),(2,0,(2,1)),(0,2,(2,1)),
+   (2,2,(5,2)), and (1,1,(4,2)) with one additional (2,1) background
+   in the last case. Rank-one row roots (1),(3),(5),(7), with respectively
+   one,two,three,four H backgrounds and three V backgrounds, gave
+   surpluses 0,1,3,6. These diagnose the invariant insertion, not prove
+   the uniform theorem.
+6. Replayed every term of the original cut budget: l=3 gives P_2=3
+   after disjoint-support reduction and P_4=0. The new injection spends
+   the full M, without reserving B. Adding the positive defining-pair
+   and equal-H/C-pair terms gives (P96.10) below. The fusion induction
+   from Theorem 96D preserves at most three defining backgrounds.
+
+**Lemma 96E (all three defining-pair insertions are independent).**
+In the setting of Lemma 94C with l=3, arbitrary actual background
+shapes, and |alpha|=D-4,
+
+    M>=3[h T_H+c T_C].                              (P96.9)
+
+All ranks and root row lengths are included, with C absent at rank one.
+
+**Proof.** Work on the compact symplectic cover with the splitting and
+grading of Lemma 96A. Number the three defining backgrounds 1,2,3.
+For a fixed nondefining background position i labelled Z=H or C, let
+U_i be the tensor product of all other nondefining backgrounds.
+Its degree is A-1, where A=|alpha|. For each of the three pairs
+p={1,2},{1,3},{2,3}, take a separate copy of
+
+    Q_i=Hom_USp(2r)(V_alpha,U_i tensor V).
+
+Its dimension is T_H when Z=H and T_C when Z=C, by Lemma 93H.
+Insert the nonzero invariant Omega_Z in Z tensor V tensor V at
+background i and the two V positions in p, using a source map in Q_i
+at the other nondefining positions and the remaining V position.
+This defines a linear map J_(i,p) into the full actual multiplicity
+space Hom_USp(2r)(V_alpha,tensor-product of all backgrounds).
+We prove that the sum of all these maps is injective.
+
+Choose bases e_a of X and f_a of X^* with symplectic pairing
+omega(e_a,f_b)=delta_(a,b). For H, its grade-zero part is spanned by
+symmetrizations of e_a tensor f_b. For C it is spanned by their
+alternations modulo the symplectic line; in particular every
+ off-diagonal element a!=b survives.
+
+The invariant Omega_H comes from symmetrizing the two contractions
+between H and the two V factors, and Omega_C from alternating them
+and projecting to the primitive exterior square. Consequently, for
+one common nonzero normalization, the coefficient at the off-diagonal
+(a,b) grade-zero element, with the first V negative and the second
+positive, is f_a tensor e_b. This follows directly by pairing e_a
+with f_a and f_b with e_b. The symmetric construction has the same
+coefficient after interchanging the V factors, while the alternating
+construction has its negative. Removing the symplectic line in C
+affects only a=b terms. For H at rank one, the sole diagonal element
+has a nonzero coefficient and the same interchange symmetry.
+
+Consider a linear relation among the J_(i,p)(g_(i,p)), and evaluate it
+on v in V_alpha[A]. Every source g_(i,p)(v) belongs to
+
+    U_i[top] tensor X,
+
+because its factors' maximal grades sum to A. Here U_i[top] is the
+tensor product of the maximal-grade spaces of its individual factors.
+For each j=1,2,3 project the relation onto the space having background
+i at grade zero, every other nondefining background at its maximum,
+V_j in X^*, and the other two V factors in X. Insertions at any
+background i'!=i vanish on this projection: their source contains
+background i at its maximal grade two. A pair not containing j also
+vanishes, because its source places V_j in X.
+
+Suppose r>=2. Apply the projection with j=1 and take the coefficient
+of the off-diagonal (a,b) middle element and f_a in V_1. After applying
+any linear functional on U_i[top], write u_12,u_13,u_23 in X for the
+corresponding source outputs. Both pairs containing 1 place their
+negative V first, so the normalization and sign agree for either Z.
+The projected relation in X at positions 2 and 3 is exactly
+
+    e_b tensor u_12+u_13 tensor e_b=0.
+
+For every b an index a!=b exists, so this holds for every basis e_b.
+For a fixed nonzero e_b it forces both u_12 and u_13 to lie in the
+line C e_b: project the first or second tensor factor onto X/C e_b.
+Two independent basis vectors therefore force u_12=u_13=0.
+The projection with j=2 now has only the pair {2,3} left. An
+ off-diagonal coefficient gives u_23 tensor e_b=0, up to its nonzero
+normalization, hence u_23=0.
+
+Since these statements hold for every functional on U_i[top] and every
+v in V_alpha[A], all three source maps vanish on that nonzero root
+space. Each is an intertwiner from an irreducible; it therefore vanishes
+everywhere. The argument applies independently at each background i.
+
+If r=1, only Z=H occurs and X is one-dimensional. The same three
+projections, using H's diagonal middle element, give respectively
+
+    u_12+u_13=0,
+    u_12+u_23=0,
+    u_13+u_23=0.
+
+Their coefficient matrix has determinant -2, so all three outputs
+vanish. The same root irreducibility argument gives zero source maps.
+This proves the direct-sum injection in every rank. Taking its finite
+dimensions gives three copies of T_H for every H position and three
+copies of T_C for every C position, which is precisely (P96.9). QED.
+
+**Theorem 96F (four-box dominance with at most three defining backgrounds).**
+Theorem 96D holds with its defining-background bound raised to three:
+for every compact connected type C_r group, every actual atomic tuple
+with arbitrary distinguished root satisfying |alpha|>=D-4 and at most
+three defining backgrounds has nonnegative original Q3 for every sign.
+
+**Proof.** Use the same strong induction as Theorem 96D. Its trivial
+root, odd parity, gap-at-most-two and root/background repeat cases
+require no change. Background opposite-sign fusion preserves a bound
+of three because its square replacements never create V and never
+increase total boxes. Thus it suffices to consider disjoint sign
+supports at gap four. For l<=2 use Theorem 96D. At l=3 the exact
+formula (P94.4) reads
+
+    Phi_G/2=M+3B+binomial(h,2)T_HH+binomial(c,2)T_CC
+                 +3[(h_+-h_-)T_H+(c_+-c_-)T_C].
+
+Applying Lemma 96E gives
+
+    Phi_G/2>=3B+binomial(h,2)T_HH+binomial(c,2)T_CC
+                           +6h_+ T_H+6c_+ T_C>=0.   (P96.10)
+
+There are no four-V cuts, so this computation includes the rank-one
+boundary with its original constants. This supplies (P94.8) for the
+whole l=3 case. The induction and actual-quotient normalized Haar
+pullback proceed exactly as in Theorem 96D. QED.
+
+**Updated original-consumer receipt.** Theorem 96F supersedes the
+at-most-two bound and the l>=3 pending threshold in the preceding
+receipt. The whole l=2 and l=3 leaves of (P94.8) are now supplied,
+with arbitrary remaining shapes and degrees. The remaining gap-four
+consumer has b in {r-1,r} (omit b=0) and l>=4.
+
+A concrete next candidate uses the same maps J_(i,p), now for all
+pairs among four V positions, together with channels supplied by the
+positive defining-pair, equal-H/C-pair and four-V terms of (P94.8).
+The first test is the kernel of these six pair insertions at a fixed
+H or C position. The three-V proof cannot simply be repeated: a
+projection with one negative V now contains three pair insertions,
+so the displayed two-vector separation is insufficient by itself.
+The exact required next comparison is still (P94.8), retaining its
+binomial(l,2) and binomial(l,4) coefficients and actual even-minus
+sign supports. No reserve of B or stronger independent-term budget
+is imposed. The full all-group central positive-definite-cone theorem
+remains unproved and active.
+
+## 97. The all-pair Gram spectrum and the first full-height kernel budget
+
+The selected hard consumer is (P94.8) at arbitrary defining count.
+The all-pair insertion has an exact Gram operator. Its kernel consists
+of two explicit Young-diagram families at the rank boundary. This
+supplies all four-box tuples whose root has fewer than r rows, without
+a defining-count bound. For a full-height root it supplies the budget
+through defining count r+2, including the first nonzero C kernel by
+using positive C-pair and quartet channels. Rank one is supplied at
+all defining counts by its exact near-top character coefficients.
+
+**Independent self-double-check immediately before recording.**
+
+1. Derived the pair-insertion Gram on an orthonormal tensor basis.
+   Each pair has two outputs of squared norm r, adjacent pairs have
+   a single signed tensor permutation as their overlap, and disjoint
+   pairs have zero overlap. Separating the total transposition sum
+   into internal-pair, remaining-slot and adjacent-pair terms gives
+   exactly 2r Id+Omega_l-R_(l-2)-sigma Id.
+2. Independently derived the transposition class-sum eigenvalue using
+   the GL(N) quadratic Casimir on tensor powers, with N>=l. Its scalar
+   on a highest weight nu is N|nu|+2 sum_(boxes in nu) content(box).
+   Its tensor coproduct is Nl Id+2Omega_l. Thus the class sum has the
+   stated content scalar, with no recalled normalization assumed.
+3. Verified Gruson--Serganova, Chapter 6, Theorem 2.4 and Theorem 7.6:
+   Schur--Weyl duality gives the remaining-slot labels mu, and the
+   induced S_2 parity gives a horizontal two-strip for sigma=+1 or
+   a vertical two-strip for sigma=-1. Section 8.1 fixes h_2 as the
+   trivial S_2 character and e_2 as its sign character. Re-derived
+   the two-strip content minima and every equality case below.
+4. Exact independent tensor matrices checked the Gram identity at
+   (l,r,sigma)=(4,1,+),(4,2,-),(5,2,-),(6,2,+). Their modular kernel
+   dimensions were 2,1,8,5, agreeing with the Young-module prediction.
+   These diagnostics do not replace the all-degree spectral proof.
+5. Replayed the actual maximal-grade source. Its top restriction is
+   injective and GL(r)-equivariant. An occupied remaining-slot label
+   mu must lie inside the root alpha, by embedding the other Schur
+   factors in tensor powers and iterating one-box Pieri. Hence a root
+   with b<r rows sees only strictly positive eigenvalues, uniformly
+   in l and the other background degrees.
+6. Rechecked the first full-height case l=r+2: only mu=(1^r) can
+   support a kernel, only C contributes, and its S_l factor is the
+   one-dimensional sign module (1^(r+2)). Each C position's kernel
+   multiplicity is at most T_4 because e_2 h_1^(r-2) contains e_r.
+   The exact positive C-pair coefficient satisfies T_CC>=T_4 when
+   available, since h_1^4-e_2^2 is Schur-positive. Its pair count
+   together with 3 binomial(l,4) absorbs c copies of T_4 for every c.
+7. Independent rank-three actual Weyl-numerator diagnostics gave
+   M-binomial(l,2)(h T_H+c T_C)=1053,225,810 for respectively
+   (h,c,l,alpha)=(1,1,6,(4,2)),(0,3,4,(3,3)),
+   (1,1,4,(5,2)), with one additional (2,1) background in the last
+   case. These check nontrivial root-row examples beyond Section 96.
+8. Re-derived the rank-one moments from Laurent coefficients of the
+   actual characters: M=binomial(m,2)-l and B=m-3 at gap four and
+   l>=4. All nontrivial labels contribute one highest coefficient
+   and one first lowering coefficient; exactly m-l contribute the
+   second lowering coefficient. The original degree-four-removed
+   coefficients are one. Substitution, rather than a graph estimate,
+   gives the stated nonnegative whole-cut lower bound.
+9. Replayed background fusion, root/background fusion, rank-one
+   absence of C, odd signs and box parity, trivial roots, and actual
+   central-quotient Haar pullback. Root-row and defining-count conditions
+   persist under background fusion; root fusion is consumed by the
+   existing at-most-five-input theorem. Thus all new suppliers return
+   to the unchanged original cut sum with its actual constants.
+
+**Primary input.** The decomposition facts are
+[Gruson--Serganova, Landmarks in representation theory](https://math.berkeley.edu/~serganov/251/Landmarks.pdf),
+Chapter 6, Theorem 2.4 (printed page 121), Theorem 7.6 (printed page 137),
+and Section 8.1 (printed page 142). The Gram identity, content eigenvalue,
+wall classification and original integral comparisons are derived below.
+
+**Lemma 97A (content scalar of the transposition sum).**
+For a partition nu of k, let [nu] be its complex Specht module, and put
+
+    ct(nu)=sum_(i,j in the Young diagram of nu)(j-i).
+
+The central sum Omega_k=sum_(a<b)(ab) acts on [nu] by ct(nu).
+The empty and one-box sums are zero.
+
+**Proof.** Take a vector space T of dimension N>=k and use Schur--Weyl
+on T^(tensor k). For the matrix units E_ij of gl(N), its quadratic
+Casimir C=sum_(i,j) E_ij E_ji commutes with every E_ab: the commutator
+terms cancel in pairs after interchanging summation indices. On a
+highest vector of weight nu, the diagonal terms give sum_i nu_i^2.
+For i<j the term E_ji E_ij kills that vector, and E_ij E_ji gives
+nu_i-nu_j, by their commutator. Thus its scalar on S_nu(T) is
+
+    sum_i nu_i[nu_i+N+1-2i]=Nk+2ct(nu).
+
+On a single defining T the Casimir is N Id. Its tensor coproduct on
+k factors is Nk Id+2 sum_(a<b) P_(ab), because
+sum_(i,j) E_ij^(a) E_ji^(b) exchanges the two tensor factors on every
+basis tensor. Schur--Weyl identifies that exchange with the corresponding
+Specht action. Comparing the two formulas proves the claim. Every
+partition occurs for N>=k, so none is omitted. QED.
+
+**Lemma 97B (all-pair insertion Gram and its exact kernel).**
+Let X have dimension r>=1, l>=2, and sigma in {+1,-1}. Define
+
+    D_sigma(l,X)=direct-sum_(unordered pairs p in {1,...,l})
+                       tensor-product_(a not in p) X_a,
+
+with the S_l action permuting slot labels and, for sigma=-1, changing
+sign when the ordered endpoints of p are reversed. This is
+Ind_(S_2 times S_(l-2))^(S_l)(xi_sigma tensor X^(tensor(l-2))),
+where xi_+ is trivial and xi_- is sign. Define F from D_sigma into
+
+    direct-sum_(j=1)^l Hom(X,tensor-product_(a!=j) X_a)
+
+as follows. A source tensor in the pair p={j,k} contributes the map
+inserting x in slot k, with sign + for sigma=+1; for sigma=-1 its sign
+is + if j<k and - if k<j. It contributes zero at slots outside p.
+Use orthogonal pair summands and the tensor and Hilbert--Schmidt metrics.
+Let R_(l-2) act on each pair summand as the transposition sum of its
+remaining slots. Then
+
+    F^* F=2r Id+Omega_l-R_(l-2)-sigma Id.             (P97.1)
+
+Under GL(X) times S_l, its summands are S_mu(X) tensor [nu], where
+|mu|=l-2, ell(mu)<=r, and nu/mu is a horizontal two-strip for sigma=+1
+or a vertical two-strip for sigma=-1. Each such pair occurs once.
+The eigenvalue on this summand is
+
+    2r+ct(nu)-ct(mu)-sigma>=2[r-ell(mu)].             (P97.2)
+
+The exact zero-eigenvalue summands are:
+
+    sigma=+1: ell(mu)=r, mu_r>=2, nu=(mu,2);
+    sigma=-1: ell(mu)=r, nu=(mu,1,1).                (P97.3)
+
+In particular F is injective on every GL(X) isotypic component whose
+partition has fewer than r rows, in every l.
+
+**Proof.** On a pair summand there are two output slots. Each inserts
+x into one factor, so its Hilbert--Schmidt squared norm sums r identical
+source norms over an orthonormal basis of X. The diagonal of F^*F is
+therefore 2r Id. Two distinct pair summands have a common output only
+when they share one endpoint. Their overlap is the isometric tensor
+permutation relabelling the other endpoints; in the alternating case
+its sign is the product of their oriented endpoint signs. Disjoint
+pairs have zero overlap.
+
+In the S_l transposition sum, a transposition internal to the marked
+pair contributes sigma Id. A transposition of two remaining slots
+contributes its fiber permutation in R_(l-2). A transposition with one
+marked and one remaining slot contributes exactly one of the adjacent
+pair permutations just computed, including its orientation sign.
+This proves (P97.1) entry by entry.
+
+Schur--Weyl on the remaining slots and the induced two-box Pieri rule
+give the displayed multiplicity-one (mu,nu) decomposition. Lemma 97A
+makes R_(l-2) scalar ct(mu) and Omega_l scalar ct(nu), yielding the
+first part of (P97.2).
+
+Write m=ell(mu). For a horizontal two-strip, no new box lies below
+row m+1, and the two columns are distinct. Thus the sum of the two
+new contents is at least -m+(1-m)=1-2m. Equality requires exactly
+the two boxes in row m+1 and columns 1,2; this is admissible precisely
+when m=0 or mu_m>=2. For a vertical two-strip the two rows are distinct
+and at most m+2, so the two contents sum to at least -m+(-m-1).
+Equality requires new rows m+1,m+2, each with its first box. After
+subtracting sigma both bounds become 2(r-m). Since m<=r, zero is
+possible only at m=r and at the respective equality diagram. Here
+r>=1 excludes the m=0 horizontal boundary from the zero cases.
+This proves (P97.2)--(P97.3). The operator is self-adjoint, and all
+other scalars are strictly positive, so these are its entire kernel.
+QED.
+
+**Lemma 97C (uniform actual triple budget below full root height, and the first full-height correction).**
+Use the setting of Lemma 94C, put b=ell(alpha), and suppose l>=2.
+If either b<r or l<=r+1, then
+
+    M>=binomial(l,2)[h T_H+c T_C].                   (P97.4)
+
+For r>=2 and l=r+2, without a root-row restriction,
+
+    M>=binomial(l,2)[h T_H+c T_C]-c T_4.             (P97.5)
+
+There is no degree or remaining-shape bound.
+
+**Proof.** For every H or C background position i, take separate source
+copies indexed by all defining pairs p. The source for (i,p) is
+Hom_USp(2r)(V_alpha,U_i tensor V^(tensor(l-2))), where U_i contains
+all nondefining backgrounds except i. As in Lemma 96E, its total degree
+is exactly A=|alpha|, its dimension is T_H or T_C, and the invariant
+Omega_Z in Z tensor V tensor V inserts it into the full actual moment
+space. The entire source has dimension binomial(l,2)(h T_H+c T_C).
+
+Restrict each source map to the root's maximal circle-grade space.
+Lemma 96A places its outputs in U_i[top] tensor X^(tensor(l-2)); the
+restriction is injective by root irreducibility. It is GL(r)-equivariant,
+using the Lagrangian-preserving subgroup and its complexification.
+Consequently all copies at position i define an element of
+
+    Hom_GL(r)(S_alpha(X),U_i[top] tensor D_sigma(l,X)),
+
+with sigma=+1 for H and sigma=-1 for C.
+
+Project a relation in the full insertion map onto background i at grade
+zero, all other nondefining backgrounds at their maximal grades, and
+one defining position j negative with every other defining position
+positive. Insertions at other background positions vanish. For r>=2,
+the off-diagonal (a,b) coefficients computed in Lemma 96E, with a!=b,
+give precisely F_j evaluated at e_b. For every b such an a exists,
+so all these projections vanishing implies F vanishes on the top
+source. At rank one only H occurs and its diagonal middle coefficient
+gives the same implication, directly.
+
+Decompose the remaining-slot tensors by GL(r) labels mu. Any occupied
+mu satisfies mu contained in alpha. To see this without a rank-stability
+assumption, embed each Schur factor of U_i[top] into its ordinary tensor
+power of X. If S_alpha occurs in U_i[top] tensor S_mu, it therefore
+occurs in S_mu tensor X^(tensor |U_i|). Repeated one-box Pieri forces
+mu contained in alpha. Thus ell(mu)<=b. If b<r, (P97.2) is strictly
+positive on every reached component. If l<=r+1, |mu|=l-2<r, so the
+same conclusion holds regardless of b. The top restrictions of every
+relation vanish; root irreducibility gives zero source maps. Hence
+the full insertion is injective, proving (P97.4).
+
+For l=r+2 and r>=2, |mu|=r. Formula (P97.3) leaves no H kernel, since
+its mu would need r rows each of size at least two. The C kernel has
+only mu=(1^r), nu=(1^(r+2)); the latter Specht module is one-dimensional.
+The relation space therefore injects, by top restriction, into the sum
+over the c C positions of spaces of dimension
+
+    k_i=[s_alpha] (product of all nondefining s_beta except i) e_r.
+
+The product e_2 h_1^(r-2) contains e_r with coefficient one, by repeated
+one-box Pieri. All other coefficients are nonnegative. Restoring the
+omitted C and the l-4=r-2 defining factors consequently gives
+
+    k_i<=T_4.
+
+Thus the kernel of the actual insertion has dimension at most c T_4.
+Subtracting that from the source dimension gives (P97.5). This uses
+only a bound for the actual relation kernel; it does not assume that
+every middle-projection kernel survives in the full insertion. QED.
+
+**Theorem 97D (the whole four-box budget below full height and through its first C kernel).**
+For every compact connected type C_r group, arbitrary actual root and
+nontrivial backgrounds of total boxes D satisfy original Q3 for all
+signs if
+
+    |alpha|>=D-4,
+    either ell(alpha)<r or l<=r+2.                  (P97.6)
+
+All other shapes, degrees and tuple lengths are unrestricted.
+
+**Proof.** Use strong induction as in Theorem 96D. A trivial root forces
+D<=4, supplied by Theorem 41B. Odd minus count or odd total box degree
+gives the original zero integral. At even total, gaps at most two are
+supplied by Theorem 93G; the remaining case is A=D-4. Background
+opposite-sign fusion preserves either condition in (P97.6): root rows
+are unchanged, total degree does not increase, and no V is created.
+Root/background fusion leaves background degree four and at most five
+positions, supplied by Theorem 41B for every replacement root.
+
+On disjoint sign supports all V have a common sign. For l<=3 use
+Theorem 96F. If b<r, or l<=r+1, apply (P97.4) in the exact budget
+(P94.4). It absorbs all negative triples while leaving the positive
+B, equal-H/C-pair, quartet and plus-background triple terms. Thus the
+whole original integral is nonnegative.
+
+It remains to consider r>=2 and l=r+2; the r=1 bound l<=3 was already
+supplied. Put L=binomial(l,2). Formula (P97.5) and the original cut
+identity give
+
+    Phi_G/2>=L B+binomial(h,2)T_HH+binomial(c,2)T_CC
+          +[3binomial(l,4)-c]T_4
+          +2L[h_+ T_H+c_+ T_C].                    (P97.7)
+
+When c>=2, T_CC>=T_4: their difference is the root coefficient in
+
+    R h_2^h e_2^(c-2) h_1^(l-4)[h_1^4-e_2^2],
+
+and h_1^4-e_2^2=h_2^2+2h_2 e_2 is Schur-positive. For c<2 its pair
+coefficient is zero, so multiplying this comparison by binomial(c,2)
+is still valid. Since l>=4 and for every integer c>=0
+
+    c-binomial(c,2)<=1,
+
+we have binomial(c,2)+3binomial(l,4)-c>=2. Substitution in (P97.7)
+leaves only nonnegative terms. The positive C-pair and quartet channels
+therefore supply exactly the first full-height kernel loss. This
+completes the induction with the actual rank constants and all signs.
+Normalized Haar pullback proves the same assertion for actual descending
+labels on every central quotient. QED.
+
+**Theorem 97E (the entire rank-one four-box region).**
+For every compact connected type C_1 group and every actual atomic tuple
+with arbitrary distinguished root and |alpha|>=D-4, original Q3 is
+nonnegative for all signs, without a defining-count or degree bound.
+
+**Proof.** The trivial, parity, smaller-gap and fusion cases are handled
+as in Theorem 97D, with no defining-count condition to preserve. Each
+irreducible on the cover SU(2) is a one-row label a>=0. After trivial
+factors have been removed, take a nontrivial root A=D-4. Counts l<=3
+are supplied by Theorem 96F. At l>=4 reduce to disjoint sign supports.
+Let m be the number of nontrivial backgrounds, h the number of row-(2)
+labels, and q=m-l-h the number of larger labels. There is no C.
+
+The actual character of label a on its torus is
+
+    chi_a(z)=z^a+z^(a-2)+...+z^(-a).
+
+For a product with top weight D, multiplicity of the root A=D-4 is
+its Laurent coefficient at A minus its coefficient at A+2. Put t=z^(-2)
+after removing the factor z^D. Each nontrivial label contributes a
+polynomial 1+t+...+t^a. Its coefficient at t is one; its coefficient
+at t^2 is one precisely when a>=2. Thus the product coefficients are
+m at t and binomial(m,2)+(m-l) at t^2, giving
+
+    M=binomial(m,2)-l.
+
+After deleting two V labels the top weight is A+2 and there are m-2
+nontrivial factors. The same first-coefficient difference gives B=m-3.
+All degree-four-removed top Schur coefficients equal one when their
+required backgrounds are available, since the ordinary alphabet has
+one variable. In particular T_4=1; T_H=1 when h>0 and T_HH=1 when
+h>=2, with their prescribed zero values otherwise. The actual rank-one
+quartet moment is k_1=2 as in Lemma 94C.
+
+The common V sign makes P_2=binomial(l,2) and P_4=binomial(l,4).
+The common H sign gives S_H>=-h and Q_H=binomial(h,2). Substituting
+these exact values in the original cut formula gives
+
+    Phi_G/2>=binomial(m,2)-l+binomial(h,2)
+           +binomial(l,2)(l+q-3)+2binomial(l,4)>=0.  (P97.8)
+
+Indeed m=l+h+q>=l>=4 gives binomial(m,2)>=l, and all other displayed
+terms are nonnegative. No representation dimension or finite label
+range was used. The same fusion induction and normalized quotient
+Haar pullback give every original sign support and actual rank-one
+central quotient. QED.
+
+**Original-consumer receipt and the remaining hard supplier.** Lemma 97B
+is a uniform structural classification of the all-pair projection
+kernel, not a numerical rank conjecture. Lemma 97C supplies the actual
+multiplicity comparison for all l below full root height. Theorem 97D
+consumes it on the original integral and also pays for the first
+full-height C kernel with the positive pair and quartet terms. Theorem
+97E supplies the entire rank-one four-box region. Together these remove
+all b=r-1 gap-four cases and all defining counts l<=r+2, and remove
+rank one without a count bound.
+
+The remaining gap-four consumer (P94.8) now has r>=2, b=r and l>=r+3.
+Its middle-projection relation sources are exactly the reached modules
+S_mu(X) tensor [mu,2] for H with ell(mu)=r and mu_r>=2, and
+S_mu(X) tensor [mu,1,1] for C with ell(mu)=r, where |mu|=l-2.
+These are candidates for routing the residual kernel, not assumptions
+that the full insertion kills those modules. The next concrete map is
+the full insertion restricted to those sources, projected onto all
+nondefining backgrounds at their maximal grades and two negative V
+positions. It separates H from C by the symmetry of those two V slots.
+Any remaining kernel must then be compared with the original positive
+B, equal-H/C-pair and quartet channels, keeping their precise counts.
+The locked target stays the full all-group central positive-definite
+cone; larger box gaps and unsupplied other Lie types remain unproved.
+
+## 98. The exact two-wall triple kernel and a uniform rank-two C budget
+
+The hard consumer remains the original four-box cut budget (P94.4),
+not positivity of an auxiliary multiplicity. This section identifies
+exactly which relations among its negative triple insertions survive
+both grading projections. Their two rank walls occur on separate tensor
+factors. Positive equal-degree-two pair insertions are independent of
+the entire triple image. At rank two a hook-formula inequality pays for
+the whole C kernel, with no bound on the number of defining factors.
+
+**Independent self-double-check immediately before recording.**
+
+1. Re-derived the omitted-slot coevaluation Gram entry by entry. Its
+   diagonal is dim(E), and its off-diagonal exchanges exactly the two
+   omitted slots. Schur--Weyl and one-box Pieri leave precisely the
+   full-height summands with one new bottom box in its kernel.
+2. Rechecked that actual extremal root restriction is an isomorphism,
+   not merely an injection: Lemma 93H gives equality of the actual
+   Hom multiplicity and its top ordinary Schur coefficient. All sources
+   here have remaining total degree exactly |alpha|.
+3. Exhausted the possible top-root outputs of a triple invariant:
+   one degree-two background at grade -2; one such background at
+   grade zero and one negative V; or all such backgrounds at grade
+   +2 and two negative V's. There are no other grade patterns. The
+   middle pattern gives Lemma 97B's F kernel. Its Specht types have
+   more than r rows, so the first pattern vanishes by Schur--Weyl.
+   The last pattern is the omitted-slot coevaluation map, separately
+   for H and C by the symmetry of the negative defining pair.
+4. Rechecked the intersection of the two tensor-factor kernels, and
+   checked that vanishing on the root top forces the actual equivariant
+   map to vanish. This identifies the actual full insertion kernel,
+   rather than treating every middle-projection relation as an actual
+   relation. Off-diagonal middle coefficients detect F at r>=2;
+   its vanishing also kills diagonal and primitive-C trace corrections.
+   At rank one the H diagonal coefficient detects F directly.
+5. Re-derived det(Sym^2 X)=(det X)^(r+1) and
+   det(Lambda^2 X)=(det X)^(r-1) from diagonal weights. Both determinant
+   factors, including the defining-slot wall, must occur simultaneously
+   in a surviving relation; all spectators are polynomial modules.
+6. Projected the positive pair insertions onto precisely their two
+   grade-zero background positions. This isolates each pair and kills
+   every triple image. The grade-zero self-dual pairing is nondegenerate
+   and nonzero for H, and for C at r>=2.
+7. Exact SU(2) polynomial insertion gave source dimension twelve,
+   image dimension ten and kernel dimension two for two H's and four
+   V's with root (4). The full Haar moment is eleven, distinct from
+   the triple-image dimension. The two-wall formula gives the same
+   kernel two; adding the positive H-pair image gives eleven.
+8. Direct primitive-C tensor insertion over the verified prime 1000003
+   gave ranks eleven of twelve and thirty-six of forty for rank-two
+   tuples (C,C,V^4), root (2,2), and (C,C,V^5), root (3,2).
+   These agree with the predicted actual kernel dimensions one and
+   four. Omitted-slot Gram audits at (s,d)=(3,1),(3,2),(4,2) likewise
+   matched the exact entry formula and kernel dimensions two, one, six.
+   These finite audits diagnose the formulas; they do not prove them.
+9. Re-derived both rank-two Young-dimension ratios from the hook formula,
+   checked their integer identities on small and larger partitions, and
+   checked the complete uniform inequality by the square
+   24(t-1/4)^2. The pair and quartet Schur coefficients match exactly
+   after the determinant shifts; no representation-dimension bound
+   replaces those coefficients.
+10. Replayed original signs and fusion. The root last-row conditions
+    survive background fusion. A root/background repeat leaves at most
+    four background boxes and is supplied by Theorem 41B. Trivial
+    factors, odd-minus and odd-total zeros, and normalized Haar pullback
+    to actual central quotients are consumed as in Theorem 97D.
+
+**Lemma 98A (omitted-slot coevaluation kernel).**
+Let E have dimension d>=1, and let s>=1. Define
+
+    A_s(E)=direct-sum_(i=1)^s tensor-product_(j!=i) E_j.
+
+The permutation action makes this
+Ind_(S_(s-1))^(S_s) E^(tensor(s-1)). Let Gamma insert the canonical
+coevaluation in E_i tensor E^* at the omitted slot i, with one common
+auxiliary E^* factor. Its target is E^(tensor s) tensor E^*. With
+orthogonal source summands and tensor metrics,
+
+    Gamma^* Gamma=d Id+Omega_s-R_(s-1).             (P98.1)
+
+Its exact kernel, as a GL(E) times S_s module, is
+
+    direct-sum_(zeta partitions s-1, ell(zeta)=d)
+                 S_zeta(E) tensor [zeta,1].        (P98.2)
+
+In particular Gamma is injective when s<=d.
+
+**Proof.** An inserted coevaluation has squared norm d. Two distinct
+omitted-slot summands have overlap given by relabelling those two slots.
+In Omega_s, the permutations of the other s-1 slots are exactly
+R_(s-1); the remaining transpositions are those overlaps. This proves
+(P98.1). Schur--Weyl and one-box Pieri give summands
+S_zeta(E) tensor [theta], with |zeta|=s-1, ell(zeta)<=d and theta/zeta
+one box. By Lemma 97A the Gram scalar is
+
+    d+ct(theta)-ct(zeta)=d+content(theta/zeta).
+
+If m=ell(zeta), the added box has content at least -m, with equality
+only at the first box in a new row m+1. Thus zero requires m=d and
+precisely theta=(zeta,1). All other scalars are positive. Such a zeta
+has at least d boxes, so the kernel is absent when s<=d. QED.
+
+**Lemma 98B (exact actual triple kernel at both rank walls).**
+Use the actual gap-four setting of Lemma 94C, with l>=2, and put
+
+    X=C^r, E_H=Sym^2 X, E_C=Lambda^2 X,
+    d_H=r(r+1)/2, d_C=r(r-1)/2.
+
+Let J be the actual invariant insertion map whose sources are indexed
+by a degree-two background position i and a defining pair p. Its source
+for (i,p) is the actual root Hom space after removing that background
+and those two V's. It has dimension
+
+    S=binomial(l,2)(h T_H+c T_C).
+
+Write R_top for the tensor product of the ordinary Schur modules of
+all other backgrounds. For each type Z present, let s_H=h, s_C=c,
+sigma_H=+1, sigma_C=-1, and
+
+    T_Htop=R_top tensor E_C^(tensor c),
+    T_Ctop=R_top tensor E_H^(tensor h).
+
+Let F_sigma be Lemma 97B's map on D_sigma(l,X). Then the exact actual
+kernel of J is the direct sum, over Z=H,C, of
+
+    Hom_GL(X)(S_alpha(X),
+       T_Ztop tensor ker Gamma_(s_Z)(E_Z)
+              tensor ker F_(sigma_Z)(l,X)).        (P98.3)
+
+The C term is absent at rank one. No stable-rank or auxiliary-dimension
+hypothesis is imposed.
+
+**Proof.** Each source has total degree A=|alpha|. Its restriction to
+the root's maximal circle grade is injective by irreducibility and has
+the same dimension as the corresponding GL(X) Hom space by Lemma 93H.
+It is consequently an isomorphism. Taking all omitted background slots
+and all defining pairs identifies the top source for type Z with
+
+    Hom_GL(X)(S_alpha(X),
+       T_Ztop tensor A_(s_Z)(E_Z) tensor D_(sigma_Z)(l,X)).
+
+The top-root output of the inserted triple invariant has exactly three
+possible grade patterns. They are: the inserted background at -2 with
+all V's positive; that background at zero with one V negative; or all
+backgrounds at their top grades with two V's negative. Other backgrounds
+in the source remain at their top grades.
+
+The middle projection isolates each background i and gives F_sigma
+on its pair sources, as proved in Lemma 97C. Its vanishing is equivalent
+to membership in the F kernel: necessity follows from the off-diagonal
+coefficients at r>=2, or the H diagonal at r=1; sufficiency follows by
+substituting F=0 in all middle coefficients, including the primitive-C
+trace correction.
+
+On that kernel, the defining-slot Specht shapes are (mu,2) for H and
+(mu,1,1) for C, with ell(mu)=r. They have respectively r+1 and r+2
+rows. The first grade pattern is S_l-equivariant and has all defining
+outputs in X^(tensor l). Schur--Weyl supplies only shapes of at most
+r rows there. Hence the entire first pattern vanishes on ker F.
+
+For the last pattern, fix the two negative V positions p. Only the
+source summands with marked pair p contribute. Their invariant
+insertion is exactly the coevaluation between E_Z at the omitted
+background position and E_Z^* in that negative pair, up to a fixed
+nonzero normalization. Thus this projection is Gamma tensor Id.
+The H and C outputs lie in the separate symmetric and alternating
+subspaces of the negative pair, so they cannot cancel each other.
+
+On the two separate tensor factors, the intersection of the kernels
+of Id tensor F and Gamma tensor Id is ker Gamma tensor ker F. The
+GL(X) Hom functor preserves this kernel intersection. All three top
+patterns therefore vanish exactly on (P98.3). Finally, an equivariant
+map out of the actual irreducible root that vanishes on its top space
+vanishes everywhere. This proves the asserted actual kernel equality.
+QED.
+
+For explicit dimensions put K_Z=dim ker J_Z, and write f^theta for
+the Specht dimension. Equivalently, (P98.3) gives
+
+    K_H=sum_(zeta partitions h-1, ell(zeta)=d_H)
+        sum_(mu partitions l-2, ell(mu)=r, mu_r>=2)
+        f^(zeta,1) f^(mu,2)
+        [s_alpha] R e_2^c ch(S_zeta(Sym^2 X)) s_mu,
+
+    K_C=sum_(zeta partitions c-1, ell(zeta)=d_C)
+        sum_(mu partitions l-2, ell(mu)=r)
+        f^(zeta,1) f^(mu,1,1)
+        [s_alpha] R h_2^h ch(S_zeta(Lambda^2 X)) s_mu. (P98.4)
+
+These are ordinary r-variable polynomial characters. Unavailable
+summands have value zero. In particular, simultaneous necessary
+conditions for nonzero kernels are
+
+    K_H>0 => h>=d_H+1, l>=2r+2, alpha_r>=r+3;
+    K_C>0 => c>=d_C+1, l>=r+2, alpha_r>=r.          (P98.5)
+
+Here alpha is padded to r rows. To verify the last-row conditions,
+S_zeta(E) at full height d factors as det(E) tensor
+S_(zeta-(1^d))(E). The diagonal weights give
+
+    det(E_H)=(det X)^(r+1),
+    det(E_C)=(det X)^(r-1).
+
+The defining-wall S_mu contributes at least (det X)^2 for H and
+det X for C. All remaining modules are polynomial. Hence every reached
+root contains at least r+3 boxes in each row for H, and r for C.
+These are joint wall conditions, rather than either projection alone.
+
+**Lemma 98C (independent positive pair contribution and matched budget).**
+In the same actual gap-four setting, put
+
+    L=binomial(l,2), Q4=binomial(l,4),
+    P_H=binomial(h,2)T_HH, P_C=binomial(c,2)T_CC.
+
+Then the actual full Haar moment satisfies
+
+    M>=L(h T_H+c T_C)-K_H-K_C+P_H+P_C.            (P98.6)
+
+After disjoint sign support reduction, the original even-minus integral
+therefore satisfies
+
+    Phi_G/2>=L B+2P_H+2P_C+k_r Q4 T_4-K_H-K_C
+                   +2L(h_+ T_H+c_+ T_C),          (P98.7)
+
+where k_r=3 at r>=2 and k_1=2.
+
+**Proof.** The triple image has dimension S-K_H-K_C by Lemma 98B.
+For every equal-H pair or equal-C pair of backgrounds, insert their
+self-dual coevaluation into the actual extremal root Hom space left
+after removing that pair. Its dimension is T_HH or T_CC. Project its
+top-root output onto those two background positions at grade zero,
+all other backgrounds and all V's at their top grades. This projection
+isolates the chosen pair; every other pair insertion vanishes there.
+The grade-zero pairing is nondegenerate and nonzero: the H middle space
+is End(X), and the C middle space is sl(X) at r>=2. Thus all these
+pair sources inject independently. Every triple image has at most one
+nondefining background below its maximal grade, and so vanishes under
+this two-middle-background projection. The pair image is therefore
+disjoint from the triple image. Adding their dimensions proves (P98.6).
+
+Use the exact disjoint-support cut identity in Section 94:
+
+    Phi_G/2=M+L B+P_H+P_C+k_r Q4 T_4
+                   +L[(h_+-h_-)T_H+(c_+-c_-)T_C].
+
+Since h=h_++h_- and c=c_++c_-, substitution proves (P98.7), with the
+actual positive pair coefficient twice its cut coefficient. QED.
+
+**Theorem 98D (original all-sign Q3 below the joint determinant wall).**
+Let r>=2. Every actual type C_r atomic tuple with distinguished root
+alpha and background degree D satisfies original Q3 for all signs if
+
+    |alpha|>=D-4 and alpha_r<r.                    (P98.8)
+
+There is no defining-count, first-row, remaining-shape or tuple-length
+bound. The same conclusion holds for |alpha|>=D-4 under the alternative
+fusion-stable condition
+
+    q+floor(l/2)<=r(r-1)/2,                        (P98.9)
+
+where q is the number of nontrivial nondefining backgrounds.
+
+**Proof.** Use strong induction under the fusion of Lemma 41A. The
+trivial-root case has D<=4 and is supplied by Theorem 41B. Odd minus
+count and odd total degree give zero. Smaller even gaps are supplied
+by Theorem 93G. At gap four reduce to disjoint sign supports.
+Condition (P98.8) makes both kernels zero by (P98.5); (P98.7) then
+supplies the actual integral.
+
+Background fusion fixes the root and cannot increase D, so (P98.8)
+is preserved. To check (P98.9), a fusion of two nondefining backgrounds
+removes two and adds at most one nondefining background. No square
+constituent is V, by even box parity. A fusion of two V's removes two
+V's and adds at most one nondefining background. Thus q+floor(l/2)
+does not increase. On the reached disjoint tuple, h,c<=q<=d_C<=d_H,
+so both omitted-slot kernels vanish by Lemma 98A, again giving
+(P98.7) with zero loss. Root/background fusion leaves at most four
+background boxes and is supplied by Theorem 41B for every replacement
+root. These inductions include the original signs and trivial factors.
+Normalized Haar pullback proves the same assertions for actual
+representations descending to every central quotient. QED.
+
+**Lemma 98E (uniform rank-two payment of the entire C kernel).**
+At r=2, for every actual gap-four root and all background shapes and
+counts, the exact C kernel obeys
+
+    K_C<=2P_C+(3/2)Q4 T_4.                         (P98.10)
+
+**Proof.** The kernel is zero if c<=1 or l<4. Otherwise E_C=det X is
+one-dimensional. In (P98.4), zeta=(c-1) and
+f^(zeta,1)=c-1. Put u=c-1. For mu=(a,b) with a>=b>=1 and a+b=l-2,
+write
+
+    A_mu=[s_alpha] R h_2^h e_2^(c-1) s_(a,b),
+    eta=(a-1,b-1), rho=(a+1,b+1),
+    Delta=(a+3)(b+2), E=(a+1)(a+2)b(b+1).
+
+Zero parts of eta are omitted. Then
+
+    K_C=u sum_mu f^(a,b,1,1) A_mu.
+
+The Young hook formula, also stated in Gruson--Serganova Chapter 6,
+Theorem 8.7, gives the exact ratios
+
+    f^(a,b,1,1)=12 binomial(l,4) f^eta/Delta,
+    f^rho=24 binomial(l,4) f^eta/E.                 (P98.11)
+
+Indeed the four-row Vandermonde expression for (a,b,1,1), divided by
+the two-row expression for (a-1,b-1), cancels to
+l(l-1)(l-2)(l-3)/(2 Delta). The same two-row formula for rho gives
+l(l-1)(l-2)(l-3)/E. These are the displayed ratios.
+
+Since E<=Delta^2 and u(u+1)>=u^2, put t=u/Delta. After division by
+binomial(l,4)f^eta, the difference in the following inequality is at
+least 24t^2+3/2-12t=24(t-1/4)^2:
+
+    u f^(a,b,1,1)
+       <=2 binomial(c,2) f^rho+(3/2)binomial(l,4) f^eta. (P98.12)
+
+Multiply by A_mu>=0 and sum. The defining tensor-power Schur--Weyl
+expansions match these coefficients precisely:
+
+    T_CC>=sum_mu f^rho A_mu,
+    T_4 =sum_mu f^eta A_mu.
+
+For the first, the rho summand in h_1^l shifts by det^(c-2), and
+rho=mu+(1,1); omitted summands are nonnegative. For the second,
+h_1^(l-4) has every two-row eta, and det^c s_eta equals
+det^(c-1)s_mu under mu=eta+(1,1). Multiplication by R h_2^h preserves
+both comparisons. Their substitution in (P98.12) proves (P98.10).
+This argument has no finite label or count range. QED.
+
+**Theorem 98F (original rank-two four-box Q3 through bottom row four).**
+For every compact connected type C_2 group, every actual atomic tuple
+with distinguished root alpha and arbitrary backgrounds satisfies
+original Q3 for all signs if
+
+    |alpha|>=D-4 and alpha_2<=4.                    (P98.13)
+
+All first rows, background shapes, defining counts and tuple lengths
+are unrestricted.
+
+**Proof.** At gap four, (P98.5) gives K_H=0 since r+3=5. Lemmas 98C
+and 98E, with the actual k_2=3, consequently give
+
+    Phi_G/2>=L B+2P_H+(3/2)Q4 T_4
+                        +2L(h_+ T_H+c_+ T_C)>=0.  (P98.14)
+
+The background-fusion induction fixes alpha_2 and decreases D.
+Root/background fusion, trivial factors, parity and smaller gaps are
+handled exactly as in Theorem 98D. Thus this proves the original
+all-sign integral, including the actual central quotients, rather than
+only its disjoint-support representative. QED.
+
+**Original-consumer receipt and remaining structural obligation.**
+The exact negative-triple loss is now K_H+K_C in (P98.3), an intersection
+of two explicitly classified rank-wall kernels. It is not the free
+Pfaffian-generator count and does not assume away syzygies. The positive
+pair images are proved independent inside the same actual M that occurs
+in the original signed cut identity. Formula (P98.7) is therefore a
+matched uniform comparison target, not an auxiliary positivity claim.
+
+In rank two the entire C-family loss is paid by the existing positive
+pair and quartet channels through (P98.10). The remaining reached
+rank-two gap-four supplier is the H two-wall source: h>=4, l>=6 and
+alpha_2>=5 (indeed alpha_2>=c+5 because the C spectators contribute
+det^c). Its remaining sufficient budget is
+
+    K_H<=L B+2P_H+(3/2)Q4 T_4,
+
+possibly improved by unused actual full-moment or plus-background
+contributions. This inequality is an obligation, not a theorem recorded
+here. In higher rank the general simultaneous-wall comparison remains
+unsupplied. Larger box gaps and the other unsupplied Lie types also
+remain obligations of the unchanged full all-group central
+positive-definite-cone goal. Further finite certificates do not supply
+any of these uniform missing comparisons.
+
+## 99. Uniform H payment and the entire rank-two four-box region
+
+The H kernel from Section 98 can also be paid uniformly. Its positive
+H-pair contribution alone is insufficient as a proposed degree-uniform
+supplier; a combined pair-and-quartet comparison works. The proof uses
+the exact defining-slot wall, an elementary projection bound for the
+background-slot wall, and a quadratic Young-dimension inequality.
+Together with Lemma 98E it supplies every actual rank-two four-box
+consumer, with no root-row or defining-count restriction.
+
+**Independent self-double-check immediately before recording.**
+
+1. Re-derived the background-kernel bound without a Specht-dimension
+   estimate. Delete one omitted-slot source summand from A_h(E).
+   Projection onto the other h-1 summands is injective on ker Gamma:
+   any vector supported only on the deleted summand has a nonzero
+   coevaluation image unless it is zero. This is GL(X)-equivariant.
+2. Re-derived the defining H kernel from Lemma 97B. At rank two its
+   polynomial character is sum_(a>=b>=2, a+b=l-2)
+   f^(a,b,2) s_(a,b). Multiplying by h_2 uses precisely the horizontal
+   two-strip Pieri rule. In particular the equal-row output allows
+   only the lower-row removal, not the two other candidate removals.
+3. Independently used the three-row hook formula and two-row hook
+   formula to obtain the three ratios in Lemma 99A. The quartet
+   coefficient was separately expanded using
+   h_2^2=s_(4)+s_(3,1)+s_(2,2), in two variables. This gives the
+   falling-factorial formula below, with its correct strip bounds.
+4. Checked the full Young comparison symbolically. The small bottom-row
+   cases q=2,3 have the displayed positive formulas. For q>=4 the
+   differences d=0,1,2,3 factor as displayed; the d>=4 numerator has
+   the displayed coefficient table. Each coefficient polynomial has
+   positive coefficients after q=4+y, y>=0. Positivity also follows
+   directly by bounding its negative terms by the leading positive
+   term at q>=4, so the proof does not depend on finite checks.
+5. As a separate diagnostic, exact hook dimensions and explicit Pieri
+   paths checked A_rho^2<=6 B_rho C_rho through l=100 in two variables.
+   An initial unrecorded diagnostic used the wrong interlacing direction;
+   the corrected test required rho_1>=mu_1>=rho_2>=mu_2 and agreed
+   with the independently derived formulas. No finite range proves
+   the statement recorded here.
+6. Rechecked the precise quadratic completion:
+   u(u+1)B+(3/2)C-uA
+   =B(u-A/(2B))^2+(3/2)C-A^2/(4B)+uB.
+   Thus A^2<=6BC supplies the desired coefficients for every u>=0.
+7. Replayed the actual multiplicity consumer. Multiply the ordinary
+   two-variable character inequality by R e_2^c h_2^(h-2), with
+   u=h-1. It gives K_H<=2P_H+(3/2)Q4 T_4. Its quartet coefficient
+   and Lemma 98E's C quartet coefficient add to the actual k_2=3.
+   Their pair coefficients exactly match the twice-counted positive
+   pair contributions in (P98.7), not a surrogate total dimension.
+8. Checked the all-sign induction with arbitrary root. Background
+   fusion decreases D and fixes the root; root/background fusion leaves
+   background degree at most four. Trivial factors, parity zeros and
+   actual quotient Haar pullback are consumed as in Theorem 98D.
+   There is no root-row or defining-count condition left to preserve.
+
+**Lemma 99A (two-variable H-wall quadratic comparison).**
+Work in two ordinary variables. For l>=6 define
+
+    K_l=sum_(a>=b>=2, a+b=l-2) f^(a,b,2) s_(a,b).
+
+For every rho=(p,q) of size l, p>=q>=0, put
+
+    A_rho=[s_rho] h_2 K_l,
+    B_rho=f^rho,
+    C_rho=binomial(l,4)[s_rho] h_2^2 h_1^(l-4).
+
+Then
+
+    A_rho^2<=6 B_rho C_rho.                         (P99.1)
+
+Consequently, for every real u>=0, the following is coefficientwise
+Schur-positive in two variables:
+
+    u(u+1)h_1^l+(3/2)binomial(l,4)h_2^2 h_1^(l-4)
+                                      -u h_2 K_l.  (P99.2)
+
+**Proof.** If q<=1, A_rho=0 and the claim is immediate. Otherwise put
+d=p-q and write a=A_rho/B_rho and W=24 C_rho/B_rho. The claim is
+W-4a^2>=0. Let (v)_k=v(v-1)...(v-k+1), with (v)_0=1. For a
+nonnegative integer v, (v)_k=0 if k>v.
+
+The only candidate partitions mu in h_2 K_l are
+(p-2,q), (p-1,q-1), (p,q-2), respectively permitted when
+(d>=2,q>=2), (d>=1,q>=3), and q>=4. Their f^(mu,2)/f^(p,q) ratios are
+
+    (d-1)(p-2)(q-1)(p+1)/[2(d+1)(q+1)],
+    (p-1)(q-2)/2,
+    (d+3)pq(q-3)/[2(d+1)(p+2)].                  (P99.3)
+
+These follow by cancelling factorials in
+
+    f^(x,y,2)=l!(x-y+1)x(y-1)/[2(x+2)!(y+1)!],
+    f^(p,q)=l!(p-q+1)/[(p+1)!q!].
+
+Thus a is the sum of the permitted ratios in (P99.3).
+
+For W, use h_2^2=h_4+h_2 e_2+e_2^2 in two variables. Removing the
+horizontal four-strip, or one determinant and a horizontal two-strip,
+or two determinants, gives respectively
+
+    W=sum_(k=0)^min(4,d)
+          (d+5-2k)(p+1)_k(q)_(4-k)/(d+1)
+       +sum_(k=0)^min(2,d)
+          (d+3-2k)(p+1)_(1+k)(q)_(3-k)/(d+1)
+       +(p+1)_2(q)_2.                            (P99.4)
+
+For example, the first remaining shape is
+(p-k,q-4+k). Its hook ratio against (p,q) is its displayed summand
+divided by l(l-1)(l-2)(l-3). Since 24binomial(l,4) equals that
+falling factorial, (P99.4) follows. The zero falling factorials remove
+negative bottom rows when q=2 or 3.
+
+Here is a complete positivity verification, for unbounded p and q.
+If q=2, d=0,1 have a=0. At d=2,3 the differences W-4a^2 are
+12860/81 and 411. For every d>=4 the difference is
+
+    4(d+3)(2d^5+11d^4+26d^3+33d^2+27d+9)
+                         /[9(d+1)^2]>0.          (P99.5)
+
+If q=3, d=0 has a=0. At d=1,2,3 the differences are 351,731,1368.
+For every d>=4 they are
+
+    (3d^4+38d^3+211d^2+576d+576)/4>0.             (P99.6)
+
+For q>=4 and d=0,1,2,3, direct substitution of (P99.3)--(P99.4)
+gives respectively
+
+    6q(9q^4-23q^3+6q^2+18q-16)/(q+2)^2,
+
+    3q(18q^4+17q^3-50q^2-15q-18)/(q+3)^2,
+
+    2(27q^7+174q^6+382q^5+278q^4
+          -301q^3-624q^2-304q-32)/[(q+1)^2(q+4)^2],
+
+    3(18q^5+143q^4+392q^3+407q^2-240q-300)/(q+5)^2.
+                                                        (P99.7)
+
+All four are positive at q>=4. One direct verification is to bound
+each negative term of degree j<m by its absolute coefficient times
+q^m/4^(m-j), where m is the degree of the leading positive term.
+For each polynomial displayed, the leading coefficient exceeds the
+sum of these bounds; its other positive terms can be discarded.
+
+Finally suppose q>=4 and d>=4. The numerator N in
+
+    W-4a^2=N/[(q+1)^2(d+q+2)^2]
+
+has the following coefficients as a polynomial in d:
+
+    d^6: 4q;
+    d^5: 4(8q^2-q-1);
+    d^4: 115q^3-28q^2-61q-6;
+    d^3: 235q^4-79q^3-257q^2-21q+18;
+    d^2: 283q^5-112q^4-497q^3-26q^2+128q+16;
+    d^1: (q+1)(189q^5-280q^4-179q^3+190q^2+20q-24);
+    d^0: 6q(q+1)^2(9q^4-23q^3+6q^2+18q-16).       (P99.8)
+
+Every coefficient is positive for q>=4 by the same leading-term
+bound just described. The numerator identity is obtained by expanding
+(P99.3)--(P99.4), so it supplies all d>=4 simultaneously. This completes
+the proof of (P99.1) for every two-row shape.
+
+For B=B_rho>0, A=A_rho and C=C_rho, complete the square:
+
+    u(u+1)B+(3/2)C-uA
+      =B(u-A/(2B))^2+(3/2)C-A^2/(4B)+uB>=0.
+
+The middle difference is nonnegative by (P99.1). This is exactly
+the rho coefficient in (P99.2). QED.
+
+**Lemma 99B (uniform actual H-kernel budget at rank two).**
+In the actual rank-two gap-four setting of Lemma 94C,
+
+    K_H<=2P_H+(3/2)Q4 T_4.                         (P99.9)
+
+**Proof.** If h<=3 or l<=5, (P98.5) makes K_H=0. Otherwise h>=4 and
+l>=6. For any E, project A_h(E) onto all but one of its h omitted-slot
+summands. This is injective on ker Gamma_h(E): a kernel vector with
+zero projection would be supported only on the remaining summand,
+whose coevaluation insertion is itself injective. Therefore, as actual
+GL(X) modules with E=Sym^2 X,
+
+    ker Gamma_h(E) embeds in (h-1) copies of E^(tensor(h-1)).
+
+Lemma 98B consequently gives the multiplicity bound
+
+    K_H<=(h-1)[s_alpha] R e_2^c h_2^(h-1) K_l.
+
+Set u=h-1 in (P99.2), multiply by the Schur-positive spectator
+R e_2^c h_2^(h-2), and take the actual root coefficient. The first
+positive term is
+
+    h(h-1)[s_alpha]R e_2^c h_2^(h-2)h_1^l=2P_H;
+
+its quartet term is (3/2)binomial(l,4)T_4. The negative term is the
+upper bound for K_H just obtained. This proves (P99.9) with the actual
+root label and its exact coefficients. QED.
+
+**Theorem 99C (the entire original rank-two four-box region).**
+For every compact connected type C_2 group, every actual atomic tuple
+with any distinguished root alpha and nontrivial backgrounds of total
+degree D satisfies original Q3 for every sign choice whenever
+
+    |alpha|>=D-4.                                 (P99.10)
+
+No root-row, degree, remaining-shape, defining-count or tuple-length
+restriction is imposed.
+
+**Proof.** Use strong induction under opposite-sign repeat fusion.
+The trivial-root case has D<=4 and is supplied by Theorem 41B.
+Odd-minus and odd-total cases are zero. All even gaps below four are
+supplied by Theorem 93G. At the remaining gap four, reduce to disjoint
+sign supports, and use Lemma 98C. Lemmas 98E and 99B give
+
+    K_H+K_C<=2P_H+2P_C+3Q4 T_4.
+
+The coefficient three is precisely the actual rank-two quartet moment,
+so (P98.7) gives
+
+    Phi_G/2>=L B+2L(h_+ T_H+c_+ T_C)>=0.           (P99.11)
+
+The triple, pair and quartet comparisons are all consumed in the same
+original cut budget. Background fusion leaves alpha fixed and cannot
+increase D, preserving |alpha|>=D-4. A root/background repeat leaves
+at most four background boxes, supplied by Theorem 41B for every
+replacement root. Trivial factors are handled as in Theorem 98D.
+Thus the induction returns the full original sign patterns.
+Normalized Haar pullback gives every actual central quotient. QED.
+
+**Proposition 99D (one rank-uniform structural target for the general four-box consumer).**
+For any r>=2 and sigma in {+1,-1}, put E_+=h_2, E_-=e_2, and let
+
+    K_(r,+,l)=sum_(mu partitions l-2, ell(mu)=r, mu_r>=2)
+                       f^(mu,2) s_mu,
+    K_(r,-,l)=sum_(mu partitions l-2, ell(mu)=r)
+                       f^(mu,1,1) s_mu.
+
+All characters here are in r ordinary variables. For |rho|=l,
+ell(rho)<=r, define
+
+    A_(rho,sigma)=[s_rho] E_sigma K_(r,sigma,l),
+    B_rho=f^rho,
+    C_(rho,sigma)=binomial(l,4)
+                         [s_rho] E_sigma^2 h_1^(l-4).
+
+If both families satisfy the uniform inequalities
+
+    A_(rho,sigma)^2<=6 B_rho C_(rho,sigma)           (P99.12)
+
+for all reached l,rho, then original type C_r Q3 holds on the entire
+four-box region |alpha|>=D-4, for arbitrary roots and all signs.
+
+**Proof.** The same square completion gives (P99.2) with E_sigma and
+K_(r,sigma,l) in place of h_2 and K_l. For each background type Z,
+project the omitted-slot kernel onto s_Z-1 summands, exactly as in
+Lemma 99B. Multiply the resulting polynomial comparison by its actual
+spectator modules. It gives respectively
+
+    K_H<=2P_H+(3/2)Q4 T_4,
+    K_C<=2P_C+(3/2)Q4 T_4.
+
+Types absent, counts s_Z<=1, and defining counts too small to reach a
+wall have zero kernel and need no negative-power spectator. The actual
+k_r=3 for r>=2 pays the sum of the quartet terms. Formula (P98.7)
+then supplies the original disjoint consumer, and the induction from
+Theorem 99C supplies all original signs and central quotients. QED.
+
+**Original-consumer receipt and remaining obligations.** Lemma 99A is
+a uniform Young-dimension comparison, not a finite Q3 certificate.
+It gives the entire rank-two H payment; together with the C payment
+already proved it closes every rank-two four-box case. Rank one was
+already supplied without a defining-count restriction by Theorem 97E.
+No bottom-row threshold remains at rank two.
+
+Proposition 99D isolates a single pair of coefficientwise quadratic
+comparisons that would close the higher-rank four-box consumers by the
+same maps. Its premise (P99.12) is not proved here for arbitrary rank.
+Small exact hook/Pieri diagnostics at r=3,4 did not falsify it; these
+are not suppliers. The next structural task is to prove or replace
+that rank-uniform comparison. Larger box gaps and other unsupplied
+Lie types remain separate obligations. The full all-group continuous
+central positive-definite-cone goal remains unproved and unchanged.
+
+**Lemma 99E (why the quartet contribution is needed in the H payment).**
+There is no uniform actual bound K_H<=2P_H on the reached rank-two
+four-box consumers. More precisely, take h=4, c=0, l=2m+2, no other
+backgrounds, and root alpha=(m+3,m+3), where m>=2. Then
+
+    K_H/(2P_H)
+       =m(m-1)(m+3)(m+4)/[72(3m^2+9m+8)],        (P99.13)
+
+which grows as m^2/216. The root is given sign +, all four H's sign -,
+and all V's sign +; this is an original even-minus disjoint pattern.
+
+**Independent self-double-check immediately before recording.**
+Re-derived the unique full-height background source and defining source
+in (P98.4). Independently enumerated the two successive horizontal
+two-strip removals for P_H and used exact hook dimensions. At
+m=2,3,10,20 their ratios are respectively
+5/228,7/124,455/796,2185/1041, exactly as in (P99.13).
+The symbolic formula and its unbounded growth, not these diagnostics,
+prove the assertion.
+
+**Proof.** The degree-four gap is exact:
+D=8+(2m+2)=2m+10 and |alpha|=2m+6. The background wall has only
+zeta=(1,1,1), with S_zeta(Sym^2 X)=(det X)^3 and
+f^(zeta,1)=f^(1,1,1,1)=1. Thus the defining source is uniquely
+mu=(m,m), and K_H=f^(m,m,2).
+
+Put F=f^(m,m), the m-th Catalan number. The hook formula gives
+
+    K_H/F=(2m+1)m(m-1)/(m+2).
+
+The horizontal two-strip expansion, or (P99.4) with equal-row output
+(m+3,m+3), gives
+
+    P_H/F=36(2m+1)(3m^2+9m+8)/[(m+2)(m+3)(m+4)].
+
+For the latter, the equal-row quartet coefficient divided by
+f^(m+3,m+3) is
+3(3m^2+9m+8)/[4(2m+5)(2m+3)], while
+
+    f^(m+3,m+3)/F
+      =8(2m+1)(2m+3)(2m+5)/[(m+2)(m+3)(m+4)].
+
+Multiplication by binomial(4,2)=6 gives the asserted P_H formula.
+Division proves (P99.13). At m=20 the ratio already exceeds one,
+and its quotient by m^2 tends to 1/216. QED.
+
+This is a failure of an overstrong pair-only supplier on actual reached
+labels, not a replacement consumer. The pair-plus-quartet comparison
+(P99.9) and Theorem 99C retain the positive contribution that pays for
+this family. It explains structurally why the combined budget, rather
+than another finite certificate or a pair-only count, is the correct
+next target in higher rank.
+
+## 100. Rank-uniform hook/branching control and the entire symplectic four-box region
+
+This section supplies both premises of Proposition 99D in arbitrary
+rank. The proof controls a single wall hook ratio by a branching
+probability, then applies Cauchy--Schwarz to the actual Schur coefficient.
+Jensen and Bernoulli estimates treat the symmetric and alternating
+walls uniformly in rank and degree. The whole original four-box cut
+budget is consequently supplied for every type C_r, not only rank two.
+The unchanged full-cone target still includes all larger gaps and all
+other unsupplied Lie types.
+
+**Independent self-double-check immediately before recording.**
+
+1. Independently cancelled the shifted Vandermonde hook formulas for
+   f^(mu,2)/f^mu and f^(mu,1,1)/f^mu. Both have the factor
+   L=binomial(n+2,2); their remaining factors are the products in
+   Lemma 100A. Exact hook checks on several two-, three- and four-row
+   shapes agree with those cancellations.
+2. Re-derived the one-pair branching probability from the projection
+   (Id+sigma(12))/2 on the actual Specht module. Lemma 97A gives
+   normalized transposition character ct(lambda)/binomial(|lambda|,2).
+   All downward strips remain within the actual r-variable alphabet.
+3. Rechecked the symmetric wall's lower bound using both
+   sum mu_i^2>=n^2/r and sum i mu_i<=(r+1)n/2. Its full-height
+   condition mu_r>=2 gives n>=2r. Expanded the difference after
+   n=2r+t independently and obtained the positive polynomial below.
+   Rank one is checked directly rather than using that r>=2 bound.
+4. Rechecked the alternating wall using only the r-1 tail rows for
+   Jensen. Ignoring the first product factor is an upper bound.
+   With q=n-mu_1 and a=r-1, q>=a and n=q+1+t, t>=0. The lower
+   bound for its branching numerator uses mu_i>=1 in every row.
+   Independently expanded its difference and obtained the positive
+   expression below.
+5. Re-derived every added-box content bound. A horizontal two-strip
+   has content sum at most 2mu_1+1<=2n+1. A vertical two-strip
+   inside the same r rows has content sum at least 5-2r. These
+   are the exact bounds consumed by the wall comparisons.
+6. Direct rational diagnostics over actual strips with r<=5 and
+   n<=22 checked 3580 symmetric and 6602 alternating inequalities,
+   including both Jensen/branching bounds. These diagnose the proof;
+   none of those finite ranges supplies its unbounded quantifiers.
+7. Replayed Cauchy--Schwarz with the wall subset retained until the
+   final inequality. Its two weights are f^mu p_sigma(mu) and
+   f^mu w_sigma(mu)^2/p_sigma(mu). The extension to all strips is
+   legitimate because these weights are nonnegative. The prefactor
+   is exactly binomial(l,2)binomial(l-2,2)=6binomial(l,4).
+8. Rechecked the original consumer: the omitted-slot projection gives
+   s_Z-1 copies of E_Z^(s_Z-1), then u=s_Z-1 in the quadratic
+   comparison pays 2P_Z+(3/2)Q4 T_4. The two quartet coefficients
+   total three, exactly the actual r>=2 moment. At rank one C is
+   absent and k_1=2 leaves an additional half-quartet contribution.
+9. Replayed background fusion, root/background fusion, original signs,
+   trivial factors, parity and descending labels. No auxiliary rank,
+   root last-row or tuple-length bound is introduced in Theorem 100D.
+
+**Lemma 100A (wall hook ratio controlled by the pair branching numerator).**
+Let r>=1, let mu be a partition of n with exactly r rows, and put
+
+    z_i=mu_i+r-i,
+    T_sigma(lambda)=binomial(|lambda|,2)+sigma ct(lambda).
+
+For sigma=+1 require mu_r>=2; set
+
+    w_+(mu)=product_(i=1)^r (z_i-1)/(z_i+1).
+
+For sigma=-1 require r>=2; set
+
+    w_-(mu)=product_(i=1)^r z_i/(z_i+2).
+
+Let rho/mu be a horizontal two-strip for sigma=+1, or a vertical
+two-strip for sigma=-1, and require ell(rho)<=r. Then
+
+    w_sigma(mu)^2<=T_sigma(mu)/T_sigma(rho).        (P100.1)
+
+Both denominators and numerators here are strictly positive. The hook
+ratios giving these products are
+
+    f^(mu,2)=binomial(n+2,2)f^mu w_+(mu),
+    f^(mu,1,1)=binomial(n+2,2)f^mu w_-(mu).        (P100.2)
+
+**Proof of the hook identities.** In the shifted Vandermonde hook
+formula, appending row (2) replaces each z_i by z_i+1 and adds a
+bottom coordinate 2. Each old-coordinate factorial ratio contributes
+1/(z_i+1), and each new Vandermonde factor is z_i-1. The bottom
+factorial is 2!, giving the first identity. Appending rows (1,1)
+replaces each old coordinate by z_i+2 and adds bottom coordinates 2,1.
+The Vandermonde factors z_i(z_i+1), divided by
+(z_i+2)(z_i+1), leave z_i/(z_i+2); the bottom factorial product is
+again two. The n! versus (n+2)! factor gives the stated binomial.
+QED for (P100.2).
+
+**Proof of (P100.1), symmetric wall.** First suppose r>=2. Put
+
+    S=sum z_i=n+r(r-1)/2,
+    U=S-r=n+r(r-3)/2.
+
+All z_i>=2. The function log((x-1)/(x+1)) is concave for x>1.
+Jensen followed by Bernoulli therefore gives
+
+    w_+(mu)^2<=((S-r)/(S+r))^(2r)
+             <=U/(U+4r^2).                       (P100.3)
+
+Indeed ((S+r)/(S-r))^(2r)=(1+2r/U)^(2r)>=1+4r^2/U.
+
+The content formula is
+
+    ct(mu)=(sum mu_i^2-2sum i mu_i+n)/2.
+
+The decreasing sequence mu_i and increasing sequence i give
+sum i mu_i<=(r+1)n/2; Cauchy--Schwarz gives sum mu_i^2>=n^2/r.
+Thus
+
+    T_+(mu)>=T0=(r+1)n(n-r)/(2r)>0.               (P100.4)
+
+The horizontal added-box content sum is at most 2mu_1+1<=2n+1.
+Since binomial(n+2,2)-binomial(n,2)=2n+1,
+
+    T_+(rho)-T_+(mu)<=4n+2=Delta0.
+
+We claim 4r^2 T0>Delta0 U. Write n=2r+t, t>=0, as forced by
+mu_r>=2. The difference is exactly
+
+    4r^2 T0-(4n+2)U
+       =2(r+2)(r-1)t^2
+        +(6r^3+4r^2-10r-2)t
+        +r(4r^3-5r-1)>0.                         (P100.5)
+
+Every coefficient is positive at r>=2: in particular
+6r^3-10r=2r(3r^2-5)>0 and 4r^3-5r-1>=11r-1>0.
+Consequently
+
+    U/(U+4r^2)<=T0/(T0+Delta0)
+                 <=T_+(mu)/(T_+(mu)+Delta0)
+                 <=T_+(mu)/T_+(rho).
+
+The denominator T_+(rho) is positive because its first row has at
+least two boxes. These comparisons prove the symmetric case.
+
+For r=1, mu=(n), n>=2, and rho=(n+2). Direct substitution gives
+w_+=(n-1)/(n+1) and
+
+    T_+(mu)/T_+(rho)-w_+^2
+       =2(n-1)/[(n+2)(n+1)^2]>0.
+
+This supplies the remaining symmetric case.
+
+**Proof of (P100.1), alternating wall.** Put
+
+    a=r-1>=1, q=n-mu_1>=a,
+    S_tail=sum_(i=2)^r z_i=q+a(a-1)/2.
+
+The first factor z_1/(z_1+2) is at most one. The function
+log(x/(x+2)) is concave for x>0. Jensen on the remaining a factors
+and Bernoulli give
+
+    w_-(mu)^2<=(S_tail/(S_tail+2a))^(2a)
+             <=S_tail/(S_tail+4a^2).              (P100.6)
+
+Let m=mu_1=n-q. Since sum mu_i^2<=mn and every mu_i>=1,
+sum i mu_i>=n+r(r-1)/2. The same content formula yields
+
+    T_-(mu)>=T0=[nq+a(a+1)]/2>0.                  (P100.7)
+
+The two added boxes are in distinct rows among 1,...,r. Each has
+content mu_i+1-i>=2-i, so their content sum is at least 5-2r.
+Consequently
+
+    T_-(rho)-T_-(mu)<=2n+2a-2=Delta0.
+
+It remains to check 4a^2 T0>=Delta0 S_tail. Divide that difference
+by two, and write n=q+1+t with t=mu_1-1>=0. Its exact expression is
+
+    a^2[nq+a(a+1)]-(n+a-1)[q+a(a-1)/2]
+       =(a^2-1)q^2+a(a-1)q/2
+        +a^2(2a^2+a+1)/2
+        +t[(a^2-1)q-a(a-1)/2]>0.                (P100.8)
+
+All terms are nonnegative and the constant term is positive. For the
+t coefficient use q>=a, giving
+(a^2-1)q-a(a-1)/2>=a(a-1)(a+1/2)>=0.
+Thus (P100.6) implies
+
+    w_-^2<=S_tail/(S_tail+4a^2)
+          <=T0/(T0+Delta0)
+          <=T_-(mu)/(T_-(mu)+Delta0)
+          <=T_-(mu)/T_-(rho).
+
+The last denominator is positive because rho has at least two rows.
+This proves the alternating case and the lemma. QED.
+
+**Lemma 100B (both coefficientwise quadratic comparisons in all ranks).**
+Use K_(r,sigma,l), A_(rho,sigma), B_rho and C_(rho,sigma) from
+Proposition 99D, in r ordinary variables. Then, for every l>=4,
+every |rho|=l with ell(rho)<=r, and each available sigma,
+
+    A_(rho,sigma)^2<=6 B_rho C_(rho,sigma).         (P100.9)
+
+The alternating wall is absent at r=1. Unavailable wall sources have
+A=0. Consequently, for every u>=0,
+
+    u(u+1)h_1^l+(3/2)binomial(l,4)E_sigma^2 h_1^(l-4)
+                         -u E_sigma K_(r,sigma,l) (P100.10)
+
+is coefficientwise Schur-positive in r variables.
+
+**Proof.** For a partition lambda of k>=2 define its one-pair branching
+probability by
+
+    p_sigma(lambda)=T_sigma(lambda)/(2binomial(k,2)).
+
+The transposition (12) on [lambda] has normalized character
+ct(lambda)/binomial(k,2), by Lemma 97A. Projection onto its sigma
+subspace therefore gives exactly
+
+    sum_(eta: lambda/eta a sigma two-strip) f^eta
+                         =p_sigma(lambda)f^lambda. (P100.11)
+
+This is also the ordinary two-box Pieri coefficient in
+E_sigma h_1^(k-2). The sum ranges over every available strip, not
+only wall sources.
+
+Fix rho and put n=l-2, L=binomial(l,2),
+b=binomial(n,2)/L. If its wall subset W is empty, A=0. Otherwise
+p_sigma(rho)>0. For every mu in W, p_sigma(mu)>0, and Lemma 100A is
+precisely
+
+    w_sigma(mu)^2<=b p_sigma(mu)/p_sigma(rho).     (P100.12)
+
+Write f_mu=f^mu and abbreviate p_sigma(mu), w_sigma(mu) to p_mu,w_mu.
+Pieri and (P100.2) give
+
+    A/L=sum_(mu in W) f_mu w_mu.
+
+Cauchy--Schwarz with the two nonnegative weights gives
+
+    (A/L)^2
+       <=[sum_(mu in W)f_mu p_mu]
+         [sum_(mu in W)f_mu w_mu^2/p_mu].
+
+The first bracket is at most
+
+    T=[s_rho]E_sigma^2 h_1^(l-4),
+
+because expanding the first E_sigma downward gives all strips mu,
+and expanding the second gives (P100.11) at mu. The second bracket,
+by (P100.12) and (P100.11) at rho, is at most
+
+    (b/p_sigma(rho))sum_(mu in W)f_mu
+       <=(b/p_sigma(rho))p_sigma(rho)f^rho=b B_rho.
+
+Thus A^2<=L^2 b B_rho T. But
+
+    L^2 b=binomial(l,2)binomial(l-2,2)=6binomial(l,4),
+
+so this is (P100.9) with its exact quartet coefficient. No shape,
+degree or rank range was checked in place of this argument.
+
+For each rho, complete the square as in Lemma 99A:
+
+    u(u+1)B+(3/2)C-uA
+       =B(u-A/(2B))^2+(3/2)C-A^2/(4B)+uB>=0.
+
+This proves (P100.10). QED.
+
+**Lemma 100C (uniform actual payment of both simultaneous-wall kernels).**
+For every type C_r actual gap-four tuple in the setting of Lemma 94C,
+
+    K_H<=2P_H+(3/2)Q4 T_4;
+    K_C<=2P_C+(3/2)Q4 T_4  when r>=2.             (P100.13)
+
+At rank one the C term is absent. All ranks, background shapes, root
+labels and counts are unrestricted.
+
+**Proof.** For each available background type Z with s_Z>=2, project
+ker Gamma_(s_Z)(E_Z) onto s_Z-1 omitted-slot summands. Exactly as in
+Lemma 99B this is an injective GL(X)-equivariant map into s_Z-1
+copies of E_Z^(tensor(s_Z-1)). Combine it with the exact actual kernel
+formula (P98.3), and apply (P100.10) with u=s_Z-1. Multiply by the
+remaining spectator modules, including E_Z^(s_Z-2), and take the
+actual root coefficient. Its pair term is
+s_Z(s_Z-1)T_ZZ=2P_Z; its quartet term is (3/2)Q4 T_4. Its negative
+term bounds K_Z from above. Absent types, s_Z<=1, or too few defining
+slots give zero wall kernel and require no negative powers. The
+polynomial coefficients equal the actual extremal Hom dimensions
+by Lemma 93H, as in the proof of Lemma 98B. This proves the asserted
+matched actual comparisons. QED.
+
+**Theorem 100D (original Q3 on the entire symplectic four-box region).**
+For every r>=1 and every compact connected group with Lie algebra
+of type C_r, every actual atomic tuple with arbitrary distinguished
+root alpha and nontrivial backgrounds of total box degree D satisfies
+original Q3 for every sign choice whenever
+
+    |alpha|>=D-4.                                 (P100.14)
+
+There is no root-row, total-degree, remaining-shape, defining-count
+or tuple-length bound.
+
+**Proof.** At a disjoint even-minus gap-four tuple with r>=2, substitute
+(P100.13) into the exact actual comparison (P98.7). The sum of the
+quartet payments is three, exactly the actual k_r=3. Therefore
+
+    Phi_G/2>=L B+2L(h_+ T_H+c_+ T_C)>=0.           (P100.15)
+
+At rank one only H exists. Its quartet payment is 3/2 and the actual
+moment is k_1=2, so the same argument gives
+
+    Phi_G/2>=L B+(1/2)Q4 T_4+2L h_+ T_H>=0.       (P100.16)
+
+All coefficients on the right are actual nonnegative Hom dimensions.
+Small defining counts for which the wall is absent are included by
+the zero-kernel convention. The positive pair images used in (P98.7)
+are independent inside the same actual full moment, by Lemma 98C.
+
+For all original signs use strong induction under Lemma 41A. A trivial
+root has D<=4 and is supplied by Theorem 41B; odd minus count and
+odd total box degree give the original zero integral. Smaller even
+gaps are supplied by Theorem 93G. Background fusion fixes alpha,
+cannot increase D, and creates no V, so (P100.14) is preserved. A
+root/background repeat leaves at most four background boxes and at
+most five positions, supplied by Theorem 41B for every replacement
+root. Trivial factors are removed with their original scalar and sign
+effects. Thus the disjoint comparison supplies every original sign
+pattern. Normalized Haar pullback proves the same statement for every
+actual descending label on every central quotient. QED.
+
+**Original-consumer receipt and next structural frontier.** Both
+rank-uniform premises of Proposition 99D are now proved. The symmetric
+wall uses all shifted rows; the alternating wall uses the tail rows,
+which keeps its estimate effective for extremely unbalanced shapes.
+The comparison is a structural hook/branching estimate followed by
+Cauchy--Schwarz, independent of any finite certificate range.
+
+The two exact relation kernels are paid by positive terms already
+present in the original signed integral, with the exact finite-rank
+quartet constants. This closes the entire four-box region for all
+symplectic ranks and actual central quotients. It strengthens the
+rank-two result and removes the higher-rank obligation (P99.12).
+
+The full positive-cone theorem is still not proved. The next unsupplied
+symplectic consumer has larger box gap: its invariant complements
+include additional connected channels and mixed products, so the
+four-box cut identity cannot be reused unchanged. One must classify
+those actual insertion kernels and pay them from the corresponding
+positive cut terms, retaining intersections and dependencies. The
+hook/branching control in Lemmas 100A--100B provides a uniform mechanism
+to test there, but no higher-gap budget is asserted here. Other
+unsupplied Lie types and non-polynomial generator sectors likewise
+remain obligations of the unchanged all-group full central cone.
+
+## 101. The exact six-box budget and the entire rank-one six-box region
+
+The next original symplectic consumer has A=D-6. Its degree-four
+complements now leave actual two-box-deficit moments, while its
+new degree-six complements leave extremal Schur coefficients. This
+section derives the complete signed budget in every rank, including
+all small-rank corrections. A separate count-polynomial argument
+supplies its whole rank-one case without a label or tuple bound.
+
+**Independent self-double-check immediately before recording.**
+
+1. Listed every partition of six. The types (6),(5,1),(4,2),(4,1,1)
+   have zero complement moment; the remaining seven partitions give
+   exactly the seven degree-six families in Lemma 101C. Rechecked
+   degree-two and degree-four complements separately.
+2. Derived each degree-two triangle moment from the universal triangle
+   coefficient and the actual Pfaffian quotient. At rank two only
+   C,C,C has enough auxiliary rows for the first relation: its unique
+   triangle is killed by the nonzero degree-six Pfaffian. At rank one
+   C is absent and the H,H,H auxiliary dimension is below four.
+3. Re-derived mixed moments with V^2=1+H+C, including the rank-one
+   omissions. Derived V^6 from the actual V^3 decomposition and
+   self-dual orthogonality. No stable value was used at rank one or two.
+4. A separate Laurent-polynomial Weyl-numerator audit at ranks 1,2,3
+   checked every triangle and the mixed degree-six constants. It gave
+   V^6 moments 5,14,15 and C^3 moments 0,1 at ranks two, three.
+   These diagnose the structural tensor/quotient derivation.
+5. Checked complementary-cut pairing at even original minus count.
+   The root sign is retained in that parity condition; the coefficient
+   on a background complement is exactly its original sign product.
+   No independent root or background sign freedom is introduced.
+6. Independently evaluated the full SU(2) integral by exact fusion and
+   every original cut on five sample tuples. The six-box formula gave
+   Phi=588,46,120,2,14 respectively, agreeing in every case. This audit
+   includes root/background repeats and a background of degree five.
+7. Re-derived rank-one multiplicities from Laurent coefficients at
+   deficits six, four and two. Checked the count-polynomial identities,
+   its q increment, both low-l tables and the uniform quadratic
+   discriminant by separate symbolic expansion immediately before
+   recording. The proof below covers unbounded counts.
+8. Replayed the residual-degree-six supplier before the fusion
+   induction, so the rank-one root/background-repeat case does not
+   assume the new six-box theorem. Checked trivial roots, odd-minus
+   and odd-degree zeros, original sign supports and quotient Haar.
+
+**Lemma 101A (arbitrary root at residual background degree six).**
+For every type C_r group, every actual root atom, every collection of
+backgrounds of total box degree at most six, and every original sign
+pattern, Q3 is nonnegative.
+
+**Proof.** At r>=2 apply Theorem 91D since six<=r+4. At rank one,
+remove trivial factors with their original effects. If there are at
+most five nontrivial backgrounds, use Theorem 48A on at most six
+positions. Otherwise the degree bound forces precisely six V's.
+A trivial root reduces to six positions or gives zero. A nontrivial
+rank-one root has one-row degree A>=1; odd A gives odd total degree
+and zero. Even A>=2 satisfies A>=6-4, so Theorem 100D applies.
+Thus every actual root is supplied, independently of the six-box
+comparison to follow. Haar pullback gives actual central quotients.
+QED.
+
+**Lemma 101B (all invariant complement channels of degree at most six).**
+Let Gamma_r be the available three-box labels among (3),(2,1),(1,1,1),
+i.e. those of length at most r. Their Specht dimensions are respectively
+f_gamma=1,2,1. For Z=H,C put
+
+    eta_(gamma,H)=1 for gamma=(3),(2,1), otherwise zero;
+    eta_(gamma,C)=1 for gamma=(2,1),(1,1,1), otherwise zero.
+
+C and its associated terms are absent at rank one. Write
+kappa_r=0 at rank two and kappa_r=1 at r>=3. The nonzero degree-six
+complement moments are exactly:
+
+    gamma,gamma:                1;
+    gamma,Z,V:                 eta_(gamma,Z);
+    gamma,V,V,V:               f_gamma;
+    H,H,H; H,H,C; H,C,C:        1 when the labels exist;
+    C,C,C:                     kappa_r;
+    H,H,V,V:                   a_r=2 at r=1, 3 at r>=2;
+    H,C,V,V:                   2 at r>=2;
+    C,C,V,V:                   b_r=2 at r=2, 3 at r>=3;
+    H,V,V,V,V:                 d_r=3 at r=1, 6 at r>=2;
+    C,V,V,V,V:                 e_r=5 at r=2, 6 at r>=3;
+    V,V,V,V,V,V:               k6_r=5,14,15 at r=1,2,>=3.
+                                                        (P101.1)
+
+At degree two only V,V survives with moment one. At degree four the
+channels and constants are those in Lemma 94C. Every odd-degree
+complement moment is zero.
+
+**Proof.** Orthogonality gives the equal-gamma pair channel and kills
+unequal pairs. The extremal moment identity of Lemma 93H gives the
+ordinary Pieri coefficients eta_(gamma,Z), and gives
+[s_gamma]h_1^3=f_gamma for gamma,V^3.
+
+For three degree-two labels, the universal no-internal-edge graph
+has exactly one edge between each pair of vertices. Its module is
+the tensor product of two auxiliary slots at each vertex; each
+choice of row (2) or column (1,1) occurs with multiplicity one.
+The minimal auxiliary dimensions are one for H and two for C.
+At r>=3 the total auxiliary dimension six is less than 2r+2, so
+there is no relation. At rank two, HHH,HHC,HCC have auxiliary
+sizes three,four,five, less than six. CCC has size six and its
+unique coefficient is hit by the degree-six Pfaffian generator.
+That generator is nonzero after internal edges are set to zero:
+a matching using only inter-block edges supplies a monomial with
+nonzero coefficient. In its first degree no further ideal factors
+or syzygies can change this one-dimensional image. Thus CCC has
+actual multiplicity zero. At rank one C is absent and HHH has
+auxiliary size three, below the first relation size four. This
+proves all the triangle values as actual quotient coefficients.
+
+Now use V^2=1+H+C. For example,
+
+    m(H^2 V^2)=1+m(H^3)+m(H^2 C),
+    m(H C V^2)=m(H^2 C)+m(H C^2),
+    m(C^2 V^2)=1+m(H C^2)+m(C^3),
+    m(H V^4)=2+m(H^3)+2m(H^2 C)+m(H C^2),
+    m(C V^4)=2+m(H^2 C)+2m(H C^2)+m(C^3).
+
+Delete C throughout at rank one. These equations give exactly a_r,
+b_r,d_r,e_r and the mixed coefficient two in (P101.1).
+
+Every constituent of V^3 has odd box degree at most three. Its
+three-box multiplicities are f_gamma; its V multiplicity is the
+actual V^4 moment k_r, namely two at rank one and three otherwise.
+Self-dual orthogonality therefore gives
+
+    m(V^6)=sum_(gamma in Gamma_r)f_gamma^2+k_r^2,
+
+which is five,fourteen,fifteen as asserted.
+
+The partitions (6),(5,1),(4,2),(4,1,1) vanish: they are a nontrivial
+singleton, two unequal irreducibles, or a four-box label against V^2,
+whose constituents have degree at most two. All other partitions of
+six were just supplied. Degree-two/four and odd-degree statements
+follow from Lemma 94C and central -I. This exhausts the channels.
+QED.
+
+**Lemma 101C (the exact original six-box cut formula).**
+Let alpha be a nontrivial actual root with A=D-6. Counts l,h,c refer
+to V,H,C backgrounds. For every background multiset tau let N_tau
+be the actual joint Haar moment of the root and the backgrounds after
+removing tau. Set unavailable terms to zero. For |tau|=6 define
+
+    T_tau=[s_alpha] product_(backgrounds remaining) s_beta,
+
+in r ordinary variables; by Lemma 93H this is exactly N_tau. Put
+M=N_empty. Let P_j be the elementary sign sum on V j-subsets,
+S_Z,Q_Z,R_Z the sign sums on Z singletons,pairs,triples, and
+S_gamma,Q_gamma the singleton/pair sign sums on degree-three labels.
+Use the actual constants in (P101.1), and k_r=2 at r=1, 3 otherwise.
+At every even original minus pattern,
+
+    Phi_G/2=M+P_2 N_(V^2)+Q_H N_(H^2)+Q_C N_(C^2)
+       +P_2[S_H N_(H V^2)+S_C N_(C V^2)]+k_r P_4 N_(V^4)
+       +sum_gamma Q_gamma T_(gamma^2)
+       +P_1 sum_gamma S_gamma[eta_(gamma,H)S_H T_(gamma H V)
+                            +eta_(gamma,C)S_C T_(gamma C V)]
+       +P_3 sum_gamma f_gamma S_gamma T_(gamma V^3)
+       +R_H T_(H^3)+Q_H S_C T_(H^2 C)
+                     +S_H Q_C T_(H C^2)+kappa_r R_C T_(C^3)
+       +P_2[a_r Q_H T_(H^2 V^2)+2S_H S_C T_(H C V^2)
+                                      +b_r Q_C T_(C^2 V^2)]
+       +P_4[d_r S_H T_(H V^4)+e_r S_C T_(C V^4)]
+       +k6_r P_6 T_(V^6).                         (P101.2)
+
+All sums and C terms use actual available labels. In particular the
+N terms of removed degree four are genuine two-box-deficit moments;
+they are not replaced by extremal Schur coefficients.
+
+**Proof.** Pair each cut with its complement, selecting the side that
+contains the distinguished root. A nonzero root-side moment requires
+remaining background degree at least A, so its complementary background
+subset has degree at most six. Its original coefficient is the product
+of the signs on that subset. At even minus count complementary
+coefficients agree, giving the displayed factor two. Lemma 101B
+exhausts its nonzero moments; summing their sign products gives exactly
+(P101.2). For a six-box complement the remaining degree equals A,
+so its actual root-side moment is T_tau by Lemma 93H. For degree
+four or two it remains N_tau, with deficit two or four respectively.
+This proves the complete original formula and its normalization. QED.
+
+**Lemma 101D (exact rank-one moments and a sufficient count polynomial).**
+At r=1 put m=l+h+d+q, where d counts row-(3) backgrounds and q counts
+backgrounds of degree at least four. After disjoint sign support
+reduction let s be the common H sign, v the common V sign, and t the
+common row-(3) sign; unused signs are arbitrary when their count is zero.
+At gap six with nontrivial root,
+
+    M=binomial(m,3)+binomial(m,2)-(m-1)l-h,
+    N_(V^2)=binomial(m-2,2)-l+2,
+    N_(H^2)=m-3, N_(H V^2)=m-4, N_(V^4)=m-5.      (P101.3)
+
+Each last expression is used only when its required backgrounds exist.
+Every available T_tau equals one. Define L_j=binomial(l,j),
+H_2=binomial(h,2), H_3=binomial(h,3), D_2=binomial(d,2), and
+
+    Base=M+L_2[binomial(m-2,2)-l+2]+H_2(m-3)
+                       +2L_4(m-5)+D_2+2L_2 H_2+5L_6,
+    A_H=L_2 h(m-4)+H_3+3L_4 h.
+
+Then A_H>=0 and the exact original disjoint integral is
+
+    Phi_G/2=Base+s A_H+(vt)d[lhs+L_3].            (P101.4)
+
+It is consequently bounded below by
+
+    F(l,h,d,q)=Base-A_H-d(lh+L_3).                 (P101.5)
+
+**Proof.** On the SU(2) torus, chi_a(z)=z^a(1+t+...+t^a), t=z^-2.
+For a product of nontrivial backgrounds with top degree D, the
+coefficients at t,t^2,t^3 are
+
+    m, binomial(m,2)+(m-l),
+    binomial(m,3)+(m-1)(m-l)+(m-l-h).
+
+Subtracting the t^2 coefficient from the t^3 coefficient gives the
+root multiplicity at A=D-6, namely the first formula in (P101.3).
+The deficit-four and deficit-two differences give the remaining
+formulas after deleting the indicated factors. In one ordinary
+variable every available extremal coefficient is one.
+
+Substitute these values and the rank-one constants of Lemma 101B
+into (P101.2). The common V sign has even elementary sums L_2,L_4,L_6
+and odd sums lv,vL_3. This gives (P101.4). In A_H its first term is
+nonnegative whenever present: l>=2,h>=1 implies m>=3, but m=3 would
+make D=4 and contradict A=D-6>0. Thus m>=4 there. Its other terms
+are nonnegative. Taking the lower bound -A_H for s A_H and using
+|lhs+L_3|<=lh+L_3 proves (P101.5). QED.
+
+**Lemma 101E (uniform positivity of the rank-one count polynomial).**
+For all integer counts l,h,d,q>=0 that arise at a nontrivial rank-one
+six-box root, F(l,h,d,q)>=0.
+
+**Proof.** First the exact q increment is
+
+    F(l,h,d,q+1)-F(l,h,d,q)
+       =binomial(m+1,2)-l+L_2(l+d+q-2)+H_2+2L_4>=0. (P101.6)
+
+For l>=2 every term is nonnegative; for l=0,1 the L_2 term vanishes
+and binomial(m+1,2)>=l since m>=l. Thus it suffices to handle q=0
+and q=1.
+
+For l>=6, expand F in h,d,q and collect the possibly negative terms
+into the quadratic
+
+    B h^2+A h+Z,
+    B=(l^2+3l-6)/4,
+    A=-l(l^3-6l^2-7l+36)/24,
+    Z=l^2(l-5)(l-1)(l+1)(l+2)/144.
+
+Every remaining term is nonnegative, as seen from the exact remainder
+
+    h^3/2+h^2(d+q)+h d(d-1)/2+h d q+h q^2/2
+       +(2l-1)h q/2
+       +d^3/6+d^2 q/2+d q^2/2+q^3/6
+       +(l^2+l+2)d^2/4+l(l+1)d q/2+l(l+1)q^2/4
+       +(l^4-2l^3+2l^2-7l-8)d/12
+       +(l^4-4l^2-3l-2)q/12.                     (P101.7)
+
+Here d(d-1)>=0 for integer d>=0; both displayed linear coefficients
+are positive at l>=6 by leading-term bounds. The quadratic is
+nonnegative because B>0 and
+
+    4BZ-A^2=l^2 P(l)/192,
+    P(l)=l^6+4l^5-42l^4-68l^3+241l^2+184l-512.
+
+With l=6+y, y>=0,
+
+    P(6+y)=y^6+40y^5+618y^4+4684y^3
+                         +18025y^2+32020y+17908>0. (P101.8)
+
+Completing the square proves F>=0 at l>=6 without any count range.
+
+For l=0,...,5 and q=1 write
+
+    6F=3h^3+a h^2+b h+d^3+c d^2+e d+z
+                                      +6dh^2+3d^2h+3dh.
+
+The exact coefficients are
+
+    l   a    b    c    e    z
+    0  -3    0    6   -1    0
+    1   3    0    9    2    0
+    2  12    9   15   14    0
+    3  24   27   24   47    6
+    4  39   48   36  125   60
+    5  57   60   51  284  300.                     (P101.9)
+
+Rows one through five are coefficientwise nonnegative. In row zero,
+3h^3-3h^2=3h^2(h-1)>=0, and d^3+6d^2-d>=0 for integer d>=0.
+Thus q>=1 is supplied by (P101.6).
+
+Finally take q=0, l<=5. Now all background degrees are exactly one,
+two or three, so nontriviality of the root forces l+2h+3d>=7.
+Write
+
+    6F=3h^3+a h^2+b h+d^3+c d^2+e d+z
+                                         +6dh^2+3dh(d-1).
+
+Its exact coefficients are
+
+    l   a    b    c    e    z
+    0  -9    0    3   -4    0
+    1  -3   -6    6   -7    0
+    2   6   -3   12   -7   -6
+    3  18    9   21    8  -30
+    4  33   24   33   62  -60
+    5  51   30   48  191    0.                    (P101.10)
+
+The cross terms are nonnegative. Row five is immediate. In row four,
+d>=1 supplies at least 96 from d^3+33d^2+62d, paying the constant
+sixty; at d=0 the degree condition gives h>=2, whose h terms pay it.
+In row three, d>=1 pays thirty, or d=0 forces h>=2, whose h terms
+pay it. In row two, d>=1 gives d^3+12d^2-7d>=6; its h polynomial
+3h^3+6h^2-3h is nonnegative on integers. At d=0, h>=3 pays the
+constant six.
+
+In row one the h polynomial is 3h(h-2)(h+1), nonnegative except at
+h=1, and the d polynomial is d(d-1)(d+7)>=0. At h=1 the degree
+condition forces d>=2, which pays the negative h value. In row zero
+the h polynomial is 3h^2(h-3), and the d polynomial is
+d(d-1)(d+4)>=0. Only h=1,2 need attention. At h=1 the degree
+condition forces d>=2; at h=2 it forces d>=1. The positive term
+6dh^2 alone pays the corresponding h losses six and twelve.
+This exhausts all integer counts and proves the lemma. QED.
+
+**Theorem 101F (the entire original rank-one six-box region).**
+Every actual atomic tuple on a compact connected type C_1 group,
+with arbitrary distinguished root alpha and background degree D,
+satisfies original Q3 for every sign choice if
+
+    |alpha|>=D-6.                                 (P101.11)
+
+First rows, background degrees and tuple lengths are unrestricted.
+
+**Proof.** Use strong induction under opposite-sign repeat fusion.
+Trivial roots give D<=6 and are supplied by Lemma 101A. Odd-minus
+or odd-total cases are zero. Smaller even gaps are supplied by
+Theorem 100D. Background fusion fixes the root and decreases D.
+Root/background fusion leaves background degree at most six and is
+supplied by Lemma 101A for every new root. Thus only the disjoint
+nontrivial six-box case remains. Lemmas 101D--101E give its original
+integral nonnegative directly. All signs on higher-degree backgrounds
+are retained: no invariant complement of degree at most six contains
+them, by Lemma 101B. Normalized Haar pullback gives actual central
+quotients. QED.
+
+**Original-consumer receipt and higher-rank obligation.** Formula
+(P101.2) is the exact six-box consumer in every symplectic rank,
+not the old four-box identity with a larger parameter. Its negative
+channels now include mixed cubic/degree-two/defining couplings,
+degree-two triangles, mixed H,C paths, and degree-two/four-defining
+channels. Its degree-four complement sources have a two-box deficit;
+their top restrictions are not the extremal source spaces of Section 98.
+The rank-one count proof supplies all of them together in the original
+budget. It uses a uniform quadratic and integer-count structure,
+not a finite label certificate.
+
+At higher rank, the negative H,V,V and C,V,V insertion sources have
+actual dimensions N_(H V^2),N_(C V^2), while the new degree-six sources
+are extremal T_tau. Their images can intersect, so adding their
+individual image dimensions without proving independence is invalid.
+The next structural task is to describe the two-box-descendant graded
+modules and those intersections, then consume the whole (P101.2).
+The full all-group continuous central positive-definite-cone objective
+remains unproved and unchanged.
+
+## 102. Actual descendant sources: positive first layer, raising kernels and all-gap extraction
+
+The six-box budget requires actual two-box-deficit Hom spaces. They
+cannot be identified with unrestricted GL(r) Hom spaces in the first
+lower grade: higher-degree symplectic constituents also contribute
+there. This section gives the exact first-descendant module, describes
+actual Hom sources as raising kernels at every gap, and gives a
+rank-uniform graded character/extraction formula. These are structural
+inputs to the larger-gap comparison, not a claim that its signed budget
+has been paid.
+
+**Primary input checked.** Soichi Okada, *Intermediate symplectic
+characters and shifted plane partitions of shifted double staircase
+shape*, equations (2.4)--(2.7), gives the ordinary and symplectic Weyl
+bialternants and their denominator factorizations:
+https://escholarship.org/content/qt12m158c5/qt12m158c5.pdf .
+The identities below are derived directly from those formulas; no
+stable Littlewood restriction rule or free-generator count is assumed.
+
+**Independent self-double-check immediately before recording.**
+
+1. Substituted z_j=t x_j in the actual symplectic numerator and
+   denominator. A reflected row i changes the t exponent by exactly
+   2a_i, a_i=lambda_i+r-i+1. Dividing the denominator by its leading
+   alternant gives product_(i<=j)(1-t^-2/(x_i x_j)), not the exterior
+   square product. Its reciprocal is Sym(Sym^2 X^*).
+2. Rechecked the signs and common determinant factor in each reflected
+   numerator. After ordering its distinct signed exponents, it is a
+   signed rational GL(r) character, with highest weight equal to the
+   ordered exponents minus (r,...,1). The unreflected ratio is s_lambda.
+3. Re-derived the first lower grade. Only the last numerator row can
+   reflect at exponent t^-2, and only if lambda_r=0. Dual Pieri then
+   removes precisely the last-weight -2 constituent. The remaining
+   polynomial horizontal-two removals and last-weight -1 constituents
+   are all positive and multiplicity one.
+4. A separate exact rational audit compared the predicted grades zero
+   through three with actual V, Sym^2 V, primitive Lambda^2 V,
+   Sym^3 V, the actual (2,1) representation, and rank-two (2,2).
+   It also checked the positive first-layer decomposition at ranks
+   1,2,3 using distinct positive torus parameters. Actual characters
+   were constructed by tensor/symmetric/exterior formulas, independently
+   of the reflected-alternant computation.
+5. Rechecked the raising-kernel argument using the standard symplectic
+   Borel: its positive roots are the GL(r) positive roots and the
+   Sym^2 X block. A GL(r) highest vector killed by that block is a
+   symplectic highest vector. In an actual irreducible there is only
+   its own highest-weight line, so no spurious lower-degree source
+   survives the primitive condition.
+6. Independently checked the two-box-deficit extraction against actual
+   rank-two triangle moments. For sources HH,HC,CC, the polynomial
+   first-layer multiplicities at roots H,C are respectively (4,2),
+   (2,2),(2,0); the higher-top horizontal-removal contributions are
+   (3,1),(1,1),(1,0). Their differences (1,1),(1,1),(1,0) are the
+   actual moments from Lemma 101B. This specifically rejects treating
+   the unrestricted first-layer GL(r) multiplicity as the actual Hom.
+7. Replayed finite-alphabet extraction. The higher top sum is truncated
+   to actual length<=r before horizontal removal. Commuting that
+   truncation through a stable Hall operator could add discarded
+   length-(r+1) terms and is not justified. The formulas below keep
+   the order explicit.
+8. Rechecked that all actual constituents have degree<=D and the same
+   box parity as D. At grade D-2k only constituents of degree>=D-2k
+   can occur, making the extraction triangular. The raising-kernel
+   description and moment extraction apply to the original actual
+   labels and normalized Haar moments, including descending quotients.
+
+**Lemma 102A (rank-uniform graded character with exact reflected corrections).**
+Let lambda be any actual type C_r label, padded to r rows, A=|lambda|,
+and a_i=lambda_i+r-i+1. Let G_(lambda,k)(X) be the GL(X) character
+of its actual circle grade A-2k, where V=X+X^* and dim X=r.
+For I subset {1,...,r}, define
+
+    e(I)=sum_(i in I) a_i,
+    b_i(I)=-a_i if i in I, and a_i otherwise,
+    W_(lambda,I)(x)=det(x_j^(b_i(I))) / det(x_j^(r-i+1)).
+
+Let Q_m(X)=ch Sym^m(Sym^2 X^*), with Q_0=1 and Q_m=0 at m<0.
+Then for every k>=0,
+
+    G_(lambda,k)=sum_(I: e(I)<=k)
+                        (-1)^|I| W_(lambda,I) Q_(k-e(I)). (P102.1)
+
+This is an identity of actual finite-dimensional rational GL(r)
+characters. The right side may be presented virtually, but its sum is
+the actual grade, including all finite-rank cancellations. In particular
+G_(lambda,0)=s_lambda, and G_(lambda,k)=0 when k>A.
+
+Only the last min(k,r) rows can occur in a reflected set at grade k.
+If lambda_r>=k, no nonempty reflected set contributes to any grade
+j<=k, so G_(lambda,j)=s_lambda Q_j throughout those grades.
+
+**Proof.** The Weyl formula on the torus z_j=t x_j is
+
+    chi_lambda(t x)=det[(t x_j)^a_i-(t x_j)^(-a_i)]
+                    /det[(t x_j)^(r-i+1)-(t x_j)^(-(r-i+1))].
+
+The leading denominator is
+D0=det(x_j^(r-i+1)) times t^(r(r+1)/2). By the Weyl denominator
+factorization, its exact quotient by that leading term is
+
+    product_(i<=j)(1-t^-2/(x_i x_j)).
+
+Its formal reciprocal has coefficient Q_m at t^-2m: the weights
+of Sym^2 X^* are precisely (x_i x_j)^-1 for i<=j. Expanding the
+numerator row by row gives the sign (-1)^|I|, the t loss 2e(I),
+and the alternant W_(lambda,I). Comparing t^(A-2k) proves (P102.1).
+
+The exponents b_i are distinct integers, so after ordering them the
+ratio is the row-permutation sign times the rational GL(r) character
+with dominant highest weight b_sorted-(r,...,1). Thus the formula
+is in the rational representation ring. Since it is equal to the
+actual Weyl character, it is the actual grade rather than a generator
+upper bound. The irreducible has extreme grades A,-A by Lemma 96A,
+so grades beyond k=A vanish.
+
+Finally a_i>=r-i+1. Membership in a set with e(I)<=k requires
+r-i+1<=k, hence i>=r-k+1. Also every a_i>=lambda_r+1; if
+lambda_r>=k none is <=k. This proves the last assertions. QED.
+
+**Lemma 102B (positive, explicit first-descendant module).**
+Write L_kappa(X) for the irreducible rational GL(r) module of dominant
+integer highest weight kappa. Then
+
+    G_(lambda,1)(X)
+       =direct-sum_(eta: lambda/eta horizontal two-strip) S_eta(X)
+        +direct-sum_(nu: lambda/nu one box, ell(nu)<r)
+                            L_(nu_1,...,nu_(r-1),-1)(X). (P102.2)
+
+Here nu is padded with last row zero. Every summand has multiplicity
+one. In particular lambda_r>=2 makes the first descendant entirely
+polynomial; if lambda_r=0,1 the displayed rational summands are retained.
+
+**Proof.** In (P102.1) with k=1 only I=empty occurs, except that
+I={r} also occurs when lambda_r=0. Consequently
+
+    G_(lambda,1)=s_lambda h_2(X^*)
+        -1_(lambda_r=0) ch L_(lambda_1,...,lambda_(r-1),-2)(X).
+                                                        (P102.3)
+
+For dual Pieri, multiplicity of L_kappa in S_lambda tensor Sym^2 X^*
+is the multiplicity of S_lambda in L_kappa tensor Sym^2 X. Twist
+both lambda and kappa by a sufficiently large determinant power to
+make them polynomial. Ordinary two-box Pieri applies, giving one
+for a horizontal two-strip lambda/kappa in the shifted diagrams,
+and zero otherwise. The last weight kappa_r can only be >=-2.
+The nonnegative cases are precisely the eta in (P102.2). The -1
+cases are precisely kappa=(nu_1,...,nu_(r-1),-1) with lambda/nu
+one box and nu_r=0. The sole -2 case exists exactly when lambda_r=0,
+and is (lambda_1,...,lambda_(r-1),-2). Formula (P102.3) deletes
+that case. This proves the positive decomposition and multiplicities.
+QED.
+
+**Lemma 102C (actual Hom sources are raising kernels at every gap).**
+Let T be any actual finite-dimensional symplectic representation,
+T_a its circle-grade-a GL(r) module, and alpha any actual root with
+A=|alpha|. The upper symplectic block u_+=Sym^2 X raises the circle
+grade by two. Define
+
+    R_alpha: Hom_GL(r)(S_alpha(X),T_A)
+                  ->Hom_GL(r)(Sym^2 X tensor S_alpha(X),T_(A+2)),
+    (R_alpha q)(Y tensor v)=Y q(v).
+
+Restriction to the actual root's top space gives an isomorphism
+
+    Hom_Sp(2r)(V_alpha,T) = ker R_alpha.            (P102.4)
+
+The identity holds for arbitrary total degrees, tuple lengths and box
+gaps. At an extremal source, T_(A+2)=0 and it reduces to Lemma 93H.
+
+**Proof.** In block matrices relative to X+X^*, the Lie algebra sp(2r)
+consists of gl(X), an upper symmetric block Sym^2 X and a lower
+symmetric block Sym^2 X^*. The upper block sends X^* to X, kills X,
+and raises circle grade by two. Its action is GL(r)-equivariant in
+the displayed tensor sense, so R_alpha is well defined.
+
+Decompose T into actual symplectic irreducibles. In one irreducible
+V_lambda, its u_+-annihilator is GL(r)-stable. Every nonzero GL(r)
+constituent in that annihilator has a GL(r) highest vector; it is
+killed by both the GL positive roots and u_+, which together are all
+positive symplectic roots. It must therefore be the unique symplectic
+highest vector of V_lambda. Its weight is lambda and its circle grade
+is |lambda|. The entire annihilator is consequently the top GL module
+S_lambda(X), and has no other grade or GL(r) constituent.
+
+Thus at grade A the annihilator in T is the direct sum of
+S_lambda(X) over actual constituents with |lambda|=A, with their
+actual multiplicities. Taking Hom from S_alpha selects exactly the
+V_alpha copies. Restriction of each symplectic map identifies them
+with this kernel, proving (P102.4). QED.
+
+**Lemma 102D (exact actual one-detour multiplicity).**
+Let backgrounds beta_1,...,beta_m have total degree D, and let
+|alpha|=D-2. Define
+
+    P0=product_i s_(beta_i)(X),
+    P1=sum_i G_(beta_i,1)(X) product_(j!=i)s_(beta_j)(X).
+
+Expand P0 in the actual r-variable Schur basis, so partitions of
+length greater than r are already discarded. On that basis define
+H2^down(s_lambda)=sum_(eta: lambda/eta horizontal two-strip)s_eta.
+Then the actual root Haar moment is exactly
+
+    m_alpha(product_i V_(beta_i))
+       =[S_alpha]P1-[s_alpha]H2^down(P0).          (P102.5)
+
+The first bracket is rational GL(r) irreducible multiplicity; the
+second is ordinary polynomial Schur multiplicity. They cannot be
+replaced by an unrestricted stable-alphabet coefficient.
+
+**Proof.** The source's grade D is P0, and its grade D-2 is P1.
+Actual symplectic constituents have degrees at most D and parity D.
+At grade D-2 only degree D or degree D-2 constituents can contribute.
+The degree D constituents have multiplicities [s_lambda]P0 by their
+extreme modules. By (P102.2), the polynomial S_alpha multiplicity
+in their first descendant is one precisely at a horizontal two-strip
+lambda/alpha. Their last-weight -1 rational constituents contain no
+polynomial S_alpha. Therefore their entire contribution is the
+second term of (P102.5). The degree D-2 constituents contribute their
+top modules, among which only V_alpha contributes S_alpha. Subtracting
+proves the asserted actual moment formula. QED.
+
+**Proposition 102E (triangular extraction of actual moments at every box gap).**
+For backgrounds of total degree D put
+
+    P_j=sum_(k_1+...+k_m=j) product_i G_(beta_i,k_i)(X).
+
+Let m_lambda be the actual multiplicity of V_lambda in their product.
+For any |alpha|=D-2k>=0, with alpha an actual length<=r label,
+
+    m_alpha=[S_alpha]P_k
+       -sum_(d=0)^(k-1) sum_(|lambda|=D-2d, ell(lambda)<=r)
+                       m_lambda [S_alpha]G_(lambda,k-d). (P102.6)
+
+Starting with m_lambda=[s_lambda]P0 at degree D, this is an exact
+finite triangular extraction for arbitrary k and rank. Together with
+(P102.1) it includes all finite-rank character corrections.
+
+**Proof.** The product's actual grade D-2k is P_k. Decomposing the
+product into actual symplectic irreducibles, only constituents of
+degree D-2d with d<=k can reach this grade. Their contribution is
+m_lambda G_(lambda,k-d). Constituents at degree D-2k have top modules
+S_lambda; their S_alpha coefficient is exactly m_alpha. Isolating
+that term gives (P102.6). The constituent set is finite and the
+remaining coefficients have already been determined at strictly
+higher degree, proving triangularity. QED.
+
+**Original-consumer receipt.** Every two-box-deficit N_tau in (P101.2)
+is now given by (P102.5), on its actual remaining background product.
+Every negative insertion source is exactly the primitive raising
+kernel (P102.4), rather than the whole rational GL(r) Hom space.
+Invariant insertions commute with the raising actions, so their actual
+relation problem can be studied on these kernels using the explicit
+descendant decomposition (P102.2).
+
+More broadly, (P102.1) and (P102.6) give an exact rank-uniform framework
+for every symplectic box gap. A fixed descendant depth sees only a
+bounded bottom set of numerator rows, while all other factors are
+symmetric-algebra modules. This is structural information for the
+unbounded-gap problem, not a finite certificate cover.
+
+It does not supply positivity of the signed six-box budget at r>=2,
+or of any arbitrary-gap signed sum. Classifying the intersections of
+the insertion images inside the primitive kernels, then comparing
+their losses with the original positive contributions, remains the
+hard supplier. The full all-group central positive-definite-cone goal
+remains active and unproved.
+
+## 103. A Casimir payment for the cubic row wall, uniform in symplectic rank
+
+The selected original obligation is the six-box consumer (P101.2),
+with the full all-group central positive-definite-cone goal unchanged.
+This section pays its row-(3)-with-three-V insertion kernel in every
+rank, using a positive contribution already present in that consumer.
+It then supplies the original six-box inequality when the backgrounds
+consist of V's with a common sign, row-(3)'s with arbitrary signs, and
+arbitrary labels of degree at least four. This is a theorem for an
+unbounded family, not a finite certificate or the entire six-box budget.
+
+**Matched demand sheet.** The consumer is (P101.2), at A=D-6. The
+negative row-cubic cost is h binomial(l,3) T_(W V^3), where W=(3).
+The positive terms used are the actual full moment M, equal-W pairs,
+binomial(l,2) N_(V^2), and k6_r binomial(l,6) T_(V^6).
+Uniformity is in every r>=1, root label, spectator shape and count,
+and h,l; it is used because these are unbounded in the original
+consumer. Every Hom space is actual Sp(2r) Hom, every Haar measure is
+normalized, and quotient labels must descend. Only a dimension bound
+is needed, not a canonical injection of the entire relation space into
+the positive channels. The constant spent on V^6 is five, which is
+at most each actual k6_r=5,14,15. A full-height root hypothesis occurs
+only in the intermediate Casimir lemma: the joint relation wall derives
+it wherever the consumer needs that lemma. No root-height restriction
+is added to the final payment. No independence from other negative
+insertion families, or right to reuse the positive budget, is asserted.
+
+**Primary input checked.** A. Okounkov and G. Olshanski, *Shifted Schur
+Functions*, arXiv:q-alg/9605042, Theorem 8.1, equation (8.3), and
+Theorem 11.1, equations (11.5)--(11.6), identify a skew Specht dimension
+ratio with a shifted Schur value, and express that value by reverse
+tableaux. For the single row (3), these give exactly (P103.9) below.
+Source: https://arxiv.org/pdf/q-alg/9605042 . The row, degree and
+normalizations were checked in the source, rather than inferred from
+a general description of shifted characters.
+
+**Independent self-double-check immediately before recording.**
+
+1. Re-derived the cubic marked-slot Gram: diagonal 3r, exchange
+   overlaps Omega_l-R_(l-3)-3. Horizontal-three Pieri gives precisely
+   the full-height appended-row-(3) zero eigenvalue. Rechecked all
+   four actual cubic insertion grades. The lower projections have
+   fewer than three negative V's and cannot carry that Specht type;
+   the remaining projection is the actual omitted-W coevaluation.
+2. Checked the independent pair projection at W grades +1 and -1.
+   It is nonzero, isolates the marked pair and kills every star image.
+   Its source removes six boxes, so the root restriction is the
+   actual extremal isomorphism, not an unrestricted lower-grade Hom.
+3. Re-derived the adjoint inclusion in Sym^3(V) tensor V explicitly,
+   then composed it with the actual root Lie-action Casimir map.
+   The W-grade -1/all-V-positive projection isolates the marked W.
+   Its e_i f_i^2 coefficient is a nonzero common constant times
+   alpha_i times the omitted-V bank evaluated at e_i on the root
+   highest vector. Thus full height detects the whole bank kernel;
+   off-diagonal root actions also vanish when that bank vanishes.
+4. Independently constructed the rank-two determinant-(3,3) source
+   from the five noncrossing pairings on six positive X slots.
+   Its seven marked-V Casimir projections have source dimension 35,
+   rank 14 and kernel 21, agreeing with 7 f^(3,3)-f^(3,3,1).
+   Modular elimination used the separately verified prime 1000003.
+5. Direct SU(2) cubic-star polynomial insertion for h=2,l=6 gave
+   source 40, rank 35 and kernel 5. Exact Weyl-numerator moment
+   diagnostics at (r,h,l,alpha)=(2,1,9,(3,3)),
+   (2,5,9,(9,9)) and (3,1,12,(3,3,3)) gave Casimir lower bounds
+   14,2990,210 and actual N_(V^2) values 252,73370,7650.
+   These small checks diagnose the maps; none supplies uniformity.
+6. Re-derived f^(mu,3)/f^mu and f^(mu,1)/f^mu by cancelling
+   shifted Vandermonde hook products. Checked the shifted cubic
+   reverse-tableau sum against the independent content-square
+   polynomial on several shapes. The source supplies the arbitrary
+   rank identities, not the diagnostic shapes.
+7. Independently expanded the scalar comparison at b=5+t:
+   3(b^3+6b^2-21b-50)=3t^3+63t^2+342t+360.
+   Rechecked the direction of the tableau termwise ratio, both
+   branching denominators and the Cauchy--Schwarz factor
+   binomial(l,3)binomial(l-3,3)=20binomial(l,6).
+   Hook/Pieri diagnostics also checked the resulting coefficient
+   quadratic, including a positive effective loss at rho=(9).
+8. Replayed the polynomial comparison after multiplying by the
+   actual spectator R E^(h-2): its pair coefficient is precisely
+   h(h-1)T_(W^2), its six-V coefficient is five, and its bank term
+   uses (h-1)/h of binomial(l,2)N_(V^2). No spectator is inverted
+   in a reached nonzero-wall case. Zero-wall cases bypass Casimir.
+9. Independently summed all original complementary cuts for rank-two
+   (alpha,h,l)=((3),1,6) and ((9,9),5,9), with V sign + and W sign -,
+   and root sign chosen for even minus count. Their Phi/2 values
+   604 and 5336784 agree with the specialized (P101.2).
+10. Checked original-sign induction: opposite W's fuse into degrees
+    0,2,4,6. Degrees <=4 enter the already supplied four-box region;
+    degree six creates a permitted spectator and reduces tuple length.
+    The common V sign is preserved. Root repeats need no additional
+    restriction in the insertion argument; trivial roots use Lemma
+    101A. Odd parity, normalization and descending quotient labels
+    retain their original meanings.
+
+**Lemma 103A (the exact actual symmetric-cubic star kernel).**
+Let V=X+X^*, dim X=r, and W=Sym^3 V, whose actual irreducible label
+is (3). Let a background product have h copies of W, l copies of V
+and arbitrary other factors; write R for the product of their top
+ordinary GL(r) characters and E=Sym^3 X, also writing E=h_3 for its
+character. Let the root alpha have A=D-6. For h>=1,l>=3 let J_W
+insert the unique invariant in W_i tensor V_T into each actual root
+Hom source after removing W_i and a marked three-subset T of V's.
+Put
+
+    n=l-3, d=dim E=binomial(r+2,3),
+    D_3(l,X)=Ind_(S_3 x S_n)^(S_l)(1 tensor X^(tensor n)),
+    K3_(r,l)=sum_(mu partitions n, ell(mu)=r, mu_r>=3)
+                                      f^(mu,3) s_mu.
+
+Let F_3 send the summand marked by T to every summand marked by
+S=T\{j}, inserting its argument x in position j. Then
+
+    F_3^*F_3=3r Id+Omega_l-R_n-3 Id,
+    ker F_3=direct-sum_(mu partitions n, ell(mu)=r, mu_r>=3)
+                                 S_mu(X) tensor [mu,3]. (P103.1)
+
+With the actual bank Gamma_h(E) of Lemma 98A,
+
+    ker J_W=Hom_GL(r)(S_alpha,
+                    R tensor ker Gamma_h(E) tensor ker F_3). (P103.2)
+
+In particular, writing K_W=dim ker J_W,
+
+    K_W <= (h-1)[s_alpha] R E^(h-1) K3_(r,l).     (P103.3)
+
+A nonzero kernel requires
+
+    h>=d+1, l>=3r+3,
+    alpha_r>=3+binomial(r+2,2)>0.                 (P103.4)
+
+**Proof.** Sym^3 V has the highest vector of weight (3). The
+symplectic Weyl dimension at that weight is binomial(2r+2,3),
+equal to the whole symmetric cube dimension, so it is irreducible.
+Its multiplicity in V^3 is one. Hence its invariant star is unique.
+Each source left after deleting the four marked factors has degree
+A, and its top restriction is the actual extremal isomorphism of
+Lemma 93H (equivalently Lemma 102C). The combined source is therefore
+Hom_GL(S_alpha,R tensor A_h(E) tensor D_3(l,X)).
+
+For F_3, the three insertions in one marked summand each have norm
+squared r. Two different marked triples overlap only if they share
+two positions, in which case their overlap exchanges the other
+positions. The full transposition class sum consists of these exchanges,
+the class sum R_n on the unmarked positions, and the three internal
+transpositions acting trivially on the marked triple. This gives
+(P103.1)'s Gram identity. Schur--Weyl and horizontal-three Pieri give
+its summands S_mu(X) tensor [nu], with nu/mu a horizontal three-strip.
+By Lemma 97A their Gram scalar is
+
+    3r+ct(nu)-ct(mu)-3.
+
+If m=ell(mu), the three distinct new columns j_1<j_2<j_3 have
+sum of contents at least 1+2+3-3(m+1)=3-3m.
+Equality requires all three boxes in a new bottom row in columns
+1,2,3. Thus the scalar vanishes exactly when m=r and nu=(mu,3),
+which is a partition precisely when mu_r>=3. This proves its kernel.
+
+A top-root star output has W grade 3-2a and a positive marked V's,
+3-a negative marked V's, where a=0,1,2,3. All other factors are at
+top grade. At a=1, the W factor is Sym^2 X tensor X^*. Choosing
+its Sym^2 X coefficient to be e_c^2 and its X^* coefficient f_b,
+and choosing the two negative V coefficients f_c, detects exactly
+F_3(e_b) in the remaining positions, up to a nonzero common scalar.
+This isolates each marked W and detects the entire F_3 kernel.
+
+On that kernel the defining permutation type is [mu,3]. For a>=1,
+put t=3-a<3. The negative V positions are symmetric, since paired
+against a symmetric power in W. As an S_l module their output lies
+in Ind_(S_t x S_(l-t))^(S_l)(1 tensor X^(tensor(l-t))), tensored
+with external coefficient spaces. Its types arise by adding a
+horizontal t-strip to a partition of height <=r. They cannot have
+an (r+1)-st row of length three. Therefore every a>=1 projection
+vanishes on ker F_3.
+
+For a=0, all W's are top, and the three negative V's form E^*.
+The invariant insertion is precisely the omitted-W coevaluation
+Gamma_h(E), for each marked negative triple. That marked-triple
+embedding is injective. The intersection of its kernel with the
+other tensor-factor kernel is ker Gamma_h(E) tensor ker F_3.
+Taking Hom preserves these intersections. Vanishing on the root top
+forces the actual equivariant map to vanish everywhere, proving
+(P103.2).
+
+Projection of ker Gamma_h(E) onto any h-1 omitted-slot summands is
+injective: a vector supported on the one remaining summand cannot
+have zero coevaluation. Each such summand has character E^(h-1).
+Together with (P103.1), this proves (P103.3). Lemma 98A gives
+h>=d+1; the defining wall gives l-3>=3r. At full height the bank
+Schur module contains det(E). Its diagonal weights give
+
+    det(Sym^3 X)=(det X)^binomial(r+2,2).
+
+The defining S_mu contains (det X)^3. All spectators are polynomial,
+so their product can contain S_alpha only if every row of alpha
+has at least the asserted determinant power. This proves (P103.4).
+QED.
+
+**Lemma 103B (positive equal-cubic pairs independent of the star image).**
+In the same setting put
+
+    T_*=[s_alpha]R E^(h-1) h_1^(l-3),
+    T_WW=[s_alpha]R E^(h-2) h_1^l,
+    P_W=binomial(h,2)T_WW,
+    M=m_alpha(background product).
+
+Then, with absent terms zero,
+
+    M>=h binomial(l,3)T_*-K_W+P_W.               (P103.5)
+
+**Proof.** J_W has the displayed source dimension and loses K_W.
+For each equal-W pair insert its self-dual coevaluation into the
+actual extremal Hom space remaining after removing that pair.
+Project its root-top output onto grades +1,-1 in those two W
+positions, all other positions top. The pairing between W_1 and
+W_-1 is nondegenerate and nonzero. This projection isolates that
+pair and injects its extremal source. Every star image has at most
+one W below grade three and thus vanishes there. The pair images
+are independent of each other and of the whole star image. Their
+total dimension is P_W. Adding gives (P103.5). QED.
+
+**Lemma 103C (a root-Casimir bank in the actual two-V-removed moment).**
+Retain arbitrary spectator factors. Suppose alpha_r>0 and l>=3,
+and put p=l-2, n=l-3 and
+
+    K1_(r,n)=sum_(mu partitions n, ell(mu)=r) f^(mu,1) s_mu,
+    B2=N_(V^2).
+
+Then the actual positive Haar moment satisfies
+
+    B2>=h [s_alpha]R E^(h-1)
+                         [p h_1^n-K1_(r,n)].    (P103.6)
+
+The bracket is an actual GL(r) module character with nonnegative
+Schur coefficients.
+
+**Proof.** B2 is the dimension of Hom_Sp(V_alpha,T), where T has
+h cubic backgrounds, p V's and the same spectators. For a marked
+W_i and one marked V_j in T, the product remaining after removing
+them has degree A. Its actual Hom source has top character
+R E^(h-1) X^(tensor n). Assemble these sources over the p choices
+of j and h choices of i.
+
+Identify the adjoint H with Sym^2 V. With dual symplectic bases
+(e_a,f_a), there is an actual equivariant inclusion
+
+    iota(uv)=sum_a Sym(uv e_a) tensor f_a
+                         -Sym(uv f_a) tensor e_a. (P103.7)
+
+It is the symplectic coevaluation multiplied into the symmetric cube,
+and is nonzero, hence injective on the irreducible adjoint. Let
+C_alpha:V_alpha->V_alpha tensor H be the actual Lie-action map
+u->sum_s rho(x_s)u tensor x^s, using dual bases for the invariant
+form. Composing C_alpha with q tensor iota gives an actual root
+intertwiner into T. The nontrivial root is not replaced by its top
+GL module in this construction.
+
+Project its root-top output onto W_i grade -1, all other nondefining
+factors top and all p V's positive. An insertion at a different W_b
+vanishes: the inserted W_b at grade three together with its positive
+V would have grade four, exceeding the adjoint's top grade two.
+For insertion at i the selected W/V grades sum to zero, so only
+the middle gl(X) component of C_alpha and the source q's root top
+contribute. Apart from a nonzero common normalization, the output is
+
+    -sum_(a,b,c) Sym(e_a f_b f_c) tensor
+                           sum_j insert_j(e_c) q_j(E_ab u),
+
+where the dual-basis indexing may transpose a,b; diagonal entries
+are unaffected. On a GL highest vector u of S_alpha, the coefficient
+of Sym(e_i f_i^2) is a nonzero common scalar times
+
+    alpha_i sum_j insert_j(e_i) q_j(u).           (P103.8)
+
+Every alpha_i is positive. Vanishing of the projection thus forces
+Gamma_p(X)q(u)=0, evaluated on every basis e_i. Gamma_p(X)q is a
+GL-equivariant map out of the irreducible S_alpha, so vanishing on
+its highest vector forces the entire map to vanish. Conversely, if
+that bank vanishes, each sum over j in the projected formula also
+vanishes, including on E_ab u. The projected kernel for this marked
+W is therefore exactly the kernel of Gamma_p(X) on its source.
+The different W projections are isolated, so their ranks add.
+
+Lemma 98A with E=X gives that bank's character K1_(r,n). Its source
+character is p h_1^n. Taking the actual root coefficient, and summing
+the h isolated projections, proves (P103.6). A projection's rank is
+at most the actual Hom dimension B2. Source modulo this bank kernel
+is an actual polynomial GL(r) module, proving Schur nonnegativity.
+QED.
+
+**Lemma 103D (a cubic wall bound from shifted branching and the bank).**
+All characters below are in r ordinary variables. For every l>=6,
+r>=1 and real u>=0,
+
+    u E K3_(r,l)
+       <=_Schur u(u+1) h_1^l
+          +5 binomial(l,6) E^2 h_1^(l-6)
+          +u binomial(l,2) E[p h_1^n-K1_(r,n)],   (P103.9)
+
+where n=l-3, p=l-2. Here <=_Schur means every Schur coefficient
+of the right side minus the left side is nonnegative.
+
+**Proof.** For a partition lambda of m>=3 define
+
+    H3(lambda)=sum_(1<=i<=j<=k<=r)
+                          (lambda_i-2)(lambda_j-1)lambda_k,
+    q3(lambda)=f^(lambda/(3))/f^lambda.
+
+The checked shifted-Schur identities give
+
+    q3(lambda)=H3(lambda)/[m(m-1)(m-2)].          (P103.10)
+
+Equivalently ordinary Pieri and branching give
+[s_lambda]E h_1^(m-3)=f^lambda q3(lambda). This quantity is
+nonnegative even when some summands in H3's formula are negative.
+When lambda_r>=3, all of those summands are positive.
+
+For full-height mu of degree n put z_i=mu_i+r-i. Hook cancellation
+for an appended bottom row gives
+
+    f^(mu,3)=binomial(l,3) f^mu w3(mu),
+    w3(mu)=product_i (z_i-2)/(z_i+1)  (mu_r>=3),
+    f^(mu,1)=p f^mu w1(mu),
+    w1(mu)=product_i z_i/(z_i+1).                 (P103.11)
+
+Set w1=0 for shorter mu and delta(mu)=1-w1(mu). Thus
+p h_1^n-K1_(r,n)=p sum_mu f^mu delta(mu)s_mu.
+For the cubic wall set
+
+    eta(mu)=max(w3(mu)-3delta(mu),0).
+
+For rho/mu a horizontal three-strip within r rows, with mu_r=b>=3,
+we claim
+
+    eta(mu)^2<=H3(mu)/H3(rho).                   (P103.12)
+
+Indeed the bottom factors alone give w3<=(b-2)/(b+1) and
+delta>=1/(b+1), so eta<=max((b-5)/(b+1),0). For b<=5 it
+is zero. For b>=6, each rho_i lies between mu_i and mu_i+3.
+Termwise in the positive reverse-tableau sums,
+
+    H3(rho)/H3(mu)
+          <=(b+3)(b+2)(b+1)/[b(b-1)(b-2)].
+
+For each of the three factors, the multiplicative increase is at
+most 1+3/(b-a), a=2,1,0. The scalar inequality needed is
+
+    ((b-5)/(b+1))^2
+            <=b(b-1)(b-2)/[(b+3)(b+2)(b+1)].
+
+Its positive-denominator numerator after cancellation is
+3(b^3+6b^2-21b-50), whose expansion at b=5+t is the positive
+polynomial stated in the self-check. This proves (P103.12).
+
+Fix rho of degree l and height <=r. Put
+
+    B=f^rho,
+    A=[s_rho]E K3_(r,l),
+    D=binomial(l,2)[s_rho]E[p h_1^n-K1_(r,n)],
+    T=[s_rho]E^2 h_1^(l-6), C=binomial(l,6)T,
+    Ahat=binomial(l,3)
+                 sum_(mu: rho/mu horizontal 3, ell(mu)=r, mu_r>=3)
+                                      f^mu eta(mu).
+
+Because binomial(l,2)p=3binomial(l,3), all nonwall contributions
+to D are nonnegative, and hence A-D<=Ahat. If there are no reached
+wall terms the desired comparison follows directly. Otherwise
+q3(rho)>0, and on the retained wall q3(mu)>0. With
+b_n=binomial(n,3)/binomial(l,3), (P103.10)--(P103.12) give
+
+    eta(mu)^2<=b_n q3(mu)/q3(rho).
+
+Cauchy--Schwarz, followed only by extensions of nonnegative sums,
+therefore gives
+
+    (Ahat/binomial(l,3))^2
+      <=[sum_wall f^mu q3(mu)]
+                         [sum_wall f^mu eta(mu)^2/q3(mu)]
+      <=T [b_n/q3(rho)]sum_(rho/mu horizontal 3) f^mu
+      =b_n T B.
+
+The first extended sum equals T by the second Pieri removal;
+the final branching sum is B q3(rho). All downward diagrams
+remain within the actual r-variable alphabet. Consequently
+
+    Ahat^2<=20 B C.                              (P103.13)
+
+For u>=0, square completion yields
+
+    u(u+1)B+5C-u Ahat
+      =B(u-Ahat/(2B))^2+uB+5C-Ahat^2/(4B)>=0.
+
+Since uA<=u Ahat+uD, this proves (P103.9) coefficient by
+coefficient, in every rank and without a degree or shape cutoff.
+QED.
+
+**Proposition 103E (the actual cubic loss is paid in the original budget).**
+For every actual six-box root/background product as in Lemma 103A,
+with arbitrary spectators and h>=2,
+
+    K_W<=2P_W+5 binomial(l,6)T_(V^6)
+                       +((h-1)/h)binomial(l,2)B2. (P103.14)
+
+For h<=1, or l<6, K_W=0. The comparison imposes no height
+restriction on the root.
+
+**Proof.** A zero kernel satisfies the bound since its right side
+is nonnegative. Otherwise (P103.4) gives h>=2,l>=6 and full-height
+alpha, so Lemma 103C applies. In (P103.9) take u=h-1, multiply
+by R E^(h-2), and take the actual S_alpha coefficient. The left
+side bounds K_W by (P103.3). The pair coefficient is exactly
+h(h-1)T_WW=2P_W. The six-V coefficient is exactly
+5binomial(l,6)[s_alpha]R E^h h_1^(l-6)=5binomial(l,6)T_(V^6).
+The bank coefficient is
+(h-1)binomial(l,2)[s_alpha]R E^(h-1)[p h_1^n-K1_(r,n)],
+which is at most ((h-1)/h)binomial(l,2)B2 by (P103.6).
+All extremal coefficients equal their actual Haar moments by Lemma
+93H. This proves the original matched comparison. Lemma 103A
+also gives the stated zero-kernel cases. QED.
+
+**Theorem 103F (an original six-box sector in every symplectic rank).**
+For every compact connected group of type C_r, r>=1, consider an
+actual atomic tuple with arbitrary distinguished root alpha and
+nontrivial backgrounds, each having label (1), (3), or box degree
+at least four. Suppose all backgrounds with label (1) have a common
+sign; their count is unrestricted, and their absence is permitted.
+All other signs, labels and counts are unrestricted. Original Q3
+holds whenever
+
+    |alpha|>=D-6.                                 (P103.15)
+
+This includes every actual descending tuple on every central quotient.
+
+**Proof.** The region |alpha|>=D-4 is already supplied by Theorem
+100D. Odd box gaps give odd total degree and zero. A trivial root
+in the remaining region has background degree <=6 and is supplied
+by Lemma 101A. Thus only a nontrivial root at A=D-6 remains.
+Odd original minus count gives zero, so assume even minus count.
+
+First suppose the W=(3) backgrounds also have a common sign s.
+Let v be the common V sign, with unused signs arbitrary. Set
+B4=N_(V^4), L_j=binomial(l,j), and T6=T_(V^6).
+No spectator of degree >=4 can appear in a nonzero complement of
+degree <=6: a singleton has no invariants, and its possible remaining
+partner has smaller box degree and cannot contain its dual. Formula
+(P101.2) therefore specializes exactly to
+
+    Phi_G/2=M+L_2 B2+k_r L_4 B4+P_W
+                                +sv h L_3 T_*+k6_r L_6 T6. (P103.16)
+
+Insert (P103.5). Since 1+sv>=0, the star cost cancels, leaving
+
+    Phi_G/2>=2P_W+L_2 B2+k_r L_4 B4+k6_r L_6 T6-K_W.
+
+If K_W=0 this is nonnegative. Otherwise Proposition 103E gives
+
+    Phi_G/2>= (L_2/h) B2+k_r L_4 B4
+                                      +(k6_r-5)L_6 T6>=0. (P103.17)
+
+All are actual nonnegative Haar moments, and the actual constants
+satisfy k6_r>=5 in every rank. This proves the common-W-sign case,
+including repeated roots and every spectator sign.
+
+For arbitrary W signs use strong induction on tuple length. If both
+W signs occur, their two factors multiply to chi_W(g)^2-chi_W(h)^2.
+Actual tensor-square fusion writes this as a finite nonnegative
+integer combination of chi_beta(g)-chi_beta(h), with beta of even
+degree 0,2,4 or 6. A trivial beta gives zero. For |beta|<=4, the
+new background degree is D'=D-6+|beta| and A>=D'-4, so Theorem
+100D applies. For |beta|=6, the replacement is a permitted spectator,
+the common V sign persists, A=D'-6, and tuple length decreases.
+Apply the induction hypothesis. This proves all W signs and retains
+the original root and minus parity. If h<=1 the common-W-sign base
+already applies. Pullback under a central covering preserves each
+actual descending character and normalized Haar integral, proving
+the quotient statement. QED.
+
+**Original-consumer return and next unresolved statement.**
+Proposition 103E supplies a previously unpaid row-cubic relation
+family uniformly in rank, root and all background multiplicities.
+Theorem 103F consumes it in the unchanged original Haar/sign budget,
+with arbitrary high-degree spectators. The mechanism retains the
+positive two-V-removed moment; omitting that term would ask a stronger
+comparison than the actual consumer needs. The proof uses actual
+Casimir intertwiners and shifted branching, not bounded certificates.
+
+The full six-box consumer with degree-two backgrounds and the other
+cubic labels is still unsupplied. Its precise remaining task is the
+joint insertion-image comparison in (P101.2): pay the H/C and mixed
+cubic losses, together with their overlaps, from the positive terms
+not already spent. Proposition 103E alone does not authorize spending
+B2 or the five-unit V6 budget again on another family. In particular,
+opposite defining signs may fuse into H or C while preserving gap six;
+Theorem 103F's common-defining-sign hypothesis is therefore not removed
+by its induction. Larger symplectic gaps and the other unsupplied Lie
+types remain part of the active full central positive-definite-cone
+objective. No full-cone completion is claimed.
+
+## 104. The primitive column-cubic wall and its joint payment with the row wall
+
+The selected obligation is still the original six-box formula (P101.2),
+not an unrestricted GL tensor-space inequality. This section supplies
+its primitive column-(1,1,1) star kernel and proves that its image is
+independent of the row-(3) star image. The two payments are consumed
+jointly: they spend ten of the actual fifteen six-V units when both
+labels exist, and only the previously supplied fraction of the positive
+two-V-removed term. The entire six-box sector with these two cubic
+labels, defining backgrounds of a common sign, and arbitrary higher
+backgrounds is consequently supplied in every symplectic rank.
+
+**Matched demand sheet.** The consumer is (P101.2) at |alpha|=D-6.
+For Z=(1,1,1), it uses t binomial(l,3) T_(Z V^3), the actual full
+moment M, the positive equal-Z pairs and the actual V^6 moment.
+All r>=3, t,l, root labels and spectator shapes/counts are required;
+Z is unavailable below rank three. Only a dimension bound is used.
+The exact comparison to supply is K_Z<=2P_Z+5binomial(l,6)T_(V^6),
+with no root-height condition. Its joint application must prove image
+independence from W=(3), rather than add two unrelated lower bounds
+for M. When both labels are available k6_r=15; the two comparisons
+may spend five units each, once. The original common-V-sign hypothesis
+is retained; this section does not replace it by an unproved all-sign
+fusion claim. Normalized Haar and actual quotient labels are unchanged.
+
+**Primary input in context.** The checked Okounkov--Olshanski source
+in Section 103, Theorem 8.1 (8.3) and Theorem 11.1 (11.6), specializes
+to the three-box column exactly as in (P104.6). Its elementary shifted
+formula is also displayed in that source's equation (0.9). The
+specialization and its multiplicity normalization are replayed below.
+
+**Independent self-double-check immediately before recording.**
+
+1. Re-derived contraction C on Lambda^3 V and wedge insertion L by
+   the symplectic form. Their composite C L is (r-1)Id, so
+   P=Id-L C/(r-1) is the actual primitive projection. Its trace image
+   at grade one has a negative index equal to one of its positive
+   indices. For r>=3 the off-diagonal coefficients used below exist
+   for every input index and are untouched by that projection.
+2. Re-derived the exterior marked-triple Gram, including its +3
+   sign correction. An independent tensor-basis audit at r=3,l=4
+   checked all 144 entries against 3r+Omega_l-R_(l-3)+3.
+   Vertical-three Pieri gives precisely the appended three-bottom-row
+   kernel, not the appended-row-(3) kernel of Section 103.
+3. Constructed the actual primitive exterior-cube star, using P on
+   its background slot. At r=3,t=2,l=6 and alpha=(2,2,2), its
+   extremal sources are the remaining background determinant times
+   the alternating three-positive-V tensor. Sparse elimination gave
+   source 40, rank 39 and kernel one, matching both simultaneous walls.
+   This uses the actual primitive representation, not Lambda^3 V
+   without its trace removed. Prime 1000003 was checked separately.
+4. Re-derived the shifted elementary cubic sum and appended-column
+   hook ratio. Checked the hook/Pieri quadratic on several three-
+   and four-row shapes, including rho=(2,2,2). The proof below uses
+   a termwise ratio for arbitrary r and degree; those diagnostics
+   do not provide a finite certificate cover.
+5. Replayed Cauchy--Schwarz with column rather than row branching:
+   both normalized branching sums are f^lambda times the skew
+   dimension ratio, and the coefficient is again exactly twenty.
+   Multiplication by R e_3^(t-2) gives 2P_Z and five actual V6 units,
+   with no extra defining or background multiplicity factor.
+6. Checked the joint kernel on the actual tensors. In rank three,
+   one W, one Z, six V's and root alpha=(4,1,1), the row source
+   has dimension twenty and the column source sixty. The latter
+   has three extremal highest-vector sources per marked triple,
+   obtained independently from the GL raising equations. Sparse
+   primitive-tensor elimination gave joint rank eighty, agreeing
+   with the direct-sum kernel proof below.
+7. Independently expanded all original complementary cuts for
+   rank-three (alpha,h,t,l)=((4,1,1),1,1,6) and
+   ((5,2,2),1,2,6), with cubic signs minus, V sign plus and root sign
+   retaining even minus count. Weyl-numerator Haar extraction gave
+   Phi/2=3015 and 8735. These agree with the specialized (P101.2),
+   including row/column star source costs 20,60 and 20,120.
+8. Replayed the joint consumer: its full-moment lower bound uses
+   the dimension of one combined insertion map, its equal-pair
+   contribution is independently isolated, and its two loss estimates
+   spend ten six-V units in total. Five remain at r>=3. Lower ranks
+   use Theorem 103F because Z is absent. Opposite equal-cubic signs
+   fuse into even degrees <=6; only degree six retains the gap and
+   becomes an allowed spectator. Original root repeats, odd parities,
+   trivial roots and central quotients require no new assumption.
+
+**Lemma 104A (the exact actual primitive exterior-cubic star kernel).**
+Let r>=3, V=X+X^*, dim X=r, and Z=V_(1,1,1). Take an actual
+root alpha with A=D-6, t backgrounds Z, l backgrounds V and
+arbitrary other backgrounds. Write R for their top character product,
+E=Lambda^3 X=e_3, n=l-3, d=binomial(r,3). For t>=1,l>=3, let J_Z
+be the invariant star insertion indexed by one Z and a marked V
+three-subset. Define
+
+    D_alt(l,X)=Ind_(S_3 x S_n)^(S_l)(sgn tensor X^(tensor n)),
+    Kalt_(r,l)=sum_(mu partitions n, ell(mu)=r)
+                                  f^(mu,1,1,1) s_mu.
+
+The exterior polarization F_alt removes one marked position, with
+its alternating sign, and inserts its input x in that position.
+Then
+
+    F_alt^*F_alt=3r Id+Omega_l-R_n+3 Id,
+    ker F_alt=direct-sum_(mu partitions n, ell(mu)=r)
+                          S_mu(X) tensor [mu,1,1,1]. (P104.1)
+
+The full actual insertion kernel is exactly
+
+    ker J_Z=Hom_GL(r)(S_alpha,
+                    R tensor ker Gamma_t(E) tensor ker F_alt). (P104.2)
+
+Consequently
+
+    K_Z:=dim ker J_Z
+       <=(t-1)[s_alpha]R E^(t-1) Kalt_(r,l).      (P104.3)
+
+A nonzero kernel requires t>=d+1 and l>=r+3. It also requires
+alpha_r>=1+binomial(r-1,2), although that condition is not needed
+in the payment below.
+
+**Proof.** On Lambda^3 V put
+
+    C(v_1 wedge v_2 wedge v_3)
+      =omega(v_1,v_2)v_3-omega(v_1,v_3)v_2
+                                      +omega(v_2,v_3)v_1,
+    L(v)=(sum_a e_a wedge f_a) wedge v.
+
+Direct contraction gives C L=(r-1)Id. Thus P=Id-L C/(r-1)
+is the equivariant projection onto ker C. This kernel contains the
+highest weight (1,1,1) and has dimension binomial(2r,3)-2r,
+which is that highest weight's Weyl dimension. It is precisely the
+actual irreducible Z. The unique star is the exterior-cube pairing
+with V^3, projected by P on its background slot. Its multiplicity
+is one, as in Lemma 101B.
+
+All marked sources have remaining degree A, so actual extremal
+restriction identifies their combined source with
+Hom_GL(S_alpha,R tensor A_t(E) tensor D_alt(l,X)). For F_alt,
+the three diagonal terms have norm squared r each. Exchanges of
+one marked and one unmarked position give the signed relabeling
+in the full transposition class sum. Internal marked transpositions
+act by minus one, giving the displayed +3 correction; unmarked
+transpositions contribute R_n. This proves its Gram formula.
+
+Schur--Weyl and vertical-three Pieri give summands
+S_mu(X) tensor [nu], nu/mu a vertical three-strip. Its Gram scalar
+is 3r+ct(nu)-ct(mu)+3. For m=ell(mu), the smallest possible
+added content sum is -3m-3. Equality requires three new bottom
+rows, with their single boxes in column one. Indeed their distinct
+row indices have sum at most (m+1)+(m+2)+(m+3), and every
+column index is at least one. Thus zero occurs exactly when m=r
+and nu=(mu,1,1,1), proving (P104.1).
+
+The actual star's root-top output has Z grade 3-2a, a positive
+marked V's and 3-a negative marked V's, a=0,1,2,3. At a=1 the
+raw background grade is Lambda^2 X tensor X^*. For a fixed
+input index c choose distinct a,b different from c, possible at
+r>=3. Its coefficient e_a wedge e_b wedge f_c, with the two
+negative V coefficients f_a,f_b, detects F_alt(e_c) for the
+marked negative pair, up to a nonzero scalar and its fixed orientation.
+Every tensor L(v) at this grade has its negative index equal to
+one of its positive indices. The trace correction therefore has
+zero coefficient here. These coefficients isolate each marked Z
+and detect all of F_alt. Conversely a zero raw middle projection
+remains zero under P. Hence the actual middle-projection kernel
+is exactly ker F_alt, not a larger trace-induced kernel.
+
+On that kernel the defining Specht type has height r+3. For a>=1,
+put k=3-a<3. The negative defining positions are alternating,
+since the whole marked triple is alternating. Their S_l output
+lies in Ind_(S_k x S_(l-k))^(S_l)(sgn tensor X^(tensor(l-k))),
+tensored with external coefficient spaces. Vertical-k Pieri bounds
+its height by r+k<r+3. Consequently every such graded output
+vanishes on ker F_alt. At a=0, all Z backgrounds are top and
+the three negative V's form E^*. This is exactly the omitted-Z
+bank Gamma_t(E), independently for each marked negative triple.
+Intersecting the two tensor-factor kernels, and then taking Hom,
+gives (P104.2). Vanishing on the root top is equivalent to vanishing
+of the actual root intertwiner, as in Lemma 102C.
+
+The bank's projection into any t-1 omitted-slot summands is injective,
+so (P104.3) follows exactly as in Lemma 103A. Lemma 98A gives
+t>=d+1; the defining wall has n>=r. At full height the bank
+contributes det(E)=(det X)^binomial(r-1,2), and the defining wall
+contributes det X. All spectators are polynomial, proving the last
+necessary condition. QED.
+
+**Lemma 104B (rank-uniform column hook and branching payment).**
+For every r>=3,l>=6 and real u>=0, in the actual r-variable
+ordinary Schur alphabet,
+
+    u e_3 Kalt_(r,l)
+       <=_Schur u(u+1) h_1^l
+                    +5binomial(l,6)e_3^2 h_1^(l-6). (P104.4)
+
+**Proof.** For lambda of degree m>=3 put
+
+    E3(lambda)=sum_(i<j<k)(lambda_i+2)(lambda_j+1)lambda_k,
+    qalt(lambda)=f^(lambda/(1,1,1))/f^lambda.
+
+The checked shifted elementary specialization gives
+
+    qalt(lambda)=E3(lambda)/[m(m-1)(m-2)].         (P104.5)
+
+Equivalently [s_lambda]e_3 h_1^(m-3)=f^lambda qalt(lambda)
+by ordinary vertical Pieri and skew branching. Every term of E3
+is nonnegative, and all are positive when lambda has r full rows.
+
+For mu of degree n=l-3 and full height r, put z_i=mu_i+r-i.
+The shifted Vandermonde hook formula for the appended three-row
+column cancels to
+
+    f^(mu,1,1,1)=binomial(l,3)f^mu walt(mu),
+    walt(mu)=product_i z_i/(z_i+3).               (P104.6)
+
+Here the appended shifts are 3,2,1; their Vandermonde divided by
+their factorial product is 1/6. The old shifts increase by three,
+and each old factor leaves exactly z_i/(z_i+3).
+
+Suppose rho/mu is vertical three and put b=mu_r>=1. Then
+rho_i<=mu_i+1. Termwise in the positive E3 sum,
+
+    E3(rho)/E3(mu)
+      <=[(b+3)/(b+2)][(b+2)/(b+1)][(b+1)/b]
+      =(b+3)/b.
+
+On the other hand the bottom hook factor gives walt<=b/(b+3).
+It follows that
+
+    walt(mu)^2<=E3(mu)/E3(rho)
+      =[binomial(n,3)/binomial(l,3)]
+                               qalt(mu)/qalt(rho). (P104.7)
+
+Fix a rho of degree l and height <=r, and put
+
+    A=[s_rho]e_3 Kalt_(r,l), B=f^rho,
+    T=[s_rho]e_3^2 h_1^(l-6), C=binomial(l,6)T.
+
+If there are no reached full-height strips, A=0 and the assertion
+is immediate. Otherwise both branching ratios in (P104.7) are
+positive. Cauchy--Schwarz on the retained full-height strip set gives
+
+    (A/binomial(l,3))^2
+       <=[sum_wall f^mu qalt(mu)]
+                                [sum_wall f^mu walt(mu)^2/qalt(mu)]
+       <=T [binomial(n,3)/(binomial(l,3)qalt(rho))]
+                                     sum_(rho/mu vertical 3)f^mu
+       =[binomial(n,3)/binomial(l,3)]T B.
+
+The extended first sum is T by the second vertical-three removal;
+the final branching sum equals B qalt(rho). Downward diagrams stay
+within the actual r rows. Thus A^2<=20BC, since
+binomial(l,3)binomial(l-3,3)=20binomial(l,6). Square completion,
+
+    u(u+1)B+5C-uA
+      =B(u-A/(2B))^2+uB+5C-A^2/(4B)>=0,
+
+proves (P104.4) at every Schur coefficient. No degree or rank
+interval is substituted for this argument. QED.
+
+**Proposition 104C (actual column-cubic loss paid by pairs and six-V).**
+With arbitrary spectators in Lemma 104A, put
+
+    P_Z=binomial(t,2)[s_alpha]R e_3^(t-2)h_1^l,
+    T6=[s_alpha]R e_3^t h_1^(l-6).
+
+Then, with absent terms zero, the original actual loss satisfies
+
+    K_Z<=2P_Z+5binomial(l,6)T6.                  (P104.8)
+
+No root-row condition is imposed.
+
+**Proof.** If K_Z=0 this is immediate. Otherwise t>=2 and
+l>=r+3>=6. In (P104.4) set u=t-1, multiply by R e_3^(t-2),
+and take the S_alpha coefficient. Lemma 104A bounds the left side's
+actual relation dimension. The pair coefficient becomes
+(t-1)t[s_alpha]R e_3^(t-2)h_1^l=2P_Z, and the six-V coefficient
+is precisely the displayed T6 term. By Lemma 93H both are actual
+extremal Haar moments with their original counts. This proves the
+matched original payment. QED.
+
+**Lemma 104D (joint row/column image and independent positive pairs).**
+For r>=3, take h backgrounds W=(3), t backgrounds Z=(1,1,1),
+l backgrounds V and arbitrary spectators with top product R, at
+A=D-6. Let J_W and J_Z be the two actual insertion families, with
+kernels K_W,K_Z as in Lemmas 103A and 104A. Put
+
+    T_W=[s_alpha]R h_3^(h-1)e_3^t h_1^(l-3),
+    T_Z=[s_alpha]R h_3^h e_3^(t-1) h_1^(l-3),
+    P_W=binomial(h,2)[s_alpha]R h_3^(h-2)e_3^t h_1^l,
+    P_Z=binomial(t,2)[s_alpha]R h_3^h e_3^(t-2)h_1^l.
+
+Unavailable terms are zero. The kernel of the one combined map
+J_W+J_Z is the direct sum of its two individual kernels. In
+particular its full moment satisfies the single joint lower bound
+
+    M>=binomial(l,3)(h T_W+t T_Z)
+                                    -K_W-K_Z+P_W+P_Z. (P104.9)
+
+**Proof.** A middle projection at a marked cubic background isolates
+that background, regardless of its label: all other source factors
+are at maximal grade. Lemmas 103A and 104A therefore force a
+joint relation into the respective defining F kernels. Every other
+lower-background projection then vanishes on those kernels.
+
+Only the all-backgrounds-top/three-negative-V projections remain.
+For each fixed negative triple, the row insertion is symmetric on
+those three V positions, while the column insertion is alternating.
+These are disjoint S_3 types. They cannot cancel, so their separate
+omitted-background bank maps must both vanish. The joint kernel is
+therefore exactly the two individual kernels' direct sum. This uses
+one map into M; it does not add two independent estimates for M.
+
+Insert the equal-W and equal-Z positive pair invariants. Projection
+onto the chosen pair's grades +1,-1, all other positions top,
+is nonzero and isolates that pair. Both actual cubic representations
+have nonzero mutually dual grade-one and grade-minus-one spaces.
+Every star image lowers at most one cubic background and so vanishes
+there. All positive pair images are independent of each other and
+of the combined star image. Their total dimension is P_W+P_Z.
+The combined source dimension is binomial(l,3)(hT_W+tT_Z),
+proving (P104.9). QED.
+
+**Theorem 104E (the joint row/column six-box sector, every symplectic rank).**
+Let G be any compact connected group of type C_r, r>=1. Take an
+actual atomic tuple with arbitrary distinguished root alpha and
+nontrivial backgrounds whose labels are (1), (3), the available
+(1,1,1), or arbitrary labels of box degree at least four. Require
+only that all label-(1) backgrounds have a common sign; their absence
+is allowed. All other signs and background shapes/counts are arbitrary.
+Then original Q3 is nonnegative whenever
+
+    |alpha|>=D-6.                                 (P104.10)
+
+The conclusion includes every actual descending tuple on every
+central quotient.
+
+**Proof.** At r=1,2 the column cubic is unavailable, so Theorem
+103F supplies the statement. Let r>=3. The four-box region is
+already supplied by Theorem 100D; odd gaps and odd minus count
+give their original zero. A trivial root leaves at most six background
+boxes and is supplied by Lemma 101A. Only a nontrivial root at
+even-minus gap six remains.
+
+First suppose each cubic type has a common sign, s_W and s_Z,
+with unused signs arbitrary. Let v be the common V sign and put
+L_j=binomial(l,j), B2=N_(V^2), B4=N_(V^4), T6=T_(V^6).
+No degree-at-least-four spectator can participate in a nonzero
+invariant complement of degree <=6: its remaining complementary
+partner product has smaller total degree, which cannot contain its
+dual. Unequal cubic pairs have zero invariant moment. Thus (P101.2)
+reduces exactly to
+
+    Phi_G/2=M+L_2 B2+3L_4 B4+P_W+P_Z
+             +v L_3(s_W hT_W+s_Z tT_Z)+15L_6 T6. (P104.11)
+
+Substitute the single joint bound (P104.9). The two star costs
+cancel their negative contributions because 1+v s_W and 1+v s_Z
+are nonnegative. Hence
+
+    Phi_G/2>=2P_W+2P_Z+L_2 B2+3L_4 B4
+                                         +15L_6 T6-K_W-K_Z.
+
+Set theta_h=0 for h<=1 and theta_h=(h-1)/h for h>=2.
+Apply Proposition 103E with the column backgrounds retained as
+spectators, and Proposition 104C with the row backgrounds retained
+as spectators. Zero-kernel cases obey the same relaxed nonnegative
+bounds. Together they give
+
+    K_W+K_Z<=2P_W+2P_Z+10L_6 T6+theta_h L_2 B2.
+
+These payments spend distinct pair channels, ten six-V units in
+total, and one fraction of B2. No positive contribution is counted
+twice. Consequently
+
+    Phi_G/2>=(1-theta_h)L_2 B2+3L_4 B4+5L_6 T6>=0. (P104.12)
+
+All moments are actual nonnegative multiplicities. The conventions
+for absent backgrounds avoid negative spectator powers.
+
+For arbitrary signs within either cubic label, use strong induction
+on tuple length. An opposite-sign pair of equal cubics fuses its
+square into a finite nonnegative integer sum of differences of actual
+characters of even degrees 0,2,4,6. The degree-zero difference is
+zero. Degrees <=4 give new background degree D'=D-6+|beta|
+and |alpha|>=D'-4, supplied by Theorem 100D. Degree six produces
+an allowed high-degree spectator, preserves the common V sign and
+the six-box hypothesis, and decreases tuple length. Apply induction.
+The common-sign cubic case supplies the base. The original root is
+retained throughout. Normalized Haar pullback under a central cover
+proves the statement for every actual quotient label. QED.
+
+**Original-consumer return and remaining hard comparison.** The
+column-cubic wall is paid uniformly using the actual primitive tensor
+projection. The row and column payments are consumed through a proved
+joint image bound, so the two families do not merely compete for the
+same unexamined full-moment dimension. Theorem 104E is an original
+all-rank, unbounded-count result with the stated defining-sign hypothesis.
+
+The middle cubic label (2,1) and the degree-two H/C backgrounds remain
+unpaid in the full six-box expression (P101.2). For the middle cubic,
+the natural marked-three-slot raising map has both symmetric-two and
+alternating-two branches. Its actual first lower grade removes a trace
+copy of X; at rank two the alternating branch cannot be detected by
+the off-diagonal column argument above. Its two invariant star channels
+must therefore be checked in the actual harmonic representation before
+any branching comparison is used. The existing positive adjoint-coupled
+channel in (P101.2) is available because (2,1) occurs in H tensor V,
+but no payment of that family or of its mixed H/C insertions is asserted.
+The remaining task is still to pay those joint losses without reusing
+the B2 and V6 contributions already spent. Opposite defining signs
+likewise still introduce H/C under fusion at unchanged gap six.
+Arbitrary larger gaps and other Lie types remain within the unchanged
+active full central positive-definite-cone objective.
+
+## 105. Middle-cubic relations force a quartet payment; the rank-two cubic sector is supplied
+
+The hard consumer remains the original six-box expression (P101.2).
+This section constructs an actual middle-cubic relation subspace and
+shows, on an infinite reached rank-two family, that equal-cubic pairs
+plus the entire available V^6 term cannot pay it. It then retains the
+positive V^4-removed moment and proves a uniform payment for the whole
+middle-cubic negative cut at rank two, with arbitrary roots and spectators.
+The row payment and this quartet payment are consumed jointly without
+reusing a positive term. All rank-two cubic-background six-box tuples
+with a common defining sign are supplied. A separate intrinsic bank
+argument supplies the middle-cubic zero-wall region in every rank.
+The full all-group central positive-definite-cone objective is unchanged.
+
+**Matched demand sheet and obstruction knob.** The consumer is
+(P101.2), with root degree A=D-6. For W=(2,1), multiplicity f_W=2,
+its negative cubic star cost is 2h binomial(l,3)T_(W V^3).
+At rank two the positive coefficients available are three on V^4
+and fourteen on V^6. Every root, spectator label/count and h,l is
+required. The selected payment uses independent equal-W pair images
+inside M and their original positive cut, hence 2P_W, together with
+3binomial(l,4)N_(V^4). It spends no V^6 or two-V-removed term.
+For h<=dim S_(2,1)(X), an actual top-grade bank injection pays the
+star directly inside M. The failed comparison in Proposition 105B
+retains only pairs and V^6; that is stronger than the original consumer,
+which retains V^4 and V^2 as well. Its failure rejects that restricted
+supplier, not Q3 or the insertion route. All measures, labels, quotient
+restrictions and original signs keep their existing meanings.
+
+**Independent self-double-check immediately before recording.**
+
+1. Re-derived the GL marked-(2,1) raising annihilator using the
+   block GL(r) x GL(2) Levi. A Levi highest vector annihilated by
+   all cross-block positive roots is the unique full GL highest
+   vector. The surviving defining Specht tail is exactly (2,1),
+   with full-height mu and mu_r>=2. Rechecked its actual subkernel
+   application: every lower-background output has fewer than three
+   negative V's and cannot carry three boxes below row r. Trace
+   projection cannot change this permutation obstruction.
+2. Re-derived the rank-two relation dimension in (P105.3):
+   S_zeta(det X tensor X)=(det X)^(2q)S_zeta(X), and a balanced
+   output forces equal SL(2) spins. Both shifted hook ratios and
+   the factor two from f^(2,1) were cancelled independently.
+3. Checked every asymptotic bound in Proposition 105B. The uniform
+   background ratio defect is bounded by (m+m^2)/q; the bank hook
+   defect by 2/(q-m+1); and the discarded defining spin probability
+   by 6/m using the exact centered binomial second moment. These
+   give a squeeze estimate, not a numerical extrapolation. The
+   normalized difference limit is exactly 2/15.
+4. Exact rational arithmetic at m=64,q=43690 gives a positive
+   subkernel-minus-pairs-minus-fourteen-V6 difference. Dividing by
+   m^6 C_(q+m) gives approximately 0.08440420324597589. The
+   exact rational sign, rather than that decimal, is the diagnostic.
+5. Independently built the actual harmonic (2,1) projection in
+   V tensor Lambda^2 V at rank two. Its primitive trace-copy norm,
+   idempotence and irreducible dimension were checked. On the
+   omitted-background wall, actual middle projections at mu=(1,1)
+   and (2,2) had source/rank/kernel 20/20/0 and 140/126/14.
+   These tests do not claim a uniform exact full insertion kernel.
+6. Constructed an actual root-Casimir map into N_(V^4): its source
+   omits one cubic from that product and adds one auxiliary V; couple
+   the auxiliary V with the root adjoint through H tensor V -> W.
+   At h=3,l=7,alpha=(5,5), its cubic-middle projection had rank
+   fifteen of fifteen. Exact local tensor coefficients also matched
+   the corresponding Casimir matrix. This tests a direct positive
+   supplier; the uniform proof below uses the first-descendant identity.
+7. Re-derived the actual rank-two first grades E=det X tensor X,
+   G_(W,1)=X+(det X)^(-1)Sym^3 X and G_(V,1)=X^*. Replayed
+   Lemma 102D with the actual two-variable alphabet. Ordinary dual
+   two-box Pieri makes its subtraction exactly the S_alpha coefficient
+   of P0 tensor Sym^2 X^*, including short and boundary rows.
+   All spectator first-grade contributions have nonnegative coefficients.
+8. Independently checked the resulting quartet identity on actual
+   Weyl-numerator moments: B4=33,9,8,45,714,1 at (h,l)=
+   (3,7),(4,4),(3,5),(6,4),(8,6),(2,4), with their balanced roots.
+   At the nonbalanced equality case h=3,l=4,alpha=(4,3), its
+   coefficients are T=2,U=5,B4=6, giving exact payment equality.
+9. Re-derived the two-variable Schur ratio minimum from
+   f^(u+1,v+1)/f^(u,v)=(N+2)(N+1)/[(u+2)(v+1)]. Checked the
+   l=5 factor (h-3)(5h-2), the l=4 polynomial h(4h^2+h-45),
+   and the l>=6 lower bound without a finite count table.
+10. Replayed the combined original consumer with one row cubic,
+    three middle cubics, four V's and root (5,5). The actual quartet
+    moment is nine and its matched lower bound six. Independent
+    complementary-cut summation gave Phi/2=3183, agreeing with
+    the specialized (P101.2). Arbitrary cubic sign fusion preserves
+    the hypotheses because only its degree-six terms retain gap six.
+11. Rechecked the all-rank joint-image argument separately from any
+    middle-kernel classification. Below-top cubic positions isolate
+    each type, and the all-top three-negative-V output separates
+    the three distinct S_3 types. For h<=dim S_(2,1)(X), the actual
+    omitted-background bank is injective. This is enough for the
+    all-rank zero-wall corollary; no raw harmonic kernel is assumed.
+
+**Lemma 105A (a marked-middle GL wall and an actual relation subspace).**
+Let dim X=r>=2, dim Y=2, n=l-3>=0. In the bidegree (n,3)
+part of (X+Y)^(tensor l), taking Hom_GL(Y) from S_(2,1)(Y)
+identifies the GL(X) x S_l module
+
+    D_(2,1)(l,X)
+      =Ind_(S_3 x S_n)^(S_l)([2,1] tensor X^(tensor n)).
+
+Its polarization by u=Hom(Y,X), which replaces a Y by an X, has
+exact kernel
+
+    Kpol=direct-sum_(mu partitions n, ell(mu)=r, mu_r>=2)
+                            S_mu(X) tensor [mu,2,1]. (P105.1)
+
+Let an actual symplectic background product at root degree A=D-6
+have h copies of W=V_(2,1), l copies of V and spectators with
+top product R. Put E=S_(2,1)(X). Its actual W-with-three-V insertion
+kernel contains the subspace
+
+    Hom_GL(X)(S_alpha,
+                  R tensor ker Gamma_h(E) tensor Kpol). (P105.2)
+
+This is an inclusion in the actual kernel; equality is not asserted.
+
+**Proof.** Apply Schur--Weyl to X+Y. In an irreducible S_nu(X+Y),
+the u-annihilator is stable under the block Levi. A Levi highest
+vector in that annihilator is killed by the Levi positive roots and
+all cross-block positive roots, hence is the unique full GL highest
+vector. Its Levi module has highest weights given by the first r
+rows of nu and the remaining two rows. The entire u-annihilator
+is that module: the annihilator is Levi stable, and no second Levi
+highest weight can occur. Selecting Y type (2,1) consequently gives
+nu=(mu,2,1), with mu_r>=2 and |mu|=n. This proves (P105.1).
+
+Each actual marked insertion source has remaining degree A, so
+Lemma 93H identifies it with its GL top space. Its combined source
+is Hom_GL(S_alpha,R tensor A_h(E) tensor D_(2,1)(l,X)). The two
+star channels are exactly the two copies indexed by [2,1]. In a
+root-top output with fewer than three negative V's, say k<3, the
+positive V factors give S_l types of height <=r before induction
+with the k negative positions. Their induction can add only k boxes
+below row r. A type [mu,2,1] has three such boxes, so cannot occur.
+This permutation argument remains valid after actual harmonic trace
+projection on the background. When all cubic backgrounds are top,
+there are exactly three negative V's; the map is the omitted-W
+coevaluation Gamma_h(E), with the two independent [2,1] embeddings
+into those negative positions. The bank kernel kills that last
+projection. Thus every root-top output vanishes on (P105.2), and
+actual equivariance forces the whole root map to vanish. QED.
+
+**Proposition 105B (pairs plus the whole six-V term do not pay the middle wall).**
+At rank two there is an infinite family of actual, even-minus,
+six-box tuples for which
+
+    K_W>2P_W+14binomial(l,6)T_(V^6).
+
+In particular take m tending to infinity, q=floor(m^3/6),
+
+    h=2q+1, l=2m+3, alpha=(3q+m,3q+m),
+
+with no spectators, root sign minus, W signs minus and V signs plus.
+The relation subspace in Lemma 105A has dimension
+
+    Ksub=sum_(t=0)^(m-2)
+                  f^(q+t,q-t,1) f^(m+t,m-t,2,1), (P105.3)
+
+for sufficiently large m. If C_j=binomial(2j,j)/(j+1), then
+
+    2P_W=h(h-1)C_(q+m+1), T_(V^6)=C_(q+m-1),
+    [Ksub-2P_W-14binomial(l,6)T_(V^6)]
+                          /[m^6 C_(q+m)] -> 2/15. (P105.4)
+
+Thus the displayed restricted supplier fails on reached labels,
+not just on an unrestricted coefficient space.
+
+**Proof.** E=S_(2,1)(X)=det X tensor X has dimension two.
+For the full-height background partition zeta of 2q,
+S_zeta(E)=(det X)^(2q)S_zeta(X). For a defining partition mu
+of 2m, a balanced root coefficient in their product is one precisely
+when their SL(2) spins agree. The partitions are therefore
+zeta=(q+t,q-t), mu=(m+t,m-t), and mu_2>=2 gives t<=m-2.
+For large m, q>m, so zeta is always full height. Lemma 98A and
+(P105.1) give exactly (P105.3) as an actual subkernel dimension.
+It is at most K_W, without needing equality of the full kernel.
+The two extremal positive coefficients are the displayed Catalan
+numbers by the same determinant twist. The gap is exactly six,
+and the original minus count is h+1=2q+2, even.
+
+Put L3=binomial(l,3). Independent hook cancellation gives
+
+    f^(q+t,q-t)/[(2t+1)C_q]
+      =[(q+1)/(q+t+1)] product_(j=0)^(t-1)(q-j)/(q+j+1),
+    f^(q+t,q-t,1)/[h f^(q+t,q-t)]
+      =[(q+t+1)/(q+t+2)][(q-t)/(q-t+1)],
+    f^(m+t,m-t,2,1)/[2L3 f^(m+t,m-t)]
+      =[(m+t)/(m+t+3)][(m-t-1)/(m-t+2)].         (P105.5)
+
+Uniformly for 0<=t<=m, the first ratio lies between
+1-(m+m^2)/q and one. This follows from product(1-a_j)>=
+1-sum a_j for nonnegative a_j<=1. The bank ratio lies between
+1-2/(q-m+1) and one. For t<=m/2, the final ratio is at least
+1-9/m and at most one.
+
+The weights (2t+1)f^(m+t,m-t)/4^m form a probability distribution:
+Schur--Weyl dimensions sum to dim X^(tensor 2m)=4^m. Its second
+moment is exactly
+
+    sum_t (2t+1)f^(m+t,m-t)t(t+1)/4^m=3m/2.
+
+For a direct verification write B_t=binomial(2m,m-t) and
+f^(m+t,m-t)=B_t-B_(t+1). Summation by parts turns the numerator
+into 6sum_(t>=1)t^2B_t. Binomial symmetry and centered variance
+m/2 give the stated value. Markov's inequality therefore bounds
+the mass t>m/2 by 6/m. The t<=m/2 set is inside t<=m-2
+for large m. The preceding product bounds squeeze
+
+    Ksub/[h 2L3 C_q 4^m] ->1.
+
+All lower bounds are positive for sufficiently large m and their
+explicit defects tend to zero because q/m^3->1/6. Moreover
+
+    C_(q+m)/(C_q4^m)
+       =product_(j=1)^m [1-3/(2(q+j+1))] ->1,
+
+with defect bounded by 3m/(2(q+2)). Hence
+Ksub/[h 2L3 C_(q+m)]->1. The exact adjacent Catalan ratios tend
+to four and one quarter. Also h/m^3->1/3,
+L3/m^3->4/3, and binomial(l,6)/m^6->4/45.
+The three normalized terms in (P105.4) consequently tend to
+8/9,4/9,14/45, whose difference is 2/15. This proves positivity
+of the actual comparison defect for all sufficiently large m.
+At m=64 exact rational substitution already gives a positive defect.
+This is not a Q3 counterexample: it has omitted positive channels
+from its proposed payment. QED.
+
+**Lemma 105C (the actual rank-two quartet moment retains a uniform middle payment).**
+Work at rank two with root degree A=D-6. Let h>=2 count W=(2,1),
+l>=4 count V, and let R be the product of the top characters of
+all other actual backgrounds, without a restriction on their labels.
+Put
+
+    T=[s_alpha]R E^(h-1)h_1^(l-3)=T_(W V^3),
+    U=[s_alpha]R E^(h-2)h_1^l=T_(W^2),
+    B4=N_(V^4), N=h+l-4.
+
+Then
+
+    B4>=(l-h-3)T+(h-1)U,                         (P105.6)
+    U>=r_N T,
+    r_N=4-12/(N+4) if N even,
+    r_N=4-12/(N+5) if N odd.                     (P105.7)
+
+If there are no spectators, (P105.6) is equality. The first bound
+is a lower bound for the actual moment, not a replacement by an
+extremal coefficient. Its right side need not be nonnegative alone.
+
+**Proof.** Put X=C^2 and delta=det X, abbreviating h_1=X in
+character identities. The actual grades are
+
+    E=delta X,
+    G_(W,1)=X+delta^(-1)Sym^3 X,
+    G_(V,1)=X^*=delta^(-1)X.
+
+These follow either from Lemma 102B or directly from the harmonic
+(2,1) realization: its raw first grade is
+Sym^2 X tensor X^* + Lambda^2 X tensor X^*, and removal of the
+trace X leaves Sym^2 X tensor X^*=X+delta^(-1)Sym^3 X.
+After removing four V's the top product is R E^h X^(l-4).
+By actual one-detour extraction (P102.5), its root multiplicity
+is its first-grade coefficient minus the higher-top two-box removal.
+For any polynomial root the latter is exactly the coefficient of
+that top product tensor Sym^2 X^*. This is ordinary dual Pieri,
+with determinant shifts if a boundary row becomes negative.
+
+The spectator first-grade contributions are all nonnegative rational
+GL(2) modules. Retaining only the W and V contributions therefore
+bounds B4 below by the S_alpha coefficient of R times
+
+    h G_(W,1)E^(h-1)X^(l-4)
+       +(l-4)X^* E^h X^(l-5)
+       -E^h X^(l-4)Sym^2 X^*.
+
+When l=4 the term with coefficient l-4 is absent. Use
+Sym^3 X=X^3-2delta X and Sym^2 X=X^2-delta. The retained
+expression reduces exactly to
+
+    (l-h-3)delta^(h-1)X^N
+                          +(h-1)delta^(h-2)X^(N+2).
+
+Those two coefficients are T and U, proving (P105.6).
+No spectator terms remain when there are no spectators, proving
+the equality assertion.
+
+For a two-row partition (u,v), u+v=N, hook cancellation gives
+
+    f^(u+1,v+1)/f^(u,v)
+                       =(N+2)(N+1)/[(u+2)(v+1)].
+
+At fixed N with u>=v, the denominator is largest at the most
+balanced partition. Substitution gives exactly r_N above.
+Consequently X^(N+2)>=_Schur r_N delta X^N; the extra one-row
+summand on the left is also nonnegative. Multiplication by the
+polynomial spectator R delta^(h-2), followed by the actual root
+coefficient, proves (P105.7), including zero coefficients at short
+or boundary roots. In particular r_N>=4-12/(N+4). QED.
+
+**Proposition 105D (rank-two pairs and quartets pay the whole middle-cubic cut).**
+Under the original rank-two six-box hypotheses, with arbitrary root
+and arbitrary spectators, let h>=3 count W=(2,1), l count V,
+P_W=binomial(h,2)T_(W^2), and B4=N_(V^4). Then
+
+    2P_W+3binomial(l,4)B4
+                          >=2h binomial(l,3)T_(W V^3). (P105.8)
+
+Absent terms are zero. Neither a root-row nor a defining-count
+restriction is imposed. The constant three is exactly the original
+rank-two quartet moment.
+
+**Proof.** If l<=2 the right side is zero. For l=3, N=h-1>=2,
+(P105.7)'s Schur comparison applies directly to the two extremal
+coefficients and gives U>=2T. Thus
+2P_W=h(h-1)U>=2h(h-1)T>=2hT.
+
+For l>=6, (P105.6)--(P105.7) give
+
+    B4/T >= l-h-3+(h-1)[4-12/(h+l)] >= h
+
+whenever T>0. At l=6 the last difference is
+(2h^2-h+6)/(h+6)>0, and it increases with l.
+If T=0, the asserted payment is immediate from actual positivity.
+Since 3binomial(l,4)/binomial(l,3)=3(l-3)/4>=2 for l>=6,
+the quartet alone pays the right side.
+
+At l=5 the same bounds give
+
+    B4>=(4h/3)T,
+
+because the difference after multiplying by 3(h+5) is
+(h-3)(5h-2)>=0. The quartet coefficient is fifteen, and
+2binomial(5,3)=20, so it again supplies the required cost.
+
+At l=4, (P105.6) says B4>=(h-1)(U-T), and the payment reduces
+to
+
+    (h-1)(h+3)U >= (11h-3)T.
+
+For h=3 use r_3=5/2, giving equality in this comparison.
+For h>=4, use r_h>=4-12/(h+4). The difference after multiplying
+by h+4 is h(4h^2+h-45), positive since h=4+t gives
+4h^2+h-45=4t^2+33t+23. This supplies the last case.
+The finite distinction between l=3,4,5 and l>=6 is by symbolic
+inequalities for all h, not by certificates on a bounded count box.
+All comparisons use the same actual root coefficients, so the
+original consumer receives exactly (P105.8). QED.
+
+**Lemma 105E (joint cubic images and a dimension-controlled middle injection).**
+At arbitrary rank r, consider all available three-box labels gamma
+and their actual star insertion maps into the same six-box moment M.
+The kernel of their combined map is the direct sum of their individual
+kernels. Independent positive equal-gamma pair images can be added
+to that combined image. For gamma=(2,1), writing
+
+    d_mid=dim S_(2,1)(C^r)=r(r^2-1)/3,
+
+the full actual star map is injective whenever its background count
+h<=d_mid. This includes h<=2 at rank two, without assuming any
+classification of its harmonic middle kernel.
+
+**Proof.** Every star source is extremal and all unmarked background
+factors are at maximal grade. Therefore any output with a cubic
+background below its top grade identifies its insertion family by
+that background's label. In a joint relation all such projections
+of each family must vanish individually. The remaining all-cubic-
+backgrounds-top projection has three negative V's. For each fixed
+negative triple, its three families lie respectively in the distinct
+S_3 types [3],[2,1],[1,1,1]. They cannot cancel, so each family's
+last projection vanishes as well. Root-top vanishing gives zero
+of the actual root map. This proves the joint kernel statement
+without presuming a middle-kernel formula.
+
+The all-top projection for the middle family is precisely
+Gamma_h(S_(2,1)X), with its two independent [2,1] negative-slot
+embeddings. Lemma 98A makes that bank injective for h<=d_mid,
+so the full middle insertion is then injective. Its source dimension
+is 2hbinomial(l,3)T_(W V^3). The dimension d_mid follows from
+the ordinary hook dimension of the three-box shape.
+
+An equal-gamma pair invariant has a nonzero pairing between its
+grade-one and grade-minus-one spaces. Those spaces are nonzero
+for every available cubic label; for the middle label a harmonic
+off-diagonal coefficient e_a,e_a,f_c with a!=c already supplies
+one at r>=2. Project onto those two chosen background grades,
+all other factors top. It isolates that pair, injects its actual
+extremal source and kills every star image, which lowers at most
+one cubic background. Hence all pair images are independent of
+each other and the combined star image. QED.
+
+**Theorem 105F (the whole rank-two cubic six-box sector and the all-rank middle zero-wall sector).**
+Let G have type C_r, r>=1. Take an actual atomic tuple with arbitrary
+root alpha and nontrivial backgrounds whose labels are V=(1), any
+available three-box label (3),(2,1),(1,1,1), or arbitrary labels of
+box degree at least four. All V backgrounds have a common sign;
+their absence is permitted. All other signs, labels and counts are
+unrestricted. Original Q3 holds whenever
+
+    |alpha|>=D-6                                  (P105.9)
+
+and either r<=2, or the number of middle-(2,1) backgrounds is at
+most r(r^2-1)/3. There is no root-row or tuple-length bound.
+Every actual descending tuple on every central quotient is included.
+
+**Proof.** The four-box region is Theorem 100D, odd gaps and odd
+minus count give zero, and a trivial root leaves at most six background
+boxes and is Lemma 101A. Only a nontrivial even-minus gap-six root
+remains. Degree-at-least-four spectators cannot contribute to a
+nonzero invariant complement of degree <=6, as in Theorem 104E.
+First take each cubic type to have a common sign; arbitrary spectator
+signs do not enter any nonzero complementary invariant channel.
+
+At r>=3 with middle count <=d_mid, Lemma 105E adds the injective
+middle source to the joint row/column image bound (P104.9), together
+with its independent positive pair images. Its full source dimension
+pays the negative middle star cost. Its positive equal-pair cut is
+also nonnegative. The row and column payments consume exactly the
+same ten six-V units and fraction of B2 as in (P104.12); no quartet
+is used for the middle injection. The residual right side remains
+nonnegative. At r=1 only the row cubic is available and Theorem
+103F applies.
+
+For r=2, write a for the row-cubic count, h for the middle-cubic
+count, L_j=binomial(l,j), B2=N_(V^2), B4=N_(V^4), T6=T_(V^6).
+Let S_row=aL_3 T_((3)V^3), S_mid=2hL_3 T_((2,1)V^3), and
+let P_row,P_mid be the positive equal-pair quantities. With common
+cubic signs s_row,s_mid and common V sign v, the original formula is
+
+    Phi_G/2=M+L_2 B2+3L_4 B4+P_row+P_mid
+                       +v s_row S_row+v s_mid S_mid+14L_6 T6.
+
+If h<=2, Lemma 105E gives one combined full-moment bound
+
+    M>=S_row+S_mid-K_row+P_row+P_mid.
+
+After cancelling each possible negative star cost, apply Proposition
+103E to K_row, with middle and higher backgrounds retained as
+spectators. It spends 2P_row, five six-V units and at most its
+stated fraction of L_2B2. Everything remaining is nonnegative.
+
+If h>=3, include only the row star image and the independent pair
+images in M:
+
+    M>=S_row-K_row+P_row+P_mid.
+
+This retains the entire middle negative cost. The row cost and loss
+are paid as before, leaving, among other nonnegative terms,
+
+    2P_mid+3L_4 B4-S_mid.
+
+Proposition 105D supplies exactly this remaining original expression.
+It spends only the middle pair budget and the quartet budget, none
+of the row's two-V or six-V budget. Nine six-V units remain at rank
+two. Thus the common-cubic-sign consumer is supplied for every h,l
+and every root/spectator label.
+
+For arbitrary cubic signs use strong induction on tuple length.
+An opposite-sign pair of equal cubic atoms fuses into a finite
+nonnegative integer combination of differences of actual characters
+of even degrees 0,2,4,6. Degree zero gives zero. Degrees <=4 move
+to the already supplied four-box region. Degree six creates an allowed
+higher spectator, preserves the common V sign and decreases tuple
+length. The middle count never increases, so its all-rank zero-wall
+condition is preserved; at r=2 there is no middle-count condition.
+Apply induction. This retains the distinguished root, the original
+minus parity and the exact gap hypothesis. Pullback of descending
+labels under a central cover preserves normalized Haar and completes
+the quotient statement. QED.
+
+**Original-consumer return and remaining hard supplier.** The full
+rank-two cubic-background six-box consumer is now supplied by an
+actual quartet identity and a uniform ordinary two-variable Schur
+comparison. At every higher rank the middle cubic is also supplied
+up to its intrinsic top-module dimension, using an actual bank
+injection, not a finite certificate bound. The same proof uses one
+joint image and independent pair projections throughout.
+
+The general six-box expression with H/C degree-two backgrounds
+remains unpaid. At r>=3, middle-cubic counts above dim S_(2,1)X
+also remain unpaid when their actual insertion relations are reached.
+The rank-two quartet identity relied on S_(2,1)X=det X tensor X
+and cannot be substituted unchanged in those higher-rank consumers.
+A concrete positive supplier remains the actual map into B4 tested
+above: omit a marked middle cubic from that product, add an auxiliary
+V to obtain an extremal root source, apply the root adjoint Casimir,
+and couple H tensor V to the marked cubic. Its joint rank/kernel
+must be compared in the actual higher-rank Hom spaces, or the first-
+descendant identity must supply the original quartet moment directly.
+Neither the already spent quartet nor the row/column B2 and V6
+payments may be spent twice on H/C mixed families. Opposite defining
+signs still introduce H/C under fusion at unchanged gap six.
+Larger gaps and other Lie types remain obligations of the active full
+central positive-definite-cone goal. No full-cone completion is claimed.
+
+## 106. A uniform Casimir payment for the middle-cubic bank; the all-rank cubic six-box sector
+
+The selected hard consumer is still (P101.2) for the actual root at
+A=D-6. The preceding section supplied every rank-two cubic-background
+tuple, but at higher rank retained a count bound on middle cubics.
+Here an actual Casimir map sends the omitted-middle-background bank
+relations injectively into the positive quartet moment. This is a
+uniform supplier on the actual relation space, with arbitrary roots
+and spectators, rather than a classification of every harmonic trace
+relation or a count-box certificate. Its payment removes the middle
+count bound from the original joint cubic consumer.
+
+**Matched demand sheet.** The missing quantity is the actual middle
+star-insertion kernel dimension K_mid. The joint image bound of
+Lemma 105E retains that source minus K_mid, so the consumer needs
+only a payment for K_mid, not for the whole middle negative cost.
+The available unspent terms are the doubled positive equal-middle
+pair channel and 3 binomial(l,4)N_(V^4) at every rank r>=2. The
+required supplier is therefore
+
+    K_mid <= 2P_mid+3 binomial(l,4)N_(V^4).        (P106.1)
+
+Uniformity in r>=2, all h,l, every root alpha and all actual
+spectators is used in the same original six-box coefficient.
+The constants are exactly those of (P101.2); neither a reserve of
+N_(V^2) nor a six-V contribution is available to this supplier.
+Only an upper bound on the actual kernel is used, not an exact
+harmonic-kernel classification. The original consumer below excludes
+H/C backgrounds; those mixed terms remain within the full goal.
+The supplier itself permits arbitrary actual spectators.
+
+**Independent self-double-check immediately before recording.**
+
+1. Rechecked Lemma 98A's omitted-slot bank and its injectivity for
+   s<=dim E. A relation supported on only d slots is the d-slot
+   bank tensored with the unmarked external factors. Consequently
+   projection onto any h-d slots is injective on its h-slot kernel.
+2. Independently built the actual Young projection and removed its
+   symplectic trace copy, using exact rational tensor coefficients.
+   At ranks 2,3,4, every trace-copy Gram entry, every polynomial-X
+   middle-copy Gram entry, every gl(X) coupling coefficient, every
+   symmetric raising coefficient and the mixed-bank diagonal matched
+   the formulas below. These local diagnostics are not an all-rank
+   proof; the general tensor and Casimir derivations are given below.
+3. Re-derived the middle coupling coefficients from two independent
+   identities: the central gl(X) element gives K, and the Young
+   cyclic relation together with the zero intertwiner V->W gives
+   the fundamental middle component -K/2. Solving these equations
+   gives the displayed coefficients without guessing a normalization.
+4. Re-derived the root-Casimir projection on a GL edge mu->alpha.
+   The tensor Casimir gives Q=r+content(alpha/mu). Its scalar is
+   bounded below using content<=A-1, with no root-height assumption.
+   The auxiliary lowering contribution is +1/2, not -1/2.
+5. Rechecked the sign and factor of every off-diagonal block using
+   R_Y K=2 tau_Y and the fundamental positive-adjoint component
+   -2 sum_Y L_Y tensor Y. The resulting block is -4/kappa times
+   the mixed-bank Gram. This Gram factors through the original
+   omitted-E bank, and hence annihilates its relation space.
+6. An independent end-to-end actual tensor computation at r=2,
+   h=3,l=5,alpha=(4,4), with no spectators, applied the Casimir
+   coproduct to all eight source letters, then the actual harmonic
+   coupling and the selected K(X) projections. The bank relation
+   was sent to exactly seven times itself. Its twelve source
+   coefficients, twelve projected coefficients and 384 raw output
+   coefficients were checked exactly. This checks the first nonzero
+   bank instance of the actual map, not just its abstract matrix.
+7. Symbolic rational simplification checked the Casimir diagonal,
+   its content minimum, kappa, the positive shift 4d_tau/kappa,
+   both coupling equations, and the completed-square count bound.
+   The l=4,5 difference is exactly five; the l>=6 ratio is exactly
+   3(l-3)/4. The all-count proof below does not rely on a finite table.
+8. Replayed the original joint image and all positive budgets.
+   The middle consumes only its own doubled pair contribution and
+   the quartet. Row and column retain their distinct pairs, five
+   six-V units each, and the row's fraction of N_(V^2). The remaining
+   six-V coefficients are five at r>=3 and nine at r=2.
+9. Rechecked small counts, trivial root, odd signs and degree,
+   opposite-sign cubic fusion, and actual central quotients. The
+   degree-six fusion replacement is an allowed higher spectator;
+   every lower even degree returns to Theorem 100D. No middle count
+   bound is needed or propagated.
+
+**Lemma 106A (projection of a bank relation onto h-d omitted slots).**
+Let E have dimension d>=1, and let Gamma_h(E) be Lemma 98A's
+coevaluation bank on A_h(E). For h>d, projection onto any h-d of
+its omitted-source summands is injective on ker Gamma_h(E). In
+particular there is a GL(E)-equivariant injection
+
+    ker Gamma_h(E) -> (h-d) E^(tensor(h-1)).       (P106.2)
+
+For h<=d the kernel is zero.
+
+**Proof.** If the selected h-d components of a kernel vector vanish,
+the vector is supported on the remaining d omitted-source summands.
+On that supported subspace, Gamma_h is Gamma_d(E) on these d slots,
+tensored with the common E factors at the other h-d positions.
+Lemma 98A makes Gamma_d injective. The supported vector is therefore
+zero. Projection is GL(E)-equivariant, and each selected source
+summand is a copy of E^(tensor(h-1)), giving (P106.2). The final
+statement is exactly Lemma 98A's injectivity assertion. QED.
+
+**Lemma 106B (actual middle-cubic harmonic coupling and its coefficients).**
+Let r>=2, V=X+X^* with dual symplectic bases e_a,f_a, and
+W=V_(2,1). Give the tensor bases their usual positive Hermitian
+metrics. On V^(tensor 3) define
+
+    P0=A_(23)^--Alt_3,
+    j(v)=P0(v tensor omega),
+    omega=sum_a(e_a tensor f_a-f_a tensor e_a),
+    P=P0-j(j^*j)^(-1)j^*.
+
+Then P is the orthogonal projection onto one actual W copy,
+its all-positive subspace is E=S_(2,1)(X), and
+
+    j^*j=(4r+2)/3 Id.
+
+Let tau:Sym^2 V tensor V->W be the restriction of P, and set
+
+    H0=sum_a(e_a tensor f_a+f_a tensor e_a),
+    K(v)=tau(H0 tensor v),
+    kappa=2(r^2-1)/(2r+1).
+
+For v in X the map K embeds X into W's grade-one space and
+K^*K=kappa Id. Identify the grade-zero adjoint element
+H_(ba)=e_b tensor f_a+f_a tensor e_b with the matrix E_(ba).
+Projection of tau(B tensor v) onto K(X), followed by K^*/kappa,
+is
+
+    tau_0(B,v)=-c_r Bv+b_r tr(B)v,
+    c_r=(r+2)/[2(r^2-1)],
+    b_r=(2r+1)/[2(r^2-1)].                       (P106.3)
+
+Write H_X=Sym^2 X with its inherited tensor metric, and
+ tau_Y(v)=P0(Y tensor v) for Y in H_X. For the symplectic raising
+matrix R_Y sending f_b to sum_a Y_(ab)e_a, one has
+
+    R_Y K(v)=2 tau_Y(v),
+    tau_top tau_top^*=3/4 Id_E,
+    sum_(Y orthonormal in H_X) tau_Y^*tau_Y
+                               =d_tau Id_X,
+    d_tau=(r^2-1)/4.                             (P106.4)
+
+Here tau_top:H_X tensor X->E is the map P0 on all-positive
+words, and L_Y=R_Y^* is the corresponding lowering matrix.
+
+**Proof.** The antisymmetrizer A_(23)^- and Alt_3 are orthogonal
+projections, with the latter contained in the former. Thus P0 is
+an orthogonal Young projection of shape (2,1), one of its two
+Specht channels. Its restriction to X^(tensor 3) is E. The actual
+V^(tensor 3) has one degree-three (2,1) irreducible in this channel
+and one trace copy of V. To check this without a harmonic assumption,
+its degree-three top spaces are the three S_3 types in Lemma 101B,
+and P0 has rank one on [2,1] and zero on [3] and [1,1,1]. Its
+three degree-one V copies are the three symplectic coevaluation
+placements. Their S_3 module is [1,1,1]+[2,1]; P0 has rank one
+on it as well. Those placements span because their multiplicity is
+m(V^4)=3 at r>=2, again Lemma 101B. There are no other positive
+odd degrees <=3. The nonzero equivariant j therefore spans exactly
+the one trace copy inside P0. Subtracting its orthogonal projection
+gives precisely one actual W copy, and commutes with the actual
+symplectic action.
+
+For a unit v=e_b, v tensor omega has squared norm 2r. Its complete
+antisymmetrization has squared norm 2(r-1)/3: the b summand vanishes,
+and each a!=b supplies six different words of coefficient +/-1/3.
+It was already alternating in slots 2,3. Consequently
+||j(v)||^2=2r-2(r-1)/3=(4r+2)/3. Equivariance makes the same scalar
+hold on V, including all cross Gram entries.
+
+Put T=H0 tensor v. Then ||T||^2=2r, Alt_3 T=0, and
+<T,(23)T>=1, by matching the tensor basis words. It follows that
+||P0T||^2=(2r-1)/2. The same word matching gives
+<j(v),T>=-1; the other j(e_a),j(f_a) pairings vanish. Hence
+
+    ||K(v)||^2=(2r-1)/2-3/(4r+2)
+                          =2(r^2-1)/(2r+1)>0.
+
+GL equivariance gives K^*K=kappa Id on X.
+
+A GL(X)-equivariant map gl(X) tensor X->X has the form
+ a Bv+b tr(B)v: decompose gl(X) into its scalar and traceless
+parts, or match its matrix-unit weights and apply elementary
+changes of basis. The scalar matrix gives a+rb=1 because tau(H0,v)
+is K(v). There is a second identity that fixes both coefficients.
+Use the fundamental Casimir map normalized as
+
+    C_V(v)=sum_a e_a tensor (f_a tensor v+v tensor f_a)
+                  -f_a tensor (e_a tensor v+v tensor e_a).
+                                                        (P106.5)
+
+Its coupling through tau is an actual map V->W and is zero because
+these irreducibles are unequal. The cyclic Young identity is
+
+    tau(sym(u,v),w)+tau(sym(v,w),u)+tau(sym(w,u),v)=0,
+
+since the sum is fully symmetric before P. Apply it to e_a,f_a,v
+and sum over a. The other two terms in that sum are equal by the
+zero coupling of (P106.5); they are therefore each -K(v)/2.
+The term with positive auxiliary e_a is precisely (ra+b)K(v).
+Thus ra+b=-1/2. Solving gives a=-c_r,b=b_r, proving (P106.3).
+The negative auxiliary term in (P106.5), including its minus sign,
+contributes +K(v)/2. This also fixes the auxiliary-lowering sign
+used in the following lemma.
+
+The projection P commutes with actual raising, R_Y v=0 for v in X,
+and R_Y H0=2Y. Raising K consequently gives 2 tau_Y, the first
+identity in (P106.4). The adjoint identity is K^*L_Y|_E=2tau_Y^*.
+For the next identity tau_top tau_top^*=P0 P_(12)^+ P0 on E.
+On its [2,1] channel the transposition class sum is zero by
+Lemma 97A and (23) acts as -1. The (12) and (13) compressed
+operators agree by conjugation with (23), so each is 1/2 Id.
+Thus P0 P_(12)^+ P0=3/4 Id.
+Finally the partial trace sum in (P106.4) is a U(r)-equivariant
+endomorphism of X, hence scalar. Its trace is
+(3/4)dim E=(3/4)r(r^2-1)/3. Dividing by r gives d_tau as stated.
+All these identities use the same inherited tensor metrics. QED.
+
+**Lemma 106C (the actual quartet contains the middle bank relation space).**
+Take arbitrary actual spectators R_actual, h copies of W=(2,1),
+and l defining backgrounds, at an actual six-box root A=D-6.
+Let R be the product of the spectators' ordinary top Schur modules,
+X=C^r, E=S_(2,1)(X), d=dim E=r(r^2-1)/3. For h>=1,l>=3 put
+
+    B_Gamma=[S_alpha] R tensor ker Gamma_h(E)
+                                  tensor X^(tensor(l-3)).
+
+Then for l>=4 the actual root moment after removing four defining
+backgrounds obeys
+
+    B4=N_(V^4) >= B_Gamma.                       (P106.6)
+
+There is no root-height, spectator-degree or count bound.
+
+**Proof.** Put p=l-4. The quartet target is
+
+    T=R_actual tensor W^(tensor h) tensor V^(tensor p),
+
+whose total box degree is A+2. Omit one marked W_i and add an
+auxiliary V. This gives an actual source of degree A. By Lemmas
+93H and 102C its actual root Hom space is isomorphic, by restriction,
+to its entire top GL(X) Hom space. Summing over i identifies these
+sources with
+
+    Q=Hom_GL(X)(S_alpha,
+                      R tensor A_h(E) tensor X_aux tensor X^p).
+
+Its bank subspace Q_bank replaces A_h(E) by ker Gamma_h(E),
+and has dimension B_Gamma.
+
+Use the actual root Lie-action Casimir C_alpha:V_alpha->V_alpha
+tensor H, normalized so that its defining map is (P106.5).
+Such a normalization is fixed by the symplectic matrix action and
+its invariant dual pairing; its tensor coproduct is the sum of
+(P106.5) on the individual letters. For each source q_i, compose
+C_alpha with q_i and couple H with the source's auxiliary V using
+Lemma 106B's actual tau:H tensor V->W_i. This defines a genuine
+symplectic root map Phi:Q->Hom_Sp(V_alpha,T). It has not replaced
+the root by a GL module.
+
+Project its root-top output onto the direct sum of patterns having
+exactly one W_i at grade one in the subspace K(X), with every other
+W, spectator and physical V at its top grade. Identify K(X) with
+X_aux using K^*/kappa. The resulting target is exactly the GL
+module used for Q. The projected Phi is therefore an endomorphism
+M of Q. We calculate it with the metrics of Lemma 106B.
+
+On the diagonal source i, the grade-zero adjoint part of C_alpha
+is sum_(a,b)rho_alpha(E_ab) tensor H_(ba). By (P106.3) its
+projection is b_r A Id-c_r Q_i, where
+
+    Q_i=sum_(a,b)rho_alpha(E_ab) tensor E_ba^(aux)
+
+means act on the root, then apply q_i and act on its auxiliary X.
+Equivariance identifies it with the same operator on the source.
+Decompose the source without its auxiliary X into GL modules S_mu,
+with |mu|=A-1. On an edge S_alpha inside S_mu tensor X, set
+ c=content(alpha/mu). The GL quadratic Casimir has scalar
+ r|lambda|+2ct(lambda), derived in Lemma 97A. Its tensor coproduct
+gives cross scalar c, and its auxiliary self term is r. Consequently
+Q_i is r+c on that edge. The source auxiliary's positive-adjoint
+lowering term contributes +1/2 Id, as derived from (P106.5) in
+Lemma 106B. Thus the complete diagonal block D_i is the self-adjoint
+operator with edge scalar
+
+    D_i=[(2r+1)(A-1)-(r+2)c]/[2(r^2-1)].          (P106.7)
+
+The content satisfies c<=alpha_1-1<=A-1. Therefore
+
+    D_i >= (A-1)/[2(r+1)] Id >=0.                (P106.8)
+
+An existing spectator or physical V lowered by the positive-adjoint
+part is killed by the selected top projection. An existing W_j
+with j!=i can survive, yielding the off-diagonal blocks. For an
+orthonormal Y in H_X, the positive-adjoint component of the
+fundamental Casimir is -2 L_Y tensor Y, summed over Y. The same
+formula holds by the tensor coproduct on every existing factor.
+The identity K^*L_Y|_E=2tau_Y^* in (P106.4), with the projection
+factor 1/kappa, gives exactly -4/kappa times the mixed-bank
+ off-diagonal block.
+
+More explicitly define
+
+    Gamma_tau:A_h(E) tensor X -> E^(tensor h) tensor H_X^*,
+
+by inserting tau_Y(x) into the omitted E slot and Y^* into the
+common H_X^* slot, then summing over orthonormal Y. Its Gram
+has diagonal d_tau Id by (P106.4). We have consequently derived
+on Q the whole selected projection matrix
+
+    M=diag(D_i)+(4d_tau/kappa)Id
+                                  -(4/kappa)Gamma_tau^*Gamma_tau
+     =diag(D_i)+(2r+1)/2 Id
+                                  -(4/kappa)Gamma_tau^*Gamma_tau.
+                                                        (P106.9)
+
+The tensor factors R and X^p and the root Hom are understood in
+this equation. Both the diagonal and all off-diagonal blocks have
+been accounted for; an upper-adjoint term cannot survive at the
+source's maximal grade.
+
+There is an exact factorization, not a rank estimate. Define the
+GL(X)-equivariant contraction
+
+    beta:E^* tensor X -> H_X^*,
+    beta(e^* tensor x)(Y)=e^*(tau_Y(x)).
+
+Then
+
+    Gamma_tau=(Id tensor beta)(Gamma_h(E) tensor Id_X).
+                                                        (P106.10)
+
+Indeed expanding the E coevaluation and applying beta inserts
+sum_e e e^*(tau_Y(x))=tau_Y(x) at the omitted position. Thus
+Gamma_tau kills Q_bank. Combining (P106.8)--(P106.10), for every
+q in Q_bank one obtains
+
+    <q,Mq> >= [(A-1)/(2(r+1))+(2r+1)/2]||q||^2.  (P106.11)
+
+The source degree is A=deg R+3(h-1)+p+1>=1, and the last scalar
+is strictly positive. Hence M, and therefore the actual Phi, is
+injective on Q_bank. The range of Phi lies in the actual quartet
+root Hom space of dimension B4. Taking dimensions proves (P106.6).
+No preservation of Q_bank by the diagonal is required: the strictly
+positive quadratic form suffices for injectivity. QED.
+
+**Proposition 106D (all-rank middle loss paid only by pairs and quartet).**
+In the same actual six-box setting, let K_mid be the kernel dimension
+of the whole W-with-three-V insertion family, with its two Specht
+channels. Put
+
+    T_mid=[S_alpha]R E^(tensor(h-1)) X^(tensor(l-3)),
+    U_mid=[S_alpha]R E^(tensor(h-2)) X^(tensor l),
+    P_mid=binomial(h,2)U_mid.
+
+Absent sources and pairs are zero. Then (P106.1) holds for every
+r>=2,h,l and arbitrary actual root and spectators.
+
+**Proof.** The all-backgrounds-top/three-negative-V projection of
+the actual insertion map is Gamma_h(E) on each of the two independent
+[2,1] channels, as in Lemma 105E. Its full kernel is therefore
+contained in the root Hom from ker Gamma_h(E) tensored with the
+marked-triple source D_(2,1)(l,X). Forgetting the S_l action, that
+last source consists of 2binomial(l,3) copies of X^(tensor(l-3)).
+Thus, when l>=3,
+
+    K_mid <= 2binomial(l,3) B_Gamma,
+    B_Gamma <= (h-d)T_mid when h>d.              (P106.12)
+
+The second bound is Lemma 106A tensored with R and X^(l-3) and
+then passed through the exact GL root Hom functor. If h<=d, the
+bank and actual kernel are zero. The source is also zero for l<3.
+These facts use only a necessary all-top projection of an actual
+relation; no equality of the full harmonic kernel is assumed.
+
+Schur--Weyl on X^(tensor 3) gives
+X^3=Sym^3 X+2E+Lambda^3 X, with unavailable summands zero.
+Consequently U_mid>=2T_mid whenever h>=2,l>=3, so
+
+    2P_mid=h(h-1)U_mid>=2h(h-1)T_mid.             (P106.13)
+
+Assume a nonzero kernel. Then h>d>=2. At l=3, (P106.12) and
+(P106.13) immediately give K_mid<=2P_mid. No quartet exists.
+At l>=6, the exact ratio
+
+    3binomial(l,4)/binomial(l,3)=3(l-3)/4>=2
+
+and Lemma 106C give K_mid<=3binomial(l,4)B4. At l=4 or 5,
+
+    2binomial(l,3)-3binomial(l,4)=5.
+
+Therefore (P106.6) and (P106.12) imply
+
+    K_mid <=3binomial(l,4)B4+5B_Gamma
+           <=3binomial(l,4)B4+5(h-d)T_mid.
+
+The last coefficient is paid by (P106.13), because
+
+    2h(h-1)-5(h-d)
+      >=2h^2-7h+10
+       =2(h-7/4)^2+31/8>0.
+
+This proves (P106.1) in all cases. In particular the payment spends
+neither B2 nor any six-V term, and it has no count cap or root-wall
+hypothesis. Every quartet here is the actual moment of the same
+root and the same remaining backgrounds. QED.
+
+**Theorem 106E (the cubic-background six-box sector in every symplectic rank).**
+Let G be a compact connected group of type C_r, r>=1. Take an
+actual atomic tuple with arbitrary root alpha and nontrivial backgrounds
+whose labels are V=(1), any available cubic (3),(2,1),(1,1,1), or
+arbitrary labels of box degree at least four. Suppose all defining
+backgrounds have a common sign; their absence is allowed. Every
+other sign, count and label is unrestricted. Then original Q3 holds
+whenever
+
+    |alpha|>=D-6.                                (P106.14)
+
+There is no middle-cubic count bound, root-row condition or tuple-length
+bound. The conclusion includes all actual descending tuples on every
+central quotient.
+
+**Proof.** At r=1 the stronger Theorem 101F already supplies the
+statement. At r>=2, use Theorem 100D for the four-box region,
+central -I for odd total degree, and variable exchange for odd
+minus count. A trivial root leaves background degree <=6 and is
+Lemma 101A. Thus only a nontrivial root at even-minus gap six remains.
+Trivial background factors have their original factor two or zero.
+
+First give each cubic family a common sign s_gamma. Let v be the
+common defining sign, l its count, and L_j=binomial(l,j). Denote
+its positive removed moments by B2=N_(V^2), B4=N_(V^4), T6=T_(V^6).
+For each cubic gamma let h_gamma be its count, f_gamma its Specht
+dimension, T_gamma=T_(gamma V^3), P_gamma=binomial(h_gamma,2)
+T_(gamma^2), and S_gamma=f_gamma h_gamma L_3 T_gamma.
+A background of degree >=4 cannot belong to a nonzero invariant
+complement of degree <=6: the total degree of its other partners
+is strictly smaller than its own, and their tensor product cannot
+contain its dual. The exact original formula (P101.2) is therefore
+
+    Phi_G/2=M+L_2B2+3L_4B4+sum_gamma P_gamma
+                       +v sum_gamma s_gamma S_gamma+k6_r L_6T6.
+                                                        (P106.15)
+
+Lemma 105E gives one joint image bound, including the middle family,
+and the mutually independent equal-cubic pair images:
+
+    M>=sum_gamma S_gamma-sum_gamma K_gamma
+                                      +sum_gamma P_gamma.
+
+Since each 1+v s_gamma is nonnegative, substitution gives
+
+    Phi_G/2>=L_2B2+3L_4B4+2sum_gamma P_gamma
+                                   +k6_r L_6T6-sum_gamma K_gamma.
+                                                        (P106.16)
+
+Use Proposition 103E for the row loss, Proposition 104C for the
+available column loss, and Proposition 106D for the middle loss.
+Each uses exactly these actual roots and keeps every other cubic
+and high-degree factor as a spectator. With theta=0 for row count
+<=1 and theta=(h_row-1)/h_row otherwise, their payments are
+
+    K_row <=2P_row+5L_6T6+theta L_2B2,
+    K_col <=2P_col+5L_6T6                 (r>=3),
+    K_mid <=2P_mid+3L_4B4.
+
+Zero-loss and unavailable-family cases satisfy these relaxed bounds.
+These are distinct pair channels; only the middle uses the quartet,
+and only the row uses B2. At r>=3, k6_r=15, so (P106.16) yields
+
+    Phi_G/2>=(1-theta)L_2B2+5L_6T6>=0.            (P106.17)
+
+At r=2 there is no column cubic and k6_r=14; the same calculation
+leaves nine L_6T6 units. All these quantities are actual nonnegative
+multiplicities. This proves the common-cubic-sign case at all counts,
+including l<3 and absent families by the stated zero conventions.
+
+For arbitrary signs within each cubic type, use strong induction
+on tuple length under Proposition 41A's opposite-sign fusion. An
+opposite-sign equal cubic pair produces its square difference, a
+finite nonnegative integer combination of actual character differences
+with even degrees 0,2,4,6. Degree zero contributes zero. If the new
+label has degree <=4, the background degree becomes
+D'=D-6+|beta| and the unchanged root satisfies |alpha|>=D'-4;
+Theorem 100D supplies that term. Degree six gives an allowed higher
+spectator, preserves the common defining sign and the gap-six
+condition, and decreases tuple length. Apply induction. There is
+no middle-count condition to retain. The original root, minus parity
+and normalization are unchanged. Finally pull back descending labels
+to the simply connected cover; normalized Haar pushforward preserves
+the exact original double integral. This proves the quotient statement.
+QED.
+
+**Original-consumer return and next hard supplier.** Proposition 106D
+supplies precisely the previously unpaid middle kernel at every
+higher-rank count. Theorem 106E consumes it together with the existing
+row/column suppliers in (P101.2). Thus the rank>=3 middle-count
+restriction in Theorem 105F is removed for the full cubic-background
+six-box sector. The Casimir construction supplies new positive
+representation-space evidence, rather than reducing the requested
+bound or expanding a finite certificate cutoff.
+
+The full central positive-definite-cone theorem remains active and
+unproved. The next reached six-box consumer includes H/C degree-two
+backgrounds and all their mixed terms in (P101.2). Proposition 106D
+already permits those as spectators, but the joint mixed insertion
+relations and their additional negative cuts are not paid by Theorem
+106E. The next direct construction to test is the joint insertion
+map into the actual moment for the gamma-Z-V channels, Z=H,C,
+together with its projections at the marked cubic and degree-two
+positions. It must be consumed simultaneously with gamma-V^3,
+Z-V^2, degree-two triangles and the mixed V^2/V^4 channels, retaining
+exactly the available coefficients in (P101.2). The middle quartet
+has already been spent and cannot be reused for another family.
+Opposite defining signs introduce H/C by unchanged-gap fusion, so
+that mixed comparison is also the missing return for removing the
+common-defining-sign hypothesis. Larger gaps and other Lie types
+remain obligations of the unchanged full goal.
+
+**Remark 106F (raising-action terminology in the Casimir projection).**
+The Casimir component killed on a maximal-grade source is the term
+with upper symmetric *action* R_Y; its adjoint output has negative
+grade. The positive-grade adjoint output has lowering action L_Y
+and is retained in (P106.9), including its off-diagonal blocks.
+
+**Proof.** The invariant dual pairing couples the upper symmetric
+Lie block with the lower symmetric adjoint block and conversely.
+The upper block kills X and raises X^* into X. It therefore kills
+every source top tensor, whereas the lower block need not do so.
+This fixes the interpretation of the final matrix sentence in
+Lemma 106C and agrees directly with (P106.5). QED.
+
+## 107. Mixed cubic-degree-two cuts have independent images; the positive-H/C six-box sector
+
+The next original consumer is (P101.2) with actual H/C degree-two
+backgrounds. Its gamma-Z-V terms have a particularly useful actual
+projection: the marked cubic is at grade one, the marked degree-two
+factor at grade zero, and the marked V is negative. All three are
+below their top grades. This isolates every marked mixed triple
+from all cubic star and equal-cubic-pair images. The mixed negative
+cuts can therefore be supplied in every rank and at arbitrary counts,
+without a relation payment. As an immediate original application,
+the full six-box sector with positive signs on H/C is supplied.
+
+**Matched demand sheet.** Write h_gamma,h_Z,l for background counts,
+with Z=H,C and eta_(gamma,Z) as in Lemma 101B. The original mixed
+coefficient, at common defining and cubic signs, has magnitude
+
+    R_(gamma,Z)=eta_(gamma,Z) l h_gamma h_Z T_(gamma Z V).
+
+Its source removes exactly six boxes, so its actual root Hom is
+extremal. The consumer requires these positive image dimensions in
+the same M that already contains the cubic-star and equal-cubic-pair
+images. An estimate for M separately cannot be added to that earlier
+bound. The supplier must prove independence of the combined actual
+map, uniformly in every rank, root, count and spectator. No new
+positive moment or quartet reserve is imposed. The first consuming
+family permits all H/C counts but gives those backgrounds plus signs;
+all its other degree-two complementary channels are then nonnegative.
+
+**Independent self-double-check immediately before recording.**
+
+1. Constructed the actual joint insertion on the first mixed rank-two
+   instance: root (2,1), one (2,1) background, one H and four V's.
+   The cubic-with-three-V sources and mixed cubic-H-V sources each
+   had dimension and rank eight. Their exact joint Gram had rank
+   sixteen, with zero kernel. The calculation used the harmonic
+   projection P of Lemma 106B, symplectic coevaluations, and actual
+   source embeddings into H tensor V and V^(tensor 3), not free
+   graph tensors. The two source families had respectively 864 and
+   608 nonzero raw tensor coefficients per column.
+2. Re-derived the isolating circle grades. A mixed source is at its
+   total maximal grade A. The inserted grades 1,0,-1 sum to zero,
+   hence produce the root grade A after a six-box removal. Another
+   source cannot lower any of those same three marked positions
+   unless it inserts at the identical triple.
+3. Checked all four nonzero coupling types explicitly. At ranks two
+   and three the squared norms of the off-diagonal tensor images
+   for (3)-H-V, (2,1)-H-V and (2,1)-C-V were respectively 4/3,1/2,2.
+   At rank three the primitive (1,1,1)-C-V image had squared norm
+   2/3. The coefficient patterns have no symplectic contractions,
+   so the same nonzero words prove every available higher-rank case.
+4. Rechecked disjointness from the existing cubic-star and equal-pair
+   images: all their degree-two backgrounds are source factors and
+   therefore top at root grade A. The selected Z grade zero kills
+   those images, independently of their internal cubic kernels.
+5. Independently summed every original complementary cut on the first
+   mixed instance with root and cubic signs minus and all other
+   signs plus. The actual moments were M=130,B2=15,B4=2,N_(H V^2)=4.
+   The full cut sum gave Phi/2=240, agreeing with (P101.2), including
+   both negative mixed and cubic costs, each equal to eight.
+6. Replayed (P101.2) symbolically for all counts with H/C plus signs.
+   The new mixed dimensions cancel their possible negative cuts.
+   Every remaining degree-two cut is nonnegative. The old cubic
+   kernel payments use the same roots and retain H/C as spectators,
+   so they spend exactly the distinct budgets of Theorem 106E.
+7. Rechecked cubic sign fusion. A new degree-two or degree-four minus
+   background moves to gap <=4 and is supplied by Theorem 100D;
+   only degree six needs induction, and that replacement retains all
+   original H/C plus signs. Actual quotient descent is preserved.
+
+**Lemma 107A (a nonzero three-position middle coefficient).**
+At every rank where eta_(gamma,Z)=1, with r>=2 and Z=H,C, the
+unique actual invariant in V_gamma tensor Z tensor V has nonzero
+projection onto circle grades
+
+    (gamma grade one, Z grade zero, V grade minus one). (P107.1)
+
+**Proof.** The invariant multiplicity is one by Lemma 101B.
+It suffices to construct a nonzero component of an actual coupling
+Z tensor V->V_gamma on Z_0 tensor X, with output in gamma_1.
+Dual coevaluation turns that component into exactly (P107.1).
+The four possible couplings and nonzero tensors are as follows.
+
+For gamma=(3), Z=H, use complete symmetrization into Sym^3 V.
+Choose a!=b and apply it to sym(e_a,f_b) tensor e_a. Its image
+is a nonzero multiple of e_a^2 f_b. This representation needs no
+trace removal.
+
+For gamma=(2,1), Z=H, use Lemma 106B's actual P on
+sym(e_a,f_b) tensor e_a, with a!=b. Its Young image is
+
+    (e_a tensor f_b tensor e_a
+                 -e_a tensor e_a tensor f_b)/2.
+
+It is nonzero and every symplectic contraction is zero since a!=b.
+Thus the actual harmonic projection leaves this image intact.
+
+For gamma=(2,1), Z=C, the primitive alternating square contains
+ e_a wedge f_b at a!=b. Apply the actual middle projection P to
+ e_a tensor (e_a tensor f_b-f_b tensor e_a). It is already
+alternating in the last pair, its complete antisymmetrization is
+zero because e_a is repeated, and all symplectic contractions
+vanish. Its nonzero Young image is therefore this same tensor.
+
+For gamma=(1,1,1), Z=C, the label requires r>=3. Choose distinct
+ a,b,c. The primitive alternating cube projection of
+ e_c tensor (e_a tensor f_b-f_b tensor e_a) is a nonzero multiple
+of e_c wedge e_a wedge f_b. It is already primitive, since b is
+different from both a and c. It is a grade-one tensor in the actual
+primitive cubic. These exhaust eta=1 and prove (P107.1). QED.
+
+**Proposition 107B (all mixed cubic-Z-V images are independent of the cubic images).**
+At actual gap six A=D-6, allow arbitrary counts and signs of all
+backgrounds and arbitrary actual spectators. Let J_cubic be the
+combined cubic-with-three-V insertion from Lemma 105E, with actual
+individual kernel dimensions K_gamma. Retain the independent positive
+equal-cubic-pair images of that lemma. For every triple of positions
+with labels gamma,Z,V and eta_(gamma,Z)=1, insert its actual invariant
+into the root Hom remaining after removing those three factors.
+The full mixed insertion is injective and its image is disjoint from
+the combined cubic-star and equal-cubic-pair images. In particular,
+with L_3=binomial(l,3), the single actual full root moment obeys
+
+    M >= sum_gamma f_gamma h_gamma L_3 T_(gamma V^3)
+           -sum_gamma K_gamma+sum_gamma P_gamma
+           +l sum_(gamma,Z) eta_(gamma,Z)h_gamma h_Z T_(gamma Z V).
+                                                        (P107.2)
+
+Here P_gamma=binomial(h_gamma,2)T_(gamma^2), and every displayed
+T is an actual extremal root moment. Signs do not enter this image
+statement. It is asserted at r>=2; rank one uses Theorem 101F.
+
+**Proof.** Each mixed source removes degree 3+2+1=6, leaving
+background degree A. Its actual root Hom restricts isomorphically
+to the top GL source by Lemmas 93H and 102C. Every unmarked factor
+is therefore at its individual maximal grade on the root top.
+
+Fix positions i,j,k for gamma,Z,V. Project the full target onto
+ gamma_i at grade one, Z_j at grade zero and V_k at grade minus
+one, with all other factors top. The insertion at that same triple
+is its source top map tensored with Lemma 107A's fixed nonzero
+invariant component. Tensoring with a nonzero vector is injective.
+An insertion at a different triple leaves at least one of i,j,k
+as an unmarked source factor, which stays top; its projection is
+zero. Thus the projected blocks isolate and inject every mixed
+source separately, without a bank or a count restriction.
+
+A cubic-with-three-V source also has degree A, but inserts no
+degree-two factor. Every Z_j in it is at top grade two. It vanishes
+on the selected grade-zero Z projection. The same holds for every
+equal-cubic-pair source, which removes exactly six boxes and has
+all Z's at their top grades. Hence a joint relation first forces
+every mixed source to vanish by the isolating projections, and then
+reduces to the previous joint cubic relation. This proves the claimed
+independence in the one actual full Hom space.
+
+There are l h_gamma h_Z sources for a given allowed (gamma,Z),
+each of dimension T_(gamma Z V). Add their dimensions to the
+combined cubic source minus its actual kernels and the independent
+pair images from Lemma 105E. This is (P107.2), with no separate
+bounds on M added together. QED.
+
+**Theorem 107C (the entire positive-H/C cubic six-box sector, all symplectic ranks).**
+Let G be a compact connected type C_r group, r>=1. Take an actual
+atomic tuple with arbitrary distinguished root alpha. Its nontrivial
+backgrounds may have any labels: V=(1), H=(2), available C=(1,1),
+any available cubic, or any label of box degree at least four.
+Require only that all V backgrounds have a common sign and every
+H/C background has sign plus. All other signs, labels and counts
+are unrestricted, and any of these families may be absent. Then
+original Q3 is nonnegative whenever
+
+    |alpha|>=D-6.                                (P107.3)
+
+There is no root-row, middle-count, degree-two-count or tuple-length
+bound. All actual descending tuples on central quotients are included.
+
+**Proof.** Rank one is already supplied by Theorem 101F, including
+arbitrary degree-two signs. At r>=2 use Theorem 100D for gap <=4,
+Lemma 101A for a trivial root, and the original odd-sign and odd-total
+zeros. Trivial backgrounds have their original factor two or zero.
+Only a nontrivial even-minus root at gap six remains.
+
+First suppose that each cubic family has a common sign s_gamma;
+let v be the common V sign. With H/C plus signs,
+S_Z=h_Z,Q_Z=binomial(h_Z,2),R_Z=binomial(h_Z,3). The defining
+even-subset coefficients are L_2,L_4,L_6. Every term of (P101.2)
+involving only degree-two backgrounds and an even number of V's
+is consequently nonnegative. Degree-at-least-four spectators enter
+no nonzero complementary invariant of degree <=6, by the degree
+argument of Theorem 106E. Set
+
+    S_gamma=f_gamma h_gamma L_3T_(gamma V^3),
+    R_(gamma,Z)=eta_(gamma,Z)l h_gamma h_Z T_(gamma Z V).
+
+The exact original expression can thus be written
+
+    Phi_G/2=M+L_2B2+3L_4B4+sum_gamma P_gamma+k6_r L_6T6
+                 +v sum_gamma s_gamma S_gamma
+                 +v sum_(gamma,Z)s_gamma R_(gamma,Z)+P_Z,
+                                                        (P107.4)
+
+where P_Z is the sum of the remaining nonnegative degree-two terms
+of (P101.2), with their actual constants and moments. No term has
+been counted twice: gamma-Z-V appears only in the mixed sum.
+Apply Proposition 107B in this same M. Each S_gamma and each
+R_(gamma,Z) now has coefficient 1+v s_gamma>=0. Therefore
+
+    Phi_G/2>=L_2B2+3L_4B4+2sum_gamma P_gamma
+                              +k6_r L_6T6-sum_gamma K_gamma+P_Z.
+
+Propositions 103E,104C,106D apply with every H/C factor retained
+as an arbitrary actual spectator. They spend exactly the same
+budgets as in Theorem 106E. The result at r>=3 is at least
+(1-theta)L_2B2+5L_6T6+P_Z, and at r=2 is at least
+(1-theta)L_2B2+9L_6T6+P_Z. Both are nonnegative. This supplies
+the common-cubic-sign original consumer at arbitrary H/C counts.
+
+For arbitrary signs within a cubic label, use strong induction on
+tuple length under Proposition 41A. Its opposite-sign pair square
+has actual nonnegative integer coefficients and even box degrees
+0,2,4,6. The degree-zero difference is zero. Degrees <=4 move
+to gap <=4, where Theorem 100D permits the new sign-minus degree-two
+background, irrespective of this theorem's plus-sign hypothesis.
+Degree six instead creates a higher spectator, retains all original
+H/C plus signs and the common defining sign, and decreases length.
+Apply induction to just those terms. Thus no minus H/C assumption
+has been silently propagated into this theorem. Normalized Haar
+pullback proves the conclusion for actual descending quotient labels.
+QED.
+
+**Original-consumer return.** Theorem 107C extends Theorem 106E to
+arbitrary H/C background counts with plus signs. The mixed gamma-Z-V
+negative cuts are now supplied by actual mutually independent images,
+not merely bounded on a finite list. Proposition 107B itself is
+sign-independent and remains available for the general six-box tuple.
+
+The next unresolved original comparison has minus-sign degree-two
+backgrounds. After consuming Proposition 107B, its remaining potentially
+negative terms are precisely the pure degree-two/V terms of (P101.2):
+Z-V^2, degree-two triangles, degree-two-pair/V^2 and Z-V^4. The
+natural source for a Z-V^2 insertion removes four boxes, leaving
+an actual root Hom at deficit two rather than an extremal source.
+Its domain is the actual raising kernel of Lemma 102C in that
+first-descendant source; its codomain is the same full root Hom M.
+The next joint test must retain those source descendants while
+projecting the inserted Z and marked V positions, and compare its
+relations with the already consumed cubic and mixed images. A
+maximal-grade-only source replacement would discard this required
+part of the actual construction. Opposite defining-sign fusion still
+introduces minus H/C at unchanged gap six, so this remaining payment
+also controls removal of the common-defining-sign condition. Larger
+gaps and other Lie types remain part of the active, unproved full
+central positive-definite-cone goal.
+
+## 108. Joint first-descendant reserves supply one minus degree-two background
+
+The selected hard consumer is (P101.2) with minus H/C backgrounds.
+This section supplies the whole one-H-background six-box consumer,
+with arbitrary cubic counts and signs, and the one-C-background
+consumer except for a precisely identified two-V rectangular-root
+leaf. The first-descendant source is retained as an actual root Hom.
+New actual module inclusions and Casimir images supply its positive
+reserve jointly with the cubic relations; the earlier quartet or row
+bank is not spent twice. The full all-group cone goal is unchanged.
+
+**Matched demand sheet.** Give the sole degree-two background Z a
+minus sign, put U=N_(Z V^2), B2=N_(V^2), B4=N_(V^4), and
+T_Z=T_(Z V^4). With common defining sign v and common signs s_gamma
+within each cubic type, Proposition 107B consumes both cubic and
+mixed gamma-Z-V cuts in the same M. Its original return is
+
+    Phi_G/2 >= L2(B2-U)+3L4B4+2 sum_gamma P_gamma
+                 +k6_r L6 T6-sum_gamma K_gamma-a_Z L4 T_Z,
+                                                        (P108.1)
+
+where L_j=binomial(l,j), a_H=6 at r>=2, and a_C=5 at r=2,
+6 at r>=3. The actual removed-degree-four U has deficit two; it
+cannot be replaced by an unrestricted top GL coefficient. For the
+row payment the needed reserve is B2-U, not B2. For the middle
+payment the quartet must cover its bank and the Z-V^4 negative
+cut simultaneously. Uniformity in every rank, arbitrary roots,
+spectator labels/counts and all defining counts is used directly
+in (P108.1). Only the C/l=2/positive-full-rectangle root remains
+outside the supplied return below; its exact consumer is listed last.
+
+**Independent self-double-check immediately before recording.**
+
+1. Rechecked the single-marked-middle Casimir matrix in (P106.7).
+   Its scalar on a top edge mu->alpha is strictly positive whenever
+   A>=2. The auxiliary root is the actual Sp module, and the source
+   has total degree A. This gives a new uniform injection into the
+   middle component of Z tensor V, for both Z=H,C.
+2. Rechecked all top-output patterns of the middle bank map. If all
+   middle backgrounds stay top, only an external factor can be
+   lowered. Each such term factors through Gamma_tau, which kills
+   the bank. Thus this whole projection is zero, not just the
+   specific projection used to prove (P106.6).
+3. Built the actual augmented quartet map at r=2,h_mid=3,l=5,
+   alpha=(5,5), for both H and C. Its bank source had dimension one,
+   its two replacement sources had dimension two each, and its exact
+   joint Gram had rank five. On the all-middle-top projection the
+   bank output was exactly zero and the replacement rank was four.
+   The full supports for H were 1152,224,224,1536,1536 raw tensors;
+   for C they were 768,256,256,1088,1088. No free GL replacement
+   was used for the actual Casimir or local Z tensor V embeddings.
+4. Independently checked the actual quartet dimensions in those
+   examples: B4=20 for H and 11 for C, each at least bank+2T=5.
+   These diagnose the construction; the all-rank joint proof follows.
+5. Re-derived the actual low constituents of Z tensor V^2 from
+   V^2=1+H+C and the triangle moments in Lemma 101B. They give
+   V^2 plus two H and one C for H, or V^2 plus one H and
+   (1+kappa_r)C for C. These are module inclusions, not dimension
+   comparisons at a chosen root. Their V^2 image has local maximal
+   circle grade two, while the row bank's selected Z/V/V pattern
+   has grade four and therefore kills that image.
+6. Replayed Proposition 103E using precisely that quotient projection.
+   Its supplier rank is at most B2-U, so its row loss now consumes
+   only a fraction of L2(B2-U). All unchanged Schur inequalities
+   retain their original coefficients and hypotheses.
+7. Verified the symplectic Weyl bialternant in Okada (2.5) and
+   re-derived m_alpha(C tensor V_alpha) by its signed-permutation
+   expansion. Exact independent signed-Weyl sums at ranks 2,3,4
+   matched the strict-adjacent-row-drop formula below, including
+   zero, rectangular, short-height and nonrectangular roots.
+8. Checked the l=3,4,5 and l>=6 payments separately. Symbolic
+   identities gave a nine-T surplus for H at l=4 and a nonnegative
+   (6-a_C)T surplus for C. At l>=5 the joint quartet covers both
+   its bank and 2T, leaving the row's B2-U reserve intact. The
+   count deficit at l=5 is still exactly five bank units, paid by
+   the doubled middle pair channel.
+9. Independently replayed the original cuts for three middle cubics,
+   one minus Z and five plus V's, root (5,5), with the cubics minus.
+   For H, (M,B2,U,B4,T)=(4926,324,33,20,2) and Phi/2=7998.
+   For C, the corresponding values are (2644,175,33,11,2) and
+   Phi/2=4149. Full complementary-cut summation agreed with (P108.1)'s
+   original source expression, including all signs and constants.
+10. Rechecked the exceptional A=1,l=5 tuple, fusion of arbitrary
+    cubic signs, zero and odd cases, all small l, and actual quotient
+    labels. The C/l=2 root exception is fixed under degree-six
+    cubic fusion; every lower even fusion term returns to Theorem 100D.
+
+**Primary input.** Only the Weyl character formula is used from
+[Okada, Intermediate symplectic characters, equation (2.5), printed page 6](https://escholarship.org/content/qt12m158c5/qt12m158c5.pdf#page=7).
+The C self-multiplicity, all representation-space injections and
+original Q3 comparisons below are derived here.
+
+**Lemma 108A (a fundamental replacement injects into the middle cubic).**
+Let r>=2, let S be a product of actual representations of total box
+degree A-1, and let |alpha|=A>=2. The root-Casimir construction
+with one marked auxiliary V gives an injection
+
+    Hom_Sp(V_alpha,S tensor V)
+                   ->Hom_Sp(V_alpha,S tensor V_(2,1)).  (P108.2)
+
+Consequently, for either Z=H or available C,
+
+    m_alpha(S tensor Z tensor V)
+                            >=2 m_alpha(S tensor V).   (P108.3)
+
+All labels, root rows and source multiplicities are unrestricted.
+
+**Proof.** The first source has total degree A and restricts
+isomorphically to its top GL source by Lemmas 93H and 102C. Apply
+C_alpha and couple H tensor V to the one new middle cubic using
+Lemma 106B's actual tau. Project onto S top and that middle
+cubic's K(X) grade-one component. This is the one-marked diagonal
+of Lemma 106C, with no other marked cubic in the construction.
+On a GL edge S_mu tensor X containing S_alpha its scalar is
+
+    [(2r+1)(A-1)-(r+2)content(alpha/mu)]/[2(r^2-1)]
+                                >=(A-1)/[2(r+1)]>0.
+
+All source GL edges have |mu|=A-1. The inherited compact-group
+metrics make this operator self-adjoint; a strictly positive lower
+bound gives injectivity of its projection and hence of the actual
+map. Existing middle factors inside S are spectators in this single
+marked construction and are killed when below top by this projection.
+This proves (P108.2) without a first-descendant surrogate.
+
+Actual degree-three decomposition gives
+
+    H tensor V=V+V_(3)+V_(2,1),
+    C tensor V=V+V_(2,1)+V_(1,1,1),
+
+with the last summand absent at r=2. Their top constituents follow
+from ordinary two-box Pieri and Lemma 93H; the V multiplicity is
+m_Z(V^2)=1, and degree three permits no other constituent degrees.
+Thus each contains V and the middle cubic once. Combining with
+(P108.2) proves (P108.3). QED.
+
+**Lemma 108B (the middle bank and the degree-two replacement coexist in the quartet).**
+At actual gap six let there be one distinguished Z=H,C, arbitrary
+spectators, h middle-cubic backgrounds and l defining backgrounds.
+Let B_Gamma be Lemma 106C's middle bank dimension, with Z retained
+as a spectator. Let T_Z=N_(Z V^4), an extremal actual moment when
+l>=4. Then
+
+    l>=5,A>=2:       B4>=B_Gamma+2T_Z;
+    l=4,Z=H,A>=1:    B4>=B_Gamma+T_Z.             (P108.4)
+
+For Z=C,l=4 one retains B4>=B_Gamma from Lemma 106C. No spectator,
+root-row or middle-count condition is imposed.
+
+**Proof.** First establish a useful stronger projection property
+of the actual bank map Phi in Lemma 106C. Its root-top output has
+zero projection onto the subspace where every marked middle cubic
+is at grade three. Indeed, its inserted cubic can stay top only
+from the positive-adjoint component, with the auxiliary V positive.
+Some source factor must then be lowered by two. If it is an existing
+middle cubic, the selected all-middle-top projection kills it.
+If it is an external spectator or physical V, that lowering operator
+commutes with each component of Gamma_tau on the omitted-middle
+bank and auxiliary X. By (P106.10), Gamma_tau kills the bank,
+so every such external-lowering term also vanishes. A middle-adjoint
+or auxiliary-lowering term instead makes the inserted cubic grade
+one and is killed by this projection. This exhausts the Casimir
+components. Hence
+
+    (all marked middle cubics top) Phi(Q_bank)=0.  (P108.5)
+
+The map is injective on Q_bank by Lemma 106C.
+
+For l>=5 put p=l-4>=1 and choose one physical V of the quartet
+target. Remove Z from that target. Its actual root Hom has dimension
+T_Z and total degree A. Write the resulting product as S tensor V
+with the chosen V last, so S has degree A-1. Construct two maps
+from two independent copies of this root Hom into the quartet:
+embed the chosen V in the V summand of Z tensor V for the first;
+for the second use (P108.2) and then embed its new middle cubic
+in the middle summand of Z tensor V. These are actual symplectic
+subrepresentations, with orthogonal local summands.
+
+Project all old middle cubics and all other source factors to top,
+and the local Z tensor V to grade one. In its local V summand the
+first map is its original top source; in its local middle summand,
+further projection onto K(X) gives the strictly positive diagonal
+of Lemma 108A on the second source. These two local projections
+are disjoint and each injects its T_Z-dimensional source. Therefore
+their joint projected rank is 2T_Z. By (P108.5) the bank image
+vanishes under the same old-middle-top projection. A joint relation
+first forces the two new sources to vanish, then the bank source
+by its own injectivity. Their dimensions add in the one actual
+quartet Hom, proving its first lower bound in (P108.4).
+
+For l=4,Z=H, the source after removing Z has total degree A and
+dimension T_Z. Apply the actual root-Casimir map directly to insert
+H. Project all original factors top and H to grade zero. Pairing
+that H middle with its GL scalar direction gives
+sum_a rho_alpha(E_aa)=A Id on the root top. Since A>=1, this
+projection injects the source. It has all old middle cubics top,
+so is independent of the bank by (P108.5). This gives the second
+bound. For C no adjoint insertion of this form is asserted; its
+unaugmented bank bound is exactly Lemma 106C. QED.
+
+**Lemma 108C (actual degree-two/V inclusions and first-descendant reserve).**
+At r>=2, for Z=H,C there are actual representation inclusions
+
+    V -> Z tensor V,
+    V^2 -> Z tensor V^2.
+
+More precisely, with kappa_r=0 at r=2 and 1 at r>=3,
+
+    H tensor V^2 contains V^2+2H+C,
+    C tensor V^2 contains V^2+H+(1+kappa_r)C.     (P108.6)
+
+Consequently B2>=U at every l>=3 in the one-Z six-box setting.
+At l=4 with a nontrivial root,
+
+    Z=H: B2-U>=2T_Z;
+    Z=C: B2-U>=T_Z.                              (P108.7)
+
+At l=2,Z=H one also has B2>=U.
+
+**Proof.** The first inclusion is in Lemma 108A's actual decomposition,
+which does not require A>=2 for the local representation identity.
+For the second use V^2=1+H+C. The actual multiplicities of 1,H,C
+in H tensor V^2 are respectively 1,3,2, by orthogonality and the
+HHH,HHC,HCC moments in Lemma 101B. Their multiplicities in
+C tensor V^2 are 1,2,2+kappa_r. Subtracting the one copy of
+1+H+C gives exactly (P108.6); every other actual constituent has
+nonnegative multiplicity. These are actual split module inclusions.
+The included V^2 has maximal circle grade two, whereas its Z/V/V
+target has maximal grade four.
+
+For l>=3 the B2 target still has l-2>=1 physical V's. Choose
+one of them and use V->Z tensor V to include the whole U target
+into it. This includes the actual root Hom U, even though that
+source is at deficit two. It proves B2>=U.
+
+At l=4, choose both remaining physical V's and use (P108.6).
+Let R_actual be the product after removing Z and all original V's;
+it has total degree A. Define B_H'=m_alpha(R_actual tensor H)
+and B_C'=m_alpha(R_actual tensor C). The two module inclusions give
+
+    B2-U>=2B_H'+B_C'               for Z=H,
+    B2-U>=B_H'+(1+kappa_r)B_C'     for Z=C.
+
+For every nontrivial root, its Lie action supplies a nonzero
+intertwiner V_alpha->H tensor V_alpha. Thus tensoring any product
+with H retains at least every existing root copy. This follows by
+decomposing into actual irreducibles, or by composing each root map
+with C_alpha; the root is irreducible and C_alpha is nonzero.
+In particular B_H'>=m_alpha(R_actual)=T_Z. All other moments are
+nonnegative, giving (P108.7). The same root-copy retention with H
+applied to the entire U target proves B2>=U at l=2,Z=H, where
+U=m_alpha(R_actual) and B2=m_alpha(R_actual tensor H). QED.
+
+**Proposition 108D (the row loss uses only the reserve B2-U).**
+In the one-Z six-box setting at r>=2,l>=4, Proposition 103E's
+row-cubic payment improves to
+
+    K_row <=2P_row+5L6T6+theta L2(B2-U),           (P108.8)
+
+where theta=0 if l<6 or the row count is <=1, and otherwise
+ theta=(h_row-1)/h_row. All other backgrounds, including the actual
+Z, remain unrestricted spectators. No new reserve is imposed.
+
+**Proof.** Lemma 108C gives B2>=U. A zero row kernel obeys the
+claimed bound by nonnegativity. If the kernel is nonzero, Lemma
+103A gives full root height and enough defining factors for Lemma
+103C. Let P_rowbank be precisely the rank in its selected projection:
+
+    P_rowbank=h_row [s_alpha]R_row E_row^(h_row-1)
+                      [p h_1^n-K1_(r,n)],
+    p=l-2, n=l-3.
+
+This is an actual positive image rank inside B2; R_row retains Z.
+Instead of bounding it only by B2, use the module inclusion
+V^2->Z tensor V^2 on two chosen physical V's of the B2 target.
+Its domain is exactly the actual U target. Denote its included root
+Hom by I_U; it has dimension U.
+
+Lemma 103C's selected projection has the marked row cubic at grade
+minus one, every other background including Z top, and all physical
+V's positive. Its local chosen Z/V/V has grade four. But the
+module image V^2 used for I_U has maximal local grade two. Thus
+this projection kills every I_U vector. The row-bank projection
+still has rank P_rowbank on the actual Casimir image. Its rank in
+the quotient by I_U is unchanged, giving
+
+    P_rowbank <= B2-U.                            (P108.9)
+
+In the proof of Proposition 103E the only use of B2 is to bound
+this exact rank after the unchanged Schur comparison (P103.9).
+Replacing that one bound by (P108.9) gives (P108.8), with identical
+pair and six-V terms. The small-l and small-row-count kernels are
+zero as stated in Proposition 103E. This proves the matched payment
+without adding separate estimates for B2 or replacing its actual
+first-descendant U. QED.
+
+**Lemma 108E (primitive-C self-multiplicity counts adjacent root drops).**
+For r>=2 and any dominant partition alpha padded to r rows,
+
+    m_alpha(C tensor V_alpha)
+                    =number of i<r with alpha_i>alpha_(i+1). (P108.10)
+
+Hence a nontrivial nonrectangular root has a positive C self-copy,
+and B2>=U at l=2,Z=C for every such root. The self-copy is zero
+exactly at full-height rectangles (a^r), a>=1, and at the trivial
+root.
+
+**Proof.** In torus coordinates the weights of C=primitive Lambda^2 V
+are +/-e_i+/-e_j for i<j, each once, and zero with multiplicity
+r-1. This follows directly by expanding Lambda^2(X+X^*) and
+removing its one scalar symplectic trace.
+
+Use the actual Weyl bialternant cited above, and put
+rho=(r,r-1,...,1), x=alpha+rho. Multiplying chi_alpha chi_C
+by the Weyl denominator and selecting the dominant alpha coefficient
+therefore gives
+
+    m_alpha(C tensor V_alpha)
+                   =sum_(w in W_Cr) sign(w) mult_C(x-wx).
+
+The identity permutation contributes r-1. The entries of x are
+strictly decreasing positive integers. A signed permutation with
+a negative output entry has some coordinate of x-wx at least two;
+it cannot be a nonzero C weight. A positive permutation giving a
+nonzero C weight changes exactly two coordinates by +/-1 and fixes
+all others, since the entries of x are distinct. It must transpose
+two entries at distance one. Their indices are adjacent, and their
+values differ by one precisely when alpha_i=alpha_(i+1).
+Each such adjacent transposition contributes minus one. There are
+no other terms. Subtracting these equalities from r-1 proves
+(P108.10).
+
+If alpha is not a full rectangle and is nontrivial, some adjacent
+row drop occurs before row r. Decompose the actual U target into
+irreducibles; every V_alpha copy contributes at least one new
+V_alpha copy after tensoring C. This proves B2>=U at l=2. Full
+positive rectangles have no such adjacent drop and hence zero
+self-multiplicity; no claim of B2>=U for them is made here. QED.
+
+**Proposition 108F (joint middle-kernel and sole Z-quartet payment).**
+At r>=2 in the one-Z setting, if l>=5 and A>=2, then
+
+    K_mid+a_Z L4 T_Z <=2P_mid+3L4B4.              (P108.11)
+
+At l=4,A>=1, one instead has the whole original reserve bound
+
+    6(B2-U)+3B4+2P_mid-K_mid-a_Z T_Z>=0.          (P108.12)
+
+At l=3, K_mid<=2P_mid and B2>=U. No defining-count or middle-count
+cutoff is substituted for these statements.
+
+**Proof.** For l>=6, (P106.12) and its binomial comparison give
+K_mid<=3L4B_Gamma. For l=5 they give
+K_mid<=3L4B_Gamma+5B_Gamma; Lemma 106A and (P106.13) give
+5B_Gamma<=2P_mid exactly as in Proposition 106D. Combining either
+case with B4>=B_Gamma+2T_Z from Lemma 108B and a_Z<=6 proves
+(P108.11). The kernel and Z cost are paid inside that one augmented
+quartet, not by two independent lower bounds on B4.
+
+At l=4, (P106.12) gives K_mid<=8B_Gamma. As in Proposition
+106D, 5B_Gamma<=2P_mid, so
+
+    K_mid<=3B_Gamma+2P_mid.
+
+For H use B4>=B_Gamma+T_Z and B2-U>=2T_Z from Lemmas 108B,C.
+The left side of (P108.12) is at least
+12T_Z+3T_Z-6T_Z=9T_Z>=0. For C use B4>=B_Gamma and
+B2-U>=T_Z; it is at least (6-a_C)T_Z>=0. Zero-bank and absent
+middle cases use the same nonnegative bounds, without negative
+spectator powers. At l=3 the quartet is absent; Proposition 106D
+gives K_mid<=2P_mid and Lemma 108C gives B2>=U. QED.
+
+**Theorem 108G (one degree-two background, apart from the rectangular C/two-V leaf).**
+Let G be a compact connected type C_r group, r>=1. Take an actual
+atomic tuple with arbitrary distinguished root alpha, exactly one
+nontrivial degree-two background Z=H or available C, any number
+l of defining backgrounds with a common sign, arbitrary available
+cubic backgrounds, and arbitrary backgrounds of box degree at least
+four. All signs other than the common defining sign are unrestricted.
+Then original Q3 holds whenever |alpha|>=D-6, except possibly when
+all of the following hold:
+
+    r>=2, Z=C with minus sign, l=2,
+    |alpha|=D-6, alpha=(a,...,a) with a>=1.        (P108.13)
+
+In particular the whole one-H-background consumer is supplied at
+every root and defining count, without a cubic count bound. For C,
+all defining counts other than two and all nonrectangular roots are
+supplied. Every actual descending central-quotient tuple is included.
+
+**Proof.** Rank one is Theorem 101F. At r>=2 a plus Z is Theorem
+107C. The four-box region is Theorem 100D; odd box gaps and odd
+minus counts give zero. A trivial root is Lemma 101A. Trivial
+background factors have their original effect. Only a nontrivial
+even-minus gap-six root with Z minus remains.
+
+First suppose each cubic family has a common sign s_gamma. Let
+v be the common defining sign, define S_gamma=f_gamma h_gamma L3
+T_(gamma V^3), and R_gamma=eta_(gamma,Z)l h_gamma T_(gamma Z V).
+There is just one degree-two factor, so every degree-two pair and
+triangle term in (P101.2) is absent. The exact original formula is
+
+    Phi_G/2=M+L2B2+3L4B4+sum_gamma P_gamma+k6_r L6T6
+                  -L2U-a_ZL4T_Z
+                  +v sum_gamma s_gamma S_gamma
+                  -v sum_gamma s_gamma R_gamma. (P108.14)
+
+A higher spectator participates in no complementary invariant of
+degree <=6, by the same degree argument as Theorem 106E. Terms
+with insufficient defining positions are zero. Proposition 107B
+adds both families and the positive pairs jointly inside M. The
+coefficients of their positive dimensions become respectively
+1+v s_gamma and 1-v s_gamma, both nonnegative. Drop just those
+nonnegative terms. This gives precisely (P108.1).
+
+If l>=6, A>=2 automatically because after removing Z and four V's
+the remaining degree is A and includes l-4>=2 V's. Proposition
+108F spends the quartet and the middle pairs jointly on K_mid and
+a_ZL4T_Z. Proposition 108D spends only the row pairs, five six-V
+units and a fraction theta of the genuine reserve L2(B2-U).
+Proposition 104C spends the column pairs and five six-V units when
+available. These are disjoint positive channels. The result is
+
+    Phi_G/2>=(1-theta)L2(B2-U)+5L6T6>=0           (r>=3),
+
+and the same expression with nine six-V units at r=2. The reserve
+is nonnegative by Lemma 108C. This supplies all large defining counts.
+
+At l=5 the row and column kernels are zero. If A>=2, (P108.11)
+consumes exactly the middle and Z-quartet costs in (P108.1), leaving
+only nonnegative terms. The only A=1 case has no other backgrounds:
+its root is V, its backgrounds are Z and five V's. Even minus
+parity forces the root sign to be opposite to the common V sign,
+because Z is minus. Fuse the root and one opposite-sign V by
+Proposition 41A. The remaining background degree is six, and every
+replacement root is supplied by Lemma 101A. The trivial replacement
+difference is zero. This exceptional small-root case requires no
+use of the A>=2 Casimir injection.
+
+At l=4, the row and column kernels are again zero, and (P108.12)
+is exactly the remaining negative part of (P108.1). At l=3 there
+is no quartet or six-V cut; Lemma 108C and the l=3 assertion of
+Proposition 108F give nonnegativity. At l=2 all cubic star sources
+are absent, so all K_gamma are zero. For H the adjoint-root copy
+retention in Lemma 108C gives B2>=U. For C with a nonrectangular
+nontrivial root, Lemma 108E gives the same bound. Thus (P108.1)
+is at least 2sum_gamma P_gamma>=0 in those cases. The positive
+full-rectangle C case is precisely the remaining leaf (P108.13).
+At l<=1 both the degree-two negative cut and the quartet are absent,
+and the mixed injection already makes every remaining term in
+(P108.1) nonnegative.
+
+For arbitrary cubic signs, use strong induction on tuple length
+under Proposition 41A. Opposite-sign equal cubics fuse into even
+degrees 0,2,4,6 with nonnegative actual coefficients. Degree zero
+vanishes. Every degree <=4 moves to the supplied four-box region,
+which permits extra minus degree-two backgrounds. Degree six only
+creates a higher spectator, preserves the unique original Z, the
+common defining sign and the unchanged root, and decreases length.
+The exclusion (P108.13) is fixed under these degree-six replacements;
+a tuple outside it stays outside it. Apply induction. Normalized
+Haar pullback proves the statement for all actual quotient labels.
+QED.
+
+**Original-consumer return and next matched leaf.** Theorem 108G
+supplies a previously unpaid minus-H/C consumer using two new actual
+suppliers: a simultaneous quartet bank/replacement injection and a
+row reserve in the quotient by the actual first-descendant U image.
+No unrestricted GL first layer was used in place of U. The old
+cubic bounds are consumed with their original constants, including
+every small defining count. The excluded single-C leaf is now only
+l=2 with a positive full-height rectangular root.
+
+For that leaf write alpha=(a^r), R_actual for the product of all
+cubic and higher backgrounds, |R|=ra+2, and
+
+    U=m_alpha(R_actual), B2=m_alpha(C tensor R_actual),
+    P_gamma=binomial(h_gamma,2)
+          [s_alpha]R_(top, minus two gamma factors) e_2 h_1^2.
+
+The e_2 is the existing C and h_1^2 the two defining factors;
+these pair sources are extremal. After the already supplied mixed
+injection, the exact residual of (P108.1) is
+
+    B2-U+2sum_gamma P_gamma.                      (P108.15)
+
+The matched next supplier is nonnegativity of (P108.15), not the
+stronger individual demand B2>=U. It is required for arbitrary ranks,
+positive a, all reached cubic/higher labels and counts, and normalized
+actual Hom dimensions. A rectangle has no C root self-copy by
+(P108.10), so that previous supplier cannot simply be reused.
+
+A natural actual map to test on this leaf uses partial Casimirs.
+For each background factor k of R_actual, apply the root Casimir,
+then the Lie-action Casimir on that one factor of the source, and
+project the two adjoint outputs through the actual unique
+H tensor H->C coupling (Lemma 101B). Its domain is
+Hom_Sp(V_alpha,R_actual), the genuine first-descendant raising kernel;
+its codomain is Hom_Sp(V_alpha,C tensor R_actual). The sum of
+these partial maps is the full root's two-Casimir C component and
+vanishes because m_alpha(C tensor V_alpha)=0. Individual partial
+maps and their joint Gram, rather than their zero sum, must therefore
+be tested against the doubled equal-cubic pair spaces in (P108.15).
+This defines the candidate and its exact target without asserting
+unproved injectivity.
+
+The first reached rectangular count example with four rank-two
+middle cubics, alpha=(5,5), has U=9,B2=47 and sum P_gamma=12,
+so (P108.15) is positive there. This diagnostic checks the actual
+residual; it is not a uniform proof of that supplier or of the
+partial-Casimir map. The latter construction is staged for the next
+hard leaf. More than one degree-two background, arbitrary defining
+signs, larger gaps and other Lie types remain within the active
+full central positive-definite-cone theorem, which is unproved.
+
+**Construction diagnostic 108H (a partial Casimir is nonzero although its total is zero).**
+The partial-Casimir candidate was tested on its smallest nonzero
+rectangular rank-two source, R_actual=W_(2,1) tensor W_(2,1),
+alpha=(2,2). The actual source Hom has dimension one. Either
+individual partial map is injective on it; their sum is zero.
+This is construction evidence, not a new Q3 closure: the corresponding
+single-C/two-V tuple is already within the six-input theorem.
+
+**Independent self-double-check immediately before recording.**
+The source was checked against all three symmetric raising matrices.
+The two actual partial Casimir contractions were computed separately;
+they were exact negatives. The first had 544 nonzero tensor coefficients
+and squared norm 384, with the normalization specified next.
+
+**Proof and exact normalization.** Use r=2, E(v)=v tensor
+(e_0 tensor e_1-e_1 tensor e_0), and K from Lemma 106B. The root-top
+source vector is
+
+    q=K(e_0) tensor E(e_1)-K(e_1) tensor E(e_0)
+             +E(e_0) tensor K(e_1)-E(e_1) tensor K(e_0).
+
+Its two displayed grade patterns span the GL det^2 source. The
+rational grade-one middle constituent has SL(2) spin three and cannot
+pair the top constituent's spin one to a singlet. Raising a diagonal
+Y=e_0^2 on the first pattern gives -E(e_0) tensor E(e_0), while
+on the second it gives the positive of that tensor, by (P106.4).
+GL equivariance gives the same kernel for all Y. Thus q spans
+exactly the actual raising kernel of Lemma 102C.
+
+Apply (P106.5)'s tensor coproduct to all six source letters, then
+the same coproduct to the first three letters for partial map one
+or the last three for partial map two. Couple the symmetric adjoint
+outputs through contraction of one index from each, antisymmetrize
+the remaining two by Id-(12), and remove their omega trace. More
+explicitly on sym(u,v) tensor sym(w,z), sum all four orientations
+omega(v,z)(u tensor w-w tensor u), then project primitive Lambda^2 V.
+This fixes the H tensor H->C normalization used in the computation.
+The existing W factors stay actual harmonic tensors because all
+their actions are Lie actions. Exact contraction gives norm squared
+384 for the first output and its negative for the second. Its nonzero
+norm proves injectivity on this one-dimensional source. The zero
+total also agrees with (P108.10) and the root's full two-Casimir map.
+No claim about the larger-dimensional partial-map kernel is made.
+QED.
+
+## 109. Factor retention closes the rectangular single-C first-descendant leaf
+
+**Selected package and actual consumer.** The locked target remains full
+central positive-definite Q3 for every compact connected simple-Lie-algebra
+group. This is direct closure of the remaining leaf (P108.15), not a
+replacement of that target. The leaf has r>=2, alpha=(a^r), a>=1,
+one minus C background, two defining backgrounds with a common sign,
+and cubic/higher product R of degree |alpha|+2. Its exact unpaid
+expression is B2-U+2 sum_gamma P_gamma, with U=m_alpha(R),
+B2=m_alpha(C tensor R), and the positive pair sources defined in
+Section 108. The required inequality is nonnegativity of that expression
+for every reached rank, label, spectator count and cubic sign. The
+supplier below proves B2>=U directly, without a partial-Casimir kernel
+estimate or an additional use of the pair budget.
+
+**Independent self-double-check immediately before recording.**
+Re-read the actual self-multiplicity proof in Lemma 108E and the exact
+grade/raising-kernel statements in Lemmas 102A,C. For a nonrectangular
+factor, an actual irreducible embedding into C tensor that factor tensors
+to an injection of the whole product. For an all-rectangular product,
+each nontrivial factor has last row at least one, so no reflected
+numerator contributes at its first descendant. The whole first grade
+is consequently q copies of det^B tensor Sym^2 X^*, whose highest
+weight (B,...,B,B-2) is not constant at r>=2. Thus it cannot contain
+the rectangular root's det^a top. This also handles a=0. Checked that
+all cases exhaust the first-descendant source and that no unrestricted
+GL multiplicity is equated with an actual Hom. The previously executed
+independent rank-two actual-character checks gave U=0,B2=3 for
+R=V_(2,2)^2,alpha=(3,3), and U=9,B2=47 for R=W_(2,1)^4,
+alpha=(5,5); these are diagnostics, not the uniform argument.
+Finally substituted B2>=U in the original (P108.15), then replayed
+opposite-sign cubic fusion: degree at most four is supplied by Theorem
+100D and degree six preserves the sole C and the two common-sign V's.
+
+**Lemma 109A (one nonrectangular factor retains every product constituent).**
+Let r>=2 and let R be a finite tensor product of actual type C_r
+irreducibles. If one nontrivial factor V_lambda is not a full-height
+rectangle, there is an actual injection
+
+    R -> C tensor R.                             (P109.1)
+
+In particular m_alpha(C tensor R)>=m_alpha(R) for every actual alpha,
+without a degree restriction.
+
+**Proof.** Lemma 108E gives
+m_lambda(C tensor V_lambda)=#{i<r:lambda_i>lambda_(i+1)}>=1,
+where lambda is padded to r rows. Choose a nonzero intertwiner
+V_lambda->C tensor V_lambda. Its kernel is an invariant subspace
+of an irreducible, so it is injective. Tensor it with all other
+factors and permute tensor factors to obtain (P109.1). The actual
+representation category is semisimple; hence each constituent's
+multiplicity is retained. QED.
+
+**Lemma 109B (all rectangles have no rectangular first-descendant root).**
+Let r>=2 and let R be a finite tensor product of actual irreducibles,
+all its nontrivial factors having labels (b_i^r), b_i>=1. Write D
+for their total box degree. For every alpha=(a^r), a>=0, satisfying
+|alpha|=D-2, one has
+
+    m_alpha(R)=0.                                (P109.2)
+
+**Proof.** Omit trivial factors, put q equal to the number of remaining
+factors and B=sum_i b_i, so D=rB. If q=0 the degree condition is
+impossible. Each top GL(X) module is det(X)^b_i. Lemma 102A at
+k=1 has no reflected term because b_i>=1, and gives its actual
+first-descendant module as det(X)^b_i tensor Sym^2 X^*.
+The grade D-2 of the product is obtained by lowering exactly one
+factor. It is therefore
+
+    R_(D-2) = (det(X)^B tensor Sym^2 X^*)^(direct-sum q).
+                                                        (P109.3)
+
+The rational GL(r) module inside parentheses is irreducible with
+highest weight (B,...,B,B-2). At r>=2 this is not a constant
+weight, whereas S_alpha(X)=det(X)^a has constant highest weight.
+Thus Hom_GL(r)(S_alpha,R_(D-2))=0. Restriction of an actual root
+intertwiner lands in that Hom by Lemma 102C, so its subspace of
+raising-kernel maps is also zero. This proves (P109.2), including
+the trivial root. QED.
+
+**Proposition 109C (uniform C retention at the first descendant).**
+For r>=2, any product R of actual irreducibles of total box degree D,
+and every actual alpha with |alpha|=D-2,
+
+    m_alpha(C tensor R)>=m_alpha(R).              (P109.4)
+
+**Proof.** If alpha is nontrivial and not a full-height rectangle,
+Lemma 108E gives a self-copy of V_alpha in C tensor V_alpha.
+Decompose R into actual irreducibles: each V_alpha copy contributes
+at least one V_alpha copy after tensoring C. This proves the bound
+in that case.
+
+Otherwise alpha is a full-height rectangle, with a>=0. If R has a
+nonrectangular nontrivial factor, apply Lemma 109A. If it has none,
+Lemma 109B gives m_alpha(R)=0, and the assertion follows from the
+nonnegative actual multiplicity on the left. These cases exhaust
+all actual roots and products. QED.
+
+**Theorem 109D (the entire one-degree-two-background six-box consumer).**
+Let G be any compact connected type C_r group, r>=1. Consider an
+actual atomic tuple with arbitrary distinguished root alpha, exactly
+one nontrivial degree-two background Z=H or available C, any number
+of defining backgrounds with a common sign, arbitrary available cubic
+backgrounds, and arbitrary backgrounds of box degree at least four.
+All other signs are unrestricted. Original Q3 holds whenever
+|alpha|>=D-6. Every actual descending central-quotient tuple is included.
+There is no rectangular-root exception or cubic-count bound.
+
+**Proof.** Theorem 108G already supplies all stated cases except
+(P108.13). For that remaining case first suppose each cubic type
+has a common sign. Its original consumer is exactly (P108.15).
+The product R in that expression has total degree |alpha|+2.
+Proposition 109C gives B2>=U with the same actual root, product,
+and normalized multiplicities. Thus
+
+    B2-U+2 sum_gamma P_gamma>=2 sum_gamma P_gamma>=0.
+                                                        (P109.5)
+
+No pair space was used for C retention, so all positive pair terms
+remain available with their original coefficients.
+
+For arbitrary cubic signs, induct on tuple length and fuse an
+opposite-sign equal cubic pair by Proposition 41A. Replacement
+degrees are 0,2,4,6 with nonnegative actual coefficients. The zero
+replacement difference vanishes. Degrees two and four reduce the
+box gap to at most four and are supplied by Theorem 100D, including
+any additional degree-two background. Degree six is a higher
+spectator, preserves the unique C, the two common-sign defining
+backgrounds and the original root, and decreases tuple length.
+Induction therefore supplies this remaining case for arbitrary
+cubic signs. All other cases retain Theorem 108G's original proof.
+Normalized Haar pullback gives the same result for descending
+quotient labels. QED.
+
+**Original-consumer return and scope.** The first unresolved application
+in (P108.15) is now supplied by (P109.4), and the exclusion in
+Theorem 108G is removed. The non-moving auxiliary-batch count resets
+because the original leaf is discharged. The partial-Casimir construction
+of diagnostic 108H remains valid diagnostic evidence; no uniform
+injectivity claim about that construction is used here. This is a
+structural result for arbitrary ranks and reached labels/counts.
+It does not supply multiple degree-two backgrounds, unrestricted
+defining sign patterns, larger box gaps or the other Lie types.
+Those remain within the unchanged active full-cone target.
+
+## 110. Independent H-C channels and joint quartet supply the two-distinct-degree-two consumer
+
+**Selected hard obligation and matched demand.** The previous goal turn
+was progress: Section 109 discharged (P108.15) in its original consumer.
+The locked package remains full central positive-definite Q3 for all
+compact connected simple-Lie-algebra groups. This section is direct
+closure of the next interaction in (P101.2): exactly one H and one C,
+arbitrary signs, arbitrary cubic/higher spectators, common defining
+sign, and actual gap six in every rank r>=2. No count or root cutoff
+is part of this demand.
+
+Let R_actual denote all cubic/higher backgrounds, l the defining
+count, s_H,s_C their degree-two signs, and A=|alpha|=D-6. Write
+L_j=binomial(l,j), e_r=5 at r=2 and 6 otherwise, and set
+
+    B2=m_alpha(R_actual H C V^(l-2)),
+    U_H=m_alpha(R_actual C V^(l-2)),
+    U_C=m_alpha(R_actual H V^(l-2)),
+    T_S=m_alpha(R_actual V^(l-2)),
+    B4=m_alpha(R_actual H C V^(l-4)),
+    T_H=m_alpha(R_actual C V^(l-4)),
+    T_C=m_alpha(R_actual H V^(l-4)).
+
+Sources with too few defining positions are absent. The U sources
+are genuine first-descendant actual Hom spaces; T_S,T_H,T_C are
+extremal actual sources when present. The new terms in the original
+consumer, beyond its cubic and mixed contributions, are exactly
+
+    L2(B2+s_H U_H+s_C U_C)+3L4B4
+      +2L2 s_H s_C T_S+L4(6s_H T_H+e_r s_C T_C). (P110.1)
+
+Uniformity in rank, actual root and all spectator labels/counts is
+used in (P110.1). Its constants and normalized Haar multiplicities
+are unchanged from (P101.2). The relevant task is a joint supply of
+these terms and the old cubic kernel losses; independent lower
+bounds on the same B2,B4 or M would not supply this demand.
+
+**Primary input checked.** Re-read the actual symplectic Weyl
+bialternant in [Okada, equation (2.5), printed page 6](https://escholarship.org/content/qt12m158c5/qt12m158c5.pdf#page=7).
+The one-box tensor rule used below is derived from that formula;
+no stable restriction or rank-truncated generator count is assumed.
+
+**Independent self-double-check immediately before recording.**
+
+1. Replayed all complementary cuts in (P101.2) with h=c=1. The
+   equal-Z pairs and degree-two triangles disappear; H-C-V^2 has
+   coefficient two and the two Z-V^4 constants are six and e_r.
+2. Checked the actual matrix couplings AB+BA and AB-BA in the
+   symplectic skew/self-adjoint matrix models of H,C. The first is
+   H-valued; the second is trace-free C-valued. With D=diag(1,-1,0,...)
+   their selected H-top/C-middle coefficients are nonzero for both
+   channels, and the negative V-pair channels are symmetric versus
+   alternating. Exact rank-two/three matrix evaluations gave trace
+   pairings two and four. The uniform block calculation is below.
+3. Checked each projection against the entire existing joint image:
+   cubic stars and equal-cubic pairs leave C top; gamma-H-V leaves
+   C top; gamma-C-V has at most one negative defining slot. Thus
+   the selected C-middle/two-negative-V projection kills them all.
+   It isolates each marked defining pair among the new images.
+4. Re-derived the actual decomposition of HC and its one-/two-V
+   descendants. Independent Laurent-character/Weyl-denominator checks
+   at r=2,3 gave the stated multiplicities. In particular rank two
+   has HC V degree-three multiplicities (2,3), not (2,4), and
+   HC V^2 degree-four multiplicities (3,7,4).
+5. Re-read (P108.5): the actual middle-bank image is zero on the
+   all-old-middle-top projection. The new local HC embeddings have
+   an injective projection there. Thus the augmented quartet is a
+   sum of independent images, not an addition of separate bounds.
+6. Checked the actual inclusion H direct-sum C -> HC and the
+   row-bank selected projection in Lemma 103C. Its HC local grade
+   four kills both included degree-two modules. The row reserve is
+   therefore exactly B2-U_H-U_C, which is nonnegative.
+7. Replayed all l branches with their original coefficients. At
+   rank two,l=5 the four sign remainders have nonnegative row/middle
+   coefficients (45,70),(55,40),(5,50),(55,100), after using the
+   extra H-C channel only for the both-minus case. At l=4, the
+   opposite-sign cases use only the available positive U channel;
+   the both-minus case uses T_S=T_H+T_C. The large-l comparison is
+   the exact ratio 3L4/L3=3(l-3)/4>=2.
+8. Independently summed every complementary cut on actual rank-two
+   reached tuples with three middle cubics, one H, one C, and four
+   or five defining factors. At root (6,5),l=4 the actual moments
+   were (M,B2,U_H,U_C,B4,T_H,T_C,T_S)=(6864,415,37,70,23,2,3,5).
+   At root (6,6),l=5 they were (8808,504,42,79,26,2,3,5).
+   With all middle signs minus and common V sign plus, direct sums
+   agreed with (P110.1) plus the original cubic/mixed terms for all
+   four H/C sign pairs. The Phi/2 values in sign order ++,-+,+-,--
+   were (9939,9471,9165,8937) and (15320,14310,13660,13050).
+   These diagnostics check consumption; the uniform proof follows.
+9. Checked trivial/odd cases, opposite-sign cubic fusion and actual
+   quotient descent. A degree-six fusion preserves the unique H,C;
+   lower even degrees return to Theorem 100D.
+
+**Lemma 110A (two H-C-V^2 channels have independent isolating projections).**
+At r>=2, the actual invariant space in H tensor C tensor V^2 has
+two channels. Both have nonzero projection onto
+
+    H grade two, C grade zero, both V's grade minus one,
+
+and their two defining slots are respectively symmetric and alternating.
+At an actual gap-six root, insertion of these invariants for all
+L2 marked defining pairs is injective on the direct sum of the two
+extremal root sources per pair. Its image is disjoint from the joint
+cubic-star, equal-cubic-pair and mixed gamma-Z-V images of Proposition
+107B. Consequently that same full moment satisfies
+
+    M>=sum_gamma S_gamma-sum_gamma K_gamma
+       +sum_gamma P_gamma+sum_(gamma,Z) R_(gamma,Z)+2L2T_S,
+                                                        (P110.2)
+
+where S_gamma=f_gamma h_gamma L3 T_(gamma V^3),
+R_(gamma,Z)=eta_(gamma,Z)l h_gamma T_(gamma Z V), and Z=H,C.
+
+**Proof.** Realize H as symplectic-skew-adjoint endomorphisms of V,
+and C as trace-free symplectic-self-adjoint endomorphisms. For
+A in H,B in C the equivariant maps
+
+    mu_H(A,B)=AB+BA,    mu_C(A,B)=AB-BA
+
+land in H and C respectively. The adjoint identities give the
+asserted symmetry types; the commutator has trace zero.
+For the decomposition V=X+X^*, take A with upper symmetric block Y
+and all other blocks zero, and B=diag(D,D^T), tr D=0. These are
+H_top and C_middle. The output upper blocks are
+
+    mu_H: YD^T+DY,       mu_C: YD^T-DY.
+
+Choose D=diag(1,-1,0,...). For Y=e_1 e_1^T the first output is
+2e_1 e_1^T. For Y=e_1 e_2^T+e_2 e_1^T the second is a nonzero
+skew matrix. Thus both selected maps are nonzero at every r>=2.
+Use the compact invariant Hermitian metrics to take their adjoints,
+and coevaluate through the respective H and C summands of V^2.
+The adjoints have nonzero projection onto H_top tensor C_middle
+from their grade-two inputs. Coevaluation pairs that input grade
+with the grade-minus-two H or C subspace of V^2. This constructs
+the claimed invariant components. The V slots are symmetric in the
+H channel and alternating in the C channel, so the two components
+are independent. Orthogonality gives m(H C V^2)=m(H H C)+m(H C C)=2
+by Lemma 101B, so these are precisely the two invariant channels.
+
+Removing H,C and the two marked V's removes six boxes. The source
+has degree A, hence on the root top all its factors are individually
+top by Lemmas 93H and 102C. Project the inserted output onto the
+stated H/C/V grades, leaving all other factors top. On that marked
+pair the projection is the source top map tensored with one of the
+two independent nonzero invariant components. It injects their
+direct sum. A different marked pair leaves at least one selected
+negative V unmarked and top, so its projection is zero.
+
+Cubic stars and equal-cubic-pair images have C top and vanish on
+this projection. A mixed gamma-H-V image also has C top. A mixed
+gamma-C-V image can have only its one marked V negative; all its
+unmarked V's are top, so it vanishes on two selected negative slots.
+Thus a joint relation first forces every new pair source to zero,
+and reduces to the old relation of Proposition 107B. Adding the
+new 2L2T_S dimensions in that one actual Hom proves (P110.2). QED.
+
+**Lemma 110B (the H-C first-descendant reserve retains both removed-Z sources).**
+For l>=2 put delta=B2-U_H-U_C. Then delta>=0. The row-cubic loss
+obeys the strengthened bound
+
+    K_row<=2P_row+5L6T6+theta L2 delta,           (P110.3)
+
+where theta is the same coefficient as in Proposition 108D.
+
+**Proof.** The actual local product has a split inclusion H+C -> HC.
+Its H,C multiplicities are m(H H C)=m(H C C)=1 by Lemma 101B.
+Tensoring it with R_actual V^(l-2) includes the independent root
+Hom spaces U_C,U_H in the actual B2 target. This proves delta>=0
+without replacing either first-descendant source by a GL top Hom.
+
+The included local H+C has maximal circle grade two. Lemma 103C's
+row-bank projection has both H and C at their top grades, local
+HC grade four, so it kills both included sources. Its image rank
+therefore obeys the quotient bound P_rowbank<=delta, exactly as
+in (P108.9). The unchanged Schur payment in Proposition 103E then
+gives (P110.3). For l<6 the row kernel is zero; the bound is used
+only when its sources exist. QED.
+
+**Lemma 110C (actual local multiplicities for the joint quartet).**
+At every r>=2 one has
+
+    HC=V_(3,1)+V_(2,1,1)+H+C,
+
+where the length-three label is absent at r=2. The degree-three
+constituents of HC V have multiplicities
+
+    r=2:    2V_(3)+3V_(2,1),
+    r>=3:   2V_(3)+4V_(2,1)+2V_(1,1,1).         (P110.4)
+
+At r=2 its degree-five constituents are V_(4,1)+V_(3,2), and
+the degree-four constituents of HC V^2 are
+
+    3V_(4)+7V_(3,1)+4V_(2,2).                   (P110.5)
+
+**Proof.** The HC top is ordinary h_2 e_2=s_(3,1)+s_(2,1,1)
+in the actual r-variable alphabet. Only degrees four,two,zero
+can occur. The degree-two multiplicities are exactly the two
+triangle moments above, and a scalar is absent because H!=C.
+This proves the first identity.
+
+For completeness derive the actual one-box rule from the checked
+Weyl bialternant. Put a=lambda+rho, with strictly decreasing positive
+integer entries. Multiplication by chi_V=sum_i(z_i+z_i^-1)
+turns its alternating numerator into the sum of alternating
+numerators with exponents a+e_i or a-e_i. If a changed exponent
+meets its neighbor or zero, that numerator vanishes. Otherwise
+the exponents remain strictly decreasing and positive: a unit
+change cannot cross a neighboring integer without first meeting it.
+Thus the nonzero terms are exactly lambda with one addable or
+removable box, within r rows, each with multiplicity one. This is
+an actual finite-rank rule, including zero-row boundaries.
+
+Apply it to the four HC summands. Removing from (3,1) gives
+(3),(2,1); removing from (2,1,1) gives (2,1),(1,1,1).
+Adding to H gives (3),(2,1), and adding to C gives (2,1),(1,1,1),
+with the latter absent at r=2. These are precisely (P110.4).
+At r=2 adding to (3,1) gives (4,1),(3,2); these are all degree-five
+constituents. Tensoring HC V once more with V, the degree-four
+terms come by removing from these degree-five labels and adding
+to its degree-three labels. The former give (4)+(3,1) and
+(3,1)+(2,2); the latter give two copies of (4)+(3,1) and three
+copies of (3,1)+(2,2). Their sums are (3,7,4), proving (P110.5).
+QED.
+
+**Lemma 110D (the middle bank and H-C replacements coexist in the quartet).**
+Let B_Gamma be Lemma 106C's middle bank dimension with H,C and
+all other factors retained as spectators. When no bank is present
+set it to zero. Then
+
+    l=4:                         B4>=B_Gamma+T_H+T_C;
+    r>=3,l>=5 or r=2,l>=6:       B4>=B_Gamma+2T_H+2T_C.
+                                                        (P110.6)
+
+At r=2,l=5 write
+
+    t_row=m_alpha(R_actual V_(3)),
+    t_mid=m_alpha(R_actual V_(2,1)).
+
+These are extremal, and
+
+    T_H=t_mid, T_C=t_row+t_mid, T_S=t_row+2t_mid,
+    B4>=B_Gamma+2t_row+3t_mid.                    (P110.7)
+
+**Proof.** Lemma 106C embeds the middle bank injectively in the
+actual quartet Hom. Its all-old-middle-top projection is zero by
+(P108.5), which permits arbitrary external spectators and hence
+permits both H and C here.
+
+At l=4 the actual local H+C inclusion in HC gives separate images
+of T_C,T_H. Their sources have total degree A, so restriction to
+all source factors top is injective. The H,C local summands are
+independent. In particular these images have an injective projection
+where every old middle cubic is top; that projection kills the bank.
+Their dimensions therefore add to B_Gamma.
+
+For l>=5 put n=l-4 and choose one local V. At r>=3 the top
+constituents of CV are middle+column and those of HV are row+middle.
+Only these degree-three constituents can contribute to T_H,T_C:
+a lower local degree would put the whole source below A. The
+multiplicities (2,4,2) in (P110.4) contain two separate copies of
+both sets of top constituents. Embed these actual irreducibles
+in separate local HC V summands, tensor R_actual V^(n-1), and
+restrict their sources to top. Their joint projected rank is
+2T_H+2T_C on the all-old-middle-top projection, independent of
+B_Gamma. This gives the second bound at r>=3.
+
+At r=2,n>=2 choose two local V's. Ordinary top multiplication gives
+
+    top_4(CV^2)=V_(3,1)+V_(2,2),
+    top_4(HV^2)=V_(4)+2V_(3,1)+V_(2,2).
+
+Twice their sum has multiplicities (2,6,4), contained in the
+actual degree-four multiplicities (3,7,4) of HC V^2. Choose
+separate actual local copies and tensor R_actual V^(n-2).
+Only the degree-four local sources contribute to T_H,T_C, and
+all source maps restrict injectively to top. Their images again
+have joint rank 2T_H+2T_C where all old middles are top and
+therefore coexist with the bank.
+
+Finally at r=2,l=5 the local CV top is just middle and the HV
+top is row+middle. This proves the first two equalities of
+(P110.7). The actual V^3 top is row+2middle; all its lower
+constituents have degree one and cannot reach A=deg R_actual+3.
+Thus T_S=t_row+2t_mid. The multiplicities (2,3) in (P110.4),
+embedded as actual local copies and detected where all old middles
+are top, give the last bound jointly with the bank. QED.
+
+**Proposition 110E (the entire signed residual is nonnegative).**
+At every r>=2 and nontrivial gap-six root in this one-H/one-C
+setting, the original Q3 expression is nonnegative for arbitrary
+H/C signs and common signs within each cubic family.
+
+**Proof.** Insert (P110.2) in the unchanged (P101.2). The original
+cubic-star and mixed coefficients become respectively 1+v s_gamma
+and 1+v s_gamma s_Z, hence are nonnegative. Drop those terms only.
+Using delta=B2-U_H-U_C when l>=2 leaves the exact lower bound
+
+    Phi_G/2>=L2[delta+(1+s_H)U_H+(1+s_C)U_C]
+      +3L4B4+2sum_gamma P_gamma+k6_r L6T6-sum_gamma K_gamma
+      +2L2(1+s_H s_C)T_S+L4(6s_H T_H+e_r s_C T_C).
+                                                        (P110.8)
+
+Terms without enough positions are absent. In particular the new
+H-C positive dimensions and the original mixed cut have been
+combined with their original coefficient two.
+
+For l>=4 the proof of Proposition 106D gives the strengthened
+middle bound K_mid<=3L4B_Gamma+2P_mid. At l>=6 this follows
+already from 2L3<=3L4; at l=4,5 its deficit is exactly 5B_Gamma
+and is covered by (P106.13), as in that proof. At l=3 use
+K_mid<=2P_mid; at l<=2 it is zero.
+
+First let l>=6. Pay the row by (P110.3), the column by Proposition
+104C, and the middle by the preceding bound. These use distinct
+pair channels, at most ten six-V units (only five at r=2), and
+only theta L2 delta from the two-V reserve. Apply (P110.6) in the
+same quartet. Its remaining signed Z cost is at least
+
+    L4[(6+6s_H)T_H+(6+e_r s_C)T_C]>=0,
+
+since e_r<=6. All added U and T_S terms in (P110.8) are
+nonnegative, and the untouched reserve is (1-theta)L2 delta.
+The remaining six-V coefficient is five at r>=3 or nine at r=2.
+This proves the large-l branch with no reused budget.
+
+At l=5 row and column kernels are zero. For r>=3 the same joint
+quartet bound and middle pairs pay the entire possible negative
+part; all remaining terms are nonnegative. For r=2 substitute
+(P110.7) after paying the bank and middle pairs. The signed
+quartet remainder is
+
+    5[(6+5s_C)t_row+(9+6s_H+5s_C)t_mid].
+
+For sign pairs -+,+-,++ these coefficients are respectively
+(55,40),(5,50),(55,100), all nonnegative. For -- they are
+(5,-10), but the additional H-C term is
+4L2T_S=40(t_row+2t_mid). Their sum is 45t_row+70t_mid>=0.
+The U reserve is still nonnegative. This supplies the smallest
+rank's exceptional local multiplicity without a source-count bound.
+
+At l=4, pay the middle kernel from 3B_Gamma+2P_mid and use the
+first line of (P110.6). The remaining quartet cost is
+
+    (3+6s_H)T_H+(3+e_r s_C)T_C.                 (P110.9)
+
+Here A=deg R_actual+2, so the scalar summand of V^2 cannot reach
+alpha, and T_S=T_H+T_C. If both signs are minus, the added
+4L2T_S=24(T_H+T_C) makes (P110.9) at least
+21T_H+(27-e_r)T_C>=0.
+
+For the opposite signs, (P108.6) and the same degree exclusion give
+
+    U_C>=2T_H+3T_C,
+    U_H>=(2+kappa_r)T_H+2T_C.
+
+If (s_H,s_C)=(-,+), the positive reserve in (P110.8) includes
+12U_C. Spend just 2U_C of it: its sum with (P110.9) is at least
+T_H+(9+e_r)T_C>=0. If (s_H,s_C)=(+,-), spend just 2U_H of
+its available 12U_H; the sum is at least
+(13+2kappa_r)T_H+(7-e_r)T_C>=0. The unused parts remain
+nonnegative. The ++ case is immediate from (P110.9).
+Thus all l=4 signs are supplied with their actual coefficients.
+
+At l=3 no quartet or six-V cut exists; row/column kernels vanish
+and the doubled middle pairs cover K_mid. The delta,U,T_S terms
+are nonnegative. At l=2 every cubic star kernel is zero and those
+same nonnegative terms suffice. At l<=1 the U,quartet and H-C-V^2
+terms are absent; all cubic star kernels are zero, and (P110.2)
+already covers all remaining negative mixed cuts. These branches
+exhaust l. QED.
+
+**Theorem 110F (the one-H/one-C six-box consumer, all signs and ranks).**
+Let G be any compact connected type C_r group, r>=2. Take an
+actual atomic tuple with arbitrary distinguished root alpha, exactly
+one H and one C background, any number of defining backgrounds
+with a common sign, arbitrary available cubic backgrounds and arbitrary
+backgrounds of box degree at least four. All other signs, labels and
+counts are unrestricted. Original Q3 holds whenever |alpha|>=D-6,
+including every actual descending central-quotient tuple.
+
+**Proof.** The four-box region is Theorem 100D. Odd box gaps or
+odd original minus count give zero. A trivial root in the remaining
+region has D<=6 and is supplied by Lemma 101A. Trivial backgrounds
+have their original factor two or zero. Thus the common-cubic-sign
+case at a nontrivial even-minus gap-six root is Proposition 110E.
+No higher spectator can belong to a nonzero complementary invariant
+of degree at most six: its other factors have total degree strictly
+smaller than its own actual label degree, as in Lemma 101C.
+
+For arbitrary cubic signs, strongly induct on tuple length using
+Proposition 41A on an opposite-sign equal cubic pair. Its replacements
+have nonnegative actual coefficients and degrees 0,2,4,6. The zero
+difference vanishes. Degrees two and four put the new tuple in the
+four-box region of Theorem 100D, with any additional degree-two
+background allowed. Degree six is a higher spectator preserving
+exactly one H, one C and all common defining signs, and decreases
+length. Induction supplies it. Normalized Haar pullback gives the
+same conclusion for actual quotient labels. QED.
+
+**Original-consumer return and next interaction.** The signed expression
+(P110.1) is now consumed inside the original (P101.2), simultaneously
+with the cubic relations. Theorem 110F closes the two-distinct-degree-two
+leaf for arbitrary ranks, roots, signs and cubic counts. The key new
+suppliers are independent H-C invariant images, a quotient reserve
+that retains both actual first-descendant sources, and an augmented
+quartet containing the middle bank and local replacements together.
+The prior historical ledger bytes are preserved. The non-moving
+auxiliary-batch count remains zero after this successful original return.
+
+The full-cone theorem remains active and unproved. The next interaction
+within the two-degree-two sector has two copies of the same degree-two
+label with minus signs. Opposite signs on that equal label fuse by
+Proposition 41A: a degree-four replacement is a higher spectator
+covered by Theorem 106E, and lower nontrivial replacements move to
+Theorem 100D. Both-plus signs are covered by Theorem 107C. Thus the
+remaining same-label sign pattern is precisely both-minus. Larger
+degree-two families, unrestricted defining signs, larger gaps and
+other Lie types remain part of the unchanged target.
+
+## 111. Two-copy retention and rank-two descendant comparison supply every two-degree-two six-box tuple
+
+**Selected hard obligation and demand.** The previous turn was progress:
+Theorem 110F consumed the one-H/one-C interaction in (P101.2).
+The locked target remains the full all-group central positive-definite
+Q3 theorem. The selected remaining two-degree-two consumer has two
+identical backgrounds Z=H or available C, both minus, common defining
+sign, and arbitrary cubic/higher spectators at A=|alpha|=D-6.
+Its uniform demand is the original signed comparison, not a cutoff
+in rank, root, count or label.
+
+Let R_actual contain all cubic/higher backgrounds, l the defining
+count, and L_j=binomial(l,j). Put
+
+    M=m_alpha(R_actual Z^2 V^l),
+    B2=m_alpha(R_actual Z^2 V^(l-2)),
+    U=m_alpha(R_actual Z V^(l-2)),
+    E=m_alpha(R_actual V^l),
+    B4=m_alpha(R_actual Z^2 V^(l-4)),
+    T_Z=m_alpha(R_actual Z V^(l-4)),
+    T_S=m_alpha(R_actual V^(l-2)).
+
+Insufficient defining positions mean absent sources. B2 has deficit
+four, U,E,B4 have deficit two, and T_Z,T_S are extremal. All are
+actual normalized root multiplicities. Write b_Z=3 for H, and
+2 or 3 for C at r=2 or r>=3; write a_Z=6 for H, and 5 or 6 for
+C at r=2 or r>=3. After the already joint cubic/mixed insertion
+of Proposition 107B, the exact required lower bound is
+
+    Phi_G/2>=L2(B2-2U)+E+3L4B4+2sum_gamma P_gamma
+       +k6_r L6T6-sum_gamma K_gamma
+       +b_Z L2T_S-2a_Z L4T_Z.                   (P111.1)
+
+The two negative Z-V^2 cuts have coefficient -2, the positive Z-pair
+cut has coefficient one, and the Z^2-V^2 and Z-V^4 coefficients
+are exactly those of (P101.2). Uniformity in every actual root,
+rank, label and spectator count is used here. Actual descendant
+spaces are retained throughout. This is direct construction and
+closure of this consumer, with no new certificate package.
+
+**Primary input reused.** The actual Weyl bialternant checked in Section
+110, [Okada equation (2.5), printed page 6](https://escholarship.org/content/qt12m158c5/qt12m158c5.pdf#page=7),
+is the input for the rank-two tensor graphs below. Its one-box
+consequence is already proved in Lemma 110C. Every other comparison
+below is derived from actual local modules or Lemma 102D's extraction.
+
+**Independent self-double-check immediately before recording.**
+
+1. Replayed (P101.2) at exactly two identical minus Z's. The
+   Z-pair moment E is positive, the Z-V^2 singleton sum is -2U,
+   the Z^2-V^2 cut has coefficient b_Z, and the Z-V^4 singleton
+   sum is -2a_ZT_Z. Proposition 107B leaves every star and mixed
+   coefficient nonnegative and doubles the cubic pair channels.
+2. Re-derived Z^2's actual top and degree-two/scalar constituents,
+   then applied Lemma 110C's one-box rule. Exact independent Weyl
+   coefficient checks at r=2,3,4 matched all displayed local
+   multiplicities. In particular Z^2 V contains two actual copies
+   of ZV, including its lower V constituent. Their maximum local
+   grade is three, whereas the row-bank selected target grade is five.
+3. Checked the quartet augmentation jointly with the actual middle
+   bank. The bank's all-old-middle-top projection vanishes by
+   (P108.5); the new local irreducible embeddings restrict injectively
+   there. The required four-copy multiplicities fit at every large
+   defining count, with the precise rank-two C/l=6 exception supplied
+   separately by its original positive Z-pair/V^2 cut.
+4. Replayed l=3,4,5,6 and larger l with their exact constants.
+   At l=5 the residual row/middle/column coefficients are
+   (15,60,45) for H, (45,60,15c-30) for C at r>=3 with c>=2,
+   and (35,20) for rank-two C. At rank-two C,l=6 they are
+   (75,120,45) on (4),(3,1),(2,2). All use only the original
+   b_Z L2T_S budget after bank payment.
+5. Derived the rank-two C tensor graph directly by alternating its
+   four nonzero short weights and its one zero weight. Independently
+   evaluated signed Weyl sums for the virtual K=C^2-2C+V^2+2.
+   Its only negative entries were -1 between adjacent rectangular
+   labels. The full rectangular coefficient formula below was also
+   checked against those sums, including its boundary at a=2.
+6. Rechecked every rank-two first-descendant module from (P102.3).
+   On SL(2), its spin-two multiplicity is at least its spin-zero
+   multiplicity. The same comparison survives arbitrary spectators:
+   spin s tensor spin s contains spin two whenever s>=1, and the
+   s=0 comparison is precisely the local inequality. Applied the
+   actual extraction (P102.5), with both horizontal-parent lists
+   written explicitly, to get (P111.8).
+7. Independently checked the extraction and virtual-K comparison
+   on R=row-(3)^2, row-(3) times middle, middle^4, row-(4)^2,
+   (3,1)^2, row-(3) times row-(5), and row-(4) times (2,2).
+   The K root moments were 12,8,90,12,19,5,5. In every case the
+   actual first-layer identities and the spin comparison matched.
+   These are construction diagnostics; the uniform proof is below.
+8. Direct complementary-cut sums agreed with (P111.1)'s original
+   pre-estimate formula on rank-two tuples with two minus Z's,
+   all middle signs minus, and all defining signs plus. For
+   (l,h_mid,alpha)=(2,3,(5,4)),(2,4,(6,6)),(4,3,(6,5)),
+   (5,3,(6,6)),(6,3,(7,6)), Phi/2 was respectively
+   2404,4838,17619,26193,130564 for H and
+   738,1351,4731,6755,31312 for C. The rectangular l=2 case
+   therefore checks the final supplier in the original consumer.
+9. Rechecked all odd/trivial cases, cubic sign fusion, opposite
+   identical-Z sign fusion, and normalized quotient Haar pullback.
+   No positive graph dimension or original cut is spent twice.
+
+**Lemma 111A (two-copy local retention and the required lower-degree tables).**
+At every r>=2 and Z=H,C there is an actual split inclusion
+
+    (Z tensor V)^(direct-sum 2) -> Z^2 tensor V.  (P111.2)
+
+The degree-three and degree-one constituents of Z^2 V are
+
+    H:       3 row+4 middle+1 column+3V;
+    C,r=2:  1 row+2 middle+2V;
+    C,r=3:  1 row+4 middle+2 column+3V;
+    C,r>=4: 1 row+4 middle+3 column+3V.
+
+Unavailable columns are omitted. The degree-four multiplicities of
+Z^2 V^2, in label order (4),(3,1),(2,2),(2,1,1),(1,1,1,1), are
+
+    H,r=2:    6,11,6,-,-;
+    H,r>=3:   6,12,7,7,1 (last label only if r>=4);
+    C,r=2:    1,4,3,-,-;
+    C,r=3:    1,7,7,9,-;
+    C,r=4:    1,7,7,12,5;
+    C,r>=5:   1,7,7,12,6.                        (P111.3)
+
+At r=2 the degree-five multiplicities of C^2 V^3, on labels
+(5),(4,1),(3,2), are (1,6,9).
+
+**Proof.** Ordinary top multiplication and Lemma 101B give the
+actual identities
+
+    H^2=1+H+C+V_(4)+V_(3,1)+V_(2,2),
+    C^2=1+H+kappa_r C+V_(2,2)+V_(2,1,1)+V_(1,1,1,1).
+
+All labels use the actual r-row alphabet. The H,C degree-two
+multiplicities are their triangle moments; the scalar is one.
+There are no other lower degrees. Apply the actual one-box rule
+of Lemma 110C. Removing from these degree-four top labels and
+adding to their degree-two labels gives exactly the stated
+row/middle/column counts; removing from their degree-two labels
+and adding to their scalar gives the V count. Compare these with
+ZV=V+row+middle for H, and V+middle+column for C. Every required
+constituent occurs at least twice, including V, proving (P111.2).
+
+For clarity the degree-five lists used for the second application
+of that rule are
+
+    H^2 V: (5)+2(4,1)+2(3,2)+(3,1,1)+(2,2,1);
+    C^2 V: (3,2)+2(2,2,1)+(3,1,1)+2(2,1,1,1)+(1,1,1,1,1),
+
+with unavailable lengths removed. Removing one box from these
+lists and adding one box to the degree-three lists above gives
+(P111.3), entry by entry. For rank-two C^2 V^2 the degree-six
+list is (4,2)+(3,3). Removing from it and adding to its degree-four
+list (1,4,3) gives degree-five counts (1,6,9) in C^2 V^3.
+All these are actual decompositions, not stable multiplicities. QED.
+
+**Lemma 111B (two actual U images leave a row reserve and coexist with the quartet bank).**
+For l>=3 put delta=B2-2U. Then delta>=0 and
+
+    K_row<=2P_row+5L6T6+theta L2 delta.           (P111.4)
+
+Let B_Gamma be the middle bank dimension of Lemma 106C with both
+Z's retained as spectators. In the following ranges its same
+actual quartet target obeys
+
+    B4>=B_Gamma+4T_Z:
+      Z=H,l>=6; C,r>=3,l>=6; C,r=2,l>=7.        (P111.5)
+
+At l=5 write t_row,t_mid,t_col for the extremal root multiplicities
+of R_actual tensor the respective cubic. Then T_S=t_row+2t_mid+t_col,
+T_H=t_row+t_mid, T_C=t_mid+t_col, and the joint quartet bounds are
+
+    H:       B4>=B_Gamma+3t_row+4t_mid+t_col;
+    C,r=2:  B4>=B_Gamma+t_row+2t_mid;
+    C,r>=3: B4>=B_Gamma+t_row+4t_mid+c t_col,
+                      c=2 at r=3,3 at r>=4.     (P111.6)
+
+At C,r=2,l=6, let t_4,t_31,t_22 be the extremal multiplicities
+of R_actual tensor those four-box labels. Then
+
+    T_Z=t_31+t_22, T_S=t_4+3t_31+2t_22,
+    B4>=B_Gamma+t_4+4t_31+3t_22.                (P111.7)
+
+**Proof.** There are l-2>=1 physical V's in B2. Choose one and
+use (P111.2), tensoring every other actual factor. This embeds two
+independent copies of the whole actual U target into B2, so gives
+delta>=0. The included local ZV has maximum circle grade three.
+The row-bank projection of Lemma 103C has both Z's top and that
+V positive, local grade five. It kills both U images. The image
+rank in its quotient is therefore at most delta. Proposition 103E's
+unchanged Schur payment gives (P111.4) with the same theta.
+
+For the quartet use the actual bank embedding of Lemma 106C,
+whose all-old-middle-top projection vanishes by (P108.5). Choose
+j physical V's of its target. The root source R_actual Z V^(l-4)
+has total degree A, so only the degree j+2 top constituents of its
+local ZV^j can contribute. Embed these irreducibles in actual local
+Z^2 V^j summands. The source top restriction injects each copy,
+and independent local copies have independent images where all
+old middle cubics are top. That projection kills the bank, so
+their ranks add to B_Gamma in this one B4.
+
+For H,j=2 the local ZV^2 top has multiplicities (1,2,1,1,0)
+in the order of (P111.3); four copies fit its H rows in that table.
+For C,r>=3,j=2 the top multiplicities are (0,1,1,2,1), truncated
+to available lengths; four copies fit its C rows. For C,r=2,j=3
+its degree-five top has multiplicities one on (4,1) and two on
+(3,2). Four copies fit (1,6,9) from Lemma 111A. The ranges in
+(P111.5) are exactly those with enough chosen V's.
+
+At l=5 use one local V and the degree-three lists of Lemma 111A.
+The top identities for ZV and V^3 give the stated T's; lower
+constituents cannot reach A. The same independent-copy/all-old-middle-
+top argument gives (P111.6). At rank-two C,l=6 choose two local
+V's. Ordinary top multiplication gives CV^2 top=(3,1)+(2,2),
+and V^4 top=(4)+3(3,1)+2(2,2). The C,r=2 row of (P111.3)
+therefore gives (P111.7), again jointly with the bank. QED.
+
+**Lemma 111C (the rank-two virtual-K tensor graph has only rectangular negative edges).**
+At r=2 put K=C^2-2C+V^2+2 in the actual representation ring.
+For any actual labels lambda,mu, its tensor coefficient
+m_mu(K tensor V_lambda) is nonnegative unless
+
+    lambda=(b,b), mu=(a,a), |a-b|=1.
+
+In these exceptional entries it is exactly -1. In particular every
+nonrectangular target has nonnegative K tensor coefficients.
+
+**Proof.** By the actual Weyl bialternant, C has weights
+(+/-1,+/-1) and (0,0), each once. Put x=(b_1+2,b_2+1) for an
+actual label (b_1,b_2). Alternating x+(+/-1,+/-1) gives the four
+neighbor labels (b_1+/-1,b_2+/-1) whenever dominant/nonnegative.
+A last coordinate zero gives a zero numerator. The sole reflected
+case is x+(-1,+1) when b_1=b_2: it swaps the two entries and
+contributes minus the original numerator, cancelling the zero
+weight's original contribution. If b_1=b_2+1 that term is singular;
+otherwise it is the valid neighbor. Thus the actual C tensor graph
+has these valid four neighbors and one self-loop exactly when
+b_1>b_2. The V graph has precisely the valid one-box neighbors by
+Lemma 110C, with no loops.
+
+All off-diagonal C edges change both row parities. Two off-diagonal
+C steps preserve both parities, so a two-step C walk along a C
+edge can only use one loop. Write L_lambda=1 for a nonrectangle
+and zero for a rectangle. At an off-diagonal C edge the K coefficient
+is consequently
+
+    L_lambda+L_mu-2+(number of two-step V walks).
+
+If both endpoints are nonrectangular it is nonnegative. If one is
+a rectangle, the other is (a+1,a-1) from (a,a), with a>=1.
+There are two V paths, through (a+1,a) and (a,a-1), so the
+coefficient is one. If both are rectangles, they differ by one
+in each row and have just one V path; their coefficient is -1.
+At a diagonal entry the coefficient is
+(number of C neighbors)-L_lambda+(number of V neighbors)+2>=0.
+At every other entry the negative -2C term is absent, so both
+walk counts and the scalar term are nonnegative. This exhausts
+the actual graph and proves the assertion uniformly in both labels.
+QED.
+
+**Lemma 111D (rank-two spin comparison controls a rectangular first descendant).**
+Let R_actual be any product of actual type C_2 irreducibles of total
+degree 2a, with a>=2. Put
+
+    T0=m_(a,a)(R_actual),
+    T1=m_(a+1,a-1)(R_actual),
+    T2=m_(a+2,a-2)(R_actual),
+    F0=m_(a-1,a-1)(R_actual),
+    F1=m_(a,a-2)(R_actual).
+
+Then, for arbitrary factor labels and counts,
+
+    F0<=F1+T0+T2.                               (P111.8)
+
+The F's are actual first-descendant multiplicities, not unconditioned
+GL coefficients.
+
+**Proof.** Denote the SL(2) irreducible of highest weight s>=0 by
+L_s. For a factor lambda=(b,c), restrict its actual first-descendant
+GL(2) module to SL(2). Formula (P102.3) gives
+
+    c>=1:  G_(lambda,1)|_SL2=L_(b-c) tensor L_2;
+    c=0,b>=2: L_b+L_(b-2);
+    c=0,b=1: L_1;
+    c=0,b=0: 0.
+
+The ordinary two-row Pieri/Clebsch--Gordan rule shows in every case
+that its L_2 multiplicity is at least its L_0 multiplicity. For
+c>=1 the only case with L_0 is b-c=2, and it also contains L_2.
+For c=0 the only case with L_0 is b=2, and it also contains L_2.
+
+This comparison survives tensoring with every positive SL(2) module
+W. To see it on a summand L_s of W, its L_0 multiplicity in G L_s
+is precisely [L_s]G by self-duality. If s>=1, the tensor square
+L_s^2 contains L_2, so the L_2 multiplicity in G L_s is at least
+[L_s]G. If s=0 the comparison is exactly [L_2]G>=[L_0]G.
+Sum over W's nonnegative multiplicities.
+
+The whole product's actual grade 2a-2 is P1 from Lemma 102D:
+sum over factors of G_(lambda,1) times the other top modules.
+Apply the preceding comparison to each summand. At this fixed
+central grade, SL(2) weights zero and two correspond precisely
+to GL(2) labels (a-1,a-1) and (a,a-2). Therefore
+
+    [S_(a-1,a-1)]P1 <= [S_(a,a-2)]P1.
+
+Use the actual finite-alphabet extraction (P102.5). The only
+horizontal-two parent of (a-1,a-1) at degree 2a is (a+1,a-1),
+so the left side is F0+T1. The horizontal-two parents of
+(a,a-2) are (a,a),(a+1,a-1),(a+2,a-2), so the right side is
+F1+T0+T1+T2. Subtract T1 and obtain (P111.8). This extraction
+retains the actual raising kernel and all reflected corrections.
+QED.
+
+**Proposition 111E (uniform rank-two extremal K positivity).**
+For every product R_actual of actual type C_2 irreducibles of total
+degree D, and every actual alpha with |alpha|=D,
+
+    m_alpha((C^2-2C+V^2+2) tensor R_actual)>=0.   (P111.9)
+
+**Proof.** For a nonrectangular alpha, Lemma 111C gives nonnegative
+coefficients after tensoring each actual constituent of R_actual.
+For alpha=(a,a),a>=2, list the two-step C and V walks of that
+lemma with input degree at most 2a. The only nonzero coefficients
+are
+
+    input (a,a):7; (a+1,a-1):1; (a+2,a-2):1;
+          (a,a-2):3; (a-2,a-2):1; (a-1,a-1):-1.
+
+Indeed the diagonal has three C neighbors,two V neighbors and
+the added scalar two. The same-degree nonrectangular edge has two
+V paths and one loop. The next same-degree label has one C path.
+The (a,a-2) label has two C paths and one V path, and (a-2,a-2)
+has one C path. The lower adjacent rectangle has coefficient -1.
+The higher adjacent rectangle cannot occur in R_actual because
+its degree exceeds D. All other inputs have zero coefficient.
+Consequently the left side of (P111.9) is exactly
+
+    7T0+T1+T2+3F1+m_(a-2,a-2)(R_actual)-F0
+      >=6T0+T1+2F1+m_(a-2,a-2)(R_actual)>=0,
+
+by Lemma 111D. Every remaining term is an actual nonnegative
+multiplicity.
+
+At a=0, D=0 and R_actual is trivial, giving coefficient four.
+At a=1,D=2, after removing trivial factors R_actual is either one
+H, one C, or two V's. The K coefficients at target C are respectively
+one,seven, and seven (V^2=1+H+C, and its three coefficients are
+-1,one,seven). They are nonnegative. These exhaust that total degree
+and finish the proof. QED.
+
+**Proposition 111F (the whole identical-minus-Z consumer is supplied).**
+At every r>=2, the original gap-six Q3 consumer with two identical
+minus Z backgrounds, arbitrary cubic/higher spectators, common defining
+sign, and common sign within each cubic family is nonnegative.
+
+**Proof.** Its exact residual is (P111.1). For l>=3 use delta=B2-2U
+from Lemma 111B. Pay the row by (P111.4), the column by Proposition
+104C, and the middle by K_mid<=3L4B_Gamma+2P_mid when l>=4,
+as in Proposition 106D. These use distinct pair channels, a fraction
+of L2 delta, and at most ten six-V units (five at rank two).
+
+In the ranges of (P111.5), the same joint quartet gives
+3L4B4-K_mid-2a_ZL4T_Z>=-2P_mid+(12-2a_Z)L4T_Z.
+The second term is nonnegative because a_Z<=6. Thus all consumed
+costs leave nonnegative reserves (1-theta)L2 delta,E,b_Z L2T_S,
+and at least five six-V units (nine at rank two). This supplies
+H and higher-rank C at l>=6, and rank-two C at l>=7.
+
+At rank-two C,l=6 use (P111.7) in the same quartet after paying
+its middle bank. Combining its remainder with the original positive
+b_Z L2T_S gives exactly
+
+    45(t_4+4t_31+3t_22)-150(t_31+t_22)
+                         +30(t_4+3t_31+2t_22)
+       =75t_4+120t_31+45t_22>=0.
+
+The row and other budgets are still disjoint as above.
+
+At l=5 the row and column kernels vanish. Use (P111.6) after
+paying 3L4B_Gamma+2P_mid. Combine the remaining quartet with
+b_Z L2T_S. Its coefficients are
+
+    H:       15t_row+60t_mid+45t_col;
+    C,r>=3: 45t_row+60t_mid+(15c-30)t_col;
+    C,r=2:  35t_row+20t_mid.
+
+All are nonnegative, including c=2 at the smallest higher rank.
+All delta,E and unused pair terms are also nonnegative.
+
+At l=4 pay the middle bank with B4>=B_Gamma. The remaining
+negative quartet is -2a_ZT_Z. The source V^2 contains Z, so
+T_S>=T_Z as actual extremal multiplicities. The original positive
+b_Z L2T_S=6b_ZT_S pays that cost because 6b_Z-2a_Z is six
+for H and higher-rank C, and two for rank-two C. The row/column
+kernels vanish; delta and E are nonnegative.
+
+At l=3 no quartet exists. The row/column kernels vanish, and
+K_mid<=2P_mid from Proposition 106D. The remaining L2 delta,E
+and b_ZL2T_S are nonnegative.
+
+At l=2 all cubic star kernels vanish. Here L2=1 and A=deg R_actual.
+For H and C at r>=3, the actual local virtual combination
+Z^2-2Z+V^2 is a positive representation: it is respectively
+2+2C+top(H^2) or 2+2H+top(C^2), by Lemma 111A and V^2=1+H+C.
+Thus B2-2U+E>=0, and every other residual term is nonnegative.
+For rank-two C instead combine the remaining b_ZT_S=2m_alpha(R_actual)
+with B2-2U+E. Their sum is exactly the left side of (P111.9),
+with the same actual product R_actual and root of its top degree.
+Proposition 111E supplies it uniformly. No cubic pair term was
+used for that supplier, so all doubled pairs remain positive.
+
+At l<=1 the U,quartet and Z^2-V^2 cuts are absent and every
+cubic star kernel vanishes. E and the doubled pairs are nonnegative;
+Proposition 107B already covers every potentially negative mixed
+cut. This exhausts all defining counts. QED.
+
+**Theorem 111G (every at-most-two-degree-two six-box tuple).**
+Let G be any compact connected type C_r group, r>=1. Take an
+actual atomic tuple with arbitrary distinguished root alpha, at most
+two nontrivial degree-two backgrounds H/C, any number of defining
+backgrounds with a common sign, arbitrary available cubic backgrounds,
+and arbitrary backgrounds of box degree at least four. All other
+signs, labels and counts are unrestricted. Then original Q3 holds
+whenever |alpha|>=D-6, including every actual descending quotient tuple.
+There is no rectangular-root exception.
+
+**Proof.** Rank one is Theorem 101F. At r>=2, zero,one,or two
+unequal degree-two backgrounds are supplied by Theorems 106E,109D,
+110F. Two equal plus backgrounds are supplied by Theorem 107C.
+For two equal backgrounds of opposite signs, Proposition 41A fuses
+them with nonnegative actual coefficients into degrees 0,2,4.
+The zero difference vanishes; degree two moves to the supplied
+four-box region of Theorem 100D; degree four is a higher spectator
+with no degree-two backgrounds, supplied by Theorem 106E.
+
+For two equal minus backgrounds, trivial roots at gap at most six
+are supplied by Lemma 101A, smaller even gaps by Theorem 100D,
+and odd gaps or odd original minus counts give zero. Trivial
+backgrounds have their original effect. The remaining common-cubic-
+sign case is Proposition 111F.
+
+For arbitrary cubic signs strongly induct on tuple length under
+opposite-sign equal-cubic fusion, Proposition 41A. Its nonnegative
+replacements have degrees 0,2,4,6. Degree zero vanishes; degrees
+two and four move to Theorem 100D, which permits additional minus
+degree-two backgrounds. Degree six is a higher spectator, preserves
+the two original minus Z's and common defining signs, and decreases
+length. Induction therefore supplies it. Normalized Haar pullback
+proves the statement for actual descending central quotients. QED.
+
+**Original-consumer return and scope.** Proposition 111F consumes
+(P111.1) with its original actual spaces and every small defining
+count. Theorem 111G therefore removes the complete two-degree-two
+interaction, including the rank-two rectangular two-C/two-V leaf.
+The new rank-two first-descendant comparison (P111.8), together
+with the tensor-graph computation, supplies that last leaf without
+using its positive cubic-pair budget. The prior ledger prefix is
+preserved; the non-moving auxiliary-batch count is zero after this
+successful return. This is structural progress toward the unchanged
+full cone theorem, which remains active and unproved. Arbitrary
+larger degree-two families, arbitrary defining signs, larger gaps
+and the other Lie types remain within that target.
+
+## 112. Independent all-middle triangles supply arbitrary degree-two counts with at most two defining factors
+
+**Selected package and actual missing application.** The previous turn
+was progress: Theorem 111G supplied every at-most-two-degree-two
+six-box tuple. The locked target remains full central positive-definite
+Q3 for every compact connected simple-Lie-algebra group. Its next
+original consumer is (P101.2) at arbitrary H/C multiplicities. The
+three-degree-two triangle cuts were not covered by Theorem 111G.
+Their exact demand is their original signed contribution at every
+rank r>=2, actual gap-six root, spectator label/count and marked
+triple, without a defining-count or degree-two-count bound.
+
+The construction is the actual invariant insertion from the root
+Hom after removing the marked three degree-two factors into the
+full root Hom M. Its domain is extremal of total degree A=D-6,
+so it is the actual top Hom of Lemma 93H. The all-three-middle
+projection below is tested directly. Its injectivity removes the
+triangle loss uniformly, and is consumed here in the complete
+original budget with zero,one,or two defining backgrounds. No new
+certificate package or reduction of the full goal is made.
+
+**Independent self-double-check immediately before recording.**
+
+1. Re-read every degree-two triangle multiplicity in Lemma 101B:
+   HHH,HHC,HCC are one at r>=2; CCC is one only at r>=3.
+   Constructed their invariant trace forms in the actual skew/self-
+   adjoint matrix models. Their all-middle restrictions are nonzero.
+   Exact matrix evaluations at r=2,3 gave respectively HHH=4,
+   HHC=8,HCC=4, and CCC=-24 at r=3. The uniform embeddings of
+   these witnesses in every larger rank are explicit below.
+2. Checked the triangle projection against all previously consumed
+   images in Proposition 107B. Cubic stars and pairs leave all Z's
+   top, mixed gamma-Z-V marks only one Z, and an unmarked factor
+   of an extremal source stays top. The three-middle projection
+   therefore isolates each triangle and kills every old image.
+3. Tested the actual H-C-V^2 couplings with both H,C at grade zero.
+   Their symmetric/alternating V channels are independently nonzero:
+   the trace witnesses were eight and minus four at r=2,3.
+   With exactly two V's, these projections isolate every marked
+   H,C pair at arbitrary counts, kill all cubic/mixed images, and
+   kill triangle images because their unmarked V's remain positive.
+4. Replayed (P101.2) at l=0,1,2. At l<=1 no V-pair,quartet or
+   cubic-star term remains. At l=2 the new H-C image contributes
+   2hc T_(H C V^2), so its original mixed coefficient becomes
+   2hc(1+s_H s_C), with no residual mixed negative term.
+5. Checked that E_(Z Z)>=U_Z at l=2 as actual module inclusions
+   from V^2 containing Z. For counts n>=3, binomial(n,2)>=n
+   pays the entire negative singleton cost. For n=1,2 the exact
+   root degrees match Lemma 109C and Proposition 111E; no
+   first-descendant GL surrogate is substituted.
+6. Executed independent exact Laurent-character checks of all three
+   low-count local identities K21,K12,K22 below, at r=2,3.
+   Their positivity follows from explicit actual inclusions:
+   C top(H^2) contains top(H^2), and H top(C^2) contains
+   top(C^2), with the rank-two rectangular case stated separately.
+7. Direct complementary-cut sums at r=2 checked every H/C sign
+   combination in reached count cases (h,c,l,alpha)=(2,1,2,(1,1)),
+   (1,2,2,(1,1)),(2,2,2,(3,1)),(2,2,2,(2,2)),
+   (3,1,2,(2,2)),(1,3,2,(2,2)),(3,3,2,(4,4)),
+   (3,3,0,(3,3)),(3,3,1,(4,3)). The original formula agreed
+   with the cut sums; each full moment exceeded the joint triangle/
+   H-C image count, and each post-insertion residual was nonnegative.
+   These diagnose the uniform construction and exact consumption.
+8. Rechecked opposite-sign H/C and cubic fusion and the opposite-
+   sign V pair. Their higher replacements preserve l<=2; the
+   V-pair replacement has l=0. All lower replacements move to
+   Theorem 100D. Trivial/odd cases and actual quotient pullback
+   use the original normalized Haar measure.
+
+**Lemma 112A (all available degree-two triangles have a nonzero all-middle component).**
+At r>=2, the unique invariant for each available degree-two triangle
+HHH,HHC,HCC, and CCC at r>=3, has nonzero projection onto circle
+grade zero in all three factors.
+
+**Proof.** Relative to V=X+X^*, H is the symplectic-skew-adjoint
+endomorphism module and C is the trace-free symplectic-self-adjoint
+module. Their middle spaces have matrices
+
+    H(A)=diag(A,-A^T), A in gl(X),
+    C(B)=diag(B,B^T), tr B=0.
+
+The actual invariant trace forms can be taken as
+
+    HHH: tr_V H(A1)[H(A2),H(A3)];
+    HHC: tr_V {H(A1),H(A2)} C(B);
+    HCC: tr_V H(A)[C(B1),C(B2)];
+    CCC: tr_V {C(B1),C(B2)} C(B3).
+
+Braces denote anticommutator. A scalar trace correction in either
+C-valued anticommutator has zero pairing with the final trace-free
+C, so these are actual invariant forms on H/C. Their middle
+restrictions are respectively
+
+    2tr A1[A2,A3], 2tr {A1,A2}B,
+    2tr A[B1,B2], 2tr {B1,B2}B3.
+
+Take D=diag(1,-1,0,...), E=E12,F=E21. The witnesses
+(A1,A2,A3)=(D,E,F), (A1,A2,B)=(I,D,D), and
+(A,B1,B2)=(D,E,F) give four,eight,four. At r>=3 use
+B1=B2=B3=diag(1,1,-2,0,...); its CCC value is minus twenty-four.
+These choices work in every stated rank. The trace pairings on
+gl(X) and sl(X) are nondegenerate, so the corresponding invariant
+tensors have nonzero all-middle projections as well. Lemma 101B's
+actual multiplicity one identifies the unique channels. At r=2 the
+CCC channel is absent; none is asserted. QED.
+
+**Proposition 112B (all triangle insertions are injective and independent of the old joint image).**
+At actual gap six A=D-6, arbitrary H/C counts, arbitrary defining,
+cubic and higher spectators, insert each available triangle invariant
+on each marked degree-two triple. The direct sum of all its actual
+extremal root sources injects into M and its image is disjoint from
+the cubic-star,equal-cubic-pair and mixed images of Proposition 107B.
+With h,c the H,C counts, H_j=binomial(h,j), C_j=binomial(c,j), set
+
+    D_tri=H3 T_(H^3)+H2 c T_(H^2 C)
+                   +h C2 T_(H C^2)+kappa_r C3 T_(C^3).
+
+Then the one full root moment obeys
+
+    M>=sum_gamma S_gamma-sum_gamma K_gamma+sum_gamma P_gamma
+                    +sum_(gamma,Z) R_(gamma,Z)+D_tri. (P112.1)
+
+All sources and counts are unsigned; this statement permits arbitrary
+signs and labels and imposes no multiplicity bound.
+
+**Proof.** Each triangle removes six boxes, leaving degree A.
+On the root top every unmarked factor is therefore individually
+top by Lemmas 93H and 102C. For a chosen triple project just its
+three factors to grade zero and every other factor to top. On
+that triple the insertion is its source top map tensored with
+Lemma 112A's nonzero invariant component, hence injective.
+A different triple leaves some chosen middle factor unmarked and
+top, so is killed. These projections isolate every triple source.
+
+Cubic stars and equal-cubic pairs leave every degree-two factor
+top, and a mixed gamma-Z-V insertion can lower only its one
+marked Z. They are all killed by the three-middle projection.
+Thus a joint relation first forces every triangle source to zero,
+then reduces to the old joint relation. Their ranks add to that
+old image in the same M, giving (P112.1). QED.
+
+**Lemma 112C (with exactly two V's every H-C pair supplies two independent channels).**
+At l=2, arbitrary h,c and actual gap six, the H-C-V^2 insertion
+on every marked H,C pair is injective on its two-channel source
+and independent of the entire joint image in Proposition 112B.
+Consequently (P112.1) improves by
+
+    M >= its right side +2hc T_(H C V^2).        (P112.2)
+
+**Proof.** Use the actual equivariant maps HC->H,C given by
+AB+BA and AB-BA from Lemma 110A. Their restrictions on the two
+middle spaces in Lemma 112A have blocks
+
+    H channel: AB+BA,    C channel: AB-BA.
+
+The first is nonzero at A=I,B=D, and the second at A=E12,B=D.
+Both outputs are grade zero, and the latter is trace-free.
+Their compact Hermitian adjoints and coevaluation through the
+H,C summands of V^2 therefore give nonzero invariant components
+in H_middle tensor C_middle tensor (V^2)_0. The V pair is
+respectively symmetric and alternating, so these components are
+independent.
+
+For a fixed H,C pair project those two factors to middle, the
+entire two-V factor to its grade-zero space, and every other
+factor to top. Its source removes six boxes and is extremal;
+tensoring its top map with the two independent constants injects
+both source copies. A different H,C pair leaves one of the
+selected middle factors unmarked and top, so is killed. There
+is only one physical V pair because l=2.
+
+The old cubic/pair/mixed images have at most one Z in middle,
+so are killed. Triangle images leave both V's unmarked and
+positive, and vanish on the grade-zero V-pair projection. Thus
+the new sources are independent of the entire old joint image,
+and their 2hc extremal dimensions give (P112.2). QED.
+
+**Lemma 112D (the low-count two-V virtual modules are positive actual representations).**
+At r>=2 write P_H=top(H^2)=V_(4)+V_(3,1)+V_(2,2), and
+P_C=top(C^2)=V_(2,2)+V_(2,1,1)+V_(1,1,1,1), truncated to
+actual available lengths. Let b=2 at r=2,3 at r>=3. The virtual
+representations
+
+    K21=H^2 C-2HC-H^2+C V^2+3C+4H,
+    K12=H C^2-C^2-2HC+H V^2+bH+4C,
+    K22=H^2 C^2-2HC^2-2H^2 C+C^2 V^2+H^2 V^2
+                                        +3C^2+bH^2+8HC
+
+are positive in the actual representation ring.
+
+**Proof.** Lemma 111A gives H^2=1+H+C+P_H and
+C^2=1+H+kappa_r C+P_C, with V^2=1+H+C.
+Direct substitution gives
+
+    K21=1+5H+(4+2kappa_r)C+2P_C+(C P_H-P_H).   (P112.3)
+
+At r>=3 each label of P_H is nonrectangular when padded to r
+rows, so Lemma 108E gives a self-copy after tensoring C.
+At r=2 choose the self-copies of (4) and (3,1) and the (2,2)
+copy in C tensor (3,1), from Lemma 111C's actual C graph.
+These three actual irreducible embeddings are independent and
+show C P_H contains P_H in every rank. Thus (P112.3) is positive.
+
+At r>=3 the same substitution gives
+
+    K12=1+6H+5C+2P_H+(H P_C-P_C).               (P112.4)
+
+Every nontrivial actual irreducible retains itself after tensoring
+H by its nonzero root Lie action, as proved in Lemma 108C.
+Hence H P_C contains P_C. At r=2, using HC=H+C+V_(3,1) instead,
+the exact expansion is
+
+    K12=1+4H+5C+2V_(4)+V_(3,1)+V_(2,2)+H V_(2,2).
+                                                        (P112.5)
+
+It is positive. Finally direct subtraction of C K21 from K22 gives
+
+    K22=C K21+(1+b)H^2+H^3+4HC.                 (P112.6)
+
+Every term on the right is positive. This proves all three
+identities and their actual positivity without stable multiplicities.
+QED.
+
+**Independent self-double-check immediately before the consumer assertions.**
+Replayed the l=2 source degrees with all spectators retained: if the
+negative family has n factors and S contains every other factor, then
+A=deg S+2n-4. Hence n=1 is exactly the first-descendant use of
+Lemma 109C, and n=2 is exactly Proposition 111E's extremal use.
+The pair sources retain V^2 and contain U by a split actual module
+inclusion. Checked each low-count coefficient in K21,K12,K22 against
+(P101.2), after discarding only the extra nonnegative H-C image in
+the both-minus case. Rechecked l<=1, every fusion branch and the
+original root/sign/Haar conventions. Thus the following return uses
+exactly the available consumer hypotheses and budgets.
+
+**Proposition 112E (the full original budget with at most two common-sign V's).**
+At every r>=2 and nontrivial gap-six root, allow arbitrary H/C,
+cubic and higher counts/labels. Suppose l<=2 and each background
+label has a common sign among its occurrences. Then original Q3
+is nonnegative, with either common V sign when present.
+
+**Proof.** Denote the H,C signs by s_H,s_C, cubic signs by s_gamma,
+and the V sign by v. Set H_j=binomial(h,j),C_j=binomial(c,j).
+All absent sources are zero. Adding Proposition 112B's triangle
+dimensions to their original signed cuts gives the nonnegative term
+
+    Pi_tri=(1+s_H)H3 T_(H^3)+(1+s_C)H2 c T_(H^2 C)
+             +(1+s_H)h C2 T_(H C^2)
+                            +(1+s_C)kappa_r C3 T_(C^3). (P112.7)
+
+The cubic stars are absent since l<3. The mixed gamma-Z-V dimensions
+in Proposition 107B combine with their original coefficients to
+1+v s_gamma s_Z>=0, and the equal-cubic pairs are doubled. For
+l<=1 all V-pair and quartet cuts are absent. The only other terms
+are the positive H,C pair cuts H2 N_(H^2),C2 N_(C^2). This proves
+l=0,1 at arbitrary counts, retaining every actual pair moment.
+
+Now let l=2, and let R_actual contain all cubic/higher factors.
+Then A=deg R_actual+2h+2c-4. Write
+
+    B=m_alpha(R_actual H^h C^c),
+    U_H=m_alpha(R_actual H^(h-1)C^c),
+    U_C=m_alpha(R_actual H^h C^(c-1)),
+    E_HH=m_alpha(R_actual H^(h-2)C^c V^2),
+    E_CC=m_alpha(R_actual H^h C^(c-2)V^2),
+    T_HH=m_alpha(R_actual H^(h-2)C^c),
+    T_CC=m_alpha(R_actual H^h C^(c-2)),
+    T_HC=m_alpha(R_actual H^(h-1)C^(c-1)).
+
+The E,U moments are actual first descendants, B is an actual
+second descendant, and the T's are extremal when present. In
+(P112.2), T_(H C V^2)=T_HC. Discard just the nonnegative mixed
+cubic terms. The unchanged original formula gives
+
+    Phi_G/2>=B+H2 E_HH+C2 E_CC+s_H h U_H+s_C c U_C
+       +3H2 T_HH+b_r C2 T_CC+2hc(1+s_H s_C)T_HC
+                         +Pi_tri+2sum_gamma P_gamma. (P112.8)
+
+In particular every mixed H-C negative cut has been supplied in
+that same M, without a count bound.
+
+A general one-negative-family payment suffices for opposite signs.
+Let its label be Z and count n, and let S_actual contain all
+other backgrounds except the two V's. If n>=3, V^2 contains Z,
+so its positive pair moment E_ZZ is at least U_Z. Since
+binomial(n,2)>=n, the pair term pays nU_Z without using B.
+If n=1, the required B>=U follows from the nontrivial root's H
+self-copy for H, or Lemma 109C for C: the latter has
+|alpha|=deg S_actual-2, exactly its first-descendant hypothesis.
+If n=2, B-2U+E_ZZ is the root moment of
+S_actual tensor (Z^2-2Z+V^2). This virtual module is positive
+for H and for C at r>=3, by Lemma 111A. For C at r=2, use also
+the original b_r binomial(2,2)T_ZZ=2m_alpha(S_actual).
+Their sum is Proposition 111E's K moment, with
+|alpha|=deg S_actual, and is nonnegative. The n=0 case has no
+negative cost. All other terms in (P112.8) remain nonnegative.
+This supplies both opposite H/C sign patterns. The ++ pattern
+is already entirely nonnegative.
+
+For --, if either count is at least three, first pay that family's
+negative cost solely by its pair term, as just proved. Pay the
+other family by the same one-family argument, using B only if
+its count is one or two. The relevant other-family spectators
+are still actual products; the source degree identities for
+Lemma 109C or Proposition 111E are unchanged. The positive
+2hc(1+s_H s_C)T_HC may be dropped, so nothing is paid twice.
+
+It remains h,c<=2 with both signs minus. If one count is zero,
+the one-family argument applies. At h=c=1, HC contains H+C,
+so B-U_H-U_C>=0 as an actual module inclusion. All additional
+terms are positive. For (h,c)=(2,1),(1,2),(2,2), discard half of
+the positive H-C contribution in (P112.8); its remaining original
+coefficient is respectively 4H,4C,8HC after factoring R_actual.
+The B,U,E and degree-two-pair/V^2 terms then combine exactly
+into m_alpha(R_actual K21), m_alpha(R_actual K12), and
+m_alpha(R_actual K22). Lemma 112D proves their actual positivity.
+Pi_tri and the doubled cubic pairs were never spent. These cases
+exhaust both low counts and finish the original return. QED.
+
+**Theorem 112F (the complete six-box sector with at most two defining backgrounds).**
+Let G be any compact connected type C_r group, r>=1. Take an
+actual atomic tuple with arbitrary distinguished root alpha and at
+most two nontrivial defining backgrounds V=(1). Every other
+background can be any actual nontrivial label, with arbitrary
+multiplicity and arbitrary original signs. Then original Q3 holds
+whenever |alpha|>=D-6. No common-sign condition is imposed on the
+defining backgrounds. All actual descending quotient tuples are included.
+
+**Proof.** Rank one is Theorem 101F. At r>=2 the four-box region
+is Theorem 100D, odd box gaps and odd original minus counts are
+zero, and a trivial root at gap at most six has D<=6 and is
+supplied by Lemma 101A. Trivial background factors retain their
+original factor two or zero. Only a nontrivial even-minus gap-six
+root remains. Every nontrivial nondefining label has degree two,
+three,or at least four, so the categories in Proposition 112E
+exhaust them. Higher spectators belong to no nonzero complement
+in (P101.2), by Lemma 101C's degree argument.
+
+Strongly induct on tuple length. If an equal degree-two background
+occurs with opposite signs, Proposition 41A replaces it with degrees
+0,2,4 using nonnegative actual coefficients. The zero difference
+vanishes; degree two moves to gap at most four and Theorem 100D;
+degree four is a higher spectator preserving l<=2 and decreasing
+length, so induction applies. If an equal cubic label occurs with
+opposite signs, its replacements have degrees 0,2,4,6. Degrees
+at most four are handled by Theorem 100D, and degree six is a
+higher spectator preserving l<=2 and decreasing length.
+
+If the two V backgrounds have opposite signs, fuse that pair by
+Proposition 41A. The nontrivial replacements are H or C with a
+minus sign; they have degree two, preserve the gap six, and have
+no remaining defining backgrounds. Induction supplies these actual
+shorter tuples by the already checked l=0 consumer. The trivial
+difference vanishes. Thus every un-fused tuple has a common sign
+within each H/C/cubic family and, if l=2, a common V sign.
+Proposition 112E supplies exactly that remaining base case.
+Normalized Haar pullback proves the same result for every actual
+descending quotient tuple. QED.
+
+**Original-consumer return.** Theorem 112F consumes the full original
+(P101.2) for every H/C multiplicity with at most two defining
+backgrounds, all signs, actual roots and cubic/higher labels. It
+removes the degree-two-count restriction there and also the remaining
+defining-sign restriction in that range. The uniform triangle map
+of Proposition 112B is available at every defining count. The
+locked full all-group cone theorem remains active and unproved;
+no restriction in Theorem 112F replaces that goal. The non-moving
+auxiliary-batch count is zero after the successful original return.
+
+**Open requirement 112G (the remaining original common-V six-box budget).**
+For the active six-box route at r>=2,l>=3, reduce signs within
+H,C and cubic labels by their existing opposite-sign fusion, and
+retain a common V sign. Define B2=N_(V^2),B4=N_(V^4),
+U_Z=N_(Z V^2),E_ZZ=N_(Z^2), and T_tau=N_tau for removed
+degree six as in Lemma 101C. Set H_j=binomial(h,j),C_j=binomial(c,j)
+and L_j=binomial(l,j). Proposition 112B, consumed in the original
+formula, gives the still-unpaid lower bound
+
+    B_remaining=L2 B2+H2 E_HH+C2 E_CC
+       +L2(s_H h U_H+s_C c U_C)+3L4B4
+       +2sum_gamma P_gamma+k6_r L6T6-sum_gamma K_gamma
+       +L2[3H2 T_(H^2 V^2)+2s_H s_C hc T_(H C V^2)
+                                      +b_r C2 T_(C^2 V^2)]
+       +L4[6s_H h T_(H V^4)+e_r s_C c T_(C V^4)]+Pi_tri.
+                                                        (P112.9)
+
+Proving this quantity nonnegative is the current sufficient supplier;
+no positivity assertion about it is made here. The nonnegative
+triangle remainder Pi_tri is retained, rather than discarded from
+the available budget. Strength knobs are: all r>=2,l>=3,h,c>=0
+and reached actual labels/counts, used in (P112.9); arbitrary
+nontrivial alpha with |alpha|=D-6, used in every actual root Hom;
+common signs only within the named families, exactly the fusion
+base case; normalized actual Haar multiplicities, with absent sources
+zero; and the displayed constants/one-sided bound, exactly the
+unchanged complementary-cut coefficients. No exact full-kernel
+classification is demanded.
+
+The natural next map for the mixed H-C/V-pair cost is the full
+actual insertion
+
+    Gamma_HC: direct-sum_(H_i,C_j,V-pair p)
+       Hom_Sp(V_alpha,backgrounds with i,j,p removed)^(direct-sum 2)
+                                     -> Hom_Sp(V_alpha,all backgrounds).
+
+Every source removes six boxes and is extremal. Its source dimension
+is 2hc L2 T_(H C V^2). Let J_old be the actual joint cubic-star,
+cubic-pair,mixed and triangle image used in (P112.1). The relevant
+loss is the source dimension minus the rank of Gamma_HC in the
+quotient by J_old, not an unsupported claim of full injectivity.
+For l>=3, a two-Z-middle/one-negative-V projection can mix different
+marked positive V positions, so the isolation in Lemma 112C is
+not asserted there. The smallest actual construction test is
+recorded next; its higher-count relations and their consumption
+in (P112.9) remain the selected next task. Other defining-sign
+patterns, larger gaps and other Lie types remain within the full goal.
+
+**Construction diagnostic 112H (the first three-V H-C middle projection is injective).**
+At r=2,h=c=1,l=3 with no other backgrounds, the actual root is
+V, since D=7 and A=1. The two-channel invariant insertion has
+six one-dimensional extremal root sources, one per channel and
+marked V pair. Its selected H-middle/C-middle/one-negative-V
+projection has rank six. This tests Gamma_HC beyond Lemma 112C;
+it is not a new Q3 closure, since this tuple is already supplied
+by Theorem 111G.
+
+**Independent self-double-check immediately before recording.**
+Computed both local trace couplings separately, used the common
+invertible trace-dual middle-coordinate identification, and retained
+both positive/negative orientations with their opposite alternating
+sign. The exact six-column coefficient Gram had rank six and
+nonzero determinant 45298483200. No numerical tolerance or stable
+character coefficient was used.
+
+**Proof and coordinate specification.** Use the H-middle matrix basis
+E11,E12,E21,E22 and C-middle basis E12,E21,diag(1,-1).
+The local coefficient matrices are AB+BA and AB-BA. On a marked
+pair i<j, positive i/negative j receives its (u,v) coefficient;
+negative i/positive j receives the same coefficient for the H
+channel and its negative for the C channel. The remaining positive
+V carries the root-top identity e_a->e_a, a=0,1. Form the six
+columns for pairs (0,1),(0,2),(1,2), in these two channels, with
+rows indexed by a,the two middle basis indices,and the three signed
+V letters. Their ordinary coefficient Gram is invertible with the
+determinant stated above, proving rank six. Trace-dual identification
+and the actual inherited middle metrics only change invertible
+coordinate factors; no canonical metric value is assigned to that
+determinant. Rank of this root-top projection is therefore rank of
+the indicated actual source images, proving the diagnostic. No
+uniform claim about larger l,h,c or the quotient loss is made. QED.
